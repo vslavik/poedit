@@ -57,7 +57,7 @@ import sys
 def init():
     pass
 
-# Feature controling the command used to lanch test programs.
+# Feature controlling the command used to lanch test programs.
 feature.feature("testing.launcher", [], ["free", "optional"])
 
 feature.feature("test-info", [], ["free", "incidental"])
@@ -113,7 +113,7 @@ def make_test(target_type, sources, requirements, target_name=None):
 
     # The alias to the real target, per period replacement above.
     if real_name != target_name:
-        get_manager().projects().project_rules().all_names_["alias"](
+        get_manager().projects().project_rules().rules["alias"](
             target_name, [t])
 
     # Remember the test (for --dump-tests). A good way would be to collect all

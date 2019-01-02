@@ -47,7 +47,7 @@ lib liba : a.cpp : <use>libb ;
 """)
 
 t.run_build_system(["-d2"])
-t.expect_addition("bin/$toolset/debug/main.exe")
+t.expect_addition("bin/$toolset/debug*/main.exe")
 
 
 # Test the order between searched libraries.

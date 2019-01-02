@@ -50,6 +50,8 @@
 #include <io.h>
 
 
+int file_collect_archive_content_( file_archive_info_t * const archive );
+
 /*
  * file_collect_dir_content_() - collects directory content information
  */
@@ -227,10 +229,7 @@ int try_file_query_root( file_info_t * const info )
     }
     else if ( pathstr[ 1 ] == ':' )
     {
-        if ( !pathstr[ 2 ] )
-        {
-        }
-        else if ( !pathstr[ 2 ] || ( pathstr[ 2 ] == '\\' && !pathstr[ 3 ] ) )
+        if ( !pathstr[ 2 ] || ( pathstr[ 2 ] == '\\' && !pathstr[ 3 ] ) )
         {
             buf[ 0 ] = pathstr[ 0 ];
             buf[ 1 ] = ':';

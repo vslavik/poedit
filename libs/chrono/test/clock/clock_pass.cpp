@@ -68,7 +68,7 @@ void check_clock_now_err(int err)
         typename Clock::time_point t1 = Clock::now();
     } catch (boost::system::system_error& ex) {
         BOOST_TEST(ex.code().value()==err);
-//      BOOST_TEST(ex.code().category() == BOOST_CHRONO_SYSTEM_CATEGORY);
+//      BOOST_TEST(ex.code().category() == ::boost::system::system_category());
 //      BOOST_TEST(std::string(ex.what()) == std::string("errored_clock"));
     }
     Clock::set_errno(0);
@@ -82,7 +82,7 @@ void check_clock_now_ec_err(int err)
     boost::system::error_code ec;
     typename Clock::time_point t1 = Clock::now(ec);
     BOOST_TEST(ec.value()==err);
-//  BOOST_TEST(ec.category() == BOOST_CHRONO_SYSTEM_CATEGORY);
+//  BOOST_TEST(ec.category() == ::boost::system::system_category());
     Clock::set_errno(0);
 }
 
@@ -96,7 +96,7 @@ void check_clock_now_throws_err(int err)
         BOOST_TEST(0&&"exception not thown");
     } catch (boost::system::system_error& ex) {
         BOOST_TEST(ex.code().value()==err);
-//      BOOST_TEST(ex.code().category() == BOOST_CHRONO_SYSTEM_CATEGORY);
+//      BOOST_TEST(ex.code().category() == ::boost::system::system_category());
 //      BOOST_TEST(std::string(ex.what()) == std::string("errored_clock"));
     }
     Clock::set_errno(0);

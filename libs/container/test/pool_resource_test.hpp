@@ -22,11 +22,11 @@ template<class PoolResource>
 struct derived_from_pool_resource
    : public PoolResource
 {
-    derived_from_pool_resource(const pool_options& opts, memory_resource* upstream)
+   derived_from_pool_resource(const pool_options& opts, memory_resource* upstream)
       : PoolResource(opts, upstream)
    {}
 
-  explicit derived_from_pool_resource(memory_resource *p)
+   explicit derived_from_pool_resource(memory_resource *p)
       : PoolResource(p)
    {}
 
@@ -471,7 +471,7 @@ void test_destructor()
          BOOST_TEST(mrl.m_info.size() == ++expected_memory_allocs);
       }
       //Don't release, all memory, including internal allocations, should be automatically
-      //after the destructor is run
+      //released after the destructor is run
    }
    BOOST_TEST(mrl.m_mismatches == 0u);
    BOOST_TEST(mrl.m_info.size() == 0u);

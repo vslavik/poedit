@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Adapted</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="prev" href="view/flatten_view.html" title="flatten_view">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="fusion.adapted"></a><a class="link" href="adapted.html" title="Adapted">Adapted</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="adapted/array.html">Array</a></span></dt>
 <dt><span class="section"><a href="adapted/std__pair.html">std::pair</a></span></dt>
 <dt><span class="section"><a href="adapted/std__tuple.html">std::tuple</a></span></dt>
@@ -52,11 +52,11 @@
 </dl></div>
 <p>
       Fusion provides a couple of adapters for other sequences such as arrays, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></code>,
-      <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> sequences,
-      and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span></code>. These adapters are written using Fusion's
-      non-intrusive <a class="link" href="extension.html" title="Extension">Extension</a> mechanism.
-      If you wish to use these sequences with fusion, simply include the necessary
-      files and they will be regarded as first-class, fully conforming fusion sequences.
+      <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> sequences, and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span></code>.
+      These adapters are written using Fusion's non-intrusive <a class="link" href="extension.html" title="Extension">Extension</a>
+      mechanism. If you wish to use these sequences with fusion, simply include the
+      necessary files and they will be regarded as first-class, fully conforming
+      fusion sequences.
     </p>
 <p>
       Fusion also provides various schemes to make it easy for the user to adapt
@@ -64,29 +64,11 @@
     </p>
 <h4>
 <a name="fusion.adapted.h0"></a>
-      <span><a name="fusion.adapted.header"></a></span><a class="link" href="adapted.html#fusion.adapted.header">Header</a>
+      <span class="phrase"><a name="fusion.adapted.header"></a></span><a class="link" href="adapted.html#fusion.adapted.header">Header</a>
     </h4>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">adapted</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">adapted</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<p>
-      Fusion sequences may also be adapted as fully conforming <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      sequences (see <a class="link" href="sequence/intrinsic.html" title="Intrinsic">Intrinsics</a>).
-      That way, we can have 2-way adaptation to and from <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      and Fusion. To make Fusion sequences fully conforming <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      sequences, include:
-    </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-</pre>
-<p>
-      If you want bi-directional adaptation to and from <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      and Fusion, simply include:
-    </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-</pre>
-<p>
-      The header includes all the necessary headers.
-    </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

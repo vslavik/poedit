@@ -28,8 +28,8 @@ typedef scaled_base_unit<boost::units::astronomical::light_second_base_unit, sca
 
 template<>
 struct base_unit_info<astronomical::light_day_base_unit> {
-    static const char* name()   { return("light day"); }
-    static const char* symbol() { return("ldy"); }
+    static BOOST_CONSTEXPR const char* name()   { return("light day"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("ldy"); }
 };
 
 } // namespace units

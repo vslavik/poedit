@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Examples</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_units.html" title="Chapter&#160;39.&#160;Boost.Units 1.1.0">
+<link rel="up" href="../boost_units.html" title="Chapter&#160;43.&#160;Boost.Units 1.1.0">
 <link rel="prev" href="Quantities.html" title="Quantities">
 <link rel="next" href="Utilities.html" title="Utilities">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_units.Examples"></a><a class="link" href="Examples.html" title="Examples">Examples</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="Examples.html#boost_units.Examples.DimensionExample">Dimension Example</a></span></dt>
 <dt><span class="section"><a href="Examples.html#boost_units.Examples.UnitExample">Unit Example</a></span></dt>
 <dt><span class="section"><a href="Examples.html#boost_units.Examples.QuantityExample">Quantity Example</a></span></dt>
@@ -216,7 +216,7 @@
 <a name="boost_units.Examples.KitchenSinkExample"></a><a class="link" href="Examples.html#boost_units.Examples.KitchenSinkExample" title="Kitchen Sink Example using SI units">Kitchen Sink
       Example using SI units</a>
 </h3></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="Examples.html#boost_units.Examples.KitchenSinkExample.UDT_Quantities">User-defined
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="Examples.html#boost_units.Examples.KitchenSinkExample.UDT_Quantities">User-defined
         value types</a></span></dt></dl></div>
 <p>
         (<a href="../../../libs/units/example/kitchen_sink.cpp" target="_top">kitchen_sink.cpp</a>)
@@ -381,6 +381,7 @@
 </p>
 <pre class="programlisting"><span class="comment">/// the physical definition of work - computed for an arbitrary unit system </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">System</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">energy_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">Y</span><span class="special">&gt;</span>
 <span class="identifier">work</span><span class="special">(</span><span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">force_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">Y</span><span class="special">&gt;</span> <span class="identifier">F</span><span class="special">,</span>
      <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">Y</span><span class="special">&gt;</span> <span class="identifier">dx</span><span class="special">)</span>
@@ -417,6 +418,7 @@
 </p>
 <pre class="programlisting"><span class="comment">/// the ideal gas law in si units</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">si</span><span class="special">::</span><span class="identifier">amount</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;</span>
 <span class="identifier">idealGasLaw</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">si</span><span class="special">::</span><span class="identifier">pressure</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">P</span><span class="special">,</span>
             <span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">si</span><span class="special">::</span><span class="identifier">volume</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">V</span><span class="special">,</span>
@@ -592,7 +594,7 @@
         no way to emulate the exact behavior of the built-in conversion. Explicit
         constructors allow conversions for two cases:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             explicit casting of a <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html" title="Class template quantity">quantity</a></code></span>
             to a different <code class="computeroutput"><span class="identifier">value_type</span></code>
             :
@@ -603,7 +605,7 @@
 </pre>
 <p>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             and explicit casting of a <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html" title="Class template quantity">quantity</a></code></span>
             to a different unit :
           </li></ul></div>
@@ -906,10 +908,10 @@
     <span class="keyword">public</span><span class="special">:</span>
         <span class="keyword">typedef</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>  <span class="identifier">this_type</span><span class="special">;</span>
 
-        <span class="identifier">complex</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">r</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">r_</span><span class="special">(</span><span class="identifier">r</span><span class="special">),</span><span class="identifier">i_</span><span class="special">(</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
-        <span class="identifier">complex</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">r_</span><span class="special">(</span><span class="identifier">source</span><span class="special">.</span><span class="identifier">r_</span><span class="special">),</span><span class="identifier">i_</span><span class="special">(</span><span class="identifier">source</span><span class="special">.</span><span class="identifier">i_</span><span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="identifier">complex</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">r</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">r_</span><span class="special">(</span><span class="identifier">r</span><span class="special">),</span><span class="identifier">i_</span><span class="special">(</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="identifier">complex</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">r_</span><span class="special">(</span><span class="identifier">source</span><span class="special">.</span><span class="identifier">r_</span><span class="special">),</span><span class="identifier">i_</span><span class="special">(</span><span class="identifier">source</span><span class="special">.</span><span class="identifier">i_</span><span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="keyword">if</span> <span class="special">(</span><span class="keyword">this</span> <span class="special">==</span> <span class="special">&amp;</span><span class="identifier">source</span><span class="special">)</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
 
@@ -919,59 +921,59 @@
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">real</span><span class="special">()</span>                   <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">r_</span><span class="special">;</span> <span class="special">}</span>
-        <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">imag</span><span class="special">()</span>                   <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">i_</span><span class="special">;</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">real</span><span class="special">()</span>             <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">r_</span><span class="special">;</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">imag</span><span class="special">()</span>             <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">i_</span><span class="special">;</span> <span class="special">}</span>
 
-        <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">real</span><span class="special">()</span> <span class="keyword">const</span>       <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">r_</span><span class="special">;</span> <span class="special">}</span>
-        <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">imag</span><span class="special">()</span> <span class="keyword">const</span>       <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">i_</span><span class="special">;</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">real</span><span class="special">()</span> <span class="keyword">const</span>       <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">r_</span><span class="special">;</span> <span class="special">}</span>
+        <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">imag</span><span class="special">()</span> <span class="keyword">const</span>       <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">i_</span><span class="special">;</span> <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">+=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">+=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">+=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">-=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">-=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">-=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">*=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">*=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">*=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="identifier">i_</span> <span class="special">*=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">/=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">/=(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">/=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="identifier">i_</span> <span class="special">/=</span> <span class="identifier">val</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">+=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">+=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">+=</span> <span class="identifier">source</span><span class="special">.</span><span class="identifier">r_</span><span class="special">;</span>
             <span class="identifier">i_</span> <span class="special">+=</span> <span class="identifier">source</span><span class="special">.</span><span class="identifier">i_</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">-=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">-=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">r_</span> <span class="special">-=</span> <span class="identifier">source</span><span class="special">.</span><span class="identifier">r_</span><span class="special">;</span>
             <span class="identifier">i_</span> <span class="special">-=</span> <span class="identifier">source</span><span class="special">.</span><span class="identifier">i_</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">*=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">*=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="special">*</span><span class="keyword">this</span> <span class="special">=</span> <span class="special">*</span><span class="keyword">this</span> <span class="special">*</span> <span class="identifier">source</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
         <span class="special">}</span>
 
-        <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">/=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
+        <span class="keyword">constexpr</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">/=(</span><span class="keyword">const</span> <span class="identifier">this_type</span><span class="special">&amp;</span> <span class="identifier">source</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="special">*</span><span class="keyword">this</span> <span class="special">=</span> <span class="special">*</span><span class="keyword">this</span> <span class="special">/</span> <span class="identifier">source</span><span class="special">;</span>
             <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
@@ -998,6 +1000,7 @@
 <span class="keyword">namespace</span> <span class="identifier">units</span> <span class="special">{</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">unary_plus_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">+(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1007,6 +1010,7 @@
 <span class="special">}</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">unary_minus_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">-(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1016,6 +1020,7 @@
 <span class="special">}</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">add_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">+(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">y</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1025,6 +1030,7 @@
 <span class="special">}</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">subtract_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">-(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">y</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1034,6 +1040,7 @@
 <span class="special">}</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">multiply_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">*(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">y</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1060,6 +1067,7 @@
 <span class="special">}</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">X</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">Y</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">divide_typeof_helper</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="keyword">operator</span><span class="special">/(</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">,</span><span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;&amp;</span> <span class="identifier">y</span><span class="special">)</span>
 <span class="special">{</span>
@@ -1209,7 +1217,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">length</span><span class="special">,</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span>     <span class="identifier">length_dimension</span><span class="special">;</span>
 
-<span class="identifier">length_dimension</span>    <span class="identifier">L</span><span class="special">(</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;(</span><span class="number">2.0</span><span class="special">,</span><span class="number">1.0</span><span class="special">)*</span><span class="identifier">meters</span><span class="special">);</span>
+<span class="keyword">const</span> <span class="identifier">length_dimension</span>    <span class="identifier">L</span><span class="special">(</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;(</span><span class="number">2.0</span><span class="special">,</span><span class="number">1.0</span><span class="special">)*</span><span class="identifier">meters</span><span class="special">);</span>
 </pre>
 <p>
       </p>
@@ -1240,7 +1248,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">length</span><span class="special">&gt;</span> <span class="special">&gt;</span>     <span class="identifier">length_dimension</span><span class="special">;</span>
 
-<span class="identifier">length_dimension</span>    <span class="identifier">L</span><span class="special">(</span><span class="number">2.0</span><span class="special">*</span><span class="identifier">meters</span><span class="special">,</span><span class="number">1.0</span><span class="special">*</span><span class="identifier">meters</span><span class="special">);</span>
+<span class="keyword">const</span> <span class="identifier">length_dimension</span>    <span class="identifier">L</span><span class="special">(</span><span class="number">2.0</span><span class="special">*</span><span class="identifier">meters</span><span class="special">,</span><span class="number">1.0</span><span class="special">*</span><span class="identifier">meters</span><span class="special">);</span>
 </pre>
 <p>
       </p>
@@ -1361,6 +1369,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">System</span><span class="special">,</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">T</span><span class="special">&gt;</span>
 <span class="identifier">radar_beam_height</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">radar_range</span><span class="special">,</span>
                   <span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System</span><span class="special">&gt;,</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">earth_radius</span><span class="special">,</span>
@@ -1379,16 +1388,15 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">return_type</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">System1</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">System2</span><span class="special">,</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span>
 <span class="identifier">return_type</span>
 <span class="identifier">radar_beam_height</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System1</span><span class="special">&gt;,</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">radar_range</span><span class="special">,</span>
                   <span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">unit</span><span class="special">&lt;</span><span class="identifier">length_dimension</span><span class="special">,</span><span class="identifier">System2</span><span class="special">&gt;,</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">earth_radius</span><span class="special">,</span>
                   <span class="identifier">T</span> <span class="identifier">k</span> <span class="special">=</span> <span class="number">4.0</span><span class="special">/</span><span class="number">3.0</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="comment">// need to decide which system to use for calculation</span>
-    <span class="keyword">const</span> <span class="identifier">return_type</span>   <span class="identifier">rr</span><span class="special">(</span><span class="identifier">radar_range</span><span class="special">),</span>
-                        <span class="identifier">er</span><span class="special">(</span><span class="identifier">earth_radius</span><span class="special">);</span>
-
-    <span class="keyword">return</span> <span class="identifier">return_type</span><span class="special">(</span><span class="identifier">pow</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">rr</span><span class="special">)/(</span><span class="number">2.0</span><span class="special">*</span><span class="identifier">k</span><span class="special">*</span><span class="identifier">er</span><span class="special">));</span>
+    <span class="keyword">return</span> <span class="identifier">pow</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">return_type</span><span class="special">&gt;(</span><span class="identifier">radar_range</span><span class="special">))</span>
+            <span class="special">/</span> <span class="special">(</span><span class="number">2.0</span><span class="special">*</span><span class="identifier">k</span><span class="special">*</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">return_type</span><span class="special">&gt;(</span><span class="identifier">earth_radius</span><span class="special">));</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -1401,7 +1409,8 @@
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">imperial</span><span class="special">::</span><span class="identifier">length</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">constexpr</span>
+<span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">imperial</span><span class="special">::</span><span class="identifier">length</span><span class="special">&gt;</span>
 <span class="identifier">radar_beam_height</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">nautical</span><span class="special">::</span><span class="identifier">length</span><span class="special">&gt;&amp;</span> <span class="identifier">range</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">return</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">imperial</span><span class="special">::</span><span class="identifier">length</span><span class="special">&gt;</span>

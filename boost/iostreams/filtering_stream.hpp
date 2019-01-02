@@ -8,7 +8,7 @@
 #ifndef BOOST_IOSTREAMS_FILTER_STREAM_HPP_INCLUDED
 #define BOOST_IOSTREAMS_FILTER_STREAM_HPP_INCLUDED
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif              
 
@@ -62,6 +62,12 @@ struct filtering_stream_traits {
             >::type stream_tag;
 };
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(push)
+// https://connect.microsoft.com/VisualStudio/feedback/details/733720/
+# pragma warning(disable: 4250)
+#endif
+
 template<typename Chain, typename Access>
 class filtering_stream_base 
     : public access_control<
@@ -92,6 +98,10 @@ private:
     void notify() { this->rdbuf(chain_.empty() ? 0 : &chain_.front()); }
     Chain chain_;
 };
+
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(pop)
+#endif
 
 } // End namespace detail.
 
@@ -149,8 +159,19 @@ private:
         { client_type::push(t BOOST_IOSTREAMS_PUSH_ARGS()); } \
     }; \
     /**/    
+
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(push)
+// https://connect.microsoft.com/VisualStudio/feedback/details/733720/
+# pragma warning(disable: 4250)
+#endif
+
 BOOST_IOSTREAMS_DEFINE_FILTER_STREAM(filtering_stream, boost::iostreams::chain, char)
 BOOST_IOSTREAMS_DEFINE_FILTER_STREAM(wfiltering_stream, boost::iostreams::chain, wchar_t)
+
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(pop)
+#endif
 
 typedef filtering_stream<input>    filtering_istream;
 typedef filtering_stream<output>   filtering_ostream;

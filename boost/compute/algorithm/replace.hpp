@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_REPLACE_HPP
 #define BOOST_COMPUTE_ALGORITHM_REPLACE_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -68,6 +71,8 @@ private:
 
 /// Replaces each instance of \p old_value in the range [\p first,
 /// \p last) with \p new_value.
+///
+/// Space complexity: \Omega(1)
 template<class Iterator, class T>
 inline void replace(Iterator first,
                     Iterator last,
@@ -75,6 +80,7 @@ inline void replace(Iterator first,
                     const T &new_value,
                     command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
     detail::replace_kernel<Iterator, T> kernel;
 
     kernel.set_range(first, last);

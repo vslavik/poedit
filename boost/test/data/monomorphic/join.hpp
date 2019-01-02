@@ -16,6 +16,9 @@
 #include <boost/test/data/config.hpp>
 #include <boost/test/data/monomorphic/fwd.hpp>
 
+#include <boost/core/enable_if.hpp>
+#include <boost/mpl/identity.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -40,22 +43,33 @@ class join {
 
     typedef typename dataset1_decay::iterator       dataset1_iter;
     typedef typename dataset2_decay::iterator       dataset2_iter;
+  
+    using iter1_ret = decltype(*std::declval<DataSet1>().begin());
+    using iter2_ret = decltype(*std::declval<DataSet2>().begin());
+
 public:
-    typedef typename dataset1_decay::sample         sample;
 
     enum { arity = dataset1_decay::arity };
+  
+    using sample_t = typename std::conditional<
+        std::is_reference<iter1_ret>::value && std::is_reference<iter2_ret>::value && std::is_same<iter1_ret, iter2_ret>::value,
+        iter1_ret,
+        typename std::remove_reference<iter1_ret>::type
+        >::type
+        ;
 
     struct iterator {
         // Constructor
-        explicit    iterator( dataset1_iter it1, dataset2_iter it2, data::size_t first_size )
+        explicit    iterator( dataset1_iter&& it1, dataset2_iter&& it2, data::size_t first_size )
         : m_it1( std::move( it1 ) )
         , m_it2( std::move( it2 ) )
         , m_first_size( first_size )
         {}
 
         // forward iterator interface
-        sample const&       operator*() const   { return m_first_size > 0 ? *m_it1 : *m_it2; }
-        void                operator++()        { if( m_first_size > 0 ) { --m_first_size; ++m_it1; } else ++m_it2; }
+        // The returned sample should be by value, as the operator* may return a temporary object
+        sample_t     operator*() const   { return m_first_size > 0 ? *m_it1 : *m_it2; }
+        void         operator++()        { if( m_first_size > 0 ) { --m_first_size; ++m_it1; } else ++m_it2; }
 
     private:
         // Data members

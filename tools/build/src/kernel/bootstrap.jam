@@ -69,7 +69,7 @@ module .ENVIRON
     }
 }
 
-# Make sure that \n escape is avaiable.
+# Make sure that \n escape is available.
 if "\n" = "n"
 {
     if $(OS) = CYGWIN
@@ -140,7 +140,6 @@ if ! $(dont-build)
     }
     else
     {
-        ECHO "Boost.Build V2 Python port (experimental)" ;
 
         # Define additional interface exposed to Python code. Python code will
         # also have access to select bjam builtins in the 'bjam' module, but

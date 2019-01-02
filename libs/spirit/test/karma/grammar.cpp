@@ -12,8 +12,6 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <string>
 #include <iostream>

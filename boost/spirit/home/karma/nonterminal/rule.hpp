@@ -178,7 +178,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Auto, typename Expr>
-        static void define(rule& lhs, Expr const& expr, mpl::false_)
+        static void define(rule& /* lhs */, Expr const& /* expr */, mpl::false_)
         {
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,

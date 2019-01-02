@@ -1,41 +1,27 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_STEP_ITERATOR_HPP
+#define BOOST_GIL_STEP_ITERATOR_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/pixel_iterator_adaptor.hpp>
+#include <boost/gil/utilities.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_STEP_ITERATOR_H
-#define GIL_STEP_ITERATOR_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel step iterator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 18, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/iterator/iterator_facade.hpp>
 
 #include <cstddef>
 #include <iterator>
-#include <boost/iterator/iterator_facade.hpp>
-#include "gil_config.hpp"
-#include "utilities.hpp"
-#include "pixel_iterator.hpp"
-#include "pixel_iterator_adaptor.hpp"
 
 namespace boost { namespace gil {
 
 /// \defgroup PixelIteratorModelStepPtr step iterators
 /// \ingroup PixelIteratorModel
 /// \brief Iterators that allow for specifying the step between two adjacent values
-
 
 namespace detail {
 
@@ -315,6 +301,6 @@ typename dynamic_x_step_type<I>::type make_step_iterator(const I& it, std::ptrdi
     return detail::make_step_iterator_impl(it, step, typename is_iterator_adaptor<I>::type());
 }
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

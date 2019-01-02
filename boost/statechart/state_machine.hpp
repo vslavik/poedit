@@ -230,7 +230,7 @@ class history_key
 //////////////////////////////////////////////////////////////////////////////
 template< class MostDerived,
           class InitialState,
-          class Allocator = std::allocator< void >,
+          class Allocator = std::allocator< none >,
           class ExceptionTranslator = null_exception_translator >
 class state_machine : noncopyable
 {

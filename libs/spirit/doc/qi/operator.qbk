@@ -244,7 +244,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Difference]
 
 [/------------------------------------------------------------------------------]
-[section:expect Expectation Parser (`a > b`)]
+[section:expect Expectation Operator (`a > b`)]
 
 [heading Description]
 
@@ -313,6 +313,8 @@ defined in __nary_parser_concept__.
     [[`a > b`]          [Match `a` followed by `b`. If `a` fails, no-match.
                         If `b` fails, throw an `expectation_failure<Iter>`]]
 ]
+
+[note If you need an exception to be thrown if `a` fails, use the __qi_expectd__ directive instead of the expectation operator.]
 
 [heading Attributes]
 
@@ -444,9 +446,14 @@ not defined in __binary_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`a % b`]          [Match a list of one or more repetitions of `a`
-                        separated by occurrences of `b`. This is equivalent
-                        to `a >> *(b >> a)`.]]
+                        separated by occurrences of `b`. This is 
+                        equivalent to `a >> *(omit[b] >> a)`.]]
 ]
+
+[note The list operator `a % b` omits the attribute of parser `b`. If you need 
+      `b` to contribute to the result attribute choose `a >> *(b >> a)` over 
+      the list operator `a % b`.]
+
 
 [heading Attributes]
 

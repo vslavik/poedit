@@ -21,6 +21,7 @@ Iterator which iterates through a range, but adds first element at end of the ra
 [heading Synopsis]
 ``template<typename Range>
 struct closing_iterator
+      : public boost::iterator_facade< closing_iterator< Range >, boost::range_value< Range >::type const, boost::random_access_traversal_tag, boost::range_reference< Range const  >::type, boost::range_difference< Range >::type >
 {
   // ...
 };

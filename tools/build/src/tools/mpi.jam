@@ -3,33 +3,33 @@
 # (C) Copyright 2005, 2006 Trustees of Indiana University
 # (C) Copyright 2005 Douglas Gregor
 #
-# Distributed under the Boost Software License, Version 1.0. (See accompanying 
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt.)
 #
 # Authors: Douglas Gregor
 #          Andrew Lumsdaine
 #
 # ==== MPI Configuration ====
-# 
-# For many users, MPI support can be enabled simply by adding the following 
+#
+# For many users, MPI support can be enabled simply by adding the following
 # line to your user-config.jam file:
 #
 #   using mpi ;
 #
-# This should auto-detect MPI settings based on the MPI wrapper compiler in 
+# This should auto-detect MPI settings based on the MPI wrapper compiler in
 # your path, e.g., "mpic++". If the wrapper compiler is not in your path, or
 # has a different name, you can pass the name of the wrapper compiler as the
 # first argument to the mpi module:
 #
 #   using mpi : /opt/mpich2-1.0.4/bin/mpiCC ;
 #
-# If your MPI implementation does not have a wrapper compiler, or the MPI 
+# If your MPI implementation does not have a wrapper compiler, or the MPI
 # auto-detection code does not work with your MPI's wrapper compiler,
-# you can pass MPI-related options explicitly via the second parameter to the 
+# you can pass MPI-related options explicitly via the second parameter to the
 # mpi module:
 #
 #    using mpi : : <find-shared-library>lammpio <find-shared-library>lammpi++
-#                  <find-shared-library>mpi <find-shared-library>lam 
+#                  <find-shared-library>mpi <find-shared-library>lam
 #                  <find-shared-library>dl ;
 #
 # To see the results of MPI auto-detection, pass "--debug-configuration" on
@@ -41,17 +41,17 @@
 # to this to run tests and tell the program to expect the number of
 # processors to follow (default: "-np").  With the default parameters,
 # for instance, the test harness will execute, e.g.,
-#  
+#
 #    mpirun -np 4 all_gather_test
 #
 # ==== Linking Against the MPI Libraries ===
 #
-# To link against the MPI libraries, import the "mpi" module and add the 
+# To link against the MPI libraries, import the "mpi" module and add the
 # following requirement to your target:
-# 
-#   <library>/mpi//mpi 
 #
-# Since MPI support is not always available, you should check 
+#   <library>/mpi//mpi
+#
+# Since MPI support is not always available, you should check
 # "mpi.configured" before trying to link against the MPI libraries.
 
 import "class" : new ;
@@ -82,7 +82,7 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
 #   <name>value rest-of-cmdline
 #
 # This is a subroutine of cmdline_to_features
-rule add_feature ( prefix name cmdline ) 
+rule add_feature ( prefix name cmdline )
 {
     local match = [ MATCH "^$(prefix)([^\" ]+|\"[^\"]+\") *(.*)$" : $(cmdline) ] ;
 
@@ -142,7 +142,7 @@ rule cmdline_to_features ( cmdline : unknown-features ? )
     executable = $(match[1]) ;
     cmdline = $(match[2]) ;
 
-    # List the prefix/feature pairs that we will be able to transform. 
+    # List the prefix/feature pairs that we will be able to transform.
     # Every kind of parameter not mentioned here will be placed in both
     # cxxflags and linkflags, because we don't know where they should go.
     local feature_kinds-D = "define" ;
@@ -171,13 +171,13 @@ rule cmdline_to_features ( cmdline : unknown-features ? )
                       # uses -lpthread as opposed to -pthread. We do want to
                       # set <threading>multi, instead of -lpthread.
                       result += "<threading>multi" ;
-                      MPI_EXTRA_REQUIREMENTS += "<threading>multi" ;                      
+                      MPI_EXTRA_REQUIREMENTS += "<threading>multi" ;
                   }
                   else
-                  {                      
-                      result += $(add[1]) ;                  
+                  {
+                      result += $(add[1]) ;
                   }
-                                     
+
                   cmdline = $(add[2]) ;
                   matched = yes ;
                }
@@ -204,7 +204,7 @@ rule cmdline_to_features ( cmdline : unknown-features ? )
              # conflicts when BBv2 determines which "common" properties to
              # apply to a target. In our case, the <threading>single property
              # gets propagated from the common properties to Boost.MPI
-             # targets, even though <threading>multi is in the usage 
+             # targets, even though <threading>multi is in the usage
              # requirements of <library>/mpi//mpi.
              MPI_EXTRA_REQUIREMENTS += "<threading>multi" ;
            }
@@ -235,63 +235,97 @@ local rule safe-shell-command ( cmdline )
   return [ MATCH ".*(SSCOK).*" : $(result) ] ;
 }
 
-# Initialize the MPI module.  
+# Initialize the MPI module.
 rule init ( mpicxx ? : options * : mpirun-with-options * )
 {
   if ! $(options) && $(.debug-configuration)
   {
     ECHO "===============MPI Auto-configuration===============" ;
   }
-    
+
   if ! $(mpicxx) && [ os.on-windows ]
-  {  
-    # Try to auto-configure to the Microsoft Compute Cluster Pack
+  {
+    # Paths for Microsoft MPI
+    local ms_mpi_path_native = "C:\\Program Files\\Microsoft MPI" ;
+    local ms_mpi_sdk_path_native = "C:\\Program Files (x86)\\Microsoft SDKs\\MPI" ;
+
+    # Path for Microsoft Compute Cluster Pack
     local cluster_pack_path_native = "C:\\Program Files\\Microsoft Compute Cluster Pack" ;
-    local cluster_pack_path = [ path.make $(cluster_pack_path_native) ] ;
-    if [ GLOB $(cluster_pack_path_native)\\Include : mpi.h ]
+
+    # Try to auto-configure Microsoft MPI
+    if [ GLOB $(ms_mpi_path_native)\\Bin : mpiexec.exe ] &&
+        [ GLOB $(ms_mpi_sdk_path_native)\\Include : mpi.h ]
+    {
+      if $(.debug-configuration)
+      {
+        ECHO "Found Microsoft MPI: $(ms_mpi_path_native)" ;
+        ECHO "Found Microsoft MPI SDK: $(ms_mpi_sdk_path_native)" ;
+      }
+
+      local ms_mpi_sdk_path = [ path.make $(ms_mpi_sdk_path_native) ] ;
+
+      # Pick up either the 32-bit or 64-bit library, depending on which address
+      # model the user has selected. Default to 32-bit.
+      options = <include>$(ms_mpi_sdk_path)/Include
+                <address-model>64:<library-path>$(ms_mpi_sdk_path)/Lib/x64
+                <library-path>$(ms_mpi_sdk_path)/Lib/x86
+                <find-static-library>msmpi
+                <toolset>msvc:<define>_SECURE_SCL=0
+              ;
+
+      # Setup the "mpirun" equivalent (mpiexec)
+      .mpirun = "\"$(ms_mpi_path_native)\\Bin\\mpiexec.exe"\" ;
+      .mpirun_flags = -n ;
+    }
+    # Try to auto-configure to the Microsoft Compute Cluster Pack
+    else if [ GLOB $(cluster_pack_path_native)\\Include : mpi.h ]
     {
       if $(.debug-configuration)
       {
         ECHO "Found Microsoft Compute Cluster Pack: $(cluster_pack_path_native)" ;
       }
-      
+
+      local cluster_pack_path = [ path.make $(cluster_pack_path_native) ] ;
+
       # Pick up either the 32-bit or 64-bit library, depending on which address
       # model the user has selected. Default to 32-bit.
-      options = <include>$(cluster_pack_path)/Include 
+      options = <include>$(cluster_pack_path)/Include
                 <address-model>64:<library-path>$(cluster_pack_path)/Lib/amd64
                 <library-path>$(cluster_pack_path)/Lib/i386
                 <find-static-library>msmpi
                 <toolset>msvc:<define>_SECURE_SCL=0
               ;
-              
+
       # Setup the "mpirun" equivalent (mpiexec)
       .mpirun = "\"$(cluster_pack_path_native)\\Bin\\mpiexec.exe"\" ;
       .mpirun_flags = -n ;
     }
     else if $(.debug-configuration)
     {
+      ECHO "Did not find Microsoft MPI in $(ms_mpi_path_native)" ;
+      ECHO "      and/or Microsoft MPI SDK in $(ms_mpi_sdk_path_native)." ;
       ECHO "Did not find Microsoft Compute Cluster Pack in $(cluster_pack_path_native)." ;
     }
-  } 
-   
+  }
+
   if ! $(options)
-  { 
+  {
     # Try to auto-detect options based on the wrapper compiler
     local command = [ common.get-invocation-command mpi : mpic++ : $(mpicxx) ] ;
 
-    if ! $(mpicxx) && ! $(command) 
+    if ! $(mpicxx) && ! $(command)
     {
-      # Try "mpiCC", which is used by MPICH 
+      # Try "mpiCC", which is used by MPICH
       command = [ common.get-invocation-command mpi : mpiCC ] ;
     }
 
-    if ! $(mpicxx) && ! $(command) 
+    if ! $(mpicxx) && ! $(command)
     {
       # Try "mpicxx", which is used by OpenMPI and MPICH2
       command = [ common.get-invocation-command mpi : mpicxx ] ;
     }
 
-    if ! $(mpicxx) && ! $(command) 
+    if ! $(mpicxx) && ! $(command)
     {
       # Try "CC", which is used by Cray
       command = [ common.get-invocation-command mpi : CC ] ;
@@ -302,10 +336,10 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
     local link_flags ;
 
     if ! $(command)
-    { 
+    {
       # Do nothing: we'll complain later
     }
-    # OpenMPI and newer versions of LAM-MPI have -showme:compile and 
+    # OpenMPI and newer versions of LAM-MPI have -showme:compile and
     # -showme:link.
     else if [ safe-shell-command "$(command) -showme:compile" ] &&
               [ safe-shell-command "$(command) -showme:link" ]
@@ -317,8 +351,8 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
 
       compile_flags = [ SHELL "$(command) -showme:compile" ] ;
       link_flags = [ SHELL "$(command) -showme:link" ] ;
-   
-      # Prepend COMPILER as the executable name, to match the format of 
+
+      # Prepend COMPILER as the executable name, to match the format of
       # other compilation commands.
       compile_flags = "COMPILER $(compile_flags) -DOMPI_SKIP_MPICXX " ;
       link_flags = "COMPILER $(link_flags)" ;
@@ -379,7 +413,7 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
           ECHO "Found IBM MPI wrapper compiler: $(command)" ;
         }
 
-        # 
+        #
         compile_flags = [ SHELL "$(command) -c -v 2>/dev/null" ] ;
         compile_flags = [ MATCH "(.*)exec: export.*" : $(compile_flags) ] ;
         local front = [ MATCH "(.*)-v" :  $(compile_flags) ] ;
@@ -402,7 +436,7 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
         compile_flags = "$(compile_flags) $(f_flags)" ;
       }
     }
-    # Cray 
+    # Cray
     else if [ safe-shell-command "$(command) -v" ]
     {
       compile_flags = [ safe-shell-command  "$(command) -###" ] ;
@@ -411,8 +445,8 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
       # ECHO "Noel: link_flags: $(link_flags)" ;
       result = " " ;
     }
-   
-      # Prepend COMPILER as the executable name, to match the format of 
+
+      # Prepend COMPILER as the executable name, to match the format of
 
     if $(result) || $(compile_flags) && $(link_flags)
     {
@@ -421,17 +455,17 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
          result = [ strip-eol $(result) ] ;
          options = [ cmdline_to_features $(result) ] ;
       }
-      else 
-      { 
+      else
+      {
          compile_flags = [ strip-eol $(compile_flags) ] ;
          link_flags = [ strip-eol $(link_flags) ] ;
 
          # Separately process compilation and link features, then combine
          # them at the end.
-         local compile_features = [ cmdline_to_features $(compile_flags) 
-                                                        : "<cxxflags>" ] ; 
-         local link_features = [ cmdline_to_features $(link_flags) 
-                                                     : "<linkflags>" ] ; 
+         local compile_features = [ cmdline_to_features $(compile_flags)
+                                                        : "<cxxflags>" ] ;
+         local link_features = [ cmdline_to_features $(link_flags)
+                                                     : "<linkflags>" ] ;
          options = $(compile_features) $(link_features) ;
       }
 
@@ -444,44 +478,44 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
         }
         else
         {
-	  local match = [ MATCH "^([^\" ]+|\"[^\"]+\") *(.*)$" 
+	  local match = [ MATCH "^([^\" ]+|\"[^\"]+\") *(.*)$"
                                 : $(compile_flags) ] ;
           ECHO "MPI compilation flags: $(match[2])" ;
-	  local match = [ MATCH "^([^\" ]+|\"[^\"]+\") *(.*)$" 
+	  local match = [ MATCH "^([^\" ]+|\"[^\"]+\") *(.*)$"
                                 : $(link_flags) ] ;
           ECHO "MPI link flags: $(match[2])" ;
         }
       }
-    } 
-    else 
+    }
+    else
     {
       if $(command)
       {
         ECHO "MPI auto-detection failed: unknown wrapper compiler $(command)" ;
         ECHO "Please report this error to the Boost mailing list: http://www.boost.org" ;
-      }     
+      }
       else if $(mpicxx)
       {
         ECHO "MPI auto-detection failed: unable to find wrapper compiler $(mpicxx)" ;
-      } 
+      }
       else
       {
         ECHO "MPI auto-detection failed: unable to find wrapper compiler `mpic++' or `mpiCC'" ;
       }
       ECHO "You will need to manually configure MPI support." ;
     }
- 
+
   }
 
   # Find mpirun (or its equivalent) and its flags
   if ! $(.mpirun)
   {
-    .mpirun = 
+    .mpirun =
         [ common.get-invocation-command mpi : mpirun : $(mpirun-with-options[1]) ] ;
     .mpirun_flags = $(mpirun-with-options[2-]) ;
     .mpirun_flags ?= -np ;
   }
-  
+
   if $(.debug-configuration)
   {
     if $(options)
@@ -494,15 +528,15 @@ rule init ( mpicxx ? : options * : mpirun-with-options * )
     {
       echo "MPI launcher: $(.mpirun) $(.mpirun_flags)" ;
     }
-        
+
     ECHO "====================================================" ;
   }
 
-  if $(options)  
+  if $(options)
   {
     .configured = true ;
 
-    # Set up the "mpi" alias 
+    # Set up the "mpi" alias
     alias mpi : : : : $(options) ;
   }
 }
@@ -513,7 +547,7 @@ rule configured ( )
   return $(.configured) ;
 }
 
-# Returs the "extra" requirements needed to build MPI. These requirements are
+# Returns the "extra" requirements needed to build MPI. These requirements are
 # part of the /mpi//mpi library target, but they need to be added to anything
 # that uses MPI directly to work around bugs in BBv2's propagation of
 # requirements.
@@ -537,30 +571,34 @@ class mpi-test-generator : generator
     }
 
     rule run ( project name ? : property-set : sources * : multiple ? )
-    {  
+    {
       # Generate an executable from the sources. This is the executable we will run.
-      local executable = 
+      local executable =
         [ generators.construct $(project) $(name) : EXE : $(property-set) : $(sources) ] ;
 
-      result = 
+      result =
         [ construct-result $(executable[2-]) : $(project) $(name)-run : $(property-set) ] ;
     }
 }
 
 # Use mpi-test-generator to generate MPI tests from sources
-generators.register 
+generators.register
   [ new mpi-test-generator mpi.capture-output : : RUN_MPI_OUTPUT ] ;
 
-generators.register-standard testing.expect-success 
+generators.register-standard testing.expect-success
   : RUN_MPI_OUTPUT : RUN_MPI ;
 
 # The number of processes to spawn when executing an MPI test.
-feature mpi:processes : : free incidental ;
+feature "mpi:processes" : : free incidental ;
 
 # The flag settings on testing.capture-output do not
 # apply to mpi.capture output at the moment.
 # Redo this explicitly.
 toolset.flags mpi.capture-output ARGS <testing.arg> ;
+toolset.uses-features mpi.capture-output :
+    <testing.launcher> <testing.execute> <dll-path> <xdll-path> <target-os>
+    <mpi:processes> ;
+
 rule capture-output ( target : sources * : properties * )
 {
     # Use the standard capture-output rule to run the tests
@@ -574,25 +612,25 @@ rule capture-output ( target : sources * : properties * )
     JAM_SEMAPHORE on $(target) = <s>mpi-run-semaphore ;
 
     # We launch MPI processes using the "mpirun" equivalent specified by the user.
-    LAUNCHER on $(target) =  
+    LAUNCHER on $(target) =
       [ on $(target) return $(.mpirun) $(.mpirun_flags) $(num_processes) ] ;
 }
 
-# Creates a set of test cases to be run through the MPI launcher. The name, sources, 
-# and requirements are the same as for any other test generator. However, schedule is 
-# a list of numbers, which indicates how many processes each test run will use. For 
+# Creates a set of test cases to be run through the MPI launcher. The name, sources,
+# and requirements are the same as for any other test generator. However, schedule is
+# a list of numbers, which indicates how many processes each test run will use. For
 # example, passing 1 2 7 will run the test with 1 process, then 2 processes, then 7
-# 7 processes. The name provided is just the base name: the actual tests will be 
-# the name followed by a hypen, then the number of processes. 
+# 7 processes. The name provided is just the base name: the actual tests will be
+# the name followed by a hyphen, then the number of processes.
 rule mpi-test ( name : sources * : requirements * : schedule * )
-{        
+{
     sources ?= $(name).cpp ;
     schedule ?= 1 2 3 4 7 8 13 17 ;
 
     local result ;
     for processes in $(schedule)
-    {  
-      result += [ testing.make-test 
+    {
+      result += [ testing.make-test
         run-mpi : $(sources) /boost/mpi//boost_mpi
           : $(requirements) <toolset>msvc:<link>static <mpi:processes>$(processes) : $(name)-$(processes) ] ;
     }

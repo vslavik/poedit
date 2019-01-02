@@ -9,6 +9,8 @@
 #// For more information, see http://www.boost.org/libs/ptr_container/
 #//
 
+import testing ;
+
 rule sc-test ( name : extra-sources * )
 {
     return [ 
@@ -38,6 +40,7 @@ test-suite ptr_container :
     [ sc-test ptr_unordered_set ]
     [ sc-test ptr_unordered_map ]        
     [ sc-test ptr_circular_buffer ]    
+    [ compile const_element_containers.cpp ]
  #   [ sc-test null_filter_iterator ]    
   
     ;

@@ -61,7 +61,7 @@ Key extraction
 <h2><a name="classification">Classification</a></h2>
 
 <p>
-Boost.MultiIndex provides six different index types, which can be classified as
+Boost.MultiIndex provides eight different index types, which can be classified as
 shown in the table below. <a href="basics.html#ord_indices">Ordered</a> and
 <a href="basics.html#seq_indices">sequenced</a> indices,
 which are the most commonly used, have been explained in the basics section;
@@ -655,7 +655,7 @@ a preliminary concept: a <i>view</i> of an index is defined as
 some iterator range [<code>first</code>,<code>last</code>) over the
 elements of the index such that all its elements are contained in the
 range exactly once. Continuing with our example, we can apply
-<code>std::random_suffle</code> on an ad hoc view obtained from the
+<code>std::shuffle</code> on an ad hoc view obtained from the
 container:
 </p>
 
@@ -821,9 +821,9 @@ Key extraction
 
 <br>
 
-<p>Revised August 19th 2015</p>
+<p>Revised August 6th 2018</p>
 
-<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2018 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

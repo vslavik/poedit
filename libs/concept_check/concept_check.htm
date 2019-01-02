@@ -72,7 +72,7 @@
     <li>A mechanism for inserting compile-time checks on template parameters
     at their point of use.</li>
 
-    <li>A framework for specifying concept requirements though concept
+    <li>A framework for specifying concept requirements through concept
     checking classes.</li>
 
     <li>A mechanism for verifying that concept requirements cover the
@@ -220,7 +220,7 @@ bad_error_eg.cpp:8:   instantiated from here
 
   <p>In this case, the fundamental error is
   that <tt>std:complex&lt;float&gt;</tt> does not model the <a href=
-  "http://www.sgi.com/tech/stl/LessThanComparable.html">LessThanComparable</a>
+  "http://www.boost.org/sgi/stl/LessThanComparable.html">LessThanComparable</a>
   concept.  Unfortunately, there is nothing in the error message to
   indicate that to the user.</p>
 
@@ -232,7 +232,7 @@ bad_error_eg.cpp:8:   instantiated from here
   <ol>
     <li>There is no textual correlation between the error message and the
     documented requirements for <tt>std::stable_sort()</tt> and for <a href=
-    "http://www.sgi.com/tech/stl/LessThanComparable.html">LessThanComparable</a>.</li>
+    "http://www.boost.org/sgi/stl/LessThanComparable.html">LessThanComparable</a>.</li>
 
     <li>The error message is overly long, listing functions internal
     to the STL (e.g. <code>__insertion_sort</code>) that the user
@@ -268,7 +268,7 @@ boost/concept_check.hpp:236: error: no match for ‘operator&lt;’ in ‘((boos
   <ul>
     <li>The message refers explicitly to concepts that the user can look up
     in the STL documentation (<a href=
-    "http://www.sgi.com/tech/stl/LessThanComparable.html">LessThanComparable</a>).</li>
+    "http://www.boost.org/sgi/stl/LessThanComparable.html">LessThanComparable</a>).</li>
 
     <li>The error message is now much shorter and does not reveal
     internal STL functions, nor indeed does it even point

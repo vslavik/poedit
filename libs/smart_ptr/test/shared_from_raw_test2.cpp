@@ -13,6 +13,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/config.hpp>
 #include <memory>
 #include <string>
 
@@ -75,10 +76,14 @@ void test()
 
     BOOST_TEST( X::instances == 0 );
 
+#if !defined( BOOST_NO_AUTO_PTR )
+
     {
         std::auto_ptr<X> px( new X( 0 ) );
         BOOST_TEST( X::instances == 1 );
     }
+
+#endif
 
     BOOST_TEST( X::instances == 0 );
 

@@ -18,7 +18,7 @@ The original design of the __UTF__ required of the programmer to implement it. I
 the __master_test_suite__. No [link ref_BOOST_AUTO_TEST_CASE automatic test case registration] was available at that
 time. The null-pointer value was considered an initialization error.
 
-In the single-header usage variant, you fall back to the obsolete initialization function signature by omitting the
+In the header-only usage variant, you fall back to the obsolete initialization function signature by omitting the
 definition of macro __BOOST_TEST_ALTERNATIVE_INIT_API__ in test module code.
 
 [bt_example custom_obsolete_init..using obsolete initialization function..run-fail]

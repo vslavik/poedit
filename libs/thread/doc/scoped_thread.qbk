@@ -15,11 +15,12 @@
   struct detach;
   struct join_if_joinable;
   struct interrupt_and_join_if_joinable;
-  template <class CallableThread = join_if_joinable>
+  template <class CallableThread = join_if_joinable, class Thread = thread>
   class strict_scoped_thread;
-  template <class CallableThread = join_if_joinable>
+  template <class CallableThread = join_if_joinable, class Thread = thread>
   class scoped_thread;
-  void swap(scoped_thread& lhs,scoped_thread& rhs) noexcept;
+  template <class CallableThread, class Thread = thread>
+  void swap(scoped_thread<Callable, Thread>& lhs, scoped_threadCallable, Thread>& rhs) noexcept;
 
 [section:motivation Motivation]
 Based on the scoped_thread class defined in C++ Concurrency in Action Boost.Thread defines a thread wrapper class that instead of calling terminate if the thread is joinable on destruction, call a specific action given as template parameter.
@@ -54,7 +55,8 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
 
   struct detach
   {
-    void operator()(thread& t)
+    template <class Thread>
+    void operator()(Thread& t)
     {
       t.detach();
     }
@@ -64,7 +66,8 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
 
   struct join_if_joinable
   {
-    void operator()(thread& t)
+    template <class Thread>
+    void operator()(Thread& t)
     {
       if (t.joinable())
       {
@@ -79,7 +82,8 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
 
   struct interrupt_and_join_if_joinable
   {
-    void operator()(thread& t)
+    template <class Thread>
+    void operator()(Thread& t)
     {
       t.interrupt();
       if (t.joinable())
@@ -96,7 +100,7 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
 
   // #include <boost/thread/scoped_thread.hpp>
 
-  template <class CallableThread = join_if_joinable>
+  template <class CallableThread = join_if_joinable, class Thread = ::boost::thread>
   class strict_scoped_thread
   {
     thread t_; // for exposition purposes only
@@ -105,7 +109,7 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
     strict_scoped_thread(strict_scoped_thread const&) = delete;
     strict_scoped_thread& operator=(strict_scoped_thread const&) = delete;
 
-    explicit strict_scoped_thread(thread&& t) noexcept;
+    explicit strict_scoped_thread(Thread&& t) noexcept;
     template <typename F&&, typename ...Args>
     explicit strict_scoped_thread(F&&, Args&&...);
 
@@ -130,7 +134,7 @@ This wrapper can be used to join the thread before destroying it.
 
 [section:default_constructor Constructor from a __thread]
 
-    explicit strict_scoped_thread(thread&& t) noexcept;
+    explicit strict_scoped_thread(Thread&& t) noexcept;
 
 [variablelist
 
@@ -180,7 +184,7 @@ This wrapper can be used to join the thread before destroying it.
 
     #include <boost/thread/scoped_thread.hpp>
 
-    template <class CallableThread>
+    template <class CallableThread, class Thread = thread>
     class scoped_thread
     {
       thread t_; // for exposition purposes only
@@ -230,7 +234,8 @@ This wrapper can be used to join the thread before destroying it.
 
     };
 
-    void swap(scoped_thread& lhs,scoped_thread& rhs) noexcept;
+    template <class CallableThread, class Thread = thread>
+    void swap(scoped_thread<CallableThread,Thread>& lhs,scoped_thread<CallableThread,Thread>& rhs) noexcept;
 
 
 RAII __thread wrapper adding a specific destroyer allowing to master what can be done at destruction time.
@@ -291,16 +296,14 @@ same non-deprecated interface with the exception of the construction.
 [variablelist
 
 [[Effects:] [Transfers ownership of the scoped_thread managed by `other` (if
-any) to `*this`. 
+any) to `*this` after having called to `CallableThread()(t_)`. 
 
-- if defined `BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE`: If there was a `scoped_thread` previously associated with `*this` then that `scoped_thread` is detached, DEPRECATED
-
-- if defined `BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE`: If the `scoped_thread` is joinable calls to std::terminate.
 ]]
 
 [[Postconditions:] [`other->get_id()==thread::id()` and `get_id()` returns the value of `other.get_id()` prior to the assignment.]]
 
-[[Throws:] [Nothing]]
+[[Throws:] [Nothing: The `CallableThread()(t_)` should not throw when joining the thread as the scoped variable is on a scope outside the thread function.]]
+
 
 ]
 
@@ -506,7 +509,8 @@ any) to `*this`.
 
     #include <boost/thread/scoped_thread.hpp>
 
-    void swap(scoped_thread& lhs,scoped_thread& rhs) noexcept;
+    template <class CallableThread, class Thread = thread>
+    void swap(scoped_thread<Callable, Thread>& lhs, scoped_threadCallable, Thread>& rhs) noexcept;
 
 [variablelist
 

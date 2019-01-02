@@ -49,18 +49,18 @@ typedef bu::unit<bu::temperature_dimension,bu::make_system<fahrenheit_base_unit>
 
 int test_main(int,char *[])
 {
-    bu::quantity<bu::absolute<fahrenheit_type> > q1(212.0 * bu::absolute<fahrenheit_type>());
-    bu::quantity<bu::absolute<celsius_type> > q2(0.0 * bu::absolute<celsius_type>());
-    bu::quantity<bu::absolute<fahrenheit_type> > q3(q2);
-    bu::quantity<fahrenheit_type> q4(q1 - q3);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::absolute<fahrenheit_type> > q1(212.0 * bu::absolute<fahrenheit_type>());
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::absolute<celsius_type> > q2(0.0 * bu::absolute<celsius_type>());
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::absolute<fahrenheit_type> > q3(q2);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<fahrenheit_type> q4(q1 - q3);
 
     BOOST_UNITS_CHECK_CLOSE(q4.value(), 180.0);
 
-    bu::quantity<bu::absolute<kelvin_type> > q5(static_cast<bu::quantity<kelvin_type> >(q4) + static_cast<bu::quantity<bu::absolute<kelvin_type> > >(q2));
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::absolute<kelvin_type> > q5(static_cast<bu::quantity<kelvin_type> >(q4) + static_cast<bu::quantity<bu::absolute<kelvin_type> > >(q2));
 
     BOOST_UNITS_CHECK_CLOSE(q5.value(), 373.15);
 
-    bu::quantity<bu::absolute<fahrenheit_type> > q6(q5);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::absolute<fahrenheit_type> > q6(q5);
 
     BOOST_UNITS_CHECK_CLOSE(q6.value(), 212.0);
 

@@ -34,7 +34,9 @@
 
 // Utility.Support
 #include <boost/spirit/home/classic/utility/flush_multi_pass.hpp>
+#ifdef BOOST_SPIRIT_THREADSAFE
 #include <boost/spirit/home/classic/utility/scoped_lock.hpp>
+#endif
 
 
 #endif // !defined(BOOST_SPIRIT_UTILITY_MAIN_HPP)

@@ -35,7 +35,7 @@ void fn(int x)
 void test_timing(const int n)
 {
     thread_pool tp(4);
-    boost::scheduling_adpator<thread_pool> sa(tp);
+    boost::scheduling_adaptor<thread_pool> sa(tp);
     for(int i = 1; i <= n; i++)
     {
         sa.submit_after(boost::bind(fn,i),seconds(i));

@@ -59,7 +59,7 @@ std::basic_ostream<CharType, CharTraits> &operator<<
   if (empty(value)) {
     return stream << "nothing";
   } else {
-    return stream << median(value) << " ± " << width(value) / 2;
+    return stream << median(value) << " Â± " << width(value) / 2;
   }
 }
 

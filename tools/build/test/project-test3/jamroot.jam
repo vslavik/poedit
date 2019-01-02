@@ -6,6 +6,7 @@
 import os ;
 import gcc ;
 import property ;
+import toolset ;
 
 rule properties-as-path ( properties * )
 {
@@ -20,6 +21,9 @@ rule properties-as-path ( properties * )
     return [ property.as-path
         [ property.remove incidental : $(r) ] ] ;
 }
+
+toolset.flags yfc-compile KNOWN-PROPERTIES : <toolset> <optimization> ;
+toolset.flags yfc-link KNOWN-PROPERTIES : <toolset> <optimization> ;
 
 rule yfc-compile ( target : sources * : property-set * )
 {

@@ -14,6 +14,7 @@
 #include <unicode/ucnv.h>
 #include <unicode/ucnv_err.h>
 #include <boost/locale/util.hpp>
+#include <boost/locale/hold_ptr.hpp>
 #include "codecvt.hpp"
 
 #ifdef BOOST_MSVC
@@ -117,9 +118,9 @@ namespace impl_icu {
         int max_len_;
     };
     
-    std::auto_ptr<util::base_converter> create_uconv_converter(std::string const &encoding)
+    util::base_converter *create_uconv_converter(std::string const &encoding)
     {
-        std::auto_ptr<util::base_converter> cvt;
+        hold_ptr<util::base_converter> cvt;
         try {
             cvt.reset(new uconv_converter(encoding));
         }
@@ -127,7 +128,7 @@ namespace impl_icu {
         {
             // no encoding so we return empty pointer
         }
-        return cvt;
+        return cvt.release();
     }
 
     std::locale create_codecvt(std::locale const &in,std::string const &encoding,character_facet_type type)
@@ -139,15 +140,15 @@ namespace impl_icu {
             return util::create_simple_codecvt(in,encoding,type);
         }
         catch(boost::locale::conv::invalid_charset_error const &) {
-            std::auto_ptr<util::base_converter> cvt;
+            hold_ptr<util::base_converter> cvt;
             try {
-                cvt = create_uconv_converter(encoding);
+                cvt.reset(create_uconv_converter(encoding));
             }
             catch(std::exception const &/*e*/)
             {
                 cvt.reset(new util::base_converter());
             }
-            return util::create_codecvt(in,cvt,type);
+            return util::create_codecvt_from_pointer(in,cvt.release(),type);
         }
     }
 

@@ -16,6 +16,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/detail/sp_typeinfo.hpp>
+#include <boost/config.hpp>
 #include <boost/cstdint.hpp>
 
 namespace boost
@@ -58,15 +59,20 @@ inline boost::int_least32_t atomic_conditional_increment( atomic_int_least32_t *
     }    
 }
 
-class sp_counted_base
+#if defined(__clang__)
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wweak-vtables"
+#endif
+
+class BOOST_SYMBOL_VISIBLE sp_counted_base
 {
 private:
 
     sp_counted_base( sp_counted_base const & );
     sp_counted_base & operator= ( sp_counted_base const & );
 
-    atomic_int_least32_t use_count_;	// #shared
-    atomic_int_least32_t weak_count_;	// #weak + (#shared != 0)
+    atomic_int_least32_t use_count_;    // #shared
+    atomic_int_least32_t weak_count_;   // #weak + (#shared != 0)
 
 public:
 
@@ -93,6 +99,7 @@ public:
     }
 
     virtual void * get_deleter( sp_typeinfo const & ti ) = 0;
+    virtual void * get_local_deleter( sp_typeinfo const & ti ) = 0;
     virtual void * get_untyped_deleter() = 0;
 
     void add_ref_copy()
@@ -132,6 +139,10 @@ public:
         return __c11_atomic_load( const_cast< atomic_int_least32_t* >( &use_count_ ), __ATOMIC_ACQUIRE );
     }
 };
+
+#if defined(__clang__)
+# pragma clang diagnostic pop
+#endif
 
 } // namespace detail
 

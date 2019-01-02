@@ -15,7 +15,7 @@ t.set_tree("../example/libraries")
 
 t.run_build_system()
 
-t.expect_addition(["app/bin/$toolset/debug/app.exe",
-                   "util/foo/bin/$toolset/debug/bar.dll"])
+t.expect_addition(["app/bin/$toolset/debug*/app.exe",
+                   "util/foo/bin/$toolset/debug*/bar.dll"])
 
 t.cleanup()

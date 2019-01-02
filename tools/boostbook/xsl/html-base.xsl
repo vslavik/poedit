@@ -387,6 +387,10 @@ set       toc,title
    <xsl:value-of select="'index'"/>
 </xsl:template>
 
+<xsl:template match="sidebar[@role = 'blurb']" mode="class.value">
+   <xsl:value-of select="'blurb'"/>
+</xsl:template>
+
 <xsl:template match="preface|chapter|appendix|article" mode="toc">
   <xsl:param name="toc-context" select="."/>
 

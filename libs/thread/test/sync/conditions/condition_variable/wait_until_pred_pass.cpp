@@ -21,9 +21,15 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <cassert>
+#include <iostream>
+#include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
-
+typedef boost::chrono::milliseconds milliseconds;
+typedef boost::chrono::nanoseconds nanoseconds;
+typedef boost::chrono::milliseconds ms;
+typedef boost::chrono::nanoseconds ns;
 struct Clock
 {
   typedef boost::chrono::milliseconds duration;
@@ -62,33 +68,44 @@ int test2 = 0;
 
 int runs = 0;
 
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
+
 void f()
 {
-  boost::unique_lock<boost::mutex> lk(mut);
-  BOOST_TEST(test2 == 0);
-  test1 = 1;
-  cv.notify_one();
-  Clock::time_point t0 = Clock::now();
-  Clock::time_point t = t0 + Clock::duration(250);
-  bool r = cv.wait_until(lk, t, Pred(test2));
-  Clock::time_point t1 = Clock::now();
-  if (runs == 0)
-  {
-    BOOST_TEST(t1 - t0 < Clock::duration(250));
-    BOOST_TEST(test2 != 0);
-    BOOST_TEST(r);
+  try {
+    boost::unique_lock<boost::mutex> lk(mut);
+    assert(test2 == 0);
+    test1 = 1;
+    cv.notify_one();
+    Clock::time_point t0 = Clock::now();
+    Clock::time_point t = t0 + Clock::duration(250);
+    bool r = cv.wait_until(lk, t, Pred(test2));
+    Clock::time_point t1 = Clock::now();
+    if (runs == 0)
+    {
+      assert(t1 - t0 < max_diff);
+      assert(test2 != 0);
+      assert(r);
+    }
+    else
+    {
+      const nanoseconds d = t1 - t0 - milliseconds(250);
+      std::cout << "diff= " << d.count() << std::endl;
+      std::cout << "max_diff= " << max_diff.count() << std::endl;
+      assert(d < max_diff);
+      assert(test2 == 0);
+      assert(!r);
+    }
+    ++runs;
+  } catch(...) {
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
+    assert(false);
   }
-  else
-  {
-    BOOST_TEST(t1 - t0 - Clock::duration(250) < Clock::duration(250+2));
-    BOOST_TEST(test2 == 0);
-    BOOST_TEST(!r);
-  }
-  ++runs;
 }
 
 int main()
 {
+  try
   {
     boost::unique_lock<boost::mutex> lk(mut);
     boost::thread t(f);
@@ -100,9 +117,13 @@ int main()
     lk.unlock();
     cv.notify_one();
     t.join();
+  } catch(...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
   test1 = 0;
   test2 = 0;
+  try
   {
     boost::unique_lock<boost::mutex> lk(mut);
     boost::thread t(f);
@@ -112,6 +133,9 @@ int main()
     BOOST_TEST(test1 != 0);
     lk.unlock();
     t.join();
+  } catch(...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
 
   return boost::report_errors();

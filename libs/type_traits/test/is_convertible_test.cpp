@@ -4,14 +4,14 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/is_convertible.hpp>
 #endif
-#include <boost/utility/enable_if.hpp>
+#include "test.hpp"
+#include "check_integral_constant.hpp"
+#include <boost/type_traits/enable_if.hpp>
 
 
 template <class T>
@@ -29,8 +29,8 @@ struct derived2 : public middle2 { };
 template<typename T>
 struct test_bug_4530
 {
-	template<typename A>
-	test_bug_4530(A&&, typename boost::enable_if< ::tt::is_convertible<A&&, T> >::type* =0);
+    template<typename A>
+    test_bug_4530(A&&, typename boost::enable_if_< ::tt::is_convertible<A&&, T>::value >::type* =0);
 };
 
 struct A4530

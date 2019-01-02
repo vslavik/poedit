@@ -16,6 +16,11 @@ namespace python
 
 object BOOST_PYTHON_DECL eval(str string, object global, object local)
 {
+    return eval(python::extract<char const *>(string), global, local);
+}
+
+object BOOST_PYTHON_DECL eval(char const *string, object global, object local)
+{
   // Set suitable default values for global and local dicts.
   if (global.is_none())
   {
@@ -26,7 +31,7 @@ object BOOST_PYTHON_DECL eval(str string, object global, object local)
   }
   if (local.is_none()) local = global;
   // should be 'char const *' but older python versions don't use 'const' yet.
-  char *s = python::extract<char *>(string);
+  char *s = const_cast<char *>(string);
   PyObject* result = PyRun_String(s, Py_eval_input, global.ptr(), local.ptr());
   if (!result) throw_error_already_set();
   return object(detail::new_reference(result));
@@ -34,23 +39,10 @@ object BOOST_PYTHON_DECL eval(str string, object global, object local)
 
 object BOOST_PYTHON_DECL exec(str string, object global, object local)
 {
-  // Set suitable default values for global and local dicts.
-  if (global.is_none())
-  {
-    if (PyObject *g = PyEval_GetGlobals())
-      global = object(detail::borrowed_reference(g));
-    else
-      global = dict();
-  }
-  if (local.is_none()) local = global;
-  // should be 'char const *' but older python versions don't use 'const' yet.
-  char *s = python::extract<char *>(string);
-  PyObject* result = PyRun_String(s, Py_file_input, global.ptr(), local.ptr());
-  if (!result) throw_error_already_set();
-  return object(detail::new_reference(result));
+    return exec(python::extract<char const *>(string), global, local);
 }
 
-object BOOST_PYTHON_DECL exec_statement(str string, object global, object local)
+object BOOST_PYTHON_DECL exec(char const *string, object global, object local)
 {
   // Set suitable default values for global and local dicts.
   if (global.is_none())
@@ -62,7 +54,30 @@ object BOOST_PYTHON_DECL exec_statement(str string, object global, object local)
   }
   if (local.is_none()) local = global;
   // should be 'char const *' but older python versions don't use 'const' yet.
-  char *s = python::extract<char *>(string);
+  char *s = const_cast<char *>(string);
+  PyObject* result = PyRun_String(s, Py_file_input, global.ptr(), local.ptr());
+  if (!result) throw_error_already_set();
+  return object(detail::new_reference(result));
+}
+
+object BOOST_PYTHON_DECL exec_statement(str string, object global, object local)
+{
+    return exec_statement(python::extract<char const *>(string), global, local);
+}
+
+object BOOST_PYTHON_DECL exec_statement(char const *string, object global, object local)
+{
+  // Set suitable default values for global and local dicts.
+  if (global.is_none())
+  {
+    if (PyObject *g = PyEval_GetGlobals())
+      global = object(detail::borrowed_reference(g));
+    else
+      global = dict();
+  }
+  if (local.is_none()) local = global;
+  // should be 'char const *' but older python versions don't use 'const' yet.
+  char *s = const_cast<char *>(string);
   PyObject* result = PyRun_String(s, Py_single_input, global.ptr(), local.ptr());
   if (!result) throw_error_already_set();
   return object(detail::new_reference(result));
@@ -73,6 +88,11 @@ object BOOST_PYTHON_DECL exec_statement(str string, object global, object local)
 // used during execution.
 object BOOST_PYTHON_DECL exec_file(str filename, object global, object local)
 {
+    return exec_file(python::extract<char const *>(filename), global, local);
+}
+
+object BOOST_PYTHON_DECL exec_file(char const *filename, object global, object local)
+{
   // Set suitable default values for global and local dicts.
   if (global.is_none())
   {
@@ -83,7 +103,7 @@ object BOOST_PYTHON_DECL exec_file(str filename, object global, object local)
   }
   if (local.is_none()) local = global;
   // should be 'char const *' but older python versions don't use 'const' yet.
-  char *f = python::extract<char *>(filename);
+  char *f = const_cast<char *>(filename);
   // Let python open the file to avoid potential binary incompatibilities.
 #if PY_VERSION_HEX >= 0x03040000
   FILE *fs = _Py_fopen(f, "r");

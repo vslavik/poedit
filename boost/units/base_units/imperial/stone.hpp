@@ -28,8 +28,8 @@ typedef scaled_base_unit<pound_base_unit, scale<14, static_rational<1> > > stone
 
 template<>
 struct base_unit_info<imperial::stone_base_unit> {
-    static const char* name()   { return("stone"); }
-    static const char* symbol() { return("st"); }
+    static BOOST_CONSTEXPR const char* name()   { return("stone"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("st"); }
 };
 
 } // namespace units

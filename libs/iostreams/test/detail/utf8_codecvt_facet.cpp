@@ -17,6 +17,7 @@
 
 #include <boost/config.hpp>
 #include <boost/iostreams/detail/config/wide_streams.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #ifdef BOOST_IOSTREAMS_NO_LOCALES
 # error "C++ locales not supported on this platform"
 #else
@@ -165,7 +166,7 @@ std::codecvt_base::result utf8_codecvt_facet_wchar_t::do_out(
             to_next = to - (i+1);
             return std::codecvt_base::partial;
         }
-        *from++;
+        ++from;
     }
     from_next = from;
     to_next = to;
@@ -201,7 +202,7 @@ int utf8_codecvt_facet_wchar_t::do_length(
         last_octet_count = (get_octet_count(*from_next));
         ++char_count;
     }
-    return from_next-from_end;
+    return boost::numeric_cast<int>(from_next - from_end);
 }
 
 unsigned int utf8_codecvt_facet_wchar_t::get_octet_count(

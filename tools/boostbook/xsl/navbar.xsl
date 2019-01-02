@@ -33,8 +33,9 @@
    </xsl:param>
    <!--
       header border layout
-         Boost - place the old-Boost border around the header
-        *none  - do not place a border around the header
+         Boost     - place the old-Boost border around the header
+         Fullbleed - Simple CSS based full bleed header image
+        *none      - do not place a border around the header
    -->
    <xsl:param name = "nav.border" select = "'none'" />
 
@@ -87,35 +88,50 @@
       <xsl:variable name = "home" select = "/*[1]"/>
       <xsl:variable name = "up"   select = "parent::*"/>
 
-      <xsl:if test = "boolean(normalize-space($boost.image.src)) or $nav.layout != 'none'">
-         <table cellpadding = "2" width = "100%"><tr>
-            <xsl:if test = "$nav.border = 'Boost'">
-               <xsl:attribute name = "class">boost-head</xsl:attribute>
-            </xsl:if>
-
-            <td valign = "top">
-               <xsl:if test = "$nav.border = 'Boost'">
-                  <xsl:attribute name = "style">background-color: white; width: 50%;</xsl:attribute>
-               </xsl:if>
-               <xsl:if test = "boolean(normalize-space($boost.image.src))">
+      <xsl:choose>
+         <xsl:when test = "$nav.border = 'Fullbleed'">
+            <xsl:if test = "boolean(normalize-space($boost.image.src))">
+               <div class="header-fullbleed">
                   <img alt="{$boost.image.alt}" width="{$boost.image.w}" height="{$boost.image.h}">
-                      <xsl:attribute name="src">
-                          <xsl:call-template name="href.target.relative">
-                              <xsl:with-param name="target" select="$boost.image.src"/>
-                          </xsl:call-template>
-                      </xsl:attribute>
+                     <xsl:attribute name="src">
+                        <xsl:call-template name="href.target.relative">
+                           <xsl:with-param name="target" select="$boost.image.src"/>
+                        </xsl:call-template>
+                     </xsl:attribute>
                   </img>
+               </div>
+            </xsl:if>
+         </xsl:when>
+         <xsl:when test = "boolean(normalize-space($boost.image.src)) or $nav.layout != 'none'">
+            <table cellpadding = "2" width = "100%"><tr>
+               <xsl:if test = "$nav.border = 'Boost'">
+                  <xsl:attribute name = "class">boost-head</xsl:attribute>
                </xsl:if>
-            </td><xsl:choose>
-               <xsl:when test = "$nav.layout = 'horizontal'">
-                  <xsl:call-template name = "header.navdata-horiz"/>
-               </xsl:when><xsl:when test = "$nav.layout = 'vertical'">
-                  <xsl:call-template name = "header.navdata-vert"/>
-               </xsl:when>
-            </xsl:choose>
-         </tr></table>
-         <hr/>
-      </xsl:if>
+
+               <td valign = "top">
+                  <xsl:if test = "$nav.border = 'Boost'">
+                     <xsl:attribute name = "style">background-color: white; width: 50%;</xsl:attribute>
+                  </xsl:if>
+                  <xsl:if test = "boolean(normalize-space($boost.image.src))">
+                     <img alt="{$boost.image.alt}" width="{$boost.image.w}" height="{$boost.image.h}">
+                         <xsl:attribute name="src">
+                             <xsl:call-template name="href.target.relative">
+                                 <xsl:with-param name="target" select="$boost.image.src"/>
+                             </xsl:call-template>
+                         </xsl:attribute>
+                     </img>
+                  </xsl:if>
+               </td><xsl:choose>
+                  <xsl:when test = "$nav.layout = 'horizontal'">
+                     <xsl:call-template name = "header.navdata-horiz"/>
+                  </xsl:when><xsl:when test = "$nav.layout = 'vertical'">
+                     <xsl:call-template name = "header.navdata-vert"/>
+                  </xsl:when>
+               </xsl:choose>
+            </tr></table>
+            <hr/>
+         </xsl:when>
+      </xsl:choose>
       <xsl:choose>
          <xsl:when test = "$nav.flow = 'DocBook'">
             <table width = "100%" class = "navheader">

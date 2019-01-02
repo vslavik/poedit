@@ -108,12 +108,12 @@ rule feature (
     # Check for any unknown attributes.
     if ! ( $(attributes) in $(.all-attributes) )
     {
-        error = unknown attributes:
+        error = unknown "attributes:"
             [ set.difference $(attributes) : $(.all-attributes) ] ;
     }
     else if $(name) in $(.all-features)
     {
-        error = feature already defined: ;
+        error = feature already "defined:" ;
     }
     else if implicit in $(attributes) && free in $(attributes)
     {
@@ -136,7 +136,7 @@ rule feature (
     {
         import errors ;
         errors.error $(error)
-              : "in" feature declaration:
+              : "in" feature "declaration:"
               : feature [ errors.lol->list $(1) : $(2) : $(3) ] ;
     }
 
@@ -182,7 +182,7 @@ rule set-default ( feature : value )
     {
         import errors ;
         errors.error The specified default value, '$(value)' is invalid :
-            allowed values are: $($(f).values) ;
+            allowed values "are:" $($(f).values) ;
     }
     $(f).default = $(value) ;
 }
@@ -220,7 +220,7 @@ rule valid ( names + )
 }
 
 
-# Returns the attibutes of the given feature.
+# Returns the attributes of the given feature.
 #
 rule attributes ( feature )
 {
@@ -289,7 +289,8 @@ local rule find-implied-subfeature ( feature subvalue : value-string ? )
         import errors ;
         errors.error invalid feature $(feature) ;
     }
-    return $($(feature)$(value-string:E="")<>$(subvalue).subfeature) ;
+    value-string += "" ;
+    return $($(feature)$(value-string)<>$(subvalue).subfeature) ;
 }
 
 
@@ -371,12 +372,8 @@ local rule expand-subfeatures-aux (
 
     local result = $(components[1]:G=$(feature)) ;
 
-    local subvalues = $(components[2-]) ;
-    while $(subvalues)
+    for local subvalue in $(components[2-])
     {
-        local subvalue = $(subvalues[1]) ;  # Pop the head off of subvalues.
-        subvalues = $(subvalues[2-]) ;
-
         local subfeature = [ find-implied-subfeature $(feature) $(subvalue) :
             $(value) ] ;
 
@@ -385,7 +382,7 @@ local rule expand-subfeatures-aux (
         {
             result = $(components:J=-) ;
             result = $(result:G=$(feature)) ;
-            subvalues = ;  # Stop looping.
+            break ;
         }
         else
         {
@@ -491,7 +488,7 @@ rule validate-value-string ( feature value-string )
         {
             import errors ;
             errors.error \"$(values[1])\" is not a known value of feature
-                $(feature) : legal values: \"$($(feature).values)\" ;
+                $(feature) : legal "values:" \"$($(feature).values)\" ;
         }
 
         for local v in $(values[2-])
@@ -619,7 +616,7 @@ rule extend ( feature-or-property subfeature ? : values * )
             import errors ;
             errors.error can only specify a property as the first argument when
                 extending a subfeature
-                : usage:
+                : "usage:"
                 : "    extend" feature ":" values...
                 : "  | extend" <feature>value-string subfeature ":" values... ;
         }
@@ -631,7 +628,7 @@ rule extend ( feature-or-property subfeature ? : values * )
 
 local rule get-subfeature-name ( subfeature value-string ? )
 {
-    local prefix = $(value-string): ;
+    local prefix = "$(value-string):" ;
     return $(prefix:E="")$(subfeature) ;
 }
 
@@ -665,6 +662,10 @@ rule subfeature (
     local f = [ utility.ungrist $(feature) ] ;
     feature $(f)-$(subfeature-name) : $(subvalues) : $(attributes) subfeature ;
 
+    # Features and subfeatures are always relevant as a group
+    .feature-dependencies.$(f) += $(f)-$(subfeature-name) ;
+    .feature-dependencies.$(f)-$(subfeature-name) += $(f) ;
+
     # Now make sure the subfeature values are known.
     extend-subfeature $(feature) $(value-string) : $(subfeature) : $(subvalues) ;
 }
@@ -685,7 +686,7 @@ rule compose ( composite-property : component-properties * )
     if $($(composite-property).components)
     {
         import errors ;
-        errors.error components of "$(composite-property)" already set:
+        errors.error components of "$(composite-property)" already "set:"
             $($(composite-property).components) ;
     }
 
@@ -695,6 +696,10 @@ rule compose ( composite-property : component-properties * )
         errors.error composite property "$(composite-property)" cannot have itself as a component ;
     }
     $(composite-property).components = $(component-properties) ;
+
+    # A composite feature is relevant if any composed feature is relevant
+    local component-features = [ sequence.transform utility.ungrist : $(component-properties:G) ] ;
+    .feature-dependencies.$(component-features) += [ utility.ungrist $(feature) ] ;
 }
 
 
@@ -764,7 +769,7 @@ rule expand-composites ( properties * )
                             import errors ;
                             errors.error expansions of composite features result
                                 in conflicting values for $(f)
-                                : values: [ get-values $(f) : $(result) ] $(x:G=)
+                                : "values:" [ get-values $(f) : $(result) ] $(x:G=)
                                 : one contributing composite property was $(p) ;
                         }
                         else
@@ -993,7 +998,7 @@ rule compress-subproperties ( properties * )
         if ! $(p:G)
         {
             # Expecting fully-gristed properties.
-            assert.variable-not-empty p:G ;
+            assert.variable-not-empty "p:G" ;
         }
 
         if ! subfeature in $($(p:G).attributes)
@@ -1043,6 +1048,8 @@ local rule split-top-feature ( feature-plus )
 # Given a set of properties, add default values for features not represented in
 # the set.
 #
+# properties must be fully expanded and must not contain conditionals.
+#
 # Note: if there's an ordinary feature F1 and a composite feature F2 which
 # includes some value for F1 and both feature have default values then the
 # default value of F1 will be added (as opposed to the value in F2). This might
@@ -1070,27 +1077,65 @@ rule add-defaults ( properties * )
                 feature ;
         }
     }
-    # We don't add default for elements with ":" inside. This catches:
-    # 1. Conditional properties --- we don't want <variant>debug:<define>DEBUG
-    #    to be takes as specified value for <variant>
-    # 2. Free properties with ":" in values. We don't care, since free
-    #    properties don't have defaults.
-    local xproperties = [ MATCH "^([^:]+)$" : $(properties) ] ;
-    local missing-top = [ set.difference $(.all-top-features) : $(xproperties:G) ] ;
+    local missing-top = [ set.difference $(.all-top-features) : $(properties:G) ] ;
     local more =  [ defaults $(missing-top) ] ;
-    properties += $(more) ;
-    xproperties += $(more) ;
 
-    # Add defaults for subfeatures of features which are present.
-    for local p in $(xproperties)
+    # This is similar to property.refine, except that it
+    # does not remove subfeatures, because we might be adding
+    # the default value of a subfeature.
+    local to-remove ;
+    for local f in $(properties:G)
     {
-        local s = $($(p:G).subfeatures) ;
-        local f = [ utility.ungrist $(p:G) ] ;
-        local missing-subs = [ set.difference <$(f)-$(s)> : $(properties:G) ] ;
-        properties += [ defaults [ select-subfeatures $(p) : $(missing-subs) ] ] ;
+        if ! free in [ attributes $(f) ]
+        {
+            to-remove += $(f) ;
+        }
     }
 
-    return $(properties)  ;
+    local worklist = $(properties) $(more) ;
+    local expanded-from-composite ;
+    local to-expand = $(more) ;
+    while $(worklist)
+    {
+        # Add defaults for subfeatures of features which are present.
+        for local p in $(worklist)
+        {
+            local s = $($(p:G).subfeatures) ;
+            local f = [ utility.ungrist $(p:G) ] ;
+            local missing-subs = [ set.difference <$(f)-$(s)> : $(properties:G) ] ;
+            local sd = [ defaults [ select-subfeatures $(p) : $(missing-subs) ] ] ;
+            to-expand += $(sd) ;
+        }
+        worklist = ;
+
+        # Expand subfeatures of newly added properties
+        for local m in [ sequence.transform expand-composite : $(to-expand) ]
+        {
+            if ! $(m:G) in $(to-remove)
+            {
+                local att = [ attributes $(m:G) ] ;
+                if $(m:G) in $(expanded-from-composite) &&
+                    ! free in $(att) &&
+                    ! $(m) in $(more)
+                {
+                    import errors ;
+                    errors.error "default values for $(p:G) conflict" ;
+                }
+                if ! $(m) in $(to-expand)
+                {
+                    expanded-from-composite += $(m:G) ;
+                }
+                more += $(m) ;
+                if ! subfeature in $(att) && ! free in $(att)
+                {
+                    worklist += $(m) ;
+                }
+            }
+        }
+        to-expand = ;
+    }
+
+    return [ sequence.unique $(properties) $(more) ] ;
 }
 
 
@@ -1106,7 +1151,7 @@ rule add-defaults ( properties * )
 #
 rule split ( property-set )
 {
-    local pieces = [ regex.split $(property-set) [\\/] ] ;
+    local pieces = [ regex.split $(property-set) "[\\/]" ] ;
     local result ;
 
     for local x in $(pieces)
@@ -1121,6 +1166,41 @@ rule split ( property-set )
         }
     }
 
+    return $(result) ;
+}
+
+# Returns all the features that also must be relevant when these features are relevant
+rule expand-relevant ( features * )
+{
+    local conditional ;
+    local result ;
+    for f in $(features)
+    {
+        # This looks like a conditional, even though it isn't really.
+        # (Free features can never be used in conditionals)
+        local split = [ MATCH "^(.*):<relevant>(.*)$" : $(f) ] ;
+        if $(split)
+        {
+            local-dependencies.$(split[1]) += $(split[2]) ;
+            conditional += local-dependencies.$(split[1]) ;
+        }
+        else
+        {
+            result += $(f) ;
+        }
+    }
+    local queue = $(result) ;
+    while $(queue)
+    {
+        local added = [ set.difference
+            $(.feature-dependencies.$(queue))
+            $(local-dependencies.$(queue))
+          : $(result) ] ;
+        result += $(added) ;
+        queue = $(added) ;
+    }
+    # Clean up local map
+    $(conditional) = ;
     return $(result) ;
 }
 
@@ -1202,6 +1282,9 @@ rule __test__ ( )
     assert.result <define>foo=x-y
         : expand-subfeatures <define>foo=x-y ;
 
+    assert.result <define>minus=-
+        : expand-subfeatures <define>minus=- ;
+
     assert.result <toolset>gcc <toolset-gcc:version>3.0.1
         : expand-subfeatures gcc-3.0.1 ;
 
@@ -1234,17 +1317,18 @@ rule __test__ ( )
 
     assert.result optional : attributes <fu> ;
 
-    assert.result <runtime-link>static <define>foobar <optimization>on
-        <toolset>gcc:<define>FOO <toolset>gcc <variant>debug <stdlib>native
-        <dummy>dummy1 <toolset-gcc:version>2.95.2
-        : add-defaults <runtime-link>static <define>foobar <optimization>on
-          <toolset>gcc:<define>FOO ;
+    assert.result [ SORT <define>_DEBUG <runtime-link>static
+        <define>foobar <optimization>on
+        <toolset>gcc <variant>debug <stdlib>native
+        <dummy>dummy1 <toolset-gcc:version>2.95.2 ]
+        : add-defaults <runtime-link>static <define>foobar <optimization>on ;
 
-    assert.result <runtime-link>static <define>foobar <optimization>on
-        <toolset>gcc:<define>FOO <fu>fu1 <toolset>gcc <variant>debug
-        <stdlib>native <dummy>dummy1 <fu-subfu2>q <toolset-gcc:version>2.95.2
+    assert.result [ SORT <define>_DEBUG <runtime-link>static
+        <define>foobar <optimization>on
+        <fu>fu1 <toolset>gcc <variant>debug
+        <stdlib>native <dummy>dummy1 <fu-subfu2>q <toolset-gcc:version>2.95.2 ]
         : add-defaults <runtime-link>static <define>foobar <optimization>on
-          <toolset>gcc:<define>FOO <fu>fu1 ;
+          <fu>fu1 ;
 
     set-default <runtime-link> : static ;
     assert.result <runtime-link>static : defaults <runtime-link> ;
@@ -1307,14 +1391,14 @@ rule __test__ ( )
     {
         feature foobar : : baz ;
     }
-    catch unknown attributes: baz ;
+    catch unknown "attributes:" baz ;
 
     feature feature1 ;
     try ;
     {
         feature feature1 ;
     }
-    catch feature already defined: ;
+    catch feature already "defined:" ;
 
     try ;
     {

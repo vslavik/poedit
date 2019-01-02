@@ -12,22 +12,23 @@
 #include "symbols.hpp"
 
 typedef char char_type;
-typedef char const * iterator;
+typedef char const* iterator;
 
 char_type data_[] = "whatever";
 
 iterator begin = data_;
-iterator end = data_
-    + sizeof(data_)/sizeof(char_type); // Yes, this is an intentional bug ;)
+iterator end =
+    data_ +
+    sizeof(data_) / sizeof(char_type); // Yes, this is an intentional bug ;)
 
 int main()
 {
     typedef BOOST_SPIRIT_CLASSIC_NS::scanner<> scanner;
-    typedef quickbook::tst<void *, char_type> symbols;
+    typedef quickbook::tst<void*, char_type> symbols;
 
     symbols symbols_;
 
-    symbols_.add(begin, end - 1, (void*) boost::addressof(symbols_));
+    symbols_.add(begin, end - 1, (void*)boost::addressof(symbols_));
 
     // The symbol table parser should not choke on input containing the null
     // character.

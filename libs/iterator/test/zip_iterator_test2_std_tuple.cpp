@@ -1,6 +1,6 @@
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_CXX11_HDR_TUPLE)
+#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
 #include <tuple>
 #include <boost/fusion/adapted/std_tuple.hpp>

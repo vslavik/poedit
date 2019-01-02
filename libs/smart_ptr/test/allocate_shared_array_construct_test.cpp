@@ -1,127 +1,163 @@
 /*
-(c) 2012-2015 Glen Joseph Fernandes
-<glenjofe -at- gmail.com>
+Copyright 2012-2015 Glen Joseph Fernandes
+(glenjofe@gmail.com)
 
-Distributed under the Boost Software
-License, Version 1.0.
-http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software License, Version 1.0.
+(http://www.boost.org/LICENSE_1_0.txt)
 */
+#include <boost/config.hpp>
+#if !defined(BOOST_NO_CXX11_ALLOCATOR)
 #include <boost/core/lightweight_test.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
-struct tag { };
+struct allow { };
 
-template<typename T>
-class creator {
-public:
+template<class T = void>
+struct creator {
     typedef T value_type;
-    creator() {
-    }
-    template<typename U>
-    creator(const creator<U>&) {
-    }
+
+    template<class U>
+    struct rebind {
+        typedef creator<U> other;
+    };
+
+    creator() { }
+
+    template<class U>
+    creator(const creator<U>&) { }
+
     T* allocate(std::size_t size) {
-        void* p = ::operator new(size * sizeof(T));
-        return static_cast<T*>(p);
+        return static_cast<T*>(::operator new(sizeof(T) * size));
     }
-    void deallocate(T* memory, std::size_t) {
-        void* p = memory;
-        ::operator delete(p);
+
+    void deallocate(T* ptr, std::size_t) {
+        ::operator delete(ptr);
     }
-    template<typename U>
-    void construct(U* memory) {
-        void* p = memory;
-        ::new(p) U(tag());
+
+    template<class U>
+    void construct(U* ptr) {
+        ::new(static_cast<void*>(ptr)) U(allow());
     }
-    template<typename U>
-    void destroy(U* memory) {
-        memory->~U();
+
+    template<class U>
+    void destroy(U* ptr) {
+        ptr->~U();
     }
+
 };
+
+template<class T, class U>
+inline bool
+operator==(const creator<T>&, const creator<U>&)
+{
+    return true;
+}
+
+template<class T, class U>
+inline bool
+operator!=(const creator<T>&, const creator<U>&)
+{
+    return false;
+}
 
 class type {
 public:
-    static unsigned int instances;
-    explicit type(tag) {
-        instances++;
+    static unsigned instances;
+
+    explicit type(allow) {
+        ++instances;
     }
-    type(const type&) {
-        instances++;
-    }
+
     ~type() {
-        instances--;
+        --instances;
     }
+
+private:
+    type(const type&);
+    type& operator=(const type&);
 };
 
-unsigned int type::instances = 0;
+unsigned type::instances = 0;
 
 int main()
 {
-#if !defined(BOOST_NO_CXX11_ALLOCATOR)
     {
-        boost::shared_ptr<type[]> a1 = boost::allocate_shared<type[]>(creator<void>(), 3);
-        BOOST_TEST(a1.use_count() == 1);
-        BOOST_TEST(a1.get() != 0);
+        boost::shared_ptr<type[]> result =
+            boost::allocate_shared<type[]>(creator<type>(), 3);
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<type[3]> a1 = boost::allocate_shared<type[3]>(creator<void>());
-        BOOST_TEST(a1.use_count() == 1);
-        BOOST_TEST(a1.get() != 0);
+        boost::shared_ptr<type[3]> result =
+            boost::allocate_shared<type[3]>(creator<type>());
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<type[][2]> a1 = boost::allocate_shared<type[][2]>(creator<void>(), 2);
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<type[][2]> result =
+            boost::allocate_shared<type[][2]>(creator<>(), 2);
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<type[2][2]> a1 = boost::allocate_shared<type[2][2]>(creator<void>());
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<type[2][2]> result =
+            boost::allocate_shared<type[2][2]>(creator<>());
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<const type[]> a1 = boost::allocate_shared<const type[]>(creator<void>(), 3);
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<const type[]> result =
+            boost::allocate_shared<const type[]>(creator<>(), 3);
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<const type[3]> a1 = boost::allocate_shared<const type[3]>(creator<void>());
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<const type[3]> result =
+            boost::allocate_shared<const type[3]>(creator<>());
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<const type[][2]> a1 = boost::allocate_shared<const type[][2]>(creator<void>(), 2);
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<const type[][2]> result =
+            boost::allocate_shared<const type[][2]>(creator<>(), 2);
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
     {
-        boost::shared_ptr<const type[2][2]> a1 = boost::allocate_shared<const type[2][2]>(creator<void>());
-        BOOST_TEST(a1.get() != 0);
-        BOOST_TEST(a1.use_count() == 1);
+        boost::shared_ptr<const type[2][2]> result =
+            boost::allocate_shared<const type[2][2]>(creator<>());
+        BOOST_TEST(result.get() != 0);
+        BOOST_TEST(result.use_count() == 1);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
-#endif
     return boost::report_errors();
 }
+#else
+int main()
+{
+    return 0;
+}
+#endif

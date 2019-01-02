@@ -82,7 +82,7 @@ class order
                 }
                 # No problem with placing first.
                 result += $(obj) ;
-                # Remove all contraints where 'obj' comes first, since they are
+                # Remove all constraints where 'obj' comes first, since they are
                 # already satisfied.
                 constraints = [ remove-satisfied $(constraints) : $(obj) ] ;
 

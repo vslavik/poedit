@@ -1,45 +1,32 @@
 #
-# Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+# Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-import os ;
-
-if [ os.name ] = SOLARIS
-{
-  lib socket ;
-  lib nsl ;
-}
-else if [ os.name ] = NT
-{
-  lib ws2_32 ;
-  lib mswsock ;
-}
-else if [ os.name ] = HPUX
-{
-  lib ipv6 ;
-}
-else if [ os.name ] = HAIKU
-{
-  lib network ;
-}
+lib socket ; # SOLARIS
+lib nsl ; # SOLARIS
+lib ws2_32 ; # NT
+lib mswsock ; # NT
+lib ipv6 ; # HPUX
+lib network ; # HAIKU
 
 exe daemon
   : daemon.cpp
     /boost/system//boost_system
+    /boost/chrono//boost_chrono
   : <define>BOOST_ALL_NO_LIB=1
     <threading>multi
-    <os>SOLARIS:<library>socket
-    <os>SOLARIS:<library>nsl
-    <os>NT:<define>_WIN32_WINNT=0x0501
-    <os>NT,<toolset>gcc:<library>ws2_32
-    <os>NT,<toolset>gcc:<library>mswsock
-    <os>NT,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
-    <os>HPUX,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
-    <os>HPUX:<library>ipv6
-    <os>HAIKU:<library>network
+    <target-os>solaris:<library>socket
+    <target-os>solaris:<library>nsl
+    <target-os>windows:<define>_WIN32_WINNT=0x0501
+    <target-os>windows,<toolset>gcc:<library>ws2_32
+    <target-os>windows,<toolset>gcc:<library>mswsock
+    <target-os>windows,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
+    <target-os>hpux,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
+    <target-os>hpux:<library>ipv6
+    <target-os>haiku:<library>network
   ;
 
 exe process_per_connection
@@ -47,13 +34,13 @@ exe process_per_connection
     /boost/system//boost_system
   : <define>BOOST_ALL_NO_LIB=1
     <threading>multi
-    <os>SOLARIS:<library>socket
-    <os>SOLARIS:<library>nsl
-    <os>NT:<define>_WIN32_WINNT=0x0501
-    <os>NT,<toolset>gcc:<library>ws2_32
-    <os>NT,<toolset>gcc:<library>mswsock
-    <os>NT,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
-    <os>HPUX,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
-    <os>HPUX:<library>ipv6
-    <os>HAIKU:<library>network
+    <target-os>solaris:<library>socket
+    <target-os>solaris:<library>nsl
+    <target-os>windows:<define>_WIN32_WINNT=0x0501
+    <target-os>windows,<toolset>gcc:<library>ws2_32
+    <target-os>windows,<toolset>gcc:<library>mswsock
+    <target-os>windows,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
+    <target-os>hpux,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
+    <target-os>hpux:<library>ipv6
+    <target-os>haiku:<library>network
   ;

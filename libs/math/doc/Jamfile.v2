@@ -69,7 +69,7 @@ boostbook standalone
         <format>pdf:<xsl:param>preferred.mediaobject.role=print
         <format>pdf:<xsl:param>img.src.path=$(images_location)/
         <format>pdf:<xsl:param>draft.mode="no"
-        <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/math/doc/html
+        <format>pdf:<xsl:param>boost.url.prefix=https\://www.boost.org/doc/libs/release/libs/math/doc/html
         <auto-index>on <format>pdf:<auto-index-internal>off
         <format>html:<auto-index-internal>on
         <auto-index-script>$(here)/index.idx
@@ -82,10 +82,8 @@ boostbook standalone
 install pdfinstall : standalone/<format>pdf : <location>. <install-type>PDF <name>math.pdf ;
 explicit pdfinstall ;
 
-
-
-
-
-
-
-
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : standalone ;
+explicit boostrelease ;

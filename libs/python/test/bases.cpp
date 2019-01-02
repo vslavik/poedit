@@ -4,7 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/python/bases.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits/same_traits.hpp>
+#include <boost/python/detail/type_traits.hpp>
 
 struct A;
 struct B;
@@ -42,8 +42,8 @@ int main()
         int
         , boost::python::detail::select_bases<char*>::type > collected1;
 
-    BOOST_STATIC_ASSERT((boost::is_same<collected1::type,boost::python::bases<> >::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose_bases<int,char*,long>::type,boost::python::bases<> >::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<collected1::type,boost::python::bases<> >::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose_bases<int,char*,long>::type,boost::python::bases<> >::value));
     
     typedef boost::python::detail::select_bases<
         int
@@ -55,8 +55,8 @@ int main()
          >::type
      > collected2;
 
-    BOOST_STATIC_ASSERT((boost::is_same<collected2::type,boost::python::bases<A,B> >::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose_bases<int,boost::python::bases<A,B>,long>::type,boost::python::bases<A,B> >::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<collected2::type,boost::python::bases<A,B> >::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose_bases<int,boost::python::bases<A,B>,long>::type,boost::python::bases<A,B> >::value));
     
     return 0;
 }

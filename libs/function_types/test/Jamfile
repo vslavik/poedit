@@ -64,10 +64,10 @@ import testing ;
 
     # Custom calling conventions
 
-    [ compile custom_ccs/nonmember_ccs.cpp ]
-    [ compile custom_ccs/nonmember_ccs_exact.cpp ]
-    [ compile custom_ccs/member_ccs.cpp ]
-    [ compile custom_ccs/member_ccs_exact.cpp ]
+    [ compile custom_ccs/nonmember_ccs.cpp : <address-model>64:<build>no ]
+    [ compile custom_ccs/nonmember_ccs_exact.cpp : <address-model>64:<build>no ]
+    [ compile custom_ccs/member_ccs.cpp : <address-model>64:<build>no ]
+    [ compile custom_ccs/member_ccs_exact.cpp : <address-model>64:<build>no ]
 
     # Code from the examples
 

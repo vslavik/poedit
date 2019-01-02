@@ -22,6 +22,7 @@
 #include <boost/thread/null_mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
 
@@ -33,14 +34,16 @@ typedef Clock::duration duration;
 typedef boost::chrono::milliseconds ms;
 typedef boost::chrono::nanoseconds ns;
 
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
+
 void f1()
 {
   time_point t0 = Clock::now();
-  BOOST_TEST(m.try_lock_until(Clock::now() + ms(300) ) == true);
+  BOOST_TEST(m.try_lock_until(Clock::now() + ms(250)) == true);
   time_point t1 = Clock::now();
   m.unlock();
   ns d = t1 - t0 ;
-  BOOST_TEST(d < ns(5000000)); // within 5ms
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
 }
 
 

@@ -12,11 +12,11 @@
 >>> def check_unregistered(f, msgprefix):   
 ...     try:
 ...         f(1)
-...     except TypeError, x:
+...     except TypeError as x:
 ...         if not str(x).startswith(msgprefix):
-...             print str(x)
+...             print(str(x))
 ...     else:
-...         print 'expected a TypeError'
+...         print('expected a TypeError')
 ...
 >>> check_unregistered(make_unregistered, 'No to_python (by-value) converter found for C++ type')
 >>> check_unregistered(make_unregistered2, 'No Python class registered for C++ class')
@@ -42,7 +42,7 @@ Can't get a non-const reference to a built-in integer object
 >>> try:
 ...     unwrap_int_ref(7)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> unwrap_int_const_ref(9)
 9
@@ -52,7 +52,7 @@ Can't get a non-const reference to a built-in integer object
 
 try: wrap_int_ref(n)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> wrap_int_const_ref(n)
 42
@@ -105,7 +105,7 @@ are a complicated constructor and member function, respectively.
 
 >>> try: A.__dict__['name'](None)
 ... except TypeError: pass
-... else: print 'expected an exception!'
+... else: print('expected an exception!')
 
 
 >>> a = A()
@@ -120,17 +120,17 @@ are a complicated constructor and member function, respectively.
 >>> try:
 ...     take_b(a)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> try:
 ...     take_c(a)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> try:
 ...     take_d(a)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 ------
 >>> take_a(b).name()
@@ -142,12 +142,12 @@ are a complicated constructor and member function, respectively.
 >>> try:
 ...     take_c(b)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> try:
 ...     take_d(b)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 -------
 >>> take_a(c).name()
@@ -156,7 +156,7 @@ are a complicated constructor and member function, respectively.
 >>> try:
 ...     take_b(c)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 >>> take_c(c).name()
 'C'
@@ -164,7 +164,7 @@ are a complicated constructor and member function, respectively.
 >>> try:
 ...     take_d(c)
 ... except: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 -------
 >>> take_a(d).name()
@@ -183,7 +183,7 @@ are a complicated constructor and member function, respectively.
 >>> dd = take_d(d_as_a)
 >>> dd.name()
 'D'
->>> print g.__doc__.splitlines()[1]
+>>> print(g.__doc__.splitlines()[1])
 g( (Simple)arg1) -> Simple :
 
 """
@@ -199,8 +199,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

@@ -1,29 +1,16 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_VIRTUAL_LOCATOR_HPP
+#define BOOST_GIL_VIRTUAL_LOCATOR_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_VIRTUAL_LOCATOR_HPP
-#define GIL_VIRTUAL_LOCATOR_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Locator for virtual image views
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on February 12, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/position_iterator.hpp>
 
 #include <boost/iterator/iterator_facade.hpp>
-#include "position_iterator.hpp"
 
 namespace boost { namespace gil {
 
@@ -72,7 +59,7 @@ public:
     y_iterator const& y()                         const { return _p; }
 
     // Returns the y distance between two x_iterators given the difference of their x positions
-    y_coord_t y_distance_to(const this_t& it2, x_coord_t xDiff) const { return (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }
+    y_coord_t y_distance_to(const this_t& it2, x_coord_t) const { return (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }
     bool      is_1d_traversable(x_coord_t)        const { return false; }   // is there no gap at the end of each row? I.e. can we use x_iterator to visit every pixel instead of nested loops?
 
     // Methods specific for virtual 2D locator
@@ -131,6 +118,6 @@ struct transposed_type<virtual_2d_locator<D,IsTransposed> > {
     typedef virtual_2d_locator<D,1-IsTransposed> type;
 };
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

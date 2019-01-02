@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Jacobi Elliptic SN, CN and DN</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../jacobi.html" title="Jacobi Elliptic Functions">
 <link rel="prev" href="jac_over.html" title="Overvew of the Jacobi Elliptic Functions">
 <link rel="next" href="jacobi_cd.html" title="Jacobi Elliptic Function cd">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.jacobi.jacobi_elliptic.h0"></a>
-        <span><a name="math_toolkit.jacobi.jacobi_elliptic.synopsis"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.jacobi.jacobi_elliptic.synopsis"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">jacobi_elliptic</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -45,7 +45,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.jacobi.jacobi_elliptic.h1"></a>
-        <span><a name="math_toolkit.jacobi.jacobi_elliptic.description"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.jacobi.jacobi_elliptic.description"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.description">Description</a>
       </h5>
 <p>
         The function <a class="link" href="jacobi_elliptic.html" title="Jacobi Elliptic SN, CN and DN">jacobi_elliptic</a>
@@ -129,9 +129,9 @@
 </td></tr>
 </table></div>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -150,7 +150,7 @@
       </p>
 <h5>
 <a name="math_toolkit.jacobi.jacobi_elliptic.h2"></a>
-        <span><a name="math_toolkit.jacobi.jacobi_elliptic.accuracy"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.jacobi.jacobi_elliptic.accuracy"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.accuracy">Accuracy</a>
       </h5>
 <p>
         These functions are computed using only basic arithmetic operations and trigomometric
@@ -176,22 +176,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -204,15 +204,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 45.8&#949; (Mean = 11.4&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 17.3&#949; (Mean = 4.29&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_GSL_1_16_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_Cephes_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 17.3&#949; (Mean = 4.29&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_cn_GSL_2_1_Jacobi_Elliptic_Mathworld_Data">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -225,6 +219,11 @@
                   <span class="blue">Max = 71.6&#949; (Mean = 19.4&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 45.8&#949; (Mean = 11.4&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -234,14 +233,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.83&#949; (Mean = 0.455&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0.816&#949; (Mean = 0.0563&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.43&#949; (Mean = 0.803&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.83&#949; (Mean = 0.437&#949;))
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.43&#949; (Mean = 0.803&#949;))
                 </p>
               </td>
 <td>
@@ -254,6 +247,11 @@
                   <span class="blue">Max = 1.68&#949; (Mean = 0.454&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.83&#949; (Mean = 0.455&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -263,15 +261,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 26.2&#949; (Mean = 1.17&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 55.2&#949; (Mean = 1.64&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_GSL_1_16_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_Cephes_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 55.2&#949; (Mean = 1.64&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_cn_GSL_2_1_Jacobi_Elliptic_Random_Small_Values">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -284,6 +276,11 @@
                   <span class="blue">Max = 10.4&#949; (Mean = 0.602&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 26.2&#949; (Mean = 1.17&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -293,15 +290,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 513&#949; (Mean = 126&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0.919&#949; (Mean = 0.127&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_GSL_1_16_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_cn_Cephes_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)</span>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_cn_GSL_2_1_Jacobi_Elliptic_Modulus_near_1">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -314,6 +305,11 @@
                   <span class="blue">Max = 675&#949; (Mean = 86.8&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 513&#949; (Mean = 126&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -323,14 +319,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.27e+004&#949; (Mean = 1.93e+003&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 14.2&#949; (Mean = 0.927&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 5.92e+03&#949; (Mean = 477&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 3.27e+04&#949; (Mean = 1.93e+03&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 5.92e+03&#949; (Mean = 477&#949;))
                 </p>
               </td>
 <td>
@@ -341,6 +331,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 2.97e+04&#949; (Mean = 1.9e+03&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.27e+04&#949; (Mean = 1.93e+03&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -362,22 +357,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -390,15 +385,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 34.3&#949; (Mean = 8.71&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 2.82&#949; (Mean = 1.18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_GSL_1_16_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_Cephes_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 2.82&#949; (Mean = 1.18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_dn_GSL_2_1_Jacobi_Elliptic_Mathworld_Data">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -409,6 +398,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 49&#949; (Mean = 14&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 34.3&#949; (Mean = 8.71&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -420,14 +414,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.52&#949; (Mean = 0.466&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 3&#949; (Mean = 0.61&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.49&#949; (Mean = 0.321&#949;))
+                  2.1:</em></span> Max = 3&#949; (Mean = 0.61&#949;))
                 </p>
               </td>
 <td>
@@ -440,6 +428,11 @@
                   <span class="blue">Max = 1.53&#949; (Mean = 0.481&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.52&#949; (Mean = 0.466&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -449,15 +442,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 16.1&#949; (Mean = 0.685&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0.5&#949; (Mean = 0.0122&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.5&#949; (Mean = 0.391&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_GSL_1_16_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_Cephes_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)</span>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.5&#949; (Mean = 0.391&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_dn_GSL_2_1_Jacobi_Elliptic_Random_Small_Values">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -470,6 +457,11 @@
                   <span class="blue">Max = 22.4&#949; (Mean = 0.763&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 16.1&#949; (Mean = 0.685&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -479,15 +471,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.24e+003&#949; (Mean = 482&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 2.28&#949; (Mean = 0.194&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_GSL_1_16_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_dn_Cephes_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)</span>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_dn_GSL_2_1_Jacobi_Elliptic_Modulus_near_1">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -498,6 +484,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 3.75e+03&#949; (Mean = 293&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.24e+03&#949; (Mean = 482&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -509,14 +500,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.67e+004&#949; (Mean = 1e+003&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 14.1&#949; (Mean = 0.897&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 121&#949; (Mean = 22&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 196&#949; (Mean = 30.2&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 121&#949; (Mean = 22&#949;))
                 </p>
               </td>
 <td>
@@ -527,6 +512,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 2.82e+04&#949; (Mean = 1.79e+03&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.67e+04&#949; (Mean = 1e+03&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -548,22 +538,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -576,15 +566,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 481&#949; (Mean = 113&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 588&#949; (Mean = 146&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_GSL_1_16_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_Cephes_Jacobi_Elliptic_Mathworld_Data">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 588&#949; (Mean = 146&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_sn_GSL_2_1_Jacobi_Elliptic_Mathworld_Data">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -595,6 +579,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 341&#949; (Mean = 80.7&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 481&#949; (Mean = 113&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -606,14 +595,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.92&#949; (Mean = 0.567&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 4.02&#949; (Mean = 1.07&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.92&#949; (Mean = 0.567&#949;))
+                  2.1:</em></span> Max = 4.02&#949; (Mean = 1.07&#949;))
                 </p>
               </td>
 <td>
@@ -626,6 +609,11 @@
                   <span class="blue">Max = 2.01&#949; (Mean = 0.593&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.92&#949; (Mean = 0.567&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -635,15 +623,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.11&#949; (Mean = 0.385&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 11.7&#949; (Mean = 1.65&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_GSL_1_16_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_Cephes_Jacobi_Elliptic_Random_Small_Values">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 11.7&#949; (Mean = 1.65&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_sn_GSL_2_1_Jacobi_Elliptic_Random_Small_Values">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -654,6 +636,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 1.99&#949; (Mean = 0.347&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.11&#949; (Mean = 0.385&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -665,15 +652,9 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 23.2&#949; (Mean = 1.85&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_GSL_1_16_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_jacobi_sn_Cephes_Jacobi_Elliptic_Modulus_near_1">And
-                  other failures.</a>)</span>
+                  2.1:</em></span> Max = 0&#949; (Mean = 0&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_jacobi_sn_GSL_2_1_Jacobi_Elliptic_Modulus_near_1">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
@@ -686,6 +667,11 @@
                   <span class="blue">Max = 109&#949; (Mean = 7.38&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 23.2&#949; (Mean = 1.85&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -695,14 +681,8 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.36e+004&#949; (Mean = 2.54e+003&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 12&#949; (Mean = 0.771&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 4.54e+04&#949; (Mean = 2.63e+03&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 4.36e+04&#949; (Mean = 2.54e+03&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 4.54e+04&#949; (Mean = 2.63e+03&#949;))
                 </p>
               </td>
 <td>
@@ -713,6 +693,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 2.45e+04&#949; (Mean = 1.51e+03&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.36e+04&#949; (Mean = 2.54e+03&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -721,7 +706,7 @@
 </div>
 <br class="table-break"><h5>
 <a name="math_toolkit.jacobi.jacobi_elliptic.h3"></a>
-        <span><a name="math_toolkit.jacobi.jacobi_elliptic.testing"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.jacobi.jacobi_elliptic.testing"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.testing">Testing</a>
       </h5>
 <p>
         The tests use a mixture of spot test values calculated using the online calculator
@@ -731,7 +716,7 @@
       </p>
 <h5>
 <a name="math_toolkit.jacobi.jacobi_elliptic.h4"></a>
-        <span><a name="math_toolkit.jacobi.jacobi_elliptic.implementation"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.jacobi.jacobi_elliptic.implementation"></a></span><a class="link" href="jacobi_elliptic.html#math_toolkit.jacobi.jacobi_elliptic.implementation">Implementation</a>
       </h5>
 <p>
         For <span class="emphasis"><em>k &gt; 1</em></span> we apply the relations:
@@ -764,10 +749,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

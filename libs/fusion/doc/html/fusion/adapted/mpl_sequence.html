@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>mpl sequence</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../adapted.html" title="Adapted">
 <link rel="prev" href="std__tuple.html" title="std::tuple">
@@ -27,42 +27,42 @@
 <a name="fusion.adapted.mpl_sequence"></a><a class="link" href="mpl_sequence.html" title="mpl sequence">mpl sequence</a>
 </h3></div></div></div>
 <p>
-        This module provides adapters for <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-        sequences. Including the module header makes all <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+        This module provides adapters for <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+        sequences. Including the module header makes all <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
         sequences fully conforming fusion sequences.
       </p>
 <h5>
 <a name="fusion.adapted.mpl_sequence.h0"></a>
-        <span><a name="fusion.adapted.mpl_sequence.header"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.header">Header</a>
+        <span class="phrase"><a name="fusion.adapted.mpl_sequence.header"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.header">Header</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">adapted</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h5>
 <a name="fusion.adapted.mpl_sequence.h1"></a>
-        <span><a name="fusion.adapted.mpl_sequence.model_of"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.model_of">Model
+        <span class="phrase"><a name="fusion.adapted.mpl_sequence.model_of"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.model_of">Model
         of</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward Sequence</a>
-            (If the <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-            sequence is a forward sequence.)
+            (If the <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> sequence
+            is a forward sequence.)
           </li>
 <li class="listitem">
             <a class="link" href="../sequence/concepts/bidirectional_sequence.html" title="Bidirectional Sequence">Bidirectional
-            Sequence</a> (If the <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+            Sequence</a> (If the <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
             sequence is a bidirectional sequence.)
           </li>
 <li class="listitem">
             <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
-            Access Sequence</a> (If the <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+            Access Sequence</a> (If the <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
             sequence is a random access sequence.)
           </li>
 </ul></div>
 <h5>
 <a name="fusion.adapted.mpl_sequence.h2"></a>
-        <span><a name="fusion.adapted.mpl_sequence.example"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.example">Example</a>
+        <span class="phrase"><a name="fusion.adapted.mpl_sequence.example"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">123</span><span class="special">,</span> <span class="number">456</span><span class="special">&gt;</span> <span class="identifier">vec_c</span><span class="special">;</span>
 <span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector2</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">long</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="identifier">vec_c</span><span class="special">);</span>
@@ -75,11 +75,34 @@
 </pre>
 <h5>
 <a name="fusion.adapted.mpl_sequence.h3"></a>
-        <span><a name="fusion.adapted.mpl_sequence.see_also"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.see_also">See
+        <span class="phrase"><a name="fusion.adapted.mpl_sequence.bi_directional_adaptation"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.bi_directional_adaptation">Bi-directional
+        adaptation</a>
+      </h5>
+<p>
+        Fusion sequences may also be adapted as fully conforming <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+        sequences (see <a class="link" href="../sequence/intrinsic.html" title="Intrinsic">Intrinsics</a>).
+        That way, we can have 2-way adaptation to and from <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+        and Fusion. To make Fusion sequences fully conforming <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+        sequences, include:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        If you want bi-directional adaptation to and from <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+        and Fusion, simply include:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">mpl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        The header includes all the necessary headers.
+      </p>
+<h5>
+<a name="fusion.adapted.mpl_sequence.h4"></a>
+        <span class="phrase"><a name="fusion.adapted.mpl_sequence.see_also"></a></span><a class="link" href="mpl_sequence.html#fusion.adapted.mpl_sequence.see_also">See
         also</a>
       </h5>
 <p>
-        <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+        <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

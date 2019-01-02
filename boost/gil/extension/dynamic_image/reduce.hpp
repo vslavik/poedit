@@ -1,49 +1,40 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_GIL_REDUCE_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_GIL_REDUCE_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#ifdef BOOST_GIL_DOXYGEN_ONLY
+#undef BOOST_GIL_REDUCE_CODE_BLOAT
+#endif
 
-#ifndef GIL_REDUCE_HPP
-#define GIL_REDUCE_HPP
+#ifdef BOOST_GIL_REDUCE_CODE_BLOAT
 
-#include <boost/mpl/insert_range.hpp>
-#include <boost/mpl/range_c.hpp>
-#include <boost/mpl/vector_c.hpp>
+#include <boost/gil/extension/dynamic_image/dynamic_at_c.hpp>
+
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/typedefs.hpp>
+
 #include <boost/mpl/back.hpp>
-#include <boost/mpl/vector.hpp>
+#include <boost/mpl/insert.hpp>
+#include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/long.hpp>
 #include <boost/mpl/logical.hpp>
+#include <boost/mpl/range_c.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/vector_c.hpp>
 #include <boost/mpl/transform.hpp>
-#include <boost/mpl/insert.hpp>
-#include <boost/mpl/transform.hpp>
-
-#include "../../metafunctions.hpp"
-#include "../../typedefs.hpp"
-#include "dynamic_at_c.hpp"
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Constructs for static-to-dynamic integer convesion
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on May 4, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-#ifdef GIL_REDUCE_CODE_BLOAT
-
 
 // Max number of cases in the cross-expension of binary operation for it to be reduced as unary
 #define GIL_BINARY_REDUCE_LIMIT 226
 
 namespace boost { namespace mpl {
+
+// Constructs for static-to-dynamic integer convesion
 
 ///////////////////////////////////////////////////////
 /// Mapping vector - represents the mapping of one type vector to another
@@ -59,7 +50,7 @@ struct mapping_vector {};
 
 template <typename SrcTypes, typename DstTypes, long K>
 struct at_c<mapping_vector<SrcTypes,DstTypes>, K> {
-    static const std::size_t value=size<DstTypes>::value - order<DstTypes, typename at_c<SrcTypes,K>::type>::type::value +1;
+    static const std::size_t value=size<DstTypes>::value - order<DstTypes, typename gil::at_c<SrcTypes,K>::type>::type::value +1;
     typedef size_t<value> type;
 };
 
@@ -89,7 +80,7 @@ namespace detail {
         typedef typename push_front<rest, T>::type type;
     };
 
-    template <typename SFirst> 
+    template <typename SFirst>
     struct copy_to_vector_impl<SFirst,1> {
         typedef vector<typename deref<SFirst>::type> type;
     };
@@ -111,7 +102,7 @@ namespace boost { namespace gil {
 
 
 ///////////////////////////////////////////////////////
-/// 
+///
 /// unary_reduce, binary_reduce - given an MPL Random Access Sequence,
 /// dynamically specified index to that container, the bits of an instance of the corresponding type and
 /// a generic operation, invokes the operation on the given type
@@ -122,7 +113,7 @@ namespace boost { namespace gil {
 
 
 ///////////////////////////////////////////////////////
-/// 
+///
 /// \brief Unary reduce.
 ///
 /// Given a set of types and an operation, reduces each type in the set (to reduced_t), then removes duplicates (to unique_t)
@@ -147,11 +138,11 @@ struct unary_reduce : public unary_reduce_impl<Types,Op> {
         typedef typename mpl::mapping_vector<reduced_t, unique_t> indices_t;
         return gil::at_c<indices_t, unsigned short>(index);
     }
-    template <typename Bits> GIL_FORCEINLINE static typename Op::result_type applyc(const Bits& bits, std::size_t index, Op op) {
+    template <typename Bits> BOOST_FORCEINLINE static typename Op::result_type applyc(const Bits& bits, std::size_t index, Op op) {
         return apply_operation_basec<unique_t>(bits,map_index(index),op);
     }
 
-    template <typename Bits> GIL_FORCEINLINE static typename Op::result_type apply(Bits& bits, std::size_t index, Op op) {
+    template <typename Bits> BOOST_FORCEINLINE static typename Op::result_type apply(Bits& bits, std::size_t index, Op op) {
         return apply_operation_base<unique_t>(bits,map_index(index),op);
     }
 };
@@ -161,18 +152,18 @@ struct unary_reduce<Types,Op,true> : public unary_reduce_impl<Types,Op> {
     typedef typename unary_reduce_impl<Types,Op>::unique_t unique_t;
     static unsigned short inline map_index(std::size_t index) { return 0; }
 
-    template <typename Bits> GIL_FORCEINLINE static typename Op::result_type applyc(const Bits& bits, std::size_t index, Op op) {
+    template <typename Bits> BOOST_FORCEINLINE static typename Op::result_type applyc(const Bits& bits, std::size_t index, Op op) {
         return op(*gil_reinterpret_cast_c<const typename mpl::front<unique_t>::type*>(&bits));
     }
 
-    template <typename Bits> GIL_FORCEINLINE static typename Op::result_type apply(Bits& bits, std::size_t index, Op op) {
+    template <typename Bits> BOOST_FORCEINLINE static typename Op::result_type apply(Bits& bits, std::size_t index, Op op) {
         return op(*gil_reinterpret_cast<typename       mpl::front<unique_t>::type*>(&bits));
     }
 };
 
 
 ///////////////////////////////////////////////////////
-/// 
+///
 /// \brief Binary reduce.
 ///
 /// Given two sets of types, Types1 and Types2, first performs unary reduction on each. Then checks if the product of their sizes is above
@@ -200,7 +191,7 @@ namespace detail {
 
         typedef mpl::cross_vector<mpl::vector2<vec1_types, vec2_types>, pair_generator> BIN_TYPES;
         typedef unary_reduce<BIN_TYPES,Op> bin_reduced_t;
-        
+
         static unsigned short inline map_index(std::size_t index1, std::size_t index2) {
             unsigned short r1=Unary1::map_index(index1);
             unsigned short r2=Unary2::map_index(index2);
@@ -233,7 +224,7 @@ struct binary_reduce {
     typedef unary_reduce<Types1,Op> unary1_t;
     typedef unary_reduce<Types2,Op> unary2_t;
 
-    static const std::size_t CROSS_SIZE = mpl::size<typename unary1_t::unique_t>::value * 
+    static const std::size_t CROSS_SIZE = mpl::size<typename unary1_t::unique_t>::value *
                                           mpl::size<typename unary2_t::unique_t>::value;
 
     typedef detail::binary_reduce_impl<unary1_t,unary2_t,Op, (CROSS_SIZE>GIL_BINARY_REDUCE_LIMIT)> impl;
@@ -245,17 +236,17 @@ public:
 };
 
 template <typename Types, typename UnaryOp>
-GIL_FORCEINLINE typename UnaryOp::result_type apply_operation(variant<Types>& arg, UnaryOp op) {
+BOOST_FORCEINLINE typename UnaryOp::result_type apply_operation(variant<Types>& arg, UnaryOp op) {
     return unary_reduce<Types,UnaryOp>::template apply(arg._bits, arg._index ,op);
 }
 
 template <typename Types, typename UnaryOp>
-GIL_FORCEINLINE typename UnaryOp::result_type apply_operation(const variant<Types>& arg, UnaryOp op) {
+BOOST_FORCEINLINE typename UnaryOp::result_type apply_operation(const variant<Types>& arg, UnaryOp op) {
     return unary_reduce<Types,UnaryOp>::template applyc(arg._bits, arg._index ,op);
 }
 
 template <typename Types1, typename Types2, typename BinaryOp>
-GIL_FORCEINLINE typename BinaryOp::result_type apply_operation(const variant<Types1>& arg1, const variant<Types2>& arg2, BinaryOp op) {    
+BOOST_FORCEINLINE typename BinaryOp::result_type apply_operation(const variant<Types1>& arg1, const variant<Types2>& arg2, BinaryOp op) {
     return binary_reduce<Types1,Types2,BinaryOp>::template apply(arg1._bits, arg1._index, arg2._bits, arg2._index, op);
 }
 
@@ -268,19 +259,19 @@ namespace boost { namespace mpl {
 ///////////////////////////////////////////////////////
 /// \brief Represents the virtual cross-product of the types generated from VecOfVecs.
 /// \ingroup CrossVector
-/// INPUT: 
+/// INPUT:
 ///   VecOfVecs - a vector of vector types. For example [ [A1,A2,A3], [B1,B2], [C1,C2,C3,C4] ]
 ///       Each element must be a non-empty mpl vector
 ///   TypeGen - a metafunction that generates a type from a vector of types, each of which can be
 ///       selected from the corresponding vector in VecOfVecs. For example, [A1, B2, C4]
-///       
+///
 /// Represents the virtual cross-product of the types generated from VecOfVecs.
 /// For example, [ TypeGen[A1,B1,C1], TypeGen[A2,B1,C1], TypeGen[A3,B1,C1],
 ///                TypeGen[A1,B2,C1], TypeGen[A2,B2,C1], TypeGen[A3,B2,C1],
 ///                TypeGen[A1,B1,C2], TypeGen[A2,B1,C2], TypeGen[A3,B1,C2], ... ]
-/// 
+///
 /// Models an immutable MPL Random Access Sequence
-/// Traversal, random-access, etc, is defined, but mutable operations, 
+/// Traversal, random-access, etc, is defined, but mutable operations,
 ///  such as push_back and pop_front are not supported
 ///////////////////////////////////////////////////////
 
@@ -301,7 +292,7 @@ struct cross_iterator {
 /// \brief Dereferences a cross-vector iterator
 /// \ingroup CrossVectorIterator
 /// Creates a vector of the sizes of each type vector in VecOfVecs, then uses it as a basis
-/// to represent the iterator's position K as a vector of indices. Extracts the corresponding type of 
+/// to represent the iterator's position K as a vector of indices. Extracts the corresponding type of
 /// each input vector and passes the element types to the type generation function, which returns the dereferenced type
 template <typename VecOfVecs, typename TypeGen, std::size_t K>
 struct deref<cross_iterator<VecOfVecs,TypeGen,K> > {
@@ -413,13 +404,13 @@ template <typename VecOfVecs, typename TypeGen, typename OPP>
 struct transform<cross_vector<VecOfVecs,TypeGen>, OPP > {
     typedef typename lambda<OPP>::type Op;
     struct adapter {
-        template <typename Elements> 
+        template <typename Elements>
         struct apply {
             typedef typename TypeGen::template apply<Elements>::type orig_t;
             typedef typename Op::template apply<orig_t>::type type;
         };
     };
-    typedef cross_vector<VecOfVecs, adapter > type; 
+    typedef cross_vector<VecOfVecs, adapter > type;
 };
 
 } } // boost::mpl
@@ -460,9 +451,9 @@ namespace detail {
     };
 
     template <typename Op, typename Loc>
-    struct reduce<Op, image_view<Loc> > 
+    struct reduce<Op, image_view<Loc> >
         : public reduce_view_basic<Op,image_view<Loc>,view_is_basic<image_view<Loc> >::value> {};
- 
+
     ////////////////////////////////////////////////////////
     ////
     ////   Unary reduce_image operation. Splits into basic and non-basic images.
@@ -491,7 +482,7 @@ namespace detail {
     };
 
     template <typename Op, typename L1, typename L2>
-    struct reduce<Op, std::pair<const image_view<L1>*, const image_view<L2>*> > 
+    struct reduce<Op, std::pair<const image_view<L1>*, const image_view<L2>*> >
         : public reduce_views_basic<Op,image_view<L1>,image_view<L2>,
                  mpl::and_<view_is_basic<image_view<L1> >, view_is_basic<image_view<L2> > >::value >
     {};
@@ -515,20 +506,20 @@ namespace detail {
     /*
     ////////////////////////////////////////////////////////
     ////
-    ////   Color space binary reduce operation. Given a source and destination color spaces, 
+    ////   Color space binary reduce operation. Given a source and destination color spaces,
     ////   returns a reduced source and destination color spaces that have the same mapping of channels
     ////
     ////   Precondition: The two color spaces must be compatible (i.e. must have the same set of channels)
     ////////////////////////////////////////////////////////
 
-    template <typename Vec, int Basis, int VecSize> 
+    template <typename Vec, int Basis, int VecSize>
     struct type_vec_to_integer_impl {
         typedef typename mpl::back<Vec>::type     last;
         typedef typename mpl::pop_back<Vec>::type rest;
         static const int value = type_vec_to_integer_impl<rest, Basis, VecSize-1>::value * Basis + last::value;
     };
 
-    template <typename Vec, int Basis> 
+    template <typename Vec, int Basis>
     struct type_vec_to_integer_impl<Vec,Basis,0> {
         static const int value=0;
     };
@@ -608,7 +599,7 @@ namespace detail {
         typedef typename channel_order<DstColorSpace>::type dst_order_t;
         typedef typename mpl::transform<src_order_t, type_to_index<dst_order_t,mpl::_1> >::type mapping;
         static const int mapping_val = type_vec_to_integer<mapping>::value;
-        
+
         typedef typename reduce_color_spaces_impl<SrcColorSpace,DstColorSpace,mapping_val>::first_t  _first_t;
         typedef typename reduce_color_spaces_impl<SrcColorSpace,DstColorSpace,mapping_val>::second_t _second_t;
         typedef typename mpl::and_<color_space_is_base<DstColorSpace>, mpl::not_< color_space_is_base<_second_t> > > swap_t;
@@ -644,12 +635,12 @@ namespace detail {
     };
 */
     // Incompatible views cannot be used in copy_pixels - will throw std::bad_cast
-    template <typename V1, typename V2, bool Compatible> 
+    template <typename V1, typename V2, bool Compatible>
     struct reduce_copy_pixop_compat {
         typedef error_t type;
     };
-    
-    // For compatible basic views, reduce their color spaces based on their channel mapping. 
+
+    // For compatible basic views, reduce their color spaces based on their channel mapping.
     // Make the source immutable and the destination mutable (they should already be that way)
     template <typename V1, typename V2>
     struct reduce_copy_pixop_compat<V1,V2,true> {
@@ -661,10 +652,10 @@ namespace detail {
 
         typedef typename derived_view_type<V1, use_default, L1, use_default, use_default, use_default, mpl::false_>::type DV1;
         typedef typename derived_view_type<V2, use_default, L2, use_default, use_default, use_default, mpl::true_ >::type DV2;
-        
+
         typedef std::pair<const DV1*, const DV2*> type;
     };
-    
+
     // The general 2D version branches into compatible and incompatible views
     template <typename V1, typename V2>
     struct reduce_views_basic<copy_pixels_fn, V1, V2, true>
@@ -685,7 +676,7 @@ namespace detail {
     ////   Reduce for get_dimensions (basic views and images have the same structure and the dimensions are contained at the beginning)
     ////
     ////////////////////////////////////////////////////////
-    
+
     struct any_type_get_dimensions;
     template <typename View> struct reduce_view_basic<any_type_get_dimensions,View,true> { typedef gray8_view_t type; };
     template <typename Img>  struct reduce_image_basic<any_type_get_dimensions,Img,true> { typedef gray8_image_t type; };
@@ -695,15 +686,15 @@ namespace detail {
     ////   Reduce for get_num_channels (only color space matters)
     ////
     ////////////////////////////////////////////////////////
-    
+
     struct any_type_get_num_channels;
-    template <typename View> struct reduce_view_basic<any_type_get_num_channels,View,true> { 
+    template <typename View> struct reduce_view_basic<any_type_get_num_channels,View,true> {
         typedef typename View::color_space_t::base Cs;
-        typedef typename view_type<bits8,typename reduce_color_space<Cs>::type>::type type; 
+        typedef typename view_type<uint8_t,typename reduce_color_space<Cs>::type>::type type;
     };
-    template <typename Img>  struct reduce_image_basic<any_type_get_num_channels,Img,true> { 
+    template <typename Img>  struct reduce_image_basic<any_type_get_num_channels,Img,true> {
         typedef typename Img::color_space_t::base Cs;
-        typedef typename image_type<bits8,typename reduce_color_space<Cs>::type>::type type; 
+        typedef typename image_type<uint8_t,typename reduce_color_space<Cs>::type>::type type;
     };
 
     ////////////////////////////////////////////////////////
@@ -711,13 +702,13 @@ namespace detail {
     ////   Reduce for resample_pixels (same as copy_pixels)
     ////
     ////////////////////////////////////////////////////////
-    
+
     template <typename Sampler, typename MapFn> struct resample_pixels_fn;
 
-    template <typename S, typename M, typename V, bool IsBasic> 
+    template <typename S, typename M, typename V, bool IsBasic>
     struct reduce_view_basic<resample_pixels_fn<S,M>, V, IsBasic> : public reduce_view_basic<copy_pixels_fn, V, IsBasic> {};
 
-    template <typename S, typename M, typename V1, typename V2, bool IsBasic> 
+    template <typename S, typename M, typename V1, typename V2, bool IsBasic>
     struct reduce_views_basic<resample_pixels_fn<S,M>, V1, V2, IsBasic> : public reduce_views_basic<copy_pixels_fn, V1, V2, IsBasic> {};
 
     ////////////////////////////////////////////////////////
@@ -727,18 +718,18 @@ namespace detail {
     ////
     ////////////////////////////////////////////////////////
 
-    
+
     template <typename CC> class copy_and_convert_pixels_fn;
 
     // the only thing for 1D reduce is making them all mutable...
-    template <typename CC, typename View, bool IsBasic> 
-    struct reduce_view_basic<copy_and_convert_pixels_fn<CC>, View, IsBasic> 
+    template <typename CC, typename View, bool IsBasic>
+    struct reduce_view_basic<copy_and_convert_pixels_fn<CC>, View, IsBasic>
         : public derived_view_type<View, use_default, use_default, use_default, use_default, mpl::true_> {
     };
 
     // For 2D reduce, if they have the same channels and color spaces (i.e. the same pixels) then copy_and_convert is just copy.
     // In this case, reduce their common color space. In general make the first immutable and the second mutable
-    template <typename CC, typename V1, typename V2, bool AreBasic> 
+    template <typename CC, typename V1, typename V2, bool AreBasic>
     struct reduce_views_basic<copy_and_convert_pixels_fn<CC>, V1, V2, AreBasic> {
         typedef is_same<typename V1::pixel_t, typename V2::pixel_t> Same;
 
@@ -748,7 +739,7 @@ namespace detail {
 
         typedef typename derived_view_type<V1, use_default, layout<Cs1, typename V1::channel_mapping_t>, use_default, use_default, mpl::false_>::type DV1;
         typedef typename derived_view_type<V2, use_default, layout<Cs2, typename V2::channel_mapping_t>, use_default, use_default, mpl::true_ >::type DV2;
-        
+
         typedef std::pair<const DV1*, const DV2*> type;
     };
 
@@ -759,11 +750,11 @@ namespace detail {
     //fill_converted_pixels_fn
     //bind(gil::detail::copy_pixels_fn(), _1, dst)
     //bind(gil::detail::copy_pixels_fn(), src,_1)
-    
+
     //bind(detail::copy_and_convert_pixels_fn(), _1, dst)
     //bind(detail::copy_and_convert_pixels_fn(), src, _1)
     //gil::detail::fill_pixels_fn<Value>(val)
-    
+
     //detail::copy_construct_in_place_fn<base_t>
     //detail::equal_to_fn<typename variant<Types>::base_t>
 
@@ -781,9 +772,8 @@ namespace detail {
     //detail::color_converted_view_fn<DstP,typename color_convert_view_type<any_image_view<ViewTypes>, DstP>::type >
 }
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
-#endif // GIL_REDUCE_CODE_BLOAT
-
+#endif // defined(BOOST_GIL_REDUCE_CODE_BLOAT)
 
 #endif

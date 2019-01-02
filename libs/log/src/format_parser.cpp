@@ -19,7 +19,7 @@
 #include <boost/throw_exception.hpp>
 #include <boost/exception/exception.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/spirit/include/qi_uint.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/log/detail/format.hpp>
@@ -127,7 +127,7 @@ BOOST_LOG_API format_description< CharT > parse_format(const CharT* begin, const
     if (literal_start_pos < literal_chars_size)
         descr.format_elements.push_back(format_element::literal(literal_start_pos, literal_chars_size - literal_start_pos));
 
-    return boost::move(descr);
+    return BOOST_LOG_NRVO_RESULT(descr);
 }
 
 

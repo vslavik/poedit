@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Units</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_units.html" title="Chapter&#160;39.&#160;Boost.Units 1.1.0">
+<link rel="up" href="../boost_units.html" title="Chapter&#160;43.&#160;Boost.Units 1.1.0">
 <link rel="prev" href="Dimensional_Analysis.html" title="Dimensional Analysis">
 <link rel="next" href="Quantities.html" title="Quantities">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_units.Units"></a><a class="link" href="Units.html" title="Units">Units</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="Units.html#boost_units.Units.base_units">Base Units</a></span></dt>
 <dt><span class="section"><a href="Units.html#boost_units.Units.scaled_base_units">Scaled Base Units</a></span></dt>
 <dt><span class="section"><a href="Units.html#boost_units.Units.scaled_units">Scaled Units</a></span></dt>
@@ -50,7 +50,7 @@
 <p>
       There are two distinct types of systems that can be envisioned:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <span class="bold"><strong>Homogeneous systems</strong></span> : Systems which hold
           a linearly independent set of base units which can be used to represent
@@ -85,7 +85,7 @@
       dimension associated with powers and roots must be computed at compile-time,
       it is not possible to provide overloads for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></code> that
       function correctly for <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/unit.html" title="Class template unit">unit</a></code></span>s.
-      These operations are supported through free functions <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/pow_idp362891424.html" title="Function template pow">pow</a></code></span> and <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/root.html" title="Function template root">root</a></code></span> that are templated
+      These operations are supported through free functions <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/pow_1_3_44_10_2_5_3_1_29.html" title="Function template pow">pow</a></code></span> and <span class="underline"><code class="computeroutput"><a class="link" href="Reference.html#boost.units.root_1_3_44_10_2_35_2_1_3">root</a></code></span> that are templated
       on integer and <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/static_rational.html" title="Class template static_rational">static_rational</a></code></span>
       values and can take as an argument any type for which the utility classes
       <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/power_typeof_helper.html" title="Struct template power_typeof_helper">power_typeof_helper</a></code></span>
@@ -134,7 +134,7 @@
 <p>
       </p>
 <p>
-        The macro <span class="underline"><code class="computeroutput"><a class="link" href="../BOOST_UNITS_STATIC_CONSTANT.html" title="Macro BOOST_UNITS_STATIC_CONSTANT">BOOST_UNITS_STATIC_CONSTANT</a></code></span>
+        The macro <span class="underline"><code class="computeroutput"><a class="link" href="../BOOST_UNI_1_3_44_10_2_40_1.html" title="Macro BOOST_UNITS_STATIC_CONSTANT">BOOST_UNITS_STATIC_CONSTANT</a></code></span>
         is provided in <code class="computeroutput"><a class="link" href="Reference.html#header.boost.units.static_constant_hpp" title="Header &lt;boost/units/static_constant.hpp&gt;">boost/units/static_constant.hpp</a></code>
         to facilitate ODR- and thread-safe constant definition in header files. We
         then define some constants for the supported units to simplify variable definitions:
@@ -199,7 +199,7 @@
 <p>
         There are several advantages to this approach.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             It reflects the real meaning of these units better than treating them
             as independent units.

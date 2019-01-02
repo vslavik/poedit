@@ -19,7 +19,7 @@ namespace bg = boost::geometry;
 
 int main()
 {
-    bg::concept::check
+    bg::concepts::check
         <
             rw_lon_lat_point<double, bg::cs::spherical_equatorial<double> >
         >();

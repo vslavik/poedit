@@ -38,6 +38,23 @@ rule expand-no-defaults ( property-sets * )
 }
 
 
+# Update the list of expected conflicts based on the new
+# features.
+#
+local rule remove-conflicts ( conflicts * : features * )
+{
+    local result ;
+    for local c in $(conflicts)
+    {
+        if ! [ set.intersection [ regex.split $(c) "/" ] : $(features) ]
+        {
+            result += $(c) ;
+        }
+    }
+    return $(result) ;
+}
+
+
 # Implementation of x-product, below. Expects all the project files to already
 # be loaded.
 #
@@ -47,28 +64,43 @@ local rule x-product-aux ( property-sets + )
     local p = [ feature.split $(property-sets[1]) ] ;
     local f = [ set.difference $(p:G) : [ feature.free-features ] ] ;
     local seen ;
+    local extra-conflicts ;
+
     # No conflict with things used at a higher level?
     if ! [ set.intersection $(f) : $(x-product-used) ]
     {
         local x-product-seen ;
+        local x-product-conflicts =
+            [ remove-conflicts $(x-product-conflicts) : $(f) ] ;
         {
             # Do not mix in any conflicting features.
             local x-product-used = $(x-product-used) $(f) ;
 
             if $(property-sets[2])
             {
-                local rest = [ x-product-aux $(property-sets[2-]) : $(feature-space) ] ;
+                local rest = [ x-product-aux $(property-sets[2-]) ] ;
                 result = $(property-sets[1])/$(rest) ;
             }
-
-            result ?= $(property-sets[1]) ;
+            if ! $(x-product-conflicts)
+            {
+                result ?= $(property-sets[1]) ;
+            }
         }
 
         # If we did not encounter a conflicting feature lower down, do not
         # recurse again.
-        if ! [ set.intersection $(f) : $(x-product-seen) ]
+        if ! [ set.intersection $(f) : $(x-product-seen) ] 
+            || [ remove-conflicts $(x-product-conflicts) : $(x-product-seen) ]
         {
             property-sets = ;
+        }
+        else
+        {
+            # A property is only allowed to be absent if it conflicts
+            # with either a higher or lower layer.  We don't need to
+            # bother setting this if we already know that we don't need
+            # to recurse again.
+            extra-conflicts = $(f:J=/) ;
         }
 
         seen = $(x-product-seen) ;
@@ -76,7 +108,10 @@ local rule x-product-aux ( property-sets + )
 
     if $(property-sets[2])
     {
-        result += [ x-product-aux $(property-sets[2-]) : $(feature-space) ] ;
+        # Lower layers expansion must conflict with this
+        local x-product-conflicts = $(x-product-conflicts) $(extra-conflicts) ;
+
+        result += [ x-product-aux $(property-sets[2-]) ] ;
     }
 
     # Note that we have seen these features so that higher levels will recurse
@@ -90,13 +125,21 @@ local rule x-product-aux ( property-sets + )
 # contain conflicting values for single-valued features. Expects all the project
 # files to already be loaded.
 #
+# Formal definition:
+# Returns all maximum non-conflicting subsets of property-sets.
+# The result is a list of all property-sets p such that
+# 1. p is composed by joining a subset of property-sets without removing
+#    duplicates
+# 2. p contains at most one instance of every single-valued feature
+# 3. Adding any additional element of property-sets to p be would
+#    violate (2)
 local rule x-product ( property-sets * )
 {
     if $(property-sets).non-empty
     {
         # Prepare some "scoped globals" that can be used by the implementation
         # function, x-product-aux.
-        local x-product-seen x-product-used ;
+        local x-product-seen x-product-used x-product-conflicts ;
         return [ x-product-aux $(property-sets) : $(feature-space) ] ;
     }
     # Otherwise return empty.

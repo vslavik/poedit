@@ -81,12 +81,12 @@ main()
         ss.str() == std::string("Okt"));
 
   ss.str(""); //reset string stream 
-  greg_month m(Oct);
-  month_formatter::format_month(m, ss, gdnp);
+  greg_month mo(Oct);
+  month_formatter::format_month(mo, ss, gdnp);
   check("check german short month: " + ss.str(), 
         ss.str() == std::string("Okt"));
   ss.str(""); //reset string stream 
-//   month_formatter::format_month(m, ss, gdnp);
+//   month_formatter::format_month(mo, ss, gdnp);
 //   check("check german long month: " + ss.str(), 
 //         ss.str() == std::string("Oktober"));
 
@@ -277,7 +277,7 @@ main()
   /*******************************************************************/
   {
     std::stringstream ss1("January");
-    std::stringstream ss2("dec"); // misspelled
+    std::stringstream ss2m("dec"); // misspelled
     std::stringstream german("Okt");
     german.imbue(global2);
     greg_month m(3);
@@ -293,7 +293,7 @@ main()
     german >> m;
     check("Stream in German month", m == greg_month(Oct));
     try{
-      ss2 >> m; // misspelled
+      ss2m >> m; // misspelled
       check("Bad month exception NOT thrown (misspelled name)", false);
     }catch(bad_month&){
       check("Bad month exception caught (misspelled name)", true);
@@ -306,7 +306,7 @@ main()
   /*******************************************************************/
   {
     std::stringstream ss1("Sun");
-    std::stringstream ss2("Wensday"); // misspelled
+    std::stringstream ss2w("Wensday"); // misspelled
     std::stringstream german("Mittwoch"); // Wednesday
     german.imbue(global2);
     greg_weekday wd(Friday); //something not Sunday...
@@ -322,7 +322,7 @@ main()
     german >> wd;
     check("Stream in German weekday", wd == greg_weekday(Wednesday));
     try{
-      ss2 >> wd;
+      ss2w >> wd;
       check("Bad weekday exception NOT thrown (misspelled name)", false);
     }catch(bad_weekday&){
       check("Bad weekday exception caught (misspelled name)", true);

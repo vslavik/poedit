@@ -1,6 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+from __future__ import print_function
 '''
 >>> from list_ext import *
 
@@ -25,7 +26,7 @@ X(22)
 
 >>> try: result = apply_object_list(identity, 5)
 ... except TypeError: pass
-... else: print 'expected an exception, got', result, 'instead'
+... else: print('expected an exception, got', result, 'instead')
 
 >>> assert apply_list_list(identity, letters) is letters
 
@@ -33,7 +34,7 @@ X(22)
 
 >>> try: result = apply_list_list(len, letters)
 ... except TypeError: pass
-... else: print 'expected an exception, got', result, 'instead'
+... else: print('expected an exception, got', result, 'instead')
 
 >>> append_object(letters, '.')
 >>> letters
@@ -43,7 +44,7 @@ X(22)
   
 >>> try: append_list(letters, (1,2))
 ... except TypeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 
 >>> append_list(letters, [1,2])
 >>> letters
@@ -68,8 +69,8 @@ X(22)
 2
 
 >>> def printer(*args):
-...     for x in args: print x,
-...     print
+...     for x in args: print( x,)
+...     print('')
 ...
 
 >>> y = X(42)
@@ -111,8 +112,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

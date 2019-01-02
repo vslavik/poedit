@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Customizing Boost.Interprocess</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="architecture.html" title="Architecture and internals">
 <link rel="next" href="acknowledgements_notes.html" title="Acknowledgements, notes and links">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.customizing_interprocess"></a><a class="link" href="customizing_interprocess.html" title="Customizing Boost.Interprocess">Customizing Boost.Interprocess</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="customizing_interprocess.html#interprocess.customizing_interprocess.custom_interprocess_alloc">Writing
       a new shared memory allocation algorithm</a></span></dt>
 <dt><span class="section"><a href="customizing_interprocess.html#interprocess.customizing_interprocess.custom_allocators">Building
@@ -129,11 +129,11 @@
         must implement all the functions that boost::interprocess::rbtree_best_fit
         class offers:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>my_algorithm</strong></span>'s constructor must take
             2 arguments:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <span class="bold"><strong>size</strong></span> indicates the total size
                   of the managed memory segment, and <span class="bold"><strong>my_algorithm</strong></span>
@@ -277,7 +277,7 @@
         user can define its own index type if he needs that. To construct a new index
         type, the user must create a class with the following guidelines:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             The interface of the index must follow the common public interface of
             std::map and std::tr1::unordered_map including public typedefs. The
             <code class="computeroutput"><span class="identifier">value_type</span></code> typedef can
@@ -295,7 +295,7 @@
         following this basic interface are <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unordered_map</span></code>,
         <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">flat_map</span></code> and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">map</span></code>.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             The class must be a class template taking only a traits struct of this
             type:
           </li></ul></div>
@@ -346,13 +346,13 @@
         will define interesting internal types like <code class="computeroutput"><span class="identifier">void_pointer</span></code>
         or <code class="computeroutput"><span class="identifier">mutex_family</span></code>.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             The constructor of the customized index type must take a pointer to segment_manager
             as constructor argument:
           </li></ul></div>
 <pre class="programlisting"><span class="identifier">constructor</span><span class="special">(</span><span class="identifier">segment_manager</span> <span class="special">*</span><span class="identifier">segment_mngr</span><span class="special">);</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             The index must provide a memory reservation function, that optimizes
             the index if the user knows the number of elements to be inserted in
             the index:
@@ -443,7 +443,7 @@
 <p>
         Interprocess also defines other index types:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>boost::map_index</strong></span> uses <span class="bold"><strong>boost::interprocess::map</strong></span>
             as index type.
@@ -451,7 +451,7 @@
 <li class="listitem">
             <span class="bold"><strong>boost::null_index</strong></span> that uses an dummy
             index type if the user just needs anonymous allocations and wants to
-            save some space and class instantations.
+            save some space and class instantiations.
           </li>
 </ul></div>
 <p>

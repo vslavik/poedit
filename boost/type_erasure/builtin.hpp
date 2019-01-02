@@ -12,10 +12,15 @@
 #define BOOST_TYPE_ERASURE_BUILTIN_HPP_INCLUDED
 
 #include <boost/mpl/vector.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_reference.hpp>
 #include <boost/type_erasure/detail/storage.hpp>
 #include <boost/type_erasure/placeholder.hpp>
 #include <boost/type_erasure/constructible.hpp>
 #include <boost/type_erasure/rebind_any.hpp>
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#   include <utility>  // std::move
+#endif
 #include <typeinfo>
 
 namespace boost {
@@ -64,26 +69,59 @@ struct copy_constructible :
     ::boost::mpl::vector<constructible<T(const T&)>, destructible<T> >
 {};
 
+#ifdef BOOST_TYPE_ERASURE_DOXYGEN
+
 /**
  * Enables assignment of @ref any types.
  */
-template<class T = _self, class U = T>
+template<class T = _self, class U = const T&>
 struct assignable
 {
-    static void apply(T& dst, const U& src) { dst = src; }
+    static void apply(T& dst, U src);
+};
+
+#else
+
+/**
+ * Enables assignment of @ref any types.
+ */
+template<class T = _self, class U = const T&>
+struct assignable :
+    ::boost::mpl::vector<assignable<T, const U&> >
+{};
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+
+/** INTERNAL ONLY */
+template<class T, class U>
+struct assignable<T, U&&>
+{
+    static void apply(T& dst, U&& src) { dst = std::forward<U>(src); }
+};
+
+#endif
+
+/** INTERNAL ONLY */
+template<class T, class U>
+struct assignable<T, U&>
+{
+    static void apply(T& dst, U& src) { dst = src; }
 };
 
 /** INTERNAL ONLY */
 template<class T, class U, class Base>
-struct concept_interface<assignable<T, U>, Base, T> : Base
+struct concept_interface<assignable<T, U>, Base, T,
+        typename ::boost::enable_if_c< ::boost::is_reference<U>::value>::type> : Base
 {
     using Base::_boost_type_erasure_deduce_assign;
     assignable<T, U>* _boost_type_erasure_deduce_assign(
-        typename ::boost::type_erasure::rebind_any<Base, const U&>::type)
+        typename ::boost::type_erasure::as_param<Base, U>::type)
     {
         return 0;
     }
 };
+
+#endif
 
 /**
  * Enables runtime type information.  This is required

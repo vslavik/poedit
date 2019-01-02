@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using integral_promotion_t = typename integral_promotion<T>::type; // C++11 and above
+
 __type If integral promotion can be applied to an rvalue of type `T`, then
 applies integral promotion to `T` and keeps cv-qualifiers of `T`,
 otherwise leaves `T` unchanged.

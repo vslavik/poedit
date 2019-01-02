@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test suite.
  *
- * Copyright 2003-2015 Joaquin M Lopez Munoz.
+ * Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +17,7 @@
 #include "test_copy_assignment.hpp"
 #include "test_hash_ops.hpp"
 #include "test_iterators.hpp"
+#include "test_key.hpp"
 #include "test_key_extractors.hpp"
 #include "test_list_ops.hpp"
 #include "test_modifiers.hpp"
@@ -42,6 +43,7 @@ int main()
   test_copy_assignment();
   test_hash_ops();
   test_iterators();
+  test_key();
   test_key_extractors();
   test_list_ops();
   test_modifiers();

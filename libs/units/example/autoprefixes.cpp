@@ -1,4 +1,4 @@
-// Boost.Units - A C++ library for zero-overhead dimensional analysis and 
+// Boost.Units - A C++ library for zero-overhead dimensional analysis and
 // unit/quantity manipulation and conversion
 //
 // Copyright (C) 2003-2008 Matthias Christian Schabel
@@ -8,9 +8,9 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-/** 
+/**
 \file
-    
+
 \brief Example of using autoprefixes.
 
 \details
@@ -22,7 +22,7 @@ autoprefixes.cpp
 using native typeof
 Linking...
 Embedding manifest...
-Autorun "j:\Cpp\Misc\debug\autoprefixes.exe" 
+Autorun "j:\Cpp\Misc\debug\autoprefixes.exe"
 2.345 m
 2.345 km
 5.49902 MJ
@@ -54,20 +54,20 @@ meter
 
 struct byte_base_unit : boost::units::base_unit<byte_base_unit, boost::units::dimensionless_type, 3>
 {
-  static const char* name() { return("byte"); }
-  static const char* symbol() { return("b"); }
+  static constexpr const char* name() { return("byte"); }
+  static constexpr const char* symbol() { return("b"); }
 };
 
 struct thing_base_unit : boost::units::base_unit<thing_base_unit, boost::units::dimensionless_type, 4>
 {
-  static const char* name() { return("thing"); }
-  static const char* symbol() { return(""); }
+  static constexpr const char* name() { return("thing"); }
+  static constexpr const char* symbol() { return(""); }
 };
 
 struct euro_base_unit : boost::units::base_unit<euro_base_unit, boost::units::dimensionless_type, 5>
 {
-  static const char* name() { return("EUR"); }
-  static const char* symbol() { return("€"); }
+  static constexpr const char* name() { return("EUR"); }
+  static constexpr const char* symbol() { return("€"); }
 };
 
 int main()
@@ -100,7 +100,7 @@ int main()
 
   quantity<byte_base_unit::unit_type> b = 2048. * byte_base_unit::unit_type();
   cout << engineering_prefix << b << endl;  // 2.048 kb
-  cout << symbol_format << binary_prefix << b << endl; //  "2 Kib" 
+  cout << symbol_format << binary_prefix << b << endl; //  "2 Kib"
   //] [/autoprefixes_snippet_2]
 
   // Note that scalar dimensionless values are *not* prefixed automatically by the engineering_prefix or binary_prefix iostream manipulators.
@@ -135,8 +135,8 @@ int main()
   quantity<thing_base_unit::unit_type> t = 2048. * thing_base_unit::unit_type();
   cout << name_format << engineering_prefix << t << endl;  // 2.048 kilothing
   cout << symbol_format << engineering_prefix << t << endl;  // 2.048 k
- 
-  cout  << binary_prefix << t << endl; //  "2 Ki" 
+
+  cout  << binary_prefix << t << endl; //  "2 Ki"
 
   quantity<euro_base_unit::unit_type> ce = 2048. * euro_base_unit::unit_type();
   cout << name_format << engineering_prefix << ce << endl;  // 2.048 kiloEUR

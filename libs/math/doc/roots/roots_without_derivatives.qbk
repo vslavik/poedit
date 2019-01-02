@@ -180,7 +180,7 @@ These functions locate the root using __bisection_wikipedia.
 `bisect` function arguments are:
 
 [variablelist
-[[f]  [A unary functor which is the function ['f(x)] whose root is to be found.]]
+[[f]  [A unary functor (or C++ lambda) which is the function ['f(x)] whose root is to be found.]]
 [[min] [The left bracket of the interval known to contain the root.]]
 [[max] [The right bracket of the interval known to contain the root.[br]
         It is a precondition that ['min < max] and ['f(min)*f(max) <= 0],
@@ -188,7 +188,7 @@ These functions locate the root using __bisection_wikipedia.
         The action taken on error is controlled by the __Policy template argument: the default behavior is to
         throw a ['boost::math::evaluation_error].  If the __Policy is changed to not throw
         then it returns ['std::pair<T>(min, min)].]]
-[[tol]  [A binary functor that specifies the termination condition: the function
+[[tol]  [A binary functor (or C++ lambda) that specifies the termination condition: the function
         will return the current brackets enclosing the root when ['tol(min, max)] becomes true.
         See also __root_termination.]]
 [[max_iter][The maximum number of invocations of ['f(x)] to make while searching for the root.  On exit, this is updated to the actual number of invocations performed.]]
@@ -260,7 +260,7 @@ setting the initial guess to 0.1, when the root is at 1e-300.
 The `bracket_and_solve_root` parameters are:
 
 [variablelist
-[[f][A unary functor that is the function whose root is to be solved.
+[[f][A unary functor (or C++ lambda) that is the function whose root is to be solved.
     ['f(x)] must be uniformly increasing or decreasing on ['x].]]
 [[guess][An initial approximation to the root.]]
 [[factor][A scaling factor that is used to bracket the root: the value
@@ -275,7 +275,7 @@ The `bracket_and_solve_root` parameters are:
          is falling on /x/.  This value is used along with the result
          of /f(guess)/ to determine if /guess/ is
          above or below the root.]]
-[[tol]   [A binary functor that determines the termination condition for the search
+[[tol]   [A binary functor (or C++ lambda) that determines the termination condition for the search
          for the root.  /tol/ is passed the current brackets at each step,
          when it returns true then the current brackets are returned as the pair result.
          See also __root_termination.]]
@@ -371,7 +371,7 @@ number of iterations than would otherwise be possible.
 The __root_finding_TOMS748 parameters are:
 
 [variablelist
-[[f]   [A unary functor that is the function whose root is to be solved.
+[[f]   [A unary functor (or C++ lambda) that is the function whose root is to be solved.
        f(x) need not be uniformly increasing or decreasing on ['x] and
        may have multiple roots.  However, the bounds given must bracket a single root.]]
 [[a]   [The lower bound for the initial bracket of the root.]]
@@ -380,7 +380,7 @@ The __root_finding_TOMS748 parameters are:
        bracket the root to find so that ['f(a) * f(b) < 0].]]
 [[fa]  [Optional: the value of ['f(a)].]]
 [[fb]  [Optional: the value of ['f(b)].]]
-[[tol] [A binary functor that determines the termination condition for the search
+[[tol] [A binary functor (or C++ lambda) that determines the termination condition for the search
         for the root.  ['tol] is passed the current brackets at each step,
         when it returns true, then the current brackets are returned as the result.
         See also __root_termination.]]

@@ -49,6 +49,17 @@ compiler include path.
 
 [endsect]
 
+[section:tested_compilers Tested compilers]
+
+[*Boost.Intrusive] has been tested on the following compilers/platforms:
+
+*  Visual C++ >= 7.1.
+*  GCC >= 4.1.
+
+[warning GCC < 4.3 and MSVC < 9.0 are deprecated and will be removed in the next version.]
+
+[endsect]
+
 [endsect]
 
 [section:intrusive_vs_nontrusive Intrusive and non-intrusive containers]
@@ -144,9 +155,11 @@ A non-intrusive container has some limitations:
    a size overhead for each allocation to store bookkeeping information and a
    synchronization to protected concurrent allocation from different threads.
 
-*  Only copies of objects are stored in non-intrusive containers. Hence copy
-   or move constructors and copy or move assignment operators are required. Non-copyable
-   and non-movable objects can't be stored in non-intrusive containers.
+*  Before C++11, only copies of objects could be stored in non-intrusive containers. Still
+   copy or move constructors and copy or move assignment operators are required
+   and non-copyable and non-movable objects can't be stored in some containers. In any case,
+   [*new] objects have to be created inside the container using constructors and the same
+   object can't be shared between two containers.
 
 *  It's not possible to store a derived object in a STL-container while
    retaining its original type.
@@ -155,6 +168,9 @@ Intrusive containers have some important advantages:
 
 *  Operating with intrusive containers doesn't invoke any memory management at all.
    The time and size overhead associated with dynamic memory can be minimized.
+
+*  The same object can be inserted in more than one container at the same time with
+   a tiny overhead in the object size.
 
 *  Iterating an Intrusive container needs less memory accesses than the semantically
    equivalent container of pointers: iteration is faster.
@@ -208,7 +224,7 @@ Intrusive containers have also downsides:
     [[Memory management]                                                         [External]                          [Internal through allocator]]
     [[Insertion/Erasure time]                                                    [Faster]                            [Slower]]
     [[Memory locality]                                                           [Better]                            [Worse]]
-    [[Can hold non-copyable and non-movable objects by value]                    [Yes]                               [No]]
+    [[Can insert the same object in more than one container]                     [Yes]                               [No]]
     [[Exception guarantees]                                                      [Better]                            [Worse]]
     [[Computation of iterator from value]                                        [Constant]                          [Non-constant]]
     [[Insertion/erasure predictability]                                          [High]                              [Low]]
@@ -331,7 +347,7 @@ and optionally, the user can specify options. We have 3 option types:
    containers can have a `size_type` that might be different from `std::size_t`
    (for example, STL-like containers use the `size_type` defined by their allocator).
    [*Boost.Intrusive] can be used to implement such containers specifying the
-   the type of the size. By default the type is `std::size_t`.
+   type of the size. By default the type is `std::size_t`.
 
 Example of a constant-time size intrusive list that will store Foo objects, using
 the base hook with the default tag:
@@ -701,7 +717,7 @@ with the name of the file to include:
 
 These hooks have exactly the same size overhead as their analog non auto-unlinking
 hooks, but they have a restriction: they can only be used with
-[link intrusive.presenting_containers non-constant time containers].
+[link intrusive.presenting_containers non-constant time size containers].
 There is a reason for this:
 
 * Auto-unlink hooks don't store any reference to the container where they are inserted.
@@ -863,7 +879,7 @@ the section [link intrusive.usage How to use Boost.Intrusive]:
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`.
 
 [classref boost::intrusive::slist slist] can receive additional options:
@@ -965,7 +981,7 @@ the section [link intrusive.usage How to use Boost.Intrusive]:
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 [endsect]
@@ -1089,7 +1105,7 @@ These containers receive the same options explained in the section
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive an additional option:
@@ -1279,7 +1295,7 @@ receive the same options explained in the section
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive additional options:
@@ -1393,9 +1409,15 @@ The option is called [classref boost::intrusive::key_of_value].
 
 If a user specifies that option when defining a `set/multiset` intrusive container, it specifies a function object
 that will tell the container which is the type of the ['key] that `value_type` holds and how to obtain it. This
-function object must be lightweight, `DefaultConstructible`, it shall define a `type` member that defines the type
-of the key and a member function to obtain a const reference to the key stored inside a `value_type`. Let's
-see an example of how a set can be configured as a map indexed by an integer stored in the `value_type`.
+function object must be:
+
+* Lightweight to copy.
+* Default constructible (when the container constructor overload requires it).
+* It shall define:
+   * A `type` member that defines the type of the key
+   * A member function that returns the key derived a `value_type`, either by value or by const-reference.
+
+Let's see an example of how a set can be configured as a map indexed by an integer stored in the `value_type`:
  
 [import ../example/doc_map.cpp]
 [doc_map_code]
@@ -1505,7 +1527,7 @@ These containers receive the same options explained in the section
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive an additional option:
@@ -1607,7 +1629,7 @@ These containers receive the same options explained in the section
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive an additional option:
@@ -1718,7 +1740,7 @@ These containers receive the same options explained in the section
    to configure the container. (To learn about value traits go to the section
    [link intrusive.value_traits Containers with custom ValueTraits].)
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive additional options:
@@ -1821,7 +1843,7 @@ These containers receive the same options explained in the section
 *  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
    Default: `constant_time_size<true>`
 
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+*  [*`size_type<typename SizeType>`]: To specify the type that will be used to store the size
    of the container. Default: `size_type<std::size_t>`
 
 And they also can receive additional options:
@@ -2413,7 +2435,7 @@ This section will expand the explanation of previously presented basic concepts
 before explaining the customization options of [*Boost.Intrusive].
 
 *  [*Node Algorithms]: A set of static functions that implement basic operations
-   on a group of nodes: initialize a node, link_mode_type a node to a group of nodes,
+   on a group of nodes: initialize a node, link a node to a group of nodes,
    unlink a node from another group of nodes, etc. For example, a circular
    singly linked list is a group of nodes, where each node has a pointer to the
    next node. [*Node Algorithms] just require a [*NodeTraits]
@@ -3316,6 +3338,28 @@ To analyze the thread safety, consider the following points:
 
 [endsect]
 
+[section:boost_intrusive_iterators Boost.Intrusive Iterator features]
+
+[section:null_forward_iterators Null forward iterators]
+
+[*Boost.Intrusive] implements
+[@http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2013/n3644.pdf C++14 Null Forward Iterators],
+a feature that was introduced with C++14. This means that equality and inequality comparison are defined
+over all iterators for the same underlying sequence and the value initialized-iterators.
+
+Value initialized iterators behave as if they refer past the end of the same empty sequence:
+
+[c++]
+
+   list<MyType> l = { ... };
+   auto ni = list<MyType>::iterator();
+   auto nd = list<MyType2>::iterator();
+   ni == ni; // True.
+   nd != nd; // False.
+   ni == nd; // Won't compile.
+
+[endsect]
+
 [section:scary_iterators Scary Iterators]
 
 The paper N2913, titled [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf,
@@ -3343,6 +3387,8 @@ More concretely, the following options and conditions guarantee that iterator ty
 * [*`treap_[multi]set`]: `priority<>`
 * [*`bs_[multi]set`, `sg_[multi]set`, `treap_[multi]set`, `splay_[multi]set`]:
    They share the same iterator type when configured with the same options.
+
+[endsect]
 
 [endsect]
 
@@ -3835,6 +3881,54 @@ to be inserted in intrusive containers are allocated using `std::vector` or `std
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_67_00 Boost 1.67 Release]
+
+*  Fixed bugs:
+   *  [@https://github.com/boostorg/intrusive/issues/29 GitHub Issues #29: ['Uninitialized variable warning pointer_plus_bits.hpp]]
+
+[endsect]
+
+[section:release_notes_boost_1_65_00 Boost 1.65 Release]
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/12894 Boost Trac #12894: ['Allow non std::size_t size_type]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12698 Boost Trac #12698: ['base64 iterators can't be used with iterator_advance]]
+   *  [@https://github.com/boostorg/intrusive/pull/23 GitHub Pull #23: ['Conditionally replace deprecated/removed C++98 std::random_shuffle by...]]
+   *  [@https://github.com/boostorg/intrusive/pull/24 GitHub Pull #24: ['Adds support for MSVC ARM64 target]]
+
+[endsect]
+
+[section:release_notes_boost_1_64_00 Boost 1.64 Release]
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/12745 Boost Trac #12745: ['key_nodeptr_comp broken if the key type is void*]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12761 Boost Trac #12761: ['intrusive::set::swap doesn't swap the comparison function*]]
+
+[endsect]
+
+[section:release_notes_boost_1_63_00 Boost 1.63 Release]
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/12556 Boost Trac #12556: ['member_value_traits.hpp has a missing #include]]
+
+[endsect]
+
+[section:release_notes_boost_1_62_00 Boost 1.62 Release]
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/11476 Boost Trac #11476: ['has_member_function_callable_with.hpp is massively broken with BOOST_NO_CXX11_DECLTYPE]]
+   *  [@https://svn.boost.org/trac/boost/ticket/11994 Boost Trac #11994: ['Support intrusive container key extractors that return the key by value]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12184 Boost Trac #12184: ['clang -Wdocumentation warning]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12190 Boost Trac #12190: ['Intrusive List + Flat Map combination crashes]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12229 Boost Trac #12229: ['intrusive::unordered_set<T>::rehash() broken]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12245 Boost Trac #12245: ['bstree uses a shared static size_traits for constant_time_size<false>]]
+   *  [@https://svn.boost.org/trac/boost/ticket/12432 Boost Trac #12432: ['Forced KeyOfValue creation when using custom compare on insert_check]]
+
+*  Implemented `merge` functions in ordered associative containers.
+*  Officially documented `root()` function for tree-based containers.
+
+[endsect]
+
 [section:release_notes_boost_1_61_00 Boost 1.61 Release]
 
 *  Fixed bugs:
@@ -4071,16 +4165,6 @@ to be inserted in intrusive containers are allocated using `std::vector` or `std
 *  Added `container_from_iterator` function to tree-based containers.
 
 [endsect]
-
-[endsect]
-
-[section:tested_compilers Tested compilers]
-
-[*Boost.Intrusive] has been tested on the following compilers/platforms:
-
-*  Visual >= 7.1
-*  GCC >= 4.1
-*  Intel 11
 
 [endsect]
 

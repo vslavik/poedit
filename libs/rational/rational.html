@@ -55,76 +55,76 @@ public:
     typedef I int_type;
 
     // Constructors
-    constexpr rational();          // Zero
-    constexpr rational(I n);       // Equal to n/1
-              rational(I n, I d);  // General case (n/d)
-   template&lt;typename J&gt;
-    constexpr explicit rational(const rational&lt;J&gt; &amp;r);  // Cross-instantiation
+    rational();          // Zero;               constexpr since C++11
+    rational(I n);       // Equal to n/1;       constexpr since C++11
+    rational(I n, I d);  // General case (n/d); constexpr since C++14
+    template&lt;typename J&gt;
+    explicit rational(const rational&lt;J&gt; &amp;r);  // Cross-instantiation; constexpr since C++11
 
     // Normal copy constructors and assignment operators
 
     // Assignment from I
-    rational&amp; operator=(I n);
+    rational&amp; operator=(I n); // constexpr since C++14
 
     // Assign in place
-    rational&amp; assign(I n, I d);
+    rational&amp; assign(I n, I d); // constexpr since C++14
 
     // Representation
-    constexpr I numerator() const;
-    constexpr I denominator() const;
+    I numerator() const;   // constexpr since C++11
+    I denominator() const; // constexpr since C++11
 
     // In addition to the following operators, all of the "obvious" derived
     // operators are available - see <a href="../utility/operators.htm">operators.hpp</a>
 
     // Arithmetic operators
-    rational&amp; operator+= (const rational&amp; r);
-    rational&amp; operator-= (const rational&amp; r);
-    rational&amp; operator*= (const rational&amp; r);
-    rational&amp; operator/= (const rational&amp; r);
+    rational&amp; operator+= (const rational&amp; r); // constexpr since C++14
+    rational&amp; operator-= (const rational&amp; r); // constexpr since C++14
+    rational&amp; operator*= (const rational&amp; r); // constexpr since C++14
+    rational&amp; operator/= (const rational&amp; r); // constexpr since C++14
 
     // Arithmetic with integers
-    rational&amp; operator+= (I i);
-    rational&amp; operator-= (I i);
-    rational&amp; operator*= (I i);
-    rational&amp; operator/= (I i);
+    rational&amp; operator+= (I i); // constexpr since C++14
+    rational&amp; operator-= (I i); // constexpr since C++14
+    rational&amp; operator*= (I i); // constexpr since C++14
+    rational&amp; operator/= (I i); // constexpr since C++14
 
     // Increment and decrement
-    const rational&amp; operator++();
-    const rational&amp; operator--();
+    const rational&amp; operator++(); // constexpr since C++14
+    const rational&amp; operator--(); // constexpr since C++14
 
     // Operator not
-    constexpr bool operator!() const;
+    bool operator!() const; // constexpr since C++11
 
     // Boolean conversion
-    constexpr operator bool_type() const;
+    operator bool_type() const; // constexpr since C++11
 
     // Comparison operators
-              bool operator&lt; (const rational&amp; r) const;
-    constexpr bool operator== (const rational&amp; r) const;
+    bool operator&lt; (const rational&amp; r) const;  // constexpr since C++14
+    bool operator== (const rational&amp; r) const; // constexpr since C++11
 
     // Comparison with integers
-              bool operator&lt; (I i) const;
-              bool operator&gt; (I i) const;
-    constexpr bool operator== (I i) const;
+    bool operator&lt; (I i) const;  // constexpr since C++14
+    bool operator&gt; (I i) const;  // constexpr since C++14
+    bool operator== (I i) const; // constexpr since C++11
 };
 
 // Unary operators
-template &lt;typename I&gt; constexpr rational&lt;I&gt; operator+ (const rational&lt;I&gt;&amp; r);
-template &lt;typename I&gt;           rational&lt;I&gt; operator- (const rational&lt;I&gt;&amp; r);
+template &lt;typename I&gt; rational&lt;I&gt; operator+ (const rational&lt;I&gt;&amp; r); // constexpr since C++11
+template &lt;typename I&gt; rational&lt;I&gt; operator- (const rational&lt;I&gt;&amp; r); // constexpr since C++14
 
 // Reversed order operators for - and / between (types convertible to) I and rational
-template &lt;typename I, typename II&gt; inline rational&lt;I&gt; operator- (II i, const rational&lt;I&gt;&amp; r);
-template &lt;typename I, typename II&gt; inline rational&lt;I&gt; operator/ (II i, const rational&lt;I&gt;&amp; r);
+template &lt;typename I, typename II&gt; inline rational&lt;I&gt; operator- (II i, const rational&lt;I&gt;&amp; r); // constexpr since C++14
+template &lt;typename I, typename II&gt; inline rational&lt;I&gt; operator/ (II i, const rational&lt;I&gt;&amp; r); // constexpr since C++14
 
 // Absolute value
-template &lt;typename I&gt; rational&lt;I&gt; abs (const rational&lt;I&gt;&amp; r);
+template &lt;typename I&gt; rational&lt;I&gt; abs (const rational&lt;I&gt;&amp; r); // constexpr since C++14
 
 // Input and output
 template &lt;typename I&gt; std::istream&amp; operator&gt;&gt; (std::istream&amp; is, rational&lt;I&gt;&amp; r);
 template &lt;typename I&gt; std::ostream&amp; operator&lt;&lt; (std::ostream&amp; os, const rational&lt;I&gt;&amp; r);
 
 // Type conversion
-template &lt;typename T, typename I&gt; constexpr T rational_cast (const rational&lt;I&gt;&amp; r);
+template &lt;typename T, typename I&gt; T rational_cast (const rational&lt;I&gt;&amp; r); // constexpr since C++11
 </pre>
 
 <h2><a name="Rationale">Rationale</a></h2>
@@ -300,11 +300,12 @@ for normalization is performed in case value-preservation is violated.
     rational&lt;J&gt; r3(r2);  // assuming J(n) and J(d) are well-formed
 </pre>
 
-<p>The no-argument constructor, single-argument constructor, and cross-version
-constructor template are marked as <code>constexpr</code>, making them viable in
-constant-expressions when the initializers (if any) are also constant
+<p>In C++11, the no-argument constructor, single-argument constructor, and
+cross-version constructor template are marked as <code>constexpr</code>, making
+them viable in constant-expressions when the initializers (if any) are also constant
 expressions (and the necessary operations from the underlying integer type(s)
-are <code>constexpr</code>-enabled).
+are <code>constexpr</code>-enabled). Since C++14, all constructors are
+<code>constexpr</code>-enabled.
 
 <p>The single-argument constructor is <em>not</em> declared as explicit, so
 there is an implicit conversion from the underlying integer type to the
@@ -332,8 +333,9 @@ class. These include:
     Unary: + - !
 </pre>
 
-<p>So far, only <code>operator ==</code>, unary <code>operator +</code>, and
-<code>operator !</code> are <code>constexpr</code>-enabled.
+<p>Since C++14, all of these operations are <code>constexpr</code>-enabled.
+In C++11, only <code>operator==</code>, <code>operator!=</code>,
+unary <code>operator+</code>, and <code>operator!</code> are.
 
 <h3><a name="Input and Output">Input and Output</a></h3>
 Input and output operators <tt>&lt;&lt;</tt> and <tt>&gt;&gt;</tt>
@@ -341,7 +343,7 @@ are provided. The external representation of a rational is
 two integers, separated by a slash (<tt>/</tt>). On input, the format must be
 exactly an integer, followed with no intervening whitespace by a slash,
 followed (again with no intervening whitespace) by a second integer. The
-external representation of an integer is defined by the undelying integer
+external representation of an integer is defined by the underlying integer
 type.
 
 <h3><a name="In-place assignment">In-place assignment</a></h3>
@@ -694,38 +696,67 @@ required elsewhere, the calculation is performed inline.
 
 <h2><a name="History and Acknowledgements">History and Acknowledgements</a></h2>
 
-In December, 1999, I implemented the initial version of the rational number
-class, and submitted it to the <A HREF="http://www.boost.org/">boost.org</A>
-mailing list. Some discussion of the implementation took place on the mailing
-list. In particular, Andrew D. Jewell pointed out the importance of ensuring
-that the risk of overflow was minimised, and provided overflow-free
-implementations of most of the basic operations. The name rational_cast was
-suggested by Kevlin Henney. Ed Brey provided invaluable comments - not least
-in pointing out some fairly stupid typing errors in the original code!
+   <p>
+      In December, 1999, I implemented the initial version of the rational number
+      class, and submitted it to the <A HREF="http://www.boost.org/">boost.org</A>
+      mailing list. Some discussion of the implementation took place on the mailing
+      list. In particular, Andrew D. Jewell pointed out the importance of ensuring
+      that the risk of overflow was minimised, and provided overflow-free
+      implementations of most of the basic operations. The name rational_cast was
+      suggested by Kevlin Henney. Ed Brey provided invaluable comments - not least
+      in pointing out some fairly stupid typing errors in the original code!</p>
 
-<p>David Abrahams contributed helpful feedback on the documentation.
+   <p>David Abrahams contributed helpful feedback on the documentation.</p>
 
-<p>A long discussion of the merits of providing a conversion from floating
-point to rational took place on the boost list in November 2000. Key
-contributors included Reggie Seagraves, Lutz Kettner and Daniel Frey (although
-most of the boost list seemed to get involved at one point or another!). Even
-though the end result was a decision <em>not</em> to implement anything, the
-discussion was very valuable in understanding the issues.
+   <p>
+      A long discussion of the merits of providing a conversion from floating
+      point to rational took place on the boost list in November 2000. Key
+      contributors included Reggie Seagraves, Lutz Kettner and Daniel Frey (although
+      most of the boost list seemed to get involved at one point or another!). Even
+      though the end result was a decision <em>not</em> to implement anything, the
+      discussion was very valuable in understanding the issues.
+   </p>
 
-<p>Stephen Silver contributed useful experience on using the rational class
-with a user-defined integer type.
+   <p>
+      Stephen Silver contributed useful experience on using the rational class
+      with a user-defined integer type.
+   </p>
 
-<p>Nickolay Mladenov provided the current implementation of operator+= and
-operator-=.
+   <p>
+      Nickolay Mladenov provided the current implementation of operator+= and
+      operator-=.
+   </p>
+   <p>
+      Discussion of the issues surrounding Koenig lookup and std::swap took place
+      on the boost list in January 2001.
+   </p>
+   <p>
+      Daryle Walker provided a Boolean conversion operator, so that a rational can
+      be used in the same Boolean contexts as the built-in numeric types, in December
+      2005.  He added the cross-instantiation constructor template in August 2013.
+   </p>
+   <p>
+   July 2014: Updated numerator/denominator accessors to return values by constant 
+   reference: this gives a performance improvement when using with multiprecision (class) types.
+   </p>
+   <p>
+      July 2014: Updated to use BOOST_THROW_EXCEPTION uniformly throughout.
+   </p>
+   <p>
+      July 2014: Added support for C++11 constexpr constructors, plus tests to match.
+   </p>
+   <p>
+      Nov 2014: Added support for gcd and lcm of rational numbers.
+   </p>
+   <p>
+      Dec 2016: Reworked constructors and operators to prohibit narrowing implicit 
+      conversions, in particular accidental conversion from floating point types.
+   </p>
+   <p>
+      Oct/Nov 2018: Add more constexpr.
+   </p>
 
-<p>Discussion of the issues surrounding Koenig lookup and std::swap took place
-on the boost list in January 2001.
-
-<p>Daryle Walker provided a Boolean conversion operator, so that a rational can
-be used in the same Boolean contexts as the built-in numeric types, in December
-2005.  He added the cross-instantiation constructor template in August 2013.
-
-<p>Revised August 30, 2013</p>
+<p>Revised July 14, 2017</p>
 
 <p>&copy; Copyright Paul Moore 1999-2001; &copy; Daryle Walker 2005, 2013.
 Permission to copy, use, modify, sell and distribute this document is granted

@@ -25,10 +25,10 @@ namespace rexpr { namespace parser
     typedef error_handler<iterator_type> error_handler_type;
 
     // Combined Error Handler and Phrase Parse Context
-    typedef x3::with_context<
+    typedef x3::context<
         error_handler_tag
       , std::reference_wrapper<error_handler_type> const
-      , phrase_context_type>::type
+      , phrase_context_type>
     context_type;
 }}
 

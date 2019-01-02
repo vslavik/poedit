@@ -104,6 +104,7 @@
 #include "class.h"
 #include "compile.h"
 #include "constants.h"
+#include "debugger.h"
 #include "filesys.h"
 #include "function.h"
 #include "hcache.h"
@@ -120,6 +121,7 @@
 #include "strings.h"
 #include "timestamp.h"
 #include "variable.h"
+#include "execcmd.h"
 
 /* Macintosh is "special" */
 #ifdef OS_MAC
@@ -219,6 +221,32 @@ void regex_done();
 
 char const * saved_argv0;
 
+static void usage( const char * progname )
+{
+	err_printf("\nusage: %s [ options ] targets...\n\n", progname);
+
+	err_printf("-a      Build all targets, even if they are current.\n");
+	err_printf("-dx     Set the debug level to x (0-13,console,mi).\n");
+	err_printf("-fx     Read x instead of Jambase.\n");
+	/* err_printf( "-g      Build from newest sources first.\n" ); */
+	err_printf("-jx     Run up to x shell commands concurrently.\n");
+	err_printf("-lx     Limit actions to x number of seconds after which they are stopped.\n");
+	err_printf("-mx     Maximum target output saved (kb), default is to save all output.\n");
+	err_printf("-n      Don't actually execute the updating actions.\n");
+	err_printf("-ox     Mirror all output to file x.\n");
+	err_printf("-px     x=0, pipes action stdout and stderr merged into action output.\n");
+	err_printf("-q      Quit quickly as soon as a target fails.\n");
+	err_printf("-sx=y   Set variable x=y, overriding environment.\n");
+	err_printf("-tx     Rebuild x, even if it is up-to-date.\n");
+	err_printf("-v      Print the version of jam and exit.\n");
+#ifdef HAVE_PYTHON
+	err_printf("-z      Disable Python Optimization and enable asserts\n");
+#endif
+	err_printf("--x     Option is ignored.\n\n");
+
+    exit( EXITBAD );
+}
+
 int main( int argc, char * * argv, char * * arg_environ )
 {
     int                     n;
@@ -230,6 +258,7 @@ int main( int argc, char * * argv, char * * arg_environ )
     char          *       * arg_v = argv;
     char            const * progname = argv[ 0 ];
     module_t              * environ_module;
+    int                     is_debugger;
 
     saved_argv0 = argv[ 0 ];
 
@@ -237,6 +266,73 @@ int main( int argc, char * * argv, char * * arg_environ )
 
 #ifdef OS_MAC
     InitGraf( &qd.thePort );
+#endif
+
+    cwd_init();
+    constants_init();
+
+#ifdef JAM_DEBUGGER
+
+    is_debugger = 0;
+    
+    if ( getoptions( argc - 1, argv + 1, "-:l:m:d:j:p:f:gs:t:ano:qv", optv ) < 0 )
+        usage( progname );
+
+    if ( ( s = getoptval( optv, 'd', 0 ) ) )
+    {
+        if ( strcmp( s, "mi" ) == 0 )
+        {
+            debug_interface = DEBUG_INTERFACE_MI;
+            is_debugger = 1;
+        }
+        else if ( strcmp( s, "console" ) == 0 )
+        {
+            debug_interface = DEBUG_INTERFACE_CONSOLE;
+            is_debugger = 1;
+        }
+    }
+
+#if NT
+
+    if ( argc >= 3 )
+    {
+        /* Check whether this instance is being run by the debugger. */
+        size_t opt_len = strlen( debugger_opt );
+        if ( strncmp( argv[ 1 ], debugger_opt, opt_len ) == 0 &&
+            strncmp( argv[ 2 ], debugger_opt, opt_len ) == 0 )
+        {
+            debug_init_handles( argv[ 1 ] + opt_len, argv[ 2 ] + opt_len );
+            /* Fix up argc/argv to hide the internal options */
+            arg_c = argc = (argc - 2);
+            argv[ 2 ] = argv[ 0 ];
+            arg_v = argv = (argv + 2);
+            debug_interface = DEBUG_INTERFACE_CHILD;
+        }
+    }
+
+    if ( is_debugger )
+    {
+        return debugger();
+    }
+
+#else
+
+    if ( is_debugger )
+    {
+        if ( setjmp( debug_child_data.jmp ) != 0 )
+        {
+            arg_c = argc = debug_child_data.argc;
+            arg_v = argv = (char * *)debug_child_data.argv;
+            debug_interface = DEBUG_INTERFACE_CHILD;
+        }
+        else
+        {
+            return debugger();
+        }
+    }
+
+#endif
+
 #endif
 
     --argc;
@@ -250,28 +346,7 @@ int main( int argc, char * * argv, char * * arg_environ )
 
     if ( getoptions( argc, argv, OPTSTRING, optv ) < 0 )
     {
-        err_printf( "\nusage: %s [ options ] targets...\n\n", progname );
-
-        err_printf( "-a      Build all targets, even if they are current.\n" );
-        err_printf( "-dx     Set the debug level to x (0-9).\n" );
-        err_printf( "-fx     Read x instead of Jambase.\n" );
-        /* err_printf( "-g      Build from newest sources first.\n" ); */
-        err_printf( "-jx     Run up to x shell commands concurrently.\n" );
-        err_printf( "-lx     Limit actions to x number of seconds after which they are stopped.\n" );
-        err_printf( "-mx     Maximum target output saved (kb), default is to save all output.\n" );
-        err_printf( "-n      Don't actually execute the updating actions.\n" );
-        err_printf( "-ox     Mirror all output to file x.\n" );
-        err_printf( "-px     x=0, pipes action stdout and stderr merged into action output.\n" );
-        err_printf( "-q      Quit quickly as soon as a target fails.\n" );
-        err_printf( "-sx=y   Set variable x=y, overriding environment.\n" );
-        err_printf( "-tx     Rebuild x, even if it is up-to-date.\n" );
-        err_printf( "-v      Print the version of jam and exit.\n" );
-        #ifdef HAVE_PYTHON
-        err_printf( "-z      Disable Python Optimization and enable asserts\n" );
-        #endif
-        err_printf( "--x     Option is ignored.\n\n" );
-
-        exit( EXITBAD );
+        usage( progname );
     }
 
     /* Version info. */
@@ -317,10 +392,9 @@ int main( int argc, char * * argv, char * * arg_environ )
     if ( ( s = getoptval( optv, 'j', 0 ) ) )
     {
         globs.jobs = atoi( s );
-        if ( globs.jobs < 1 || globs.jobs > MAXJOBS )
+        if ( globs.jobs < 1 )
         {
-            err_printf( "Invalid value for the '-j' option, valid values are 1 "
-                "through %d.\n", MAXJOBS );
+            err_printf( "Invalid value for the '-j' option.\n" );
             exit( EXITBAD );
         }
     }
@@ -375,9 +449,6 @@ int main( int argc, char * * argv, char * * arg_environ )
         }
         /* ++globs.noexec; */
     }
-
-    constants_init();
-    cwd_init();
 
     {
         PROFILE_ENTER( MAIN );
@@ -554,10 +625,9 @@ int main( int argc, char * * argv, char * * arg_environ )
             if ( !list_empty( p ) )
             {
                 int const j = atoi( object_str( list_front( p ) ) );
-                if ( j < 1 || j > MAXJOBS )
-                    out_printf( "Invalid value of PARALLELISM: %s. Valid values "
-                        "are 1 through %d.\n", object_str( list_front( p ) ),
-                        MAXJOBS );
+                if ( j < 1 )
+                    out_printf( "Invalid value of PARALLELISM: %s.\n",
+                        object_str( list_front( p ) ) );
                 else
                     globs.jobs = j;
             }
@@ -596,6 +666,7 @@ int main( int argc, char * * argv, char * * arg_environ )
 
     /* Widely scattered cleanup. */
     property_set_done();
+    exec_done();
     file_done();
     rules_done();
     timestamp_done();

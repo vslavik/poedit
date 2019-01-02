@@ -58,11 +58,26 @@ struct buffer_iterator_index_expr
                                size_t index,
                                const memory_object::address_space address_space,
                                const IndexExpr &expr)
-        : m_buffer(buffer),
+        : m_buffer(buffer.get(), false),
           m_index(index),
           m_address_space(address_space),
           m_expr(expr)
     {
+    }
+
+    buffer_iterator_index_expr(const buffer_iterator_index_expr& other)
+        : m_buffer(other.m_buffer.get(), false),
+          m_index(other.m_index),
+          m_address_space(other.m_address_space),
+          m_expr(other.m_expr)
+    {
+    }
+
+    ~buffer_iterator_index_expr()
+    {
+        // set buffer to null so that its reference count will
+        // not be decremented when its destructor is called
+        m_buffer.get() = 0;
     }
 
     operator T() const
@@ -73,10 +88,10 @@ struct buffer_iterator_index_expr
         return buffer_value<T>(m_buffer, size_t(m_expr) * sizeof(T));
     }
 
-    const buffer &m_buffer;
-    size_t m_index;
-    memory_object::address_space m_address_space;
-    IndexExpr m_expr;
+    const buffer m_buffer;
+    const size_t m_index;
+    const memory_object::address_space m_address_space;
+    const IndexExpr m_expr;
 };
 
 template<class T, class IndexExpr>

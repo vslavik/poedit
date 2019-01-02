@@ -92,7 +92,7 @@ Or
 
 [endsect]
 
-[section:get_as_radian get_as_radian]
+[section:get_as_radian_1 get_as_radian]
 
 '''<indexterm><primary>get_as_radian</primary></indexterm>'''
 get coordinate value of a point, result is in Radian 
@@ -108,6 +108,44 @@ fp_coordinate_type<Geometry>::type get_as_radian(Geometry const & geometry)``
 
 [table
 [[Type] [Concept] [Name] [Description] ]
+[[Dimension] [dimension ] [ - ] [Must be specified]]
+[[Geometry const &] [geometry ] [geometry] [geometry to get coordinate value from ]]
+]
+
+
+[heading Returns]
+coordinate value
+
+[heading Header]
+Either
+
+`#include <boost/geometry.hpp>`
+
+
+Or
+
+`#include <boost/geometry/core/radian_access.hpp>`
+
+
+[endsect]
+
+[section:get_as_radian_1 get_as_radian]
+
+'''<indexterm><primary>get_as_radian</primary></indexterm>'''
+get coordinate value of a segment or box, result is in Radian 
+
+[heading Description]
+Result is in Radian, even if source coordinate system is in Degrees 
+
+[heading Synopsis]
+``template<std::size_t Index, std::size_t Dimension, typename Geometry>
+fp_coordinate_type<Geometry>::type get_as_radian(Geometry const & geometry)``
+
+[heading Parameters]
+
+[table
+[[Type] [Concept] [Name] [Description] ]
+[[Index] [index ] [ - ] [Must be specified]]
 [[Dimension] [dimension ] [ - ] [Must be specified]]
 [[Geometry const &] [geometry ] [geometry] [geometry to get coordinate value from ]]
 ]

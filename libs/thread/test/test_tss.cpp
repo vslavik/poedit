@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-#if defined(BOOST_HAS_WINTHREADS)
+#if defined(BOOST_THREAD_PLATFORM_WIN32)
     #define WIN32_LEAN_AND_MEAN
     #include <windows.h>
 #endif

@@ -9,7 +9,9 @@ using quickbook ;
 path-constant images_location : ../ ;
 path-constant admonishment_location : ../../../../doc/src/images ;
 
-xml unordered : unordered.qbk ;
+xml unordered : unordered.qbk :
+    <xsl:param>generate.consistent.ids=1 ;
+
 boostbook standalone : unordered :
     <xsl:param>chunk.first.sections=1
     <xsl:param>chunk.section.depth=2
@@ -20,6 +22,8 @@ boostbook standalone : unordered :
     <xsl:param>boost.compact.typedef=0
     <xsl:param>boost.compact.function=0
     <xsl:param>boost.compact.enum=0
+
+    <xsl:param>generate.consistent.ids=1
 
     # HTML Options:
 
@@ -57,3 +61,12 @@ boostbook standalone : unordered :
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/unordered/doc/html
     ;
 
+###############################################################################
+alias boostdoc
+    : unordered
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

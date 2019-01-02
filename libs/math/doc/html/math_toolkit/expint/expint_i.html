@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Exponential Integral Ei</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../expint.html" title="Exponential Integrals">
 <link rel="prev" href="expint_n.html" title="Exponential Integral En">
 <link rel="next" href="../powers.html" title="Basic Functions">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.expint.expint_i.h0"></a>
-        <span><a name="math_toolkit.expint.expint_i.synopsis"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.expint.expint_i.synopsis"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">expint</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -47,20 +47,20 @@
         type calculation rules</em></span></a>: the return type is <code class="computeroutput"><span class="keyword">double</span></code> if T is an integer type, and T otherwise.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
 <a name="math_toolkit.expint.expint_i.h1"></a>
-        <span><a name="math_toolkit.expint.expint_i.description"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.expint.expint_i.description"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.description">Description</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the <a href="http://mathworld.wolfram.com/ExponentialIntegral.html" target="_top">exponential
@@ -74,7 +74,7 @@
       </p>
 <h5>
 <a name="math_toolkit.expint.expint_i.h2"></a>
-        <span><a name="math_toolkit.expint.expint_i.accuracy"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.expint.expint_i.accuracy"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.accuracy">Accuracy</a>
       </h5>
 <p>
         The following table shows the peak errors (in units of epsilon) found on
@@ -85,7 +85,7 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.expint.expint_i.table_expint_Ei_"></a><p class="title"><b>Table&#160;6.75.&#160;Error rates for expint (Ei)</b></p>
+<a name="math_toolkit.expint.expint_i.table_expint_Ei_"></a><p class="title"><b>Table&#160;6.78.&#160;Error rates for expint (Ei)</b></p>
 <div class="table-contents"><table class="table" summary="Error rates for expint (Ei)">
 <colgroup>
 <col>
@@ -99,22 +99,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -127,29 +127,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.43&#949; (Mean = 0.541&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 5.05&#949; (Mean = 0.821&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 14.1&#949; (Mean = 2.43&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_expint_Ei___tr1_cmath__Exponential_Integral_Ei">And
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 14.1&#949; (Mean = 2.43&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_expint_Ei___cmath__Exponential_Integral_Ei">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.994&#949; (Mean = 0.142&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 8.96&#949; (Mean = 0.703&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean
-                  = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_expint_Ei__Cephes_Exponential_Integral_Ei">And
-                  other failures.</a>)</span>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 8.96&#949; (Mean = 0.703&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.34&#949; (Mean = 0.631&#949;)</span>
+                  <span class="blue">Max = 5.05&#949; (Mean = 0.835&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.43&#949; (Mean = 0.54&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -161,25 +157,24 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.7&#949; (Mean = 0.66&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 1.72&#949; (Mean = 0.593&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 3.11&#949; (Mean = 1.13&#949;))
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 3.11&#949; (Mean = 1.13&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.998&#949; (Mean = 0.156&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.5&#949; (Mean = 0.612&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.77&#949; (Mean = 0.644&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.5&#949; (Mean = 0.612&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.72&#949; (Mean = 0.618&#949;)</span>
+                  <span class="blue">Max = 1.72&#949; (Mean = 0.607&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.7&#949; (Mean = 0.66&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -190,11 +185,9 @@
                 </p>
               </td>
 <td>
-              </td>
-<td>
                 <p>
                   <span class="blue">Max = 1.98&#949; (Mean = 0.595&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.93&#949; (Mean = 0.855&#949;))
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.93&#949; (Mean = 0.855&#949;))
                 </p>
               </td>
 <td>
@@ -203,6 +196,8 @@
                 <p>
                   <span class="blue">Max = 1.98&#949; (Mean = 0.575&#949;)</span>
                 </p>
+              </td>
+<td>
               </td>
 </tr>
 </tbody>
@@ -217,9 +212,24 @@
         SPECFUN along with this implementation increase their error rates very slightly
         over the range [4,6].
       </p>
+<p>
+        The following error plot are based on an exhaustive search of the functions
+        domain, MSVC-15.5 at <code class="computeroutput"><span class="keyword">double</span></code>
+        precision, and GCC-7.1/Ubuntu for <code class="computeroutput"><span class="keyword">long</span>
+        <span class="keyword">double</span></code> and <code class="computeroutput"><span class="identifier">__float128</span></code>.
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/exponential_integral_ei__double.svg" align="middle"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/exponential_integral_ei__80_bit_long_double.svg" align="middle"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/exponential_integral_ei____float128.svg" align="middle"></span>
+      </p>
 <h5>
 <a name="math_toolkit.expint.expint_i.h3"></a>
-        <span><a name="math_toolkit.expint.expint_i.testing"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.expint.expint_i.testing"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.testing">Testing</a>
       </h5>
 <p>
         The tests for these functions come in two parts: basic sanity checks use
@@ -233,7 +243,7 @@
       </p>
 <h5>
 <a name="math_toolkit.expint.expint_i.h4"></a>
-        <span><a name="math_toolkit.expint.expint_i.implementation"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.expint.expint_i.implementation"></a></span><a class="link" href="expint_i.html#math_toolkit.expint.expint_i.implementation">Implementation</a>
       </h5>
 <p>
         For x &lt; 0 this function just calls <a class="link" href="expint_n.html" title="Exponential Integral En">zeta</a>(1,
@@ -262,7 +272,7 @@
         a minimax rational approximation rescaled so that it is evaluated over [-1,1].
         Note that while the rational approximation over [0,6] converges rapidly to
         the minimax solution it is rather ill-conditioned in practice. Cody and Thacher
-        <sup>[<a name="math_toolkit.expint.expint_i.f0" href="#ftn.math_toolkit.expint.expint_i.f0" class="footnote">5</a>]</sup> experienced the same issue and converted the polynomials into
+        <a href="#ftn.math_toolkit.expint.expint_i.f0" class="footnote" name="math_toolkit.expint.expint_i.f0"><sup class="footnote">[5]</sup></a> experienced the same issue and converted the polynomials into
         Chebeshev form to ensure stable computation. By experiment we found that
         the polynomials are just as stable in polynomial as Chebyshev form, <span class="emphasis"><em>provided</em></span>
         they are computed over the interval [-1,1].
@@ -289,8 +299,8 @@
         involved.
       </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.math_toolkit.expint.expint_i.f0" href="#math_toolkit.expint.expint_i.f0" class="para">5</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.math_toolkit.expint.expint_i.f0" class="footnote"><p><a href="#math_toolkit.expint.expint_i.f0" class="para"><sup class="para">[5] </sup></a>
           W. J. Cody and H. C. Thacher, Jr., Rational Chebyshev approximations for
           the exponential integral E<sub>1</sub>(x), Math. Comp. 22 (1968), 641-649, and W.
           J. Cody and H. C. Thacher, Jr., Chebyshev approximations for the exponential
@@ -300,10 +310,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

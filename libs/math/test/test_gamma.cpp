@@ -203,14 +203,14 @@ void expected_results()
       "Sun.*",                       // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "tgamma", 300, 50); // test function
+      "tgamma", 450, 100); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
-      "Sun.*",                       // platform
+      ".*Solaris.*",                       // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "tgamma", 300, 50); // test function
+      "tgamma", 450, 150); // test function
 
    //
    // Catch all cases come last:

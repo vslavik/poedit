@@ -34,10 +34,13 @@ check_default()
     D d;
     BOOST_TEST(d.count() == typename D::rep());
   }
-  {
-    BOOST_CONSTEXPR D d;
-    BOOST_CONSTEXPR_ASSERT(d.count() == typename D::rep());
-  }
+}
+template <class D>
+void
+check_constexpr()
+{
+  BOOST_CONSTEXPR D d(0);
+  BOOST_CONSTEXPR_ASSERT(d.count() == typename D::rep());
 }
 
 template <class D, class R>
@@ -88,6 +91,9 @@ int main()
     // default constructor
     {
       check_default<boost::chrono::duration<Rep> >();
+    }
+    {
+      check_constexpr<boost::chrono::duration<int> >();
     }
     // constructor from rep
     {

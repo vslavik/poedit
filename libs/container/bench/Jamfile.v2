@@ -21,7 +21,7 @@ rule test_all
 
    for local fileb in [ glob *.cpp ]
    {
-      all_rules += [ run $(fileb) /boost/timer//boost_timer /boost/container//boost_container
+      all_rules += [ run $(fileb) /boost/container//boost_container  /boost/timer//boost_timer
       :  # additional args
       :  # test-files
       :  # requirements

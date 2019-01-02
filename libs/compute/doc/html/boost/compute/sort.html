@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function sort</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.sort_hpp" title="Header &lt;boost/compute/algorithm/sort.hpp&gt;">
 <link rel="prev" href="set_union.html" title="Function template set_union">
@@ -39,32 +39,39 @@
   <span class="keyword">void</span> <span class="identifier">sort</span><span class="special">(</span><span class="identifier">Iterator</span> first<span class="special">,</span> <span class="identifier">Iterator</span> last<span class="special">,</span> 
             <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp68817904"></a><h2>Description</h2>
+<a name="idp83245056"></a><h2>Description</h2>
 <p>Sorts the values in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) according to <code class="computeroutput">compare</code>.</p>
 <p>
 For example, to sort a vector on the device: </p>
-<pre class="programlisting"> <span class="comment">// create vector on the device with data</span>
- <span class="keyword">float</span> <span class="identifier">data</span><span class="special">[</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">2</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">4</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">1</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">3</span><span class="special">.</span><span class="identifier">f</span> <span class="special">}</span><span class="special">;</span>
- <a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;float&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="identifier">data</span><span class="special">,</span> <span class="identifier">data</span> <span class="special">+</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="comment">// create vector on the device with data</span>
+<span class="keyword">float</span> <span class="identifier">data</span><span class="special">[</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">2</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">4</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">1</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">3</span><span class="special">.</span><span class="identifier">f</span> <span class="special">}</span><span class="special">;</span>
+<a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;float&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="identifier">data</span><span class="special">,</span> <span class="identifier">data</span> <span class="special">+</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 
- <span class="comment">// sort the vector on the device</span>
- <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">sort</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<span class="comment">// sort the vector on the device</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">sort</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p>The sort() algorithm can also be directly used with host iterators. This example will automatically transfer the data to the device, sort it, and then transfer the data back to the host: </p>
-<pre class="programlisting"> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">data</span> <span class="special">=</span> <span class="special">{</span> <span class="number">9</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">6</span><span class="special">,</span> <span class="number">7</span> <span class="special">}</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">data</span> <span class="special">=</span> <span class="special">{</span> <span class="number">9</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">6</span><span class="special">,</span> <span class="number">7</span> <span class="special">}</span><span class="special">;</span>
 
- <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">sort</span><span class="special">(</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">data</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">sort</span><span class="special">(</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">data</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 </pre>
+<p>Space complexity: (n)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>is_sorted() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">compare</code></span></p></td>

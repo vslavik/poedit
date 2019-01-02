@@ -430,6 +430,23 @@ void test_swap()
   BOOST_TEST(boost::addressof(*o2_) == boost::addressof(v1));
 }
 
+template <typename T, typename U>
+void test_convertability_of_compatible_reference_types()
+{
+  typename concrete_type_of<T>::type v1(1);
+  optional<T&> oN, o1(v1);
+  optional<U&> uN(oN), u1(o1);
+  BOOST_TEST(!uN);
+  BOOST_TEST(u1);
+  BOOST_TEST(boost::addressof(*u1) == boost::addressof(*o1));
+  
+  uN = o1;
+  u1 = oN;
+  BOOST_TEST(!u1);
+  BOOST_TEST(uN);
+  BOOST_TEST(boost::addressof(*uN) == boost::addressof(*o1));
+}
+
 template <typename T>
 void test_optional_ref()
 {
@@ -465,10 +482,18 @@ int main()
   test_optional_ref<int>();
   test_optional_ref<ScopeGuard>();
   test_optional_ref<Abstract>();
+  test_optional_ref< optional<int> >();
   
   test_optional_const_ref<int>();
   test_optional_const_ref<ScopeGuard>();
   test_optional_const_ref<Abstract>();
+  test_optional_const_ref< optional<int> >();
+  
+  test_convertability_of_compatible_reference_types<int, const int>();
+  test_convertability_of_compatible_reference_types<Impl, Abstract>();
+  test_convertability_of_compatible_reference_types<Impl, const Abstract>();
+  test_convertability_of_compatible_reference_types<const Impl, const Abstract>();
+  test_convertability_of_compatible_reference_types<optional<int>, const optional<int> >();
   
   return boost::report_errors();
 }

@@ -1,6 +1,6 @@
 // Boost.Geometry Index
 //
-// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2016 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,7 +9,7 @@
 #ifndef BOOST_GEOMETRY_INDEX_EQUAL_TO_HPP
 #define BOOST_GEOMETRY_INDEX_EQUAL_TO_HPP
 
-#include <boost/geometry/algorithms/equals.hpp>
+#include <boost/geometry/algorithms/detail/equals/interface.hpp>
 #include <boost/geometry/index/indexable.hpp>
 
 namespace boost { namespace geometry { namespace index { namespace detail {
@@ -37,6 +37,15 @@ template <typename T>
 struct equals<T, void>
 {
     inline static bool apply(T const& v1, T const& v2)
+    {
+        return v1 == v2;
+    }
+};
+
+template <typename T>
+struct equals<T *, void>
+{
+    inline static bool apply(const T * v1, const T * v2)
     {
         return v1 == v2;
     }

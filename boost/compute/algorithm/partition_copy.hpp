@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_PARTITION_COPY_HPP
 #define BOOST_COMPUTE_ALGORITHM_PARTITION_COPY_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/copy_if.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -23,6 +26,8 @@ namespace compute {
 /// \p predicate returns \c true to the range beginning at \p first_true
 /// and all of the elements for which \p predicate returns \c false to
 /// the range beginning at \p first_false.
+///
+/// Space complexity: \Omega(2n)
 ///
 /// \see partition()
 template<class InputIterator,
@@ -37,6 +42,10 @@ partition_copy(InputIterator first,
                UnaryPredicate predicate,
                command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator2>::value);
+
     // copy true values
     OutputIterator1 last_true =
         ::boost::compute::copy_if(first,

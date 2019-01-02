@@ -9,7 +9,7 @@
 // For more information, see http://www.boost.org/libs/range/
 //
 // The strided_defect_Trac5014 test case is a modified version of a test case
-// contributed by Michel Morin as part of the trac ticket.
+// contributed by Maxim Yanchenko as part of the trac ticket.
 //
 // The deque test case has been removed due to erroneous standard library
 // implementations causing test failures.

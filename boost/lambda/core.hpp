@@ -22,6 +22,8 @@
 #ifndef BOOST_LAMBDA_CORE_HPP
 #define BOOST_LAMBDA_CORE_HPP
 
+#include "boost/config.hpp"
+
 #include "boost/type_traits/transform_traits.hpp"
 #include "boost/type_traits/cv_traits.hpp"
 
@@ -66,9 +68,9 @@ namespace {
   boost::lambda::placeholder2_type free2 = boost::lambda::placeholder2_type();
   boost::lambda::placeholder3_type free3 = boost::lambda::placeholder3_type();
 
-  boost::lambda::placeholder1_type& _1 = free1;
-  boost::lambda::placeholder2_type& _2 = free2;
-  boost::lambda::placeholder3_type& _3 = free3;
+  boost::lambda::placeholder1_type& BOOST_ATTRIBUTE_UNUSED _1 = free1;
+  boost::lambda::placeholder2_type& BOOST_ATTRIBUTE_UNUSED _2 = free2;
+  boost::lambda::placeholder3_type& BOOST_ATTRIBUTE_UNUSED _3 = free3;
   // _1, _2, ... naming scheme by Peter Dimov
 } // unnamed
    

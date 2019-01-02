@@ -127,8 +127,10 @@ private:
 // test_runner
 template<typename BidiIter>
 struct test_runner
-  : std::unary_function<xpr_test_case<BidiIter>, void>
 {
+    typedef xpr_test_case<BidiIter> argument_type;
+    typedef void result_type;
+
     void operator ()(xpr_test_case<BidiIter> const &test) const
     {
         test.run();

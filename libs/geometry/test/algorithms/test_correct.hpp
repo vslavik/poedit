@@ -27,12 +27,11 @@
 #include <boost/geometry/io/wkt/write.hpp>
 #include <boost/variant/variant.hpp>
 
-
 template <typename Geometry>
 void check_geometry(Geometry const& geometry, std::string const& expected)
 {
     std::ostringstream out;
-    out << bg::wkt(geometry);
+    out << bg::wkt_manipulator<Geometry>(geometry, false);
 
     BOOST_CHECK_EQUAL(out.str(), expected);
 }

@@ -28,8 +28,8 @@ typedef scaled_base_unit<pint_base_unit, scale<2, static_rational<-5> > > tables
 
 template<>
 struct base_unit_info<us::tablespoon_base_unit> {
-    static const char* name()   { return("tablespoon"); }
-    static const char* symbol() { return("tbsp"); }
+    static BOOST_CONSTEXPR const char* name()   { return("tablespoon"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("tbsp"); }
 };
 
 } // namespace units

@@ -21,6 +21,7 @@ Iterator which ever circles through a range.
 [heading Synopsis]
 ``template<typename Iterator>
 struct ever_circling_iterator
+      : public detail::iterators::iterator_base< ever_circling_iterator< Iterator >, Iterator >
 {
   // ...
 };

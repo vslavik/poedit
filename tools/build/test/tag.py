@@ -34,7 +34,7 @@ exe a : a.cpp ;
     t.write("version-1.32.0/a.cpp", "int main() {}\n")
 
     t.run_build_system(subdir="version-1.32.0")
-    t.expect_addition("version-1.32.0/bin/$toolset/debug/a.exe")
+    t.expect_addition("version-1.32.0/bin/$toolset/debug*/a.exe")
     t.expect_output_lines("The tag rule has been invoked.")
 
 
@@ -85,17 +85,17 @@ __declspec (dllexport) void x () {}
 """)
 
     file_list = (
-        BoostBuild.List("bin/$toolset/debug/a_ds.exe") +
-        BoostBuild.List("bin/$toolset/debug/b_ds.dll") +
+        BoostBuild.List("bin/$toolset/debug*/a_ds.exe") +
+        BoostBuild.List("bin/$toolset/debug*/b_ds.dll") +
         BoostBuild.List("c/a_ds.exe") +
-        BoostBuild.List("bin/$toolset/release/a_rs.exe") +
-        BoostBuild.List("bin/$toolset/release/b_rs.dll") +
+        BoostBuild.List("bin/$toolset/release*/a_rs.exe") +
+        BoostBuild.List("bin/$toolset/release*/b_rs.dll") +
         BoostBuild.List("c/a_rs.exe") +
-        BoostBuild.List("bin/$toolset/debug/link-static/a_dt.exe") +
-        BoostBuild.List("bin/$toolset/debug/link-static/b_dt.lib") +
+        BoostBuild.List("bin/$toolset/debug*/a_dt.exe") +
+        BoostBuild.List("bin/$toolset/debug*/b_dt.lib") +
         BoostBuild.List("c/a_dt.exe") +
-        BoostBuild.List("bin/$toolset/release/link-static/a_rt.exe") +
-        BoostBuild.List("bin/$toolset/release/link-static/b_rt.lib") +
+        BoostBuild.List("bin/$toolset/release*/a_rt.exe") +
+        BoostBuild.List("bin/$toolset/release*/b_rt.lib") +
         BoostBuild.List("c/a_rt.exe"))
 
     variants = ["debug", "release", "link=static,shared"]

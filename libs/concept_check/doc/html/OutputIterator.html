@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Concept OutputIterator</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Concept reference">
 <link rel="up" href="index.html" title="Concept reference">
 <link rel="prev" href="InputIterator.html" title="Concept InputIterator">
@@ -29,7 +29,7 @@
 <p>OutputIterator</p>
 </div>
 <div class="refsect1">
-<a name="idp34266688"></a><h2>Description</h2>
+<a name="idp73097328"></a><h2>Description</h2>
 <p>An output iterator is an iterator that can write a sequence of
   values.  It is single-pass (old values of the iterator cannot be
   re-used), and write-only.</p>
@@ -39,8 +39,8 @@
   (and not dereferenceable or incrementable).</p>
 </div>
 <div class="refsect1">
-<a name="idp32715536"></a><h2>Associated types</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp69109264"></a><h2>Associated types</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p><span class="bold"><strong>value_type</strong></span></p>
 <pre class="literallayout">std::iterator_traits&lt;Iter&gt;::value_type</pre>
@@ -61,8 +61,8 @@
 </ul></div>
 </div>
 <div class="refsect1">
-<a name="idp34565456"></a><h2>Notation</h2>
-<div class="variablelist"><dl>
+<a name="idp71734816"></a><h2>Notation</h2>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term">Iter</span></dt>
 <dd>A type playing the role of iterator-type in the <a class="link" href="OutputIterator.html" title="Concept OutputIterator">OutputIterator</a> concept.</dd>
 <dt><span class="term">ValueType</span></dt>
@@ -76,8 +76,8 @@
 </dl></div>
 </div>
 <div class="refsect1">
-<a name="idp33569216"></a><h2>Type expressions</h2>
-<div class="variablelist"><dl>
+<a name="idp70873840"></a><h2>Type expressions</h2>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term"></span></dt>
 <dd><p>The type <span class="type">Iter</span> must be a model of <a class="link" href="Assignable.html" title="Concept Assignable">Assignable</a>.</p></dd>
 <dt><span class="term"></span></dt>
@@ -98,7 +98,7 @@
 </dl></div>
 </div>
 <div class="refsect1">
-<a name="idp32061632"></a><h2>Valid expressions</h2>
+<a name="idp72214176"></a><h2>Valid expressions</h2>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -169,14 +169,14 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="idp29846032"></a><h2>Complexity</h2>
+<a name="idp71826096"></a><h2>Complexity</h2>
 <p>
   All iterator operations must take amortized constant time.
   </p>
 </div>
 <div class="refsect1">
-<a name="idp29846672"></a><h2>Models</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp71635056"></a><h2>Models</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><span class="simplelist"><span class="type">std::ostream_iterator</span>, <span class="type">...</span></span></li>
 <li class="listitem"><span class="simplelist"><span class="type">std::insert_iterator</span>, <span class="type">...</span></span></li>
 <li class="listitem"><span class="simplelist"><span class="type">std::front_insert_iterator</span>, <span class="type">...</span></span></li>

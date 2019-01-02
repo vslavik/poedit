@@ -34,11 +34,17 @@ static PyMemberDef enum_members[] = {
 
 extern "C"
 {
+    static void
+    enum_dealloc(enum_object* self)
+    {
+        Py_XDECREF(self->name);
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
     static PyObject* enum_repr(PyObject* self_)
     {
-        // XXX(bhy) Potentional memory leak here since PyObject_GetAttrString returns a new reference
-        // const char *mod = PyString_AsString(PyObject_GetAttrString( self_, const_cast<char*>("__module__")));
         PyObject *mod = PyObject_GetAttrString( self_, "__module__");
+        object auto_free = object(handle<>(mod));
         enum_object* self = downcast<enum_object>(self_);
         if (!self->name)
         {
@@ -88,7 +94,7 @@ static PyTypeObject enum_type_object = {
     const_cast<char*>("Boost.Python.enum"),
     sizeof(enum_object),                    /* tp_basicsize */
     0,                                      /* tp_itemsize */
-    0,                                      /* tp_dealloc */
+    (destructor) enum_dealloc,              /* tp_dealloc */
     0,                                      /* tp_print */
     0,                                      /* tp_getattr */
     0,                                      /* tp_setattr */

@@ -2,7 +2,7 @@
 // client.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,16 +19,16 @@ enum { max_length = 1024 };
 class client
 {
 public:
-  client(boost::asio::io_service& io_service,
+  client(boost::asio::io_context& io_context,
       boost::asio::ssl::context& context,
-      boost::asio::ip::tcp::resolver::iterator endpoint_iterator)
-    : socket_(io_service, context)
+      boost::asio::ip::tcp::resolver::results_type endpoints)
+    : socket_(io_context, context)
   {
     socket_.set_verify_mode(boost::asio::ssl::verify_peer);
     socket_.set_verify_callback(
         boost::bind(&client::verify_certificate, this, _1, _2));
 
-    boost::asio::async_connect(socket_.lowest_layer(), endpoint_iterator,
+    boost::asio::async_connect(socket_.lowest_layer(), endpoints,
         boost::bind(&client::handle_connect, this,
           boost::asio::placeholders::error));
   }
@@ -134,18 +134,18 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    boost::asio::ip::tcp::resolver resolver(io_service);
-    boost::asio::ip::tcp::resolver::query query(argv[1], argv[2]);
-    boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
+    boost::asio::ip::tcp::resolver resolver(io_context);
+    boost::asio::ip::tcp::resolver::results_type endpoints =
+      resolver.resolve(argv[1], argv[2]);
 
     boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23);
     ctx.load_verify_file("ca.pem");
 
-    client c(io_service, ctx, iterator);
+    client c(io_context, ctx, endpoints);
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

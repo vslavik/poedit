@@ -17,19 +17,22 @@ import doxygen ;
 doxygen doxygen_reference_generated_doc
     :
       $(BOOST_ROOT)/libs/test/include/boost/test/debug_config.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/detail/global_typedef.hpp      
       $(BOOST_ROOT)/libs/test/include/boost/test/debug.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/execution_monitor.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/framework.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/tools/assertion_result.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test.hpp
+      $(BOOST_ROOT)/libs/test/include/boost/test/tree/observer.hpp
 
-      # formatters
+      # logs and formatters
+      $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_log.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/output/xml_log_formatter.hpp
-      $(BOOST_ROOT)/libs/test/include/boost/test/output/xml_report_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/output/plain_report_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/output/compiler_log_formatter.hpp
 
-      # log formatter
+      # reports
+      $(BOOST_ROOT)/libs/test/include/boost/test/output/xml_report_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/unit_test_log_formatter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/results_reporter.hpp
       $(BOOST_ROOT)/libs/test/include/boost/test/results_collector.hpp
@@ -90,6 +93,7 @@ doxygen doxygen_reference_generated_doc
                                    \"BOOST_TEST_DOXYGEN_DOC__=1\"
                                    "
         <doxygen:param>HIDE_UNDOC_MEMBERS=NO
+        <doxygen:param>AUTOLINK_SUPPORT=YES
         <doxygen:param>HIDE_UNDOC_CLASSES=NO
         <doxygen:param>INLINE_INHERITED_MEMB=YES
         <doxygen:param>EXTRACT_PRIVATE=NO
@@ -141,3 +145,9 @@ boostbook standalone
   ;
 
 explicit test ;
+
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : standalone ;
+explicit boostrelease ;

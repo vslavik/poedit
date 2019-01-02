@@ -18,100 +18,42 @@
 
 #include <ostream> // for friend output operators
 #include <cstddef> // size_t
-#include <string>
 #include <boost/config.hpp>
+
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{
     using ::size_t;
 }
 #endif
 
-#include <boost/detail/workaround.hpp>
 #include <boost/limits.hpp>
 #include <boost/cstdint.hpp>
 
 #include <boost/serialization/access.hpp>
-
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
-    #include <boost/detail/workaround.hpp>
-    #if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1)
-    #include <boost/archive/dinkumware.hpp>
-    #endif
-#endif
-
-#include <boost/serialization/nvp.hpp>
 #include <boost/serialization/string.hpp>
 
-#include <boost/preprocessor/facilities/empty.hpp>
-
-#if defined(A_IMPORT)
-    #define DLL_DECL BOOST_SYMBOL_IMPORT
-#elif defined(A_EXPORT)
-    #define DLL_DECL BOOST_SYMBOL_EXPORT
-#else
-    #define DLL_DECL
+#if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK)
+    #if defined(A_IMPORT)
+        #define A_DLL_DECL BOOST_SYMBOL_IMPORT
+        #pragma message("A imported")
+    #elif defined(A_EXPORT)
+        #define A_DLL_DECL BOOST_SYMBOL_EXPORT
+        #pragma message ("A exported")
+    #endif
 #endif
 
-class DLL_DECL A
-{
+#ifndef A_DLL_DECL
+    #define A_DLL_DECL
+#endif
+
+class A_DLL_DECL A {
 private:
     friend class boost::serialization::access;
-    // note: from an aesthetic perspective, I would much prefer to have this
-    // defined out of line.  Unfortunately, this trips a bug in the VC 6.0
-    // compiler. So hold our nose and put it her to permit running of tests.
-    // mscvc 6.0 requires template functions to be implemented. For this
-    // reason we can't make abstract.
-    #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
-        template<class Archive>
-        void serialize(
-            Archive &ar,
-            const unsigned int /* file_version */
-        ){
-            ar & BOOST_SERIALIZATION_NVP(b);
-            #ifndef BOOST_NO_INT64_T
-            ar & BOOST_SERIALIZATION_NVP(f);
-            ar & BOOST_SERIALIZATION_NVP(g);
-            #endif
-            #if BOOST_WORKAROUND(__BORLANDC__,  <= 0x551 )
-                int i;
-                if(BOOST_DEDUCED_TYPENAME Archive::is_saving::value){
-                    i = l;
-                    ar & BOOST_SERIALIZATION_NVP(i);
-                }
-                else{
-                    ar & BOOST_SERIALIZATION_NVP(i);
-                    l = i;
-                }
-            #else
-                ar & BOOST_SERIALIZATION_NVP(l);
-            #endif
-            ar & BOOST_SERIALIZATION_NVP(m);
-            ar & BOOST_SERIALIZATION_NVP(n);
-            ar & BOOST_SERIALIZATION_NVP(o);
-            ar & BOOST_SERIALIZATION_NVP(p);
-            ar & BOOST_SERIALIZATION_NVP(q);
-            #ifndef BOOST_NO_CWCHAR
-            ar & BOOST_SERIALIZATION_NVP(r);
-            #endif
-            ar & BOOST_SERIALIZATION_NVP(c);
-            ar & BOOST_SERIALIZATION_NVP(s);
-            ar & BOOST_SERIALIZATION_NVP(t);
-            ar & BOOST_SERIALIZATION_NVP(u);
-            ar & BOOST_SERIALIZATION_NVP(v);
-            ar & BOOST_SERIALIZATION_NVP(w);
-            ar & BOOST_SERIALIZATION_NVP(x);
-            ar & BOOST_SERIALIZATION_NVP(y);
-            #ifndef BOOST_NO_STD_WSTRING
-            ar & BOOST_SERIALIZATION_NVP(z);
-            #endif
-        }
-    #else
-        template<class Archive>
-        void serialize(
-            Archive &ar,
-            const unsigned int /* file_version */
-        );
-    #endif
+    template<class Archive>
+    void serialize(
+        Archive &ar,
+        const unsigned int /* file_version */
+    );
     bool b;
     #ifndef BOOST_NO_INT64_T
     boost::int64_t f;
@@ -151,7 +93,5 @@ public:
     operator std::size_t () const;
     friend std::ostream & operator<<(std::ostream & os, A const & a);
 };
-
-#undef DLL_DECL
 
 #endif // BOOST_SERIALIZATION_TEST_A_HPP

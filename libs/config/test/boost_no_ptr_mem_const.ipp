@@ -16,12 +16,10 @@
 //                 of these in overloaded function templates.
 //                 See boost/functional.hpp for example.
 
-#include <functional>
-
 namespace boost_no_pointer_to_member_const{
 
 template <class S, class T>
-class const_mem_fun_t : public std::unary_function<const T*, S>
+class const_mem_fun_t
 {
 public:
   explicit const_mem_fun_t(S (T::*p)() const)
@@ -37,7 +35,7 @@ private:
 };
 
 template <class S, class T, class A>
-class const_mem_fun1_t : public std::binary_function<const T*, A, S>
+class const_mem_fun1_t
 {
 public:
   explicit const_mem_fun1_t(S (T::*p)(A) const)

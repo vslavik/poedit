@@ -9,8 +9,6 @@
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_CB_DISABLE_DEBUG
-
 #include "test.hpp"
 
 // test of the example (introduced in the documentation)
@@ -602,7 +600,7 @@ void validity_swap_test() {
     cb1.swap(cb2);
 
     // Although iterators refer to the original elements,
-    // their interal state is inconsistent and no other operation
+    // their internal state is inconsistent and no other operation
     // (except dereferencing) can be invoked on them any more.
     BOOST_CHECK(*it11 == 1);
     BOOST_CHECK(*it12 == 2);

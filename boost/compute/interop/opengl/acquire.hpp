@@ -14,6 +14,7 @@
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/interop/opengl/cl_gl.hpp>
 #include <boost/compute/interop/opengl/opengl_buffer.hpp>
+#include <boost/compute/types/fundamental.hpp>
 #include <boost/compute/utility/wait_list.hpp>
 
 namespace boost {
@@ -22,7 +23,7 @@ namespace compute {
 /// Enqueues a command to acquire the specified OpenGL memory objects.
 ///
 /// \see_opencl_ref{clEnqueueAcquireGLObjects}
-inline event opengl_enqueue_acquire_gl_objects(size_t num_objects,
+inline event opengl_enqueue_acquire_gl_objects(const uint_ num_objects,
                                               const cl_mem *mem_objects,
                                               command_queue &queue,
                                               const wait_list &events = wait_list())
@@ -47,7 +48,7 @@ inline event opengl_enqueue_acquire_gl_objects(size_t num_objects,
 /// Enqueues a command to release the specified OpenGL memory objects.
 ///
 /// \see_opencl_ref{clEnqueueReleaseGLObjects}
-inline event opengl_enqueue_release_gl_objects(size_t num_objects,
+inline event opengl_enqueue_release_gl_objects(const uint_ num_objects,
                                               const cl_mem *mem_objects,
                                               command_queue &queue,
                                               const wait_list &events = wait_list())

@@ -35,6 +35,8 @@
 #include <memory>
 #endif
 
+#include <boost/locale/hold_ptr.hpp>
+
 namespace boost {
     namespace locale {
         namespace impl_icu {
@@ -213,7 +215,7 @@ namespace boost {
                 if(!time_zone.empty()) {
                     return icu::TimeZone::createTimeZone(time_zone.c_str());
                 }
-                std::auto_ptr<icu::TimeZone> tz(icu::TimeZone::createDefault());
+                hold_ptr<icu::TimeZone> tz(icu::TimeZone::createDefault());
                 icu::UnicodeString id;
                 tz->getID(id);
                 // Check if there is a bug?

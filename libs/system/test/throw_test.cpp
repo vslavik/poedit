@@ -13,19 +13,16 @@
 
 //--------------------------------------------------------------------------------------// 
 
-// define BOOST_SYSTEM_SOURCE so that <boost/system/config.hpp> knows
-// the library is being built (possibly exporting rather than importing code)
-#define BOOST_SYSTEM_SOURCE 
-
 #include <boost/system/system_error.hpp>
+#include <boost/config.hpp>
 
-namespace boost
+#if defined(THROW_DYN_LINK)
+# define EXPORT BOOST_SYMBOL_EXPORT
+#else
+# define EXPORT
+#endif
+
+EXPORT void throw_test()
 {
-  namespace system
-  {
-    BOOST_SYSTEM_DECL void throw_test()
-    {
-      throw system_error(9999, system_category(), "boo boo");
-    }
-  }
+    throw boost::system::system_error( 9999, boost::system::system_category(), "boo boo" );
 }

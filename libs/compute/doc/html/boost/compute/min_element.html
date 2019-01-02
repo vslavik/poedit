@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function min_element</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.min_element_hpp" title="Header &lt;boost/compute/algorithm/min_element.hpp&gt;">
 <link rel="prev" href="merge.html" title="Function merge">
@@ -41,32 +41,40 @@
   <span class="identifier">min_element</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">,</span> 
               <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp66828048"></a><h2>Description</h2>
+<a name="idp81228752"></a><h2>Description</h2>
 <p>Returns an iterator pointing to the element in range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) with the minimum value.</p>
 <p>
 For example, to find <code class="computeroutput">int2</code> value with minimum first component in given vector: </p>
-<pre class="programlisting"> <span class="comment">// comparison function object</span>
- <span class="identifier">BOOST_COMPUTE_FUNCTION</span><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> <span class="identifier">compare_first</span><span class="special">,</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">int2_</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">int2_</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">,</span>
- <span class="special">{</span>
-     <span class="keyword">return</span> <span class="identifier">a</span><span class="special">.</span><span class="identifier">x</span> <span class="special">&lt;</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">x</span><span class="special">;</span>
- <span class="special">}</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="comment">// comparison function object</span>
+<span class="identifier">BOOST_COMPUTE_FUNCTION</span><span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> <span class="identifier">compare_first</span><span class="special">,</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">int2_</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">int2_</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">,</span>
+<span class="special">{</span>
+    <span class="keyword">return</span> <span class="identifier">a</span><span class="special">.</span><span class="identifier">x</span> <span class="special">&lt;</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">x</span><span class="special">;</span>
+<span class="special">}</span><span class="special">)</span><span class="special">;</span>
 
- <span class="comment">// create vector</span>
- <a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;uint2_&gt;</a> <span class="identifier">data</span> <span class="special">=</span> <span class="special">...</span>
+<span class="comment">// create vector</span>
+<a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;uint2_&gt;</a> <span class="identifier">data</span> <span class="special">=</span> <span class="special">...</span>
 
- <a class="link" href="buffer_iterator.html" title="Class template buffer_iterator">boost::compute::vector&lt;uint2_&gt;::iterator</a> <span class="identifier">min</span> <span class="special">=</span>
-     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">min_element</span><span class="special">(</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">data</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">compare_first</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">uint2_</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">min</span> <span class="special">=</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">min_element</span><span class="special">(</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">data</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">compare_first</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 </pre>
+<p>Space complexity on CPUs: (1)<br>
+ Space complexity on GPUs: (N)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>max_element() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">compare</code></span></p></td>

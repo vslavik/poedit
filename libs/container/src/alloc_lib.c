@@ -15,6 +15,11 @@
    #error "DLMALLOC_VERSION undefined"
 #endif
 
+#ifdef __VXWORKS__
+// no sbrk() in VxWorks, configure dlmalloc to use only mmap() 
+#define HAVE_MORECORE 0
+#endif 
+
 #if DLMALLOC_VERSION == 286
    #include "dlmalloc_ext_2_8_6.c"
 #else

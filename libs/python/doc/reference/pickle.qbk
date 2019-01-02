@@ -4,7 +4,7 @@ Pickle is a Python module for object serialization, also known as persistence, m
 
 It is often necessary to save and restore the contents of an object to a file. One approach to this problem is to write a pair of functions that read and write data from a file in a special format. A powerful alternative approach is to use Python's pickle module. Exploiting Python's ability for introspection, the pickle module recursively converts nearly arbitrary Python objects into a stream of bytes that can be written to a file.
 
-The Boost Python Library supports the pickle module through the interface as described in detail in the [@http://www.python.org/doc/current/lib/module-pickle.html Python Library Reference for pickle]. This interface involves the special methods `__getinitargs__`, `__getstate__` and `__setstate__` as described in the following. Note that `Boost.Python` is also fully compatible with Python's cPickle module.
+The Boost Python Library supports the pickle module through the interface as described in detail in the [@https://docs.python.org/2/library/pickle.html Python Library Reference for pickle]. This interface involves the special methods `__getinitargs__`, `__getstate__` and `__setstate__` as described in the following. Note that `Boost.Python` is also fully compatible with Python's cPickle module.
 [endsect]
 [section The Pickle Interface]
 At the user level, the Boost.Python pickle interface involves three special methods:

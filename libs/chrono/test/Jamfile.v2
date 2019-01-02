@@ -8,6 +8,7 @@
 
 # See library home page at http://www.boost.org/libs/chrono
 
+import testing ;
 import os ;
 import feature ;
 
@@ -20,7 +21,6 @@ project
         #<threading>single:<define>BOOST_CHRONO_THREAD_DISABLED
         <toolset>msvc:<asynch-exceptions>on
         <define>BOOST_CHRONO_USES_MPL_ASSERT
-        <define>BOOST_SYSTEM_NO_DEPRECATED
         #<toolset>sun:<define>BOOST_COMMON_TYPE_DONT_USE_TYPEOF
         #<toolset>sun:<define>BOOST_TYPEOF_EMULATION
         <toolset>sun:<define>__typeof__=__typeof__
@@ -84,6 +84,31 @@ rule chrono-run ( sources )
         :   $(sources[1]:B)_h ]
     ;
 }
+
+rule chrono-runXXX ( sources )
+{
+    return
+    [ run $(sources) ../build//boost_chrono
+        : :
+        :
+            <library>/boost/system//boost_system
+            <define>BOOST_CHRONO_VERSION=2
+        :   $(sources[1]:B)_d  ]
+    #[ run $(sources) ../build//boost_chrono/<link>static
+    #    : :
+    #    :
+    #        <library>/boost/system//boost_system/<link>static
+    #    :   $(sources[1]:B)_s ]
+    [ run $(sources)
+        : :
+        :   <define>BOOST_CHRONO_HEADER_ONLY
+            <define>BOOST_ERROR_CODE_HEADER_ONLY
+           <define>BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING
+            <define>BOOST_CHRONO_VERSION=2
+        :   $(sources[1]:B)_h ]
+    ;
+}
+
 
 rule chrono-v1-v2-run ( sources )
 {
@@ -357,7 +382,6 @@ rule chrono-compile2 ( sources : name )
         [ chrono-run-header ../example/miscellaneous.cpp ]
         [ chrono-run-header ../example/test_special_values.cpp ]
         [ chrono-run ../example/manipulate_clock_object.cpp ]
-        #[ chrono-run ../example/chrono_accuracy_test.cpp ]
         [ chrono-run-mt ../example/test_thread_clock.cpp  ]
         [ chrono-run-header ../example/rounding.cpp  ]
         #[ chrono-run ../example/await_keystroke.cpp  ]
@@ -440,6 +464,7 @@ rule chrono-compile2 ( sources : name )
         [ chrono-run test_7868.cpp  ]
         [ chrono-run test_11006.cpp  ]
         [ chrono-run test_11012.cpp  ]
+        [ chrono-runXXX test_12176.cpp  ]
         ;
 
     test-suite "win32"

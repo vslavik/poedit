@@ -2,7 +2,7 @@
 @file
 Defines several `constexpr` algorithms.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -19,8 +19,10 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 BOOST_HANA_NAMESPACE_BEGIN namespace detail {
+    // Do not call this swap, otherwise it can get picked up by ADL and conflict
+    // with std::swap (see https://github.com/boostorg/hana/issues/297).
     template <typename T>
-    constexpr void swap(T& x, T& y) {
+    constexpr void constexpr_swap(T& x, T& y) {
         auto tmp = x;
         x = y;
         y = std::move(tmp);
@@ -31,7 +33,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace detail {
         while (first != last) {
             if (first == --last)
                 break;
-            detail::swap(*first, *last);
+            detail::constexpr_swap(*first, *last);
             ++first;
         }
     }
@@ -49,7 +51,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace detail {
                 BidirIter j = last;
                 while (!pred(*i, *--j))
                     ;
-                detail::swap(*i, *j);
+                detail::constexpr_swap(*i, *j);
                 detail::reverse(ip1, last);
                 return true;
             }

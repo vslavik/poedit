@@ -193,7 +193,7 @@ void iterator_comparison_test() {
 
 void iterator_invalidation_test() {
 
-#if !defined(NDEBUG) && !defined(BOOST_CB_DISABLE_DEBUG)
+#if BOOST_CB_ENABLE_DEBUG
 
     circular_buffer<MyInteger>::iterator it1;
     circular_buffer<MyInteger>::const_iterator it2;
@@ -563,7 +563,7 @@ void iterator_invalidation_test() {
     BOOST_CHECK(it3.is_valid(&cb16));
     BOOST_CHECK(!it4.is_valid(&cb16));
 
-#endif // #if !defined(NDEBUG) && !defined(BOOST_CB_DISABLE_DEBUG)
+#endif // #if BOOST_CB_ENABLE_DEBUG
 }
 
 // basic exception safety test (it is useful to use any memory-leak detection tool)

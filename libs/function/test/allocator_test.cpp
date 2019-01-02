@@ -7,10 +7,10 @@
 
 // For more information, see http://www.boost.org
 
-#include <boost/test/minimal.hpp>
+#include <boost/function.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <cassert>
 #include <functional>
-#include <boost/function.hpp>
 
 using namespace std;
 using namespace boost;
@@ -74,20 +74,19 @@ struct DoNothing: base
 
 static void do_nothing() {}
 
-int
-test_main(int, char*[])
+int main()
 {
   function2<int, int, int> f;
   f.assign( plus_int<disable_small_object_optimization>(), counting_allocator<int>() );
   f.clear();
-  BOOST_CHECK(alloc_count == 1);
-  BOOST_CHECK(dealloc_count == 1);
+  BOOST_TEST_EQ( alloc_count, 1 );
+  BOOST_TEST_EQ( dealloc_count, 1 );
   alloc_count = 0;
   dealloc_count = 0;
   f.assign( plus_int<enable_small_object_optimization>(), counting_allocator<int>() );
   f.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
+  BOOST_TEST_EQ( alloc_count, 0 );
+  BOOST_TEST_EQ( dealloc_count, 0 );
   f.assign( plus_int<disable_small_object_optimization>(), std::allocator<int>() );
   f.clear();
   f.assign( plus_int<enable_small_object_optimization>(), std::allocator<int>() );
@@ -97,8 +96,8 @@ test_main(int, char*[])
   dealloc_count = 0;
   f.assign( &do_minus, counting_allocator<int>() );
   f.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
+  BOOST_TEST_EQ( alloc_count, 0 );
+  BOOST_TEST_EQ( dealloc_count, 0 );
   f.assign( &do_minus, std::allocator<int>() );
   f.clear();
 
@@ -107,14 +106,14 @@ test_main(int, char*[])
   dealloc_count = 0;
   fv.assign( DoNothing<disable_small_object_optimization>(), counting_allocator<int>() );
   fv.clear();
-  BOOST_CHECK(alloc_count == 1);
-  BOOST_CHECK(dealloc_count == 1);
+  BOOST_TEST_EQ( alloc_count, 1 );
+  BOOST_TEST_EQ( dealloc_count, 1 );
   alloc_count = 0;
   dealloc_count = 0;
   fv.assign( DoNothing<enable_small_object_optimization>(), counting_allocator<int>() );
   fv.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
+  BOOST_TEST_EQ( alloc_count, 0 );
+  BOOST_TEST_EQ( dealloc_count, 0 );
   fv.assign( DoNothing<disable_small_object_optimization>(), std::allocator<int>() );
   fv.clear();
   fv.assign( DoNothing<enable_small_object_optimization>(), std::allocator<int>() );
@@ -124,8 +123,8 @@ test_main(int, char*[])
   dealloc_count = 0;
   fv.assign( &do_nothing, counting_allocator<int>() );
   fv.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
+  BOOST_TEST_EQ( alloc_count, 0 );
+  BOOST_TEST_EQ( dealloc_count, 0 );
   fv.assign( &do_nothing, std::allocator<int>() );
   fv.clear();
   
@@ -133,5 +132,5 @@ test_main(int, char*[])
   fv.assign(&do_nothing, std::allocator<int>() );
   fv2.assign(fv, std::allocator<int>() );
 
-  return 0;
+  return boost::report_errors();
 }

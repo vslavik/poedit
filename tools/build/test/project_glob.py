@@ -27,14 +27,14 @@ void force_import_lib_creation() {}
     t.write("d3/a.cpp", "int main() {}\n")
 
     t.run_build_system(subdir="d1")
-    t.expect_addition("d1/bin/$toolset/debug/a.exe")
+    t.expect_addition("d1/bin/$toolset/debug*/a.exe")
 
     t.run_build_system(subdir="d3/d")
-    t.expect_addition("d3/d/bin/$toolset/debug/a.exe")
+    t.expect_addition("d3/d/bin/$toolset/debug*/a.exe")
 
     t.rm("d2/d/bin")
     t.run_build_system(subdir="d2/d")
-    t.expect_addition("d2/d/bin/$toolset/debug/l.dll")
+    t.expect_addition("d2/d/bin/$toolset/debug*/l.dll")
 
     t.cleanup()
 
@@ -63,7 +63,7 @@ void force_import_lib_creation() {}
     t.write("d2/d/jamfile.jam", "lib l : [ glob *.cpp ] ;")
 
     t.run_build_system(subdir="d1")
-    t.expect_addition("d1/bin/$toolset/debug/a.exe")
+    t.expect_addition("d1/bin/$toolset/debug*/a.exe")
 
     t.cleanup()
 
@@ -93,7 +93,7 @@ void force_import_lib_creation() {}
     t.write("d2/d/jamfile.jam", "lib l : [ glob *.cpp ] ;")
 
     t.run_build_system(subdir="d1")
-    t.expect_addition("d1/bin/$toolset/debug/a.exe")
+    t.expect_addition("d1/bin/$toolset/debug*/a.exe")
 
     t.cleanup()
 
@@ -120,7 +120,7 @@ void force_import_lib_creation() {}
     t.write("d2/d/jamfile.jam", "lib l : [ glob *.cpp ] ;")
 
     t.run_build_system(subdir="d1")
-    t.expect_addition("d1/bin/$toolset/debug/a.exe")
+    t.expect_addition("d1/bin/$toolset/debug*/a.exe")
 
     t.cleanup()
 
@@ -179,7 +179,7 @@ void force_import_lib_creation() {}
     t.write("d2/d/jamfile.jam", "lib l : [ glob *.cpp ] ;")
 
     t.run_build_system(subdir="d1")
-    t.expect_addition("d1/bin/$toolset/debug/a.exe")
+    t.expect_addition("d1/bin/$toolset/debug*/a.exe")
 
     t.cleanup()
 
@@ -198,7 +198,7 @@ def test_glob_excludes_in_subdirectory():
     t.write("p/jamfile.jam", "exe p : [ glob *.c : p_x.c ] ;")
 
     t.run_build_system(subdir="p")
-    t.expect_addition("p/bin/$toolset/debug/p.exe")
+    t.expect_addition("p/bin/$toolset/debug*/p.exe")
 
     t.cleanup()
 

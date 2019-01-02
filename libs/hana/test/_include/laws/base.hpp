@@ -1,13 +1,9 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_BASE_HPP
 #define BOOST_HANA_TEST_LAWS_BASE_HPP
-
-// Hack to make sure tests that include this are not missing includes, since
-// the include scheme changed at some point and it caused major breakage.
-#include <boost/hana.hpp>
 
 #include <boost/hana/and.hpp>
 #include <boost/hana/bool.hpp>
@@ -44,7 +40,7 @@ namespace boost { namespace hana {
             static_assert(i > 0, "can't use for_each_n with i < 0");
 
             template <typename Xs, typename F>
-            constexpr auto operator()(Xs xs, F f) const {
+            constexpr auto operator()(Xs const& xs, F const& f) const {
                 hana::for_each(xs,
                     hana::compose(
                         hana::partial(for_each_n_t<i - 1>{}, xs),
@@ -57,7 +53,7 @@ namespace boost { namespace hana {
         template <>
         struct for_each_n_t<1> {
             template <typename Xs, typename F>
-            constexpr auto operator()(Xs xs, F f) const {
+            constexpr auto operator()(Xs const& xs, F const& f) const {
                 hana::for_each(xs, f);
             }
         };
@@ -258,29 +254,27 @@ namespace boost { namespace hana {
         };
 
         template <int i>
-        using eq = integer<i, Policy::Comparable | Policy::Runtime>;
+        struct eq : integer<i, Policy::Comparable | Policy::Runtime> { };
 
         template <int i>
-        using ct_eq = integer<i, Policy::Comparable | Policy::Constant>;
+        struct ct_eq : integer<i, Policy::Comparable | Policy::Constant> { };
 
         template <int i>
-        using cx_eq = integer<i, Policy::Comparable | Policy::Constexpr>;
+        struct cx_eq : integer<i, Policy::Comparable | Policy::Constexpr> { };
 
         template <int i>
-        using ord = integer<i, Policy::Orderable | Policy::Runtime>;
+        struct ord : integer<i, Policy::Orderable | Policy::Runtime> { };
 
         template <int i>
-        using ct_ord = integer<i, Policy::Orderable | Policy::Constant>;
+        struct ct_ord : integer<i, Policy::Orderable | Policy::Constant> { };
 
         template <int i>
-        using cx_ord = integer<i, Policy::Orderable | Policy::Constexpr>;
+        struct cx_ord : integer<i, Policy::Orderable | Policy::Constexpr> { };
 
         template <int i>
-        using _constant = integer<i,
-              Policy::Constant
-            | Policy::Comparable
-            | Policy::Orderable
-        >;
+        struct _constant
+            : integer<i, Policy::Constant | Policy::Comparable | Policy::Orderable>
+        { };
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -296,7 +290,7 @@ namespace boost { namespace hana {
         (policy & test::Policy::Constant) &&
         hana::IntegralConstant<C>::value
     >>
-        : embedding<is_embedded<typename C::value_type, int>{}>
+        : embedding<is_embedded<typename C::value_type, int>::value>
     {
         template <typename N>
         static constexpr auto apply(N const&) {

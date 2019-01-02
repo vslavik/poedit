@@ -41,12 +41,9 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
     .debug-configuration = true ;
 }
                        
-# vectorization diagnostics
-feature vectorize : off on full ;
-
 # Initializes the intel-darwin toolset
 #   version in mandatory
-#   name (default icc) is used to invoke the specified intel complier
+#   name (default icc) is used to invoke the specified intel compiler
 #   compile and link options allow you to specify addition command line options for each version
 rule init ( version ? :  command * : options * )
 {
@@ -57,8 +54,6 @@ rule init ( version ? :  command * : options * )
         : $(command) : /opt/intel_cc_80/bin ] ;
 
     common.handle-options intel-darwin : $(condition) : $(command) : $(options) ;
-
-    gcc.init-link-flags intel-darwin darwin $(condition) ;
 
     # handle <library-path>
     # local library-path = [ feature.get-values <library-path> : $(options) ] ;
@@ -80,7 +75,7 @@ rule init ( version ? :  command * : options * )
             local lib_path = $(root)/lib $(root:P)/lib/$(bin:B) ;
             if $(.debug-configuration)
             {
-                ECHO notice: using intel libraries :: $(condition) :: $(lib_path) ;
+                ECHO notice\: using intel libraries "::" $(condition) "::" $(lib_path) ;
             }
             flags intel-darwin.link RUN_PATH $(condition) : $(lib_path) ;
         }   
@@ -121,6 +116,14 @@ rule init ( version ? :  command * : options * )
     if $(major) = "9" || ( $(major) = "10" && ( $(minor) = "0" || $(minor) = "1" ) ) {
         flags intel-darwin.compile DEFINES $(condition) : __WINT_TYPE__=int : unchecked ;
     }
+
+    # - Ranlib.
+    local ranlib = [ feature.get-values <ranlib> : $(options) ] ;
+    toolset.flags intel-darwin.archive .RANLIB $(condition) : $(ranlib[1]) ;
+
+    # - Archive builder.
+    local archiver = [ feature.get-values <archiver> : $(options) ] ;
+    toolset.flags intel-darwin.archive .AR $(condition) : $(archiver[1]) ;
 }
 
 SPACE = " " ;
@@ -135,9 +138,11 @@ flags intel-darwin.compile OPTIONS <optimization>space : -O1 ; # no specific spa
 .cpu-type-em64t    = prescott nocona core2 corei7 corei7-avx core-avx-i
                      conroe conroe-xe conroe-l allendale merom
                      merom-xe kentsfield kentsfield-xe penryn wolfdale
-                     yorksfield nehalem sandy-bridge ivy-bridge haswell ;
+                     yorksfield nehalem sandy-bridge ivy-bridge haswell
+                     broadwell skylake skylake-avx512 cannonlake icelake ;
 .cpu-type-amd64    = k8 opteron athlon64 athlon-fx k8-sse3 opteron-sse3
-                     athlon64-sse3 amdfam10 barcelona bdver1 bdver2 bdver3 btver1 btver2 ;
+                     athlon64-sse3 amdfam10 barcelona bdver1 bdver2 bdver3
+                     bdver4 btver1 btver2 znver1 ;
 .cpu-type-x86-64   = $(.cpu-type-em64t) $(.cpu-type-amd64) ;
 
 flags intel-darwin.compile OPTIONS <instruction-set>$(.cpu-type-x86-64)/<address-model>32 : -m32 ; # -mcmodel=small ;
@@ -169,6 +174,7 @@ flags intel-darwin ARFLAGS <archiveflags> ;
 # logic in intel-linux, but that's hardly worth the trouble
 # as on Linux, 'ar' is always available.
 .AR = ar ;
+.RANLIB = ranlib ;
 
 rule archive ( targets * : sources * : properties * )
 {
@@ -202,7 +208,7 @@ rule archive ( targets * : sources * : properties * )
 actions piecemeal archive
 {
   "$(.AR)" $(AROPTIONS) rc "$(<)" "$(>)"
-  "ranlib" -cs "$(<)"
+  "$(.RANLIB)" -cs "$(<)"
 }
 
 flags intel-darwin.link USER_OPTIONS <linkflags> ;

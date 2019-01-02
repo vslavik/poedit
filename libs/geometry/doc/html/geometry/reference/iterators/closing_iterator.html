@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>closing_iterator</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../iterators.html" title="Iterators">
 <link rel="prev" href="../iterators.html" title="Iterators">
@@ -27,18 +27,19 @@
 <a name="geometry.reference.iterators.closing_iterator"></a><a class="link" href="closing_iterator.html" title="closing_iterator">closing_iterator</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp93773280"></a>
+          <a class="indexterm" name="idp112326304"></a>
 Iterator which iterates through a range, but adds first element at end
           of the range.
         </p>
 <h6>
 <a name="geometry.reference.iterators.closing_iterator.h0"></a>
-          <span><a name="geometry.reference.iterators.closing_iterator.synopsis"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.iterators.closing_iterator.synopsis"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Range</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">closing_iterator</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_facade</span><span class="special">&lt;</span> <span class="identifier">closing_iterator</span><span class="special">&lt;</span> <span class="identifier">Range</span> <span class="special">&gt;,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">range_value</span><span class="special">&lt;</span> <span class="identifier">Range</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="keyword">const</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">random_access_traversal_tag</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">range_reference</span><span class="special">&lt;</span> <span class="identifier">Range</span> <span class="keyword">const</span>  <span class="special">&gt;::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">range_difference</span><span class="special">&lt;</span> <span class="identifier">Range</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -47,7 +48,7 @@ Iterator which iterates through a range, but adds first element at end
         </p>
 <h6>
 <a name="geometry.reference.iterators.closing_iterator.h1"></a>
-          <span><a name="geometry.reference.iterators.closing_iterator.template_parameter_s_"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.template_parameter_s_">Template
+          <span class="phrase"><a name="geometry.reference.iterators.closing_iterator.template_parameter_s_"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -82,7 +83,7 @@ Iterator which iterates through a range, but adds first element at end
 </table></div>
 <h6>
 <a name="geometry.reference.iterators.closing_iterator.h2"></a>
-          <span><a name="geometry.reference.iterators.closing_iterator.constructor_s_"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.constructor_s_">Constructor(s)</a>
+          <span class="phrase"><a name="geometry.reference.iterators.closing_iterator.constructor_s_"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -169,7 +170,7 @@ Iterator which iterates through a range, but adds first element at end
 </table></div>
 <h6>
 <a name="geometry.reference.iterators.closing_iterator.h3"></a>
-          <span><a name="geometry.reference.iterators.closing_iterator.header"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.iterators.closing_iterator.header"></a></span><a class="link" href="closing_iterator.html#geometry.reference.iterators.closing_iterator.header">Header</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">iterators</span><span class="special">/</span><span class="identifier">closing_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
@@ -177,8 +178,8 @@ Iterator which iterates through a range, but adds first element at end
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -5,7 +5,7 @@
 /*
  * Craig W. McPheeters, Alias|Wavefront.
  *
- * hcache.c hcache.h - handle cacheing of #includes in source files.
+ * hcache.c hcache.h - handle caching of #includes in source files.
  *
  * Create a cache of files scanned for headers. When starting jam, look for the
  * cache file and load it if present. When finished the binding phase, create a
@@ -88,7 +88,7 @@ static const char * cache_name( void )
             pushsettings( root_module(), t->settings );
             /* Do not expect the cache file to be generated, so pass 0 as the
              * third argument to search. Expect the location to be specified via
-             * LOCATE, so pass 0 as the fourth arugment.
+             * LOCATE, so pass 0 as the fourth argument.
              */
             object_free( t->boundname );
             t->boundname = search( t->name, &t->time, 0, 0 );

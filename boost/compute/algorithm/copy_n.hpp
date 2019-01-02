@@ -30,6 +30,8 @@ namespace compute {
 /// boost::compute::copy_n(values, 4, vec.begin(), queue);
 /// \endcode
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see copy()
 template<class InputIterator, class Size, class OutputIterator>
 inline OutputIterator copy_n(InputIterator first,

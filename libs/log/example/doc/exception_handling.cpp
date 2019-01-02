@@ -144,7 +144,7 @@ void init()
     sink->set_formatter
     (
         expr::stream
-            << expr::attr< unsigned int >("LineID")
+            << expr::attr< unsigned int >("LineID").or_throw()  // this attribute will not be found, which will cause an exception
             << ": <" << expr::attr< severity_level >("Severity")
             << "> " << expr::smessage
     );

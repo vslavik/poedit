@@ -158,11 +158,6 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                     {
                         // no argument preprocessing
                     }
-                    else if (n_actual > max_arity)
-                    {
-                        // too many arguments
-                        inner_args = handle<>();
-                    }
                     else
                     {
                         // build a new arg tuple, will adjust its size later

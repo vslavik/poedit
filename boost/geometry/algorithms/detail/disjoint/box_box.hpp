@@ -5,8 +5,8 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2013-2016.
-// Modifications copyright (c) 2013-2016, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013-2017.
+// Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -52,6 +52,12 @@ template
 >
 struct box_box
 {
+    template <typename Strategy>
+    static inline bool apply(Box1 const& box1, Box2 const& box2, Strategy const&)
+    {
+        return apply(box1, box2);
+    }
+
     static inline bool apply(Box1 const& box1, Box2 const& box2)
     {
         if (get<max_corner, Dimension>(box1) < get<min_corner, Dimension>(box2))
@@ -84,6 +90,12 @@ struct box_box<Box1, Box2, DimensionCount, DimensionCount, CSTag>
 template <typename Box1, typename Box2, std::size_t DimensionCount>
 struct box_box<Box1, Box2, 0, DimensionCount, spherical_tag>
 {
+    template <typename Strategy>
+    static inline bool apply(Box1 const& box1, Box2 const& box2, Strategy const&)
+    {
+        return apply(box1, box2);
+    }
+
     static inline bool apply(Box1 const& box1, Box2 const& box2)
     {
         typedef typename geometry::select_most_precise
@@ -109,9 +121,18 @@ struct box_box<Box1, Box2, 0, DimensionCount, spherical_tag>
             // calculate positive longitude translation with b1_min as origin
             calc_t const diff_min = math::longitude_distance_unsigned<units_t>(b1_min, b2_min);
             calc_t const b2_min_transl = b1_min + diff_min; // always right of b1_min
+            calc_t b2_max_transl = b2_min_transl - constants::period() + diff2;
 
-            if (b2_min_transl > b1_max                                // b2_min right of b1_max
-             && b2_min_transl - constants::period() + diff2 < b1_min) // b2_max left of b1_min
+            // if the translation is too close then use the original point
+            // note that math::abs(b2_max_transl - b2_max) takes values very
+            // close to k*2*constants::period() for k=0,1,2,...
+            if (math::abs(b2_max_transl - b2_max) < constants::period() / 2)
+            {
+                b2_max_transl = b2_max;
+            }
+
+            if (b2_min_transl > b1_max  // b2_min right of b1_max
+             && b2_max_transl < b1_min) // b2_max left of b1_min
             {
                 return true;
             }

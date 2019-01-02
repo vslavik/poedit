@@ -41,6 +41,29 @@ namespace logging = boost::log;
 
 namespace {
 
+struct unreferencable_data
+{
+    unsigned int m : 2;
+    unsigned int n : 6;
+
+    enum my_enum
+    {
+        one = 1,
+        two = 2
+    };
+
+    // The following static constants don't have definitions, so they can only be used in constant expressions.
+    // Trying to bind a reference to these members will result in linking errors.
+    static const int x = 7;
+    static const my_enum y = one;
+
+    unreferencable_data()
+    {
+        m = 1;
+        n = 5;
+    }
+};
+
 template< typename CharT >
 struct test_impl
 {
@@ -137,6 +160,33 @@ struct test_impl
         BOOST_CHECK(equal_strings(str_fmt, strm_correct.str()));
     }
 #endif
+
+    static void output_unreferencable_data()
+    {
+        unreferencable_data data;
+        {
+            string_type str_fmt;
+            formatting_ostream_type strm_fmt(str_fmt);
+            strm_fmt << data.m << static_cast< char_type >(' ') << data.n << static_cast< char_type >(' ') << unreferencable_data::x << static_cast< char_type >(' ') << unreferencable_data::y;
+            strm_fmt.flush();
+
+            ostream_type strm_correct;
+            strm_correct << static_cast< unsigned int >(data.m) << static_cast< char_type >(' ') << static_cast< unsigned int >(data.n) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::x) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::y);
+
+            BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
+        }
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+        {
+            string_type str_fmt;
+            formatting_ostream_type(str_fmt) << data.m << static_cast< char_type >(' ') << data.n << static_cast< char_type >(' ') << unreferencable_data::x << static_cast< char_type >(' ') << unreferencable_data::y << std::flush;
+
+            ostream_type strm_correct;
+            strm_correct << static_cast< unsigned int >(data.m) << static_cast< char_type >(' ') << static_cast< unsigned int >(data.n) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::x) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::y);
+
+            BOOST_CHECK(equal_strings(str_fmt, strm_correct.str()));
+        }
+#endif
+    }
 };
 
 } // namespace
@@ -179,6 +229,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rvalue_stream, CharT, char_types)
 }
 #endif
 
+// Test output of data to which a reference cannot be bound
+BOOST_AUTO_TEST_CASE_TEMPLATE(output_unreferencable_data, CharT, char_types)
+{
+    typedef test_impl< CharT > test;
+    test::output_unreferencable_data();
+}
+
 namespace my_namespace {
 
 class A {};
@@ -205,6 +262,14 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< Cha
     return strm;
 }
 
+enum E { eee };
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, E)
+{
+    strm << "E";
+    return strm;
+}
+
 } // namespace my_namespace
 
 // Test operator forwarding
@@ -221,10 +286,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(operator_forwarding, CharT, char_types)
     const my_namespace::A a = my_namespace::A(); // const lvalue
     my_namespace::B b; // lvalue
     strm_fmt << a << b << my_namespace::C(); // rvalue
+    strm_fmt << my_namespace::eee;
     strm_fmt.flush();
 
     ostream_type strm_correct;
-    strm_correct << a << b << my_namespace::C();
+    strm_correct << a << b << my_namespace::C() << my_namespace::eee;
 
     BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
 }
@@ -269,6 +335,14 @@ inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator
     return strm;
 }
 
+enum E { eee };
+template< typename CharT, typename TraitsT, typename AllocatorT >
+inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator<< (logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, E)
+{
+    strm << "E";
+    return strm;
+}
+
 } // namespace my_namespace2
 
 // Test operator overriding
@@ -285,10 +359,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(operator_overriding, CharT, char_types)
     const my_namespace2::A a = my_namespace2::A(); // const lvalue
     my_namespace2::B b; // lvalue
     strm_fmt << a << b << my_namespace2::C() << my_namespace2::D(); // rvalue
+    strm_fmt << my_namespace2::eee;
     strm_fmt.flush();
 
     ostream_type strm_correct;
-    strm_correct << "ABCD";
+    strm_correct << "ABCDE";
 
     BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
 }
@@ -297,15 +372,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(operator_overriding, CharT, char_types)
 
 namespace {
 
-const char narrow_chars[] =
-{
-    static_cast< char >(0xd0), static_cast< char >(0x9f), static_cast< char >(0xd1), static_cast< char >(0x80),
-    static_cast< char >(0xd0), static_cast< char >(0xb8), static_cast< char >(0xd0), static_cast< char >(0xb2),
-    static_cast< char >(0xd0), static_cast< char >(0xb5), static_cast< char >(0xd1), static_cast< char >(0x82),
-    ',', ' ',
-    static_cast< char >(0xd0), static_cast< char >(0xbc), static_cast< char >(0xd0), static_cast< char >(0xb8),
-    static_cast< char >(0xd1), static_cast< char >(0x80), '!', 0
-};
+const char narrow_chars[] = "\xd0\x9f\xd1\x80\xd0\xb8\xd0\xb2\xd0\xb5\xd1\x82, \xd0\xbc\xd0\xb8\xd1\x80!";
 const wchar_t wide_chars[] = { 0x041f, 0x0440, 0x0438, 0x0432, 0x0435, 0x0442, L',', L' ', 0x043c, 0x0438, 0x0440, L'!', 0 };
 
 template< typename StringT >

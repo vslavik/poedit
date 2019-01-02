@@ -9,11 +9,15 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 version="1.0">
+  <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/common/common.xsl"/>
   <xsl:include href="reference.xsl"/>
 
   <xsl:output method="xml"
     doctype-public="-//OASIS//DTD DocBook XML V4.2//EN"
     doctype-system="http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"/>
+
+  <!-- Generate consistent id values if document is unchanged -->
+  <xsl:param name="generate.consistent.ids" select="0"/>
 
   <!-- The maximum number of columns allowed in preformatted text -->
   <xsl:param name="max-columns" select="78"/>

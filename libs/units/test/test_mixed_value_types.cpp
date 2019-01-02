@@ -16,7 +16,7 @@ namespace bu = boost::units;
 
 int main() {
     bu::quantity<bu::si::length, double> q1;
-    bu::quantity<bu::si::length, int> q2;
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::si::length, int> q2;
     q1 + q2;
     q1 -= q2;
 }

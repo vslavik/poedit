@@ -9,7 +9,7 @@
 //
 //  Version     : $Revision$
 //
-//  Description : single header usage variant with custom init test
+//  Description : header-only usage variant with custom init test
 // ***************************************************************************
 
 // Boost.Test

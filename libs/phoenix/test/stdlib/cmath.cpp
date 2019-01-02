@@ -11,7 +11,7 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/stl/cmath.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 int main()
 {
@@ -27,4 +27,5 @@ int main()
     BOOST_TEST(!f(0.0, eps));
     BOOST_TEST(std::fabs(x-4.) < eps );
     BOOST_TEST(std::fabs(z-1.) < eps );
+    return boost::report_errors();
 }

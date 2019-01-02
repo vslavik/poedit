@@ -29,10 +29,10 @@ class propagation_test_allocator
       typedef propagation_test_allocator<U, Id, HasTrueTypes> other;
    };
 
-   typedef boost::container::container_detail::bool_<HasTrueTypes>  propagate_on_container_copy_assignment;
-   typedef boost::container::container_detail::bool_<HasTrueTypes>  propagate_on_container_move_assignment;
-   typedef boost::container::container_detail::bool_<HasTrueTypes>  propagate_on_container_swap;
-   typedef boost::container::container_detail::bool_<HasTrueTypes>  is_always_equal;
+   typedef boost::container::dtl::bool_<HasTrueTypes>  propagate_on_container_copy_assignment;
+   typedef boost::container::dtl::bool_<HasTrueTypes>  propagate_on_container_move_assignment;
+   typedef boost::container::dtl::bool_<HasTrueTypes>  propagate_on_container_swap;
+   typedef boost::container::dtl::bool_<HasTrueTypes>  is_always_equal;
    typedef T value_type;
 
    propagation_test_allocator()

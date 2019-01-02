@@ -12,7 +12,7 @@
 
 #include <boost/concept_check.hpp>
 
-namespace boost { namespace container { namespace container_detail { namespace concept {
+namespace boost { namespace container { namespace dtl { namespace concept {
 
 /**
  * VArrayStrategyConcept
@@ -55,6 +55,6 @@ public :
 #endif
 };
 
-}}}} // namespace boost::container::container_detail::concept
+}}}} // namespace boost::container::dtl::concept
 
 #endif //BOOST_CONTAINER_VARRAY_CONCEPT_HPP

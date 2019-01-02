@@ -46,12 +46,12 @@ struct call_base_unit_converter;
 
 /// INTERNAL ONLY
 struct undefined_base_unit_converter_base {
-    static const bool is_defined = false;
+    BOOST_STATIC_CONSTEXPR bool is_defined = false;
 };
 
 /// INTERNAL ONLY
 struct no_default_conversion {
-    static const bool is_defined = false;
+    BOOST_STATIC_CONSTEXPR bool is_defined = false;
 };
 
 /// INTERNAL ONLY
@@ -110,11 +110,10 @@ struct base_unit_converter_base : undefined_base_unit_converter_base {
 template<class Source>
 struct base_unit_converter_base<Source, BOOST_UNITS_MAKE_HETEROGENEOUS_UNIT(Source, typename Source::dimension_type)>
 {
-    static const bool is_defined = true;
+    BOOST_STATIC_CONSTEXPR bool is_defined = true;
     typedef one type;
-    static type value() {
-        one result;
-        return(result);
+    static BOOST_CONSTEXPR type value() {
+        return(one());
     }
 };
 
@@ -135,7 +134,7 @@ struct do_call_base_unit_converter {
     typedef typename mpl::divides<source_factor, destination_factor>::type factor;
     typedef eval_scale_list<factor> eval_factor;
     typedef typename multiply_typeof_helper<typename converter::type, typename eval_factor::type>::type type;
-    static type value()
+    static BOOST_CONSTEXPR type value()
     {
         return(converter::value() * eval_factor::value());
     }
@@ -172,9 +171,8 @@ struct call_base_unit_converter_base_unit_impl<false, true>
     {
         typedef do_call_base_unit_converter<Dest, typename Source::unit_type> converter;
         typedef typename divide_typeof_helper<one, typename converter::type>::type type;
-        static type value() {
-            one numerator;
-            return(numerator / converter::value());
+        static BOOST_CONSTEXPR type value() {
+            return(one() / converter::value());
         }
     };
 };
@@ -200,7 +198,7 @@ struct call_base_unit_converter_base_unit_impl<false, false>
             >::type,
             typename end::type
         >::type type;
-        static type value() {
+        static BOOST_CONSTEXPR type value() {
             return(start::value() * conversion::value() / end::value());
         }
     };
@@ -220,7 +218,7 @@ struct get_default_conversion_impl
         typedef typename multiply_typeof_helper<typename power_typeof_helper<new_source, exponent>::type, typename next_iteration::unit_type>::type unit_type;
         typedef call_base_unit_converter<source, new_source> conversion;
         typedef typename multiply_typeof_helper<typename conversion::type, typename next_iteration::type>::type type;
-        static type value() {
+        static BOOST_CONSTEXPR type value() {
             return(static_rational_power<exponent>(conversion::value()) * next_iteration::value());
         }
     };
@@ -234,9 +232,8 @@ struct get_default_conversion_impl<0>
     {
         typedef unit<dimensionless_type, heterogeneous_system<heterogeneous_system_impl<dimensionless_type, dimensionless_type, no_scale> > > unit_type;
         typedef one type;
-        static one value() {
-            one result;
-            return(result);
+        static BOOST_CONSTEXPR one value() {
+            return(one());
         }
     };
 };
@@ -272,7 +269,7 @@ struct call_base_unit_converter_impl<false>
             >::type,
             typename impl::type
         >::type type;
-        static type value() {
+        static BOOST_CONSTEXPR type value() {
             return(start::value() * conversion::value() / impl::value());
         }
     };
@@ -314,7 +311,7 @@ struct conversion_impl
         typedef typename reduce_unit<units::unit<dimensions, DestinationSystem> >::type reduced_unit;
         typedef detail::call_base_unit_converter<unit, reduced_unit> converter;
         typedef typename multiply_typeof_helper<typename converter::type, typename next_iteration::type>::type type;
-        static type value() { return(static_rational_power<typename unit_pair::value_type>(converter::value()) * next_iteration::value()); }
+        static BOOST_CONSTEXPR type value() { return(static_rational_power<typename unit_pair::value_type>(converter::value()) * next_iteration::value()); }
     };
 };
 
@@ -325,7 +322,7 @@ struct conversion_impl<0>
     struct apply
     {
         typedef one type;
-        static type value() { one result; return(result); }
+        static BOOST_CONSTEXPR type value() { return(one()); }
     };
 };
 
@@ -338,11 +335,9 @@ struct conversion_helper<quantity<Unit1, T1>, quantity<Unit2, T2> >
 {
     /// INTERNAL ONLY
     typedef quantity<Unit2, T2> destination_type;
-    static destination_type convert(const quantity<Unit1, T1>& source)
+    static BOOST_CONSTEXPR destination_type convert(const quantity<Unit1, T1>& source)
     {
-        Unit1 u1;
-        Unit2 u2;
-        return(destination_type::from_value(static_cast<T2>(source.value() * conversion_factor(u1, u2))));
+        return(destination_type::from_value(static_cast<T2>(source.value() * conversion_factor(Unit1(), Unit2()))));
     }
 };
 
@@ -365,7 +360,7 @@ struct conversion_factor_helper<unit<D, homogeneous_system<L1> >, unit<D, homoge
     //    homogeneous_system<L2>
     //> impl;
     //typedef typename impl::type type;
-    //static type value()
+    //static BOOST_CONSTEXPR type value()
     //{
     //    return(impl::value());
     //}
@@ -384,7 +379,7 @@ struct conversion_factor_helper<unit<D, heterogeneous_system<L1> >, unit<D, homo
     //> impl;
     //typedef eval_scale_list<typename L1::scale> scale;
     //typedef typename multiply_typeof_helper<typename impl::type, typename scale::type>::type type;
-    //static type value()
+    //static BOOST_CONSTEXPR type value()
     //{
     //    return(impl::value() * scale::value());
     //}
@@ -406,10 +401,9 @@ struct conversion_factor_helper<unit<D, homogeneous_system<L1> >, unit<D, hetero
     //> impl;
     //typedef eval_scale_list<typename L2::scale> scale;
     //typedef typename multiply_typeof_helper<typename impl::type, typename scale::type>::type type;
-    //static type value()
+    //static BOOST_CONSTEXPR type value()
     //{
-    //    one numerator;
-    //    return(numerator / (impl::value() * scale::value()));
+    //    return(one() / (impl::value() * scale::value()));
     //}
 };
 
@@ -443,7 +437,7 @@ struct conversion_factor_helper<unit<D, heterogeneous_system<S1> >, unit<D, hete
         typename conversion1::type,
         typename divide_typeof_helper<typename scale::type, typename conversion2::type>::type
     >::type type;
-    static type value()
+    static BOOST_CONSTEXPR type value()
     {
         return(conversion1::value() * (scale::value() / conversion2::value()));
     }

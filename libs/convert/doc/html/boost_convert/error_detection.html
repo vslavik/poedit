@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Better Error Detection</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="prev" href="getting_started/basic_conversion_failure_detection.html" title="Basic Conversion-Failure Detection">
@@ -39,15 +39,13 @@
 <p>
     </p>
 <p>
-      The code above is straightforward and self-explanatory but, unfortunately,
-      strictly speaking, is not entirely deterministic as -1 might be the result
-      of a conversion failure or the successful conversion of the "-1"
-      string. Still, in reality "spare" values (outside the valid/sensible
-      range) are quite often available to indicate conversion failures. If so, such
-      simple deployment might be adequate without introducing non-deterministic behavior.
-      Alternatively, it might be not that uncommon to ignore conversion failures
-      altogether and to simply log the failure and to proceed with the supplied fallback
-      value.
+      The code above is straightforward and self-explanatory but, strictly speaking,
+      is not entirely correct as -1 might be the result of a conversion failure or
+      the successful conversion of the "-1" string. Still, in reality "spare"
+      values (outside the valid/sensible range) are often available to indicate conversion
+      failures. If so, such straightorward deployment might be adequate. Alternatively,
+      it might be not that uncommon to ignore conversion failures altogether and
+      to simply log the event and to proceed with the supplied fallback value.
     </p>
 <p>
       Applications outside these mentioned categories still require conversion failure
@@ -73,7 +71,7 @@
       However, to cater for a wider range of program-flow variations, <span class="emphasis"><em>Boost.Convert</em></span>
       adds the flexibility of
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           delaying the moment when the conversion-failure exception is actually thrown
           or
@@ -121,8 +119,8 @@
 </tr>
 <tr><td align="left" valign="top"><p>
         One notable advantage of <code class="computeroutput"><span class="identifier">value_or_eval</span><span class="special">()</span></code> over <code class="computeroutput"><span class="identifier">value_or</span><span class="special">()</span></code> is that the actual calculation of the
-        <code class="computeroutput"><span class="identifier">fallback_value</span></code> is delayed,
-        conditional on the success or failure of the conversion.
+        <code class="computeroutput"><span class="identifier">fallback_value</span></code> is potentially
+        delayed and conditional on the success or failure of the conversion.
       </p></td></tr>
 </table></div>
 <p>
@@ -171,7 +169,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Vladimir Batov<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2016 Vladimir Batov<p>
         Distributed under the Boost Software License, Version 1.0. See copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>.
       </p>
 </div></td>

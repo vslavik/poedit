@@ -104,8 +104,8 @@ BOOST_AUTO_TEST_CASE( test_instantiation )
     s4.do_step( lorenz() , x , t , dt );
     s5.do_step( lorenz() , x , t , dt );
     s6.do_step( lorenz() , x , t , dt );
-//  s7.do_step( lorenz() , x , t , dt );
-//  s8.do_step( lorenz() , x , t , dt );
+//    s7.do_step( lorenz() , x , t , dt );
+//    s8.do_step( lorenz() , x , t , dt );
 }
 
 

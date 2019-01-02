@@ -38,7 +38,7 @@ int main()
                     E(5, 2) };
 
   typedef compressed_sparse_row_graph<directedS, WebPage> WebGraph;
-  WebGraph g(&the_edges[0], &the_edges[0] + sizeof(the_edges)/sizeof(E), 6);
+  WebGraph g(boost::edges_are_sorted, &the_edges[0], &the_edges[0] + sizeof(the_edges)/sizeof(E), 6);
   
   // Set the URLs of each vertex
   int index = 0;

@@ -3,6 +3,10 @@
 
 // Copyright (c) 2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -76,7 +80,15 @@ struct map_visitor
                     m_mapper.map(turn.point, "fill:rgb(255,128,0);"
                             "stroke:rgb(0,0,0);stroke-width:1", 3);
                     break;
-                case 2 :
+                case 11 :
+                    m_mapper.map(turn.point, "fill:rgb(92,255,0);" // Greenish
+                            "stroke:rgb(0,0,0);stroke-width:1", 3);
+                    break;
+                case 21 :
+                    m_mapper.map(turn.point, "fill:rgb(0,128,255);" // Blueish
+                            "stroke:rgb(0,0,0);stroke-width:1", 3);
+                    break;
+                case 3 :
                     label_turn(index, turn);
                     break;
             }
@@ -129,8 +141,9 @@ struct map_visitor
         for (typename Clusters::const_iterator it = clusters.begin(); it != clusters.end(); ++it)
         {
             std::cout << " CLUSTER " << it->first << ": ";
-            for (typename std::set<bg::signed_size_type>::const_iterator sit = it->second.begin();
-                 sit != it->second.end(); ++sit)
+            for (typename std::set<bg::signed_size_type>::const_iterator sit
+                 = it->second.turn_indices.begin();
+                 sit != it->second.turn_indices.end(); ++sit)
             {
                 std::cout << " "  << *sit;
             }
@@ -233,10 +246,15 @@ struct map_visitor
                     result = true;
                 }
             }
-        }
-        if (! turn.operations[index].enriched.startable)
-        {
-            os << "$";
+
+            os << " {" << turn.operations[index].enriched.region_id
+               << (turn.operations[index].enriched.isolated ? " ISO" : "")
+               << "}";
+
+            if (! turn.operations[index].enriched.startable)
+            {
+                os << "$";
+            }
         }
 
         return result;
@@ -254,27 +272,45 @@ struct map_visitor
         bool lab1 = label_operation(turn, 0, out);
         out << " / ";
         bool lab2 = label_operation(turn, 1, out);
-        if (turn.switch_source)
+        if (turn.discarded)
         {
-            out << "#";
+            out << "!";
+        }
+        if (turn.has_colocated_both)
+        {
+            out << "+";
+        }
+        bool const self_turn = bg::detail::overlay::is_self_turn<bg::overlay_union>(turn);
+        if (self_turn)
+        {
+            out << "@";
         }
 
-        std::string style =  "fill:rgb(0,0,0);font-family:Arial;font-size:8px";
-        if (turn.colocated)
+        std::string font8 = "font-family:Arial;font-size:6px";
+        std::string font6 = "font-family:Arial;font-size:4px";
+        std::string style =  "fill:rgb(0,0,255);" + font8;
+        if (self_turn)
         {
-            style =  "fill:rgb(255,0,0);font-family:Arial;font-size:8px";
+            if (turn.discarded)
+            {
+                style =  "fill:rgb(128,28,128);" + font6;
+            }
+            else
+            {
+                style =  "fill:rgb(255,0,255);" + font8;
+            }
         }
         else if (turn.discarded)
         {
-            style =  "fill:rgb(92,92,92);font-family:Arial;font-size:6px";
+            style =  "fill:rgb(92,92,92);" + font6;
         }
         else if (turn.cluster_id != -1)
         {
-            style =  "fill:rgb(0,0,255);font-family:Arial;font-size:8px";
+            style =  "fill:rgb(0,0,255);" + font8;
         }
         else if (! lab1 || ! lab2)
         {
-            style =  "fill:rgb(0,0,255);font-family:Arial;font-size:6px";
+            style =  "fill:rgb(0,0,255);" + font6;
         }
 
         add_text(turn, out.str(), style);
@@ -284,7 +320,7 @@ struct map_visitor
     void add_text(Turn const& turn, std::string const& text, std::string const& style)
     {
         int const margin = 5;
-        int const lineheight = 8;
+        int const lineheight = 6;
         double const half = 0.5;
         double const ten = 10;
 
@@ -313,7 +349,9 @@ struct map_visitor
 template <typename Geometry, bg::overlay_type OverlayType>
 void test_overlay(std::string const& caseid,
         std::string const& wkt1, std::string const& wkt2,
-        double expected_area)
+        double expected_area,
+        std::size_t expected_clip_count,
+        std::size_t expected_hole_count)
 {
     Geometry g1;
     bg::read_wkt(wkt1, g1);
@@ -326,10 +364,21 @@ void test_overlay(std::string const& caseid,
     bg::correct(g2);
 
 #if defined(TEST_WITH_SVG)
+    bool const ccw = bg::point_order<Geometry>::value == bg::counterclockwise;
+    bool const open = bg::closure<Geometry>::value == bg::open;
+
     std::ostringstream filename;
     filename << "overlay"
         << "_" << caseid
         << "_" << string_from_type<typename bg::coordinate_type<Geometry>::type>::name()
+        << (ccw ? "_ccw" : "")
+        << (open ? "_open" : "")
+#if defined(BOOST_GEOMETRY_NO_SELF_TURNS)
+        << "_no_self"
+#endif
+#if defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
+        << "_no_rob"
+#endif
         << ".svg";
 
     std::ofstream svg(filename.str().c_str());
@@ -351,10 +400,22 @@ void test_overlay(std::string const& caseid,
     typedef typename boost::range_value<Geometry>::type geometry_out;
     typedef bg::detail::overlay::overlay
         <
-            Geometry, Geometry, false, OverlayType == bg::overlay_difference,
-            false, geometry_out,
+            Geometry, Geometry,
+            bg::detail::overlay::do_reverse<bg::point_order<Geometry>::value>::value,
+            OverlayType == bg::overlay_difference
+            ? ! bg::detail::overlay::do_reverse<bg::point_order<Geometry>::value>::value
+            : bg::detail::overlay::do_reverse<bg::point_order<Geometry>::value>::value,
+            bg::detail::overlay::do_reverse<bg::point_order<Geometry>::value>::value,
+            geometry_out,
             OverlayType
         > overlay;
+
+    typedef typename bg::strategy::intersection::services::default_strategy
+        <
+            typename bg::cs_tag<Geometry>::type
+        >::type strategy_type;
+
+    strategy_type strategy;
 
     typedef typename bg::rescale_overlay_policy_type
     <
@@ -365,15 +426,6 @@ void test_overlay(std::string const& caseid,
     rescale_policy_type robust_policy
         = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
 
-    typedef bg::strategy_intersection
-    <
-        typename bg::cs_tag<Geometry>::type,
-        Geometry,
-        Geometry,
-        typename bg::point_type<Geometry>::type,
-        rescale_policy_type
-    > strategy;
-
 #if defined(TEST_WITH_SVG)
     map_visitor<svg_mapper> visitor(mapper);
 #else
@@ -382,9 +434,17 @@ void test_overlay(std::string const& caseid,
 
     Geometry result;
     overlay::apply(g1, g2, robust_policy, std::back_inserter(result),
-                   strategy(), visitor);
+                   strategy, visitor);
 
     BOOST_CHECK_CLOSE(bg::area(result), expected_area, 0.001);
+    BOOST_CHECK_MESSAGE((bg::num_interior_rings(result) == expected_hole_count),
+                        caseid
+                        << " hole count: detected: " << bg::num_interior_rings(result)
+                        << " expected: "  << expected_hole_count);
+    BOOST_CHECK_MESSAGE((result.size() == expected_clip_count),
+                        caseid
+                        << " clip count: detected: " << result.size()
+                        << " expected: "  << expected_clip_count);
 
 #if defined(TEST_WITH_SVG)
     mapper.map(result, "fill-opacity:0.2;stroke-opacity:0.4;fill:rgb(255,0,0);"
@@ -393,128 +453,58 @@ void test_overlay(std::string const& caseid,
 #endif
 }
 
-template <typename T>
+#define TEST_INTERSECTION(caseid, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_intersection>) \
+    ( #caseid "_int", caseid[0], caseid[1], area, clips, holes)
+#define TEST_UNION(caseid, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_union>) \
+    ( #caseid "_union", caseid[0], caseid[1], area, clips, holes)
+#define TEST_DIFFERENCE_A(caseid, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_difference>) \
+    ( #caseid "_diff_a", caseid[0], caseid[1], area, clips, holes)
+#define TEST_DIFFERENCE_B(caseid, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_difference>) \
+    ( #caseid "_diff_b", caseid[1], caseid[0], area, clips, holes)
+
+#define TEST_INTERSECTION_WITH(caseid, index1, index2, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_intersection>) \
+    ( #caseid "_int_" #index1 "_" #index2, caseid[index1], caseid[index2], area, clips, holes)
+#define TEST_UNION_WITH(caseid, index1, index2, area, clips, holes) (test_overlay<multi_polygon, bg::overlay_union>) \
+    ( #caseid "_union" #index1 "_" #index2, caseid[index1], caseid[index2], area, clips, holes)
+
+template <typename T, bool Clockwise>
 void test_all()
 {
     typedef bg::model::point<T, 2, bg::cs::cartesian> point_type;
-    typedef bg::model::polygon<point_type> polygon;
+    typedef bg::model::polygon<point_type, Clockwise> polygon;
     typedef bg::model::multi_polygon<polygon> multi_polygon;
 
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_multi_simplex_union",
-            case_multi_simplex[0], case_multi_simplex[1],
-            14.58
-        );
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_multi_simplex_intersection",
-            case_multi_simplex[0], case_multi_simplex[1],
-            6.42
-        );
-    test_overlay<multi_polygon, bg::overlay_difference>
-        (
-            "case_multi_simplex_diff_a",
-            case_multi_simplex[0], case_multi_simplex[1],
-            5.58
-        );
-    test_overlay<multi_polygon, bg::overlay_difference>
-        (
-            "case_multi_simplex_diff_b",
-            case_multi_simplex[1], case_multi_simplex[0],
-            2.58
-        );
+    TEST_UNION(case_multi_simplex, 14.58, 1, 0);
+    TEST_INTERSECTION(case_multi_simplex, 6.42, 2, 0);
+
+    TEST_DIFFERENCE_A(case_multi_simplex, 5.58, 5, 0);
+    TEST_DIFFERENCE_B(case_multi_simplex, 2.58, 4, 0);
 
     // Contains 5 clusters, needing immediate selection of next turn
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_58_multi_0_3_union",
-            case_58_multi[0], case_58_multi[3],
-            19.8333333
-        );
+    TEST_UNION_WITH(case_58_multi, 0, 3, 19.8333333, 2, 0);
 
     // Contains many clusters, needing to exclude u/u turns
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_recursive_boxes_3_union",
-            case_recursive_boxes_3[0], case_recursive_boxes_3[1],
-            56.5
-        );
+    TEST_UNION(case_recursive_boxes_3, 56.5, 17, 6);
+
     // Contains 4 clusters, one of which having 4 turns
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_recursive_boxes_7_union",
-            case_recursive_boxes_7[0], case_recursive_boxes_7[1],
-            7.0
-        );
+    TEST_UNION(case_recursive_boxes_7, 7.0, 2, 0);
 
     // Contains 5 clusters, needing immediate selection of next turn
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_89_multi_union",
-            case_89_multi[0], case_89_multi[1],
-            6.0
-        );
+    TEST_UNION(case_89_multi, 6.0, 1, 0);
 
     // Needs ux/next_turn_index==-1 to be filtered out
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_77_multi_intersection",
-            case_77_multi[0], case_77_multi[1],
-            9.0
-        );
+    TEST_INTERSECTION(case_77_multi, 9.0, 5, 0);
+    TEST_UNION(case_101_multi, 22.25, 1, 3);
+    TEST_INTERSECTION(case_101_multi, 4.75, 4, 0);
 
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_101_multi_union",
-            case_101_multi[0], case_101_multi[1],
-            22.25
-        );
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_101_multi_intersection",
-            case_101_multi[0], case_101_multi[1],
-            4.75
-        );
+    TEST_INTERSECTION(case_recursive_boxes_11, 1.0, 2, 0);
+    TEST_INTERSECTION(case_recursive_boxes_30, 6.0, 4, 0);
 
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_recursive_boxes_11_intersection",
-            case_recursive_boxes_11[0], case_recursive_boxes_11[1],
-            1.0
-        );
-
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_recursive_boxes_4_union",
-            case_recursive_boxes_4[0], case_recursive_boxes_4[1],
-            96.75
-        );
-
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_58_multi_b6_intersection",
-            case_58_multi[6], case_58_multi[2],
-            13.25
-        );
-    test_overlay<multi_polygon, bg::overlay_intersection>
-        (
-            "case_72_multi_intersection_inv_b",
-            case_72_multi[2], case_72_multi[1],
-            6.15
-        );
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_recursive_boxes_12_union",
-            case_recursive_boxes_12[0], case_recursive_boxes_12[1],
-            6.0
-        );
-    test_overlay<multi_polygon, bg::overlay_union>
-        (
-            "case_recursive_boxes_13_union",
-            case_recursive_boxes_13[0], case_recursive_boxes_13[1],
-            10.25
-        );
+    TEST_UNION(case_recursive_boxes_4, 96.75, 1, 2);
+    TEST_INTERSECTION_WITH(case_58_multi, 2, 6, 13.25, 1, 1);
+    TEST_INTERSECTION_WITH(case_72_multi, 1, 2, 6.15, 3, 1);
+    TEST_UNION(case_recursive_boxes_12, 6.0, 6, 0);
+    TEST_UNION(case_recursive_boxes_13, 10.25, 3, 0);
 
 
 //    std::cout
@@ -525,6 +515,7 @@ void test_all()
 
 int test_main(int, char* [])
 {
-    test_all<double>();
+    test_all<double, true>();
+//    test_all<double, false>();
     return 0;
  }

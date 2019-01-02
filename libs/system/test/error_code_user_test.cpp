@@ -14,8 +14,6 @@
 
 //  Motivation was a Boost posting by Christopher Kohlhoff on June 28, 2006.
 
-#define BOOST_SYSTEM_NO_DEPRECATED
-
 #include <boost/system/error_code.hpp>
 #include <boost/cerrno.hpp>
 #include <string>

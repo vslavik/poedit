@@ -14,14 +14,14 @@ r'''>>> import pickle1_ext
     >>> wd = pickle1_ext.world('California')
     >>> pstr = pickle.dumps(wd)
     >>> wl = pickle.loads(pstr)
-    >>> print wd.greet()
+    >>> print(wd.greet())
     Hello from California!
-    >>> print wl.greet()
+    >>> print(wl.greet())
     Hello from California!
 
     >>> noop = pickle1_ext.noop()
     >>> try: pickle.dumps(noop)
-    ... except RuntimeError, e: print str(e)[:55]
+    ... except RuntimeError as e: print(str(e)[:55])
     Pickling of "pickle1_ext.noop" instances is not enabled
 '''
 
@@ -34,8 +34,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

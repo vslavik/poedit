@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -15,7 +15,7 @@ using namespace cppcon;
 int main() {
     // transform
     {
-        auto m = matrix(
+        BOOST_HANA_CONSTEXPR_LAMBDA auto m = matrix(
             row(1,              hana::int_c<2>, 3),
             row(hana::int_c<4>, 5,              6),
             row(7,              8,              hana::int_c<9>)

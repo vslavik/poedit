@@ -36,7 +36,7 @@ class bad_weak_ptr
 {
    public:
 
-   virtual char const * what() const throw()
+   virtual char const * what() const BOOST_NOEXCEPT_OR_NOTHROW
    {  return "boost::interprocess::bad_weak_ptr"; }
 };
 

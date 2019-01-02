@@ -16,7 +16,6 @@
 #include <algorithm>    // for std::swap
 #include <exception>    // for std::exception
 #include <boost/limits.hpp>
-#include <boost/iterator.hpp>
 
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
@@ -147,7 +146,7 @@ class first_owner
 // thrown by buf_id_check CheckingPolicy if an instance of an iterator is
 // used after another one has invalidated the queue
 ///////////////////////////////////////////////////////////////////////////////
-class illegal_backtracking : public std::exception
+class BOOST_SYMBOL_VISIBLE illegal_backtracking : public std::exception
 {
 public:
 
@@ -760,24 +759,19 @@ class inner
 
 namespace iterator_ { namespace impl {
 
-// Meta-function to generate a std::iterator<> base class for multi_pass. This
-//  is used mainly to improve conformance of compilers not supporting PTS
-//  and thus relying on inheritance to recognize an iterator.
-// We are using boost::iterator<> because it offers an automatic workaround
-//  for broken std::iterator<> implementations.
+// Meta-function to generate a std::iterator<>-like base class for multi_pass.
 template <typename InputPolicyT, typename InputT>
 struct iterator_base_creator
 {
     typedef typename InputPolicyT::BOOST_NESTED_TEMPLATE inner<InputT> input_t;
 
-    typedef boost::iterator
-    <
-        std::forward_iterator_tag,
-        typename input_t::value_type,
-        typename input_t::difference_type,
-        typename input_t::pointer,
-        typename input_t::reference
-    > type;
+    struct type {
+        typedef std::forward_iterator_tag iterator_category;
+        typedef typename input_t::value_type value_type;
+        typedef typename input_t::difference_type difference_type;
+        typedef typename input_t::pointer pointer;
+        typedef typename input_t::reference reference;
+    };
 };
 
 }}

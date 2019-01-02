@@ -22,6 +22,10 @@
 
 #if defined BOOST_THREAD_USES_CHRONO
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 namespace boost
 {
 template <typename T>

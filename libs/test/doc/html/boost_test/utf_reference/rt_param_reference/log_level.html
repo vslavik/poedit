@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>log_level</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../rt_param_reference.html" title="Runtime parameters reference">
 <link rel="prev" href="log_format.html" title="log_format">
@@ -28,7 +28,7 @@
 </h4></div></div></div>
 <p>
           Parameter <span class="emphasis"><em>log_level</em></span> allows to set the <span class="emphasis"><em>Unit
-          Test Framework</em></span> <a class="link" href="../../test_output/log_compil_time_configuration/log_ct_log_level.html#ref_log_level_explanations">log
+          Test Framework</em></span> <a class="link" href="../../test_output/logging_api/log_ct_log_level.html#ref_log_level_explanations">log
           level</a>. Log level defines the verbosity of the testing log produced
           by a testing module. The verbosity ranges from a complete log, when all
           assertions (both successful and failing) are reported and all notifications
@@ -43,7 +43,7 @@
         </p>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h0"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.acceptable_values"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.acceptable_values">Acceptable
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.acceptable_values"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.acceptable_values">Acceptable
           values</a>
         </h5>
 <p>
@@ -72,7 +72,7 @@
 <tr>
 <td>
                   <p>
-                    all
+                    all (default for JUNIT)
                   </p>
                 </td>
 <td>
@@ -134,7 +134,7 @@
 <tr>
 <td>
                   <p>
-                    <span class="bold"><strong>error</strong></span> (default)
+                    <span class="bold"><strong>error</strong></span> (default for HRF and XML)
                   </p>
                 </td>
 <td>
@@ -200,12 +200,23 @@
 </tr>
 </tbody>
 </table></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            the JUNIT log format does not accept the log level to change: anything
+            specified by <code class="computeroutput"><span class="identifier">log_level</span></code>
+            will be ignored for the JUNIT format.
+          </p></td></tr>
+</table></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h1"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax">Command
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax">Command
           line syntax</a>
         </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="special">--</span><span class="identifier">log_level</span><span class="special">=&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code>
             </li>
@@ -216,7 +227,7 @@
 </ul></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h2"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.environment_variable"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.environment_variable">Environment
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.environment_variable"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.environment_variable">Environment
           variable</a>
         </h5>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_LOG_LEVEL</span>
@@ -224,7 +235,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

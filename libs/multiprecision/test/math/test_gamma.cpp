@@ -22,21 +22,28 @@ void expected_results()
       ".*",                          // platform
       ".*gmp_float<18>.*",           // test type(s)
       ".*",                          // test data group
-      "boost::math::tgamma", 4000, 2500);  // test function
+      "tgamma", 4000, 2500);  // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*mpfr_float_backend<0>.*",   // test type(s)
+      "factorials",                  // test data group
+      "tgamma", 400, 100);           // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 140, 70);  // test function
+      "tgamma", 170, 70);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 750, 100);  // test function
+      "lgamma", 750, 100);  // test function
 #ifdef BOOST_INTEL
    add_expected_result(
       ".*",                          // compiler
@@ -52,21 +59,21 @@ void expected_results()
       ".*",                          // platform
       ".*",                          // test type(s)
       "near.*",                      // test data group
-      "boost::math::tgamma", 200, 100);  // test function
+      "tgamma", 250, 120);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "near.*",                      // test data group
-      "boost::math::lgamma", 10000000, 10000000);  // test function
+      "lgamma", 1400, 250);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 1000, 150);  // test function
+      "tgamma1pm1", 1500, 400);  // test function
    //
    // Finish off by printing out the compiler/stdlib/platform names,
    // we do this to make it easier to mark up expected error rates.

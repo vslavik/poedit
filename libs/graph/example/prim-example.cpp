@@ -32,7 +32,6 @@ main()
   }
 #else
   Graph g(edges, edges + sizeof(edges) / sizeof(E), weights, num_nodes);
-  property_map<Graph, edge_weight_t>::type weightmap = get(edge_weight, g);
 #endif
   std::vector < graph_traits < Graph >::vertex_descriptor >
     p(num_vertices(g));

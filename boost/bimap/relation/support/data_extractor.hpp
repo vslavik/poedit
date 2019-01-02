@@ -19,7 +19,6 @@
 #include <boost/config.hpp>
 
 #include <boost/bimap/relation/detail/metadata_access_builder.hpp>
-#include <functional>
 
 /** \struct boost::bimaps::relation::support::data_extractor
 
@@ -39,9 +38,11 @@ template< class Tag, class Relation >
 struct data_extractor_implementation;
 
 template< class Relation >
-struct data_extractor_implementation< member_at::left, Relation > :
-    public std::unary_function<Relation,BOOST_DEDUCED_TYPENAME Relation::left_value_type>
+struct data_extractor_implementation< member_at::left, Relation >
 {
+    typedef Relation argument_type;
+    typedef BOOST_DEDUCED_TYPENAME Relation::left_value_type result_type;
+
     BOOST_DEDUCED_TYPENAME Relation::left_value_type const &
         operator()(Relation const & rel) const
     {
@@ -56,9 +57,11 @@ struct data_extractor_implementation< member_at::left, Relation > :
 };
 
 template< class Relation >
-struct data_extractor_implementation< member_at::right, Relation > :
-    public std::unary_function<Relation,BOOST_DEDUCED_TYPENAME Relation::right_value_type>
+struct data_extractor_implementation< member_at::right, Relation >
 {
+    typedef Relation argument_type;
+    typedef BOOST_DEDUCED_TYPENAME Relation::right_value_type result_type;
+
     BOOST_DEDUCED_TYPENAME Relation::right_value_type const & 
         operator()(Relation const & rel) const
     {

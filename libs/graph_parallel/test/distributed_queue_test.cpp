@@ -9,6 +9,7 @@
 #include <boost/graph/use_mpi.hpp>
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/graph/distributed/queue.hpp>
 #include <boost/test/minimal.hpp>
 #include <boost/graph/distributed/mpi_process_group.hpp>

@@ -46,6 +46,7 @@ main()
     {
         typedef boost::tuple<int, std::string> tuple_type;
         BOOST_MPL_ASSERT_NOT((traits::is_view<tuple_type>));
+        BOOST_STATIC_ASSERT(!traits::is_view<tuple_type>::value);
         tuple_type t(123, "Hola!!!");
 
         std::cout << at_c<0>(t) << std::endl;

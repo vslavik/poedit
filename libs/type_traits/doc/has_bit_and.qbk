@@ -46,62 +46,7 @@ __examples
 
 [has_binary_operator_compat]
 
-[*Known issues:]
-
-* This trait cannot detect whether binary `operator&` is public or not:
-if `operator&` is defined as a private member of `Lhs` then
-instantiating `has_bit_and<Lhs>` will produce a compiler error.
-For this reason `has_bit_and` cannot be used to determine whether a type has a public `operator&` or not.
-``
-struct A { private: void operator&(const A&); };
-boost::has_bit_and<A>::value; // error: A::operator&(const A&) is private
-``
-
-* There is an issue if the operator exists only for type `A` and `B` is
-convertible to `A`. In this case, the compiler will report an ambiguous overload.
-``
-struct A { };
-void operator&(const A&, const A&);
-struct B { operator A(); };
-boost::has_bit_and<A>::value; // this is fine
-boost::has_bit_and<B>::value; // error: ambiguous overload
-``
-
-* There is an issue when applying this trait to template classes.
-If `operator&` is defined but does not bind for a given template type,
-it is still detected by the trait which returns `true` instead of `false`.
-Example:
-``
-#include <boost/type_traits/has_bit_and.hpp>
-#include <iostream>
-
-template <class T>
-struct contains { T data; };
-
-template <class T>
-bool operator&(const contains<T> &lhs, const contains<T> &rhs) {
-	return f(lhs.data, rhs.data);
-}
-
-class bad { };
-class good { };
-bool f(const good&, const good&) { }
-
-int main() {
-	std::cout<<std::boolalpha;
-	// works fine for contains<good>
-	std::cout<<boost::has_bit_and< contains< good > >::value<<'\n'; // true
-	contains<good> g;
-	g&g; // ok
-	// does not work for contains<bad>
-	std::cout<<boost::has_bit_and< contains< bad > >::value<<'\n'; // true, should be false
-	contains<bad> b;
-	b&b; // compile time error
-	return 0;
-}
-``
-
-* `volatile` qualifier is not properly handled and would lead to undefined behavior
+[binary_operator_known_issues has_bit_and..&..A..contains<T>..const ]
 
 [endsect]
 

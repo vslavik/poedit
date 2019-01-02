@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spherical Bessel Functions of the First and Second Kinds</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../bessel.html" title="Bessel Functions">
 <link rel="prev" href="mbessel.html" title="Modified Bessel Functions of the First and Second Kinds">
 <link rel="next" href="bessel_derivatives.html" title="Derivatives of the Bessel Functions">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.bessel.sph_bessel.h0"></a>
-        <span><a name="math_toolkit.bessel.sph_bessel.synopsis"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.bessel.sph_bessel.synopsis"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.synopsis">Synopsis</a>
       </h5>
 <p>
         <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">bessel</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
@@ -37,18 +37,18 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <h5>
 <a name="math_toolkit.bessel.sph_bessel.h1"></a>
-        <span><a name="math_toolkit.bessel.sph_bessel.description"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.bessel.sph_bessel.description"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.description">Description</a>
       </h5>
 <p>
         The functions <a class="link" href="sph_bessel.html" title="Spherical Bessel Functions of the First and Second Kinds">sph_bessel</a>
@@ -73,9 +73,9 @@
         type calculation rules</em></span></a> for the single argument type T.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -97,7 +97,7 @@ for small <span class="emphasis"><em>x</em></span>:
       </p>
 <h5>
 <a name="math_toolkit.bessel.sph_bessel.h2"></a>
-        <span><a name="math_toolkit.bessel.sph_bessel.testing"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.bessel.sph_bessel.testing"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.testing">Testing</a>
       </h5>
 <p>
         There are two sets of test values: spot values calculated using <a href="http://functions.wolfram.com/" target="_top">functions.wolfram.com</a>,
@@ -106,7 +106,7 @@ for small <span class="emphasis"><em>x</em></span>:
       </p>
 <h5>
 <a name="math_toolkit.bessel.sph_bessel.h3"></a>
-        <span><a name="math_toolkit.bessel.sph_bessel.accuracy"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.bessel.sph_bessel.accuracy"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.accuracy">Accuracy</a>
       </h5>
 <div class="table">
 <a name="math_toolkit.bessel.sph_bessel.table_sph_bessel"></a><p class="title"><b>Table&#160;6.48.&#160;Error rates for sph_bessel</b></p>
@@ -123,22 +123,22 @@ for small <span class="emphasis"><em>x</em></span>:
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -150,25 +150,24 @@ for small <span class="emphasis"><em>x</em></span>:
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 245&#949; (Mean = 16.3&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 243&#949; (Mean = 13.3&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.91e+06&#949; (Mean =
-                  1.09e+05&#949;))
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.91e+06&#949; (Mean = 1.09e+05&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.978&#949; (Mean = 0.0539&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.79e+03&#949; (Mean = 107&#949;))
+                  <span class="blue">Max = 0.978&#949; (Mean = 0.0445&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.79e+03&#949; (Mean = 107&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 243&#949; (Mean = 33.7&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 245&#949; (Mean = 16.3&#949;)</span>
                 </p>
               </td>
 </tr></tbody>
@@ -189,22 +188,22 @@ for small <span class="emphasis"><em>x</em></span>:
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -216,19 +215,14 @@ for small <span class="emphasis"><em>x</em></span>:
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 281&#949; (Mean = 31.1&#949;)</span>
+                  <span class="blue">Max = 234&#949; (Mean = 19.5&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.6e+06&#949; (Mean = 1.4e+05&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.995&#949; (Mean = 0.0665&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 8.5e+04&#949; (Mean = 5.33e+03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 234&#949; (Mean = 19.5&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.6e+06&#949; (Mean = 1.4e+05&#949;))
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 8.5e+04&#949; (Mean = 5.33e+03&#949;))
                 </p>
               </td>
 <td>
@@ -236,12 +230,17 @@ for small <span class="emphasis"><em>x</em></span>:
                   <span class="blue">Max = 234&#949; (Mean = 19.8&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 281&#949; (Mean = 31.1&#949;)</span>
+                </p>
+              </td>
 </tr></tbody>
 </table></div>
 </div>
 <br class="table-break"><h5>
 <a name="math_toolkit.bessel.sph_bessel.h4"></a>
-        <span><a name="math_toolkit.bessel.sph_bessel.implementation"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.bessel.sph_bessel.implementation"></a></span><a class="link" href="sph_bessel.html#math_toolkit.bessel.sph_bessel.implementation">Implementation</a>
       </h5>
 <p>
         Other than error handling and a couple of special cases these functions are
@@ -270,10 +269,11 @@ for small <span class="emphasis"><em>x</em></span>:
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

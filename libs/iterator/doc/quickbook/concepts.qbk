@@ -1,9 +1,9 @@
 
 [section:concepts Iterator Concepts]
 
-[section:concepts_access Access]
+[section:access Access]
 
-[h2 Readable Iterator Concept]
+[section:readable Readable Iterator Concept]
 
 A class or built-in type `X` models the *Readable Iterator* concept
 for value type `T` if, in addition to `X` being Assignable and
@@ -32,17 +32,18 @@ type `T`.
     [`U&`]
     [pre: `(*a).m` is well-defined. Equivalent to `(*a).m`.]
   ]
-]                              
-                               
-[h2 Writable Iterator Concept  ]
-                               
-                               
+]
+
+[endsect]
+
+[section:writable Writable Iterator Concept]
+
 A class or built-in type `X`   models the *Writable Iterator* concept
 if, in addition to `X` being   Copy Constructible, the following
 expressions are valid and respect the stated semantics.  Writable
 Iterators have an associated *set of value types*.
 
-[table Writable Iterator Requirements (in addition to Copy Constructible) 
+[table Writable Iterator Requirements (in addition to Copy Constructible)
   [
     [Expression]
     [Return Type]
@@ -55,13 +56,15 @@ Iterators have an associated *set of value types*.
   ]
 ]
 
-[h2 Swappable Iterator Concept]
+[endsect]
+
+[section:swappable Swappable Iterator Concept]
 
 A class or built-in type `X` models the *Swappable Iterator* concept
 if, in addition to `X` being Copy Constructible, the following
 expressions are valid and respect the stated semantics.
 
-[table Swappable Iterator Requirements (in addition to Copy Constructible) 
+[table Swappable Iterator Requirements (in addition to Copy Constructible)
   [
     [Expression]
     [Return Type]
@@ -77,7 +80,9 @@ expressions are valid and respect the stated semantics.
 [blurb *Note:* An iterator that is a model of the *Readable* and *Writable Iterator* concepts
   is also a model of *Swappable Iterator*.  *--end note*]
 
-[h2 Lvalue Iterator Concept]
+[endsect]
+
+[section:lvalue Lvalue Iterator Concept]
 
 The *Lvalue Iterator* concept adds the requirement that the return
 type of `operator*` type be a reference to the value type of the
@@ -101,16 +106,16 @@ iterator.
 
 [endsect]
 
-[section:concepts_traversal Traversal]
+[endsect]
 
-[h2 Incrementable Iterator Concept]
+[section:traversal Traversal]
 
+[section:incrementable Incrementable Iterator Concept]
 
 A class or built-in type `X` models the *Incrementable Iterator*
 concept if, in addition to `X` being Assignable and Copy
 Constructible, the following expressions are valid and respect the
 stated semantics.
-
 
 [table Incrementable Iterator Requirements (in addition to Assignable, Copy Constructible)
   [
@@ -129,7 +134,7 @@ stated semantics.
     [``
        {
          X tmp = r;
-         ++r;    
+         ++r;
          return tmp;
        }
     ``]
@@ -141,7 +146,9 @@ stated semantics.
   ]
 ]
 
-[h2 Single Pass Iterator Concept]
+[endsect]
+
+[section:single_pass Single Pass Iterator Concept]
 
 A class or built-in type `X` models the *Single Pass Iterator*
 concept if the following expressions are valid and respect the stated
@@ -169,14 +176,20 @@ semantics.
     [`!(a == b)`]
   ]
   [
+    [`iterator_traits<X>::difference_type`]
+    [A signed integral type representing the distance between iterators]
+    []
+  ]
+  [
     [`iterator_traversal<X>::type`]
     [Convertible to`single_pass_traversal_tag`]
     []
   ]
 ]
 
+[endsect]
 
-[h2 Forward Traversal Concept]
+[section:forward Forward Traversal Concept]
 
 A class or built-in type `X` models the *Forward Traversal*
 concept if, in addition to `X` meeting the requirements of Default
@@ -200,18 +213,15 @@ valid and respect the stated semantics.
     [`r == s` and `r` is dereferenceable implies `++r == ++s.`]
   ]
   [
-    [`iterator_traits<X>::difference_type`]
-    [A signed integral type representing the distance between iterators]
-    []
-  ]
-  [
     [`iterator_traversal<X>::type`]
     [Convertible to `forward_traversal_tag`]
     []
   ]
 ]
 
-[h2 Bidirectional Traversal Concept]
+[endsect]
+
+[section:bidirectional Bidirectional Traversal Concept]
 
 A class or built-in type `X` models the *Bidirectional Traversal*
 concept if, in addition to `X` meeting the requirements of Forward
@@ -223,7 +233,7 @@ the stated semantics.
     [Expression]
     [Return Type]
     [Assertion/Semantics/Pre-/Post-condition]
-  ] 
+  ]
   [
     [`--r`]
     [`X&`]
@@ -247,7 +257,9 @@ the stated semantics.
   ]
 ]
 
-[h2 Random Access Traversal Concept]
+[endsect]
+
+[section:random_access Random Access Traversal Concept]
 
 A class or built-in type `X` models the *Random Access Traversal*
 concept if the following expressions are valid and respect the stated
@@ -255,8 +267,8 @@ semantics.  In the table below, `Distance` is
 `iterator_traits<X>::difference_type` and `n` represents a
 constant object of type `Distance`.
 
-[table Random Access Traversal Iterator Requirements (in addition to Bidirectional Traversal) 
-  [ 
+[table Random Access Traversal Iterator Requirements (in addition to Bidirectional Traversal)
+  [
     [Expression]
     [Return Type]
     [Operational Semantics]
@@ -266,10 +278,10 @@ constant object of type `Distance`.
     [`r += n`]
     [ `X&`]
     [``
-        { 
+        {
           Distance m = n;
           if (m >= 0)
-            while (m--) 
+            while (m--)
               ++r;
           else
             while (m++)
@@ -279,18 +291,18 @@ constant object of type `Distance`.
     ``]
     [ ]
   ]
-  [ 
+  [
     [`a + n`, `n + a`]
     [`X`]
     [``
-        { 
+        {
           X tmp = a;
           return tmp+= n;
         }
     ``]
     []
   ]
-  [ 
+  [
     [`r -= n`]
     [`X&`]
     [`return r += -n`]
@@ -300,9 +312,9 @@ constant object of type `Distance`.
     [`a - n`]
     [`X`]
     [``
-        { 
+        {
           X tmp = a;
-          return tmp-= n; 
+          return tmp-= n;
         }
     ``]
     []
@@ -320,7 +332,7 @@ constant object of type `Distance`.
     [pre: a is a *Readable Iterator*]
   ]
   [
-    [`a\[n\] = v`] 
+    [`a\[n\] = v`]
     [convertible to T]
     [`*(a + n) = v`]
     [pre: a is a *Writable iterator*]
@@ -356,6 +368,8 @@ constant object of type `Distance`.
     []
   ]
 ]
+
+[endsect]
 
 [endsect]
 

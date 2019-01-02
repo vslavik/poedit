@@ -323,6 +323,8 @@ attributes. The specification uses the function declarator syntax:
 where `RT` is the Nonterminal's synthesized attribute and `A0` ... `AN`
 are the Nonterminal's inherited attributes.
 
+The default value is `void()` (no synthesized and inherited attributes).
+
 [heading Attributes]
 
 The Nonterminal models a C++ function. The Nonterminal's synthesized
@@ -403,9 +405,8 @@ Nonterminal the following must be met:
 
 [table
     [[Expression]       [Description]]
-    [[`X::sig_type`]    [The Signature of `X`: An __mpl_fwd_sequence__.
-                        The first element is the Nonterminal's synthesized attribute
-                        type and the rest are the inherited attribute types.]]
+    [[`X::sig_type`]    [The Signature of `X`: In a function signature form
+                        as described above in the Signature paragraph.]]
     [[`X::locals_type`] [The local variables of `X`: An __mpl_fwd_sequence__.]]
 ]
 

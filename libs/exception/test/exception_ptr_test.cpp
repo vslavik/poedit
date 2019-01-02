@@ -121,9 +121,42 @@ check( boost::shared_ptr<thread_handle> const & t )
         }
     }
 
+void
+test_deep_copy()
+    {
+    int const * p1=0;
+    boost::exception_ptr p;
+    try
+        {
+        BOOST_THROW_EXCEPTION(exc() << answer(42));
+        BOOST_ERROR("BOOST_THROW_EXCEPTION didn't throw");
+        }
+    catch(
+    exc & e )
+        {
+        p1=boost::get_error_info<answer>(e);
+        p=boost::current_exception();
+        }
+    BOOST_TEST(p1!=0);
+    BOOST_TEST(p);
+    try
+        {
+        boost::rethrow_exception(p);
+        BOOST_ERROR("rethrow_exception didn't throw");
+        }
+    catch(
+    exc & e )
+        {
+        int const * p2=boost::get_error_info<answer>(e);
+        BOOST_TEST(p2!=0 && *p2==42);
+        BOOST_TEST(p2!=p1);
+        }
+    }
+
 int
 main()
     {
+    test_deep_copy();
     BOOST_TEST(++exc_count==1);
     try
         {

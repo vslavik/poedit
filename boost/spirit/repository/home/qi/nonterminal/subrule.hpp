@@ -54,46 +54,22 @@
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
     ///////////////////////////////////////////////////////////////////////////
-    // subrule_group:
+    // subrule_group_parser:
     // - parser representing a group of subrule definitions (one or more),
     //   invokes first subrule on entry,
-    // - also a Proto terminal, so that a group behaves like any Spirit
-    //   expression.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Defs>
-    struct subrule_group
-      : proto::extends<
-            typename proto::terminal<
-                spirit::qi::reference<subrule_group<Defs> const>
-            >::type
-          , subrule_group<Defs>
-        >
-      , spirit::qi::parser<subrule_group<Defs> >
+    struct subrule_group_parser
+      : spirit::qi::parser<subrule_group_parser<Defs> >
     {
         // Fusion associative sequence, associating each subrule ID in this
         // group (as an MPL integral constant) with its definition
         typedef Defs defs_type;
 
-        typedef subrule_group<Defs> this_type;
-        typedef spirit::qi::reference<this_type const> reference_;
-        typedef typename proto::terminal<reference_>::type terminal;
-        typedef proto::extends<terminal, this_type> base_type;
+        typedef subrule_group_parser<Defs> this_type;
 
-        static size_t const params_size =
-            // Forward to first subrule.
-            remove_reference<
-                typename fusion::result_of::front<Defs>::type
-            >::type::second_type::params_size;
-
-        subrule_group(subrule_group const& rhs)
-          : base_type(terminal::make(reference_(*this)))
-          , defs(rhs.defs)
-        {
-        }
-
-        explicit subrule_group(Defs const& defs)
-          : base_type(terminal::make(reference_(*this)))
-          , defs(defs)
+        explicit subrule_group_parser(Defs const& defs)
+          : defs(defs)
         {
         }
 
@@ -287,6 +263,41 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             return fusion::front(defs).second.binder.p.what(context);
         }
 
+        Defs defs;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // subrule_group:
+    // - a Proto terminal, so that a group behaves like any Spirit
+    //   expression.
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Defs>
+    struct subrule_group
+      : proto::extends<
+            typename proto::terminal<
+                subrule_group_parser<Defs>
+            >::type
+          , subrule_group<Defs>
+        >
+    {
+        typedef subrule_group_parser<Defs> parser_type;
+        typedef typename proto::terminal<parser_type>::type terminal;
+
+        static size_t const params_size =
+            // Forward to first subrule.
+            remove_reference<
+                typename fusion::result_of::front<Defs>::type
+            >::type::second_type::params_size;
+
+        explicit subrule_group(Defs const& defs)
+          : subrule_group::proto_extends(terminal::make(parser_type(defs)))
+        {
+        }
+
+        parser_type const& parser() const { return proto::value(*this); }
+
+        Defs const& defs() const { return parser().defs; }
+
         template <typename Defs2>
         subrule_group<
             typename fusion::result_of::as_map<
@@ -298,15 +309,29 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 typename fusion::result_of::as_map<
                     typename fusion::result_of::join<
                         Defs const, Defs2 const>::type>::type> result_type;
-            return result_type(fusion::as_map(fusion::join(defs, other.defs)));
+            return result_type(fusion::as_map(fusion::join(defs(), other.defs())));
+        }
+
+        // non-const versions needed to suppress proto's comma op kicking in
+        template <typename Defs2>
+        friend subrule_group<
+            typename fusion::result_of::as_map<
+                typename fusion::result_of::join<
+                    Defs const, Defs2 const>::type>::type>
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        operator,(subrule_group&& left, subrule_group<Defs2>&& other)
+#else
+        operator,(subrule_group& left, subrule_group<Defs2>& other)
+#endif
+        {
+            return static_cast<subrule_group const&>(left)
+                .operator,(static_cast<subrule_group<Defs2> const&>(other));
         }
 
         // bring in the operator() overloads
-        this_type const& get_parameterized_subject() const { return *this; }
-        typedef this_type parameterized_subject_type;
+        parser_type const& get_parameterized_subject() const { return parser(); }
+        typedef parser_type parameterized_subject_type;
         #include <boost/spirit/home/qi/nonterminal/detail/fcall.hpp>
-
-        Defs defs;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -378,13 +403,20 @@ namespace boost { namespace spirit { namespace repository { namespace qi
 
         typedef mpl::vector<T1, T2> template_params;
 
-        // locals_type is a sequence of types to be used as local variables
+        // The subrule's locals_type: a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
 
+        // The subrule's encoding type
         typedef typename
-            spirit::detail::extract_sig<template_params>::type
+            spirit::detail::extract_encoding<template_params>::type
+        encoding_type;
+
+        // The subrule's signature
+        typedef typename
+            spirit::detail::extract_sig<template_params, encoding_type
+              , spirit::qi::domain>::type
         sig_type;
 
         // This is the subrule's attribute type
@@ -461,42 +493,34 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 def_type(compile<spirit::qi::domain>(expr), name_)));
         }
 
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule const& sr, Expr const& expr)
-        {
-            typedef group_type_helper<Expr, true> helper;
-            typedef typename helper::def_type def_type;
-            typedef typename helper::type result_type;
-            return result_type(fusion::make_map<id_type>(
-                def_type(compile<spirit::qi::domain>(expr), sr.name_)));
-        }
+#define SUBRULE_MODULUS_ASSIGN_OPERATOR(lhs_ref, rhs_ref)                     \
+        template <typename Expr>                                              \
+        friend typename group_type_helper<Expr, true>::type                   \
+        operator%=(subrule lhs_ref sr, Expr rhs_ref expr)                     \
+        {                                                                     \
+            typedef group_type_helper<Expr, true> helper;                     \
+            typedef typename helper::def_type def_type;                       \
+            typedef typename helper::type result_type;                        \
+            return result_type(fusion::make_map<id_type>(                     \
+                def_type(compile<spirit::qi::domain>(expr), sr.name_)));      \
+        }                                                                     \
+        /**/
 
         // non-const versions needed to suppress proto's %= kicking in
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule const& sr, Expr& expr)
-        {
-            return operator%=(
-                sr
-              , static_cast<Expr const&>(expr));
-        }
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule& sr, Expr const& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , expr);
-        }
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule& sr, Expr& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, const&)
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &&)
+#else
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &)
+#endif
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, const&)
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &&)
+#else
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &)
+#endif
+
+#undef SUBRULE_MODULUS_ASSIGN_OPERATOR
 
         std::string const& name() const
         {

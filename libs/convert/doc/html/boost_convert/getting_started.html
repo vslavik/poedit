@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Getting Started</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="prev" href="introduction.html" title="Introduction">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_convert.getting_started"></a><a class="link" href="getting_started.html" title="Getting Started">Getting Started</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started.html#boost_convert.getting_started.basic_deployment">Basic
       Deployment</a></span></dt>
 <dt><span class="section"><a href="getting_started/flexibility_and_adaptability_to_change.html">Flexibility
@@ -54,8 +54,8 @@
 <p>
         For die-hard <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code> users or as a transitional
         path to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">convert</span></code>, one of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">convert</span></code>
-        deployments is not that different from <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>
-        and, in fact, the original <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>
+        deployments is not that different from <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>.
+        In fact, the original <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>
         functionality is easily deployed through <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">convert</span></code>
         interface:
       </p>
@@ -77,7 +77,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="comment">// Definition of the default converter (optional)</span>
-<span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">lexical_cast</span> <span class="special">{};</span>
+<span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">lexical_cast</span> <span class="special">{};</span>
 </pre>
 <p>
       </p>
@@ -131,7 +131,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Vladimir Batov<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2016 Vladimir Batov<p>
         Distributed under the Boost Software License, Version 1.0. See copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>.
       </p>
 </div></td>

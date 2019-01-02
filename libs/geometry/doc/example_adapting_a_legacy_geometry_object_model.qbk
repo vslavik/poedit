@@ -122,7 +122,7 @@ That's it! The methods of __boost_geometry__ can now be used directly on instanc
                 { typedef point_tag type; };
     
                 template<> struct coordinate_type<QPoint>
-                { typedef QPoint::double type; };
+                { typedef double type; };
     
                 template<> struct coordinate_system<QPoint>
                 { typedef cs::cartesian type; };

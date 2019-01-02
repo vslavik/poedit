@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test case fixture</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../fixtures.html" title="Fixtures">
 <link rel="prev" href="models.html" title="Fixture models">
@@ -37,7 +37,7 @@
           The <span class="emphasis"><em>Unit Test Framework</em></span> provides several ways of defining
           fixtures for test-cases, each of which having their properties:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               the declaration of a fixture for a single test case, letting the test
               case access the members of the fixture,
@@ -53,14 +53,14 @@
 </ul></div>
 <h4>
 <a name="boost_test.tests_organization.fixtures.case.h0"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.single_test_case_fixture"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.single_test_case_fixture">Single
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.single_test_case_fixture"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.single_test_case_fixture">Single
           test case fixture</a>
         </h4>
 <p>
           The following two methods are available for declaring a fixture attached
           to one particular test case:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               the use of the macro <a class="link" href="../../utf_reference/test_org_reference/test_org_boost_test_case_fixture.html" title="BOOST_FIXTURE_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_CASE</span></code></a> in
               place of <a class="link" href="../../utf_reference/test_org_reference/test_org_boost_auto_test_case.html" title="BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a>, which
@@ -74,7 +74,7 @@
 </ul></div>
 <a name="test_case_fixture_macro"></a><h5>
 <a name="boost_test.tests_organization.fixtures.case.h1"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.fixture_with_boost_fixture_test_"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_with_boost_fixture_test_">Fixture
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.fixture_with_boost_fixture_test_"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_with_boost_fixture_test_">Fixture
           with <code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_CASE</span></code></a>
         </h5>
 <p>
@@ -89,7 +89,7 @@
           of an extra argument <code class="computeroutput"><span class="identifier">fixture_name</span></code>.
           The public and protected members of the fixture are directly accessible
           from the test case body. Only one fixture can be attached to a test-case
-          <sup>[<a name="boost_test.tests_organization.fixtures.case.f0" href="#ftn.boost_test.tests_organization.fixtures.case.f0" class="footnote">4</a>]</sup>.
+          <a href="#ftn.boost_test.tests_organization.fixtures.case.f0" class="footnote" name="boost_test.tests_organization.fixtures.case.f0"><sup class="footnote">[4]</sup></a>.
         </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -103,7 +103,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.fixtures.case.h2"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.example_descr"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.example_descr">Example:
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.example_descr"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.example_descr">Example:
           Per test case fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -173,13 +173,13 @@
         </p>
 <a name="test_case_fixture_decorator"></a><h5>
 <a name="boost_test.tests_organization.fixtures.case.h3"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.fixture_with_fixture_decorator"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_with_fixture_decorator">Fixture
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.fixture_with_fixture_decorator"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_with_fixture_decorator">Fixture
           with <code class="computeroutput"><span class="identifier">fixture</span></code> decorator</a>
         </h5>
 <p>
           By using the decorator <a class="link" href="../../utf_reference/test_org_reference/decorator_fixture.html" title="fixture (decorator)"><code class="computeroutput"><span class="identifier">fixture</span></code></a>, it is possible to:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               attach several fixtures to a unique test case
             </li>
@@ -199,7 +199,7 @@
 </table></div>
 <a name="test_case_fixture_subtree"></a><h4>
 <a name="boost_test.tests_organization.fixtures.case.h4"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.fixture_for_a_complete_subtree"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_for_a_complete_subtree">Fixture
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.fixture_for_a_complete_subtree"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.fixture_for_a_complete_subtree">Fixture
           for a complete subtree</a>
         </h4>
 <p>
@@ -246,7 +246,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.fixtures.case.h5"></a>
-          <span><a name="boost_test.tests_organization.fixtures.case.example_descr0"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.example_descr0">Example:
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.case.example_descr0"></a></span><a class="link" href="case.html#boost_test.tests_organization.fixtures.case.example_descr0">Example:
           Test suite level fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -312,13 +312,13 @@
 <th align="left">Caution</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The fixture constructor and destructor is called for each test cases
-            (the state of the fixture is not shared among the test cases).
+            The fixture constructor/setup and teardown/destructor is called for each
+            test cases (the state of the fixture is not shared among the test cases).
           </p></td></tr>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.tests_organization.fixtures.case.f0" href="#boost_test.tests_organization.fixtures.case.f0" class="para">4</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.tests_organization.fixtures.case.f0" class="footnote"><p><a href="#boost_test.tests_organization.fixtures.case.f0" class="para"><sup class="para">[4] </sup></a>
             it is still possible to define a class inheriting from several fixtures,
             that will act as a proxy fixture.
           </p></div>
@@ -326,7 +326,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

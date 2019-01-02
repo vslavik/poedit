@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::filter`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -93,7 +93,7 @@ BOOST_HANA_NAMESPACE_BEGIN
                 return indices;
             }
 
-            static constexpr auto indices = compute_indices();
+            static constexpr auto cached_indices = compute_indices();
         };
 
         template <typename Pred>
@@ -113,7 +113,7 @@ BOOST_HANA_NAMESPACE_BEGIN
         template <typename Indices, typename Xs, std::size_t ...i>
         static constexpr auto filter_helper(Xs&& xs, std::index_sequence<i...>) {
             return hana::make<S>(
-                hana::at_c<Indices::indices[i]>(static_cast<Xs&&>(xs))...
+                hana::at_c<Indices::cached_indices[i]>(static_cast<Xs&&>(xs))...
             );
         }
 
@@ -126,7 +126,7 @@ BOOST_HANA_NAMESPACE_BEGIN
 
             return filter_impl::filter_helper<Indices>(
                 static_cast<Xs&&>(xs),
-                std::make_index_sequence<Indices::indices.size()>{}
+                std::make_index_sequence<Indices::cached_indices.size()>{}
             );
         }
     };

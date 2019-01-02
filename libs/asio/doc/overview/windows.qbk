@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@ For example, to perform asynchronous operations on a named pipe, the following
 object may be created:
 
   HANDLE handle = ::CreateFile(...);
-  windows::stream_handle pipe(my_io_service, handle);
+  windows::stream_handle pipe(my_io_context, handle);
 
 These are then used as synchronous or asynchronous read and write streams. This
 means the objects can be used with any of the [link boost_asio.reference.read
@@ -37,9 +37,7 @@ pipes and console streams are not).
 
 [heading See Also]
 
-[link boost_asio.reference.windows__stream_handle windows::stream_handle],
-[link boost_asio.reference.windows__basic_stream_handle windows::basic_stream_handle],
-[link boost_asio.reference.windows__stream_handle_service windows::stream_handle_service].
+[link boost_asio.reference.windows__stream_handle windows::stream_handle].
 
 [heading Notes]
 
@@ -61,7 +59,7 @@ For example, to perform asynchronous operations on a file the following object
 may be created:
 
   HANDLE handle = ::CreateFile(...);
-  windows::random_access_handle file(my_io_service, handle);
+  windows::random_access_handle file(my_io_context, handle);
 
 Data may be read from or written to the handle using one of the
 `read_some_at()`, `async_read_some_at()`, `write_some_at()` or
@@ -76,9 +74,7 @@ all data has been transferred.
 
 [heading See Also]
 
-[link boost_asio.reference.windows__random_access_handle windows::random_access_handle],
-[link boost_asio.reference.windows__basic_random_access_handle windows::basic_random_access_handle],
-[link boost_asio.reference.windows__random_access_handle_service windows::random_access_handle_service].
+[link boost_asio.reference.windows__random_access_handle windows::random_access_handle].
 
 [heading Notes]
 
@@ -110,16 +106,14 @@ For example, to perform asynchronous operations on an event, the following
 object may be created:
 
   HANDLE handle = ::CreateEvent(...);
-  windows::object_handle file(my_io_service, handle);
+  windows::object_handle file(my_io_context, handle);
 
 The `wait()` and `async_wait()` member functions may then be used to wait until
 the kernel object is signalled.
 
 [heading See Also]
 
-[link boost_asio.reference.windows__object_handle windows::object_handle],
-[link boost_asio.reference.windows__basic_object_handle windows::basic_object_handle],
-[link boost_asio.reference.windows__object_handle_service windows::object_handle_service].
+[link boost_asio.reference.windows__object_handle windows::object_handle].
 
 [heading Notes]
 

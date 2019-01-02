@@ -8,15 +8,15 @@
 #ifndef BOOST_IOSTREAMS_DETAIL_DIRECT_STREAMBUF_HPP_INCLUDED
 #define BOOST_IOSTREAMS_DETAIL_DIRECT_STREAMBUF_HPP_INCLUDED
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif              
 
 #include <boost/assert.hpp>
 #include <cstddef>
-#include <typeinfo>
 #include <utility>                                 // pair.
 #include <boost/config.hpp>                        // BOOST_DEDUCED_TYPENAME, 
+#include <boost/core/typeinfo.hpp>
 #include <boost/iostreams/detail/char_traits.hpp>  // member template friends.
 #include <boost/iostreams/detail/config/wide_streams.hpp>
 #include <boost/iostreams/detail/error.hpp>
@@ -67,16 +67,14 @@ public: // stream needs access.
     // Declared in linked_streambuf.
     T* component() { return storage_.get(); }
 protected:
-#if !BOOST_WORKAROUND(__GNUC__, == 2)
     BOOST_IOSTREAMS_USING_PROTECTED_STREAMBUF_MEMBERS(base_type)
-#endif
     direct_streambuf();
 
     //--------------Virtual functions-----------------------------------------//
 
     // Declared in linked_streambuf.
     void close_impl(BOOST_IOS::openmode m);
-    const std::type_info& component_type() const { return typeid(T); }
+    const boost::core::typeinfo& component_type() const { return BOOST_CORE_TYPEID(T); }
     void* component_impl() { return component(); } 
 #ifdef BOOST_IOSTREAMS_NO_STREAM_TEMPLATES
     public:

@@ -35,12 +35,15 @@ rule independent-obj-build ( name : cpp-sources + : requirements * )
 
 rule statechart-st-lib ( name : cpp-sources + : requirements * )
 {
+  local reqs =
+    <threading>single $(st-requirements)
+    <link>shared\:$(dll-export) $(requirements) ;
+
   lib $(name)
     : [ independent-obj-build $(name)
           : $(cpp-sources)
-          : <threading>single $(st-requirements)
-            <link>shared:$(dll-export) $(requirements) ] ;
-  
+          : $(reqs) ] : $(reqs) ;
+
   return $(name) ;
 }
 
@@ -99,7 +102,7 @@ rule statechart-st-lib-run (
              : $(exe-cpp-sources).cpp
                [ statechart-st-lib $(name)Lib
                    : $(lib-cpp-sources) : $(requirements) ]
-             : <link>shared:$(dll) $(requirements) ] ;
+             : <link>shared\:$(dll) $(requirements) ] ;
 }
 
 rule statechart-st-compile-example ( name : directory : cpp-sources + )

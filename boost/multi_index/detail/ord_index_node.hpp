@@ -1,4 +1,4 @@
-/* Copyright 2003-2015 Joaquin M Lopez Munoz.
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -42,6 +42,7 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <cstddef>
+#include <memory>
 #include <boost/detail/allocator_utilities.hpp>
 #include <boost/multi_index/detail/raw_ptr.hpp>
 
@@ -68,20 +69,33 @@ template<typename AugmentPolicy,typename Allocator>
 struct ordered_index_node_impl; /* fwd decl. */
 
 template<typename AugmentPolicy,typename Allocator>
-struct ordered_index_node_std_base
+struct ordered_index_node_traits
 {
   typedef typename
   boost::detail::allocator::rebind_to<
     Allocator,
     ordered_index_node_impl<AugmentPolicy,Allocator>
-  >::type::pointer                                   pointer;
-  typedef typename
-  boost::detail::allocator::rebind_to<
-    Allocator,
-    ordered_index_node_impl<AugmentPolicy,Allocator>
-  >::type::const_pointer                             const_pointer;
-  typedef ordered_index_color&                       color_ref;
-  typedef pointer&                                   parent_ref;
+  >::type                                            allocator;
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+  typedef typename allocator::pointer                pointer;
+  typedef typename allocator::const_pointer          const_pointer;
+#else
+  typedef std::allocator_traits<allocator>           allocator_traits;
+  typedef typename allocator_traits::pointer         pointer;
+  typedef typename allocator_traits::const_pointer   const_pointer;
+#endif
+};
+
+template<typename AugmentPolicy,typename Allocator>
+struct ordered_index_node_std_base
+{
+  typedef ordered_index_node_traits<
+    AugmentPolicy,Allocator>                  node_traits;
+  typedef typename node_traits::allocator     node_allocator;
+  typedef typename node_traits::pointer       pointer;
+  typedef typename node_traits::const_pointer const_pointer;
+  typedef ordered_index_color&                color_ref;
+  typedef pointer&                            parent_ref;
 
   ordered_index_color& color(){return color_;}
   ordered_index_color  color()const{return color_;}
@@ -217,10 +231,7 @@ struct ordered_index_node_impl_base:
         ordered_index_node_compressed_base<AugmentPolicy,Allocator>
        >::value%2)||
       !(is_same<
-        typename boost::detail::allocator::rebind_to<
-          Allocator,
-          ordered_index_node_impl<AugmentPolicy,Allocator>
-        >::type::pointer,
+        typename ordered_index_node_traits<AugmentPolicy,Allocator>::pointer,
         ordered_index_node_impl<AugmentPolicy,Allocator>*>::value),
       ordered_index_node_std_base<AugmentPolicy,Allocator>,
       ordered_index_node_compressed_base<AugmentPolicy,Allocator>

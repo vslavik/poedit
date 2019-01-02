@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Examples</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="prev" href="advanced_topics.html" title="Advanced Topics">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_localfunction.examples"></a><a class="link" href="examples.html" title="Examples">Examples</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="examples.html#boost_localfunction.examples.gcc_lambdas__without_c__11_">GCC
       Lambdas (without C++11)</a></span></dt>
 <dt><span class="section"><a href="examples.html#boost_localfunction.examples.constant_blocks">Constant
@@ -297,7 +297,7 @@
         <code class="computeroutput"><span class="special">=</span><span class="identifier">variable</span></code>,
         and <code class="computeroutput"><span class="special">=</span></code>) are constant but they
         are required to be <code class="computeroutput"><span class="identifier">CopyConstructible</span></code>
-        and they introduce potentially expensive copy operations. <sup>[<a name="boost_localfunction.examples.constant_blocks.f0" href="#ftn.boost_localfunction.examples.constant_blocks.f0" class="footnote">29</a>]</sup> Of course it is always possible to introduce extra constant variables
+        and they introduce potentially expensive copy operations. <a href="#ftn.boost_localfunction.examples.constant_blocks.f0" class="footnote" name="boost_localfunction.examples.constant_blocks.f0"><sup class="footnote">[29]</sup></a> Of course it is always possible to introduce extra constant variables
         and bind these variables to the <a href="http://en.wikipedia.org/wiki/C%2B%2B0x#Lambda_functions_and_expressions" target="_top">C++11
         lambda functions</a> but the constant block code will then have to manage
         the declaration and initialization of these extra variables plus it will
@@ -532,7 +532,7 @@
 <p>
         This is presented here mainly as a curiosity because <a href="http://www.boost.org/libs/phoenix" target="_top">Boost.Phoenix</a>
         functions created from local functions have the important limitation that
-        they cannot be polymorphic. <sup>[<a name="boost_localfunction.examples.boost_phoenix_functions.f0" href="#ftn.boost_localfunction.examples.boost_phoenix_functions.f0" class="footnote">30</a>]</sup> Therefore, in many cases creating the <a href="http://www.boost.org/libs/phoenix" target="_top">Boost.Phoenix</a>
+        they cannot be polymorphic. <a href="#ftn.boost_localfunction.examples.boost_phoenix_functions.f0" class="footnote" name="boost_localfunction.examples.boost_phoenix_functions.f0"><sup class="footnote">[30]</sup></a> Therefore, in many cases creating the <a href="http://www.boost.org/libs/phoenix" target="_top">Boost.Phoenix</a>
         function from global functors (possibly with the help of <a href="http://www.boost.org/libs/phoenix" target="_top">Boost.Phoenix</a>
         adaptor macros) might be a more useful.
       </p>
@@ -680,13 +680,13 @@
 </table></div>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.examples.constant_blocks.f0" href="#boost_localfunction.examples.constant_blocks.f0" class="para">29</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_localfunction.examples.constant_blocks.f0" class="footnote"><p><a href="#boost_localfunction.examples.constant_blocks.f0" class="para"><sup class="para">[29] </sup></a>
           Ideally, <a href="http://en.wikipedia.org/wiki/C%2B%2B0x#Lambda_functions_and_expressions" target="_top">C++11
           lambda functions</a> would allow to bind variables also using <code class="computeroutput"><span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">variable</span></code> (constant reference) and <code class="computeroutput"><span class="keyword">const</span><span class="special">&amp;</span></code>
           (all variables by constant reference).
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.examples.boost_phoenix_functions.f0" href="#boost_localfunction.examples.boost_phoenix_functions.f0" class="para">30</a>] </sup>
+<div id="ftn.boost_localfunction.examples.boost_phoenix_functions.f0" class="footnote"><p><a href="#boost_localfunction.examples.boost_phoenix_functions.f0" class="para"><sup class="para">[30] </sup></a>
           <span class="bold"><strong>Rationale.</strong></span> Local functions can only be
           monomorphic because they are implemented using local classes and local
           classes cannot be templates in C++ (not even in <a href="http://www.open-std.org/JTC1/SC22/WG21/" target="_top">C++11</a>).

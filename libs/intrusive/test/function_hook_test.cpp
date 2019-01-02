@@ -132,9 +132,10 @@ int main()
    CustomSlistMember slistmember;
    CustomSetBase     setbase;
    CustomSetMember   setmember;
-   CustomUSetBase::bucket_type buckets[1];
-   CustomUSetBase    usetbase(CustomUSetBase::bucket_traits(buckets, 1));
-   CustomUSetMember  usetmember(CustomUSetMember::bucket_traits(buckets, 1));
+   CustomUSetBase::bucket_type buckets_uset[1];
+   CustomUSetBase    usetbase(CustomUSetBase::bucket_traits(buckets_uset, 1));
+   CustomUSetBase::bucket_type buckets_umultiset[1];
+   CustomUSetMember  usetmember(CustomUSetMember::bucket_traits(buckets_umultiset, 1));
 
    listbase.insert(listbase.begin(), n);
    listmember.insert(listmember.begin(), n);

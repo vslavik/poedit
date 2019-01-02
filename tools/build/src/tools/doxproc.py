@@ -50,7 +50,7 @@ def get_args( argv = sys.argv[1:] ):
     ( option_pairs, other ) = getopt.getopt( argv, '', spec )
     map( lambda x: options.__setitem__( x[0], x[1] ), option_pairs )
 
-    if options.has_key( '--help' ):
+    if '--help' in options:
         usage()
         sys.exit(1)
 
@@ -59,7 +59,7 @@ def get_args( argv = sys.argv[1:] ):
         'output' : options['--output'],
         'id' : options['--id'],
         'title' : options['--title'],
-        'index' : options.has_key('--enable-index')
+        'index' : '--enable-index' in options
         }
 
 def if_attribute(node, attribute, true_value, false_value=None):
@@ -151,13 +151,13 @@ class Doxygen2BoostBook:
     #~ BoostBook references.
     def _rewriteIDs( self, node ):
         if node.nodeName in ('link'):
-            if (self.idmap.has_key(node.getAttribute('linkend'))):
+            if node.getAttribute('linkend') in self.idmap:
                 #~ A link, and we have someplace to repoint it at.
                 node.setAttribute('linkend',self.idmap[node.getAttribute('linkend')])
             else:
                 #~ A link, but we don't have a generated target for it.
                 node.removeAttribute('linkend')
-        elif hasattr(node,'hasAttribute') and node.hasAttribute('id') and self.idmap.has_key(node.getAttribute('id')):
+        elif hasattr(node,'hasAttribute') and node.hasAttribute('id') and node.getAttribute('id') in self.idmap:
             #~ Simple ID, and we have a translation.
             node.setAttribute('id',self.idmap[node.getAttribute('id')])
         #~ Recurse, and iterate, depth-first traversal which turns out to be
@@ -333,7 +333,7 @@ class Doxygen2BoostBook:
             'detailed' : self._getChildData('detaileddescription',root=node),
             'parsed' : False
             }
-        if self.symbols.has_key(namespace['name']):
+        if namespace['name'] in self.symbols:
             if not self.symbols[namespace['name']]['parsed']:
                 self.symbols[namespace['name']]['parsed'] = True
                 #~ for n in node.childNodes:
@@ -385,7 +385,7 @@ class Doxygen2BoostBook:
     #~ Translate a <compounddef ...><includes ...>...</includes></compounddef>,
     def _translate_compounddef_includes_( self, node, target=None, **kwargs ):
         name = node.firstChild.data
-        if not self.symbols.has_key(name):
+        if name not in self.symbols:
             self._setID(node.getAttribute('refid'),name)
             self.symbols[name] = {
                 'kind' : 'header',
@@ -800,7 +800,7 @@ class Doxygen2BoostBook:
             namespace = '::'.join(result['namespace'])
             while (
                 len(result['namespace']) > 0 and (
-                    not self.symbols.has_key(namespace) or
+                    namespace not in self.symbols or
                     self.symbols[namespace]['kind'] != 'namespace')
                 ):
                 result['name'] = result['namespace'].pop()+'::'+result['name']

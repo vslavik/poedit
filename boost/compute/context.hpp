@@ -204,7 +204,7 @@ public:
     typename detail::get_object_info_type<context, Enum>::type
     get_info() const;
 
-    /// Returns \c true if the context is the same at \p other.
+    /// Returns \c true if the context is the same as \p other.
     bool operator==(const context &other) const
     {
         return m_context == other.m_context;
@@ -233,11 +233,11 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(context,
     ((std::vector<cl_context_properties>, CL_CONTEXT_PROPERTIES))
 )
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(context,
     ((cl_uint, CL_CONTEXT_NUM_DEVICES))
 )
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 } // end compute namespace
 } // end boost namespace

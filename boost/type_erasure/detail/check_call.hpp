@@ -113,9 +113,52 @@ struct check_placeholder_arg :
 
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
     ((defined(__GNUC__) && !(__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 6))) || \
-    defined(__MINGW32__) || defined(__MINGW64__))
+    defined(__MINGW32__) || defined(__MINGW64__) || \
+    BOOST_WORKAROUND(BOOST_MSVC, <= 1700))
 #define BOOST_TYPE_ERASURE_BROKEN_RVALUE_IS_CONVERTIBLE
 #endif
+
+#ifdef BOOST_TYPE_ERASURE_USE_MP11
+
+template<class P, class Arg>
+using check_placeholder_arg_t =
+    typename ::boost::type_erasure::detail::check_placeholder_arg_impl<
+        P,
+        typename ::boost::type_erasure::detail::qualified_placeholder<Arg>::type
+    >::type;
+
+template<class T, class Arg>
+using check_nonplaceholder_arg_t = typename ::boost::is_convertible<Arg, T>::type;
+
+template<class FormalArg, class ActualArg>
+using check_arg_t =
+    ::boost::type_erasure::detail::eval_if<
+        ::boost::type_erasure::is_placeholder<
+            ::boost::remove_cv_t<
+                ::boost::remove_reference_t<FormalArg>
+            >
+        >::value,
+        ::boost::type_erasure::detail::check_placeholder_arg_t,
+        ::boost::type_erasure::detail::check_nonplaceholder_arg_t,
+        FormalArg,
+        ActualArg
+    >;
+
+// MSVC 14.1 ICE's if we use check_arg_t directly.
+template<class FormalArg, class ActualArg>
+struct check_arg
+{
+    typedef ::boost::type_erasure::detail::check_arg_t<FormalArg, ActualArg> type;
+};
+
+template<class R, class... T, class... U>
+struct check_call<R(T...), void(U...)> {
+    typedef ::boost::mp11::mp_all<
+        typename ::boost::type_erasure::detail::check_arg<T, U>::type...
+    > type;
+};
+
+#else
 
 template<class FormalArg, class ActualArg>
 struct check_arg
@@ -135,9 +178,36 @@ struct check_arg
     >::type type;
 };
 
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+
 #define BOOST_PP_FILENAME_1 <boost/type_erasure/detail/check_call.hpp>
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_TYPE_ERASURE_MAX_ARITY)
 #include BOOST_PP_ITERATE()
+
+#else
+
+template<class... B>
+struct and_;
+
+template<class T1, class... T>
+struct and_<T1, T...> : boost::mpl::eval_if_c<T1::type::value, and_<T...>, boost::mpl::false_>::type {};
+
+template<class T1>
+struct and_<T1> : T1::type {};
+
+template<>
+struct and_<> : boost::mpl::true_ {};
+
+template<class R, class... T, class... U>
+struct check_call<R(T...), void(U...)> {
+    typedef typename ::boost::type_erasure::detail::and_<
+        ::boost::type_erasure::detail::check_arg<T, U>...
+    >::type type;
+};
+
+#endif
+
+#endif
 
 }
 }

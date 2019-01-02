@@ -101,13 +101,13 @@ namespace boost { namespace spirit
                     *reinterpret_cast<T*>(dest) =
                         *reinterpret_cast<T const*>(src);
                 }
-                static std::basic_istream<Char>& 
+                static std::basic_istream<Char>&
                 stream_in (std::basic_istream<Char>& i, void** obj)
                 {
                     i >> *reinterpret_cast<T*>(obj);
                     return i;
                 }
-                static std::basic_ostream<Char>& 
+                static std::basic_ostream<Char>&
                 stream_out(std::basic_ostream<Char>& o, void* const* obj)
                 {
                     o << *reinterpret_cast<T const*>(obj);
@@ -146,13 +146,13 @@ namespace boost { namespace spirit
                     **reinterpret_cast<T**>(dest) =
                         **reinterpret_cast<T* const*>(src);
                 }
-                static std::basic_istream<Char>& 
+                static std::basic_istream<Char>&
                 stream_in(std::basic_istream<Char>& i, void** obj)
                 {
                     i >> **reinterpret_cast<T**>(obj);
                     return i;
                 }
-                static std::basic_ostream<Char>& 
+                static std::basic_ostream<Char>&
                 stream_out(std::basic_ostream<Char>& o, void* const* obj)
                 {
                     o << **reinterpret_cast<T* const*>(obj);
@@ -198,7 +198,7 @@ namespace boost { namespace spirit
             // value of the required type to the hold_any instance you want to
             // stream to. This assignment has to be executed before the actual
             // call to the operator>>().
-            BOOST_ASSERT(false && 
+            BOOST_ASSERT(false &&
                 "Tried to insert from a std istream into an empty "
                 "hold_any instance");
             return i;
@@ -222,10 +222,8 @@ namespace boost { namespace spirit
         explicit basic_hold_any(T const& x)
           : table(spirit::detail::get_table<T>::template get<Char>()), object(0)
         {
-            if (spirit::detail::get_table<T>::is_small::value)
-                new (&object) T(x);
-            else
-                object = new T(x);
+            new_object(object, x,
+                typename spirit::detail::get_table<T>::is_small());
         }
 
         basic_hold_any()
@@ -297,6 +295,18 @@ namespace boost { namespace spirit
             return *this;
         }
 
+        template <typename T>
+        static void new_object(void*& object, T const& x, mpl::true_)
+        {
+            new (&object) T(x);
+        }
+
+        template <typename T>
+        static void new_object(void*& object, T const& x, mpl::false_)
+        {
+            object = new T(x);
+        }
+
         // assignment operator
 #ifdef BOOST_HAS_RVALUE_REFS
         template <typename T>
@@ -317,6 +327,11 @@ namespace boost { namespace spirit
             return assign(x);
         }
 #endif
+        // copy assignment operator
+        basic_hold_any& operator=(basic_hold_any const& x)
+        {
+            return assign(x);
+        }
 
         // utility functions
         basic_hold_any& swap(basic_hold_any& x)
@@ -369,14 +384,14 @@ namespace boost { namespace spirit
     // because spirit::hold_any is used only in contexts where these operators
     // do exist
         template <typename Char_>
-        friend inline std::basic_istream<Char_>& 
+        friend inline std::basic_istream<Char_>&
         operator>> (std::basic_istream<Char_>& i, basic_hold_any<Char_>& obj)
         {
             return obj.table->stream_in(i, &obj.object);
         }
 
         template <typename Char_>
-        friend inline std::basic_ostream<Char_>& 
+        friend inline std::basic_ostream<Char_>&
         operator<< (std::basic_ostream<Char_>& o, basic_hold_any<Char_> const& obj)
         {
             return obj.table->stream_out(o, &obj.object);

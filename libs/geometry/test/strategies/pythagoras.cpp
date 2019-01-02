@@ -145,7 +145,7 @@ void test_services()
 
     typedef bgsd::pythagoras<CalculationType> strategy_type;
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<strategy_type, P1, P2>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::PointDistanceStrategy<strategy_type, P1, P2>) );
 
     typedef typename bgsd::services::return_type<strategy_type, P1, P2>::type return_type;
 
@@ -258,7 +258,7 @@ void test_integer(bool check_types)
 
     comparable_type comparable;
     cdistance_type cdistance = comparable.apply(p1, p2);
-    BOOST_CHECK_EQUAL(cdistance, 11589696996311540);
+    BOOST_CHECK_EQUAL(cdistance, 11589696996311540.0);
 
     distance_type distance2 = sqrt(distance_type(cdistance));
     BOOST_CHECK_CLOSE(distance, distance2, 0.001);

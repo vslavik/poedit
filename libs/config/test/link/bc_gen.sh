@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # copyright John Maddock 2005
 # Use, modification and distribution are subject to the 

@@ -73,6 +73,6 @@ second a : a.cpp ;
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a")
+t.expect_addition("bin/a")
 
 t.cleanup()

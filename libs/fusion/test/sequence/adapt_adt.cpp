@@ -165,6 +165,7 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point>));
+        BOOST_STATIC_ASSERT(!traits::is_view<ns::point>::value);
         ns::point p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
@@ -237,6 +238,7 @@ main()
 #if !BOOST_WORKAROUND(__GNUC__,<4)
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point_with_private_members>));
+        BOOST_STATIC_ASSERT(!traits::is_view<ns::point_with_private_members>::value);
         ns::point_with_private_members p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
@@ -300,7 +302,7 @@ main()
         BOOST_MPL_ASSERT((
             boost::is_same<
                 boost::fusion::result_of::back<ns::point const>::type::type,
-                const int
+                int
             >));
     }
 

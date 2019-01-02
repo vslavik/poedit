@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
 
     Global application configuration
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -32,12 +32,12 @@ namespace util {
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharT = char>
-    struct pattern_and 
+    struct pattern_and
       : public boost::spirit::classic::char_parser<pattern_and<CharT> >
     {
         pattern_and(CharT pattern_, unsigned long pattern_mask_ = 0UL)
-        :   pattern(pattern_), 
-            pattern_mask((0UL != pattern_mask_) ? 
+        :   pattern(pattern_),
+            pattern_mask((0UL != pattern_mask_) ?
                 pattern_mask_ : (unsigned long)pattern_)
         {}
 

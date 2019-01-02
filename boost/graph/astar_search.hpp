@@ -46,11 +46,12 @@ namespace boost {
 
 
   template <class Graph, class CostType>
-  class astar_heuristic : public std::unary_function<
-    typename graph_traits<Graph>::vertex_descriptor, CostType>
+  class astar_heuristic
   {
   public:
     typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
+    typedef Vertex argument_type;
+    typedef CostType result_type;
     astar_heuristic() {}
     CostType operator()(Vertex u) { return static_cast<CostType>(0); }
   };
@@ -325,7 +326,7 @@ namespace boost {
         bool decreased =
           relax(e, g, weight, predecessor, distance,
                 combine, compare);
-        Distance w_d = combine(get(distance, v), e_weight);
+        combine(get(distance, v), e_weight);
         if (decreased) {
           vis.edge_relaxed(e, g);
           Distance w_rank = combine(get(distance, w), h(w));

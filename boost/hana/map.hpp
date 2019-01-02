@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::map`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -27,6 +27,7 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/detail/fast_and.hpp>
 #include <boost/hana/detail/has_duplicates.hpp>
 #include <boost/hana/detail/hash_table.hpp>
+#include <boost/hana/detail/intrinsics.hpp>
 #include <boost/hana/detail/operators/adl.hpp>
 #include <boost/hana/detail/operators/comparable.hpp>
 #include <boost/hana/detail/operators/searchable.hpp>
@@ -39,9 +40,12 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/functional/partial.hpp>
 #include <boost/hana/fwd/any_of.hpp>
 #include <boost/hana/fwd/at_key.hpp>
+#include <boost/hana/fwd/difference.hpp>
 #include <boost/hana/fwd/erase_key.hpp>
+#include <boost/hana/fwd/intersection.hpp>
 #include <boost/hana/fwd/is_subset.hpp>
 #include <boost/hana/fwd/keys.hpp>
+#include <boost/hana/fwd/union.hpp>
 #include <boost/hana/insert.hpp>
 #include <boost/hana/integral_constant.hpp>
 #include <boost/hana/keys.hpp>
@@ -52,7 +56,9 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/unpack.hpp>
 #include <boost/hana/value.hpp>
 
+
 #include <cstddef>
+#include <type_traits>
 #include <utility>
 
 
@@ -71,37 +77,134 @@ BOOST_HANA_NAMESPACE_BEGIN
     // map
     //////////////////////////////////////////////////////////////////////////
     //! @cond
-    template <typename HashTable, typename Storage>
-    struct map
-        : detail::searchable_operators<map<HashTable, Storage>>
-        , detail::operators::adl<map<HashTable, Storage>>
-    {
-        using hash_table_type = HashTable;
-        using storage_type = Storage;
-
-        Storage storage;
-
-        using hana_tag = map_tag;
-
-        explicit constexpr map(Storage const& xs)
-            : storage(xs)
-        { }
-
-        explicit constexpr map(Storage&& xs)
-            : storage(static_cast<Storage&&>(xs))
-        { }
-
-        constexpr map() = default;
-        constexpr map(map const& other) = default;
-        constexpr map(map&& other) = default;
-    };
-    //! @endcond
-
     namespace detail {
+        template <typename ...>
+        struct storage_is_default_constructible;
+        template <typename ...T>
+        struct storage_is_default_constructible<hana::basic_tuple<T...>> {
+            static constexpr bool value = detail::fast_and<
+                BOOST_HANA_TT_IS_CONSTRUCTIBLE(T)...
+            >::value;
+        };
+
+        template <typename ...>
+        struct storage_is_copy_constructible;
+        template <typename ...T>
+        struct storage_is_copy_constructible<hana::basic_tuple<T...>> {
+            static constexpr bool value = detail::fast_and<
+                BOOST_HANA_TT_IS_CONSTRUCTIBLE(T, T const&)...
+            >::value;
+        };
+
+        template <typename ...>
+        struct storage_is_move_constructible;
+        template <typename ...T>
+        struct storage_is_move_constructible<hana::basic_tuple<T...>> {
+            static constexpr bool value = detail::fast_and<
+                BOOST_HANA_TT_IS_CONSTRUCTIBLE(T, T&&)...
+            >::value;
+        };
+
+        template <typename ...>
+        struct storage_is_copy_assignable;
+        template <typename ...T>
+        struct storage_is_copy_assignable<hana::basic_tuple<T...>> {
+            static constexpr bool value = detail::fast_and<
+                BOOST_HANA_TT_IS_ASSIGNABLE(T, T const&)...
+            >::value;
+        };
+
+        template <typename ...>
+        struct storage_is_move_assignable;
+        template <typename ...T>
+        struct storage_is_move_assignable<hana::basic_tuple<T...>> {
+            static constexpr bool value = detail::fast_and<
+                BOOST_HANA_TT_IS_ASSIGNABLE(T, T&&)...
+            >::value;
+        };
+
+        template <typename HashTable, typename Storage>
+        struct map_impl final
+            : detail::searchable_operators<map_impl<HashTable, Storage>>
+            , detail::operators::adl<map_impl<HashTable, Storage>>
+        {
+            using hash_table_type = HashTable;
+            using storage_type = Storage;
+
+            Storage storage;
+
+            using hana_tag = map_tag;
+
+            template <typename ...P, typename = typename std::enable_if<
+                std::is_same<
+                    Storage,
+                    hana::basic_tuple<typename detail::decay<P>::type...>
+                >::value
+            >::type>
+            explicit constexpr map_impl(P&& ...pairs)
+                : storage{static_cast<P&&>(pairs)...}
+            { }
+
+            explicit constexpr map_impl(Storage&& xs)
+                : storage(static_cast<Storage&&>(xs))
+            { }
+
+            template <typename ...Dummy, typename = typename std::enable_if<
+                detail::storage_is_default_constructible<Storage, Dummy...>::value
+            >::type>
+            constexpr map_impl()
+                : storage()
+            { }
+
+            template <typename ...Dummy, typename = typename std::enable_if<
+                detail::storage_is_copy_constructible<Storage, Dummy...>::value
+            >::type>
+            constexpr map_impl(map_impl const& other)
+                : storage(other.storage)
+            { }
+
+            template <typename ...Dummy, typename = typename std::enable_if<
+                detail::storage_is_move_constructible<Storage, Dummy...>::value
+            >::type>
+            constexpr map_impl(map_impl&& other)
+                : storage(static_cast<Storage&&>(other.storage))
+            { }
+
+            template <typename ...Dummy, typename = typename std::enable_if<
+                detail::storage_is_move_assignable<Storage, Dummy...>::value
+            >::type>
+            constexpr map_impl& operator=(map_impl&& other) {
+                storage = static_cast<Storage&&>(other.storage);
+                return *this;
+            }
+
+            template <typename ...Dummy, typename = typename std::enable_if<
+                detail::storage_is_copy_assignable<Storage, Dummy...>::value
+            >::type>
+            constexpr map_impl& operator=(map_impl const& other) {
+                storage = other.storage;
+                return *this;
+            }
+
+            // Prevent the compiler from defining the default copy and move
+            // constructors, which interfere with the SFINAE above.
+            ~map_impl() = default;
+        };
+        //! @endcond
+
         template <typename Storage>
         struct KeyAtIndex {
             template <std::size_t i>
-            using apply = decltype(hana::first(hana::get_impl<i>(std::declval<Storage>())));
+            using apply = decltype(hana::first(hana::at_c<i>(std::declval<Storage>())));
+        };
+
+        template <typename ...Pairs>
+        struct make_map_type {
+            using Storage = hana::basic_tuple<Pairs...>;
+            using HashTable = typename detail::make_hash_table<
+                detail::KeyAtIndex<Storage>::template apply, sizeof...(Pairs)
+            >::type;
+            using type = detail::map_impl<HashTable, Storage>;
         };
     }
 
@@ -117,12 +220,12 @@ BOOST_HANA_NAMESPACE_BEGIN
             "hana::make_map(pairs...) requires all the 'pairs' to be Products");
 
             static_assert(detail::fast_and<
-                Comparable<decltype(hana::first(pairs))>::value...
+                hana::Comparable<decltype(hana::first(pairs))>::value...
             >::value,
             "hana::make_map(pairs...) requires all the keys to be Comparable");
 
             static_assert(detail::fast_and<
-                Constant<
+                hana::Constant<
                     decltype(hana::equal(hana::first(pairs), hana::first(pairs)))
                 >::value...
             >::value,
@@ -139,14 +242,8 @@ BOOST_HANA_NAMESPACE_BEGIN
             "hana::make_map({keys, values}...) requires all the keys to have different hashes");
 #endif
 
-            using Storage = hana::basic_tuple<typename detail::decay<Pairs>::type...>;
-            using HashTable = typename detail::make_hash_table<
-                detail::KeyAtIndex<Storage>::template apply, sizeof...(Pairs)
-            >::type;
-
-            return map<HashTable, Storage>(
-                hana::make_basic_tuple(static_cast<Pairs&&>(pairs)...)
-            );
+            using Map = typename detail::make_map_type<typename detail::decay<Pairs>::type...>::type;
+            return Map{hana::make_basic_tuple(static_cast<Pairs&&>(pairs)...)};
         }
     };
 
@@ -189,7 +286,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             using NewStorage = decltype(
                 hana::append(static_cast<Map&&>(map).storage, static_cast<Pair&&>(pair))
             );
-            return hana::map<NewHashTable, NewStorage>(
+            return detail::map_impl<NewHashTable, NewStorage>(
                 hana::append(static_cast<Map&&>(map).storage, static_cast<Pair&&>(pair))
             );
         }
@@ -244,10 +341,20 @@ BOOST_HANA_NAMESPACE_BEGIN
         }
 
         template <typename Map, typename Key>
-        static constexpr auto apply(Map&& map, Key const& key) {
-            constexpr bool contains = hana::value<decltype(hana::contains(map, key))>();
+        static constexpr auto apply_impl(Map&& map, Key const& key, hana::false_) {
             return erase_key_helper(static_cast<Map&&>(map), key,
-                                    hana::bool_c<contains>);
+                                    hana::contains(map, key));
+        }
+
+        template <typename Map, typename Key>
+        static constexpr auto apply_impl(Map&& map, Key const&, hana::true_) {
+            return static_cast<Map&&>(map);
+        }
+
+        template <typename Map, typename Key>
+        static constexpr auto apply(Map&& map, Key const& key) {
+            constexpr bool is_empty = decltype(hana::length(map))::value == 0;
+            return apply_impl(static_cast<Map&&>(map), key, hana::bool_<is_empty>{});
         }
     };
 
@@ -319,6 +426,20 @@ BOOST_HANA_NAMESPACE_BEGIN
     };
 
     template <>
+    struct contains_impl<map_tag> {
+        template <typename Map, typename Key>
+        static constexpr auto apply(Map const&, Key const&) {
+            using RawMap = typename std::remove_reference<Map>::type;
+            using HashTable = typename RawMap::hash_table_type;
+            using Storage = typename RawMap::storage_type;
+            using MaybeIndex = typename detail::find_index<
+                HashTable, Key, detail::KeyAtIndex<Storage>::template apply
+            >::type;
+            return hana::bool_<!decltype(hana::is_nothing(MaybeIndex{}))::value>{};
+        }
+    };
+
+    template <>
     struct any_of_impl<map_tag> {
         template <typename M, typename Pred>
         static constexpr auto apply(M const& map, Pred const& pred)
@@ -355,8 +476,75 @@ BOOST_HANA_NAMESPACE_BEGIN
             using MaybeIndex = typename detail::find_index<
                 HashTable, Key, detail::KeyAtIndex<Storage>::template apply
             >::type;
+            static_assert(!decltype(hana::is_nothing(MaybeIndex{}))::value,
+                "hana::at_key(map, key) requires the 'key' to be present in the 'map'");
             constexpr std::size_t index = decltype(*MaybeIndex{}){}();
             return hana::second(hana::at_c<index>(static_cast<Map&&>(map).storage));
+        }
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // union_
+    //////////////////////////////////////////////////////////////////////////
+    template <>
+    struct union_impl<map_tag> {
+        template <typename Xs, typename Ys>
+        static constexpr auto apply(Xs&& xs, Ys&& ys) {
+            return hana::fold_left(static_cast<Xs&&>(xs), static_cast<Ys&&>(ys),
+                                   hana::insert);
+        }
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // intersection_
+    //////////////////////////////////////////////////////////////////////////
+    namespace detail {
+        template <typename Ys>
+        struct map_insert_if_contains {
+            Ys const& ys;
+
+            // Second template param will be pair
+            // Get its key and check if it exists, if it does, insert key, value pair.
+            template <typename Result, typename Pair>
+            static constexpr auto helper(Result&& result, Pair&& pair, hana::true_) {
+                return hana::insert(static_cast<Result&&>(result), static_cast<Pair&&>(pair));
+            }
+
+            template <typename Result, typename Pair>
+            static constexpr auto helper(Result&& result, Pair&&, hana::false_) {
+                return static_cast<Result&&>(result);
+            }
+
+            template <typename Result, typename Pair>
+            constexpr auto operator()(Result&& result, Pair&& pair) const {
+                constexpr bool keep = hana::value<decltype(hana::contains(ys, hana::first(pair)))>();
+                return map_insert_if_contains::helper(static_cast<Result&&>(result),
+                                                      static_cast<Pair&&>(pair),
+                                                      hana::bool_c<keep>);
+            }
+        };
+    }
+
+    template <>
+    struct intersection_impl<map_tag> {
+        template <typename Xs, typename Ys>
+        static constexpr auto apply(Xs&& xs, Ys const& ys) {
+            return hana::fold_left(static_cast<Xs&&>(xs), hana::make_map(),
+                                   detail::map_insert_if_contains<Ys>{ys});
+        }
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // difference
+    //////////////////////////////////////////////////////////////////////////
+    template <>
+    struct difference_impl<map_tag> {
+        template <typename Xs, typename Ys>
+        static constexpr auto apply(Xs&& xs, Ys&& ys) {
+            return hana::fold_left(
+                    hana::keys(static_cast<Ys&&>(ys)),
+                    static_cast<Xs&&>(xs),
+                    hana::erase_key);
         }
     };
 

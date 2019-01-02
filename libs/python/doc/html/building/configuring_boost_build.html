@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Configuring Boost.Build</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python">
-<link rel="up" href="../building.html" title="Chapter&#160;1.&#160;Building and Testing">
+<link rel="up" href="../building.html" title="Chapter&#160;2.&#160;Building and Testing">
 <link rel="prev" href="installing_boost_python_on_your_.html" title="Installing Boost.Python on your System">
 <link rel="next" href="choosing_a_boost_python_library_.html" title="Choosing a Boost.Python Library Binary">
 </head>
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="building.configuring_boost_build"></a><a class="link" href="configuring_boost_build.html" title="Configuring Boost.Build">Configuring Boost.Build</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="configuring_boost_build.html#building.configuring_boost_build.python_configuration_parameters">Python
         Configuration Parameters</a></span></dt>
 <dt><span class="section"><a href="configuring_boost_build.html#building.configuring_boost_build.examples">Examples</a></span></dt>
@@ -40,7 +40,7 @@
 <tr><td align="left" valign="top"><p>
           If you are using a unix-variant OS and you ran Boost's <code class="computeroutput"><span class="identifier">configure</span></code>
           script, it may have generated a <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code>
-          for you. <sup>[<a name="building.configuring_boost_build.f0" href="#ftn.building.configuring_boost_build.f0" class="footnote">2</a>]</sup> If your <code class="computeroutput"><span class="identifier">configure</span></code>/<code class="computeroutput"><span class="identifier">make</span></code> sequence was successful and Boost.Python
+          for you. <a href="#ftn.building.configuring_boost_build.f0" class="footnote" name="building.configuring_boost_build.f0"><sup class="footnote">[2]</sup></a> If your <code class="computeroutput"><span class="identifier">configure</span></code>/<code class="computeroutput"><span class="identifier">make</span></code> sequence was successful and Boost.Python
           binaries were built, your <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code>
           file is probably already correct.
         </p></td></tr>
@@ -75,7 +75,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">version</span></dt>
 <dd><p>
                 the version of Python to use. Should be in Major.Minor format, for
@@ -134,7 +134,7 @@
           Note that in the examples below, case and <span class="bold"><strong>especially
           whitespace</strong></span> are significant.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p class="simpara">
               If you have both python 2.5 and python 2.4 installed, <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> might contain
@@ -239,8 +239,8 @@
 </ul></div>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.building.configuring_boost_build.f0" href="#building.configuring_boost_build.f0" class="para">2</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.building.configuring_boost_build.f0" class="footnote"><p><a href="#building.configuring_boost_build.f0" class="para"><sup class="para">[2] </sup></a>
             <code class="computeroutput"><span class="identifier">configure</span></code> overwrites
             the existing <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> in your home directory (if any)
             after making a backup of the old version.

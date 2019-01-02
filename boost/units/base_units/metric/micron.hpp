@@ -26,8 +26,8 @@ typedef scaled_base_unit<boost::units::si::meter_base_unit, scale<10, static_rat
 
 template<>
 struct base_unit_info<metric::micron_base_unit> {
-    static const char* name()   { return("micron"); }
-    static const char* symbol() { return("u"); }
+    static BOOST_CONSTEXPR const char* name()   { return("micron"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("u"); }
 };
 
 }

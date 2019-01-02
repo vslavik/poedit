@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Generator Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="warming_up.html" title="Warming up">
 <link rel="next" href="karma_complex.html" title="Complex - A first more complex generator">
@@ -107,13 +107,13 @@
 </pre>
 <h6>
 <a name="spirit.karma.tutorials.semantic_actions.h0"></a>
-          <span><a name="spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions"></a></span><a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions">Examples
+          <span class="phrase"><a name="spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions"></a></span><a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions">Examples
           of Semantic Actions</a>
         </h6>
 <p>
           In the following example we present various ways to attach semantic actions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Using a plain function pointer
             </li>
@@ -253,12 +253,12 @@
         </p>
 <h6>
 <a name="spirit.karma.tutorials.semantic_actions.h1"></a>
-          <span><a name="spirit.karma.tutorials.semantic_actions.phoenix"></a></span><a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
+          <span class="phrase"><a name="spirit.karma.tutorials.semantic_actions.phoenix"></a></span><a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>
-          <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>, a companion
-          library bundled with Spirit, is specifically suited for binding semantic
-          actions. It is like <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
+          <a href="../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>,
+          a companion library bundled with Spirit, is specifically suited for binding
+          semantic actions. It is like <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
           on steroids, with special custom features that make it easy to integrate
           semantic actions with Spirit. If your requirements go beyond simple to
           moderate generation, I suggest you use this library. Examples presented
@@ -274,13 +274,13 @@
             There are different ways to write semantic actions for <span class="emphasis"><em>Spirit.Karma</em></span>:
             using plain functions, <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
             <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>, or
-            <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>. The latter
-            three allow you to use special placeholders to control parameter placement
-            (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>,
-            etc.). Each of those libraries has it's own implementation of the placeholders,
-            all in different namespaces. You have to make sure not to mix placeholders
-            with a library they don't belong to and not to use different libraries
-            while writing a semantic action.
+            <a href="../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>.
+            The latter three allow you to use special placeholders to control parameter
+            placement (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>, etc.). Each of those libraries
+            has it's own implementation of the placeholders, all in different namespaces.
+            You have to make sure not to mix placeholders with a library they don't
+            belong to and not to use different libraries while writing a semantic
+            action.
           </p>
 <p>
             Generally, for <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
@@ -293,7 +293,7 @@
             the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lambda</span></code>.
           </p>
 <p>
-            For semantic actions written using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            For semantic actions written using <a href="../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
             use the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>.
             Please note that all existing placeholders for your convenience are also
             available from the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span></code>.

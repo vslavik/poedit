@@ -46,6 +46,8 @@ extern "C" {
 #include <gb_books.h> /* graphs based on literature */
 #include <gb_econ.h> /* graphs based on economic data */
 #include <gb_games.h> /* graphs based on football scores */
+#undef ap /* avoid name clash with BGL parameter */
+        // ap ==> Vertex::u.I
 #include <gb_gates.h> /* graphs based on logic circuits */
 #undef val /* avoid name clash with g++ headerfile stl_tempbuf.h */
         // val ==> Vertex::x.I
@@ -92,6 +94,9 @@ namespace boost {
     typedef directed_tag directed_category;
     typedef sgb_traversal_tag traversal_category;
     typedef allow_parallel_edge_tag edge_parallel_category;
+    /** Return a null descriptor */
+    static vertex_descriptor null_vertex()
+    { return NULL; }
   };
   template <> struct graph_traits<sgb_const_graph_ptr> {
     typedef Vertex* vertex_descriptor;
@@ -107,6 +112,9 @@ namespace boost {
     typedef directed_tag directed_category;
     typedef sgb_traversal_tag traversal_category;
     typedef allow_parallel_edge_tag edge_parallel_category;
+    /** Return a null descriptor */
+    static vertex_descriptor null_vertex()
+    { return NULL; }
   };
 }
 

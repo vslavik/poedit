@@ -11,6 +11,9 @@
 #ifndef BOOST_COMPUTE_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
 #define BOOST_COMPUTE_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
 
+#include <boost/assert.hpp>
+#include <boost/type_traits.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/function.hpp>
 #include <boost/compute/detail/literal.hpp>
@@ -20,7 +23,7 @@ namespace boost {
 namespace compute {
 
 /// \class uniform_real_distribution
-/// \brief Produces uniformily distributed random floating-point numbers.
+/// \brief Produces uniformly distributed random floating-point numbers.
 ///
 /// The following example shows how to setup a uniform real distribution to
 /// produce random \c float values between \c 1 and \c 100.
@@ -36,10 +39,12 @@ public:
 
     /// Creates a new uniform distribution producing numbers in the range
     /// [\p a, \p b).
+    /// Requires a < b
     uniform_real_distribution(RealType a = 0.f, RealType b = 1.f)
         : m_a(a),
           m_b(b)
     {
+        BOOST_ASSERT(a < b);
     }
 
     /// Destroys the uniform_real_distribution object.
@@ -59,7 +64,7 @@ public:
         return m_b;
     }
 
-    /// Generates uniformily distributed floating-point numbers and stores
+    /// Generates uniformly distributed floating-point numbers and stores
     /// them to the range [\p first, \p last).
     template<class OutputIterator, class Generator>
     void generate(OutputIterator first,
@@ -69,7 +74,7 @@ public:
     {
         BOOST_COMPUTE_FUNCTION(RealType, scale_random, (const uint_ x),
         {
-            return LO + (convert_RealType(x) / MAX_RANDOM) * (HI - LO);
+            return nextafter(LO + (convert_RealType(x) / MAX_RANDOM) * (HI - LO), (RealType) LO);
         });
 
         scale_random.define("LO", detail::make_literal(m_a));
@@ -78,6 +83,7 @@ public:
         scale_random.define(
             "convert_RealType", std::string("convert_") + type_name<RealType>()
         );
+        scale_random.define("RealType", type_name<RealType>());
 
         generator.generate(
             first, last, scale_random, queue
@@ -97,6 +103,11 @@ public:
 private:
     RealType m_a;
     RealType m_b;
+
+    BOOST_STATIC_ASSERT_MSG(
+        boost::is_floating_point<RealType>::value,
+        "Template argument must be a floating point type"
+    );
 };
 
 } // end compute namespace

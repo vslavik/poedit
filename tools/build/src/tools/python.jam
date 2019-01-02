@@ -34,6 +34,7 @@ import path ;
 import feature ;
 import set ;
 import builtin ;
+import property-set ;
 
 
 # Make this module a project.
@@ -59,6 +60,10 @@ lib rt ;
 # access Python modules that are part of the product being built, but are not
 # installed in the development system's default paths.
 feature.feature pythonpath : : free optional path ;
+
+# The best configured version of Python 2 and 3.
+py2-version = ;
+py3-version = ;
 
 # Initializes the Python toolset. Note that all parameters are optional.
 #
@@ -103,7 +108,7 @@ rule init ( version ? : cmd-or-prefix ? : includes * : libraries ?
     {
         if $($(v))
         {
-            debug-message "  user-specified "$(v): \"$($(v))\" ;
+            debug-message "  user-specified $(v):" \"$($(v))\" ;
         }
     }
 
@@ -150,7 +155,7 @@ local rule is-cygwin-symlink ( path )
     if $(dir-listing)
     {
         # Escape any special regex characters in the base part of the path.
-        local base-pat = [ regex.escape $(path:D=) : ].[()*+?|\\$^ : \\ ] ;
+        local base-pat = [ regex.escape $(path:D=) : "].[()*+?|\\$^" : \\ ] ;
 
         # Extract the file's size from the directory listing.
         local size-of-system-file = [ MATCH "([0-9]+) "$(base-pat) : $(dir-listing) : 1 ] ;
@@ -223,7 +228,7 @@ local rule debug-message ( message * )
 {
     if --debug-configuration in [ modules.peek : ARGV ]
     {
-        ECHO notice: [python-cfg] $(message) ;
+        ECHO "notice:" "[python-cfg]" $(message) ;
     }
 }
 
@@ -251,8 +256,8 @@ local rule software-registry-value ( path : data ? )
 }
 
 
-.windows-drive-letter-re = ^([A-Za-z]):[\\/](.*) ;
-.cygwin-drive-letter-re = ^/cygdrive/([a-z])/(.*) ;
+.windows-drive-letter-re = "^([A-Za-z]):[\\/](.*)" ;
+.cygwin-drive-letter-re = "^/cygdrive/([a-z])/(.*)" ;
 
 .working-directory = [ PWD ] ;
 .working-drive-letter = [ SUBST $(.working-directory) $(.windows-drive-letter-re) $1 ] ;
@@ -279,7 +284,7 @@ local rule cygwin-to-windows-path ( path )
 {
     path = $(path:R="") ; # strip any trailing slash
 
-    local drive-letter = [ SUBST $(path) $(.cygwin-drive-letter-re) $1:/$2 ] ;
+    local drive-letter = [ SUBST $(path) $(.cygwin-drive-letter-re) "$1:/$2" ] ;
     if $(drive-letter)
     {
         path = $(drive-letter) ;
@@ -348,7 +353,7 @@ local rule windows-path-to-native ( path )
 #
 local rule guess-windows-path ( path )
 {
-    return [ SUBST $(path) ($(.windows-drive-letter-re)|.*([\\]).*) $1 ] ;
+    return [ SUBST $(path) "($(.windows-drive-letter-re)|.*([\\]).*)" $1 ] ;
 }
 
 
@@ -375,7 +380,7 @@ local rule path-to-native ( paths * )
 #
 local rule split-version ( version )
 {
-    local major-minor = [ MATCH ^([0-9]+)\.([0-9]+)(.*)$ : $(version) : 1 2 3 ] ;
+    local major-minor = [ MATCH "^([0-9]+)\.([0-9]+)(.*)$" : $(version) : 1 2 3 ] ;
     if ! $(major-minor[2]) || $(major-minor[3])
     {
         ECHO "Warning: \"using python\" expects a two part (major, minor) version number; got" $(version) instead ;
@@ -454,7 +459,7 @@ local rule probe ( python-cmd )
         debug-message ;
         debug-message If you intend to target a Cygwin build of Python, please ;
         debug-message replace the path to the link with the path to a real executable ;
-        debug-message (guessing: \"$(skip-symlink)\") "in" your 'using python' line ;
+        debug-message "(guessing:" \"$(skip-symlink)\") "in" your 'using python' line ;
         debug-message "in" user-config.jam or site-config.jam. Do not forget to escape ;
         debug-message backslashes ;
         debug-message -------------------------------------------------------------------- ;
@@ -490,7 +495,7 @@ local rule probe ( python-cmd )
             {
                 # These variables are expected to be declared local in the
                 # caller, so Jam's dynamic scoping will set their values there.
-                sys.$(s) = [ SUBST $(output) \\<$(s)=([^$(nl)]+) $1 ] ;
+                sys.$(s) = [ SUBST $(output) "\\<$(s)=([^$(nl)]+)" $1 ] ;
             }
         }
         return $(output) ;
@@ -547,7 +552,7 @@ local rule compute-default-paths ( target-os : version ? : prefix ? :
 }
 
 # The version of the python interpreter to use.
-feature.feature python : : propagated ;
+feature.feature python : : propagated symmetric ;
 feature.feature python.interpreter : : free ;
 
 toolset.flags python.capture-output PYTHON : <python.interpreter> ;
@@ -556,7 +561,7 @@ toolset.flags python.capture-output PYTHON : <python.interpreter> ;
 # Support for Python configured --with-pydebug
 #
 feature.feature python-debugging : off on : propagated ;
-builtin.variant debug-python : debug : <python-debugging>on ;
+variant debug-python : debug : <python-debugging>on ;
 
 
 # Return a list of candidate commands to try when looking for a Python
@@ -652,6 +657,15 @@ local rule system-library-dependencies ( target-os )
 }
 
 
+# Define a version suffix for libraries depending on Python.
+# For example, Boost.Python built for Python 2.7 uses the suffix "27"
+rule version-suffix ( version )
+{
+    local major-minor = [ split-version $(version) ] ;
+    local suffix = $(major-minor:J="") ;
+    return $(suffix) ;
+}
+
 # Declare a target to represent Python's library.
 #
 local rule declare-libpython-target ( version ? : requirements * )
@@ -671,10 +685,10 @@ local rule declare-libpython-target ( version ? : requirements * )
 
     if ! $(lib-version)
     {
-        ECHO *** warning: could not determine Python version, which will ;
-        ECHO *** warning: probably prevent us from linking with the python ;
-        ECHO *** warning: library.  Consider explicitly passing the version ;
-        ECHO *** warning: to 'using python'. ;
+        ECHO *** "warning:" could not determine Python version, which will ;
+        ECHO *** "warning:" probably prevent us from linking with the python ;
+        ECHO *** "warning:" library.  Consider explicitly passing the version ;
+        ECHO *** "warning:" to 'using python'. ;
     }
 
     # Declare it.
@@ -700,14 +714,6 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
         extension-suffix ?= _d ;
     }
     extension-suffix ?= "" ;
-
-    # Normalize and dissect any version number.
-    local major-minor ;
-    if $(version)
-    {
-        major-minor = [ split-version $(version) ] ;
-        version = $(major-minor:J=.) ;
-    }
 
     local cmds-to-try ;
 
@@ -797,13 +803,11 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
         }
     }
 
-    # Anything left to compute?
+    # Check whether configuration succeeded.
     if ! ( $(includes) && $(libraries) )
     {
-        version ?= $(fallback-version) ;
-        version ?= 2.5 ;
-        exec-prefix ?= $(prefix) ;
-        compute-default-paths $(target-os) : $(version) : $(prefix:E=) ;
+        debug-message Python headers and libraries not found. ;
+        return ;
     }
     
     .configured = true ;
@@ -832,8 +836,39 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
     }
 
     #
+    # Discover the presence of NumPy
+    #
+    debug-message "Checking for NumPy..." ;
+    local full-cmd = "import sys; sys.stderr = sys.stdout; import numpy; print(numpy.get_include())" ;
+    local full-cmd = $(interpreter-cmd)" -c \"$(full-cmd)\"" ;
+    debug-message "running command '$(full-cmd)'" ;
+    local result = [ SHELL $(full-cmd) : strip-eol : exit-status ] ;
+    if $(result[2]) = 0
+    {
+        .numpy = true ;
+        .numpy-include = $(result[1]) ;
+        debug-message "NumPy enabled" ;
+    }
+    else
+    {
+        debug-message "NumPy disabled. Reason:" ;
+        debug-message "  $(full-cmd) aborted with " ;
+        debug-message "  $(result[1])" ;
+    }
+
+    #
     # End autoconfiguration sequence.
     #
+    
+    # Normalize and dissect any version number.
+    local major-minor ;
+    if $(version)
+    {
+        major-minor = [ split-version $(version) ] ;
+        version = $(major-minor:J=.) ;
+    }
+    
+    
     local target-requirements = $(condition) ;
 
     # Add the version, if any, to the target requirements.
@@ -842,6 +877,11 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
         if ! $(version) in [ feature.values python ]
         {
             feature.extend python : $(version) ;
+            py$(major-minor[1])-version ?= $(version) ;
+            if $(py$(major-minor[1])-version) < $(version)
+            {
+                py$(major-minor[1])-version = $(version) ;
+            }
         }
         target-requirements += <python>$(version:E=default) ;
     }
@@ -897,13 +937,22 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
         }
     }
 
+    # In case we added duplicate requirements from what the user specified.
+    target-requirements = [ sequence.unique $(target-requirements) ] ;
+
     # Global, but conditional, requirements to give access to the interpreter
     # for general utilities, like other toolsets, that run Python scripts.
     toolset.add-requirements
-        $(target-requirements:J=,):<python.interpreter>$(interpreter-cmd) ;
+        "$(target-requirements:J=,):<python.interpreter>$(interpreter-cmd)" ;
 
     # Register the right suffix for extensions.
     register-extension-suffix $(extension-suffix) : $(target-requirements) ;
+
+    # Make sure that the python feature is always considered
+    # relevant for any targets that depend on python.  Without
+    # this, it would only be considered relevant when there are
+    # multiple configurations defined within the same build.
+    target-requirements += <relevant>python ;
 
     #
     # Declare the "python" target. This should really be called
@@ -981,7 +1030,7 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
             :
             : $(target-requirements)
             :
-            : $(usage-requirements) <linkflags>-Wl,-bI:$(libraries[1])/python.exp
+            : $(usage-requirements) <linkflags>"-Wl,-bI:$(libraries[1])/python.exp"
             ;
     }
     else
@@ -993,12 +1042,42 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
             : $(usage-requirements)
             ;
     }
+    
+}
+
+# Conditional rule specification that will prevent building of a target
+# if there is no matching python configuration available with the given
+# required properties.
+rule require-py ( properties * )
+{
+    local py-ext-target = [ $(.project).find python_for_extensions : no-error ] ;
+    if ! $(py-ext-target)
+    {
+        return <build>no ;
+    }
+    local property-set = [ property-set.create $(properties) ] ;
+    property-set = [ $(property-set).expand ] ;
+    local py-ext-alternative = [ $(py-ext-target).select-alternatives $(property-set) ] ;
+    if ! $(py-ext-alternative)
+    {
+        return <build>no ;
+    }
 }
 
 
 rule configured ( )
 {
      return $(.configured) ;
+}
+
+rule numpy ( )
+{
+     return $(.numpy) ;
+}
+
+rule numpy-include ( )
+{
+     return $(.numpy-include) ;
 }
 
 
@@ -1056,19 +1135,6 @@ rule python-extension ( name : sources * : requirements * : default-build * :
 
 IMPORT python : python-extension : : python-extension ;
 
-rule py2to3
-{
-    common.copy $(<) : $(>) ;
-    2to3 $(<) ;
-}
-
-actions 2to3
-{
-    2to3 -wn --no-diffs "$(<)"
-    2to3 -dwn --no-diffs "$(<)"
-}
-
-
 # Support for testing.
 type.register PY : py ;
 type.register RUN_PYD_OUTPUT ;
@@ -1091,22 +1157,6 @@ class python-test-generator : generator
         local python ;
         local other-pythons ;
 
-        # Make new target that converting Python source by 2to3 when running with Python 3.
-        local rule make-2to3-source ( source )
-        {
-            if $(pyversion) >= 3.0
-            {
-                local a = [ new action $(source) : python.py2to3 : $(property-set) ] ;
-                local t =  [ utility.basename [ $(s).name ] ] ;
-                local p = [ new file-target $(t) : PY : $(project) : $(a) ] ;
-                return $(p) ;
-            }
-            else
-            {
-                return $(source) ;
-            }
-        }
-
         for local s in $(sources)
         {
             if [ $(s).type ] = PY
@@ -1114,13 +1164,13 @@ class python-test-generator : generator
                 if ! $(python)
                 {
                     # First Python source ends up on command line.
-                    python = [ make-2to3-source $(s) ] ;
+                    python = $(s) ;
 
                 }
                 else
                 {
                     # Other Python sources become dependencies.
-                    other-pythons += [ make-2to3-source $(s) ] ;
+                    other-pythons += $(s) ;
                 }
             }
         }
@@ -1210,7 +1260,11 @@ local rule pyd-pythonpath ( source )
 # The flag settings on testing.capture-output do not apply to python.capture
 # output at the moment. Redo this explicitly.
 toolset.flags python.capture-output ARGS <testing.arg> ;
+toolset.flags python.capture-output INPUT_FILES <testing.input-file> ;
 
+toolset.uses-features python.capture-output :
+    <testing.launcher> <testing.execute> <dll-path> <xdll-path> <target-os>
+    <pythonpath> ;
 
 rule capture-output ( target : sources * : properties * )
 {
@@ -1224,8 +1278,7 @@ rule capture-output ( target : sources * : properties * )
     PYTHONPATH += [ feature.get-values pythonpath : $(properties) ] ;
 
     # After test is run, we remove the Python module, but not the Python script.
-    testing.capture-output $(target) : $(sources[1]) : $(properties) :
-        $(sources[2-]) ;
+    testing.capture-output $(target) : $(sources[1]) : $(properties) ;
 
     # PYTHONPATH is different; it will be interpreted by whichever Python is
     # invoked and so must follow path rules for the target os. The only OSes
@@ -1242,7 +1295,7 @@ rule capture-output ( target : sources * : properties * )
     }
     local path-separator = [ os.path-separator [ translate-os $(target-os) ] ] ;
     local set-PYTHONPATH = [ common.variable-setting-command PYTHONPATH :
-        $(PYTHONPATH:J=$(path-separator)) ] ;
+        $(PYTHONPATH:E=:J=$(path-separator)) ] ;
     LAUNCHER on $(target) = $(set-PYTHONPATH) [ on $(target) return \"$(PYTHON)\" ] ;
 }
 
@@ -1255,5 +1308,26 @@ rule bpl-test ( name : sources * : requirements * )
         : $(requirements) : $(name) ] ;
 }
 
+# The same as bpl-test but additionally require (and link to) boost_numpy.
+# Masked whenever NumPy is not enabled.
+rule numpy-test ( name : sources * : requirements * )
+{
+    numpy-include = [ python.numpy-include ] ;
+    # yuk !
+    if ! $(.numpy) { requirements += <build>no ; }
+    sources ?= $(name).py $(name).cpp ;
+    name = [ regex.replace $(name) "[/]" "~" ] ;
+    return [ testing.make-test run-pyd
+        : $(sources) /boost/python//boost_numpy /boost/python//boost_python
+        : $(requirements) <include>$(numpy-include)
+        : $(name) ] ;
+}
+
+rule py-version ( n )
+{
+    return $(py$(n)-version) ;
+}
 
 IMPORT $(__name__) : bpl-test : : bpl-test ;
+IMPORT $(__name__) : numpy-test : : numpy-test ;
+IMPORT $(__name__) : py-version : : py-version ;

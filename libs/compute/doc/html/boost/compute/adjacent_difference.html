@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function adjacent_difference</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.adjacent_difference_hpp" title="Header &lt;boost/compute/algorithm/adjacent_difference.hpp&gt;">
 <link rel="prev" href="accumulate.html" title="Function accumulate">
@@ -44,22 +44,29 @@
                       <span class="identifier">OutputIterator</span> result<span class="special">,</span> 
                       <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp64360480"></a><h2>Description</h2>
+<a name="idp78726400"></a><h2>Description</h2>
 <p>Stores the difference of each pair of consecutive values in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) to the range beginning at <code class="computeroutput">result</code>. If <code class="computeroutput">op</code> is not provided, <code class="computeroutput">minus&lt;T&gt;</code> is used.</p>
 <p>
 
-</p>
+Space complexity: (1)<br>
+ Space complexity when <code class="computeroutput">result</code> == <code class="computeroutput">first:</code> (n)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>adjacent_find() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

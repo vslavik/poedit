@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Optional References</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Optional">
 <link rel="up" href="../../../optional/reference/header__boost_optional_optional_hpp_.html" title="Header &lt;boost/optional/optional.hpp&gt;">
 <link rel="prev" href="header_optional_optional_values.html" title="Optional Values">
@@ -53,7 +53,6 @@
 
     <span class="identifier">optional</span><span class="special">&amp;</span> <span class="keyword">operator</span> <span class="special">=</span> <span class="special">(</span> <span class="identifier">none_t</span> <span class="special">)</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_assign_none_t"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
-
     <span class="identifier">optional</span><span class="special">&amp;</span> <span class="keyword">operator</span> <span class="special">=</span> <span class="special">(</span> <span class="identifier">optional</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rhs</span> <span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_copy_assign"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span> <span class="identifier">optional</span><span class="special">&amp;</span> <span class="keyword">operator</span> <span class="special">=</span> <span class="special">(</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">U</span><span class="special">&amp;&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rhs</span> <span class="special">)</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_assign_optional_U"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
@@ -73,16 +72,21 @@
 
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">value_or_eval</span><span class="special">(</span> <span class="identifier">F</span> <span class="identifier">f</span> <span class="special">)</span> <span class="keyword">const</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_value_or_eval"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">auto</span> <span class="identifier">map</span><span class="special">(</span> <span class="identifier">F</span> <span class="identifier">f</span> <span class="special">)</span> <span class="keyword">const</span> <span class="special">-&gt;</span> <span class="emphasis"><em>see below</em></span><span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_map"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
+
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">auto</span> <span class="identifier">flat_map</span><span class="special">(</span> <span class="identifier">F</span> <span class="identifier">f</span> <span class="special">)</span> <span class="keyword">const</span> <span class="special">-&gt;</span> <span class="emphasis"><em>see below</em></span><span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_flat_map"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
+
     <span class="identifier">T</span><span class="special">*</span> <span class="identifier">get_ptr</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_get_ptr"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
+
+    <span class="keyword">bool</span> <span class="identifier">has_value</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_operator_bool"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
     <span class="keyword">explicit</span> <span class="keyword">operator</span> <span class="keyword">bool</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_operator_bool"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
     <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_operator_not"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
 
-    <span class="comment">// deprecated methods</span>
-
-    <span class="comment">// (deprecated)</span>
     <span class="keyword">void</span> <span class="identifier">reset</span><span class="special">()</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_reset"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
+
+    <span class="comment">// deprecated methods</span>
 
     <span class="comment">// (deprecated)</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">&gt;</span> <span class="keyword">void</span> <span class="identifier">reset</span> <span class="special">(</span> <span class="identifier">R</span> <span class="special">&amp;&amp;</span> <span class="identifier">r</span> <span class="special">)</span> <span class="keyword">noexcept</span> <span class="special">;</span> <a class="link" href="detailed_semantics___optional_references.html#reference_optional_ref_reset_value"><span class="inlinemediaobject"><img src="../../../images/callouts/R.png" alt="R"></span></a>
@@ -100,7 +104,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2016 Andrzej Krzemie&#324;ski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2018 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

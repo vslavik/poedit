@@ -1,5 +1,5 @@
 // Copyright 2014 Renato Tegon Forti, Antony Polukhin.
-// Copyright 2015-2016 Antony Polukhin.
+// Copyright 2015-2017 Antony Polukhin.
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt
@@ -13,7 +13,7 @@
 #include <boost/predef/compiler/visualc.h>
 #include <boost/dll/detail/aggressive_ptr_cast.hpp>
 #if BOOST_OS_WINDOWS
-#   include <boost/detail/winapi/dll.hpp>
+#   include <boost/winapi/dll.hpp>
 #   include <boost/dll/detail/windows/path_from_handle.hpp>
 #else
 #   include <dlfcn.h>
@@ -28,30 +28,59 @@
 /// \brief Provides methods for getting acceptable by boost::dll::shared_library location of symbol, source line or program.
 namespace boost { namespace dll {
 
-namespace detail {
 #if BOOST_OS_WINDOWS
-    inline boost::filesystem::path symbol_location_impl(const void* symbol, boost::system::error_code& ec) {
-        boost::filesystem::path ret;
+namespace detail {
+    inline boost::filesystem::path program_location_impl(boost::system::error_code& ec) {
+        return boost::dll::detail::path_from_handle(NULL, ec);
+    }
+} // namespace detail
+#endif
 
-        boost::detail::winapi::MEMORY_BASIC_INFORMATION_ mbi;
-        if (!boost::detail::winapi::VirtualQuery(symbol, &mbi, sizeof(mbi))) {
+    /*!
+    * On success returns full path and name to the binary object that holds symbol pointed by ptr_to_symbol.
+    *
+    * \param ptr_to_symbol Pointer to symbol which location is to be determined.
+    * \param ec Variable that will be set to the result of the operation.
+    * \return Path to the binary object that holds symbol or empty path in case error.
+    * \throws std::bad_alloc in case of insufficient memory. Overload that does not accept boost::system::error_code also throws boost::system::system_error.
+    *
+    * \b Examples:
+    * \code
+    * int main() {
+    *    dll::symbol_location_ptr(std::set_terminate(0));       // returns "/some/path/libmy_terminate_handler.so"
+    *    dll::symbol_location_ptr(::signal(SIGSEGV, SIG_DFL));  // returns "/some/path/libmy_symbol_handler.so"
+    * }
+    * \endcode
+    */
+    template <class T>
+    inline boost::filesystem::path symbol_location_ptr(T ptr_to_symbol, boost::system::error_code& ec) {
+        BOOST_STATIC_ASSERT_MSG(boost::is_pointer<T>::value, "boost::dll::symbol_location_ptr works only with pointers! `ptr_to_symbol` must be a pointer");
+        boost::filesystem::path ret;
+        if (!ptr_to_symbol) {
+            ec = boost::system::error_code(
+                boost::system::errc::bad_address,
+                boost::system::generic_category()
+            );
+
+            return ret;
+        }
+        ec.clear();
+
+        const void* ptr = boost::dll::detail::aggressive_ptr_cast<const void*>(ptr_to_symbol);
+
+#if BOOST_OS_WINDOWS
+        boost::winapi::MEMORY_BASIC_INFORMATION_ mbi;
+        if (!boost::winapi::VirtualQuery(ptr, &mbi, sizeof(mbi))) {
             ec = boost::dll::detail::last_error_code();
             return ret;
         }
 
-        return boost::dll::detail::path_from_handle(reinterpret_cast<boost::detail::winapi::HMODULE_>(mbi.AllocationBase), ec);
-    }
-
-    inline boost::filesystem::path program_location_impl(boost::system::error_code& ec) {
-        return boost::dll::detail::path_from_handle(NULL, ec);
-    }
+        return boost::dll::detail::path_from_handle(reinterpret_cast<boost::winapi::HMODULE_>(mbi.AllocationBase), ec);
 #else
-    inline boost::filesystem::path symbol_location_impl(const void* symbol, boost::system::error_code& ec) {
-        boost::filesystem::path ret;
         Dl_info info;
 
         // Some of the libc headers miss `const` in `dladdr(const void*, Dl_info*)`
-        const int res = dladdr(const_cast<void*>(symbol), &info);
+        const int res = dladdr(const_cast<void*>(ptr), &info);
 
         if (res) {
             ret = info.dli_fname;
@@ -64,12 +93,26 @@ namespace detail {
         }
 
         return ret;
-    }
 #endif
-} // namespace detail
+    }
+
+    //! \overload symbol_location_ptr(const void* ptr_to_symbol, boost::system::error_code& ec)
+    template <class T>
+    inline boost::filesystem::path symbol_location_ptr(T ptr_to_symbol) {
+        boost::filesystem::path ret;
+        boost::system::error_code ec;
+        ret = boost::dll::symbol_location_ptr(ptr_to_symbol, ec);
+
+        if (ec) {
+            boost::dll::detail::report_error(ec, "boost::dll::symbol_location_ptr(T ptr_to_symbol) failed");
+        }
+
+        return ret;
+    }
 
     /*!
     * On success returns full path and name of the binary object that holds symbol.
+    *
     * \tparam T Type of the symbol, must not be explicitly specified.
     * \param symbol Symbol which location is to be determined.
     * \param ec Variable that will be set to the result of the operation.
@@ -93,7 +136,7 @@ namespace detail {
     template <class T>
     inline boost::filesystem::path symbol_location(const T& symbol, boost::system::error_code& ec) {
         ec.clear();
-        return boost::dll::detail::symbol_location_impl(
+        return boost::dll::symbol_location_ptr(
             boost::dll::detail::aggressive_ptr_cast<const void*>(boost::addressof(symbol)),
             ec
         );
@@ -112,7 +155,7 @@ namespace detail {
     {
         boost::filesystem::path ret;
         boost::system::error_code ec;
-        ret = boost::dll::detail::symbol_location_impl(
+        ret = boost::dll::symbol_location_ptr(
             boost::dll::detail::aggressive_ptr_cast<const void*>(boost::addressof(symbol)),
             ec
         );
@@ -126,7 +169,7 @@ namespace detail {
 
     /// @cond
     // We have anonymous namespace here to make sure that `this_line_location()` method is instantiated in
-    // current translation module and is not shadowed by instantiations from other modules.
+    // current translation unit and is not shadowed by instantiations from other units.
     namespace {
     /// @endcond
 

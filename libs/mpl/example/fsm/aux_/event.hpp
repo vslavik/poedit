@@ -26,12 +26,27 @@ struct event
     typedef base_event base_t;
 
  private:
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     virtual std::auto_ptr<base_event> do_clone() const
     {
         return std::auto_ptr<base_event>(
               new Derived(static_cast<Derived const&>(*this))
             );
     }
+    
+#else
+
+    virtual std::unique_ptr<base_event> do_clone() const
+    {
+        return std::unique_ptr<base_event>(
+              new Derived(static_cast<Derived const&>(*this))
+            );
+    }
+    
+#endif
+
 };
 
 }}

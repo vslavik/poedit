@@ -56,11 +56,23 @@ int main()
     STATIC_ASSERT_SAME(boost::pointee<X*>::type, X);
     STATIC_ASSERT_SAME(boost::pointee<X const*>::type, X const);
 
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     STATIC_ASSERT_SAME(boost::pointee<std::auto_ptr<int> >::type, int);
     STATIC_ASSERT_SAME(boost::pointee<std::auto_ptr<X> >::type, X);
     
     STATIC_ASSERT_SAME(boost::pointee<std::auto_ptr<int const> >::type, int const);
     STATIC_ASSERT_SAME(boost::pointee<std::auto_ptr<X const> >::type, X const);
+
+#else
+
+    STATIC_ASSERT_SAME(boost::pointee<std::unique_ptr<int> >::type, int);
+    STATIC_ASSERT_SAME(boost::pointee<std::unique_ptr<X> >::type, X);
+    
+    STATIC_ASSERT_SAME(boost::pointee<std::unique_ptr<int const> >::type, int const);
+    STATIC_ASSERT_SAME(boost::pointee<std::unique_ptr<X const> >::type, X const);
+
+#endif
 
     STATIC_ASSERT_SAME(boost::pointee<std::list<int>::iterator >::type, int);
     STATIC_ASSERT_SAME(boost::pointee<std::list<X>::iterator >::type, X);

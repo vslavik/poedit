@@ -147,7 +147,7 @@ rule init ( version ? ) { }
 from b2.build import feature
 feature.extend('toolset', ["%(toolset)s"])
 feature.subfeature('toolset', "%(toolset)s", "version", ['0','1'])
-def init ( version ): pass
+def init (version=''): pass
 """ % {"toolset": toolset})
 
     t.write("jamroot.jam", """\
@@ -165,7 +165,7 @@ feature.feature ccc : 0 1 : incidental ;
 rule buildRule ( name : targets ? : properties * )
 {
     local ttt = [ feature.get-values toolset                     : $(properties) ] ;
-    local vvv = [ feature.get-values toolset-testToolset:version : $(properties) ] ;
+    local vvv = [ feature.get-values "toolset-testToolset:version" : $(properties) ] ;
     local aaa = [ feature.get-values aaa                         : $(properties) ] ;
     local bbb = [ feature.get-values bbb                         : $(properties) ] ;
     local ccc = [ feature.get-values ccc                         : $(properties) ] ;

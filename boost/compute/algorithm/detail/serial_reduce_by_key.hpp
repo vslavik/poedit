@@ -55,11 +55,9 @@ inline size_t serial_reduce_by_key(InputKeyIterator keys_first,
     size_t result_size_arg = k.add_arg<uint_ *>(memory_object::global_memory,
                                                 "result_size");
 
-    convert<result_type> to_result_type;
-
     k <<
         k.decl<result_type>("result") <<
-            " = " << to_result_type(values_first[0]) << ";\n" <<
+            " = " << values_first[0] << ";\n" <<
         k.decl<key_type>("previous_key") << " = " << keys_first[0] << ";\n" <<
         k.decl<result_type>("value") << ";\n" <<
         k.decl<key_type>("key") << ";\n" <<
@@ -70,7 +68,7 @@ inline size_t serial_reduce_by_key(InputKeyIterator keys_first,
         values_result[0] << " = result;\n" <<
 
         "for(ulong i = 1; i < count; i++) {\n" <<
-        "    value = " << to_result_type(values_first[k.var<uint_>("i")]) << ";\n" <<
+        "    value = " << values_first[k.var<uint_>("i")] << ";\n" <<
         "    key = " << keys_first[k.var<uint_>("i")] << ";\n" <<
         "    if (" << predicate(k.var<key_type>("previous_key"),
                                 k.var<key_type>("key")) << ") {\n" <<

@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::zero`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -23,21 +23,21 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 BOOST_HANA_NAMESPACE_BEGIN
+    //! @cond
     template <typename M>
-    struct zero_t {
+    constexpr decltype(auto) zero_t<M>::operator()() const {
     #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
         static_assert(hana::Monoid<M>::value,
         "hana::zero<M>() requires 'M' to be a Monoid");
     #endif
 
-        constexpr decltype(auto) operator()() const {
-            using Zero = BOOST_HANA_DISPATCH_IF(zero_impl<M>,
-                hana::Monoid<M>::value
-            );
+        using Zero = BOOST_HANA_DISPATCH_IF(zero_impl<M>,
+            hana::Monoid<M>::value
+        );
 
-            return Zero::apply();
-        }
-    };
+        return Zero::apply();
+    }
+    //! @endcond
 
     template <typename M, bool condition>
     struct zero_impl<M, when<condition>> : default_ {

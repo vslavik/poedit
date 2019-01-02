@@ -15,6 +15,7 @@
 #endif
 #include <boost/locale/message.hpp>
 #include <boost/locale/formatting.hpp>
+#include <boost/locale/hold_ptr.hpp>
 
 #include <sstream>
 
@@ -121,7 +122,7 @@ namespace boost {
 
                 std::ios_base &ios_;
                 struct data;
-                std::auto_ptr<data> d;
+                hold_ptr<data> d;
             };
 
         }

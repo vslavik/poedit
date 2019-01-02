@@ -18,6 +18,8 @@ for backwards compatibility only.
    {
       typedef __below type;
    };
+
+   template <class T> using add_reference_t = typename add_reference<T>::type; // C++11 and above
   
 __type If `T` is not a reference type then `T&`, otherwise `T`.
 

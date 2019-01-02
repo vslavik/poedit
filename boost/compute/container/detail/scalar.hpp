@@ -12,6 +12,7 @@
 #define BOOST_COMPUTE_CONTAINER_DETAIL_SCALAR_HPP
 
 #include <boost/compute/buffer.hpp>
+#include <boost/compute/event.hpp>
 #include <boost/compute/detail/read_write_single_value.hpp>
 
 namespace boost {
@@ -40,9 +41,9 @@ public:
         return read_single_value<T>(m_buffer, 0, queue);
     }
 
-    void write(const T &value, command_queue &queue)
+    event write(const T &value, command_queue &queue)
     {
-        write_single_value<T>(value, m_buffer, 0, queue);
+        return write_single_value<T>(value, m_buffer, 0, queue);
     }
 
     const buffer& get_buffer() const

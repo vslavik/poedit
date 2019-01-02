@@ -31,7 +31,7 @@ template <typename Clock, typename D>
 void test_good(std::string str, D res)
 {
   typedef boost::chrono::time_point<Clock, D> clock_time_point;
-  typedef typename Clock::duration clock_duration;
+  //typedef typename Clock::duration clock_duration;
   std::istringstream in(str + boost::chrono::clock_string<Clock, char>::since());
   clock_time_point tp;
   in >> tp;
@@ -158,7 +158,7 @@ void check_all_process_cpu_clock()
 {
   using namespace boost::chrono;
   using namespace boost;
-  typedef process_cpu_clock Clock;
+  //typedef process_cpu_clock Clock;
   //test_good<Clock> ("{5000;0;0} nanoseconds", process_cpu_clock::duration(process_cpu_clock::times(5000,0,0)));
 }
 #endif

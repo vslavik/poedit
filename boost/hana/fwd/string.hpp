@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::string`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -12,6 +12,7 @@ Distributed under the Boost Software License, Version 1.0.
 
 #include <boost/hana/config.hpp>
 #include <boost/hana/fwd/core/make.hpp>
+#include <boost/hana/fwd/core/to.hpp>
 
 
 BOOST_HANA_NAMESPACE_BEGIN
@@ -38,8 +39,9 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! The representation of `hana::string` is implementation-defined.
     //! In particular, one should not take for granted that the template
     //! parameters are `char`s. The proper way to access the contents of
-    //! a `hana::string` as character constants is to use `hana::unpack`
-    //! or `hana::to<char const*>`, as documented below.
+    //! a `hana::string` as character constants is to use `hana::unpack`,
+    //! `.c_str()` or `hana::to<char const*>`, as documented below. More
+    //! details [in the tutorial](@ref tutorial-containers-types).
     //!
     //!
     //! Modeled concepts
@@ -57,23 +59,28 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! lexicographical comparison of strings.
     //! @include example/string/orderable.cpp
     //!
-    //! 3. `Foldable`\n
+    //! 3. `Monoid`\n
+    //! Strings form a monoid under concatenation, with the neutral element
+    //! being the empty string.
+    //! @include example/string/monoid.cpp
+    //!
+    //! 4. `Foldable`\n
     //! Folding a string is equivalent to folding the sequence of its
     //! characters.
     //! @include example/string/foldable.cpp
     //!
-    //! 4. `Iterable`\n
+    //! 5. `Iterable`\n
     //! Iterating over a string is equivalent to iterating over the sequence
     //! of its characters. Also note that `operator[]` can be used instead of
     //! the `at` function.
     //! @include example/string/iterable.cpp
     //!
-    //! 5. `Searchable`\n
+    //! 6. `Searchable`\n
     //! Searching through a string is equivalent to searching through the
     //! sequence of its characters.
     //! @include example/string/searchable.cpp
     //!
-    //! 6. `Hashable`\n
+    //! 7. `Hashable`\n
     //! The hash of a compile-time string is a type uniquely representing
     //! that string.
     //! @include example/string/hashable.cpp
@@ -82,24 +89,38 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! Conversion to `char const*`
     //! ---------------------------
     //! A `hana::string` can be converted to a `constexpr` null-delimited
-    //! string of type `char const*` by using `to<char const*>`. This makes
-    //! it easy to turn a compile-time string into a runtime string. However,
-    //! note that this conversion is not an embedding, because `char const*`
-    //! does not model the same concepts as `hana::string` does.
+    //! string of type `char const*` by using the `c_str()` method or
+    //! `hana::to<char const*>`. This makes it easy to turn a compile-time
+    //! string into a runtime string. However, note that this conversion is
+    //! not an embedding, because `char const*` does not model the same
+    //! concepts as `hana::string` does.
     //! @include example/string/to.cpp
     //!
+    //! Conversion from any Constant holding a `char const*`
+    //! ----------------------------------------------------
+    //! A `hana::string` can be created from any `Constant` whose underlying
+    //! value is convertible to a `char const*` by using `hana::to`. The
+    //! contents of the `char const*` are used to build the content of the
+    //! `hana::string`.
+    //! @include example/string/from_c_str.cpp
     //!
-    //! > #### Rationale for `hana::string` not being a `Constant`
-    //! > The underlying type held by a `hana::string` could be either
-    //! > `char const*` or some other constexpr-enabled string-like container.
-    //! > In the first case, `hana::string` can not be a `Constant` because
-    //! > the models of several concepts would not be respected by the
-    //! > underlying type, causing `value` not to be structure-preserving.
-    //! > Providing an underlying value of constexpr-enabled string-like
-    //! > container type like `std::string_view` would be great, but that's
-    //! > a bit complicated for the time being.
+    //! Rationale for `hana::string` not being a `Constant` itself
+    //! ----------------------------------------------------------
+    //! The underlying type held by a `hana::string` could be either `char const*`
+    //! or some other constexpr-enabled string-like container. In the first case,
+    //! `hana::string` can not be a `Constant` because the models of several
+    //! concepts would not be respected by the underlying type, causing `value`
+    //! not to be structure-preserving. Providing an underlying value of
+    //! constexpr-enabled string-like container type like `std::string_view`
+    //! would be great, but that's a bit complicated for the time being.
     template <typename implementation_defined>
     struct string {
+        // Default-construct a `hana::string`; no-op since `hana::string` is stateless.
+        constexpr string() = default;
+
+        // Copy-construct a `hana::string`; no-op since `hana::string` is stateless.
+        constexpr string(string const&) = default;
+
         //! Equivalent to `hana::equal`
         template <typename X, typename Y>
         friend constexpr auto operator==(X&& x, Y&& y);
@@ -124,9 +145,16 @@ BOOST_HANA_NAMESPACE_BEGIN
         template <typename X, typename Y>
         friend constexpr auto operator>=(X&& x, Y&& y);
 
+        //! Performs concatenation; equivalent to `hana::plus`
+        template <typename X, typename Y>
+        friend constexpr auto operator+(X&& x, Y&& y);
+
         //! Equivalent to `hana::at`
         template <typename N>
         constexpr decltype(auto) operator[](N&& n);
+
+        //! Returns a null-delimited C-style string.
+        static constexpr char const* c_str();
     };
 #else
     template <char ...s>
@@ -161,6 +189,10 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! @relates hana::string
     constexpr auto make_string = make<string_tag>;
 
+    //! Equivalent to `to<string_tag>`; provided for convenience.
+    //! @relates hana::string
+    constexpr auto to_string = to<string_tag>;
+
     //! Create a compile-time string from a parameter pack of characters.
     //! @relates hana::string
     //!
@@ -181,7 +213,8 @@ BOOST_HANA_NAMESPACE_BEGIN
     //!
     //! This macro is a more convenient alternative to `string_c` for creating
     //! compile-time strings. However, since this macro uses a lambda
-    //! internally, it can't be used in an unevaluated context.
+    //! internally, it can't be used in an unevaluated context, or where
+    //! a constant expression is expected before C++17.
     //!
     //!
     //! Example

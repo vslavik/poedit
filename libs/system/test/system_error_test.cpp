@@ -9,9 +9,6 @@
 
 //----------------------------------------------------------------------------// 
 
-//  test without deprecated features
-#define BOOST_SYSTEM_NO_DEPRECATED
-
 #include <boost/config/warning_disable.hpp>
 
 #include <boost/detail/lightweight_test.hpp>

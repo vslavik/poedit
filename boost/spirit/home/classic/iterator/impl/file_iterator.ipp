@@ -130,7 +130,7 @@ public:
 
     void advance(std::ptrdiff_t n)
     {
-        m_pos += n * sizeof(CharT);
+        m_pos += static_cast<long>(n) * sizeof(CharT);
         update_char();
     }
 
@@ -141,14 +141,14 @@ public:
 
 private:
     boost::shared_ptr<std::FILE> m_file;
-    std::size_t m_pos;
+    long m_pos;
     CharT m_curChar;
     bool m_eof;
 
     void update_char(void)
     {
         using namespace std;
-        if ((std::size_t)ftell(m_file.get()) != m_pos)
+        if (ftell(m_file.get()) != m_pos)
             fseek(m_file.get(), m_pos, SEEK_SET);
 
         m_eof = (fread(&m_curChar, sizeof(CharT), 1, m_file.get()) < 1);

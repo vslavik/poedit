@@ -131,12 +131,12 @@ within an IDE or to get a coredump for a stack analysis. See
 [/ ###############################################################################################]
 [section:color_output `color_output`]
 
-The __UTF__ is able to produce color output on systems which support it. To enable this behavior, set this option to
-`yes`. By default the framework does not produce color output.
+The __UTF__ is able to produce color output on systems which support it. To disable this behavior, set this option to
+`no`. By default the framework produces color output.
 
 [h4 Acceptable values]
 
-[link boolean_param_value Boolean] with default value [*no].
+[link boolean_param_value Boolean] with default value [*yes].
 
 [h4 Command line syntax]
 
@@ -281,7 +281,7 @@ The following /deliberately/ complicated example illustrates the purpose of the 
 directive. The SVG generated from the produced Graphviz/dot file can be downloaded
 [@images/boost_runtime_list_content.svg here].
 
-[bt_example boost_runtime_list_content..`--list_content` illustration..run-fail]
+[bt_example boost_runtime_list_content..`--list_content` illustration..run]
 
 [$images/boost_runtime_list_content.png [width 70%]]
 
@@ -331,8 +331,8 @@ To specify custom log format use the [link ref_log_formatter_api custom log form
 
 The only acceptable values for this parameter are the names of the output formats supplied by the
 framework. By default the framework uses human readable format (HRF) for the testing log. This format
-is similar to a compiler error format. Alternatively you can specify XML as a log format. This format
-is easier to process by testing automation tools.
+is similar to a compiler error format. Alternatively you can specify XML or JUNIT as a log format which are
+easier to process by testing automation tools.
 
 [h4 Acceptable values]
 
@@ -340,6 +340,7 @@ is easier to process by testing automation tools.
 
 * [*HRF] (default)
 * XML
+* JUNIT
 
 [h4 Command line syntax]
 
@@ -375,7 +376,7 @@ Thus each level includes messages on that level as well as all the messages on l
     [Included messages]
   ]
   [
-    [all]
+    [all (default for JUNIT)]
     [All log messages including the passed assertions notification]
   ]
   [
@@ -398,7 +399,7 @@ Thus each level includes messages on that level as well as all the messages on l
      tools)]
   ]
   [
-    [[*error] (default)]
+    [[*error] (default for HRF and XML)]
     [Messages describing failed assertion on `CHECK` level (__BOOST_TEST__ / `BOOST_CHECK_...` tools)]
   ]
   [
@@ -419,6 +420,9 @@ Thus each level includes messages on that level as well as all the messages on l
     [No messages are reported.]
   ]
 ]
+
+[caution the JUNIT log format does not accept the log level to change: anything specified by `log_level` will be ignored
+ for the JUNIT format.]
 
 [h4 Command line syntax]
 
@@ -448,7 +452,7 @@ Case sensitive [link regular_param_value string]:
     [Meaning]
   ]
   [
-    [[*`stdout`] (default)]
+    [[*`stdout`] (default for HRF and XML)]
     [Testing log is redirected into standard output stream]
   ]
   [
@@ -456,10 +460,13 @@ Case sensitive [link regular_param_value string]:
     [Testing log is redirected into standard error stream]
   ]
   [
-    [File name]
+    [File name (default for JUNIT)]
     [Testing log is redirected into this file]
   ]
 ]
+
+[note For JUnit and if not specified, the log file is generated after the name of the
+ [link boost_test.tests_organization.test_suite.master_test_suite master test suite].]
 
 [h4 Command line syntax]
 
@@ -472,16 +479,61 @@ Case sensitive [link regular_param_value string]:
 
 [endsect] [/log_sink]
 
+
+[/ ###############################################################################################]
+[section:logger `logger`]
+
+The ['logger] parameter allows to fully specify (log format, level and sink) one or several loggers in one command.
+If this parameter is specified, it has precedence over [link boost_test.utf_reference.rt_param_reference.log_format `log_format`],
+[link boost_test.utf_reference.rt_param_reference.log_level `log_level`] and [link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`].
+
+The parameter is /repeatable/: it may appear several times on the command line. It is possible to indicate a set of loggers using the separator ':',
+which is the only way for repeating a logger description through the environment variable.
+
+The parameter is composed of three fields separated by a coma ',' and indicating respectively the log format, level and sink. The log
+format is mandatory. The log level and sink are both optional: if omitted, the default for the specified format will
+be used. The log level and sink accept the same value as their respective command line switch (see
+[link boost_test.utf_reference.rt_param_reference.log_level `log_level`] and [link boost_test.utf_reference.rt_param_reference.log_sink `log_sink`]
+for more information).
+
+[h4 Acceptable values]
+
+Case sensitive [link regular_param_value string]:
+
+```
+logger_set    ::= (logger ':')* logger
+logger        ::= logger_format (',' log_level? (',' log_sink? )? )?
+logger_format ::= 'HRF' | 'XML' | 'JUNIT'
+log_level     ::= 'all' | 'success' | 'test_suite' | 'message' | 'warning' | 'error' | 'cpp_exception' | 'system_error' | 'fatal_error' | 'nothing'
+log_sink      ::= 'stdout' | 'stderr' | filename
+```
+
+Examples:
+
+* `--logger=HRF,all` will set the `all` log level for the `HRF` log format, and will use the default sink associated to `HRF` (`stdout`)
+* `--logger=JUNIT,,somefile.xml:HRF,warning` will use the default log level associated to the `JUNIT` log format, and will use the file `somefile.xml`
+  as the log sink. It will also enable the `HRF` format with log level `warning`. The corresponding sink will be set to the `HRF` default (`stdout`).
+
+[h4 Command line syntax]
+
+* `--logger=<logger_set>`
+
+[h4 Environment variable]
+
+  BOOST_TEST_LOGGER
+
+[endsect] [/logger]
+
 [/ ###############################################################################################]
 [section:output_format `output_format`]
 
 Parameter ['output_format] combines an effect of
 [link boost_test.utf_reference.rt_param_reference.report_format `report_format`] and
 [link boost_test.utf_reference.rt_param_reference.log_format `log_format`]
-parameters. This parameter has higher priority than either one of them. In other words if this
-parameter is specified it overrides the value of other two parameters. This parameter does not have
-a default value. The only acceptable values are string names of output formats: HRF - human readable
-format and XML - XML formats for automation tools processing.
+parameters. This parameter does not have
+a default value. The only acceptable values are string names of output formats (see below).
+
+[note This parameter has precedence over ['report_format] and ['log_format] on the command line. ]
 
 [h4 Acceptable values]
 
@@ -628,7 +680,7 @@ Case sensitive [link regular_param_value string]:
 
 [h4 Command line syntax]
 
-* `--report_synk=<stream or file name>`
+* `--report_sink=<stream or file name>`
 * `-e <stream or file name>`
 
 [h4 Environment variable]
@@ -668,25 +720,33 @@ test units, and "disabler filters", which allow to disable some test units. The 
 enabling/disabling test units at compile time. These settings identify the default set of test units
 to run. Parameter ['run_test] is used to change this default. This parameter is repeatable, so you can
 specify more than one filter if necessary.
+It is also possible to use the ':' for separating each filter
+which can be used for filtering the tests with the environment variable `BOOST_TEST_RUN_FILTERS` (as it cannot be
+repeated like `--run_test`).
 
 More details about practical application of this parameter resides in [link boost_test.runtime_config.test_unit_filtering test unit
 filtering] section.
 
 [h4 Acceptable values]
 
-[link regular_param_value String] value representing single filter. The following grammar productions
-describe the syntax of filters:
+[link regular_param_value String] value representing single filter or a set of filters separated by ':'.
+The following grammar productions describe the syntax of filters:
 
 ```
+filter_set    ::= (filter ':')* filter
 filter        ::= relative_spec? test_set
 relative_spec ::= '+' | '!'
 test_set      ::= label | path
 label         ::= '@' identifier
 path          ::= (suite '/')? pattern_list
-pattern_list   ::= (pattern ',')* pattern
+pattern_list  ::= (pattern ',')* pattern
 suite         ::= (pattern '/')* pattern
 pattern       ::= '*'? identifier '*'?
 ```
+
+[caution the `pattern_list` above indicates test unit inside the same test suite given by `suite`. This means that the syntax
+ "`--run_test=suite1/suite2/A,B,C`" runs the test cases `A`, `B` and `C` that are *inside* `suite1/suite2`. In order to indicate
+ several test units that are not siblings, either repeat the `--run_test` or use `:` to separate the filters.]
 
 Regarding the meaning of these values [link ref_command_line_control see here].
 
@@ -766,6 +826,9 @@ by default, but can be disabled using this parameter.
 
 [/ TODO indicate which platforms are supported]
 [/ TODO add a link to the execution monitor]
+[note If this feature is not supported by your compiler, this command line option will be silently ignored.]
+[note it is possible to remove the support of the alternative stack with the macro
+[link boost_test.utf_reference.link_references.config_disable_alt_stack `BOOST_TEST_DISABLE_ALT_STACK`]]
 
 [h4 Acceptable values]
 

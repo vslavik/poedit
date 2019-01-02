@@ -8,7 +8,6 @@ Copyright (c) 2008-2010: Joachim Faulhaber
 #ifndef BOOST_LIBS_ICL_TEST_ICL_LAWS_HPP_JOFA_090119
 #define BOOST_LIBS_ICL_TEST_ICL_LAWS_HPP_JOFA_090119
 
-#include <functional>
 #include <boost/icl/type_traits/identity_element.hpp>
 #include <boost/icl/associative_interval_container.hpp>
 
@@ -16,8 +15,11 @@ namespace boost{namespace icl
 {
 
 template<class Type>
-struct equality : std::binary_function<Type,Type,bool> 
+struct equality
 {
+    typedef Type first_argument_type;
+    typedef Type second_argument_type;
+    typedef bool result_type;
     typedef bool (type)(const Type&, const Type&);
 };
 

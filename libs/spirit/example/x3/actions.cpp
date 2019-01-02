@@ -42,6 +42,7 @@ int main()
 
     { // example using C++14 lambda
 
+        using boost::spirit::x3::_attr;
         char const *first = "{44}", *last = first + std::strlen(first);
         auto f = [](auto& ctx){ std::cout << _attr(ctx) << std::endl; };
         parse(first, last, '{' >> int_[f] >> '}');

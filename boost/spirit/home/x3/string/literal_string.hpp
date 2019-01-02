@@ -77,6 +77,7 @@ namespace boost { namespace spirit { namespace x3
         }
     }
 
+#ifndef BOOST_SPIRIT_NO_STANDARD_WIDE
     namespace standard_wide
     {
         inline literal_string<wchar_t const*, char_encoding::standard_wide>
@@ -103,6 +104,7 @@ namespace boost { namespace spirit { namespace x3
             return { s };
         }
     }
+#endif
 
     namespace ascii
     {
@@ -162,8 +164,10 @@ namespace boost { namespace spirit { namespace x3
 
     using standard::string;
     using standard::lit;
+#ifndef BOOST_SPIRIT_NO_STANDARD_WIDE
     using standard_wide::string;
     using standard_wide::lit;
+#endif
 
     namespace extension
     {
@@ -185,6 +189,7 @@ namespace boost { namespace spirit { namespace x3
         template <int N>
         struct as_parser<char const[N]> : as_parser<char[N]> {};
 
+#ifndef BOOST_SPIRIT_NO_STANDARD_WIDE
         template <int N>
         struct as_parser<wchar_t[N]>
         {
@@ -202,6 +207,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <int N>
         struct as_parser<wchar_t const[N]> : as_parser<wchar_t[N]> {};
+#endif
 
         template <>
         struct as_parser<char const*>

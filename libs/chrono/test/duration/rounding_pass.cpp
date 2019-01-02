@@ -36,10 +36,11 @@ void test_floor()
     BOOST_TEST_EQ( seconds(1), floor<seconds>( milliseconds(1001) ) );
     BOOST_TEST_EQ( seconds(1), floor<seconds>( milliseconds(1999) ) );
     BOOST_TEST_EQ( seconds(2), floor<seconds>( milliseconds(2000) ) );
+
     {
       // check that int32 isn't overflowed in intermediate calculations:
-        typedef duration<int32_t> sec32;
-        typedef duration< int32_t, boost::ratio<999,1000> > sec32_m1ms;
+        typedef duration<boost::int32_t> sec32;
+        typedef duration< boost::int32_t, boost::ratio<999,1000> > sec32_m1ms;
         BOOST_TEST_EQ( sec32(-999000000), floor<sec32>( sec32_m1ms(-1000000000) ) );
         BOOST_TEST_EQ( sec32( 999000000), floor<sec32>( sec32_m1ms( 1000000000) ) );
     }
@@ -62,8 +63,8 @@ void test_ceil()
     BOOST_TEST_EQ( seconds(2), ceil<seconds>( milliseconds(2000) ) );
     {
       // check that int32 isn't overflowed in intermediate calculations:
-        typedef duration<int32_t> sec32;
-        typedef duration< int32_t, boost::ratio<999,1000> > sec32_m1ms;
+        typedef duration<boost::int32_t> sec32;
+        typedef duration< boost::int32_t, boost::ratio<999,1000> > sec32_m1ms;
         BOOST_TEST_EQ( sec32(-999000000), ceil<sec32>( sec32_m1ms(-1000000000) ) );
         BOOST_TEST_EQ( sec32( 999000000), ceil<sec32>( sec32_m1ms( 1000000000) ) );
     }
@@ -87,8 +88,8 @@ void test_round()
     BOOST_TEST_EQ( seconds(2), round<seconds>( milliseconds(2000) ) );
     {
       // check that int32 isn't overflowed in intermediate calculations:
-        typedef duration<int32_t> sec32;
-        typedef duration< int32_t, boost::ratio<999,1000> > sec32_m1ms;
+        typedef duration<boost::int32_t> sec32;
+        typedef duration< boost::int32_t, boost::ratio<999,1000> > sec32_m1ms;
         BOOST_TEST_EQ( sec32(-999000000), round<sec32>( sec32_m1ms(-1000000000) ) );
         BOOST_TEST_EQ( sec32( 999000000), round<sec32>( sec32_m1ms( 1000000000) ) );
     }

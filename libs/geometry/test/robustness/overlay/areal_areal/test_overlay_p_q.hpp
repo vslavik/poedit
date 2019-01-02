@@ -9,12 +9,14 @@
 #ifndef BOOST_GEOMETRY_TEST_OVERLAY_P_Q_HPP
 #define BOOST_GEOMETRY_TEST_OVERLAY_P_Q_HPP
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
 
-//#define BOOST_GEOMETRY_ROBUSTNESS_USE_DIFFERENCE
+#include <boost/typeof/typeof.hpp>
 
+//#define BOOST_GEOMETRY_ROBUSTNESS_USE_DIFFERENCE
 
 #include <geometry_test_common.hpp>
 
@@ -32,19 +34,24 @@
 
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
 #include <boost/geometry/algorithms/intersects.hpp>
+#include <boost/geometry/algorithms/is_valid.hpp>
 #include <boost/geometry/algorithms/touches.hpp>
 
 struct p_q_settings
 {
     bool svg;
     bool also_difference;
+    bool validity;
     bool wkt;
+    bool verify_area;
     double tolerance;
 
     p_q_settings()
         : svg(false)
         , also_difference(false)
+        , validity(false)
         , wkt(false)
+        , verify_area(false)
         , tolerance(1.0e-3) // since rescaling to integer the tolerance should be less. Was originally 1.0e-6
     {}
 };
@@ -62,6 +69,49 @@ inline typename bg::default_area_result<Geometry>::type p_q_area(Geometry const&
     }
 }
 
+struct verify_area
+{
+    template <typename Iterator>
+    static inline bool check_ring(Iterator begin, Iterator end)
+    {
+        for (Iterator it = begin; it != end; ++it)
+        {
+            double const area = bg::area(*it);
+            if (fabs(area) < 0.01)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    template <typename Interiors>
+    static inline bool check_rings(Interiors const& rings)
+    {
+        return check_ring(boost::begin(rings), boost::end(rings));
+    }
+
+    template <typename Iterator>
+    static inline bool check_polys(Iterator begin, Iterator end)
+    {
+        for (Iterator it = begin; it != end; ++it)
+        {
+            // If necessary, exterior_ring can be checked too
+            if (! check_rings(bg::interior_rings(*it)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    template <typename Geometry>
+    static inline bool apply(Geometry const& g)
+    {
+        return check_polys(boost::begin(g), boost::end(g));
+    }
+};
+
 template <typename OutputType, typename CalculationType, typename G1, typename G2>
 static bool test_overlay_p_q(std::string const& caseid,
             G1 const& p, G2 const& q,
@@ -72,7 +122,7 @@ static bool test_overlay_p_q(std::string const& caseid,
     typedef typename bg::coordinate_type<G1>::type coordinate_type;
     typedef typename bg::point_type<G1>::type point_type;
 
-    bg::model::multi_polygon<OutputType> out_i, out_u, out_d, out_d2;
+    bg::model::multi_polygon<OutputType> out_i, out_u, out_d1, out_d2;
 
     CalculationType area_p = p_q_area(p);
     CalculationType area_q = p_q_area(q);
@@ -90,9 +140,9 @@ static bool test_overlay_p_q(std::string const& caseid,
 
     if (settings.also_difference)
     {
-        bg::difference(p, q, out_d);
+        bg::difference(p, q, out_d1);
         bg::difference(q, p, out_d2);
-        area_d1 = p_q_area(out_d);
+        area_d1 = p_q_area(out_d1);
         area_d2 = p_q_area(out_d2);
         double sum_d1 = (area_u - area_q) - area_d1;
         double sum_d2 = (area_u - area_p) - area_d2;
@@ -101,6 +151,45 @@ static bool test_overlay_p_q(std::string const& caseid,
 
         if (wrong_d1 || wrong_d2)
         {
+            wrong = true;
+        }
+    }
+
+    if (settings.validity)
+    {
+        std::string message;
+        if (! bg::is_valid(out_u, message))
+        {
+            std::cout << "Union is not valid: " << message << std::endl;
+            wrong = true;
+        }
+        if (! bg::is_valid(out_i, message))
+        {
+            std::cout << "Intersection is not valid: " << message << std::endl;
+            wrong = true;
+        }
+        if (settings.also_difference)
+        {
+            if (! bg::is_valid(out_d1, message))
+            {
+                std::cout << "Difference (p-q) is not valid: " << message << std::endl;
+                wrong = true;
+            }
+            if (! bg::is_valid(out_d2, message))
+            {
+                std::cout << "Difference (q-p) is not valid: " << message << std::endl;
+                wrong = true;
+            }
+        }
+
+        if (settings.verify_area && ! verify_area::apply(out_u))
+        {
+            std::cout << "Union/interior area incorrect" << std::endl;
+            wrong = true;
+        }
+        if (settings.verify_area && ! verify_area::apply(out_i))
+        {
+            std::cout << "Intersection/interior area incorrect" << std::endl;
             wrong = true;
         }
     }
@@ -179,7 +268,7 @@ static bool test_overlay_p_q(std::string const& caseid,
 
         if (settings.also_difference)
         {
-            for (BOOST_AUTO(it, out_d.begin()); it != out_d.end(); ++it)
+            for (BOOST_AUTO(it, out_d1.begin()); it != out_d1.end(); ++it)
             {
                 mapper.map(*it,
                     "opacity:0.8;fill:none;stroke:rgb(255,128,0);stroke-width:4;stroke-dasharray:1,7;stroke-linecap:round");
@@ -192,16 +281,10 @@ static bool test_overlay_p_q(std::string const& caseid,
         }
         else
         {
-            for (BOOST_AUTO(it, out_i.begin()); it != out_i.end(); ++it)
-            {
-                mapper.map(*it, "fill-opacity:0.1;stroke-opacity:0.4;fill:rgb(255,0,0);"
-                        "stroke:rgb(255,0,0);stroke-width:4");
-            }
-            for (BOOST_AUTO(it, out_u.begin()); it != out_u.end(); ++it)
-            {
-                mapper.map(*it, "fill-opacity:0.1;stroke-opacity:0.4;fill:rgb(255,0,0);"
-                        "stroke:rgb(255,0,255);stroke-width:4");
-            }
+            mapper.map(out_i, "fill-opacity:0.1;stroke-opacity:0.4;fill:rgb(255,0,128);"
+                    "stroke:rgb(255,0,0);stroke-width:4");
+            mapper.map(out_u, "fill-opacity:0.1;stroke-opacity:0.4;fill:rgb(255,0,0);"
+                    "stroke:rgb(255,0,255);stroke-width:4");
         }
     }
     return result;

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>FAQ</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_units.html" title="Chapter&#160;39.&#160;Boost.Units 1.1.0">
+<link rel="up" href="../boost_units.html" title="Chapter&#160;43.&#160;Boost.Units 1.1.0">
 <link rel="prev" href="Installation.html" title="Installation">
 <link rel="next" href="Acknowledgements.html" title="Acknowledgements">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_units.FAQ"></a><a class="link" href="FAQ.html" title="FAQ">FAQ</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="FAQ.html#boost_units.FAQ.Distinguishing_Quantities_With_Same_Units">How
       does one distinguish between quantities that are physically different but have
       the same units (such as energy and torque)?</a></span></dt>
@@ -86,11 +86,11 @@
 <p>
         Consider the following code:
       </p>
-<pre class="programlisting"><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">sin</span><span class="special">(</span><span class="identifier">asin</span><span class="special">(</span><span class="number">180.0</span> <span class="special">*</span> <span class="identifier">degrees</span><span class="special">));</span>
+<pre class="programlisting"><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">asin</span><span class="special">(</span><span class="identifier">sin</span><span class="special">(</span><span class="number">90.0</span> <span class="special">*</span> <span class="identifier">degrees</span><span class="special">));</span>
 </pre>
 <p>
         What should this print? If only heterogeneous systems are available it would
-        print 3.14159+ rad Why? Well, <code class="computeroutput"><span class="identifier">asin</span></code>
+        print 1.5708 rad Why? Well, <code class="computeroutput"><span class="identifier">sin</span></code>
         would return a <code class="computeroutput"><span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">dimensionless</span><span class="special">&gt;</span></code>
         effectively losing the information that degrees are being used. In order
         to propogate this extra information we need homogeneous systems.

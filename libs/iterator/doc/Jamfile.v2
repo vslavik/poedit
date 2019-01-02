@@ -16,8 +16,12 @@ boostbook standalone
     <xsl:param>boost.root=../../../..
     <xsl:param>toc.max.depth=3
     <xsl:param>toc.section.depth=3
-    <xsl:param>chunk.section.depth=4
+    <xsl:param>chunk.section.depth=2
     <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/iterator/doc
   ;
 
-
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : standalone ;
+explicit boostrelease ;

@@ -15,7 +15,7 @@
 #include <boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp>
 #include <algorithm>
 #include <functional>
-#include <memory> // for std::auto_ptr
+#include <boost/move/unique_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #endif
 
@@ -70,7 +70,7 @@ struct grammar_definition
         {   // Does _not_ copy the helpers member !
         }
 
-        grammar_helper_list& operator=(grammar_helper_list const& x)
+        grammar_helper_list& operator=(grammar_helper_list const& /*x*/)
         {   // Does _not_ copy the helpers member !
             return *this;
         }
@@ -156,7 +156,7 @@ struct grammar_definition
             if (definitions[id]!=0)
                 return *definitions[id];
 
-            std::auto_ptr<definition_t>
+            boost::movelib::unique_ptr<definition_t>
                 result(new definition_t(target_grammar->derived()));
 
 #ifdef BOOST_SPIRIT_THREADSAFE
@@ -286,18 +286,10 @@ struct grammar_definition
         helper_list_t&  helpers =
         grammartract_helper_list::do_(self);
 
-# if defined(BOOST_INTEL_CXX_VERSION)
         typedef typename helper_list_t::vector_t::reverse_iterator iterator_t;
 
         for (iterator_t i = helpers.rbegin(); i != helpers.rend(); ++i)
             (*i)->undefine(self);
-# else
-        typedef impl::grammar_helper_base<GrammarT> helper_base_t;
-
-        std::for_each(helpers.rbegin(), helpers.rend(),
-            std::bind2nd(std::mem_fun(&helper_base_t::undefine), self));
-# endif
-
 #else
         (void)self;
 #endif

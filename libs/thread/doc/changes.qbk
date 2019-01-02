@@ -1,6 +1,6 @@
 [/
   (C) Copyright 2007-11 Anthony Williams.
-  (C) Copyright 2011-15 Vicente J. Botet Escriba.
+  (C) Copyright 2011-18 Vicente J. Botet Escriba.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
@@ -8,6 +8,141 @@
 
 [section:changes History]
 
+[heading Version 4.8.1 - boost 1.67]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+
+* [@http://svn.boost.org/trac/boost/ticket/10964 #10964] future<future<T>>::unwrap().then() Deadlocks
+
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread master regression test] to see the last regression test snapshot.
+
+[*Fixed Bugs:]
+
+
+* [@https://github.com/boostorg/thread/issues/162 #162] fix as much time-related issues as possible and improve the QOI
+* [@https://github.com/boostorg/thread/issues/193 #193] future_then unit test contains two different implementations of do_continuation function
+* [@https://github.com/boostorg/thread/issues/209 #209] Legal problem with `win32/thread_primitives.hpp`
+
+
+[heading Version 4.8.0 - boost 1.66]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+
+* [@http://svn.boost.org/trac/boost/ticket/10964 #10964] future<future<T>>::unwrap().then() Deadlocks
+
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread master regression test] to see the last regression test snapshot.
+
+[*Fixed Bugs:]
+ 	
+
+* [@http://svn.boost.org/trac/boost/ticket/12323 #12323] windows - boost/thread/win32/mfc_thread_init.hpp has wrong signature for _pRawDllMainOrig
+* [@http://svn.boost.org/trac/boost/ticket/12730 #12730] windows - static threads library is incompatible with MSVC 2017 RC
+* [@http://svn.boost.org/trac/boost/ticket/12976 #12976] Boost Thread Executors documentation mistakes
+* [@http://svn.boost.org/trac/boost/ticket/12949 #12949] using sleep_for in a thread context without including boost/thread/thread.hpp yields incorrect behaviour when BOOST_THREAD_HAS_CONDATTR_SET_CLOCK_MONOTONIC is defined
+* [@http://svn.boost.org/trac/boost/ticket/13019 #13019] ABI compatibility for BOOST_THREAD_PROVIDES_INTERRUPTIONS incomplete
+* [@http://svn.boost.org/trac/boost/ticket/13069 #13069] Boost unit test "sync_pq_multi_thread_p_lib.exe" hung in thread library
+* [@http://svn.boost.org/trac/boost/ticket/13163 #13163] boost::detail::heap_new does not have a variadic variant
+* [@http://svn.boost.org/trac/boost/ticket/13226 #13226] getpagesize() is deprecated since 199506L
+
+* [@https://github.com/boostorg/thread/issues/132 #132] VS 2017.4 Preview deadlocks on Test 10964
+* [@https://github.com/boostorg/thread/issues/133 #133] windows - Spurious timing test failures on windows
+* [@https://github.com/boostorg/thread/issues/134 #134] VS 2017.4 Preview deadlock in sync_pq_multi_thread_p_lib.exe
+* [@https://github.com/boostorg/thread/issues/135 #135] VS 2017.4 Preview test_scheduled_tp_p.exe deadlock
+* [@https://github.com/boostorg/thread/issues/136 #136] VS 2017.4 Preview test_scheduler_p.exe deadlock
+* [@https://github.com/boostorg/thread/issues/137 #137] VS 2017.4 Preview executor_ex.exe deadlock
+* [@https://github.com/boostorg/thread/issues/143 #143] Failures on msvc-12.0
+* [@https://github.com/boostorg/thread/issues/145 #145] Clang build error with BOOST_THREAD_ATTRIBUTE_MAY_ALIAS
+
+[*New Experimental Features:]
+
+* [@https://github.com/boostorg/thread/issues/116 #116] [Proposal] Add APIs for deferred set_value/exception
+
+[heading Version 4.7.5 - boost 1.65.1]
+
+[*Fixed Bugs:]
+
+* [@https://github.com/boostorg/thread/issues/130 #130] windows: Bug in boost::condition_variable on Windows
+
+[heading Version 4.7.4 - boost 1.65]
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/6787 #6787] boost::thread::sleep() hangs if system time is rolled back
+* [@http://svn.boost.org/trac/boost/ticket/12519 #12519] boost::thread::try_join_for does not return after timeout
+* [@http://svn.boost.org/trac/boost/ticket/12874 #12874] future<> extension constructor must be under BOOST_THREAD_PROVIDES_FUTURE_UNWRAP
+* [@http://svn.boost.org/trac/boost/ticket/12888 #12888] Linking with boost thread does not work on mingw/gcc 4.4
+* [@http://svn.boost.org/trac/boost/ticket/12958 #12958] sync_bounded_queue::wait_pull_front( lve ) might throw
+* [@http://svn.boost.org/trac/boost/ticket/13077 #13077] Linking to static 64bit libboost_thread fails DLL initialization
+* [@http://svn.boost.org/trac/boost/ticket/13155 #13155] log doesn't build on a system with pthreads
+
+* [@https://github.com/boostorg/thread/issues/121 #121] on_tls_prepare is broken under VS2017
+
+[heading Version 4.7.3 - boost 1.64]
+
+[*Fixed Bugs:]
+
+* [@https://github.com/boostorg/thread/issues/113 #113] Add a Thread template on all the scoped thread and thread guard classes
+* [@https://github.com/boostorg/thread/issues/117 #117] loop_executor should block on it's work_queue instead of polling
+* [@https://github.com/boostorg/thread/issues/119 #119] basic_condition_variable::relocker::~relocker can throw an exception
+
+[heading Version 4.7.2 - boost 1.63]
+
+[*Fixed Bugs:]
+
+* fix boost::synchronized_value<>::load() 
+* fix relational operators of boost::synchronized_value<> 
+* fix compile failed with boost::user_scheduler
+* Fix minor possibility of loosing the notify
+
+[heading Version 4.7.1 - boost 1.62]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+
+Please define BOOST_THREAD_PATCH to apply the patch that could unfortunately results is a regression as described in [@http://svn.boost.org/trac/boost/ticket/12049 #12049].
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread master regression test] to see the last regression test snapshot.
+
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/11097 #11097] 	test_scheduled_tp - ThreadSanitizer: heap-use-after-free
+* [@http://svn.boost.org/trac/boost/ticket/11951 #11951] 	Memory leak in boost::when_all
+* [@http://svn.boost.org/trac/boost/ticket/12102 #12102] condition_variable_fwd.hpp fails to compile when BOOST_THREAD_PROVIDES_INTERRUPTIONS is disabled
+* [@http://svn.boost.org/trac/boost/ticket/12120 #12120] Performance improvement in thread/barrier.hpp
+* [@http://svn.boost.org/trac/boost/ticket/12146 #12146] make_exceptional_future is not mentioned in the docs
+* [@http://svn.boost.org/trac/boost/ticket/12202 #12202] shared_lock should be in shared_mutex header
+* [@http://svn.boost.org/trac/boost/ticket/12220 #12220] 	Memory leak in future::then()
+* [@http://svn.boost.org/trac/boost/ticket/12293 #12293] boost::future::then lambda called before future is ready.
+* [@http://svn.boost.org/trac/boost/ticket/12350 #12350] shared_mutex (pthreads) unlocked too early in unlock_shared()
+* [@http://svn.boost.org/trac/boost/ticket/12371 #12371] boost thread/future.hpp fails to build
+
+
+and several PR
+
+* #88 fix typos in boost::upgrade_lock
+* #89 fix a bug in upgrade_to_unique_lock<>::operator=()
+* #90 fix a bug in try_lock_wrapper<>::operator=()
+* #91 Add shared_lock_guard to the included lock types
+* #92 Fixed compilation with MSVC-8.  
+* #93 Fix variable shadowing warnings (Clang)
+* #94 fix bugs in boost::barrier
+* #95 fix a mistake in boost::completion_latch
+* #96 rename async_func.hpp to invoker.hpp.
+* #97 fix a mistake in sync_timed_queue<>::pull_until()
 
 [heading Version 4.7.0 - boost 1.61]
 

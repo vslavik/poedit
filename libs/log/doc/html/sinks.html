@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sinks</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="log/reference.html" title="Reference">
 <link rel="prev" href="boost/log/sources/multi_thread_model.html" title="Struct template multi_thread_model">
@@ -18,7 +18,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="sinks"></a>Sinks</h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.async_frontend_hpp">Header &lt;boost/log/sinks/async_frontend.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.attribute_mapping_hpp">Header &lt;boost/log/sinks/attribute_mapping.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.basic_sink_backend_hpp">Header &lt;boost/log/sinks/basic_sink_backend.hpp&gt;</a></span></dt>
@@ -36,6 +36,7 @@
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.syslog_backend_hpp">Header &lt;boost/log/sinks/syslog_backend.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.syslog_constants_hpp">Header &lt;boost/log/sinks/syslog_constants.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.text_file_backend_hpp">Header &lt;boost/log/sinks/text_file_backend.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="sinks.html#header.boost.log.sinks.text_ipc_message_queue_backend_hpp">Header &lt;boost/log/sinks/text_ipc_message_queue_backend.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.text_multifile_backend_hpp">Header &lt;boost/log/sinks/text_multifile_backend.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.text_ostream_backend_hpp">Header &lt;boost/log/sinks/text_ostream_backend.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="sinks.html#header.boost.log.sinks.unbounded_fifo_queue_hpp">Header &lt;boost/log/sinks/unbounded_fifo_queue.hpp&gt;</a></span></dt>
@@ -98,7 +99,7 @@ The header contains implementation of base classes for sink backends. </p>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FrontendRequirementsT<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/basic_sink_backend.html" title="Struct template basic_sink_backend">basic_sink_backend</a><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> 
                <span class="keyword">typename</span> FrontendRequirementsT <span class="special">=</span> <a class="link" href="boost/log/sinks/synchronized_feeding.html" title="Struct synchronized_feeding">synchronized_feeding</a><span class="special">&gt;</span> 
-        <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/basic_formatte_idp22115968.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a><span class="special">;</span>
+        <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/basic_formatte_idp51388608.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
@@ -116,7 +117,7 @@ The header contains implementation of a base class for sink frontends. </p>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sinks</span> <span class="special">{</span>
       <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_sink_frontend.html" title="Class basic_sink_frontend">basic_sink_frontend</a><span class="special">;</span>
-      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_formatti_idp22175216.html" title="Class template basic_formatting_sink_frontend">basic_formatting_sink_frontend</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_formatti_idp51447856.html" title="Class template basic_formatting_sink_frontend">basic_formatting_sink_frontend</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
@@ -224,12 +225,12 @@ The header contains a logging sink backend that uses Windows NT event log API fo
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sinks</span> <span class="special">{</span>
-      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp22306752.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp51586224.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/basic_event_log_backend.html" title="Class template basic_event_log_backend">basic_event_log_backend</a><span class="special">;</span>
 
-      <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp22306752.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">char</span> <span class="special">&gt;</span> <a name="boost.log.sinks.simple_event_log_backend"></a><span class="identifier">simple_event_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for narrow-character logging. </span>
+      <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp51586224.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">char</span> <span class="special">&gt;</span> <a name="boost.log.sinks.simple_event_log_backend"></a><span class="identifier">simple_event_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for narrow-character logging. </span>
       <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_event_log_backend.html" title="Class template basic_event_log_backend">basic_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">char</span> <span class="special">&gt;</span> <a name="boost.log.sinks.event_log_backend"></a><span class="identifier">event_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for narrow-character logging. </span>
-      <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp22306752.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">wchar_t</span> <span class="special">&gt;</span> <a name="boost.log.sinks.wsimple_event_log_backend"></a><span class="identifier">wsimple_event_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for wide-character logging. </span>
+      <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_simple_e_idp51586224.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">wchar_t</span> <span class="special">&gt;</span> <a name="boost.log.sinks.wsimple_event_log_backend"></a><span class="identifier">wsimple_event_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for wide-character logging. </span>
       <span class="keyword">typedef</span> <a class="link" href="boost/log/sinks/basic_event_log_backend.html" title="Class template basic_event_log_backend">basic_event_log_backend</a><span class="special">&lt;</span> <span class="keyword">wchar_t</span> <span class="special">&gt;</span> <a name="boost.log.sinks.wevent_log_backend"></a><span class="identifier">wevent_log_backend</span><span class="special">;</span>  <span class="comment">// Convenience typedef for wide-character logging. </span>
       <span class="keyword">namespace</span> <span class="identifier">event_log</span> <span class="special">{</span>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/direct_event_type_mapping.html" title="Class template direct_event_type_mapping">direct_event_type_mapping</a><span class="special">;</span>
@@ -237,9 +238,9 @@ The header contains a logging sink backend that uses Windows NT event log API fo
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/direct_event_id_mapping.html" title="Class template direct_event_id_mapping">direct_event_id_mapping</a><span class="special">;</span>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/custom_event_id_mapping.html" title="Class template custom_event_id_mapping">custom_event_id_mapping</a><span class="special">;</span>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> 
-          <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/direct_event_c_idp22409696.html" title="Class template direct_event_category_mapping">direct_event_category_mapping</a><span class="special">;</span>
+          <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/direct_event_c_idp51689168.html" title="Class template direct_event_category_mapping">direct_event_category_mapping</a><span class="special">;</span>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> 
-          <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/custom_event_c_idp22415872.html" title="Class template custom_event_category_mapping">custom_event_category_mapping</a><span class="special">;</span>
+          <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/custom_event_c_idp51695344.html" title="Class template custom_event_category_mapping">custom_event_category_mapping</a><span class="special">;</span>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/event_log/basic_event_composer.html" title="Class template basic_event_composer">basic_event_composer</a><span class="special">;</span>
 
         <span class="comment">// Event log source registration modes. </span>
@@ -267,7 +268,8 @@ The header contains definition of constants related to Windows NT Event Log API.
       <span class="keyword">namespace</span> <span class="identifier">event_log</span> <span class="special">{</span>
 
         <span class="comment">// Windows event types. </span>
-        <span class="keyword">enum</span> <a name="boost.log.sinks.event_log.event_type"></a>event_type <span class="special">{</span> success =  0, info =  4, warning =  2, error =  1 <span class="special">}</span><span class="special">;</span>
+        <span class="keyword">enum</span> <a name="boost.log.sinks.event_log.event_type"></a>event_type <span class="special">{</span> success = = 0, info = = 4, warning = = 2, 
+                          error = = 1 <span class="special">}</span><span class="special">;</span>
 
         <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.log.sinks.event_log.event_id"></a><span class="identifier">event_id</span><span class="special">;</span>  <span class="comment">// A tagged integral type that represents event identifier for the Windows API. </span>
         <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.log.sinks.event_log.event_category"></a><span class="identifier">event_category</span><span class="special">;</span>  <span class="comment">// A tagged integral type that represents event category for the Windows API. </span>
@@ -290,7 +292,7 @@ The header contains definition of constants related to Windows NT Event Log API.
 The header contains definition of requirement tags that sink backend may declare with regard to frontends. These requirements ensure that a backend will not be used with an incompatible frontend. </p>
 <pre class="synopsis">
 
-<a class="link" href="BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT.html" title="Macro BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT">BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT</a></pre>
+<a class="link" href="BOOST_LOG_COMB_idp51783568.html" title="Macro BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT">BOOST_LOG_COMBINE_REQUIREMENTS_LIMIT</a></pre>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sinks</span> <span class="special">{</span>
@@ -298,6 +300,7 @@ The header contains definition of requirement tags that sink backend may declare
       <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/concurrent_feeding.html" title="Struct concurrent_feeding">concurrent_feeding</a><span class="special">;</span>
       <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/formatted_records.html" title="Struct formatted_records">formatted_records</a><span class="special">;</span>
       <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/flushing.html" title="Struct flushing">flushing</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> RequirementsT<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/combine_requirements.html" title="Struct template combine_requirements">combine_requirements</a><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> TestedT<span class="special">,</span> <span class="keyword">typename</span> RequiredT<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="boost/log/sinks/has_requirement.html" title="Struct template has_requirement">has_requirement</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
@@ -358,7 +361,7 @@ The header contains implementation of a Syslog sink backend along with its setup
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> AttributeValueT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/syslog/custom_severity_mapping.html" title="Class template custom_severity_mapping">custom_severity_mapping</a><span class="special">;</span>
 
         <span class="comment">// The enumeration defined the possible implementation types for the syslog backend. </span>
-        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.impl_types"></a>impl_types <span class="special">{</span> native =  0, udp_socket_based =  1 <span class="special">}</span><span class="special">;</span>
+        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.impl_types"></a>impl_types <span class="special">{</span> native = = 0, udp_socket_based = = 1 <span class="special">}</span><span class="special">;</span>
       <span class="special">}</span>
     <span class="special">}</span>
   <span class="special">}</span>
@@ -379,19 +382,22 @@ The header contains definition of constants related to Syslog API. The constants
       <span class="keyword">namespace</span> <span class="identifier">syslog</span> <span class="special">{</span>
 
         <span class="comment">// Syslog record levels. </span>
-        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.level"></a>level <span class="special">{</span> emergency =  0, alert =  1, critical =  2, error =  3, 
-                     warning =  4, notice =  5, info =  6, debug =  7 <span class="special">}</span><span class="special">;</span>
+        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.level"></a>level <span class="special">{</span> emergency = = 0, alert = = 1, critical = = 2, 
+                     error = = 3, warning = = 4, notice = = 5, info = = 6, 
+                     debug = = 7 <span class="special">}</span><span class="special">;</span>
 
         <span class="comment">// Syslog facility codes. </span>
-        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.facility"></a>facility <span class="special">{</span> kernel =  0 * 8, user =  1 * 8, mail =  2 * 8, 
-                        daemon =  3 * 8, security0 =  4 * 8, syslogd =  5 * 8, 
-                        printer =  6 * 8, news =  7 * 8, uucp =  8 * 8, 
-                        clock0 =  9 * 8, security1 =  10 * 8, ftp =  11 * 8, 
-                        ntp =  12 * 8, log_audit =  13 * 8, 
-                        log_alert =  14 * 8, clock1 =  15 * 8, 
-                        local0 =  16 * 8, local1 =  17 * 8, local2 =  18 * 8, 
-                        local3 =  19 * 8, local4 =  20 * 8, local5 =  21 * 8, 
-                        local6 =  22 * 8, local7 =  23 * 8 <span class="special">}</span><span class="special">;</span>
+        <span class="keyword">enum</span> <a name="boost.log.sinks.syslog.facility"></a>facility <span class="special">{</span> kernel = = 0 * 8, user = = 1 * 8, mail = = 2 * 8, 
+                        daemon = = 3 * 8, security0 = = 4 * 8, 
+                        syslogd = = 5 * 8, printer = = 6 * 8, news = = 7 * 8, 
+                        uucp = = 8 * 8, clock0 = = 9 * 8, 
+                        security1 = = 10 * 8, ftp = = 11 * 8, ntp = = 12 * 8, 
+                        log_audit = = 13 * 8, log_alert = = 14 * 8, 
+                        clock1 = = 15 * 8, local0 = = 16 * 8, 
+                        local1 = = 17 * 8, local2 = = 18 * 8, 
+                        local3 = = 19 * 8, local4 = = 20 * 8, 
+                        local5 = = 21 * 8, local6 = = 22 * 8, 
+                        local7 = = 23 * 8 <span class="special">}</span><span class="special">;</span>
         <span class="identifier">level</span> <a class="link" href="boost/log/sinks/syslog/make_level.html" title="Function make_level"><span class="identifier">make_level</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
         <span class="identifier">facility</span> <a class="link" href="boost/log/sinks/syslog/make_facility.html" title="Function make_facility"><span class="identifier">make_facility</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
       <span class="special">}</span>
@@ -423,6 +429,24 @@ The header contains implementation of a text file sink backend. </p>
         <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
           <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <a class="link" href="boost/log/sinks/file/collector.html" title="Struct collector">collector</a> <span class="special">&gt;</span> <a class="link" href="boost/log/sinks/file/make_collector.html" title="Function template make_collector"><span class="identifier">make_collector</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
       <span class="special">}</span>
+    <span class="special">}</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.log.sinks.text_ipc_message_queue_backend_hpp"></a>Header &lt;<a href="../../../../boost/log/sinks/text_ipc_message_queue_backend.hpp" target="_top">boost/log/sinks/text_ipc_message_queue_backend.hpp</a>&gt;</h4></div></div></div>
+<p>Lingxi Li </p>
+<p>Andrey Semashev </p>
+<p>
+</p>
+<p>14.10.2015</p>
+<p>
+The header contains implementation of a text interprocess message queue sink backend along with implementation of a supporting interprocess message queue. </p>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">sinks</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> QueueT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sinks/text_ipc_messa_idp52096416.html" title="Class template text_ipc_message_queue_backend">text_ipc_message_queue_backend</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>

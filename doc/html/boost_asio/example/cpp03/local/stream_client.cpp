@@ -2,7 +2,7 @@
 // stream_client.cpp
 // ~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,9 +29,9 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    stream_protocol::socket s(io_service);
+    stream_protocol::socket s(io_context);
     s.connect(stream_protocol::endpoint(argv[1]));
 
     using namespace std; // For strlen.

@@ -341,7 +341,7 @@ bool test_value_and_state_equals(const alloc_int &r, int value, int state)
 {  return r.get_value() == value && r.get_allocator_state() == state;  }
 
 template<class F, class S>
-bool test_value_and_state_equals(const container_detail::pair<F, S> &p, int value, int state)
+bool test_value_and_state_equals(const dtl::pair<F, S> &p, int value, int state)
 {  return test_value_and_state_equals(p.first, value, state) && test_alloc_state_equals(p.second, value, state);  }
 
 template<class F, class S>

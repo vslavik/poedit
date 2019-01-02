@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Creation and Modification</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../spatial_indexes.html" title="Spatial Indexes">
 <link rel="prev" href="rtree_quickstart.html" title="Quick Start">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h0"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.template_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.template_parameters">Template
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.template_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.template_parameters">Template
         parameters</a>
       </h5>
 <p>
@@ -41,7 +41,7 @@
       <span class="identifier">EqualTo</span> <span class="special">=</span> <span class="identifier">index</span><span class="special">::</span><span class="identifier">equal_to</span><span class="special">&lt;</span><span class="identifier">Value</span><span class="special">&gt;,</span>
       <span class="identifier">Allocator</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">Value</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput">Value</code> - type of object which will be stored in the container,
           </li>
@@ -65,7 +65,7 @@
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h1"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.values_and_indexables"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.values_and_indexables">Values
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.values_and_indexables"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.values_and_indexables">Values
         and Indexables</a>
       </h5>
 <p>
@@ -124,7 +124,7 @@
         and tuples. In the case of those two collection types, the <code class="computeroutput">Indexable</code>
         must be the first stored type.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput">Indexable <span class="special">=</span> Point <span class="special">|</span>
             Box <span class="special">|</span> <span class="identifier">Segment</span></code>
@@ -172,7 +172,7 @@
 <p>
         The predefined <code class="computeroutput"><span class="identifier">index</span><span class="special">::</span><span class="identifier">equal_to</span><span class="special">&lt;</span><span class="identifier">Value</span><span class="special">&gt;</span></code>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             for <code class="computeroutput">Point</code>, <code class="computeroutput">Box</code> and <code class="computeroutput"><span class="identifier">Segment</span></code>
             - compares <code class="computeroutput">Value</code>s with geometry::equals().
@@ -192,7 +192,7 @@
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h2"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.balancing_algorithms_compile_time_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.balancing_algorithms_compile_time_parameters">Balancing
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.balancing_algorithms_compile_time_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.balancing_algorithms_compile_time_parameters">Balancing
         algorithms compile-time parameters</a>
       </h5>
 <p>
@@ -218,7 +218,7 @@
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h3"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.balancing_algorithms_run_time_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.balancing_algorithms_run_time_parameters">Balancing
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.balancing_algorithms_run_time_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.balancing_algorithms_run_time_parameters">Balancing
         algorithms run-time parameters</a>
       </h5>
 <p>
@@ -240,7 +240,7 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h4"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.non_default_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.non_default_parameters">Non-default
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.non_default_parameters"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.non_default_parameters">Non-default
         parameters</a>
       </h5>
 <p>
@@ -248,7 +248,7 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h5"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.copying__moving_and_swapping"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.copying__moving_and_swapping">Copying,
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.copying__moving_and_swapping"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.copying__moving_and_swapping">Copying,
         moving and swapping</a>
       </h5>
 <p>
@@ -276,7 +276,7 @@
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h6"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.inserting_and_removing_values"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.inserting_and_removing_values">Inserting
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.inserting_and_removing_values"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.inserting_and_removing_values">Inserting
         and removing Values</a>
       </h5>
 <p>
@@ -313,7 +313,7 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h7"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.additional_interface"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.additional_interface">Additional
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.additional_interface"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.additional_interface">Additional
         interface</a>
       </h5>
 <p>
@@ -367,7 +367,7 @@
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h8"></a>
-        <span><a name="geometry.spatial_indexes.creation_and_modification.insert_iterator"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.insert_iterator">Insert
+        <span class="phrase"><a name="geometry.spatial_indexes.creation_and_modification.insert_iterator"></a></span><a class="link" href="creation_and_modification.html#geometry.spatial_indexes.creation_and_modification.insert_iterator">Insert
         iterator</a>
       </h5>
 <p>
@@ -395,8 +395,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

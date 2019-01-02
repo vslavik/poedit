@@ -11,8 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_ANY_OF_HPP
 #define BOOST_COMPUTE_ALGORITHM_ANY_OF_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/algorithm/find_if.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -24,6 +27,8 @@ namespace compute {
 ///
 /// \snippet test/test_any_all_none_of.cpp any_of
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see all_of(), none_of()
 template<class InputIterator, class UnaryPredicate>
 inline bool any_of(InputIterator first,
@@ -31,6 +36,7 @@ inline bool any_of(InputIterator first,
                    UnaryPredicate predicate,
                    command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
     return ::boost::compute::find_if(first, last, predicate, queue) != last;
 }
 

@@ -1,6 +1,6 @@
 // Boost.Geometry Index
 //
-// Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,6 +10,7 @@
 #define BOOST_GEOMETRY_INDEX_INDEXABLE_HPP
 
 #include <boost/mpl/assert.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include <boost/geometry/index/detail/is_indexable.hpp>
 

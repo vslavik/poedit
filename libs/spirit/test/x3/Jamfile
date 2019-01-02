@@ -8,106 +8,119 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-# bring in rules for testing
-import testing ;
+import config : requires ;
 import modules ;
 import feature ;
+import testing ;
 
 ###############################################################################
-project spirit_test
+
+project spirit-x3
     : requirements
         <include>.
-        <toolset>gcc:<cxxflags>-std=c++1y
-        <toolset>gcc:<cxxflags>-ftemplate-depth-512
-        <toolset>clang:<cxxflags>-std=c++1y
-        <toolset>clang:<cxxflags>-ftemplate-depth-512
-        <toolset>darwin:<cxxflags>-std=c++1y
-        <toolset>darwin:<cxxflags>-ftemplate-depth-512
-    :
-    :
+        <c++-template-depth>512
+        [ requires
+            # Assume all the cxx11 checks succeed if any of cxx14 does.
+            #cxx14_binary_literals               # grep -Er "[0-9]+b[0-9]+" *
+            #cxx14_constexpr
+            cxx14_decltype_auto                 # grep -r "decltype(auto)" *
+            #cxx14_digit_separators              # grep -Er "[0-9]+'[0-9]+" *
+            cxx14_generic_lambdas               # grep -Er "]\s*\\([^\\)]*auto" *
+            #cxx14_hdr_shared_mutex              # grep -r "shared_mutex" *
+            #cxx14_initialized_lambda_captures   # grep -Er "\\[[^=\\]]+=" *
+            #cxx14_aggregate_nsdmi
+            cxx14_return_type_deduction         # grep -Er "auto[^\\(=\\)]+\(" *
+            #cxx14_std_exchange                  # grep -r "exchange" *
+            #cxx14_variable_templates
+        ]
     ;
 
-tests = ;
+###############################################################################
 
-rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
+local subproject-name = x3 ;
+
+rule run ( sources + : args * : input-files *
+         : requirements * : target-name ? : default-build * )
 {
-    target-name ?= $(sources[1]:D=:S=) ;
-    tests += [ testing.run $(sources) : $(args)
-      : $(input-files) : $(requirements) : $(target-name)-p3 : $(default-build) ] ;
+    target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
+    return [ testing.run $(sources) : $(args) : $(input-files)
+           : $(requirements) : $(target-name) : $(default-build) ] ;
 }
 
 rule compile ( sources + : requirements * : target-name ? )
 {
-    target-name ?= $(sources[1]:D=:S=) ;
-    tests += [ testing.compile $(sources) : $(requirements) : $(target-name)-p3 ] ;
+    target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
+    return [ testing.compile $(sources)
+           : $(requirements) : $(target-name) ] ;
 }
 
 rule compile-fail ( sources + : requirements * : target-name ? )
 {
-    target-name ?= $(sources[1]:D=:S=) ;
-    tests += [ testing.compile-fail $(sources) : $(requirements) : $(target-name)-p3 ] ;
+    target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
+    return [ testing.compile-fail $(sources)
+           : $(requirements) : $(target-name) ] ;
 }
 
 ###############################################################################
 
-{
-    ###########################################################################
-    test-suite spirit_v3/qi :
+run actions.cpp ;
+run alternative.cpp ;
+run and_predicate.cpp ;
+run any_parser.cpp ;
+run attr.cpp ;
+run binary.cpp ;
+run bool.cpp ;
+run char1.cpp ;
+run char_class.cpp ;
+run container_support.cpp ;
+run debug.cpp ;
+run difference.cpp ;
+run eoi.cpp ;
+run eol.cpp ;
+run eps.cpp ;
+run expect.cpp ;
+run int1.cpp ;
+run kleene.cpp ;
+run lexeme.cpp ;
+run lit1.cpp ;
+run lit2.cpp ;
+run list.cpp ;
+run matches.cpp ;
+run no_case.cpp ;
+run no_skip.cpp ;
+run not_predicate.cpp ;
+run omit.cpp ;
+run optional.cpp ;
+run plus.cpp ;
+run with.cpp ;
 
-     [ run actions.cpp          : : : : x3_actions ]
-     [ run alternative.cpp      : : : : x3_alternative ]
-     [ run and_predicate.cpp    : : : : x3_and_predicate ]
-     [ run any_parser.cpp    : : : : x3_any_parser ]
-     [ run attr.cpp             : : : : x3_attr ]
-     [ run binary.cpp           : : : : x3_binary ]
-     [ run bool.cpp             : : : : x3_bool ]
-     [ run char1.cpp            : : : : x3_char1 ]
-     [ run char_class.cpp       : : : : x3_char_class ]
-     [ run debug.cpp            : : : : x3_debug ]
-     [ run difference.cpp       : : : : x3_difference ]
-     [ run eoi.cpp              : : : : x3_eoi ]
-     [ run eol.cpp              : : : : x3_eol ]
-     [ run eps.cpp              : : : : x3_eps ]
-     [ run expect.cpp           : : : : x3_expect ]
-     [ run int1.cpp             : : : : x3_int1 ]
-     [ run kleene.cpp           : : : : x3_kleene ]
-     [ run lexeme.cpp           : : : : x3_lexeme ]
-     [ run lit1.cpp             : : : : x3_lit1 ]
-     [ run lit2.cpp             : : : : x3_lit2 ]
-     [ run list.cpp             : : : : x3_list ]
-     [ run matches.cpp          : : : : x3_matches ]
-     [ run no_case.cpp          : : : : x3_no_case ]
-     [ run no_skip.cpp          : : : : x3_no_skip ]
-     [ run not_predicate.cpp    : : : : x3_not_predicate ]
-     [ run optional.cpp         : : : : x3_optional ]
-     [ run plus.cpp             : : : : x3_plus ]
-     [ run with.cpp             : : : : x3_with ]
+run raw.cpp ;
+run real1.cpp ;
+run real2.cpp ;
+run real3.cpp ;
+run real4.cpp ;
+run rule1.cpp ;
+run rule2.cpp ;
+run rule3.cpp ;
+run rule4.cpp ;
+run sequence.cpp ;
+run skip.cpp ;
+run symbols1.cpp ;
+run symbols2.cpp ;
+run symbols3.cpp ;
+run tst.cpp /boost//system ;
 
-     [ run raw.cpp              : : : : x3_raw ]
-     [ run real1.cpp            : : : : x3_real1 ]
-     [ run real2.cpp            : : : : x3_real2 ]
-     [ run real3.cpp            : : : : x3_real3 ]
-     [ run real4.cpp            : : : : x3_real4 ]
-     [ run rule1.cpp            : : : : x3_rule1 ]
-     [ run rule2.cpp            : : : : x3_rule2 ]
-     [ run rule3.cpp            : : : : x3_rule3 ]
-     [ run rule4.cpp            : : : : x3_rule4 ]
-     [ run sequence.cpp         : : : : x3_sequence ]
-     [ run skip.cpp             : : : : x3_skip ]
-     [ run symbols1.cpp         : : : : x3_symbols1 ]
-     [ run symbols2.cpp         : : : : x3_symbols2 ]
-     [ run symbols3.cpp         : : : : x3_symbols3 ]
-     [ run tst.cpp
-       $(BOOST_ROOT)/libs/system/build//boost_system
-                                   : : : : x3_tst ]
-     [ run uint1.cpp            : : : : x3_uint1 ]
-     [ run uint_radix.cpp       : : : : x3_uint_radix ]
+run uint1.cpp ;
+run uint_radix.cpp ;
 
-     [ run confix.cpp           : : : : x3_confix ]
-     [ run repeat.cpp           : : : : x3_repeat ]
-     [ run seek.cpp             : : : : x3_seek ]
+run confix.cpp ;
+run repeat.cpp ;
+run seek.cpp ;
 
-     [ run x3_variant.cpp       : : : : x3_variant ]
+run attribute_type_check.cpp ;
+run fusion_map.cpp ;
+run x3_variant.cpp ;
+run error_handler.cpp /boost//system /boost//filesystem ;
+run iterator_check.cpp ;
 
-    ;
-}
+run to_utf8.cpp ;

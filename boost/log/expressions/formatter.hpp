@@ -19,11 +19,11 @@
 #include <ostream>
 #include <boost/ref.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-#include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_cv.hpp>
+#include <boost/log/detail/sfinae_tools.hpp>
 #endif
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/light_function.hpp>
@@ -376,11 +376,11 @@ public:
     }
 #elif !defined(BOOST_MSVC) || BOOST_MSVC >= 1600
     template< typename FunT >
-    basic_formatter(FunT const& fun, typename disable_if_c< move_detail::is_rv< FunT >::value, int >::type = 0) : m_Formatter(fun)
+    basic_formatter(FunT const& fun, typename boost::disable_if_c< move_detail::is_rv< FunT >::value, boost::log::aux::sfinae_dummy >::type = boost::log::aux::sfinae_dummy()) : m_Formatter(fun)
     {
     }
 #else
-    // MSVC 9 blows up in unexpected ways if we use SFINAE to disable constructor instantiation
+    // MSVC 9 and older blows up in unexpected ways if we use SFINAE to disable constructor instantiation
     template< typename FunT >
     basic_formatter(FunT const& fun) : m_Formatter(fun)
     {
@@ -426,7 +426,7 @@ public:
     }
 #else
     template< typename FunT >
-    typename disable_if< is_same< typename remove_cv< FunT >::type, this_type >, this_type& >::type
+    typename boost::disable_if_c< is_same< typename remove_cv< FunT >::type, this_type >::value, this_type& >::type
     operator= (FunT const& fun)
     {
         this_type(fun).swap(*this);

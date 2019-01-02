@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Porting</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
+<link rel="up" href="../atomic.html" title="Chapter&#160;6.&#160;Boost.Atomic">
 <link rel="prev" href="limitations.html" title="Limitations">
-<link rel="next" href="../chrono.html" title="Chapter&#160;6.&#160;Boost.Chrono 2.0.5">
+<link rel="next" href="../chrono.html" title="Chapter&#160;7.&#160;Boost.Chrono 2.0.8">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="atomic.porting"></a><a class="link" href="porting.html" title="Porting">Porting</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="porting.html#atomic.porting.unit_tests">Unit tests</a></span></dt>
 <dt><span class="section"><a href="porting.html#atomic.porting.tested_compilers">Tested compilers</a></span></dt>
 <dt><span class="section"><a href="porting.html#atomic.porting.acknowledgements">Acknowledgements</a></span></dt>
@@ -40,7 +40,7 @@
         <span class="bold"><strong>Boost.Atomic</strong></span> provides a unit test suite
         to verify that the implementation behaves as expected:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>fallback_api.cpp</strong></span> verifies that the fallback-to-locking
             aspect of <span class="bold"><strong>Boost.Atomic</strong></span> compiles and
@@ -56,8 +56,8 @@
 <li class="listitem">
             <span class="bold"><strong>lockfree.cpp</strong></span> verifies that the <span class="bold"><strong>BOOST_ATOMIC_*_LOCKFREE</strong></span> macros are set properly
             according to the expectations for a given platform, and that they match
-            up with the <span class="bold"><strong>is_lock_free</strong></span> member functions
-            of the <span class="bold"><strong>atomic</strong></span> object instances.
+            up with the <span class="bold"><strong>is_always_lock_free</strong></span> and
+            <span class="bold"><strong>is_lock_free</strong></span> members of the <span class="bold"><strong>atomic</strong></span> object instances.
           </li>
 <li class="listitem">
             <span class="bold"><strong>atomicity.cpp</strong></span> lets two threads race
@@ -87,7 +87,7 @@
         <span class="bold"><strong>Boost.Atomic</strong></span> has been tested on and is known
         to work on the following compilers/platforms:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             gcc 4.x: i386, x86_64, ppc32, ppc64, sparcv9, armv6, alpha
           </li>
@@ -100,7 +100,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="atomic.porting.acknowledgements"></a><a class="link" href="porting.html#atomic.porting.acknowledgements" title="Acknowledgements">Acknowledgements</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Adam Wulkiewicz created the logo used on the <a href="https://github.com/boostorg/atomic" target="_top">GitHub
             project page</a>. The logo was taken from his <a href="https://github.com/awulkiew/boost-logos" target="_top">collection</a>
             of Boost logos.
@@ -109,7 +109,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<br>Copyright &#169; 2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<br>Copyright &#169; 2013, 2017, 2018 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

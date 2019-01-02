@@ -3,6 +3,10 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -19,12 +23,16 @@
 
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_relative_order.hpp>
+#include <boost/geometry/algorithms/make.hpp>
 
 #include <boost/geometry/geometries/point_xy.hpp>
 
 #if defined(TEST_WITH_SVG)
 #  include <boost/geometry/io/svg/svg_mapper.hpp>
 #endif
+
+#include <boost/geometry/strategies/side.hpp>
+#include <boost/geometry/strategies/cartesian/side_by_triangle.hpp>
 
 
 template <typename P, typename T>
@@ -41,7 +49,12 @@ void test_with_point(std::string const& /*caseid*/,
     P si = bg::make<P>(si_x, si_y);
     P sj = bg::make<P>(sj_x, sj_y);
 
-    int order = bg::detail::overlay::get_relative_order<P>::apply(pi, pj, ri, rj, si, sj);
+    typedef typename bg::strategy::side::services::default_strategy
+        <
+            typename bg::cs_tag<P>::type
+        >::type strategy_type;
+
+    int order = bg::detail::overlay::get_relative_order::apply(pi, pj, ri, rj, si, sj, strategy_type());
 
     BOOST_CHECK_EQUAL(order, expected_order);
 

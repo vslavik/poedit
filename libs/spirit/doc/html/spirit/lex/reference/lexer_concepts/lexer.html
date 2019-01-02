@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Lexer</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../lexer_concepts.html" title="Lexer Concepts">
 <link rel="prev" href="../lexer_concepts.html" title="Lexer Concepts">
 <link rel="next" href="primitivelexer.html" title="PrimitiveLexer">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.lexer.h0"></a>
-            <span><a name="spirit.lex.reference.lexer_concepts.lexer.description"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.description">Description</a>
+            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.lexer.description"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.description">Description</a>
           </h6>
 <p>
             The <span class="emphasis"><em>Lexer</em></span> is the most fundamental concept. A Lexer
@@ -45,7 +45,7 @@
           </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
                   A <code class="computeroutput"><span class="identifier">Lexer</span></code>.
@@ -66,7 +66,7 @@
 </div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.lexer.h1"></a>
-            <span><a name="spirit.lex.reference.lexer_concepts.lexer.valid_expressions"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.valid_expressions">Valid
+            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.lexer.valid_expressions"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
@@ -148,7 +148,7 @@
 </table></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.lexer.h2"></a>
-            <span><a name="spirit.lex.reference.lexer_concepts.lexer.type_expressions"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.type_expressions">Type
+            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.lexer.type_expressions"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -187,13 +187,13 @@
 </table></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.lexer.h3"></a>
-            <span><a name="spirit.lex.reference.lexer_concepts.lexer.postcondition"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.postcondition">Postcondition</a>
+            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.lexer.postcondition"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.postcondition">Postcondition</a>
           </h6>
 <p>
             Upon return from <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">collect</span></code> the following post conditions
             should hold:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                 On return, <code class="computeroutput"><span class="identifier">def</span></code> holds
                 all token definitions defined in the Lexer, <code class="computeroutput"><span class="identifier">l</span></code>.
                 This includes all Lexer's contained inside <code class="computeroutput"><span class="identifier">l</span></code>.
@@ -202,7 +202,7 @@
             Upon return from <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">add_actions</span></code> the following post conditions
             should hold:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                 On return, <code class="computeroutput"><span class="identifier">def</span></code> holds
                 all semantic actions correctly associated with the corresponding
                 token definitions as defined in the Lexer, <code class="computeroutput"><span class="identifier">l</span></code>.
@@ -211,7 +211,7 @@
               </li></ul></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.lexer.h4"></a>
-            <span><a name="spirit.lex.reference.lexer_concepts.lexer.models"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.models">Models</a>
+            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.lexer.models"></a></span><a class="link" href="lexer.html#spirit.lex.reference.lexer_concepts.lexer.models">Models</a>
           </h6>
 <p>
             All lexer components in <span class="emphasis"><em>Spirit.Lex</em></span> are models of

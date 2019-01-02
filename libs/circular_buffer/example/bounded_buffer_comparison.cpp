@@ -7,8 +7,6 @@
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_CB_DISABLE_DEBUG
-
 #include <boost/circular_buffer.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>

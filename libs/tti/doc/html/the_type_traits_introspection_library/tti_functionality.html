@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>General Functionality</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="prev" href="tti_terminology.html" title="Terminology">
@@ -27,13 +27,13 @@
 <a name="the_type_traits_introspection_library.tti_functionality"></a><a class="link" href="tti_functionality.html" title="General Functionality">General
     Functionality</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen">Macro
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen">Macro
       metafunction name generation considerations</a></span></dt></dl></div>
 <p>
       The elements of a type about which a template metaprogrammer might be interested
       in finding out at compile time are:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Does it have a nested type with a particular name ?
         </li>
@@ -141,7 +141,7 @@
     </p>
 <h4>
 <a name="the_type_traits_introspection_library.tti_functionality.h0"></a>
-      <span><a name="the_type_traits_introspection_library.tti_functionality.macro_metafunction_name_generation"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.macro_metafunction_name_generation">Macro
+      <span class="phrase"><a name="the_type_traits_introspection_library.tti_functionality.macro_metafunction_name_generation"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.macro_metafunction_name_generation">Macro
       Metafunction Name Generation</a>
     </h4>
 <p>
@@ -183,7 +183,7 @@
 <p>
         A rule to avoid this problem is:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             When the name of the inner element to be introspected begins with an
             underscore, use the complex macro form, where the name of the metafunction
             is specifically given.
@@ -194,7 +194,7 @@
         of programming clarity, is the same as the metafunction with further letters
         appended to it separated by an underscore, another rule is:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             When using the complex macro form, which fully gives the name of the
             generated macro metafunction, that name should not end with an underscore.
           </li></ul></div>
@@ -204,7 +204,7 @@
       </p>
 <h5>
 <a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.h0"></a>
-        <span><a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.reusing_the_named_metafunction"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.reusing_the_named_metafunction">Reusing
+        <span class="phrase"><a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.reusing_the_named_metafunction"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.reusing_the_named_metafunction">Reusing
         the named metafunction</a>
       </h5>
 <p>
@@ -282,7 +282,7 @@
       </p>
 <h5>
 <a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.h1"></a>
-        <span><a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.avoiding_odr_violations"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.avoiding_odr_violations">Avoiding
+        <span class="phrase"><a name="the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.avoiding_odr_violations"></a></span><a class="link" href="tti_functionality.html#the_type_traits_introspection_library.tti_functionality.tti_functionality_nm_gen.avoiding_odr_violations">Avoiding
         ODR violations</a>
       </h5>
 <p>

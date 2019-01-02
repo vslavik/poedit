@@ -42,16 +42,16 @@ class scanner
     rule pattern ( )
     {
         import errors : error : errors.error ;
-        errors.error "method must be overriden" ;
+        errors.error "method must be overridden" ;
     }
 
     # Establish necessary relationship between targets, given an actual target
-    # beeing scanned and a list of pattern matches in that file.
+    # being scanned and a list of pattern matches in that file.
     #
     rule process ( target : matches * )
     {
         import errors : error : errors.error ;
-        errors.error "method must be overriden" ;
+        errors.error "method must be overridden" ;
     }
 }
 
@@ -102,7 +102,7 @@ rule get ( scanner-class : property-set )
     if ! $(scanner-class) in $(.registered)
     {
         import errors ;
-        errors.error "attempt to get an unregisted scanner" ;
+        errors.error "attempt to get an unregistered scanner" ;
     }
 
     local r = $(.rv-cache.$(property-set)) ;

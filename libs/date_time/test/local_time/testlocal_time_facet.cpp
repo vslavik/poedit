@@ -34,7 +34,7 @@ teststreaming(std::string const& testname,
 #endif
 }
 
-int main(){
+int main(int /* argc */, char const* argv[]){
   /* use the tz_database for the time zones. 
    * Chicago, Denver, Los_Angeles, New_Tork, and Phoenix 
    * have all had full names added */
@@ -47,18 +47,11 @@ int main(){
 
   try {
     // first try to find the data file from the test dir
-    time_zones.load_from_file("../data/date_time_zonespec.csv");
+    time_zones.load_from_file(argv[1]);
   }
-  catch(const data_not_accessible& e) {
-    // couldn't find the data file so assume we are being run from 
-    // boost_root/status and try again
-    try {
-      time_zones.load_from_file("../libs/date_time/data/date_time_zonespec.csv");
-    }
-    catch(const data_not_accessible&) {
-      check("Cannot locate data file - aborting.", false);
-      return printTestStats();
-    }
+  catch(const data_not_accessible&) {
+    check("Cannot locate data file - aborting.", false);
+    return printTestStats();
   }
 
   time_zone_ptr utc;

@@ -4,19 +4,12 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef INCLUDE_BOOST_DLL_SMART_LIBRARY_HPP_
-#define INCLUDE_BOOST_DLL_SMART_LIBRARY_HPP_
+#ifndef BOOST_DLL_SMART_LIBRARY_HPP_
+#define BOOST_DLL_SMART_LIBRARY_HPP_
 
 /// \file boost/dll/smart_library.hpp
 /// \warning Extremely experimental! Requires C++14! Will change in next version of Boost! boost/dll/smart_library.hpp is not included in boost/dll.hpp
 /// \brief Contains the boost::dll::experimental::smart_library class for loading mangled symbols.
-
-#include <boost/dll/shared_library.hpp>
-#include <boost/dll/detail/get_mem_fn_type.hpp>
-#include <boost/dll/detail/ctor_dtor.hpp>
-
-#include <boost/predef/compiler.h>
-
 
 #if BOOST_COMP_GNUC || BOOST_COMP_CLANG || BOOST_COMP_HPACC || BOOST_COMP_IBM
 #include <boost/dll/detail/demangling/itanium.hpp>
@@ -25,6 +18,17 @@
 #else
 #error "Compiler not supported"
 #endif
+
+#include <boost/dll/shared_library.hpp>
+#include <boost/dll/detail/get_mem_fn_type.hpp>
+#include <boost/dll/detail/ctor_dtor.hpp>
+#include <boost/dll/detail/type_info.hpp>
+#include <boost/type_traits/is_object.hpp>
+#include <boost/type_traits/is_void.hpp>
+#include <boost/type_traits/is_function.hpp>
+#include <boost/predef/compiler.h>
+
+
 
 namespace boost {
 namespace dll {
@@ -57,7 +61,7 @@ using boost::dll::detail::destructor;
 * BOOST_DLL_MEMBER_EXPORT for this, so that MinGW and MSVC can provide those functions. This does however not work with gcc on linux.
 *
 * Direct initialization of members.
-* On linux the following member variable i will not be initialized when using the allocating contructor:
+* On linux the following member variable i will not be initialized when using the allocating constructor:
 * \code
 * struct BOOST_SYMBOL_EXPORT my_class { int i; my_class() : i(42) {} };
 * \endcode
@@ -76,11 +80,14 @@ public:
 
     using mangled_storage = detail::mangled_storage_impl;
     /*!
-    * Acces to the mangled storage, which is created on construction.
+    * Access to the mangled storage, which is created on construction.
     *
     * \throw Nothing.
     */
     const mangled_storage &symbol_storage() const {return _storage;}
+
+    ///Overload, for current development.
+    mangled_storage &symbol_storage() {return _storage;}
 
     //! \copydoc shared_library::shared_library()
     smart_library() BOOST_NOEXCEPT {};
@@ -88,7 +95,7 @@ public:
     //! \copydoc shared_library::shared_library(const boost::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
     smart_library(const boost::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode) {
         _lib.load(lib_path, mode);
-        _storage.load(lib_path, mode);
+        _storage.load(lib_path);
     }
 
     //! \copydoc shared_library::shared_library(const boost::filesystem::path& lib_path, boost::system::error_code& ec, load_mode::type mode = load_mode::default_mode)
@@ -100,13 +107,60 @@ public:
     smart_library(const boost::filesystem::path& lib_path, load_mode::type mode, boost::system::error_code& ec) {
         load(lib_path, mode, ec);
     }
-
-    //! \copydoc shared_library::shared_library(BOOST_RV_REF(smart_library) lib)
-    smart_library(BOOST_RV_REF(smart_library) lib) BOOST_NOEXCEPT // Move ctor
-        : _lib(boost::move(static_cast<shared_library&>(lib._lib))), _storage(boost::move(lib._storage))
+    /*!
+     * copy a smart_library object.
+     *
+     * \param lib A smart_library to move from.
+     *
+     * \throw Nothing.
+     */
+     smart_library(const smart_library & lib) BOOST_NOEXCEPT
+         : _lib(lib._lib), _storage(lib._storage)
+     {}
+   /*!
+    * Move a smart_library object.
+    *
+    * \param lib A smart_library to move from.
+    *
+    * \throw Nothing.
+    */
+    smart_library(BOOST_RV_REF(smart_library) lib) BOOST_NOEXCEPT
+        : _lib(boost::move(lib._lib)), _storage(boost::move(lib._storage))
     {}
 
-    //! \copydoc shared_library::~shared_library()
+    /*!
+      * Construct from a shared_library object.
+      *
+      * \param lib A shared_library to move from.
+      *
+      * \throw Nothing.
+      */
+      explicit smart_library(const shared_library & lib) BOOST_NOEXCEPT
+          : _lib(lib)
+      {
+          _storage.load(lib.location());
+      }
+     /*!
+     * Construct from a shared_library object.
+     *
+     * \param lib A shared_library to move from.
+     *
+     * \throw Nothing.
+     */
+     explicit smart_library(BOOST_RV_REF(shared_library) lib) BOOST_NOEXCEPT
+         : _lib(boost::move(static_cast<shared_library&>(lib)))
+     {
+         _storage.load(lib.location());
+     }
+
+    /*!
+    * Destroys the smart_library.
+    * `unload()` is called if the DLL/DSO was loaded. If library was loaded multiple times
+    * by different instances of shared_library, the actual DLL/DSO won't be unloaded until
+    * there is at least one instance of shared_library.
+    *
+    * \throw Nothing.
+    */
     ~smart_library() BOOST_NOEXCEPT {};
 
     //! \copydoc shared_library::load(const boost::filesystem::path& lib_path, load_mode::type mode = load_mode::default_mode)
@@ -148,7 +202,7 @@ public:
      * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
      */
     template<typename T>
-    T& get_variable(const std::string &name) {
+    T& get_variable(const std::string &name) const {
         return _lib.get<T>(_storage.get_variable<T>(name));
     }
 
@@ -174,7 +228,7 @@ public:
      * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
      */
     template<typename Func>
-    Func& get_function(const std::string &name) {
+    Func& get_function(const std::string &name) const {
         return _lib.get<Func>(_storage.get_function<Func>(name));
     }
 
@@ -203,9 +257,9 @@ public:
      * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
      */
     template<typename Class, typename Func>
-    typename detail::get_mem_fn_type<Class, Func>::mem_fn get_mem_fn(const std::string& name) {
-        return _lib.get<typename detail::get_mem_fn_type<Class, Func>::mem_fn>(
-            _storage.get_mem_fn<Class, Func>(name)
+    typename boost::dll::detail::get_mem_fn_type<Class, Func>::mem_fn get_mem_fn(const std::string& name) const {
+        return _lib.get<typename boost::dll::detail::get_mem_fn_type<Class, Func>::mem_fn>(
+                _storage.get_mem_fn<Class, Func>(name)
         );
     }
 
@@ -226,8 +280,8 @@ public:
      * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
      */
     template<typename Signature>
-    constructor<Signature> get_constructor() {
-        return detail::load_ctor<Signature>(_lib, _storage.get_constructor<Signature>());
+    constructor<Signature> get_constructor() const {
+        return boost::dll::detail::load_ctor<Signature>(_lib, _storage.get_constructor<Signature>());
     }
 
     /*!
@@ -241,15 +295,37 @@ public:
      * destructor<MyClass>     f1 = lib.get_mem_fn<MyClass>();
      * \endcode
      *
-     * \tparam Class The class whichs destructor shall be loaded
+     * \tparam Class The class whose destructor shall be loaded
      * \return A destructor object.
      *
      * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
      *
      */
     template<typename Class>
-    destructor<Class> get_destructor() {
-        return detail::load_dtor<Class>(_lib, _storage.get_destructor<Class>());
+    destructor<Class> get_destructor() const {
+        return boost::dll::detail::load_dtor<Class>(_lib, _storage.get_destructor<Class>());
+    }
+    /*!
+     * Load the typeinfo of the given type.
+     *
+     * \b Example (import class is MyClass, which is available inside the library and the host):
+     *
+     * \code
+     * smart_library lib("test_lib.so");
+     *
+     * std::type_info &ti = lib.get_Type_info<MyClass>();
+     * \endcode
+     *
+     * \tparam Class The class whose typeinfo shall be loaded
+     * \return A reference to a type_info object.
+     *
+     * \throw boost::system::system_error if symbol does not exist or if the DLL/DSO was not loaded.
+     *
+     */
+    template<typename Class>
+    const std::type_info& get_type_info() const
+    {
+        return boost::dll::detail::load_type_info<Class>(_lib, _storage);
     }
     /**
      * This function can be used to add a type alias.
@@ -340,8 +416,47 @@ inline void swap(smart_library& lhs, smart_library& rhs) BOOST_NOEXCEPT {
 }
 
 
+#ifdef BOOST_DLL_DOXYGEN
+/** Helper functions for overloads.
+ *
+ * Gets either a variable, function or member-function, depending on the signature.
+ *
+ * @code
+ * smart_library sm("lib.so");
+ * get<int>(sm, "space::value"); //import a variable
+ * get<void(int)>(sm, "space::func"); //import a function
+ * get<some_class, void(int)>(sm, "space::class_::mem_fn"); //import a member function
+ * @endcode
+ *
+ * @param sm A reference to the @ref smart_library
+ * @param name The name of the entity to import
+ */
+template<class T, class T2>
+void get(const smart_library& sm, const std::string &name);
+#endif
+
+template<class T>
+T& get(const smart_library& sm, const std::string &name, typename boost::enable_if<boost::is_object<T>,T>::type* = nullptr)
+
+{
+    return sm.get_variable<T>(name);
+}
+
+template<class T>
+auto get(const smart_library& sm, const std::string &name, typename boost::enable_if<boost::is_function<T>>::type* = nullptr)
+{
+    return sm.get_function<T>(name);
+}
+
+template<class Class, class Signature>
+auto get(const smart_library& sm, const std::string &name) -> typename detail::get_mem_fn_type<Class, Signature>::mem_fn
+{
+    return sm.get_mem_fn<Class, Signature>(name);
+}
+
+
 } /* namespace experimental */
 } /* namespace dll */
 } /* namespace boost */
 
-#endif /* INCLUDE_BOOST_DLL_SMART_LIBRARY_HPP_ */
+#endif /* BOOST_DLL_SMART_LIBRARY_HPP_ */

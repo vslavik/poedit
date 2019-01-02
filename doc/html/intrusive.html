@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;16.&#160;Boost.Intrusive</title>
+<title>Chapter&#160;19.&#160;Boost.Intrusive</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="boost/interprocess/xsi_shared_memory.html" title="Class xsi_shared_memory">
@@ -26,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="intrusive"></a>Chapter&#160;16.&#160;Boost.Intrusive</h2></div>
+<a name="intrusive"></a>Chapter&#160;19.&#160;Boost.Intrusive</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Olaf</span> <span class="surname">Krzikalla</span>
 </h3></div></div>
@@ -44,13 +44,14 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="intrusive.html#intrusive.introduction">Introduction</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="intrusive.html#intrusive.introduction.introduction_presenting">Presenting
       Boost.Intrusive</a></span></dt>
 <dt><span class="section"><a href="intrusive.html#intrusive.introduction.introduction_building_intrusive">Building
       Boost.Intrusive</a></span></dt>
+<dt><span class="section"><a href="intrusive.html#intrusive.introduction.tested_compilers">Tested compilers</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="intrusive/intrusive_vs_nontrusive.html">Intrusive and non-intrusive
     containers</a></span></dt>
@@ -212,7 +213,14 @@
       value traits</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="intrusive/thread_safety.html">Thread safety guarantees</a></span></dt>
-<dt><span class="section"><a href="intrusive/scary_iterators.html">Scary Iterators</a></span></dt>
+<dt><span class="section"><a href="intrusive/boost_intrusive_iterators.html">Boost.Intrusive Iterator
+    features</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="intrusive/boost_intrusive_iterators.html#intrusive.boost_intrusive_iterators.null_forward_iterators">Null
+      forward iterators</a></span></dt>
+<dt><span class="section"><a href="intrusive/boost_intrusive_iterators.html#intrusive.boost_intrusive_iterators.scary_iterators">Scary
+      Iterators</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="intrusive/equal_range_stability.html">Stability and insertion
     with hint in ordered associative containers with equivalent keys</a></span></dt>
 <dt><span class="section"><a href="intrusive/obtaining_same_type_reducing_space.html">Obtaining
@@ -240,6 +248,16 @@
 </dl></dd>
 <dt><span class="section"><a href="intrusive/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_67_00">Boost
+      1.67 Release</a></span></dt>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_65_00">Boost
+      1.65 Release</a></span></dt>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_64_00">Boost
+      1.64 Release</a></span></dt>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_63_00">Boost
+      1.63 Release</a></span></dt>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_62_00">Boost
+      1.62 Release</a></span></dt>
 <dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_61_00">Boost
       1.61 Release</a></span></dt>
 <dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_60_00">Boost
@@ -279,7 +297,6 @@
 <dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_36_00">Boost
       1.36 Release</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="intrusive/tested_compilers.html">Tested compilers</a></span></dt>
 <dt><span class="section"><a href="intrusive/references.html">References</a></span></dt>
 <dt><span class="section"><a href="intrusive/acknowledgements.html">Acknowledgements</a></span></dt>
 <dt><span class="section"><a href="intrusive/index.html">Indexes</a></span></dt>
@@ -336,11 +353,12 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="intrusive.introduction"></a><a class="link" href="intrusive.html#intrusive.introduction" title="Introduction">Introduction</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="intrusive.html#intrusive.introduction.introduction_presenting">Presenting
       Boost.Intrusive</a></span></dt>
 <dt><span class="section"><a href="intrusive.html#intrusive.introduction.introduction_building_intrusive">Building
       Boost.Intrusive</a></span></dt>
+<dt><span class="section"><a href="intrusive.html#intrusive.introduction.tested_compilers">Tested compilers</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -378,10 +396,37 @@
         in your compiler include path.
       </p>
 </div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.introduction.tested_compilers"></a><a class="link" href="intrusive.html#intrusive.introduction.tested_compilers" title="Tested compilers">Tested compilers</a>
+</h3></div></div></div>
+<p>
+        <span class="bold"><strong>Boost.Intrusive</strong></span> has been tested on the following
+        compilers/platforms:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Visual C++ &gt;= 7.1.
+          </li>
+<li class="listitem">
+            GCC &gt;= 4.1.
+          </li>
+</ul></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          GCC &lt; 4.3 and MSVC &lt; 9.0 are deprecated and will be removed in the
+          next version.
+        </p></td></tr>
+</table></div>
+</div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:19:03 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:12:57 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

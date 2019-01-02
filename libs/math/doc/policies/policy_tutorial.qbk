@@ -15,20 +15,30 @@ control:
 and `double` to `long double` in order to improve precision.
 * What precision to use when calculating the result.
 
-Some of these policies could arguably be runtime variables, but then we couldn't
+Some of these policies could arguably be run-time variables, but then we couldn't
 use compile-time dispatch internally to select the best evaluation method
 for the given policies.
 
 For this reason a Policy is a /type/: in fact it's an instance of the
 class template `boost::math::policies::policy<>`.  This class is just a
-compile-time-container of user-selected policies (sometimes called a type-list):
+compile-time-container of user-selected policies (sometimes called a type-list).
+
+Over a dozen __policy_defaults are provided, so most of the time you can ignore the policy framework,
+but you can overwrite the defaults with your own policies to give detailed control, for example:
 
    using namespace boost::math::policies;
-   //
-   // Define a policy that sets ::errno on overflow, and does
-   // not promote double to long double internally:
-   //
-   typedef policy<domain_error<errno_on_error>, promote_double<false> > mypolicy;
+
+   // Define a policy that sets ::errno on overflow,
+   // and does not promote double to long double internally,
+   // and only aims for precision of only 3 decimal digits,
+   // to an error-handling policy, usually to trade precision for speed:
+
+   typedef policy
+   <
+     domain_error<errno_on_error>,
+     promote_double<false>,
+     digits10<3>
+   > my_policy;
 
 [endsect] [/section:what_is_a_policy So Just What is a Policy Anyway?]
 
@@ -83,13 +93,28 @@ inherits the defaults for any policies not explicitly set, so given:
    //
    // Define a policy that sets ::errno on overflow, and does
    // not promote double to long double internally:
-   //
-   typedef policy<domain_error<errno_on_error>, promote_double<false> > mypolicy;
 
-then `mypolicy` defines a policy where only the overflow error handling and
+   typedef policy
+   <
+     domain_error<errno_on_error>,
+     promote_double<false>
+   > my_policy;
+
+then `my_policy` defines a policy where only the overflow error handling and
 `double`-promotion policies differ from the defaults.
 
-[endsect][/section:policy_tut_defaults Policies Have Sensible Defaults]
+We can also add a desired precision, for example, 9 bits or 3 decimal digits,
+to an error-handling policy, usually to trade precision for speed:
+
+   typedef policy<domain_error<errno_on_error>, digit2<9> > my_policy;
+
+Or if you want to further modify an existing user policy, use `normalise`:
+
+  using boost::math::policies::normalise;
+
+  typedef normalise<my_policy, digits2<9>>::type my_policy_9; // errno on error, and limited precision.
+
+[endsect] [/section:policy_tut_defaults Policies Have Sensible Defaults]
 
 [section:policy_usage So How are Policies Used Anyway?]
 
@@ -97,7 +122,7 @@ The details follow later, but basically policies can be set by either:
 
 * Defining some macros that change the default behaviour: [*this is the
    recommended method for setting installation-wide policies].
-* By instantiating a distribution object with an explicit policy:
+* By instantiating a statistical distribution object with an explicit policy:
    this is mainly reserved for ad hoc policy changes.
 * By passing a policy to a special function as an optional final argument:
    this is mainly reserved for ad hoc policy changes.
@@ -297,11 +322,11 @@ Handling policies for the statistical distributions is very similar except that 
 the macro BOOST_MATH_DECLARE_DISTRIBUTIONS accepts two parameters: the
 floating point type to use, and the policy type to apply.  For example:
 
-   BOOST_MATH_DECLARE_DISTRIBUTIONS(double, mypolicy)
+   BOOST_MATH_DECLARE_DISTRIBUTIONS(double, my_policy)
 
 Results a set of typedefs being defined like this:
 
-   typedef boost::math::normal_distribution<double, mypolicy> normal;
+   typedef boost::math::normal_distribution<double, my_policy> normal;
 
 The name of each typedef is the same as the name of the distribution
 class template, but without the "_distribution" suffix.

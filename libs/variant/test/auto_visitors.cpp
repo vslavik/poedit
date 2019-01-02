@@ -151,18 +151,18 @@ struct lex_streamer2 {
     std::string res;
 
     template <class T>
-    const char* operator()(const T& val) const {
+    const char* operator()(const T& /*val*/) const {
         return "fail";
     }
 
     template <class T1, class T2>
-    const char* operator()(const T1& v1, const T2& v2) const {
+    const char* operator()(const T1& /*v1*/, const T2& /*v2*/) const {
         return "fail2";
     }
 
 
     template <class T1, class T2, class T3>
-    const char* operator()(const T1& v1, const T2& v2, const T3& v3) const {
+    const char* operator()(const T1& /*v1*/, const T2& /*v2*/, const T3& /*v3*/) const {
         return "fail3";
     }
 

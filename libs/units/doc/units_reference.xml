@@ -7,14 +7,14 @@
     </template><description><para>A wrapper to represent absolute units (points rather than vectors). Intended originally for temperatures, this class implements operators for absolute units so that addition of a relative unit to an absolute unit results in another absolute unit : absolute&lt;T&gt; +/- T -&gt; absolute&lt;T&gt; and subtraction of one absolute unit from another results in a relative unit : absolute&lt;T&gt; - absolute&lt;T&gt; -&gt; T. </para></description><typedef name="this_type"><type><classname>absolute</classname>&lt; Y &gt;</type></typedef>
 <typedef name="value_type"><type>Y</type></typedef>
 <method-group name="public member functions">
-<method name="value" cv="const"><type>const value_type &amp;</type></method>
-<method name="operator+="><type>const this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
-<method name="operator-="><type>const this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
+<method name="value" cv="const"><type>BOOST_CONSTEXPR const value_type &amp;</type></method>
+<method name="operator+="><type>BOOST_CXX14_CONSTEXPR const this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
+<method name="operator-="><type>BOOST_CXX14_CONSTEXPR const this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
 </method-group>
 <constructor/>
 <constructor><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></constructor>
 <constructor><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></constructor>
-<copy-assignment><type>this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
 </class>
 
 
@@ -34,24 +34,124 @@
 
 
 
-<function name="operator+"><type><classname>absolute</classname>&lt; Y &gt;</type><template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="operator+"><type>BOOST_CONSTEXPR <classname>absolute</classname>&lt; Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="aval"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><parameter name="rval"><paramtype>const Y &amp;</paramtype></parameter><purpose>add a relative value to an absolute one </purpose></function>
-<function name="operator+"><type><classname>absolute</classname>&lt; Y &gt;</type><template>
+<function name="operator+"><type>BOOST_CONSTEXPR <classname>absolute</classname>&lt; Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="rval"><paramtype>const Y &amp;</paramtype></parameter><parameter name="aval"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><purpose>add a relative value to an absolute one </purpose></function>
-<function name="operator-"><type><classname>absolute</classname>&lt; Y &gt;</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR <classname>absolute</classname>&lt; Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="aval"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><parameter name="rval"><paramtype>const Y &amp;</paramtype></parameter><purpose>subtract a relative value from an absolute one </purpose></function>
-<function name="operator-"><type>Y</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR Y</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="aval1"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><parameter name="aval2"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><purpose>subtracting two absolutes gives a difference </purpose></function>
-<function name="operator*"><type><classname>quantity</classname>&lt; <classname>absolute</classname>&lt; <classname>unit</classname>&lt; D, S &gt; &gt;, T &gt;</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>absolute</classname>&lt; <classname>unit</classname>&lt; D, S &gt; &gt;, T &gt;</type><template>
           <template-type-parameter name="D"/>
           <template-type-parameter name="S"/>
           <template-type-parameter name="T"/>
         </template><parameter name="t"><paramtype>const T &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>absolute</classname>&lt; <classname>unit</classname>&lt; D, S &gt; &gt; &amp;</paramtype></parameter><purpose>creates a quantity from an absolute unit and a raw value </purpose></function>
-<function name="operator*"><type><classname>quantity</classname>&lt; <classname>absolute</classname>&lt; <classname>unit</classname>&lt; D, S &gt; &gt;, T &gt;</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>absolute</classname>&lt; <classname>unit</classname>&lt; D, S &gt; &gt;, T &gt;</type><template>
           <template-type-parameter name="D"/>
           <template-type-parameter name="S"/>
           <template-type-parameter name="T"/>
@@ -61,107 +161,9 @@
           <template-type-parameter name="Traits"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="os"><paramtype>std::basic_ostream&lt; Char, Traits &gt; &amp;</paramtype></parameter><parameter name="aval"><paramtype>const <classname>absolute</classname>&lt; Y &gt; &amp;</paramtype></parameter><purpose>Print an absolute unit. </purpose></function>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </namespace>
 </namespace>
-<macro name="BOOST_UNITS_DEFINE_CONVERSION_OFFSET" kind="functionlike"><macro-parameter name="From"/><macro-parameter name="To"/><macro-parameter name="type_"/><macro-parameter name="value_"/><description><para>Macro to define the offset between two absolute units. Requires the value to be in the destination units e.g <programlisting language="c++"> BOOST_UNITS_DEFINE_CONVERSION_OFFSET(celsius_base_unit, fahrenheit_base_unit, double, 32.0);
+<macro name="BOOST_UNITS_DEFINE_CONVERSION_OFFSET" kind="functionlike"><macro-parameter name="From"/><macro-parameter name="To"/><macro-parameter name="type_"/><macro-parameter name="value_"/><description><para>Macro to define the offset between two absolute units. Requires the value to be in the destination units e.g <programlisting language="c++">BOOST_UNITS_DEFINE_CONVERSION_OFFSET(celsius_base_unit, fahrenheit_base_unit, double, 32.0);
 </programlisting> <computeroutput>BOOST_UNITS_DEFINE_CONVERSION_FACTOR</computeroutput> is also necessary to specify the conversion factor. Like <computeroutput>BOOST_UNITS_DEFINE_CONVERSION_FACTOR</computeroutput> this macro defines both forward and reverse conversions so defining, e.g., the conversion from celsius to fahrenheit as above will also define the inverse conversion from fahrenheit to celsius. </para></description></macro>
 </header>
 <header name="boost/units/base_dimension.hpp">
@@ -170,12 +172,14 @@
 <class name="base_dimension"><template>
       <template-type-parameter name="Derived"/>
       <template-nontype-parameter name="N"><type>long</type></template-nontype-parameter>
-    </template><description><para>Defines a base dimension. To define a dimension you need to provide the derived class (CRTP) and a unique integer. <programlisting language="c++"> struct my_dimension : boost::units::base_dimension&lt;my_dimension, 1&gt; {};
+    </template><inherit access="public">ordinal&lt; N &gt;</inherit><description><para>Defines a base dimension. To define a dimension you need to provide the derived class (CRTP) and a unique integer. <programlisting language="c++">struct my_dimension : <classname alt="boost::units::base_dimension">boost::units::base_dimension</classname>&lt;my_dimension, 1&gt; {};
 </programlisting> It is designed so that you will get an error message if you try to use the same value in multiple definitions. </para></description><typedef name="dimension_type"><purpose>A convenience typedef. Equivalent to boost::units::derived_dimension&lt;Derived,1&gt;::type. </purpose><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="type"><purpose>Provided for mpl compatability. </purpose><type>Derived</type></typedef>
 <method-group name="friend functions">
 </method-group>
 </class>
+
+
 
 
 
@@ -309,13 +313,15 @@
       <template-type-parameter name="Derived"/>
       <template-type-parameter name="Dim"/>
       <template-nontype-parameter name="N"><type>long</type></template-nontype-parameter>
-    </template><description><para>Defines a base unit. To define a unit you need to provide the derived class (CRTP), a dimension list and a unique integer. <programlisting language="c++"> struct my_unit : boost::units::base_unit&lt;my_unit, length_dimension, 1&gt; {};
+    </template><inherit access="public">ordinal&lt; N &gt;</inherit><description><para>Defines a base unit. To define a unit you need to provide the derived class (CRTP), a dimension list and a unique integer. <programlisting language="c++">struct my_unit : <classname alt="boost::units::base_unit">boost::units::base_unit</classname>&lt;my_unit, length_dimension, 1&gt; {};
 </programlisting> It is designed so that you will get an error message if you try to use the same value in multiple definitions. </para></description><typedef name="dimension_type"><purpose>The dimensions of this base unit. </purpose><type>Dim</type></typedef>
 <typedef name="type"><purpose>Provided for mpl compatability. </purpose><type>Derived</type></typedef>
 <typedef name="unit_type"><purpose>The unit corresponding to this base unit. </purpose><type><emphasis>unspecified</emphasis></type></typedef>
 <method-group name="friend functions">
 </method-group>
 </class>
+
+
 
 
 
@@ -472,238 +478,240 @@
 
 
 
-<function name="isfinite"><type>bool</type><template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="isfinite"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isinf"><type>bool</type><template>
+<function name="isinf"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isnan"><type>bool</type><template>
+<function name="isnan"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isnormal"><type>bool</type><template>
+<function name="isnormal"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isgreater"><type>bool</type><template>
+<function name="isgreater"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isgreaterequal"><type>bool</type><template>
+<function name="isgreaterequal"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isless"><type>bool</type><template>
+<function name="isless"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="islessequal"><type>bool</type><template>
+<function name="islessequal"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="islessgreater"><type>bool</type><template>
+<function name="islessgreater"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="isunordered"><type>bool</type><template>
+<function name="isunordered"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="abs"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="abs"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="ceil"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="ceil"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="copysign"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="copysign"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fabs"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="fabs"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="floor"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="floor"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fdim"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="fdim"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fmax"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="fmax"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fmin"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="fmin"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fpclassify"><type>int</type><template>
+<function name="fpclassify"><type>BOOST_CONSTEXPR int</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="hypot"><type><classname>root_typeof_helper</classname>&lt; typename <classname>add_typeof_helper</classname>&lt; typename <classname>power_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type, typename <classname>power_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type &gt;::type, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type</type><template>
+<function name="hypot"><type>BOOST_CONSTEXPR <classname>root_typeof_helper</classname>&lt; typename <classname>add_typeof_helper</classname>&lt; typename <classname>power_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type, typename <classname>power_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type &gt;::type, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="nextafter"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="nextafter"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="nexttoward"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="nexttoward"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="round"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="round"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="signbit"><type>int</type><template>
+<function name="signbit"><type>BOOST_CONSTEXPR int</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="trunc"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="trunc"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="fmod"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="fmod"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="modf"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="modf"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype><classname>quantity</classname>&lt; Unit, Y &gt; *</paramtype></parameter></function>
-<function name="frexp"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="frexp"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="Int"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="ex"><paramtype>Int *</paramtype></parameter></function>
-<function name="pow"><type><classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
+<function name="pow"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
           <template-type-parameter name="S"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q1"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt; &amp;</paramtype></parameter><parameter name="q2"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt; &amp;</paramtype></parameter><description><para>For non-dimensionless quantities, integral and rational powers and roots can be computed by <computeroutput>pow&lt;Ex&gt;</computeroutput> and <computeroutput>root&lt;Rt&gt;</computeroutput> respectively. </para></description></function>
-<function name="exp"><type><classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
+<function name="exp"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
           <template-type-parameter name="S"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt; &amp;</paramtype></parameter></function>
-<function name="ldexp"><type><classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
+<function name="ldexp"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; Unit, Y &gt;</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="Int"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="ex"><paramtype>const Int &amp;</paramtype></parameter></function>
-<function name="log"><type><classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
+<function name="log"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
           <template-type-parameter name="S"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt; &amp;</paramtype></parameter></function>
-<function name="log10"><type><classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
+<function name="log10"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt;</type><template>
           <template-type-parameter name="S"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(S), Y &gt; &amp;</paramtype></parameter></function>
-<function name="sqrt"><type><classname>root_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type</type><template>
+<function name="sqrt"><type>BOOST_CONSTEXPR <classname>root_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt;, <classname>static_rational</classname>&lt; 2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter></function>
-<function name="cos"><type><classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
+<function name="cos"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; si::plane_angle, Y &gt; &amp;</paramtype></parameter><purpose>cos of theta in radians </purpose></function>
-<function name="sin"><type><classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
+<function name="sin"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; si::plane_angle, Y &gt; &amp;</paramtype></parameter><purpose>sin of theta in radians </purpose></function>
-<function name="tan"><type><classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
+<function name="tan"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; si::system, Y &gt;::type</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; si::plane_angle, Y &gt; &amp;</paramtype></parameter><purpose>tan of theta in radians </purpose></function>
-<function name="cos"><type><classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
+<function name="cos"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, System &gt;, Y &gt; &amp;</paramtype></parameter><purpose>cos of theta in other angular units </purpose></function>
-<function name="sin"><type><classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
+<function name="sin"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, System &gt;, Y &gt; &amp;</paramtype></parameter><purpose>sin of theta in other angular units </purpose></function>
-<function name="tan"><type><classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
+<function name="tan"><type>BOOST_CONSTEXPR <classname>dimensionless_quantity</classname>&lt; System, Y &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="theta"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, System &gt;, Y &gt; &amp;</paramtype></parameter><purpose>tan of theta in other angular units </purpose></function>
-<function name="acos"><type><classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
+<function name="acos"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="System"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><purpose>acos of dimensionless quantity returning angle in same system </purpose></function>
-<function name="acos"><type><classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
+<function name="acos"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, heterogeneous_dimensionless_system &gt;, Y &gt; &amp;</paramtype></parameter><purpose>acos of dimensionless quantity returning angle in radians </purpose></function>
-<function name="asin"><type><classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
+<function name="asin"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="System"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><purpose>asin of dimensionless quantity returning angle in same system </purpose></function>
-<function name="asin"><type><classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
+<function name="asin"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, heterogeneous_dimensionless_system &gt;, Y &gt; &amp;</paramtype></parameter><purpose>asin of dimensionless quantity returning angle in radians </purpose></function>
-<function name="atan"><type><classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
+<function name="atan"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="System"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><purpose>atan of dimensionless quantity returning angle in same system </purpose></function>
-<function name="atan"><type><classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
+<function name="atan"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, heterogeneous_dimensionless_system &gt;, Y &gt; &amp;</paramtype></parameter><purpose>atan of dimensionless quantity returning angle in radians </purpose></function>
-<function name="atan2"><type><classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
+<function name="atan2"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; <classname>unit</classname>&lt; plane_angle_dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="Dimension"/>
           <template-type-parameter name="System"/>
         </template><parameter name="y"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; Dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><parameter name="x"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; Dimension, <classname>homogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><purpose>atan2 of <computeroutput>value_type</computeroutput> returning angle in radians </purpose></function>
-<function name="atan2"><type><classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
+<function name="atan2"><type>BOOST_CONSTEXPR <classname>quantity</classname>&lt; angle::radian_base_unit::unit_type, Y &gt;</type><template>
           <template-type-parameter name="Y"/>
           <template-type-parameter name="Dimension"/>
           <template-type-parameter name="System"/>
         </template><parameter name="y"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; Dimension, <classname>heterogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><parameter name="x"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; Dimension, <classname>heterogeneous_system</classname>&lt; System &gt; &gt;, Y &gt; &amp;</paramtype></parameter><purpose>atan2 of <computeroutput>value_type</computeroutput> returning angle in radians </purpose></function>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -725,22 +733,76 @@
 <struct name="conversion_helper"><template>
       <template-type-parameter name="From"/>
       <template-type-parameter name="To"/>
-    </template><description><para>Template for defining conversions between quantities. This template should be specialized for every quantity that allows conversions. For example, if you have a two units called pair and dozen you would write <programlisting language="c++"> namespace boost {
- namespace units {
- template&lt;class T0, class T1&gt;
- struct conversion_helper&lt;quantity&lt;dozen, T0&gt;, quantity&lt;pair, T1&gt; &gt;
- {
-     static quantity&lt;pair, T1&gt; convert(const quantity&lt;dozen, T0&gt;&amp; source)
-     {
-         return(quantity&lt;pair, T1&gt;::from_value(6 * source.value()));
-     }
- };
- }
- }
+    </template><description><para>Template for defining conversions between quantities. This template should be specialized for every quantity that allows conversions. For example, if you have a two units called pair and dozen you would write <programlisting language="c++">namespace boost {
+namespace units {
+template&lt;class T0, class T1&gt;
+struct conversion_helper&lt;quantity&lt;dozen, T0&gt;, quantity&lt;pair, T1&gt; &gt;
+{
+    static quantity&lt;pair, T1&gt; convert(const quantity&lt;dozen, T0&gt;&amp; source)
+    {
+        return(quantity&lt;pair, T1&gt;::from_value(6 * source.value()));
+    }
+};
+}
+}
 </programlisting></para><para>In most cases, the predefined specializations for <computeroutput>unit</computeroutput> and <computeroutput>absolute</computeroutput> should be sufficient, so users should rarely need to use this. </para></description><method-group name="public static functions">
-<method name="convert" specifiers="static"><type>To</type><parameter name=""><paramtype>const From &amp;</paramtype></parameter></method>
+<method name="convert" specifiers="static"><type>BOOST_CONSTEXPR To</type><parameter name=""><paramtype>const From &amp;</paramtype></parameter></method>
 </method-group>
 </struct>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -760,58 +822,6 @@
           <template-type-parameter name="FromUnit"/>
           <template-type-parameter name="ToUnit"/>
         </template><parameter name=""><paramtype>const FromUnit &amp;</paramtype></parameter><parameter name=""><paramtype>const ToUnit &amp;</paramtype></parameter><purpose>Find the conversion factor between two units. </purpose></function>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1019,6 +1029,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -1028,15 +1040,18 @@
 <struct name="dim"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="V"/>
-    </template><purpose>Dimension tag/exponent pair for a single fundamental dimension. </purpose><description><para>The dim class represents a single dimension tag/dimension exponent pair. That is, <computeroutput>dim&lt;tag_type,value_type&gt;</computeroutput> is a pair where <computeroutput>tag_type</computeroutput> represents the fundamental dimension being represented and <computeroutput>value_type</computeroutput> represents the exponent of that fundamental dimension as a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput>. <computeroutput>tag_type</computeroutput> must be a derived from a specialization of <computeroutput><classname alt="boost::units::base_dimension">base_dimension</classname></computeroutput>. Specialization of the following Boost.MPL metafunctions are provided</para><para><itemizedlist>
-<listitem><para><computeroutput>mpl::plus</computeroutput> for two <computeroutput>dims</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::minus</computeroutput> for two <computeroutput>dims</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::negate</computeroutput> for a <computeroutput>dim</computeroutput> </para></listitem></itemizedlist>
-</para><para>These metafunctions all operate on the exponent, and require that the <computeroutput>dim</computeroutput> operands have the same base dimension tag. In addition, multiplication and division by <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> is supported.</para><para><itemizedlist>
-<listitem><para><computeroutput>mpl::times</computeroutput> for a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> and a <computeroutput>dim</computeroutput> in either order</para></listitem><listitem><para><computeroutput>mpl::divides</computeroutput> for a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> and a <computeroutput>dim</computeroutput> in either order</para></listitem></itemizedlist>
+    </template><purpose>Dimension tag/exponent pair for a single fundamental dimension. </purpose><description><para>The dim class represents a single dimension tag/dimension exponent pair. That is, <computeroutput>dim&lt;tag_type,value_type&gt;</computeroutput> is a pair where <computeroutput>tag_type</computeroutput> represents the fundamental dimension being represented and <computeroutput>value_type</computeroutput> represents the exponent of that fundamental dimension as a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput>. <computeroutput>tag_type</computeroutput> must be a derived from a specialization of <computeroutput><classname alt="boost::units::base_dimension">base_dimension</classname></computeroutput>. Specialization of the following Boost.MPL metafunctions are provided - @c mpl::plus for two @c dims
+- @c mpl::minus for two @c dims
+- @c mpl::negate for a @c dim
+</para><para>These metafunctions all operate on the exponent, and require that the <computeroutput>dim</computeroutput> operands have the same base dimension tag. In addition, multiplication and division by <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> is supported. - @c mpl::times for a @c static_rational and a @c dim in either order
+- @c mpl::divides for a @c static_rational and a @c dim in either order
 </para><para>These metafunctions likewise operate on the exponent only. </para></description><typedef name="type"><type><classname>dim</classname></type></typedef>
 <typedef name="tag"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="tag_type"><type>T</type></typedef>
 <typedef name="value_type"><type>V</type></typedef>
 </struct>
+
+
 
 
 
@@ -1171,15 +1186,9 @@
     </template><description><para>Reduce dimension list to cardinal form. This algorithm collapses duplicate base dimension tags and sorts the resulting list by the tag ordinal value. Dimension lists that resolve to the same dimension are guaranteed to be represented by an identical type.</para><para>The argument should be an MPL forward sequence containing instances of the <computeroutput>dim</computeroutput> template.</para><para>The result is also an MPL forward sequence. It also supports the following metafunctions to allow use as a dimension.</para><para><itemizedlist>
 <listitem><para><computeroutput>mpl::plus</computeroutput> is defined only on two equal dimensions and returns the argument unchanged.</para></listitem><listitem><para><computeroutput>mpl::minus</computeroutput> is defined only for two equal dimensions and returns the argument unchanged.</para></listitem><listitem><para><computeroutput>mpl::negate</computeroutput> will return its argument unchanged.</para></listitem><listitem><para><computeroutput>mpl::times</computeroutput> is defined for any dimensions and adds corresponding exponents.</para></listitem><listitem><para><computeroutput>mpl::divides</computeroutput> is defined for any dimensions and subtracts the exponents of the right had argument from the corresponding exponents of the left had argument. Missing base dimension tags are assumed to have an exponent of zero.</para></listitem><listitem><para><computeroutput><classname alt="boost::units::static_power">static_power</classname></computeroutput> takes a dimension and a <classname alt="boost::units::static_rational">static_rational</classname> and multiplies all the exponents of the dimension by the <classname alt="boost::units::static_rational">static_rational</classname>.</para></listitem><listitem><para><computeroutput><classname alt="boost::units::static_root">static_root</classname></computeroutput> takes a dimension and a <classname alt="boost::units::static_rational">static_rational</classname> and divides all the exponents of the dimension by the <classname alt="boost::units::static_rational">static_rational</classname>. </para></listitem></itemizedlist>
 </para></description><typedef name="type"><type><emphasis>unspecified</emphasis></type></typedef>
-</struct><struct name="static_power"><template>
-      <template-type-parameter name="DL"/>
-      <template-type-parameter name="Ex"/>
-    </template><purpose>Raise a dimension list to a scalar power. </purpose><typedef name="type"><type><emphasis>unspecified</emphasis></type></typedef>
-</struct><struct name="static_root"><template>
-      <template-type-parameter name="DL"/>
-      <template-type-parameter name="Rt"/>
-    </template><purpose>Take a scalar root of a dimension list. </purpose><typedef name="type"><type><emphasis>unspecified</emphasis></type></typedef>
 </struct>
+
+
 
 
 
@@ -1437,6 +1446,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -1570,6 +1581,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -1580,6 +1593,8 @@
       <template-type-parameter name="System"/>
     </template><purpose>Utility class to simplify construction of dimensionless units in a system. </purpose><typedef name="type"><type><classname>unit</classname>&lt; <classname>dimensionless_type</classname>, System &gt;</type></typedef>
 </struct>
+
+
 
 
 
@@ -1846,6 +1861,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -1989,6 +2006,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -1997,9 +2016,9 @@
 <namespace name="mpl">
 </namespace>
 <namespace name="units">
-<struct name="heterogeneous_system"><template>
-      <template-type-parameter name="T"/>
-    </template><description><para>A system that can represent any possible combination of units at the expense of not preserving information about how it was created. Do not create specializations of this template directly. Instead use <computeroutput><classname alt="boost::units::reduce_unit">reduce_unit</classname></computeroutput> and <computeroutput><classname alt="boost::units::base_unit">base_unit</classname>&lt;</computeroutput>...&gt;::unit_type. </para></description></struct>
+
+
+
 
 
 
@@ -2131,7 +2150,15 @@
 <namespace name="units">
 <struct name="homogeneous_system"><template>
       <template-type-parameter name="L"/>
-    </template><description><para>A system that can uniquely represent any unit which can be composed from a linearly independent set of base units. It is safe to rebind a unit with such a system to different dimensions.</para><para>Do not construct this template directly. Use <classname alt="boost::units::make_system">make_system</classname> instead. </para></description></struct>
+    </template><description><para>A system that can uniquely represent any unit which can be composed from a linearly independent set of base units. It is safe to rebind a unit with such a system to different dimensions.</para><para>Do not construct this template directly. Use <classname alt="boost::units::make_system">make_system</classname> instead. </para></description></struct><struct name="static_power"><template>
+      <template-type-parameter name="T"/>
+      <template-type-parameter name="E"/>
+    </template><purpose>Raise a dimension list to a scalar power. </purpose></struct><struct name="static_root"><template>
+      <template-type-parameter name="T"/>
+      <template-type-parameter name="R"/>
+    </template><purpose>Take a scalar root of a dimension list. </purpose></struct>
+
+
 
 
 
@@ -2273,69 +2300,8 @@
         </template><parameter name="ar"><paramtype>Archive &amp;</paramtype></parameter><parameter name="q"><paramtype><classname>boost::units::quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="int"><paramtype>const unsigned</paramtype></parameter><purpose>Boost Serialization library support for quantities. </purpose></function>
 </namespace>
 <namespace name="units">
-<struct name="base_unit_info"><template>
-      <template-type-parameter name="BaseUnit"/>
-    </template><purpose>traits template for unit names. </purpose><method-group name="public static functions">
-<method name="name" specifiers="static"><type>std::string</type><purpose>The full name of the unit (returns BaseUnit::name() by default) </purpose></method>
-<method name="symbol" specifiers="static"><type>std::string</type><purpose>The symbol for the base unit (Returns BaseUnit::symbol() by default) </purpose><description><para>
-</para></description><returns><para>BaseUnit::symbol(), for example "m" </para></returns></method>
-</method-group>
-</struct><enum name="format_mode"><enumvalue name="symbol_fmt"><default> 0</default></enumvalue><enumvalue name="name_fmt"><default> 1</default><purpose>default - reduces unit names to known symbols for both base and derived units. </purpose></enumvalue><enumvalue name="raw_fmt"><default> 2</default><purpose>output full unit names for base and derived units, for example "meter". </purpose></enumvalue><enumvalue name="typename_fmt"><default> 3</default><purpose>output only symbols for base units (but not derived units), for example "m". </purpose></enumvalue><enumvalue name="fmt_mask"><default> 3</default><purpose>output demangled typenames (useful only for diagnosis). </purpose></enumvalue><purpose>format of output of units, for example "m" or "meter". </purpose></enum>
-<enum name="autoprefix_mode"><enumvalue name="autoprefix_none"><default> 0</default></enumvalue><enumvalue name="autoprefix_engineering"><default> 4</default><purpose>No automatic prefix. </purpose></enumvalue><enumvalue name="autoprefix_binary"><default> 8</default><purpose>Scale and prefix with 10^3 multiples, 1234.5 m output as 1.2345 km. </purpose></enumvalue><enumvalue name="autoprefix_mask"><default> 12</default><purpose>Scale and prefix with 2^10 (1024) multiples, 1024 as 1 kb. </purpose></enumvalue><purpose>automatic scaling and prefix (controlled by value of quantity) a, if any, </purpose></enum>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<enum name="format_mode"><enumvalue name="symbol_fmt"><default>= 0</default></enumvalue><enumvalue name="name_fmt"><default>= 1</default><purpose>default - reduces unit names to known symbols for both base and derived units. </purpose></enumvalue><enumvalue name="raw_fmt"><default>= 2</default><purpose>output full unit names for base and derived units, for example "meter". </purpose></enumvalue><enumvalue name="typename_fmt"><default>= 3</default><purpose>output only symbols for base units (but not derived units), for example "m". </purpose></enumvalue><enumvalue name="fmt_mask"><default>= 3</default><purpose>output demangled typenames (useful only for diagnosis). </purpose></enumvalue><purpose>format of output of units, for example "m" or "meter". </purpose></enum>
+<enum name="autoprefix_mode"><enumvalue name="autoprefix_none"><default>= 0</default></enumvalue><enumvalue name="autoprefix_engineering"><default>= 4</default><purpose>No automatic prefix. </purpose></enumvalue><enumvalue name="autoprefix_binary"><default>= 8</default><purpose>Scale and prefix with 10^3 multiples, 1234.5 m output as 1.2345 km. </purpose></enumvalue><enumvalue name="autoprefix_mask"><default>= 12</default><purpose>Scale and prefix with 2^10 (1024) multiples, 1024 as 1 kb. </purpose></enumvalue><purpose>automatic scaling and prefix (controlled by value of quantity) a, if any, </purpose></enum>
 
 
 
@@ -2414,7 +2380,7 @@
 <function name="binary_prefix"><type>std::ios_base &amp;</type><parameter name="ios"><paramtype>std::ios_base &amp;</paramtype></parameter><purpose>Set flag for binary prefix, so 1024 byte displays as "1 Kib". </purpose></function>
 <function name="autoprefix_norm"><type>double</type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name="arg"><paramtype>const T &amp;</paramtype></parameter><purpose>ADL customization point for automatic prefixing. Returns a non-negative value. Implemented as std::abs for built-in types. </purpose></function>
+        </template><parameter name="arg"><paramtype>const T &amp;</paramtype></parameter><description><para>ADL customization point for automatic prefixing. Returns a non-negative value. Implemented as std::abs for built-in types. </para></description></function>
 <function name="typename_string"><type>std::string</type><template>
           <template-type-parameter name="Dimension"/>
           <template-type-parameter name="System"/>
@@ -2432,13 +2398,72 @@
           <template-type-parameter name="Traits"/>
           <template-type-parameter name="Dimension"/>
           <template-type-parameter name="System"/>
-        </template><parameter name="os"><paramtype>std::basic_ostream&lt; Char, Traits &gt; &amp;</paramtype></parameter><parameter name="u"><paramtype>const <classname>unit</classname>&lt; Dimension, System &gt; &amp;</paramtype></parameter><purpose>Print a <computeroutput>unit</computeroutput> as a list of base units and their exponents. </purpose><description><para>for <computeroutput>symbol_format</computeroutput> outputs e.g. "m s^-1" or "J". for <computeroutput>name_format</computeroutput> outputs e.g. "meter second^-1" or "joule". for <computeroutput>raw_format</computeroutput> outputs e.g. "m s^-1" or "meter kilogram^2 second^-2". for <computeroutput>typename_format</computeroutput> outputs the typename itself (currently demangled only on GCC). </para></description></function>
+        </template><parameter name="os"><paramtype>std::basic_ostream&lt; Char, Traits &gt; &amp;</paramtype></parameter><parameter name="u"><paramtype>const <classname>unit</classname>&lt; Dimension, System &gt; &amp;</paramtype></parameter><description><para>Print a <computeroutput>unit</computeroutput> as a list of base units and their exponents. for @c symbol_format outputs e.g. "m s^-1" or "J".
+for @c name_format  outputs e.g. "meter second^-1" or "joule".
+for @c raw_format  outputs e.g. "m s^-1" or "meter kilogram^2 second^-2".
+for @c typename_format  outputs the typename itself (currently demangled only on GCC).   </para></description></function>
 <function name="operator&lt;&lt;"><type>std::basic_ostream&lt; Char, Traits &gt; &amp;</type><template>
           <template-type-parameter name="Char"/>
           <template-type-parameter name="Traits"/>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="T"/>
         </template><parameter name="os"><paramtype>std::basic_ostream&lt; Char, Traits &gt; &amp;</paramtype></parameter><parameter name="q"><paramtype>const <classname>quantity</classname>&lt; Unit, T &gt; &amp;</paramtype></parameter><purpose>Print a <computeroutput>quantity</computeroutput>. </purpose><description><para>Prints the value followed by the unit. If the engineering_prefix, or binary_prefix is set, tries to scale the value appropriately. For example, it might print 12.345 km instead of 12345 m. (Note does <emphasis role="bold">not</emphasis> attempt to automatically scale scalars like double, float...) </para></description></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -2450,7 +2475,9 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a valid <computeroutput>dim</computeroutput>. </purpose></struct><struct-specialization name="is_dim"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="V"/>
-    </template><specialization><template-arg>dim&lt; T</template-arg><template-arg>V &gt;</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>dim&lt; T</template-arg><template-arg>V &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -2585,8 +2612,10 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a valid dimension list. </purpose></struct><struct-specialization name="is_dimension_list"><template>
       <template-type-parameter name="Item"/>
       <template-type-parameter name="Next"/>
-    </template><specialization><template-arg>list&lt; Item</template-arg><template-arg>Next &gt;</template-arg></specialization></struct-specialization><struct-specialization name="is_dimension_list"><template>
-    </template><specialization><template-arg>dimensionless_type</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>list&lt; Item</template-arg><template-arg>Next &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct-specialization name="is_dimension_list"><template>
+    </template><specialization><template-arg>dimensionless_type</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -2720,10 +2749,12 @@
       <template-type-parameter name="T"/>
     </template><inherit access="public">false_</inherit></struct><struct-specialization name="is_dimensionless"><template>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>unit&lt; dimensionless_type</template-arg><template-arg>System &gt;</template-arg></specialization><purpose>Check if a unit is dimensionless. </purpose></struct-specialization><struct-specialization name="is_dimensionless"><template>
+    </template><specialization><template-arg>unit&lt; dimensionless_type</template-arg><template-arg>System &gt;</template-arg></specialization><inherit access="public">true_</inherit><purpose>Check if a unit is dimensionless. </purpose></struct-specialization><struct-specialization name="is_dimensionless"><template>
       <template-type-parameter name="Unit"/>
       <template-type-parameter name="Y"/>
     </template><specialization><template-arg>quantity&lt; Unit</template-arg><template-arg>Y &gt;</template-arg></specialization><inherit access="public">boost::units::is_dimensionless&lt; Unit &gt;</inherit><purpose>Check if a quantity is dimensionless. </purpose></struct-specialization>
+
+
 
 
 
@@ -2979,6 +3010,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -2988,6 +3021,8 @@
 <struct name="is_dimensionless_unit"><template>
       <template-type-parameter name="T"/>
     </template><inherit access="public">boost::units::is_unit_of_dimension&lt; T, dimensionless_type &gt;</inherit><purpose>Check that a type is a dimensionless unit. </purpose></struct>
+
+
 
 
 
@@ -3122,7 +3157,9 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a quantity. </purpose></struct><struct-specialization name="is_quantity"><template>
       <template-type-parameter name="Unit"/>
       <template-type-parameter name="Y"/>
-    </template><specialization><template-arg>quantity&lt; Unit</template-arg><template-arg>Y &gt;</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>quantity&lt; Unit</template-arg><template-arg>Y &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -3383,6 +3420,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -3520,6 +3559,8 @@
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -3531,7 +3572,9 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a unit. </purpose></struct><struct-specialization name="is_unit"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -3667,10 +3710,12 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a unit of the specified dimension. </purpose></struct><struct-specialization name="is_unit_of_dimension"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>Dim</template-arg></specialization></struct-specialization><struct-specialization name="is_unit_of_dimension"><template>
+    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>Dim</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct-specialization name="is_unit_of_dimension"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>absolute&lt; unit&lt; Dim</template-arg><template-arg>System &gt; &gt;</template-arg><template-arg>Dim</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>absolute&lt; unit&lt; Dim</template-arg><template-arg>System &gt; &gt;</template-arg><template-arg>Dim</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -3806,10 +3851,12 @@
     </template><inherit access="public">false_</inherit><purpose>Check that a type is a unit in a specified system. </purpose></struct><struct-specialization name="is_unit_of_system"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>System</template-arg></specialization></struct-specialization><struct-specialization name="is_unit_of_system"><template>
+    </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>System</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><struct-specialization name="is_unit_of_system"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
-    </template><specialization><template-arg>absolute&lt; unit&lt; Dim</template-arg><template-arg>System &gt; &gt;</template-arg><template-arg>System</template-arg></specialization></struct-specialization>
+    </template><specialization><template-arg>absolute&lt; unit&lt; Dim</template-arg><template-arg>System &gt; &gt;</template-arg><template-arg>System</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization>
+
+
 
 
 
@@ -4149,6 +4196,37 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <function name="operator*"><type>const <classname>multiply_typeof_helper</classname>&lt; <classname>boost::units::unit</classname>&lt; Dim, System &gt;, boost::lambda::lambda_functor&lt; Arg &gt; &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Dim"/>
@@ -4258,35 +4336,6 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </namespace>
 </namespace>
 </header>
@@ -4296,39 +4345,39 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
       <template-type-parameter name="Unit"/>
       <template-type-parameter name="T"/>
     </template><specialization><template-arg>::boost::units::quantity&lt; Unit</template-arg><template-arg>T &gt;</template-arg></specialization><typedef name="quantity_type"><type>::<classname>boost::units::quantity</classname>&lt; Unit, T &gt;</type></typedef>
-<data-member name="is_specialized" specifiers="static"><type>const bool</type></data-member>
-<data-member name="digits" specifiers="static"><type>const int</type></data-member>
-<data-member name="digits10" specifiers="static"><type>const int</type></data-member>
-<data-member name="max_digits10" specifiers="static"><type>const int</type></data-member>
-<data-member name="is_signed" specifiers="static"><type>const bool</type></data-member>
-<data-member name="is_integer" specifiers="static"><type>const bool</type></data-member>
-<data-member name="is_exact" specifiers="static"><type>const bool</type></data-member>
-<data-member name="radix" specifiers="static"><type>const int</type></data-member>
-<data-member name="min_exponent" specifiers="static"><type>const int</type></data-member>
-<data-member name="min_exponent10" specifiers="static"><type>const int</type></data-member>
-<data-member name="max_exponent" specifiers="static"><type>const int</type></data-member>
-<data-member name="max_exponent10" specifiers="static"><type>const int</type></data-member>
-<data-member name="has_infinity" specifiers="static"><type>const bool</type></data-member>
-<data-member name="has_quiet_NaN" specifiers="static"><type>const bool</type></data-member>
-<data-member name="has_signaling_NaN" specifiers="static"><type>const bool</type></data-member>
-<data-member name="has_denorm_loss" specifiers="static"><type>const bool</type></data-member>
-<data-member name="is_iec559" specifiers="static"><type>const bool</type></data-member>
-<data-member name="is_bounded" specifiers="static"><type>const bool</type></data-member>
-<data-member name="is_modulo" specifiers="static"><type>const bool</type></data-member>
-<data-member name="traps" specifiers="static"><type>const bool</type></data-member>
-<data-member name="tinyness_before" specifiers="static"><type>const bool</type></data-member>
-<data-member name="has_denorm" specifiers="static"><type>const float_denorm_style</type></data-member>
-<data-member name="round_style" specifiers="static"><type>const float_round_style</type></data-member>
+<data-member name="is_specialized"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="digits"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="digits10"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="max_digits10"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="is_signed"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="is_integer"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="is_exact"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="radix"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="min_exponent"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="min_exponent10"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="max_exponent"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="max_exponent10"><type>BOOST_STATIC_CONSTEXPR int</type></data-member>
+<data-member name="has_infinity"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="has_quiet_NaN"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="has_signaling_NaN"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="has_denorm_loss"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="is_iec559"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="is_bounded"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="is_modulo"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="traps"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="tinyness_before"><type>BOOST_STATIC_CONSTEXPR bool</type></data-member>
+<data-member name="has_denorm"><type>BOOST_STATIC_CONSTEXPR float_denorm_style</type></data-member>
+<data-member name="round_style"><type>BOOST_STATIC_CONSTEXPR float_round_style</type></data-member>
 <method-group name="public static functions">
-<method name="min" specifiers="static"><type>quantity_type()</type></method>
-<method name="max" specifiers="static"><type>quantity_type()</type></method>
-<method name="lowest" specifiers="static"><type>quantity_type()</type></method>
-<method name="epsilon" specifiers="static"><type>quantity_type</type></method>
-<method name="round_error" specifiers="static"><type>quantity_type</type></method>
-<method name="infinity" specifiers="static"><type>quantity_type</type></method>
-<method name="quiet_NaN" specifiers="static"><type>quantity_type</type></method>
-<method name="signaling_NaN" specifiers="static"><type>quantity_type</type></method>
-<method name="denorm_min" specifiers="static"><type>quantity_type</type></method>
+<method name="min" specifiers="static"><type>BOOST_CONSTEXPR quantity_type()</type></method>
+<method name="max" specifiers="static"><type>BOOST_CONSTEXPR quantity_type()</type></method>
+<method name="lowest" specifiers="static"><type>BOOST_CONSTEXPR quantity_type()</type></method>
+<method name="epsilon" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
+<method name="round_error" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
+<method name="infinity" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
+<method name="quiet_NaN" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
+<method name="signaling_NaN" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
+<method name="denorm_min" specifiers="static"><type>BOOST_CONSTEXPR quantity_type</type></method>
 </method-group>
 </class-specialization></namespace>
 </header>
@@ -4352,6 +4401,8 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
       <template-nontype-parameter name="Base"><type>long</type></template-nontype-parameter>
     </template><specialization><template-arg>unit&lt; Dimension</template-arg><template-arg>heterogeneous_system&lt; heterogeneous_system_impl&lt; UnitList</template-arg><template-arg>Dimension</template-arg><template-arg>OldScale &gt; &gt; &gt;</template-arg><template-arg>scale&lt; Base</template-arg><template-arg>static_rational&lt; 0 &gt; &gt;</template-arg></specialization><typedef name="type"><type><classname>unit</classname>&lt; Dimension, <classname>heterogeneous_system</classname>&lt; <classname>heterogeneous_system_impl</classname>&lt; UnitList, Dimension, OldScale &gt; &gt; &gt;</type></typedef>
 </struct-specialization>
+
+
 
 
 
@@ -4612,6 +4663,8 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -4653,20 +4706,22 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 <method name="typeof"><type>typedef</type><parameter name=""><paramtype>(typeof_::make&lt; X &gt;()/typeof_::make&lt; Y &gt;())</paramtype></parameter></method>
 </method-group>
 </struct><struct name="power_typeof_helper"><template>
-      <template-type-parameter name="BaseType"/>
-      <template-type-parameter name="Exponent"/>
+      <template-type-parameter name="X"/>
+      <template-type-parameter name="Y"/>
     </template><description><para>A helper used by <computeroutput>pow</computeroutput> to raise a runtime object to a compile time known exponent. This template is intended to be specialized. All specializations must conform to the interface shown here. <computeroutput>Exponent</computeroutput> will be either the exponent passed to <computeroutput>pow</computeroutput> or <computeroutput>static_rational&lt;N&gt;</computeroutput> for and integer argument, N. </para></description><typedef name="type"><purpose>specifies the result type </purpose><type><emphasis>unspecified</emphasis></type></typedef>
 <method-group name="public static functions">
-<method name="value" specifiers="static"><type>type</type><parameter name="base"><paramtype>const BaseType &amp;</paramtype></parameter><purpose>Carries out the runtime calculation. </purpose></method>
+<method name="value" specifiers="static"><type>BOOST_CONSTEXPR type</type><parameter name="base"><paramtype>const BaseType &amp;</paramtype></parameter><purpose>Carries out the runtime calculation. </purpose></method>
 </method-group>
 </struct><struct name="root_typeof_helper"><template>
-      <template-type-parameter name="Radicand"/>
-      <template-type-parameter name="Index"/>
+      <template-type-parameter name="X"/>
+      <template-type-parameter name="Y"/>
     </template><description><para>A helper used by <computeroutput>root</computeroutput> to take a root of a runtime object using a compile time known index. This template is intended to be specialized. All specializations must conform to the interface shown here. <computeroutput>Index</computeroutput> will be either the type passed to <computeroutput>pow</computeroutput> or <computeroutput>static_rational&lt;N&gt;</computeroutput> for and integer argument, N. </para></description><typedef name="type"><purpose>specifies the result type </purpose><type><emphasis>unspecified</emphasis></type></typedef>
 <method-group name="public static functions">
-<method name="value" specifiers="static"><type>type</type><parameter name="base"><paramtype>const Radicand &amp;</paramtype></parameter><purpose>Carries out the runtime calculation. </purpose></method>
+<method name="value" specifiers="static"><type>BOOST_CONSTEXPR type</type><parameter name="base"><paramtype>const Radicand &amp;</paramtype></parameter><purpose>Carries out the runtime calculation. </purpose></method>
 </method-group>
 </struct>
+
+
 
 
 
@@ -4813,34 +4868,42 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
-<function name="pow"><type><classname>power_typeof_helper</classname>&lt; Y, Rat &gt;::type</type><template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="pow"><type>BOOST_CONSTEXPR <classname>power_typeof_helper</classname>&lt; Y, Rat &gt;::type</type><template>
           <template-type-parameter name="Rat"/>
           <template-type-parameter name="Y"/>
-        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>raise a value to a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> power. </purpose><description><para>raise a value to an integer power. </para></description></function>
-<function name="root"><type><classname>root_typeof_helper</classname>&lt; Y, Rat &gt;::type</type><template>
+        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>raise a value to a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> power. </purpose></function>
+<function name="pow"><type>BOOST_CONSTEXPR <classname>power_typeof_helper</classname>&lt; Y, <classname>static_rational</classname>&lt; N &gt; &gt;::type</type><template>
+          <template-nontype-parameter name="N"><type>long</type></template-nontype-parameter>
+          <template-type-parameter name="Y"/>
+        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>raise a value to an integer power. </purpose></function>
+<function name="root"><type>BOOST_CONSTEXPR <classname>root_typeof_helper</classname>&lt; Y, Rat &gt;::type</type><template>
           <template-type-parameter name="Rat"/>
           <template-type-parameter name="Y"/>
-        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>take the <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> root of a value. </purpose><description><para>take the integer root of a value. </para></description></function>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>take the <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> root of a value. </purpose></function>
+<function name="root"><type>BOOST_CONSTEXPR <classname>root_typeof_helper</classname>&lt; Y, <classname>static_rational</classname>&lt; N &gt; &gt;::type</type><template>
+          <template-nontype-parameter name="N"><type>long</type></template-nontype-parameter>
+          <template-type-parameter name="Y"/>
+        </template><parameter name="x"><paramtype>const Y &amp;</paramtype></parameter><purpose>take the integer root of a value. </purpose></function>
 
 
 
@@ -4942,37 +5005,37 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 <method name="BOOST_MPL_ASSERT_NOT"><type/><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype></parameter></method>
 </method-group>
 <method-group name="public member functions">
-<method name="value" cv="const"><type>const value_type &amp;</type><purpose>constant accessor to value </purpose><description><para>can add a quantity of the same type if add_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </para></description></method>
-<method name="operator+="><type>this_type &amp;</type><template>
+<method name="value" cv="const"><type>BOOST_CONSTEXPR const value_type &amp;</type><purpose>constant accessor to value </purpose><description><para>can add a quantity of the same type if add_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </para></description></method>
+<method name="operator+="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter><purpose>can subtract a quantity of the same type if subtract_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator-="><type>this_type &amp;</type><template>
+<method name="operator-="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter></method>
-<method name="operator*="><type>this_type &amp;</type><template>
+<method name="operator*="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter></method>
-<method name="operator/="><type>this_type &amp;</type><template>
+<method name="operator/="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter><purpose>can multiply a quantity by a scalar value_type if multiply_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator*="><type>this_type &amp;</type><parameter name="source"><paramtype>const value_type &amp;</paramtype></parameter><purpose>can divide a quantity by a scalar value_type if divide_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator/="><type>this_type &amp;</type><parameter name="source"><paramtype>const value_type &amp;</paramtype></parameter></method>
+<method name="operator*="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const value_type &amp;</paramtype></parameter><purpose>can divide a quantity by a scalar value_type if divide_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
+<method name="operator/="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const value_type &amp;</paramtype></parameter></method>
 </method-group>
 <constructor/>
 <constructor><parameter name=""><paramtype>unspecified_null_pointer_constant_type</paramtype></parameter></constructor>
 <constructor><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></constructor>
-<copy-assignment><type>this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
 <constructor><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit, YY &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><purpose>implicit conversion between value types is allowed if allowed for value types themselves </purpose></constructor>
 <constructor specifiers="explicit"><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit, YY &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><purpose>implicit conversion between value types is not allowed if not allowed for value types themselves </purpose></constructor>
-<copy-assignment><type>this_type &amp;</type><template>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit, YY &gt; &amp;</paramtype></parameter><purpose>implicit assignment between value types is allowed if allowed for value types themselves </purpose></copy-assignment>
 <constructor specifiers="explicit"><template>
@@ -4983,12 +5046,12 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><purpose>implicit conversion between different unit systems is allowed if each fundamental dimension is implicitly convertible </purpose></constructor>
-<copy-assignment><type>this_type &amp;</type><template>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; Unit2, YY &gt; &amp;</paramtype></parameter><purpose>implicit assignment between different unit systems is allowed if each fundamental dimension is implicitly convertible </purpose></copy-assignment>
 <method-group name="public static functions">
-<method name="from_value" specifiers="static"><type>this_type</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Construct quantity directly from <computeroutput>value_type</computeroutput> (potentially dangerous). </purpose></method>
+<method name="from_value" specifiers="static"><type>BOOST_CONSTEXPR this_type</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Construct quantity directly from <computeroutput>value_type</computeroutput> (potentially dangerous). </purpose></method>
 </method-group>
 <method-group name="protected member functions">
 </method-group>
@@ -5002,24 +5065,24 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 <typedef name="dimension_type"><type><classname>dimensionless_type</classname></type></typedef>
 <typedef name="unit_type"><type><classname>unit</classname>&lt; dimension_type, system_type &gt;</type></typedef>
 <method-group name="public member functions">
-<method name="conversion-operator" cv="const"><type>value_type</type><purpose>implicit conversion to <computeroutput>value_type</computeroutput> is allowed </purpose></method>
-<method name="value" cv="const"><type>const value_type &amp;</type><purpose>constant accessor to value </purpose><description><para>can add a quantity of the same type if add_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </para></description></method>
-<method name="operator+="><type>this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter><purpose>can subtract a quantity of the same type if subtract_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator-="><type>this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter><purpose>can multiply a quantity by a scalar value_type if multiply_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator*="><type>this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>can divide a quantity by a scalar value_type if divide_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
-<method name="operator/="><type>this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
+<method name="operator value_type" cv="const"><type>BOOST_CONSTEXPR</type><purpose>implicit conversion to <computeroutput>value_type</computeroutput> is allowed </purpose></method>
+<method name="value" cv="const"><type>BOOST_CONSTEXPR const value_type &amp;</type><purpose>constant accessor to value </purpose><description><para>can add a quantity of the same type if add_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </para></description></method>
+<method name="operator+="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter><purpose>can subtract a quantity of the same type if subtract_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
+<method name="operator-="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter><purpose>can multiply a quantity by a scalar value_type if multiply_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
+<method name="operator*="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>can divide a quantity by a scalar value_type if divide_typeof_helper&lt;value_type,value_type&gt;::type is convertible to value_type </purpose></method>
+<method name="operator/="><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter></method>
 </method-group>
 <constructor/>
 <constructor><parameter name="val"><paramtype>value_type</paramtype></parameter><purpose>construction from raw <computeroutput>value_type</computeroutput> is allowed </purpose></constructor>
 <constructor><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></constructor>
-<copy-assignment><type>this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name="source"><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
 <constructor><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; dimension_type, system_type &gt;, YY &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><purpose>implicit conversion between value types is allowed if allowed for value types themselves </purpose></constructor>
 <constructor specifiers="explicit"><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; dimension_type, system_type &gt;, YY &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><purpose>implicit conversion between value types is not allowed if not allowed for value types themselves </purpose></constructor>
-<copy-assignment><type>this_type &amp;</type><template>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="YY"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; dimension_type, system_type &gt;, YY &gt; &amp;</paramtype></parameter><purpose>implicit assignment between value types is allowed if allowed for value types themselves </purpose></copy-assignment>
 <constructor><template>
@@ -5034,11 +5097,11 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
           <template-type-parameter name="System2"/>
           <template-type-parameter name="Y2"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; <classname>unit</classname>&lt; <classname>dimensionless_type</classname>, System2 &gt;, Y2 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><description><para>conversion between different unit systems is explicit when the units are not equivalent. </para></description></constructor>
-<copy-assignment><type>this_type &amp;</type><template>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><template>
           <template-type-parameter name="System2"/>
         </template><parameter name="source"><paramtype>const <classname>quantity</classname>&lt; BOOST_UNITS_DIMENSIONLESS_UNIT(System2), Y &gt; &amp;</paramtype></parameter><purpose>implicit assignment between different unit systems is allowed </purpose></copy-assignment>
 <method-group name="public static functions">
-<method name="from_value" specifiers="static"><type>this_type</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Construct quantity directly from <computeroutput>value_type</computeroutput>. </purpose></method>
+<method name="from_value" specifiers="static"><type>BOOST_CONSTEXPR this_type</type><parameter name="val"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Construct quantity directly from <computeroutput>value_type</computeroutput>. </purpose></method>
 </method-group>
 </class-specialization><struct-specialization name="add_typeof_helper"><template>
       <template-type-parameter name="Dim1"/>
@@ -5081,75 +5144,11 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<function name="quantity_cast"><type>X</type><template>
+<function name="quantity_cast"><type>BOOST_CONSTEXPR X</type><template>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="source"><paramtype>Y &amp;</paramtype></parameter><purpose>quantity_cast provides mutating access to underlying quantity value_type </purpose></function>
-<function name="quantity_cast"><type>X</type><template>
+<function name="quantity_cast"><type>BOOST_CONSTEXPR X</type><template>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="source"><paramtype>const Y &amp;</paramtype></parameter></function>
@@ -5157,123 +5156,189 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype><classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype><classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>swap quantities </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt;, Y &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt;, Y &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Dim"/>
           <template-type-parameter name="Y"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const Y &amp;</paramtype></parameter><purpose>runtime unit divided by scalar </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; Y, <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; Y, <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Dim"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const Y &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter><purpose>runtime scalar times unit </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; Y, <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; Y, <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
           <template-type-parameter name="System"/>
           <template-type-parameter name="Dim"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const Y &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter><purpose>runtime scalar divided by unit </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, X &gt;, X &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, X &gt;, X &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const X &amp;</paramtype></parameter><purpose>runtime quantity times scalar </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; X, <classname>quantity</classname>&lt; Unit, X &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; X, <classname>quantity</classname>&lt; Unit, X &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
         </template><parameter name="lhs"><paramtype>const X &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><purpose>runtime scalar times quantity </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, X &gt;, X &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, X &gt;, X &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const X &amp;</paramtype></parameter><purpose>runtime quantity divided by scalar </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; X, <classname>quantity</classname>&lt; Unit, X &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; X, <classname>quantity</classname>&lt; Unit, X &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
         </template><parameter name="lhs"><paramtype>const X &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><purpose>runtime scalar divided by quantity </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="Y"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime unit times quantity </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="Y"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime unit divided by quantity </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, Y &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, Y &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="System2"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, Y &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime quantity times unit </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, Y &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, Y &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="System2"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, Y &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime quantity divided by unit </purpose></function>
-<function name="operator+"><type><classname>unary_plus_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt; &gt;::type</type><template>
+<function name="operator+"><type>BOOST_CONSTEXPR <classname>unary_plus_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime unary plus quantity </purpose></function>
-<function name="operator-"><type><classname>unary_minus_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt; &gt;::type</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR <classname>unary_minus_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime unary minus quantity </purpose></function>
-<function name="operator+"><type><classname>add_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator+"><type>BOOST_CONSTEXPR <classname>add_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime quantity plus quantity </purpose></function>
-<function name="operator-"><type><classname>subtract_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR <classname>subtract_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime quantity minus quantity </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime quantity times quantity </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>quantity</classname>&lt; Unit1, X &gt;, <classname>quantity</classname>&lt; Unit2, Y &gt; &gt;::type</type><template>
           <template-type-parameter name="Unit1"/>
           <template-type-parameter name="Unit2"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="lhs"><paramtype>const <classname>quantity</classname>&lt; Unit1, X &gt; &amp;</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>quantity</classname>&lt; Unit2, Y &gt; &amp;</paramtype></parameter><purpose>runtime quantity divided by quantity </purpose></function>
-<function name="operator=="><type>bool</type><template>
+<function name="operator=="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator== </purpose></function>
-<function name="operator!="><type>bool</type><template>
+<function name="operator!="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator!= </purpose></function>
-<function name="operator&lt;"><type>bool</type><template>
+<function name="operator&lt;"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator&lt; </purpose></function>
-<function name="operator&lt;="><type>bool</type><template>
+<function name="operator&lt;="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator&lt;= </purpose></function>
-<function name="operator&gt;"><type>bool</type><template>
+<function name="operator&gt;"><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator&gt; </purpose></function>
-<function name="operator&gt;="><type>bool</type><template>
+<function name="operator&gt;="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Unit"/>
           <template-type-parameter name="X"/>
           <template-type-parameter name="Y"/>
         </template><parameter name="val1"><paramtype>const <classname>quantity</classname>&lt; Unit, X &gt; &amp;</paramtype></parameter><parameter name="val2"><paramtype>const <classname>quantity</classname>&lt; Unit, Y &gt; &amp;</paramtype></parameter><purpose>runtime operator&gt;= </purpose></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5430,6 +5495,8 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
+
+
 </namespace>
 </namespace>
 </header>
@@ -5441,11 +5508,20 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
       <template-type-parameter name="Exponent"/>
     </template><description><para>class representing a scaling factor such as 10^3 The exponent must be a static rational. </para></description><typedef name="exponent"><type>Exponent</type></typedef>
 <typedef name="value_type"><type>double</type></typedef>
-<data-member name="base" specifiers="static"><type>const long</type></data-member>
+<data-member name="base"><type>BOOST_STATIC_CONSTEXPR long</type></data-member>
 <method-group name="public static functions">
-<method name="value" specifiers="static"><type>value_type</type></method>
+<method name="value" specifiers="static"><type>BOOST_CONSTEXPR value_type</type></method>
 </method-group>
-</struct><function name="symbol_string"><type>std::string</type><template>
+</struct>
+
+
+
+
+
+
+
+
+<function name="symbol_string"><type>std::string</type><template>
           <template-nontype-parameter name="Base"><type>long</type></template-nontype-parameter>
           <template-type-parameter name="Exponent"/>
         </template><parameter name=""><paramtype>const <classname>scale</classname>&lt; Base, Exponent &gt; &amp;</paramtype></parameter></function>
@@ -5568,20 +5644,22 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
-
-
-
-
-
-
-
 </namespace>
 </namespace>
 </header>
 <header name="boost/units/scaled_base_unit.hpp">
 <namespace name="boost">
 <namespace name="units">
-<struct name="scaled_base_unit"><template>
+<struct name="heterogeneous_system"><template>
+      <template-type-parameter name="T"/>
+    </template><inherit access="public">T</inherit><description><para>A system that can represent any possible combination of units at the expense of not preserving information about how it was created. Do not create specializations of this template directly. Instead use <computeroutput><classname alt="boost::units::reduce_unit">reduce_unit</classname></computeroutput> and <computeroutput>base_unit&lt;...&gt;::unit_type</computeroutput>. </para></description></struct><struct name="base_unit_info"><template>
+      <template-type-parameter name="T"/>
+    </template><purpose>traits template for unit names. </purpose><method-group name="public static functions">
+<method name="name" specifiers="static"><type>std::string</type><purpose>The full name of the unit (returns BaseUnit::name() by default) </purpose></method>
+<method name="symbol" specifiers="static"><type>std::string</type><purpose>The symbol for the base unit (Returns BaseUnit::symbol() by default) </purpose><description><para>
+</para></description><returns><para>BaseUnit::symbol(), for example "m" </para></returns></method>
+</method-group>
+</struct><struct name="scaled_base_unit"><template>
       <template-type-parameter name="S"/>
       <template-type-parameter name="Scale"/>
     </template><typedef name="type"><type><classname>scaled_base_unit</classname></type></typedef>
@@ -5595,6 +5673,8 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 <method name="name" specifiers="static"><type>std::string</type></method>
 </method-group>
 </struct>
+
+
 
 
 
@@ -5739,11 +5819,11 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 <listitem><para><computeroutput>mpl::negate</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::plus</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::minus</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::times</computeroutput> </para></listitem><listitem><para><computeroutput>mpl::divides</computeroutput> </para></listitem></itemizedlist>
 </para><para>Neither <computeroutput><classname alt="boost::units::static_power">static_power</classname></computeroutput> nor <computeroutput><classname alt="boost::units::static_root">static_root</classname></computeroutput> are defined for <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput>. This is because template types may not be floating point values, while powers and roots of rational numbers can produce floating point values. </para></description><typedef name="tag"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="type"><purpose>static_rational&lt;N,D&gt; reduced by GCD </purpose><type><classname>static_rational</classname>&lt; Numerator, Denominator &gt;</type></typedef>
-<data-member name="Numerator" specifiers="static"><type>const integer_type</type></data-member>
-<data-member name="Denominator" specifiers="static"><type>const integer_type</type></data-member>
+<data-member name="Numerator"><type>BOOST_STATIC_CONSTEXPR integer_type</type></data-member>
+<data-member name="Denominator"><type>BOOST_STATIC_CONSTEXPR integer_type</type></data-member>
 <method-group name="public static functions">
-<method name="numerator" specifiers="static"><type>integer_type</type></method>
-<method name="denominator" specifiers="static"><type>integer_type</type></method>
+<method name="numerator" specifiers="static"><type>BOOST_CONSTEXPR integer_type</type></method>
+<method name="denominator" specifiers="static"><type>BOOST_CONSTEXPR integer_type</type></method>
 </method-group>
 <method-group name="public member functions">
 </method-group>
@@ -5757,29 +5837,31 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<function name="value"><type><classname>divide_typeof_helper</classname>&lt; T, T &gt;::type</type><template>
+<function name="value"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; T, T &gt;::type</type><template>
           <template-type-parameter name="T"/>
           <template-nontype-parameter name="N"><type>integer_type</type></template-nontype-parameter>
           <template-nontype-parameter name="D"><type>integer_type</type></template-nontype-parameter>
         </template><parameter name=""><paramtype>const <classname>static_rational</classname>&lt; N, D &gt; &amp;</paramtype></parameter><purpose>get decimal value of <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> </purpose></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5895,7 +5977,7 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
 </method-group>
 <constructor/>
 <constructor><parameter name=""><paramtype>const this_type &amp;</paramtype></parameter></constructor>
-<copy-assignment><type>this_type &amp;</type><parameter name=""><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment><type>BOOST_CXX14_CONSTEXPR this_type &amp;</type><parameter name=""><paramtype>const this_type &amp;</paramtype></parameter></copy-assignment>
 </class><struct-specialization name="reduce_unit"><template>
       <template-type-parameter name="Dim"/>
       <template-type-parameter name="System"/>
@@ -5907,7 +5989,7 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
       <template-nontype-parameter name="D"><type>long</type></template-nontype-parameter>
     </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>static_rational&lt; N</template-arg><template-arg>D &gt;</template-arg></specialization><purpose>raise unit to a <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> power </purpose><typedef name="type"><type><classname>unit</classname>&lt; typename <classname>static_power</classname>&lt; Dim, <classname>static_rational</classname>&lt; N, D &gt; &gt;::type, typename <classname>static_power</classname>&lt; System, <classname>static_rational</classname>&lt; N, D &gt; &gt;::type &gt;</type></typedef>
 <method-group name="public static functions">
-<method name="value" specifiers="static"><type>type</type><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter></method>
+<method name="value" specifiers="static"><type>BOOST_CONSTEXPR type</type><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="root_typeof_helper"><template>
       <template-type-parameter name="Dim"/>
@@ -5916,54 +5998,56 @@ Boost.Lambda's return type deduction system is extented to make use of Boost.Uni
       <template-nontype-parameter name="D"><type>long</type></template-nontype-parameter>
     </template><specialization><template-arg>unit&lt; Dim</template-arg><template-arg>System &gt;</template-arg><template-arg>static_rational&lt; N</template-arg><template-arg>D &gt;</template-arg></specialization><purpose>take the <computeroutput><classname alt="boost::units::static_rational">static_rational</classname></computeroutput> root of a unit </purpose><typedef name="type"><type><classname>unit</classname>&lt; typename <classname>static_root</classname>&lt; Dim, <classname>static_rational</classname>&lt; N, D &gt; &gt;::type, typename <classname>static_root</classname>&lt; System, <classname>static_rational</classname>&lt; N, D &gt; &gt;::type &gt;</type></typedef>
 <method-group name="public static functions">
-<method name="value" specifiers="static"><type>type</type><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter></method>
+<method name="value" specifiers="static"><type>BOOST_CONSTEXPR type</type><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter></method>
 </method-group>
-</struct-specialization>
-
-<function name="operator+"><type><classname>unary_plus_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
+</struct-specialization><function name="operator+"><type>BOOST_CONSTEXPR <classname>unary_plus_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim"/>
           <template-type-parameter name="System"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter><purpose>unit runtime unary plus </purpose></function>
-<function name="operator-"><type><classname>unary_minus_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR <classname>unary_minus_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim, System &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim"/>
           <template-type-parameter name="System"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim, System &gt; &amp;</paramtype></parameter><purpose>unit runtime unary minus </purpose></function>
-<function name="operator+"><type><classname>add_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator+"><type>BOOST_CONSTEXPR <classname>add_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime add two units </purpose></function>
-<function name="operator-"><type><classname>subtract_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator-"><type>BOOST_CONSTEXPR <classname>subtract_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime subtract two units </purpose></function>
-<function name="operator*"><type><classname>multiply_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator*"><type>BOOST_CONSTEXPR <classname>multiply_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime multiply two units </purpose></function>
-<function name="operator/"><type><classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
+<function name="operator/"><type>BOOST_CONSTEXPR <classname>divide_typeof_helper</classname>&lt; <classname>unit</classname>&lt; Dim1, System1 &gt;, <classname>unit</classname>&lt; Dim2, System2 &gt; &gt;::type</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>runtime divide two units </purpose></function>
-<function name="operator=="><type>bool</type><template>
+<function name="operator=="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>unit runtime <computeroutput>operator==</computeroutput> </purpose></function>
-<function name="operator!="><type>bool</type><template>
+<function name="operator!="><type>BOOST_CONSTEXPR bool</type><template>
           <template-type-parameter name="Dim1"/>
           <template-type-parameter name="Dim2"/>
           <template-type-parameter name="System1"/>
           <template-type-parameter name="System2"/>
         </template><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim1, System1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>unit</classname>&lt; Dim2, System2 &gt; &amp;</paramtype></parameter><purpose>unit runtime <computeroutput>operator!=</computeroutput> </purpose></function>
+
+
+
+
 
 
 

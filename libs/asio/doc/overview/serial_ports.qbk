@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,7 @@
 Boost.Asio includes classes for creating and manipulating serial ports in a portable
 manner. For example, a serial port may be opened using:
 
-  serial_port port(my_io_service, name);
+  serial_port port(my_io_context, name);
 
 where name is something like `"COM1"` on Windows, and `"/dev/ttyS0"` on POSIX
 platforms.
@@ -29,8 +29,6 @@ port's baud rate, flow control type, parity, stop bits and character size.
 
 [link boost_asio.reference.serial_port serial_port],
 [link boost_asio.reference.serial_port_base serial_port_base],
-[link boost_asio.reference.basic_serial_port basic_serial_port],
-[link boost_asio.reference.serial_port_service serial_port_service],
 [link boost_asio.reference.serial_port_base__baud_rate serial_port_base::baud_rate],
 [link boost_asio.reference.serial_port_base__flow_control serial_port_base::flow_control],
 [link boost_asio.reference.serial_port_base__parity serial_port_base::parity],

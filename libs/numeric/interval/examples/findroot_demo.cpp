@@ -40,6 +40,7 @@
 */
 
 #include <boost/numeric/interval.hpp>    // must be first for <limits> workaround
+#include <boost/numeric/interval/io.hpp> 
 #include <list>
 #include <deque>
 #include <vector>

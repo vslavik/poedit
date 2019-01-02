@@ -2,7 +2,7 @@
 // third_party_lib.cpp
 // ~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -83,9 +83,9 @@ class connection
 public:
   typedef boost::shared_ptr<connection> pointer;
 
-  static pointer create(boost::asio::io_service& io_service)
+  static pointer create(boost::asio::io_context& io_context)
   {
-    return pointer(new connection(io_service));
+    return pointer(new connection(io_context));
   }
 
   tcp::socket& socket()
@@ -102,8 +102,8 @@ public:
   }
 
 private:
-  connection(boost::asio::io_service& io_service)
-    : socket_(io_service),
+  connection(boost::asio::io_context& io_context)
+    : socket_(io_context),
       session_impl_(socket_),
       read_in_progress_(false),
       write_in_progress_(false)
@@ -116,8 +116,7 @@ private:
     if (session_impl_.want_read() && !read_in_progress_)
     {
       read_in_progress_ = true;
-      socket_.async_read_some(
-          boost::asio::null_buffers(),
+      socket_.async_wait(tcp::socket::wait_read,
           boost::bind(&connection::handle_read,
             shared_from_this(),
             boost::asio::placeholders::error));
@@ -127,8 +126,7 @@ private:
     if (session_impl_.want_write() && !write_in_progress_)
     {
       write_in_progress_ = true;
-      socket_.async_write_some(
-          boost::asio::null_buffers(),
+      socket_.async_wait(tcp::socket::wait_write,
           boost::bind(&connection::handle_write,
             shared_from_this(),
             boost::asio::placeholders::error));
@@ -185,8 +183,8 @@ private:
 class server
 {
 public:
-  server(boost::asio::io_service& io_service, unsigned short port)
-    : acceptor_(io_service, tcp::endpoint(tcp::v4(), port))
+  server(boost::asio::io_context& io_context, unsigned short port)
+    : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
   {
     start_accept();
   }
@@ -195,7 +193,7 @@ private:
   void start_accept()
   {
     connection::pointer new_connection =
-      connection::create(acceptor_.get_io_service());
+      connection::create(acceptor_.get_executor().context());
 
     acceptor_.async_accept(new_connection->socket(),
         boost::bind(&server::handle_accept, this, new_connection,
@@ -226,12 +224,12 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     using namespace std; // For atoi.
-    server s(io_service, atoi(argv[1]));
+    server s(io_context, atoi(argv[1]));
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

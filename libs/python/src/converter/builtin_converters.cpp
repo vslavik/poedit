@@ -45,10 +45,15 @@ namespace
   {
       return PyString_Check(obj) ? PyString_AsString(obj) : 0;
   }
-#else
+#elif PY_VERSION_HEX < 0x03070000
   void* convert_to_cstring(PyObject* obj)
   {
       return PyUnicode_Check(obj) ? _PyUnicode_AsString(obj) : 0;
+  }
+#else
+  void* convert_to_cstring(PyObject* obj)
+  {
+      return PyUnicode_Check(obj) ? const_cast<void*>(reinterpret_cast<const void*>(_PyUnicode_AsString(obj))) : 0;
   }
 #endif
 
@@ -430,6 +435,22 @@ namespace
       // Remember that this will be used to construct the result object 
       static std::wstring extract(PyObject* intermediate)
       {
+          // On Windows, with Python >= 3.3, PyObject_Length cannot be used to get
+          // the size of the wchar_t string, because it will count the number of
+          // *code points*, but some characters not on the BMP will use two UTF-16
+          // *code units* (surrogate pairs).
+          // This is not a problem on Unix, since wchar_t is 32-bit.
+#if defined(_WIN32) && PY_VERSION_HEX >= 0x03030000
+          BOOST_STATIC_ASSERT(sizeof(wchar_t) == 2);
+
+          Py_ssize_t size = 0;
+          wchar_t *buf = PyUnicode_AsWideCharString(intermediate, &size);
+          if (buf == NULL) {
+              boost::python::throw_error_already_set();
+          }
+          std::wstring result(buf, size);
+          PyMem_Free(buf);
+#else
           std::wstring result(::PyObject_Length(intermediate), L' ');
           if (!result.empty())
           {
@@ -444,6 +465,7 @@ namespace
               if (err == -1)
                   throw_error_already_set();
           }
+#endif
           return result;
       }
       static PyTypeObject const* get_pytype() { return &PyUnicode_Type;}

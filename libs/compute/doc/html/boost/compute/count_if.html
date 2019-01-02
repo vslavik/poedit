@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template count_if</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.count_if_hpp" title="Header &lt;boost/compute/algorithm/count_if.hpp&gt;">
 <link rel="prev" href="count.html" title="Function template count">
@@ -37,8 +37,10 @@
                   <span class="identifier">Predicate</span> predicate<span class="special">,</span> 
                   <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp65011280"></a><h2>Description</h2>
-<p>Returns the number of elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) for which <code class="computeroutput">predicate</code> returns <code class="computeroutput">true</code>. </p>
+<a name="idp79384688"></a><h2>Description</h2>
+<p>Returns the number of elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) for which <code class="computeroutput">predicate</code> returns <code class="computeroutput">true</code>.</p>
+<p>Space complexity on CPUs: (1)<br>
+ Space complexity on GPUs: (n) </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

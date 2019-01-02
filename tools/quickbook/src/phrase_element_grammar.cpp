@@ -8,18 +8,18 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include "grammar_impl.hpp"
-#include "state.hpp"
-#include "actions.hpp"
-#include "utils.hpp"
-#include "phrase_tags.hpp"
-#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
 #include <boost/spirit/include/classic_clear_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_if.hpp>
-#include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_casts.hpp>
-#include <boost/foreach.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include "actions.hpp"
+#include "for.hpp"
+#include "grammar_impl.hpp"
+#include "phrase_tags.hpp"
+#include "state.hpp"
+#include "utils.hpp"
 
 namespace quickbook
 {
@@ -27,28 +27,29 @@ namespace quickbook
 
     struct phrase_element_grammar_local
     {
-        cl::rule<scanner>
-                        image, anchor, link, empty, cond_phrase, inner_phrase,
-                        role, source_mode
-                        ;
+        cl::rule<scanner> image, anchor, link, empty, cond_phrase, inner_phrase,
+            role, source_mode;
     };
 
     void quickbook_grammar::impl::init_phrase_elements()
     {
-        phrase_element_grammar_local& local = cleanup_.add(
-            new phrase_element_grammar_local);
+        phrase_element_grammar_local& local =
+            cleanup_.add(new phrase_element_grammar_local);
 
         error_action error(state);
         raw_char_action raw_char(state);
         scoped_parser<cond_phrase_push> scoped_cond_phrase(state);
         scoped_parser<to_value_scoped_action> to_value(state);
 
+        // clang-format off
+
         elements.add
             ("?", element_info(element_info::phrase, &local.cond_phrase))
             ;
 
         local.cond_phrase =
-                blank
+                ( !(qbk_ver(107u) >> "!") )     [state.values.entry(ph::arg1, ph::arg2)]
+            >>  blank
             >>  macro_identifier                [state.values.entry(ph::arg1, ph::arg2)]
             >>  scoped_cond_phrase() [extended_phrase]
             ;
@@ -177,7 +178,7 @@ namespace quickbook
                 cl::eps_p                           [state.values.entry(ph::arg1, ph::arg2)]
             >>  source_modes                        [state.values.entry(ph::arg1)];
 
-        BOOST_FOREACH(int tag, source_mode_tags::tags()) {
+        QUICKBOOK_FOR(int tag, source_mode_tags::tags()) {
             source_modes.add(source_mode_tags::name(tag), tag);
             elements.add(source_mode_tags::name(tag),
                 element_info(element_info::phrase, &local.empty, tag));
@@ -204,5 +205,7 @@ namespace quickbook
                 blank
             >>  to_value() [ paragraph_phrase ]
             ;
+
+        // clang-format on
     }
 }

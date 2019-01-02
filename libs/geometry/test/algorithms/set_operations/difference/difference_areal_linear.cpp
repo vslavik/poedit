@@ -3,8 +3,8 @@
 
 // Copyright (c) 2010-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2017.
+// Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -202,6 +202,36 @@ void test_areal_linear()
         "LINESTRING(-1 -1,10 10)",
         "POLYGON((5 5,15 15,15 5,5 5))",
         1, 2, 6 * std::sqrt(2.0));
+
+    test_one_lp<LineString, LineString, Polygon>("case37_1",
+        "LINESTRING(1 1,2 2)",
+        "POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))",
+        1, 2, std::sqrt(2.0));
+
+    test_one_lp<LineString, LineString, Polygon>("case37_2",
+        "LINESTRING(1 1,2 2,3 3)",
+        "POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))",
+        1, 2, std::sqrt(2.0));
+
+    test_one_lp<LineString, LineString, Polygon>("case38",
+        "LINESTRING(0 0,1 1,2 2,3 3)",
+        "POLYGON((0 0,0 9,9 9,9 0,0 0),(0 0,2 1,2 2,1 2,0 0))",
+        1, 3, 2 * std::sqrt(2.0));
+
+    // several linestrings are in the output, the result is geometrically correct
+    // still single linestring could be generated
+    test_one_lp<LineString, LineString, Polygon>("case39",
+        "LINESTRING(0 0,1 1,2 2,3 3)",
+        "POLYGON((0 0,0 9,9 9,9 0,0 0),(0 0,2 1,2 2,1 2,0 0),(2 2,3 2,3 3,2 3,2 2))",
+        2, 5, 3 * std::sqrt(2.0));
+    test_one_lp<LineString, LineString, Polygon>("case40",
+        "LINESTRING(0 0,1 1,2 2,4 4)",
+        "POLYGON((0 0,0 9,9 9,9 0,0 0),(0 0,2 1,2 2,1 2,0 0),(2 2,3 2,3 3,2 3,2 2))",
+        2, 5, 3 * std::sqrt(2.0));
+    test_one_lp<LineString, LineString, Polygon>("case41",
+        "LINESTRING(0 0,1 1,2 2,9 9)",
+        "POLYGON((0 0,0 9,9 9,9 0,0 0),(0 0,2 1,2 2,1 2,0 0),(2 2,3 2,3 3,2 3,2 2),(7 7,8 7,9 9,7 8,7 7))",
+        3, 7, 5 * std::sqrt(2.0));
 }
 
 template <typename P>

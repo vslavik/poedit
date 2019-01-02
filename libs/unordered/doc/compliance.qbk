@@ -2,7 +2,13 @@
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) ]
 
-[section:compliance C++11 Compliance]
+[section:compliance Standard Compliance]
+
+The intent of Boost.Unordered is to implement a close (but imperfect)
+implementation of the C++17 standard, that will work with C++98 upwards.
+The wide compatibility does mean some comprimises have to be made.
+With a compiler and library that fully support C++11, the differences should
+be minor.
 
 [section:move Move emulation]
 
@@ -51,23 +57,32 @@ Due to imperfect move emulation, some assignments might check
 `propagate_on_container_copy_assignment` on some compilers and
 `propagate_on_container_move_assignment` on others.
 
-The use of the allocator's construct and destruct methods might be a bit
-surprising.
-Nodes are constructed and destructed using the allocator, but the elements
-are stored in aligned space within the node and constructed and destructed
-by calling the constructor and destructor directly.
+[endsect]
 
-In C++11 the allocator's construct function has the signature:
+[section:construction Construction/Destruction using allocators]
 
-    template <class U, class... Args>
-    void construct(U* p, Args&&... args);
+The following support is required for full use of C++11 style
+construction/destruction:
 
-which supports calling `construct` for the contained object, but
-most existing allocators don't support this. If member function detection
-was good enough then with old allocators it would fall back to calling
-the element's constructor directly but in general, detection isn't good
-enough to do this which is why Boost.Unordered just calls the constructor
-directly every time. In most cases this will work okay.
+* Variadic templates.
+* Piecewise construction of `std::pair`.
+* Either `std::allocator_traits` or expression SFINAE.
+
+This is detected using Boost.Config. The macro
+`BOOST_UNORDERED_CXX11_CONSTRUCTION` will be set to 1 if it is found, or 0
+otherwise.
+
+When this is the case `allocator_traits::construct` and
+`allocator_traits::destroy` will always be used, apart from when piecewise
+constructing a `std::pair` using `boost::tuple` (see [link
+unordered.compliance.pairs below]), but that should be easily avoided.
+
+When support is not available `allocator_traits::construct` and
+`allocator_traits::destroy` are never called.
+
+[endsect]
+
+[section:pointer_traits Pointer Traits]
 
 `pointer_traits` aren't used. Instead, pointer types are obtained from
 rebound allocators, this can cause problems if the allocator can't be
@@ -77,6 +92,7 @@ is used to obtain a const pointer.
 
 [endsect]
 
+[#unordered.compliance.pairs]
 [section:pairs Pairs]
 
 Since the containers use `std::pair` they're limited to the version
@@ -101,7 +117,7 @@ first part of the pair, and the remaining for the second part.
 
 When swapping, `Pred` and `Hash` are not currently swapped by calling
 `swap`, their copy constructors are used. As a consequence when swapping
-an exception may be throw from their  copy constructor.
+an exception may be thrown from their copy constructor.
 
 Variadic constructor arguments for `emplace` are only used when both
 rvalue references and variadic template parameters are available.

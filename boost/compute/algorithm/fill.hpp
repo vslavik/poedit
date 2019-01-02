@@ -13,6 +13,7 @@
 
 #include <iterator>
 
+#include <boost/static_assert.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/contains.hpp>
@@ -27,6 +28,8 @@
 #include <boost/compute/iterator/discard_iterator.hpp>
 #include <boost/compute/detail/is_buffer_iterator.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+
 
 namespace boost {
 namespace compute {
@@ -64,7 +67,7 @@ inline future<void> fill_async_with_copy(BufferIterator first,
            );
 }
 
-#if defined(CL_VERSION_1_2)
+#if defined(BOOST_COMPUTE_CL_VERSION_1_2)
 
 // meta-function returing true if Iterator points to a range of values
 // that can be filled using clEnqueueFillBuffer(). to meet this criteria
@@ -172,7 +175,7 @@ dispatch_fill_async(BufferIterator first,
     return future<void>(event_);
 }
 
-#ifdef CL_VERSION_2_0
+#ifdef BOOST_COMPUTE_CL_VERSION_2_0
 // specializations for svm_ptr<T>
 template<class T>
 inline void dispatch_fill(svm_ptr<T> first,
@@ -205,7 +208,7 @@ inline future<void> dispatch_fill_async(svm_ptr<T> first,
 
     return future<void>(event_);
 }
-#endif // CL_VERSION_2_0
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
 
 // default implementations
 template<class BufferIterator, class T>
@@ -251,7 +254,7 @@ inline future<void> dispatch_fill_async(BufferIterator first,
 {
     return fill_async_with_copy(first, count, value, queue);
 }
-#endif // !defined(CL_VERSION_1_2)
+#endif // !defined(BOOST_COMPUTE_CL_VERSION_1_2)
 
 } // end detail namespace
 
@@ -271,6 +274,8 @@ inline future<void> dispatch_fill_async(BufferIterator first,
 /// boost::compute::fill(vec.begin(), vec.end(), 7, queue);
 /// \endcode
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see boost::compute::fill_n()
 template<class BufferIterator, class T>
 inline void fill(BufferIterator first,
@@ -278,6 +283,7 @@ inline void fill(BufferIterator first,
                  const T &value,
                  command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<BufferIterator>::value);
     size_t count = detail::iterator_range_size(first, last);
     if(count == 0){
         return;
@@ -292,6 +298,7 @@ inline future<void> fill_async(BufferIterator first,
                                const T &value,
                                command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(detail::is_buffer_iterator<BufferIterator>::value);
     size_t count = detail::iterator_range_size(first, last);
     if(count == 0){
         return future<void>();

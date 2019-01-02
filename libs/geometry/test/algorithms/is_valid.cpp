@@ -345,6 +345,11 @@ inline void test_open_rings()
 
     // wrong orientation
     test::apply("r33", "POLYGON((0 0,0 1,1 1))", false);
+
+    // Normal case, plus spikes formed in two different ways
+    test::apply("r34", "POLYGON((0 0,4 0,4 4,0 4,0 0))", true);
+    test::apply("r35", "POLYGON((0 0,5 0,4 0,4 4,0 4,0 0))", false);
+    test::apply("r36", "POLYGON((0 0,4 0,4 -1,4 4,0 4,0 0))", false);
 }
 
 
@@ -811,6 +816,8 @@ BOOST_AUTO_TEST_CASE( test_is_valid_polygon )
 template <typename Point, bool AllowDuplicates>
 inline void test_open_multipolygons()
 {
+    // WKT of multipolygons should be defined as ccw, open
+
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::cout << std::endl << std::endl;
     std::cout << "************************************" << std::endl;
@@ -948,6 +955,29 @@ inline void test_open_multipolygons()
         // polygon contains a spike
         test::apply("mpg20", open_mpgn, false);
     }
+
+    // Interior ring touches exterior ring, which at that same point touches another exterior ring in (1 2)
+    test::apply
+        ("mpg21",
+        "MULTIPOLYGON(((2 3,1 2,1 0,2 0,2 1,4 3),(2 2,1.5 1.5,1 2)),((0 3,0 2,1 2)))",
+         true);
+
+    // Two interior rings touch each other in (10 5)
+    test::apply
+        ("mpg22",
+        "MULTIPOLYGON(((10 5,5 10,0 5,5 0),(10 5,5 4,4 6)),((10 5,10 0,20 0,20 10,10 10),(10 5,18 8,15 3)))",
+         true);
+
+    // Two polygons, one inside interior of other one, touching all at same point (0,0)
+    test::apply
+        ("mpg23",
+        "MULTIPOLYGON(((0 0,10 0,10 10,0 10),(0 0,1 9,9 9,9 1)),((0 0,8 2,8 8,2 8)))",
+         true);
+
+    test::apply
+        ("ticket_12503",
+        "MULTIPOLYGON(((15 20,12 23,15 17,15 20)),((36 25,35 25,34 24,34 23,35 23,36 25)),((15 15,10 13,11 23,12 23,12 25,10 25,7 24,8 6,15 15)),((12 29,11 30,12 30,11 31,13 31,13 34,6 38,6 32,8 31,12 27,12 29)),((9 26,6 31,7 26,7 24,9 26)),((15 48,15 45,18 44,15 48)),((38 39,18 44,26 34,38 39)),((15 45,13 34,15 33,15 45)),((17 32,15 33,15 32,17 32)),((21 31,16 38,18 32,17 32,19 30,21 31)),((15 32,13 31,13 30,15 29,15 32)),((17 29,15 29,15 28,17 29)),((15 28,13 30,12 29,14 27,15 28)),((26 27,28 30,31 27,26 34,21 31,22 29,19 30,18 30,17 29,19 29,19 28,23 28,24 27,25 27,24 26,25 24,30 24,26 27)),((17 26,15 28,15 26,17 26)),((32 26,34 27,31 27,27 27,32 26)),((19 26,17 26,19 25,19 26)),((35 23,33 18,41 15,35 23)),((24 26,24 27,19 26,20 25,23 24,24 26)),((32 13,49 1,48 4,46 5,33 15,32 13)),((33 25,32 26,32 25,31 24,32 23,33 25)),((42 15,43 22,44 22,44 23,43 23,35 23,42 15)),((44 42,38 39,40 39,39 34,34 27,33 25,35 25,38 31,36 25,43 23,44 42)),((48 46,44 23,48 22,48 46)),((15 3,23 2,18 11,15 3)),((30 19,28 20,27 21,25 24,23 24,22 23,26 20,29 17,30 19)),((24 19,21 21,21 20,22 19,24 19)),((31 24,30 24,27 21,31 22,30 19,31 19,34 23,31 23,31 24)),((21 20,20 21,21 18,21 20)),((14 26,12 26,12 25,15 25,15 20,17 17,20 21,21 21,22 23,20 24,19 25,16 25,15 26,14 27,14 26),(17 24,20 22,20 21,17 24)),((23 18,22 19,22 17,23 18)),((28 13,31 10,32 13,30 15,28 13)),((18 17,17 17,16 16,18 17)),((16 16,15 17,15 15,16 16)),((30 17,29 17,29 16,30 15,30 17)),((33 18,31 19,30 17,33 15,33 18)),((42 13,47 7,48 4,48 22,44 22,43 14,42 13)),((42 15,41 15,42 14,43 14,42 15)),((24 2,49 1,27 11,23 13,25 6,27 10,24 2)),((29 16,24 19,23 18,28 13,29 16)),((17 13,16 15,15 15,15 11,17 13)),((20 14,23 13,22 17,20 15,21 17,21 18,18 17,19 15,17 13,18 11,20 14)),((5 3,15 3,15 11,8 5,8 6,5 3)))",
+         true);
 
     // MySQL report 12.06.2015
     {
@@ -1172,11 +1202,8 @@ inline void test_open_multipolygons()
 
 BOOST_AUTO_TEST_CASE( test_is_valid_multipolygon )
 {
-    bool const allow_duplicates = true;
-    bool const do_not_allow_duplicates = !allow_duplicates;
-
-    test_open_multipolygons<point_type, allow_duplicates>();
-    test_open_multipolygons<point_type, do_not_allow_duplicates>();
+    test_open_multipolygons<point_type, true>();
+    test_open_multipolygons<point_type, false>();
 }
 
 

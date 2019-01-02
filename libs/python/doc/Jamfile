@@ -4,9 +4,13 @@
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+import boostbook ;
+import quickbook ;
+import docutils ;
+import os ;
+
 path-constant here : . ;
 path-constant images : html/images ;
-
 
 project python/doc
     : requirements
@@ -17,9 +21,16 @@ project python/doc
       <format>html:<xsl:param>chunk.section.depth=1
     ;
 
-import boostbook ;
-import quickbook ;
-import docutils ;
+make numpy : numpy/index.rst : @sphinx-build ;
+
+if [ os.name ] = NT
+{
+  actions sphinx-build { chdir "$(>:D)" && make clean && make html}
+}
+else
+{
+  actions sphinx-build { make -C "$(>:D)" clean html}
+}
 
 boostbook python : python.qbk
 	  : <format>html:<name>$(here)/html
@@ -47,3 +58,9 @@ html article : article.rst
          : <location>html
 	   <docutils-html>"--link-stylesheet --traceback --trim-footnote-reference-space --footnote-references=superscript --stylesheet=rst.css"
             ;
+
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : python tutorial reference numpy article ;
+explicit boostrelease ;

@@ -71,7 +71,7 @@ void expected_results()
          ".*",                          // platform
          "double",                      // test type(s)
          ".*",                          // test data group
-         ".*", 10, 5);                  // test function
+         ".*", 15, 5);                  // test function
    }
 #endif
    //

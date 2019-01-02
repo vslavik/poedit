@@ -11,8 +11,8 @@
 
 namespace boost{ namespace multiprecision{ namespace detail{
 
-   BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_member_value_type, value_type, false);
-   BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_member_const_iterator, const_iterator, false);
+   BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_member_value_type, value_type, false)
+   BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_member_const_iterator, const_iterator, false)
 
    template <class C, bool b>
    struct is_byte_container_imp

@@ -20,7 +20,8 @@ namespace quickbook
 
     struct state_save
     {
-        enum scope_flags {
+        enum scope_flags
+        {
             scope_none = 0,
             scope_macros = 1,
             scope_templates = 2,
@@ -44,7 +45,8 @@ namespace quickbook
         string_symbols macro;
         int template_depth;
         int min_section_level;
-    private:
+
+      private:
         state_save(state_save const&);
         state_save& operator=(state_save const&);
     };

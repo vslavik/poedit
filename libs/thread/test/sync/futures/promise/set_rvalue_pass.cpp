@@ -125,7 +125,48 @@ int main()
     boost::future<T> f = p.get_future();
     try
     {
+      p.set_value_deferred(boost::move(i));
+      BOOST_TEST(!f.is_ready());
+      p.notify_deferred();
+
+      BOOST_TEST(false);
+    }
+    catch (int j)
+    {
+      BOOST_TEST(j == 9);
+    }
+    catch (...)
+    {
+      BOOST_TEST(false);
+    }
+  }
+  {
+    typedef A T;
+    T i;
+    boost::promise<T> p;
+    boost::future<T> f = p.get_future();
+    try
+    {
       p.set_value((T()));
+      BOOST_TEST(false);
+    }
+    catch (int j)
+    {
+      BOOST_TEST(j == 9);
+    }
+    catch (...)
+    {
+      BOOST_TEST(false);
+    }
+  }
+  {
+    typedef A T;
+    T i;
+    boost::promise<T> p;
+    boost::future<T> f = p.get_future();
+    try
+    {
+      p.set_value_deferred((T()));
       BOOST_TEST(false);
     }
     catch (int j)

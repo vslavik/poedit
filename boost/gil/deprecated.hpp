@@ -1,31 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_DEPRECATED_HPP
-#define GIL_DEPRECATED_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Deprecated names
-///        This file is provided as a courtesy to ease upgrading GIL client code.
-///        Please make sure your code compiles when this file is not included. 
-///
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on February 12, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_DEPRECATED_HPP
+#define BOOST_GIL_DEPRECATED_HPP
 
 #include <cstddef>
+
+/// This file is provided as a courtesy to ease upgrading GIL client code.
+/// Please make sure your code compiles when this file is not included.
 
 #define planar_ptr          planar_pixel_iterator
 #define planar_ref          planar_pixel_reference

@@ -59,8 +59,8 @@ void check_iterator_range()
         BOOST_CHECK( false );
 //#endif
 
-    BOOST_CHECK_EQUAL( r.size(), size( r ) );
-    BOOST_CHECK_EQUAL( r2.size(), size( r2 ) );
+    BOOST_CHECK_EQUAL( r.size(), boost::size( r ) );
+    BOOST_CHECK_EQUAL( r2.size(), boost::size( r2 ) );
 
     BOOST_CHECK_EQUAL( std::distance( r.begin(), r.end() ),
                        std::distance( boost::begin( r2 ), boost::end( r2 ) ) );

@@ -20,7 +20,7 @@ namespace bg = boost::geometry;
 
 int main()
 {
-    bg::concept::check
+    bg::concepts::check
         <
             bg::model::point<double, 2, bg::cs::geographic<int> >
         >();

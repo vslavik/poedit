@@ -98,6 +98,7 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<point>));
+        BOOST_STATIC_ASSERT(!traits::is_view<point>::value);
         point p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;

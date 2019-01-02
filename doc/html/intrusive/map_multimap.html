@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Map and multimap-like interface for associative containers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="prev" href="unordered_set_unordered_multiset.html" title="Semi-Intrusive unordered associative containers: unordered_set, unordered_multiset">
 <link rel="next" href="avl_set_multiset.html" title="Intrusive avl tree based associative containers: avl_set, avl_multiset and avltree">
 </head>
@@ -55,12 +55,33 @@
       If a user specifies that option when defining a <code class="computeroutput"><span class="identifier">set</span><span class="special">/</span><span class="identifier">multiset</span></code>
       intrusive container, it specifies a function object that will tell the container
       which is the type of the <span class="emphasis"><em>key</em></span> that <code class="computeroutput"><span class="identifier">value_type</span></code>
-      holds and how to obtain it. This function object must be lightweight, <code class="computeroutput"><span class="identifier">DefaultConstructible</span></code>, it shall define a
-      <code class="computeroutput"><span class="identifier">type</span></code> member that defines the
-      type of the key and a member function to obtain a const reference to the key
-      stored inside a <code class="computeroutput"><span class="identifier">value_type</span></code>.
+      holds and how to obtain it. This function object must be:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Lightweight to copy.
+        </li>
+<li class="listitem">
+          Default constructible (when the container constructor overload requires
+          it).
+        </li>
+<li class="listitem">
+          It shall define:
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                A <code class="computeroutput"><span class="identifier">type</span></code> member that
+                defines the type of the key
+              </li>
+<li class="listitem">
+                A member function that returns the key derived a <code class="computeroutput"><span class="identifier">value_type</span></code>,
+                either by value or by const-reference.
+              </li>
+</ul></div>
+        </li>
+</ul></div>
+<p>
       Let's see an example of how a set can be configured as a map indexed by an
-      integer stored in the <code class="computeroutput"><span class="identifier">value_type</span></code>.
+      integer stored in the <code class="computeroutput"><span class="identifier">value_type</span></code>:
     </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="keyword">static_assert</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">/</span><span class="identifier">is_same</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -80,10 +101,10 @@
 <span class="special">};</span>
 
 <span class="comment">//key_of_value function object, must:</span>
-<span class="comment">//- be default constructible (and lightweight)</span>
+<span class="comment">//- be default constructible if the container constructor requires it</span>
 <span class="comment">//- define the key type using "type"</span>
 <span class="comment">//- define an operator() taking "const value_type&amp;" and</span>
-<span class="comment">//    returning "const type &amp;"</span>
+<span class="comment">//    returning "type" or "const type &amp;"</span>
 <span class="keyword">struct</span> <span class="identifier">first_int_is_key</span>
 <span class="special">{</span>
    <span class="keyword">typedef</span> <span class="keyword">int</span> <span class="identifier">type</span><span class="special">;</span>

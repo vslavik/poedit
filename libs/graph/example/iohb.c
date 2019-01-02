@@ -227,7 +227,7 @@ Fri Aug 15 16:29:47 EDT 1997
 
 char* substr(const char* S, const int pos, const int len);
 void upcase(char* S);
-void IOHBTerminate(char* message);
+void IOHBTerminate(const char* message);
 
 int readHB_info(const char* filename, int* M, int* N, int* nz, char** Type, 
                                                       int* Nrhs)
@@ -1340,7 +1340,7 @@ int writeHB_mat_char(const char* filename, int M, int N,
     int Ptrperline, Ptrwidth, Indperline, Indwidth;
     int Rhsperline, Rhswidth, Rhsprec;
     int Rhsflag;
-    int Valperline, Valwidth, Valprec;
+    int Valperline = 1, Valwidth, Valprec;
     int Valflag;           /* Indicates 'E','D', or 'F' float format */
     char pformat[16],iformat[16],vformat[19],rformat[19];
 
@@ -1602,9 +1602,9 @@ void upcase(char* S)
        S[i] = toupper(S[i]);
 }
 
-void IOHBTerminate(char* message) 
+void IOHBTerminate(const char* message)
 {
-   fprintf(stderr,message);
+   fprintf(stderr,"%s",message);
    exit(1);
 }
 

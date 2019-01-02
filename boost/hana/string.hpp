@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::string`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -13,6 +13,7 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/fwd/string.hpp>
 
 #include <boost/hana/bool.hpp>
+#include <boost/hana/concept/constant.hpp>
 #include <boost/hana/config.hpp>
 #include <boost/hana/core/make.hpp>
 #include <boost/hana/detail/algorithm.hpp>
@@ -32,7 +33,9 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/fwd/is_empty.hpp>
 #include <boost/hana/fwd/length.hpp>
 #include <boost/hana/fwd/less.hpp>
+#include <boost/hana/fwd/plus.hpp>
 #include <boost/hana/fwd/unpack.hpp>
+#include <boost/hana/fwd/zero.hpp>
 #include <boost/hana/if.hpp>
 #include <boost/hana/integral_constant.hpp>
 #include <boost/hana/optional.hpp>
@@ -48,11 +51,20 @@ BOOST_HANA_NAMESPACE_BEGIN
     // string<>
     //////////////////////////////////////////////////////////////////////////
     //! @cond
+    namespace detail {
+        template <char ...s>
+        constexpr char const string_storage[sizeof...(s) + 1] = {s..., '\0'};
+    }
+
     template <char ...s>
     struct string
         : detail::operators::adl<string<s...>>
         , detail::iterable_operators<string<s...>>
-    { };
+    {
+        static constexpr char const* c_str() {
+            return &detail::string_storage<s...>[0];
+        }
+    };
     //! @endcond
 
     template <char ...s>
@@ -132,15 +144,38 @@ BOOST_HANA_NAMESPACE_BEGIN
     template <>
     struct to_impl<char const*, string_tag> {
         template <char ...c>
-        static constexpr char const c_string[sizeof...(c) + 1] = {c..., '\0'};
-
-        template <char ...c>
         static constexpr char const* apply(string<c...> const&)
-        { return c_string<c...>; }
+        { return string<c...>::c_str(); }
     };
 
-    template <char ...c>
-    constexpr char const to_impl<char const*, string_tag>::c_string[sizeof...(c) + 1];
+    //////////////////////////////////////////////////////////////////////////
+    // to<string_tag>
+    //////////////////////////////////////////////////////////////////////////
+    namespace detail {
+        constexpr std::size_t cx_strlen(char const* s) {
+          std::size_t n = 0u;
+          while (*s != '\0')
+            ++s, ++n;
+          return n;
+        }
+
+        template <typename S, std::size_t ...I>
+        constexpr hana::string<hana::value<S>()[I]...> expand(std::index_sequence<I...>)
+        { return {}; }
+    }
+
+    template <typename IC>
+    struct to_impl<hana::string_tag, IC, hana::when<
+        hana::Constant<IC>::value &&
+        std::is_convertible<typename IC::value_type, char const*>::value
+    >> {
+        template <typename S>
+        static constexpr auto apply(S const&) {
+            constexpr char const* s = hana::value<S>();
+            constexpr std::size_t len = detail::cx_strlen(s);
+            return detail::expand<S>(std::make_index_sequence<len>{});
+        }
+    };
 
     //////////////////////////////////////////////////////////////////////////
     // Comparable
@@ -173,6 +208,30 @@ BOOST_HANA_NAMESPACE_BEGIN
             )>;
         }
     };
+
+    //////////////////////////////////////////////////////////////////////////
+    // Monoid
+    //////////////////////////////////////////////////////////////////////////
+    template <>
+    struct plus_impl<string_tag, string_tag> {
+        template <char ...s1, char ...s2>
+        static constexpr auto
+        apply(string<s1...> const&, string<s2...> const&) {
+            return string<s1..., s2...>{};
+        }
+    };
+
+    template <>
+    struct zero_impl<string_tag> {
+        static constexpr auto apply() {
+            return string<>{};
+        }
+    };
+
+    template <char ...s1, char ...s2>
+    constexpr auto operator+(string<s1...> const&, string<s2...> const&) {
+        return hana::string<s1..., s2...>{};
+    }
 
     //////////////////////////////////////////////////////////////////////////
     // Foldable

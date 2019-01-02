@@ -11,6 +11,8 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_GATHER_HPP
 #define BOOST_COMPUTE_ALGORITHM_GATHER_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
@@ -18,6 +20,7 @@
 #include <boost/compute/iterator/buffer_iterator.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/type_traits/type_name.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -36,7 +39,6 @@ public:
                    OutputIterator result)
     {
         m_count = iterator_range_size(first, last);
-        m_offset = first.get_index();
 
         *this <<
             "const uint i = get_global_id(0);\n" <<
@@ -50,12 +52,11 @@ public:
             return event();
         }
 
-        return exec_1d(queue, m_offset, m_count);
+        return exec_1d(queue, 0, m_count);
     }
 
 private:
     size_t m_count;
-    size_t m_offset;
 };
 
 } // end detail namespace
@@ -63,6 +64,8 @@ private:
 /// Copies the elements using the indices from the range [\p first, \p last)
 /// to the range beginning at \p result using the input values from the range
 /// beginning at \p input.
+///
+/// Space complexity: \Omega(1)
 ///
 /// \see scatter()
 template<class InputIterator, class MapIterator, class OutputIterator>
@@ -72,6 +75,10 @@ inline void gather(MapIterator first,
                    OutputIterator result,
                    command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<MapIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
     detail::gather_kernel<InputIterator, MapIterator, OutputIterator> kernel;
     
     kernel.set_range(first, last, input, result);

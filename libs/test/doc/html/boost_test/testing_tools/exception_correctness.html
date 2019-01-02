@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Exception correctness</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../testing_tools.html" title="Writing unit tests">
 <link rel="prev" href="extended_comparison/bitwise.html" title="Bitwise comparison">
@@ -34,7 +34,7 @@
       </p>
 <h6>
 <a name="boost_test.testing_tools.exception_correctness.h0"></a>
-        <span><a name="boost_test.testing_tools.exception_correctness.example_descr"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.example_descr">Example:
+        <span class="phrase"><a name="boost_test.testing_tools.exception_correctness.example_descr"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.example_descr">Example:
         Uncaught exception</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -102,7 +102,7 @@
         for testing a code with respect to the exceptions correctness. The following
         assertions are available:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a class="link" href="../utf_reference/testing_tool_ref/assertion_boost_level_no_throw.html" title="BOOST_&lt;level&gt;_NO_THROW"><code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_NO_THROW</span></code></a> checks that no exception
             is raised from an expression,
@@ -124,7 +124,7 @@
       </p>
 <h6>
 <a name="boost_test.testing_tools.exception_correctness.h1"></a>
-        <span><a name="boost_test.testing_tools.exception_correctness.example_descr0"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.example_descr0">Example:
+        <span class="phrase"><a name="boost_test.testing_tools.exception_correctness.example_descr0"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.example_descr0">Example:
         Exception correctness of an API</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -151,7 +151,7 @@
 
   <span class="comment">//! @returns true on success, false otherwise</span>
   <span class="keyword">bool</span> <span class="identifier">process</span><span class="special">()</span> <span class="special">{</span>
-    <span class="keyword">if</span><span class="special">(!</span><span class="identifier">is_processed</span><span class="special">)</span> <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">is_processed</span><span class="special">)</span> <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
 
     <span class="comment">// ...</span>
     <span class="identifier">is_processed</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
@@ -230,12 +230,12 @@
 </table></div>
 <h5>
 <a name="boost_test.testing_tools.exception_correctness.h2"></a>
-        <span><a name="boost_test.testing_tools.exception_correctness.bibliographic_references"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.bibliographic_references">Bibliographic
+        <span class="phrase"><a name="boost_test.testing_tools.exception_correctness.bibliographic_references"></a></span><a class="link" href="exception_correctness.html#boost_test.testing_tools.exception_correctness.bibliographic_references">Bibliographic
         references</a>
       </h5>
 <div class="variablelist">
 <p class="title"><b>Publications</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a href="https://isocpp.org/wiki/faq/exceptions" target="_top">Exceptions and
           Error Handling</a></span></dt>
 <dd><p>
@@ -246,7 +246,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

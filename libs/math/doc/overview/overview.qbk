@@ -1,6 +1,22 @@
 [section:main_intro About the Math Toolkit]
 
-This library is divided into three interconnected parts:
+This library is divided into several interconnected parts:
+
+[h4 Floating Point Utilities]
+
+Utility functions for dealing with floating point arithmetic, includes functions
+for floating point classification (fpclassify, isnan, isinf etc), sign manipulation,
+rounding, comparison, and computing the distance between floating point numbers.
+
+[h4 Specific Width Floating Point Types]
+
+A set of typedefs similar to those provided by `<cstdint>` but for floating point types.
+
+[h4 Mathematical Constants]
+
+A wide range of constants ranging from various multiples of [pi], fractions, through to euler's constant etc.
+
+These are of course usable from template code, or as non-templates with a simplified interface if that is more appropriate.
 
 [h4 Statistical Distributions]
 
@@ -47,43 +63,33 @@ although they are optimised for use with types with known-about
 [@http://en.wikipedia.org/wiki/Significand significand (or mantissa)]
 sizes: typically `float`, `double` or `long double`.
 
-[h4 Implementation Toolkit]
+These functions also provide the basis of support for the TR1 special functions.
 
-The section [link math_toolkit.internals_overview Internal tools]
-provides many of the tools required to implement
-mathematical special functions: hopefully the presence of
-these will encourage other authors to contribute more special
-function implementations in the future.
+[h4 Root Finding and Function Minimisation]
 
-Some tools are now considered well-tried and their signatures stable and unlikely to change.
+A comprehensive set of root finding algorithms over the real-line, both with and without derivative support.
 
-There is a fairly comprehensive set of root finding both
-__root_finding_without_derivatives
-and __root_finding_with_derivatives with derivative support,
-and function minimization using __brent_minima.
+Also function minimisation via Brent's Method.
 
-Other [link math_toolkit.internals_overview Internal tools]
-are currently still considered experimental: they are "exposed implementation details"
-whose interfaces and\/or implementations may change without notice.
+[h4 Polynomials and Rational Functions]
 
-There are helpers for the
-[link math_toolkit.internals.series_evaluation evaluation of infinite series],
-[link math_toolkit.internals.cf continued
-fractions] and [link math_toolkit.roots.rational
-rational approximations].
-A [link math_toolkit.internals.minimax Remez algorithm implementation]
-allows for the locating of minimax rational
-approximations.
+Tools for manipulating polynomials and for efficient evaluation of rationals or polynomials.
 
-There are also (experimental) classes for the
-[link math_toolkit.roots.polynomials manipulation of polynomials], for
-[link math_toolkit.internals.error_test
-testing a special function against tabulated test data], and for
-the [link math_toolkit.internals.test_data
-rapid generation of test data] and/or data for output to an
-external graphing application.
+[h4 Interpolation]
 
-[endsect] [/section:intro Introduction]
+Function interpolation via Barycentic or cubic B_spline approximations.
+
+[h4 Numerical Integration and Differentiation]
+
+A reasonably comprehensive set of routines for integration (trapezoidal, Gaus-Legendre, Gaus-Kronrod and double-exponential) and differentiation.
+
+The integration routines are all usable for functions returning complex results - and as a result for contour integrals as well.
+
+[h4 Quaternions and Octonions]
+
+Quaternion and Octonians as class templates similar to `std::complex`.
+
+[endsect]
 
 [/
   Copyright 2006, 2012, 2015 John Maddock and Paul A. Bristow.

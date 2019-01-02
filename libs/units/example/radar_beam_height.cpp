@@ -100,6 +100,7 @@ BOOST_UNITS_DEFINE_CONVERSION_FACTOR(imperial::length_base_unit,
 // radar beam height functions
 //[radar_beam_height_function_snippet_1
 template<class System,typename T>
+constexpr
 quantity<unit<boost::units::length_dimension,System>,T>
 radar_beam_height(const quantity<unit<length_dimension,System>,T>& radar_range,
                   const quantity<unit<length_dimension,System>,T>& earth_radius,
@@ -112,20 +113,20 @@ radar_beam_height(const quantity<unit<length_dimension,System>,T>& radar_range,
 
 //[radar_beam_height_function_snippet_2
 template<class return_type,class System1,class System2,typename T>
+constexpr
 return_type
 radar_beam_height(const quantity<unit<length_dimension,System1>,T>& radar_range,
                   const quantity<unit<length_dimension,System2>,T>& earth_radius,
                   T k = 4.0/3.0)
 {
     // need to decide which system to use for calculation
-    const return_type   rr(radar_range),
-                        er(earth_radius);
-
-    return return_type(pow<2>(rr)/(2.0*k*er));
+    return pow<2>(static_cast<return_type>(radar_range))
+            / (2.0*k*static_cast<return_type>(earth_radius));
 }
 //]
 
 //[radar_beam_height_function_snippet_3
+constexpr
 quantity<imperial::length>
 radar_beam_height(const quantity<nautical::length>& range)
 {

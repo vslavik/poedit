@@ -27,6 +27,8 @@ namespace po = boost::program_options;
 
 // Create naive optical flow program
 const char source[] = BOOST_COMPUTE_STRINGIZE_SOURCE (
+    const sampler_t sampler = CLK_ADDRESS_CLAMP_TO_EDGE;
+
     __kernel void optical_flow (
                                 read_only
                                 image2d_t current_image,
@@ -37,7 +39,6 @@ const char source[] = BOOST_COMPUTE_STRINGIZE_SOURCE (
                                 const float lambda,
                                 const float threshold )
     {
-        sampler_t sampler = CLK_ADDRESS_CLAMP_TO_EDGE;
         int2 coords = (int2)(get_global_id(0), get_global_id(1));
         float4 current_pixel    = read_imagef(current_image,
                                               sampler,

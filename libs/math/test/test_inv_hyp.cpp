@@ -31,12 +31,12 @@
 // This file tests the inverse hyperbolic functions. There are two sets of tests:
 // 1) Sanity checks: comparison to test values created with the
 // online calculator at functions.wolfram.com
-// 2) Accuracy tests use values generated with NTL::RR at 
+// 2) Accuracy tests use values generated with NTL::RR at
 // 1000-bit precision and our generic versions of these functions.
 //
 // Note that when this file is first run on a new platform many of
 // these tests will fail: the default accuracy is 1 epsilon which
-// is too tight for most platforms.  In this situation you will 
+// is too tight for most platforms.  In this situation you will
 // need to cast a human eye over the error rates reported and make
 // a judgement as to whether they are acceptable.  Either way please
 // report the results to the Boost mailing list.  Acceptable rates of
@@ -88,7 +88,7 @@ void expected_results()
       ".*",                          // test data group
       ".*", 4, 1);                   // test function
 
-   std::cout << "Tests run with " << BOOST_COMPILER << ", " 
+   std::cout << "Tests run with " << BOOST_COMPILER << ", "
       << BOOST_STDLIB << ", " << BOOST_PLATFORM << std::endl;
 }
 
@@ -99,7 +99,6 @@ void do_test_asinh(const T& data, const char* type_name, const char* test_name)
    // test asinh(T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;
@@ -130,7 +129,6 @@ void do_test_acosh(const T& data, const char* type_name, const char* test_name)
    // test acosh(T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;
@@ -161,7 +159,6 @@ void do_test_atanh(const T& data, const char* type_name, const char* test_name)
    // test atanh(T) against data:
    //
    using namespace std;
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << test_name << " with type " << type_name << std::endl;
@@ -229,7 +226,7 @@ void test_spots(T, const char* t)
 {
    std::cout << "Testing basic sanity checks for type " << t << std::endl;
    //
-   // Basic sanity checks, tolerance is either 5 or 10 epsilon 
+   // Basic sanity checks, tolerance is either 5 or 10 epsilon
    // expressed as a percentage:
    //
    T tolerance = boost::math::tools::epsilon<T>() * 100 *
@@ -285,8 +282,5 @@ BOOST_AUTO_TEST_CASE( test_main )
       "not available at all, or because they are too inaccurate for these tests "
       "to pass.</note>" << std::endl;
 #endif
-   
+
 }
-
-
-

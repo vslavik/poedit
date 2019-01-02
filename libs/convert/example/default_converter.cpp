@@ -1,5 +1,5 @@
 // Boost.Convert test and usage example
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -9,11 +9,11 @@
 
 #ifdef ONLY_FOR_DEMONSTRATION_PURPOSES
 //[default_converter_declaration_simple
-struct boost::cnv::by_default : public boost::cnv::cstream {};
+struct boost::cnv::by_default : boost::cnv::cstream {};
 //]
 #endif
 //[default_converter_declaration_formatted
-struct boost::cnv::by_default : public boost::cnv::cstream 
+struct boost::cnv::by_default : boost::cnv::cstream 
 { 
     by_default() { (*this)(std::uppercase)(std::hex); }
 };

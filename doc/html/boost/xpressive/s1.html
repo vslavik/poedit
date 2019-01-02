@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Global s1</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.regex_primitives_hpp" title="Header &lt;boost/xpressive/regex_primitives.hpp&gt;">
 <link rel="prev" href="s0.html" title="Global s0">
@@ -34,7 +34,7 @@
 
 </span><a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a> <span class="keyword">const</span> s1<span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp509669904"></a><h2>Description</h2>
+<a name="id-1.3.47.5.10.35.4"></a><h2>Description</h2>
 <p>To create a sub-match, assign a sub-expression to the sub-match placeholder. For instance, (s1= _) will match any one character and remember which character was matched in the 1st sub-match. Later in the pattern, you can refer back to the sub-match. For instance, (s1= _) &gt;&gt; s1 will match any character, and then match the same character again.</p>
 <p>After a successful regex_match() or regex_search(), the sub-match placeholders can be used to index into the <a class="link" href="match_results.html" title="Struct template match_results">match_results</a>&lt;&gt; object to retrieve the Nth sub-match. </p>
 </div>

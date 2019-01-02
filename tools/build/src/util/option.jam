@@ -65,7 +65,7 @@ rule process ( )
 
         if $(arg)
         {
-            local split = [ MATCH ^(([^-=]+)[^=]*)(=?)(.*)$ : $(arg) ] ;
+            local split = [ MATCH "^(([^-=]+)[^=]*)(=?)(.*)$" : $(arg) ] ;
             local full-name = $(split[1]) ;
             local prefix = $(split[2]) ;
             local values ;

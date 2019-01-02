@@ -2,7 +2,7 @@
 // udp_client.cpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -39,17 +39,16 @@ int main(int argc, char* argv[])
   std::size_t buf_size = static_cast<std::size_t>(std::atoi(argv[4]));
   bool spin = (std::strcmp(argv[5], "spin") == 0);
 
-  boost::asio::io_service io_service;
+  boost::asio::io_context io_context;
 
-  udp::socket socket(io_service, udp::endpoint(udp::v4(), 0));
+  udp::socket socket(io_context, udp::endpoint(udp::v4(), 0));
 
   if (spin)
   {
-    udp::socket::non_blocking_io nbio(true);
-    socket.io_control(nbio);
+    socket.non_blocking(true);
   }
 
-  udp::endpoint target(boost::asio::ip::address::from_string(ip), first_port);
+  udp::endpoint target(boost::asio::ip::make_address(ip), first_port);
   unsigned short last_port = first_port + num_ports - 1;
   std::vector<unsigned char> write_buf(buf_size);
   std::vector<unsigned char> read_buf(buf_size);

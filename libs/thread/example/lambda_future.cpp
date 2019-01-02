@@ -20,8 +20,11 @@
 #include <iostream>
 
 #if    defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION \
-  && ! defined BOOST_NO_CXX11_LAMBDAS && ! (defined BOOST_MSVC && _MSC_VER < 1700)
+  && ! defined BOOST_NO_CXX11_LAMBDAS && ! (defined BOOST_MSVC && _MSC_VER < 1800) // works since msvc-12.0
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
 
 int main()
 {
@@ -67,6 +70,8 @@ int main()
   return 0;
 }
 #else
+
+//#warning "This test is not supported in this configuration, either because  Bosst.Thread has been configured to don't support continuations, the compiler doesn't provides lambdas or because they are buggy as for MSV versions < msvc-12.0"
 
 int main()
 {

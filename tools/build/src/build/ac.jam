@@ -11,6 +11,7 @@ import modules ;
 import "class" ; 
 import errors ;
 import configure ;
+import feature ;
 import project ;
 import virtual-target ;
 import generators ;
@@ -22,11 +23,21 @@ project.initialize $(__name__) ;
 .project = [ project.current ] ;
 project ac ;
 
+feature.feature ac.print-text : : free ;
+
 rule generate-include ( target : sources * : properties * )
 {
-    local header = [ property.select <include> : $(properties) ] ;
     print.output $(target) ;
-    print.text "#include <$(header:G=)>\n" : true ;
+    local text = [ property.select <ac.print-text> : $(properties) ] ;
+    if $(text)
+    {
+        print.text $(text:G=) : true ;
+    }
+    else
+    {
+        local header = [ property.select <include> : $(properties) ] ;
+        print.text "#include <$(header:G=)>\n" : true ;
+    }
 }
 
 rule generate-main ( target : sources * : properties * )
@@ -35,7 +46,7 @@ rule generate-main ( target : sources * : properties * )
     print.text "int main() {}" : true ;
 }
 
-rule find-include-path ( properties : header : provided-path ? )
+rule find-include-path ( properties : header : provided-path ? : test-source ? )
 {
     if $(provided-path) && [ path.exists [ path.root $(header) $(provided-path) ] ]
     {
@@ -43,21 +54,23 @@ rule find-include-path ( properties : header : provided-path ? )
     }
     else
     {
-        local a = [ class.new action : ac.generate-include : [ property-set.create <include>$(header) ] ] ;
+        local a = [ class.new action : ac.generate-include : [ property-set.create <include>$(header) <ac.print-text>$(test-source) ] ] ;
         # Create a new CPP target named after the header.
         # Replace dots (".") in target basename for portability.
         local basename = [ regex.replace $(header:D=) "[.]" "_" ] ;
         local header-target = $(header:S=:B=$(basename)) ;
         local cpp = [ class.new file-target $(header-target:S=.cpp) exact : CPP : $(.project) : $(a) ] ;
         cpp = [ virtual-target.register $(cpp) ] ;
+        $(cpp).root true ;
         local result = [ generators.construct $(.project) $(header-target) : OBJ : $(properties) : $(cpp) : true ] ;
+        configure.maybe-force-rebuild $(result[2-]) ;
         local jam-targets ;
-        for t in $(result[2-])
+        for local t in $(result[2-])
         {
             jam-targets += [ $(t).actualize ] ;
         }
         if [ UPDATE_NOW $(jam-targets) : [ modules.peek configure : .log-fd ]
-            : ignore-minus-n : ignore-minus-q ]
+            : ignore-minus-n ]
         {
             return %default ;
         }
@@ -66,7 +79,6 @@ rule find-include-path ( properties : header : provided-path ? )
 
 rule construct-library ( name : property-set : provided-path ? )
 {
-    property-set = [ $(property-set).refine [ property-set.create $(link-opt) ] ] ;
     local lib-props = [ $(property-set).add-raw <name>$(name) <search>$(provided-path) ] ;
     return [ generators.construct $(.project) lib-$(name)
         : SEARCHED_LIB : $(lib-props) : : true ] ;
@@ -76,14 +88,6 @@ rule construct-library ( name : property-set : provided-path ? )
 rule find-library ( properties : names + : provided-path ? )
 {
     local result ;
-    if ! $(.main.cpp)
-    {
-        local a = [ class.new action : ac.generate-main :
-                    [ property-set.empty ] ] ;
-        .main.cpp = [ virtual-target.register
-            [ class.new file-target main.cpp exact
-                : CPP : $(.project) : $(a) ] ] ;
-    }
     if [ $(properties).get <link> ] = shared
     {
         link-opts = <link>shared <link>static ;
@@ -100,16 +104,22 @@ rule find-library ( properties : names + : provided-path ? )
         {
             local name = $(names-iter[1]) ;
             local lib = [ construct-library $(name) : $(properties) : $(provided-path) ] ;
+            local a = [ class.new action : ac.generate-main :
+                [ property-set.empty ] ] ;
+            local main.cpp = [ virtual-target.register
+                [ class.new file-target main-$(name).cpp exact : CPP : $(.project) : $(a) ] ] ;
+            $(main.cpp).root true ;
             local test = [ generators.construct $(.project) $(name) : EXE
-                : [ $(properties).add $(lib[1]) ] : $(.main.cpp) $(lib[2-])
+                : [ $(properties).add $(lib[1]) ] : $(main.cpp) $(lib[2-])
                 : true ] ;
+            configure.maybe-force-rebuild $(test[2-]) ;
             local jam-targets ;
             for t in $(test[2-])
             {
                 jam-targets += [ $(t).actualize ] ;
             }
             if [ UPDATE_NOW $(jam-targets) : [ modules.peek configure : .log-fd ]
-                    : ignore-minus-n : ignore-minus-q ]
+                    : ignore-minus-n ]
             {
                 result = $(name) $(link-opts[1]) ;
                 names-iter = ; link-opts = ; # break
@@ -129,6 +139,7 @@ class ac-library : basic-target
     import ac ;
     import configure ;
     import config-cache ;
+    import os ;
 
     rule __init__ ( name : project : requirements * : include-path ? : library-path ? : library-name ? )
     {
@@ -145,6 +156,11 @@ class ac-library : basic-target
     rule set-default-names ( names + )
     {
         self.default-names = $(names) ;
+    }
+
+    rule set-header-test ( source )
+    {
+        self.header-test = $(source) ;
     }
 
     rule reconfigure ( include-path ? : library-path ? : library-name ? )
@@ -189,30 +205,27 @@ class ac-library : basic-target
             local libnames = $(self.library-name) ;
             if ! $(libnames) && $(use-environment)
             {
-                libnames = [ modules.peek : $(name:U)_NAME ] ;
+                libnames = [ os.environ $(name:U)_NAME ] ;
                 # Backward compatibility only.
-                libnames ?= [ modules.peek : $(name:U)_BINARY ] ;
+                libnames ?= [ os.environ $(name:U)_BINARY ] ;
             }
             libnames ?= $(self.default-names) ;
 
             local include-path = $(self.include-path) ;
             if ! $(include-path) && $(use-environment)
             {
-                include-path = [ modules.peek : $(name:U)_INCLUDE ] ;
+                include-path = [ os.environ $(name:U)_INCLUDE ] ;
             }
 
             local library-path = $(self.library-path) ;
             if ! $(library-path) && $(use-environment)
             {
-                library-path = [ modules.peek : $(name:U)_LIBRARY_PATH ] ;
+                library-path = [ os.environ $(name:U)_LIBRARY_PATH ] ;
                 # Backwards compatibility only
-                library-path ?= [ modules.peek : $(name:U)_LIBPATH ] ;
+                library-path ?= [ os.environ $(name:U)_LIBPATH ] ;
             }
 
-            local toolset = [ $(property-set).get <toolset> ] ;
-            local toolset-version-property = "<toolset-$(toolset):version>" ;
-            local relevant = [ property.select <target-os> <toolset>
-                $(toolset-version-property) <link> <address-model> <architecture> :
+            local relevant = [ property.select [ configure.get-relevant-features ] <link> :
                 [ $(property-set).raw ] ] ;
 
             local key = ac-library-$(name)-$(relevant:J=-) ;
@@ -240,7 +253,7 @@ class ac-library : basic-target
             }
             else
             {
-                local includes = [ ac.find-include-path $(property-set) : $(self.header) : $(include-path) ] ;
+                local includes = [ ac.find-include-path $(property-set) : $(self.header) : $(include-path) : $(self.header-test) ] ;
                 local library = [ ac.find-library $(property-set) : $(libnames) : $(library-path) ] ;
                 if $(includes) && $(library)
                 {
@@ -304,5 +317,8 @@ rule check-library ( target : true-properties * : false-properties * )
 {
     local instance = [ class.new check-library-worker $(target) :
         $(true-properties) : $(false-properties) ] ;
-    return <conditional>@$(instance).check ;
+    return <conditional>@$(instance).check
+        [ property.evaluate-conditional-relevance
+            $(true-properties) $(false-properties)
+          : [ configure.get-relevant-features ] <link> ] ;
 }

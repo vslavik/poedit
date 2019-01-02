@@ -6,6 +6,9 @@
 
 // For more information, see http://www.boost.org
 
+#include <boost/predef.h>
+
+#if (__cplusplus >= 201402L) || (BOOST_COMP_MSVC >= BOOST_VERSION_NUMBER(14,0,0))
 
 #include <boost/config.hpp>
 #include <boost/variant.hpp>
@@ -83,11 +86,27 @@ struct BOOST_SYMBOL_EXPORT some_class : some_father
     void set(int i)  ;
 
     some_class();
+    some_class(some_class &&);
     some_class(int i);
 
-    virtual ~some_class();
+    some_class& operator=(some_class &&);
 
+
+    virtual ~some_class();
 };
+
+some_class::some_class(some_class &&){}
+
+
+some_class& some_class::operator=(some_class &&ref) {return ref;}
+
+
+BOOST_SYMBOL_EXPORT extern std::size_t size_of_some_class;
+std::size_t size_of_some_class = sizeof(some_space::some_class);
+
+
+extern "C"  BOOST_SYMBOL_EXPORT const volatile some_class* this_;
+const volatile some_class * this_ = nullptr;
 
 int some_class::value = -1;
 
@@ -96,20 +115,24 @@ void some_class::set_value(const int &i) {value = i;}
 
 //some_class* some_class::dummy() {return new some_class();}//so it implements an allocating ctor.
 
-double  some_class::func(double i, double j) {return i*j;}
-int     some_class::func(int i,     int j)      {return i+j;}
-int     some_class::func(int i,     int j)             volatile {return i-j;;}
-double  some_class::func(double i, double j) const volatile {return i/j;}
+double  some_class::func(double i, double j)                {this_ = this; return i*j;}
+int     some_class::func(int i,     int j)                  {this_ = this; return i+j;}
+int     some_class::func(int i,     int j)   volatile       {this_ = this; return i-j;;}
+double  some_class::func(double i, double j) const volatile {this_ = this; return i/j;}
 
-int  some_class::get() const {return mem_val;}
-void some_class::set(int i)  {mem_val = i;}
+int  some_class::get() const {this_ = this; return mem_val;}
+void some_class::set(int i)  {this_ = this; mem_val = i;}
 
-some_class::some_class()        {value = 23; mem_val = 123;}
-some_class::some_class(int i) : mem_val(456) {value = i;}
+some_class::some_class()        { this_ = this; value = 23; mem_val = 123;}
+some_class::some_class(int i) : mem_val(456) {this_ = this; value = i;}
 
 some_class::~some_class()
 {
     value = 0;
+    this_ = this;
 }
 
 }
+
+
+#endif

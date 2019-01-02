@@ -27,8 +27,43 @@ The implementation uses the following other Boost modules:
 
 [endsect]
 
+[section Emplace operations in older compilers][#optional_emplace_workaround]
 
-[section Optional Reference Binding]
+Certain constructors and functions in the interface of `optional` perform a 'perfect forwarding' of arguments:
+
+    template<class... Args> optional(in_place_init_t, Args&&... args);
+    template<class... Args> optional(in_place_init_if_t, bool condition, Args&&... args);
+    template<class... Args> void emplace(Args&&... args);
+    
+On compilers that do not support variadic templates, each of these functions is substituted with two overloads, one forwarding a single argument, the other forwarding zero arguments. This forms the following set:
+
+    template<class Arg> optional(in_place_init_t, Arg&& arg);
+    optional(in_place_init_t);
+    
+    template<class Arg> optional(in_place_init_if_t, bool condition, Arg&& arg);
+    optional(in_place_init_if_t, bool condition);
+    
+    template<class Arg> void emplace(Arg&& arg);
+    void emplace();
+
+On compilers that do not support rvalue references, each of these functions is substituted with three overloadss: taking `const` and non-`const` lvalue reference, and third forwarding zero arguments. This forms the following set:
+
+    template<class Arg> optional(in_place_init_t, const Arg& arg);
+    template<class Arg> optional(in_place_init_t, Arg& arg);
+    optional(in_place_init_t);
+    
+    template<class Arg> optional(in_place_init_if_t, bool condition, const Arg& arg);
+    template<class Arg> optional(in_place_init_if_t, bool condition, Arg& arg);
+    optional(in_place_init_if_t, bool condition);
+    
+    template<class Arg> void emplace(const Arg& arg);
+    template<class Arg> void emplace(Arg& arg);
+    void emplace();
+
+This workaround addressess about 40% of all use cases. If this is insufficient, you need to resort to using [link boost_optional.tutorial.in_place_factories In-Place Factories].    
+[endsect]
+
+[section Optional Reference Binding][#optional_reference_binding]
 
 A number of compilers incorrectly treat const lvalues of integral type as rvalues, and create an illegal temporary when binding to an lvalue reference to const in some expressions. This could result in creating an optional lvalue reference that is in fact bound to an unexpected temporary rather than to the intended object. In order to prevent hard to find run-time bugs, this library performs compile-time checks to prevent expressions that would otherwise bind an optional reference to an unexpected temporary. As a consequence, on certain compilers certain pieces of functionality in optional references are missing. In order to maintain a portability of your code across diferent compilers, it is recommended that you only stick to the minimum portable interface of optional references: prefer direct-initialization and copy assignment of optional references to copy-initialization and assignment from `T&`:
 

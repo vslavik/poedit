@@ -73,7 +73,7 @@ void test_sectionalize(std::string const& caseid, G const& g, std::size_t sectio
         std::string const& index_check, std::string const& dir_check,
         std::size_t max_count = 10)
 {
-    boost::ignore_unused_variable_warning(caseid);
+    boost::ignore_unused(caseid);
 
     static const std::size_t dimension_count = boost::mpl::size<DimensionVector>::value;
 

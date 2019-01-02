@@ -26,8 +26,8 @@ typedef scaled_base_unit<degree_base_unit, scale<360, static_rational<1> > >  re
 
 template<>
 struct base_unit_info<angle::revolution_base_unit> {
-    static const char* name()   { return("revolution"); }
-    static const char* symbol() { return("rev"); }
+    static BOOST_CONSTEXPR const char* name()   { return("revolution"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("rev"); }
 };
 
 }

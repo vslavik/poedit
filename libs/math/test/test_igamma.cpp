@@ -68,6 +68,13 @@ void expected_results()
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
+      ".*Solaris.*",                    // platform
+      "real_concept",                   // test type(s)
+      "[^|]*medium[^|]*",               // test data group
+      "[^|]*", 1000, 200);              // test function
+   add_expected_result(
+      "[^|]*",                          // compiler
+      "[^|]*",                          // stdlib
       "linux",                          // platform
       largest_type,                     // test type(s)
       "[^|]*integer[^|]*",               // test data group

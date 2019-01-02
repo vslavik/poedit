@@ -12,6 +12,7 @@
 #include <boost/thread/xtime.hpp>
 #include "./util.inl"
 #include "./shared_mutex_locking_thread.hpp"
+#include <iostream>
 
 #define CHECK_LOCKED_VALUE_EQUAL(mutex_name,value,expected_value)    \
     {                                                                \

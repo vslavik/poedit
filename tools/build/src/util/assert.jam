@@ -53,7 +53,7 @@ rule equal ( a * : b * )
 {
     if $(a) != $(b)
     {
-        errors.error-skip-frames 3 assertion failure: \"$(a)\" "==" \"$(b)\"
+        errors.error-skip-frames 3 assertion "failure:" \"$(a)\" "==" \"$(b)\"
             (ignoring trailing empty strings) ;
     }
 }
@@ -74,10 +74,10 @@ rule false ( rule-name args * : * )
 
     if $(result)
     {
-        errors.error-skip-frames 3 assertion failure: Expected false result from
+        errors.error-skip-frames 3 assertion "failure:" Expected false result from
             "[" $(rule-name) [ errors.lol->list $(args) : $(2) : $(3) : $(4) :
             $(5) : $(6) : $(7) : $(8) : $(9) : $(10) : $(11) : $(12) : $(13) :
-            $(14) : $(15) : $(16) : $(17) : $(18) : $(19) ] "]" : Got: "["
+            $(14) : $(15) : $(16) : $(17) : $(18) : $(19) ] "]" : "Got:" "["
             \"$(result)\" "]" ;
     }
 }
@@ -89,7 +89,7 @@ rule "in" ( element : list * )
 {
     if ! $(element) in $(list)
     {
-        errors.error-skip-frames 3 assertion failure: Expected \"$(element)\" in
+        errors.error-skip-frames 3 assertion "failure:" Expected \"$(element)\" in
             "[" \"$(list)\" "]" ;
     }
 }
@@ -101,7 +101,7 @@ rule not-equal ( a * : b * )
 {
     if $(a) = $(b)
     {
-        errors.error-skip-frames 3 assertion failure: \"$(a)\" "!=" \"$(b)\"
+        errors.error-skip-frames 3 assertion "failure:" \"$(a)\" "!=" \"$(b)\"
             (ignoring trailing empty strings) ;
     }
 }
@@ -113,7 +113,7 @@ rule not-in ( element : list * )
 {
     if $(element) in $(list)
     {
-        errors.error-skip-frames 3 assertion failure: Did not expect
+        errors.error-skip-frames 3 assertion "failure:" Did not expect
             \"$(element)\" in "[" \"$(list)\" "]" ;
     }
 }
@@ -125,7 +125,7 @@ rule not-set-equal ( a * : b * )
 {
     if [ set-equal-test $(a) : $(b) ]
     {
-        errors.error-skip-frames 3 assertion failure: Expected "[" \"$(a)\" "]"
+        errors.error-skip-frames 3 assertion "failure:" Expected "[" \"$(a)\" "]"
             and "[" \"$(b)\" "]" to not be equal as sets ;
     }
 }
@@ -138,7 +138,7 @@ rule not-exact-equal ( a * : b * )
 {
     if [ exact-equal-test $(a) : $(b) ]
     {
-        errors.error-skip-frames 3 assertion failure: \"$(a)\" "!=" \"$(b)\" ;
+        errors.error-skip-frames 3 assertion "failure:" \"$(a)\" "!=" \"$(b)\" ;
     }
 }
 
@@ -158,10 +158,10 @@ rule result ( expected * : rule-name args * : * )
 
     if ! [ exact-equal-test $(result) : $(expected) ]
     {
-        errors.error-skip-frames 3 assertion failure: "[" $(rule-name) [
+        errors.error-skip-frames 3 assertion "failure:" "[" $(rule-name) [
             errors.lol->list $(args) : $(3) : $(4) : $(5) : $(6) : $(7) : $(8) :
             $(9) : $(10) : $(11) : $(12) : $(13) : $(14) : $(15) : $(16) : $(17)
-            : $(18) : $(19) ] "]" : Expected: "[" \"$(expected)\" "]" : Got: "["
+            : $(18) : $(19) ] "]" : "Expected:" "[" \"$(expected)\" "]" : "Got:" "["
             \"$(result)\" "]" ;
     }
 }
@@ -183,10 +183,10 @@ rule result-set-equal ( expected * : rule-name args * : * )
 
     if ! [ set-equal-test $(result) : $(expected) ]
     {
-        errors.error-skip-frames 3 assertion failure: "[" $(rule-name) [
+        errors.error-skip-frames 3 assertion "failure:" "[" $(rule-name) [
             errors.lol->list $(args) : $(3) : $(4) : $(5) : $(6) : $(7) : $(8) :
             $(9) : $(10) : $(11) : $(12) : $(13) : $(14) : $(15) : $(16) : $(17)
-            : $(18) : $(19) ] "]" : Expected: "[" \"$(expected)\" "]" : Got: "["
+            : $(18) : $(19) ] "]" : "Expected:" "[" \"$(expected)\" "]" : "Got:" "["
             \"$(result)\" "]" ;
     }
 }
@@ -198,7 +198,7 @@ rule set-equal ( a * : b * )
 {
     if ! [ set-equal-test $(a) : $(b) ]
     {
-        errors.error-skip-frames 3 assertion failure: Expected "[" \"$(a)\" "]"
+        errors.error-skip-frames 3 assertion "failure:" Expected "[" \"$(a)\" "]"
             and "[" \"$(b)\" "]" to be equal as sets ;
     }
 }
@@ -219,7 +219,7 @@ rule true ( rule-name args * : * )
 
     if ! $(result)
     {
-        errors.error-skip-frames 3 assertion failure: Expected true result from
+        errors.error-skip-frames 3 assertion "failure:" Expected true result from
             "[" $(rule-name) [ errors.lol->list $(args) : $(2) : $(3) : $(4) :
             $(5) : $(6) : $(7) : $(8) : $(9) : $(10) : $(11) : $(12) : $(13) :
             $(14) : $(15) : $(16) : $(17) : $(18) : $(19) ] "]" ;
@@ -234,7 +234,7 @@ rule exact-equal ( a * : b * )
 {
     if ! [ exact-equal-test $(a) : $(b) ]
     {
-        errors.error-skip-frames 3 assertion failure: \"$(a)\" "==" \"$(b)\" ;
+        errors.error-skip-frames 3 assertion "failure:" \"$(a)\" "==" \"$(b)\" ;
     }
 }
 
@@ -246,7 +246,7 @@ rule variable-not-empty ( name )
     local value = [ modules.peek [ CALLER_MODULE ] : $(name) ] ;
     if ! $(value)-is-not-empty
     {
-        errors.error-skip-frames 3 assertion failure: Expected variable
+        errors.error-skip-frames 3 assertion "failure:" Expected variable
             \"$(name)\" not to be an empty list ;
     }
 }

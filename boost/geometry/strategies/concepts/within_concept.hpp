@@ -17,12 +17,13 @@
 
 
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/function_types/result_type.hpp>
 
 #include <boost/geometry/util/parameter_type_of.hpp>
 
 
-namespace boost { namespace geometry { namespace concept
+namespace boost { namespace geometry { namespace concepts
 {
 
 
@@ -55,12 +56,12 @@ class WithinStrategyPolygonal
             // CHECK: apply-arguments should both fulfill point concept
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstPoint<point_type>)
+                    (concepts::ConstPoint<point_type>)
                 );
 
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstPoint<segment_point_type>)
+                    (concepts::ConstPoint<segment_point_type>)
                 );
 
             // CHECK: return types (result: int, apply: bool)
@@ -93,9 +94,7 @@ class WithinStrategyPolygonal
             bool b = str->apply(*p, *sp, *sp, *st);
             int r = str->result(*st);
 
-            boost::ignore_unused_variable_warning(r);
-            boost::ignore_unused_variable_warning(b);
-            boost::ignore_unused_variable_warning(str);
+            boost::ignore_unused(r, b, str);
         }
     };
 
@@ -130,12 +129,12 @@ class WithinStrategyPointBox
             // CHECK: apply-arguments should fulfill point/box concept
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstPoint<point_type>)
+                    (concepts::ConstPoint<point_type>)
                 );
 
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstBox<box_type>)
+                    (concepts::ConstBox<box_type>)
                 );
 
             // CHECK: return types (apply: bool)
@@ -158,8 +157,7 @@ class WithinStrategyPointBox
 
             bool b = str->apply(*p, *bx);
 
-            boost::ignore_unused_variable_warning(b);
-            boost::ignore_unused_variable_warning(str);
+            boost::ignore_unused(b, str);
         }
     };
 
@@ -194,12 +192,12 @@ class WithinStrategyBoxBox
             // CHECK: apply-arguments should both fulfill box concept
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstBox<box_type1>)
+                    (concepts::ConstBox<box_type1>)
                 );
 
             BOOST_CONCEPT_ASSERT
                 (
-                    (concept::ConstBox<box_type2>)
+                    (concepts::ConstBox<box_type2>)
                 );
 
             // CHECK: return types (apply: bool)
@@ -222,8 +220,7 @@ class WithinStrategyBoxBox
 
             bool b = str->apply(*b1, *b2);
 
-            boost::ignore_unused_variable_warning(b);
-            boost::ignore_unused_variable_warning(str);
+            boost::ignore_unused(b, str);
         }
     };
 
@@ -236,7 +233,7 @@ public :
 #endif
 };
 
-// So now: boost::geometry::concept::within
+// So now: boost::geometry::concepts::within
 namespace within
 {
 
@@ -281,11 +278,11 @@ template <typename FirstTag, typename SecondTag, typename CastedTag, typename St
 inline void check()
 {
     dispatch::check_within<FirstTag, SecondTag, CastedTag, Strategy> c;
-    boost::ignore_unused_variable_warning(c);
+    boost::ignore_unused(c);
 }
 
 
-}}}} // namespace boost::geometry::concept::within
+}}}} // namespace boost::geometry::concepts::within
 
 
 #endif // BOOST_GEOMETRY_STRATEGIES_CONCEPTS_WITHIN_CONCEPT_HPP

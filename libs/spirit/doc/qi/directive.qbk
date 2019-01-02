@@ -2,6 +2,7 @@
     Copyright (C) 2001-2011 Joel de Guzman
     Copyright (C) 2001-2011 Hartmut Kaiser
     Copyright (C) 2011      Bryce Lelbach
+	Copyright (C) 2016 		Frank Hein, maxence business consulting gmbh
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -855,6 +856,108 @@ Some using declarations:
 Simple usage of `as<T>`, `as_string` and `as_wstring`:
 
 [reference_as]
+
+[endsect]
+[/------------------------------------------------------------------------------]
+[section:expect Expectation Directive (`expect[]`)]
+
+[heading Description]
+
+There are occasions in which it is expected that the input must match a
+particular parser or the input is invalid. Such cases generally arise
+after matching a portion of a grammar, such that the context is fully
+known. In such a situation, failure to match should result in an
+exception. For example, when parsing an e-mail address, a name, an "@" 
+and a domain name must be matched or the address is invalid.
+
+The expect directive requires that the argument parser matches
+the input or an exception is emitted. Using on_error(), that exception
+can be handled by calling a handler with the context at which the
+parsing failed can be reported.
+
+The expect directive parses an operand parser expression which may be a 
+single parser or a complex parser expression like  a sequence.
+
+Single parser: 
+
+	expect[a]
+
+Parser expression:
+
+    expect[a >> b >> ...]
+
+In the latter case while the plain __qi_sequence__ simply returns a no-match
+(returns `false`) when one of the elements fail, the expect directive
+throws an __qi_expectation_failure__`<Iter>` if any of the parsers
+(even the first parser of a sequence) fails to match.
+
+[note Spirit provides two ways to handle expectation failures by throwing an expectation exception.
+Use the __qi_expect__ if you do not need an exception to be thrown when the first parser of a sequence fails. ]
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/expect.hpp>
+    #include <boost/spirit/include/qi_expect.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]     		[A __parser_concept__]]
+    [[`Iter`]       [A __fwditer__ type]]
+]
+
+[heading Expectation Failure]
+
+When the operand parser fails to match an `expectation_failure<Iter>` is thrown:
+
+    template <typename Iter>
+    struct expectation_failure : std::runtime_error
+    {
+        Iter first;           // [first, last) iterator pointing
+        Iter last;            // to the error position in the input.
+        __info__ what_;       // Information about the nature of the error.
+    };
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`expect[a]`]      [Match `a`. If `a` fails, throw an `expectation_failure<Iter>`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`expect[a]`]      
+[``a: A --> expect[a]: A
+a: Unused --> expect[a] : Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the expectation parser is defined by the 
+complexity of it's argument parser. The complexity of the expect directive itself is O(1).]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_using_declarations_expectd]
+
+[reference_expectd]
 
 [endsect]
 

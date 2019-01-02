@@ -26,10 +26,10 @@ BOOST_AUTO_TEST_CASE(rotate_trivial)
 
     boost::compute::copy_n(data, 10, vector.begin(), queue);
 
-    boost::compute::rotate(vector.begin(), vector.begin(), vector.end());
+    boost::compute::rotate(vector.begin(), vector.begin(), vector.end(), queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (1, 4, 2, 6, 3, 2, 5, 3, 4, 6));
 
-    boost::compute::rotate(vector.begin(), vector.end(), vector.end());
+    boost::compute::rotate(vector.begin(), vector.end(), vector.end(), queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (1, 4, 2, 6, 3, 2, 5, 3, 4, 6));
 }
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(rotate_1)
 
     boost::compute::copy_n(data, 10, vector.begin(), queue);
 
-    boost::compute::rotate(vector.begin(), vector.begin()+1, vector.end());
+    boost::compute::rotate(vector.begin(), vector.begin()+1, vector.end(), queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (4, 2, 6, 3, 2, 5, 3, 4, 6, 1));
 }
 
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(rotate_4)
 
     boost::compute::copy_n(data, 10, vector.begin(), queue);
 
-    boost::compute::rotate(vector.begin(), vector.begin()+4, vector.end());
+    boost::compute::rotate(vector.begin(), vector.begin()+4, vector.end(), queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (3, 2, 5, 3, 4, 6, 1, 4, 2, 6));
 }
 
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(rotate_9)
 
     boost::compute::copy_n(data, 10, vector.begin(), queue);
 
-    boost::compute::rotate(vector.begin(), vector.begin()+9, vector.end());
+    boost::compute::rotate(vector.begin(), vector.begin()+9, vector.end(), queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (6, 1, 4, 2, 6, 3, 2, 5, 3, 4));
 }
 

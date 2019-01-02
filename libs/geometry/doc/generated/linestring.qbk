@@ -24,6 +24,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
 [heading Synopsis]
 ``template<typename Point, template< typename, typename > class Container, template< typename > class Allocator>
 class model::linestring
+      : public Container< Point, Allocator< Point > >
 {
   // ...
 };
@@ -42,13 +43,13 @@ class model::linestring
 [[Function] [Description] [Parameters] ]
 [[``linestring()``
 
-] [Default constructor, creating an empty \1. ] [
+] [Default constructor, creating an empty linestring. ] [
 
 ]]
 [[``template<typename Iterator>
 linestring(Iterator begin, Iterator end)``
 
-] [Constructor with begin and end, filling the \1. ] [[* Iterator]: ['begin]:  
+] [Constructor with begin and end, filling the linestring. ] [[* Iterator]: ['begin]:  
 
 [* Iterator]: ['end]:  
 
@@ -57,7 +58,7 @@ linestring(Iterator begin, Iterator end)``
 ]]
 [[``linestring(std::initializer_list< Point > l)``
 
-] [Constructor taking std::initializer_list, filling the \1. ] [[* std::initializer_list< Point >]: ['l]:  
+] [Constructor taking std::initializer_list, filling the linestring. ] [[* std::initializer_list< Point >]: ['l]:  
 
 
 

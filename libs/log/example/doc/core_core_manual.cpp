@@ -6,7 +6,7 @@
  */
 
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 

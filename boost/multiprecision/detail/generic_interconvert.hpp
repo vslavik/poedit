@@ -35,36 +35,37 @@ void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_
    using default_ops::eval_right_shift;
    using default_ops::eval_ldexp;
    using default_ops::eval_add;
+   using default_ops::eval_is_zero;
    // smallest unsigned type handled natively by "From" is likely to be it's limb_type:
-   typedef typename canonical<unsigned char, From>::type   limb_type;
+   typedef typename canonical<unsigned char, From>::type   l_limb_type;
    // get the corresponding type that we can assign to "To":
-   typedef typename canonical<limb_type, To>::type         to_type;
+   typedef typename canonical<l_limb_type, To>::type         to_type;
    From t(from);
    bool is_neg = eval_get_sign(t) < 0;
    if(is_neg)
       t.negate();
    // Pick off the first limb:
-   limb_type limb;
-   limb_type mask = ~static_cast<limb_type>(0);
+   l_limb_type limb;
+   l_limb_type mask = static_cast<l_limb_type>(~static_cast<l_limb_type>(0));
    From fl;
    eval_bitwise_and(fl, t, mask);
    eval_convert_to(&limb, fl);
    to = static_cast<to_type>(limb);
-   eval_right_shift(t, std::numeric_limits<limb_type>::digits);
+   eval_right_shift(t, std::numeric_limits<l_limb_type>::digits);
    //
    // Then keep picking off more limbs until "t" is zero:
    //
    To l;
-   unsigned shift = std::numeric_limits<limb_type>::digits;
+   unsigned shift = std::numeric_limits<l_limb_type>::digits;
    while(!eval_is_zero(t))
    {
       eval_bitwise_and(fl, t, mask);
       eval_convert_to(&limb, fl);
       l = static_cast<to_type>(limb);
-      eval_right_shift(t, std::numeric_limits<limb_type>::digits);
+      eval_right_shift(t, std::numeric_limits<l_limb_type>::digits);
       eval_ldexp(l, l, shift);
       eval_add(to, l);
-      shift += std::numeric_limits<limb_type>::digits;
+      shift += std::numeric_limits<l_limb_type>::digits;
    }
    //
    // Finish off by setting the sign:
@@ -146,6 +147,8 @@ void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_
    using default_ops::eval_add;
    using default_ops::eval_subtract;
    using default_ops::eval_convert_to;
+   using default_ops::eval_get_sign;
+   using default_ops::eval_is_zero;
 
    //
    // First classify the input, then handle the special cases:
@@ -310,7 +313,7 @@ typename enable_if_c<is_number<To>::value || is_floating_point<To>::value>::type
       num = -num;
    }
    int denom_bits = msb(denom);
-   int shift = std::numeric_limits<To>::digits + denom_bits - msb(num) + 1;
+   int shift = std::numeric_limits<To>::digits + denom_bits - msb(num);
    if(shift > 0)
       num <<= shift;
    else if(shift < 0)
@@ -318,7 +321,7 @@ typename enable_if_c<is_number<To>::value || is_floating_point<To>::value>::type
    Integer q, r;
    divide_qr(num, denom, q, r);
    int q_bits = msb(q);
-   if(q_bits == std::numeric_limits<To>::digits)
+   if(q_bits == std::numeric_limits<To>::digits - 1)
    {
       //
       // Round up if 2 * r > denom:
@@ -334,7 +337,7 @@ typename enable_if_c<is_number<To>::value || is_floating_point<To>::value>::type
    }
    else
    {
-      BOOST_ASSERT(q_bits == 1 + std::numeric_limits<To>::digits);
+      BOOST_ASSERT(q_bits == std::numeric_limits<To>::digits);
       //
       // We basically already have the rounding info:
       //
@@ -424,8 +427,15 @@ void generic_interconvert_float2rational(To& to, const From& from, const mpl::in
    //
    typedef typename mpl::front<typename To::unsigned_types>::type ui_type;
    typename From::exponent_type e;
-   typename component_type<To>::type num, denom;
+   typename component_type<number<To> >::type num, denom;
    number<From> val(from);
+
+   if (!val)
+   {
+      to = ui_type(0u);
+      return;
+   }
+
    e = ilogb(val);
    val = scalbn(val, -e);
    while(val)
@@ -445,7 +455,7 @@ void generic_interconvert_float2rational(To& to, const From& from, const mpl::in
       num *= denom;
       denom = 1;
    }
-   assign_components(to, num, denom);
+   assign_components(to, num.backend(), denom.backend());
 }
 
 template <class To, class From>
@@ -454,7 +464,123 @@ void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_
    generic_interconvert_float2rational(to, from, mpl::int_<std::numeric_limits<number<From> >::radix>());
 }
 
-}}} // namespaces
+template <class To, class From>
+void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_integer>& /*to_type*/, const mpl::int_<number_kind_rational>& /*from_type*/)
+{
+   number<From> t(from);
+   number<To> result(numerator(t) / denominator(t));
+   to = result.backend();
+}
+
+template <class To, class From>
+void generic_interconvert_float2int(To& to, const From& from, const mpl::int_<2>& /*radix*/)
+{
+   typedef typename From::exponent_type exponent_type;
+   static const exponent_type shift = std::numeric_limits<boost::long_long_type>::digits;
+   exponent_type e;
+   number<To>   num(0u);
+   number<From> val(from);
+   val = frexp(val, &e);
+   while(e > 0)
+   {
+      int s = (std::min)(e, shift);
+      val = ldexp(val, s);
+      e -= s;
+      boost::long_long_type ll = boost::math::lltrunc(val);
+      val -= ll;
+      num <<= s;
+      num += ll;
+   }
+   to = num.backend();
+}
+
+template <class To, class From, int Radix>
+void generic_interconvert_float2int(To& to, const From& from, const mpl::int_<Radix>& /*radix*/)
+{
+   //
+   // This is almost the same as the binary case above, but we have to use
+   // scalbn and ilogb rather than ldexp and frexp, we also only extract
+   // one Radix digit at a time which is terribly inefficient!
+   //
+   typename From::exponent_type e;
+   number<To> num(0u);
+   number<From> val(from);
+   e = ilogb(val);
+   val = scalbn(val, -e);
+   while(e >= 0)
+   {
+      boost::long_long_type ll = boost::math::lltrunc(val);
+      val -= ll;
+      val = scalbn(val, 1);
+      num *= Radix;
+      num += ll;
+      --e;
+   }
+   to = num.backend();
+}
+
+template <class To, class From>
+void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_integer>& /*to_type*/, const mpl::int_<number_kind_floating_point>& /*from_type*/)
+{
+   generic_interconvert_float2int(to, from, mpl::int_<std::numeric_limits<number<From> >::radix>());
+}
+
+template <class To, class From, class tag>
+void generic_interconvert_complex_to_scalar(To& to, const From& from, const mpl::true_&, const tag&)
+{
+   // We just want the real part, and "to" is the correct type already:
+   eval_real(to, from);
+
+   To im;
+   eval_imag(im, from);
+   if(!eval_is_zero(im))
+      BOOST_THROW_EXCEPTION(std::runtime_error("Could not convert imaginary number to scalar."));
+}
+template <class To, class From>
+void generic_interconvert_complex_to_scalar(To& to, const From& from, const mpl::false_&, const mpl::true_&)
+{
+   typedef typename component_type<number<From> >::type component_number;
+   typedef typename component_number::backend_type component_backend;
+   //
+   // Get the real part and copy-construct the result from it:
+   //
+   component_backend r;
+   generic_interconvert_complex_to_scalar(r, from, mpl::true_(), mpl::true_());
+   to = r;
+}
+template <class To, class From>
+void generic_interconvert_complex_to_scalar(To& to, const From& from, const mpl::false_&, const mpl::false_&)
+{
+   typedef typename component_type<number<From> >::type component_number;
+   typedef typename component_number::backend_type component_backend;
+   //
+   // Get the real part and use a generic_interconvert to type To:
+   //
+   component_backend r;
+   generic_interconvert_complex_to_scalar(r, from, mpl::true_(), mpl::true_());
+   generic_interconvert(to, r, mpl::int_<number_category<To>::value>(), mpl::int_<number_category<To>::value>());
+}
+
+template <class To, class From>
+void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_floating_point>& /*to_type*/, const mpl::int_<number_kind_complex>& /*from_type*/)
+{
+   typedef typename component_type<number<From> >::type component_number;
+   typedef typename component_number::backend_type component_backend;
+
+   generic_interconvert_complex_to_scalar(to, from, mpl::bool_<boost::is_same<component_backend, To>::value>(), mpl::bool_<boost::is_constructible<To, const component_backend&>::value>());
+}
+template <class To, class From>
+void generic_interconvert(To& to, const From& from, const mpl::int_<number_kind_integer>& /*to_type*/, const mpl::int_<number_kind_complex>& /*from_type*/)
+{
+   typedef typename component_type<number<From> >::type component_number;
+   typedef typename component_number::backend_type component_backend;
+
+   generic_interconvert_complex_to_scalar(to, from, mpl::bool_<boost::is_same<component_backend, To>::value>(), mpl::bool_<boost::is_constructible<To, const component_backend&>::value>());
+}
+
+}
+}
+} // namespaces
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)

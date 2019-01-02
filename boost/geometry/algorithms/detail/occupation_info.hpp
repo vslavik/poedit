@@ -2,6 +2,11 @@
 
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -99,12 +104,18 @@ public :
         }
     }
 
-    template <typename RobustPoint, typename Turns>
-    inline void get_left_turns(RobustPoint const& origin, Turns& turns)
+    template <typename RobustPoint, typename Turns, typename SideStrategy>
+    inline void get_left_turns(RobustPoint const& origin, Turns& turns,
+                               SideStrategy const& strategy)
     {
+        typedef detail::left_turns::angle_less
+            <
+                typename AngleInfo::point_type,
+                SideStrategy
+            > angle_less;
+
         // Sort on angle
-        std::sort(m_angles.begin(), m_angles.end(),
-                detail::left_turns::angle_less<typename AngleInfo::point_type>(origin));
+        std::sort(m_angles.begin(), m_angles.end(), angle_less(origin, strategy));
 
         // Group same-angled elements
         std::size_t cluster_size = detail::left_turns::assign_cluster_indices(m_angles, origin);

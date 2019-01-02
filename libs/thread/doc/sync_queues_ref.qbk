@@ -769,22 +769,14 @@ Closed queues add the following valid expressions
       void push(const value_type& x);
       void push(BOOST_THREAD_RV_REF(value_type) x);
   
-      void pull(value_type& x);
-      value_type pull();
-  
       queue_op_status try_push(const value_type& x);
       queue_op_status try_push(BOOST_THREAD_RV_REF(value_type) x);
-  
-      queue_op_status try_pull(value_type& x);
-  
+ 
       queue_op_status nonblocking_push(const value_type& x);
       queue_op_status nonblocking_push(BOOST_THREAD_RV_REF(value_type) x);
   
-      queue_op_status nonblocking_pull(value_type& x);
-  
       queue_op_status wait_push(const value_type& x);
       queue_op_status wait_push(BOOST_THREAD_RV_REF(value_type) x);
-      queue_op_status wait_pull_front(value_type& x);
   
     };
 
@@ -812,24 +804,13 @@ Closed queues add the following valid expressions
       // Modifiers
       void close();
   
-      void push(const value_type& x);
-      void push(BOOST_THREAD_RV_REF(value_type) x);
-  
       void pull(value_type& x);
       value_type pull();
   
-      queue_op_status try_push(const value_type& x);
-      queue_op_status try_push(BOOST_THREAD_RV_REF(value_type) x);
-  
       queue_op_status try_pull(value_type& x);
-  
-      queue_op_status nonblocking_push(const value_type& x);
-      queue_op_status nonblocking_push(BOOST_THREAD_RV_REF(value_type) x);
   
       queue_op_status nonblocking_pull(value_type& x);
   
-      queue_op_status wait_push(const value_type& x);
-      queue_op_status wait_push(BOOST_THREAD_RV_REF(value_type) x);
       queue_op_status wait_pull(value_type& x);
   
     };

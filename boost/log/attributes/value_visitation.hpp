@@ -16,6 +16,7 @@
 #ifndef BOOST_LOG_ATTRIBUTES_VALUE_VISITATION_HPP_INCLUDED_
 #define BOOST_LOG_ATTRIBUTES_VALUE_VISITATION_HPP_INCLUDED_
 
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/exceptions.hpp>
 #include <boost/log/core/record.hpp>
@@ -26,7 +27,6 @@
 #include <boost/log/attributes/value_visitation_fwd.hpp>
 #include <boost/log/attributes/fallback_policy.hpp>
 #include <boost/log/expressions/keyword_fwd.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/utility/type_dispatch/static_type_dispatcher.hpp>
 #include <boost/log/detail/header.hpp>
 

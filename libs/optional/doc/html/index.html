@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost.Optional</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Boost.Optional">
 <link rel="next" href="boost_optional/quick_start.html" title="Quick Start">
 </head>
@@ -26,7 +26,7 @@
 <span class="firstname">Fernando Luis</span> <span class="surname">Cacciola Carballal</span>
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal</p></div>
-<div><p class="copyright">Copyright &#169; 2014-2016 Andrzej Krzemie&#324;ski</p></div>
+<div><p class="copyright">Copyright &#169; 2014-2018 Andrzej Krzemie&#324;ski</p></div>
 <div><div class="legalnotice">
 <a name="optional.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -36,7 +36,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#optional.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="boost_optional/quick_start.html">Quick Start</a></span></dt>
 <dd><dl>
@@ -64,8 +64,7 @@
       references</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/in_place_factories.html">In-Place
       Factories</a></span></dt>
-<dt><span class="section"><a href="boost_optional/tutorial/a_note_about_optional_bool_.html">A
-      note about optional&lt;bool&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_optional/tutorial/gotchas.html">Gotchas</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/exception_safety_guarantees.html">Exception
       Safety Guarantees</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/type_requirements.html">Type requirements</a></span></dt>
@@ -90,6 +89,8 @@
     and Portability</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_optional/dependencies_and_portability.html#boost_optional.dependencies_and_portability.dependencies">Dependencies</a></span></dt>
+<dt><span class="section"><a href="boost_optional/dependencies_and_portability/emplace_operations_in_older_compilers.html">Emplace
+      operations in older compilers</a></span></dt>
 <dt><span class="section"><a href="boost_optional/dependencies_and_portability/optional_reference_binding.html">Optional
       Reference Binding</a></span></dt>
 </dl></dd>
@@ -110,7 +111,7 @@
     </p>
 <h4>
 <a name="optional.introduction.h0"></a>
-      <span><a name="optional.introduction.problem"></a></span><a class="link" href="index.html#optional.introduction.problem">Problem</a>
+      <span class="phrase"><a name="optional.introduction.problem"></a></span><a class="link" href="index.html#optional.introduction.problem">Problem</a>
     </h4>
 <p>
       Suppose we want to read a parameter form a config file which represents some
@@ -124,7 +125,7 @@
     </p>
 <h4>
 <a name="optional.introduction.h1"></a>
-      <span><a name="optional.introduction.solution"></a></span><a class="link" href="index.html#optional.introduction.solution">Solution</a>
+      <span class="phrase"><a name="optional.introduction.solution"></a></span><a class="link" href="index.html#optional.introduction.solution">Solution</a>
     </h4>
 <p>
       This is how you solve it with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span></code>:
@@ -144,7 +145,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:43:25 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:03:28 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

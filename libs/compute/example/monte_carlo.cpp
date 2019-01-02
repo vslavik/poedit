@@ -32,8 +32,13 @@ int main()
     using compute::uint_;
     using compute::uint2_;
 
+
+#ifdef CI_BUILD // lower number of points for CI builds
+    size_t n = 2000;
+#else
     // ten million random points
     size_t n = 10000000;
+#endif
 
     // generate random numbers
     compute::default_random_engine rng(queue);

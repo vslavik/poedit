@@ -99,27 +99,27 @@ public:
       typedef allocator_architype<U> other;
    };
 
-   pointer address(reference r);
-   const_pointer address(const_reference r);
-   pointer allocate(size_type);
-   pointer allocate(size_type, pointer);
-   void deallocate(pointer, size_type);
-   size_type max_size()const;
+   pointer address(reference r){ return &r; }
+   const_pointer address(const_reference r) { return &r; }
+   pointer allocate(size_type n) { return static_cast<pointer>(std::malloc(n)); }
+   pointer allocate(size_type n, pointer) { return static_cast<pointer>(std::malloc(n)); }
+   void deallocate(pointer p, size_type) { std::free(p); }
+   size_type max_size()const { return UINT_MAX; }
 
-   allocator_architype();
-   allocator_architype(const allocator_architype&);
+   allocator_architype(){}
+   allocator_architype(const allocator_architype&){}
 
    template <class Other>
-   allocator_architype(const allocator_architype<Other>&);
+   allocator_architype(const allocator_architype<Other>&){}
 
-   void construct(pointer, const_reference);
-   void destroy(pointer);
+   void construct(pointer p, const_reference r) { new (p)T(r); }
+   void destroy(pointer p) { p->~T(); }
 };
 
 template <class T>
-bool operator == (const allocator_architype<T>&, const allocator_architype<T>&);
+bool operator == (const allocator_architype<T>&, const allocator_architype<T>&) {return true; }
 template <class T>
-bool operator != (const allocator_architype<T>&, const allocator_architype<T>&);
+bool operator != (const allocator_architype<T>&, const allocator_architype<T>&) { return false; }
 
 namespace boost{
 //
@@ -130,7 +130,7 @@ template <class charT>
 struct regex_traits_architype
 {
 public:
-   regex_traits_architype();
+   regex_traits_architype(){}
    typedef charT char_type;
    // typedef std::size_t size_type;
    typedef std::vector<char_type> string_type;
@@ -168,8 +168,8 @@ public:
 
 private:
    // this type is not copyable:
-   regex_traits_architype(const regex_traits_architype&);
-   regex_traits_architype& operator=(const regex_traits_architype&);
+   regex_traits_architype(const regex_traits_architype&){}
+   regex_traits_architype& operator=(const regex_traits_architype&){ return *this; }
 };
 
 //
@@ -437,7 +437,8 @@ struct BaseRegexConcept
       ignore_unused_variable_warning(bi);
       sub_diff_type diff = m_sub.length();
       ignore_unused_variable_warning(diff);
-      // match_results tests:
+      // match_results tests - some typedefs are not used, however these
+      // guarante that they exist (some compilers may warn on non-usage)
       typedef typename match_results_type::value_type mr_value_type;
       typedef typename match_results_type::const_reference mr_const_reference;
       typedef typename match_results_type::reference mr_reference;
@@ -483,7 +484,7 @@ struct BaseRegexConcept
       mrci = m_cresults.end();
       ignore_unused_variable_warning(mrci);
 
-      mr_allocator_type at2 = m_cresults.get_allocator();
+      (void) m_cresults.get_allocator();
       m_results.swap(m_results);
       global_regex_namespace::swap(m_results, m_results);
 

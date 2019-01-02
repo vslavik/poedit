@@ -13,13 +13,11 @@
 
 #include <boost/config.hpp>
 
-#ifdef BOOST_HAS_DECLSPEC
-  #ifdef BOOST_STATECHART_TEST_DYNAMIC_LINK
-    #ifdef BOOST_STATECHART_TEST_DLL_EXPORT
-      #define BOOST_STATECHART_DECL __declspec(dllexport)
-    #else
-      #define BOOST_STATECHART_DECL __declspec(dllimport)
-    #endif
+#ifdef BOOST_STATECHART_TEST_DYNAMIC_LINK
+  #ifdef BOOST_STATECHART_TEST_DLL_EXPORT
+    #define BOOST_STATECHART_DECL BOOST_SYMBOL_EXPORT
+  #else
+    #define BOOST_STATECHART_DECL BOOST_SYMBOL_IMPORT
   #endif
 #endif
 

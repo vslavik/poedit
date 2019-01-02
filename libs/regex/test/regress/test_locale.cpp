@@ -49,7 +49,9 @@ test_locale::test_locale(const char* c_name, boost::uint32_t lcid)
 #else
   s_c_locale = no_test;
 #endif
-#if !defined(BOOST_NO_STD_LOCALE) && !defined(BOOST_NO_EXCEPTIONS)
+  // Disabled for VC15.7 (and later?) as the C runtime asserts if you pass an invalid
+  // locale name to std::locale, rather than throwing the expected exception.
+#if !defined(BOOST_NO_STD_LOCALE) && !defined(BOOST_NO_EXCEPTIONS) && !BOOST_WORKAROUND(BOOST_MSVC, > 1913)
    // back up the C++ locale and create the new one:
    m_old_cpp_locale = s_cpp_locale_inst;
    m_old_cpp_state = s_cpp_locale;
@@ -191,8 +193,11 @@ void test_en_locale(const char* name, boost::uint32_t lcid)
    // causes these tests to crash (pointer overrun in std::collate<wchar_t>::do_transform).
    TEST_REGEX_SEARCH_L("[a-z]+", perl|::boost::regex_constants::collate, "\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf8\xf9\xfa\xfb\xfc", match_default, make_array(0, 28, -2, -2));
    TEST_REGEX_SEARCH_L("[a-z]+", perl|::boost::regex_constants::collate, "\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd8\xd9\xda\xdb\xdc", match_default, make_array(1, 28, -2, -2));
-   // and equivalence classes:
-   TEST_REGEX_SEARCH_L("[[=a=]]+", perl, "aA\xe0\xe1\xe2\xe3\xe4\xe5\xc0\xc1\xc2\xc3\xc4\xc5", match_default, make_array(0, 14, -2, -2));
+   if (lcid != 0x09)
+   {
+      // and equivalence classes, these fail for locale "en" but pass for "en_UK" and "en_US":
+      TEST_REGEX_SEARCH_L("[[=a=]]+", perl, "aA\xe0\xe1\xe2\xe3\xe4\xe5\xc0\xc1\xc2\xc3\xc4\xc5", match_default, make_array(0, 14, -2, -2));
+   }
    // case mapping:
    TEST_REGEX_SEARCH_L("[A-Z]+", perl|icase|::boost::regex_constants::collate, "\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf8\xf9\xfa\xfb\xfc", match_default, make_array(0, 28, -2, -2));
    TEST_REGEX_SEARCH_L("[a-z]+", perl|icase|::boost::regex_constants::collate, "\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd8\xd9\xda\xdb\xdc", match_default, make_array(1, 28, -2, -2));

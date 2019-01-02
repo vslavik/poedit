@@ -37,19 +37,11 @@
 
 #if defined(BOOST_LOG_ADAPTIVE_MUTEX_USE_WINAPI)
 
+#include <boost/log/detail/pause.hpp>
+#include <boost/winapi/thread.hpp>
 #include <boost/detail/interlocked.hpp>
-#include <boost/detail/winapi/thread.hpp>
 
 #if defined(__INTEL_COMPILER) || defined(_MSC_VER)
-#    if defined(_M_IX86)
-#        define BOOST_LOG_PAUSE_OP __asm { pause }
-#    elif defined(_M_AMD64)
-extern "C" void _mm_pause(void);
-#        if defined(BOOST_MSVC)
-#            pragma intrinsic(_mm_pause)
-#        endif
-#        define BOOST_LOG_PAUSE_OP _mm_pause()
-#    endif
 #    if defined(__INTEL_COMPILER)
 #        define BOOST_LOG_COMPILER_BARRIER __memory_barrier()
 #    else
@@ -60,7 +52,6 @@ extern "C" void _ReadWriteBarrier(void);
 #        define BOOST_LOG_COMPILER_BARRIER _ReadWriteBarrier()
 #    endif
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
-#    define BOOST_LOG_PAUSE_OP __asm__ __volatile__("pause;")
 #    define BOOST_LOG_COMPILER_BARRIER __asm__ __volatile__("" : : : "memory")
 #endif
 
@@ -94,17 +85,17 @@ public:
 
     void lock()
     {
-#if defined(BOOST_LOG_PAUSE_OP)
+#if defined(BOOST_LOG_AUX_PAUSE)
         unsigned int pause_count = initial_pause;
 #endif
         while (!try_lock())
         {
-#if defined(BOOST_LOG_PAUSE_OP)
+#if defined(BOOST_LOG_AUX_PAUSE)
             if (pause_count < max_pause)
             {
                 for (unsigned int i = 0; i < pause_count; ++i)
                 {
-                    BOOST_LOG_PAUSE_OP;
+                    BOOST_LOG_AUX_PAUSE;
                 }
                 pause_count += pause_count;
             }
@@ -112,10 +103,10 @@ public:
             {
                 // Restart spinning after waking up this thread
                 pause_count = initial_pause;
-                SwitchToThread();
+                boost::winapi::SwitchToThread();
             }
 #else
-            SwitchToThread();
+            boost::winapi::SwitchToThread();
 #endif
         }
     }
@@ -136,7 +127,7 @@ public:
     BOOST_DELETED_FUNCTION(adaptive_mutex& operator= (adaptive_mutex const&))
 };
 
-#undef BOOST_LOG_PAUSE_OP
+#undef BOOST_LOG_AUX_PAUSE
 #undef BOOST_LOG_COMPILER_BARRIER
 
 } // namespace aux

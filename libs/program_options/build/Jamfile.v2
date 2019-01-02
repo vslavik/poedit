@@ -9,13 +9,8 @@ SOURCES =
     convert winmain split
     ;
 
-lib boost_program_options
+boost-lib program_options
     : $(SOURCES).cpp
-    : <link>shared:<define>BOOST_PROGRAM_OPTIONS_DYN_LINK=1 # tell source we're building dll's
-      # See https://svn.boost.org/trac/boost/ticket/5049
+    : # See https://svn.boost.org/trac/boost/ticket/5049
       <target-os>hpux,<toolset>gcc:<define>_INCLUDE_STDC__SOURCE_199901
-    :
-    : <link>shared:<define>BOOST_PROGRAM_OPTIONS_DYN_LINK=1
     ;
-
-boost-install boost_program_options ;

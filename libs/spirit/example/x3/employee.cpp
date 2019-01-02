@@ -21,7 +21,6 @@
 
 #include <iostream>
 #include <string>
-#include <complex>
 
 namespace client { namespace ast
 {
@@ -31,8 +30,8 @@ namespace client { namespace ast
     struct employee
     {
         int age;
-        std::string surname;
         std::string forename;
+        std::string surname;
         double salary;
     };
 
@@ -44,7 +43,7 @@ namespace client { namespace ast
 // be in global scope.
 
 BOOST_FUSION_ADAPT_STRUCT(client::ast::employee,
-    age, surname, forename, salary
+    age, forename, surname, salary
 )
 
 namespace client
@@ -93,7 +92,7 @@ main()
 
     std::cout
         << "Give me an employee of the form :"
-        << "employee{age, \"surname\", \"forename\", salary } \n";
+        << "employee{age, \"forename\", \"surname\", salary } \n";
     std::cout << "Type [q or Q] to quit\n\n";
 
     using boost::spirit::x3::ascii::space;

@@ -13,6 +13,8 @@
 #include <boost/test/test_case_template.hpp>
 #include <boost/mpl/list.hpp>
 
+#include <iostream>
+
 #include <boost/compute/algorithm/equal.hpp>
 #include <boost/compute/algorithm/fill.hpp>
 #include <boost/compute/algorithm/fill_n.hpp>
@@ -247,7 +249,7 @@ BOOST_AUTO_TEST_CASE(check_fill_type)
         bc::fill_async(vector.begin(), vector.end(), 42, queue);
     future.wait();
 
-    #ifdef CL_VERSION_1_2
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_2
     BOOST_CHECK_EQUAL(
             future.get_event().get_command_type(),
             device.check_version(1,2) ? CL_COMMAND_FILL_BUFFER : CL_COMMAND_NDRANGE_KERNEL
@@ -301,7 +303,7 @@ BOOST_AUTO_TEST_CASE(fill_clone_buffer)
     );
 }
 
-#ifdef CL_VERSION_2_0
+#ifdef BOOST_COMPUTE_CL_VERSION_2_0
 BOOST_AUTO_TEST_CASE(fill_svm_buffer)
 {
     REQUIRES_OPENCL_VERSION(2, 0);
@@ -319,7 +321,7 @@ BOOST_AUTO_TEST_CASE(fill_svm_buffer)
 
     bc::svm_free(context, ptr);
 }
-#endif // CL_VERSION_2_0
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
 
 BOOST_AUTO_TEST_CASE(empty_fill)
 {

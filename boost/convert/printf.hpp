@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -18,10 +18,10 @@ namespace boost { namespace cnv
     struct printf;
 }}
 
-struct boost::cnv::printf : public boost::cnv::cnvbase<boost::cnv::printf>
+struct boost::cnv::printf : boost::cnv::cnvbase<boost::cnv::printf>
 {
-    typedef boost::cnv::printf             this_type;
-    typedef boost::cnv::cnvbase<this_type> base_type;
+    using this_type = boost::cnv::printf;
+    using base_type = boost::cnv::cnvbase<this_type>;
 
     using base_type::operator();
 
@@ -50,39 +50,37 @@ struct boost::cnv::printf : public boost::cnv::cnvbase<boost::cnv::printf>
 
     template<typename Type> int pos() const
     {
-        typedef boost::mpl::vector<double, float,
-                                   int, unsigned int,
-                                   short int, unsigned short int,
-                                   long int, unsigned long int
-                                   > managed_types;
-
-        typedef typename boost::mpl::find<managed_types, Type>::type type_iterator;
-        typedef typename type_iterator::pos                               type_pos;
+        using managed_types = boost::mpl::vector<double, float,
+                                  int, unsigned int,
+                                  short int, unsigned short int,
+                                  long int, unsigned long int>;
+        using type_iterator = typename boost::mpl::find<managed_types, Type>::type;
+        using      type_pos = typename type_iterator::pos;
 
         return type_pos::value;
     }
 
     char const* pformat(int pos) const
     {
-        static char const* d_format[] = { "%.*f", "%.*f", "%.*d", "%.*u", "%.*hd", "%.*hu", "%.*ld", "%.*lu" }; // Must match managed_types
-        static char const* x_format[] = { "%.*f", "%.*f", "%.*x", "%.*x", "%.*hx", "%.*hx", "%.*lx", "%.*lx" }; // Must match managed_types
-        static char const* o_format[] = { "%.*f", "%.*f", "%.*o", "%.*o", "%.*ho", "%.*ho", "%.*lo", "%.*lo" }; // Must match managed_types
-        char const*            format = base_ == 10 ? d_format[pos]
-                                      : base_ == 16 ? x_format[pos]
-                                      : base_ ==  8 ? o_format[pos]
-                                      : (BOOST_ASSERT(0), (char const*) 0);
-        return format;
+        static char const* d_fmt[] = { "%.*f", "%.*f", "%.*d", "%.*u", "%.*hd", "%.*hu", "%.*ld", "%.*lu" }; // Must match managed_types
+        static char const* x_fmt[] = { "%.*f", "%.*f", "%.*x", "%.*x", "%.*hx", "%.*hx", "%.*lx", "%.*lx" }; // Must match managed_types
+        static char const* o_fmt[] = { "%.*f", "%.*f", "%.*o", "%.*o", "%.*ho", "%.*ho", "%.*lo", "%.*lo" }; // Must match managed_types
+        char const*            fmt = base_ == boost::cnv::base::dec ? d_fmt[pos]
+                                   : base_ == boost::cnv::base::hex ? x_fmt[pos]
+                                   : base_ == boost::cnv::base::oct ? o_fmt[pos]
+                                   : (BOOST_ASSERT(0), nullptr);
+        return fmt;
     }
     char const* format(int pos) const
     {
-        static char const* d_format[] = { "%f", "%f", "%d", "%u", "%hd", "%hu", "%ld", "%lu" }; // Must match managed_types
-        static char const* x_format[] = { "%f", "%f", "%x", "%x", "%hx", "%hx", "%lx", "%lx" }; // Must match managed_types
-        static char const* o_format[] = { "%f", "%f", "%o", "%o", "%ho", "%ho", "%lo", "%lo" }; // Must match managed_types
-        char const*            format = base_ == 10 ? d_format[pos]
-                                      : base_ == 16 ? x_format[pos]
-                                      : base_ ==  8 ? o_format[pos]
-                                      : (BOOST_ASSERT(0), (char const*) 0);
-        return format;
+        static char const* d_fmt[] = { "%f", "%f", "%d", "%u", "%hd", "%hu", "%ld", "%lu" }; // Must match managed_types
+        static char const* x_fmt[] = { "%f", "%f", "%x", "%x", "%hx", "%hx", "%lx", "%lx" }; // Must match managed_types
+        static char const* o_fmt[] = { "%f", "%f", "%o", "%o", "%ho", "%ho", "%lo", "%lo" }; // Must match managed_types
+        char const*            fmt = base_ == boost::cnv::base::dec ? d_fmt[pos]
+                                   : base_ == boost::cnv::base::hex ? x_fmt[pos]
+                                   : base_ == boost::cnv::base::oct ? o_fmt[pos]
+                                   : (BOOST_ASSERT(0), nullptr);
+        return fmt;
     }
 };
 

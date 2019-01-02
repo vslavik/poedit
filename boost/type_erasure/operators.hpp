@@ -28,9 +28,6 @@
 namespace boost {
 namespace type_erasure {
 
-template<class Concept, class Placeholder>
-class any;
-
 /** INTERNAL ONLY */
 #define BOOST_TYPE_ERASURE_UNARY_INPLACE_OPERATOR(name, op)                         \
     template<class T = _self>                                                       \

@@ -10,6 +10,7 @@ import "class" : new ;
 import feature ;
 import generators : * ;
 import os ;
+import param ;
 import project ;
 import property ;
 import scanner ;
@@ -66,7 +67,7 @@ rule register ( type : suffixes * : base-type ? )
             # Specify mapping from suffixes to type.
             register-suffixes $(suffixes) : $(type) ;
             # By default generated targets of 'type' will use the first of
-            #'suffixes'. This may be overriden.
+            #'suffixes'. This may be overridden.
             set-generated-target-suffix $(type) : : $(suffixes[1]) ;
         }
 
@@ -377,6 +378,8 @@ rule type ( filename )
 rule main-target-rule ( name : sources * : requirements * : default-build * :
     usage-requirements * )
 {
+    param.handle-named-params
+        sources requirements default-build usage-requirements ;
     # First discover the required target type based on the exact alias used to
     # invoke this rule.
     local bt = [ BACKTRACE 1 ] ;

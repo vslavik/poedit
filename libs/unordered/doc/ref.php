@@ -7,6 +7,10 @@ function echo_unordered_docs(
     $name = 'unordered_'.
         ($equivalent_keys ? 'multi' : '').
         ($map ? 'map' : 'set');
+    // For merge....
+    $node_partner = 'unordered_'.
+        ($equivalent_keys ? '' : 'multi').
+        ($map ? 'map' : 'set');
 
     if ($map)
     {
@@ -189,10 +193,36 @@ EOL;
               <para>A const_local_iterator object can be used to iterate through a single bucket.</para>
             </description>
           </typedef>
+          <typedef name="node_type">
+            <type><emphasis>implementation-defined</emphasis></type>
+            <description>
+              <para>See <classname>node_handle_<?php echo $map ? 'map' : 'set'; ?></classname> for details.</para>
+            </description>
+          </typedef>
+<?php if (!$equivalent_keys): ?>
+          <typedef name="insert_return_type">
+            <type><emphasis>implementation-defined</emphasis></type>
+            <description>
+              Structure returned by inserting <code>node_type</code>.
+            </description>
+          </typedef>
+<?php endif; ?>
+          <constructor>
+            <postconditions>
+              <code><methodname>size</methodname>() == 0</code>
+            </postconditions>
+            <description>
+              <para>Constructs an empty container using hasher() as the hash function, key_equal() as the key equality predicate, allocator_type() as the allocator and a maximum load factor of 1.0.</para>
+            </description>
+            <requires>
+              <para>If the defaults are used, <code>hasher</code>, <code>key_equal</code> and
+                <code>allocator_type</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
           <constructor specifiers="explicit">
             <parameter name="n">
               <paramtype>size_type</paramtype>
-              <default><emphasis>implementation-defined</emphasis></default>
             </parameter>
             <parameter name="hf">
               <paramtype>hasher const&amp;</paramtype>
@@ -246,7 +276,12 @@ EOL;
               <default>allocator_type()</default>
             </parameter>
             <description>
-              <para>Constructs an empty container with at least n buckets, using hf as the hash function, eq as the key equality predicate, a as the allocator and a maximum load factor of 1.0 and inserts the elements from [f, l) into it.</para>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+              using <code>hf</code> as the hash function,
+              <code>eq</code> as the key equality predicate,
+              <code>a</code> as the allocator and a maximum load factor of 1.0
+              and inserts the elements from [f, l) into it.
+              </para>
             </description>
             <requires>
               <para>If the defaults are used, <code>hasher</code>, <code>key_equal</code> and
@@ -310,6 +345,168 @@ EOL;
                 <para>Constructs an container, copying <code>x</code>'s contained elements, hash function, predicate, maximum load factor, but using allocator <code>a</code>.</para>
             </description>
           </constructor>
+          <constructor>
+            <parameter name="x">
+              <paramtype><?php echo $name; ?> &amp;&amp;</paramtype>
+            </parameter>
+            <parameter name="a">
+              <paramtype>Allocator const&amp;</paramtype>
+            </parameter>
+            <description>
+              <para>Construct a container moving <code>x</code>'s contained elements, and having the hash function, predicate and maximum load factor, but using allocate <code>a</code>.</para>
+            </description>
+            <notes>
+              <para>This is implemented using Boost.Move.</para>
+            </notes>
+            <requires>
+              <para>
+                <code>value_type</code> is move insertable.
+              </para>
+            </requires>
+          </constructor>
+          <constructor>
+            <parameter name="il">
+              <paramtype>initializer_list&lt;value_type&gt;</paramtype>
+            </parameter>
+            <parameter name="n">
+              <paramtype>size_type</paramtype>
+              <default><emphasis>implementation-defined</emphasis></default>
+            </parameter>
+            <parameter name="hf">
+              <paramtype>hasher const&amp;</paramtype>
+              <default>hasher()</default>
+            </parameter>
+            <parameter name="eq">
+              <paramtype>key_equal const&amp;</paramtype>
+              <default>key_equal()</default>
+            </parameter>
+            <parameter name="a">
+              <paramtype>allocator_type const&amp;</paramtype>
+              <default>allocator_type()</default>
+            </parameter>
+            <description>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+                using <code>hf</code> as the hash function,
+                <code>eq</code> as the key equality predicate,
+                <code>a</code> as the allocator and a maximum load factor of 1.0
+                and inserts the elements from <code>il</code> into it.
+              </para>
+            </description>
+            <requires>
+              <para>If the defaults are used, <code>hasher</code>, <code>key_equal</code> and
+                <code>allocator_type</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
+          <constructor>
+            <parameter name="n">
+              <paramtype>size_type</paramtype>
+            </parameter>
+            <parameter name="a">
+              <paramtype>allocator_type const&amp;</paramtype>
+            </parameter>
+            <postconditions>
+              <code><methodname>size</methodname>() == 0</code>
+            </postconditions>
+            <description>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+              using <code>hf</code> as the hash function,
+              the default hash function and key equality predicate,
+              <code>a</code> as the allocator and a maximum load factor of 1.0.</para>
+            </description>
+            <requires>
+              <para><code>hasher</code> and <code>key_equal</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
+          <constructor>
+            <parameter name="n">
+              <paramtype>size_type</paramtype>
+            </parameter>
+            <parameter name="hf">
+              <paramtype>hasher const&amp;</paramtype>
+            </parameter>
+            <parameter name="a">
+              <paramtype>allocator_type const&amp;</paramtype>
+            </parameter>
+            <postconditions>
+              <code><methodname>size</methodname>() == 0</code>
+            </postconditions>
+            <description>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+              using <code>hf</code> as the hash function,
+              the default key equality predicate,
+              <code>a</code> as the allocator and a maximum load factor of 1.0.</para>
+            </description>
+            <requires>
+              <para><code>key_equal</code> needs to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
+          <constructor>
+            <template>
+              <template-type-parameter name="InputIterator">
+              </template-type-parameter>
+            </template>
+            <parameter name="f">
+              <paramtype>InputIterator</paramtype>
+            </parameter>
+            <parameter name="l">
+              <paramtype>InputIterator</paramtype>
+            </parameter>
+            <parameter name="n">
+              <paramtype>size_type</paramtype>
+            </parameter>
+            <parameter name="a">
+              <paramtype>allocator_type const&amp;</paramtype>
+            </parameter>
+            <description>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+              using  <code>a</code> as the allocator, with the
+              default hash function and key equality predicate
+              and a maximum load factor of 1.0
+              and inserts the elements from [f, l) into it.
+              </para>
+            </description>
+            <requires>
+              <para><code>hasher</code>, <code>key_equal</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
+          <constructor>
+            <template>
+              <template-type-parameter name="InputIterator">
+              </template-type-parameter>
+            </template>
+            <parameter name="f">
+              <paramtype>InputIterator</paramtype>
+            </parameter>
+            <parameter name="l">
+              <paramtype>InputIterator</paramtype>
+            </parameter>
+            <parameter name="n">
+              <paramtype>size_type</paramtype>
+            </parameter>
+            <parameter name="hf">
+              <paramtype>hasher const&amp;</paramtype>
+            </parameter>
+            <parameter name="a">
+              <paramtype>allocator_type const&amp;</paramtype>
+            </parameter>
+            <description>
+              <para>Constructs an empty container with at least <code>n</code> buckets,
+              using <code>hf</code> as the hash function,
+              <code>a</code> as the allocator, with the
+              default key equality predicate
+              and a maximum load factor of 1.0
+              and inserts the elements from [f, l) into it.
+              </para>
+            </description>
+            <requires>
+              <para><code>key_equal</code> needs to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
+          </constructor>
           <destructor>
             <notes>
               <para>The destructor is applied to every element, and all memory is deallocated</para>
@@ -355,6 +552,21 @@ EOL;
             <requires>
               <para>
                 <code>value_type</code> is move constructible.
+              </para>
+            </requires>
+          </method>
+          <method name="operator=">
+            <parameter>
+              <paramtype>initializer_list&lt;value_type&gt;</paramtype>
+            </parameter>
+            <type><?php echo $name; ?>&amp;</type>
+            <description>
+              <para>Assign from values in initializer list. All existing elements are either overwritten by the new elements or destroyed.</para>
+            </description>
+            <requires>
+              <para>
+                <code>value_type</code> is <code>CopyInsertable</code> into the container and
+                <code>CopyAssignable</code>.
               </para>
             </requires>
           </method>
@@ -640,6 +852,54 @@ EOL;
               </parameter>
               <type>void</type>
               <description>
+                <para>Inserts a range of elements into the container.
+<?php if (!$equivalent_keys): ?>
+                Elements are inserted if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.
+<?php endif; ?>
+                </para>
+              </description>
+              <requires>
+                <para><code>value_type</code> is <code>EmplaceConstructible</code> into
+                  <code>X</code> from <code>*first</code>.</para>
+              </requires>
+              <throws>
+                <para>When inserting a single element, if an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="il">
+                <paramtype>initializer_list&lt;value_type&gt;</paramtype>
+              </parameter>
+              <type>void</type>
+              <description>
+                <para>Inserts a range of elements into the container.
+                <?php if (!$equivalent_keys): ?>
+                Elements are inserted if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.
+                <?php endif; ?>
+                </para>
+              </description>
+              <requires>
+                <para><code>value_type</code> is <code>EmplaceConstructible</code> into
+                  <code>X</code> from <code>*first</code>.</para>
+              </requires>
+              <throws>
+                <para>When inserting a single element, if an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="il">
+                <paramtype>initializer_list&lt;value_type&gt;</paramtype>
+              </parameter>
+              <type>void</type>
+              <description>
                 <para>Inserts a range of elements into the container. Elements are inserted if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.</para>
               </description>
               <requires>
@@ -652,6 +912,138 @@ EOL;
               <notes>
                 <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
                 <para>Pointers and references to elements are never invalidated.</para>
+              </notes>
+            </method>
+            <method name="extract">
+              <parameter name="position">
+                <paramtype>const_iterator</paramtype>
+              </parameter>
+              <type>node_type</type>
+              <description>
+                <para>Removes the element pointed to by <code>position</code>.</para>
+              </description>
+              <returns>
+                <para>A <code>node_type</code> owning the element.</para>
+              </returns>
+              <notes>
+                <para>
+                  In C++17 a node extracted using this method can be inserted into a compatible <code><?php echo $node_partner; ?></code>,
+                  but that is not supported yet.
+                </para>
+              </notes>
+            </method>
+            <method name="extract">
+              <parameter name="k">
+                <paramtype>key_type const&amp;</paramtype>
+              </parameter>
+              <type>node_type</type>
+              <description>
+                <para>Removes an element with key equivalent to <code>k</code>.</para>
+              </description>
+              <returns>
+                <para>A <code>node_type</code> owning the element if found, otherwise an empty <code>node_type</code>.</para>
+              </returns>
+              <throws>
+                <para>Only throws an exception if it is thrown by <code>hasher</code> or <code>key_equal</code>.</para>
+              </throws>
+              <notes>
+                <para>
+                  In C++17 a node extracted using this method can be inserted into a compatible <code><?php echo $node_partner; ?></code>,
+                  but that is not supported yet.
+                </para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="nh">
+                <paramtype>node_type&amp;&amp;</paramtype>
+              </parameter>
+              <type><?php echo $equivalent_keys ? 'iterator' : 'insert_return_type' ?></type>
+              <description>
+                <para>If <code>nh</code> is empty, has no affect.</para>
+<?php if ($equivalent_keys): ?>
+                <para>Otherwise inserts the element owned by <code>nh</code></para>
+<?php else: ?>
+                <para>Otherwise inserts the element owned by <code>nh</code>
+                      if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.
+                </para>
+<?php endif ?>
+              </description>
+              <requires>
+                <para><code>nh</code> is empty or <code>nh.get_allocator()</code> is equal to the container's allocator.</para>
+              </requires>
+              <returns>
+<?php if ($equivalent_keys): ?>
+                <para>If <code>nh</code> was empty, returns <code>end()</code>.</para>
+                <para>Otherwise returns an iterator pointing to the newly inserted element.</para>
+<?php else: ?>
+                <para>If <code>nh</code> was empty, returns an <code>insert_return_type</code> with:
+                      <code>inserted</code> equal to <code>false</code>,
+                      <code>position</code> equal to <code>end()</code> and
+                      <code>node</code> empty.</para>
+                <para>Otherwise if there was already an element with an equivalent key, returns an <code>insert_return_type</code> with:
+                      <code>inserted</code> equal to <code>false</code>,
+                      <code>position</code> pointing to a matching element and
+                      <code>node</code> contains the node from <code>nh</code>.</para>
+                <para>Otherwise if the insertion succeeded, returns an <code>insert_return_type</code> with:
+                      <code>inserted</code> equal to <code>true</code>,
+                      <code>position</code> pointing to the newly inserted element and
+                      <code>node</code> empty.</para>
+<?php endif; ?>
+              </returns>
+              <throws>
+                <para>If an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+                <para>In C++17 this can be used to insert a node extracted from a compatible <code><?php echo $node_partner; ?></code>,
+                    but that is not supported yet.</para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="hint">
+                <paramtype>const_iterator</paramtype>
+              </parameter>
+              <parameter name="nh">
+                <paramtype>node_type&amp;&amp;</paramtype>
+              </parameter>
+              <type>iterator</type>
+              <description>
+                <para>If <code>nh</code> is empty, has no affect.</para>
+<?php if ($equivalent_keys): ?>
+                <para>Otherwise inserts the element owned by <code>nh</code></para>
+<?php else: ?>
+                <para>Otherwise inserts the element owned by <code>nh</code>
+                      if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.
+                </para>
+                <para>If there is already an element in the container with an equivalent <?php echo $key_name; ?>
+                      has no effect on <code>nh</code> (i.e. <code>nh</code> still contains the node.)</para>
+<?php endif ?>
+                <para>hint is a suggestion to where the element should be inserted.</para>
+              </description>
+              <requires>
+                <para><code>nh</code> is empty or <code>nh.get_allocator()</code> is equal to the container's allocator.</para>
+              </requires>
+              <returns>
+<?php if ($equivalent_keys): ?>
+                <para>If <code>nh</code> was empty, returns <code>end()</code>.</para>
+                <para>Otherwise returns an iterator pointing to the newly inserted element.</para>
+<?php else: ?>
+                <para>If <code>nh</code> was empty returns <code>end()</code>.</para>
+                <para>If there was already an element in the container with an equivalent <?php echo $key_name; ?>
+                      returns an iterator pointing to that.</para>
+                <para>Otherwise returns an iterator pointing to the newly inserted element.</para>
+<?php endif; ?>
+              </returns>
+              <throws>
+                <para>If an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>The standard is fairly vague on the meaning of the hint. But the only practical way to use it, and the only way that Boost.Unordered supports is to point to an existing element with the same <?php echo $key_name; ?>. </para>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+                <para>In C++17 this can be used to insert a node extracted from a compatible <code><?php echo $node_partner; ?></code>,
+                    but that is not supported yet.</para>
               </notes>
             </method>
             <method name="erase">
@@ -785,6 +1177,74 @@ EOL;
                   the equality predieate and hash function are swapped using their copy constructors.</para>
               </notes>
             </method>
+            <method name="merge">
+              <template>
+                <template-type-parameter name="H2">
+                </template-type-parameter>
+                <template-type-parameter name="P2">
+                </template-type-parameter>
+              </template>
+              <parameter name="source">
+<?php if ($map): ?>
+                <paramtype><?php echo $name; ?>&lt;Key, Mapped, H2, P2, Alloc&gt;&amp;</paramtype>
+<?php else: ?>
+                <paramtype><?php echo $name; ?>&lt;Value, H2, P2, Alloc&gt;&amp;</paramtype>
+<?php endif; ?>
+              </parameter>
+              <notes>
+                <para>Does not support merging with a compatible <code><?php echo $node_partner; ?></code> yet.</para>
+              </notes>
+            </method>
+            <method name="merge">
+              <template>
+                <template-type-parameter name="H2">
+                </template-type-parameter>
+                <template-type-parameter name="P2">
+                </template-type-parameter>
+              </template>
+              <parameter name="source">
+<?php if ($map): ?>
+                <paramtype><?php echo $name; ?>&lt;Key, Mapped, H2, P2, Alloc&gt;&amp;&amp;</paramtype>
+<?php else: ?>
+                <paramtype><?php echo $name; ?>&lt;Value, H2, P2, Alloc&gt;&amp;&amp;</paramtype>
+<?php endif; ?>
+              </parameter>
+              <notes>
+                <para>Does not support merging with a compatible <code><?php echo $node_partner; ?></code> yet.</para>
+              </notes>
+            </method>
+<?php /*
+            <method name="merge">
+              <template>
+                <template-type-parameter name="H2">
+                </template-type-parameter>
+                <template-type-parameter name="P2">
+                </template-type-parameter>
+              </template>
+              <parameter name="source">
+<?php if ($map): ?>
+                <paramtype><?php echo $node_partner; ?>&lt;Key, Mapped, H2, P2, Alloc&gt;&amp;</paramtype>
+<?php else: ?>
+                <paramtype><?php echo $node_partner; ?>&lt;Value, H2, P2, Alloc&gt;&amp;</paramtype>
+<?php endif; ?>
+              </parameter>
+            </method>
+            <method name="merge">
+              <template>
+                <template-type-parameter name="H2">
+                </template-type-parameter>
+                <template-type-parameter name="P2">
+                </template-type-parameter>
+              </template>
+              <parameter name="source">
+<?php if ($map): ?>
+                <paramtype><?php echo $node_partner; ?>&lt;Key, Mapped, H2, P2, Alloc&gt;&amp;&amp;</paramtype>
+<?php else: ?>
+                <paramtype><?php echo $node_partner; ?>&lt;Value, H2, P2, Alloc&gt;&amp;&amp;</paramtype>
+<?php endif; ?>
+              </parameter>
+            </method>
+*/ ?>
           </method-group>
           <method-group name="observers">
             <method name="hash_function" cv="const">
@@ -1194,6 +1654,113 @@ EOL;
 <?php
 }
 
+function echo_node_handle_docs($map)
+{
+    $type = $map ? 'map' : 'set';
+    $name = 'node_handle_'.$type;
+    $full_type = "{$name}&lt;ImplementationDefined&gt;";
+?>
+      <namespace name="unordered">
+        <class name="<?php echo $name ?>">
+          <template pack="true">
+            <template-type-parameter name="ImplementationDefined"/>
+          </template>
+          <purpose>
+            <para>
+              An object that owns a single element extracted from an
+              <classname>unordered_<?php echo $type ?></classname> or an
+              <classname>unordered_multi<?php echo $type ?></classname>, that
+              can then be inserted into a compatible container type.
+            </para>
+            <para>
+              The name and template parameters of this type are implementation
+              defined, and should be obtained using the <code>node_type</code>
+              member typedef from the appropriate container.
+            </para>
+          </purpose>
+<?php if ($map): ?>
+          <typedef name="key_type">
+            <type>typename Container::key_type</type>
+          </typedef>
+          <typedef name="mapped_type">
+            <type>typename Container::mapped_type</type>
+          </typedef>
+<?php else: ?>
+          <typedef name="value_type">
+            <type>typename Container::value_type></type>
+          </typedef>
+<?php endif ?>
+          <typedef name="allocator_type">
+            <type>typename Container::allocator_type></type>
+          </typedef>
+          <constructor specifiers="constexpr" cv="noexcept">
+          </constructor>
+          <destructor/>
+          <constructor cv="noexcept">
+            <parameter>
+              <paramtype><?php echo $name; ?> &amp;&amp;</paramtype>
+            </parameter>
+          </constructor>
+          <method name="operator=">
+            <parameter>
+              <paramtype><?php echo $name; ?>&amp;&amp;</paramtype>
+            </parameter>
+            <type><?php echo $name; ?>&amp;</type>
+          </method>
+<?php if ($map): ?>
+          <method name="key" cv="const">
+            <type>key_type&amp;</type>
+          </method>
+          <method name="mapped" cv="const">
+            <type>mapped_type&amp;</type>
+          </method>
+<?php else: ?>
+          <method name="value" cv="const">
+            <type>value_type&amp;</type>
+          </method>
+<?php endif; ?>
+          <method name="get_allocator" cv="const">
+            <type>allocator_type</type>
+          </method>
+          <method name="operator bool" specifiers="explicit" cv="const noexcept">
+          </method>
+          <method name="empty" cv="const noexcept">
+            <type>bool</type>
+          </method>
+          <method name="swap" cv="noexcept(ator_traits::propagate_on_container_swap::value)">
+            <parameter>
+              <paramtype><?php echo $name; ?>&amp;</paramtype>
+            </parameter>
+            <type>void</type>
+            <notes>
+              <para>
+                In C++17 is also <code>noexcept</code> if <code>ator_traits::is_always_equal::value</code> is true.
+                But we don't support that trait yet.
+              </para>
+            </notes>
+          </method>
+          <free-function-group name="swap" cv="noexcept(noexcept(x.swap(y)))">
+            <function name="swap">
+              <template pack="true">
+                <template-type-parameter name="ImplementationDefined"/>
+              </template>
+              <parameter name="x">
+                <paramtype><?php echo $full_type; ?>&amp;</paramtype>
+              </parameter>
+              <parameter name="y">
+                <paramtype><?php echo $full_type; ?>&amp;</paramtype>
+              </parameter>
+              <type>void</type>
+              <effects>
+                <para><code>x.swap(y)</code></para>
+              </effects>
+            </function>
+          </free-function-group>
+        </class>
+      </namespace>
+<?php
+}
+
 ?>
 <!--
 Copyright Daniel James 2006-2009
@@ -1205,6 +1772,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 <?php
 echo_unordered_docs(false, false);
 echo_unordered_docs(false, true);
+echo_node_handle_docs(false);
 ?>
       </namespace>
     </header>
@@ -1213,6 +1781,7 @@ echo_unordered_docs(false, true);
 <?php
 echo_unordered_docs(true, false);
 echo_unordered_docs(true, true);
+echo_node_handle_docs(true);
 ?>
       </namespace>
     </header>

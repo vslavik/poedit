@@ -34,7 +34,7 @@ public:
 
     // Constructs a temp file which does not initially exist.
     temp_file() { set_name(); }
-    ~temp_file() { std::remove(name_.c_str()); }
+    ~temp_file() { (void)std::remove(name_.c_str()); }
     const ::std::string name() const { return name_; }
     operator const ::std::string() const { return name_; }
 private:

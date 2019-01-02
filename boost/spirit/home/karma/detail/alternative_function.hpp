@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             return call(component, sink, ctx, d, attr
-              , spirit::traits::not_is_variant<Attribute, karma::domain>());
+              , spirit::traits::not_is_variant_or_variant_in_optional<Attribute, karma::domain>());
         }
 
         template <typename OutputIterator, typename Context, typename Delimiter>

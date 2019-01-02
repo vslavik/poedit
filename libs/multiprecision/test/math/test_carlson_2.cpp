@@ -21,6 +21,20 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*gmp_float<0>.*",            // test type(s)
+      ".*RJ.*",                      // test data group
+      ".*", 40000, 4000);              // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*gmp_float<0>.*",            // test type(s)
+      ".*RC.*",                      // test data group
+      ".*", 7000, 1000);              // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       ".*RJ.*",                      // test data group
       ".*", 2700, 250);              // test function

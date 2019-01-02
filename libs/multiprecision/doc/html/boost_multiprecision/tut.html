@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="prev" href="intro.html" title="Introduction">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_multiprecision.tut"></a><a class="link" href="tut.html" title="Tutorial">Tutorial</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tut/ints.html">Integer Types</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="tut/ints/cpp_int.html">cpp_int</a></span></dt>
@@ -57,10 +57,19 @@
           an Integral</a></span></dt>
 <dt><span class="section"><a href="tut/floats/fp_eg/poly_eg.html">Polynomial
           Evaluation</a></span></dt>
+<dt><span class="section"><a href="tut/floats/fp_eg/variable_precision.html">Variable
+          Precision Newton Evaluation</a></span></dt>
 </dl></dd>
 </dl></dd>
 <dt><span class="section"><a href="tut/interval.html">Interval Number Types</a></span></dt>
 <dd><dl><dt><span class="section"><a href="tut/interval/mpfi.html">mpfi_float</a></span></dt></dl></dd>
+<dt><span class="section"><a href="tut/complex.html">Complex Number Types</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="tut/complex/cpp_complex.html">cpp_complex</a></span></dt>
+<dt><span class="section"><a href="tut/complex/mpc_complex.html">mpc_complex</a></span></dt>
+<dt><span class="section"><a href="tut/complex/complex128.html">complex128</a></span></dt>
+<dt><span class="section"><a href="tut/complex/complex_adaptor.html">complex_adaptor</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="tut/rational.html">Rational Number Types</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="tut/rational/cpp_rational.html">cpp_rational</a></span></dt>
@@ -101,19 +110,22 @@
         Determine the Kind of a Number From <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span></code></a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="tut/input_output.html">Input Output</a></span></dt>
+<dt><span class="section"><a href="tut/hash.html">Hash Function Support</a></span></dt>
+<dt><span class="section"><a href="tut/eigen.html">Eigen Interoperability</a></span></dt>
 </dl></div>
 <p>
       In order to use this library you need to make two choices:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           What kind of number do I want (<a class="link" href="tut/ints.html" title="Integer Types">integer</a>,
-          <a class="link" href="tut/floats.html" title="floating-point Numbers">floating-point</a> or
-          <a class="link" href="tut/rational.html" title="Rational Number Types">rational</a>).
+          <a class="link" href="tut/floats.html" title="floating-point Numbers">floating-point</a>,
+          <a class="link" href="tut/rational.html" title="Rational Number Types">rational</a>, or
+          <a class="link" href="tut/complex.html" title="Complex Number Types">complex</a>).
         </li>
 <li class="listitem">
           Which back-end do I want to perform the actual arithmetic (Boost-supplied,
-          GMP, MPFR, Tommath etc)?
+          GMP, MPFR, MPC, Tommath etc)?
         </li>
 </ul></div>
 </div>

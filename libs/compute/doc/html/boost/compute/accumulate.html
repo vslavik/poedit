@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function accumulate</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.accumulate_hpp" title="Header &lt;boost/compute/algorithm/accumulate.hpp&gt;">
 <link rel="prev" href="../../boost_compute/reference.html" title="Reference">
@@ -40,7 +40,7 @@
   <span class="identifier">T</span> <span class="identifier">accumulate</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">,</span> <span class="identifier">T</span> init<span class="special">,</span> 
                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp64200160"></a><h2>Description</h2>
+<a name="idp78564960"></a><h2>Description</h2>
 <p>Returns the result of applying <code class="computeroutput">function</code> to the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) and <code class="computeroutput">init</code>.</p>
 <p>If no function is specified, <code class="computeroutput">plus</code> will be used.</p>
 <p>
@@ -48,25 +48,33 @@
 In specific situations the call to <code class="computeroutput">accumulate()</code> can be automatically optimized to a call to the more efficient <code class="computeroutput">reduce()</code> algorithm. This occurs when the binary reduction function is recognized as associative (such as the <code class="computeroutput">plus&lt;int&gt;</code> function).</p>
 <p>Note that because floating-point addition is not associative, calling <code class="computeroutput">accumulate()</code> with <code class="computeroutput">plus&lt;float&gt;</code> results in a less efficient serial reduction algorithm being executed. If a slight loss in precision is acceptable, the more efficient parallel <code class="computeroutput">reduce()</code> algorithm should be used instead.</p>
 <p>For example: </p>
-<pre class="programlisting"> <span class="comment">// with vec = boost::compute::vector&lt;int&gt;</span>
- <span class="identifier">accumulate</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>   <span class="comment">// fast</span>
- <span class="identifier">reduce</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">result</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span> <span class="comment">// fast</span>
+<pre class="programlisting"><span class="comment">// with vec = boost::compute::vector&lt;int&gt;</span>
+<span class="identifier">accumulate</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>   <span class="comment">// fast</span>
+<span class="identifier">reduce</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">result</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span> <span class="comment">// fast</span>
 
- <span class="comment">// with vec = boost::compute::vector&lt;float&gt;</span>
- <span class="identifier">accumulate</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>   <span class="comment">// slow</span>
- <span class="identifier">reduce</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">result</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span> <span class="comment">// fast</span>
+<span class="comment">// with vec = boost::compute::vector&lt;float&gt;</span>
+<span class="identifier">accumulate</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>   <span class="comment">// slow</span>
+<span class="identifier">reduce</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">result</span><span class="special">,</span> <span class="identifier">plus</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span> <span class="comment">// fast</span>
 </pre>
+<p>Space complexity: (1)<br>
+ Space complexity when optimized to <code class="computeroutput">reduce()</code>: (n)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>reduce() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

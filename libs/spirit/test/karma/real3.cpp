@@ -7,6 +7,9 @@
 //#define KARMA_FAIL_COMPILATION
 
 #include <boost/spirit/include/version.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
 #include "real.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -175,6 +178,10 @@ int main()
     }
 #endif
 
+    // test for denormalized numbers
+    {
+        BOOST_TEST(test("4.941e-324", double_, std::numeric_limits<double>::denorm_min()));
+    }
     return boost::report_errors();
 }
 

@@ -41,8 +41,8 @@ test_glob([], "[ GLOB . : f*am ]", ["./file.jam"])
 test_glob([], "[ GLOB . : fi?e.?am ]", ["./file.jam"])
 test_glob([], "[ GLOB . : fi?.jam ]", [])
 # [abc-fh-j] matches a set of characters
-test_glob([], "[ GLOB . : [f][i][l][e].jam ]", ["./file.jam"])
-test_glob([], "[ GLOB . : [fghau][^usdrwe][k-o][^f-s].jam ]", ["./file.jam"])
+test_glob([], '[ GLOB . : "[f][i][l][e].jam" ]', ["./file.jam"])
+test_glob([], '[ GLOB . : "[fghau][^usdrwe][k-o][^f-s].jam" ]', ["./file.jam"])
 # \x matches x
 test_glob([], "[ GLOB . : \\f\\i\\l\\e.jam ]", ["./file.jam"])
 

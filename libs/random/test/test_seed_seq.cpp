@@ -111,3 +111,20 @@ BOOST_AUTO_TEST_CASE(test_seed_seq) {
         &param[0], &param[0] + 4, &expected_param[0], &expected_param[0] + 4);
 #endif
 }
+
+BOOST_AUTO_TEST_CASE(test_seed_seq_short_output) {
+    boost::uint32_t store32[2];
+
+    boost::uint32_t expected_short[2] = {
+        4149590228u,
+        3175758659u
+    };
+    
+    std::vector<int> data = list_of(2)(3)(4)(5);
+
+    boost::random::seed_seq seq(data);
+
+    seq.generate(&store32[0], &store32[0] + 2);
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+        &store32[0], &store32[0] + 2, &expected_short[0], &expected_short[0] + 2);
+}

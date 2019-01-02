@@ -1,11 +1,15 @@
 // Boost.Convert test and usage example
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 #include "./test.hpp"
-#include "./prepare.hpp"
 
+#if defined(BOOST_CONVERT_IS_NOT_SUPPORTED)
+int main(int, char const* []) { return 0; }
+#else
+
+#include "./prepare.hpp"
 #include <boost/convert.hpp>
 #include <boost/convert/stream.hpp>
 #include <boost/convert/printf.hpp>
@@ -309,3 +313,5 @@ main(int, char const* [])
 
     return boost::report_errors();
 }
+
+#endif

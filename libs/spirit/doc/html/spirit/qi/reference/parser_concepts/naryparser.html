@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>NaryParser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="binaryparser.html" title="BinaryParser">
 <link rel="next" href="nonterminal.html" title="Nonterminal">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h0"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.description"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.description">Description</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.description"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>NaryParser</em></span> is a composite parser that has one or
@@ -38,7 +38,7 @@
           </p>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h1"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.refinement_of"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.refinement_of">Refinement
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.refinement_of"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -46,7 +46,7 @@
             </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">p</span></code></span></dt>
 <dd><p>
                   A NaryParser.
@@ -59,7 +59,7 @@
 </div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h2"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.valid_expressions"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.valid_expressions">Valid
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.valid_expressions"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
@@ -110,7 +110,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h3"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.type_expressions"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.type_expressions">Type
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.type_expressions"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -163,26 +163,26 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h4"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.invariants"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.invariants">Invariants</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.invariants"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.invariants">Invariants</a>
           </h6>
 <p>
             For each element, <code class="computeroutput"><span class="identifier">E</span></code>,
             in any NaryParser, <code class="computeroutput"><span class="identifier">P</span></code>,
             the following invariant always holds:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_parser</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
               </li></ul></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.naryparser.h5"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.naryparser.models"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.models">Models</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.naryparser.models"></a></span><a class="link" href="naryparser.html#spirit.qi.reference.parser_concepts.naryparser.models">Models</a>
           </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 <a class="link" href="../operator/alternative.html" title="Alternative Parser (a | b)">Alternative</a>
               </li>
 <li class="listitem">
-                <a class="link" href="../operator/expect.html" title="Expectation Parser (a &gt; b)">Expect</a>
+                <a class="link" href="../operator/expect.html" title="Expectation Operator (a &gt; b)">Expectation operator</a>
               </li>
 <li class="listitem">
                 <a class="link" href="../operator/permutation.html" title="Permutation Parser (a ^ b)">Permutation</a>

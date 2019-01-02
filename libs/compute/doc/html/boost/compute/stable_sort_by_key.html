@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function stable_sort_by_key</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.stable_sort_by_key_hpp" title="Header &lt;boost/compute/algorithm/stable_sort_by_key.hpp&gt;">
 <link rel="prev" href="stable_sort.html" title="Function stable_sort">
@@ -41,9 +41,10 @@
                           <span class="identifier">ValueIterator</span> values_first<span class="special">,</span> 
                           <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp69191408"></a><h2>Description</h2>
+<a name="idp83619104"></a><h2>Description</h2>
 <p>Performs a key-value stable sort using the keys in the range [<code class="computeroutput">keys_first</code>, <code class="computeroutput">keys_last</code>) on the values in the range [<code class="computeroutput">values_first</code>, <code class="computeroutput">values_first</code> <code class="computeroutput">+</code> (<code class="computeroutput">keys_last</code> <code class="computeroutput">-</code> <code class="computeroutput">keys_first</code>)) using <code class="computeroutput">compare</code>.</p>
 <p>If no compare function is specified, <code class="computeroutput">less</code> is used.</p>
+<p>Space complexity: (2n)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>sort() </p>
 <p>

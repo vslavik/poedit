@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Assertion severity level</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../testing_tools.html" title="Writing unit tests">
 <link rel="prev" href="../testing_tools.html" title="Writing unit tests">
@@ -32,7 +32,7 @@
         all the testing tools are supplied in these three flavours/levels. These
         levels have different meaning on the consistency of the test case:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">REQUIRE</span></code> which implements
             a <span class="bold"><strong>requirements</strong></span> : this is a strong condition
@@ -59,12 +59,12 @@
 <p>
         For example:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a class="link" href="../utf_reference/testing_tool_ref/assertion_boost_level_throw.html" title="BOOST_&lt;level&gt;_THROW"><code class="computeroutput"><span class="identifier">BOOST_REQUIRE_THROW</span></code></a>, <a class="link" href="../utf_reference/testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST_REQUIRE</span></code></a>
           </li>
 <li class="listitem">
-            <code class="computeroutput"><span class="identifier">BOOST_CHECK_THROW</span></code>, <code class="computeroutput"><span class="identifier">BOOST_TEST</span></code> <sup>[<a name="boost_test.testing_tools.tools_assertion_severity_level.f0" href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f0" class="footnote">6</a>]</sup>
+            <code class="computeroutput"><span class="identifier">BOOST_CHECK_THROW</span></code>, <code class="computeroutput"><span class="identifier">BOOST_TEST</span></code> <a href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f0" class="footnote" name="boost_test.testing_tools.tools_assertion_severity_level.f0"><sup class="footnote">[6]</sup></a>
           </li>
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">BOOST_WARN_THROW</span></code>, <code class="computeroutput"><span class="identifier">BOOST_TEST_WARN</span></code>
@@ -77,11 +77,11 @@
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
             If an assertion designated by the tool passes, confirmation message can
-            be printed in log output <sup>[<a name="boost_test.testing_tools.tools_assertion_severity_level.f1" href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f1" class="footnote">7</a>]</sup>.
+            be printed in log output <a href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f1" class="footnote" name="boost_test.testing_tools.tools_assertion_severity_level.f1"><sup class="footnote">[7]</sup></a>.
           </li>
 <li class="listitem">
             If an assertion designated by the tool fails, the following will happen,
-            depending on the assertion level <sup>[<a name="boost_test.testing_tools.tools_assertion_severity_level.f2" href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f2" class="footnote">8</a>]</sup>:
+            depending on the assertion level <a href="#ftn.boost_test.testing_tools.tools_assertion_severity_level.f2" class="footnote" name="boost_test.testing_tools.tools_assertion_severity_level.f2"><sup class="footnote">[8]</sup></a>:
           </li>
 </ol></div>
 <div class="table">
@@ -204,16 +204,16 @@
         </p></td></tr>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f0" href="#boost_test.testing_tools.tools_assertion_severity_level.f0" class="para">6</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f0" class="footnote"><p><a href="#boost_test.testing_tools.tools_assertion_severity_level.f0" class="para"><sup class="para">[6] </sup></a>
               <a class="link" href="../utf_reference/testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST</span></code></a> is equivalent to
               <code class="computeroutput"><span class="identifier">BOOST_TEST_CHECK</span></code>
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f1" href="#boost_test.testing_tools.tools_assertion_severity_level.f1" class="para">7</a>] </sup>
+<div id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f1" class="footnote"><p><a href="#boost_test.testing_tools.tools_assertion_severity_level.f1" class="para"><sup class="para">[7] </sup></a>
               to manage what messages appear in the test log stream, set the proper
-              <a class="link" href="../test_output/log_runtime_config.html" title="Verbosity of the logs">log level</a>
+              <a class="link" href="../utf_reference/rt_param_reference/log_level.html" title="log_level"><code class="computeroutput"><span class="identifier">log_level</span></code></a>
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f2" href="#boost_test.testing_tools.tools_assertion_severity_level.f2" class="para">8</a>] </sup>
+<div id="ftn.boost_test.testing_tools.tools_assertion_severity_level.f2" class="footnote"><p><a href="#boost_test.testing_tools.tools_assertion_severity_level.f2" class="para"><sup class="para">[8] </sup></a>
               in some cases log message can be slightly different to reflect failed
               tool specifics, see <a class="link" href="reports.html" title="Reported information">here</a>
             </p></div>
@@ -221,7 +221,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

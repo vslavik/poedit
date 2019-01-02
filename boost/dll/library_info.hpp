@@ -15,6 +15,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/predef/os.h>
 #include <boost/predef/architecture.h>
+#include <boost/throw_exception.hpp>
 #include <boost/type_traits/integral_constant.hpp>
 
 #include <boost/dll/detail/pe_info.hpp>

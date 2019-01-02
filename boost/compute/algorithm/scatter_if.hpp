@@ -11,6 +11,7 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_SCATTER_IF_HPP
 #define BOOST_COMPUTE_ALGORITHM_SCATTER_IF_HPP
 
+#include <boost/static_assert.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 #include <boost/compute/system.hpp>
@@ -20,6 +21,7 @@
 #include <boost/compute/type_traits/type_name.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -83,7 +85,7 @@ private:
 /// at \p map if stencil is resolved to true. By default the predicate is
 /// an identity
 ///
-///
+/// Space complexity: \Omega(1)
 template<class InputIterator, class MapIterator, class StencilIterator, class OutputIterator,
          class Predicate>
 inline void scatter_if(InputIterator first,
@@ -94,6 +96,11 @@ inline void scatter_if(InputIterator first,
                        Predicate predicate,
                        command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<MapIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<StencilIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
     detail::scatter_if_kernel<InputIterator, MapIterator, StencilIterator, OutputIterator, Predicate> kernel;
 
     kernel.set_range(first, last, map, stencil, result, predicate);
@@ -108,6 +115,11 @@ inline void scatter_if(InputIterator first,
                        OutputIterator result,
                        command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<MapIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<StencilIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
     typedef typename std::iterator_traits<StencilIterator>::value_type T;
 
     scatter_if(first, last, map, stencil, result, identity<T>(), queue);

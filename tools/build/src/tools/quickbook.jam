@@ -127,6 +127,7 @@ feature.feature <quickbook-binary-dependencies> : : free dependency ;
 feature.feature <quickbook-define> : : free ;
 feature.feature <quickbook-indent> : : free ;
 feature.feature <quickbook-line-width> : : free ;
+feature.feature <quickbook-strict-mode> : : free ;
 
 
 # quickbook-binary-generator handles generation of the QuickBook executable, by
@@ -330,6 +331,7 @@ toolset.flags quickbook.quickbook-to-boostbook INCLUDES        <include> ;
 toolset.flags quickbook.quickbook-to-boostbook QB-DEFINES      <quickbook-define> ;
 toolset.flags quickbook.quickbook-to-boostbook QB-INDENT       <quickbook-indent> ;
 toolset.flags quickbook.quickbook-to-boostbook QB-LINE-WIDTH   <quickbook-line-width> ;
+toolset.flags quickbook.quickbook-to-boostbook QB-OPTIONS      <quickbook-strict-mode>on : --strict ;
 
 
 rule quickbook-to-boostbook ( target : source : properties * )
@@ -342,7 +344,7 @@ rule quickbook-to-boostbook ( target : source : properties * )
 
 actions quickbook-to-boostbook
 {
-    "$(QB-COMMAND)" -I"$(INCLUDES)" -D"$(QB-DEFINES)" --indent="$(QB-INDENT)" --linewidth="$(QB-LINE-WIDTH)" --output-file="$(1)" "$(2)"
+    "$(QB-COMMAND)" -I"$(INCLUDES)" -D"$(QB-DEFINES)" --indent="$(QB-INDENT)" --linewidth="$(QB-LINE-WIDTH)" $(QB-OPTIONS) --output-file="$(1)" "$(2)"
 }
 
 

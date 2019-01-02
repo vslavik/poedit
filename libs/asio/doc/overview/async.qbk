@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -30,8 +30,8 @@ read or write on a socket.]
 [mdash] Asynchronous Operation Processor
 
 [:Executes asynchronous operations and queues events on a completion event
-queue when operations complete. From a high-level point of view, services like
-`stream_socket_service` are asynchronous operation processors.]
+queue when operations complete. From a high-level point of view, internal
+services like `reactive_socket_service` are asynchronous operation processors.]
 
 [mdash] Completion Event Queue
 
@@ -52,14 +52,14 @@ a completed event to its caller.]
 
 [:Calls the asynchronous event demultiplexer to dequeue events, and dispatches
 the completion handler (i.e. invokes the function object) associated with the
-event. This abstraction is represented by the `io_service` class.]
+event. This abstraction is represented by the `io_context` class.]
 
 [mdash] Initiator
 
 [:Application-specific code that starts asynchronous operations. The initiator
 interacts with an asynchronous operation processor via a high-level interface
 such as `basic_stream_socket`, which in turn delegates to a service like
-`stream_socket_service`.]
+`reactive_socket_service`.]
 
 [heading Implementation Using Reactor]
 
@@ -97,7 +97,7 @@ calling an overlapped function such as `AcceptEx`.]
 [mdash] Completion Event Queue
 
 [:This is implemented by the operating system, and is associated with an I/O
-completion port. There is one I/O completion port for each `io_service`
+completion port. There is one I/O completion port for each `io_context`
 instance.]
 
 [mdash] Asynchronous Event Demultiplexer

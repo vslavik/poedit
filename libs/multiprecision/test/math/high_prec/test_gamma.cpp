@@ -50,7 +50,7 @@ void expected_results()
       ".*",                          // platform
       ".*",                          // test type(s)
       ".*",                          // test data group
-      ".*", 100000, 50000);          // test function
+      ".*", 110000, 50000);          // test function
 
    //
    // Finish off by printing out the compiler/stdlib/platform names,

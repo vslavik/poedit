@@ -29,7 +29,7 @@ namespace boost { namespace wave { namespace util
         std::strstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
         std::string throwmsg = stream.str(); stream.freeze(false);
@@ -38,29 +38,29 @@ namespace boost { namespace wave { namespace util
     }
 
     template <typename Exception, typename Context, typename S1, typename Pos>
-    void throw_(Context& ctx, typename Exception::error_code code, 
+    void throw_(Context& ctx, typename Exception::error_code code,
         S1 msg, Pos const& pos)
     {
         std::strstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
         std::string throwmsg = stream.str(); stream.freeze(false);
-        ctx.get_hooks().throw_exception(ctx.derived(), 
-            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(), 
+        ctx.get_hooks().throw_exception(ctx.derived(),
+            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(),
                 pos.get_file().c_str()));
     }
 
     template <typename Exception, typename S1, typename Pos, typename S2>
-    void throw_(typename Exception::error_code code, S1 msg, Pos const& pos, 
+    void throw_(typename Exception::error_code code, S1 msg, Pos const& pos,
         S2 name)
     {
         std::strstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
         std::string throwmsg = stream.str(); stream.freeze(false);
@@ -68,20 +68,20 @@ namespace boost { namespace wave { namespace util
             pos.get_line(), pos.get_column(), pos.get_file().c_str(), name));
     }
 
-    template <typename Exception, typename Context, typename S1, typename Pos, 
+    template <typename Exception, typename Context, typename S1, typename Pos,
         typename S2>
-    void throw_(Context& ctx, typename Exception::error_code code, 
+    void throw_(Context& ctx, typename Exception::error_code code,
         S1 msg, Pos const& pos, S2 name)
     {
         std::strstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
         std::string throwmsg = stream.str(); stream.freeze(false);
-        ctx.get_hooks().throw_exception(ctx.derived(), 
-            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(), 
+        ctx.get_hooks().throw_exception(ctx.derived(),
+            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(),
                 pos.get_file().c_str(), name));
     }
 #else
@@ -91,59 +91,59 @@ namespace boost { namespace wave { namespace util
         std::stringstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
-        std::string throwmsg = stream.str(); 
+        std::string throwmsg = stream.str();
         boost::throw_exception(Exception(throwmsg.c_str(), code,
             pos.get_line(), pos.get_column(), pos.get_file().c_str()));
     }
 
     template <typename Exception, typename Context, typename S1, typename Pos>
-    void throw_(Context& ctx, typename Exception::error_code code, 
+    void throw_(Context& ctx, typename Exception::error_code code,
         S1 msg, Pos const& pos)
     {
         std::stringstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
-        std::string throwmsg = stream.str(); 
-        ctx.get_hooks().throw_exception(ctx.derived(), 
-            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(), 
+        std::string throwmsg = stream.str();
+        ctx.get_hooks().throw_exception(ctx.derived(),
+            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(),
                 pos.get_file().c_str()));
     }
 
     template <typename Exception, typename S1, typename Pos, typename S2>
-    void throw_(typename Exception::error_code code, S1 msg, Pos const& pos, 
+    void throw_(typename Exception::error_code code, S1 msg, Pos const& pos,
         S2 name)
     {
         std::stringstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
-        std::string throwmsg = stream.str(); 
+        std::string throwmsg = stream.str();
         boost::throw_exception(Exception(throwmsg.c_str(), code,
             pos.get_line(), pos.get_column(), pos.get_file().c_str(), name));
     }
 
-    template <typename Exception, typename Context, typename S1, typename Pos1, 
+    template <typename Exception, typename Context, typename S1, typename Pos1,
         typename S2>
-    void throw_(Context& ctx, typename Exception::error_code code, 
+    void throw_(Context& ctx, typename Exception::error_code code,
         S1 msg, Pos1 const& pos, S2 name)
     {
         std::stringstream stream;
         stream << Exception::severity_text(code) << ": "
                << Exception::error_text(code);
-        if (msg[0] != 0) 
+        if (msg[0] != 0)
             stream << ": " << msg;
         stream << std::ends;
-        std::string throwmsg = stream.str(); 
-        ctx.get_hooks().throw_exception(ctx.derived(), 
-            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(), 
+        std::string throwmsg = stream.str();
+        ctx.get_hooks().throw_exception(ctx.derived(),
+            Exception(throwmsg.c_str(), code, pos.get_line(), pos.get_column(),
                 pos.get_file().c_str(), name));
     }
 #endif

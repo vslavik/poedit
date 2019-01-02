@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Synchronized Data Structures</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
 <link rel="prev" href="thread_local_storage.html" title="Thread Local Storage">
 <link rel="next" href="parallel.html" title="Parallel - Fork-Join -- EXPERIMENTAL">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.sds"></a><a class="link" href="sds.html" title="Synchronized Data Structures">Synchronized Data Structures</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx">Synchronized Values
       - EXPERIMENTAL</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues">Synchronized Queues --
@@ -38,7 +38,7 @@
 <a name="thread.sds.synchronized_valuesxxx"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx" title="Synchronized Values - EXPERIMENTAL">Synchronized Values
       - EXPERIMENTAL</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref">Reference
         </a></span></dt>
@@ -58,7 +58,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.sds.synchronized_valuesxxx.tutorial"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx.tutorial" title="Tutorial">Tutorial</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.tutorial.the_problem_with_mutexes">The
           Problem with Mutexes</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.tutorial.beyond_simple_accesses">Beyond
@@ -259,7 +259,7 @@
 <a name="thread.sds.synchronized_valuesxxx.synchronized_value_ref"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref" title="Reference">Reference
         </a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value">Class
           <code class="computeroutput"><span class="identifier">synchronized_value</span></code></a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronize">Non-Member
@@ -382,7 +382,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">Lockable</span></code> is <code class="computeroutput"><span class="identifier">Lockable</span></code>.
@@ -397,7 +397,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">DefaultConstructible</span></code>.
@@ -421,7 +421,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">CopyConstructible</span></code>.
@@ -445,7 +445,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">DefaultConstructible</span></code> and <code class="computeroutput"><span class="identifier">Assignable</span></code>.
@@ -470,7 +470,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">MoveConstructible</span> </code>.
@@ -494,7 +494,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">MoveConstructible</span> </code>.
@@ -518,7 +518,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
@@ -553,7 +553,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
@@ -583,7 +583,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">CopyConstructible</span></code>.
@@ -617,7 +617,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">CopyConstructible</span></code>.
@@ -649,7 +649,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
@@ -674,7 +674,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Swapable</span></code>.
@@ -703,7 +703,7 @@
             </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">strict_lock_ptr</span><span class="special">&lt;&gt;.</span></code>
@@ -732,7 +732,7 @@
             </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">const_strict_lock_ptr</span>
@@ -769,7 +769,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">strict_lock_ptr</span>
@@ -791,7 +791,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">const_strict_lock_ptr</span>
@@ -812,7 +812,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">an</span>
@@ -846,7 +846,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">A</span> <span class="identifier">an</span>
@@ -895,7 +895,7 @@
 <a name="thread.sds.synchronized_queues"></a><a class="link" href="sds.html#thread.sds.synchronized_queues" title="Synchronized Queues -- EXPERIMENTAL">Synchronized Queues --
       EXPERIMENTAL</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.examples">Examples</a></span></dt>
@@ -964,7 +964,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.sds.synchronized_queues.ref"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref" title="Reference">Reference</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req">Synchronized
           Queue Model</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.queue_op_status">Queue
@@ -1053,7 +1053,7 @@
               </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
                       Any exception thrown by the internal locking.
@@ -1071,7 +1071,7 @@
               </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
                       Any exception due to allocation errors.
@@ -1098,7 +1098,7 @@
               BasicConcurrentQueue requirements if the following expressions are
               well-formed and have the specified semantics
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   Q::value_type
                 </li>
@@ -1130,7 +1130,7 @@
 <p>
               where
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">q</span></code> denotes a value
                   of type <code class="computeroutput"><span class="identifier">Q</span></code>,
@@ -1162,7 +1162,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Waits until the queue is not full (for bounded queues) and
@@ -1201,7 +1201,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Waits until the queue is not full (for bounded queues) and
@@ -1240,7 +1240,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Waits until the queue is not empty and then pull_front the
@@ -1278,7 +1278,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                       Q::value_type is no throw move constructible. This is needed
@@ -1334,7 +1334,7 @@
               and the following expressions are well-formed and have the specified
               semantics
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span>
                   <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">e</span><span class="special">);</span></code>
@@ -1351,7 +1351,7 @@
 <p>
               where
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">q</span></code> denotes a value
                   of type <code class="computeroutput"><span class="identifier">Q</span></code>,
@@ -1383,7 +1383,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue <code class="computeroutput"><span class="identifier">q</span></code>
@@ -1435,7 +1435,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue <code class="computeroutput"><span class="identifier">q</span></code>
@@ -1486,7 +1486,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue is not empty pulls the element from the queue
@@ -1543,7 +1543,7 @@
 <p>
               Non-blocking operations are provided only for lock based queues
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span>
                   <span class="identifier">q</span><span class="special">.</span><span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="identifier">nb</span><span class="special">,</span>
@@ -1563,7 +1563,7 @@
 <p>
               where
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">q</span></code> denotes a value
                   of type <code class="computeroutput"><span class="identifier">Q</span></code>,
@@ -1591,7 +1591,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue <code class="computeroutput"><span class="identifier">q</span></code>
@@ -1646,7 +1646,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue <code class="computeroutput"><span class="identifier">q</span></code>
@@ -1700,7 +1700,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       If the queue is not empty pulls the element from the queue
@@ -1754,7 +1754,7 @@
 <p>
               Bounded queues add the following valid expressions
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">Q</span> <span class="identifier">q</span><span class="special">(</span><span class="identifier">u</span><span class="special">);</span></code>
                 </li>
@@ -1770,7 +1770,7 @@
 <p>
               where
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">q</span></code> denotes a value
                   of type <code class="computeroutput"><span class="identifier">Q</span></code>,
@@ -1790,7 +1790,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return type:</span></dt>
 <dd><p>
                       <code class="computeroutput"><span class="keyword">bool</span></code>.
@@ -1814,7 +1814,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return type:</span></dt>
 <dd><p>
                       <code class="computeroutput"><span class="identifier">Q</span><span class="special">::</span><span class="identifier">size_type</span></code>.
@@ -1835,7 +1835,7 @@
 <p>
               Closed queues add the following valid expressions
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">q</span><span class="special">.</span><span class="identifier">close</span><span class="special">();</span></code>
                 </li>
@@ -1862,7 +1862,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Close the queue.
@@ -1876,7 +1876,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Return type:</span></dt>
 <dd><p>
                       <code class="computeroutput"><span class="keyword">bool</span></code>.
@@ -1895,7 +1895,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Waits until the queue is not full (for bounded queues) and
@@ -1943,7 +1943,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Waits until the queue is not full (for bounded queues) and
@@ -1994,7 +1994,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       if the queue is not empty and not closed, waits until the queue
@@ -2199,22 +2199,14 @@
   <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
 
-  <span class="keyword">void</span> <span class="identifier">pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="identifier">value_type</span> <span class="identifier">pull</span><span class="special">();</span>
-
   <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
-
-  <span class="identifier">queue_op_status</span> <span class="identifier">try_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
 
   <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
 
-  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-
   <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
 
 <span class="special">};</span>
 </pre>
@@ -2243,24 +2235,13 @@
   <span class="comment">// Modifiers</span>
   <span class="keyword">void</span> <span class="identifier">close</span><span class="special">();</span>
 
-  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
-
   <span class="keyword">void</span> <span class="identifier">pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="identifier">value_type</span> <span class="identifier">pull</span><span class="special">();</span>
 
-  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
-
   <span class="identifier">queue_op_status</span> <span class="identifier">try_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-
-  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
 
   <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
 
-  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
-  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
   <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
 
 <span class="special">};</span>
@@ -2362,7 +2343,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Constructs a sync_bounded_queue with a maximum number of elements
@@ -2385,7 +2366,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Constructs a sync_bounded_queue with a maximum number of elements
@@ -2510,7 +2491,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Constructs an empty sync_queue.
@@ -2531,7 +2512,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                       false.
@@ -2548,7 +2529,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                       Moves internal queue.
@@ -2591,7 +2572,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -17 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

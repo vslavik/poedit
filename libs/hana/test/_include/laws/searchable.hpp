@@ -1,19 +1,41 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_SEARCHABLE_HPP
 #define BOOST_HANA_TEST_LAWS_SEARCHABLE_HPP
 
+#include <boost/hana/all.hpp>
+#include <boost/hana/all_of.hpp>
+#include <boost/hana/any.hpp>
+#include <boost/hana/any_of.hpp>
 #include <boost/hana/assert.hpp>
+#include <boost/hana/at_key.hpp>
 #include <boost/hana/bool.hpp>
+#include <boost/hana/concat.hpp>
 #include <boost/hana/concept/comparable.hpp>
+#include <boost/hana/concept/searchable.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/contains.hpp>
 #include <boost/hana/core/is_a.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/find.hpp>
+#include <boost/hana/find_if.hpp>
+#include <boost/hana/for_each.hpp>
+#include <boost/hana/functional/always.hpp>
 #include <boost/hana/functional/capture.hpp>
+#include <boost/hana/functional/compose.hpp>
+#include <boost/hana/functional/partial.hpp>
+#include <boost/hana/is_disjoint.hpp>
+#include <boost/hana/is_subset.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/none.hpp>
+#include <boost/hana/none_of.hpp>
+#include <boost/hana/not.hpp>
 #include <boost/hana/optional.hpp>
-#include <boost/hana/concept/searchable.hpp>
+#include <boost/hana/transform.hpp>
+#include <boost/hana/tuple.hpp>
 
 #include <laws/base.hpp>
 #include <support/numeric.hpp>
@@ -30,7 +52,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Searchables, typename Keys>
         TestSearchable(Searchables searchables, Keys keys) {
             hana::for_each(searchables, [](auto xs) {
-                static_assert(Searchable<decltype(xs)>::value, "");
+                static_assert(Searchable<decltype(xs)>{}, "");
             });
 
             auto predicates = hana::concat(

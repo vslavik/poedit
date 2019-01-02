@@ -1,6 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2013-2016.
 // Modifications copyright (c) 2013-2016 Oracle and/or its affiliates.
@@ -15,6 +16,7 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_RESULT_HPP
 
 #include <cstddef>
+#include <cstring>
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/at.hpp>
@@ -24,6 +26,7 @@
 #include <boost/mpl/is_sequence.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/throw_exception.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/type_traits/integral_constant.hpp>
 
@@ -266,7 +269,7 @@ private:
                          || ( c >= '0' && c <= '9' );
         if ( !is_valid )
         {
-            throw geometry::invalid_input_exception();
+            BOOST_THROW_EXCEPTION(geometry::invalid_input_exception());
         }
     }
 

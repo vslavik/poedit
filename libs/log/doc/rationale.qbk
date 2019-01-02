@@ -193,6 +193,8 @@ Another solution is to remove and destroy file sinks from the logging core befor
         return 0;
     }
 
+Lastly, you can disable the final log file rotation in every file sink you register in the logging core. For sinks added programmatically this can be done by calling `enable_final_rotation(false)` on the sink backend. If the sink is created from [link log.detailed.utilities.setup.settings settings], you can do this by setting EnableFinalRotation parameter to "false".
+
 [endsect]
 
 [section:namespace_mangling Why my application fails to link with Boost.Log? What's the fuss about library namespaces?]

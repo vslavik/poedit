@@ -19,8 +19,11 @@ BOOST_AUTO_TEST_CASE( test_collections_vectors_lex )
   std::vector<int> a{1,2,3}, b{1,2,2};
   std::vector<long int> c{1,2,3,5}, d{1,2,3,4};
 
-  BOOST_TEST(a < a); // extended diagnostic
-  BOOST_TEST(a < b); // extended diagnostic
+  BOOST_TEST(a < a); // lexcographic
+  BOOST_TEST(a < b); // lexcographic
+  BOOST_TEST(a == b); // element-wise
+  BOOST_TEST(a != b); // extended diagnostic
   BOOST_TEST(c < d); // no extended diagnostic
+  BOOST_TEST(c == d); // no extended diagnostic
 }
 //]

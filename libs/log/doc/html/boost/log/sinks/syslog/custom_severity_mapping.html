@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template custom_severity_mapping</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp" title="Header &lt;boost/log/sinks/syslog_backend.hpp&gt;">
 <link rel="prev" href="direct_severity_mapping.html" title="Class template direct_severity_mapping">
@@ -30,27 +30,33 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="custom_severity_mapping.html#boost.log.sinks.syslog.custom_severity_mappingconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="custom_severity_mapping.html#idp22612080-bb"><span class="identifier">custom_severity_mapping</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="custom_severity_mapping.html#idp51898448-bb"><span class="identifier">custom_severity_mapping</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp99262144"></a><h2>Description</h2>
+<a name="idp116798496"></a><h2>Description</h2>
 <p>The class allows to setup a custom mapping between an attribute and Syslog severity levels. The mapping should be initialized similarly to the standard <code class="computeroutput">map</code> container, by using indexing operator and assignment. </p>
 <div class="refsect2">
-<a name="idp99263712"></a><h3>
+<a name="idp116800064"></a><h3>
 <a name="boost.log.sinks.syslog.custom_severity_mappingconstruct-copy-destruct"></a><code class="computeroutput">custom_severity_mapping</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp22612080-bb"></a><span class="identifier">custom_severity_mapping</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp51898448-bb"></a><span class="identifier">custom_severity_mapping</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">name</code></span></p></td>
 <td><p>Attribute name </p></td>

@@ -23,7 +23,7 @@ using namespace boost::posix_time;
 
 //[perf_list_value_type
 //Iteration and element count defines
-const int NumIter = 100;
+const int NumIter = 4;
 const int NumElements   = 50000;
 
 using namespace boost::intrusive;

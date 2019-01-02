@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The obsolete initialization function</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../adv_scenarios.html" title="Advanced Usage Scenarios">
 <link rel="prev" href="external_test_runner.html" title="The external test runner usage variant">
@@ -44,13 +44,13 @@
         value was considered an initialization error.
       </p>
 <p>
-        In the single-header usage variant, you fall back to the obsolete initialization
+        In the header-only usage variant, you fall back to the obsolete initialization
         function signature by omitting the definition of macro <a class="link" href="../utf_reference/link_references/link_boost_test_alternative_init_macro.html" title="BOOST_TEST_ALTERNATIVE_INIT_API"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a>
         in test module code.
       </p>
 <h6>
 <a name="boost_test.adv_scenarios.obsolete_init_func.h0"></a>
-        <span><a name="boost_test.adv_scenarios.obsolete_init_func.example_descr"></a></span><a class="link" href="obsolete_init_func.html#boost_test.adv_scenarios.obsolete_init_func.example_descr">Example:
+        <span class="phrase"><a name="boost_test.adv_scenarios.obsolete_init_func.example_descr"></a></span><a class="link" href="obsolete_init_func.html#boost_test.adv_scenarios.obsolete_init_func.example_descr">Example:
         using obsolete initialization function</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -112,7 +112,7 @@
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
             You always return a null-pointer value and install the master test suite
-            via <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idp27673664-bb">test_suite::add</a></code> as illustrated <a class="link" href="../tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_TEST_CASE">here</a>. The current framework does
+            via <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idp69885360-bb">test_suite::add</a></code> as illustrated <a class="link" href="../tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_TEST_CASE">here</a>. The current framework does
             no longer treat the null-pointer value as failure.
           </li>
 <li class="listitem">
@@ -140,7 +140,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

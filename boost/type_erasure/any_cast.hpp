@@ -109,7 +109,7 @@ bool check_any_cast(const any<Concept, Tag>& arg)
  * \endcode
  *
  * \pre if @c arg is a pointer, @c T must be a pointer type.
- * \pre @c Concept must contain @ref typeid_<tt>&lt;Tag&gt;</tt>.
+ * \pre @c Concept must contain @ref typeid_ "typeid_<Tag>".
  *
  * \throws bad_any_cast if @c arg doesn't contain
  *         an object of type @c T and we're casting

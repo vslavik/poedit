@@ -65,7 +65,7 @@ rule init ( prefix ? )
         # The following generator is used to convert UI files to CPP. It creates
         # UIC_H from UI, and constructs CPP from UI/UIC_H. In addition, it also
         # returns UIC_H target, so that it can be mocced.
-        class qt::uic-cpp-generator : generator
+        class "qt::uic-cpp-generator" : generator
         {
             rule __init__ ( )
             {
@@ -107,7 +107,7 @@ rule init ( prefix ? )
             }               
         }
     
-        generators.register [ new qt::uic-cpp-generator ] ;
+        generators.register [ new "qt::uic-cpp-generator" ] ;
         
         # Finally, declare prebuilt target for QT library.
         local usage-requirements = 

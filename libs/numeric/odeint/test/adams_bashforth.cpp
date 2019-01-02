@@ -208,8 +208,13 @@ BOOST_AUTO_TEST_CASE( test_auto_initialization )
     adams.do_step( lorenz() , x , 0.0 , x , 0.1 );
     BOOST_CHECK_EQUAL( adams.initializing_stepper().do_count , size_t( 2 ) );
 
+    adams.reset();
+
     adams.do_step( lorenz() , x , 0.0 , x , 0.1 );
-    BOOST_CHECK_EQUAL( adams.initializing_stepper().do_count , size_t( 2 ) );
+    BOOST_CHECK_EQUAL( adams.initializing_stepper().do_count , size_t( 3 ) );
+
+    adams.do_step( lorenz() , x , 0.0 , x , 0.1 );
+    BOOST_CHECK_EQUAL( adams.initializing_stepper().do_count , size_t( 4 ) );
 }
 
 BOOST_AUTO_TEST_CASE( test_manual_initialization )

@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::one`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -35,7 +35,9 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct one_impl : one_impl<R, when<true>> { };
 
     template <typename R>
-    struct one_t;
+    struct one_t {
+        constexpr decltype(auto) operator()() const;
+    };
 
     template <typename R>
     constexpr one_t<R> one{};

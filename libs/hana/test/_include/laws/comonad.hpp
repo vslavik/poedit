@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -26,7 +26,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Ws>
         TestComonad(Ws ws) {
             hana::for_each(ws, [](auto w) {
-                static_assert(Comonad<decltype(w)>::value, "");
+                static_assert(Comonad<decltype(w)>{}, "");
 
                 // extract(duplicate(w)) == w
                 BOOST_HANA_CHECK(hana::equal(

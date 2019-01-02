@@ -44,7 +44,7 @@ int main()
 
   //BOOST_LOG_TRIVIAL(info) << "[TaskScheduler::run_and_wait] Scheduling loop - BEGIN";
 
-  //while (true)
+  //for (;;)
   {
     static const milliseconds TIME_BACK = milliseconds(1);
     m_task_spawn_condition.wait_until(

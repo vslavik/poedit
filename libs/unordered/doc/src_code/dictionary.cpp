@@ -4,13 +4,12 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/unordered_map.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include "../../examples/fnv1.hpp"
 
 //[case_insensitive_functions
     struct iequal_to
-        : std::binary_function<std::string, std::string, bool>
     {
         bool operator()(std::string const& x,
             std::string const& y) const
@@ -20,7 +19,6 @@
     };
 
     struct ihash
-        : std::unary_function<std::string, std::size_t>
     {
         std::size_t operator()(std::string const& x) const
         {

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parsing Expression Grammar</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../abstracts.html" title="Abstracts">
 <link rel="prev" href="syntax_diagram.html" title="Syntax Diagram">
 <link rel="next" href="attributes.html" title="Attributes">
@@ -28,7 +28,7 @@
       Expression Grammar</a>
 </h3></div></div></div>
 <p>
-        Parsing Expression Grammars (PEG) <sup>[<a name="spirit.abstracts.parsing_expression_grammar.f0" href="#ftn.spirit.abstracts.parsing_expression_grammar.f0" class="footnote">6</a>]</sup> are a derivative of Extended Backus-Naur Form (EBNF) <sup>[<a name="spirit.abstracts.parsing_expression_grammar.f1" href="#ftn.spirit.abstracts.parsing_expression_grammar.f1" class="footnote">7</a>]</sup> with a different interpretation, designed to represent a recursive
+        Parsing Expression Grammars (PEG) <a href="#ftn.spirit.abstracts.parsing_expression_grammar.f0" class="footnote" name="spirit.abstracts.parsing_expression_grammar.f0"><sup class="footnote">[6]</sup></a> are a derivative of Extended Backus-Naur Form (EBNF) <a href="#ftn.spirit.abstracts.parsing_expression_grammar.f1" class="footnote" name="spirit.abstracts.parsing_expression_grammar.f1"><sup class="footnote">[7]</sup></a> with a different interpretation, designed to represent a recursive
         descent parser. A PEG can be directly represented as a recursive-descent
         parser.
       </p>
@@ -40,7 +40,7 @@
       </p>
 <h5>
 <a name="spirit.abstracts.parsing_expression_grammar.h0"></a>
-        <span><a name="spirit.abstracts.parsing_expression_grammar.sequences"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
+        <span class="phrase"><a name="spirit.abstracts.parsing_expression_grammar.sequences"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
       </h5>
 <p>
         Sequences are represented by juxtaposition like in EBNF:
@@ -76,7 +76,7 @@
 </table></div>
 <h5>
 <a name="spirit.abstracts.parsing_expression_grammar.h1"></a>
-        <span><a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
+        <span class="phrase"><a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
       </h5>
 <p>
         Alternatives are represented in PEG using the slash:
@@ -113,7 +113,7 @@
       </p>
 <h5>
 <a name="spirit.abstracts.parsing_expression_grammar.h2"></a>
-        <span><a name="spirit.abstracts.parsing_expression_grammar.loops"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
+        <span class="phrase"><a name="spirit.abstracts.parsing_expression_grammar.loops"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
       </h5>
 <p>
         Again, like EBNF, PEG uses the regular-expression Kleene star and the plus
@@ -164,7 +164,7 @@
       </p>
 <h5>
 <a name="spirit.abstracts.parsing_expression_grammar.h3"></a>
-        <span><a name="spirit.abstracts.parsing_expression_grammar.difference"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
+        <span class="phrase"><a name="spirit.abstracts.parsing_expression_grammar.difference"></a></span><a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
       </h5>
 <p>
         In some cases, you may want to restrict a certain expression. You can think
@@ -188,12 +188,12 @@
         </p></td></tr>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.spirit.abstracts.parsing_expression_grammar.f0" href="#spirit.abstracts.parsing_expression_grammar.f0" class="para">6</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.spirit.abstracts.parsing_expression_grammar.f0" class="footnote"><p><a href="#spirit.abstracts.parsing_expression_grammar.f0" class="para"><sup class="para">[6] </sup></a>
           Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
           Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.spirit.abstracts.parsing_expression_grammar.f1" href="#spirit.abstracts.parsing_expression_grammar.f1" class="para">7</a>] </sup>
+<div id="ftn.spirit.abstracts.parsing_expression_grammar.f1" class="footnote"><p><a href="#spirit.abstracts.parsing_expression_grammar.f1" class="para"><sup class="para">[7] </sup></a>
           Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
         </p></div>
 </div>

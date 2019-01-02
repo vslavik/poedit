@@ -20,6 +20,7 @@
 #include <sys/resource.h>
 #include <sys/times.h>
 #include <sys/wait.h>
+#include <poll.h>
 
 #if defined(sun) || defined(__sun)
     #include <wait.h>
@@ -64,8 +65,6 @@ static int get_free_cmdtab_slot();
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 static clock_t tps;
-static int old_time_initialized;
-static struct tms old_time;
 
 /* We hold stdout & stderr child process information in two element arrays
  * indexed as follows.
@@ -84,13 +83,54 @@ static struct
     int          buf_size[ 2 ];  /* buffer sizes in bytes */
     timestamp    start_dt;       /* start of command timestamp */
 
+    int flags;
+
     /* Function called when the command completes. */
     ExecCmdCallback func;
 
     /* Opaque data passed back to the 'func' callback. */
     void * closure;
-} cmdtab[ MAXJOBS ] = { { 0 } };
+} * cmdtab = NULL;
+static int cmdtab_size = 0;
 
+/* Contains both stdin and stdout of all processes.
+ * The length is either globs.jobs or globs.jobs * 2
+ * depending on globs.pipe_action.
+ */
+struct pollfd * wait_fds = NULL;
+#define WAIT_FDS_SIZE ( globs.jobs * ( globs.pipe_action ? 2 : 1 ) )
+#define GET_WAIT_FD( job_idx ) ( wait_fds + ( ( job_idx * ( globs.pipe_action ? 2 : 1 ) ) ) )
+
+/*
+ * exec_init() - global initialization
+ */
+void exec_init( void )
+{
+    int i;
+    if ( globs.jobs > cmdtab_size )
+    {
+        cmdtab = BJAM_REALLOC( cmdtab, globs.jobs * sizeof( *cmdtab ) );
+        memset( cmdtab + cmdtab_size, 0, ( globs.jobs - cmdtab_size ) * sizeof( *cmdtab ) );
+        wait_fds = BJAM_REALLOC( wait_fds, WAIT_FDS_SIZE * sizeof ( *wait_fds ) );
+        for ( i = cmdtab_size; i < globs.jobs; ++i )
+        {
+            GET_WAIT_FD( i )[ OUT ].fd = -1;
+            GET_WAIT_FD( i )[ OUT ].events = POLLIN;
+            if ( globs.pipe_action )
+            {
+                GET_WAIT_FD( i )[ ERR ].fd = -1;
+                GET_WAIT_FD( i )[ ERR ].events = POLLIN;
+            }
+        }
+        cmdtab_size = globs.jobs;
+    }
+}
+
+void exec_done( void )
+{
+    BJAM_FREE( cmdtab );
+    BJAM_FREE( wait_fds );
+}
 
 /*
  * exec_check() - preprocess and validate the command.
@@ -132,6 +172,7 @@ int exec_check
 void exec_cmd
 (
     string const * command,
+    int flags,
     ExecCmdCallback func,
     void * closure,
     LIST * shell
@@ -176,13 +217,6 @@ void exec_cmd
     {
         perror( "pipe" );
         exit( EXITBAD );
-    }
-
-    /* Initialize old_time only once. */
-    if ( !old_time_initialized )
-    {
-        times( &old_time );
-        old_time_initialized = 1;
     }
 
     /* Start the command */
@@ -306,6 +340,12 @@ void exec_cmd
         }
     }
 
+    GET_WAIT_FD( slot )[ OUT ].fd = out[ EXECCMD_PIPE_READ ];
+    if ( globs.pipe_action )
+        GET_WAIT_FD( slot )[ ERR ].fd = err[ EXECCMD_PIPE_READ ];
+
+    cmdtab[ slot ].flags = flags;
+
     /* Save input data into the selected running commands table slot. */
     cmdtab[ slot ].func = func;
     cmdtab[ slot ].closure = closure;
@@ -339,6 +379,16 @@ static int read_descriptor( int i, int s )
         cmdtab[ i ].stream[ s ] ) ) )
     {
         buffer[ ret ] = 0;
+
+        /* Copy it to our output if appropriate */
+        if ( ! ( cmdtab[ i ].flags & EXEC_CMD_QUIET ) )
+        {
+            if ( s == OUT && ( globs.pipe_action != 2 ) )
+                out_data( buffer );
+            else if ( s == ERR && ( globs.pipe_action & 2 ) )
+                err_data( buffer );
+        }
+
         if ( !cmdtab[ i ].buffer[ s ] )
         {
             /* Never been allocated. */
@@ -390,38 +440,8 @@ static void close_streams( int const i, int const s )
 
     close( cmdtab[ i ].fd[ s ] );
     cmdtab[ i ].fd[ s ] = 0;
-}
 
-
-/*
- * Populate the file descriptors collection for use in select() and return the
- * maximal included file descriptor value.
- */
-
-static int populate_file_descriptors( fd_set * const fds )
-{
-    int i;
-    int fd_max = 0;
-
-    FD_ZERO( fds );
-    for ( i = 0; i < globs.jobs; ++i )
-    {
-        int fd;
-        if ( ( fd = cmdtab[ i ].fd[ OUT ] ) > 0 )
-        {
-            if ( fd > fd_max ) fd_max = fd;
-            FD_SET( fd, fds );
-        }
-        if ( globs.pipe_action )
-        {
-            if ( ( fd = cmdtab[ i ].fd[ ERR ] ) > 0 )
-            {
-                if ( fd > fd_max ) fd_max = fd;
-                FD_SET( fd, fds );
-            }
-        }
-    }
-    return fd_max;
+    GET_WAIT_FD( i )[ s ].fd = -1;
 }
 
 
@@ -443,10 +463,6 @@ void exec_wait()
         struct timeval tv;
         struct timeval * ptv = NULL;
         int select_timeout = globs.timeout;
-
-        /* Prepare file descriptor information for use in select(). */
-        fd_set fds;
-        int const fd_max = populate_file_descriptors( &fds );
 
         /* Check for timeouts:
          *   - kill children that already timed out
@@ -472,7 +488,7 @@ void exec_wait()
 
             /* If nothing else causes our select() call to exit, force it after
              * however long it takes for the next one of our child processes to
-             * crossed its alloted processing time so we can terminate it.
+             * crossed its allotted processing time so we can terminate it.
              */
             tv.tv_sec = select_timeout;
             tv.tv_usec = 0;
@@ -483,11 +499,17 @@ void exec_wait()
         {
             /* disable child termination signals while in select */
             int ret;
+            int timeout;
             sigset_t sigmask;
             sigemptyset(&sigmask);
             sigaddset(&sigmask, SIGCHLD);
             sigprocmask(SIG_BLOCK, &sigmask, NULL);
-            while ( ( ret = select( fd_max + 1, &fds, 0, 0, ptv ) ) == -1 )
+
+            /* If no timeout is specified, pass -1 (which means no timeout,
+             * wait indefinitely) to poll, to prevent busy-looping.
+             */
+            timeout = select_timeout? select_timeout * 1000 : -1;
+            while ( ( ret = poll( wait_fds, WAIT_FDS_SIZE, timeout ) ) == -1 )
                 if ( errno != EINTR )
                     break;
             /* restore original signal mask by unblocking sigchld */
@@ -500,10 +522,10 @@ void exec_wait()
         {
             int out_done = 0;
             int err_done = 0;
-            if ( FD_ISSET( cmdtab[ i ].fd[ OUT ], &fds ) )
+            if ( GET_WAIT_FD( i )[ OUT ].revents )
                 out_done = read_descriptor( i, OUT );
 
-            if ( globs.pipe_action && FD_ISSET( cmdtab[ i ].fd[ ERR ], &fds ) )
+            if ( globs.pipe_action && ( GET_WAIT_FD( i )[ ERR ].revents ) )
                 err_done = read_descriptor( i, ERR );
 
             /* If feof on either descriptor, we are done. */
@@ -513,6 +535,7 @@ void exec_wait()
                 int status;
                 int rstat;
                 timing_info time_info;
+                struct rusage cmd_usage;
 
                 /* We found a terminated child process - our search is done. */
                 finished = 1;
@@ -523,7 +546,7 @@ void exec_wait()
                     close_streams( i, ERR );
 
                 /* Reap the child and release resources. */
-                while ( ( pid = waitpid( cmdtab[ i ].pid, &status, 0 ) ) == -1 )
+                while ( ( pid = wait4( cmdtab[ i ].pid, &status, 0, &cmd_usage ) ) == -1 )
                     if ( errno != EINTR )
                         break;
                 if ( pid != cmdtab[ i ].pid )
@@ -539,15 +562,10 @@ void exec_wait()
                         : EXIT_OK;
 
                 {
-                    struct tms new_time;
-                    times( &new_time );
-                    time_info.system = (double)( new_time.tms_cstime -
-                        old_time.tms_cstime ) / CLOCKS_PER_SEC;
-                    time_info.user   = (double)( new_time.tms_cutime -
-                        old_time.tms_cutime ) / CLOCKS_PER_SEC;
+                    time_info.system = ((double)(cmd_usage.ru_stime.tv_sec)*1000000.0+(double)(cmd_usage.ru_stime.tv_usec))/1000000.0;
+                    time_info.user   = ((double)(cmd_usage.ru_utime.tv_sec)*1000000.0+(double)(cmd_usage.ru_utime.tv_usec))/1000000.0;
                     timestamp_copy( &time_info.start, &cmdtab[ i ].start_dt );
                     timestamp_current( &time_info.end );
-                    old_time = new_time;
                 }
 
                 /* Drive the completion. */
@@ -589,7 +607,7 @@ void exec_wait()
 static int get_free_cmdtab_slot()
 {
     int slot;
-    for ( slot = 0; slot < MAXJOBS; ++slot )
+    for ( slot = 0; slot < globs.jobs; ++slot )
         if ( !cmdtab[ slot ].pid )
             return slot;
     err_printf( "no slots for child!\n" );

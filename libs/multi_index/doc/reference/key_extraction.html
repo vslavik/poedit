@@ -98,6 +98,12 @@ Compiler specifics
       <li><a href="#ckey_result_semantics">Semantics of <code>composite_key_result</code></a></li>
     </ul>
   </li>
+  <li><a href="#key_synopsis">Header
+    <code>"boost/multi_index/key.hpp"</code> synopsis</a>
+    <ul>
+      <li><a href="#key">Alias template <code>key</code></a></li>
+    </ul>
+  </li>
 </ul>
 
 <h2><a name="key_extractors">Key Extractors</a></h2>
@@ -142,8 +148,10 @@ Boost.MultiIndex provides six general-purpose key extractors:
   <li><a href="#const_mem_fun"><code>const_mem_fun</code></a>,</li>
   <li><a href="#mem_fun"><code>mem_fun</code></a>,</li>
   <li><a href="#global_fun"><code>global_fun</code></a> and</li>
-  <li><a href="#composite_key"><code>composite_key</code></a>.</li>
+  <li><a href="#composite_key"><code>composite_key</code></a>,</li>
 </ul>
+plus, in C++17 compliant environments, an alias template <a href="#key"><code>key</code></a>
+allowing for a very terse specification of the latter five extractors.
 </p>
 
 <h3><a name="chained_pointers">Chained pointers</a></h3>
@@ -2055,6 +2063,79 @@ Therefore, the equivalence classes induced by <code>x==y</code> are
 subsets of those associated to <code>!(x&lt;y)&amp;&amp;!(y&lt;x)</code>.
 </p>
 
+<h2>
+<a name="key_synopsis">Header
+<a href="../../../../boost/multi_index/key.hpp">
+<code>"boost/multi_index/key.hpp"</code></a> synopsis</a></h2>
+
+<blockquote><pre>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>multi_index</span><span class=special>/</span><span class=identifier>member</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>multi_index</span><span class=special>/</span><span class=identifier>mem_fun</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>multi_index</span><span class=special>/</span><span class=identifier>global_fun</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>multi_index</span><span class=special>/</span><span class=identifier>composite_key</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
+
+<span class=preprocessor>#if</span> <b>implementation defined</b> <span class=comment>/* auto non-type template parameters supported */</span>
+
+<span class=preprocessor>#define</span> <span class=identifier>BOOST_MULTI_INDEX_KEY_SUPPORTED</span>
+
+<span class=keyword>namespace</span> <span class=identifier>boost</span><span class=special>{</span>
+
+<span class=keyword>namespace</span> <span class=identifier>multi_index</span><span class=special>{</span>
+
+<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>auto</span><span class=special>...</span> <span class=identifier>Keys</span><span class=special>&gt;</span>
+<span class=keyword>using</span> <span class=identifier>key</span><span class=special>=</span><b>implementation defined</b><span class=special>;</span>
+
+<span class=special>}</span> <span class=comment>/* namespace multi_index */</span>
+
+<span class=special>}</span> <span class=comment>/* namespace boost */</span>
+
+<span class=preprocessor>#endif</span>
+</pre></blockquote>
+
+<h3><a name="key">Alias template <code>key</code></a></h3>
+
+<p>
+In C++17 compliant environments, <code>key</code> provides a very terse syntax for
+the specification of Boost.MultiIndex predefined key extractors. The number of template
+arguments passed to <code>key</code> must be greater than zero and not exceed the
+maximum number of key extractors accepted by
+<a href="#composite_key"><code>composite_key</code></a>. <code>key&lt;Key&gt;</code>
+resolves to:
+<ul>
+  <li><a href="#member"><code>member&lt;Class,Type,Key&gt;</code></a>
+     if <code>Key</code> is of type <code>Type Class::*</code>,
+  </li>
+  <li><a href="#const_mem_fun"><code>const_mem_fun&lt;Class,Type,Key&gt;</code></a>
+     if <code>Key</code> is of type <code>Type (Class::*)()const</code>,
+  </li>
+  <li><a href="#mem_fun"><code>mem_fun&lt;Class,Type,Key&gt;</code></a>
+     if <code>Key</code> is of type <code>Type (Class::*)()</code>,
+  </li>
+  <li><a href="#global_fun"><code>global_fun&lt;Value,Type,Key&gt;</code></a>
+     if <code>Key</code> is of type <code>Type (*)(Value)</code>,
+  </li>
+</ul>
+and engenders undefined behavior otherwise. When passed two or more arguments,
+<code>key&lt;Key0,...,Keyn&gt;</code> resolves to
+<a href="#composite_key"><code>composite_key&lt;Value,KeyFromValue0,...,KeyFromValuen&gt;</code></a>,
+with:
+<ul>
+  <li><code>KeyFromValuei</code> = <code>key&lt;Keyi&gt;</code>
+    for all <code>i = 0,...,n</code>
+  </li>
+  <li><code>Value</code> = <code>std::decay_t&lt;Value0&gt;</code> &#8855;
+    <code>std::decay_t&lt;Value1&gt;</code>  &#8855; &middot;&middot;&middot;  &#8855;
+    <code>std::decay_t&lt;Valuen&gt;</code>,
+  </li>
+</ul>
+where <code>Valuei</code> corresponds to the associated <code>Class</code> or <code>Value</code>
+type of <code>KeyFromValuei</code>, and <code>T</code> &#8855; <code>Q</code>
+is the <i>least generic type</i> between <code>T</code> and <code>Q</code>, defined as
+<code>T</code> if <code>std::is_convertible_v&lt;const T&amp;,const Q&amp;&gt;</code>,
+<code>Q</code> if <code>std::is_convertible_v&lt;const Q&amp;,const T&amp;&gt;</code>,
+and undefined otherwise.
+</p>
+
 <hr>
 
 <div class="prev_link"><a href="rnd_indices.html"><img src="../prev.gif" alt="random access indices" border="0"><br>
@@ -2069,9 +2150,9 @@ Compiler specifics
 
 <br>
 
-<p>Revised November 24th 2015</p>
+<p>Revised August 22nd 2018</p>
 
-<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2018 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

@@ -3,15 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.3.10: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
 <title>Boost Pointer Container Library</title>
 <style type="text/css">
 
 /*
-:Author: David Goodger
-:Contact: goodger@users.sourceforge.net
-:Date: $Date$
-:Revision: $Revision$
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
@@ -20,10 +18,17 @@ See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
 */
 
-/* "! important" is used here to override other ``margin-top`` and
-   ``margin-bottom`` styles that are later in the stylesheet or 
-   more specific.  See http://www.w3.org/TR/CSS1#the-cascade */
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
 .first {
+  /* Override more specific margin styles with "! important". */
   margin-top: 0 ! important }
 
 .last, .with-subtitle {
@@ -31,6 +36,14 @@ customize this style sheet.
 
 .hidden {
   display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
 
 a.toc-backref {
   text-decoration: none ;
@@ -41,6 +54,10 @@ blockquote.epigraph {
 
 dl.docutils dd {
   margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
 
 /* Uncomment (and remove this text!) to get bold-faced definition list terms
 dl.docutils dt {
@@ -68,7 +85,7 @@ div.tip p.admonition-title {
 
 div.attention p.admonition-title, div.caution p.admonition-title,
 div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
+div.warning p.admonition-title, .code .error {
   color: red ;
   font-weight: bold ;
   font-family: sans-serif }
@@ -92,7 +109,8 @@ div.dedication p.topic-title {
   font-style: normal }
 
 div.figure {
-  margin-left: 2em }
+  margin-left: 2em ;
+  margin-right: 2em }
 
 div.footer, div.header {
   clear: both;
@@ -109,7 +127,7 @@ div.line-block div.line-block {
   margin-left: 1.5em }
 
 div.sidebar {
-  margin-left: 1em ;
+  margin: 0 0 0.5em 1em ;
   border: medium outset ;
   padding: 1em ;
   background-color: #ffffee ;
@@ -151,14 +169,52 @@ h2.subtitle {
 hr.docutils {
   width: 75% }
 
-img.align-left {
-  clear: left }
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
 
-img.align-right {
-  clear: right }
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
 
-img.borderless {
-  border: 0 }
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
 
 ol.simple, ul.simple {
   margin-bottom: 1em }
@@ -213,17 +269,20 @@ p.topic-title {
 pre.address {
   margin-bottom: 0 ;
   margin-top: 0 ;
-  font-family: serif ;
-  font-size: 100% }
+  font: inherit }
 
-pre.line-block {
-  font-family: serif ;
-  font-size: 100% }
-
-pre.literal-block, pre.doctest-block {
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
-  margin-right: 2em ;
-  background-color: #eeeeee }
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
 
 span.classifier {
   font-family: sans-serif ;
@@ -250,7 +309,8 @@ span.section-subtitle {
   font-size: 80% }
 
 table.citation {
-  border-left: solid thin gray }
+  border-left: solid 1px gray;
+  margin-left: 1px }
 
 table.docinfo {
   margin: 2em 4em }
@@ -260,7 +320,8 @@ table.docutils {
   margin-bottom: 0.5em }
 
 table.footnote {
-  border-left: solid thin black }
+  border-left: solid 1px black;
+  margin-left: 1px }
 
 table.docutils td, table.docutils th,
 table.docinfo td, table.docinfo th {
@@ -274,12 +335,24 @@ table.docutils th.field-name, table.docinfo th.docinfo-name {
   white-space: nowrap ;
   padding-left: 0 }
 
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
 h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
 h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
   font-size: 100% }
-
-tt.docutils {
-  background-color: #eeeeee }
 
 ul.auto-toc {
   list-style-type: none }
@@ -289,25 +362,26 @@ ul.auto-toc {
 <body>
 <div class="document" id="boost-pointer-container-library">
 <h1 class="title"><img alt="Boost" src="boost.png" /> Pointer Container Library</h1>
-<div class="section">
-<h1><a id="class-ptr-sequence-adapter" name="class-ptr-sequence-adapter">Class <tt class="docutils literal"><span class="pre">ptr_sequence_adapter</span></tt></a></h1>
+
+<div class="section" id="class-ptr-sequence-adapter">
+<h1>Class <tt class="docutils literal">ptr_sequence_adapter</tt></h1>
 <p>This section describes all the common operations for all the pointer
 sequences:</p>
 <ul class="simple">
-<li><a class="reference" href="ptr_vector.html">ptr_vector</a></li>
-<li><a class="reference" href="ptr_list.html">ptr_list</a></li>
-<li><a class="reference" href="ptr_deque.html">ptr_deque</a></li>
+<li><a class="reference external" href="ptr_vector.html">ptr_vector</a></li>
+<li><a class="reference external" href="ptr_list.html">ptr_list</a></li>
+<li><a class="reference external" href="ptr_deque.html">ptr_deque</a></li>
 </ul>
-<p>The <tt class="docutils literal"><span class="pre">ptr_sequence_adapter</span></tt> is also a concrete class that you can use to create custom pointer
+<p>The <tt class="docutils literal">ptr_sequence_adapter</tt> is also a concrete class that you can use to create custom pointer
 containers from.</p>
 <p><strong>Hierarchy:</strong></p>
 <ul class="simple">
-<li><a class="reference" href="reversible_ptr_container.html">reversible_ptr_container</a><ul>
-<li><tt class="docutils literal"><span class="pre">ptr_sequence_adapter</span></tt><ul>
-<li><a class="reference" href="ptr_vector.html">ptr_vector</a></li>
-<li><a class="reference" href="ptr_list.html">ptr_list</a></li>
-<li><a class="reference" href="ptr_deque.html">ptr_deque</a></li>
-<li><a class="reference" href="ptr_array.html">ptr_array</a></li>
+<li><a class="reference external" href="reversible_ptr_container.html">reversible_ptr_container</a><ul>
+<li><tt class="docutils literal">ptr_sequence_adapter</tt><ul>
+<li><a class="reference external" href="ptr_vector.html">ptr_vector</a></li>
+<li><a class="reference external" href="ptr_list.html">ptr_list</a></li>
+<li><a class="reference external" href="ptr_deque.html">ptr_deque</a></li>
+<li><a class="reference external" href="ptr_array.html">ptr_array</a></li>
 </ul>
 </li>
 </ul>
@@ -315,8 +389,8 @@ containers from.</p>
 </ul>
 <p><strong>Navigate:</strong></p>
 <ul class="simple">
-<li><a class="reference" href="ptr_container.html">home</a></li>
-<li><a class="reference" href="reference.html">reference</a></li>
+<li><a class="reference external" href="ptr_container.html">home</a></li>
+<li><a class="reference external" href="reference.html">reference</a></li>
 </ul>
 <p><strong>Synopsis:</strong></p>
 <pre class="literal-block">
@@ -331,26 +405,26 @@ namespace boost
     &gt;
     class ptr_sequence_adapter
     {
-    public: // <a class="reference" href="#construct-copy-destroy">construct/copy/destroy</a>
+    public: // <a class="reference internal" href="#construct-copy-destroy">construct/copy/destroy</a>
         template&lt; class InputIterator &gt;
         assign( InputIterator first, InputIterator last );
         template&lt; class InputRange &gt;
         assign( const InputRange&amp; e );
 
-    public: // <a class="reference" href="#element-access">element access</a>
+    public: // <a class="reference internal" href="#element-access">element access</a>
         T&amp;        front();
         const T&amp;  front() const;
         T&amp;        back();
         const T&amp;  back() const;
 
-    public: // <a class="reference" href="#modifiers">modifiers</a>
+    public: // <a class="reference internal" href="#modifiers">modifiers</a>
         void      push_back( T* x );
         template&lt; class U &gt;
-        void      push_back( std::auto_ptr&lt;U&gt; x );
+        void      push_back( <a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt; x );
         auto_type pop_back();
         iterator  insert( iterator position, T* x );
         template&lt; class U &gt;
-        iterator  insert( iterator position, std::auto_ptr&lt;U&gt; x );
+        iterator  insert( iterator position, <a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt; x );
         template&lt; class InputIterator &gt;
         void      insert( iterator position, InputIterator first, InputIterator last );
         template&lt; class InputRange &gt;
@@ -362,10 +436,10 @@ namespace boost
         void      resize( size_type size );
         void      resize( size_type size, T* to_clone );
 
-    public: // <a class="reference" href="#pointer-container-requirements">pointer container requirements</a>
+    public: // <a class="reference internal" href="#pointer-container-requirements">pointer container requirements</a>
         template&lt; class PtrSequence &gt;
         void transfer( iterator before, typename PtrSequence::iterator object,
-                       PtrSequence&amp; from );                             
+                       PtrSequence&amp; from );
         template&lt; class PtrSequence &gt;
         void transfer( iterator before, typename PtrSequence::iterator first, typename PtrSequence::iterator last,
                        PtrSequence&amp; from );
@@ -374,7 +448,7 @@ namespace boost
         template&lt; class PtrSequence &gt;
         void transfer( iterator before, PtrSequence&amp; from );
 
-    public: // <a class="reference" href="#algorithms">algorithms</a>
+    public: // <a class="reference internal" href="#algorithms">algorithms</a>
 
         void sort();
         void sort( iterator first, iterator last );
@@ -402,38 +476,38 @@ namespace boost
         template&lt; class Compare &gt;
         void merge( iterator first, iterator last, ptr_sequence_adapter&amp; from, Compare comp );
 
-    public: // <a class="reference" href="ptr_list.html">ptr_list interface</a>
+    public: // <a class="reference external" href="ptr_list.html">ptr_list interface</a>
 
-    public: // <a class="reference" href="ptr_vector.html">ptr_vector interface</a>
+    public: // <a class="reference external" href="ptr_vector.html">ptr_vector interface</a>
 
-    public: // <a class="reference" href="ptr_deque.html">ptr_deque interface</a>
+    public: // <a class="reference external" href="ptr_deque.html">ptr_deque interface</a>
 
     }; //  class 'ptr_sequence_adapter'
 
 } // namespace 'boost'
 </pre>
 </div>
-<div class="section">
-<h1><a id="semantics" name="semantics">Semantics</a></h1>
-<div class="section">
-<h2><a id="semantics-construct-copy-destroy" name="semantics-construct-copy-destroy"><span id="construct-copy-destroy"></span>Semantics: construct/copy/destroy</a></h2>
+<div class="section" id="semantics">
+<h1>Semantics</h1>
+<div class="section" id="semantics-construct-copy-destroy">
+<span id="construct-copy-destroy"></span><h2>Semantics: construct/copy/destroy</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">InputIterator</span> <span class="pre">&gt;</span>
-<span class="pre">void</span> <span class="pre">assign(</span> <span class="pre">InputIterator</span> <span class="pre">first,</span> <span class="pre">InputIterator</span> <span class="pre">last</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class InputIterator &gt;
+void assign( InputIterator first, InputIterator last );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">(first,last]</span></tt> is a valid range</li>
-<li>Effects: <tt class="docutils literal"><span class="pre">clear();</span> <span class="pre">insert(</span> <span class="pre">first,</span> <span class="pre">last</span> <span class="pre">);</span></tt></li>
-<li>Postconditions: <tt class="docutils literal"><span class="pre">size()</span> <span class="pre">==</span> <span class="pre">std::distance(</span> <span class="pre">first,</span> <span class="pre">last</span> <span class="pre">);</span></tt></li>
+<li>Requirements: <tt class="docutils literal">(first,last]</tt> is a valid range</li>
+<li>Effects: <tt class="docutils literal"><span class="pre">clear();</span> insert( first, last );</tt></li>
+<li>Postconditions: <tt class="docutils literal">size() == <span class="pre">std::distance(</span> first, last );</tt></li>
 <li>Exception safety: strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">InputRange</span> <span class="pre">&gt;</span>
-<span class="pre">void</span> <span class="pre">assign(</span> <span class="pre">const</span> <span class="pre">InputRange&amp;</span> <span class="pre">r</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class InputRange &gt;
+void assign( const InputRange&amp; r );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">assign(</span> <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">assign( <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> );</tt></li>
 </ul>
 </blockquote>
 </li>
@@ -459,60 +533,60 @@ Postconditions: size() == sz
 
 Exception safety: Strong guarantee -->
 </div>
-<div class="section">
-<h2><a id="semantics-element-access" name="semantics-element-access"><span id="element-access"></span>Semantics: element access</a></h2>
+<div class="section" id="semantics-element-access">
+<span id="element-access"></span><h2>Semantics: element access</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">T&amp;</span> <span class="pre">front();</span></tt></p>
+<li><p class="first"><tt class="docutils literal">T&amp; <span class="pre">front();</span></tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">empty();</span></tt></li>
-<li>Effects: <tt class="docutils literal"><span class="pre">return</span> <span class="pre">*begin();</span></tt></li>
+<li>Requirements: <tt class="docutils literal">not <span class="pre">empty();</span></tt></li>
+<li>Effects: <tt class="docutils literal">return <span class="pre">*begin();</span></tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span> <span class="pre">front()</span> <span class="pre">const;</span></tt></p>
+<li><p class="first"><tt class="docutils literal">const T&amp; front() const;</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">empty();</span></tt></li>
-<li>Effects: <tt class="docutils literal"><span class="pre">return</span> <span class="pre">*begin();</span></tt></li>
+<li>Requirements: <tt class="docutils literal">not <span class="pre">empty();</span></tt></li>
+<li>Effects: <tt class="docutils literal">return <span class="pre">*begin();</span></tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">T&amp;</span> <span class="pre">back();</span></tt></p>
+<li><p class="first"><tt class="docutils literal">T&amp; <span class="pre">back();</span></tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">empty();</span></tt></li>
-<li>Effects: <tt class="docutils literal"><span class="pre">return</span> <span class="pre">*--end();</span></tt></li>
+<li>Requirements: <tt class="docutils literal">not <span class="pre">empty();</span></tt></li>
+<li>Effects: <tt class="docutils literal">return <span class="pre">*--end();</span></tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span> <span class="pre">back()</span> <span class="pre">const;</span></tt></p>
+<li><p class="first"><tt class="docutils literal">const T&amp; back() const;</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">empty();</span></tt></li>
-<li>Effects: <tt class="docutils literal"><span class="pre">return</span> <span class="pre">*--end();</span></tt></li>
+<li>Requirements: <tt class="docutils literal">not <span class="pre">empty();</span></tt></li>
+<li>Effects: <tt class="docutils literal">return <span class="pre">*--end();</span></tt></li>
 </ul>
 </blockquote>
 </li>
 </ul>
 </div>
-<div class="section">
-<h2><a id="semantics-modifiers" name="semantics-modifiers"><span id="modifiers"></span>Semantics: modifiers</a></h2>
+<div class="section" id="semantics-modifiers">
+<span id="modifiers"></span><h2>Semantics: modifiers</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">push_back(</span> <span class="pre">T*</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void push_back( T* x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">0</span></tt></li>
+<li>Requirements: <tt class="docutils literal">x != 0</tt></li>
 <li>Effects: Inserts the pointer into container and takes ownership of it</li>
-<li>Throws: <tt class="docutils literal"><span class="pre">bad_pointer</span></tt> if <tt class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">0</span></tt></li>
+<li>Throws: <tt class="docutils literal">bad_pointer</tt> if <tt class="docutils literal">x == 0</tt></li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">U</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">push_back(</span> <span class="pre">std::auto_ptr&lt;U&gt;</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class U &gt; void push_back( <span class="pre"><a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt;</span> x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">push_back(</span> <span class="pre">x.release()</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">push_back( x.release() );</tt></li>
 </ul>
 </blockquote>
 </li>
@@ -523,32 +597,32 @@ Exception safety: Strong guarantee -->
 
 - Exception safety: Strong guarantee -->
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">auto_type</span> <span class="pre">pop_back();</span></tt></p>
+<li><p class="first"><tt class="docutils literal">auto_type <span class="pre">pop_back();</span></tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements:<tt class="docutils literal"><span class="pre">not</span> <span class="pre">empty()</span></tt></li>
+<li>Requirements:<tt class="docutils literal">not empty()</tt></li>
 <li>Effects: Removes the last element in the container</li>
-<li>Postconditions: <tt class="docutils literal"><span class="pre">size()</span></tt> is one less</li>
-<li>Throws: <tt class="docutils literal"><span class="pre">bad_ptr_container_operation</span></tt> if <tt class="docutils literal"><span class="pre">empty()</span> <span class="pre">==</span> <span class="pre">true</span></tt></li>
+<li>Postconditions: <tt class="docutils literal">size()</tt> is one less</li>
+<li>Throws: <tt class="docutils literal">bad_ptr_container_operation</tt> if <tt class="docutils literal">empty() == true</tt></li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">iterator</span> <span class="pre">insert(</span> <span class="pre">iterator</span> <span class="pre">position,</span> <span class="pre">T*</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">iterator insert( iterator position, T* x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">position</span></tt> is a valid iterator from the container and
-<tt class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">0</span></tt></li>
-<li>Effects: Inserts <tt class="docutils literal"><span class="pre">x</span></tt> before <tt class="docutils literal"><span class="pre">position</span></tt> and returns an iterator pointing to it</li>
-<li>Throws: <tt class="docutils literal"><span class="pre">bad_pointer</span></tt> if <tt class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">0</span></tt></li>
+<li>Requirements: <tt class="docutils literal">position</tt> is a valid iterator from the container and
+<tt class="docutils literal">x != 0</tt></li>
+<li>Effects: Inserts <tt class="docutils literal">x</tt> before <tt class="docutils literal">position</tt> and returns an iterator pointing to it</li>
+<li>Throws: <tt class="docutils literal">bad_pointer</tt> if <tt class="docutils literal">x == 0</tt></li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">U</span> <span class="pre">&gt;</span> <span class="pre">iterator</span> <span class="pre">insert(</span> <span class="pre">iterator</span> <span class="pre">position,</span> <span class="pre">std::auto_ptr&lt;U&gt;</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class U &gt; iterator insert( iterator position, <span class="pre"><a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt;</span> x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">return</span> <span class="pre">insert(</span> <span class="pre">position,</span> <span class="pre">x.release()</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">return insert( position, x.release() );</tt></li>
 </ul>
 </blockquote>
 </li>
@@ -569,185 +643,185 @@ Exception safety: Strong guarantee -->
 
 - Exception safety: Strong guarantee -->
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">InputIterator</span> <span class="pre">&gt;</span>
-<span class="pre">void</span> <span class="pre">insert(</span> <span class="pre">iterator</span> <span class="pre">position,</span> <span class="pre">InputIterator</span> <span class="pre">first,</span> <span class="pre">InputIterator</span> <span class="pre">last</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class InputIterator &gt;
+void insert( iterator position, InputIterator first, InputIterator last );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">position</span></tt> is a valid iterator from the container</li>
-<li>Effects: Inserts a cloned range before <tt class="docutils literal"><span class="pre">position</span></tt></li>
+<li>Requirements: <tt class="docutils literal">position</tt> is a valid iterator from the container</li>
+<li>Effects: Inserts a cloned range before <tt class="docutils literal">position</tt></li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">InputRange</span> <span class="pre">&gt;</span>
-<span class="pre">void</span> <span class="pre">insert(</span> <span class="pre">iterator</span> <span class="pre">position,</span> <span class="pre">const</span> <span class="pre">InputRange&amp;</span> <span class="pre">r</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class InputRange &gt;
+void insert( iterator position, const InputRange&amp; r );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">insert(</span> <span class="pre">position,</span> <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">insert( position, <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> );</tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">iterator</span> <span class="pre">erase(</span> <span class="pre">iterator</span> <span class="pre">position</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">iterator erase( iterator position );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">position</span></tt> is a valid iterator from the container</li>
-<li>Effects: Removes the element defined by <tt class="docutils literal"><span class="pre">position</span></tt> and returns an iterator to the following element</li>
+<li>Requirements: <tt class="docutils literal">position</tt> is a valid iterator from the container</li>
+<li>Effects: Removes the element defined by <tt class="docutils literal">position</tt> and returns an iterator to the following element</li>
 <li>Throws: Nothing</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">iterator</span> <span class="pre">erase(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">iterator erase( iterator first, iterator last );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">[first,last)</span></tt> is a valid range</li>
-<li>Effects: Removes the range of element defined by <tt class="docutils literal"><span class="pre">[first,last)</span></tt> and returns an iterator to the following element</li>
+<li>Requirements: <tt class="docutils literal">[first,last)</tt> is a valid range</li>
+<li>Effects: Removes the range of element defined by <tt class="docutils literal">[first,last)</tt> and returns an iterator to the following element</li>
 <li>Throws: Nothing</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Range</span> <span class="pre">&gt;</span>
-<span class="pre">void</span> <span class="pre">erase(</span> <span class="pre">const</span> <span class="pre">Range&amp;</span> <span class="pre">r</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Range &gt;
+void erase( const Range&amp; r );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">erase(</span> <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">erase( <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r)</span> );</tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">resize(</span> <span class="pre">size_type</span> <span class="pre">size</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void resize( size_type size );</tt></p>
 <blockquote>
 <ul class="simple">
 <li>Effects: Resizes the container. If elements are erased, it happens from the back. If elements are inserted, it happens at the back.</li>
-<li>Requirements: <tt class="docutils literal"><span class="pre">T</span></tt> is default constructible</li>
-<li>Postcondition: <tt class="docutils literal"><span class="pre">size()</span> <span class="pre">==</span> <span class="pre">size;</span></tt></li>
+<li>Requirements: <tt class="docutils literal">T</tt> is default constructible</li>
+<li>Postcondition: <tt class="docutils literal">size() == size;</tt></li>
 <li>Exception safety: Basic guarantee under expansion; nothrow guarantee otherwise</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">resize(</span> <span class="pre">size_type</span> <span class="pre">size,</span> <span class="pre">T*</span> <span class="pre">to_clone</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void resize( size_type size, T* to_clone );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: Resizes the container. If elements are erased, it happens from the back. If elements are inserted, clones of <tt class="docutils literal"><span class="pre">*to_clone</span></tt> are inserted at the back.</li>
-<li>Postcondition: <tt class="docutils literal"><span class="pre">size()</span> <span class="pre">==</span> <span class="pre">size;</span></tt></li>
+<li>Effects: Resizes the container. If elements are erased, it happens from the back. If elements are inserted, clones of <tt class="docutils literal">*to_clone</tt> are inserted at the back.</li>
+<li>Postcondition: <tt class="docutils literal">size() == size;</tt></li>
 <li>Exception safety: Basic guarantee under expansion; nothrow guarantee otherwise</li>
-<li>Remarks: <tt class="docutils literal"><span class="pre">to_clone</span> <span class="pre">==</span> <span class="pre">0</span></tt> is valid if the container supports nulls. The container does not take ownership of <tt class="docutils literal"><span class="pre">to_clone</span></tt>.</li>
+<li>Remarks: <tt class="docutils literal">to_clone == 0</tt> is valid if the container supports nulls. The container does not take ownership of <tt class="docutils literal">to_clone</tt>.</li>
 </ul>
 </blockquote>
 </li>
 </ul>
 </div>
-<div class="section">
-<h2><a id="semantics-pointer-container-requirements" name="semantics-pointer-container-requirements"><span id="pointer-container-requirements"></span>Semantics: pointer container requirements</a></h2>
-<p>You can use <tt class="docutils literal"><span class="pre">transfer()</span></tt> to move elements between two containers of the same type. Furthermore,
-you can also move elements from a container of type <tt class="docutils literal"><span class="pre">T</span></tt> to a container of type <tt class="docutils literal"><span class="pre">U</span></tt> as long as
+<div class="section" id="semantics-pointer-container-requirements">
+<span id="pointer-container-requirements"></span><h2>Semantics: pointer container requirements</h2>
+<p>You can use <tt class="docutils literal">transfer()</tt> to move elements between two containers of the same type. Furthermore,
+you can also move elements from a container of type <tt class="docutils literal">T</tt> to a container of type <tt class="docutils literal">U</tt> as long as
 <tt class="docutils literal"><span class="pre">T::value_type</span></tt> is convertible to <tt class="docutils literal"><span class="pre">U::value_type</span></tt>. An example would be transferring from <tt class="docutils literal"><span class="pre">boost::ptr_vector&lt;Derived&gt;</span></tt>
 to <tt class="docutils literal"><span class="pre">boost::ptr_deque&lt;Base&gt;</span></tt>.</p>
-<p>(<strong>Remark:</strong> <em>When moving elements between two different containers, it is your responsibility to make sure the allocators are compatible.</em> 
+<p>(<strong>Remark:</strong> <em>When moving elements between two different containers, it is your responsibility to make sure the allocators are compatible.</em>
 <em>The special latitude of being able to transfer between two different containers is only available for Sequences and not for Associative Containers.</em>)</p>
 <!--  -->
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">PtrSequence</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">before,</span> <span class="pre">typename</span> <span class="pre">PtrSequence::iterator</span> <span class="pre">object,</span> <span class="pre">PtrSequence&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class PtrSequence &gt; void transfer( iterator before, typename <span class="pre">PtrSequence::iterator</span> object, PtrSequence&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: Inserts the object defined by <tt class="docutils literal"><span class="pre">object</span></tt> into the container and remove it from <tt class="docutils literal"><span class="pre">from</span></tt>.
-Insertion takes place before <tt class="docutils literal"><span class="pre">before</span></tt>.</li>
-<li>Postconditions: If <tt class="docutils literal"><span class="pre">from.empty()</span></tt>, nothing happens. Otherwise
-<tt class="docutils literal"><span class="pre">size()</span></tt> is one more, <tt class="docutils literal"><span class="pre">from.size()</span></tt> is one less.</li>
+<li>Effects: Inserts the object defined by <tt class="docutils literal">object</tt> into the container and remove it from <tt class="docutils literal">from</tt>.
+Insertion takes place before <tt class="docutils literal">before</tt>.</li>
+<li>Postconditions: If <tt class="docutils literal">from.empty()</tt>, nothing happens. Otherwise
+<tt class="docutils literal">size()</tt> is one more, <tt class="docutils literal">from.size()</tt> is one less.</li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">PtrSequence</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">before,</span> <span class="pre">typename</span> <span class="pre">PtrSequence::iterator</span> <span class="pre">first,</span> <span class="pre">typename</span> <span class="pre">PtrSequence::iterator</span> <span class="pre">last,</span> <span class="pre">PtrSequence&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class PtrSequence &gt; void transfer( iterator before, typename <span class="pre">PtrSequence::iterator</span> first, typename <span class="pre">PtrSequence::iterator</span> last, PtrSequence&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">from.size()</span> <span class="pre">&gt;=</span> <span class="pre">std::distance(first,last)</span></tt></li>
-<li>Effects: Inserts the objects defined by the range <tt class="docutils literal"><span class="pre">[first,last)</span></tt> into the container and remove it from <tt class="docutils literal"><span class="pre">from</span></tt>.
-Insertion takes place before <tt class="docutils literal"><span class="pre">before</span></tt>.</li>
-<li>Postconditions: If <tt class="docutils literal"><span class="pre">from.empty()</span></tt>, nothing happens. Otherwise, 
-let <tt class="docutils literal"><span class="pre">N</span> <span class="pre">==</span> <span class="pre">std::distance(first,last);</span></tt> then <tt class="docutils literal"><span class="pre">size()</span></tt> is <tt class="docutils literal"><span class="pre">N</span></tt> more, <tt class="docutils literal"><span class="pre">from.size()</span></tt> is <tt class="docutils literal"><span class="pre">N</span></tt> less.</li>
+<li>Requirements: <tt class="docutils literal">from.size() &gt;= <span class="pre">std::distance(first,last)</span></tt></li>
+<li>Effects: Inserts the objects defined by the range <tt class="docutils literal">[first,last)</tt> into the container and remove it from <tt class="docutils literal">from</tt>.
+Insertion takes place before <tt class="docutils literal">before</tt>.</li>
+<li>Postconditions: If <tt class="docutils literal">from.empty()</tt>, nothing happens. Otherwise,
+let <tt class="docutils literal">N == <span class="pre">std::distance(first,last);</span></tt> then <tt class="docutils literal">size()</tt> is <tt class="docutils literal">N</tt> more, <tt class="docutils literal">from.size()</tt> is <tt class="docutils literal">N</tt> less.</li>
 <li>Exception safety: Strong guarantee</li>
 <li>Complexity: Linear or better</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">PtrSequence,</span> <span class="pre">class</span> <span class="pre">Range</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">before,</span> <span class="pre">const</span> <span class="pre">Range&amp;</span> <span class="pre">r,</span> <span class="pre">PtrSequence&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void template&lt; class PtrSequence, class Range &gt; void transfer( iterator before, const Range&amp; r, PtrSequence&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">transfer(before,</span> <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r),</span> <span class="pre">from);</span></tt></li>
+<li>Effects: <tt class="docutils literal">transfer(before, <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r),</span> from);</tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">PtrSequence&gt;</span> <span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">before,</span> <span class="pre">PtrSequence&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class PtrSequence&gt; void transfer( iterator before, PtrSequence&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">transfer(before,</span> <span class="pre">from,</span> <span class="pre">from);</span></tt></li>
+<li>Effects: <tt class="docutils literal">transfer(before, from, from);</tt></li>
 </ul>
 </blockquote>
 </li>
 </ul>
 </div>
-<div class="section">
-<h2><a id="semantics-algorithms" name="semantics-algorithms"><span id="algorithms"></span>Semantics: algorithms</a></h2>
+<div class="section" id="semantics-algorithms">
+<span id="algorithms"></span><h2>Semantics: algorithms</h2>
 <p>The general requirement for these algorithms is that the container <em>does not
 contain any nulls</em>.</p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">sort();</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void <span class="pre">sort();</span></tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">sort(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void sort( iterator first, iterator last );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">sort(</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void sort( Compare comp );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">sort(</span> <span class="pre">iterator</span> <span class="pre">begin,</span> <span class="pre">iterator</span> <span class="pre">end,</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void sort( iterator begin, iterator end, Compare comp );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: (versions without <tt class="docutils literal"><span class="pre">Compare</span></tt>) <tt class="docutils literal"><span class="pre">bool</span> <span class="pre">operator&lt;(</span> <span class="pre">const</span> <span class="pre">T&amp;,</span> <span class="pre">const</span> <span class="pre">T&amp;</span> <span class="pre">)</span></tt> is defined</li>
-<li>Requirements: (<tt class="docutils literal"><span class="pre">Compare</span></tt> versions) <tt class="docutils literal"><span class="pre">Compare</span></tt> must take <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> arguments</li>
+<li>Requirements: (versions without <tt class="docutils literal">Compare</tt>) <tt class="docutils literal">bool operator&lt;( const T&amp;, const T&amp; )</tt> is defined</li>
+<li>Requirements: (<tt class="docutils literal">Compare</tt> versions) <tt class="docutils literal">Compare</tt> must take <tt class="docutils literal">const T&amp;</tt> arguments</li>
 <li>Effects: sorts the entire container or the specified range</li>
 <li>Exception safety: nothrow guarantee (the behavior is undefined if the comparison operator throws)</li>
-<li>Remarks: The versions of <tt class="docutils literal"><span class="pre">sort()</span></tt> that take two iterators are not available for <tt class="docutils literal"><span class="pre">ptr_list</span></tt></li>
+<li>Remarks: The versions of <tt class="docutils literal">sort()</tt> that take two iterators are not available for <tt class="docutils literal">ptr_list</tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">unique();</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void <span class="pre">unique();</span></tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">unique(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void unique( iterator first, iterator last );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">unique(</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void unique( Compare comp );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">unique(</span> <span class="pre">iterator</span> <span class="pre">begin,</span> <span class="pre">iterator</span> <span class="pre">end,</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void unique( iterator begin, iterator end, Compare comp );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: (versions without <tt class="docutils literal"><span class="pre">Compare</span></tt>) <tt class="docutils literal"><span class="pre">bool</span> <span class="pre">operator==(</span> <span class="pre">const</span> <span class="pre">T&amp;,</span> <span class="pre">const</span> <span class="pre">T&amp;</span> <span class="pre">)</span></tt> is defined</li>
-<li>Requirements: (<tt class="docutils literal"><span class="pre">Compare</span></tt> versions) <tt class="docutils literal"><span class="pre">Compare</span></tt> must take <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> arguments</li>
+<li>Requirements: (versions without <tt class="docutils literal">Compare</tt>) <tt class="docutils literal">bool <span class="pre">operator==(</span> const T&amp;, const T&amp; )</tt> is defined</li>
+<li>Requirements: (<tt class="docutils literal">Compare</tt> versions) <tt class="docutils literal">Compare</tt> must take <tt class="docutils literal">const T&amp;</tt> arguments</li>
 <li>Effects: removes adjacent and equal objects from the entire container or the specified range</li>
 <li>Exception safety: nothrow guarantee (the behavior is undefined if the comparison operator throws)</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Pred</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">erase_if(</span> <span class="pre">Pred</span> <span class="pre">pred</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Pred &gt; void erase_if( Pred pred );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Pred</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">erase_if(</span> <span class="pre">iterator</span> <span class="pre">begin,</span> <span class="pre">iterator</span> <span class="pre">end,</span> <span class="pre">Pred</span> <span class="pre">pred</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Pred &gt; void erase_if( iterator begin, iterator end, Pred pred );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">Pred</span></tt> must take an <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> argument</li>
-<li>Effects: removes all elements <tt class="docutils literal"><span class="pre">t</span></tt> for which <tt class="docutils literal"><span class="pre">pred(t)</span></tt> returns <tt class="docutils literal"><span class="pre">true</span></tt> from the entire container or the specified range</li>
+<li>Requirements: <tt class="docutils literal">Pred</tt> must take an <tt class="docutils literal">const T&amp;</tt> argument</li>
+<li>Effects: removes all elements <tt class="docutils literal">t</tt> for which <tt class="docutils literal">pred(t)</tt> returns <tt class="docutils literal">true</tt> from the entire container or the specified range</li>
 <li>Exception safety: nothrow guarantee (the behavior is undefined if the comparison operator throws)</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">merge(</span> <span class="pre">ptr_sequence_adapter&amp;</span> <span class="pre">r</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void merge( ptr_sequence_adapter&amp; r );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">merge(</span> <span class="pre">ptr_sequence_adapter&amp;</span> <span class="pre">r,</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void merge( ptr_sequence_adapter&amp; r, Compare comp );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">merge(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last,</span> <span class="pre">ptr_sequence_adapter&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void merge( iterator first, iterator last, ptr_sequence_adapter&amp; from );</tt></p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Compare</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">merge(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last,</span> <span class="pre">ptr_sequence_adapter&amp;</span> <span class="pre">from,</span> <span class="pre">Compare</span> <span class="pre">comp</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Compare &gt; void merge( iterator first, iterator last, ptr_sequence_adapter&amp; from, Compare comp );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: (<tt class="docutils literal"><span class="pre">Compare</span></tt> versions) <tt class="docutils literal"><span class="pre">Compare</span></tt> must take <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> arguments</li>
+<li>Requirements: (<tt class="docutils literal">Compare</tt> versions) <tt class="docutils literal">Compare</tt> must take <tt class="docutils literal">const T&amp;</tt> arguments</li>
 <li>Requirements: both sequences are sorted wrt. the same predicate</li>
 <li>Effects: transfers the entire container or the specified sequence to the container while
 ensuring the new sequence is also sorted</li>
-<li>Postconditions: (Container versions) <tt class="docutils literal"><span class="pre">r.empty()</span></tt></li>
+<li>Postconditions: (Container versions) <tt class="docutils literal">r.empty()</tt></li>
 <li>Exception safety: nothrow guarantee (the behavior is undefined if the comparison operator throws)</li>
 </ul>
 </blockquote>
@@ -757,7 +831,7 @@ ensuring the new sequence is also sorted</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
+<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference external" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
 </tr>
 </tbody>
 </table>

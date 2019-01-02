@@ -5,7 +5,12 @@
 
 #define BOOST_TEST_MODULE empty_string
 
-#include <boost/metaparse/v1/impl/empty_string.hpp>
+#include <boost/metaparse/config.hpp>
+#if BOOST_METAPARSE_STD >= 2011
+#  include <boost/metaparse/v1/cpp11/impl/empty_string.hpp>
+#else
+#  include <boost/metaparse/v1/cpp98/impl/empty_string.hpp>
+#endif
 
 #include <boost/test/unit_test.hpp>
 

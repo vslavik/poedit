@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -8,7 +8,7 @@
 #include <boost/tuple/tuple.hpp>
 
 #include <type_traits>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 int main() {
@@ -21,43 +21,43 @@ int main() {
         };
 
         static_assert(std::is_same<
-            tag_of_t<decltype(boost::make_tuple())>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(boost::make_tuple())>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(boost::make_tuple(1))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(boost::make_tuple(1))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(boost::make_tuple(1, '2'))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(boost::make_tuple(1, '2'))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(boost::make_tuple(1, '2', 3.3))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(boost::make_tuple(1, '2', 3.3))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(make_cons(1, boost::tuples::null_type{}))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(make_cons(1, boost::tuples::null_type{}))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(make_cons(1, make_cons('2', boost::tuples::null_type{})))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(make_cons(1, make_cons('2', boost::tuples::null_type{})))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<decltype(make_cons(1, boost::make_tuple('2', 3.3)))>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<decltype(make_cons(1, boost::make_tuple('2', 3.3)))>,
+            hana::ext::boost::tuple_tag
         >::value, "");
 
         static_assert(std::is_same<
-            tag_of_t<boost::tuples::null_type>,
-            ext::boost::tuple_tag
+            hana::tag_of_t<boost::tuples::null_type>,
+            hana::ext::boost::tuple_tag
         >::value, "");
     }
 }

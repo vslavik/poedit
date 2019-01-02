@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Fixtures</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../tests_organization.html" title="Declaring and organizing tests">
 <link rel="prev" href="decorators/explicit_decorator_declaration.html" title="Explicit decorator declaration">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.tests_organization.fixtures"></a><a class="link" href="fixtures.html" title="Fixtures">Fixtures</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="fixtures/models.html">Fixture
         models</a></span></dt>
 <dt><span class="section"><a href="fixtures/case.html">Test case
@@ -40,7 +40,7 @@
         In general terms a test fixture or test context is the collection of one
         or more of the following items, required to perform the test:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             preconditions
           </li>
@@ -102,7 +102,7 @@
         setup or cleanup procedure. Still there are several more or less minor practical
         issues with this pure C++ based fixtures solution:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             We need to add a fixture declaration statement into each test case manually.
           </li>
@@ -121,7 +121,7 @@
         to <a class="link" href="fixtures/models.html" title="Fixture models">several
         generic interfaces</a>, and thus helps you with following tasks:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             define shared setup/teardown procedures for a single or group of test
             cases
@@ -130,14 +130,14 @@
             define setup/teardown procedures which are performed once per test suite
           </li>
 <li class="listitem">
-            define global setup/teardown procedures which are performed once per
-            test module
+            define <a class="link" href="fixtures/global.html" title="Global fixture">global
+            setup/teardown</a> procedures which are performed once per test module
           </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

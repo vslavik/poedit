@@ -3,25 +3,26 @@
 
 [h1 Synopsis]
 
-  template <class N, class P0, /* ... */, class Pk>
+  template <class N, class... Ps>
   struct nth_of;
 
 This is a [link parser_combinator parser combinator].
 
 [table Arguments
   [[Name]       [Type]]
-  [[`N`]        [[link boxed_value boxed] integer value in the range `[0..k]`]]
-  [[`P0`..`Pk`] [[link parser parser]s]]
+  [[`N`]        [[link boxed_value boxed] integer value in the range `[0..sizeof...(Ps)]`]]
+  [[`Ps`]       [[link parser parser]s]]
 ]
 
 [h1 Description]
 
-`nth_of` applies the `P0` .. `Pk` parsers in sequence. It accepts an input when
-all of these parsers accept it. The result of parsing is the result of the `N`.
+`nth_of` applies the `Ps...` parsers in sequence. It accepts an input when all
+of these parsers accept it. The result of parsing is the result of the `N`.
 parser.
 
-The maximum number of parsers `nth_of` accepts can be specified with the
-`BOOST_METAPARSE_LIMIT_SEQUENCE_SIZE` macro. Its default value is `5`.
+On compilers, which are not C++11-compliant, the maximum number of parsers
+`nth_of` accepts can be specified with the `BOOST_METAPARSE_LIMIT_SEQUENCE_SIZE`
+macro. Its default value is `5`.
 
 [h1 Header]
 

@@ -52,6 +52,8 @@ int test()
    a1 |= 2;
    a1 ^= 3;
 
+   a2 = 0u;
+
    a3.store(&v);
    a3.fetch_add(1);
    a3.fetch_sub(1);

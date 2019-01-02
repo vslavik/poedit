@@ -3,6 +3,7 @@
 // 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/config.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/test/minimal.hpp>
 #include <iostream>
@@ -14,6 +15,19 @@ int test_main(int, char*[])
   tribool x; // false
   tribool y(true); // true
   tribool z(indeterminate); // indeterminate
+
+#if defined( BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS )
+  // c++03 allows for implicit conversion to bool
+  // c++11 uses an explicit conversion operator so this would not compile
+  //       and that is tested in the compile-fail/implicit.cpp file
+  // so we check the conversion to ensure it is sane
+  bool bx = x;
+  BOOST_CHECK(bx == false);
+  bool by = y;
+  BOOST_CHECK(by == true);
+  bool bz = z;
+  BOOST_CHECK(bz == false);
+#endif
 
   BOOST_CHECK(!x);
   BOOST_CHECK(x == false);
@@ -114,7 +128,7 @@ int test_main(int, char*[])
     BOOST_CHECK(false);
   }
 
-#ifndef BOOST_NO_CXX11_CONSTEXPR
+#if !defined(BOOST_NO_CXX11_CONSTEXPR) 
   constexpr bool res_ors = indeterminate(false || tribool(false) || false || indeterminate); // true
   BOOST_CHECK(res_ors);
   char array_ors[res_ors ? 2 : 3];
@@ -125,13 +139,14 @@ int test_main(int, char*[])
   char array_ands[res_ands ? 2 : 3];
   BOOST_CHECK(sizeof(array_ands) / sizeof(char) == 3);
 
-  // We avoid checking the tribool::operator safe_bool(),
-  // because GCC-4.8 fails to evaluate it at compile-time.
-  // Clang compiles well.
-  //
-  // constexpr bool res_safe_bool = tribool(true); // false
-  // constexpr tribool xxx = (tribool(true) || tribool(indeterminate));
-  // static_assert(xxx, "Must be true!");
+  constexpr bool res_safe_bool = static_cast<bool>( tribool(true) );
+  BOOST_STATIC_ASSERT(res_safe_bool);
+
+// gcc 4.6 chokes on the xxx assignment
+# if !BOOST_WORKAROUND(BOOST_GCC, < 40700)
+    constexpr tribool xxx = (tribool(true) || tribool(indeterminate));
+    BOOST_STATIC_ASSERT(xxx);
+# endif
 #endif
 
   std::cout << "no errors detected\n";

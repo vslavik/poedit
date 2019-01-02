@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Command line usage recommendations</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../practical_usage_recommendations.html" title="Practical usage recommendations">
 <link rel="prev" href="ide_usage_recommendations.html" title="IDE usage recommendations">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.h0"></a>
-        <span><a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.if_you_got_fatal_exception_somew"></a></span><a class="link" href="command_line_usage_recommendatio.html#boost_test.practical_usage_recommendations.command_line_usage_recommendatio.if_you_got_fatal_exception_somew">If
+        <span class="phrase"><a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.if_you_got_fatal_exception_somew"></a></span><a class="link" href="command_line_usage_recommendatio.html#boost_test.practical_usage_recommendations.command_line_usage_recommendatio.if_you_got_fatal_exception_somew">If
         you got fatal exception somewhere within test case, make program generate
         coredump by adding extra command line argument</a>
       </h5>
@@ -47,7 +47,7 @@
       </p>
 <h5>
 <a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.h1"></a>
-        <span><a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.how_to_use_test_module_build_wit"></a></span><a class="link" href="command_line_usage_recommendatio.html#boost_test.practical_usage_recommendations.command_line_usage_recommendatio.how_to_use_test_module_build_wit">How
+        <span class="phrase"><a name="boost_test.practical_usage_recommendations.command_line_usage_recommendatio.how_to_use_test_module_build_wit"></a></span><a class="link" href="command_line_usage_recommendatio.html#boost_test.practical_usage_recommendations.command_line_usage_recommendatio.how_to_use_test_module_build_wit">How
         to use test module build with Boost.Test framework under management of automated
         regression test facilities?</a>
       </h5>
@@ -62,7 +62,7 @@
         dialogs (depends on compiler and OS) that will halt you regression tests
         run. The second recommendation is to suppress result report output by adding
       </p>
-<pre class="programlisting">--__param_report_level__=no
+<pre class="programlisting">--<a class="link" href="../utf_reference/rt_param_reference/report_level.html" title="report_level">report_level</a>=no
 </pre>
 <p>
         argument and test log output by adding
@@ -74,9 +74,14 @@
         going to look at anyway. We recommend relying only on result code that will
         be consistent for all test programs. An alternative to my second recommendation
         is direct both log and report to separate file you could analyze later on.
-        Moreover you can make Boost.Test to produce them in XML format using
+        Moreover you can make Boost.Test to produce them in XML or JUNIT format using
       </p>
 <pre class="programlisting">--<a class="link" href="../utf_reference/rt_param_reference/output_format.html" title="output_format">output_format</a>=XML
+</pre>
+<p>
+        or
+      </p>
+<pre class="programlisting">--<a class="link" href="../utf_reference/rt_param_reference/log_format.html" title="log_format">log_format</a>=JUNIT
 </pre>
 <p>
         and use some automated tool that will format this information as you like.
@@ -84,7 +89,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

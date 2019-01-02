@@ -1,4 +1,4 @@
-# Boost.Hana <a target="_blank" href="http://semver.org">![Version][badge.version]</a> <a target="_blank" href="https://travis-ci.org/boostorg/hana">![Travis status][badge.Travis]</a> <a target="_blank" href="https://ci.appveyor.com/project/ldionne/hana">![Appveyor status][badge.Appveyor]</a> <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> <a target="_blank" href="https://gitter.im/boostorg/hana">![Gitter Chat][badge.Gitter]</a>
+# Boost.Hana <a target="_blank" href="http://semver.org">![Version][badge.version]</a> <a target="_blank" href="https://travis-ci.org/boostorg/hana">![Travis status][badge.Travis]</a> <a target="_blank" href="https://ci.appveyor.com/project/ldionne/hana">![Appveyor status][badge.Appveyor]</a> <a target="_blank" href="http://melpon.org/wandbox/permlink/g4ozIK33ITDtyGa3">![Try it online][badge.wandbox]</a> <a target="_blank" href="https://gitter.im/boostorg/hana">![Gitter Chat][badge.Gitter]</a>
 
 > Your standard library for metaprogramming
 
@@ -57,15 +57,20 @@ int main() {
 
 ## Documentation
 You can browse the documentation online at http://boostorg.github.io/hana.
-You can also get an offline version of the documentation by checking out
-the `gh-pages` branch. To avoid overwriting the current directory, you
-can clone the `gh-pages` branch into a subdirectory like `doc/html`:
+The documentation covers everything you should need including installing the
+library, a tutorial explaining what Hana is and how to use it, and an extensive
+reference section with examples. The remainder of this README is mostly for
+people that wish to work on the library itself, not for its users.
+
+An offline copy of the documentation can be obtained by checking out the
+`gh-pages` branch. To avoid overwriting the current directory, you can clone
+the `gh-pages` branch into a subdirectory like `doc/html`:
 ```shell
 git clone http://github.com/boostorg/hana --branch=gh-pages --depth=1 doc/html
 ```
 
 After issuing this, `doc/html` will contain exactly the same static website
-that's [available online][Hana.docs]. Note that `doc/html` is automatically
+that is [available online][Hana.docs]. Note that `doc/html` is automatically
 ignored by Git so updating the documentation won't pollute your index.
 
 
@@ -152,23 +157,9 @@ The project is organized in a couple of subdirectories.
   cloning the `gh-pages` branch into that directory, as explained above.
 - The [example](example) directory contains the source code for all the
   examples of both the tutorial and the reference documentation.
-- The [experimental](experimental) directory contains various experiments that
-  might or might not make it into Hana at some point.
 - The [include](include) directory contains the library itself, which is
   header only.
 - The [test](test) directory contains the source code for all the unit tests.
-
-
-## Related material
-- Talk on metaprogramming and Hana at [CppCon][] 2015 ([slides](http://ldionne.com/hana-cppcon-2015)/[video](https://youtu.be/cg1wOINjV9U))
-- Talk on metaprogramming and Hana at [C++Now][] 2015 ([slides](http://ldionne.com/hana-cppnow-2015))
-- Talk on Hana at [CppCon][] 2014 ([slides](http://ldionne.com/hana-cppcon-2014)/[video](https://youtu.be/L2SktfaJPuU))
-- The [MPL11][] library, which is how Hana started out
-- Talk on the MPL11 at [C++Now][] 2014 ([slides](http://ldionne.com/mpl11-cppnow-2014)/[video](https://youtu.be/8c0aWLuEO0Y))
-- Louis Dionne's bachelor's thesis was a formalization of C++ metaprogramming through
-  category theory. The thesis is available [here](https://github.com/ldionne/hana-thesis/blob/gh-pages/main.pdf),
-  and the slides of a related presentation are available [here](http://ldionne.com/hana-thesis).
-  Unfortunately, both are in french only.
 
 
 ## Contributing
@@ -182,10 +173,19 @@ Please see [LICENSE.md](LICENSE.md).
 ## Releasing
 This section acts as a reminder of the few simple steps required to release a
 new version of the library. This is only relevant to Hana's developers. To
-release a new version of the library, create an annotated tag using `git tag -a`.
+release a new version of the library, make sure the current version in
+`include/boost/hana/version.hpp` matches the release you're about to publish.
+Then, create an annotated tag with:
+```sh
+git tag -a --file=- v<version> <<EOM
+...your message here...
+EOM
+```
+
 Then, push the tag and create a new GitHub release pointing to that tag.
 Once that is done, bump the version number in `include/boost/hana/version.hpp`
-so that it matches the next planned release.
+so that it matches the next _planned_ release. Finally, do not forget to update
+the [Homebrew formula][] to point to the latest version.
 
 
 <!-- Links -->
@@ -194,11 +194,9 @@ so that it matches the next planned release.
 [badge.Travis]: https://travis-ci.org/boostorg/hana.svg?branch=master
 [badge.version]: https://badge.fury.io/gh/boostorg%2Fhana.svg
 [badge.Wandbox]: https://img.shields.io/badge/try%20it-online-blue.svg
-[C++Now]: http://cppnow.org
 [CMake]: http://www.cmake.org
-[CppCon]: http://cppcon.org
 [Doxygen]: http://www.doxygen.org
 [eRuby]: http://en.wikipedia.org/wiki/ERuby
 [Hana.docs]: http://boostorg.github.io/hana
 [Hana.wiki]: https://github.com/boostorg/hana/wiki
-[MPL11]: http://github.com/ldionne/mpl11
+[Homebrew formula]: https://github.com/Homebrew/homebrew-core/blob/master/Formula/hana.rb

@@ -6,15 +6,17 @@
 #
 
 import project ;
+import log-platform-config ;
 using mc ;
 
 project /boost/log/message-compiler
     : source-location ../../src
     : requirements
+        <conditional>@log-platform-config.set-platform-defines
         <pch>off
     ;
 
-obj simple_event_log : simple_event_log.mc ;
+obj simple_event_log : windows/simple_event_log.mc ;
 
 # This test target verifies that Message Compiler (mc) is available and supported by the current toolset
 alias test-availability : simple_event_log ;

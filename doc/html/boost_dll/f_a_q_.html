@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>F.A.Q.</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_dll.html" title="Chapter&#160;10.&#160;Boost.DLL">
+<link rel="up" href="../boost_dll.html" title="Chapter&#160;14.&#160;Boost.DLL">
 <link rel="prev" href="limitations.html" title="Limitations">
 <link rel="next" href="design_rationale.html" title="Design Rationale">
 </head>
@@ -27,9 +27,9 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_dll.f_a_q_"></a><a class="link" href="f_a_q_.html" title="F.A.Q.">F.A.Q.</a>
 </h2></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Is Boost.DLL thread-safe?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Some platforms allow concurrent
                 calls to <code class="computeroutput"><span class="identifier">dlopen</span></code> like
                 functions. For those platforms Boost.DLL is safe in the manner as
@@ -43,28 +43,28 @@
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Why on Linux symbols from one
           plugin are seen in another? Can't get symbol with same name from right
           plugin!
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> You've run into the symbol
                 shadowing problem. Compile your plugins with "-fvisibility=hidden"
                 flag and take a look to the Tutorial section.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> How Unicode (Windows) is handled?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Boost.DLL supports Unicode,
                 so that you could provide Unicode paths to it.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Can I open an executable file?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Yes, you can. Symbols need
                 be exported using in the executable using <code class="computeroutput"><span class="identifier">BOOST_SYMBOL_EXPORT</span></code>
                 or <code class="computeroutput"><span class="identifier">BOOST_DLL_ALIAS</span></code>.
@@ -75,11 +75,11 @@
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> What if I specify wrong type
           in <code class="computeroutput"><span class="identifier">shared_library</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
           or <code class="computeroutput"><span class="identifier">import</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Usually you'll end up with
                 <code class="computeroutput"><span class="identifier">Segmentation</span> <span class="identifier">Fault</span></code>.
                 However it is safe to make types more strict, for example making
@@ -89,10 +89,10 @@
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Does your library guarantee
           ABI stability of methods?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Library only guarantees
                 that alias names created using the <code class="computeroutput"><span class="identifier">BOOST_DLL_ALIAS</span></code>
                 macros will not change with the change of compiler or platform. You
@@ -100,39 +100,39 @@
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> Are there any function signature
           restrictions for the exported/imported functions?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> No. You may import/export
                 functions with any signature and any return parameter.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> I have 2 plugins that use same
           shared library. Would be the shared library loaded twice?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> No. Pugins will share the
                 shared library instance.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> I have 2 plugins each of them
           must work with it's own version of <code class="computeroutput"><span class="identifier">libsome_library</span></code>
           shared library. How to achieve that?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Avoid such situations by
                 statically linking in the libsome_library into each plugin and loading
                 plugins with <code class="computeroutput"><span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">rtld_deepbind</span></code>.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> How to load a shared object
           from memory??
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> All existing OS avoid loading
                 shared libraries directly from userspace memory, so you'll find no
                 syscall for such case. Currently Boost.DLL provides no means for
@@ -166,10 +166,10 @@
       dependent.
     </p>
 <pre class="programlisting"></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <span class="bold"><strong>Question:</strong></span> I have found a bug, how do I
           notify?
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Create an <a href="https://github.com/apolukhin/Boost.DLL/issues" target="_top">issue
                 at GitHub</a> with a detailed description.
               </li></ul></div>
@@ -177,7 +177,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015, 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>

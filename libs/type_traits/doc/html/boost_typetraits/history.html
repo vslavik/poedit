@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>History</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="prev" href="reference/type_with_alignment.html" title="type_with_alignment">
@@ -28,10 +28,82 @@
 </h2></div></div></div>
 <h5>
 <a name="boost_typetraits.history.h0"></a>
-      <span><a name="boost_typetraits.history.boost_1_60_0____"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_60_0____">Boost
-      1.60.0 ???</a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_68_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_68_0">Boost-1.68.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added support for detecting trivial moves on clang.
+        </li>
+<li class="listitem">
+          Correct some mismatched <code class="computeroutput"><span class="preprocessor">#pragam</span>
+          <span class="identifier">warning</span> <span class="identifier">push</span><span class="special">/</span><span class="identifier">pop</span></code>.
+        </li>
+<li class="listitem">
+          Improve <a class="link" href="reference/is_virtual_base_of.html" title="is_virtual_base_of">is_virtual_base_of</a>
+          to give more robust answers.
+        </li>
+<li class="listitem">
+          Add support for <a class="link" href="reference/is_final.html" title="is_final">is_final</a>
+          with msvc.
+        </li>
+</ul></div>
+<h5>
+<a name="boost_typetraits.history.h1"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_67_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_67_0">Boost
+      1.67.0</a>
+    </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added new traits <a class="link" href="reference/detected.html" title="detected">detected</a>,
+          <a class="link" href="reference/detected_or.html" title="detected_or">detected_or</a>,
+          <a class="link" href="reference/is_detected.html" title="is_detected">is_detected</a>,
+          <a class="link" href="reference/is_detected_convertible.html" title="is_detected_convertible">is_detected_convertible</a>,
+          <a class="link" href="reference/is_detected_exact.html" title="is_detected_exact">is_detected_exact</a>,
+          <a class="link" href="reference/is_complete.html" title="is_complete">is_complete</a>.
+        </li>
+<li class="listitem">
+          Added greatly improved code for detecting binary operators.
+        </li>
+<li class="listitem">
+          Add assertions for completeness to traits which require complete types
+          as arguments: this prevents various traits from giving eroneous results
+          from incomplete types.
+        </li>
+<li class="listitem">
+          Fix minor issue with mpl compatibility, see <a href="https://svn.boost.org/trac/boost/ticket/12212" target="_top">#12212</a>.
+        </li>
+<li class="listitem">
+          Add macro to indicate when is_constructible is fully implemented, see
+          <a href="https://svn.boost.org/trac/boost/ticket/12003" target="_top">#12003</a>.
+        </li>
+<li class="listitem">
+          Update <a class="link" href="reference/is_function.html" title="is_function">is_function</a>
+          and <a class="link" href="reference/is_member_function_pointer.html" title="is_member_function_pointer">is_member_function_pointer</a>
+          to work correctly with C++17 noexcept specifications.
+        </li>
+<li class="listitem">
+          Add workaround for <a class="link" href="reference/is_default_constructible.html" title="is_default_constructible">is_default_constructible</a>
+          and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></code>.
+        </li>
+<li class="listitem">
+          Added fallback for <a class="link" href="reference/is_nothrow_swappable.html" title="is_nothrow_swappable">is_nothrow_swappable</a>
+          on pre-C++11 compilers.
+        </li>
+</ul></div>
+<h5>
+<a name="boost_typetraits.history.h2"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_64_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_64_0">Boost
+      1.64.0</a>
+    </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Added new trait <a class="link" href="reference/make_void.html" title="make_void">make_void</a>.
+        </li></ul></div>
+<h5>
+<a name="boost_typetraits.history.h3"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_60_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_60_0">Boost
+      1.60.0</a>
+    </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Refactored traits to depend only on Boost.Config. Greatly simplified code
           to improve readability and remove workarounds for old compilers no longer
@@ -46,15 +118,15 @@
           <a class="link" href="reference/is_default_constructible.html" title="is_default_constructible">is_default_constructible</a>,
           <a class="link" href="reference/is_constructible.html" title="is_constructible">is_constructible</a>
           and <a class="link" href="reference/is_destructible.html" title="is_destructible">is_destructible</a>
-          required to fix bugs in a number of other traits, see for example <a href="https://svn.boost.org/trac/boost/ticket/7760" target="_top">#11324</a>.
+          required to fix bugs in a number of other traits, see for example <a href="https://svn.boost.org/trac/boost/ticket/11324" target="_top">#11324</a>.
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h1"></a>
-      <span><a name="boost_typetraits.history.boost_1_58_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_58_0">Boost
+<a name="boost_typetraits.history.h4"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_58_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_58_0">Boost
       1.58.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed issue with CUDA on Clang compiler see <a href="https://svn.boost.org/trac/boost/ticket/10694" target="_top">#10694</a>.
         </li>
@@ -65,11 +137,11 @@
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h2"></a>
-      <span><a name="boost_typetraits.history.boost_1_57_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_57_0">Boost
+<a name="boost_typetraits.history.h5"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_57_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_57_0">Boost
       1.57.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added new traits <a class="link" href="reference/is_copy_assignable.html" title="is_copy_assignable">is_copy_assignable</a>
           and <a class="link" href="reference/is_final.html" title="is_final">is_final</a>.
@@ -79,39 +151,39 @@
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h3"></a>
-      <span><a name="boost_typetraits.history.boost_1_56_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_56_0">Boost
+<a name="boost_typetraits.history.h6"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_56_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_56_0">Boost
       1.56.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Fixed issues <a href="https://svn.boost.org/trac/boost/ticket/7317" target="_top">#7317</a>,
           <a href="https://svn.boost.org/trac/boost/ticket/9474" target="_top">#9474</a>.
         </li></ul></div>
 <h5>
-<a name="boost_typetraits.history.h4"></a>
-      <span><a name="boost_typetraits.history.boost_1_55_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_55_0">Boost
+<a name="boost_typetraits.history.h7"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_55_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_55_0">Boost
       1.55.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Added new trait <a class="link" href="reference/is_copy_constructible.html" title="is_copy_constructible">is_copy_constructible</a>.
         </li></ul></div>
 <h5>
-<a name="boost_typetraits.history.h5"></a>
-      <span><a name="boost_typetraits.history.boost_1_54_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_54_0">Boost
+<a name="boost_typetraits.history.h8"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_54_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_54_0">Boost
       1.54.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Added new traits <a class="link" href="reference/is_nothrow_move_assignable.html" title="is_nothrow_move_assignable">is_nothrow_move_assignable</a>,
           <a class="link" href="reference/is_nothrow_move_constructible.html" title="is_nothrow_move_constructible">is_nothrow_move_constructible</a>,
           <a class="link" href="reference/has_trivial_move_assign.html" title="has_trivial_move_assign">has_trivial_move_assign</a>,
           <a class="link" href="reference/has_trivial_move_constructor.html" title="has_trivial_move_constructor">has_trivial_move_constructor</a>.
         </li></ul></div>
 <h5>
-<a name="boost_typetraits.history.h6"></a>
-      <span><a name="boost_typetraits.history.boost_1_47_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_47_0">Boost
+<a name="boost_typetraits.history.h9"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_47_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_47_0">Boost
       1.47.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <span class="bold"><strong>Breaking change</strong></span>: changed <a class="link" href="reference/is_convertible.html" title="is_convertible">is_convertible</a>
           to C++0x behaviour when possible.
@@ -122,11 +194,11 @@
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h7"></a>
-      <span><a name="boost_typetraits.history.boost_1_45_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_45_0">Boost
+<a name="boost_typetraits.history.h10"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_45_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_45_0">Boost
       1.45.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added new traits <a class="link" href="reference/add_rvalue_reference.html" title="add_rvalue_reference">add_rvalue_reference</a>,
           <a class="link" href="reference/add_lvalue_reference.html" title="add_lvalue_reference">add_lvalue_reference</a>
@@ -139,11 +211,11 @@
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h8"></a>
-      <span><a name="boost_typetraits.history.boost_1_44_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_44_0">Boost
+<a name="boost_typetraits.history.h11"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_44_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_44_0">Boost
       1.44.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added support for rvalue references throughout the library, plus two new
           traits classes <a class="link" href="reference/is_rvalue_reference.html" title="is_rvalue_reference">is_rvalue_reference</a>
@@ -156,11 +228,11 @@
         </li>
 </ul></div>
 <h5>
-<a name="boost_typetraits.history.h9"></a>
-      <span><a name="boost_typetraits.history.boost_1_42_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_42_0">Boost
+<a name="boost_typetraits.history.h12"></a>
+      <span class="phrase"><a name="boost_typetraits.history.boost_1_42_0"></a></span><a class="link" href="history.html#boost_typetraits.history.boost_1_42_0">Boost
       1.42.0</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Fixed issue <a href="https://svn.boost.org/trac/boost/ticket/3704" target="_top">#3704</a>.
         </li></ul></div>
 </div>

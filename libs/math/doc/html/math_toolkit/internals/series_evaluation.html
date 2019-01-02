@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Series Evaluation</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../internals.html" title="Internal tools">
 <link rel="prev" href="../internals.html" title="Internal tools">
 <link rel="next" href="cf.html" title="Continued Fraction Evaluation">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.internals.series_evaluation.h0"></a>
-        <span><a name="math_toolkit.internals.series_evaluation.synopsis"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.internals.series_evaluation.synopsis"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">series</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -65,7 +65,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.internals.series_evaluation.h1"></a>
-        <span><a name="math_toolkit.internals.series_evaluation.description"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.internals.series_evaluation.description"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.description">Description</a>
       </h5>
 <p>
         These algorithms are intended for the <a href="http://en.wikipedia.org/wiki/Series_%28mathematics%29" target="_top">summation
@@ -94,7 +94,7 @@
         value of the sum to which the terms of the series should be added. This is
         useful in two situations:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Where the first value of the series has a different formula to successive
             terms. In this case the first value in the series can be passed as the
@@ -122,8 +122,11 @@
       </p>
 <h5>
 <a name="math_toolkit.internals.series_evaluation.h2"></a>
-        <span><a name="math_toolkit.internals.series_evaluation.example"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.example">Example</a>
+        <span class="phrase"><a name="math_toolkit.internals.series_evaluation.examples"></a></span><a class="link" href="series_evaluation.html#math_toolkit.internals.series_evaluation.examples">Examples</a>
       </h5>
+<p>
+        These examples are all in <a href="../../../../example/series.cpp" target="_top">../../example/series.cpp</a>
+      </p>
 <p>
         Let's suppose we want to implement <span class="emphasis"><em>log(1+x)</em></span> via its
         infinite series,
@@ -142,7 +145,7 @@
    <span class="keyword">typedef</span> <span class="identifier">T</span> <span class="identifier">result_type</span><span class="special">;</span>
 
    <span class="identifier">log1p_series</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">)</span>
-      <span class="special">:</span> <span class="identifier">k</span><span class="special">(</span><span class="number">0</span><span class="special">),</span> <span class="identifier">m_mult</span><span class="special">(-</span><span class="identifier">x</span><span class="special">),</span> <span class="identifier">m_prod</span><span class="special">(-</span><span class="number">1</span><span class="special">){}</span>
+      <span class="special">:</span> <span class="identifier">k</span><span class="special">(</span><span class="number">0</span><span class="special">),</span> <span class="identifier">m_mult</span><span class="special">(-</span><span class="identifier">x</span><span class="special">),</span> <span class="identifier">m_prod</span><span class="special">(-</span><span class="number">1</span><span class="special">)</span> <span class="special">{}</span>
 
    <span class="identifier">T</span> <span class="keyword">operator</span><span class="special">()()</span>
    <span class="special">{</span>
@@ -174,16 +177,68 @@
    <span class="comment">// Set a limit on how many iterations we permit:</span>
    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span> <span class="identifier">max_iter</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
    <span class="comment">// Add it up, with enough precision for full machine precision:</span>
-   <span class="keyword">return</span> <span class="identifier">tools</span><span class="special">::</span><span class="identifier">sum_series</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">(),</span> <span class="identifier">max_iter</span><span class="special">);</span>
+   <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tools</span><span class="special">::</span><span class="identifier">sum_series</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">(),</span> <span class="identifier">max_iter</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
+<p>
+        We can almost use the code above for complex numbers as well - unfortunately
+        we need a slightly different definition for epsilon, and within the functor,
+        mixed complex and integer arithmetic is sadly not supported (as of C++17),
+        so we need to cast out integers to floats:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">log1p_series</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+   <span class="comment">// we must define a result_type typedef:</span>
+   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">result_type</span><span class="special">;</span>
+
+   <span class="identifier">log1p_series</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">x</span><span class="special">)</span>
+      <span class="special">:</span> <span class="identifier">k</span><span class="special">(</span><span class="number">0</span><span class="special">),</span> <span class="identifier">m_mult</span><span class="special">(-</span><span class="identifier">x</span><span class="special">),</span> <span class="identifier">m_prod</span><span class="special">(-</span><span class="number">1</span><span class="special">)</span> <span class="special">{}</span>
+
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">operator</span><span class="special">()()</span>
+   <span class="special">{</span>
+      <span class="comment">// This is the function operator invoked by the summation</span>
+      <span class="comment">// algorithm, the first call to this operator should return</span>
+      <span class="comment">// the first term of the series, the second call the second </span>
+      <span class="comment">// term and so on.</span>
+      <span class="identifier">m_prod</span> <span class="special">*=</span> <span class="identifier">m_mult</span><span class="special">;</span>
+      <span class="keyword">return</span> <span class="identifier">m_prod</span> <span class="special">/</span> <span class="identifier">T</span><span class="special">(++</span><span class="identifier">k</span><span class="special">);</span>
+   <span class="special">}</span>
+
+<span class="keyword">private</span><span class="special">:</span>
+   <span class="keyword">int</span> <span class="identifier">k</span><span class="special">;</span>
+   <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">m_mult</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">m_prod</span><span class="special">;</span>
+<span class="special">};</span>
+
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">log1p</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">x</span><span class="special">)</span>
+<span class="special">{</span>
+   <span class="comment">// We really should add some error checking on x here!</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">abs</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span> <span class="special">&lt;</span> <span class="number">1</span><span class="special">);</span>
+
+   <span class="comment">// Construct the series functor:</span>
+   <span class="identifier">log1p_series</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">x</span><span class="special">);</span>
+   <span class="comment">// Set a limit on how many iterations we permit:</span>
+   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span> <span class="identifier">max_iter</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
+   <span class="comment">// Add it up, with enough precision for full machine precision:</span>
+   <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tools</span><span class="special">::</span><span class="identifier">sum_series</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">()),</span> <span class="identifier">max_iter</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Of course with a few traits classes and a bit of meta-programming we could
+        fold these two implementations into one, but that's beyond the scope of these
+        examples.
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

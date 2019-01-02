@@ -49,6 +49,9 @@ project
         <library>/boost/locale//boost_locale
         <library>/boost/thread//boost_thread
         <threading>multi
+
+        # does not build on VxWorks due to lack of boost::locale support
+        <target-os>vxworks:<build>no
     ;
 
 exe wide_char

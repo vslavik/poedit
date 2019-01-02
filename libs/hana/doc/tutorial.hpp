@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -44,43 +44,72 @@ and the standard library.
 ------------------------------------------------------------------------------
 Hana is a header-only library without external dependencies (not even the rest
 of Boost). Hence, using Hana in your own project is very easy. Basically, just
-add the `include/` directory to your compiler's header search path and you are
-done. However, if you want to cleanly install Hana on your system, you have a
-couple of options. First, you can install Boost 1.61.0 or later, since Hana is
-included in Boost starting with that release. If you do not want to install all
-of Boost, it is also possible to install Hana only. To do so, you can download
-the code from the official GitHub [repository][Hana.repository] and install the
-library manually by issuing the following commands from the root of the project
-(requires [CMake][]):
+download the project and add the `include/` directory to your compiler's header
+search path and you are done. However, if you want to cleanly install Hana, you
+have a couple of options:
 
+1. __Install Boost__\n
+Hana is included in the [Boost][] distribution starting from Boost 1.61.0, so
+installing that will give you access to Hana.
+
+2. __Use Homebrew__\n
+On Mac OS, Hana can be installed with [Homebrew][]:
+@code{.sh}
+brew install hana
+@endcode
+
+3. __Install manually__\n
+You can download the code from the official GitHub [repository][Hana.repository]
+and install the library manually by issuing the following commands from the root
+of the project (requires [CMake][]):
 @code{.sh}
 mkdir build && cd build
 cmake ..
 cmake --build . --target install
 @endcode
-
 This will install Hana to the default install-directory for your platform
 (`/usr/local` for Unix, `C:/Program Files` for Windows). If you want to
 install Hana in a custom location, you can use
-
 @code{.sh}
 cmake .. -DCMAKE_INSTALL_PREFIX=/custom/install/prefix
 @endcode
 
+If you just want to contribute to Hana, you can see how to best setup your
+environment for development in the [README][Hana.hacking].
+
 @note
-- The manual installation will also install a `hana.pc` file for use
-with [pkg-config][].
+- Both the manual installation and the Homebrew installation will also install
+a `HanaConfig.cmake` file for use with CMake and a `hana.pc` file for use with
+[pkg-config][].
 
-- Do not install Hana as shown above if you already have an installation of
-Boost, because the new installation will overwrite the one that comes with
-Boost.
+- Do not mix a standalone installation of Hana (i.e. Hana not installed through
+  Boost) with a full installation of Boost. The Hana provided within Boost and
+  the standalone one may clash, and you won't know which version is used where.
+  This is asking for trouble.
 
-If you use CMake in a project, you can use the provided [FindHana.cmake][Hana.findmodule]
-module to setup Hana as an external CMake project. The module also allows
-installing Hana locally to that project, without needing to install Hana on
-the system per the above instructions. Finally, if you want to contribute to
-Hana, you can see how to best setup your environment for development in the
-[README][Hana.readme].
+@subsection tutorial-installation-cmake Note for CMake users
+
+If you use [CMake][], depending on Hana has never been so easy. When installed,
+Hana creates a `HanaConfig.cmake` file that exports the `hana` interface library
+target with all the required settings. All you need is to install Hana (through
+Homebrew or manually), use `find_package(Hana)`, and then link your own targets
+against the `hana` target. Here is a minimal example of doing this:
+
+@snippet example/cmake_integration/CMakeLists.txt snip
+
+If you have installed Hana in a non-standard place, you might need to play with
+`CMAKE_PREFIX_PATH`. For example, this can happen if you "manually" install
+Hana locally to another project. In this case, you'll need to tell CMake where
+to find the `HanaConfig.cmake` file by using
+
+@code{cmake}
+list(APPEND CMAKE_PREFIX_PATH "${INSTALLATION_PREFIX_FOR_HANA}")
+or
+cmake ... -DCMAKE_PREFIX_PATH=${INSTALLATION_PREFIX_FOR_HANA}
+@endcode
+
+where `INSTALLATION_PREFIX_FOR_HANA` is the path to the place where Hana was
+installed.
 
 @subsection tutorial-installation-requirements Compiler requirements
 
@@ -92,7 +121,8 @@ Compiler/Toolchain | Status
 ------------------ | ------
 Clang >= 3.5.0     | Fully working; tested on each push to GitHub
 Xcode >= 6.3       | Fully working; tested on each push to GitHub
-GCC >= 6.0.0       | Fully working; tested locally
+GCC >= 6.0.0       | Fully working; tested on each push to GitHub
+VS2017 >= Update 7 | Fully working; tested on each push to GitHub
 
 More specifically, Hana requires a compiler/standard library supporting the
 following C++14 features (non-exhaustively):
@@ -553,7 +583,7 @@ the most frequently used algorithms and containers, along with a short
 description of what each of them does.
 
 
-@subsection tutorial-quickstart-cheatsheet Cheatsheet
+@section tutorial-cheatsheet Cheatsheet
 
 ### Remarks
 - Most algorithms work on both types and values (see the section on
@@ -607,6 +637,7 @@ function                                                                        
 <code>[for_each](@ref ::boost::hana::for_each)(sequence, f)</code>                        | Call a function on each element of a sequence. Returns `void`.
 <code>[front](@ref ::boost::hana::front)(sequence)</code>                                 | Returns the first element of a non-empty sequence.
 <code>[group](@ref ::boost::hana::group)(sequence[, predicate])</code>                    | %Group adjacent elements of a sequence which all satisfy (or all do not satisfy) some predicate. The predicate defaults to equality, in which case the elements must be `Comparable`.
+<code>[index_if](@ref ::boost::hana::index_if)(sequence, predicate)</code>                | Find the index of the first element in a sequence satisfying the predicate and return `just` it, or return `nothing`. See `hana::optional`.
 <code>[insert](@ref ::boost::hana::insert)(sequence, index, element)</code>               | Insert an element at a given index. The index must be an `IntegralConstant`.
 <code>[insert_range](@ref ::boost::hana::insert_range)(sequence, index, elements)</code>  | Insert a sequence of elements at a given index. The index must be an `IntegralConstant`.
 <code>[is_empty](@ref ::boost::hana::is_empty)(sequence)</code>                           | Returns whether a sequence is empty as an `IntegralConstant`.
@@ -1673,7 +1704,7 @@ that type and cast it to `void`, for the same reason as we did for non-static
 members.
 
 
-@subsubsection tutorial-introspection-is_valid-typename Nested type names
+@subsubsection tutorial-introspection-is_valid-nested-typename Nested type names
 
 Checking for a nested type name is not hard, but it is slightly more
 convoluted than the previous cases:
@@ -1686,13 +1717,28 @@ support types that can't be returned from functions, like array types or
 incomplete types.
 
 
-@subsubsection tutorial-introspection-is_valid-template Nested templates
+@subsubsection tutorial-introspection-is_valid-nested-template Nested templates
 
 Checking for a nested template name is similar to checking for a nested type
 name, except we use the `template_<...>` variable template instead of
 `type<...>` in the generic lambda:
 
 @snippet example/tutorial/introspection.cpp nested_template
+
+
+@subsubsection tutorial-introspection-is_valid-template Template specializations
+
+Checking whether a template specialization is valid can be done too, but we
+now pass a `template_<...>` to `is_valid` instead of a `type<...>`, because
+that's what we want to make the check on:
+
+@snippet example/tutorial/introspection.cpp template_specialization
+
+@note
+Doing this will not cause the template to be instantiated. Hence, it will only
+check whether the given template can be mentioned with the provided template
+arguments, not whether the instantiation of the template with those arguments
+is valid. Generally speaking, there is no way to check that programmatically.
 
 
 @subsection tutorial-introspection-sfinae Taking control of SFINAE
@@ -1876,7 +1922,7 @@ The `quote` and the `to_json` overloads are pretty self-explanatory. The
 `intersperse` function takes a sequence and a separator, and returns a new
 sequence with the separator in between each pair of elements of the original
 sequence. In other words, we take a sequence of the form `[x1, ..., xn]` and
-turn it into a sequence of the form `[x1, seq, x2, sep, ..., sep, xn]`.
+turn it into a sequence of the form `[x1, sep, x2, sep, ..., sep, xn]`.
 Finally, we fold the resulting sequence with the `_ + _` function object,
 which is equivalent to `std::plus<>{}`. Since our sequence contains
 `std::string`s (we assume it does), this has the effect of concatenating
@@ -1994,7 +2040,10 @@ a container unspecified; they are explained in the
 [rationales](@ref tutorial-rationales-container_representation).
 When the representation of a container is implementation-defined, one must
 be careful not to make any assumptions about it, unless those assumption
-are explicitly allowed in the documentation of the container.
+are explicitly allowed in the documentation of the container. For example,
+assuming that one can safely inherit from a container or that the elements
+in the container are stored in the same order as specified in its template
+argument list is generally not safe.
 
 
 @subsubsection tutorial-containers-types-overloading Overloading on container types
@@ -2521,11 +2570,11 @@ will be much faster that way.
 
 You can also see that creating sequences has a non-negligible cost. Actually,
 this is really the most expensive part of doing heterogeneous computations,
-as you will see in the following charts. When you look at the charts here and
-elsewhere in the library, keep in mind the cost of merely creating the sequences.
-Also note that only the most important algorithms will be presented here, but
-micro benchmarks for compile-time performance are scattered in the reference
-documentation. Also, the benchmarks we present compare several different
+as you will see in the following charts. Hence, when you look at the charts
+below, keep in mind the cost of merely creating the sequences. Also note that
+only the most important algorithms will be presented here, but the [Metabench][]
+project provides micro benchmarks for compile-time performance for almost all
+of Hana's algorithms. Also, the benchmarks we present compare several different
 libraries. However, since Hana and Fusion can work with values and not only
 types, comparing their algorithms with type-only libraries like MPL is not
 really fair. Indeed, Hana and Fusion algorithms are more powerful since they
@@ -2609,9 +2658,9 @@ into account the free lunch given to use by C++14.
 
 As you can see, Hana performs better than Fusion, and as well as MPL, yet
 Hana's `find_if` can be used with values too, unlike MPL's. This concludes
-the section on compile-time performance, but there are micro benchmarks of
-compile-time performance scattered around the documentation if you want to
-see the compile-time behavior of a particular algorithm.
+the section on compile-time performance. In case you want to see the
+performance of an algorithm that we have not presented here, the [Metabench][]
+project provides compile-time benchmarks for most of Hana's algorithms.
 
 
 @subsection tutorial-performance-runtime Runtime performance
@@ -2787,9 +2836,12 @@ very useful for porting existing code from e.g. Fusion/MPL to Hana:
 @snippet example/tutorial/ext/fusion_to_hana.cpp main
 
 @note
-At this time, only adapters to use data types from other libraries inside Hana
-are provided; adapters for the other way around (using Hana containers inside
-other libraries) are not provided.
+- At this time, only adapters to use data types from other libraries inside Hana
+  are provided; adapters for the other way around (using Hana containers inside
+  other libraries) are not provided.
+
+- The Fusion and MPL adapters are only guaranteed to work on the version of
+  Boost matching the version of Hana being used.
 
 However, using external adapters has a couple of pitfalls. For example, after
 a while using Hana, you might become used to comparing Hana tuples using the
@@ -3077,14 +3129,14 @@ conjunction with `hana::when` to achieve a great deal of expressiveness.
 @subsection tutorial-core-concepts Emulation of C++ concepts
 
 The implementation of concepts in Hana is very simple. At its heart, a concept
-is just a template `struct` with a nested `::%value` boolean representing
-whether the given type is a _model_ of the concept:
+is just a template `struct` that inherits from a boolean `integral_constant`
+representing whether the given type is a _model_ of the concept:
 
 @code{cpp}
 template <typename T>
-struct Concept {
-  static constexpr bool value = whether T models Concept;
-};
+struct Concept
+  : hana::integral_constant<bool, whether T models Concept>
+{ };
 @endcode
 
 Then, one can test whether a type `T` is a model of `Concept` by looking at
@@ -3108,9 +3160,9 @@ that can be `print`ed. Our end goal is to have a template struct such as
 
 @code{cpp}
 template <typename T>
-struct Printable {
-  static constexpr bool value = whether print_impl<tag of T> is defined;
-};
+struct Printable
+  : hana::integral_constant<bool, whether print_impl<tag of T> is defined>
+{ };
 @endcode
 
 To know whether `print_impl<...>` has been defined, we'll modify `print_impl`
@@ -3124,14 +3176,13 @@ inherit from that `special_base_class` type:
 
 @snippet example/tutorial/concepts.cpp special_base_class_customize
 
-As you can see, `Printable<T>::%value` really only checks whether the
-`print_impl<T>` struct was specialized by a custom type. In particular,
-it does not even check whether the nested `::%apply` function is defined
-or if it is syntactically valid. It is assumed that if one specializes
-`print_impl` for a custom type, the nested `::%apply` function exists and
-is correct. If it is not, a compilation error will be triggered when one
-tries to call `print` on an object of that type. Concepts in Hana make the
-same assumptions.
+As you can see, `Printable<T>` really only checks whether the `print_impl<T>`
+struct was specialized by a custom type. In particular, it does not even check
+whether the nested `::%apply` function is defined or if it is syntactically
+valid. It is assumed that if one specializes `print_impl` for a custom type,
+the nested `::%apply` function exists and is correct. If it is not, a compilation
+error will be triggered when one tries to call `print` on an object of that type.
+Concepts in Hana make the same assumptions.
 
 Since this pattern of inheriting from a special base class is quite abundant
 in Hana, the library provides a dummy type called `hana::default_` that can be
@@ -3283,6 +3334,41 @@ unfamiliar to C++ programmers without a knowledge of functional programming.
 The reference attempts to make these concepts approachable by using intuition
 whenever possible, but bear in mind that the highest rewards are usually the
 fruit of some effort.
+
+@subsection tutorial-conclusion-related_material Related material
+
+Through the years, I have produced some material about Hana and metaprogramming
+more generally. You may find some of it useful:
+
+- Keynote on metaprogramming at [Meeting C++][] 2016 ([slides](http://ldionne.com/meetingcpp-2016)/[video](https://youtu.be/X_p9X5RzBJE))
+- Talk on advanced metaprogramming techniques used in Hana at [C++Now][] 2016 ([slides](http://ldionne.com/cppnow-2016-metaprogramming-for-the-brave)/[video](https://youtu.be/UXwWXHrvTug))
+- Introduction to metaprogramming with Hana at [C++Now][] 2016 ([slides](http://ldionne.com/cppnow-2016-metaprogramming-for-dummies)/[video](https://youtu.be/a1doqFAumCk))
+- Talk on the [MPL11][] library at [C++Now][] 2014. This is how Hana started out. ([slides](http://ldionne.com/mpl11-cppnow-2014)/[video](https://youtu.be/8c0aWLuEO0Y))
+- My bachelor's thesis was a formalization of C++ metaprogramming using category
+  theory. The thesis is available [here](https://github.com/ldionne/hana-thesis/blob/gh-pages/main.pdf),
+  and the slides of a related presentation are available [here](http://ldionne.com/hana-thesis).
+  Unfortunately, both are in french only.
+
+The complete list of talks I've done on Hana and metaprogramming is [here][ldionne.talks].
+There is also an unofficial translation of Hana's documentation to Chinese
+available [here](https://github.com/freezestudio/hana.zh).
+
+@subsection tutorial-conclusion-projects_using_hana Projects using Hana
+
+There is a growing number of projects using Hana. It can be useful to look
+at them to get a sense of how to best use the library. Here's a few of those
+projects ([open an issue][Hana.issues] if you want your project to be listed
+here):
+
+- [Dyno](https://github.com/ldionne/dyno): A policy-based type erasure library.
+  Uses Hana for vtable generation and concept map emulation under the hood.
+- [yap](https://github.com/tzlaine/yap): An expression template library built
+  on top of Hana.
+- [NBDL](https://github.com/ricejasonf/nbdl): Library for managing application
+  state across network. Uses Hana for some things under the hood.
+- [ECST](https://github.com/SuperV1234/ecst): An experimental multithreaded
+  compile-time entity-component system using Hana under the hood for a few
+  things.
 
 This finishes the tutorial part of the documentation. I hope you enjoy using
 the library, and please consider [contributing][Hana.contributing] to make it
@@ -4064,10 +4150,11 @@ modified as little as possible to work with this reimplementation.
 
 
 <!-- Links -->
-[Boost.Devel]: http://news.gmane.org/gmane.comp.lib.boost.devel
+[Boost.Devel]: http://lists.boost.org/Archives/boost
 [Boost.Fusion]: http://www.boost.org/doc/libs/release/libs/fusion/doc/html/index.html
 [Boost.MPL]: http://www.boost.org/doc/libs/release/libs/mpl/doc/index.html
 [Boost.Steering]: https://sites.google.com/a/boost.org/steering/home
+[Boost]: http://www.boost.org
 [Brigand]: https://github.com/edouarda/brigand
 [C++14.auto_rt]: http://en.wikipedia.org/wiki/C%2B%2B14#Function_return_type_deduction
 [C++14.gconstexpr]: http://en.wikipedia.org/wiki/C%2B%2B11#constexpr_.E2.80.93_Generalized_constant_expressions
@@ -4082,18 +4169,21 @@ modified as little as possible to work with this reimplementation.
 [CMake]: http://www.cmake.org
 [constexpr_throw]: http://stackoverflow.com/a/8626450/627587
 [CopyConstructible]: http://en.cppreference.com/w/cpp/concept/CopyConstructible
+[CppCon]: http://cppcon.org
 [GOTW]: http://www.gotw.ca/gotw/index.htm
 [GSoC]: http://www.google-melange.com/gsoc/homepage/google/gsoc2014
 [Hana.chat]: https://gitter.im/boostorg/hana
-[Hana.contributing]: https://goo.gl/N8DuJW <!-- Original GitHub link can't be resolved by Doxygen -->
-[Hana.findmodule]: https://github.com/boostorg/hana/blob/master/cmake/FindHana.cmake
+[Hana.contributing]: https://github.com/boostorg/hana/blob/master/CONTRIBUTING.md#how-to-contribute
+[Hana.hacking]: https://github.com/boostorg/hana/blob/master/README.md#hacking-on-hana
 [Hana.issues]: https://github.com/boostorg/hana/issues
-[Hana.readme]: https://goo.gl/RPd0sV <!-- Original GitHub link can't be resolved by Doxygen -->
 [Hana.repository]: https://github.com/boostorg/hana
 [Hana.StackOverflow]: http://stackoverflow.com/questions/tagged/boost-hana
 [Hana.wiki]: https://github.com/boostorg/hana/wiki
 [Homebrew]: http://brew.sh
+[ldionne.talks]: http://ldionne.com/talks
 [lie-to-children]: http://en.wikipedia.org/wiki/Lie-to-children
+[Meeting C++]: https://meetingcpp.com
+[Metabench]: http://metaben.ch
 [MPL.arithmetic]: http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/arithmetic-operations.html
 [MPL.metafunction]: http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/metafunction.html
 [MPL.mfc]: http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/metafunction-class.html

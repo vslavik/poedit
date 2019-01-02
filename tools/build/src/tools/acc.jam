@@ -5,6 +5,48 @@
 # (See accompanying file LICENSE_1_0.txt
 # or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.acc]]
+= HP aC++ compiler
+
+The `acc` module supports the
+http://h21007.www2.hp.com/dspp/tech/tech_TechSoftwareDetailPage_IDX/1,1703,1740,00.html[HP
+aC++ compiler] for the HP-UX operating system.
+
+The module is initialized using the following syntax:
+
+----
+using acc : [version] : [c++-compile-command] : [compiler options] ;
+----
+
+This statement may be repeated several times, if you want to configure
+several versions of the compiler.
+
+If the command is not specified, the `aCC` binary will be searched in
+PATH.
+
+
+The following options can be provided, using
+_`<option-name>option-value syntax`_:
+
+`cflags`::
+Specifies additional compiler flags that will be used when compiling C
+sources.
+
+`cxxflags`::
+Specifies additional compiler flags that will be used when compiling C++
+sources.
+
+`compileflags`::
+Specifies additional compiler flags that will be used when compiling both C
+and C++ sources.
+
+`linkflags`::
+Specifies additional command line options that will be passed to the linker.
+
+|# # end::doc[]
+
 #
 # Boost.Build V2 toolset for the HP aC++ compiler.
 #

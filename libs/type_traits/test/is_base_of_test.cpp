@@ -5,13 +5,13 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/is_base_of.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 
 

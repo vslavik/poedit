@@ -17,6 +17,7 @@
 #include <boost/compute/utility/source.hpp>
 
 #include "context_setup.hpp"
+#include "check_macros.hpp"
 
 namespace compute = boost::compute;
 
@@ -112,7 +113,7 @@ BOOST_AUTO_TEST_CASE(kernel_set_args)
 }
 #endif // BOOST_COMPUTE_NO_VARIADIC_TEMPLATES
 
-#ifdef CL_VERSION_1_2
+#ifdef BOOST_COMPUTE_CL_VERSION_1_2
 BOOST_AUTO_TEST_CASE(get_arg_info)
 {
     REQUIRES_OPENCL_VERSION(1, 2);
@@ -145,7 +146,168 @@ BOOST_AUTO_TEST_CASE(get_arg_info)
     BOOST_CHECK_EQUAL(kernel.get_arg_info<std::string>(1, CL_KERNEL_ARG_NAME), "size");
     BOOST_CHECK_EQUAL(kernel.get_arg_info<std::string>(2, CL_KERNEL_ARG_TYPE_NAME), "int*");
     BOOST_CHECK_EQUAL(kernel.get_arg_info<std::string>(2, CL_KERNEL_ARG_NAME), "result");
+
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_TYPE_NAME>(0), "int*");
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_NAME>(0), "input");
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_TYPE_NAME>(1), "uint");
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_NAME>(1), "size");
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_TYPE_NAME>(2), "int*");
+    BOOST_CHECK_EQUAL(kernel.get_arg_info<CL_KERNEL_ARG_NAME>(2), "result");
 }
-#endif // CL_VERSION_1_2
+#endif // BOOST_COMPUTE_CL_VERSION_1_2
+
+#ifdef BOOST_COMPUTE_CL_VERSION_2_0
+#ifndef CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE_KHR
+    #define CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE_KHR CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE
+#endif
+#ifndef CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE_KHR
+    #define CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE_KHR CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE
+#endif
+BOOST_AUTO_TEST_CASE(get_sub_group_info_ext)
+{
+    compute::kernel k = compute::kernel::create_with_source(
+        "__kernel void test(float x) { }", "test", context
+    );
+
+    // get_sub_group_info(const device&, cl_kernel_sub_group_info, const std::vector<size_t>)
+    std::vector<size_t> local_work_size(2, size_t(64));
+    boost::optional<size_t> count = k.get_sub_group_info<size_t>(
+        device,
+        CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE_KHR,
+        local_work_size
+    );
+
+    if(device.check_version(2, 1))
+    {
+        BOOST_CHECK(count);
+    }
+    else if(device.check_version(2, 0) && device.supports_extension("cl_khr_subgroups"))
+    {
+        // for device with cl_khr_subgroups it should return some value
+        BOOST_CHECK(count);
+    }
+    else
+    {
+        // for device without cl_khr_subgroups ext it should return null optional
+        BOOST_CHECK(count == boost::none);
+    }
+
+    // get_sub_group_info(const device&, cl_kernel_sub_group_info, const size_t, const void *)
+    count = k.get_sub_group_info<size_t>(
+        device,
+        CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE_KHR,
+        2 * sizeof(size_t),
+        &local_work_size[0]
+    );
+
+    if(device.check_version(2, 1))
+    {
+        BOOST_CHECK(count);
+    }
+    else if(device.check_version(2, 0) && device.supports_extension("cl_khr_subgroups"))
+    {
+        // for device with cl_khr_subgroups it should return some value
+        BOOST_CHECK(count);
+    }
+    else
+    {
+        // for device without cl_khr_subgroups ext it should return null optional
+        BOOST_CHECK(count == boost::none);
+    }
+}
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
+
+#ifdef BOOST_COMPUTE_CL_VERSION_2_1
+BOOST_AUTO_TEST_CASE(get_sub_group_info_core)
+{
+    compute::kernel k = compute::kernel::create_with_source(
+        "__kernel void test(float x) { }", "test", context
+    );
+
+    // get_sub_group_info(const device&, cl_kernel_sub_group_info, const size_t)
+    boost::optional<std::vector<size_t>> local_size =
+        k.get_sub_group_info<std::vector<size_t> >(
+            device,
+            CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT,
+            size_t(1)
+        );
+
+    if(device.check_version(2, 1))
+    {
+        // for 2.1 devices it should return some value
+        BOOST_CHECK(local_size);
+        BOOST_CHECK(local_size.value().size() == 3);
+    }
+    else
+    {
+        // for 1.x and 2.0 devices it should return null optional,
+        // because CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT is not
+        // supported by cl_khr_subgroups (2.0 ext)
+        BOOST_CHECK(local_size == boost::none);
+    }
+
+    // get_sub_group_info(const device&, cl_kernel_sub_group_info, const size_t)
+    boost::optional<size_t> local_size_simple =
+        k.get_sub_group_info<size_t>(
+            device,
+            CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT,
+            size_t(1)
+        );
+
+    if(device.check_version(2, 1))
+    {
+        // for 2.1 devices it should return some value
+        BOOST_CHECK(local_size_simple);
+    }
+    else
+    {
+        // for 1.x and 2.0 devices it should return null optional,
+        // because CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT is not
+        // supported by cl_khr_subgroups (2.0 ext)
+        BOOST_CHECK(local_size_simple == boost::none);
+    }
+
+    // get_sub_group_info(const device&, cl_kernel_sub_group_info)
+    boost::optional<size_t> max =
+        k.get_sub_group_info<size_t>(
+            device,
+            CL_KERNEL_MAX_NUM_SUB_GROUPS
+        );
+
+    if(device.check_version(2, 1))
+    {
+        // for 2.1 devices it should return some value
+        BOOST_CHECK(max);
+    }
+    else
+    {
+        // for 1.x and 2.0 devices it should return null optional,
+        // because CL_KERNEL_MAX_NUM_SUB_GROUPS is not
+        // supported by cl_khr_subgroups (2.0 ext)
+        BOOST_CHECK(max == boost::none);
+    }
+}
+#endif // BOOST_COMPUTE_CL_VERSION_2_1
+
+#ifdef BOOST_COMPUTE_CL_VERSION_2_1
+BOOST_AUTO_TEST_CASE(clone_kernel)
+{
+    REQUIRES_OPENCL_PLATFORM_VERSION(2, 1);
+
+    compute::kernel k1 = compute::kernel::create_with_source(
+        "__kernel void test(__global int * x) { x[get_global_id(0)] = get_global_id(0); }",
+        "test", context
+    );
+
+    compute::buffer x(context, 5 * sizeof(compute::int_));
+    k1.set_arg(0, x);
+
+    // Clone k1 kernel
+    compute::kernel k2 = k1.clone();
+    // After clone k2 0th argument (__global float * x) should be set,
+    // so we should be able to enqueue k2 kernel without problems
+    queue.enqueue_1d_range_kernel(k2, 0, x.size() / sizeof(compute::int_), 0).wait();
+}
+#endif // BOOST_COMPUTE_CL_VERSION_2_1
 
 BOOST_AUTO_TEST_SUITE_END()

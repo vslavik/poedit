@@ -34,6 +34,9 @@ imperfect behavior:
 
 * There are some expressions, such as ".\*abc" that will always produce a partial match.  This problem can be reduced by careful construction of the regular expressions used, or by setting flags like match_not_dot_newline so that expressions like .\* can't match past line boundaries.
 * Boost.Regex currently prefers leftmost matches to full matches, so for example matching "abc|b" against "ab" produces a partial match against the "ab" rather than a full match against "b".  It's more efficient to work this way, but may not be the behavior you want in all situations.
+* There are situations where full matches are found even though partial matches are also possible: for example if the partial string terminates with "abc" and the regular expression is "\w+", then a full match is found
+even though there may be more alphabetical characters to come.  This particular case can be detected by checking if the match found terminates at the end of current input string.  However, there are situations where
+that is not possible: for example an expression such as "abc.*123" may always have longer matches available since it could conceivably match the entire input string (no matter how long it may be).
 
 The following example tests to see whether the text could be a valid 
 credit card number, as the user presses a key, the character entered 

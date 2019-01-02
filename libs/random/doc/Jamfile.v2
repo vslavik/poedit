@@ -27,6 +27,7 @@ doxygen_files =
     discrete_distribution
     exponential_distribution
     extreme_value_distribution
+    faure
     fisher_f_distribution
     gamma_distribution
     generate_canonical
@@ -41,6 +42,7 @@ doxygen_files =
     lognormal_distribution
     mersenne_twister
     negative_binomial_distribution
+    niederreiter_base2
     non_central_chi_squared_distribution
     normal_distribution
     piecewise_constant_distribution
@@ -52,6 +54,7 @@ doxygen_files =
     seed_seq
     shuffle_order
     # shuffle_output
+    sobol
     student_t_distribution
     subtract_with_carry
     taus88
@@ -93,6 +96,7 @@ doxygen reference :
         boost=\"$(BOOST_ROOT)\" \\
         random_distribution=\"@xmlonly <link linkend=\\\"boost_random.reference.concepts.random_distribution\\\">random distribution</link> @endxmlonly\" \\
         pseudo_random_number_generator=\"@xmlonly <link linkend=\\\"boost_random.reference.concepts.pseudo_random_number_generator\\\">pseudo-random number generator</link> @endxmlonly\" \\
+        quasi_random_number_generator=\"@xmlonly <link linkend=\\\"boost_random.reference.concepts.quasi_random_number_generator\\\">quasi-random number generator</link> @endxmlonly\" \\
         uniform_random_number_generator=\"@xmlonly <link linkend=\\\"boost_random.reference.concepts.uniform_random_number_generator\\\">uniform random number generator</link> @endxmlonly\" \\
         nondeterministic_random_number_generator=\"@xmlonly <link linkend=\\\"boost_random.reference.concepts.non_deterministic_uniform_random_number_generator\\\">non-deterministic random number generator</link> @endxmlonly\" \\
         generators=\"@xmlonly <link linkend=\\\"boost_random.reference.generators\\\">generators</link> @endxmlonly\" \\
@@ -107,6 +111,9 @@ doxygen reference :
         rand48=\"@xmlonly <classname alt=\\\"boost::random::rand48\\\">rand48</classname> @endxmlonly\" \\
         mt11213b=\"@xmlonly <classname alt=\\\"boost::random::mt11213b\\\">mt11213b</classname> @endxmlonly\" \\
         mt19937=\"@xmlonly <classname alt=\\\"boost::random::mt19937\\\">mt19937</classname> @endxmlonly\" \\
+        niederreiter_base2_engine=\"@xmlonly <classname alt=\\\"boost::random::niederreiter_base2_engine\\\">niederreiter_base2_engine</classname> @endxmlonly\" \\
+        sobol_engine=\"@xmlonly <classname alt=\\\"boost::random::sobol_engine\\\">sobol_engine</classname> @endxmlonly\" \\
+        faure_engine=\"@xmlonly <classname alt=\\\"boost::random::faure_engine\\\">faure_engine</classname> @endxmlonly\" \\
         ecuyer1988=\"@xmlonly <classname alt=\\\"boost::random::ecuyer1988\\\">ecuyer1988</classname> @endxmlonly\" \\
         lagged_fibonacci607=\"@xmlonly <classname alt=\\\"boost::random::lagged_fibonacci607\\\">lagged_fibonacci607</classname> @endxmlonly\" \\
         lagged_fibonacci44497=\"@xmlonly <classname alt=\\\"boost::random::lagged_fibonacci44497\\\">lagged_fibonacci44497</classname> @endxmlonly\" \\
@@ -127,6 +134,7 @@ doxygen reference :
         \"BOOST_PREVENT_MACRO_SUBSTITUTION=\" \\
         \"BOOST_STATIC_ASSERT(x)=\" \\
         \"BOOST_STATIC_CONSTANT(type,value)=static const type value\" \\
+        \"BOOST_CONSTEXPR=constexpr\" \\
         \"UINT64_C(value)=value ## ull\" \\
         \"BOOST_RANDOM_DECL=\" \\
         \"RealType(x)=x\" \\
@@ -176,3 +184,13 @@ boostbook standalone :
     <xsl:param>chunk.section.depth=2
     <format>pdf:<xsl:param>img.src.path=$(here)/html/
 ;
+
+###############################################################################
+alias boostdoc
+    : random
+    :
+    : <dependency>reference
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

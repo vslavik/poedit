@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace x3
         inline void skip_over(
             Iterator& first, Iterator const& last, Skipper const& skipper)
         {
-            while (first != last && skipper.parse(first, last, unused, unused, unused))
+            while (skipper.parse(first, last, unused, unused, unused))
                 /***/;
         }
 

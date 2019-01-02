@@ -41,6 +41,7 @@ local doxygen_params =
             shared_library(const shared_library&) = delete; \\
             shared_library& operator=(const shared_library&) = delete; \" \\
         \"BOOST_DLL_IMPORT_RESULT_TYPE=result_type\" \\
+        \"BOOST_DLL_MANGLED_IMPORT_RESULT_TYPE=result_type\" \\
         \"BOOST_EXPLICIT_OPERATOR_BOOL()=explicit operator bool() const noexcept;\" \\
         \"BOOST_DLL_DOXYGEN\" "
     ;
@@ -68,6 +69,8 @@ doxygen autodoc_shared_library_refcountable
     :
         [ glob 
             ../include/boost/dll/import.hpp
+            ../include/boost/dll/import_class.hpp
+            ../include/boost/dll/import_mangled.hpp
         ]
     :
         $(doxygen_params)
@@ -88,3 +91,12 @@ boostbook dll-doc
         <xml:param>html.stylesheet=../../../../doc/src/boostbook.css
     ;
 
+###############################################################################
+alias boostdoc
+    : dll-doc/<format>docbook
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

@@ -3,61 +3,56 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template attribute_keyword</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
-<link rel="up" href="../../../expressions.html#header.boost.log.expressions.keyword_hpp" title="Header &lt;boost/log/expressions/keyword.hpp&gt;">
-<link rel="prev" href="is_keyword_descriptor.html" title="Struct template is_keyword_descriptor">
-<link rel="next" href="../../../BOOST_LOG_ATTRIBUTE_KEYWORD_TYPE.html" title="Macro BOOST_LOG_ATTRIBUTE_KEYWORD_TYPE">
+<link rel="up" href="../../../expressions.html#header.boost.log.expressions.keyword_fwd_hpp" title="Header &lt;boost/log/expressions/keyword_fwd.hpp&gt;">
+<link rel="prev" href="../../../BOOST_LOG_ATTR_idp50174096.html" title="Macro BOOST_LOG_ATTRIBUTE_KEYWORD">
+<link rel="next" href="tag/message.html" title="Struct message">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_keyword_descriptor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../expressions.html#header.boost.log.expressions.keyword_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTE_KEYWORD_TYPE.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../../BOOST_LOG_ATTR_idp50174096.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../expressions.html#header.boost.log.expressions.keyword_fwd_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tag/message.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.log.expressions.attribute_keyword"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct template attribute_keyword</span></h2>
-<p>boost::log::expressions::attribute_keyword</p>
+<p>boost::log::expressions::attribute_keyword &#8212; This class implements an expression template keyword. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../expressions.html#header.boost.log.expressions.keyword_hpp" title="Header &lt;boost/log/expressions/keyword.hpp&gt;">boost/log/expressions/keyword.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../expressions.html#header.boost.log.expressions.keyword_fwd_hpp" title="Header &lt;boost/log/expressions/keyword_fwd.hpp&gt;">boost/log/expressions/keyword_fwd.hpp</a>&gt;
 
-</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DescriptorT<span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> ActorT<span class="special">&gt;</span> 
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DescriptorT<span class="special">,</span> 
+         <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> ActorT <span class="special">=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">actor</span><span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="attribute_keyword.html" title="Struct template attribute_keyword">attribute_keyword</a> <span class="special">{</span>
-  <span class="comment">// types</span>
-  <span class="keyword">typedef</span> <a class="link" href="attribute_keyword.html" title="Struct template attribute_keyword">attribute_keyword</a>                                                         <a name="boost.log.expressions.attribute_keyword.this_type"></a><span class="identifier">this_type</span><span class="special">;</span>             <span class="comment">// Self type. </span>
-  <span class="keyword">typedef</span> <span class="identifier">DescriptorT</span>                                                               <a name="boost.log.expressions.attribute_keyword.descriptor_type"></a><span class="identifier">descriptor_type</span><span class="special">;</span>       <span class="comment">// Attribute descriptor type. </span>
-  <span class="keyword">typedef</span> <span class="identifier">descriptor_type</span><span class="special">::</span><span class="identifier">value_type</span>                                               <a name="boost.log.expressions.attribute_keyword.value_type"></a><span class="identifier">value_type</span><span class="special">;</span>            <span class="comment">// Attribute value type. </span>
-  <span class="keyword">typedef</span> <a class="link" href="attribute_actor.html" title="Class template attribute_actor">attribute_actor</a><span class="special">&lt;</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">fallback_to_none</span><span class="special">,</span> <span class="identifier">descriptor_type</span><span class="special">,</span> <span class="identifier">ActorT</span> <span class="special">&gt;</span>  <a name="boost.log.expressions.attribute_keyword.or_none_result_type"></a><span class="identifier">or_none_result_type</span><span class="special">;</span>   <span class="comment">// Expression with cached attribute name. </span>
-  <span class="keyword">typedef</span> <a class="link" href="attribute_actor.html" title="Class template attribute_actor">attribute_actor</a><span class="special">&lt;</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">fallback_to_throw</span><span class="special">,</span> <span class="identifier">descriptor_type</span><span class="special">,</span> <span class="identifier">ActorT</span> <span class="special">&gt;</span> <a name="boost.log.expressions.attribute_keyword.or_throw_result_type"></a><span class="identifier">or_throw_result_type</span><span class="special">;</span>  <span class="comment">// Expression with cached attribute name. </span>
 
-  <span class="comment">// <a class="link" href="attribute_keyword.html#idp20986640-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">attribute_name</span> <a class="link" href="attribute_keyword.html#idp20987200-bb"><span class="identifier">get_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">or_none_result_type</span> <a class="link" href="attribute_keyword.html#idp20988624-bb"><span class="identifier">or_none</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">or_throw_result_type</span> <a class="link" href="attribute_keyword.html#idp20990096-bb"><span class="identifier">or_throw</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="attribute_keyword.html#idp50185680-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">attribute_name</span> <a class="link" href="attribute_keyword.html#idp50186240-bb"><span class="identifier">get_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">or_none_result_type</span> <a class="link" href="attribute_keyword.html#idp50187664-bb"><span class="identifier">or_none</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">or_throw_result_type</span> <a class="link" href="attribute_keyword.html#idp50189136-bb"><span class="identifier">or_throw</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DefaultT<span class="special">&gt;</span> 
     <span class="keyword">static</span> <a class="link" href="attribute_actor.html" title="Class template attribute_actor">attribute_actor</a><span class="special">&lt;</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">fallback_to_default</span><span class="special">&lt;</span> <span class="identifier">DefaultT</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">descriptor_type</span><span class="special">,</span> <span class="identifier">ActorT</span> <span class="special">&gt;</span> 
-    <a class="link" href="attribute_keyword.html#idp20991568-bb"><span class="identifier">or_default</span></a><span class="special">(</span><span class="identifier">DefaultT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="attribute_keyword.html#idp50190608-bb"><span class="identifier">or_default</span></a><span class="special">(</span><span class="identifier">DefaultT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp88458000"></a><h2>Description</h2>
+<a name="idp105356112"></a><h2>Description</h2>
 <p>This class implements an expression template keyword. It is used to start template expressions involving attribute values. </p>
 <div class="refsect2">
-<a name="idp88458816"></a><h3>
-<a name="idp20986640-bb"></a><code class="computeroutput">attribute_keyword</code> public static functions</h3>
+<a name="idp105356928"></a><h3>
+<a name="idp50185680-bb"></a><code class="computeroutput">attribute_keyword</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">attribute_name</span> <a name="idp20987200-bb"></a><span class="identifier">get_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns attribute name. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">attribute_name</span> <a name="idp50186240-bb"></a><span class="identifier">get_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns attribute name. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">or_none_result_type</span> <a name="idp20988624-bb"></a><span class="identifier">or_none</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or a default value. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">or_none_result_type</span> <a name="idp50187664-bb"></a><span class="identifier">or_none</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or a default value. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">or_throw_result_type</span> <a name="idp20990096-bb"></a><span class="identifier">or_throw</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or throws an exception. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">or_throw_result_type</span> <a name="idp50189136-bb"></a><span class="identifier">or_throw</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or throws an exception. </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DefaultT<span class="special">&gt;</span> 
   <span class="keyword">static</span> <a class="link" href="attribute_actor.html" title="Class template attribute_actor">attribute_actor</a><span class="special">&lt;</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">fallback_to_default</span><span class="special">&lt;</span> <span class="identifier">DefaultT</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">descriptor_type</span><span class="special">,</span> <span class="identifier">ActorT</span> <span class="special">&gt;</span> 
-  <a name="idp20991568-bb"></a><span class="identifier">or_default</span><span class="special">(</span><span class="identifier">DefaultT</span> <span class="keyword">const</span> <span class="special">&amp;</span> def_val<span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or a default value. </li>
+  <a name="idp50190608-bb"></a><span class="identifier">or_default</span><span class="special">(</span><span class="identifier">DefaultT</span> <span class="keyword">const</span> <span class="special">&amp;</span> def_val<span class="special">)</span><span class="special">;</span></pre>Generates an expression that extracts the attribute value or a default value. </li>
 </ol></div>
 </div>
 </div>
@@ -72,7 +67,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_keyword_descriptor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../expressions.html#header.boost.log.expressions.keyword_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../../BOOST_LOG_ATTRIBUTE_KEYWORD_TYPE.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../../BOOST_LOG_ATTR_idp50174096.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../expressions.html#header.boost.log.expressions.keyword_fwd_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tag/message.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

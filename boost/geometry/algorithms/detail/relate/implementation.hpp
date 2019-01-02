@@ -2,8 +2,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013, 2014, 2015.
-// Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014, 2015, 2017.
+// Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -23,7 +23,11 @@
 #include <boost/geometry/algorithms/detail/relate/point_geometry.hpp>
 #include <boost/geometry/algorithms/detail/relate/linear_linear.hpp>
 #include <boost/geometry/algorithms/detail/relate/linear_areal.hpp>
+#include <boost/geometry/algorithms/detail/relate/multi_point_geometry.hpp>
 #include <boost/geometry/algorithms/detail/relate/areal_areal.hpp>
+
+#include <boost/geometry/strategies/intersection.hpp>
+#include <boost/geometry/strategies/within.hpp>
 
 
 namespace boost { namespace geometry {
@@ -76,6 +80,16 @@ struct relate<Point, Geometry, point_tag, Tag2, 0, TopDim2, true>
 template <typename Geometry, typename Point, typename Tag1, int TopDim1>
 struct relate<Geometry, Point, Tag1, point_tag, TopDim1, 0, true>
     : detail::relate::geometry_point<Geometry, Point>
+{};
+
+template <typename MultiPoint, typename Geometry, typename Tag2, int TopDim2>
+struct relate<MultiPoint, Geometry, multi_point_tag, Tag2, 0, TopDim2, false>
+    : detail::relate::multi_point_geometry<MultiPoint, Geometry>
+{};
+
+template <typename Geometry, typename MultiPoint, typename Tag1, int TopDim1>
+struct relate<Geometry, MultiPoint, Tag1, multi_point_tag, TopDim1, 0, false>
+    : detail::relate::geometry_multi_point<Geometry, MultiPoint>
 {};
 
 

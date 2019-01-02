@@ -38,7 +38,6 @@ void assert_destructions(int n)
 int main()
 {
     assert_destructions(0);
-    typedef int a[2];
     
     foo* f1 = new foo;
     boost::python::detail::destroy_referent<foo const volatile&>(f1);

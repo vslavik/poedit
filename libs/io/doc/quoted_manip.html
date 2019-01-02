@@ -83,17 +83,20 @@ be preceded by an escape character, as will the escape character itself:</p>
     // manipulator for const std::basic_string&amp;
 
     template &lt;class Char, class Traits, class Alloc&gt;
-    <b><i>unspecified-type1</i></b> quoted(const std::basic_string&lt;Char, Traits, Alloc&gt;&amp; string, Char escape='\\', Char delim='\&quot;');
+    <b><i>unspecified-type1</i></b> quoted(const std::basic_string&lt;Char, Traits, Alloc&gt;&amp; string,
+                             Char escape='\\', Char delim='\&quot;');
 
     // manipulator for const C-string*
 
     template &lt;class Char&gt;
-    <b><i>unspecified-type2</i></b> quoted(const Char* string, Char escape='\\', Char delim='\&quot;');
+    <b><i>unspecified-type2</i></b> quoted(const Char* string,
+                             Char escape='\\', Char delim='\&quot;');
 
     // manipulator for non-const std::basic_string&amp;
 
     template &lt;class Char, class Traits, class Alloc&gt;
-    <b><i>unspecified-type3</i></b> quoted(std::basic_string&lt;Char, Traits, Alloc&gt;&amp; string, Char escape='\\', Char delim='\&quot;');
+    <b><i>unspecified-type3</i></b> quoted(std::basic_string&lt;Char, Traits, Alloc&gt;&amp; string,
+                             Char escape='\\', Char delim='\&quot;');
   }
 }</pre>
 <p><i><b><code>unspecified_type1</code></b></i>, <i><b><code>unspecified_type2</code></b></i>, 
@@ -155,7 +158,7 @@ form of the templates. </p>
 <p>Distributed under the Boost Software License, Version 1.0. See
 <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</a></p>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->20 June 2010<!--webbot bot="Timestamp" endspan i-checksum="17544" --></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->08 March 2013<!--webbot bot="Timestamp" endspan i-checksum="27284" --></p>
 
 </body>
 </html>

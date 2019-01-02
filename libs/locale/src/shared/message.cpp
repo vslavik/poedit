@@ -12,6 +12,7 @@
 #include <boost/locale/message.hpp>
 #include <boost/locale/gnu_gettext.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/locale/hold_ptr.hpp>
 #include <boost/locale/encoding.hpp>
 #ifdef BOOST_MSVC
 #  pragma warning(disable : 4996)
@@ -627,7 +628,7 @@ namespace boost {
                     key_conversion_required_ =  sizeof(CharType) == 1 
                                                 && compare_encodings(locale_encoding,key_encoding)!=0;
 
-                    std::auto_ptr<mo_file> mo;
+                    boost::shared_ptr<mo_file> mo;
 
                     if(callback) {
                         std::vector<char> vfile = callback(file_name,locale_encoding);
@@ -651,8 +652,7 @@ namespace boost {
                         throw std::runtime_error("Invalid mo-format, encoding is not specified");
 
                     if(!plural.empty()) {
-                        std::auto_ptr<lambda::plural> ptr=lambda::compile(plural.c_str());
-                        plural_forms_[id] = ptr;
+                        plural_forms_[id] = lambda::compile(plural.c_str());;
                     }
 
                     if( mo_useable_directly(mo_encoding,*mo) )
@@ -688,9 +688,9 @@ namespace boost {
                         return false;
                     if(!mo.has_hash())
                         return false;
-                    if(compare_encodings(mo_encoding.c_str(),locale_encoding_.c_str())!=0)
+                    if(compare_encodings(mo_encoding,locale_encoding_)!=0)
                         return false;
-                    if(compare_encodings(mo_encoding.c_str(),key_encoding_.c_str())==0) {
+                    if(compare_encodings(mo_encoding,key_encoding_)==0) {
                         return true;
                     }
                     for(unsigned i=0;i<mo.size();i++) {

@@ -98,7 +98,7 @@ project /project-a3 ;
 """)
 
     t.run_build_system()
-    t.expect_addition("bin/$toolset/b%d._b" % x for x in range(1, 8))
+    t.expect_addition("bin/b%d._b" % x for x in range(1, 8))
     t.expect_nothing_more()
 
     t.cleanup()
@@ -280,7 +280,7 @@ bbb b-invalid-target : /foo//invalid ;
 """)
 
     t.run_build_system(["b1", "b2"])
-    t.expect_addition("bin/$toolset/debug/b%d._b" % x for x in range(1, 3))
+    t.expect_addition("bin/b%d._b" % x for x in range(1, 3))
     t.expect_nothing_more()
 
     t.run_build_system(["b-invalid"], status=1)

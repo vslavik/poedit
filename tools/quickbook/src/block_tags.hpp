@@ -13,6 +13,8 @@
 
 namespace quickbook
 {
+    // clang-format off
+
     QUICKBOOK_VALUE_TAGS(block_tags, 0x200,
         (begin_section)(end_section)
         (generic_heading)
@@ -35,6 +37,7 @@ namespace quickbook
         (element_id)(include_id)(list_indent)(list_mark)
     )
 
+    // clang-format on
 }
 
 #endif

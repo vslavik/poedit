@@ -34,4 +34,13 @@ make hello_world_def_code_snippet.xml
   : <extractor-command>.//snippet_extractor
   ;
 
-
+###############################################################################
+alias boostdoc
+    : signals.xml
+    :
+    :
+    : <implicit-dependency>hello_world_def_code_snippet.xml
+      <dependency>hello_world_def_code_snippet.xml ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

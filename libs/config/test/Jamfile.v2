@@ -8,6 +8,8 @@
 # the template defined in options_v2.jam.
 #
 
+import testing ;
+
 project
     : requirements
       <toolset>gcc:<cxxflags>-Wno-deprecated-declarations
@@ -57,6 +59,7 @@ test-suite config
           : #input-files
           : #requirements
           <rtti>off
+          <toolset>gcc-4.4.7,<cxxstd>0x:<build>no # <memory> does not compile with -fno-rtti
           [ check-target-builds has_atomic_lib : <source>atomic ]
           [ check-target-builds has_pthread_lib : <source>pthread ]
           [ check-target-builds has_rt_lib : <source>rt ]
@@ -67,6 +70,7 @@ test-suite config
           : #input-files
           : #requirements
           <exception-handling>off
+          <target-os>vxworks:<build>no      # vx requires complete library rebuild to turn off exceptions
           [ check-target-builds has_atomic_lib : <source>atomic ]
           [ check-target-builds has_pthread_lib : <source>pthread ]
           [ check-target-builds has_rt_lib : <source>rt ]
@@ -75,7 +79,9 @@ test-suite config
      [ run config_info.cpp : : : <test-info>always_show_run_output <threading>single <toolset>msvc:<runtime-link>static <toolset>msvc:<link>static ]
      [ run config_info.cpp : : : <test-info>always_show_run_output <threading>multi : config_info_threaded ]
      [ run config_info.cpp : : : <test-info>always_show_run_output <rtti>off : config_info_no_rtti ]
-     [ run config_info.cpp : : : <test-info>always_show_run_output <exception-handling>off : config_info_no_except ]
+     [ run config_info.cpp : : : <test-info>always_show_run_output <exception-handling>off 
+     		<target-os>vxworks:<build>no      
+     		: config_info_no_except ]
      [ run math_info.cpp : : : <test-info>always_show_run_output <toolset>borland:<runtime-link>static <toolset>borland:<link>static ]
      [ run abi/abi_test.cpp abi/main.cpp ]
      [ run limits_test.cpp ]
@@ -86,6 +92,7 @@ test-suite config
           <runtime-link>shared
           <define>BOOST_DYN_LINK=1
           <define>BOOST_CONFIG_NO_LIB=1
+          <target-os>vxworks:<link>shared  
           :
           config_link_test
     ]
@@ -97,6 +104,9 @@ test-suite config
     [ run cstdint_test2.cpp : : : <warnings>all <toolset>gcc:<cxxflags>"-Wno-long-long -Wextra" <toolset>darwin:<cxxflags>-Wno-long-long ]
     [ compile cstdint_include_test.cpp : <warnings>all <toolset>gcc:<cxxflags>-Wextra ]
     [ run config_build_check.cpp : : : [ requires int128 cxx11_constexpr cxx11_user_defined_literals ] ]
+    [ run helper_macros_test.cpp ]
+    [ compile pragma_message_test.cpp ]
+    [ compile header_deprecated_test.cpp ]
   ;
 
 obj has_clang_implicit_fallthrough : cmd_line_check.cpp :
@@ -104,3 +114,7 @@ obj has_clang_implicit_fallthrough : cmd_line_check.cpp :
 
 explicit has_clang_implicit_fallthrough ;
 
+exe config_info_travis : config_info.cpp ;
+install config_info_travis_install : config_info_travis : <location>. ;
+explicit config_info_travis_install ;
+explicit config_info_travis ;

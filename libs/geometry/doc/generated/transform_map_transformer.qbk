@@ -22,7 +22,7 @@ Transformation strategy to map from one to another Cartesian coordinate system.
 ``template<typename CalculationType, std::size_t Dimension1, std::size_t Dimension2, bool Mirror,
          bool SameScale>
 class strategy::transform::map_transformer
-      : public strategy::transform::ublas_transformer< CalculationType, Dimension1, Dimension2 >
+      : public strategy::transform::matrix_transformer< CalculationType, Dimension1, Dimension2 >
 {
   // ...
 };

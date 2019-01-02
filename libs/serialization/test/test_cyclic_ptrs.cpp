@@ -143,6 +143,7 @@ int test2(){
         ia >> BOOST_SERIALIZATION_NVP(j2);
     }
     BOOST_CHECK(*j1 == *j2);
+    delete j1;
     BOOST_CHECK(j2 == j2->j);
     std::remove(testfile);
     return EXIT_SUCCESS;
@@ -162,7 +163,7 @@ int test3(){
         BOOST_TRY {
             oa << BOOST_SERIALIZATION_NVP(k);
         }
-        BOOST_CATCH (boost::archive::archive_exception ae){
+        BOOST_CATCH (boost::archive::archive_exception const& ae){
             exception = ae;
         }
         BOOST_CATCH_END
@@ -181,7 +182,7 @@ int test3(){
         BOOST_TRY {
             ia >> BOOST_SERIALIZATION_NVP(k);
         }
-        BOOST_CATCH (boost::archive::archive_exception ae){
+        BOOST_CATCH (boost::archive::archive_exception const& ae){
             exception = ae;
         }
         BOOST_CATCH_END

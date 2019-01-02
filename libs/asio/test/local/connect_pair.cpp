@@ -2,7 +2,7 @@
 // connect_pair.cpp
 // ~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 // Test that header file is self-contained.
 #include <boost/asio/local/connect_pair.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/local/datagram_protocol.hpp>
 #include <boost/asio/local/stream_protocol.hpp>
 #include "../unit_test.hpp"
@@ -40,25 +40,24 @@ void test()
 
   try
   {
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
     boost::system::error_code ec1;
-    boost::system::error_code ec2;
 
-    dp::socket s1(io_service);
-    dp::socket s2(io_service);
+    dp::socket s1(io_context);
+    dp::socket s2(io_context);
     local::connect_pair(s1, s2);
 
-    dp::socket s3(io_service);
-    dp::socket s4(io_service);
-    ec1 = local::connect_pair(s3, s4, ec2);
+    dp::socket s3(io_context);
+    dp::socket s4(io_context);
+    local::connect_pair(s3, s4, ec1);
 
-    sp::socket s5(io_service);
-    sp::socket s6(io_service);
+    sp::socket s5(io_context);
+    sp::socket s6(io_context);
     local::connect_pair(s5, s6);
 
-    sp::socket s7(io_service);
-    sp::socket s8(io_service);
-    ec1 = local::connect_pair(s7, s8, ec2);
+    sp::socket s7(io_context);
+    sp::socket s8(io_context);
+    local::connect_pair(s7, s8, ec1);
   }
   catch (std::exception&)
   {

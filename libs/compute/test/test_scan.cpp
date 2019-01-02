@@ -8,6 +8,13 @@
 // See http://boostorg.github.com/compute for more information.
 //---------------------------------------------------------------------------//
 
+// Undefining BOOST_COMPUTE_USE_OFFLINE_CACHE macro as we want to modify cached
+// parameters for copy algorithm without any undesirable consequences (like
+// saving modified values of those parameters).
+#ifdef BOOST_COMPUTE_USE_OFFLINE_CACHE
+    #undef BOOST_COMPUTE_USE_OFFLINE_CACHE
+#endif
+
 #define BOOST_TEST_MODULE TestScan
 #include <boost/test/unit_test.hpp>
 
@@ -33,47 +40,110 @@ namespace bc = boost::compute;
 
 BOOST_AUTO_TEST_CASE(inclusive_scan_int)
 {
-    int data[] = { 1, 2, 1, 2, 3 };
-    bc::vector<int> vector(data, data + 5, queue);
-    BOOST_CHECK_EQUAL(vector.size(), size_t(5));
+    using boost::compute::uint_;
+    using boost::compute::int_;
 
-    bc::vector<int> result(5, context);
-    BOOST_CHECK_EQUAL(result.size(), size_t(5));
+    int_ data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+    bc::vector<int_> vector(data, data + 12, queue);
+    BOOST_CHECK_EQUAL(vector.size(), size_t(12));
+
+    bc::vector<int_> result(12, context);
+    BOOST_CHECK_EQUAL(result.size(), size_t(12));
 
     // inclusive scan
     bc::inclusive_scan(vector.begin(), vector.end(), result.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 5, result, (1, 3, 4, 6, 9));
+    CHECK_RANGE_EQUAL(int_, 12, result, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66));
 
     // in-place inclusive scan
-    CHECK_RANGE_EQUAL(int, 5, vector, (1, 2, 1, 2, 3));
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
     bc::inclusive_scan(vector.begin(), vector.end(), vector.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 5, vector, (1, 3, 4, 6, 9));
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66));
+
+    // scan_on_cpu
+
+    bc::copy(data, data + 12, vector.begin(), queue);
+
+    // make sure parallel scan_on_cpu is used, no serial_scan
+    std::string cache_key =
+        "__boost_scan_cpu_4";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_scan_threshold", 0);
+    // force parallel scan_on_cpu
+    parameters->set(cache_key, "serial_scan_threshold", 0);
+
+    // inclusive scan
+    bc::inclusive_scan(vector.begin(), vector.end(), result.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 12, result, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66));
+
+    // in-place inclusive scan
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+    bc::inclusive_scan(vector.begin(), vector.end(), vector.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66));
+
+    // restore
+    parameters->set(cache_key, "serial_scan_threshold", map_copy_threshold);
 }
 
 BOOST_AUTO_TEST_CASE(exclusive_scan_int)
 {
-    int data[] = { 1, 2, 1, 2, 3 };
-    bc::vector<int> vector(data, data + 5, queue);
-    BOOST_CHECK_EQUAL(vector.size(), size_t(5));
+    using boost::compute::uint_;
+    using boost::compute::int_;
 
-    bc::vector<int> result(5, context);
-    BOOST_CHECK_EQUAL(vector.size(), size_t(5));
+    int_ data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+    bc::vector<int_> vector(data, data + 12, queue);
+    BOOST_CHECK_EQUAL(vector.size(), size_t(12));
+
+    bc::vector<int_> result(size_t(12), int_(0), queue);
+    BOOST_CHECK_EQUAL(result.size(), size_t(12));
 
     // exclusive scan
     bc::exclusive_scan(vector.begin(), vector.end(), result.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 5, result, (0, 1, 3, 4, 6));
+    CHECK_RANGE_EQUAL(int_, 12, result, (0, 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
 
     // in-place exclusive scan
-    CHECK_RANGE_EQUAL(int, 5, vector, (1, 2, 1, 2, 3));
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
     bc::exclusive_scan(vector.begin(), vector.end(), vector.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 5, vector, (0, 1, 3, 4, 6));
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+
+    // scan_on_cpu
+    bc::copy(data, data + 12, vector.begin(), queue);
+
+    // make sure parallel scan_on_cpu is used, no serial_scan
+    std::string cache_key =
+        "__boost_scan_cpu_4";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_scan_threshold", 0);
+    // force parallel scan_on_cpu
+    parameters->set(cache_key, "serial_scan_threshold", 0);
+
+    // exclusive scan
+    bc::exclusive_scan(vector.begin(), vector.end(), result.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 12, result, (0, 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+
+    // in-place exclusive scan
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+    bc::exclusive_scan(vector.begin(), vector.end(), vector.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 12, vector, (0, 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+
+    // restore
+    parameters->set(cache_key, "serial_scan_threshold", map_copy_threshold);
 }
 
 BOOST_AUTO_TEST_CASE(inclusive_scan_int2)
 {
+    using boost::compute::int_;
+    using boost::compute::uint_;
     using boost::compute::int2_;
 
-    int data[] = { 1, 2,
+    int_ data[] = { 1, 2,
                    3, 4,
                    5, 6,
                    7, 8,
@@ -91,24 +161,98 @@ BOOST_AUTO_TEST_CASE(inclusive_scan_int2)
         int2_, 5, output,
         (int2_(1, 2), int2_(4, 6), int2_(9, 12), int2_(16, 20), int2_(25, 20))
     );
+
+    // scan_on_cpu
+
+    // make sure parallel scan_on_cpu is used, no serial_scan
+    std::string cache_key =
+        "__boost_scan_cpu_8";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_scan_threshold", 0);
+    // force parallel scan_on_cpu
+    parameters->set(cache_key, "serial_scan_threshold", 0);
+
+    boost::compute::inclusive_scan(input.begin(), input.end(), output.begin(),
+                                   queue);
+    CHECK_RANGE_EQUAL(
+        int2_, 5, output,
+        (int2_(1, 2), int2_(4, 6), int2_(9, 12), int2_(16, 20), int2_(25, 20))
+    );
+
+    // restore
+    parameters->set(cache_key, "serial_scan_threshold", map_copy_threshold);
 }
 
 BOOST_AUTO_TEST_CASE(inclusive_scan_counting_iterator)
 {
-    bc::vector<int> result(10, context);
+    using boost::compute::int_;
+    using boost::compute::uint_;
+
+    bc::vector<int_> result(10, context);
     bc::inclusive_scan(bc::make_counting_iterator(1),
                        bc::make_counting_iterator(11),
                        result.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 10, result, (1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+    CHECK_RANGE_EQUAL(int_, 10, result, (1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+
+    // scan_on_cpu
+
+    // make sure parallel scan_on_cpu is used, no serial_scan
+    std::string cache_key =
+        "__boost_scan_cpu_4";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_scan_threshold", 0);
+    // force parallel scan_on_cpu
+    parameters->set(cache_key, "serial_scan_threshold", 0);
+
+    bc::inclusive_scan(bc::make_counting_iterator(1),
+                       bc::make_counting_iterator(11),
+                       result.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 10, result, (1, 3, 6, 10, 15, 21, 28, 36, 45, 55));
+
+    // restore
+    parameters->set(cache_key, "serial_scan_threshold", map_copy_threshold);
 }
 
 BOOST_AUTO_TEST_CASE(exclusive_scan_counting_iterator)
 {
-    bc::vector<int> result(10, context);
+    using boost::compute::int_;
+    using boost::compute::uint_;
+
+    bc::vector<int_> result(10, context);
     bc::exclusive_scan(bc::make_counting_iterator(1),
                        bc::make_counting_iterator(11),
                        result.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 10, result, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45));
+    CHECK_RANGE_EQUAL(int_, 10, result, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45));
+
+    // scan_on_cpu
+
+    // make sure parallel scan_on_cpu is used, no serial_scan
+    std::string cache_key =
+        "__boost_scan_cpu_4";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_scan_threshold", 0);
+    // force parallel scan_on_cpu
+    parameters->set(cache_key, "serial_scan_threshold", 0);
+
+    bc::exclusive_scan(bc::make_counting_iterator(1),
+                       bc::make_counting_iterator(11),
+                       result.begin(), queue);
+    CHECK_RANGE_EQUAL(int_, 10, result, (0, 1, 3, 6, 10, 15, 21, 28, 36, 45));
+
+    // restore
+    parameters->set(cache_key, "serial_scan_threshold", map_copy_threshold);
 }
 
 BOOST_AUTO_TEST_CASE(inclusive_scan_transform_iterator)
@@ -119,7 +263,7 @@ BOOST_AUTO_TEST_CASE(inclusive_scan_transform_iterator)
 
     // normal inclusive scan of the input
     bc::inclusive_scan(input.begin(), input.end(), output.begin(), queue);
-    bc::system::finish();
+    queue.finish();
     BOOST_CHECK_CLOSE(float(output[0]), 1.0f, 1e-4f);
     BOOST_CHECK_CLOSE(float(output[1]), 3.0f, 1e-4f);
     BOOST_CHECK_CLOSE(float(output[2]), 6.0f, 1e-4f);
@@ -132,7 +276,7 @@ BOOST_AUTO_TEST_CASE(inclusive_scan_transform_iterator)
     bc::inclusive_scan(bc::make_transform_iterator(input.begin(), pown(_1, 2)),
                        bc::make_transform_iterator(input.end(), pown(_1, 2)),
                        output.begin(), queue);
-    bc::system::finish();
+    queue.finish();
     BOOST_CHECK_CLOSE(float(output[0]), 1.0f, 1e-4f);
     BOOST_CHECK_CLOSE(float(output[1]), 5.0f, 1e-4f);
     BOOST_CHECK_CLOSE(float(output[2]), 14.0f, 1e-4f);

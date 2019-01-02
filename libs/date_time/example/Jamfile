@@ -1,7 +1,6 @@
 project libs/date_time/example 
     : requirements
-      <link>static:<define>BOOST_DATE_TIME_STATIC_LINK
-      <library>../build//boost_date_time
+      <library>../build//boost_date_time/<link>static
     ;
 
 exe dates_as_strings   : gregorian/dates_as_strings.cpp ;

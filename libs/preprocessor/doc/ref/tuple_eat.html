@@ -42,7 +42,7 @@ not occur.<br>
 			<b>Header:</b> &nbsp;<a href="../headers/tuple/eat.html">&lt;boost/preprocessor/tuple/eat.hpp&gt;</a>
 		</div>
 	<h4>Sample Code</h4>
-<div><pre>#include &lt;<a href="../headers/control/if.html">boost/preprocessor/control/if.hpp</a>&gt;<br>#include &lt;<a href="../headers/tuple/eat.html">boost/preprocessor/tuple/eat.hpp</a>&gt;<br><br>#define OP(a, b) (a b)<br><br>#define MACRO(n) <a href="if.html">BOOST_PP_IF</a>(n, OP, <a href="tuple_eat.html">BOOST_PP_TUPLE_EAT</a>(2))(1, 2)<br><br>// or for the variadic version <a href="../topics/variadic_macros.html#VNotation" target="_self"><sup>(v)</sup></a><br><br>#define MACRO(n) <a href="if.html">BOOST_PP_IF</a>(n, OP, <a href="file:///C:/Programming/VersionControl/sandbox/variadics/libs/preprocessor/doc/ref/tuple_eat.html">BOOST_PP_TUPLE_EAT</a>())(1, 2)<br><br>MACRO(0) // expands to nothing<br>MACRO(1) // expands to (1, 2)<br></pre></div>
+<div><pre>#include &lt;<a href="../headers/control/if.html">boost/preprocessor/control/if.hpp</a>&gt;<br>#include &lt;<a href="../headers/tuple/eat.html">boost/preprocessor/tuple/eat.hpp</a>&gt;<br><br>#define OP(a, b) (a b)<br><br>#define MACRO(n) <a href="if.html">BOOST_PP_IF</a>(n, OP, <a href="tuple_eat.html">BOOST_PP_TUPLE_EAT</a>(2))(1, 2)<br><br>// or for the variadic version <a href="../topics/variadic_macros.html#VNotation" target="_self"><sup>(v)</sup></a><br><br>#define MACRO(n) <a href="if.html">BOOST_PP_IF</a>(n, OP, <a href="tuple_eat.html">BOOST_PP_TUPLE_EAT</a>())(1, 2)<br><br>MACRO(0) // expands to nothing<br>MACRO(1) // expands to (1, 2)<br></pre></div>
 	<hr size="1">
 	<div style="margin-left: 0px;">
 		<i>© Copyright <a href="http://www.housemarque.com" target="_top">Housemarque Oy</a> 2002</i>

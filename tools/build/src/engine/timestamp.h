@@ -42,5 +42,6 @@ void timestamp_from_filetime( timestamp * const, FILETIME const * const );
 #endif
 
 void timestamp_done();
+double timestamp_delta_seconds( timestamp const * const, timestamp const * const );
 
 #endif

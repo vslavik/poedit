@@ -15,7 +15,7 @@
 int main()
 {
    using namespace boost::container;
-   using boost::container::container_detail::is_same;
+   using boost::container::dtl::is_same;
 
    typedef basic_string<char, std::char_traits<char>, pmr::polymorphic_allocator<char> > string_t;
    typedef basic_string<wchar_t, std::char_traits<wchar_t>, pmr::polymorphic_allocator<wchar_t> > wstring_t;

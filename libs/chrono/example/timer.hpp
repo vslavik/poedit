@@ -31,19 +31,19 @@ namespace boost_ex
       typedef typename Clock::duration    duration;
       typedef typename Clock::time_point  time_point;
 
-      explicit timer( boost::system::error_code & ec = BOOST_CHRONO_THROWS )
-        { 
-          start(ec); 
+      explicit timer( boost::system::error_code & ec = ::boost::throws() )
+        {
+          start(ec);
           }
 
      ~timer() {}  // never throws
 
-      void start( boost::system::error_code & ec = BOOST_CHRONO_THROWS )
-        { 
-          m_start = clock::now( ec ); 
+      void start( boost::system::error_code & ec = ::boost::throws() )
+        {
+          m_start = clock::now( ec );
           }
 
-      duration elapsed( boost::system::error_code & ec = BOOST_CHRONO_THROWS )
+      duration elapsed( boost::system::error_code & ec = ::boost::throws() )
         { return clock::now( ec ) - m_start; }
 
     private:

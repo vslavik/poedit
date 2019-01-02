@@ -2,7 +2,7 @@
  * Handles namespace resolution quirks in older compilers and braindead
  * warnings [Herve, June 3rd 2003]
  *
- * Copyright 2002-2003 Hervé Brönnimann
+ * Copyright 2002-2003 HervÃ© BrÃ¶nnimann
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or

@@ -9,7 +9,7 @@ import os
 
 
 def basic():
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions do-print
@@ -39,7 +39,7 @@ updating target1
 
 
 def ignore_minus_n():
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions do-print
@@ -72,7 +72,7 @@ updating target1
 
 
 def failed_target():
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions fail
@@ -120,7 +120,7 @@ do-print target2
 
 
 def missing_target():
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions do-print
@@ -155,7 +155,7 @@ def build_once():
     effect.
 
     """
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions do-print
@@ -199,7 +199,7 @@ def return_status():
     Make sure that UPDATE_NOW returns a failure status if
     the target failed in a previous call to UPDATE_NOW
     """
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("file.jam", """\
 actions fail
@@ -211,8 +211,8 @@ NOTFILE target1 ;
 ALWAYS target1 ;
 fail target1 ;
 
-ECHO update1: [ UPDATE_NOW target1 ] ;
-ECHO update2: [ UPDATE_NOW target1 ] ;
+ECHO "update1:" [ UPDATE_NOW target1 ] ;
+ECHO "update2:" [ UPDATE_NOW target1 ] ;
 
 DEPENDS all : target1 ;
 """)
@@ -237,7 +237,7 @@ update2:
 def save_restore():
     """Tests that ignore-minus-n and ignore-minus-q are
     local to the call to UPDATE_NOW"""
-    t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+    t = BoostBuild.Tester(pass_toolset=0)
 
     t.write("actions.jam", """\
 rule fail

@@ -1,15 +1,29 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_ORDERABLE_HPP
 #define BOOST_HANA_TEST_LAWS_ORDERABLE_HPP
 
+#include <boost/hana/and.hpp>
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
-#include <boost/hana/core/when.hpp>
-#include <boost/hana/lazy.hpp>
+#include <boost/hana/concept/constant.hpp>
 #include <boost/hana/concept/orderable.hpp>
+#include <boost/hana/concept/product.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/when.hpp>
+#include <boost/hana/first.hpp>
+#include <boost/hana/greater.hpp>
+#include <boost/hana/greater_equal.hpp>
+#include <boost/hana/lazy.hpp>
+#include <boost/hana/less.hpp>
+#include <boost/hana/less_equal.hpp>
+#include <boost/hana/not.hpp>
+#include <boost/hana/or.hpp>
+#include <boost/hana/ordering.hpp>
+#include <boost/hana/second.hpp>
+#include <boost/hana/value.hpp>
 
 #include <laws/base.hpp>
 
@@ -25,7 +39,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs>
         TestOrderable(Xs xs) {
             hana::for_each(xs, [](auto x) {
-                static_assert(Orderable<decltype(x)>::value, "");
+                static_assert(Orderable<decltype(x)>{}, "");
             });
 
             foreach2(xs, [](auto a, auto b) {
@@ -55,10 +69,10 @@ namespace boost { namespace hana { namespace test {
                 );
 
                 // less.than & al.
-                BOOST_HANA_CHECK(less.than(a)(b) ^iff^ hana::less(b, a));
-                BOOST_HANA_CHECK(greater.than(a)(b) ^iff^ hana::greater(b, a));
-                BOOST_HANA_CHECK(less_equal.than(a)(b) ^iff^ hana::less_equal(b, a));
-                BOOST_HANA_CHECK(greater_equal.than(a)(b) ^iff^ hana::greater_equal(b, a));
+                BOOST_HANA_CHECK(hana::less.than(a)(b) ^iff^ hana::less(b, a));
+                BOOST_HANA_CHECK(hana::greater.than(a)(b) ^iff^ hana::greater(b, a));
+                BOOST_HANA_CHECK(hana::less_equal.than(a)(b) ^iff^ hana::less_equal(b, a));
+                BOOST_HANA_CHECK(hana::greater_equal.than(a)(b) ^iff^ hana::greater_equal(b, a));
 
                 // ordering
                 _injection<0> f{}; // test::_injection is also monotonic

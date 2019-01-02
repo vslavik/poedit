@@ -11,6 +11,7 @@
 #include <boost/graph/use_mpi.hpp>
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/graph/distributed/boman_et_al_graph_coloring.hpp>
 #include <boost/graph/distributed/mpi_process_group.hpp>
 #include <boost/lexical_cast.hpp>

@@ -31,7 +31,6 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
-#include <boost/date_time/posix_time/time_formatters.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/thread/thread_time.hpp>
 #include <boost/thread/locks.hpp>

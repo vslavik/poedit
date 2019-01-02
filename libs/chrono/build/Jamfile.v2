@@ -28,7 +28,6 @@ project boost/chrono
         #<define>BOOST_RATIO_USES_ARRAY_ASSERT
         #<define>BOOST_CHRONO_USES_ARRAY_ASSERT
         <toolset>sun:<define>__typeof__=__typeof__
-        <define>BOOST_SYSTEM_NO_DEPRECATED
         #<toolset>gcc-3.4.4:<linkflags>--enable-auto-import
         #<toolset>gcc-4.3.4:<linkflags>--enable-auto-import
         #<toolset>gcc-mingw-4.4.0:<linkflags>--enable-auto-import
@@ -97,7 +96,6 @@ project boost/chrono
         <toolset>vacpp:<define>BOOST_TYPEOF_EMULATION
         <toolset>sun:<define>__typeof__=__typeof__
 
-        <define>BOOST_SYSTEM_NO_DEPRECATED
         <link>shared:<define>BOOST_CHRONO_DYN_LINK=1
         <link>static:<define>BOOST_CHRONO_STATIC_LINK=1
         <toolset>gcc-3.4.4:<linkflags>--enable-auto-import

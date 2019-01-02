@@ -22,7 +22,9 @@
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/radius.hpp>
-#include <boost/geometry/core/srs.hpp>
+
+#include <boost/geometry/srs/sphere.hpp>
+#include <boost/geometry/srs/spheroid.hpp>
 
 #include <boost/geometry/algorithms/make.hpp>
 

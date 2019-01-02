@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class exception</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../mpi/reference.html#header.boost.mpi.exception_hpp" title="Header &lt;boost/mpi/exception.hpp&gt;">
+<link rel="up" href="../../mpi/tutorial.html#header.boost.mpi.exception_hpp" title="Header &lt;boost/mpi/exception.hpp&gt;">
 <link rel="prev" href="environment.html" title="Class environment">
 <link rel="next" href="../../BOOST_MPI_CHECK_RESULT.html" title="Macro BOOST_MPI_CHECK_RESULT">
 </head>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="environment.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.exception_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_MPI_CHECK_RESULT.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="environment.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/tutorial.html#header.boost.mpi.exception_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_MPI_CHECK_RESULT.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.mpi.exception"></a><div class="titlepage"></div>
@@ -30,41 +30,47 @@
 <p>boost::mpi::exception &#8212; Catch-all exception class for MPI errors. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/reference.html#header.boost.mpi.exception_hpp" title="Header &lt;boost/mpi/exception.hpp&gt;">boost/mpi/exception.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/tutorial.html#header.boost.mpi.exception_hpp" title="Header &lt;boost/mpi/exception.hpp&gt;">boost/mpi/exception.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="exception.html" title="Class exception">exception</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="exception.html" title="Class exception">exception</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">exception</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="exception.html#boost.mpi.exceptionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="exception.html#idp125509968-bb"><span class="identifier">exception</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="exception.html#idp125513680-bb"><span class="special">~</span><span class="identifier">exception</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_5-bb"><span class="identifier">exception</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_6-bb"><span class="special">~</span><span class="identifier">exception</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="exception.html#idp83111504-bb">public member functions</a></span>
-  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp83112064-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp83113840-bb"><span class="identifier">routine</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="exception.html#idp83115424-bb"><span class="identifier">result_code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="exception.html#idp125508432-bb"><span class="identifier">error_class</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_4-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_4_1-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_4_2-bb"><span class="identifier">routine</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_4_3-bb"><span class="identifier">result_code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="exception.html#id-1_3_27_5_14_11_2_1_1_4_4-bb"><span class="identifier">error_class</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp305495024"></a><h2>Description</h2>
+<a name="id-1.3.27.5.14.12.5.4"></a><h2>Description</h2>
 <p>Instances of this class will be thrown when an MPI error occurs. MPI failures that trigger these exceptions may or may not be recoverable, depending on the underlying MPI implementation. Consult the documentation for your MPI implementation to determine the effect of MPI errors. </p>
 <div class="refsect2">
-<a name="idp305496000"></a><h3>
+<a name="id-1.3.27.5.14.12.5.4.3"></a><h3>
 <a name="boost.mpi.exceptionconstruct-copy-destruct"></a><code class="computeroutput">exception</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp125509968-bb"></a><span class="identifier">exception</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> routine<span class="special">,</span> <span class="keyword">int</span> result_code<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="id-1_3_27_5_14_11_2_1_1_5-bb"></a><span class="identifier">exception</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> routine<span class="special">,</span> <span class="keyword">int</span> result_code<span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new <code class="computeroutput">exception</code> exception.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">result_code</code></span></p></td>
@@ -79,25 +85,25 @@
 </tr></tbody>
 </table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp125513680-bb"></a><span class="special">~</span><span class="identifier">exception</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="id-1_3_27_5_14_11_2_1_1_6-bb"></a><span class="special">~</span><span class="identifier">exception</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp305514976"></a><h3>
-<a name="idp83111504-bb"></a><code class="computeroutput">exception</code> public member functions</h3>
+<a name="id-1.3.27.5.14.12.5.4.4"></a><h3>
+<a name="id-1_3_27_5_14_11_2_1_1_4-bb"></a><code class="computeroutput">exception</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp83112064-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="id-1_3_27_5_14_11_2_1_1_4_1-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>A description of the error that occurred. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp83113840-bb"></a><span class="identifier">routine</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="id-1_3_27_5_14_11_2_1_1_4_2-bb"></a><span class="identifier">routine</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the name of the MPI routine that reported the error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp83115424-bb"></a><span class="identifier">result_code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Retrieve the result code returned from the MPI routine that reported the error. </li>
+<pre class="literallayout"><span class="keyword">int</span> <a name="id-1_3_27_5_14_11_2_1_1_4_3-bb"></a><span class="identifier">result_code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Retrieve the result code returned from the MPI routine that reported the error. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp125508432-bb"></a><span class="identifier">error_class</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the MPI error class associated with the error that triggered this exception. </li>
+<pre class="literallayout"><span class="keyword">int</span> <a name="id-1_3_27_5_14_11_2_1_1_4_4-bb"></a><span class="identifier">error_class</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the MPI error class associated with the error that triggered this exception. </li>
 </ol></div>
 </div>
 </div>
@@ -114,7 +120,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="environment.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.exception_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_MPI_CHECK_RESULT.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="environment.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/tutorial.html#header.boost.mpi.exception_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../BOOST_MPI_CHECK_RESULT.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

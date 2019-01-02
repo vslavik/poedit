@@ -20,11 +20,12 @@ int X::foo(int x) { return -x; }
 
 int main()
 {
+#ifndef BOOST_NO_CXX98_BINDERS
       boost::function1<int, int> f;
   X x;
   f = std::bind1st(
         std::mem_fun(&X::foo), &x);
   f(5); // Call x.foo(5)
-
+#endif
     return 0;
 }

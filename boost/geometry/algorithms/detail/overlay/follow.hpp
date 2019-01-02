@@ -1,11 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
-
+// This file was modified by Oracle on 2014, 2017.
+// Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -26,6 +27,7 @@
 
 #include <boost/geometry/algorithms/covered_by.hpp>
 #include <boost/geometry/algorithms/clear.hpp>
+#include <boost/geometry/algorithms/detail/relate/turns.hpp>
 
 
 namespace boost { namespace geometry
@@ -55,21 +57,14 @@ template
     typename Turn,
     typename Operation,
     typename LineString,
-    typename Polygon
+    typename Polygon,
+    typename PtInPolyStrategy
 >
-static inline bool last_covered_by(Turn const& turn, Operation const& op,
-                LineString const& linestring, Polygon const& polygon)
+static inline bool last_covered_by(Turn const& /*turn*/, Operation const& op,
+                LineString const& linestring, Polygon const& polygon,
+                PtInPolyStrategy const& strategy)
 {
-    // Check any point between the this one and the first IP
-    typedef typename geometry::point_type<LineString>::type point_type;
-    point_type point_in_between;
-    detail::point_on_border::midpoint_helper
-        <
-            point_type,
-            0, dimension<point_type>::value
-        >::apply(point_in_between, *(::boost::begin(linestring) + op.seg_id.segment_index), turn.point);
-
-    return geometry::covered_by(point_in_between, polygon);
+    return geometry::covered_by(range::at(linestring, op.seg_id.segment_index), polygon, strategy);
 }
 
 
@@ -78,17 +73,19 @@ template
     typename Turn,
     typename Operation,
     typename LineString,
-    typename Polygon
+    typename Polygon,
+    typename PtInPolyStrategy
 >
 static inline bool is_leaving(Turn const& turn, Operation const& op,
                 bool entered, bool first,
-                LineString const& linestring, Polygon const& polygon)
+                LineString const& linestring, Polygon const& polygon,
+                PtInPolyStrategy const& strategy)
 {
     if (op.operation == operation_union)
     {
         return entered
             || turn.method == method_crosses
-            || (first && last_covered_by(turn, op, linestring, polygon))
+            || (first && last_covered_by(turn, op, linestring, polygon, strategy))
             ;
     }
     return false;
@@ -100,11 +97,13 @@ template
     typename Turn,
     typename Operation,
     typename LineString,
-    typename Polygon
+    typename Polygon,
+    typename PtInPolyStrategy
 >
 static inline bool is_staying_inside(Turn const& turn, Operation const& op,
                 bool entered, bool first,
-                LineString const& linestring, Polygon const& polygon)
+                LineString const& linestring, Polygon const& polygon,
+                PtInPolyStrategy const& strategy)
 {
     if (turn.method == method_crosses)
     {
@@ -115,7 +114,7 @@ static inline bool is_staying_inside(Turn const& turn, Operation const& op,
 
     if (is_entering(turn, op))
     {
-        return entered || (first && last_covered_by(turn, op, linestring, polygon));
+        return entered || (first && last_covered_by(turn, op, linestring, polygon, strategy));
     }
 
     return false;
@@ -126,14 +125,16 @@ template
     typename Turn,
     typename Operation,
     typename Linestring,
-    typename Polygon
+    typename Polygon,
+    typename PtInPolyStrategy
 >
 static inline bool was_entered(Turn const& turn, Operation const& op, bool first,
-                Linestring const& linestring, Polygon const& polygon)
+                Linestring const& linestring, Polygon const& polygon,
+                PtInPolyStrategy const& strategy)
 {
     if (first && (turn.method == method_collinear || turn.method == method_equal))
     {
-        return last_covered_by(turn, op, linestring, polygon);
+        return last_covered_by(turn, op, linestring, polygon, strategy);
     }
     return false;
 }
@@ -158,6 +159,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+        typename SideStrategy,
         typename RobustPolicy
     >
     static inline void enter(LineStringOut& current_piece,
@@ -165,6 +167,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type , Point const& point,
                 Operation const& operation,
+                SideStrategy const& ,
                 RobustPolicy const& ,
                 OutputIterator& )
     {
@@ -181,6 +184,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+        typename SideStrategy,
         typename RobustPolicy
     >
     static inline void leave(LineStringOut& current_piece,
@@ -188,6 +192,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& ,
+                SideStrategy const& strategy,
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
@@ -196,7 +201,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         detail::copy_segments::copy_segments_linestring
             <
                 false, RemoveSpikes
-            >::apply(linestring, segment_id, index, robust_policy, current_piece);
+            >::apply(linestring, segment_id, index, strategy, robust_policy, current_piece);
         detail::overlay::append_no_duplicates(current_piece, point);
         if (::boost::size(current_piece) > 1)
         {
@@ -235,17 +240,9 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         return entered;
     }
 
-    template
-    <
-        typename Point,
-        typename Geometry,
-        typename RobustPolicy
-    >
-    static inline bool included(Point const& point,
-            Geometry const& geometry,
-            RobustPolicy const& )
+    static inline bool included(int inside_value)
     {
-        return geometry::covered_by(point, geometry);
+        return inside_value >= 0; // covered_by
     }
 
 };
@@ -263,6 +260,7 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+        typename SideStrategy,
         typename RobustPolicy
     >
     static inline void enter(LineStringOut& current_piece,
@@ -270,11 +268,12 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& operation,
+                SideStrategy const& strategy,
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
         normal_action::leave(current_piece, linestring, segment_id, index,
-                    point, operation, robust_policy, out);
+                    point, operation, strategy, robust_policy, out);
     }
 
     template
@@ -284,6 +283,7 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+        typename SideStrategy,
         typename RobustPolicy
     >
     static inline void leave(LineStringOut& current_piece,
@@ -291,11 +291,12 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& operation,
+                SideStrategy const& strategy,
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
         normal_action::enter(current_piece, linestring, segment_id, index,
-                    point, operation, robust_policy, out);
+                    point, operation, strategy, robust_policy, out);
     }
 
     template
@@ -319,17 +320,9 @@ struct action_selector<overlay_difference, RemoveSpikes>
         return ! normal_action::is_entered(entered);
     }
 
-    template
-    <
-        typename Point,
-        typename Geometry,
-        typename RobustPolicy
-    >
-    static inline bool included(Point const& point,
-        Geometry const& geometry,
-        RobustPolicy const& robust_policy)
+    static inline bool included(int inside_value)
     {
-        return ! normal_action::included(point, geometry, robust_policy);
+        return ! normal_action::included(inside_value);
     }
 
 };
@@ -352,6 +345,7 @@ template
 class follow
 {
 
+#ifdef BOOST_GEOMETRY_SETOPS_LA_OLD_BEHAVIOR
     template <typename Turn>
     struct sort_on_segment
     {
@@ -398,38 +392,32 @@ class follow
 
         }
     };
-
+#endif // BOOST_GEOMETRY_SETOPS_LA_OLD_BEHAVIOR
 
 
 public :
 
-    template
-    <
-        typename Point,
-        typename Geometry,
-        typename RobustPolicy
-    >
-    static inline bool included(Point const& point,
-            Geometry const& geometry,
-            RobustPolicy const& robust_policy)
+    static inline bool included(int inside_value)
     {
         return following::action_selector
             <
                 OverlayType, RemoveSpikes
-            >::included(point, geometry, robust_policy);
+            >::included(inside_value);
     }
 
     template
     <
         typename Turns,
         typename OutputIterator,
-        typename RobustPolicy
+        typename RobustPolicy,
+        typename Strategy
     >
     static inline OutputIterator apply(LineString const& linestring, Polygon const& polygon,
                 detail::overlay::operation_type ,  // TODO: this parameter might be redundant
                 Turns& turns,
                 RobustPolicy const& robust_policy,
-                OutputIterator out)
+                OutputIterator out,
+                Strategy const& strategy)
     {
         typedef typename boost::range_iterator<Turns>::type turn_iterator;
         typedef typename boost::range_value<Turns>::type turn_type;
@@ -440,9 +428,23 @@ public :
 
         typedef following::action_selector<OverlayType, RemoveSpikes> action;
 
+        typename Strategy::template point_in_geometry_strategy
+            <
+                LineString, Polygon
+            >::type const pt_in_poly_strategy
+            = strategy.template get_point_in_geometry_strategy<LineString, Polygon>();
+
         // Sort intersection points on segments-along-linestring, and distance
         // (like in enrich is done for poly/poly)
+        // sort turns by Linear seg_id, then by fraction, then
+        // for same ring id: x, u, i, c
+        // for different ring id: c, i, u, x
+#ifdef BOOST_GEOMETRY_SETOPS_LA_OLD_BEHAVIOR
         std::sort(boost::begin(turns), boost::end(turns), sort_on_segment<turn_type>());
+#else
+        typedef relate::turns::less<0, relate::turns::less_op_linear_areal_single<0> > turn_less;
+        std::sort(boost::begin(turns), boost::end(turns), turn_less());
+#endif
 
         LineStringOut current_piece;
         geometry::segment_identifier current_segment_id(0, -1, -1, -1);
@@ -454,13 +456,13 @@ public :
         {
             turn_operation_iterator_type iit = boost::begin(it->operations);
 
-            if (following::was_entered(*it, *iit, first, linestring, polygon))
+            if (following::was_entered(*it, *iit, first, linestring, polygon, pt_in_poly_strategy))
             {
                 debug_traverse(*it, *iit, "-> Was entered");
                 entered = true;
             }
 
-            if (following::is_staying_inside(*it, *iit, entered, first, linestring, polygon))
+            if (following::is_staying_inside(*it, *iit, entered, first, linestring, polygon, pt_in_poly_strategy))
             {
                 debug_traverse(*it, *iit, "-> Staying inside");
 
@@ -473,17 +475,17 @@ public :
                 entered = true;
                 action::enter(current_piece, linestring, current_segment_id,
                     iit->seg_id.segment_index, it->point, *iit,
-                    robust_policy,
+                    strategy, robust_policy,
                     out);
             }
-            else if (following::is_leaving(*it, *iit, entered, first, linestring, polygon))
+            else if (following::is_leaving(*it, *iit, entered, first, linestring, polygon, pt_in_poly_strategy))
             {
                 debug_traverse(*it, *iit, "-> Leaving");
 
                 entered = false;
                 action::leave(current_piece, linestring, current_segment_id,
                     iit->seg_id.segment_index, it->point, *iit,
-                    robust_policy,
+                    strategy, robust_policy,
                     out);
             }
             first = false;
@@ -497,7 +499,7 @@ public :
                 >::apply(linestring,
                          current_segment_id,
                          static_cast<signed_size_type>(boost::size(linestring) - 1),
-                         robust_policy,
+                         strategy, robust_policy,
                          current_piece);
         }
 

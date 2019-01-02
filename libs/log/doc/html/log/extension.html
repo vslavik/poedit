@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extending the library</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="detailed/utilities.html" title="Utilities">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="log.extension"></a><a class="link" href="extension.html" title="Extending the library">Extending the library</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="extension.html#log.extension.sinks">Writing your own sinks</a></span></dt>
 <dt><span class="section"><a href="extension/sources.html">Writing your own sources</a></span></dt>
 <dt><span class="section"><a href="extension/attributes.html">Writing your own attributes</a></span></dt>
@@ -40,14 +40,14 @@
       </p>
 <p>
         In order to develop a sink backend, you derive your class from either <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_sink_backend.html" title="Struct template basic_sink_backend">basic_sink_backend</a></code>
-        or <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp22115968.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>,
+        or <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp51388608.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>,
         depending on whether your backend requires formatted log records or not.
         Both base classes define a set of types that are required to interface with
         sink frontends. One of these types is <code class="computeroutput"><span class="identifier">frontend_requirements</span></code>.
       </p>
 <h5>
 <a name="log.extension.sinks.h0"></a>
-        <span><a name="log.extension.sinks.frontend_requirements"></a></span><a class="link" href="extension.html#log.extension.sinks.frontend_requirements">Frontend
+        <span class="phrase"><a name="log.extension.sinks.frontend_requirements"></a></span><a class="link" href="extension.html#log.extension.sinks.frontend_requirements">Frontend
         requirements</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../sinks.html#header.boost.log.sinks.frontend_requirements_hpp" title="Header &lt;boost/log/sinks/frontend_requirements.hpp&gt;">boost/log/sinks/frontend_requirements.hpp</a></code><span class="special">&gt;</span>
@@ -57,7 +57,7 @@
         type defined by all backends. The type combines one or several requirement
         tags:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><a class="link" href="../boost/log/sinks/synchronized_feeding.html" title="Struct synchronized_feeding">synchronized_feeding</a></code>.
             If the backend has this requirement, it expects log records to be passed
@@ -77,7 +77,7 @@
             The backend expects formatted log records. The frontend implements formatting
             to a string with character type defined by the <code class="computeroutput"><span class="identifier">char_type</span></code>
             typedef within the backend. The formatted string will be passed along
-            with the log record to the backend. The <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp22115968.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
+            with the log record to the backend. The <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp51388608.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
             base class automatically adds this requirement to the <code class="computeroutput"><span class="identifier">frontend_requirements</span></code>
             type.
           </li>
@@ -102,7 +102,8 @@
 </table></div>
 <p>
         Multiple requirements can be combined into <code class="computeroutput"><span class="identifier">frontend_requirements</span></code>
-        type with the [class_sinks_combine_requirements] metafunction:
+        type with the <code class="computeroutput"><a class="link" href="../boost/log/sinks/combine_requirements.html" title="Struct template combine_requirements">combine_requirements</a></code>
+        metafunction:
       </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">combine_requirements</span><span class="special">&lt;</span>
     <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">synchronized_feeding</span><span class="special">,</span>
@@ -125,7 +126,7 @@
       </p>
 <h5>
 <a name="log.extension.sinks.h1"></a>
-        <span><a name="log.extension.sinks.minimalistic_sink_backend"></a></span><a class="link" href="extension.html#log.extension.sinks.minimalistic_sink_backend">Minimalistic
+        <span class="phrase"><a name="log.extension.sinks.minimalistic_sink_backend"></a></span><a class="link" href="extension.html#log.extension.sinks.minimalistic_sink_backend">Minimalistic
         sink backend</a>
       </h5>
 <p>
@@ -289,7 +290,7 @@
       </p>
 <h5>
 <a name="log.extension.sinks.h2"></a>
-        <span><a name="log.extension.sinks.formatting_sink_backend"></a></span><a class="link" href="extension.html#log.extension.sinks.formatting_sink_backend">Formatting
+        <span class="phrase"><a name="log.extension.sinks.formatting_sink_backend"></a></span><a class="link" href="extension.html#log.extension.sinks.formatting_sink_backend">Formatting
         sink backend</a>
       </h5>
 <p>
@@ -351,7 +352,7 @@
 </table></div>
 <p>
         The first thing to notice is that the <code class="computeroutput"><span class="identifier">app_launcher</span></code>
-        backend derives from <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp22115968.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
+        backend derives from <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp51388608.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
         rather than <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_sink_backend.html" title="Struct template basic_sink_backend">basic_sink_backend</a></code>.
         This base class accepts the character type in addition to the requirements.
         The specified character type defines the target string type the formatter
@@ -365,7 +366,7 @@
         The second notable difference from the previous examples is that <code class="computeroutput"><span class="identifier">consume</span></code> method takes an additional string
         parameter besides the log record. This is the result of formatting. The
         <code class="computeroutput"><span class="identifier">string_type</span></code> type is defined
-        by the <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp22115968.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
+        by the <code class="computeroutput"><a class="link" href="../boost/log/sinks/basic_formatte_idp51388608.html" title="Struct template basic_formatted_sink_backend">basic_formatted_sink_backend</a></code>
         base class and it corresponds to the requested character type.
       </p>
 <p>
@@ -468,7 +469,7 @@
         keywords</a> to identify particular attribute values in the formatter.
         Notice that string attribute values have to be preprocessed so that special
         characters interpreted by the shell are escaped in the command line. We achieve
-        that with the <code class="computeroutput"><a class="link" href="../boost/log/expressions/char_decor_idp20627600.html" title="Function template char_decor">char_decor</a></code> decorator with
+        that with the <code class="computeroutput"><a class="link" href="../boost/log/expressions/char_decor_idp49752304.html" title="Function template char_decor">char_decor</a></code> decorator with
         our custom replacement map. After the sink is configured we also add the
         <a class="link" href="detailed/attributes.html#log.detailed.attributes.process_name" title="Current process name">current process name</a>
         attribute to the core so that we don't have to add it to every record.

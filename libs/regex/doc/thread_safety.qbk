@@ -25,7 +25,7 @@ otherwise use a separate instance of [match_results] per thread.
 The [link boost_regex.ref.posix POSIX API functions] are all re-entrant and thread safe, regular 
 expressions compiled with regcomp can also be shared between threads.
 
-The [link boost_regex.ref.deprecated_interfaces.old_regex class RegEx] is 
+The [link boost_regex.ref.deprecated.old_regex class RegEx] is 
 only thread safe if each thread gets its own 
 RegEx instance (apartment threading) - this is a consequence of 
 RegEx handling both compiling and matching regular expressions.

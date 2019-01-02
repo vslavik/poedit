@@ -17,7 +17,7 @@
 
 BOOST_AUTO_TEST_CASE(empty){}
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
 BOOST_AUTO_TEST_CASE(user_event)
 {
     REQUIRES_OPENCL_VERSION(1, 1);
@@ -30,6 +30,6 @@ BOOST_AUTO_TEST_CASE(user_event)
     event.wait();
     BOOST_CHECK(event.status() == CL_COMPLETE);
 }
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 BOOST_AUTO_TEST_SUITE_END()

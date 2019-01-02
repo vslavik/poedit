@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Compile Time Power of a Runtime Base</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../powers.html" title="Basic Functions">
 <link rel="prev" href="hypot.html" title="hypot">
 <link rel="next" href="../sinc.html" title="Sinus Cardinal and Hyperbolic Sinus Cardinal Functions">
@@ -33,7 +33,7 @@
       </p>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h0"></a>
-        <span><a name="math_toolkit.powers.ct_pow.synopsis"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.synopsis"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.synopsis">Synopsis</a>
       </h5>
 <p>
         <a href="../../../../../../boost/math/special_functions/pow.hpp" target="_top"><code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">pow</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a>
@@ -50,7 +50,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h1"></a>
-        <span><a name="math_toolkit.powers.ct_pow.rationale_and_usage"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.rationale_and_usage">Rationale
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.rationale_and_usage"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.rationale_and_usage">Rationale
         and Usage</a>
       </h5>
 <p>
@@ -91,14 +91,14 @@
       </p>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h2"></a>
-        <span><a name="math_toolkit.powers.ct_pow.return_type"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.return_type">Return
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.return_type"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.return_type">Return
         Type</a>
       </h5>
 <p>
         The return type of these functions is computed using the <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>result
         type calculation rules</em></span></a>. For example:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             If T is a <code class="computeroutput"><span class="keyword">float</span></code>, the return
             type is a <code class="computeroutput"><span class="keyword">float</span></code>.
@@ -113,23 +113,23 @@
 </ul></div>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h3"></a>
-        <span><a name="math_toolkit.powers.ct_pow.policies"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.policies">Policies</a>
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.policies"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.policies">Policies</a>
       </h5>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h4"></a>
-        <span><a name="math_toolkit.powers.ct_pow.error_handling"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.error_handling">Error
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.error_handling"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.error_handling">Error
         Handling</a>
       </h5>
 <p>
         Two cases of errors can occur when using <code class="computeroutput"><span class="identifier">pow</span></code>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             In case of null base and negative exponent, an <a class="link" href="../error_handling.html#math_toolkit.error_handling.overflow_error">overflow_error</a>
             occurs since this operation is a division by 0 (it equals to 1/0).
@@ -147,7 +147,7 @@
         exception. As shown in the link given above, other error handling policies
         can be used:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">errno_on_error</span></code>: Sets
             <code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code>
@@ -169,7 +169,7 @@
         which for this function returns 1 since it's the most commonly chosen result
         for a power of 0. Here again, other error handling policies can be used:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">throw_on_error</span></code>: Throws
             <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">domain_error</span></code>
@@ -228,7 +228,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h5"></a>
-        <span><a name="math_toolkit.powers.ct_pow.acknowledgements"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.acknowledgements">Acknowledgements</a>
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.acknowledgements"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.acknowledgements">Acknowledgements</a>
       </h5>
 <p>
         Bruno Lalande submitted this addition to Boost.Math.
@@ -239,7 +239,7 @@ improving the implementation.
       </p>
 <h5>
 <a name="math_toolkit.powers.ct_pow.h6"></a>
-        <span><a name="math_toolkit.powers.ct_pow.references"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.references">References</a>
+        <span class="phrase"><a name="math_toolkit.powers.ct_pow.references"></a></span><a class="link" href="ct_pow.html#math_toolkit.powers.ct_pow.references">References</a>
       </h5>
 <p>
         D.E. Knuth, <span class="emphasis"><em>The Art of Computer Programming, Vol. 2: Seminumerical
@@ -248,10 +248,11 @@ improving the implementation.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -11,7 +11,7 @@
 
 
 [/ Test cases ###############################################################################################]
-[section:test_org_boost_test_case `BOOST_TEST_CASE`]
+[section:test_org_boost_test_case `BOOST_TEST_CASE` and `BOOST_TEST_CASE_NAME`]
 Creates a test case for manual registration. The registration in the test tree should be performed manually.
 
 See [link ref_BOOST_TEST_CASE here] for more details.
@@ -166,13 +166,20 @@ See [link boost_test.tests_organization.fixtures.case here] for more details.
 
 [/-----------------------------------------------------------------]
 [section:test_org_boost_global_fixture `BOOST_GLOBAL_FIXTURE`]
-Declares and registers a global fixture. The global fixture is called before any of the test case in the test tree is executed.
+This macro is deprecated in favor of __BOOST_TEST_GLOBAL_FIXTURE__ and __BOOST_TEST_GLOBAL_CONFIGURATION__.
+[endsect] [/section:test_org_boost_test_case_fixture]
+
+[/-----------------------------------------------------------------]
+[section:test_org_boost_test_global_fixture `BOOST_TEST_GLOBAL_FIXTURE`]
+Declares and registers a global fixture. The global fixture acts exactly as a suite fixture attached to the
+[link boost_test.tests_organization.test_suite.master_test_suite master test suite],
+and is called before any of the test case in the test tree is executed.
+
 The class implementing the fixture should have the appropriate [link boost_test.tests_organization.fixtures.models interface].
 As any fixture, it is possible to have test assertions in the global fixture.
 
 See [link boost_test.tests_organization.fixtures.global here] for more details.
-[endsect] [/section:test_org_boost_test_case_fixture]
-
+[endsect] [/section:test_org_boost_test_global_fixture]
 
 
 
@@ -257,12 +264,24 @@ template <typename Fx, typename Arg>
 
 Decorator `fixture` specifies a pair of functions (like `set_up` and `tear_down`) to be called before and after the
 corresponding test unit. At the suite level the `set_up` function is called once -- before the suite execution starts
-and `tear_down` function is called once -- after the suite execution ends. It comes in three forms. First expects two
-functions for set-up and tear-down (the second one can be skipped). The second expects a `DefaultConstructible` class.
-Its default constructor will be used as set-up function and its destructor as a tear-down function. Third requires a
-class with one-argument public constructor. Argument `arg` is forwarded to the constructor and this is the set-up
-function, its destructor is the tear-down function. There is no way to get access to the members of these fixtures from
-within the test case or test suite.
+-- and `tear_down` function is called once -- after the suite execution ends. It comes in three forms.
+
+First expects two
+functions for set-up and tear-down (the second one can be skipped).
+
+The second expects a `DefaultConstructible` class.
+Its default constructor will be used as set-up function and its destructor as a tear-down function.
+
+The third form requires a
+class with one-argument public constructor. Argument `arg` is forwarded to the constructor.
+
+For the second and third form, the framework detects if there is a `setup` and/or `teardown` function implemented in the class,
+with the same declaration as described in the [link boost_test.tests_organization.fixtures.models fixture model].
+If those member function are declared, they will be called right after construction and just
+before destruction respectively.
+
+[note There is no way to get access to the members of these fixtures from
+within the test case or test suite.]
 
 [bt_example decorator_12..decorator fixture..run]
 

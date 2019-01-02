@@ -5,10 +5,12 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2016, 2017.
+// Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -44,16 +46,18 @@ namespace detail { namespace expand
 
 struct box_on_spheroid
 {
-    template <typename BoxOut, typename BoxIn>
-    static inline void apply(BoxOut& box_out, BoxIn const& box_in)
+    template <typename BoxOut, typename BoxIn, typename Strategy>
+    static inline void apply(BoxOut& box_out,
+                             BoxIn const& box_in,
+                             Strategy const& strategy)
     {
         // normalize both boxes and convert box-in to be of type of box-out
         BoxOut mbrs[2];
-        detail::envelope::envelope_box_on_spheroid::apply(box_in, mbrs[0]);
-        detail::envelope::envelope_box_on_spheroid::apply(box_out, mbrs[1]);
+        detail::envelope::envelope_box_on_spheroid::apply(box_in, mbrs[0], strategy);
+        detail::envelope::envelope_box_on_spheroid::apply(box_out, mbrs[1], strategy);
 
         // compute the envelope of the two boxes
-        detail::envelope::envelope_range_of_boxes::apply(mbrs, box_out);
+        detail::envelope::envelope_range_of_boxes::apply(mbrs, box_out, strategy);
     }
 };
 
@@ -70,48 +74,54 @@ namespace dispatch
 template
 <
     typename BoxOut, typename BoxIn,
-    typename StrategyLess, typename StrategyGreater,
     typename CSTagOut, typename CSTag
 >
 struct expand
     <
         BoxOut, BoxIn,
-        StrategyLess, StrategyGreater,
         box_tag, box_tag,
         CSTagOut, CSTag
-    > : detail::expand::expand_indexed
-        <
-            0, dimension<BoxIn>::value, StrategyLess, StrategyGreater
-        >
+    >
 {
-    BOOST_MPL_ASSERT_MSG((boost::is_same<CSTagOut, CSTag>::value),
-                         COORDINATE_SYSTEMS_MUST_BE_THE_SAME,
+    BOOST_MPL_ASSERT_MSG((false),
+                         NOT_IMPLEMENTED_FOR_THESE_COORDINATE_SYSTEMS,
                          (types<CSTagOut, CSTag>()));
 };
 
-template
-<
-    typename BoxOut, typename BoxIn,
-    typename StrategyLess, typename StrategyGreater
->
+template <typename BoxOut, typename BoxIn>
 struct expand
     <
         BoxOut, BoxIn,
-        StrategyLess, StrategyGreater,
+        box_tag, box_tag,
+        cartesian_tag, cartesian_tag
+    > : detail::expand::expand_indexed
+        <
+            0, dimension<BoxIn>::value
+        >
+{};
+
+template <typename BoxOut, typename BoxIn>
+struct expand
+    <
+        BoxOut, BoxIn,
         box_tag, box_tag,
         spherical_equatorial_tag, spherical_equatorial_tag
     > : detail::expand::box_on_spheroid
 {};
 
-template
-<
-    typename BoxOut, typename BoxIn,
-    typename StrategyLess, typename StrategyGreater
->
+template <typename BoxOut, typename BoxIn>
 struct expand
     <
         BoxOut, BoxIn,
-        StrategyLess, StrategyGreater,
+        box_tag, box_tag,
+        spherical_polar_tag, spherical_polar_tag
+    > : detail::expand::box_on_spheroid
+{};
+
+template <typename BoxOut, typename BoxIn>
+struct expand
+    <
+        BoxOut, BoxIn,
         box_tag, box_tag,
         geographic_tag, geographic_tag
     > : detail::expand::box_on_spheroid

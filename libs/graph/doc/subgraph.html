@@ -1,17 +1,17 @@
 <HTML>
 <!--
      Copyright (c) Jeremy Siek 2000
-    
+
      Distributed under the Boost Software License, Version 1.0.
      (See accompanying file LICENSE_1_0.txt or copy at
      http://www.boost.org/LICENSE_1_0.txt)
   -->
 <Head>
 <Title>Boost Graph Library: Subgraph</Title>
-<BODY BGCOLOR="#ffffff" LINK="#0000ee" TEXT="#000000" VLINK="#551a8b" 
-        ALINK="#ff0000"> 
-<IMG SRC="../../../boost.png" 
-     ALT="C++ Boost" width="277" height="86"> 
+<BODY BGCOLOR="#ffffff" LINK="#0000ee" TEXT="#000000" VLINK="#551a8b"
+        ALINK="#ff0000">
+<IMG SRC="../../../boost.png"
+     ALT="C++ Boost" width="277" height="86">
 
 <BR Clear>
 
@@ -71,7 +71,7 @@ create the root graph object.  Here we use <tt>adjacency_list</tt> as
 the underlying graph implementation. The underlying graph type is
 required to have <tt>vertex_index</tt> and <tt>edge_index</tt>
 internal properties, so we add an edge index property to the adjacency
-list. We do not need to add a vertex index properety because that is
+list. We do not need to add a vertex index property because that is
 built in to the <tt>adjacency_list</tt>. We will be building the graph
 and subgraphs in Figure 1, so we will need a total of six vertices.
 
@@ -83,7 +83,7 @@ typedef subgraph&lt; adjacency_list&lt; vecS, vecS, directedS,
 const int N = 6;
 Graph G0(N);
 
-enum { A, B, C, D, E, F };  // for conveniently refering to vertices in G0
+enum { A, B, C, D, E, F};  // for conveniently referring to vertices in G0
 </pre>
 
 Next we create two empty subgraph objects, specifying <tt>G0</tt> as
@@ -91,8 +91,8 @@ their parent.
 
 <pre>
 Graph& G1 = G0.create_subgraph(), G2 = G0.create_subgraph();
-enum { A1, B1, C2 }; // for conveniently refering to vertices in G1
-enum { A2, B2 };     // for conveniently refering to vertices in G2
+enum { A1, B1, C2 }; // for conveniently referring to vertices in G1
+enum { A2, B2 };     // for conveniently referring to vertices in G2
 </pre>
 
 We can add vertices from the root graph to the subgraphs using the
@@ -187,7 +187,7 @@ the underlying <tt>Graph</tt> type.
 <pre>
 graph_traits&lt;subgraph&gt;::vertex_descriptor
 </pre>
-    The type for the vertex descriptors. 
+    The type for the vertex descriptors.
  (Required by <a href="Graph.html">Graph</a>.)
 
 <hr>
@@ -195,7 +195,7 @@ graph_traits&lt;subgraph&gt;::vertex_descriptor
 <pre>
 graph_traits&lt;subgraph&gt;::edge_descriptor
 </pre>
-    The type for the edge descriptors. 
+    The type for the edge descriptors.
     (Required by <a href="Graph.html">Graph</a>.)
 
 <hr>
@@ -203,7 +203,7 @@ graph_traits&lt;subgraph&gt;::edge_descriptor
 <pre>
 graph_traits&lt;subgraph&gt;::vertex_iterator
 </pre>
-    The type for the iterators returned by <tt>vertices</tt>. 
+    The type for the iterators returned by <tt>vertices</tt>.
     (Required by <a href="VertexListGraph.html">VertexListGraph</a>.)
 
 <hr>
@@ -211,14 +211,14 @@ graph_traits&lt;subgraph&gt;::vertex_iterator
 <pre>
 graph_traits&lt;subgraph&gt;::edge_iterator
 </pre>
-    The type for the iterators returned by <tt>edges</tt>. 
+    The type for the iterators returned by <tt>edges</tt>.
     (Required by <a href="EdgeListGraph.html">EdgeListGraph</a>.)
 
 <hr>
 <pre>
 graph_traits&lt;subgraph&gt;::out_edge_iterator
 </pre>
-    The type for the iterators returned by <tt>out_edges</tt>. 
+    The type for the iterators returned by <tt>out_edges</tt>.
     (Required by <a href="IncidenceGraph.html">IncidenceGraph</a>.)
 
 <hr>
@@ -226,14 +226,14 @@ graph_traits&lt;subgraph&gt;::out_edge_iterator
 graph_traits&lt;subgraph&gt;::in_edge_iterator
 </pre>
     The <tt>in_edge_iterator</tt> is the
-    iterator type returned by the <tt>in_edges</tt> function. 
+    iterator type returned by the <tt>in_edges</tt> function.
     (Required by <a href="BidirectionalGraph.html">BidirectionalGraph</a>.)
 
 <hr>
 <pre>
 graph_traits&lt;subgraph&gt;::adjacency_iterator
 </pre>
-    The type for the iterators returned by <tt>adjacent_vertices</tt>. 
+    The type for the iterators returned by <tt>adjacent_vertices</tt>.
     (Required by <a href="AdjacencyGraph.html">AdjacencyGraph</a>.)
 
 <hr>
@@ -252,7 +252,7 @@ graph_traits&lt;subgraph&gt;::edge_parallel_category
     parallel edges (edges with the same source and target), which
     depends on the underlying <tt>Graph</tt> class. The two tags are
     <tt>allow_parallel_edge_tag</tt> and
-    <tt>disallow_parallel_edge_tag</tt>. 
+    <tt>disallow_parallel_edge_tag</tt>.
     (Required by <a href="Graph.html">Graph</a>.)
 
 <hr>
@@ -388,7 +388,7 @@ subgraph& parent()
 <pre>
 std::pair&lt;children_iterator, children_iterator&gt; children() const
 </pre>
-Return an iterator pair for accessing the children subgraphs. 
+Return an iterator pair for accessing the children subgraphs.
 
 
 <!----------------------------->
@@ -441,7 +441,7 @@ out_edges(vertex_descriptor u_local, const subgraph&amp; g)
     Returns an iterator range providing access to the out-edges of
     vertex <i>u</i> in subgraph <i>g</i>. If the graph is undirected, this
     iterator range provides access to all edge incident on
-    vertex <i>u</i>. 
+    vertex <i>u</i>.
     (Required by <a href="IncidenceGraph.html">IncidenceGraph</a>.)
 
 <hr>
@@ -451,7 +451,7 @@ in_edges(vertex_descriptor v_local, const subgraph&amp; g)
 </pre>
     Returns an iterator range providing access to the in-edges of
     vertex
-    <i>v</i> in subgraph <i>g</i>. 
+    <i>v</i> in subgraph <i>g</i>.
     (Required by <a href="BidirectionalGraph.html">BidirectionalGraph</a>.)
 
 <hr>
@@ -482,7 +482,7 @@ out_degree(vertex_descriptor u_local, const subgraph&amp; g)
 <pre>
 degree_size_type in_degree(vertex_descriptor u_local, const subgraph&amp; g)
 </pre>
-    Returns the number of edges entering vertex <i>u</i> in subgraph <i>g</i>. 
+    Returns the number of edges entering vertex <i>u</i> in subgraph <i>g</i>.
     (Required by <a href="BidirectionalGraph.html">BidirectionalGraph</a>.)
 
 <hr>
@@ -543,7 +543,7 @@ void remove_edge(vertex_descriptor u_local, vertex_descriptor v_local,
                  subgraph&amp; g)
 </pre>
     Removes the edge <i>(u,v)</i> from the subgraph and from all of the
-    ancestors of <tt>g</tt> in the subgraph tree.  
+    ancestors of <tt>g</tt> in the subgraph tree.
     (Required by <a href="EdgeMutableGraph.html">EdgeMutableGraph</a>.)
 
 <hr>
@@ -551,7 +551,7 @@ void remove_edge(vertex_descriptor u_local, vertex_descriptor v_local,
 void remove_edge(edge_descriptor e_local, subgraph&amp; g)
 </pre>
     Removes the edge <tt>e</tt> from the subgraph and from all of the
-    ancestors of <tt>g</tt> in the subgraph tree. 
+    ancestors of <tt>g</tt> in the subgraph tree.
     (Required by <a href="EdgeMutableGraph.html">EdgeMutableGraph</a>.)
 
 <hr>
@@ -591,7 +591,7 @@ get(PropertyTag, const subgraph&amp; g)
     descriptor for one subgraph will change the property for the
     global vertex descriptor, and therefore for all other subgraphs.
     However, the key type for a subgraph's property map is a subgraph-local
-    vertex or  edge descriptor. 
+    vertex or  edge descriptor.
     (Required by <a href="PropertyGraph.html">PropertyGraph</a>.)
 
 <hr>
@@ -605,7 +605,7 @@ get(PropertyTag, const subgraph&amp; g, Key k_local)
     This returns the property value for the key <tt>k_local</tt>, which
     is either a local vertex or local edge descriptor. See the above
     <tt>get</tt> function
-    for more information about the propert maps. 
+    for more information about the property maps.
     (Required by <a href="PropertyGraph.html">PropertyGraph</a>.)
 
 <hr>
@@ -656,10 +656,10 @@ properties into a <tt>property</tt> that contains an appropriate index. For
 example:
 <pre>
 struct my_vertex { ... };
-typedef property&lt;vertex_index_t, std::size_t, vertex_prop&gt; vertex_prop;
+typedef property&lt;vertex_index_t, std::size_t, my_vertex&gt; vertex_prop;
 
 struct my_edge { ... };
-typedef property&lt;edge_index_t, std::size_t, vertex_prop&gt; edge_prop;
+typedef property&lt;edge_index_t, std::size_t, my_edge&gt; edge_prop;
 
 typedef adjacency_list&lt;vecS, listS, undirectedS, vertex_prop, edge_prop&gt; Graph;
 typedef subgraph&lt;Graph&gt; Subgraph;

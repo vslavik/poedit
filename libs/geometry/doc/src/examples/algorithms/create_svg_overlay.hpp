@@ -14,6 +14,7 @@
 #include <fstream>
 
 #include <boost/foreach.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/algorithm/string.hpp>
 
 #if defined(HAVE_SVG)
@@ -45,10 +46,7 @@ void create_svg(std::string const& filename, Geometry const& a, Geometry const& 
                     "fill:rgb(0,0,0);font-family:Arial;font-size:10px");
     }
 #else
-    boost::ignore_unused_variable_warning(filename);
-    boost::ignore_unused_variable_warning(a);
-    boost::ignore_unused_variable_warning(b);
-    boost::ignore_unused_variable_warning(range);
+    boost::ignore_unused(filename, a, b, range);
 #endif
 }
 

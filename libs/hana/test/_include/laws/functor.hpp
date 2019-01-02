@@ -1,17 +1,30 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_FUNCTOR_HPP
 #define BOOST_HANA_TEST_LAWS_FUNCTOR_HPP
 
+#include <boost/hana/adjust.hpp>
+#include <boost/hana/adjust_if.hpp>
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
 #include <boost/hana/concept/comparable.hpp>
-#include <boost/hana/core/when.hpp>
-#include <boost/hana/functional/capture.hpp>
 #include <boost/hana/concept/functor.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/make.hpp>
+#include <boost/hana/core/when.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/eval_if.hpp>
+#include <boost/hana/fill.hpp>
+#include <boost/hana/for_each.hpp>
+#include <boost/hana/functional/always.hpp>
+#include <boost/hana/functional/capture.hpp>
+#include <boost/hana/functional/compose.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/replace.hpp>
+#include <boost/hana/replace_if.hpp>
+#include <boost/hana/transform.hpp>
 
 #include <laws/base.hpp>
 
@@ -27,7 +40,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs, typename Elements>
         TestFunctor(Xs xs, Elements elements) {
             hana::for_each(xs, hana::capture(elements)([](auto elements, auto x) {
-                static_assert(Functor<decltype(x)>::value, "");
+                static_assert(Functor<decltype(x)>{}, "");
 
                 test::_injection<0> f{};
                 test::_injection<1> g{};

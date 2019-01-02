@@ -3,6 +3,10 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -200,29 +204,37 @@ void test_2d_sort()
 template <typename P>
 void test_spherical()
 {
-    typedef typename bg::coordinate_type<P>::type ct;
+    //typedef typename bg::coordinate_type<P>::type ct;
 
     std::vector<P> v;
+    v.push_back(bg::make<P>( 180.00, 70.56));
     v.push_back(bg::make<P>( 179.73, 71.56)); // east
     v.push_back(bg::make<P>( 177.47, 71.23)); // less east
-    v.push_back(bg::make<P>(-178.78, 70.78)); // further east, = west, this is the most right point
+    v.push_back(bg::make<P>(-178.78, 72.78)); // further east, = west, this is the most left point
+    v.push_back(bg::make<P>(-180.00, 73.12));
 
     // Sort on coordinates in order x,y,z
     std::sort(v.begin(), v.end(), bg::less<P>());
     std::string s = coordinates(v);
-    BOOST_CHECK_EQUAL(s, "(177.47, 71.23)(179.73, 71.56)(-178.78, 70.78)");
+    BOOST_CHECK_EQUAL(s, "(-178.78, 72.78)(177.47, 71.23)(179.73, 71.56)(180, 70.56)(-180, 73.12)");
+
+    // Sort ascending on only y-coordinate
+    std::sort(v.begin(), v.end(), bg::less<P, 1>());
+    s = coordinates(v);
+    BOOST_CHECK_EQUAL(s, "(180, 70.56)(177.47, 71.23)(179.73, 71.56)(-178.78, 72.78)(-180, 73.12)");
 
     // Sort ascending on only x-coordinate
     std::sort(v.begin(), v.end(), bg::less<P, 0>());
     s = coordinates(v);
-    BOOST_CHECK_EQUAL(s, "(177.47, 71.23)(179.73, 71.56)(-178.78, 70.78)");
+    BOOST_CHECK((s == "(-178.78, 72.78)(177.47, 71.23)(179.73, 71.56)(180, 70.56)(-180, 73.12)"
+              || s == "(-178.78, 72.78)(177.47, 71.23)(179.73, 71.56)(-180, 73.12)(180, 70.56)"));
 
     // Sort ascending on only x-coordinate, but override with std-comparison,
     // (so this is the normal sorting behaviour that would have been used
     // if it would not have been spherical)
-    std::sort(v.begin(), v.end(), bg::less<P, 0, std::less<ct> >());
-    s = coordinates(v);
-    BOOST_CHECK_EQUAL(s, "(-178.78, 70.78)(177.47, 71.23)(179.73, 71.56)");
+    //std::sort(v.begin(), v.end(), bg::less<P, 0, std::less<ct> >());
+    //s = coordinates(v);
+    //BOOST_CHECK_EQUAL(s, "(-178.78, 70.78)(177.47, 71.23)(179.73, 71.56)");
 }
 
 
@@ -237,6 +249,8 @@ int test_main(int, char* [])
     test_2d_sort<bg::model::point<double, 2, bg::cs::cartesian> >();
 
     test_spherical<bg::model::point<double, 2, bg::cs::spherical<bg::degree> > >();
+    test_spherical<bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> > >();
+    test_spherical<bg::model::point<double, 2, bg::cs::geographic<bg::degree> > >();
 
     return 0;
 }

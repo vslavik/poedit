@@ -9,12 +9,14 @@
  * $Date$
  */
 
+#include <boost/core/enable_if.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/date_time/compiler_config.hpp>
+#include <boost/date_time/special_defs.hpp>
+#include <boost/date_time/time_defs.hpp>
 #include <boost/operators.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/date_time/time_defs.hpp>
-#include <boost/date_time/special_defs.hpp>
-#include <boost/date_time/compiler_config.hpp>
+#include <boost/type_traits/is_integral.hpp>
 
 namespace boost {
 namespace date_time {
@@ -31,7 +33,7 @@ namespace date_time {
       @param rep_type The time resolution traits for this duration type.
   */
   template<class T, typename rep_type>
-  class time_duration : private
+  class BOOST_SYMBOL_VISIBLE time_duration : private
       boost::less_than_comparable<T
     , boost::equality_comparable<T
     > >
@@ -262,10 +264,10 @@ namespace date_time {
 
   //! Template for instantiating derived adjusting durations
   /* These templates are designed to work with multiples of
-   * 10 for frac_of_second and resoultion adjustment
+   * 10 for frac_of_second and resolution adjustment
    */
   template<class base_duration, boost::int64_t frac_of_second>
-  class subsecond_duration : public base_duration
+  class BOOST_SYMBOL_VISIBLE subsecond_duration : public base_duration
   {
   public:
     typedef typename base_duration::impl_type impl_type;
@@ -278,13 +280,14 @@ namespace date_time {
     BOOST_STATIC_CONSTANT(boost::int64_t, adjustment_ratio = (traits_type::ticks_per_second >= frac_of_second ? traits_type::ticks_per_second / frac_of_second : frac_of_second / traits_type::ticks_per_second));
 
   public:
-    explicit subsecond_duration(boost::int64_t ss) :
+    // The argument (ss) must be an integral type
+    template <typename T>
+    explicit subsecond_duration(T const& ss,
+                                typename boost::enable_if<boost::is_integral<T>, void>::type* = BOOST_DATE_TIME_NULLPTR) :
       base_duration(impl_type(traits_type::ticks_per_second >= frac_of_second ? ss * adjustment_ratio : ss / adjustment_ratio))
     {
     }
   };
-
-
 
 } } //namespace date_time
 

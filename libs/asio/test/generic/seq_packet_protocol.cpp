@@ -2,7 +2,7 @@
 // generic/seq_packet_protocol.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@
 #include <boost/asio/generic/seq_packet_protocol.hpp>
 
 #include <cstring>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include "../unit_test.hpp"
 
 #if defined(__cplusplus_cli) || defined(__cplusplus_winrt)
@@ -57,7 +57,7 @@ void test()
 
   try
   {
-    io_service ios;
+    io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
     const socket_base::message_flags in_flags = 0;
@@ -68,13 +68,13 @@ void test()
 
     // basic_seq_packet_socket constructors.
 
-    spp::socket socket1(ios);
-    spp::socket socket2(ios, spp(af_inet, 0));
-    spp::socket socket3(ios, spp::endpoint());
+    spp::socket socket1(ioc);
+    spp::socket socket2(ioc, spp(af_inet, 0));
+    spp::socket socket3(ioc, spp::endpoint());
 #if !defined(BOOST_ASIO_WINDOWS_RUNTIME)
     spp::socket::native_handle_type native_socket1
       = ::socket(af_inet, sock_seqpacket, 0);
-    spp::socket socket4(ios, spp(af_inet, 0), native_socket1);
+    spp::socket socket4(ioc, spp(af_inet, 0), native_socket1);
 #endif // !defined(BOOST_ASIO_WINDOWS_RUNTIME)
 
 #if defined(BOOST_ASIO_HAS_MOVE)
@@ -84,14 +84,22 @@ void test()
     // basic_seq_packet_socket operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
-    socket1 = spp::socket(ios);
+    socket1 = spp::socket(ioc);
     socket1 = std::move(socket2);
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
-    io_service& ios_ref = socket1.get_io_service();
-    (void)ios_ref;
+    spp::socket::executor_type ex = socket1.get_executor();
+    (void)ex;
+
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+    io_context& ioc_ref = socket1.get_io_context();
+    (void)ioc_ref;
+
+    io_context& ioc_ref2 = socket1.get_io_service();
+    (void)ioc_ref2;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // basic_socket functions.
 
@@ -116,7 +124,7 @@ void test()
     socket1.close();
     socket1.close(ec);
 
-    spp::socket::native_type native_socket4 = socket1.native();
+    spp::socket::native_handle_type native_socket4 = socket1.native_handle();
     (void)native_socket4;
 
     socket1.cancel();

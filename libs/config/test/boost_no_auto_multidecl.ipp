@@ -1,4 +1,5 @@
 //  Copyright (C) 2009 Andrey Semashev
+//  Copyright (C) 2017 Dynatrace
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,13 +12,13 @@
 
 namespace boost_no_cxx11_auto_multideclarations {
 
-void check_f(int&, int*&)
+void check_f(short&, short*&)
 {
 }
 
 int test()
 {
-   auto x = 10, *y = &x;
+   auto x = static_cast<short>(10), *y = &x;
    check_f(x, y);
    return 0;
 }

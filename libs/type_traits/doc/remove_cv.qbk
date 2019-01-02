@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_cv_t = typename remove_cv<T>::type; // C++11 and above
+
 __type The same type as `T`, but with any /top level/ cv-qualifiers removed.
 
 __std_ref 3.9.3.

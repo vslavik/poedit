@@ -51,6 +51,7 @@
 #include <boost/geometry/algorithms/detail/multi_sum.hpp>
 // #include <boost/geometry/algorithms/detail/throw_on_empty_input.hpp>
 #include <boost/geometry/views/closeable_view.hpp>
+#include <boost/geometry/strategies/default_strategy.hpp>
 #include <boost/geometry/strategies/distance.hpp>
 #include <boost/geometry/strategies/default_length_result.hpp>
 
@@ -184,6 +185,33 @@ struct length<MultiLinestring, multi_linestring_tag> : detail::multi_sum
 #endif // DOXYGEN_NO_DISPATCH
 
 
+namespace resolve_strategy {
+
+struct length
+{
+    template <typename Geometry, typename Strategy>
+    static inline typename default_length_result<Geometry>::type
+    apply(Geometry const& geometry, Strategy const& strategy)
+    {
+        return dispatch::length<Geometry>::apply(geometry, strategy);
+    }
+
+    template <typename Geometry>
+    static inline typename default_length_result<Geometry>::type
+    apply(Geometry const& geometry, default_strategy)
+    {
+        typedef typename strategy::distance::services::default_strategy
+            <
+                point_tag, point_tag, typename point_type<Geometry>::type
+            >::type strategy_type;
+
+        return dispatch::length<Geometry>::apply(geometry, strategy_type());
+    }
+};
+
+} // namespace resolve_strategy
+
+
 namespace resolve_variant {
 
 template <typename Geometry>
@@ -193,7 +221,7 @@ struct length
     static inline typename default_length_result<Geometry>::type
     apply(Geometry const& geometry, Strategy const& strategy)
     {
-        return dispatch::length<Geometry>::apply(geometry, strategy);
+        return resolve_strategy::length::apply(geometry, strategy);
     }
 };
 
@@ -251,17 +279,11 @@ template<typename Geometry>
 inline typename default_length_result<Geometry>::type
 length(Geometry const& geometry)
 {
-    concept::check<Geometry const>();
+    concepts::check<Geometry const>();
 
     // detail::throw_on_empty_input(geometry);
 
-    // TODO put this into a resolve_strategy stage
-    typedef typename strategy::distance::services::default_strategy
-        <
-            point_tag, point_tag, typename point_type<Geometry>::type
-        >::type strategy_type;
-
-    return resolve_variant::length<Geometry>::apply(geometry, strategy_type());
+    return resolve_variant::length<Geometry>::apply(geometry, default_strategy());
 }
 
 
@@ -283,7 +305,7 @@ template<typename Geometry, typename Strategy>
 inline typename default_length_result<Geometry>::type
 length(Geometry const& geometry, Strategy const& strategy)
 {
-    concept::check<Geometry const>();
+    concepts::check<Geometry const>();
 
     // detail::throw_on_empty_input(geometry);
 

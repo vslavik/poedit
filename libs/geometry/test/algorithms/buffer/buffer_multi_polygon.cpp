@@ -3,6 +3,10 @@
 
 // Copyright (c) 2012-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2016.
+// Modifications copyright (c) 2016, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -342,25 +346,25 @@ void test_all()
     test_one<multi_polygon_type, polygon_type>("nested_10", nested, join_round, end_flat, 254.279, 1.0);
     test_one<multi_polygon_type, polygon_type>("nested_10", nested, join_round, end_flat, 1.721, -1.0);
     test_one<multi_polygon_type, polygon_type>("nested_25", nested, join_round, end_flat, 355.622, 2.5);
-    test_one<multi_polygon_type, polygon_type>("nested_25", nested, join_round, end_flat, 0, -2.5);
+    test_one<multi_polygon_type, polygon_type>("nested_25", nested, join_round, end_flat, 0.0, -2.5);
     // 3.0 is exactly touching (for the deflate case)
     test_one<multi_polygon_type, polygon_type>("nested_30", nested, join_round, end_flat, 392.256, 3.0);
-    test_one<multi_polygon_type, polygon_type>("nested_30", nested, join_round, end_flat, 0, -3.0);
+    test_one<multi_polygon_type, polygon_type>("nested_30", nested, join_round, end_flat, 0.0, -3.0);
     test_one<multi_polygon_type, polygon_type>("nested_29", nested, join_round, end_flat, 384.803, 2.9);
-    test_one<multi_polygon_type, polygon_type>("nested_29", nested, join_round, end_flat, 0, -2.9);
+    test_one<multi_polygon_type, polygon_type>("nested_29", nested, join_round, end_flat, 0.0, -2.9);
     test_one<multi_polygon_type, polygon_type>("nested_31", nested, join_round, end_flat, 399.771, 3.1);
-    test_one<multi_polygon_type, polygon_type>("nested_31", nested, join_round, end_flat, 0, -3.1);
+    test_one<multi_polygon_type, polygon_type>("nested_31", nested, join_round, end_flat, 0.0, -3.1);
 
     test_one<multi_polygon_type, polygon_type>("degenerate0", degenerate0, join_round, end_flat, 0.0, 1.0);
     test_one<multi_polygon_type, polygon_type>("degenerate1", degenerate1, join_round, end_flat, 5.708, 1.0);
     test_one<multi_polygon_type, polygon_type>("degenerate2", degenerate2, join_round, end_flat, 133.0166, 0.75);
 
     test_one<multi_polygon_type, polygon_type>("rt_a", rt_a, join_round, end_flat, 34.5381, 1.0);
-    test_one<multi_polygon_type, polygon_type>("rt_a", rt_a, join_miter, end_flat, 36, 1.0);
+    test_one<multi_polygon_type, polygon_type>("rt_a", rt_a, join_miter, end_flat, 36.0, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_b", rt_b, join_round, end_flat, 31.4186, 1.0);
-    test_one<multi_polygon_type, polygon_type>("rt_b", rt_b, join_miter, end_flat, 34, 1.0);
+    test_one<multi_polygon_type, polygon_type>("rt_b", rt_b, join_miter, end_flat, 34.0, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_c", rt_c, join_round, end_flat, 14.7093, 1.0);
-    test_one<multi_polygon_type, polygon_type>("rt_c", rt_c, join_miter, end_flat, 16, 1.0);
+    test_one<multi_polygon_type, polygon_type>("rt_c", rt_c, join_miter, end_flat, 16.0, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_d", rt_d, join_round, end_flat, 18.8726, 0.3);
     test_one<multi_polygon_type, polygon_type>("rt_e", rt_e, join_round, end_flat, 14.1866, 0.3);
 
@@ -409,7 +413,7 @@ void test_all()
     test_one<multi_polygon_type, polygon_type>("rt_p4", rt_p4, join_miter, end_flat, 33.0563, 1.0);
 
 #if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
-    test_one<multi_polygon_type, polygon_type>("rt_p5", rt_p5, join_miter, end_flat, 17, 1.0);
+    test_one<multi_polygon_type, polygon_type>("rt_p5", rt_p5, join_miter, end_flat, 17.0, 1.0);
 #endif
 
     test_one<multi_polygon_type, polygon_type>("rt_p6", rt_p6, join_miter, end_flat, 18.4853, 1.0);
@@ -469,9 +473,13 @@ void test_all()
 
     test_one<multi_polygon_type, polygon_type>("rt_u8", rt_u8, join_miter, end_flat, 70.9142, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_u9", rt_u9, join_miter, end_flat, 59.3063, 1.0);
-    test_one<multi_polygon_type, polygon_type>("rt_u10", rt_u10, join_miter, end_flat, 144.0858, 1.0);
-    test_one<multi_polygon_type, polygon_type>("rt_u10_50", rt_u10, join_miter, end_flat, 0.2145, -0.50);
-    test_one<multi_polygon_type, polygon_type>("rt_u10_25", rt_u10, join_miter, end_flat, 9.6682, -0.25);
+    test_one<multi_polygon_type, polygon_type>("rt_u10", rt_u10, join_miter, end_flat, 144.0858, 1.0); // PG: 144.085786772487
+    test_one<multi_polygon_type, polygon_type>("rt_u10_51", rt_u10, join_miter, end_flat, 0.1674, -0.51); // PG: 0.167380307629637
+
+    // TODO: now one small triangle missing due to clusters/uu turns
+    test_one<multi_polygon_type, polygon_type>("rt_u10_50", rt_u10, join_miter, end_flat, 0.2145, -0.50, ut_settings::ignore_validity()); // PG: 0.214466094067263
+    test_one<multi_polygon_type, polygon_type>("rt_u10_45", rt_u10, join_miter, end_flat, 1.3000, -0.45); // PG: 1.30004221251301
+    test_one<multi_polygon_type, polygon_type>("rt_u10_25", rt_u10, join_miter, end_flat, 9.6682, -0.25); // PG: 9.66820888343117
 
     test_one<multi_polygon_type, polygon_type>("rt_u11", rt_u11, join_miter, end_flat, 131.3995, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_u11_50", rt_u11, join_miter, end_flat, 0.04289, -0.50);
@@ -484,24 +492,27 @@ void test_all()
 
     test_one<multi_polygon_type, polygon_type>("neighbouring_small",
         neighbouring,
-        join_round32, end_round32, 128, -1);
+        join_round32, end_round32, 128.0, -1.0);
     test_one<multi_polygon_type, polygon_type>("neighbouring_with_holes_small",
         neighbouring_with_holes,
-        join_round32, end_round32, 97.757, -1);
+        join_round32, end_round32, 97.757, -1.0);
     test_one<multi_polygon_type, polygon_type>("neighbouring_large",
         neighbouring,
-        join_round32, end_round32, 0, -10);
+        join_round32, end_round32, 0.0, -10.0);
     test_one<multi_polygon_type, polygon_type>("neighbouring_with_holes_large",
         neighbouring_with_holes,
-        join_round32, end_round32, 0, -10);
+        join_round32, end_round32, 0.0, -10.0);
 
+    // Check cases with extreme coordinates on assertions
     test_one<multi_polygon_type, polygon_type>("mysql_report_2015_07_05_1",
         mysql_report_2015_07_05_1,
-        join_round32, end_round32, 6.04454566324708726e+23, 5526,
-        same_distance, false, 1e+020);
+        join_round32, end_round32, ut_settings::ignore_area(), 5526.0,
+        ut_settings::assertions_only());
+
     test_one<multi_polygon_type, polygon_type>("mysql_report_2015_07_05_2",
         mysql_report_2015_07_05_2,
-        join_round32, end_round32, 0, 948189399);
+        join_round32, end_round32, ut_settings::ignore_area(), 948189399.0,
+        ut_settings::assertions_only());
 }
 
 int test_main(int, char* [])

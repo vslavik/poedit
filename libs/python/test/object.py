@@ -1,6 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+from __future__ import print_function
 '''
 >>> from object_ext import *
 
@@ -8,7 +9,7 @@
 <class 'object_ext.NotCopyable'>
 
 >>> def print1(x):
-...     print x
+...     print(x)
 >>> call_object_3(print1)
 3
 >>> message()
@@ -33,10 +34,10 @@
 
 >>> try: obj_getattr(x, 'foo')
 ... except AttributeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 >>> try: obj_objgetattr(x, 'objfoo')
 ... except AttributeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 
 >>> obj_setattr(x, 'foo', 1)
 >>> x.foo
@@ -44,7 +45,7 @@
 >>> obj_objsetattr(x, 'objfoo', 1)
 >>> try:obj_objsetattr(x, 1)
 ... except TypeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 >>> x.objfoo
 1
 >>> obj_getattr(x, 'foo')
@@ -53,7 +54,7 @@
 1
 >>> try:obj_objgetattr(x, 1)
 ... except TypeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 >>> obj_const_getattr(x, 'foo')
 1
 >>> obj_const_objgetattr(x, 'objfoo')
@@ -92,10 +93,10 @@
 >>> obj_objdelattr(x, 'objfoo')
 >>> try:obj_delattr(x, 'foo')
 ... except AttributeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 >>> try:obj_objdelattr(x, 'objfoo')
 ... except AttributeError: pass
-... else: print 'expected an exception'
+... else: print('expected an exception')
 
         Items
 
@@ -135,7 +136,7 @@
         Operators
 
 >>> def print_args(*args, **kwds): 
-...     print args, kwds 
+...     print(args, kwds)
 >>> test_call(print_args, (0, 1, 2, 3), {'a':'A'}) 
 (0, 1, 2, 3) {'a': 'A'}
 
@@ -144,7 +145,7 @@
 
 >>> class X: pass
 ...
->>> assert check_inplace(range(3), X())
+>>> assert check_inplace(list(range(3)), X())
 
 
        Now make sure that object is actually managing reference counts
@@ -153,7 +154,7 @@
 >>> class Z: pass
 ...
 >>> z = Z()
->>> def death(r): print 'death'
+>>> def death(r): print('death')
 ...
 >>> r = weakref.ref(z, death)
 >>> z.foo = 1
@@ -172,8 +173,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

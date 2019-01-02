@@ -1,6 +1,6 @@
 /* Used in Boost.MultiIndex tests.
  *
- * Copyright 2003-2015 Joaquin M Lopez Munoz.
+ * Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +15,7 @@
 #include <boost/throw_exception.hpp>
 #include <iterator>
 #include <cstddef>
+#include <stdexcept>
 
 template<typename T>
 class non_raw_pointer
@@ -102,6 +103,8 @@ public:
   typedef std::ptrdiff_t           difference_type;
   typedef non_raw_pointer<T>       pointer;
   typedef non_raw_pointer<const T> const_pointer;
+  typedef void*                    void_pointer;
+  typedef const void*              const_void_pointer;
   typedef T&                       reference;
   typedef const T&                 const_reference;
   typedef T                        value_type;

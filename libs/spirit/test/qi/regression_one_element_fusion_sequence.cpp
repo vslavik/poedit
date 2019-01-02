@@ -7,8 +7,13 @@
 // This compilation test fails if proto expressions are not properly 
 // distinguished from 'normal' Fusion sequences.
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_symbols.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
+#include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
 #include <string>
 
 int main() 

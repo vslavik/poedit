@@ -143,6 +143,67 @@ Or
 
 [endsect]
 
+[section:cross_product_2 cross_product]
+
+'''<indexterm><primary>cross_product</primary></indexterm>'''
+Computes the cross product of two vectors. 
+
+[heading Description]
+All vectors should have the same dimension, 3 or 2.
+
+[heading Synopsis]
+``template<typename ResultP, typename P1, typename P2>
+ResultP cross_product(P1 const & p1, P2 const & p2)``
+
+[heading Parameters]
+
+[table
+[[Type] [Concept] [Name] [Description] ]
+[[ResultP] [] [ - ] [Must be specified]]
+[[P1 const &] [] [p1] [first vector ]]
+[[P2 const &] [] [p2] [second vector ]]
+]
+
+
+[heading Returns]
+the cross product vector 
+
+[heading Header]
+`#include <boost/geometry/arithmetic/cross_product.hpp>`
+
+
+[endsect]
+
+[section:cross_product_2 cross_product]
+
+'''<indexterm><primary>cross_product</primary></indexterm>'''
+Computes the cross product of two vectors. 
+
+[heading Description]
+All vectors should have the same dimension, 3 or 2.
+
+[heading Synopsis]
+``template<typename P>
+P cross_product(P const & p1, P const & p2)``
+
+[heading Parameters]
+
+[table
+[[Type] [Concept] [Name] [Description] ]
+[[P const &] [] [p1] [first vector ]]
+[[P const &] [] [p2] [second vector ]]
+]
+
+
+[heading Returns]
+the cross product vector 
+
+[heading Header]
+`#include <boost/geometry/arithmetic/cross_product.hpp>`
+
+
+[endsect]
+
 [section:divide_point divide_point]
 
 '''<indexterm><primary>divide_point</primary></indexterm>'''

@@ -33,6 +33,7 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
+#include <boost/type_traits/integral_promotion.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/static_assert.hpp>
@@ -155,10 +156,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  this default conversion operator is needed to allow the direct 
         //  usage of tokens in conjunction with the primitive parsers defined 
         //  in Qi
-        operator id_type() const { return id_; }
+        operator id_type() const { return static_cast<id_type>(id_); }
 
         //  Retrieve or set the token id of this token instance. 
-        id_type id() const { return id_; }
+        id_type id() const { return static_cast<id_type>(id_); }
         void id(id_type newid) { id_ = newid; }
 
         std::size_t state() const { return 0; }   // always '0' (INITIAL state)
@@ -187,7 +188,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
     protected:
-        id_type id_;            // token id, 0 if nothing has been matched
+        typename boost::integral_promotion<id_type>::type id_;            // token id, 0 if nothing has been matched
     };
 
 #if defined(BOOST_SPIRIT_DEBUG)

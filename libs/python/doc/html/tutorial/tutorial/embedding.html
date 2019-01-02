@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Embedding</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python Tutorial">
 <link rel="up" href="../index.html" title="Boost.Python Tutorial">
 <link rel="prev" href="object.html" title="Object Interface">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tutorial.embedding"></a><a class="link" href="embedding.html" title="Embedding">Embedding</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="embedding.html#tutorial.embedding.using_the_interpreter">Using the interpreter</a></span></dt></dl></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="embedding.html#tutorial.embedding.using_the_interpreter">Using the interpreter</a></span></dt></dl></div>
 <p>
       By now you should know how to use Boost.Python to call your C++ code from Python.
       However, sometimes you may need to do the reverse: call Python code from the
@@ -35,7 +35,7 @@
     </p>
 <h3>
 <a name="tutorial.embedding.h0"></a>
-      <span><a name="tutorial.embedding.building_embedded_programs"></a></span><a class="link" href="embedding.html#tutorial.embedding.building_embedded_programs">Building
+      <span class="phrase"><a name="tutorial.embedding.building_embedded_programs"></a></span><a class="link" href="embedding.html#tutorial.embedding.building_embedded_programs">Building
       embedded programs</a>
     </h3>
 <p>
@@ -78,7 +78,7 @@ exe embedded_program # name of the executable
 </pre>
 <h3>
 <a name="tutorial.embedding.h1"></a>
-      <span><a name="tutorial.embedding.getting_started"></a></span><a class="link" href="embedding.html#tutorial.embedding.getting_started">Getting
+      <span class="phrase"><a name="tutorial.embedding.getting_started"></a></span><a class="link" href="embedding.html#tutorial.embedding.getting_started">Getting
       started</a>
     </h3>
 <p>
@@ -130,7 +130,7 @@ exe embedded_program # name of the executable
       </p>
 <h3>
 <a name="tutorial.embedding.using_the_interpreter.h0"></a>
-        <span><a name="tutorial.embedding.using_the_interpreter.running_python_code"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.running_python_code">Running
+        <span class="phrase"><a name="tutorial.embedding.using_the_interpreter.running_python_code"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.running_python_code">Running
         Python code</a>
       </h3>
 <p>
@@ -144,6 +144,11 @@ exe embedded_program # name of the executable
         eval evaluates the given expression and returns the resulting value. exec
         executes the given code (typically a set of statements) returning the result,
         and exec_file executes the code contained in the given file.
+      </p>
+<p>
+        There are also overloads taking <code class="computeroutput"><span class="keyword">char</span>
+        <span class="keyword">const</span><span class="special">*</span></code>
+        instead of str as the first argument.
       </p>
 <p>
         The <code class="literal">globals</code> and <code class="literal">locals</code> parameters are
@@ -178,7 +183,7 @@ exe embedded_program # name of the executable
       </p>
 <h3>
 <a name="tutorial.embedding.using_the_interpreter.h1"></a>
-        <span><a name="tutorial.embedding.using_the_interpreter.manipulating_python_objects"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.manipulating_python_objects">Manipulating
+        <span class="phrase"><a name="tutorial.embedding.using_the_interpreter.manipulating_python_objects"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.manipulating_python_objects">Manipulating
         Python objects</a>
       </h3>
 <p>
@@ -204,7 +209,7 @@ exe embedded_program # name of the executable
 </pre>
 <h3>
 <a name="tutorial.embedding.using_the_interpreter.h2"></a>
-        <span><a name="tutorial.embedding.using_the_interpreter.exception_handling"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.exception_handling">Exception
+        <span class="phrase"><a name="tutorial.embedding.using_the_interpreter.exception_handling"></a></span><a class="link" href="embedding.html#tutorial.embedding.using_the_interpreter.exception_handling">Exception
         handling</a>
       </h3>
 <p>

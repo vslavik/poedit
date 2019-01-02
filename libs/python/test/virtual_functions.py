@@ -52,12 +52,12 @@
 # Call f indirectly from C++
 >>> try: a2.call_f(y1)
 ... except AttributeError: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 # Call f directly from Python
 >>> try: a2.call_f(y2)
 ... except AttributeError: pass
-... else: print 'no exception'
+... else: print('no exception')
 
 ############# Concrete Tests ############
 
@@ -103,8 +103,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

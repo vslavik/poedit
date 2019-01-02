@@ -4,6 +4,7 @@ http://www.boost.org/
 Copyright (c) 2005-2010 Joel de Guzman
 Copyright (c) 2010-2013 Thomas Heller
 Copyright (c) 2014-2015 John Fletcher
+Copyright (c) 2016 Kohei Takahashi
 
 Distributed under the Boost Software License, Version 1.0. (See accompanying
 file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -47,7 +48,64 @@ CHANGELOG
 
 - DEVELOP
 
-- V3.2.0
+- Many of components now supports C++11 variadic templates.
+  This is not a breaking change.
+
+- Boost 1.59.0
+
+- Support for <unordered_set> and <unordered_map>
+  This involves the following changes.
+  phoenix/config.hpp - New section with the following description:
+
+  This section is to sort out whether hash types or unordered types
+  are available. This depends on whether stdlib or libc++ is being used
+  and also whether C++11 or C++03 is being used.
+
+  Client code should contain this:
+
+  #ifdef BOOST_PHOENIX_HAS_HASH
+  #include BOOST_PHOENIX_HASH_SET_HEADER
+  #include BOOST_PHOENIX_HASH_MAP_HEADER
+  #endif
+
+  #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+  #define BOOST_PHOENIX_UNORDERED_SET_HEADER <unordered_set>
+  #define BOOST_PHOENIX_UNORDERED_MAP_HEADER <unordered_map>
+  #endif
+
+  The client code can then chose the implementation provided.
+  See the example in test/stl/querying_find2.cpp
+  This example file has been adjusted for a problem with MSVC 10
+
+  Modified files:
+     phoenix/stl/algorithm/detail/has_find.hpp
+  New files:
+     phoenix/stl/algorithm/detail/is_unordered_set_or_map.hpp
+     phoenix/stl/algorithm/detail/std_unordered_set_or_map_fwd.hpp
+  New test file:
+     phoenix/test/algorithm/querying_find2.cpp
+
+  Support for retrieving the return type of boost::phoenix::function objects.
+  This is needed in the lazy functionality.
+  Modified file: boost/phoenix/function/function.hpp
+
+  Revised version of lazy functionality with added functions.
+  Modified files in boost/phoenix/function:
+    lazy_operator.hpp lazy_prelude.hpp lazy_reuse.hpp
+  New files:
+    lazy_signature.hpp lazy_smart.hpp
+  New test files:
+    lazy_compose_tests.cpp lazy_fold_tests.cpp lazy_scan_tests.cpp
+
+- Feature enhancements #5604 Sequenced statements of a catch_ statement is
+  now able to handle thrown exception via local variables.
+
+  Modified files:
+    boost/phoenix/statement/try_catch.hpp
+  Modified test files:
+    exceptions.cpp
+
+- V3.2.0 in Boost 1.58.0
 
 - patch for #10927 in test/stdlib/cmath.cpp
 - patch for #11085 in test/function/function_tests.cpp
@@ -69,6 +127,12 @@ CHANGELOG
   test/function/lazy_list2_tests     More tests of list<T>.
 - Develop documentation for version 3.2.0
   This includes a new section on the lazy list implementation.
+
+- Fixed name clash by renaming 'at' to be 'at_' because the name 'at' is
+  used in phoenix/stl/container/container.hpp.
+
+- Fixed an unused typedef in phoenix/scope/let.hpp
+  - contributed by Kohei Takahashi
 
 - V3.1.1
 

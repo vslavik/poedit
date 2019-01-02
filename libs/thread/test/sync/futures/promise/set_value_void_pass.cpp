@@ -58,7 +58,27 @@ int main()
       BOOST_TEST(false);
     }
   }
-
+  {
+    typedef void T;
+    boost::promise<T> p;
+    boost::future<T> f = p.get_future();
+    p.set_value_deferred();
+    p.notify_deferred();
+    f.get();
+    try
+    {
+      p.set_value();
+      BOOST_TEST(false);
+    }
+    catch (const boost::future_error& e)
+    {
+      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
+    }
+    catch (...)
+    {
+      BOOST_TEST(false);
+    }
+  }
   return boost::report_errors();
 }
 

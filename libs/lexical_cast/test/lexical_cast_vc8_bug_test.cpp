@@ -19,6 +19,10 @@
 
 #include <string>
 
+#ifdef BOOST_MSVC
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 using namespace boost;
 
 // See also test_conversion_from_string_to_integral(CharT)
@@ -37,11 +41,11 @@ void test_too_long_number(CharT zero)
     s[s.size()-1] += static_cast<CharT>(9); // '0' -> '9'
     BOOST_CHECK_THROW(lexical_cast<T>(s), bad_lexical_cast);
 
-    if(limits::is_signed)
+    if (limits::is_signed)
     {
-        std::basic_ostringstream<CharT> o;
-        o << (limits::min)() << zero;
-        s = o.str();
+        std::basic_ostringstream<CharT> o2;
+        o2 << (limits::min)() << zero;
+        s = o2.str();
         BOOST_CHECK_THROW(lexical_cast<T>(s), bad_lexical_cast);
         s[s.size()-1] += static_cast<CharT>(9); // '0' -> '9'
         BOOST_CHECK_THROW(lexical_cast<T>(s), bad_lexical_cast);

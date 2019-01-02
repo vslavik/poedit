@@ -1,6 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -14,13 +14,13 @@
 
 //____________________________________________________________________________//
 
-struct MyConfig2 { 
-    MyConfig2() { std::cout << "global setup part2\n"; } 
-    ~MyConfig2() { std::cout << "global teardown part2\n"; } 
+struct MyConfig2 {
+    MyConfig2() { std::cout << "global setup part2\n"; }
+    ~MyConfig2() { std::cout << "global teardown part2\n"; }
 };
 
 // structure MyConfig2 is used as a global fixture. You could have any number of global fxtures
-BOOST_GLOBAL_FIXTURE( MyConfig2 );
+BOOST_TEST_GLOBAL_FIXTURE( MyConfig2 );
 
 //____________________________________________________________________________//
 

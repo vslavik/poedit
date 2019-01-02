@@ -6,7 +6,7 @@
  */
 
 /*
- * filesys.c - OS independant file system manipulation support
+ * filesys.c - OS independent file system manipulation support
  *
  * External routines:
  *  file_build1()        - construct a path string based on PATHNAME information
@@ -19,7 +19,7 @@
  *  file_remove_atexit() - schedule a path to be removed on program exit
  *  file_time()          - get a file timestamp
  *
- * External routines - utilites for OS specific module implementations:
+ * External routines - utilities for OS specific module implementations:
  *  file_query_posix_()  - query information about a path using POSIX stat()
  *
  * Internal routines:
@@ -88,6 +88,7 @@ file_archive_info_t * file_archive_info( OBJECT * const path, int * found )
 
     if ( !*found )
     {
+        archive->name = path_key;
         archive->file = 0;
         archive->members = FL0;
     }
@@ -292,6 +293,7 @@ file_info_t * file_query( OBJECT * const path )
     return ff;
 }
 
+#ifndef OS_NT
 
 /*
  * file_query_posix_() - query information about a path using POSIX stat()
@@ -329,9 +331,44 @@ void file_query_posix_( file_info_t * const info )
         info->is_file = statbuf.st_mode & S_IFREG ? 1 : 0;
         info->is_dir = statbuf.st_mode & S_IFDIR ? 1 : 0;
         info->exists = 1;
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200809
+#if defined(OS_MACOSX)
+        timestamp_init( &info->time, statbuf.st_mtimespec.tv_sec, statbuf.st_mtimespec.tv_nsec );
+#else
+        timestamp_init( &info->time, statbuf.st_mtim.tv_sec, statbuf.st_mtim.tv_nsec );
+#endif
+#else
         timestamp_init( &info->time, statbuf.st_mtime, 0 );
+#endif
     }
 }
+
+/*
+ * file_supported_fmt_resolution() - file modification timestamp resolution
+ *
+ * Returns the minimum file modification timestamp resolution supported by this
+ * Boost Jam implementation. File modification timestamp changes of less than
+ * the returned value might not be recognized.
+ *
+ * Does not take into consideration any OS or file system related restrictions.
+ *
+ * Return value 0 indicates that any value supported by the OS is also supported
+ * here.
+ */
+
+void file_supported_fmt_resolution( timestamp * const t )
+{
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200809
+    timestamp_init( t, 0, 1 );
+#else
+    /* The current implementation does not support file modification timestamp
+     * resolution of less than one second.
+     */
+    timestamp_init( t, 1, 0 );
+#endif
+}
+
+#endif
 
 
 /*

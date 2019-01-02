@@ -24,6 +24,25 @@
 #include <algorithm> // for random_shuffle
 #include <boost/serialization/vector.hpp>
 #include <boost/mpi/collectives/broadcast.hpp>
+#include <boost/config.hpp>
+
+#if defined(BOOST_NO_CXX98_RANDOM_SHUFFLE)
+
+#include <random>
+
+std::default_random_engine gen;
+
+template<typename RandomIt> void random_shuffle( RandomIt first, RandomIt last )
+{
+    std::shuffle( first, last, gen );
+}
+
+#else
+
+using std::random_shuffle;
+
+#endif // #if defined(BOOST_NO_CXX98_RANDOM_SHUFFLE)
+
 
 using boost::mpi::communicator;
 using boost::mpi::graph_communicator;
@@ -74,7 +93,7 @@ int test_main(int argc, char* argv[])
     BGL_FORALL_VERTICES(v, graph, Graph)
       put(graph_alt_index, v, index++);
 
-    std::random_shuffle(graph_alt_index_vec.begin(), graph_alt_index_vec.end());
+    ::random_shuffle(graph_alt_index_vec.begin(), graph_alt_index_vec.end());
   }
   broadcast(world, graph_alt_index_vec, 0);
 

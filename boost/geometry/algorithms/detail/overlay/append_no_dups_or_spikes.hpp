@@ -2,8 +2,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2017.
+// Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -63,8 +63,9 @@ inline bool points_equal_or_close(Point1 const& point1,
 }
 
 
-template <typename Range, typename Point, typename RobustPolicy>
+template <typename Range, typename Point, typename SideStrategy, typename RobustPolicy>
 inline void append_no_dups_or_spikes(Range& range, Point const& point,
+        SideStrategy const& strategy,
         RobustPolicy const& robust_policy)
 {
 #ifdef BOOST_GEOMETRY_DEBUG_INTERSECTION
@@ -92,6 +93,7 @@ inline void append_no_dups_or_spikes(Range& range, Point const& point,
             && point_is_spike_or_equal(point,
                 *(boost::end(range) - 3),
                 *(boost::end(range) - 2),
+                strategy,
                 robust_policy))
     {
         // Use the Concept/traits, so resize and append again
@@ -100,8 +102,46 @@ inline void append_no_dups_or_spikes(Range& range, Point const& point,
     }
 }
 
-template <typename Range, typename RobustPolicy>
+template <typename Range, typename Point, typename SideStrategy, typename RobustPolicy>
+inline void append_no_collinear(Range& range, Point const& point,
+        SideStrategy const& strategy,
+        RobustPolicy const& robust_policy)
+{
+    // Stricter version, not allowing any point in a linear row
+    // (spike, continuation or same point)
+
+    // The code below this condition checks all spikes/dups
+    // for geometries >= 3 points.
+    // So we have to check the first potential duplicate differently
+    if (boost::size(range) == 1
+        && points_equal_or_close(*(boost::begin(range)), point, robust_policy))
+    {
+        return;
+    }
+
+    traits::push_back<Range>::apply(range, point);
+
+    // If a point is equal, or forming a spike, remove the pen-ultimate point
+    // because this one caused the spike.
+    // If so, the now-new-pen-ultimate point can again cause a spike
+    // (possibly at a corner). So keep doing this.
+    // Besides spikes it will also avoid adding duplicates.
+    while(boost::size(range) >= 3
+            && point_is_collinear(point,
+                *(boost::end(range) - 3),
+                *(boost::end(range) - 2),
+                strategy,
+                robust_policy))
+    {
+        // Use the Concept/traits, so resize and append again
+        traits::resize<Range>::apply(range, boost::size(range) - 2);
+        traits::push_back<Range>::apply(range, point);
+    }
+}
+
+template <typename Range, typename SideStrategy, typename RobustPolicy>
 inline void clean_closing_dups_and_spikes(Range& range,
+                SideStrategy const& strategy,
                 RobustPolicy const& robust_policy)
 {
     std::size_t const minsize
@@ -134,8 +174,8 @@ inline void clean_closing_dups_and_spikes(Range& range,
         }
 
         // Check if closing point is a spike (this is so if the second point is
-        // considered as a spike w.r.t. the last segment)
-        if (point_is_spike_or_equal(*second, *ultimate, *first, robust_policy))
+        // considered as collinear w.r.t. the last segment)
+        if (point_is_collinear(*second, *ultimate, *first, strategy, robust_policy))
         {
             range::erase(range, first);
             if (BOOST_GEOMETRY_CONDITION(closed))

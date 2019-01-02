@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template key_of_value</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../intrusive/reference.html#header.boost.intrusive.options_hpp" title="Header &lt;boost/intrusive/options.hpp&gt;">
 <link rel="prev" href="compare.html" title="Struct template compare">
@@ -36,9 +36,9 @@
 <span class="keyword">struct</span> <a class="link" href="key_of_value.html" title="Struct template key_of_value">key_of_value</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp212284896"></a><h2>Description</h2>
-<p>This option setter specifies the a function object that specifies the type of the key of an associative container and an operator to obtain it from a value type.</p>
-<p>This function object must the define a `key_type` and a member with signature `const key_type &amp; operator()(const value_type &amp;) const` that will return the key from a value_type of an associative container </p>
+<a name="id-1.3.20.42.21.7.4"></a><h2>Description</h2>
+<p>This option setter specifies a function object that specifies the type of the key of an associative container and an operator to obtain it from a value type.</p>
+<p>This function object must the define a <code class="computeroutput">type</code> member typedef and a member with signature <code class="computeroutput">type [const&amp;] operator()(const value_type &amp;) const</code> that will return the key from a value_type of an associative container </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

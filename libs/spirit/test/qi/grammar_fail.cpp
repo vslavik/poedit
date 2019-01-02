@@ -29,10 +29,10 @@ struct num_list : qi::grammar<char const*, qi::rule<char const*> >
 int main()
 {
     char const* input = "some input, it doesn't matter";
-    char const* end = &input[strlen(input)+1];
+    char const* end = &input[strlen(input)];
 
     num_list g;
-    bool r = qi::phrase_parse(input, end, g,
+    qi::phrase_parse(input, end, g,
         qi::space | ('%' >> *~qi::char_('\n') >> '\n'));
 
     return 0;

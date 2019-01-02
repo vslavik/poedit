@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -8,9 +8,19 @@
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
 #include <boost/hana/concept/comparable.hpp>
+#include <boost/hana/concept/constant.hpp>
 #include <boost/hana/concept/euclidean_ring.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/div.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/for_each.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/mod.hpp>
+#include <boost/hana/mult.hpp>
+#include <boost/hana/not_equal.hpp>
+#include <boost/hana/plus.hpp>
+#include <boost/hana/value.hpp>
+#include <boost/hana/zero.hpp>
 
 #include <laws/base.hpp>
 
@@ -26,7 +36,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs>
         TestEuclideanRing(Xs xs) {
             hana::for_each(xs, [](auto x) {
-                static_assert(EuclideanRing<decltype(x)>::value, "");
+                static_assert(EuclideanRing<decltype(x)>{}, "");
             });
 
             foreach2(xs, [](auto a, auto b) {

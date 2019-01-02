@@ -35,6 +35,9 @@ std::vector<int> const build_vector()
 int
 main()
 {
+    BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::deque<int> >::value));
+    BOOST_STATIC_ASSERT((!phx::stl::has_key_type<std::deque<int> >::value));
+
     std::deque<int> const data = build_deque();
     test_insert(data);
     test_max_size(data);

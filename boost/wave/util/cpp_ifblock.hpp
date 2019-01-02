@@ -30,23 +30,23 @@ class if_block
 {
 public:
     if_block() :
-        status(true), some_part_status(true), 
+        status(true), some_part_status(true),
         enclosing_status(true), is_in_else(false)
     {
     }
-    if_block(bool status_, bool enclosing_status_) : 
-        status(status_), 
+    if_block(bool status_, bool enclosing_status_) :
+        status(status_),
         some_part_status(status_),
         enclosing_status(enclosing_status_),
         is_in_else(false)
     {
     }
 
-    void set_status(bool status_) 
-    { 
-        status = status_; 
-        if (status_) 
-            some_part_status = true; 
+    void set_status(bool status_)
+    {
+        status = status_;
+        if (status_)
+            some_part_status = true;
     }
     bool get_status() const { return status; }
     bool get_some_part_status() const { return some_part_status; }
@@ -63,8 +63,8 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 // stack of conditional compilation contexts
-class if_block_stack 
-:   private std::stack<if_block> 
+class if_block_stack
+:   private std::stack<if_block>
 {
 public:
     typedef std::stack<if_block>::size_type size_type;
@@ -84,7 +84,7 @@ public:
             if (get_status()) {
             // entered a (false) #elif block from a true block
                 this->top().set_status(false);
-            } 
+            }
             else if (new_status && !this->top().get_some_part_status()) {
             // Entered true #elif block and no previous block was true
                 this->top().set_status(new_status);
@@ -101,7 +101,7 @@ public:
             if (!this->top().get_some_part_status()) {
             // Entered (true) #else block and no previous block was true
                 this->top().set_status(true);
-            } 
+            }
             else if (get_status()) {
             // Entered (false) #else block from true block
                 this->top().set_status(false);
@@ -123,12 +123,12 @@ public:
 
 // return, whether the top (innermost) condition is true or false
     bool get_status() const
-    { 
-        return 0 == this->size() || this->top().get_status(); 
+    {
+        return 0 == this->size() || this->top().get_status();
     }
     bool get_some_part_status() const
-    { 
-        return 0 == this->size() || this->top().get_some_part_status(); 
+    {
+        return 0 == this->size() || this->top().get_some_part_status();
     }
     bool get_enclosing_status() const
     {

@@ -13,6 +13,8 @@
       typedef __below type;
    };
   
+   template <class T> using promote_t = typename promote<T>::type; // C++11 and above
+
 __type If integral or floating point promotion can be applied to an rvalue
 of type `T`, then applies integral and floating point promotions to `T` and
 keeps cv-qualifiers of `T`, otherwise leaves `T` unchanged. See also

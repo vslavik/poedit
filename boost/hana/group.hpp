@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::group`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -78,7 +78,7 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <bool ...b>
         struct group_indices {
-            static constexpr bool bs[] = {b...};
+            static constexpr bool bs[sizeof...(b)] = {b...};
             static constexpr std::size_t n_groups =
                     detail::count(bs, bs + sizeof(bs), false) + 1;
 
@@ -97,7 +97,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             }
 
             static constexpr auto info = compute_info();
-            static constexpr auto offsets = info.first;
+            static constexpr auto group_offsets = info.first;
             static constexpr auto group_sizes = info.second;
 
             template <typename S, typename Xs, std::size_t ...i>
@@ -106,7 +106,8 @@ BOOST_HANA_NAMESPACE_BEGIN
                     detail::get_subsequence_(
                         static_cast<Xs&&>(xs),
                         typename offset_by<
-                            offsets[i], std::make_index_sequence<group_sizes[i]>
+                            group_offsets[i],
+                            std::make_index_sequence<group_sizes[i]>
                         >::type{}
                     )...
                 );

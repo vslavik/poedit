@@ -30,7 +30,7 @@ private:
             to_.push_back(from[idx++]);
         }
         while ( to_.size() < max_)
-            to_.push_back( other->from[other->idx]); 
+            to_.push_back( other->from[other->idx++]); 
     }
 
     merger( merger const&);

@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
 
     A generic C++ lexer token definition
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -18,7 +18,7 @@
 #include <boost/serialization/serialization.hpp>
 #endif
 #include <boost/wave/util/file_position.hpp>
-#include <boost/wave/token_ids.hpp>  
+#include <boost/wave/token_ids.hpp>
 #include <boost/wave/language_support.hpp>
 
 #include <boost/throw_exception.hpp>
@@ -80,7 +80,7 @@ public:
 
     friend bool operator== (token_data const& lhs, token_data const& rhs)
     {
-        //  two tokens are considered equal even if they refer to different 
+        //  two tokens are considered equal even if they refer to different
         //  positions
         return (lhs.id == rhs.id && lhs.value == rhs.value) ? true : false;
     }
@@ -89,7 +89,7 @@ public:
     {
         BOOST_ASSERT(refcnt == 1);
         id = id_;
-        value = value_; 
+        value = value_;
         pos = pos_;
     }
 
@@ -97,7 +97,7 @@ public:
     {
         BOOST_ASSERT(refcnt == 1);
         id = rhs.id;
-        value = rhs.value; 
+        value = rhs.value;
         pos = rhs.pos;
     }
 
@@ -114,7 +114,7 @@ public:
             case '\r':  stream << "\\r"; break;
             case '\n':  stream << "\\n"; break;
             default:
-                stream << value[i]; 
+                stream << value[i];
                 break;
             }
         }
@@ -160,7 +160,7 @@ token_data<StringTypeT, PositionT>::operator new(std::size_t size)
 }
 
 template <typename StringTypeT, typename PositionT>
-inline void 
+inline void
 token_data<StringTypeT, PositionT>::operator delete(void *p, std::size_t size)
 {
     BOOST_ASSERT(sizeof(token_data<StringTypeT, PositionT>) == size);
@@ -168,7 +168,7 @@ token_data<StringTypeT, PositionT>::operator delete(void *p, std::size_t size)
             token_data_tag, sizeof(token_data<StringTypeT, PositionT>)
         > pool_type;
 
-    if (0 != p) 
+    if (0 != p)
         pool_type::free(p);
 }
 
@@ -180,13 +180,13 @@ template <typename PositionT = boost::wave::util::file_position_type>
 class lex_token;
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  lex_token
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename PositionT>
-class lex_token 
+class lex_token
 {
 public:
     typedef BOOST_WAVE_STRINGTYPE   string_type;
@@ -194,7 +194,7 @@ public:
 
 private:
     typedef impl::token_data<string_type, position_type> data_type;
-    
+
 public:
     //  default constructed tokens correspond to EOI tokens
     lex_token()
@@ -209,7 +209,7 @@ public:
     lex_token(lex_token const& rhs)
     :   data(rhs.data)
     {
-        if (0 != data) 
+        if (0 != data)
             data->addref();
     }
 
@@ -219,7 +219,7 @@ public:
 
     ~lex_token()
     {
-        if (0 != data && 0 == data->release()) 
+        if (0 != data && 0 == data->release())
             delete data;
         data = 0;
     }
@@ -227,11 +227,11 @@ public:
     lex_token& operator=(lex_token const& rhs)
     {
         if (&rhs != this) {
-            if (0 != data && 0 == data->release()) 
+            if (0 != data && 0 == data->release())
                 delete data;
-            
+
             data = rhs.data;
-            if (0 != data) 
+            if (0 != data)
                 data->addref();
         }
         return *this;
@@ -260,11 +260,11 @@ public:
 // debug support
 #if BOOST_WAVE_DUMP_PARSE_TREE != 0
 // access functions for the tree_to_xml functionality
-    static int get_token_id(lex_token const &t) 
+    static int get_token_id(lex_token const &t)
         { return token_id(t); }
-    static string_type get_token_value(lex_token const &t) 
+    static string_type get_token_value(lex_token const &t)
         { return t.get_value(); }
-#endif 
+#endif
 
 #if defined(BOOST_SPIRIT_DEBUG)
 // debug support
@@ -292,7 +292,7 @@ private:
 
         data_type* newdata = new data_type(*data) ;
 
-        data->release();          // release this reference, can't get zero 
+        data->release();          // release this reference, can't get zero
         data = newdata;
     }
 
@@ -300,12 +300,12 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//  This overload is needed by the multi_pass/functor_input_policy to 
-//  validate a token instance. It has to be defined in the same namespace 
+//  This overload is needed by the multi_pass/functor_input_policy to
+//  validate a token instance. It has to be defined in the same namespace
 //  as the token class itself to allow ADL to find it.
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Position>
-inline bool 
+inline bool
 token_is_valid(lex_token<Position> const& t)
 {
     return t.is_valid();

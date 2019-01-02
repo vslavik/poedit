@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <boost/cstdint.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/spirit/include/karma_uint.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/log/attributes/named_scope.hpp>
@@ -575,15 +575,15 @@ public:
         result_type operator() (stream_type& strm, value_type const& value) const
         {
             strm.flush();
-            typedef typename stream_type::streambuf_type streambuf_type;
-            string_type& str = *static_cast< streambuf_type* >(strm.rdbuf())->storage();
 
             char_type buf[std::numeric_limits< unsigned int >::digits10 + 2];
             char_type* p = buf;
 
             typedef karma::uint_generator< unsigned int, 10 > uint_gen;
             karma::generate(p, uint_gen(), value.line);
-            str.append(buf, p);
+
+            typedef typename stream_type::streambuf_type streambuf_type;
+            static_cast< streambuf_type* >(strm.rdbuf())->append(buf, static_cast< std::size_t >(p - buf));
         }
     };
 

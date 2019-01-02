@@ -21,7 +21,7 @@ Transformation strategy to do an inverse transformation in a Cartesian coordinat
 [heading Synopsis]
 ``template<typename CalculationType, std::size_t Dimension1, std::size_t Dimension2>
 class strategy::transform::inverse_transformer
-      : public strategy::transform::ublas_transformer< CalculationType, Dimension1, Dimension2 >
+      : public strategy::transform::matrix_transformer< CalculationType, Dimension1, Dimension2 >
 {
   // ...
 };

@@ -17,17 +17,22 @@
 #define BOOST_LOG_SOURCES_RECORD_OSTREAM_HPP_INCLUDED_
 
 #include <string>
+#include <iosfwd>
 #include <ostream>
 #include <boost/assert.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
-#include <boost/utility/addressof.hpp>
+#include <boost/move/utility_core.hpp>
+#include <boost/type_traits/is_enum.hpp>
+#include <boost/type_traits/is_scalar.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#include <boost/core/addressof.hpp>
+#include <boost/core/enable_if.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/native_typeof.hpp>
 #include <boost/log/detail/unhandled_exception_count.hpp>
 #include <boost/log/core/record.hpp>
 #include <boost/log/utility/unique_identifier_name.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/utility/formatting_ostream.hpp>
 #include <boost/log/detail/header.hpp>
 
@@ -44,10 +49,18 @@ class basic_record_ostream;
 
 namespace aux {
 
-template< typename StreamT, typename R >
-struct enable_if_record_ostream {};
-template< typename CharT, typename R >
-struct enable_if_record_ostream< basic_record_ostream< CharT >, R > { typedef R type; };
+template< typename StreamT, typename T, bool ByValueV, typename R >
+struct enable_record_ostream_generic_operator {};
+template< typename CharT, typename T, typename R >
+struct enable_record_ostream_generic_operator< basic_record_ostream< CharT >, T, false, R > :
+    public boost::disable_if_c< boost::is_scalar< typename boost::remove_cv< T >::type >::value, R >
+{
+};
+template< typename CharT, typename T, typename R >
+struct enable_record_ostream_generic_operator< basic_record_ostream< CharT >, T, true, R > :
+    public boost::enable_if_c< boost::is_enum< typename boost::remove_cv< T >::type >::value, R >
+{
+};
 
 } // namespace aux
 
@@ -73,6 +86,8 @@ public:
     typedef std::basic_string< char_type > string_type;
     //! Stream type
     typedef std::basic_ostream< char_type > stream_type;
+    //! Character traits
+    typedef typename base_type::traits_type traits_type;
 
 private:
     //! Log record
@@ -169,6 +184,160 @@ public:
     //! The function resets the stream into a detached (default initialized) state
     BOOST_LOG_API void detach_from_record() BOOST_NOEXCEPT;
 
+    basic_record_ostream& operator<< (typename base_type::ios_base_manip manip)
+    {
+        static_cast< base_type& >(*this) << manip;
+        return *this;
+    }
+    basic_record_ostream& operator<< (typename base_type::basic_ios_manip manip)
+    {
+        static_cast< base_type& >(*this) << manip;
+        return *this;
+    }
+    basic_record_ostream& operator<< (typename base_type::stream_manip manip)
+    {
+        static_cast< base_type& >(*this) << manip;
+        return *this;
+    }
+
+    basic_record_ostream& operator<< (char c)
+    {
+        static_cast< base_type& >(*this) << c;
+        return *this;
+    }
+    basic_record_ostream& operator<< (const char* p)
+    {
+        static_cast< base_type& >(*this) << p;
+        return *this;
+    }
+
+    // When no native character type is supported, the following overloads are disabled as they have ambiguous meaning.
+    // Use basic_string_view or basic_string to explicitly indicate that the data is a string.
+#if !defined(BOOST_NO_INTRINSIC_WCHAR_T)
+    basic_record_ostream& operator<< (wchar_t c)
+    {
+        static_cast< base_type& >(*this) << c;
+        return *this;
+    }
+    basic_record_ostream& operator<< (const wchar_t* p)
+    {
+        static_cast< base_type& >(*this) << p;
+        return *this;
+    }
+#endif
+#if !defined(BOOST_LOG_NO_CXX11_CODECVT_FACETS)
+#if !defined(BOOST_NO_CXX11_CHAR16_T)
+    basic_record_ostream& operator<< (char16_t c)
+    {
+        static_cast< base_type& >(*this) << c;
+        return *this;
+    }
+    basic_record_ostream& operator<< (const char16_t* p)
+    {
+        static_cast< base_type& >(*this) << p;
+        return *this;
+    }
+#endif
+#if !defined(BOOST_NO_CXX11_CHAR32_T)
+    basic_record_ostream& operator<< (char32_t c)
+    {
+        static_cast< base_type& >(*this) << c;
+        return *this;
+    }
+    basic_record_ostream& operator<< (const char32_t* p)
+    {
+        static_cast< base_type& >(*this) << p;
+        return *this;
+    }
+#endif
+#endif
+
+    basic_record_ostream& operator<< (bool value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (signed char value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (unsigned char value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (short value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (unsigned short value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (int value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (unsigned int value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (long value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (unsigned long value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+#if !defined(BOOST_NO_LONG_LONG)
+    basic_record_ostream& operator<< (long long value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (unsigned long long value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+#endif
+
+    basic_record_ostream& operator<< (float value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (double value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+    basic_record_ostream& operator<< (long double value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+
+    basic_record_ostream& operator<< (const void* value)
+    {
+        static_cast< base_type& >(*this) << value;
+        return *this;
+    }
+
+    basic_record_ostream& operator<< (std::basic_streambuf< char_type, traits_type >* buf)
+    {
+        static_cast< base_type& >(*this) << buf;
+        return *this;
+    }
+
 private:
     //! The function initializes the stream and the stream buffer
     BOOST_LOG_API void init_stream();
@@ -196,7 +365,16 @@ typedef basic_record_ostream< wchar_t > wrecord_ostream;    //!< Convenience typ
 // This is because my_type rvalues require adding const to the type, which counts as a conversion that is not required
 // if there is a perfect forwarding overload.
 template< typename StreamT, typename T >
-inline typename boost::log::aux::enable_if_record_ostream< StreamT, StreamT& >::type
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, true, StreamT& >::type
+operator<< (StreamT& strm, T value)
+{
+    typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;
+    static_cast< formatting_ostream_type& >(strm) << value;
+    return strm;
+}
+
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, false, StreamT& >::type
 operator<< (StreamT& strm, T const& value)
 {
     typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;
@@ -205,7 +383,7 @@ operator<< (StreamT& strm, T const& value)
 }
 
 template< typename StreamT, typename T >
-inline typename boost::log::aux::enable_if_record_ostream< StreamT, StreamT& >::type
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, false, StreamT& >::type
 operator<< (StreamT& strm, T& value)
 {
     typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;
@@ -216,7 +394,16 @@ operator<< (StreamT& strm, T& value)
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 template< typename StreamT, typename T >
-inline typename boost::log::aux::enable_if_record_ostream< StreamT, StreamT& >::type
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, true, StreamT& >::type
+operator<< (StreamT&& strm, T value)
+{
+    typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;
+    static_cast< formatting_ostream_type& >(strm) << value;
+    return strm;
+}
+
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, false, StreamT& >::type
 operator<< (StreamT&& strm, T const& value)
 {
     typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;
@@ -225,7 +412,7 @@ operator<< (StreamT&& strm, T const& value)
 }
 
 template< typename StreamT, typename T >
-inline typename boost::log::aux::enable_if_record_ostream< StreamT, StreamT& >::type
+inline typename boost::log::aux::enable_record_ostream_generic_operator< StreamT, T, false, StreamT& >::type
 operator<< (StreamT&& strm, T& value)
 {
     typedef basic_formatting_ostream< typename StreamT::char_type > formatting_ostream_type;

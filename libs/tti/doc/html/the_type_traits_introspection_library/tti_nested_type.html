@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Nested Types</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="prev" href="tti_detail_has_function.html" title="Introspecting an inner function">
@@ -48,7 +48,7 @@
       a marker type if it does not.
     </p>
 <p>
-      As with our other macros we can use the alternative form of the macro <code class="computeroutput"><a class="link" href="../BOOST_TTI_TRAIT_MEMBER_TYPE.html" title="Macro BOOST_TTI_TRAIT_MEMBER_TYPE">BOOST_TTI_TRAIT_MEMBER_TYPE</a></code> to
+      As with our other macros we can use the alternative form of the macro <code class="computeroutput"><a class="link" href="../BOOST_TTI_TRAI_idp20502000.html" title="Macro BOOST_TTI_TRAIT_MEMBER_TYPE">BOOST_TTI_TRAIT_MEMBER_TYPE</a></code> to
       pass first the name of the metafunction to be generated and then the name of
       the 'named type'. After that the functionality of our resulting metafunction
       is exactly the same.
@@ -103,7 +103,10 @@
                 <code class="computeroutput"><span class="identifier">member_type_</span><span class="char">'name'</span></code>
               </p>
               <p>
-                class T = enclosing type class U = (optional) marker type
+                class T = enclosing type
+              </p>
+              <p>
+                class U = (optional) marker type
               </p>
               <p>
                 returns = the type of 'name' if it exists, else a marker type, as
@@ -150,7 +153,7 @@
     </p>
 <h4>
 <a name="the_type_traits_introspection_library.tti_nested_type.h0"></a>
-      <span><a name="the_type_traits_introspection_library.tti_nested_type.the_problem"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.the_problem">The
+      <span class="phrase"><a name="the_type_traits_introspection_library.tti_nested_type.the_problem"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.the_problem">The
       problem</a>
     </h4>
 <p>
@@ -195,7 +198,7 @@
     </p>
 <h4>
 <a name="the_type_traits_introspection_library.tti_nested_type.h1"></a>
-      <span><a name="the_type_traits_introspection_library.tti_nested_type.the_solution"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.the_solution">The
+      <span class="phrase"><a name="the_type_traits_introspection_library.tti_nested_type.the_solution"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.the_solution">The
       solution</a>
     </h4>
 <p>
@@ -224,7 +227,7 @@
     </p>
 <h4>
 <a name="the_type_traits_introspection_library.tti_nested_type.h2"></a>
-      <span><a name="the_type_traits_introspection_library.tti_nested_type.checking_if_the_member_type_exists"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.checking_if_the_member_type_exists">Checking
+      <span class="phrase"><a name="the_type_traits_introspection_library.tti_nested_type.checking_if_the_member_type_exists"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.checking_if_the_member_type_exists">Checking
       if the member type exists</a>
     </h4>
 <p>
@@ -287,7 +290,10 @@
                 <code class="computeroutput"><a class="link" href="../boost/tti/valid_member_type.html" title="Struct template valid_member_type">boost::tti::valid_member_type</a></code>
               </p>
               <p>
-                class T = a type class U = (optional) marker type
+                class T = a type
+              </p>
+              <p>
+                class U = (optional) marker type
               </p>
               <p>
                 returns = true if the type exists, false if it does not. 'Existence'
@@ -380,7 +386,7 @@
     </p>
 <h4>
 <a name="the_type_traits_introspection_library.tti_nested_type.h3"></a>
-      <span><a name="the_type_traits_introspection_library.tti_nested_type.an_extended_nested_type_example"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.an_extended_nested_type_example">An
+      <span class="phrase"><a name="the_type_traits_introspection_library.tti_nested_type.an_extended_nested_type_example"></a></span><a class="link" href="tti_nested_type.html#the_type_traits_introspection_library.tti_nested_type.an_extended_nested_type_example">An
       extended nested type example</a>
     </h4>
 <p>
@@ -408,10 +414,10 @@
       In our TTI code we first create a series of member type macros for each of
       our nested types:
     </p>
-<pre class="programlisting"><span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">FindType</span><span class="special">)</span>
-<span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">AType</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">AType</span><span class="special">)</span>
 <span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">BType</span><span class="special">)</span>
 <span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">CType</span><span class="special">)</span>
+<span class="identifier">BOOST_TTI_MEMBER_TYPE</span><span class="special">(</span><span class="identifier">FindType</span><span class="special">)</span>
 </pre>
 <p>
       Next we can create a typedef to reflect a nested type called FindType which

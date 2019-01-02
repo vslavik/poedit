@@ -19,6 +19,7 @@
 #endif
 
 #include <boost/assign/list_inserter.hpp>
+#include <boost/move/utility.hpp>
 #ifdef BOOST_SLIST_HEADER
 # include BOOST_SLIST_HEADER
 #else
@@ -29,14 +30,22 @@ namespace boost
 {
 namespace assign
 {
-
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     template< class V, class A, class V2 >
     inline list_inserter< assign_detail::call_push_back< BOOST_STD_EXTENSION_NAMESPACE::slist<V,A> >, V >
     operator+=( BOOST_STD_EXTENSION_NAMESPACE::slist<V,A>& c, V2 v )
     {
         return push_back( c )( v );
     }
-    
+#else
+    template< class V, class A, class V2 >
+    inline list_inserter< assign_detail::call_push_back< BOOST_STD_EXTENSION_NAMESPACE::slist<V,A> >, V >
+    operator+=( BOOST_STD_EXTENSION_NAMESPACE::slist<V,A>& c, V2&& v )
+    {
+        return push_back( c )( boost::forward<V2>(v) );
+    }
+
+#endif
 }
 }
 

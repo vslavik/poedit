@@ -7,7 +7,7 @@
 [section:id_test1 Quickbook section id test]
 [endsect]
 [section :id_test2 Quickbook section id test]
-[endsect]
+[endsect:id_test2]
 [section:  id_test3 Quickbook section id test]
 [endsect]
 [section:-- Quickbook section odd id test]
@@ -15,4 +15,9 @@
 
 [template thing[] abc]
 [section:sect-[thing] Section with template in id]
+[endsect]
+
+[section [link section_id_1_7.id_test1 Link in title]]
+[endsect]
+[section [link section_id_1_7.id_test1 Link] in title]
 [endsect]

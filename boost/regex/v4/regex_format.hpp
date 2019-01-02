@@ -86,7 +86,7 @@ struct trivial_format_traits
    }
    int toi(const charT*& p1, const charT* p2, int radix)const
    {
-      return global_toi(p1, p2, radix, *this);
+      return (int)global_toi(p1, p2, radix, *this);
    }
 };
 
@@ -165,7 +165,7 @@ private:
          std::vector<char_type> v(i, j);
          const char_type* start = &v[0];
          const char_type* pos = start;
-         int r = m_traits.toi(pos, &v[0] + v.size(), base);
+         int r = (int)m_traits.toi(pos, &v[0] + v.size(), base);
          std::advance(i, pos - start);
          return r;
       }
@@ -800,9 +800,6 @@ void basic_regex_formatter<OutputIterator, Results, traits, ForwardIter>::put(co
 
 template <class S>
 class string_out_iterator
-#ifndef BOOST_NO_STD_ITERATOR
-   : public std::iterator<std::output_iterator_tag, typename S::value_type>
-#endif
 {
    S* out;
 public:
@@ -816,13 +813,11 @@ public:
       return *this; 
    }
 
-#ifdef BOOST_NO_STD_ITERATOR
    typedef std::ptrdiff_t difference_type;
    typedef typename S::value_type value_type;
    typedef value_type* pointer;
    typedef value_type& reference;
    typedef std::output_iterator_tag iterator_category;
-#endif
 };
 
 template <class OutputIterator, class Iterator, class Alloc, class ForwardIter, class traits>

@@ -8,6 +8,7 @@
 # Test Boost Build configuration file handling.
 
 import BoostBuild
+import TestCmd
 
 import os
 import os.path
@@ -236,7 +237,7 @@ ECHO test-index: $(test-index:E=(unknown)) ;
 def _canSetEmptyEnvironmentVariable():
     """
       Unfortunately different OSs (and possibly Python implementations as well)
-    have different interpretations of what it means to set an evironment
+    have different interpretations of what it means to set an environment
     variable to an empty string. Some (e.g. Windows) interpret it as unsetting
     the variable and some (e.g. AIX or Darwin) actually set it to an empty
     string.
@@ -316,6 +317,71 @@ for x in $(names)
         t.cleanup()
 
 
+def test_site_config():
+    # Ignore user-config, just in case it depends on the user's site-config.jam
+    t = BoostBuild.Tester(["--user-config="], use_test_config=False,
+                          pass_toolset=0)
+    # We can immediately exit after we finish loading the config files
+    t.write("Jamroot", "EXIT Done : 0 ;")
+    t.write("my-site-config.jam", "ECHO Loaded my-site-config ;")
+
+    t.run_build_system(["--site-config=my-site-config.jam"],
+                       stdout="Loaded my-site-config\nDone\n")
+
+    t.run_build_system(["--ignore-site-config", "--debug-configuration"])
+    t.expect_output_lines("""\
+notice: Site configuration files will be ignored due to the
+notice: --ignore-site-config command-line option.""")
+
+    t.run_build_system(["--site-config=", "--debug-configuration"])
+    t.expect_output_lines("""\
+notice: Site configuration file loading explicitly disabled.""")
+
+    t.cleanup()
+
+def test_global_config():
+    t = BoostBuild.Tester(use_test_config=False, pass_toolset=0)
+    t.write("my-config.jam", "ECHO Loading my-config ;")
+    t.write("Jamroot", "EXIT Done : 0 ;")
+    t.write("project-config.jam", "ECHO bad ;")
+    t.run_build_system(["--config=my-config.jam", "--debug-configuration"],
+                       match=TestCmd.match_re, stdout=
+r"""notice: found boost-build\.jam at .*
+notice: loading Boost\.Build from .*
+notice: Searching '.*' for all-config configuration file 'my-config\.jam'\.
+notice: Loading all-config configuration file 'my-config\.jam' from '.*'\.
+Loading my-config
+notice: Regular configuration files will be ignored due
+notice: to the global configuration being loaded\.
+Done
+""")
+    t.run_build_system(["--config=", "--debug-configuration"],
+                       match=TestCmd.match_re, stdout=
+r"""notice: found boost-build\.jam at .*
+notice: loading Boost\.Build from .*
+notice: Configuration file loading explicitly disabled.
+Done
+""")
+    t.cleanup()
+
+def test_project_config():
+    t = BoostBuild.Tester(["--user-config=", "--site-config="],
+                          use_test_config=False, pass_toolset=False)
+    t.write("Jamroot", "EXIT Done : 0 ;")
+    t.write("project-config.jam", "ECHO Loading Root ;")
+    t.write("my-project-config.jam", "ECHO Loading explicit ;")
+    t.write("sub/project-config.jam", "ECHO Loading subdir ;")
+    t.write("sub/Jamfile", "")
+
+    t.run_build_system(stdout="Loading Root\nDone\n")
+    t.run_build_system(subdir="sub", stdout="Loading subdir\nDone\n")
+    t.rm("sub/project-config.jam")
+    t.run_build_system(subdir="sub", stdout="Loading Root\nDone\n")
+    t.run_build_system(["--project-config=my-project-config.jam"],
+                       stdout="Loading explicit\nDone\n")
+
+    t.cleanup()
+
 ###############################################################################
 #
 # main()
@@ -326,3 +392,6 @@ for x in $(names)
 canSetEmptyEnvironmentVariable = _canSetEmptyEnvironmentVariable()
 
 test_user_configuration()
+test_site_config()
+test_global_config()
+test_project_config()

@@ -16,9 +16,9 @@
   *   DESCRIPTION: regex_search example: searches a cpp file for class definitions.
   */
   
+#include <boost/regex.hpp>
 #include <string>
 #include <map>
-#include <boost/regex.hpp>
 
 // purpose:
 // takes the contents of a file in the form of a string

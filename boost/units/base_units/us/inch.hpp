@@ -28,8 +28,8 @@ typedef scaled_base_unit<yard_base_unit, scale<36, static_rational<-1> > > inch_
 
 template<>
 struct base_unit_info<us::inch_base_unit> {
-    static const char* name()   { return("inch"); }
-    static const char* symbol() { return("in"); }
+    static BOOST_CONSTEXPR const char* name()   { return("inch"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("in"); }
 };
 
 } // namespace units

@@ -45,8 +45,10 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace repository { namespace karma
 {
-    using repository::confix_type;
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using repository::confix;
+#endif
+    using repository::confix_type;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Prefix, typename Suffix>

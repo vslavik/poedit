@@ -43,7 +43,7 @@ int main() { return i; }
 
 t.run_build_system()
 
-t.expect_addition("bin/$toolset/debug/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
 
 t.rm("bin")
 
@@ -76,6 +76,6 @@ int main() { return i; }
 """)
 t.run_build_system()
 
-t.expect_addition("bin/$toolset/debug/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
 
 t.cleanup()

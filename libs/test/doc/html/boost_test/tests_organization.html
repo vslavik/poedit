@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Declaring and organizing tests</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
 <link rel="prev" href="usage_variants.html" title="Usage variants">
@@ -27,7 +27,7 @@
 <a name="boost_test.tests_organization"></a><a class="link" href="tests_organization.html" title="Declaring and organizing tests">Declaring and organizing
     tests</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tests_organization/test_cases.html">Test cases</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="tests_organization/test_cases/test_organization_nullary.html">Test
@@ -51,6 +51,7 @@
 <dt><span class="section"><a href="tests_organization/test_suite.html">Test suite</a></span></dt>
 <dd><dl><dt><span class="section"><a href="tests_organization/test_suite/master_test_suite.html">Master
         Test Suite</a></span></dt></dl></dd>
+<dt><span class="section"><a href="tests_organization/test_naming.html">Tests naming</a></span></dt>
 <dt><span class="section"><a href="tests_organization/decorators.html">Decorators</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="tests_organization/decorators/suite_level_decorators.html">Suite-level
@@ -86,7 +87,7 @@
       Is there anything wrong with it? Yes. There are various disadvantages in single
       test function approach:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           One big function tends to become really difficult to manage if the number
           of checks exceeds a reasonable limit (true for any large function). What
@@ -115,13 +116,13 @@
     </p>
 <div class="variablelist">
 <p class="title"><b>Subjects covered by this section</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Declaration</span></dt>
 <dd><p>
             The <span class="emphasis"><em>Unit Test Framework</em></span> supports several methods
             for declaring a <a class="link" href="tests_organization/test_cases.html" title="Test cases">test
             case</a>. Test cases can be implemented using free function like syntax
-            or based on actual free function, function object, The can be defined
+            or based on actual free function, function object, that can be defined
             with or without parameters/data, or as template functions to be run against
             various types.
           </p></dd>
@@ -158,7 +159,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

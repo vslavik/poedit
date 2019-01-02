@@ -35,6 +35,29 @@ namespace expr = boost::log::expressions;
 
 namespace {
 
+struct unreferencable_data
+{
+    unsigned int m : 2;
+    unsigned int n : 6;
+
+    enum my_enum
+    {
+        one = 1,
+        two = 2
+    };
+
+    // The following static constants don't have definitions, so they can only be used in constant expressions.
+    // Trying to bind a reference to these members will result in linking errors.
+    static const int x = 7;
+    static const my_enum y = one;
+
+    unreferencable_data()
+    {
+        m = 1;
+        n = 5;
+    }
+};
+
 template< typename CharT >
 struct test_impl
 {
@@ -143,6 +166,72 @@ struct test_impl
         BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
     }
 #endif
+
+    static void output_unreferencable_data()
+    {
+        unreferencable_data data;
+        {
+            logging::record rec = make_record();
+            BOOST_REQUIRE(!!rec);
+            record_ostream_type strm_fmt(rec);
+            strm_fmt << data.m << static_cast< char_type >(' ') << data.n << static_cast< char_type >(' ') << unreferencable_data::x << static_cast< char_type >(' ') << unreferencable_data::y;
+            strm_fmt.flush();
+            string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
+
+            ostream_type strm_correct;
+            strm_correct << static_cast< unsigned int >(data.m) << static_cast< char_type >(' ') << static_cast< unsigned int >(data.n) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::x) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::y);
+
+            BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
+        }
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+        {
+            logging::record rec = make_record();
+            BOOST_REQUIRE(!!rec);
+            record_ostream_type(rec) << data.m << static_cast< char_type >(' ') << data.n << static_cast< char_type >(' ') << unreferencable_data::x << static_cast< char_type >(' ') << unreferencable_data::y << std::flush;
+            string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
+
+            ostream_type strm_correct;
+            strm_correct << static_cast< unsigned int >(data.m) << static_cast< char_type >(' ') << static_cast< unsigned int >(data.n) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::x) << static_cast< char_type >(' ') << static_cast< int >(unreferencable_data::y);
+
+            BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
+        }
+#endif
+    }
+
+    static void formatting_params_restoring()
+    {
+        record_ostream_type strm_fmt;
+        {
+            logging::record rec = make_record();
+            BOOST_REQUIRE(!!rec);
+            strm_fmt.attach_record(rec);
+            strm_fmt << std::setw(8) << std::setfill(static_cast< char_type >('x')) << std::hex << 15;
+            strm_fmt.flush();
+            string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
+            strm_fmt.detach_from_record();
+
+            ostream_type strm_correct;
+            strm_correct << std::setw(8) << std::setfill(static_cast< char_type >('x')) << std::hex << 15;
+
+            BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
+        }
+
+        // Check that the formatting flags are reset for the next record
+        {
+            logging::record rec = make_record();
+            BOOST_REQUIRE(!!rec);
+            strm_fmt.attach_record(rec);
+            strm_fmt << 15;
+            strm_fmt.flush();
+            string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
+            strm_fmt.detach_from_record();
+
+            ostream_type strm_correct;
+            strm_correct << 15;
+
+            BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
+        }
+    }
 };
 
 } // namespace
@@ -185,6 +274,20 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rvalue_stream, CharT, char_types)
 }
 #endif
 
+// Test output of data to which a reference cannot be bound
+BOOST_AUTO_TEST_CASE_TEMPLATE(output_unreferencable_data, CharT, char_types)
+{
+    typedef test_impl< CharT > test;
+    test::output_unreferencable_data();
+}
+
+// Test that formatting settings are reset for new log records
+BOOST_AUTO_TEST_CASE_TEMPLATE(formatting_params_restoring, CharT, char_types)
+{
+    typedef test_impl< CharT > test;
+    test::formatting_params_restoring();
+}
+
 namespace my_namespace {
 
 class A {};
@@ -211,6 +314,14 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< Cha
     return strm;
 }
 
+enum E { eee };
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, E)
+{
+    strm << "E";
+    return strm;
+}
+
 } // namespace my_namespace
 
 // Test operator forwarding
@@ -228,11 +339,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(operator_forwarding, CharT, char_types)
     const my_namespace::A a = my_namespace::A(); // const lvalue
     my_namespace::B b; // lvalue
     strm_fmt << a << b << my_namespace::C(); // rvalue
+    strm_fmt << my_namespace::eee;
     strm_fmt.flush();
     string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
 
     ostream_type strm_correct;
-    strm_correct << a << b << my_namespace::C();
+    strm_correct << a << b << my_namespace::C() << my_namespace::eee;
 
     BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
 }
@@ -277,6 +389,14 @@ inline logging::basic_record_ostream< CharT >& operator<< (logging::basic_record
     return strm;
 }
 
+enum E { eee };
+template< typename CharT >
+inline logging::basic_record_ostream< CharT >& operator<< (logging::basic_record_ostream< CharT >& strm, E)
+{
+    strm << "E";
+    return strm;
+}
+
 } // namespace my_namespace2
 
 // Test operator overriding
@@ -294,11 +414,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(operator_overriding, CharT, char_types)
     const my_namespace2::A a = my_namespace2::A(); // const lvalue
     my_namespace2::B b; // lvalue
     strm_fmt << a << b << my_namespace2::C() << my_namespace2::D(); // rvalue
+    strm_fmt << my_namespace2::eee;
     strm_fmt.flush();
     string_type rec_message = logging::extract_or_throw< string_type >(expr::message.get_name(), rec);
 
     ostream_type strm_correct;
-    strm_correct << "ABCD";
+    strm_correct << "ABCDE";
 
     BOOST_CHECK(equal_strings(rec_message, strm_correct.str()));
 }

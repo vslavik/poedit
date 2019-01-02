@@ -14,25 +14,70 @@
 #include <iomanip>
 #include <sstream>
 #include <geometry_test_common.hpp>
+#include <boost/geometry/algorithms/correct_closure.hpp>
+#include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/simplify.hpp>
 #include <boost/geometry/algorithms/distance.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
 #include <boost/variant/variant.hpp>
 
-template <typename Tag, typename Geometry>
+
+template
+<
+    typename GeometryForTag,
+    typename Tag = typename bg::tag<GeometryForTag>::type
+>
+struct test_equality
+{
+    template <typename Geometry, typename Expected>
+    static void apply(Geometry const& geometry, Expected const& expected)
+    {
+        // Verify both spatially equal AND number of points, because several
+        // of the tests only check explicitly on collinear points being
+        // simplified away
+        bool const result
+                = bg::equals(geometry, expected)
+                && bg::num_points(geometry) == bg::num_points(expected);
+
+        BOOST_CHECK_MESSAGE(result,
+                            " result: " << bg::wkt(geometry) << " " << bg::area(geometry)
+                            << " expected: " << bg::wkt(expected) << " " << bg::area(expected));
+
+    }
+};
+
+// Linestring does NOT yet have "geometry::equals" implemented
+// Until then, WKT's are compared (which is acceptable for linestrings, but not
+// for polygons, because simplify might rotate them)
+template <typename GeometryForTag>
+struct test_equality<GeometryForTag, bg::linestring_tag>
+{
+    template <typename Geometry, typename Expected>
+    static void apply(Geometry const& geometry, Expected const& expected)
+    {
+        std::ostringstream out1, out2;
+        out1 << bg::wkt(geometry);
+        out2 << bg::wkt(expected);
+        BOOST_CHECK_EQUAL(out1.str(), out2.str());
+    }
+};
+
+
+template <typename Tag>
 struct test_inserter
 {
-    static void apply(Geometry& , std::string const& , double )
+    template <typename Geometry, typename Expected>
+    static void apply(Geometry& , Expected const& , double )
     {}
 };
 
-template <typename Geometry>
-struct test_inserter<bg::linestring_tag, Geometry>
+template <>
+struct test_inserter<bg::linestring_tag>
 {
-    template <typename DistanceMeasure>
+    template <typename Geometry, typename Expected, typename DistanceMeasure>
     static void apply(Geometry& geometry,
-            std::string const& expected,
+            Expected const& expected,
             DistanceMeasure const& distance)
     {
         {
@@ -40,11 +85,7 @@ struct test_inserter<bg::linestring_tag, Geometry>
             bg::detail::simplify::simplify_insert(geometry,
                 std::back_inserter(simplified), distance);
 
-            std::ostringstream out;
-            // TODO: instead of comparing the full string (with more or less decimal digits),
-            // we should call something more robust to check the test for example geometry::equals
-            out << std::setprecision(12) << bg::wkt(simplified);
-            BOOST_CHECK_EQUAL(out.str(), expected);
+            test_equality<Geometry>::apply(simplified, expected);
         }
 
 #ifdef TEST_PULL89
@@ -67,54 +108,56 @@ struct test_inserter<bg::linestring_tag, Geometry>
             bg::detail::simplify::simplify_insert(geometry,
                 std::back_inserter(simplified), max_distance, strategy);
 
-            std::ostringstream out;
-            // TODO: instead of comparing the full string (with more or less decimal digits),
-            // we should call something more robust to check the test for example geometry::equals
-            out << std::setprecision(12) << bg::wkt(simplified);
-            BOOST_CHECK_EQUAL(out.str(), expected);
+            test_equality<Geometry>::apply(simplified, expected);
         }
 #endif
     }
 };
 
-
-template <typename Geometry, typename DistanceMeasure>
+template <typename Geometry, typename Expected, typename DistanceMeasure>
 void check_geometry(Geometry const& geometry,
-                    std::string const& expected,
-                    DistanceMeasure const&  distance)
+                    Expected const& expected,
+                    DistanceMeasure const& distance)
 {
     Geometry simplified;
     bg::simplify(geometry, simplified, distance);
-
-    std::ostringstream out;
-    out << std::setprecision(12) << bg::wkt(simplified);
-    BOOST_CHECK_EQUAL(out.str(), expected);
+    test_equality<Expected>::apply(simplified, expected);
 }
 
-template <typename Geometry, typename Strategy, typename DistanceMeasure>
+template <typename Geometry, typename Expected, typename Strategy, typename DistanceMeasure>
 void check_geometry(Geometry const& geometry,
-                    std::string const& expected,
+                    Expected const& expected,
                     DistanceMeasure const& distance,
                     Strategy const& strategy)
 {
     Geometry simplified;
     bg::simplify(geometry, simplified, distance, strategy);
+    test_equality<Expected>::apply(simplified, expected);
+}
 
-    std::ostringstream out;
-    out << std::setprecision(12) << bg::wkt(simplified);
-    BOOST_CHECK_EQUAL(out.str(), expected);
+template <typename Geometry, typename DistanceMeasure>
+void check_geometry_with_area(Geometry const& geometry,
+                    double expected_area,
+                    DistanceMeasure const& distance)
+{
+    Geometry simplified;
+    bg::simplify(geometry, simplified, distance);
+    BOOST_CHECK_CLOSE(bg::area(simplified), expected_area, 0.01);
 }
 
 
 template <typename Geometry, typename DistanceMeasure>
 void test_geometry(std::string const& wkt,
-        std::string const& expected,
+        std::string const& expected_wkt,
         DistanceMeasure distance)
 {
     typedef typename bg::point_type<Geometry>::type point_type;
 
-    Geometry geometry;
+    Geometry geometry, expected;
+
     bg::read_wkt(wkt, geometry);
+    bg::read_wkt(expected_wkt, expected);
+
     boost::variant<Geometry> v(geometry);
 
     // Define default strategy for testing
@@ -128,7 +171,7 @@ void test_geometry(std::string const& wkt,
     check_geometry(v, expected, distance);
 
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::SimplifyStrategy<dp, point_type>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::SimplifyStrategy<dp, point_type>) );
 
     check_geometry(geometry, expected, distance, dp());
     check_geometry(v, expected, distance, dp());
@@ -136,8 +179,7 @@ void test_geometry(std::string const& wkt,
     // Check inserter (if applicable)
     test_inserter
         <
-            typename bg::tag<Geometry>::type,
-            Geometry
+            typename bg::tag<Geometry>::type
         >::apply(geometry, expected, distance);
 
 #ifdef TEST_PULL89
@@ -155,7 +197,7 @@ void test_geometry(std::string const& wkt,
             less_comparator
         > douglass_peucker_with_less;
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::SimplifyStrategy<douglass_peucker_with_less, point_type>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::SimplifyStrategy<douglass_peucker_with_less, point_type>) );
 
     check_geometry(geometry, expected, distance, douglass_peucker_with_less(less));
     check_geometry(v, expected, distance, douglass_peucker_with_less(less));
@@ -164,19 +206,36 @@ void test_geometry(std::string const& wkt,
 
 template <typename Geometry, typename Strategy, typename DistanceMeasure>
 void test_geometry(std::string const& wkt,
-        std::string const& expected,
+        std::string const& expected_wkt,
         DistanceMeasure const& distance,
         Strategy const& strategy)
 {
-    Geometry geometry;
+    Geometry geometry, expected;
+
     bg::read_wkt(wkt, geometry);
+    bg::read_wkt(expected_wkt, expected);
+    bg::correct_closure(geometry);
+    bg::correct_closure(expected);
+
     boost::variant<Geometry> v(geometry);
 
-    BOOST_CONCEPT_ASSERT( (bg::concept::SimplifyStrategy<Strategy,
+    BOOST_CONCEPT_ASSERT( (bg::concepts::SimplifyStrategy<Strategy,
                            typename bg::point_type<Geometry>::type>) );
 
     check_geometry(geometry, expected, distance, strategy);
     check_geometry(v, expected, distance, strategy);
+}
+
+template <typename Geometry, typename DistanceMeasure>
+void test_geometry(std::string const& wkt,
+        double expected_area,
+        DistanceMeasure const& distance)
+{
+    Geometry geometry;
+    bg::read_wkt(wkt, geometry);
+    bg::correct_closure(geometry);
+
+    check_geometry_with_area(geometry, expected_area, distance);
 }
 
 #endif

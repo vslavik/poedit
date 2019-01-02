@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Bimap and Boost</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Bimap">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Bimap">
 <link rel="prev" href="the_tutorial/complete_instantiation_scheme.html" title="Complete instantiation scheme">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_bimap.bimap_and_boost"></a><a class="link" href="bimap_and_boost.html" title="Bimap and Boost">Bimap and Boost</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="bimap_and_boost.html#boost_bimap.bimap_and_boost.bimap_and_multiindex">Bimap
       and MultiIndex</a></span></dt>
 <dt><span class="section"><a href="bimap_and_boost/boost_libraries_that_work_well_with_boost_bimap.html">Boost
@@ -82,7 +82,7 @@
         the best for every specialization. People may end up wrapping a B.MI container
         in its own class every time they want to use it as a bidirectional map. Boost.Bimap
         takes advantage of the narrower scope to produce a better interface for bidirectional
-        maps <sup>[<a name="boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" href="#ftn.boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" class="footnote">2</a>]</sup>. There is no learning curve if you know how to use standard containers.
+        maps <a href="#ftn.boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" class="footnote" name="boost_bimap.bimap_and_boost.bimap_and_multiindex.f0"><sup class="footnote">[2]</sup></a>. There is no learning curve if you know how to use standard containers.
         Great effort was put into mapping the naming scheme of the STL to Boost.Bimap.
         The library is designed to match the common STL containers.
       </p>
@@ -93,8 +93,8 @@
         However, Boost.Bimap do not aim to tackle every problem with two indexed
         types. There exist some problems that are better modelled with Boost.MultiIndex.
       </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
         <span class="bold"><strong>Problem I - An employee register</strong></span>
       </p>
@@ -107,8 +107,8 @@
         that other data will need to be indexed later.
       </p>
 </div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
         <span class="bold"><strong>Problem II - A partners container</strong></span>
       </p>
@@ -126,8 +126,8 @@
       </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" href="#boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" class="para">2</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" class="footnote"><p><a href="#boost_bimap.bimap_and_boost.bimap_and_multiindex.f0" class="para"><sup class="para">[2] </sup></a>
           In the same fashion, Boost.MRU will allow the creation of <span class="emphasis"><em>most
           recent updated</em></span> aware containers, hiding the complexity of Boost.MultiIndex.
         </p></div>

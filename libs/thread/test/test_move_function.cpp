@@ -16,7 +16,7 @@ void do_nothing()
 
 BOOST_AUTO_TEST_CASE(test_thread_move_from_lvalue_on_construction)
 {
-    boost::thread src(do_nothing);
+    boost::thread src(&do_nothing);
     boost::thread::id src_id=src.get_id();
     boost::thread dest(boost::move(src));
     boost::thread::id dest_id=dest.get_id();
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(test_thread_move_from_lvalue_on_construction)
 
 BOOST_AUTO_TEST_CASE(test_thread_move_from_lvalue_on_assignment)
 {
-    boost::thread src(do_nothing);
+    boost::thread src(&do_nothing);
     boost::thread::id src_id=src.get_id();
     boost::thread dest;
     dest=boost::move(src);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(test_thread_move_from_lvalue_on_assignment)
 
 boost::thread start_thread()
 {
-    return boost::thread(do_nothing);
+    return boost::thread(&do_nothing);
 }
 
 BOOST_AUTO_TEST_CASE(test_thread_move_from_rvalue_on_construction)

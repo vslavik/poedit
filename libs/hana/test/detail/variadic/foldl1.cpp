@@ -1,65 +1,66 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #include <boost/hana/detail/variadic/foldl1.hpp>
 
 #include <boost/hana/assert.hpp>
+#include <boost/hana/equal.hpp>
 
 #include <laws/base.hpp>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 struct undefined { };
 
 template <int i>
-using x = test::ct_eq<i>;
+using x = hana::test::ct_eq<i>;
 
 int main() {
-    using detail::variadic::foldl1;
-    test::_injection<0> f{};
+    using hana::detail::variadic::foldl1;
+    hana::test::_injection<0> f{};
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(undefined{}, x<1>{}),
         x<1>{}
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}),
         f(x<1>{}, x<2>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}),
         f(f(x<1>{}, x<2>{}), x<3>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}, x<4>{}),
         f(f(f(x<1>{}, x<2>{}), x<3>{}), x<4>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}),
         f(f(f(f(x<1>{}, x<2>{}), x<3>{}), x<4>{}), x<5>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}),
         f(f(f(f(f(x<1>{}, x<2>{}), x<3>{}), x<4>{}), x<5>{}), x<6>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}, x<7>{}),
         f(f(f(f(f(f(x<1>{}, x<2>{}), x<3>{}), x<4>{}), x<5>{}), x<6>{}), x<7>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}, x<7>{}, x<8>{}),
         f(f(f(f(f(f(f(x<1>{}, x<2>{}), x<3>{}), x<4>{}), x<5>{}), x<6>{}), x<7>{}), x<8>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{}
         ),
@@ -69,7 +70,7 @@ int main() {
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}
         ),
@@ -78,7 +79,7 @@ int main() {
             x<8>{}),  x<9>{}),  x<10>{}), x<11>{}), x<12>{}), x<13>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{}
         ),
@@ -87,7 +88,7 @@ int main() {
             x<8>{}),  x<9>{}),  x<10>{}), x<11>{}), x<12>{}), x<13>{}), x<14>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}
@@ -99,7 +100,7 @@ int main() {
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -112,7 +113,7 @@ int main() {
             x<22>{}), x<23>{}), x<24>{}), x<25>{}), x<26>{}), x<27>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -125,7 +126,7 @@ int main() {
             x<22>{}), x<23>{}), x<24>{}), x<25>{}), x<26>{}), x<27>{}), x<28>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -141,7 +142,7 @@ int main() {
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -163,7 +164,7 @@ int main() {
             x<50>{}), x<51>{}), x<52>{}), x<53>{}), x<54>{}), x<55>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -185,7 +186,7 @@ int main() {
             x<50>{}), x<51>{}), x<52>{}), x<53>{}), x<54>{}), x<55>{}), x<56>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldl1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},

@@ -29,8 +29,8 @@ typedef scaled_base_unit<pint_base_unit, scale<8, static_rational<1> > > gallon_
 
 template<>
 struct base_unit_info<imperial::gallon_base_unit> {
-    static const char* name()   { return("gallon (imp.)"); }
-    static const char* symbol() { return("gal"); }
+    static BOOST_CONSTEXPR const char* name()   { return("gallon (imp.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("gal"); }
 };
 
 } // namespace units

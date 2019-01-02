@@ -10,6 +10,10 @@
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/tools/precision.hpp>
 
+template <class T>
+BOOST_CONSTEXPR int consume_constexpr(const T&)
+{  return 0;  }
+
 void test()
 {
    using namespace boost::math::policies;
@@ -45,6 +49,27 @@ void test()
    constexpr float r8 = raise_rounding_error("func", "msg", 0.0, 0.0f, p6);
    constexpr float r9 = raise_indeterminate_result_error("func", "msg", 0.0, 0.0f, p6);
 
+   consume_constexpr(p1);
+   consume_constexpr(p2);
+   consume_constexpr(p3);
+   consume_constexpr(p4);
+   consume_constexpr(p5);
+   consume_constexpr(p6);
+   consume_constexpr(d);
+   consume_constexpr(s);
+   consume_constexpr(r);
+   consume_constexpr(ep);
+   consume_constexpr(ep2);
+   consume_constexpr(r1);
+   consume_constexpr(r2);
+   consume_constexpr(r3);
+   consume_constexpr(r4);
+   consume_constexpr(r5);
+   consume_constexpr(r6);
+   consume_constexpr(r7);
+   consume_constexpr(r8);
+   consume_constexpr(r9);
+
 #endif
 
 #ifndef BOOST_NO_CXX11_NOEXCEPT
@@ -53,7 +78,7 @@ void test()
    static_assert(noexcept(make_policy(promote_double<false>())), "This expression should be noexcept");
    static_assert(noexcept(make_policy(domain_error<user_error>(), pole_error<user_error>(), overflow_error<user_error>(), underflow_error<user_error>(),
       denorm_error<user_error>(), evaluation_error<user_error>(), rounding_error<user_error>(), indeterminate_result_error<user_error>())), "This expression should be noexcept");
-   static_assert(noexcept(make_policy(promote_float<false>(), promote_double<false>(), assert_undefined<true>(), discrete_quantile<real>(),
+   static_assert(noexcept(make_policy(promote_float<false>(), promote_double<false>(), assert_undefined<true>(), discrete_quantile<boost::math::policies::real>(),
       digits10<10>(), max_series_iterations<100>(), max_root_iterations<20>())), "This expression should be noexcept");
 
    static_assert(noexcept(digits<double, policy<> >() + digits_base10<double, policy<> >()), "This expression should be noexcept");

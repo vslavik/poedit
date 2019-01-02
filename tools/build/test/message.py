@@ -10,7 +10,7 @@
 import BoostBuild
 
 # Create a temporary working directory.
-t = BoostBuild.Tester(use_test_config=False)
+t = BoostBuild.Tester(["-d0"], use_test_config=False)
 
 t.write("Jamroot.jam", """
 project
@@ -32,7 +32,7 @@ t.write("test.cpp", """
 t.run_build_system(["test"], stdout="""Hello World!
 """)
 
-t.expect_addition("bin/$toolset/link-static/test.obj")
+t.expect_addition("bin/$toolset/link-static*/test.obj")
 t.expect_nothing_more()
 
 t.cleanup()

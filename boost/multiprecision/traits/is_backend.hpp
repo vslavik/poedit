@@ -13,9 +13,9 @@
 
 namespace boost{ namespace multiprecision{  namespace detail{
 
-   BOOST_MPL_HAS_XXX_TRAIT_DEF(signed_types);
-   BOOST_MPL_HAS_XXX_TRAIT_DEF(unsigned_types);
-   BOOST_MPL_HAS_XXX_TRAIT_DEF(float_types);
+   BOOST_MPL_HAS_XXX_TRAIT_DEF(signed_types)
+   BOOST_MPL_HAS_XXX_TRAIT_DEF(unsigned_types)
+   BOOST_MPL_HAS_XXX_TRAIT_DEF(float_types)
 
    template <class T>
    struct is_backend

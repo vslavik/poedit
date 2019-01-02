@@ -644,8 +644,8 @@ double run_experiment(const Experiment & experiment, Generator & gen, int n)
   generic_counter<std::vector<int> > v(experiment.classes());
   experiment.run(gen, v, n);
   return chi_square_value(v.begin(), v.end(),
-                          std::bind1st(std::mem_fun_ref(&Experiment::probability), 
-                                       experiment));
+                          boost::bind(&Experiment::probability, 
+                                       experiment, boost::placeholders::_1));
 }
 
 // chi_square test
@@ -655,8 +655,8 @@ double run_experiment(const Experiment & experiment, const Generator & gen, int 
   generic_counter<std::vector<int> > v(experiment.classes());
   experiment.run(gen, v, n);
   return chi_square_value(v.begin(), v.end(),
-                          std::bind1st(std::mem_fun_ref(&Experiment::probability), 
-                                       experiment));
+                          boost::bind(&Experiment::probability, 
+                                       experiment, boost::placeholders::_1));
 }
 
 // number generator with experiment results (for nesting)

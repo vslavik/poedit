@@ -86,6 +86,14 @@ inline bool operator BOOST_TT_TRAIT_OP (const C&, void*) { return true; }
 inline bool operator BOOST_TT_TRAIT_OP (void*, const D&) { return true; }
 inline bool operator BOOST_TT_TRAIT_OP (const C&, const D&) { return true; }
 
+struct private_op { private: void operator BOOST_TT_TRAIT_OP (const private_op&) {} };
+
+struct ambiguous_A 
+{ 
+};
+inline bool operator BOOST_TT_TRAIT_OP (const ambiguous_A&, const ambiguous_A&) { return true; }
+struct ambiguous_B { operator ambiguous_A()const { return ambiguous_A(); } };
+
 //class internal_private { ret operator BOOST_TT_TRAIT_OP (const internal_private&) const; };
 
 void common() {
@@ -144,6 +152,17 @@ void common() {
    TEST_TR(Derived2, bool, true);
 // compile time error
 // TEST_T(internal_private, false);
+#if defined(BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION)
+// There are some things that pass that wouldn't otherwise do so:
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1910)
+   TEST_TR(private_op, bool, false);
+   TEST_T(private_op, false);
+#endif
+   TEST_TR(ambiguous_A, bool, true);
+   TEST_T(ambiguous_A, true);
+   TEST_TR(ambiguous_B, bool, true);
+   TEST_T(ambiguous_B, true);
+#endif
 }
 
 }

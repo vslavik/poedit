@@ -13,9 +13,20 @@
 #include <boost/smart_ptr/detail/sp_interlocked.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#ifndef __LP64__
+
+typedef long long_type;
+
+#else
+
+// On Cygwin 64, long is 64 bit
+typedef int long_type;
+
+#endif
+
 int main()
 {
-    long x = 0, r;
+    long_type x = 0, r;
 
     r = BOOST_SP_INTERLOCKED_INCREMENT( &x );
 

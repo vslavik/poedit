@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_const_t = typename remove_const<T>::type; // C++11 and above
+
 __type The same type as `T`, but with any /top level/ const-qualifier removed.
 
 __std_ref 3.9.3.

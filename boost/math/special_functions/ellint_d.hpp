@@ -82,8 +82,12 @@ T ellint_d_imp(T phi, T k, const Policy& pol)
           s = -1;
           rphi = constants::half_pi<T>() - rphi;
        }
+       BOOST_MATH_INSTRUMENT_VARIABLE(rphi);
+       BOOST_MATH_INSTRUMENT_VARIABLE(m);
        T sinp = sin(rphi);
        T cosp = cos(rphi);
+       BOOST_MATH_INSTRUMENT_VARIABLE(sinp);
+       BOOST_MATH_INSTRUMENT_VARIABLE(cosp);
        T c = 1 / (sinp * sinp);
        T cm1 = cosp * cosp / (sinp * sinp);  // c - 1
        T k2 = k * k;
@@ -99,6 +103,7 @@ T ellint_d_imp(T phi, T k, const Policy& pol)
        {
           // http://dlmf.nist.gov/19.25#E10
           result = s * ellint_rd_imp(cm1, T(c - k2), c, pol) / 3;
+          BOOST_MATH_INSTRUMENT_VARIABLE(result);
        }
        if(m != 0)
           result += m * ellint_d_imp(k, pol);

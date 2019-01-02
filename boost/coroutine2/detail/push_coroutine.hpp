@@ -43,9 +43,9 @@ public:
     explicit push_coroutine( Fn &&);
 
     template< typename StackAllocator, typename Fn >
-    push_coroutine( StackAllocator, Fn &&);
+    push_coroutine( StackAllocator &&, Fn &&);
 
-    ~push_coroutine() noexcept;
+    ~push_coroutine();
 
     push_coroutine( push_coroutine const&) = delete;
     push_coroutine & operator=( push_coroutine const&) = delete;
@@ -54,8 +54,7 @@ public:
 
     push_coroutine & operator=( push_coroutine && other) noexcept {
         if ( this == & other) return * this;
-        cb_ = other.cb_;
-        other.cb_ = nullptr;
+        std::swap( cb_, other.cb_);
         return * this;
     }
 
@@ -67,19 +66,25 @@ public:
 
     bool operator!() const noexcept;
 
-    class iterator : public std::iterator< std::output_iterator_tag, void, void, void, void > {
+    class iterator {
     private:
         push_coroutine< T > *   c_{ nullptr };
 
     public:
-        constexpr iterator() noexcept = default;
+        typedef std::output_iterator_tag iterator_category;
+        typedef void value_type;
+        typedef void difference_type;
+        typedef void pointer;
+        typedef void reference;
+
+        iterator() noexcept = default;
 
         explicit iterator( push_coroutine< T > * c) noexcept :
             c_{ c } {
         }
 
         iterator & operator=( T t) {
-            BOOST_ASSERT( c_);
+            BOOST_ASSERT( nullptr != c_);
             if ( ! ( * c_)( t) ) {
                 c_ = nullptr;
             }
@@ -123,9 +128,9 @@ public:
     explicit push_coroutine( Fn &&);
 
     template< typename StackAllocator, typename Fn >
-    push_coroutine( StackAllocator, Fn &&);
+    push_coroutine( StackAllocator &&, Fn &&);
 
-    ~push_coroutine() noexcept;
+    ~push_coroutine();
 
     push_coroutine( push_coroutine const&) = delete;
     push_coroutine & operator=( push_coroutine const&) = delete;
@@ -134,8 +139,7 @@ public:
 
     push_coroutine & operator=( push_coroutine && other) noexcept {
         if ( this == & other) return * this;
-        cb_ = other.cb_;
-        other.cb_ = nullptr;
+        std::swap( cb_, other.cb_);
         return * this;
     }
 
@@ -145,19 +149,25 @@ public:
 
     bool operator!() const noexcept;
 
-    class iterator : public std::iterator< std::output_iterator_tag, void, void, void, void > {
+    class iterator {
     private:
         push_coroutine< T & >   *   c_{ nullptr };
 
     public:
-        constexpr iterator() noexcept = default;
+        typedef std::output_iterator_tag iterator_category;
+        typedef void value_type;
+        typedef void difference_type;
+        typedef void pointer;
+        typedef void reference;
+
+        iterator() noexcept = default;
 
         explicit iterator( push_coroutine< T & > * c) noexcept :
             c_{ c } {
         }
 
         iterator & operator=( T & t) {
-            BOOST_ASSERT( c_);
+            BOOST_ASSERT( nullptr != c_);
             if ( ! ( * c_)( t) ) {
                 c_ = nullptr;
             }
@@ -201,9 +211,9 @@ public:
     explicit push_coroutine( Fn &&);
 
     template< typename StackAllocator, typename Fn >
-    push_coroutine( StackAllocator, Fn &&);
+    push_coroutine( StackAllocator &&, Fn &&);
 
-    ~push_coroutine() noexcept;
+    ~push_coroutine();
 
     push_coroutine( push_coroutine const&) = delete;
     push_coroutine & operator=( push_coroutine const&) = delete;
@@ -212,8 +222,7 @@ public:
 
     push_coroutine & operator=( push_coroutine && other) noexcept {
         if ( this == & other) return * this;
-        cb_ = other.cb_;
-        other.cb_ = nullptr;
+        std::swap( cb_, other.cb_);
         return * this;
     }
 

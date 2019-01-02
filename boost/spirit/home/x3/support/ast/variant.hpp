@@ -7,9 +7,10 @@
 #if !defined(BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM)
 #define BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM
 
+#include <boost/config.hpp>
 #include <boost/variant.hpp>
 #include <boost/mpl/list.hpp>
-#include <boost/type_traits/is_base_of.hpp>
+#include <utility>
 #include <type_traits>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,7 +30,7 @@ namespace boost { namespace spirit { namespace x3
         forward_ast(forward_ast const& operand)
             : p_(new T(operand.get())) {}
 
-        forward_ast(forward_ast&& operand)
+        forward_ast(forward_ast&& operand) BOOST_NOEXCEPT
             : p_(operand.p_)
         {
             operand.p_ = 0;
@@ -46,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
             boost::checked_delete(p_);
         }
 
-        forward_ast& operator=(forward_ast const& rhs)
+        forward_ast& operator=(forward_ast const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             assign(rhs.get());
             return *this;
@@ -59,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
             p_ = temp;
         }
 
-        forward_ast& operator=(T const& rhs)
+        forward_ast& operator=(T const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             assign(rhs);
             return *this;
@@ -71,24 +72,24 @@ namespace boost { namespace spirit { namespace x3
             return *this;
         }
 
-        forward_ast& operator=(T&& rhs)
+        forward_ast& operator=(T&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<T>::value)
         {
             get() = std::move(rhs);
             return *this;
         }
 
-        T& get() { return *get_pointer(); }
-        const T& get() const { return *get_pointer(); }
+        T& get() BOOST_NOEXCEPT { return *get_pointer(); }
+        const T& get() const BOOST_NOEXCEPT { return *get_pointer(); }
 
-        T* get_pointer() { return p_; }
-        const T* get_pointer() const { return p_; }
+        T* get_pointer() BOOST_NOEXCEPT { return p_; }
+        const T* get_pointer() const BOOST_NOEXCEPT { return p_; }
 
-        operator T const&() const { return this->get(); }
-        operator T&() { return this->get(); }
+        operator T const&() const BOOST_NOEXCEPT { return this->get(); }
+        operator T&() BOOST_NOEXCEPT { return this->get(); }
 
     private:
 
-        void assign(const T& rhs)
+        void assign(const T& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<T>::value)
         {
             this->get() = rhs;
         }
@@ -135,46 +136,46 @@ namespace boost { namespace spirit { namespace x3
                                                 ::value)
                               >;
 
-        variant() : var() {}
+        variant() BOOST_NOEXCEPT_IF(std::is_nothrow_default_constructible<variant_type>::value) : var() {}
 
         template <typename T, class = non_self_t<T>>
-        explicit variant(T const& rhs)
+        explicit variant(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T const&>::value))
             : var(rhs) {}
 
         template <typename T, class = non_self_t<T>>
-        explicit variant(T&& rhs)
+        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))
             : var(std::forward<T>(rhs)) {}
 
-        variant(variant const& rhs)
+        variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>::value)
             : var(rhs.var) {}
 
-        variant(variant& rhs)
+        variant(variant& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, variant_type&>::value))
             : var(rhs.var) {}
 
-        variant(variant&& rhs)
-            : var(std::forward<variant_type>(rhs.var)) {}
+        variant(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_constructible<variant_type>::value)
+            : var(std::move(rhs.var)) {}
 
-        variant& operator=(variant const& rhs)
+        variant& operator=(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<variant_type>::value)
         {
             var = rhs.get();
             return *this;
         }
 
-        variant& operator=(variant&& rhs)
+        variant& operator=(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<variant_type>::value)
         {
-            var = std::forward<variant_type>(rhs.get());
+            var = std::move(rhs.get());
             return *this;
         }
 
         template <typename T, class = non_self_t<T>>
-        variant& operator=(T const& rhs)
+        variant& operator=(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T const&>::value))
         {
             var = rhs;
             return *this;
         }
 
         template <typename T, class = non_self_t<T>>
-        variant& operator=(T&& rhs)
+        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))
         {
             var = std::forward<T>(rhs);
             return *this;
@@ -204,12 +205,12 @@ namespace boost { namespace spirit { namespace x3
             return var.apply_visitor(v);
         }
 
-        variant_type const& get() const
+        variant_type const& get() const BOOST_NOEXCEPT
         {
             return var;
         }
 
-        variant_type& get()
+        variant_type& get() BOOST_NOEXCEPT
         {
             return var;
         }
@@ -227,28 +228,28 @@ namespace boost
 {
     template <typename T, typename ...Types>
     inline T const&
-    get(boost::spirit::x3::variant<Types...> const& x)
+    get(boost::spirit::x3::variant<Types...> const& x) BOOST_NOEXCEPT
     {
         return boost::get<T>(x.get());
     }
 
     template <typename T, typename ...Types>
     inline T&
-    get(boost::spirit::x3::variant<Types...>& x)
+    get(boost::spirit::x3::variant<Types...>& x) BOOST_NOEXCEPT
     {
         return boost::get<T>(x.get());
     }
 
     template <typename T, typename ...Types>
     inline T const*
-    get(boost::spirit::x3::variant<Types...> const* x)
+    get(boost::spirit::x3::variant<Types...> const* x) BOOST_NOEXCEPT
     {
         return boost::get<T>(&x->get());
     }
 
     template <typename T, typename ...Types>
     inline T*
-    get(boost::spirit::x3::variant<Types...>* x)
+    get(boost::spirit::x3::variant<Types...>* x) BOOST_NOEXCEPT
     {
         return boost::get<T>(&x->get());
     }

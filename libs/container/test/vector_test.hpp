@@ -55,13 +55,13 @@ struct vector_hash_function_capacity
 };
 
 template<class V1, class V2>
-bool vector_vector_hash_function_capacity_only(V1&, V2&, boost::container::container_detail::false_type)
+bool vector_vector_hash_function_capacity_only(V1&, V2&, boost::container::dtl::false_type)
 {
    return true;
 }
 
 template<class MyBoostVector, class MyStdVector>
-bool vector_vector_hash_function_capacity_only(MyBoostVector&boostvector, MyStdVector&stdvector, boost::container::container_detail::true_type)
+bool vector_vector_hash_function_capacity_only(MyBoostVector&boostvector, MyStdVector&stdvector, boost::container::dtl::true_type)
 {
    //deque has no reserve
    boostvector.reserve(boostvector.size()*2);
@@ -89,14 +89,14 @@ bool vector_vector_hash_function_capacity_only(MyBoostVector&boostvector, MyStdV
 
 
 template<class V1, class V2>
-bool vector_copyable_only(V1&, V2&, boost::container::container_detail::false_type)
+bool vector_copyable_only(V1&, V2&, boost::container::dtl::false_type)
 {
    return true;
 }
 
 //Function to check if both sets are equal
 template<class MyBoostVector, class MyStdVector>
-bool vector_copyable_only(MyBoostVector &boostvector, MyStdVector &stdvector, boost::container::container_detail::true_type)
+bool vector_copyable_only(MyBoostVector &boostvector, MyStdVector &stdvector, boost::container::dtl::true_type)
 {
    typedef typename MyBoostVector::value_type IntType;
    std::size_t size = boostvector.size();
@@ -203,6 +203,45 @@ bool vector_copyable_only(MyBoostVector &boostvector, MyStdVector &stdvector, bo
       boostvectorp->resize(100, IntType(9));
       if(!test::CheckEqualContainers(*boostvectorp, *stdvectorp)) return 1;
    }
+   //operator=
+   {
+      //Copy constructor test
+      MyBoostVector bcopy((const MyBoostVector&) boostvector);
+      MyStdVector   scopy((const MyStdVector&)   stdvector);
+      MyBoostVector bcopy2(boostvector);
+      MyStdVector   scopy2(stdvector);
+
+      if(!test::CheckEqualContainers(bcopy, scopy)) return false;
+      if(!test::CheckEqualContainers(bcopy2, scopy2)) return false;
+
+      //Assignment from a smaller vector
+      bcopy2.erase(bcopy2.begin() + bcopy2.size()/2, bcopy2.end());
+      scopy2.erase(scopy2.begin() + scopy2.size()/2, scopy2.end());
+      bcopy = bcopy2;
+      scopy = scopy2;
+      if(!test::CheckEqualContainers(bcopy, scopy)) return false;
+
+      //Assignment from a bigger vector with capacity
+      bcopy2  = boostvector;
+      scopy2  = stdvector;
+      if(!test::CheckEqualContainers(bcopy2, scopy2)) return false;
+
+      //Assignment from bigger vector with no capacity
+      bcopy2.erase(bcopy2.begin() + bcopy2.size()/2, bcopy2.end());
+      scopy2.erase(scopy2.begin() + scopy2.size()/2, scopy2.end());
+      bcopy2.shrink_to_fit();
+      MyStdVector(scopy2).swap(scopy2);
+
+      bcopy2 = boostvector;
+      scopy2 = stdvector;
+      if(!test::CheckEqualContainers(bcopy, scopy)) return false;
+
+      //Assignment with equal capacity
+      bcopy2 = boostvector;
+      scopy2 = stdvector;
+      if(!test::CheckEqualContainers(bcopy2, scopy2)) return false;
+   }
+
    return true;
 }
 
@@ -403,7 +442,7 @@ int vector_test()
       }
 
       if(!vector_copyable_only(boostvector, stdvector
-                     ,container_detail::bool_<boost::container::test::is_copyable<IntType>::value>())){
+                     ,dtl::bool_<boost::container::test::is_copyable<IntType>::value>())){
          return 1;
       }
 
@@ -453,7 +492,7 @@ int vector_test()
          if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
       }
    
-      if(!vector_vector_hash_function_capacity_only(boostvector, stdvector, container_detail::bool_<vector_hash_function_capacity<MyBoostVector>::value>()))
+      if(!vector_vector_hash_function_capacity_only(boostvector, stdvector, dtl::bool_<vector_hash_function_capacity<MyBoostVector>::value>()))
          return 1;
 
       boostvector.clear();

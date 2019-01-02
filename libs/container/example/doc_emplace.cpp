@@ -31,7 +31,7 @@ int main ()
    list<non_copy_movable> l;
    non_copy_movable ncm;
 
-   //A new element will be built calling non_copy_movable(int) contructor
+   //A new element will be built calling non_copy_movable(int) constructor
    l.emplace(l.begin(), 0);
    assert(l.size() == 1);
 

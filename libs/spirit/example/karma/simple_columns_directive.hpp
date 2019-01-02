@@ -12,7 +12,7 @@
 // definition the place holder 
 namespace custom_generator 
 { 
-    BOOST_SPIRIT_TERMINAL(columns);
+    BOOST_SPIRIT_TERMINAL(columns)
 } 
 
 ///////////////////////////////////////////////////////////////////////////////

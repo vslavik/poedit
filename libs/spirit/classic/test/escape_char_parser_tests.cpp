@@ -12,6 +12,7 @@
 #include <boost/spirit/include/classic_escape_char.hpp>
 
 #include <iostream>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <cstdio>       // for sprintf
 
@@ -156,11 +157,11 @@ main()
     // test bad wc escapes
     BOOST_TEST(!parse(L"\\z", wcep[assign_a(wc)]).hit);
 
+#if !defined(BOOST_NO_SWPRINTF)
     // test out of range octal escape
     size_t const octmax_size = 16;
     wchar_t octmax[octmax_size];
 
-#if !defined(BOOST_NO_SWPRINTF)
     swprintf(octmax, octmax_size,
       L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     BOOST_TEST(parse(octmax, wlep[assign_a(wc)]).full);
@@ -183,6 +184,8 @@ main()
     swprintf(hexmax, hexmax_size,
       L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
     BOOST_TEST(!parse(hexmax, wlep[assign_a(wc)]).hit);
+#else
+    boost::ignore_unused(wlep);
 #endif // !defined(BOOST_NO_SWPRINTF)
 
 #endif

@@ -7,6 +7,8 @@
 #  define _SCL_SECURE_NO_WARNINGS
 #endif
 
+#define NO_MIXED_OPS
+
 #include <boost/multiprecision/debug_adaptor.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include "test_arithmetic.hpp"

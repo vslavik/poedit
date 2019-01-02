@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Functional/OverloadedFunction 1.0.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Functional/OverloadedFunction 1.0.0">
 <link rel="prev" href="getting_started.html" title="Getting Started">
@@ -22,11 +22,11 @@
 <div class="spirit-nav">
 <a accesskey="p" href="getting_started.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../reference.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section boost_functional_overloadedfunction_tutorial">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_functional_overloadedfunction.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial">Tutorial</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tutorial.html#boost_functional_overloadedfunction.tutorial.overloading">Overloading</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#boost_functional_overloadedfunction.tutorial.without_function_types">Without
       Function Types</a></span></dt>
@@ -34,7 +34,7 @@
 <p>
       This section explains how to use this library.
     </p>
-<div class="section boost_functional_overloadedfunction_tutorial_overloading">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_functional_overloadedfunction.tutorial.overloading"></a><a class="link" href="tutorial.html#boost_functional_overloadedfunction.tutorial.overloading" title="Overloading">Overloading</a>
 </h3></div></div></div>
@@ -55,8 +55,8 @@
 <p>
       </p>
 <p>
-        This library header <code class="computeroutput"><a class="link" href="../reference.html#header.boost.functional.overloaded_function_hpp" title="Header &lt;boost/functional/overloaded_function.hpp&gt;">boost/functional/overloaded_function.hpp</a></code>
-        provides a <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>
+        This library header <code class="computeroutput">boost/functional/overloaded_function.hpp</code>
+        provides a <code class="computeroutput">boost::overloaded_function</code>
         class template that creates a single overloaded function object that can
         be used to call the specified functions instead of using the separate function
         names (see also <a href="../../../test/functor.cpp" target="_top"><code class="literal">functor.cpp</code></a>
@@ -78,7 +78,7 @@
 <p>
       </p>
 <p>
-        Note how each function type is passed as a template parameter of <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code> using
+        Note how each function type is passed as a template parameter of <code class="computeroutput">boost::overloaded_function</code> using
         the following syntax (this is <a href="http://www.boost.org/libs/function" target="_top">Boost.Function</a>'s
         preferred syntax):
       </p>
@@ -86,8 +86,8 @@
 </pre>
 <p>
         Then the relative function pointers, function references, or <a href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science)" target="_top">monomorphic
-        function</a> objects are passed to the <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>
-        constructor matching the order of the specified template parameters. <sup>[<a name="boost_functional_overloadedfunction.tutorial.overloading.f0" href="#ftn.boost_functional_overloadedfunction.tutorial.overloading.f0" class="footnote">2</a>]</sup> In the above example, <code class="computeroutput"><span class="identifier">identity_s</span></code>
+        function</a> objects are passed to the <code class="computeroutput">boost::overloaded_function</code>
+        constructor matching the order of the specified template parameters. <a href="#ftn.boost_functional_overloadedfunction.tutorial.overloading.f0" class="footnote" name="boost_functional_overloadedfunction.tutorial.overloading.f0"><sup class="footnote">[2]</sup></a> In the above example, <code class="computeroutput"><span class="identifier">identity_s</span></code>
         is passed as a function pointer (the function address is automatically taken
         from the function name by the compiler), <code class="computeroutput"><span class="identifier">identity_i</span></code>
         as a function reference, and <code class="computeroutput"><span class="identifier">identity_d</span></code>
@@ -95,25 +95,25 @@
       </p>
 <p>
         All specified function types must have distinct parameters from one another
-        (so the overloaded calls can be resolved by this library). <sup>[<a name="boost_functional_overloadedfunction.tutorial.overloading.f1" href="#ftn.boost_functional_overloadedfunction.tutorial.overloading.f1" class="footnote">3</a>]</sup> In order to create an overloaded function object, it is necessary
+        (so the overloaded calls can be resolved by this library). <a href="#ftn.boost_functional_overloadedfunction.tutorial.overloading.f1" class="footnote" name="boost_functional_overloadedfunction.tutorial.overloading.f1"><sup class="footnote">[3]</sup></a> In order to create an overloaded function object, it is necessary
         to specify at least two function types (because there is nothing to overload
         between one or zero functions).
       </p>
 </div>
-<div class="section boost_functional_overloadedfunction_tutorial_without_function_types">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_functional_overloadedfunction.tutorial.without_function_types"></a><a class="link" href="tutorial.html#boost_functional_overloadedfunction.tutorial.without_function_types" title="Without Function Types">Without
       Function Types</a>
 </h3></div></div></div>
 <p>
-        For convenience, this library also provides the <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>
+        For convenience, this library also provides the <code class="computeroutput">boost::make_overloaded_function</code>
         function template which allows to create the overloaded function object without
         explicitly specifying the function types. The function types are automatically
-        deduced from the specified functions and the appropriate <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>
-        instantiation is returned by <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>.
+        deduced from the specified functions and the appropriate <code class="computeroutput">boost::overloaded_function</code>
+        instantiation is returned by <code class="computeroutput">boost::make_overloaded_function</code>.
       </p>
 <p>
-        The <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>
+        The <code class="computeroutput">boost::make_overloaded_function</code>
         function template can be useful when used together with <a href="http://www.boost.org/doc/libs/typeof" target="_top">Boost.Typeof</a>'s
         <code class="computeroutput"><span class="identifier">BOOST_AUTO</span></code> (or C++11 <code class="computeroutput"><span class="keyword">auto</span></code>). For example (see also <a href="../../../test/make_decl.cpp" target="_top"><code class="literal">make_decl.cpp</code></a>
         and <a href="../../../test/identity.hpp" target="_top"><code class="literal">identity.hpp</code></a>):
@@ -137,14 +137,14 @@
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;)</span></code>,
         <code class="computeroutput"><span class="keyword">int</span> <span class="special">(</span><span class="keyword">int</span><span class="special">)</span></code>, and
         <code class="computeroutput"><span class="keyword">double</span> <span class="special">(</span><span class="keyword">double</span><span class="special">)</span></code> as
-        required instead by <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>.
-        Therefore, <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>
-        provides a more concise syntax in this context when compared with <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>.
+        required instead by <code class="computeroutput">boost::overloaded_function</code>.
+        Therefore, <code class="computeroutput">boost::make_overloaded_function</code>
+        provides a more concise syntax in this context when compared with <code class="computeroutput">boost::overloaded_function</code>.
       </p>
 <p>
-        Another case where <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>
+        Another case where <code class="computeroutput">boost::make_overloaded_function</code>
         can be useful is when the overloaded function object is passed to a function
-        template which can hold the specific <code class="computeroutput"><a class="link" href="../boost/overloaded_function.html" title="Class template overloaded_function">boost::overloaded_function</a></code>
+        template which can hold the specific <code class="computeroutput">boost::overloaded_function</code>
         type using a template parameter. For example (see also <a href="../../../test/make_call.cpp" target="_top"><code class="literal">make_call.cpp</code></a>
         and <a href="../../../test/identity.hpp" target="_top"><code class="literal">identity.hpp</code></a>):
       </p>
@@ -166,7 +166,7 @@
 <p>
       </p>
 <p>
-        The library implementation of <code class="computeroutput"><a class="link" href="../boost/make_overloaded_function.html" title="Function template make_overloaded_function">boost::make_overloaded_function</a></code>
+        The library implementation of <code class="computeroutput">boost::make_overloaded_function</code>
         uses <a href="http://www.boost.org/doc/libs/typeof" target="_top">Boost.Typeof</a>
         to automatically deduce some of the function types. In order to compile code
         in <a href="http://www.boost.org/doc/libs/typeof" target="_top">Boost.Typeof</a>
@@ -188,8 +188,8 @@
       </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_functional_overloadedfunction.tutorial.overloading.f0" href="#boost_functional_overloadedfunction.tutorial.overloading.f0" class="para">2</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_functional_overloadedfunction.tutorial.overloading.f0" class="footnote"><p><a href="#boost_functional_overloadedfunction.tutorial.overloading.f0" class="para"><sup class="para">[2] </sup></a>
           Function pointers are of the form <code class="literal"><span class="emphasis"><em>result-type </em></span></code><code class="computeroutput"><span class="special">(*)(</span></code><code class="literal"><span class="emphasis"><em>argument1-type</em></span></code><code class="computeroutput"><span class="special">,</span> <span class="special">...)</span></code> (the
           C++ compiler is usually able to automatically promote a function name to
           a function pointer in a context where a function pointer is expected even
@@ -204,7 +204,7 @@
           Unfortunately, it is not possible to support polymorphic function objects
           (see <a href="http://lists.boost.org/Archives/boost/2012/03/191744.php" target="_top">http://lists.boost.org/Archives/boost/2012/03/191744.php</a>).
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_functional_overloadedfunction.tutorial.overloading.f1" href="#boost_functional_overloadedfunction.tutorial.overloading.f1" class="para">3</a>] </sup>
+<div id="ftn.boost_functional_overloadedfunction.tutorial.overloading.f1" class="footnote"><p><a href="#boost_functional_overloadedfunction.tutorial.overloading.f1" class="para"><sup class="para">[3] </sup></a>
           Note that in C++ the function result type is not used for overload resolution
           (to avoid making the overload resolution context dependent). Therefore,
           at least one of the function parameters must be distinct for each specified

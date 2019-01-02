@@ -12,7 +12,7 @@
 // definition the place holder 
 namespace custom_parser 
 { 
-    BOOST_SPIRIT_TERMINAL(iter_pos);
+    BOOST_SPIRIT_TERMINAL(iter_pos)
 } 
 
 ///////////////////////////////////////////////////////////////////////////////

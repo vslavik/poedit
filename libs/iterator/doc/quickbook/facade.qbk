@@ -141,7 +141,7 @@ standardize the gateway protocol.  Note that even if
 open a safety loophole, as every core member function preserves the
 invariants of the iterator.
 
-[h2 `operator\[\]`]
+[h2 `operator[]`]
 
 The indexing operator for a generalized iterator presents special
 challenges.  A random access iterator's `operator[]` is only
@@ -289,7 +289,7 @@ The `iterator_category` member of `iterator_facade` is
 
 .. parsed-literal::
 
-  *iterator-category*\ (CategoryOrTraversal, value_type, reference)
+  *iterator-category*\ (CategoryOrTraversal, reference, value_type)
 
 where *iterator-category* is defined as follows:
 
@@ -297,10 +297,10 @@ where *iterator-category* is defined as follows:
 
 The `enable_if_interoperable` template used above is for exposition
 purposes.  The member operators should only be in an overload set
-provided the derived types `Dr1` and `Dr2` are interoperable, 
+provided the derived types `Dr1` and `Dr2` are interoperable,
 meaning that at least one of the types is convertible to the other.  The
 `enable_if_interoperable` approach uses SFINAE to take the operators
-out of the overload set when the types are not interoperable.  
+out of the overload set when the types are not interoperable.
 The operators should behave *as-if* `enable_if_interoperable`
 were defined to be:
 
@@ -400,7 +400,7 @@ through member functions of class `iterator_core_access`.
 __ `operator arrow`_
 
 [*Returns:] If `reference` is a reference type, an object of type `pointer` equal to: `&static_cast<Derived const*>(this)->dereference()`
-Otherwise returns an object of unspecified type such that, 
+Otherwise returns an object of unspecified type such that,
 `(*static_cast<Derived const*>(this))->m` is equivalent to `(w = **static_cast<Derived const*>(this),
 w.m)` for some temporary object `w` of type `value_type`.
 
@@ -417,7 +417,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Derived& operator++();
 
-[*Effects:] 
+[*Effects:]
 
     static_cast<Derived*>(this)->increment();
     return *static_cast<Derived*>(this);
@@ -457,7 +457,7 @@ w.m)` for some temporary object `w` of type `value_type`.
   Derived& operator-=(difference_type n);
 
 [*Effects:]
- 
+
       static_cast<Derived*>(this)->advance(-n);
       return *static_cast<Derived*>(this);
 
@@ -493,10 +493,10 @@ w.m)` for some temporary object `w` of type `value_type`.
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `((Dr1 const&)lhs).equal((Dr2 const&)rhs)`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).equal((Dr1 const&)lhs)`.
 ]
 
@@ -508,14 +508,14 @@ w.m)` for some temporary object `w` of type `value_type`.
               iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `!((Dr1 const&)lhs).equal((Dr2 const&)rhs)`.
 
-  Otherwise, 
+  Otherwise,
     `!((Dr2 const&)rhs).equal((Dr1 const&)lhs)`.
 ]
 
@@ -527,14 +527,14 @@ w.m)` for some temporary object `w` of type `value_type`.
              iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `((Dr1 const&)lhs).distance_to((Dr2 const&)rhs) < 0`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) > 0`.
 ]
 
@@ -546,14 +546,14 @@ w.m)` for some temporary object `w` of type `value_type`.
               iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `((Dr1 const&)lhs).distance_to((Dr2 const&)rhs) <= 0`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) >= 0`.
 ]
 
@@ -565,14 +565,14 @@ w.m)` for some temporary object `w` of type `value_type`.
              iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `((Dr1 const&)lhs).distance_to((Dr2 const&)rhs) > 0`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) < 0`.
 ]
 
@@ -584,14 +584,14 @@ w.m)` for some temporary object `w` of type `value_type`.
               iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `((Dr1 const&)lhs).distance_to((Dr2 const&)rhs) >= 0`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) <= 0`.
 ]
 
@@ -605,27 +605,27 @@ w.m)` for some temporary object `w` of type `value_type`.
              iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Return Type:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-   then 
+   then
     `difference` shall be
     `iterator_traits<Dr1>::difference_type`.
 
-   Otherwise 
+   Otherwise
     `difference` shall be `iterator_traits<Dr2>::difference_type`
 ]
 
 [*Returns:]
- 
+
 [pre
   if `is_convertible<Dr2,Dr1>::value`
 
-  then 
+  then
     `-((Dr1 const&)lhs).distance_to((Dr2 const&)rhs)`.
 
-  Otherwise, 
+  Otherwise,
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs)`.
 ]
 

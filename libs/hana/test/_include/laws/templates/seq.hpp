@@ -1,12 +1,9 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-#include <boost/hana.hpp>
-
-#include <support/seq.hpp>
-
 #include <boost/hana/bool.hpp>
+#include <boost/hana/equal.hpp>
 #include <boost/hana/functional/always.hpp>
 #include <boost/hana/tuple.hpp>
 
@@ -21,15 +18,14 @@
 #include <laws/orderable.hpp>
 #include <laws/searchable.hpp>
 #include <laws/sequence.hpp>
-using namespace boost::hana;
+#include <support/seq.hpp>
+namespace hana = boost::hana;
+using hana::test::ct_eq;
+using hana::test::ct_ord;
 
 
 int main() {
-    using boost::hana::size_t;
-    using test::ct_eq;
-    using test::ct_ord;
-
-    auto eqs = make<tuple_tag>(
+    auto eqs = hana::make_tuple(
           ::seq()
         , ::seq(ct_eq<0>{})
         , ::seq(ct_eq<0>{}, ct_eq<1>{})
@@ -38,7 +34,7 @@ int main() {
     );
     (void)eqs;
 
-    auto nested_eqs = make<tuple_tag>(
+    auto nested_eqs = hana::make_tuple(
           ::seq()
         , ::seq(
             ::seq(ct_eq<0>{}))
@@ -52,16 +48,16 @@ int main() {
     );
     (void)nested_eqs;
 
-    auto eq_keys = make<tuple_tag>(ct_eq<0>{}, ct_eq<3>{}, ct_eq<10>{});
+    auto eq_keys = hana::make_tuple(ct_eq<0>{}, ct_eq<3>{}, ct_eq<10>{});
     (void)eq_keys;
 
-    auto predicates = make<tuple_tag>(
-        equal.to(ct_eq<0>{}), equal.to(ct_eq<3>{}), equal.to(ct_eq<10>{}),
-        always(true_c), always(false_c)
+    auto predicates = hana::make_tuple(
+        hana::equal.to(ct_eq<0>{}), hana::equal.to(ct_eq<3>{}), hana::equal.to(ct_eq<10>{}),
+        hana::always(hana::true_c), hana::always(hana::false_c)
     );
     (void)predicates;
 
-    auto ords = make<tuple_tag>(
+    auto ords = hana::make_tuple(
           ::seq()
         , ::seq(ct_ord<0>{})
         , ::seq(ct_ord<0>{}, ct_ord<1>{})
@@ -74,21 +70,21 @@ int main() {
     // Comparable, Orderable
     //////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HANA_TEST_ORDERABLE
-    test::TestComparable<::Seq>{eqs};
-    test::TestOrderable<::Seq>{ords};
+    hana::test::TestComparable<::Seq>{eqs};
+    hana::test::TestOrderable<::Seq>{ords};
 #endif
 
 #ifdef BOOST_HANA_TEST_ITERABLE
     //////////////////////////////////////////////////////////////////////////
     // Foldable
     //////////////////////////////////////////////////////////////////////////
-    test::TestFoldable<::Seq>{eqs};
+    hana::test::TestFoldable<::Seq>{eqs};
 
     //////////////////////////////////////////////////////////////////////////
     // Iterable
     //////////////////////////////////////////////////////////////////////////
     {
-        test::TestIterable<::Seq>{eqs};
+        hana::test::TestIterable<::Seq>{eqs};
     }
 #endif
 
@@ -97,17 +93,17 @@ int main() {
     //////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HANA_TEST_SEARCHABLE
     {
-        test::TestSearchable<::Seq>{eqs, eq_keys};
+        hana::test::TestSearchable<::Seq>{eqs, eq_keys};
 
-        auto bools = make<tuple_tag>(
-              ::seq(true_c)
-            , ::seq(false_c)
-            , ::seq(true_c, true_c)
-            , ::seq(true_c, false_c)
-            , ::seq(false_c, true_c)
-            , ::seq(false_c, false_c)
+        auto bools = hana::make_tuple(
+              ::seq(hana::true_c)
+            , ::seq(hana::false_c)
+            , ::seq(hana::true_c, hana::true_c)
+            , ::seq(hana::true_c, hana::false_c)
+            , ::seq(hana::false_c, hana::true_c)
+            , ::seq(hana::false_c, hana::false_c)
         );
-        test::TestSearchable<::Seq>{bools, make<tuple_tag>(true_c, false_c)};
+        hana::test::TestSearchable<::Seq>{bools, hana::make_tuple(hana::true_c, hana::false_c)};
     }
 #endif
 
@@ -115,22 +111,22 @@ int main() {
     // Functor, Applicative, Monad
     //////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HANA_TEST_MONAD
-    test::TestFunctor<::Seq>{eqs, eq_keys};
-    test::TestApplicative<::Seq>{eqs};
-    test::TestMonad<::Seq>{eqs, nested_eqs};
+    hana::test::TestFunctor<::Seq>{eqs, eq_keys};
+    hana::test::TestApplicative<::Seq>{eqs};
+    hana::test::TestMonad<::Seq>{eqs, nested_eqs};
 #endif
 
     //////////////////////////////////////////////////////////////////////////
     // MonadPlus
     //////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HANA_TEST_MONAD_PLUS
-    test::TestMonadPlus<::Seq>{eqs, predicates, eq_keys};
+    hana::test::TestMonadPlus<::Seq>{eqs, predicates, eq_keys};
 #endif
 
     //////////////////////////////////////////////////////////////////////////
     // Sequence
     //////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HANA_TEST_SEQUENCE
-    test::TestSequence<::Seq>{};
+    hana::test::TestSequence<::Seq>{};
 #endif
 }

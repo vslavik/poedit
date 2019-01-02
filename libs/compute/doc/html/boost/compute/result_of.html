@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template result_of</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.type_traits.result_of_hpp" title="Header &lt;boost/compute/type_traits/result_of.hpp&gt;">
 <link rel="prev" href="make_vector_type.html" title="Struct template make_vector_type">
@@ -37,11 +37,11 @@
   <span class="keyword">typedef</span> <span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">tr1_result_of</span><span class="special">&lt;</span> <span class="identifier">Signature</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="boost.compute.result_of.type"></a><span class="identifier">type</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp82982896"></a><h2>Description</h2>
+<a name="idp98043456"></a><h2>Description</h2>
 <p>Returns the result of <code class="computeroutput">Function</code> when called with <code class="computeroutput">Args</code>.</p>
 <p>For example, </p>
-<pre class="programlisting"> <span class="comment">// int + int = int</span>
- <span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">plus</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">==</span> <span class="keyword">int</span>
+<pre class="programlisting"><span class="comment">// int + int = int</span>
+<span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">plus</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">==</span> <span class="keyword">int</span>
 </pre>
 <p> </p>
 </div>

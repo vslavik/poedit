@@ -23,8 +23,17 @@ void goo( int )
 {
 }
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
+// VS2017+ compiler optimizations may cause this code NOT to crash.
+#pragma optimize("", off)
+#endif
+
 void foo( int i )
 {
     goo( 2/(i-1) );
 }
+
+#if defined(BOOST_MSVC) && (BOOST_MSVC > 1900)
+#pragma optimize("", on)
+#endif
 //]

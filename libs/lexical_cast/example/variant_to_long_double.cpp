@@ -1,4 +1,4 @@
-// Copyright 2013 Antony Polukhin
+// Copyright 2013-2017 Antony Polukhin
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See the accompanying file LICENSE_1_0.txt
@@ -32,8 +32,10 @@ long double to_long_double(const Variant& v) {
 int main() {
     boost::variant<char, int, std::string> v1('0'), v2("10.0001"), v3(1);
 
-    long double sum = to_long_double(v1) + to_long_double(v2) + to_long_double(v3);
-    assert(sum > 11 && sum < 11.1);
+    const long double sum = to_long_double(v1) + to_long_double(v2) + to_long_double(v3);
+    const int ret = (sum > 11 && sum < 11.1 ? 0 : 1);
+    assert(ret == 0);
+    return ret;
 }
 
 //] [/lexical_cast_variant_to_long_double]

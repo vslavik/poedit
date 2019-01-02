@@ -60,7 +60,7 @@ class array_iterator
     , private
           value_accessor_generator<T,NumDims>::type
 {
-  friend class iterator_core_access;
+  friend class ::boost::iterator_core_access;
   typedef detail::multi_array::associated_types<T,NumDims> access_t;
 
   typedef iterator_facade<

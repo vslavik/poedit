@@ -75,7 +75,7 @@ class Order:
             # No problem with placing first.
             result.append (obj)
 
-            # Remove all containts where 'obj' comes first,
+            # Remove all contains where 'obj' comes first,
             # since they are already satisfied.
             constraints = self.__remove_satisfied (constraints, obj)
 

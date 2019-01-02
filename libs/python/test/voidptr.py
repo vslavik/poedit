@@ -30,13 +30,13 @@
    
 >>> try: use(0)
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 
    ... and from strings to opaque objects
    
 >>> try: use("")
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 """
 def run(args = None):
     import sys
@@ -47,8 +47,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

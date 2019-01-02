@@ -92,8 +92,8 @@ struct zip_iterator_index_expr
     {
     }
 
-    IteratorTuple m_iterators;
-    IndexExpr m_index_expr;
+    const IteratorTuple m_iterators;
+    const IndexExpr m_index_expr;
 };
 
 /// \internal_

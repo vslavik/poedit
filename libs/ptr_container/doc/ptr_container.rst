@@ -38,6 +38,7 @@ and designs for dealing with OO specific problems
 * `Upgrading from Boost v. 1.33.*`_
 * `Upgrading from Boost v. 1.34.*`_
 * `Upgrading from Boost v. 1.35.*`_
+* `Upgrading from Boost v. 1.66.*`_
 * `Future Developments`_
 * Acknowledgements_
 * References_
@@ -248,7 +249,47 @@ The underlying containers stem from the two boost libraries
 
 - `Boost.Circular Buffer <../../circular_buffer/index.html>`_
 
-Furthermore, `insert iterators <ptr_inserter.html>`_ have been added. 
+Furthermore, `insert iterators <ptr_inserter.html>`_ have been added.
+
+
+
+===================================
+Upgrading from Boost v. ``1.66.*``
+===================================
+
+Starting with Boost v. ``1.67.0``, Boost.Pointer Container will use
+`Boost.Config <../../config/index.html>`_ to conditionally provide
+``std::unique_ptr``-based interfaces in addition to, or instead of,
+interfaces using ``std::auto_ptr``. Details
+are on the `Compatible Smart Pointer <compatible_smart_ptr.html>`_
+page, which also explains the convention in this documentation of using
+
+.. parsed-literal::
+   *compatible-smart-ptr*\ <T>
+
+to indicate such conditional interfaces.
+
+For C++98/03 users, this change has no observable effect.
+
+For C++11/14 users, there is no effect on existing code that used
+previous versions of Boost.Pointer Container, but now all function
+overloads taking an ``std::auto_ptr`` parameter are accompanied by an
+overload taking ``std::unique_ptr``. In the case of return types,
+``std::auto_ptr`` is still always used. Note however that until C++17,
+it is possible to construct ``std::unique_ptr<T>`` implicitly from
+``std::auto_ptr<T>``. Thus, users are free to modernize their code by
+replacing any explicit mention of ``std::auto_ptr`` with
+``std::unique_ptr``. This change falls just short of a
+search-and-replace conversion, as it is possible that some code may
+have relied on ``std::auto_ptr`` being copyable. But such situations
+will result in compile-time errors which should be easy to fix.
+
+Although ``std::auto_ptr`` is formally removed as of ISO C++17,
+certain compiler or standard library vendors have chosen to leave it
+in for backwards compatibility. For compilers and standard libraries
+where this is *not* the case, C++17 compilation of code using
+Boost.Pointer Container is not possible with Boost v. ``1.66.*`` or
+earlier. This situation is fixed as of Boost v. ``1.67.0``. 
 
 =====================
  Future Developments

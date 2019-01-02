@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../spatial_indexes.html" title="Spatial Indexes">
 <link rel="prev" href="../spatial_indexes.html" title="Spatial Indexes">
@@ -37,14 +37,14 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h0"></a>
-        <span><a name="geometry.spatial_indexes.introduction.r_tree"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.r_tree">R-tree</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.r_tree"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.r_tree">R-tree</a>
       </h5>
 <p>
         R-tree is a tree data structure used for spatial searching. It was proposed
-        by Antonin Guttman in 1984 <sup>[<a name="geometry.spatial_indexes.introduction.f0" href="#ftn.geometry.spatial_indexes.introduction.f0" class="footnote">1</a>]</sup> as an expansion of B-tree for multi-dimensional data. It may
+        by Antonin Guttman in 1984 <a href="#ftn.geometry.spatial_indexes.introduction.f0" class="footnote" name="geometry.spatial_indexes.introduction.f0"><sup class="footnote">[1]</sup></a> as an expansion of B-tree for multi-dimensional data. It may
         be used to store points or volumetric data in order to perform a spatial
         query. This query may for example return objects that are inside some area
-        or are close to some point in space <sup>[<a name="geometry.spatial_indexes.introduction.f1" href="#ftn.geometry.spatial_indexes.introduction.f1" class="footnote">2</a>]</sup>. It's possible to insert new objects or to remove the ones already
+        or are close to some point in space <a href="#ftn.geometry.spatial_indexes.introduction.f1" class="footnote" name="geometry.spatial_indexes.introduction.f1"><sup class="footnote">[2]</sup></a>. It's possible to insert new objects or to remove the ones already
         stored.
       </p>
 <p>
@@ -58,7 +58,7 @@
       </p>
 <p>
         The R-tree is a self-balanced data structure. The key part of balancing algorithm
-        is node splitting algorithm <sup>[<a name="geometry.spatial_indexes.introduction.f2" href="#ftn.geometry.spatial_indexes.introduction.f2" class="footnote">3</a>]</sup> <sup>[<a name="geometry.spatial_indexes.introduction.f3" href="#ftn.geometry.spatial_indexes.introduction.f3" class="footnote">4</a>]</sup>. Each algorithm produces different splits so the internal structure
+        is node splitting algorithm <a href="#ftn.geometry.spatial_indexes.introduction.f2" class="footnote" name="geometry.spatial_indexes.introduction.f2"><sup class="footnote">[3]</sup></a> <a href="#ftn.geometry.spatial_indexes.introduction.f3" class="footnote" name="geometry.spatial_indexes.introduction.f3"><sup class="footnote">[4]</sup></a>. Each algorithm produces different splits so the internal structure
         of a tree may be different for each one of them. In general, more complex
         algorithms analyses elements better and produces less overlapping nodes.
         In the searching process less nodes must be traversed in order to find desired
@@ -70,7 +70,7 @@
 <p>
         Additionally there are also algorithms creating R-tree containing some, number
         of objects. This technique is called bulk loading and is done by use of packing
-        algorithm <sup>[<a name="geometry.spatial_indexes.introduction.f4" href="#ftn.geometry.spatial_indexes.introduction.f4" class="footnote">5</a>]</sup> <sup>[<a name="geometry.spatial_indexes.introduction.f5" href="#ftn.geometry.spatial_indexes.introduction.f5" class="footnote">6</a>]</sup>. This method is faster and results in R-trees with better internal
+        algorithm <a href="#ftn.geometry.spatial_indexes.introduction.f4" class="footnote" name="geometry.spatial_indexes.introduction.f4"><sup class="footnote">[5]</sup></a> <a href="#ftn.geometry.spatial_indexes.introduction.f5" class="footnote" name="geometry.spatial_indexes.introduction.f5"><sup class="footnote">[6]</sup></a>. This method is faster and results in R-trees with better internal
         structure. This means that the query performance is increased.
       </p>
 <p>
@@ -292,13 +292,13 @@
 </table></div>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h1"></a>
-        <span><a name="geometry.spatial_indexes.introduction.implementation_details"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.implementation_details">Implementation
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.implementation_details"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.implementation_details">Implementation
         details</a>
       </h5>
 <p>
         Key features of this implementation of the R-tree are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             capable to store arbitrary Value type,
           </li>
@@ -336,7 +336,7 @@
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h2"></a>
-        <span><a name="geometry.spatial_indexes.introduction.dependencies"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.dependencies">Dependencies</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.dependencies"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.dependencies">Dependencies</a>
       </h5>
 <p>
         R-tree depends on Boost.Container, Boost.Core, Boost.Move, Boost.MPL, Boost.Range,
@@ -344,7 +344,7 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h3"></a>
-        <span><a name="geometry.spatial_indexes.introduction.contributors"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.contributors">Contributors</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.contributors"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.contributors">Contributors</a>
       </h5>
 <p>
         The spatial index was originally started by Federico J. Fernandez during
@@ -352,35 +352,35 @@
       </p>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h4"></a>
-        <span><a name="geometry.spatial_indexes.introduction.spatial_thanks"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.spatial_thanks">Spatial thanks</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.introduction.spatial_thanks"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.spatial_thanks">Spatial thanks</a>
       </h5>
 <p>
         I'd like to thank Barend Gehrels, Bruno Lalande, Mateusz &#321;oskot, Lucanus
         J. Simonson for their support and ideas.
       </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f0" href="#geometry.spatial_indexes.introduction.f0" class="para">1</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.geometry.spatial_indexes.introduction.f0" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f0" class="para"><sup class="para">[1] </sup></a>
           Guttman, A. (1984). <span class="emphasis"><em>R-Trees: A Dynamic Index Structure for Spatial
           Searching</em></span>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f1" href="#geometry.spatial_indexes.introduction.f1" class="para">2</a>] </sup>
+<div id="ftn.geometry.spatial_indexes.introduction.f1" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f1" class="para"><sup class="para">[2] </sup></a>
           Cheung, K.; Fu, A. (1998). <span class="emphasis"><em>Enhanced Nearest Neighbour Search
           on the R-tree</em></span>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f2" href="#geometry.spatial_indexes.introduction.f2" class="para">3</a>] </sup>
+<div id="ftn.geometry.spatial_indexes.introduction.f2" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f2" class="para"><sup class="para">[3] </sup></a>
           Greene, D. (1989). <span class="emphasis"><em>An implementation and performance analysis
           of spatial data access methods</em></span>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f3" href="#geometry.spatial_indexes.introduction.f3" class="para">4</a>] </sup>
+<div id="ftn.geometry.spatial_indexes.introduction.f3" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f3" class="para"><sup class="para">[4] </sup></a>
           Beckmann, N.; Kriegel, H. P.; Schneider, R.; Seeger, B. (1990). <span class="emphasis"><em>The
           R*-tree: an efficient and robust access method for points and rectangles</em></span>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f4" href="#geometry.spatial_indexes.introduction.f4" class="para">5</a>] </sup>
+<div id="ftn.geometry.spatial_indexes.introduction.f4" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f4" class="para"><sup class="para">[5] </sup></a>
           Leutenegger, Scott T.; Edgington, Jeffrey M.; Lopez, Mario A. (1997).
           <span class="emphasis"><em>STR: A Simple and Efficient Algorithm for R-Tree Packing</em></span>
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.geometry.spatial_indexes.introduction.f5" href="#geometry.spatial_indexes.introduction.f5" class="para">6</a>] </sup>
+<div id="ftn.geometry.spatial_indexes.introduction.f5" class="footnote"><p><a href="#geometry.spatial_indexes.introduction.f5" class="para"><sup class="para">[6] </sup></a>
           Garcia, Yvan J.; Lopez, Mario A.; Leutenegger, Scott T. (1997). <span class="emphasis"><em>A
           Greedy Algorithm for Bulk Loading R-trees</em></span>
         </p></div>
@@ -388,8 +388,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

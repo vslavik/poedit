@@ -116,7 +116,7 @@ gives an overview and a short description of the available functionality.
 
 Even if it is possible to write your own function object implementations (i.e. 
 using Boost.Lambda or Boost.Bind), the preferred way of defining lexer semantic 
-actions is to use __boost_phoenix__. In this case you can access the parameters 
+actions is to use __phoenix__. In this case you can access the parameters 
 described above by using the predefined __spirit__ placeholders: 
 
 [table Predefined Phoenix placeholders for lexer semantic actions
@@ -153,7 +153,7 @@ described above by using the predefined __spirit__ placeholders:
 ]
 
 The context object passed as the last parameter to any lexer semantic action is 
-not directly accessible while using __boost_phoenix__ expressions. We rather provide
+not directly accessible while using __phoenix__ expressions. We rather provide
 predefined Phoenix functions allowing to invoke the different support functions
 as mentioned above. The following table lists the available support functions 
 and describes their functionality:

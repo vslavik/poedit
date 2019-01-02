@@ -19,6 +19,7 @@
 // helper function templates for serialization of collections
 
 #include <boost/config.hpp>
+#include <boost/core/addressof.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/version.hpp>
@@ -60,7 +61,7 @@ inline void save_collection(
         // note borland emits a no-op without the explicit namespace
         boost::serialization::save_construct_data_adl(
             ar, 
-            &(*it), 
+            boost::addressof(*it),
             item_version
         );
         ar << boost::serialization::make_nvp("item", *it++);

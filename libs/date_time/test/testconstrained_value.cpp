@@ -43,8 +43,8 @@ int main()
 
 
   try {
-    constrained_value<one_to_ten_range_policy> cv2(11);
-    std::cout << "Not Reachable: " << cv2 << " ";
+    constrained_value<one_to_ten_range_policy> cv3(11);
+    std::cout << "Not Reachable: " << cv3 << " ";
     check("got range exception max", false);
   }
   catch(range_error& e) {

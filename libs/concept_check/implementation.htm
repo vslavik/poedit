@@ -27,7 +27,7 @@
   <p><font color="red">This documentation is out-of-date; similar but
   newer implementation techniques are now used.  This documentation
   also refers to components and protocols in the library's old
-  interace such as <code>BOOST_CLASS_REQUIRES</code>
+  interface such as <code>BOOST_CLASS_REQUIRES</code>
   and <code>constraints()</code> functions, which are still supported
   but deprecated.</font></p>
 
@@ -77,7 +77,7 @@
   function. Instead, we group sets of valid expressions together, according
   to the definitions of the corresponding concepts. For each concept we
   define a concept checking class template where the template parameter is
-  for the type to be checked. The class contains a <tt>contraints()</tt>
+  for the type to be checked. The class contains a <tt>constraints()</tt>
   member function which exercises all of the valid expressions of the
   concept. The objects used in the constraints function, such as <tt>n</tt>
   and <tt>i</tt>, are declared as data members of the concept checking
@@ -104,7 +104,7 @@
   checks, we wrap the member function pointer mechanism in a function named
   <tt>function_requires()</tt>. The following code snippet shows how to use
   <tt>function_requires()</tt> to make sure that the iterator is a <a href=
-  "http://www.sgi.com/tech/stl/RandomAccessIterator.html">RandomAccessIterator</a>.</p>
+  "http://www.boost.org/sgi/stl/RandomAccessIterator.html">RandomAccessIterator</a>.</p>
   <pre>
   template &lt;class Iter&gt;
   void stable_sort(Iter first, Iter last)

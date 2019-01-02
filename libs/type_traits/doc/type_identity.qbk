@@ -12,6 +12,8 @@
    {
       typedef T type;
    };
+
+   template <class T> using type_identity_t = typename type_identity<T>::type; // C++11 and above
   
 __header ` #include <boost/type_traits/type_identity.hpp>` or ` #include <boost/type_traits.hpp>`
 

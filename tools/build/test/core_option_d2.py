@@ -7,7 +7,7 @@
 
 import BoostBuild
 
-t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+t = BoostBuild.Tester(pass_toolset=0)
 
 t.write("file.jam", """\
 actions .a.

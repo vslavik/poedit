@@ -1,34 +1,25 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
+#define BOOST_GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/bit_aligned_pixel_reference.hpp>
+#include <boost/gil/pixel_iterator.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
-#define GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief A model of a heterogeneous pixel that is not byte aligned. Examples are bitmap (1-bit pixels) or 6-bit RGB (222)
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 28, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/config.hpp>
+#include <boost/iterator/iterator_facade.hpp>
 
 #include <functional>
-#include <boost/iterator/iterator_facade.hpp>
-#include "gil_config.hpp"
-#include "bit_aligned_pixel_reference.hpp"
-#include "pixel_iterator.hpp"
 
 namespace boost { namespace gil {
+
+/// A model of a heterogeneous pixel that is not byte aligned.
+/// Examples are bitmap (1-bit pixels) or 6-bit RGB (222).
 
 /// \defgroup PixelIteratorNonAlignedPixelIterator bit_aligned_pixel_iterator
 /// \ingroup PixelIteratorModel

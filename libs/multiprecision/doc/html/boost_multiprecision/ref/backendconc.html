@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Backend Requirements</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="internals.html" title="Internal Support Code">
@@ -45,7 +45,8 @@
         In the following tables, type B is the <code class="computeroutput"><span class="identifier">Backend</span></code>
         template argument to <code class="computeroutput"><span class="identifier">number</span></code>,
         <code class="computeroutput"><span class="identifier">b</span></code> and <code class="computeroutput"><span class="identifier">b2</span></code>
-        are a variables of type B, <code class="computeroutput"><span class="identifier">cb</span></code>,
+        are a variables of type B, <code class="computeroutput"><span class="identifier">pb</span></code>
+        is a variable of type B*, <code class="computeroutput"><span class="identifier">cb</span></code>,
         <code class="computeroutput"><span class="identifier">cb2</span></code> and <code class="computeroutput"><span class="identifier">cb3</span></code>
         are constant variables of type <code class="computeroutput"><span class="keyword">const</span>
         <span class="identifier">B</span></code>, <code class="computeroutput"><span class="identifier">rb</span></code>
@@ -939,9 +940,160 @@
                   <code class="computeroutput"><span class="identifier">N</span></code> is one of the
                   values <code class="computeroutput"><span class="identifier">number_kind_integer</span></code>,
                   <code class="computeroutput"><span class="identifier">number_kind_floating_point</span></code>,
+                  <code class="computeroutput"><span class="identifier">number_kind_complex</span></code>,
                   <code class="computeroutput"><span class="identifier">number_kind_rational</span></code>
                   or <code class="computeroutput"><span class="identifier">number_kind_fixed_point</span></code>.
                   Defaults to <code class="computeroutput"><span class="identifier">number_kind_floating_point</span></code>.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_conj</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the complex
+                  conjugate of <code class="computeroutput"><span class="identifier">cb</span></code>.
+                  Required for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_proj</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the Riemann
+                  projection of <code class="computeroutput"><span class="identifier">cb</span></code>.
+                  Required for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_real</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the real
+                  part of <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_imag</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the imaginary
+                  of <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_set_real</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets the real part of <code class="computeroutput"><span class="identifier">b</span></code>
+                  to <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_set_imag</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets the imaginary part of <code class="computeroutput"><span class="identifier">b</span></code>
+                  to <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
                 </p>
               </td>
 <td>
@@ -3468,6 +3620,34 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">eval_exp2</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Performs the equivalent operation to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">exp2</span></code>
+                  on argument <code class="computeroutput"><span class="identifier">cb</span></code>
+                  and stores the result in <code class="computeroutput"><span class="identifier">b</span></code>.
+                  Only required when <code class="computeroutput"><span class="identifier">B</span></code>
+                  is an floating-point type. The default version of this function
+                  is implemented in terms of <code class="computeroutput"><span class="identifier">eval_pow</span></code>.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">eval_log</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
                   <span class="identifier">cb</span><span class="special">)</span></code>
                 </p>
@@ -3806,6 +3986,36 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">eval_modf</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">pb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Performs the equivalent operation to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">modf</span></code>
+                  on argument <code class="computeroutput"><span class="identifier">cb</span></code>,
+                  and store the integer result in <code class="computeroutput"><span class="special">*</span><span class="identifier">pb</span></code> and the fractional part in
+                  <code class="computeroutput"><span class="identifier">b</span></code>. Only required
+                  when <code class="computeroutput"><span class="identifier">B</span></code> is an floating-point
+                  type. The default version of this function is synthesised from
+                  other operations above.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">eval_pow</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
                   <span class="identifier">cb</span><span class="special">,</span>
                   <span class="identifier">cb2</span><span class="special">)</span></code>
@@ -3889,6 +4099,25 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">eval_scalbln</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">e</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Calls <code class="computeroutput"><span class="identifier">eval_scalbn</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">,</span> <span class="identifier">e</span><span class="special">)</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">eval_ilogb</span><span class="special">(</span><span class="identifier">cb</span><span class="special">)</span></code>
                 </p>
               </td>
@@ -3904,6 +4133,372 @@
                   of type B. The default version of this function is implemented
                   in terms of eval_frexp, consequently this function must be provided
                   for types with a radix other than 2.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remquo</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">cb2</span><span class="special">,</span>
+                  <span class="identifier">pi</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span> <span class="special">=</span>
+                  <span class="identifier">cb</span> <span class="special">-</span>
+                  <span class="identifier">n</span> <span class="special">*</span>
+                  <span class="identifier">cb2</span></code> and stores <code class="computeroutput"><span class="identifier">n</span></code> in <code class="computeroutput"><span class="special">*</span><span class="identifier">pi</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remquo</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">pi</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version converts a to type B and calls the overload above.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remquo</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">pi</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version converts a to type B and calls the overload above.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remainder</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">,</span> <span class="identifier">cb2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version calls eval_remquo with a dummy final argument.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remainder</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">,</span> <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version calls eval_remquo with a dummy final argument.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_remainder</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version calls eval_remquo with a dummy final argument.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fdim</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">cb2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version sets <code class="computeroutput"><span class="identifier">b</span>
+                  <span class="special">=</span> <span class="identifier">cb</span>
+                  <span class="special">-</span> <span class="identifier">cb2</span></code>
+                  if <code class="computeroutput"><span class="identifier">cb</span> <span class="special">&gt;</span>
+                  <span class="identifier">cb2</span></code> and zero otherwise.
+                  Special cases are handled as in the C99 annex.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fdim</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version sets <code class="computeroutput"><span class="identifier">b</span>
+                  <span class="special">=</span> <span class="identifier">cb</span>
+                  <span class="special">-</span> <span class="identifier">cb2</span></code>
+                  if <code class="computeroutput"><span class="identifier">cb</span> <span class="special">&gt;</span>
+                  <span class="identifier">cb2</span></code> and zero otherwise.
+                  Special cases are handled as in the C99 annex.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fdim</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Default version sets <code class="computeroutput"><span class="identifier">b</span>
+                  <span class="special">=</span> <span class="identifier">cb</span>
+                  <span class="special">-</span> <span class="identifier">cb2</span></code>
+                  if <code class="computeroutput"><span class="identifier">cb</span> <span class="special">&gt;</span>
+                  <span class="identifier">cb2</span></code> and zero otherwise.
+                  Special cases are handled as in the C99 annex.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmax</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">cb2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the larger
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">cb2</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmax</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the larger
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">a</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmax</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the larger
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">a</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmin</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">cb2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the smaller
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">cb2</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmin</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the smaller
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">a</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_fmin</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the smaller
+                  of <code class="computeroutput"><span class="identifier">cb</span></code> and <code class="computeroutput"><span class="identifier">a</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_hypot</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">cb2</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the square
+                  root of the sum of the squares of <code class="computeroutput"><span class="identifier">cb</span></code>
+                  and <code class="computeroutput"><span class="identifier">cb2</span></code> without
+                  undue over or under flow.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_hypot</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  As above.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_hypot</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  As above.
                 </p>
               </td>
 </tr>
@@ -3926,6 +4521,88 @@
                   such that <span class="emphasis"><em>1 &lt;= cb*r<sup>-b</sup> &lt; r</em></span>, where <span class="emphasis"><em>r</em></span>
                   is the radix of type B. The default version of this function is
                   implemented in terms of <code class="computeroutput"><span class="identifier">eval_ilogb</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_nearbyint</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Calls <code class="computeroutput"><span class="identifier">eval_round</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">)</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_rint</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Calls <code class="computeroutput"><span class="identifier">eval_nearbyint</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span> <span class="identifier">cb</span><span class="special">)</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_log2</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the logarithm
+                  base 2 of <code class="computeroutput"><span class="identifier">cb</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <span class="emphasis"><em>hashing:</em></span>
+                </p>
+              </td>
+<td class="auto-generated">&#160;</td>
+<td class="auto-generated">&#160;</td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">hash_value</span><span class="special">(</span><span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns a hash value for the argument that is suitable for use
+                  with <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">hash</span></code> etc. If not provided then
+                  no automatic hashing support will be available for the number type.
                 </p>
               </td>
 </tr>
@@ -3953,6 +4630,36 @@
           some compiler bugs.
         </p></td></tr>
 </table></div>
+<h5>
+<a name="boost_multiprecision.ref.backendconc.h0"></a>
+        <span class="phrase"><a name="boost_multiprecision.ref.backendconc.overloadable_functions"></a></span><a class="link" href="backendconc.html#boost_multiprecision.ref.backendconc.overloadable_functions">Overloadable
+        Functions</a>
+      </h5>
+<p>
+        Some of the C99 math functions do not have <code class="computeroutput"><span class="identifier">eval_</span></code>
+        functions but must be overloaded directly: these functions are either trivial
+        or are forwarded to the Boost.Math implementations by default. The full list
+        of these functions is:
+      </p>
+<pre class="programlisting"><span class="keyword">int</span>           <span class="identifier">sign</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">int</span>           <span class="identifier">signbit</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">changesign</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">copysign</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">asinh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">acosh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">atanh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">cbrt</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">erf</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">erfc</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">expm1</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">log1p</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">tgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">lgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span>          <span class="identifier">lrint</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span> <span class="keyword">long</span>     <span class="identifier">llrint</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">nextafter</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>        <span class="identifier">nexttoward</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -81,16 +81,28 @@ public:
     enum properties {
         enable_profiling = CL_QUEUE_PROFILING_ENABLE,
         enable_out_of_order_execution = CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
+        ,
+        on_device = CL_QUEUE_ON_DEVICE,
+        on_device_default = CL_QUEUE_ON_DEVICE_DEFAULT
+        #endif
     };
 
     enum map_flags {
         map_read = CL_MAP_READ,
         map_write = CL_MAP_WRITE
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         ,
         map_write_invalidate_region = CL_MAP_WRITE_INVALIDATE_REGION
         #endif
     };
+
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_2
+    enum mem_migration_flags {
+        migrate_to_host = CL_MIGRATE_MEM_OBJECT_HOST,
+        migrate_content_undefined = CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED
+    };
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
 
     /// Creates a null command queue.
     command_queue()
@@ -118,7 +130,7 @@ public:
 
         cl_int error = 0;
 
-        #ifdef CL_VERSION_2_0
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         if (device.check_version(2, 0)){
             std::vector<cl_queue_properties> queue_properties;
             if(properties){
@@ -248,6 +260,35 @@ public:
         return get_info<cl_command_queue_properties>(CL_QUEUE_PROPERTIES);
     }
 
+    #if defined(BOOST_COMPUTE_CL_VERSION_2_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    /// Returns the current default device command queue for the underlying device.
+    ///
+    /// \opencl_version_warning{2,1}
+    command_queue get_default_device_queue() const
+    {
+        return command_queue(get_info<cl_command_queue>(CL_QUEUE_DEVICE_DEFAULT));
+    }
+
+    /// Replaces the default device command queue for the underlying device
+    /// with this command queue. Command queue must have been created
+    /// with CL_QUEUE_ON_DEVICE flag.
+    ///
+    /// \see_opencl21_ref{clSetDefaultDeviceCommandQueue}
+    ///
+    /// \opencl_version_warning{2,1}
+    void set_as_default_device_queue() const
+    {
+        cl_int ret = clSetDefaultDeviceCommandQueue(
+            this->get_context().get(),
+            this->get_device().get(),
+            m_queue
+        );
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+    }
+    #endif // BOOST_COMPUTE_CL_VERSION_2_1
+
     /// Enqueues a command to read data from \p buffer to host memory.
     ///
     /// \see_opencl_ref{clEnqueueReadBuffer}
@@ -323,7 +364,7 @@ public:
         return event_;
     }
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to read a rectangular region from \p buffer to
     /// host memory.
     ///
@@ -417,7 +458,7 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
     /// Enqueues a command to write data from host memory to \p buffer.
     ///
@@ -494,7 +535,7 @@ public:
         return event_;
     }
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to write a rectangular region from host memory
     /// to \p buffer.
     ///
@@ -588,7 +629,7 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
     /// Enqueues a command to copy data from \p src_buffer to
     /// \p dst_buffer.
@@ -630,7 +671,7 @@ public:
         return event_;
     }
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to copy a rectangular region from
     /// \p src_buffer to \p dst_buffer.
     ///
@@ -676,9 +717,9 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
-    #if defined(CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to fill \p buffer with \p pattern.
     ///
     /// \see_opencl_ref{clEnqueueFillBuffer}
@@ -717,7 +758,7 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_2
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
 
     /// Enqueues a command to map \p buffer into the host address space.
     /// Event associated with map operation is returned through
@@ -1269,7 +1310,7 @@ public:
         return event_;
     }
 
-    #if defined(CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to fill \p image with \p fill_color.
     ///
     /// \see_opencl_ref{clEnqueueFillImage}
@@ -1354,7 +1395,7 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_2
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
 
     /// Enqueues a kernel for execution.
     ///
@@ -1438,7 +1479,7 @@ public:
 
         // clEnqueueTask() was deprecated in OpenCL 2.0. In that case we
         // just forward to the equivalent clEnqueueNDRangeKernel() call.
-        #ifdef CL_VERSION_2_0
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         size_t one = 1;
         cl_int ret = clEnqueueNDRangeKernel(
             m_queue, kernel, 1, 0, &one, &one,
@@ -1511,7 +1552,10 @@ public:
     {
         BOOST_ASSERT(m_queue != 0);
 
-        clFlush(m_queue);
+        cl_int ret = clFlush(m_queue);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
     }
 
     /// Blocks until all outstanding commands in the queue have finished.
@@ -1521,7 +1565,10 @@ public:
     {
         BOOST_ASSERT(m_queue != 0);
 
-        clFinish(m_queue);
+        cl_int ret = clFinish(m_queue);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
     }
 
     /// Enqueues a barrier in the queue.
@@ -1530,11 +1577,11 @@ public:
         BOOST_ASSERT(m_queue != 0);
         cl_int ret = CL_SUCCESS;
 
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(get_device().check_version(1, 2)){
             ret = clEnqueueBarrierWithWaitList(m_queue, 0, 0, 0);
         } else
-        #endif // CL_VERSION_1_2
+        #endif // BOOST_COMPUTE_CL_VERSION_1_2
         {
             // Suppress deprecated declarations warning
             BOOST_COMPUTE_DISABLE_DEPRECATED_DECLARATIONS();
@@ -1547,7 +1594,7 @@ public:
         }
     }
 
-    #if defined(CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a barrier in the queue after \p events.
     ///
     /// \opencl_version_warning{1,2}
@@ -1568,7 +1615,7 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_2
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
 
     /// Enqueues a marker in the queue and returns an event that can be
     /// used to track its progress.
@@ -1577,7 +1624,7 @@ public:
         event event_;
         cl_int ret = CL_SUCCESS;
 
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(get_device().check_version(1, 2)){
             ret = clEnqueueMarkerWithWaitList(m_queue, 0, 0, &event_.get());
         } else
@@ -1596,7 +1643,7 @@ public:
         return event_;
     }
 
-    #if defined(CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a marker after \p events in the queue and returns an
     /// event that can be used to track its progress.
     ///
@@ -1615,9 +1662,9 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_1_2
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
 
-    #if defined(CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Enqueues a command to copy \p size bytes of data from \p src_ptr to
     /// \p dst_ptr.
     ///
@@ -1797,7 +1844,81 @@ public:
 
         return event_;
     }
-    #endif // CL_VERSION_2_0
+    #endif // BOOST_COMPUTE_CL_VERSION_2_0
+
+    #if defined(BOOST_COMPUTE_CL_VERSION_2_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    /// Enqueues a command to indicate which device a set of ranges of SVM allocations
+    /// should be associated with. The pair \p svm_ptrs[i] and \p sizes[i] together define
+    /// the starting address and number of bytes in a range to be migrated.
+    ///
+    /// If \p sizes is empty, then that means every allocation containing any \p svm_ptrs[i]
+    /// is to be migrated. Also, if \p sizes[i] is zero, then the entire allocation containing
+    /// \p svm_ptrs[i] is migrated.
+    ///
+    /// \opencl_version_warning{2,1}
+    ///
+    /// \see_opencl21_ref{clEnqueueSVMMigrateMem}
+    event enqueue_svm_migrate_memory(const std::vector<const void*> &svm_ptrs,
+                                     const std::vector<size_t> &sizes,
+                                     const cl_mem_migration_flags flags = 0,
+                                     const wait_list &events = wait_list())
+    {
+        BOOST_ASSERT(svm_ptrs.size() == sizes.size() || sizes.size() == 0);
+        event event_;
+
+        cl_int ret = clEnqueueSVMMigrateMem(
+            m_queue,
+            static_cast<cl_uint>(svm_ptrs.size()),
+            const_cast<void const **>(&svm_ptrs[0]),
+            sizes.size() > 0 ? &sizes[0] : NULL,
+            flags,
+            events.size(),
+            events.get_event_ptr(),
+            &event_.get()
+        );
+
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+
+        return event_;
+    }
+
+    /// Enqueues a command to indicate which device a range of SVM allocation
+    /// should be associated with. The pair \p svm_ptr and \p size together define
+    /// the starting address and number of bytes in a range to be migrated.
+    ///
+    /// If \p size is 0, then the entire allocation containing \p svm_ptr is
+    /// migrated. The default value for \p size is 0.
+    ///
+    /// \opencl_version_warning{2,1}
+    ///
+    /// \see_opencl21_ref{clEnqueueSVMMigrateMem}
+    event enqueue_svm_migrate_memory(const void* svm_ptr,
+                                     const size_t size = 0,
+                                     const cl_mem_migration_flags flags = 0,
+                                     const wait_list &events = wait_list())
+    {
+        event event_;
+
+        cl_int ret = clEnqueueSVMMigrateMem(
+            m_queue,
+            cl_uint(1),
+            &svm_ptr,
+            &size,
+            flags,
+            events.size(),
+            events.get_event_ptr(),
+            &event_.get()
+        );
+
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+
+        return event_;
+    }
+    #endif // BOOST_COMPUTE_CL_VERSION_2_1
 
     /// Returns \c true if the command queue is the same at \p other.
     bool operator==(const command_queue &other) const
@@ -1874,6 +1995,12 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(command_queue,
     ((uint_, CL_QUEUE_REFERENCE_COUNT))
     ((cl_command_queue_properties, CL_QUEUE_PROPERTIES))
 )
+
+#ifdef BOOST_COMPUTE_CL_VERSION_2_1
+BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(command_queue,
+    ((cl_command_queue, CL_QUEUE_DEVICE_DEFAULT))
+)
+#endif // BOOST_COMPUTE_CL_VERSION_2_1
 
 } // end compute namespace
 } // end boost namespace

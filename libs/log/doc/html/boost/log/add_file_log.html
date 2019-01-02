@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template add_file_log</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../utilities.html#header.boost.log.utility.setup.file_hpp" title="Header &lt;boost/log/utility/setup/file.hpp&gt;">
 <link rel="prev" href="wadd_console_log.html" title="Function wadd_console_log">
@@ -29,23 +29,29 @@
   <span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">synchronous_sink</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_file_backend</span> <span class="special">&gt;</span> <span class="special">&gt;</span> 
   <span class="identifier">add_file_log</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp107060352"></a><h2>Description</h2>
+<a name="idp126224224"></a><h2>Description</h2>
 <p>The function initializes the logging library to write logs to a file stream.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">args</code></span></p></td>
 <td>
 <p>A number of named arguments. The following parameters are supported: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p><code class="computeroutput">file_name</code> The file name or its pattern. This parameter is mandatory. </p></li>
 <li class="listitem"><p><code class="computeroutput">open_mode</code> The mask that describes the open mode for the file. See <code class="computeroutput">std::ios_base::openmode</code>. </p></li>
 <li class="listitem"><p><code class="computeroutput">rotation_size</code> The size of the file at which rotation should occur. See <code class="computeroutput">basic_text_file_backend</code>. </p></li>

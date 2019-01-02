@@ -29,7 +29,7 @@ t.run_build_system(["-n", "-d+2"])
 
 t.fail_test(t.stdout().find("echo hi") == -1)
 
-name = t.adjust_names("bin/$toolset/debug/hello.exe")[0]
+name = t.adjust_names("bin/$toolset/debug*/hello.exe")[0]
 name = apply(os.path.join, name.split("/"));
 t.expect_output_lines(" valgrind *%s " % name)
 

@@ -27,7 +27,7 @@ int_log_mean_bin_size = 2,
 //Minimum value 1
 int_log_min_split_count = 9,
 //This is the minimum split count to use spreadsort when it will finish in one
-//iteration.  Make this larger the faster std::sort is relative to integer_sort.
+//iteration.  Make this larger the faster boost::sort::pdqsort is relative to integer_sort.
 int_log_finishing_count = 31,
 //Sets the minimum number of items per bin for floating point.
 float_log_mean_bin_size = 2,
@@ -35,7 +35,7 @@ float_log_mean_bin_size = 2,
 //Minimum value 1
 float_log_min_split_count = 8,
 //This is the minimum split count to use spreadsort when it will finish in one
-//iteration.  Make this larger the faster std::sort is relative to float_sort.
+//iteration.  Make this larger the faster boost::sort::pdqsort is relative to float_sort.
 float_log_finishing_count = 4,
 //There is a minimum size below which it is not worth using spreadsort
 min_sort_size = 1000 };

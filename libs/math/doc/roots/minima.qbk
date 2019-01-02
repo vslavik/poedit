@@ -25,7 +25,7 @@ a [@http://en.wikipedia.org/wiki/Golden_section_search golden-section search].
 [*Parameters]
 
 [variablelist
-[[f] [The function to minimise: a function object (functor) that should be smooth over the
+[[f] [The function to minimise: a function object (or C++ lambda) that should be smooth over the
           range ['\[min, max\]], with no maxima occurring in that interval.]]
 [[min] [The lower endpoint of the range in which to search  for the minima.]]
 [[max] [The upper endpoint of the range in which to search  for the minima.]]
@@ -41,17 +41,17 @@ a [@http://en.wikipedia.org/wiki/Golden_section_search golden-section search].
 
 [*Returns:]
 
-A `pair` of type T containing the value of the abscissa at the minima and the value
+A `std::pair` of type T containing the value of the abscissa (x) at the minima and the value
 of ['f(x)] at the minima.
 
 [tip Defining BOOST_MATH_INSTRUMENT will show some parameters, for example:
 ``
-	Type T is double
-	bits = 24, maximum 26
-	tolerance = 1.19209289550781e-007
-	seeking minimum in range min-4 to 1.33333333333333
-	maximum iterations 18446744073709551615
-	10 iterations.
+  Type T is double
+  bits = 24, maximum 26
+  tolerance = 1.19209289550781e-007
+  seeking minimum in range min-4 to 1.33333333333333
+  maximum iterations 18446744073709551615
+  10 iterations.
 ``
 ]
 
@@ -61,7 +61,7 @@ As a demonstration, we replicate this  [@http://en.wikipedia.org/wiki/Brent%27s_
 minimising the function ['y= (x+3)(x-1)[super 2]].
 
 It is obvious from the equation and the plot that there is a
-minimum at exactly one and the value of the function at one is exactly zero.
+minimum at exactly unity (x = 1) and the value of the function at one is exactly zero (y = 0).
 
 [tip This observation shows that an analytical or
 [@http://en.wikipedia.org/wiki/Closed-form_expression Closed-form expression]
@@ -79,55 +79,61 @@ This function is encoded in C++ as function object (functor) using `double` prec
 
 The Brent function is conveniently accessed through a `using` statement (noting sub-namespace `::tools`).
 
+  using boost::math::tools::brent_find_minima;
+
 The search minimum and maximum are chosen as -4 to 4/3 (as in the Wikipedia example).
 
 [tip S A Stage (reference 6) reports that the Brent algorithm is ['slow to start, but fast to converge],
 so choosing a tight min-max range is good.]
 
 For simplicity, we set the precision parameter `bits` to `std::numeric_limits<double>::digits`,
-which is effectively the maximum possible i.e. `std::numeric_limits<double>::digits`/2.
-Nor do we provide a maximum iterations parameter `max_iter`,
-(perhaps unwidely), so the function will iterate until it finds a minimum.
+which is effectively the maximum possible `std::numeric_limits<double>::digits/2`.
+
+Nor do we provide a value for maximum iterations parameter `max_iter`,
+(probably unwisely), so the function will iterate until it finds a minimum.
 
 [brent_minimise_double_1]
 
 The resulting [@http://en.cppreference.com/w/cpp/utility/pair std::pair]
-contains the minimum close to one and the minimum value close to zero.
+contains the minimum close to one, and the minimum value close to zero.
 
-  x at minimum = 1.00000000112345, f(1.00000000112345) = 5.04852568272458e-018
+  x at minimum = 1.00000000112345,
+  f(1.00000000112345) = 5.04852568272458e-018
 
 The differences from the expected ['one] and ['zero] are less than the
-uncertainty (for `double`) 1.5e-008 calculated from
-`sqrt(std::numeric_limits<double>::digits) == 53`.
+uncertainty, for `double` 1.5e-008, calculated from
+`sqrt(std::numeric_limits<double>::epsilon())`.
 
-We can use it like this to check that the two values are close-enough to those expected,
+We can use this uncertainty to check that the two values are close-enough to those expected,
 
-    using boost::math::fpc::is_close_to;
-    using boost::math::fpc::is_small;
+[brent_minimise_double_1a]
 
-   double uncertainty = sqrt(std::numeric_limits<double>::digits);
-   is_close_to(1., r.first, uncertainty);
-   is_small(r.second, uncertainty);
+that outputs
 
-   x == 1 (compared to uncertainty 0.00034527) is true
-   f(x) == 0 (compared to uncertainty 0.00034527) is true
+  x == 1 (compared to uncertainty 1.49011611938477e-08) is true
+  f(x) == 0 (compared to uncertainty 1.49011611938477e-08) is true
+
+[note The function `close_at_tolerance` is ineffective for testing if a value is small or zero
+(because it may divide by small or zero and cause overflow).
+Function `is_small` does this job.]
 
 It is possible to make this comparison more generally with a templated function,
-returning `true` when this criterion is met, for example:
+`is_close`, first checking `is_small` before checking `close_at_tolerance`,
+returning `true` when small or close, for example:
 
 [brent_minimise_close]
 
 In practical applications, we might want to know how many iterations,
-and maybe to limit iterations and
-perhaps to trade some loss of precision for speed, for example:
+and maybe to limit iterations (in case the function proves ill-behaved),
+and/or perhaps to trade some loss of precision for speed, for example:
 
 [brent_minimise_double_2]
 
 limits to a maximum of 20 iterations
-(a reasonable estimate for this application, even for higher precision shown later).
+(a reasonable estimate for this example function, even for much higher precision shown later).
 
 The parameter `it` is updated to return the actual number of iterations
-(so it may be useful to also keep a record of the limit in `maxit`).
+(so it may be useful to also keep a record of the limit set in `const maxit`).
 
 It is neat to avoid showing insignificant digits by computing the number of decimal digits to display.
 
@@ -136,7 +142,7 @@ It is neat to avoid showing insignificant digits by computing the number of deci
   Showing 53 bits precision with 9 decimal digits from tolerance 1.49011611938477e-008
   x at minimum = 1, f(1) = 5.04852568e-018
 
-We can also half the number of precision bits from 52 to 26.
+We can also half the number of precision bits from 52 to 26:
 
 [brent_minimise_double_4]
 
@@ -146,10 +152,10 @@ It is only if we reduce the precision to a quarter, specifying only 13 precision
 
 [brent_minimise_double_5]
 
-that we reduce the number of iterations from 10 to 7 and the result significantly differing from ['one] and ['zero].
+that we reduce the number of iterations from 10 to 7 that the result slightly differs from ['one] and ['zero].
 
   Showing 13 bits precision with 9 decimal digits from tolerance 0.015625
-  x at minimum = 0.9999776, f(0.9999776) = 2.0069572e-009 after  7 iterations.
+  x at minimum = 0.9999776, f(0.9999776) = 2.0069572e-009 after 7 iterations.
 
 [h5:template Templating on floating-point type]
 
@@ -159,7 +165,7 @@ Since the functor is stateless, the easiest option is to simply make
 
 [brent_minimise_T_functor]
 
-The `brent_find_minima` function can now be used in template form.
+The `brent_find_minima` function can now be used in template form, for example using `long double`:
 
 [brent_minimise_template_1]
 
@@ -169,41 +175,49 @@ but it is also possible to be more explicit, for example:
   std::pair<long double, long double> r = brent_find_minima<func, long double>
   (func(), bracket_min, bracket_max, bits, it);
 
-In order to show the use of multiprecision below, it may be convenient to write a templated function to use this.
+In order to show the use of multiprecision below (or other user-defined types),
+it may be convenient to write a templated function to use this:
 
 [brent_minimise_T_show]
+
+[note the prudent addition of `try'n'catch` blocks within the function.
+This ensures that any malfunction will provide a Boost.Math error message
+rather than uncommunicatively calling `std::abort`.]
 
 We can use this with all built-in floating-point types, for example
 
 [brent_minimise_template_fd]
 
-and, on platforms that provide it, a
-[@http://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format 128-bit quad] type.
+[h5:quad_precision  Quad 128-bit precision]
+
+On platforms that provide it, a
+[@http://en.wikipedia.org/wiki/Quadruple-precision_floating-point_format 128-bit quad] type can be used.
 (See [@boost:libs/multiprecision/doc/html/boost_multiprecision/tut/floats/float128.html float128]).
 
-For this optional include, the build should define the macro BOOST_HAVE_QUADMATH:
+If this type is available, the build should define the macro BOOST_HAVE_QUADMATH:
 
 [brent_minimise_mp_include_1]
 
-or
+and can be (conditionally) used this:
 
 [brent_minimise_template_quad]
 
 [h5:multiprecision  Multiprecision]
 
 If a higher precision than `double` (or `long double` if that is more precise) is required,
-then this is easily achieved using __multiprecision with some includes from
+then this is easily achieved using __multiprecision with some includes, for example:
 
 [brent_minimise_mp_include_0]
 
 and some `typdef`s.
 
 [brent_minimise_mp_typedefs]
-Using thus
+
+Used thus
 
 [brent_minimise_mp_1]
 
-and with our show function
+and with our `show_minima` function
 
 [brent_minimise_mp_2]
 
@@ -256,7 +270,7 @@ Stage concludes that Brent's algorithm is slow to start, but fast to finish conv
 [endsect] [/section:rebt_minima Locating Function Minima]
 
 [/
-  Copyright 2006, 2015 John Maddock and Paul A. Bristow.
+  Copyright 2006, 2015, 2018 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).

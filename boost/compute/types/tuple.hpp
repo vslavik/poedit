@@ -206,7 +206,7 @@ inline meta_kernel& operator<<(meta_kernel &kernel,                            \
     typedef typename boost::tuple<BOOST_PP_ENUM_PARAMS(n, T)> T;               \
     BOOST_STATIC_ASSERT(N < size_t(boost::tuples::length<T>::value));          \
     kernel.inject_type<T>();                                                   \
-    return kernel << expr.m_arg << ".v" << uint_(N);                           \
+    return kernel << expr.m_arg << ".v" << int_(N);                           \
 }
 
 BOOST_PP_REPEAT_FROM_TO(1, BOOST_COMPUTE_MAX_ARITY, BOOST_COMPUTE_GET_N, ~)

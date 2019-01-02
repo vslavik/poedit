@@ -28,8 +28,20 @@ rule refine ( properties * : requirements * )
     for local r in $(requirements)
     {
         # Do not consider conditional requirements.
-        if ! [ MATCH (:) : $(r:G=) ] && ! free in [ feature.attributes $(r:G) ]
+        if ! [ MATCH "(:<)" : $(r:G=) ] && ! free in [ feature.attributes $(r:G) ]
         {
+            if ! $(r) in $(properties)
+            {
+                # Kill subfeatures of properties that we're changing
+                local sub = [ modules.peek feature : $(r:G).subfeatures ] ;
+                if $(sub)
+                {
+                    # non-specific subfeatures are still valid
+                    sub = [ MATCH "(.*:.*)" : $(sub) ] ;
+                    local name = [ utility.ungrist $(r:G) ] ;
+                    unset += <$(name)-$(sub)> ;
+                }
+            }
             unset += $(r:G) ;
         }
     }
@@ -37,7 +49,7 @@ rule refine ( properties * : requirements * )
     # Remove properties that are overridden by requirements
     for local p in $(properties)
     {
-        if [ MATCH (:) : $(p:G=) ] || ! $(p:G) in $(unset)
+        if [ MATCH "(:<)" : $(p:G=) ] || ! $(p:G) in $(unset)
         {
             result += $(p) ;
         }
@@ -55,11 +67,16 @@ rule evaluate-conditionals-in-context ( properties * : context * )
 {
     local base ;
     local conditionals ;
+    local indirect ;
     for local p in $(properties)
     {
-        if [ MATCH (:<) : $(p) ]
+        if [ MATCH "(:<)" : $(p) ] && ! free in [ feature.attributes $(p:G) ]
         {
             conditionals += $(p) ;
+        }
+        else if $(p:G) = <conditional>
+        {
+            indirect += $(p) ;
         }
         else
         {
@@ -71,7 +88,7 @@ rule evaluate-conditionals-in-context ( properties * : context * )
     for local p in $(conditionals)
     {
         # Separate condition and property.
-        local s = [ MATCH ^(.*):(<.*) : $(p) ] ;
+        local s = [ MATCH "^(.*):(<.*)" : $(p) ] ;
         # Split condition into individual properties.
         local condition = [ regex.split $(s[1]) "," ] ;
         # Evaluate condition.
@@ -116,7 +133,55 @@ rule evaluate-conditionals-in-context ( properties * : context * )
             }
         }
     }
+    # Import here to avoid cyclic dependency
+    import project ;
+    for local i in [ MATCH "^@(.*)" : $(indirect:G=) ]
+    {
+        # If the rule was set in a project module, translate paths
+        # relative to that project's location.
+        local m = [ indirect.get-module $(i) ] ;
+        local p = [ project.target $(m) : allow-missing ] ;
+        local new = [ indirect.call $(i) $(context) ] ;
+        if $(p) && [ $(p).location ]
+        {
+            result += [ translate-paths $(new) : [ $(p).location ] ] ;
+        }
+        else
+        {
+            result += $(new) ;
+        }
+    }
     return $(result) ;
+}
+
+
+# Returns <relevant> properties indicating how the conditionals in
+# properties affect feature relevance.  If the optional argument cond
+# is passed, it is treated as extra conditions for all properties.
+# 
+rule evaluate-conditional-relevance ( properties * :  cond * )
+{
+    cond = [ sequence.transform utility.ungrist : $(cond:G) ] ;
+    local result ;
+    for local p in $(properties)
+    {
+        # Separate condition and property.
+        local s = [ MATCH "^(.*):(<.*)" : $(p) ] ;
+        if ! $(s) || free in [ feature.attributes $(p:G) ]
+        {
+            local value = [ utility.ungrist $(p:G) ] ;
+            result += <relevant>$(value):<relevant>$(cond) ;
+        }
+        else
+        {
+            local condition = [ regex.split $(s[1]) "," ] ;
+            condition = [ MATCH "^!?(.*)" : $(condition) ] ;
+            condition = [ sequence.transform utility.ungrist : $(condition:G) ] $(cond) ;
+            local value = [ utility.ungrist $(s[2]:G) ] ;
+            result += <relevant>$(value):<relevant>$(condition) ;
+        }
+    }
+    return [ sequence.unique $(result) ] ;
 }
 
 
@@ -125,7 +190,7 @@ rule expand-subfeatures-in-conditions ( properties * )
     local result ;
     for local p in $(properties)
     {
-        local s = [ MATCH ^(.*):(<.*) : $(p) ] ;
+        local s = [ MATCH "^(.*):(<.*)" : $(p) ] ;
         if ! $(s)
         {
             result += $(p) ;
@@ -156,7 +221,7 @@ rule expand-subfeatures-in-conditions ( properties * )
             }
             else
             {
-                result += $(e:J=,):$(value) ;
+                result += "$(e:J=,):$(value)" ;
             }
         }
     }
@@ -508,7 +573,7 @@ rule translate ( properties * : project-id : project-location : context-module )
                 e += [ feature.expand-subfeatures $(c) : true ] ;
             }
 
-            condition = $(e:J=,): ;
+            condition = "$(e:J=,):" ;
         }
         else
         {
@@ -580,7 +645,7 @@ rule translate-paths ( properties * : path )
         local condition = "" ;
         if $(split)
         {
-            condition = $(split[1]): ;
+            condition = "$(split[1]):" ;
             p = $(split[2]) ;
         }
 
@@ -665,7 +730,7 @@ rule translate-dependencies ( specification * : project-id : location )
         local condition = "" ;
         if $(split)
         {
-            condition = $(split[1]): ;
+            condition = "$(split[1]):" ;
             p = $(split[2]) ;
         }
         if dependency in [ feature.attributes $(p:G) ]
@@ -898,7 +963,7 @@ rule __test__ ( )
     assert.result : split-conditional <toolset>gcc ;
 
     # Test properties with ":".
-    assert.result : split-conditional <define>FOO=A::B ;
+    assert.result : split-conditional <define>"FOO=A::B" ;
 
     # Test conditional feature.
     assert.result-set-equal <toolset>gcc,<toolset-gcc:version>3.0 <define>FOO

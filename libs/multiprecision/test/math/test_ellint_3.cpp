@@ -34,6 +34,20 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*mpfr_float_backend<0>.*",   // test type(s)
+      ".*Mathworld.*",               // test data group
+      ".*", 10000, 3000);            // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*gmp_float<0>.*",            // test type(s)
+      ".*",               // test data group
+      ".*", 10000, 1200);            // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       ".*Large.*",                   // test data group
       ".*", 75, 40);                 // test function
@@ -53,6 +67,13 @@ void expected_results()
       ".*",                          // test data group
       ".*", 200, 30);              // test function
 #endif
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*",                          // test type(s)
+      ".*Mathworld.*",               // test data group
+      ".*", 600, 300);            // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib

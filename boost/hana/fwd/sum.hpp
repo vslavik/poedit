@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::sum`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -69,7 +69,10 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct sum_impl : sum_impl<T, when<true>> { };
 
     template <typename M>
-    struct sum_t;
+    struct sum_t {
+        template <typename Xs>
+        constexpr decltype(auto) operator()(Xs&& xs) const;
+    };
 
     template <typename M = integral_constant_tag<int>>
     constexpr sum_t<M> sum{};

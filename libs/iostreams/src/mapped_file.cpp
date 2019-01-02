@@ -11,12 +11,14 @@
 #define BOOST_IOSTREAMS_SOURCE
 
 #include <cassert>
+#include <stdexcept>
 #include <boost/iostreams/detail/config/rtl.hpp>
 #include <boost/iostreams/detail/config/windows_posix.hpp>
 #include <boost/iostreams/detail/file_handle.hpp>
 #include <boost/iostreams/detail/system_failure.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 
 #ifdef BOOST_IOSTREAMS_WINDOWS
 # define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
@@ -56,7 +58,7 @@ public:
     void close();
     bool error() const { return error_; }
     mapmode flags() const { return params_.flags; }
-    std::size_t size() const { return size_; }
+    std::size_t size() const { return static_cast<std::size_t>(size_); }
     char* data() const { return data_; }
     void resize(stream_offset new_size);
     static int alignment();
@@ -261,6 +263,7 @@ void mapped_file_impl::open_file(param_type p)
         flags |= O_LARGEFILE;
     #endif
     errno = 0;
+    if (p.path.is_wide()) { errno = EINVAL; cleanup_and_throw("wide path not supported here"); } // happens on CYGWIN
     handle_ = ::open(p.path.c_str(), flags, S_IRWXU);
     if (errno != 0)
         cleanup_and_throw("failed opening file");
@@ -321,7 +324,7 @@ void mapped_file_impl::try_map_file(param_type p)
             access,
             (DWORD) (p.offset >> 32),
             (DWORD) (p.offset & 0xffffffff),
-            size_ != max_length ? size_ : 0, 
+            (SIZE_T) (numeric_cast<size_type>(size_) != max_length ? size_ : 0),
             (LPVOID) p.hint );
     if (!data)
         cleanup_and_throw("failed mapping view");

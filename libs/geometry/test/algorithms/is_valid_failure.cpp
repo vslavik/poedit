@@ -848,10 +848,9 @@ void test_open_multipolygons()
                 bg::failure_self_intersections);
 
     // one polygon inside another and boundaries touching
-    // TODO: return the failure value failure_intersecting_interiors
     test::apply("mpg09",
                 "MULTIPOLYGON(((0 0,10 0,10 10,0 10)),((0 0,9 1,9 2)))",
-                bg::failure_self_intersections);
+                bg::failure_intersecting_interiors);
 
     // one polygon inside another and boundaries not touching
     test::apply("mpg10",

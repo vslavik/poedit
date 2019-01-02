@@ -164,6 +164,19 @@ public:
         m_definitions[name] = value;
     }
 
+    bool operator==(const function<Signature>& other) const
+    {
+        return
+            (m_name == other.m_name)
+                && (m_definitions == other.m_definitions)
+                && (m_source == other.m_source);
+    }
+
+    bool operator!=(const function<Signature>& other) const
+    {
+        return !(*this == other);
+    }
+
     /// \internal_
     detail::invoked_function<result_type, boost::tuple<> >
     operator()() const
@@ -215,7 +228,7 @@ public:
     {
         BOOST_STATIC_ASSERT_MSG(
             arity == 3,
-            "Non-ternary function invoked with two arguments"
+            "Non-ternary function invoked with three arguments"
         );
 
         return detail::invoked_function<result_type, boost::tuple<Arg1, Arg2, Arg3> >(

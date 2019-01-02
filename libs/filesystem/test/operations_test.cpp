@@ -56,32 +56,40 @@ inline std::wstring convert(const char* c)
    return std::wstring(s.begin(), s.end());
 }
 
-#if defined(_MSC_VER) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 //  Note: these three setenv* functions are not general solutions for the missing
 //  setenv* problem on VC++. See Microsoft's _putenv for that need, and ticker #7018
 //  for discussion and rationale for returning void for this test program, which needs
 //  to work for both the MSVC Runtime and the Windows Runtime (which does not support
 //  _putenv).
 
-inline void setenv(const char* name, const fs::path::value_type* val, int) 
+inline void setenv_(const char* name, const fs::path::value_type* val, int)
 {
-  SetEnvironmentVariableW(convert(name).c_str(), val); 
+  SetEnvironmentVariableW(convert(name).c_str(), val);
 }
 
-inline void setenv(const char* name, const char* val, int) 
+inline void setenv_(const char* name, const char* val, int)
 {
-  SetEnvironmentVariableW(convert(name).c_str(), convert(val).c_str()); 
+  SetEnvironmentVariableW(convert(name).c_str(), convert(val).c_str());
 }
 
-inline void unsetenv(const char* name) 
+inline void unsetenv_(const char* name)
 { 
-  SetEnvironmentVariableW(convert(name).c_str(), 0); 
+  SetEnvironmentVariableW(convert(name).c_str(), 0);
 }
-#endif
 
 #else
 
 #include <stdlib.h>  // allow unqualifed calls to env funcs on SunOS
+
+inline void setenv_(const char* name, const char* val, int ovw)
+{
+  setenv(name, val, ovw);
+}
+
+inline void unsetenv_(const char* name)
+{
+  unsetenv(name);
+}
 
 #endif
 
@@ -168,8 +176,17 @@ namespace
     return false;
   }
 
-  boost::system::error_category* poison_category_aux() { return 0; }
-  boost::system::error_category& poison_category()     { return *poison_category_aux(); }
+  struct poison_category_impl: public boost::system::error_category
+  {
+    char const * name() const BOOST_NOEXCEPT { return "poison"; }
+    std::string message( int ) const { return "poison_category::message"; }
+  };
+
+  boost::system::error_category& poison_category()
+  {
+    static poison_category_impl instance;
+    return instance;
+  }
 
   // compile-only two argument "do-the-right-thing" tests
   //   verifies that all overload combinations compile without error
@@ -558,14 +575,22 @@ namespace
       BOOST_TEST(dir_itr->path() != p);
 
       // test case reported in comment to SourceForge bug tracker [937606]
+      // augmented to test single pass semantics of a copied iterator [#12578]
       fs::directory_iterator itx(dir);
+      fs::directory_iterator itx2(itx);
+      BOOST_TEST(itx == itx2);
       const fs::path p1 = (*itx++).path();
+      BOOST_TEST(itx == itx2);
       BOOST_TEST(itx != fs::directory_iterator());
       const fs::path p2 = (*itx++).path();
+      BOOST_TEST(itx == itx2);
       BOOST_TEST(p1 != p2);
       ++itx;
+      BOOST_TEST(itx == itx2);
       ++itx;
+      BOOST_TEST(itx == itx2);
       BOOST_TEST(itx == fs::directory_iterator());
+      BOOST_TEST(itx2 == fs::directory_iterator());
     }
 
     //  Windows has a tricky special case when just the root-name is given,
@@ -631,15 +656,19 @@ namespace
     cout << "  with error_code argument" << endl;
     boost::system::error_code ec;
     int d1f1_count = 0;
-    for (fs::recursive_directory_iterator it (dir, fs::symlink_option::no_recurse);
+    fs::recursive_directory_iterator it(dir, fs::symlink_option::no_recurse);
+    fs::recursive_directory_iterator it2(it);  // test single pass shallow copy semantics
+    for (;
          it != fs::recursive_directory_iterator();
          it.increment(ec))
     {
       if (it->path().filename() == "d1f1")
         ++d1f1_count;
+      BOOST_TEST(it == it2);  // verify single pass shallow copy semantics
     }
     BOOST_TEST(!ec);
     BOOST_TEST_EQ(d1f1_count, 1);
+    BOOST_TEST(it == it2);  // verify single pass shallow copy semantics
 
     cout << "  recursive_directory_iterator_tests complete" << endl;
   }
@@ -1026,8 +1055,28 @@ namespace
   {
     cout << "create_directory_tests..." << endl;
 
-    BOOST_TEST(!fs::create_directory("."));
-    BOOST_TEST(!fs::create_directory(".."));
+    error_code ec;
+    BOOST_TEST(!fs::create_directory("", ec));
+    BOOST_TEST(ec);
+
+#ifdef BOOST_WINDOWS_API
+    ec.clear();
+    BOOST_TEST(!fs::create_directory(" ", ec));  // OK on Linux
+    BOOST_TEST(ec);
+#endif
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directory("/", ec));
+    BOOST_TEST(!ec);
+    BOOST_TEST(fs::is_directory("/"));  // this is a post-condition
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directory(".", ec));
+    BOOST_TEST(!ec);
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directory("..", ec));
+    BOOST_TEST(!ec);
 
     // create a directory, then check it for consistency
     //   take extra care to report problems, since if this fails
@@ -1102,12 +1151,41 @@ namespace
   {
     cout << "create_directories_tests..." << endl;
 
-    BOOST_TEST(!fs::create_directories("/")); 
+    error_code ec;
+    BOOST_TEST(!fs::create_directories("", ec));
+    BOOST_TEST(ec);
 
+#ifdef BOOST_WINDOWS_API
+    // Windows only test, since " " is OK on Linux as a directory name
+    ec.clear();
+    BOOST_TEST(!fs::create_directories(" ", ec));
+    BOOST_TEST(ec);
+#endif
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directories("/", ec));
+    BOOST_TEST(!ec);
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directories(".", ec));
+    BOOST_TEST(ec);
+
+    ec.clear();
+    BOOST_TEST(!fs::create_directories("..", ec));
+    BOOST_TEST(ec);
+
+#ifdef BOOST_POSIX_API
+    ec.clear();
+    BOOST_TEST(!fs::create_directories("/foo", ec));  // may be OK on Windows
+                                                      //  but unlikely to be OK on POSIX
+    BOOST_TEST(ec);
+#endif
+ 
     fs::path p = dir / "level1/." / "level2/./.." / "level3/";
     // trailing "/.", "/./..", and "/" in the above elements test ticket #7258 and
     // related issues
 
+    cout << "    p is " << p << endl;
     BOOST_TEST(!fs::exists(p));
     BOOST_TEST(fs::create_directories(p));
     BOOST_TEST(fs::exists(p));
@@ -1115,7 +1193,6 @@ namespace
 
     if (fs::exists("/permissions_test"))
     {
-      error_code ec;
       BOOST_TEST(!fs::create_directories("/permissions_test", ec));
       BOOST_TEST(!fs::create_directories("/permissions_test/another_directory", ec));
       BOOST_TEST(ec);
@@ -1167,6 +1244,16 @@ namespace
     BOOST_TEST(!fs::is_directory(s));
     BOOST_TEST(!fs::is_symlink(s));
     BOOST_TEST(!fs::is_other(s));
+
+    // ticket #12574 was just user confusion, but are the tests are worth keeping
+    error_code ec;
+    BOOST_TEST(!fs::is_directory(dir / "no-such-directory", ec));
+    BOOST_TEST(ec);
+    //cout << "error_code value: " << ec.value() << endl;
+    ec.clear();
+    BOOST_TEST(!fs::is_directory(dir / "no-such-directory" / "bar", ec));
+    BOOST_TEST(ec);
+    //cout << "error_code value: " << ec.value() << endl;
   }
 
   //  status_error_reporting_tests  ----------------------------------------------------//
@@ -1859,8 +1946,8 @@ namespace
       }
       ~previous_value()
       {
-        m_empty? unsetenv(m_name.c_str()) 
-               : setenv(m_name.c_str(), m_string.c_str(), 1);
+        m_empty? unsetenv_(m_name.c_str())
+               : setenv_(m_name.c_str(), m_string.c_str(), 1);
       }
     };
   
@@ -1870,7 +1957,7 @@ namespace
     : m_previous_value(name) 
     {
 //      std::cout << name << " old value is \"" << getenv(name) << "\"" << std::endl;
-      value ? setenv(name, value, 1) : unsetenv(name);
+      value ? setenv_(name, value, 1) : unsetenv_(name);
 //      std::cout << name << " new value is \"" << getenv(name) << "\"" << std::endl;
     }
   };
@@ -1879,6 +1966,7 @@ namespace
   {
     {
       cout << "temp_directory_path_tests..." << endl;
+      cout << " temp_directory_path() is " << fs::temp_directory_path() << endl;
 
 #if defined(BOOST_WINDOWS_API)
 
@@ -1924,7 +2012,7 @@ namespace
 #endif
       BOOST_TEST(!fs::temp_directory_path().empty());
       BOOST_TEST(exists(fs::temp_directory_path()));
-      fs::path ph = fs::temp_directory_path()/"temp_directory_path_test.txt";
+      fs::path ph = fs::temp_directory_path() / fs::unique_path("temp_directory_path_test_%%%%_%%%%.txt");
       {
           if(exists(ph)) remove(ph);
           std::ofstream f(ph.BOOST_FILESYSTEM_C_STR);

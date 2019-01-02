@@ -15,8 +15,8 @@
       <template-type-parameter name="Feature1"/>
       <template-type-parameter name="Feature2"/>
       <template-nontype-parameter name=""><type>...</type></template-nontype-parameter>
-    </template><description><para><classname alt="boost::accumulators::depends_on">depends_on</classname> </para></description><typedef name="is_weight_accumulator"><type>mpl::false_</type></typedef>
-<typedef name="dependencies"><type>mpl::transform&lt; mpl::vector&lt; Feature1, Feature2,...&gt;, <classname>as_feature</classname>&lt; mpl::_1 &gt; &gt;::<classname>type</classname></type></typedef>
+    </template><purpose><classname alt="boost::accumulators::depends_on">depends_on</classname> </purpose><typedef name="is_weight_accumulator"><type>mpl::false_</type></typedef>
+<typedef name="dependencies"><type>mpl::transform&lt; mpl::vector&lt; Feature1, Feature2,...&gt;, <classname>as_feature</classname>&lt; mpl::_1 &gt; &gt;::type</type></typedef>
 </struct></namespace>
 </namespace>
 </header>
@@ -25,7 +25,9 @@
 <namespace name="accumulators">
 <struct name="extractor"><template>
       <template-type-parameter name="Feature"/>
-    </template><description><para>Extracts the result associated with Feature from the specified accumulator_set. </para></description><struct-specialization name="result"><template>
+    </template><purpose>Extracts the result associated with Feature from the specified accumulator_set. </purpose><struct name="result"><template>
+      <template-type-parameter name="F"/>
+    </template><purpose>The result meta-function for determining the return type of the extractor. </purpose></struct><struct-specialization name="result"><template>
       <template-type-parameter name="A1"/>
     </template><specialization><template-arg>this_type(A1)</template-arg></specialization></struct-specialization><typedef name="this_type"><type><classname>extractor</classname>&lt; Feature &gt;</type></typedef>
 <method-group name="public member functions">
@@ -36,7 +38,7 @@
 <method name="operator()" cv="const"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="AccumulatorSet"/>
           <template-type-parameter name="A1"/>
-        </template><parameter name="acc"><paramtype>AccumulatorSet const &amp;</paramtype></parameter><parameter name="a1"><paramtype>A1 const &amp;</paramtype><description><para>Optional named parameter to be passed to the accumulator's result() function. </para></description></parameter><description><para>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
+        </template><parameter name="acc"><paramtype>AccumulatorSet const &amp;</paramtype></parameter><parameter name="a1"><paramtype>A1 const &amp;</paramtype><description><para>Optional named parameter to be passed to the accumulator's result() function. </para></description></parameter><description><para>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</para><para>
 </para></description></method>
 <method name="operator()"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="AccumulatorSet"/>

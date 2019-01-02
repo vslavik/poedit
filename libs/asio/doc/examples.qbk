@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +15,9 @@ examples make use of selected Boost C++ libraries.
 * [link boost_asio.examples.cpp11_examples C++11 Examples]: Contains a limited set of
 the C++03 Boost.Asio examples, updated to use only C++11 library and language
 facilities. These examples do not make direct use of Boost C++ libraries.
+
+* [link boost_asio.examples.cpp17_examples C++17 Examples]: Selected examples
+illustrating C++17 usage in conjunction with Technical Specifications.
 
 
 [section:cpp03_examples C++03 Examples]
@@ -116,13 +119,13 @@ cancelling all outstanding asynchronous operations.
 
 [heading HTTP Server 2]
 
-An HTTP server using an io_service-per-CPU design.
+An HTTP server using an io_context-per-CPU design.
 
 * [@boost_asio/example/cpp03/http/server2/connection.cpp]
 * [@boost_asio/example/cpp03/http/server2/connection.hpp]
 * [@boost_asio/example/cpp03/http/server2/header.hpp]
-* [@boost_asio/example/cpp03/http/server2/io_service_pool.cpp]
-* [@boost_asio/example/cpp03/http/server2/io_service_pool.hpp]
+* [@boost_asio/example/cpp03/http/server2/io_context_pool.cpp]
+* [@boost_asio/example/cpp03/http/server2/io_context_pool.hpp]
 * [@boost_asio/example/cpp03/http/server2/main.cpp]
 * [@boost_asio/example/cpp03/http/server2/mime_types.cpp]
 * [@boost_asio/example/cpp03/http/server2/mime_types.hpp]
@@ -139,7 +142,7 @@ An HTTP server using an io_service-per-CPU design.
 
 [heading HTTP Server 3]
 
-An HTTP server using a single io_service and a thread pool calling `io_service::run()`.
+An HTTP server using a single io_context and a thread pool calling `io_context::run()`.
 
 * [@boost_asio/example/cpp03/http/server3/connection.cpp]
 * [@boost_asio/example/cpp03/http/server3/connection.hpp]
@@ -227,7 +230,7 @@ decode structures for transmission over a socket.
 [heading Services]
 
 This example demonstrates how to integrate custom functionality (in this case,
-for logging) into asio's [link boost_asio.reference.io_service io_service], and
+for logging) into asio's [link boost_asio.reference.io_context io_context], and
 how to use a custom service with [link
 boost_asio.reference.basic_stream_socket basic_stream_socket<>].
 
@@ -264,15 +267,15 @@ operations after a period of time.
 
 * [@boost_asio/example/cpp03/timeouts/async_tcp_client.cpp]
 * [@boost_asio/example/cpp03/timeouts/blocking_tcp_client.cpp]
+* [@boost_asio/example/cpp03/timeouts/blocking_token_tcp_client.cpp]
 * [@boost_asio/example/cpp03/timeouts/blocking_udp_client.cpp]
 * [@boost_asio/example/cpp03/timeouts/server.cpp]
 
 
 [heading Timers]
 
-Examples showing how to customise deadline_timer using different time types.
+Example showing how to customise basic_waitable_timer using a different clock type.
 
-* [@boost_asio/example/cpp03/timers/tick_count_timer.cpp]
 * [@boost_asio/example/cpp03/timers/time_t_timer.cpp]
 
 
@@ -309,6 +312,7 @@ coroutines.
 Examples showing how to use UNIX domain (local) sockets.
 
 * [@boost_asio/example/cpp03/local/connect_pair.cpp]
+* [@boost_asio/example/cpp03/local/iostream_client.cpp]
 * [@boost_asio/example/cpp03/local/stream_server.cpp]
 * [@boost_asio/example/cpp03/local/stream_client.cpp]
 
@@ -366,12 +370,33 @@ and asynchronous operations.
 * [@boost_asio/example/cpp11/echo/blocking_udp_echo_server.cpp]
 
 
+[heading Fork]
+
+These POSIX-specific examples show how to use Boost.Asio in conjunction with the
+`fork()` system call. The first example illustrates the steps required to start
+a daemon process:
+
+* [@boost_asio/example/cpp11/fork/daemon.cpp]
+
+The second example demonstrates how it is possible to fork a process from
+within a completion handler.
+
+* [@boost_asio/example/cpp11/fork/process_per_connection.cpp]
+
+
 [heading Futures]
 
 This example demonstrates how to use std::future in conjunction with
 Boost.Asio's asynchronous operations.
 
 * [@boost_asio/example/cpp11/futures/daytime_client.cpp]
+
+
+[heading Handler Tracking]
+
+This example shows how to implement custom handler tracking.
+
+* [@boost_asio/example/cpp11/handler_tracking/custom_tracking.hpp]
 
 
 [heading HTTP Server]
@@ -399,6 +424,43 @@ cancelling all outstanding asynchronous operations.
 * [@boost_asio/example/cpp11/http/server/server.hpp]
 
 
+[heading Multicast]
+
+An example showing the use of multicast to transmit packets to a group of
+subscribers.
+
+* [@boost_asio/example/cpp11/multicast/receiver.cpp]
+* [@boost_asio/example/cpp11/multicast/sender.cpp]
+
+
+[heading Nonblocking]
+
+Example demonstrating reactor-style operations for integrating a third-party
+library that wants to perform the I/O operations itself.
+
+* [@boost_asio/example/cpp11/nonblocking/third_party_lib.cpp]
+
+
+[heading Operations]
+
+Examples showing how to implement composed asynchronous operations as reusable library functions.
+
+* [@boost_asio/example/cpp11/operations/composed_1.cpp]
+* [@boost_asio/example/cpp11/operations/composed_2.cpp]
+* [@boost_asio/example/cpp11/operations/composed_3.cpp]
+* [@boost_asio/example/cpp11/operations/composed_4.cpp]
+* [@boost_asio/example/cpp11/operations/composed_5.cpp]
+
+
+[heading SOCKS 4]
+
+Example client program implementing the SOCKS 4 protocol for communication via
+a proxy.
+
+* [@boost_asio/example/cpp11/socks4/sync_client.cpp]
+* [@boost_asio/example/cpp11/socks4/socks4.hpp]
+
+
 [heading Spawn]
 
 Example of using the boost::asio::spawn() function, a wrapper around the
@@ -407,6 +469,62 @@ library, to implement a chain of asynchronous operations using stackful
 coroutines.
 
 * [@boost_asio/example/cpp11/spawn/echo_server.cpp]
+
+
+[heading SSL]
+
+Example client and server programs showing the use of the [link
+boost_asio.reference.ssl__stream ssl::stream<>] template with asynchronous operations.
+
+* [@boost_asio/example/cpp11/ssl/client.cpp]
+* [@boost_asio/example/cpp11/ssl/server.cpp]
+
+
+[heading Timeouts]
+
+A collection of examples showing how to cancel long running asynchronous
+operations after a period of time.
+
+* [@boost_asio/example/cpp11/timeouts/async_tcp_client.cpp]
+* [@boost_asio/example/cpp11/timeouts/blocking_tcp_client.cpp]
+* [@boost_asio/example/cpp11/timeouts/blocking_token_tcp_client.cpp]
+* [@boost_asio/example/cpp11/timeouts/blocking_udp_client.cpp]
+* [@boost_asio/example/cpp11/timeouts/server.cpp]
+
+
+[heading Timers]
+
+Example showing how to customise basic_waitable_timer using a different clock type.
+
+* [@boost_asio/example/cpp11/timers/time_t_timer.cpp]
+
+
+[heading UNIX Domain Sockets]
+
+Examples showing how to use UNIX domain (local) sockets.
+
+* [@boost_asio/example/cpp11/local/connect_pair.cpp]
+* [@boost_asio/example/cpp11/local/iostream_client.cpp]
+* [@boost_asio/example/cpp11/local/stream_server.cpp]
+* [@boost_asio/example/cpp11/local/stream_client.cpp]
+
+
+[endsect]
+
+
+[section:cpp17_examples C++17 Examples]
+
+
+[heading Coroutines TS Support]
+
+Examples showing how to implement a chain of asynchronous operations using the
+Coroutines TS.
+
+* [@boost_asio/example/cpp17/coroutines_ts/echo_server.cpp]
+* [@boost_asio/example/cpp17/coroutines_ts/refactored_echo_server.cpp]
+* [@boost_asio/example/cpp17/coroutines_ts/double_buffered_echo_server.cpp]
+* [@boost_asio/example/cpp17/coroutines_ts/chat_server.cpp]
+* [@boost_asio/example/cpp17/coroutines_ts/range_based_for.cpp]
 
 
 [endsect]

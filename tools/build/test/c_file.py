@@ -31,6 +31,6 @@ int foo()
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
 
 t.cleanup()

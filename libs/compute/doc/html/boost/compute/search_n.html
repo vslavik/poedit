@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template search_n</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.search_n_hpp" title="Header &lt;boost/compute/algorithm/search_n.hpp&gt;">
 <link rel="prev" href="search.html" title="Function template search">
@@ -37,17 +37,23 @@
   <span class="identifier">search_n</span><span class="special">(</span><span class="identifier">TextIterator</span> t_first<span class="special">,</span> <span class="identifier">TextIterator</span> t_last<span class="special">,</span> <span class="identifier">size_t</span> n<span class="special">,</span> 
            <span class="identifier">ValueType</span> value<span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp68488544"></a><h2>Description</h2>
+<a name="idp82902752"></a><h2>Description</h2>
 <p>Searches for the first occurrence of n consecutive occurrences of value in text [t_first, t_last). 
 
-</p>
-<div class="variablelist"><table border="0">
+Space complexity: (distance(<code class="computeroutput">t_first</code>, <code class="computeroutput">t_last</code>)) </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">n</code></span></p></td>
@@ -55,7 +61,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">queue</code></span></p></td>
-<td><p>Queue on which to execute </p></td>
+<td><p>Queue on which to execute</p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">t_first</code></span></p></td>

@@ -6,7 +6,7 @@
 
 #define BOOST_RATIO_EXTENSIONS
 #include <boost/ratio/ratio.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 boost::intmax_t func(boost::ratio<5,6>  s);
 
@@ -26,4 +26,5 @@ void test() {
 int main()
 {
     test();
+    return boost::report_errors();
 }

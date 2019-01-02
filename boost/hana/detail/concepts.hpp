@@ -2,7 +2,7 @@
 @file
 Defines concepts from the Standard library.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -18,6 +18,7 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 BOOST_HANA_NAMESPACE_BEGIN namespace detail {
+    //! @cond
     //////////////////////////////////////////////////////////////////////////
     // EqualityComparable
     //////////////////////////////////////////////////////////////////////////
@@ -32,7 +33,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace detail {
 
     template <typename T, typename U>
     struct EqualityComparable<T, U, typename std::enable_if<
-        !std::is_same<T, U>{}, detail::void_t<
+        !std::is_same<T, U>::value, detail::void_t<
             decltype(static_cast<T&&>(*(T*)0) == static_cast<U&&>(*(U*)0) ? 0:0),
             decltype(static_cast<U&&>(*(U*)0) == static_cast<T&&>(*(T*)0) ? 0:0),
             decltype(static_cast<T&&>(*(T*)0) != static_cast<U&&>(*(U*)0) ? 0:0),
@@ -71,6 +72,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace detail {
             LessThanComparable<typename detail::std_common_type<T, U>::type>::value
         >
     { };
+    //! @endcond
 } BOOST_HANA_NAMESPACE_END
 
 #endif // !BOOST_HANA_DETAIL_CONCEPTS_HPP

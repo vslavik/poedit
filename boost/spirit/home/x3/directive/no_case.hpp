@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_NO_CASE_SEPT_16_2014_0912PM)
-#define SPIRIT_NO_CASE_SEPT_16_2014_0912PM
+#if !defined(BOOST_SPIRIT_X3_NO_CASE_SEPT_16_2014_0912PM)
+#define BOOST_SPIRIT_X3_NO_CASE_SEPT_16_2014_0912PM
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>

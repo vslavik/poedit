@@ -50,7 +50,7 @@ t.write("lib/jamroot.jam", """
 
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a.exe")
+t.expect_addition("bin/$toolset/debug*/a.exe")
 t.expect_nothing("lib/bin/$toolset/release/x.obj")
 
 t.cleanup()

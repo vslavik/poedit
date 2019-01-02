@@ -4,7 +4,7 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
-// Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2013-2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2014, 2015.
 // Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
@@ -143,6 +143,11 @@ void test_point_order_and_type()
     test_geometry<cw_open_polygon>("with_hole_cw_open", "POLYGON((0 0,0 9,9 9,9 0),(2 2,7 2,7 7,2 7))", 0, 0);
     test_geometry<ccw_closed_polygon>("with_hole_ccw_closed", "POLYGON((0 0,9 0,9 9,0 9,0 0),(2 2,2 7,7 7,7 2,2 2))", 0, 0);
     test_geometry<cw_closed_polygon>("with_hole_cw_closed", "POLYGON((0 0,0 9,9 9,9 0,0 0),(2 2,7 2,7 7,2 7,2 2))", 0, 0);
+
+    test_geometry<cw_closed_polygon>("t1", "POLYGON((0 0,0 10,10 0,0 0))", 0, 0);
+    test_geometry<cw_closed_polygon>("t2", "POLYGON((0 0,10 0,0 -10,0 0))", 0, 0);
+    test_geometry<cw_closed_polygon>("t3", "POLYGON((0 0,0 -10,-10 0,0 0))", 0, 0);
+    test_geometry<cw_closed_polygon>("t4", "POLYGON((0 0,-10 0,0 10,0 0))", 0, 0);
 }
 
 template <typename Point>

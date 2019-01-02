@@ -3,14 +3,24 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <cassert>
 #include <cstddef>
 
 #include <algorithm>
-#include <iostream>
 #include <iterator>
 #include <vector>
 
+#include <boost/config.hpp>
+
+#if !defined(BOOST_NO_CXX11_DECLTYPE)
+// Force boost::result_of use decltype, even on compilers that don't support N3276.
+// This enables this test to also verify if the iterator works with lambdas
+// on such compilers with this config macro. Note that without the macro result_of
+// (and consequently the iterator) is guaranteed to _not_ work, so this case is not
+// worth testing anyway.
+#define BOOST_RESULT_OF_USE_DECLTYPE
+#endif
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/iterator/function_input_iterator.hpp>
 
 namespace {
@@ -39,7 +49,7 @@ struct counter {
 
 using namespace std;
 
-int main(int argc, char * argv[])
+int main()
 {
     // test the iterator with function objects
     ones ones_generator;
@@ -53,9 +63,7 @@ int main(int argc, char * argv[])
         back_inserter(generated)
         );
 
-    assert(values.size() == generated.size());
-    assert(equal(values.begin(), values.end(), generated.begin()));
-    cout << "function iterator test with function objects successful." << endl;
+    BOOST_TEST_ALL_EQ(values.begin(), values.end(), generated.begin(), generated.end());
 
     // test the iterator with normal functions
     vector<int>().swap(generated);
@@ -65,9 +73,7 @@ int main(int argc, char * argv[])
         back_inserter(generated)
         );
 
-    assert(values.size() == generated.size());
-    assert(equal(values.begin(), values.end(), generated.begin()));
-    cout << "function iterator test with pointer to function successful." << endl;
+    BOOST_TEST_ALL_EQ(values.begin(), values.end(), generated.begin(), generated.end());
 
     // test the iterator with a reference to a function
     vector<int>().swap(generated);
@@ -77,9 +83,7 @@ int main(int argc, char * argv[])
         back_inserter(generated)
         );
 
-    assert(values.size() == generated.size());
-    assert(equal(values.begin(), values.end(), generated.begin()));
-    cout << "function iterator test with reference to function successful." << endl;
+    BOOST_TEST_ALL_EQ(values.begin(), values.end(), generated.begin(), generated.end());
 
     // test the iterator with a stateful function object
     counter counter_generator(42);
@@ -90,12 +94,27 @@ int main(int argc, char * argv[])
         back_inserter(generated)
         );
 
-    assert(generated.size() == 10);
-    assert(counter_generator.n == 42 + 10);
+    BOOST_TEST_EQ(generated.size(), 10u);
+    BOOST_TEST_EQ(counter_generator.n, 42 + 10);
     for(std::size_t i = 0; i != 10; ++i)
-        assert(generated[i] == 42 + i);
-    cout << "function iterator test with stateful function object successful." << endl;
+        BOOST_TEST_EQ(generated[i], static_cast<int>(42 + i));
 
-    return 0;
+#if !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) \
+    && defined(BOOST_RESULT_OF_USE_DECLTYPE)
+    // test the iterator with lambda expressions
+    int num = 42;
+    auto lambda_generator = [&num] { return num++; };
+    vector<int>().swap(generated);
+    copy(
+        boost::make_function_input_iterator(lambda_generator, 0),
+        boost::make_function_input_iterator(lambda_generator, 10),
+        back_inserter(generated)
+        );
+
+    BOOST_TEST_EQ(generated.size(), 10u);
+    for(std::size_t i = 0; i != 10; ++i)
+        BOOST_TEST_EQ(generated[i], static_cast<int>(42 + i));
+#endif // BOOST_NO_CXX11_LAMBDAS
+
+    return boost::report_errors();
 }
-

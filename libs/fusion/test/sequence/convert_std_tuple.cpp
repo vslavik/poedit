@@ -8,18 +8,13 @@
 
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if defined(BOOST_NO_CXX11_HDR_TUPLE) || \
+    defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#   error "does not meet requirements"
+#endif
 
 #include <tuple>
 #include <boost/fusion/include/std_tuple.hpp>
 
 #define FUSION_SEQUENCE std::tuple
 #include "convert.hpp"
-
-#else
-
-int main()
-{
-}
-
-#endif

@@ -220,19 +220,27 @@ void divide_unsigned_helper(
       //
       double_limb_type carry = 0;
       t.resize(y.size() + shift + 1, y.size() + shift);
-      bool truncated_t = !CppInt1::variable && (t.size() != y.size() + shift + 1);
+      bool truncated_t = (t.size() != y.size() + shift + 1);
       typename CppInt1::limb_pointer pt = t.limbs();
       for(unsigned i = 0; i < shift; ++i)
          pt[i] = 0;
       for(unsigned i = 0; i < y.size(); ++i)
       {
          carry += static_cast<double_limb_type>(py[i]) * static_cast<double_limb_type>(guess);
+#ifdef __MSVC_RUNTIME_CHECKS
+         pt[i + shift] = static_cast<limb_type>(carry & ~static_cast<limb_type>(0));
+#else
          pt[i + shift] = static_cast<limb_type>(carry);
+#endif
          carry >>= CppInt1::limb_bits;
       }
       if(carry && !truncated_t)
       {
+#ifdef __MSVC_RUNTIME_CHECKS
+         pt[t.size() - 1] = static_cast<limb_type>(carry & ~static_cast<limb_type>(0));
+#else
          pt[t.size() - 1] = static_cast<limb_type>(carry);
+#endif
       }
       else if(!truncated_t)
       {

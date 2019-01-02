@@ -8,11 +8,8 @@
 
 #include <boost/spirit/include/karma_binary.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
-#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/predef/other/endian.h>
 
 #include "test.hpp"
 
@@ -23,10 +20,9 @@ int
 main()
 {
     using namespace boost::spirit;
-    using namespace boost::phoenix;
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(binary_test("\x01", 1, byte_, 0x01));
         BOOST_TEST(binary_test("\x80", 1, byte_, 0x80));
         BOOST_TEST(binary_test("\x01\x82", 2, word, 0x8201));
@@ -55,7 +51,7 @@ main()
         BOOST_TEST(binary_test_delimited("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
             bin_double, 1.0, pad(8)));
 
-#else // BOOST_LITTLE_ENDIAN
+#else // BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(binary_test("\x01", 1, byte_, 0x01));
         BOOST_TEST(binary_test("\x80", 1, byte_, 0x80));
@@ -88,7 +84,7 @@ main()
     }
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(binary_test("\x01", 1, byte_(0x01)));
         BOOST_TEST(binary_test("\x01\x02", 2, word(0x0201)));
         BOOST_TEST(binary_test("\x01\x02\x03\x04", 4, dword(0x04030201)));

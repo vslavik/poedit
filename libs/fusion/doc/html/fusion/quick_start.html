@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Quick Start</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="prev" href="introduction.html" title="Introduction">
@@ -27,20 +27,20 @@
 <a name="fusion.quick_start"></a><a class="link" href="quick_start.html" title="Quick Start">Quick Start</a>
 </h2></div></div></div>
 <p>
-      I assume the reader is already familiar with tuples (<a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>)
+      I assume the reader is already familiar with tuples (<a href="http://www.boost.org/libs/tuple" target="_top">Boost.Tuple</a>)
       and its ancestor <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></code>. The tuple is a generalization of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></code>
       for multiple heterogeneous elements (triples, quadruples, etc.). The tuple
       is more or less a synonym for fusion's <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code>.
     </p>
 <p>
       For starters, we shall include all of Fusion's <a class="link" href="sequence.html" title="Sequence">Sequence</a>(s)
-      <sup>[<a name="fusion.quick_start.f0" href="#ftn.fusion.quick_start.f0" class="footnote">2</a>]</sup>:
+      <a href="#ftn.fusion.quick_start.f0" class="footnote" name="fusion.quick_start.f0"><sup class="footnote">[2]</sup></a>:
     </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-      Let's begin with a <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code> <sup>[<a name="fusion.quick_start.f1" href="#ftn.fusion.quick_start.f1" class="footnote">3</a>]</sup>:
+      Let's begin with a <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code> <a href="#ftn.fusion.quick_start.f1" class="footnote" name="fusion.quick_start.f1"><sup class="footnote">[3]</sup></a>:
     </p>
 <pre class="programlisting"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">stuff</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'x'</span><span class="special">,</span> <span class="string">"howdy"</span><span class="special">);</span>
 <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <a class="link" href="sequence/intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">stuff</span><span class="special">);</span>
@@ -50,14 +50,14 @@
 <p>
       Just replace <code class="computeroutput"><span class="identifier">tuple</span></code> for <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code>
       and <code class="computeroutput"><span class="identifier">get</span></code> for <code class="computeroutput"><a class="link" href="sequence/intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a></code> and this is exactly like
-      <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>.
-      Actually, either names can be used interchangeably. Yet, the similarity ends
-      there. You can do a lot more with Fusion <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code> or <code class="computeroutput"><span class="identifier">tuple</span></code>.
+      <a href="http://www.boost.org/libs/tuple" target="_top">Boost.Tuple</a>. Actually,
+      either names can be used interchangeably. Yet, the similarity ends there. You
+      can do a lot more with Fusion <code class="computeroutput"><a class="link" href="container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a></code> or <code class="computeroutput"><span class="identifier">tuple</span></code>.
       Let's see some examples.
     </p>
 <h4>
 <a name="fusion.quick_start.h0"></a>
-      <span><a name="fusion.quick_start.print_the_vector_as_xml"></a></span><a class="link" href="quick_start.html#fusion.quick_start.print_the_vector_as_xml">Print
+      <span class="phrase"><a name="fusion.quick_start.print_the_vector_as_xml"></a></span><a class="link" href="quick_start.html#fusion.quick_start.print_the_vector_as_xml">Print
       the vector as XML</a>
     </h4>
 <p>
@@ -112,7 +112,7 @@
     </p>
 <h4>
 <a name="fusion.quick_start.h1"></a>
-      <span><a name="fusion.quick_start.print_only_pointers"></a></span><a class="link" href="quick_start.html#fusion.quick_start.print_only_pointers">Print
+      <span class="phrase"><a name="fusion.quick_start.print_only_pointers"></a></span><a class="link" href="quick_start.html#fusion.quick_start.print_only_pointers">Print
       only pointers</a>
     </h4>
 <p>
@@ -145,7 +145,7 @@
     </p>
 <h4>
 <a name="fusion.quick_start.h2"></a>
-      <span><a name="fusion.quick_start.associative_tuples"></a></span><a class="link" href="quick_start.html#fusion.quick_start.associative_tuples">Associative
+      <span class="phrase"><a name="fusion.quick_start.associative_tuples"></a></span><a class="link" href="quick_start.html#fusion.quick_start.associative_tuples">Associative
       tuples</a>
     </h4>
 <p>
@@ -218,7 +218,7 @@
     </p>
 <h4>
 <a name="fusion.quick_start.h3"></a>
-      <span><a name="fusion.quick_start.tip_of_the_iceberg"></a></span><a class="link" href="quick_start.html#fusion.quick_start.tip_of_the_iceberg">Tip
+      <span class="phrase"><a name="fusion.quick_start.tip_of_the_iceberg"></a></span><a class="link" href="quick_start.html#fusion.quick_start.tip_of_the_iceberg">Tip
       of the Iceberg</a>
     </h4>
 <p>
@@ -228,13 +228,13 @@
       etc. What you've seen is just the tip of the iceberg.
     </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.fusion.quick_start.f0" href="#fusion.quick_start.f0" class="para">2</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.fusion.quick_start.f0" class="footnote"><p><a href="#fusion.quick_start.f0" class="para"><sup class="para">[2] </sup></a>
         There are finer grained header files available if you wish to have more control
         over which components to include (see section <a class="link" href="organization.html" title="Organization">Organization</a>
         for details).
       </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.fusion.quick_start.f1" href="#fusion.quick_start.f1" class="para">3</a>] </sup>
+<div id="ftn.fusion.quick_start.f1" class="footnote"><p><a href="#fusion.quick_start.f1" class="para"><sup class="para">[3] </sup></a>
         Unless otherwise noted, components are in namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span></code>.
         For the sake of simplicity, code in this quick start implies <code class="computeroutput"><span class="keyword">using</span></code> directives for the fusion components
         we will be using.

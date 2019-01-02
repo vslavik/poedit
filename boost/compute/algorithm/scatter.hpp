@@ -11,6 +11,7 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_SCATTER_HPP
 #define BOOST_COMPUTE_ALGORITHM_SCATTER_HPP
 
+#include <boost/static_assert.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 #include <boost/compute/system.hpp>
@@ -20,6 +21,7 @@
 #include <boost/compute/type_traits/type_name.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -79,6 +81,8 @@ private:
 /// beginning at \p result using the output indices from the range beginning
 /// at \p map.
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see gather()
 template<class InputIterator, class MapIterator, class OutputIterator>
 inline void scatter(InputIterator first,
@@ -87,6 +91,10 @@ inline void scatter(InputIterator first,
                     OutputIterator result,
                     command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<MapIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
     detail::scatter_kernel<InputIterator, MapIterator, OutputIterator> kernel;
     
     kernel.set_range(first, last, map, result);

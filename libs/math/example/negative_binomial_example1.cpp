@@ -246,7 +246,7 @@ Probability of selling his quota of 5 bars
 on or before the 30th house is 0.99849
 ]
 
-/*`So the risk of failing even after visiting all the houses is 1 - this probability,
+So the risk of failing even after visiting all the houses is 1 - this probability,
   ``1 - cdf(nb, all_houses - sales_quota``
 But using this expression may cause serious inaccuracy,
 so it would be much better to use the complement of the cdf:
@@ -328,7 +328,7 @@ We can list quantiles for a few probabilities:
     double ps[] = {0., 0.001, 0.01, 0.05, 0.1, 0.5, 0.9, 0.95, 0.99, 0.999, 1.};
     // Confidence as fraction = 1-alpha, as percent =  100 * (1-alpha[i]) %
     cout.precision(3);
-    for (int i = 0; i < sizeof(ps)/sizeof(ps[0]); i++)
+    for (unsigned i = 0; i < sizeof(ps)/sizeof(ps[0]); i++)
     {
       cout << "If confidence of meeting quota is " << ps[i]
         << ", then finishing house is " << quantile(nb, ps[i]) + sales_quota
@@ -511,9 +511,3 @@ House for 5th (last) sale.  Probability (%)
 30                              0.99849
 
 */
-
-
-
-
-
-

@@ -71,21 +71,26 @@ def register (type, suffixes = [], base_type = None):
     if __re_hyphen.search (type):
         raise BaseException ('type name "%s" contains a hyphen' % type)
 
-    if __types.has_key (type):
+    # it's possible for a type to be registered with a
+    # base type that hasn't been registered yet. in the
+    # check for base_type below and the following calls to setdefault()
+    # the key `type` will be added to __types. When the base type
+    # actually gets registered, it would fail after the simple check
+    # of "type in __types"; thus the check for "'base' in __types[type]"
+    if type in __types and 'base' in __types[type]:
         raise BaseException ('Type "%s" is already registered.' % type)
 
-    entry = {}
-    entry ['base'] = base_type
-    entry ['derived'] = []
-    entry ['scanner'] = None
-    __types [type] = entry
+    entry = __types.setdefault(type, {})
+    entry['base'] = base_type
+    entry.setdefault('derived', [])
+    entry.setdefault('scanner', None)
 
     if base_type:
         __types.setdefault(base_type, {}).setdefault('derived', []).append(type)
 
     if len (suffixes) > 0:
         # Generated targets of 'type' will use the first of 'suffixes'
-        # (this may be overriden)
+        # (this may be overridden)
         set_generated_target_suffix (type, [], suffixes [0])
 
         # Specify mapping from suffixes to type
@@ -122,7 +127,7 @@ def register_suffixes (suffixes, type):
     assert is_iterable_typed(suffixes, basestring)
     assert isinstance(type, basestring)
     for s in suffixes:
-        if __suffixes_to_types.has_key (s):
+        if s in __suffixes_to_types:
             old_type = __suffixes_to_types [s]
             if old_type != type:
                 raise BaseException ('Attempting to specify type for suffix "%s"\nOld type: "%s", New type "%s"' % (s, old_type, type))
@@ -133,7 +138,7 @@ def registered (type):
     """ Returns true iff type has been registered.
     """
     assert isinstance(type, basestring)
-    return __types.has_key (type)
+    return type in __types
 
 def validate (type):
     """ Issues an error if 'type' is unknown.
@@ -250,16 +255,23 @@ def generated_target_suffix(type, properties):
         assert isinstance(properties, PropertySet)
     return generated_target_ps(1, type, properties)
 
-# Sets a target prefix that should be used when generating targets of 'type'
-# with the specified properties. Can be called with empty properties if no
-# prefix for 'type' has been specified yet.
-#
-# The 'prefix' parameter can be empty string ("") to indicate that no prefix
-# should be used.
-#
-# Usage example: library names use the "lib" prefix on unix.
-@bjam_signature((["type"], ["properties", "*"], ["suffix"]))
+
+@bjam_signature((["type"], ["properties", "*"], ["prefix"]))
 def set_generated_target_prefix(type, properties, prefix):
+    """
+    Sets a file prefix to be used when generating a target of 'type' with the
+    specified properties. Can be called with no properties if no prefix has
+    already been specified for the 'type'. The 'prefix' parameter can be an empty
+    string ("") to indicate that no prefix should be used.
+
+    Note that this does not cause files with 'prefix' to be automatically
+    recognized as being of 'type'. Two different types can use the same prefix for
+    their generated files but only one type can be auto-detected for a file with
+    that prefix. User should explicitly specify which one using the
+    register-prefixes rule.
+
+    Usage example: library names use the "lib" prefix on unix.
+    """
     set_generated_target_ps(0, type, properties, prefix)
 
 # Change the prefix previously registered for this type/properties combination.
@@ -349,7 +361,7 @@ def type(filename):
         if not suffix: return None
         suffix = suffix[1:]
 
-        if __suffixes_to_types.has_key(suffix):
+        if suffix in __suffixes_to_types:
             return __suffixes_to_types[suffix]
 
 # NOTE: moved from tools/types/register

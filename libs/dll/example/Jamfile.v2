@@ -20,11 +20,12 @@ project
       ;
 	
    # our example plugin lib
+   lib my_cpp_plugin : mangled/my_cpp_plugin.hpp
    lib my_plugin_sum : tutorial1/my_plugin_sum.cpp ;
    lib my_plugin_aggregator : tutorial2/my_plugin_aggregator.cpp ;
    lib getting_started_library : getting_started_library.cpp ;
    install install-bin 
-      : my_plugin_sum my_plugin_aggregator getting_started_library :
+      : my_plugin_sum my_plugin_aggregator getting_started_library my_cpp_plugin :
       <target-os>windows:<location>"C:/test/boost/application" 
       <target-os>linux:<location>/test/boost/application ; 
 	  
@@ -39,5 +40,11 @@ exe getting_started
    ;
 
 exe load_self  
-   : tutorail3/load_self.cpp
+   : tutorial3/load_self.cpp
    ;
+
+exe smart_test 
+   : mangled/smart_lib.cpp 
+   ;
+
+ 

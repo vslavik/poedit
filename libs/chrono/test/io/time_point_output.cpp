@@ -211,7 +211,7 @@ void check_all_system_clock()
 
 
 #endif
-#if BOOST_CHRONO_INTERNAL_GMTIME
+#if defined  BOOST_CHRONO_INTERNAL_GMTIME
 #elif BOOST_CHRONO_VERSION == 2
 void test_gmtime(std::time_t t)
 {
@@ -248,7 +248,7 @@ void test_gmtime(std::time_t t)
 
 int main()
 {
-#if BOOST_CHRONO_INTERNAL_GMTIME
+#if defined BOOST_CHRONO_INTERNAL_GMTIME
 #elif BOOST_CHRONO_VERSION == 2
   test_gmtime(  0 );
   test_gmtime( -1  );
@@ -303,7 +303,7 @@ int main()
 #endif
 #endif
 
-#if BOOST_CHRONO_INTERNAL_GMTIME
+#if defined BOOST_CHRONO_INTERNAL_GMTIME
 #elif BOOST_CHRONO_VERSION == 2
   boost::chrono::system_clock::time_point tp = boost::chrono::system_clock::now();
   std::cout << tp << std::endl;

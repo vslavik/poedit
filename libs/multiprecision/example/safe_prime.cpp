@@ -38,8 +38,8 @@ int main()
          }
       }
    }
-   std::cout << "Ooops, no safe primes were found" << std::endl;
-   return 1;
+   std::cout << "Ooops, no safe primes were found - probably a bad choice of seed values!" << std::endl;
+   return 0;
 }
 
 //]

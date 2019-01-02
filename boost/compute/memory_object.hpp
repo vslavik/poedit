@@ -38,7 +38,7 @@ public:
         use_host_ptr = CL_MEM_USE_HOST_PTR,
         alloc_host_ptr = CL_MEM_ALLOC_HOST_PTR,
         copy_host_ptr = CL_MEM_COPY_HOST_PTR
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         ,
         host_write_only = CL_MEM_HOST_WRITE_ONLY,
         host_read_only = CL_MEM_HOST_READ_ONLY,
@@ -105,7 +105,7 @@ public:
         return detail::get_object_info<T>(clGetMemObjectInfo, m_mem, info);
     }
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Registers a function to be called when the memory object is deleted
     /// and its resources freed.
     ///
@@ -137,7 +137,7 @@ public:
             new boost::function<void()>(callback)
         );
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
     /// Returns \c true if the memory object is the same as \p other.
     bool operator==(const memory_object &other) const
@@ -152,7 +152,7 @@ public:
     }
 
 private:
-    #ifdef CL_VERSION_1_1
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_1
     /// \internal_
     static void BOOST_COMPUTE_CL_CALLBACK
     destructor_callback_invoker(cl_mem, void *user_data)
@@ -164,7 +164,7 @@ private:
 
         delete callback;
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 protected:
     /// \internal_

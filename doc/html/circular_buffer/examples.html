@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>More Examples</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
+<link rel="up" href="../circular_buffer.html" title="Chapter&#160;8.&#160;Boost.Circular Buffer">
 <link rel="prev" href="implementation.html" title="Implementation">
 <link rel="next" href="headers.html" title="Header Files">
 </head>
@@ -29,7 +29,7 @@
 </h2></div></div></div>
 <h4>
 <a name="circular_buffer.examples.h0"></a>
-      <span><a name="circular_buffer.examples.summing_all_the_values_in_a_circ"></a></span><a class="link" href="examples.html#circular_buffer.examples.summing_all_the_values_in_a_circ">Summing
+      <span class="phrase"><a name="circular_buffer.examples.summing_all_the_values_in_a_circ"></a></span><a class="link" href="examples.html#circular_buffer.examples.summing_all_the_values_in_a_circ">Summing
       all the values in a circular buffer</a>
     </h4>
 <p>
@@ -93,7 +93,7 @@
     </p>
 <h4>
 <a name="circular_buffer.examples.h1"></a>
-      <span><a name="circular_buffer.examples.bounded_buffer_example"></a></span><a class="link" href="examples.html#circular_buffer.examples.bounded_buffer_example">Bounded
+      <span class="phrase"><a name="circular_buffer.examples.bounded_buffer_example"></a></span><a class="link" href="examples.html#circular_buffer.examples.bounded_buffer_example">Bounded
       Buffer Example</a>
     </h4>
 <p>
@@ -101,7 +101,7 @@
       produce items and store them in the container and consumer threads remove these
       items and process them. The bounded buffer has to guarantee that
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           producers do not insert items into the container when the container is
           full,
@@ -177,7 +177,7 @@
       <a href="../../../libs/utility/call_traits.htm" target="_top">Boost.call_traits utility</a>.
     </p>
 <p>
-      The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8593552-bb">push_front()</a></code>
+      The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48910896-bb">push_front()</a></code>
       method is called by the producer thread in order to insert a new item into
       the buffer. The method locks the mutex and waits until there is a space for
       the new item. (The mutex is unlocked during the waiting stage and has to be
@@ -190,7 +190,7 @@
       consumer threads waiting for a new item to be inserted into the buffer.
     </p>
 <p>
-      The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8635920-bb">pop_back()</a></code>
+      The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48953264-bb">pop_back()</a></code>
       method is called by the consumer thread in order to read the next item from
       the buffer. The method locks the mutex and waits until there is an unread item
       in the buffer. If there is at least one unread item, the method decrements
@@ -203,7 +203,7 @@
       the item</strong></span> but the item is left in the circular_buffer which then
       <span class="bold"><strong>replaces it with a new one</strong></span> (inserted by a
       producer) when the circular_buffer is full. This technique is more effective
-      than removing the item explicitly by calling the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8635920-bb">circular_buffer::pop_back()</a></code>
+      than removing the item explicitly by calling the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48953264-bb">circular_buffer::pop_back()</a></code>
       method of the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>.
     </p>
 <p>

@@ -2,7 +2,7 @@
 // connection.hpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -30,8 +30,8 @@ class connection
     private boost::noncopyable
 {
 public:
-  /// Construct a connection with the given io_service.
-  explicit connection(boost::asio::io_service& io_service,
+  /// Construct a connection with the given io_context.
+  explicit connection(boost::asio::io_context& io_context,
       request_handler& handler);
 
   /// Get the socket associated with the connection.
@@ -49,7 +49,7 @@ private:
   void handle_write(const boost::system::error_code& e);
 
   /// Strand to ensure the connection's handlers are not called concurrently.
-  boost::asio::io_service::strand strand_;
+  boost::asio::io_context::strand strand_;
 
   /// Socket for the connection.
   boost::asio::ip::tcp::socket socket_;

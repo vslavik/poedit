@@ -17,7 +17,7 @@ the hash function, `Hash`, to the element's key (for `unordered_set` and
 `unordered_multiset` the key is the whole element, but is referred to as the key
 so that the same terminology can be used for sets and maps). This returns a
 value of type `std::size_t`.  `std::size_t` has a much greater range of values
-then the number of buckets, so that container applies another transformation to
+then the number of buckets, so the container applies another transformation to
 that value to choose a bucket to place the element in.
 
 Retrieving the elements for a given key is simple. The same process is applied
@@ -57,7 +57,7 @@ keep collisions to a minimum.
       </row>
       <row>
         <entry>'''`size_type bucket(key_type const& k) const`'''</entry>
-        <entry>'''Returns the index of the bucket which would contain k'''</entry>
+        <entry>'''Returns the index of the bucket which would contain `k`.'''</entry>
       </row>
       <row>
         <entry>'''`local_iterator begin(size_type n);`'''</entry>
@@ -92,7 +92,7 @@ You can also tell the container to change the bucket count (if required) by
 calling `rehash`.
 
 The standard leaves a lot of freedom to the implementer to decide how the
-number of buckets are chosen, but it does make some requirements based on the
+number of buckets is chosen, but it does make some requirements based on the
 container's 'load factor', the average number of elements per bucket.
 Containers also have a 'maximum load factor' which they should try to keep the
 load factor below.
@@ -138,7 +138,7 @@ or close to the hint - unless your hint is unreasonably small or large.
     ]
     [
         [`void rehash(size_type n)`]
-        [Changes the number of buckets so that there at least n buckets, and
+        [Changes the number of buckets so that there at least `n` buckets, and
         so that the load factor is less than the maximum load factor.]
     ]
 
@@ -149,7 +149,7 @@ or close to the hint - unless your hint is unreasonably small or large.
 It is not specified how member functions other than `rehash` affect
 the bucket count, although `insert` is only allowed to invalidate iterators
 when the insertion causes the load factor to be greater than or equal to the
-maximum load factor. For most implementations this means that insert will only
+maximum load factor. For most implementations this means that `insert` will only
 change the number of buckets when this happens. While iterators can be
 invalidated by calls to `insert` and `rehash`, pointers and references to the
 container's elements are never invalidated.
@@ -160,12 +160,9 @@ the expensive rehashing out of the way and let you store iterators, safe in
 the knowledge that they won't be invalidated. If you are inserting `n`
 elements into container `x`, you could first call:
 
-    x.rehash((x.size() + n) / x.max_load_factor() + 1);
+    x.rehash((x.size() + n) / x.max_load_factor());
 
 [blurb Note: `rehash`'s argument is the minimum number of buckets, not the
-number of elements, which is why the new size is divided by the maximum load factor.  The
-`+ 1` guarantees there is no invalidation; without it, reallocation could occur
-if the number of bucket exactly divides the target size, since the container is
-allowed to rehash when the load factor is equal to the maximum load factor.]
+number of elements, which is why the new size is divided by the maximum load factor.]
 
 [endsect]

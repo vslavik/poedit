@@ -7,6 +7,7 @@
 #include <boost/mpi/group.hpp>
 #include <boost/mpi/intercommunicator.hpp>
 #include <boost/mpi/graph_communicator.hpp>
+#include <boost/mpi/cartesian_communicator.hpp>
 #include <boost/mpi/skeleton_and_content.hpp>
 #include <boost/mpi/detail/point_to_point.hpp>
 
@@ -160,34 +161,52 @@ optional<intercommunicator> communicator::as_intercommunicator() const
     return optional<intercommunicator>();
 }
 
-optional<graph_communicator> communicator::as_graph_communicator() const
+bool communicator::has_graph_topology() const
 {
-  optional<graph_communicator> graph;
+  bool is_graph = false;
   // topology test not allowed on MPI_NULL_COMM
   if (bool(*this)) {
     int status;
     BOOST_MPI_CHECK_RESULT(MPI_Topo_test, ((MPI_Comm)*this, &status));
-    if (status == MPI_GRAPH)
-      graph = graph_communicator(comm_ptr);
+    is_graph = status == MPI_GRAPH;
   }
-  return graph;
+  return is_graph;
+}
+
+optional<graph_communicator> communicator::as_graph_communicator() const
+{
+  if (has_graph_topology()) {
+    return graph_communicator(comm_ptr);
+  } else {
+    return optional<graph_communicator>();
+  }
 }
 
 bool communicator::has_cartesian_topology() const
 {
+  bool is_cart = false;
   // topology test not allowed on MPI_NULL_COM
-  if (!bool(*this)) {
-    return false;
-  } else {
+  if (bool(*this)) {
     int status;
     BOOST_MPI_CHECK_RESULT(MPI_Topo_test, ((MPI_Comm)*this, &status));
-    return status == MPI_CART;
+    is_cart = status == MPI_CART;
+  }
+  return is_cart;
+}
+
+optional<cartesian_communicator> communicator::as_cartesian_communicator() const
+{
+  if (has_cartesian_topology()) {
+    return cartesian_communicator(comm_ptr);
+  } else {
+    return optional<cartesian_communicator>();
   }
 }
 
 void communicator::abort(int errcode) const
 {
   BOOST_MPI_CHECK_RESULT(MPI_Abort, (MPI_Comm(*this), errcode));
+  std::abort();
 }
 
 /*************************************************************

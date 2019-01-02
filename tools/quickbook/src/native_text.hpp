@@ -11,21 +11,22 @@
 #if !defined(BOOST_QUICKBOOK_DETAIL_NATIVE_TEXT_HPP)
 #define BOOST_QUICKBOOK_DETAIL_NATIVE_TEXT_HPP
 
-#include <boost/config.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/utility/string_ref.hpp>
-#include <string>
 #include <stdexcept>
-#include <iostream>
+#include <string>
+#include <boost/config.hpp>
 #include "fwd.hpp"
+#include "string_view.hpp"
 
 #if defined(__cygwin__) || defined(__CYGWIN__)
-#   define QUICKBOOK_CYGWIN_PATHS 1
+#define QUICKBOOK_CYGWIN_PATHS 1
 #elif defined(_WIN32)
-#   define QUICKBOOK_WIDE_PATHS 1
-#   if defined(BOOST_MSVC) && BOOST_MSVC >= 1400
-#       define QUICKBOOK_WIDE_STREAMS 1
-#   endif
+#define QUICKBOOK_WIDE_PATHS 1
+// Wide streams work okay for me with older versions of Visual C++,
+// but I've had reports of problems. My guess is that it's an
+// incompatibility with later versions of windows.
+#if defined(BOOST_MSVC) && BOOST_MSVC >= 1700
+#define QUICKBOOK_WIDE_STREAMS 1
+#endif
 #endif
 
 #if !defined(QUICKBOOK_WIDE_PATHS)
@@ -42,8 +43,6 @@
 
 namespace quickbook
 {
-    namespace fs = boost::filesystem;
-
     namespace detail
     {
         struct conversion_error : std::runtime_error
@@ -51,94 +50,16 @@ namespace quickbook
             conversion_error(char const* m) : std::runtime_error(m) {}
         };
 
-        // 'generic':   Paths in quickbook source and the generated boostbook.
-        //              Always UTF-8.
-        // 'command_line':
-        //              Paths (or other parameters) from the command line and
-        //              possibly other sources in the future. Wide strings on
-        //              normal windows, UTF-8 for cygwin and other platforms
-        //              (hopefully).
-        // 'path':      Stored as a boost::filesystem::path. Since
-        //              Boost.Filesystem doesn't support cygwin, this
-        //              is always wide on windows. UTF-8 on other
-        //              platforms (again, hopefully).
-    
-#if QUICKBOOK_WIDE_PATHS
-        typedef std::wstring command_line_string;
-        typedef boost::wstring_ref command_line_string_ref;
-#else
-        typedef std::string command_line_string;
-        typedef boost::string_ref command_line_string_ref;
-#endif
-
-        // A light wrapper around C++'s streams that gets things right
-        // in the quickbook context.
-        //
-        // This is far from perfect but it fixes some issues.
-        struct ostream
-        {
 #if QUICKBOOK_WIDE_STREAMS
-            typedef std::wostream base_ostream;
-            typedef std::wios base_ios;
-            typedef std::wstring string;
-            typedef boost::wstring_ref string_ref;
+        typedef std::wstring stream_string;
 #else
-            typedef std::ostream base_ostream;
-            typedef std::ios base_ios;
-            typedef std::string string;
-            typedef boost::string_ref string_ref;
-#endif
-            base_ostream& base;
-
-            explicit ostream(base_ostream& x) : base(x) {}
-
-            // C strings should always be ascii.
-            ostream& operator<<(char);
-            ostream& operator<<(char const*);
-
-            // std::string should be UTF-8 (what a mess!)
-            ostream& operator<<(std::string const&);
-            ostream& operator<<(boost::string_ref);
-
-            // Other value types.
-            ostream& operator<<(int x);
-            ostream& operator<<(unsigned int x);
-            ostream& operator<<(long x);
-            ostream& operator<<(unsigned long x);
-
-#if !defined(BOOST_NO_LONG_LONG)
-            ostream& operator<<(long long x);
-            ostream& operator<<(unsigned long long x);
+        typedef std::string stream_string;
 #endif
 
-            ostream& operator<<(fs::path const&);
-
-            // Modifiers
-            ostream& operator<<(base_ostream& (*)(base_ostream&));
-            ostream& operator<<(base_ios& (*)(base_ios&));
-        };
-
-
-        std::string command_line_to_utf8(command_line_string const&);
-        fs::path command_line_to_path(command_line_string const&);
-    
-        std::string path_to_generic(fs::path const&);
-        fs::path generic_to_path(boost::string_ref);
-
-        void initialise_output();
-        
-        ostream& out();
-
-        // Preformats an error/warning message so that it can be parsed by
-        // common IDEs. Set 'ms_errors' to determine if VS format
-        // or GCC format. Returns the stream to continue ouput of the verbose
-        // error message.
-        void set_ms_errors(bool);
-        ostream& outerr();
-        ostream& outerr(fs::path const& file, int line = -1);
-        ostream& outwarn(fs::path const& file, int line = -1);
-        ostream& outerr(file_ptr const&, string_iterator);
-        ostream& outwarn(file_ptr const&, string_iterator);
+#if QUICKBOOK_WIDE_PATHS || QUICKBOOK_WIDE_STREAMS
+        std::string to_utf8(std::wstring const& x);
+        std::wstring from_utf8(string_view x);
+#endif
     }
 }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -40,7 +40,7 @@ using boost::convert;
 //]
 //[getting_started_default_converter
 // Definition of the default converter (optional)
-struct boost::cnv::by_default : public boost::cnv::lexical_cast {};
+struct boost::cnv::by_default : boost::cnv::lexical_cast {};
 //]
 
 static
@@ -132,7 +132,7 @@ getting_started_example4()
     string       s3 = convert<string>(12.34567, cnv(std::scientific)(std::setprecision(3))).value();
     string expected = local::is_msc ? "1.235e+001" : "1.235e+01";
 
-    BOOST_TEST(i2 == 123);        // boost::cnv::cstream. Successfull conversion of "   123".
+    BOOST_TEST(i2 == 123);        // boost::cnv::cstream. Successful conversion of "   123".
     BOOST_TEST(s1 == "12.34567"); // boost::lexical_cast. Precision is not configurable.
     BOOST_TEST(s2 == "12.346");   // boost::cnv::cstream. Precision was set to 3. Fixed.
     BOOST_TEST(s3 == expected);   // boost::cnv::cstream. Precision was set to 3. Scientific.
@@ -207,8 +207,8 @@ fallback_fun(char const* msg, int fallback_value)
 {
     // The principal advantage of a fallback_func over a fallback_value
     // is that the former is only called when the conversion request fails.
-    // Consequently, the returned fallback_value is only calculated (which potentially
-    // might be expensive) when it is absolutely necessary.
+    // Consequently, the returned fallback_value is only calculated (which
+    // potentially might be expensive) when it is absolutely necessary.
     log(msg); return fallback_value;
 }
 //]

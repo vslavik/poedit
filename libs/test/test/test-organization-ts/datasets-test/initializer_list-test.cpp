@@ -12,6 +12,7 @@
 // Boost.Test
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/monomorphic/initializer_list.hpp>
+#include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/for_each_sample.hpp>
 namespace data=boost::unit_test::data;
 
@@ -41,7 +42,35 @@ BOOST_AUTO_TEST_CASE( test_initializer_list )
 
     copy_count::value() = 0;
     data::for_each_sample( data::make( { copy_count(), copy_count() } ), check_arg_type<copy_count>() );
+    BOOST_TEST( copy_count::value() == 2 ); // this is copied in this case, because of the initializer_list
+}
+
+#ifndef BOOST_TEST_ERRONEOUS_INIT_LIST
+
+BOOST_AUTO_TEST_CASE( test_initializer_list_variadic_template )
+{
+    BOOST_TEST( data::make( 1,2,3 ).size() == 3 );
+
+    BOOST_TEST( data::make( 7.4,3.2 ).size() == 2 );
+
+    BOOST_TEST( data::make( true, true, false ).size() == 3 );
+
+    data::for_each_sample( data::make( 7,11,13,17 ), check_arg_type<int>() );
+
+    int c = 0;
+    int exp[] = {7,11,13,17};
+    data::for_each_sample( data::make( 7,11,13,17 ), [&c,&exp](int i) {
+        BOOST_TEST( i == exp[c++] );
+    });
+
+    data::for_each_sample( data::make( 1,2,3,4 ), expected_call_count{ 4 } );
+    data::for_each_sample( data::make( 1,2,3,4 ), expected_call_count{ 2 }, 2 );
+    data::for_each_sample( data::make( 1,2,3,4 ), expected_call_count{ 0 }, 0 );
+
+    copy_count::value() = 0;
+    data::for_each_sample( data::make( copy_count(), copy_count() ), check_arg_type<copy_count>() );
     BOOST_TEST( copy_count::value() == 0 );
 }
+#endif
 
 // EOF

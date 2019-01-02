@@ -1,6 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -101,26 +103,22 @@ struct ring_area_predicate<ResultType, true>
 template <typename Ring, bool IsInteriorRing>
 struct is_properly_oriented
 {
-    typedef typename point_type<Ring>::type point_type;
-
-    typedef typename strategy::area::services::default_strategy
-        <
-            typename cs_tag<point_type>::type,
-            point_type
-        >::type strategy_type;
-
-    typedef detail::area::ring_area
-        <
-            order_as_direction<geometry::point_order<Ring>::value>::value,
-            geometry::closure<Ring>::value
-        > ring_area_type;
-
-    typedef typename default_area_result<Ring>::type area_result_type;
-
-    template <typename VisitPolicy>
-    static inline bool apply(Ring const& ring, VisitPolicy& visitor)
+    template <typename VisitPolicy, typename Strategy>
+    static inline bool apply(Ring const& ring, VisitPolicy& visitor,
+                             Strategy const& strategy)
     {
         boost::ignore_unused(visitor);
+
+        typedef detail::area::ring_area
+            <
+                order_as_direction<geometry::point_order<Ring>::value>::value,
+                geometry::closure<Ring>::value
+            > ring_area_type;
+
+        typedef typename Strategy::template area_strategy
+            <
+                Ring
+            >::type::template result_type<Ring>::type area_result_type;
 
         typename ring_area_predicate
             <
@@ -128,8 +126,11 @@ struct is_properly_oriented
             >::type predicate;
 
         // Check area
-        area_result_type const zero = area_result_type();
-        if (predicate(ring_area_type::apply(ring, strategy_type()), zero))
+        area_result_type const zero = 0;
+        area_result_type const area
+            = ring_area_type::apply(ring,
+                                    strategy.template get_area_strategy<Ring>());
+        if (predicate(area, zero))
         {
             return visitor.template apply<no_failure>();
         }
@@ -150,8 +151,9 @@ template
 >
 struct is_valid_ring
 {
-    template <typename VisitPolicy>
-    static inline bool apply(Ring const& ring, VisitPolicy& visitor)
+    template <typename VisitPolicy, typename Strategy>
+    static inline bool apply(Ring const& ring, VisitPolicy& visitor,
+                             Strategy const& strategy)
     {
         // return invalid if any of the following condition holds:
         // (a) the ring's point coordinates are not invalid (e.g., NaN)
@@ -196,10 +198,10 @@ struct is_valid_ring
         return
             is_topologically_closed<Ring, closure>::apply(ring, visitor)
             && ! has_duplicates<Ring, closure>::apply(ring, visitor)
-            && ! has_spikes<Ring, closure>::apply(ring, visitor)
+            && ! has_spikes<Ring, closure>::apply(ring, visitor, strategy.get_side_strategy())
             && (! CheckSelfIntersections
-                || has_valid_self_turns<Ring>::apply(ring, visitor))
-            && is_properly_oriented<Ring, IsInteriorRing>::apply(ring, visitor);
+                || has_valid_self_turns<Ring>::apply(ring, visitor, strategy))
+            && is_properly_oriented<Ring, IsInteriorRing>::apply(ring, visitor, strategy);
     }
 };
 

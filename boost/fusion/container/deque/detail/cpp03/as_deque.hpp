@@ -26,7 +26,13 @@ namespace boost { namespace fusion { namespace detail
 BOOST_FUSION_BARRIER_BEGIN
 
     template <int size>
-    struct as_deque;
+    struct as_deque
+    {
+        BOOST_STATIC_ASSERT_MSG(
+            size <= FUSION_MAX_DEQUE_SIZE
+          , "FUSION_MAX_DEQUE_SIZE limit is too low"
+        );
+    };
 
     template <>
     struct as_deque<0>

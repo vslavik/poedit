@@ -28,7 +28,7 @@
 
 using namespace boost::container;
 
-typedef boost::container::container_detail::aligned_storage<sizeof(void*)*4>::type buffer_t;
+typedef boost::container::dtl::aligned_storage<sizeof(void*)*4>::type buffer_t;
 
 static buffer_t buffer_0x00;
 static buffer_t buffer_0xFF;

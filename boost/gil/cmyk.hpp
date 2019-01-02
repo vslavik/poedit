@@ -1,34 +1,21 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_CMYK_HPP
+#define BOOST_GIL_CMYK_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/metafunctions.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_CMYK_H
-#define GIL_CMYK_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Support for CMYK color space and variants
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on October 10, 2007
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cstddef>
-#include "gil_config.hpp"
-#include "metafunctions.hpp"
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 
-namespace boost { namespace gil {
+#include <cstddef>
 
+namespace boost { namespace gil {
 
 /// \addtogroup ColorNameModel
 /// \{

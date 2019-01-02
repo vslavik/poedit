@@ -13,6 +13,12 @@
 
 #include <vector>
 
+#include <boost/compute/config.hpp>
+
+#ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
+#include <initializer_list>
+#endif
+
 #include <boost/compute/event.hpp>
 
 namespace boost {
@@ -27,7 +33,7 @@ template<class T> class future;
 /// specify dependencies for OpenCL operations or to wait on the host until
 /// all of the events have completed.
 ///
-/// This class also provides convenience fnuctions for interacting with
+/// This class also provides convenience functions for interacting with
 /// OpenCL APIs which typically accept event dependencies as a \c cl_event*
 /// pointer and a \c cl_uint size. For example:
 /// \code
@@ -59,6 +65,14 @@ public:
         : m_events(other.m_events)
     {
     }
+
+    #ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
+    /// Creates a wait-list from \p events
+    wait_list(std::initializer_list<event> events)
+        : m_events(events)
+    {
+    }
+    #endif // BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 
     /// Copies the events in the wait-list from \p other.
     wait_list& operator=(const wait_list &other)

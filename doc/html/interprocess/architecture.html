@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Architecture and internals</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="interprocess_smart_ptr.html" title="Ownership smart pointers">
 <link rel="next" href="customizing_interprocess.html" title="Customizing Boost.Interprocess">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.architecture"></a><a class="link" href="architecture.html" title="Architecture and internals">Architecture and internals</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.basic_guidelines">Basic guidelines</a></span></dt>
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.architecture_algorithm_to_managed">From
       the memory algorithm to the managed segment</a></span></dt>
@@ -44,7 +44,7 @@
         When building <span class="bold"><strong>Boost.Interprocess</strong></span> architecture,
         I took some basic guidelines that can be summarized by these points:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>Boost.Interprocess</strong></span> should be portable
             at least in UNIX and Windows systems. That means unifying not only interfaces
@@ -92,7 +92,7 @@
 <a name="interprocess.architecture.architecture_algorithm_to_managed"></a><a class="link" href="architecture.html#interprocess.architecture.architecture_algorithm_to_managed" title="From the memory algorithm to the managed segment">From
       the memory algorithm to the managed segment</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.architecture_algorithm_to_managed.architecture_memory_algorithm">The
         memory algorithm</a></span></dt>
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.architecture_algorithm_to_managed.architecture_segment_manager">The
@@ -203,7 +203,7 @@
           one to implement named allocations, and another one to implement "unique
           instance" allocations.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The first index is a map with a pointer to a c-string (the name of
               the named object) as a key and a structure with information of the
@@ -265,7 +265,7 @@
           The <span class="bold"><strong>Boost.Interprocess</strong></span> managed memory
           segments that construct the shared memory/memory mapped file, place there
           the segment manager and forward the user requests to the segment manager.
-          For example, <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23020560.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          For example, <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp67121152.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           is a <span class="bold"><strong>Boost.Interprocess</strong></span> managed memory
           segment that works with shared memory. <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a></code>
           works with memory mapped files, etc...
@@ -297,9 +297,9 @@
           Deriving from this class, <span class="bold"><strong>Boost.Interprocess</strong></span>
           implements several managed memory classes, for different memory backends:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23020560.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp67121152.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
               (for shared memory).
             </li>
 <li class="listitem">
@@ -311,7 +311,7 @@
               (for heap allocated memory).
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp22912048.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp67012640.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
               (for user provided external buffer).
             </li>
 </ul></div>
@@ -322,7 +322,7 @@
 <a name="interprocess.architecture.allocators_containers"></a><a class="link" href="architecture.html#interprocess.architecture.allocators_containers" title="Allocators and containers">Allocators
       and containers</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.allocators_containers.allocators">Boost.Interprocess
         allocators</a></span></dt>
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.allocators_containers.implementation_segregated_storage_pools">Implementation
@@ -379,7 +379,7 @@
           Segregated storage pools are simple and follow the classic segregated storage
           algorithm.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The pool allocates chunks of memory using the segment manager's raw
               memory allocation functions.
@@ -422,7 +422,7 @@
           Adaptive pools are a variation of segregated lists but they have a more
           complicated approach:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Instead of using raw allocation, the pool allocates <span class="bold"><strong>aligned</strong></span>
               chunks of memory using the segment manager. This is an <span class="bold"><strong>essential</strong></span>
@@ -482,7 +482,7 @@
           conforming counterparts of STL containers in <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span></code>
           namespace, but with these little details:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Boost.Interprocess</strong></span> STL containers
               don't assume that memory allocated with an allocator can be deallocated
@@ -504,7 +504,7 @@
 <a name="interprocess.architecture.performance"></a><a class="link" href="architecture.html#interprocess.architecture.performance" title="Performance of Boost.Interprocess">Performance of
       Boost.Interprocess</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.performance.performance_allocations">Performance
         of raw memory allocations</a></span></dt>
 <dt><span class="section"><a href="architecture.html#interprocess.architecture.performance.performance_named_allocation">Performance
@@ -522,7 +522,7 @@
           You can have two types of raw memory allocations with <span class="bold"><strong>Boost.Interprocess</strong></span>
           classes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Explicit</strong></span>: The user calls <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code>
               and <code class="computeroutput"><span class="identifier">deallocate</span><span class="special">()</span></code>
@@ -545,7 +545,7 @@
           If you see that memory allocation is a bottleneck in your application,
           you have these alternatives:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               If you use map/set associative containers, try using <code class="computeroutput"><span class="identifier">flat_map</span></code> family instead of the map
               family if you mainly do searches and the insertion/removal is mainly
@@ -587,7 +587,7 @@
           as two threads writing to a common structure, except when the user creates/searches
           named/unique objects. The steps when creating a named object are these:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Lock a recursive mutex (so that you can make named allocations inside
               the constructor of the object to be created).
@@ -607,7 +607,7 @@
             </li>
 <li class="listitem">
               Call the constructors of the object being created. If it's an array,
-              one construtor per array element.
+              one constructor per array element.
             </li>
 <li class="listitem">
               Unlock the recursive mutex.
@@ -617,7 +617,7 @@
           The steps when destroying a named object using the name of the object (<code class="computeroutput"><span class="identifier">destroy</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">name</span><span class="special">)</span></code>)
           are these:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Lock a recursive mutex .
             </li>
@@ -643,13 +643,13 @@
           The steps when destroying a named object using the pointer of the object
           (<code class="computeroutput"><span class="identifier">destroy_ptr</span><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span><span class="identifier">ptr</span><span class="special">)</span></code>) are these:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Lock a recursive mutex .
             </li>
 <li class="listitem">
               Depending on the index type, this can be different:
-              <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                     If the index is a node index, (marked with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">is_node_index</span></code>
                     specialization): Take the iterator stored near the object and
@@ -679,7 +679,7 @@
 <p>
           If you see that the performance is not good enough you have these alternatives:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Maybe the problem is that the lock time is too big and it hurts parallelism.
               Try to reduce the number of named objects in the global index and if

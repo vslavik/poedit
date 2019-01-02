@@ -9,6 +9,7 @@
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/qi_binary.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/predef/other/endian.h>
 #include "test.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,7 +49,7 @@ int main()
     double d;
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(test_attr("\x01", byte_, uc) && uc == 0x01);
         BOOST_TEST(test_attr("\x01\x02", word, us) && us == 0x0201);
         BOOST_TEST(test_attr("\x01\x02\x03\x04", dword, ui) && ui == 0x04030201);
@@ -76,7 +77,7 @@ int main()
     }
 
     {   // test native endian binaries
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(test("\x01", byte_(0x01)));
         BOOST_TEST(test("\x01\x02", word(0x0201)));
         BOOST_TEST(test("\x01\x02\x03\x04", dword(0x04030201)));

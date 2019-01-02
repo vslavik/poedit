@@ -1,82 +1,84 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #include <boost/hana/detail/variadic/foldr1.hpp>
 
 #include <boost/hana/assert.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/value.hpp>
 
 #include <laws/base.hpp>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 struct undefined { };
 
 template <int i>
-using x = test::ct_eq<i>;
+using x = hana::test::ct_eq<i>;
 
 // We do not use test::_injection here because comparing the result would
 // blow away the template recursion limit.
 struct f_t {
     template <typename X, typename Y>
     constexpr auto operator()(X const&, Y const&) {
-        return x<value<X>() - value<Y>()>{};
+        return x<hana::value<X>() - hana::value<Y>()>{};
     }
 };
 
 int main() {
-    using detail::variadic::foldr1;
+    using hana::detail::variadic::foldr1;
     f_t f{};
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(undefined{}, x<0>{}),
         x<0>{}
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}),
         f(x<0>{}, x<1>{})
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}),
         f(x<0>{}, f(x<1>{}, x<2>{}))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, x<3>{})))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}, x<4>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, f(x<3>{}, x<4>{}))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, x<5>{})))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, f(x<5>{}, x<6>{}))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}, x<7>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, f(x<5>{}, f(x<6>{}, x<7>{}
         )))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<0>{}, x<1>{}, x<2>{}, x<3>{}, x<4>{}, x<5>{}, x<6>{}, x<7>{}, x<8>{}),
         f(x<0>{}, f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, f(x<5>{}, f(x<6>{}, f(x<7>{}, x<8>{}
         ))))))))
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{}, x<2>{}, x<3>{},  x<4>{},  x<5>{},  x<6>{}, x<7>{},
                   x<8>{}, x<9>{}, x<10>{}, x<11>{}, x<12>{}, x<13>{}),
         f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, f(x<5>{}, f(x<6>{}, f(x<7>{},
@@ -84,7 +86,7 @@ int main() {
         ))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{}, x<2>{}, x<3>{},  x<4>{},  x<5>{},  x<6>{}, x<7>{},
                   x<8>{}, x<9>{}, x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{}),
         f(x<1>{}, f(x<2>{}, f(x<3>{}, f(x<4>{}, f(x<5>{}, f(x<6>{}, f(x<7>{},
@@ -92,7 +94,7 @@ int main() {
         )))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{}, x<2>{}, x<3>{},  x<4>{},  x<5>{},  x<6>{}, x<7>{},
                   x<8>{}, x<9>{}, x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}),
@@ -102,7 +104,7 @@ int main() {
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -114,7 +116,7 @@ int main() {
         ))))))))))))))))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -126,7 +128,7 @@ int main() {
         )))))))))))))))))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -141,7 +143,7 @@ int main() {
     ));
 
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -161,7 +163,7 @@ int main() {
         ))))))))))))))))))))))))))))))))))))))))))))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},
@@ -181,7 +183,7 @@ int main() {
         )))))))))))))))))))))))))))))))))))))))))))))))))))))))
     ));
 
-    BOOST_HANA_CONSTANT_CHECK(equal(
+    BOOST_HANA_CONSTANT_CHECK(hana::equal(
         foldr1(f, x<1>{},  x<2>{},  x<3>{},  x<4>{},  x<5>{},  x<6>{},  x<7>{},
                   x<8>{},  x<9>{},  x<10>{}, x<11>{}, x<12>{}, x<13>{}, x<14>{},
                   x<15>{}, x<16>{}, x<17>{}, x<18>{}, x<19>{}, x<20>{}, x<21>{},

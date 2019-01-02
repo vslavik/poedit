@@ -30,14 +30,14 @@ assert not isinstance(v,symbol)
 assert not isinstance(v,constant)
 assert isinstance(v,variable)
 
-print 'b=',b
+print('b=',b)
 assert repr(b)=='cltree.basic()'
-print 's=',s
+print('s=',s)
 assert repr(s)!='cltree.wrapped_symbol()' # because not isinstance(s,basic)
-print 'c=',c
+print('c=',c)
 assert repr(c)=='cltree.constant()'
-print 'v=',v
+print('v=',v)
 assert repr(v)=='cltree.wrapped_variable()'
 
 
-print 'ok'
+print('ok')

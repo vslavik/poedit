@@ -259,7 +259,6 @@ The number of values found.
 [heading Example]
 
 ``
-
 // return elements intersecting box
 bgi::query(tree, bgi::intersects(box), std::back_inserter(result));
 // return elements intersecting poly but not within box
@@ -278,7 +277,7 @@ tree.query(bgi::intersects(box),
 [heading Throws]
 If Value copy constructor or copy assignment throws.
 
-[warning Only one [^[link group__predicates_1ga8772d9d3e5b12b3292f7d94d47310e3e nearest()]] perdicate may be passed to the query. Passing more of them results in compile-time error.]
+[warning Only one [^[link group__predicates_1ga8772d9d3e5b12b3292f7d94d47310e3e nearest()]] predicate may be passed to the query. Passing more of them results in compile-time error.]
 
 [endsect]
 
@@ -310,7 +309,6 @@ The iterator pointing at the begin of the query range.
 [heading Example]
 
 ``
-
 std::for_each(bgi::qbegin(tree, bgi::nearest(pt, 3)), bgi::qend(tree), do_something());
 ``
 
@@ -346,7 +344,6 @@ The iterator pointing at the end of the query range.
 [heading Example]
 
 ``
-
 std::for_each(bgi::qbegin(tree, bgi::nearest(pt, 3)), bgi::qend(tree), do_something());
 ``
 
@@ -382,7 +379,6 @@ The iterator pointing at the begin of the range.
 [heading Example]
 
 ``
-
 std::for_each(bgi::begin(tree), bgi::end(tree), do_something());
 // the same as
 std::for_each(boost::begin(tree), boost::end(tree), do_something());
@@ -420,7 +416,6 @@ The iterator pointing at the end of the range.
 [heading Example]
 
 ``
-
 std::for_each(bgi::begin(tree), bgi::end(tree), do_something());
 // the same as
 std::for_each(boost::begin(tree), boost::end(tree), do_something());

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>boost/python/stl_iterator.hpp</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python Reference Manual">
 <link rel="up" href="../high_level_components.html" title="Chapter&#160;2.&#160;High Level Components">
 <link rel="prev" href="boost_python_scope_hpp.html" title="boost/python/scope.hpp">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="high_level_components.boost_python_stl_iterator_hpp"></a><a class="link" href="boost_python_stl_iterator_hpp.html" title="boost/python/stl_iterator.hpp">boost/python/stl_iterator.hpp</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="boost_python_stl_iterator_hpp.html#high_level_components.boost_python_stl_iterator_hpp.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="boost_python_stl_iterator_hpp.html#high_level_components.boost_python_stl_iterator_hpp.class_template_stl_input_iterato">Class
         template <code class="computeroutput"><span class="identifier">stl_input_iterator</span></code></a></span></dt>
@@ -145,7 +145,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Creates a past-the-end input iterator, useful for signifying the
@@ -164,7 +164,7 @@
 <pre class="programlisting"><span class="identifier">stl_input_iterator</span><span class="special">(</span><span class="identifier">object</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">ob</span><span class="special">)</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Calls ob.attr("__iter__")() and stores the resulting Python
@@ -189,7 +189,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Calls this-&gt;it.attr("next")() and stores the result
@@ -209,7 +209,7 @@
 <pre class="programlisting"><span class="identifier">stl_input_iterator</span> <span class="special">&amp;</span><span class="keyword">operator</span><span class="special">++(</span><span class="keyword">int</span><span class="special">)</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">stl_input_iterator</span> <span class="identifier">tmp</span> <span class="special">=</span>
@@ -232,7 +232,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Returns the current element in the sequence.
@@ -247,7 +247,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Returns true if both iterators are dereferenceable or if both iterators
@@ -263,7 +263,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                 Returns false if both iterators are dereferenceable or if both iterators

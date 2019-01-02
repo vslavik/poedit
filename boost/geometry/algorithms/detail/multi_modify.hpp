@@ -4,6 +4,10 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -38,6 +42,18 @@ struct multi_modify
             ++it)
         {
             Policy::apply(*it);
+        }
+    }
+
+    template <typename Strategy>
+    static inline void apply(MultiGeometry& multi, Strategy const& strategy)
+    {
+        typedef typename boost::range_iterator<MultiGeometry>::type iterator_type;
+        for (iterator_type it = boost::begin(multi);
+            it != boost::end(multi);
+            ++it)
+        {
+            Policy::apply(*it, strategy);
         }
     }
 };

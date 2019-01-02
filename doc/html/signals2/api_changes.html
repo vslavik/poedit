@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Signals2 API Changes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../signals2.html" title="Chapter&#160;30.&#160;Boost.Signals2">
+<link rel="up" href="../signals2.html" title="Chapter&#160;36.&#160;Boost.Signals2">
 <link rel="prev" href="rationale.html" title="Design Rationale">
 <link rel="next" href="tests.html" title="Testsuite">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="signals2.api_changes"></a>Signals2 API Changes</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="api_changes.html#signals2.porting">Porting from Boost.Signals to Boost.Signals2</a></span></dt>
 <dt><span class="section"><a href="api_changes.html#signals2.api_history">Signals2 API Development</a></span></dt>
 </dl></div>
@@ -37,7 +37,7 @@
       library are summarized below.  We also provide some notes on
       dealing with each change while porting existing Boost.Signals code to Boost.Signals2.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p>The namespace <code class="computeroutput">boost::signals</code> has been replaced by <code class="computeroutput">boost::signals2</code>
           to avoid conflict with the original Boost.Signals implementation, as well as the Qt "signals" macro.
@@ -73,16 +73,16 @@
 <p>
           Automatic connection management is now achieved through the use of
           <code class="computeroutput">shared_ptr</code>/<code class="computeroutput">weak_ptr</code>
-          and <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#idp131977696-bb">signals2::slot::track</a></code>(), as described in the
+          and <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#id-1_3_37_6_12_5_1_1_17_1-bb">signals2::slot::track</a></code>(), as described in the
           <a class="link" href="tutorial.html#signals2.tutorial.connection-management" title="Automatic Connection Management (Intermediate)">tutorial</a>.
           However, the old (thread-unsafe) Boost.Signals scheme of automatic connection management
           is still supported via the <code class="computeroutput"><a class="link" href="../boost/signals2/trackable.html" title="Class trackable">boost::signals2::trackable</a></code> class.
         </p>
 <p>
           If you do not intend to make your program multi-threaded, the easiest porting path is to simply replace
-          your uses of <code class="computeroutput"><a class="link" href="../boost/signals/trackable.html" title="Class trackable">boost::signals::trackable</a></code> as a base class with
+          your uses of <code class="computeroutput">boost::signals::trackable</code> as a base class with
           <code class="computeroutput"><a class="link" href="../boost/signals2/trackable.html" title="Class trackable">boost::signals2::trackable</a></code>.  Boost.Signals2 uses the same
-          <code class="computeroutput"><a class="link" href="../boost/visit_each.html" title="Function template visit_each">boost::visit_each</a></code> mechanism to discover
+          <code class="computeroutput">boost::visit_each</code> mechanism to discover
           <code class="computeroutput">trackable</code> objects
           as used by the original Boost.Signals library.
         </p>
@@ -107,7 +107,7 @@
           move the connection creation from the constructor to to the an
           <code class="computeroutput">adl_postconstruct</code> function, where
           a reference to the owning <code class="computeroutput">shared_ptr</code> is available for
-          passing to <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#idp131977696-bb">signals2::slot::track</a></code>.
+          passing to <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#id-1_3_37_6_12_5_1_1_17_1-bb">signals2::slot::track</a></code>.
           The <code class="computeroutput"><a class="link" href="../boost/signals2/deconstruct.html" title="Function deconstruct">deconstruct</a></code> function would be used create objects
           of the class and run their associated <code class="computeroutput">adl_postconstruct</code> function.
           You can enforce use of <code class="computeroutput"><a class="link" href="../boost/signals2/deconstruct.html" title="Function deconstruct">deconstruct</a></code> by
@@ -161,7 +161,7 @@
 <p>
           The <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html" title="Class template signal">signals2::signal</a></code> class has an additional typedef
           <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#boost.signals2.signal.extended_slot_type">signals2::signal::extended_slot_type</a></code>
-          and new <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp134091680-bb">signals2::signal::connect_extended</a></code>()
+          and new <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_24_2-bb">signals2::signal::connect_extended</a></code>()
           methods.  These allow connection of slots
           which take an additional <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html" title="Class connection">signals2::connection</a></code> argument, giving them thread-safe
           access to their signal/slot connection when they are invoked.  There is also a
@@ -174,7 +174,7 @@
           if you have slots which need access to their <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html" title="Class connection">signals2::connection</a></code>
           to the signal invoking them (for example to block or disconnect their connection)
           you may wish to connect the slots with
-          <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp134091680-bb">signals2::signal::connect_extended</a></code>().
+          <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_24_2-bb">signals2::signal::connect_extended</a></code>().
           This also requires adding an additional connection argument to the slot.
           More information on how and why to use extended slots is available
           in the <a class="link" href="tutorial.html#signals2.tutorial.extended-slot-type" title="Giving a Slot Access to its Connection (Advanced)">tutorial</a>.
@@ -197,14 +197,14 @@
 </li>
 <li class="listitem">
 <p>The <code class="computeroutput">signal::combiner()</code> method, which formerly returned a reference to the
-          signal's combiner has been replaced by <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp75358848-bb">signals2::signal::combiner</a></code>
-          (which now returns the combiner by value) and <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp73073984-bb">signals2::signal::set_combiner</a></code>.
+          signal's combiner has been replaced by <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_26_1-bb">signals2::signal::combiner</a></code>
+          (which now returns the combiner by value) and <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_26_2-bb">signals2::signal::set_combiner</a></code>.
         </p>
 <p>
           During porting it should be straightforward to replace uses of the old reference-returning
           <code class="computeroutput">signal::combiner()</code>
-          function with the new "by-value" <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp75358848-bb">signals2::signal::combiner</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp73073984-bb">signals2::signal::set_combiner</a></code> functions.
+          function with the new "by-value" <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_26_1-bb">signals2::signal::combiner</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#id-1_3_37_6_9_3_1_2_26_2-bb">signals2::signal::set_combiner</a></code> functions.
           However, you will need to inspect each call of the <code class="computeroutput">combiner</code> method in your code
           to determine if your program logic has been broken by the changed
           return type.
@@ -248,7 +248,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="signals2.api_history"></a>Signals2 API Development</h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="api_changes.html#signals2.api_history.1-56">Version 1.56</a></span></dt>
 <dt><span class="section"><a href="api_changes.html#signals2.api_history.1-45">Version 1.45</a></span></dt>
 <dt><span class="section"><a href="api_changes.html#signals2.api_history.1-40">Version 1.40</a></span></dt>
@@ -271,7 +271,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="signals2.api_history.1-45"></a>Version 1.45</h4></div></div></div>
 <p>
-        Version 1.45 added <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#idp84715072-bb">slot::track_foreign</a></code>().  This method allows tracking
+        Version 1.45 added <code class="computeroutput"><a class="link" href="../boost/signals2/slot.html#id-1_3_37_6_12_5_1_1_17_2-bb">slot::track_foreign</a></code>().  This method allows tracking
         of objects owned by <code class="computeroutput">shared_ptr</code> classes other than <code class="computeroutput">boost::shared_ptr</code>,
         for example <code class="computeroutput">std::shared_ptr</code>.
       </p>
@@ -283,7 +283,7 @@
         Version 1.40 adds a few new features to the <code class="computeroutput"><a class="link" href="../boost/signals2/shared_connection_block.html" title="Class shared_connection_block">shared_connection_block</a></code>
         class to make it more flexible:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>
               <code class="computeroutput"><a class="link" href="../boost/signals2/shared_connection_block.html" title="Class shared_connection_block">shared_connection_block</a></code> is now default constructible.
             </p></li>
@@ -292,7 +292,7 @@
               immediately blocking its connection.
             </p></li>
 <li class="listitem"><p>
-              The <code class="computeroutput"><a class="link" href="../boost/signals2/shared_connection_block.html#idp176086704-bb">shared_connection_block::connection</a></code>() query has been
+              The <code class="computeroutput"><a class="link" href="../boost/signals2/shared_connection_block.html#id-1_3_37_6_8_4_1_1_8_1-bb">shared_connection_block::connection</a></code>() query has been
               added, to provide access to the <code class="computeroutput">shared_connection_block</code>s associated
               connection.
             </p></li>
@@ -311,7 +311,7 @@
         variadic templates (i.e. BOOST_NO_CXX11_VARIADIC_TEMPLATES is defined
         by Boost.Config).
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>
               The "portable syntax" signal and slot classes, i.e. signals2::signal0, signal1, etc.
             </p></li>

@@ -19,8 +19,8 @@
 #include <boost/move/core.hpp>
 #include <boost/smart_ptr/intrusive_ptr.hpp>
 #include <boost/smart_ptr/intrusive_ref_counter.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE

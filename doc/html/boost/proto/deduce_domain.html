@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct deduce_domain</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../proto/reference.html#header.boost.proto.domain_hpp" title="Header &lt;boost/proto/domain.hpp&gt;">
 <link rel="prev" href="basic_default_domain.html" title="Struct basic_default_domain">
@@ -37,19 +37,19 @@
 <span class="keyword">struct</span> <a class="link" href="deduce_domain.html" title="Struct deduce_domain">deduce_domain</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp335068608"></a><h2>Description</h2>
+<a name="id-1.3.34.5.9.7.4"></a><h2>Description</h2>
 <p>
             When <code class="computeroutput">proto::deduce_domain</code> is used as a domain &#8212; either
             explicitly or implicitly by
-            <code class="computeroutput"><a class="link" href="make_expr_idp306095104.html" title="Function make_expr">proto::make_expr</a>()</code>,
-            <code class="computeroutput"><a class="link" href="unpack_expr_idp306127088.html" title="Function unpack_expr">proto::unpack_expr</a>()</code>,
+            <code class="computeroutput"><a class="link" href="make_expr.html" title="Function make_expr">proto::make_expr</a>()</code>,
+            <code class="computeroutput"><a class="link" href="unpack_expr.html" title="Function unpack_expr">proto::unpack_expr</a>()</code>,
             or Proto's operator overloads &#8212; Proto will use the domains of the child expressions to
             compute the domain of the parent. It is done in such a way that (A) expressions in domains
             that share a common super-domain are interoperable, and (B) expressions that are in
             the default domain (or a sub-domain thereof) are interoperable with <span class="emphasis"><em>all</em></span>
             expressions. The rules are as follows:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 A sub-domain is <span class="emphasis"><em>stronger</em></span> than its super-domain.
               </li>

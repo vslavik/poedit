@@ -8,7 +8,6 @@ Copyright (c) 2007-2009: Joachim Faulhaber
 #ifndef BOOST_ICL_FUNCTORS_HPP_JOFA_080315
 #define BOOST_ICL_FUNCTORS_HPP_JOFA_080315
 
-#include <functional>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/icl/type_traits/identity_element.hpp>
@@ -20,15 +19,19 @@ namespace boost{namespace icl
 {
     // ------------------------------------------------------------------------
     template <typename Type> struct identity_based_inplace_combine 
-        : public std::binary_function<Type&, const Type&, void>
     {
+        typedef Type& first_argument_type;
+        typedef const Type& second_argument_type;
+        typedef void result_type;
         inline static Type identity_element() { return boost::icl::identity_element<Type>::value(); }
     };
 
     // ------------------------------------------------------------------------
     template <typename Type> struct unit_element_based_inplace_combine 
-        : public std::binary_function<Type&, const Type&, void>
     {
+        typedef Type& first_argument_type;
+        typedef const Type& second_argument_type;
+        typedef void result_type;
         inline static Type identity_element() { return boost::icl::unit_element<Type>::value(); }
     };
 

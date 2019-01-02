@@ -7,7 +7,7 @@
 #
 # Paths to tools come first, change these to match your system:
 #
-math2svg='m:\download\open\SVGMath-0.3.1\math2svg.py'
+math2svg='d:\download\open\SVGMath-0.3.3\math2svg.py'
 python='/cygdrive/c/Python27/python.exe'
 inkscape='/cygdrive/c/Program Files/Inkscape/inkscape.exe'
 # Image DPI:

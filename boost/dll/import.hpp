@@ -9,11 +9,11 @@
 #define BOOST_DLL_IMPORT_HPP
 
 #include <boost/config.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/addressof.hpp>
+#include <boost/core/enable_if.hpp>
 #include <boost/type_traits/is_object.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/dll/shared_library.hpp>
-#include <boost/utility/addressof.hpp>
 #include <boost/move/move.hpp>
 
 #if defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) || defined(BOOST_NO_CXX11_DECLTYPE) || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)

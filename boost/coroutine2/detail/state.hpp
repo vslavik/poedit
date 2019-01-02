@@ -25,7 +25,8 @@ namespace detail {
 enum class state_t : unsigned int {
     none       = 0,
     complete   = 1 << 1,
-    unwind     = 1 << 2
+    unwind     = 1 << 2,
+    destroy    = 1 << 3
 };
 
 

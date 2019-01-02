@@ -21,7 +21,7 @@ that you read it all from top to bottom.
 * `Null values`_
 * `Cloneability`_
 * `New functions`_
-* `std::auto_ptr<U> overloads`_
+* `Compatible smart pointer overloads`_
 * `Algorithms`_
 
 Basic usage
@@ -317,7 +317,7 @@ shrinks. For containers that store nulls, we can exploit that
 You can also release the entire container if you
 want to return it from a function ::
 
-    std::auto_ptr< boost::ptr_deque<animal> > get_zoo()
+    compatible-smart-ptr< boost::ptr_deque<animal> > get_zoo()
     {
         boost::ptr_deque<animal>  result;
         ...
@@ -375,22 +375,30 @@ Maps can also be indexed with bounds-checking ::
         // "bobo" not found
     }        
 
-``std::auto_ptr<U>`` overloads
-------------------------------
+Compatible smart pointer overloads
+----------------------------------
 
 Every time there is a function that takes a ``T*`` parameter, there is
-also a function taking an ``std::auto_ptr<U>`` parameter. This is of course done
-to make the library intregrate seamlessly with ``std::auto_ptr``. For example ::
+also a function overload (or two) taking a ``compatible-smart-ptr<U>``
+parameter. This is of course done to make the library intregrate
+seamlessly with ``std::auto_ptr`` or ``std::unique_ptr``. For example,
+consider a statement like :: 
 
   std::ptr_vector<Base> vec;
   vec.push_back( new Base );
-  
-is complemented by ::
+
+If the compiler supports ``std::auto_ptr``, this is complemented
+by ::
 
   std::auto_ptr<Derived> p( new Derived );
-  vec.push_back( p );   
+  vec.push_back( p );
 
-Notice that the template argument for ``std::auto_ptr`` does not need to
+Similarly if ``std::unique_ptr`` is available, we can write ::
+
+  std::unique_ptr<Derived> p( new Derived );
+  vec.push_back( std::move( p ) );
+
+Notice that the template argument for ``compatible-smart-ptr`` does not need to
 follow the template argument for ``ptr_vector`` as long as ``Derived*``
 can be implicitly converted to ``Base*``.
 

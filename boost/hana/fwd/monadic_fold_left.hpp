@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::monadic_fold_left`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -94,7 +94,13 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct monadic_fold_left_impl : monadic_fold_left_impl<T, when<true>> { };
 
     template <typename M>
-    struct monadic_fold_left_t;
+    struct monadic_fold_left_t {
+        template <typename Xs, typename State, typename F>
+        constexpr decltype(auto) operator()(Xs&& xs, State&& state, F&& f) const;
+
+        template <typename Xs, typename F>
+        constexpr decltype(auto) operator()(Xs&& xs, F&& f) const;
+    };
 
     template <typename M>
     constexpr monadic_fold_left_t<M> monadic_fold_left{};

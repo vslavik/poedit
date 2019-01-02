@@ -18,8 +18,6 @@
 
 #include <boost/config.hpp>
 
-#include <functional>
-
 namespace boost {
 namespace bimaps {
 namespace container_adaptor {
@@ -29,9 +27,11 @@ namespace detail {
 
 template < class T >
 struct key_from_pair_extractor 
-    : std::unary_function< T, BOOST_DEDUCED_TYPENAME T::first_type >
 {
-    bool operator()( const T & p ) { return p.first; }
+    typedef T argument_type;
+    typedef BOOST_DEDUCED_TYPENAME T::first_type result_type;
+
+    result_type operator()( const T & p ) { return p.first; }
 };
 
 } // namespace detail

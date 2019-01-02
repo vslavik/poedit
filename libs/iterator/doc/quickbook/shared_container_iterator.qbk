@@ -56,7 +56,7 @@ original shared pointer `ints` ceases to exist after `set_range()`
 returns, the `shared_counter_iterator` objects maintain references to
 the underlying vector and thereby extend the container's lifetime.
 
-[@../../../libs/utility/shared_iterator_example1.cpp `shared_iterator_example1.cpp`]:
+[@../../example/shared_iterator_example1.cpp `shared_iterator_example1.cpp`]:
 
   #include "shared_container_iterator.hpp"
   #include "boost/shared_ptr.hpp"
@@ -139,7 +139,7 @@ explicitly specifying its type.
 This example, similar to the previous, 
 uses `make_shared_container_iterator()` to create the iterators.
 
-[@../../../libs/utility/shared_iterator_example2.cpp `shared_iterator_example2.cpp`]:
+[@../../example/shared_iterator_example2.cpp `shared_iterator_example2.cpp`]:
 
   #include "shared_container_iterator.hpp"
   #include "boost/shared_ptr.hpp"
@@ -200,7 +200,7 @@ named. The output from this example is the same as the previous.
 
 In the following example, a range of values is returned as a pair of shared_container_iterator objects.
 
-[@../../../libs/utility/shared_iterator_example3.cpp `shared_iterator_example3.cpp`]:
+[@../../example/shared_iterator_example3.cpp `shared_iterator_example3.cpp`]:
 
   #include "shared_container_iterator.hpp"
   #include "boost/shared_ptr.hpp"

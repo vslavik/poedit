@@ -31,7 +31,7 @@ t.write("test.c", """
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/test-cpp.obj")
-t.expect_addition("bin/$toolset/debug/test-c.obj")
+t.expect_addition("bin/$toolset/debug*/test-cpp.obj")
+t.expect_addition("bin/$toolset/debug*/test-c.obj")
 
 t.cleanup()

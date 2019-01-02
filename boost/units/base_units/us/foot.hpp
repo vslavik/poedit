@@ -28,8 +28,8 @@ typedef scaled_base_unit<yard_base_unit, scale<3, static_rational<-1> > > foot_b
 
 template<>
 struct base_unit_info<us::foot_base_unit> {
-    static const char* name()   { return("foot"); }
-    static const char* symbol() { return("ft"); }
+    static BOOST_CONSTEXPR const char* name()   { return("foot"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("ft"); }
 };
 
 } // namespace units

@@ -31,7 +31,9 @@
 [def __true_type [link boost_typetraits.reference.integral_constant true_type]]
 [def __false_type [link boost_typetraits.reference.integral_constant false_type]]
 [def __integral_constant [link boost_typetraits.reference.integral_constant integral_constant]]
+[def __alias [*Aliases:]]
 [def __inherit [*Inherits:]]
+[def __std_paper [*C++ Standard Paper:]]
 [def __std_ref [*C++ Standard Reference:]]
 [def __header [*Header:]]
 [def __compat [*Compiler Compatibility:]]
@@ -72,6 +74,7 @@
 [def __is_copy_constructible [link boost_typetraits.reference.is_copy_constructible is_copy_constructible]]
 [def __is_copy_assignable [link boost_typetraits.reference.is_copy_assignable is_copy_assignable]]
 [def __is_constructible [link boost_typetraits.reference.is_constructible is_constructible]]
+[def __is_list_constructible [link boost_typetraits.reference.is_list_constructible is_list_constructible]]
 [def __is_default_constructible [link boost_typetraits.reference.is_default_constructible is_default_constructible]]
 [def __is_destructible [link boost_typetraits.reference.is_destructible is_destructible]]
 [def __is_volatile [link boost_typetraits.reference.is_volatile is_volatile]]
@@ -100,6 +103,7 @@
 [def __is_nothrow_move_constructible [link boost_typetraits.reference.is_nothrow_move_constructible is_nothrow_move_constructible]]
 [def __has_nothrow_assign [link boost_typetraits.reference.has_nothrow_assign has_nothrow_assign]]
 [def __is_nothrow_move_assignable [link boost_typetraits.reference.is_nothrow_move_assignable is_nothrow_move_assignable]]
+[def __is_nothrow_swappable [link boost_typetraits.reference.is_nothrow_swappable is_nothrow_swappable]]
 
 [def __is_base_of [link boost_typetraits.reference.is_base_of is_base_of]]
 [def __is_virtual_base_of [link boost_typetraits.reference.is_virtual_base_of is_virtual_base_of]]
@@ -109,6 +113,7 @@
 [def __remove_const [link boost_typetraits.reference.remove_const remove_const]]
 [def __remove_volatile [link boost_typetraits.reference.remove_volatile remove_volatile]]
 [def __remove_cv [link boost_typetraits.reference.remove_cv remove_cv]]
+[def __remove_cv_ref [link boost_typetraits.reference.remove_cv_ref remove_cv_ref]]
 [def __remove_reference [link boost_typetraits.reference.remove_reference remove_reference]]
 [def __remove_extent [link boost_typetraits.reference.remove_extent remove_extent]]
 [def __remove_all_extents [link boost_typetraits.reference.remove_all_extents remove_all_extents]]
@@ -134,6 +139,7 @@
 
 [def __make_signed [link boost_typetraits.reference.make_signed make_signed]]
 [def __make_unsigned [link boost_typetraits.reference.make_unsigned make_unsigned]]
+[def __make_void [link boost_typetraits.reference.make_void make_void]]
 [def __decay [link boost_typetraits.reference.decay decay]]
 [def __is_complex [link boost_typetraits.reference.is_complex is_complex]]
 
@@ -141,9 +147,110 @@
 [def __type_identity [link boost_typetraits.reference.type_identity type_identity]]
 [def __declval [link boost_typetraits.reference.declval declval]]
 
+[def __detected [link boost_typetraits.reference.detected detected]]
+[def __detected_or [link boost_typetraits.reference.detected_or detected_or]]
+[def __is_detected [link boost_typetraits.reference.is_detected is_detected]]
+[def __is_detected_convertible [link boost_typetraits.reference.is_detected_convertible is_detected_convertible]]
+[def __is_detected_exact [link boost_typetraits.reference.is_detected_exact is_detected_exact]]
+[def __nonesuch [link boost_typetraits.reference.nonesuch nonesuch]]
+
+[def __is_complete [link boost_typetraits.reference.is_complete is_complete]]
+
 [def __compat [*Compiler Compatibility:]]
 [template all_compilers[] __compat All current compilers are supported by this trait.]
 [template has_binary_operator_compat[] __compat Requires working SFINAE (i.e. BOOST_NO_SFINAE is not set).  Only a minority of rather old compilers do not support this.]
+
+[template binary_operator_known_issues[Name Op Ret1 Ret2 Const]
+[*Known issues:]
+
+For modern compilers (those that support arbitrary SFINAE-expressions and decltype/declval) this trait offers near perfect detection.
+In this situation the macro `BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION` will be defined after including
+[^<boost/type_traits/[Name].hpp>].  Please note however, that detection is based on function signature only, 
+in the case that the operator is a function template then [Name] cannot perform
+introspection of the template function body to ensure that the type meets all of the conceptual requirements of the actual code.
+
+Example:
+
+
+   #include <boost/type_traits/``[Name]``.hpp>
+   #include <iostream>
+   
+   template <class T>
+   struct contains 
+   { 
+      T data; 
+      contains(const T& d) : data(d) {}   
+   };
+
+   template <class T>
+   ``[Ret2]`` operator ``[Op]`` (``[Const]``contains<T> &lhs, const contains<T> &rhs) {
+	   return f(lhs.data, rhs.data);
+   }
+
+   class bad { };
+   class good { };
+   good f(const good&, const good&) { return /*something*/; }
+
+   int main() {
+	   std::cout<<std::boolalpha;
+	   // works fine for contains<good>
+	   std::cout<<boost::``[Name]``< contains< good > >::value<<'\n'; // true
+	   contains<good> g;
+	   g&g; // ok
+	   // does not work for contains<bad>
+	   std::cout<<boost::``[Name]``< contains< bad > >::value<<'\n'; // true, should be false
+	   contains<bad> b;
+	   b&b; // compile time error
+	   return 0;
+   }
+
+For older compilers (`BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION` not defined) then there are  a number of issues:
+
+* This trait cannot detect whether binary `operator`[Op] is public or not:
+if `operator`[Op] is defined as a private member of `Lhs` then
+instantiating [^[Name]<Lhs>] will produce a compiler error.
+For this reason [^[Name]] cannot be used to determine whether a type has a public `operator`[Op] or not.
+
+   struct A { private: ``[Ret1]`` operator ``[Op]`` (const A&); };
+   boost::``[Name]``<A>::value; // error: A::operator ``[Op]`` (const A&) is private
+
+
+* There is an issue if the operator exists only for type `A` and `B` is
+convertible to `A`. In this case, the compiler will report an ambiguous overload.
+
+   struct A { };
+   ``[Ret1]`` operator ``[Op]`` (``[Const]``A&, const A&);
+   struct B { operator A(); };
+   boost::``[Name]``<A>::value; // this is fine
+   boost::``[Name]``<B>::value; // error: ambiguous overload
+
+
+* `volatile` qualifier is not properly handled and would lead to undefined behavior
+]
+[template prefix_operator_known_issues[Name Op]
+[*Known issues:]
+
+For modern compilers (those that support arbitrary SFINAE-expressions and decltype/declval) this trait offers near perfect detection.
+In this situation the macro `BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION` will be defined after including
+[^<boost/type_traits/[Name].hpp>].  Please note however, that detection is based on function signature only, 
+in the case that the operator is a function template then [Name] cannot perform
+introspection of the template function body to ensure that the type meets all of the conceptual requirements of the actual code.
+
+For older compilers (`BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION` not defined) then there are  a number of issues:
+
+* This trait cannot detect whether unary `operator`[Op] is public or not:
+if `operator`[Op] is defined as a private class member of type T then
+instantiating [^[Name]<T>] will produce a compiler error.
+For this reason [^[Name]] cannot be used to determine whether a type has a public `operator`[Op] or not.
+
+* `volatile` qualifier is not properly handled and would lead to undefined behavior
+
+* Capturless lambdas are not supported and will lead to a compiler error if [Name] is instantiated
+on the lambda type.
+
+* Scoped enum types are not supported and will lead to a compiler error if [Name] is instantiated on such a type.
+
+]
 
 
 A printer-friendly [@http://sourceforge.net/projects/boost/files/boost-docs/ 
@@ -200,6 +307,9 @@ that is the result of the transformation.
 [include copy_cv.qbk]
 [include decay.qbk]
 [include declval.qbk]
+[include detected.qbk]
+[include detected_or.qbk]
+[include enable_if.qbk]
 [include extent.qbk]
 [include floating_point_promotion.qbk]
 [include function_traits.qbk]
@@ -276,6 +386,7 @@ See __has_trivial_constructor.
 [include is_assignable.qbk]
 [include is_base_of.qbk]
 [include is_class.qbk]
+[include is_complete.qbk]
 [include is_complex.qbk]
 [include is_compound.qbk]
 [include is_const.qbk]
@@ -285,6 +396,9 @@ See __has_trivial_constructor.
 [include is_copy_constructible.qbk]
 [include is_default_constructible.qbk]
 [include is_destructible.qbk]
+[include is_detected.qbk]
+[include is_detected_convertible.qbk]
+[include is_detected_exact.qbk]
 [include is_empty.qbk]
 [include is_enum.qbk]
 [include is_final.qbk]
@@ -292,12 +406,14 @@ See __has_trivial_constructor.
 [include is_function.qbk]
 [include is_fundamental.qbk]
 [include is_integral.qbk]
+[include is_list_constructible.qbk]
 [include is_lvalue_reference.qbk]
 [include is_member_function_pointer.qbk]
 [include is_member_object_pointer.qbk]
 [include is_member_pointer.qbk]
 [include is_nothrow_move_assignable.qbk]
 [include is_nothrow_move_constructible.qbk]
+[include is_nothrow_swappable.qbk]
 [include is_object.qbk]
 [include is_pod.qbk]
 [include is_pointer.qbk]
@@ -316,6 +432,8 @@ See __has_trivial_constructor.
 
 [include make_signed.qbk]
 [include make_unsigned.qbk]
+[include make_void.qbk]
+[include nonesuch.qbk]
 
 [include promote.qbk]
 [include rank.qbk]
@@ -323,6 +441,7 @@ See __has_trivial_constructor.
 [include remove_all_extents.qbk]
 [include remove_const.qbk]
 [include remove_cv.qbk]
+[include remove_cv_ref.qbk]
 [include remove_extent.qbk]
 [include remove_pointer.qbk]
 [include remove_reference.qbk]

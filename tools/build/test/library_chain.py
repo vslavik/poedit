@@ -54,11 +54,11 @@ foo() { geek(); }
 t.write("b/jamfile.jam", "lib b : b.cpp ../a//a ;")
 
 t.run_build_system(["-d2"], stderr=None)
-t.expect_addition("bin/$toolset/debug/main.exe")
+t.expect_addition("bin/$toolset/debug*/main.exe")
 t.rm(["bin", "a/bin", "b/bin"])
 
 t.run_build_system(["link=static"])
-t.expect_addition("bin/$toolset/debug/link-static/main.exe")
+t.expect_addition("bin/$toolset/debug/link-static*/main.exe")
 t.rm(["bin", "a/bin", "b/bin"])
 
 
@@ -66,14 +66,14 @@ t.rm(["bin", "a/bin", "b/bin"])
 t.write("b/jamfile.jam", "lib b : b.cpp : <library>../a//a ;")
 
 t.run_build_system(["link=static"])
-t.expect_addition("bin/$toolset/debug/link-static/main.exe")
+t.expect_addition("bin/$toolset/debug/link-static*/main.exe")
 
 t.rm(["bin", "a/bin", "b/bin"])
 
 t.write("b/jamfile.jam", "lib b : b.cpp ../a//a/<link>shared : <link>static ;")
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/main.exe")
+t.expect_addition("bin/$toolset/debug*/main.exe")
 
 t.rm(["bin", "a/bin", "b/bin"])
 
@@ -88,7 +88,7 @@ lib z : : <name>zzz ;
 t.run_build_system(["-a", "-d+2"], status=None, stderr=None)
 # Try to find the "zzz" string either in response file (for Windows compilers),
 # or in the standard output.
-rsp = t.adjust_names("bin/$toolset/debug/main.exe.rsp")[0]
+rsp = t.adjust_names("bin/$toolset/debug*/main.exe.rsp")[0]
 if os.path.exists(rsp) and ( string.find(open(rsp).read(), "zzz") != -1 ):
     pass
 elif string.find(t.stdout(), "zzz") != -1:
@@ -147,6 +147,6 @@ int main() { b(); }
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/main.exe")
+t.expect_addition("bin/$toolset/debug*/main.exe")
 
 t.cleanup()

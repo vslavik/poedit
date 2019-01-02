@@ -2,7 +2,7 @@
 @file
 Defines macros to perform different kinds of assertions.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -286,21 +286,42 @@ Distributed under the Boost Software License, Version 1.0.
 // BOOST_HANA_CONSTEXPR_CHECK and BOOST_HANA_CONSTEXPR_CHECK_MSG
 //////////////////////////////////////////////////////////////////////////////
 
-//! @ingroup group-assertions
-//! Equivalent to `BOOST_HANA_CONSTEXPR_ASSERT_MSG`, but not influenced by the
-//! `BOOST_HANA_CONFIG_DISABLE_ASSERTIONS` config macro. For internal use only.
+#if defined(BOOST_HANA_DOXYGEN_INVOKED)
+    //! @ingroup group-assertions
+    //! Equivalent to `BOOST_HANA_CONSTEXPR_ASSERT_MSG`, but not influenced by
+    //! the `BOOST_HANA_CONFIG_DISABLE_ASSERTIONS` config macro.
+    //! For internal use only.
+#   define BOOST_HANA_CONSTEXPR_CHECK_MSG(condition, message) implementation-defined
+
+    //! @ingroup group-assertions
+    //! Equivalent to `BOOST_HANA_CONSTEXPR_ASSERT`, but not influenced by the
+    //! `BOOST_HANA_CONFIG_DISABLE_ASSERTIONS` config macro.
+    //! For internal use only.
+#   define BOOST_HANA_CONSTEXPR_CHECK(...) implementation-defined
+
+#elif defined(BOOST_HANA_CONFIG_HAS_CONSTEXPR_LAMBDA)
+
+#   define BOOST_HANA_CONSTEXPR_CHECK_MSG(condition, message)               \
+        static_assert(condition, message)                                   \
+/**/
+
+#   define BOOST_HANA_CONSTEXPR_CHECK(...)                                  \
+        static_assert((__VA_ARGS__), BOOST_HANA_PP_STRINGIZE(__VA_ARGS__))  \
+/**/
+
+#else
+
 #   define BOOST_HANA_CONSTEXPR_CHECK_MSG(condition, message)               \
         BOOST_HANA_RUNTIME_CHECK_MSG(condition, message)                    \
 /**/
 
-//! @ingroup group-assertions
-//! Equivalent to `BOOST_HANA_CONSTEXPR_ASSERT`, but not influenced by the
-//! `BOOST_HANA_CONFIG_DISABLE_ASSERTIONS` config macro. For internal use only.
 #   define BOOST_HANA_CONSTEXPR_CHECK(...)                                  \
         BOOST_HANA_CONSTEXPR_CHECK_MSG(                                     \
             (__VA_ARGS__),                                                  \
             BOOST_HANA_PP_STRINGIZE(__VA_ARGS__)                            \
         )                                                                   \
 /**/
+
+#endif
 
 #endif // !BOOST_HANA_ASSERT_HPP

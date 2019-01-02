@@ -51,7 +51,7 @@ footer = """
 
 t.run_build_system()
 
-t.expect_addition("bin/$toolset/debug/FILL_SOME_HERE.exe")
+t.expect_addition("bin/$toolset/debug*/FILL_SOME_HERE.exe")
 
 t.cleanup()
 """

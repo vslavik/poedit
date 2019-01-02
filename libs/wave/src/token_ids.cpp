@@ -1,8 +1,8 @@
 /*=============================================================================
     Boost.Wave: A Standard compliant C++ preprocessor library
-    The definition of a default set of token identifiers and related 
+    The definition of a default set of token identifiers and related
     functions.
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -208,9 +208,9 @@ static char const *tok_names[] = {
     /* 418 */   "MSEXT_ASM",
     /* 419 */   "MSEXT_REGION",
     /* 420 */   "MSEXT_ENDREGION",
-    
+
     /* 421 */   "IMPORT",
-    
+
     /* 422 */   "ALIGNAS",
     /* 423 */   "ALIGNOF",
     /* 424 */   "CHAR16_T",
@@ -410,9 +410,9 @@ static char const *tok_values[] = {
     /* 418 */   "__asm",
     /* 419 */   "#region",
     /* 420 */   "#endregion",
-    
+
     /* 421 */   "import",
-    
+
     /* 422 */   "alignas",
     /* 423 */   "alignof",
     /* 424 */   "char16_t",
@@ -424,8 +424,8 @@ static char const *tok_values[] = {
     /* 430 */   "static_assert",
     /* 431 */   "threadlocal",
     /* 432 */   "",   // extrawstringlit
-    };   
-     
+    };
+
     // make sure, I have not forgotten any commas (as I did more than once)
     BOOST_STATIC_ASSERT(
         sizeof(tok_values)/sizeof(tok_values[0]) == T_LAST_TOKEN-T_FIRST_TOKEN

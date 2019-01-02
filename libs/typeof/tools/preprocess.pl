@@ -1,7 +1,7 @@
 # // (C) Copyright Tobias Schwinger
 # //
 # // Use modification and distribution are subject to the boost Software License
-# // Version 1.0. (See http:/\/www.boost.org/LICENSE_1_0.txt).
+# // Version 1.0. (See http://www.boost.org/LICENSE_1_0.txt).
 
 # // Preprocess and run this script.
 # //

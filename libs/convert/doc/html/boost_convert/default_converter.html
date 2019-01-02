@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Default Converter</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="prev" href="error_detection.html" title="Better Error Detection">
@@ -27,7 +27,7 @@
 <a name="boost_convert.default_converter"></a><a class="link" href="default_converter.html" title="Default Converter">Default Converter</a>
 </h2></div></div></div>
 <p>
-      The explicitly provided converter as in
+      The explicit converter as in
     </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">convert</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">converter</span><span class="special">).</span><span class="identifier">value</span><span class="special">();</span>
 </pre>
@@ -60,7 +60,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">cstream</span> <span class="special">{};</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">cstream</span> <span class="special">{};</span>
 </pre>
 <p>
     </p>
@@ -69,7 +69,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">cstream</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">cstream</span>
 <span class="special">{</span>
     <span class="identifier">by_default</span><span class="special">()</span> <span class="special">{</span> <span class="special">(*</span><span class="keyword">this</span><span class="special">)(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uppercase</span><span class="special">)(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">hex</span><span class="special">);</span> <span class="special">}</span>
 <span class="special">};</span>
@@ -96,7 +96,7 @@
     </p>
 <p>
       The trade-off for the convenience is the rigid converter configuration (which
-      in certain contexts might be the desired behavior) and potentially performance
+      in certain contexts might be the desired behavior) and a potential performance
       impact. When a converter is not provided explicitly, the default converter
       is created, potentially configured, deployed and destroyed for every <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">convert</span><span class="special">()</span></code> call. Consequently, if efficiency of this
       particular component is important, then the implementation of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">by_default</span></code>
@@ -105,7 +105,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Vladimir Batov<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2016 Vladimir Batov<p>
         Distributed under the Boost Software License, Version 1.0. See copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>.
       </p>
 </div></td>

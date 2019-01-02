@@ -141,8 +141,6 @@ int main(int , char* [])
 
   add_edge(6, 8, Flow(10, Cap(8)), G);
 
-  typedef boost::graph_traits<Graph>::edge_descriptor Edge;
-
   print_network(G);
 
   property_map<Graph, edge_myflow_t>::type

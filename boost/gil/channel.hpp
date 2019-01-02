@@ -1,58 +1,78 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_CHANNEL_HPP
+#define BOOST_GIL_CHANNEL_HPP
 
-    See http://stlab.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/utilities.hpp>
 
-/*************************************************************************************************/
+#include <boost/config.hpp>
+#include <boost/config/pragma_message.hpp>
+#include <boost/integer/integer_mask.hpp>
+#include <boost/type_traits/remove_cv.hpp>
 
-#ifndef GIL_CHANNEL_HPP
-#define GIL_CHANNEL_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Channel utilities
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 6, 2007
-///
-/// Definitions of standard GIL channel models
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <limits>
 #include <cassert>
-#include <boost/cstdint.hpp>
-#include "gil_config.hpp"
-#include "utilities.hpp"
+#include <cstdint>
+#include <limits>
+
+#ifdef BOOST_GIL_DOXYGEN_ONLY
+/// \def BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
+/// \brief Define to allow unaligned memory access for models of packed channel value.
+/// Theoretically (or historically?) on platforms which support dereferencing on
+/// non-word memory boundary, unaligned access may result in performance improvement.
+/// \warning Unfortunately, this optimization may be a C/C++ strict aliasing rules
+/// violation, if accessed data buffer has effective type that cannot be aliased
+/// without leading to undefined behaviour.
+#define BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
+#endif
+
+#ifdef BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
+#if defined(sun) || defined(__sun) || \             // SunOS
+    defined(__osf__) || defined(__osf) || \         // Tru64
+    defined(_hpux) || defined(hpux) || \            // HP-UX
+    defined(__arm__) || defined(__ARM_ARCH) || \    // ARM
+    defined(_AIX)                                   // AIX
+#error Unaligned access strictly disabled for some UNIX platforms or ARM architecture
+#elif defined(__i386__) || defined(__x86_64__) || defined(__vax__)
+    // The check for little-endian architectures that tolerate unaligned memory
+    // accesses is just an optimization. Nothing will break if it fails to detect
+    // a suitable architecture.
+    //
+    // Unfortunately, this optimization may be a C/C++ strict aliasing rules violation
+    // if accessed data buffer has effective type that cannot be aliased
+    // without leading to undefined behaviour.
+BOOST_PRAGMA_MESSAGE("CAUTION: Unaligned access tolerated on little-endian may cause undefined behaviour")
+#else
+#error Unaligned access disabled for unknown platforms and architectures
+#endif
+#endif // defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
 
 namespace boost { namespace gil {
 
-
 ///////////////////////////////////////////
 ////  channel_traits
-////  
+////
 ////  \ingroup ChannelModel
 ////  \class channel_traits
 ////  \brief defines properties of channels, such as their range and associated types
 ////
 ////  The channel traits must be defined for every model of ChannelConcept
 ////  Default traits are provided. For built-in types the default traits use
-////  built-in pointer and reference and the channel range is the physical 
+////  built-in pointer and reference and the channel range is the physical
 ////  range of the type. For classes, the default traits forward the associated types
 ////  and range to the class.
-//// 
+////
 ///////////////////////////////////////////
 
 namespace detail {
     template <typename T, bool is_class> struct channel_traits_impl;
 
     // channel traits for custom class
-    template <typename T> 
+    template <typename T>
     struct channel_traits_impl<T, true> {
         typedef typename T::value_type      value_type;
         typedef typename T::reference       reference;
@@ -65,7 +85,7 @@ namespace detail {
     };
 
     // channel traits implementation for built-in integral or floating point channel type
-    template <typename T> 
+    template <typename T>
     struct channel_traits_impl<T, false> {
         typedef T           value_type;
         typedef T&          reference;
@@ -78,7 +98,7 @@ namespace detail {
     };
 
     // channel traits implementation for constant built-in scalar or floating point type
-    template <typename T> 
+    template <typename T>
     struct channel_traits_impl<const T, false> : public channel_traits_impl<T, false> {
         typedef const T&    reference;
         typedef const T*    pointer;
@@ -97,7 +117,7 @@ struct channel_traits {
     typedef ... pointer;
     typedef ... const_reference;
     typedef ... const_pointer;
-    
+
     static const bool is_mutable;
     static value_type min_value();
     static value_type max_value();
@@ -138,7 +158,7 @@ typedef scoped_channel_value<double, double_minus_half, double_plus_half> bits64
 // channel_convert its maximum should map to the maximum
 bits64custom_t x = channel_traits<bits64custom_t>::max_value();
 assert(x == 0.5);
-bits16 y = channel_convert<bits16>(x);
+uint16_t y = channel_convert<uint16_t>(x);
 assert(y == 65535);
 \endcode
 */
@@ -181,9 +201,17 @@ private:
     BaseChannelValue _value;
 };
 
-struct float_zero { static float apply() { return 0.0f; } };
-struct float_one  { static float apply() { return 1.0f; } };
+template <typename T>
+struct float_point_zero
+{
+    static constexpr T apply() { return 0.0f; }
+};
 
+template <typename T>
+struct float_point_one
+{
+    static constexpr T apply() { return 1.0f; }
+};
 
 ///////////////////////////////////////////
 ////
@@ -198,12 +226,12 @@ struct float_one  { static float apply() { return 1.0f; } };
 namespace detail {
     // returns the smallest fast unsigned integral type that has at least NumBits bits
     template <int NumBits>
-    struct min_fast_uint : public mpl::if_c< (NumBits<=8), 
-            uint_least8_t, 
-            typename mpl::if_c< (NumBits<=16), 
-                    uint_least16_t, 
-                    typename mpl::if_c< (NumBits<=32), 
-                            uint_least32_t, 
+    struct min_fast_uint : public mpl::if_c< (NumBits<=8),
+            uint_least8_t,
+            typename mpl::if_c< (NumBits<=16),
+                    uint_least16_t,
+                    typename mpl::if_c< (NumBits<=32),
+                            uint_least32_t,
                             uintmax_t
                     >::type
             >::type
@@ -243,9 +271,6 @@ BOOST_STATIC_ASSERT((boost::is_integral<bits4>::value));
 template <int NumBits>
 class packed_channel_value {
 
-    typedef  typename detail::num_value_fn< NumBits >::type num_value_t;
-    static const num_value_t num_values = static_cast< num_value_t >( 1 ) << NumBits ;
-   
 public:
     typedef typename detail::min_fast_uint<NumBits>::type integer_t;
 
@@ -256,17 +281,17 @@ public:
     typedef value_type*            pointer;
     typedef const value_type*      const_pointer;
 
-    static value_type min_value() { return value_type(0); }
-    static value_type max_value() { return value_type(num_values-1); }
+    static value_type min_value() { return 0; }
+    static value_type max_value() { return low_bits_mask_t< NumBits >::sig_bits; }
+
     BOOST_STATIC_CONSTANT(bool, is_mutable=true);
 
     packed_channel_value() {}
-    packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v % num_values ); }
-    packed_channel_value(const packed_channel_value& v) : _value(v._value) {}
-    template <typename Scalar> packed_channel_value(Scalar v) { _value = static_cast< integer_t >( v ) % num_values; }
+
+    packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v & low_bits_mask_t<NumBits>::sig_bits_fast ); }
+    template <typename Scalar> packed_channel_value(Scalar v) { _value = packed_channel_value( static_cast< integer_t >( v ) ); }
 
     static unsigned int num_bits() { return NumBits; }
-
 
     operator integer_t() const { return _value; }
 private:
@@ -318,10 +343,10 @@ public:
     Derived operator++(int) const { Derived tmp=derived(); this->operator++(); return tmp; }
     Derived operator--(int) const { Derived tmp=derived(); this->operator--(); return tmp; }
 
-    template <typename Scalar2> const Derived& operator+=(Scalar2 v) const { set(get()+v); return derived(); }
-    template <typename Scalar2> const Derived& operator-=(Scalar2 v) const { set(get()-v); return derived(); }
-    template <typename Scalar2> const Derived& operator*=(Scalar2 v) const { set(get()*v); return derived(); }
-    template <typename Scalar2> const Derived& operator/=(Scalar2 v) const { set(get()/v); return derived(); }
+    template <typename Scalar2> const Derived& operator+=(Scalar2 v) const { set( static_cast<integer_t>(  get() + v )); return derived(); }
+    template <typename Scalar2> const Derived& operator-=(Scalar2 v) const { set( static_cast<integer_t>(  get() - v )); return derived(); }
+    template <typename Scalar2> const Derived& operator*=(Scalar2 v) const { set( static_cast<integer_t>(  get() * v )); return derived(); }
+    template <typename Scalar2> const Derived& operator/=(Scalar2 v) const { set( static_cast<integer_t>(  get() / v )); return derived(); }
 
     operator integer_t() const { return get(); }
     data_ptr_t operator &() const {return _data_ptr;}
@@ -329,11 +354,11 @@ protected:
 
     typedef  typename detail::num_value_fn< NumBits >::type num_value_t;
     typedef  typename detail::max_value_fn< NumBits >::type max_value_t;
-    
+
     static const num_value_t num_values = static_cast< num_value_t >( 1 ) << NumBits ;
     static const max_value_t max_val    = static_cast< max_value_t >( num_values - 1 );
-    
-#ifdef GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED
+
+#if defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
     const bitfield_t& get_data()                      const { return *static_cast<const bitfield_t*>(_data_ptr); }
     void              set_data(const bitfield_t& val) const {        *static_cast<      bitfield_t*>(_data_ptr) = val; }
 #else
@@ -349,8 +374,7 @@ protected:
 
 private:
     void set(integer_t value) const {     // can this be done faster??
-        const integer_t num_values = max_val+1;
-        this->derived().set_unsafe(((value % num_values) + num_values) % num_values); 
+        this->derived().set_unsafe(((value % num_values) + num_values) % num_values);
     }
     integer_t get() const { return derived().get(); }
     const Derived& derived() const { return static_cast<const Derived&>(*this); }
@@ -373,20 +397,20 @@ assert(data == 6);                                          // == 3<<1 == 6
 \endcode
 */
 
-template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like boost::uint16_t
-          int FirstBit, int NumBits,// Defines the sequence of bits in the data value that contain the channel 
-          bool Mutable>             // true if the reference is mutable 
+template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
+          int FirstBit, int NumBits,// Defines the sequence of bits in the data value that contain the channel
+          bool Mutable>             // true if the reference is mutable
 class packed_channel_reference;
 
-template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like boost::uint16_t
-          int NumBits,              // Defines the sequence of bits in the data value that contain the channel 
-          bool Mutable>             // true if the reference is mutable 
+template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
+          int NumBits,              // Defines the sequence of bits in the data value that contain the channel
+          bool Mutable>             // true if the reference is mutable
 class packed_dynamic_channel_reference;
 
 /// \ingroup PackedChannelReferenceModel
 /// \brief A constant subbyte channel reference whose bit offset is fixed at compile time. Models ChannelConcept
 template <typename BitField, int FirstBit, int NumBits>
-class packed_channel_reference<BitField,FirstBit,NumBits,false> 
+class packed_channel_reference<BitField,FirstBit,NumBits,false>
    : public detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,false>,BitField,NumBits,false> {
     typedef detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,false>,BitField,NumBits,false> parent_t;
     friend class packed_channel_reference<BitField,FirstBit,NumBits,true>;
@@ -411,7 +435,7 @@ public:
 /// \ingroup PackedChannelReferenceModel
 /// \brief A mutable subbyte channel reference whose bit offset is fixed at compile time. Models ChannelConcept
 template <typename BitField, int FirstBit, int NumBits>
-class packed_channel_reference<BitField,FirstBit,NumBits,true> 
+class packed_channel_reference<BitField,FirstBit,NumBits,true>
    : public detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,true>,BitField,NumBits,true> {
     typedef detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,true>,BitField,NumBits,true> parent_t;
     friend class packed_channel_reference<BitField,FirstBit,NumBits,false>;
@@ -445,7 +469,7 @@ private:
 
 namespace std {
 // We are forced to define swap inside std namespace because on some platforms (Visual Studio 8) STL calls swap qualified.
-// swap with 'left bias': 
+// swap with 'left bias':
 // - swap between proxy and anything
 // - swap between value type and proxy
 // - swap between proxy and proxy
@@ -453,24 +477,23 @@ namespace std {
 /// \ingroup PackedChannelReferenceModel
 /// \brief swap for packed_channel_reference
 template <typename BF, int FB, int NB, bool M, typename R> inline
-void swap(const boost::gil::packed_channel_reference<BF,FB,NB,M> x, R& y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y); 
+void swap(const boost::gil::packed_channel_reference<BF,FB,NB,M> x, R& y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y);
 }
 
 
 /// \ingroup PackedChannelReferenceModel
 /// \brief swap for packed_channel_reference
 template <typename BF, int FB, int NB, bool M> inline
-void swap(typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type& x, const boost::gil::packed_channel_reference<BF,FB,NB,M> y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y); 
+void swap(typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type& x, const boost::gil::packed_channel_reference<BF,FB,NB,M> y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y);
 }
-
 
 /// \ingroup PackedChannelReferenceModel
 /// \brief swap for packed_channel_reference
 template <typename BF, int FB, int NB, bool M> inline
-void swap(const boost::gil::packed_channel_reference<BF,FB,NB,M> x, const boost::gil::packed_channel_reference<BF,FB,NB,M> y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y); 
+void swap(const boost::gil::packed_channel_reference<BF,FB,NB,M> x, const boost::gil::packed_channel_reference<BF,FB,NB,M> y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_channel_reference<BF,FB,NB,M>::value_type>(x,y);
 }
 }   // namespace std
 
@@ -496,7 +519,7 @@ assert(data == 6);                                                  // == (3<<1)
 /// \brief Models a constant subbyte channel reference whose bit offset is a runtime parameter. Models ChannelConcept
 ///        Same as packed_channel_reference, except that the offset is a runtime parameter
 /// \ingroup PackedChannelDynamicReferenceModel
-template <typename BitField, int NumBits> 
+template <typename BitField, int NumBits>
 class packed_dynamic_channel_reference<BitField,NumBits,false>
    : public detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,false>,BitField,NumBits,false> {
     typedef detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,false>,BitField,NumBits,false> parent_t;
@@ -516,7 +539,7 @@ public:
 
     unsigned first_bit() const { return _first_bit; }
 
-    integer_t get() const { 
+    integer_t get() const {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) <<_first_bit;
         return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
     }
@@ -525,7 +548,7 @@ public:
 /// \brief Models a mutable subbyte channel reference whose bit offset is a runtime parameter. Models ChannelConcept
 ///        Same as packed_channel_reference, except that the offset is a runtime parameter
 /// \ingroup PackedChannelDynamicReferenceModel
-template <typename BitField, int NumBits> 
+template <typename BitField, int NumBits>
 class packed_dynamic_channel_reference<BitField,NumBits,true>
    : public detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,true>,BitField,NumBits,true> {
     typedef detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,true>,BitField,NumBits,true> parent_t;
@@ -546,26 +569,26 @@ public:
     const packed_dynamic_channel_reference& operator=(const const_reference&   ref) const {  set_unsafe(ref.get()); return *this; }
 
     template <typename BitField1, int FirstBit1, bool Mutable1>
-    const packed_dynamic_channel_reference& operator=(const packed_channel_reference<BitField1, FirstBit1, NumBits, Mutable1>& ref) const 
+    const packed_dynamic_channel_reference& operator=(const packed_channel_reference<BitField1, FirstBit1, NumBits, Mutable1>& ref) const
         {  set_unsafe(ref.get()); return *this; }
 
     unsigned first_bit() const { return _first_bit; }
 
-    integer_t get() const { 
+    integer_t get() const {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
         return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
     }
 
-    void set_unsafe(integer_t value) const { 
+    void set_unsafe(integer_t value) const {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
-        this->set_data((this->get_data() & ~channel_mask) | value<<_first_bit); 
+        this->set_data((this->get_data() & ~channel_mask) | value<<_first_bit);
     }
 };
 } }  // namespace boost::gil
 
 namespace std {
 // We are forced to define swap inside std namespace because on some platforms (Visual Studio 8) STL calls swap qualified.
-// swap with 'left bias': 
+// swap with 'left bias':
 // - swap between proxy and anything
 // - swap between value type and proxy
 // - swap between proxy and proxy
@@ -574,84 +597,25 @@ namespace std {
 /// \ingroup PackedChannelDynamicReferenceModel
 /// \brief swap for packed_dynamic_channel_reference
 template <typename BF, int NB, bool M, typename R> inline
-void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, R& y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y); 
+void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, R& y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y);
 }
 
 
 /// \ingroup PackedChannelDynamicReferenceModel
 /// \brief swap for packed_dynamic_channel_reference
 template <typename BF, int NB, bool M> inline
-void swap(typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type& x, const boost::gil::packed_dynamic_channel_reference<BF,NB,M> y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y); 
+void swap(typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type& x, const boost::gil::packed_dynamic_channel_reference<BF,NB,M> y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y);
 }
-
 
 /// \ingroup PackedChannelDynamicReferenceModel
 /// \brief swap for packed_dynamic_channel_reference
 template <typename BF, int NB, bool M> inline
-void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, const boost::gil::packed_dynamic_channel_reference<BF,NB,M> y) { 
-    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y); 
+void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, const boost::gil::packed_dynamic_channel_reference<BF,NB,M> y) {
+    boost::gil::swap_proxy<typename boost::gil::packed_dynamic_channel_reference<BF,NB,M>::value_type>(x,y);
 }
 }   // namespace std
-
-namespace boost { namespace gil {
-///////////////////////////////////////////
-////
-////  Built-in channel models
-////
-///////////////////////////////////////////
-
-/// \defgroup bits8 bits8
-/// \ingroup ChannelModel
-/// \brief 8-bit unsigned integral channel type (typedef from uint8_t). Models ChannelValueConcept
-
-/// \ingroup bits8
-typedef uint8_t  bits8;
-
-/// \defgroup bits16 bits16
-/// \ingroup ChannelModel
-/// \brief 16-bit unsigned integral channel type (typedef from uint16_t). Models ChannelValueConcept
-
-/// \ingroup bits16
-typedef uint16_t bits16;
-
-/// \defgroup bits32 bits32
-/// \ingroup ChannelModel
-/// \brief 32-bit unsigned integral channel type  (typedef from uint32_t). Models ChannelValueConcept
-
-/// \ingroup bits32
-typedef uint32_t bits32;
-
-/// \defgroup bits8s bits8s
-/// \ingroup ChannelModel
-/// \brief 8-bit signed integral channel type (typedef from int8_t). Models ChannelValueConcept
-
-/// \ingroup bits8s
-typedef int8_t   bits8s;
-
-/// \defgroup bits16s bits16s
-/// \ingroup ChannelModel
-/// \brief 16-bit signed integral channel type (typedef from int16_t). Models ChannelValueConcept
-
-/// \ingroup bits16s
-typedef int16_t  bits16s;
-
-/// \defgroup bits32s bits32s
-/// \ingroup ChannelModel
-/// \brief 32-bit signed integral channel type (typedef from int32_t). Models ChannelValueConcept
-
-/// \ingroup bits32s
-typedef int32_t  bits32s;
-
-/// \defgroup bits32f bits32f
-/// \ingroup ChannelModel
-/// \brief 32-bit floating point channel type with range [0.0f ... 1.0f]. Models ChannelValueConcept
-
-/// \ingroup bits32f
-typedef scoped_channel_value<float,float_zero,float_one> bits32f;
-
-} }  // namespace boost::gil
 
 namespace boost {
 
@@ -664,9 +628,35 @@ struct is_integral<gil::packed_channel_reference<BitField,FirstBit,NumBits,IsMut
 template <typename BitField, int NumBits, bool IsMutable>
 struct is_integral<gil::packed_dynamic_channel_reference<BitField,NumBits,IsMutable> > : public mpl::true_ {};
 
-template <typename BaseChannelValue, typename MinVal, typename MaxVal> 
+template <typename BaseChannelValue, typename MinVal, typename MaxVal>
 struct is_integral<gil::scoped_channel_value<BaseChannelValue,MinVal,MaxVal> > : public is_integral<BaseChannelValue> {};
 
-}
+} // namespace boost
+
+// \brief Determines the fundamental type which may be used, e.g., to cast from larger to smaller channel types.
+namespace boost { namespace gil {
+template <typename T>
+struct base_channel_type_impl { typedef T type; };
+
+template <int N>
+struct base_channel_type_impl<packed_channel_value<N> >
+{ typedef typename packed_channel_value<N>::integer_t type; };
+
+template <typename B, int F, int N, bool M>
+struct base_channel_type_impl<packed_channel_reference<B, F, N, M> >
+{ typedef typename packed_channel_reference<B,F,N,M>::integer_t type; };
+
+template <typename B, int N, bool M>
+struct base_channel_type_impl<packed_dynamic_channel_reference<B, N, M> >
+{ typedef typename packed_dynamic_channel_reference<B,N,M>::integer_t type; };
+
+template <typename ChannelValue, typename MinV, typename MaxV>
+struct base_channel_type_impl<scoped_channel_value<ChannelValue, MinV, MaxV> >
+{ typedef ChannelValue type; };
+
+template <typename T>
+struct base_channel_type : base_channel_type_impl<typename remove_cv<T>::type > {};
+
+}} //namespace boost::gil
 
 #endif

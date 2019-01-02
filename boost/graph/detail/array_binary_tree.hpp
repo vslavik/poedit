@@ -14,6 +14,7 @@
 #include <iterator>
 #include <functional>
 #include <boost/config.hpp>
+#include <boost/iterator.hpp>
 
 namespace boost {
 
@@ -63,6 +64,9 @@ public:
       inline iterator& operator++() { ++i; return *this; }
       inline iterator operator++(int)
         { iterator t = *this; ++(*this); return t; }
+      inline iterator& operator--() { --i; return *this; }
+      inline iterator operator--(int)
+        { iterator t = *this; --(*this); return t; }
       inline bool operator==(const iterator& x) const { return i == x.i; }
       inline bool operator!=(const iterator& x) const
         { return !(*this == x); }

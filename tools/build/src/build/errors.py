@@ -123,5 +123,13 @@ class Errors:
                                        stack=traceback.extract_stack())
 
 
-
-
+def nearest_user_location():
+    """
+    Returns:
+        tuple: the filename and line number of the nearest user location
+    """
+    bt = bjam.backtrace()
+    if not bt:
+        return None
+    last = bt[-1]
+    return last[0], last[1]

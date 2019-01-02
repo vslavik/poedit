@@ -170,39 +170,39 @@ int main(){
         failure_test(d,"2005071", e_bad_day_of_month, f2));
 
   { // literal % in format tests
-    date d(not_a_date_time);
-    greg_month m(1);
-    greg_weekday gw(0);
+    date dx(not_a_date_time);
+    greg_month mx(1);
+    greg_weekday gwx(0);
     greg_year y(1400);
     date_input_facet* f = new date_input_facet("%%d %Y-%b-%d");
     std::stringstream ss;
     ss.imbue(std::locale(ss.getloc(), f));
 
     ss.str("%d 2005-Jun-14");
-    ss >> d;
-    check_equal("Literal '%' in date format", d, date(2005,Jun,14));
+    ss >> dx;
+    check_equal("Literal '%' in date format", dx, date(2005,Jun,14));
     f->format("%%%d %Y-%b-%d");
     ss.str("%14 2005-Jun-14");
-    ss >> d;
-    check_equal("Multiple literal '%'s in date format", d, date(2005,Jun,14));
+    ss >> dx;
+    check_equal("Multiple literal '%'s in date format", dx, date(2005,Jun,14));
 
     f->month_format("%%b %b");
     ss.str("%b Jun");
-    ss >> m;
-    check_equal("Literal '%' in month format", m, greg_month(6));
+    ss >> mx;
+    check_equal("Literal '%' in month format", mx, greg_month(6));
     f->month_format("%%%b");
     ss.str("%Jun");
-    ss >> m;
-    check_equal("Multiple literal '%'s in month format", m, greg_month(6));
+    ss >> mx;
+    check_equal("Multiple literal '%'s in month format", mx, greg_month(6));
 
     f->weekday_format("%%a %a");
     ss.str("%a Tue");
-    ss >> gw;
-    check_equal("Literal '%' in weekday format", gw, greg_weekday(2));
+    ss >> gwx;
+    check_equal("Literal '%' in weekday format", gwx, greg_weekday(2));
     f->weekday_format("%%%a");
     ss.str("%Tue");
-    ss >> gw;
-    check_equal("Multiple literal '%'s in weekday format", gw, greg_weekday(2));
+    ss >> gwx;
+    check_equal("Multiple literal '%'s in weekday format", gwx, greg_weekday(2));
 
     f->year_format("%%Y %Y");
     ss.str("%Y 2005");
@@ -258,16 +258,16 @@ int main(){
   check_equal("Default period (closed range)", dp, date_period(begin,len));
   {
     std::stringstream ss;
-    date d(not_a_date_time);
+    date dx(not_a_date_time);
     date d2 = day_clock::local_day();
     date d3(neg_infin);
     date d4(pos_infin);
-    date_period dp(d2, d); // date/nadt
-    date_period dp2(d, d); // nadt/nadt
+    date_period dpx(d2, dx); // date/nadt
+    date_period dp2(dx, dx); // nadt/nadt
     date_period dp3(d3, d4);
-    ss << dp;
+    ss << dpx;
     ss >> dp2;
-    check_equal("Special values period (reversibility test)", dp, dp2);
+    check_equal("Special values period (reversibility test)", dpx, dp2);
     ss.str("[-infinity/+infinity]");
     ss >> dp2;
     check_equal("Special values period (infinities)", dp3, dp2);
@@ -480,7 +480,7 @@ int main(){
     // create date_generator_parser
     typedef boost::date_time::date_generator_parser<date,char> date_gen_parser;
     date_gen_parser dg_parser("Zuerst","Zweitens","Dritt","Viert",
-                              "Fünft","Letzt","Vor","Nach","Von");
+                              "F\xC3\xBCnft","Letzt","Vor","Nach","Von");
 
     // create the date_input_facet
     date_input_facet* de_facet =
@@ -489,29 +489,29 @@ int main(){
                            sv_parser,
                            p_parser,
                            dg_parser);
-    std::istringstream iss;
-    iss.imbue(std::locale(std::locale::classic(), de_facet));
+    std::istringstream iss2;
+    iss2.imbue(std::locale(std::locale::classic(), de_facet));
     // June 06 2005, Dec, minimum date, Tues
-    iss.str("Juni 06 2005 Dez Wenigstes Datum Die");
-    iss >> d;
-    iss >> m;
+    iss2.str("Juni 06 2005 Dez Wenigstes Datum Die");
+    iss2 >> d;
+    iss2 >> m;
     check_equal("German names: date", d, date(2005, Jun, 6));
     check_equal("German names: month", m, greg_month(Dec));
-    iss >> d;
-    iss >> gw;
+    iss2 >> d;
+    iss2 >> gw;
     check_equal("German names: special value date", d, date(min_date_time));
     check_equal("German names: short weekday", gw, greg_weekday(Tuesday));
     de_facet->weekday_format("%A"); // long weekday
     // Tuesday, Second Tuesday of Mar
-    iss.str("Dienstag Zweitens Dienstag von Mar");
-    iss >> gw;
-    iss >> nkd;
+    iss2.str("Dienstag Zweitens Dienstag von Mar");
+    iss2 >> gw;
+    iss2 >> nkd;
     check_equal("German names: long weekday", gw, greg_weekday(Tuesday));
     check_equal("German names, nth_day_of_the_week_in_month",
         nkd.get_date(2005), date(2005,Mar,8));
     // Tuesday after
-    iss.str("Dienstag Nach");
-    iss >> fka;
+    iss2.str("Dienstag Nach");
+    iss2 >> fka;
     check_equal("German names, first_day_of_the_week_after",
         fka.get_date(date(2005,Apr,5)), date(2005,Apr,12));
   }
@@ -552,25 +552,25 @@ int main(){
               &month_long_names[12],
               std::back_inserter(long_month_names));
 
-    date d(not_a_date_time);
-    date_input_facet* facet = new date_input_facet();
+    date dx(not_a_date_time);
+    date_input_facet* facetx = new date_input_facet();
     std::stringstream ss;
-    ss.imbue(std::locale(std::locale::classic(), facet));
-    facet->short_month_names(short_month_names);
-    facet->short_weekday_names(short_weekday_names);
-    facet->long_month_names(long_month_names);
-    facet->long_weekday_names(long_weekday_names);
-    facet->format("%a %b %d, %Y");
+    ss.imbue(std::locale(std::locale::classic(), facetx));
+    facetx->short_month_names(short_month_names);
+    facetx->short_weekday_names(short_weekday_names);
+    facetx->long_month_names(long_month_names);
+    facetx->long_weekday_names(long_weekday_names);
+    facetx->format("%a %b %d, %Y");
     ss.str("day7 *apr* 23, 2005");
-    ss >> d;
-    check_equal("Short custom names, set via accessor function", d.day_of_week(), greg_weekday(6));
-    check_equal("Short custom names, set via accessor function", d.month(), greg_month(4));
+    ss >> dx;
+    check_equal("Short custom names, set via accessor function", dx.day_of_week(), greg_weekday(6));
+    check_equal("Short custom names, set via accessor function", dx.month(), greg_month(4));
     ss.str("");
     ss.str("Sun-0 **April** 24, 2005");
-    facet->format("%A %B %d, %Y");
-    ss >> d;
-    check_equal("Long custom names, set via accessor function", d.day_of_week(), greg_weekday(0));
-    check_equal("Long custom names, set via accessor function", d.month(), greg_month(4));
+    facetx->format("%A %B %d, %Y");
+    ss >> dx;
+    check_equal("Long custom names, set via accessor function", dx.day_of_week(), greg_weekday(0));
+    check_equal("Long custom names, set via accessor function", dx.month(), greg_month(4));
 
   }
 #else

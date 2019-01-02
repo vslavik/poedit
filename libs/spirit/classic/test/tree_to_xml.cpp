@@ -92,9 +92,9 @@ public:
         if (pos_ != container_.size()) {
             std::streamsize amt = 
                 static_cast<std::streamsize>(container_.size() - pos_);
-            std::streamsize result = (std::min)(n, amt);
+            result = (std::min)(n, amt);
             std::copy(s, s + result, container_.begin() + pos_);
-            pos_ += result;
+            pos_ += static_cast<size_type>(result);
         }
         if (result < n) {
             container_.insert(container_.end(), s, s + n);
@@ -132,8 +132,6 @@ private:
 bool test(wchar_t const *text)
 {
     typedef std::basic_string<wchar_t>::iterator iterator_t; 
-    typedef tree_match<iterator_t> parse_tree_match_t; 
-    typedef parse_tree_match_t::tree_iterator iter_t; 
 
     std::basic_string<wchar_t> input(text); 
     calculator calc; 
@@ -153,8 +151,6 @@ bool test(wchar_t const *text)
 bool test(char const *text)
 {
     typedef std::string::iterator iterator_t; 
-    typedef tree_match<iterator_t> parse_tree_match_t; 
-    typedef parse_tree_match_t::tree_iterator iter_t; 
 
     std::string input(text); 
     calculator calc; 

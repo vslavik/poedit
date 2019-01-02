@@ -52,7 +52,7 @@ namespace statechart
 
 
 
-template< class Allocator = std::allocator< void > >
+template< class Allocator = std::allocator< none > >
 class fifo_worker : noncopyable
 {
   public:

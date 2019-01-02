@@ -96,16 +96,16 @@ int test_main(int,char *[])
     BOOST_CHECK((bu::is_implicitly_convertible<bu::cgs::velocity,bu::si::velocity>::value == false));
     BOOST_CHECK((bu::is_implicitly_convertible<bu::cgs::wavenumber,bu::si::wavenumber>::value == false));
     
-    const bu::quantity<bu::si::time>    S1(2.0*bu::si::seconds);
-    const bu::quantity<bu::cgs::time>   S2 = S1;
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::si::time>    S1(2.0*bu::si::seconds);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::cgs::time>   S2 = S1;
 
     BOOST_CHECK((S1.value() == S2.value()));
     
-    const bu::quantity<bu::si::catalytic_activity>  S3(2.0*bu::si::catalytic_activity());
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::si::catalytic_activity>  S3(2.0*bu::si::catalytic_activity());
     
     
-    const bu::quantity<bu::cgs::time>   C1(2.0*bu::cgs::seconds);
-    const bu::quantity<bu::si::time>    C2 = C1;
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::cgs::time>   C1(2.0*bu::cgs::seconds);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::si::time>    C2 = C1;
 
     BOOST_CHECK((C1.value() == C2.value()));
 

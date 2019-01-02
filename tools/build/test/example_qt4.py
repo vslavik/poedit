@@ -13,14 +13,14 @@ t = BoostBuild.Tester()
 
 t.set_tree("../example/qt/qt4/hello")
 t.run_build_system()
-t.expect_addition(["bin/$toolset/debug/threading-multi/arrow"])
+t.expect_addition(["bin/$toolset/debug*/threading-multi/arrow"])
 
 t.set_tree("../example/qt/qt4/moccable-cpp")
 t.run_build_system()
-t.expect_addition(["bin/$toolset/debug/threading-multi/main"])
+t.expect_addition(["bin/$toolset/debug*/threading-multi/main"])
 
 t.set_tree("../example/qt/qt4/uic")
 t.run_build_system()
-t.expect_addition(["bin/$toolset/debug/threading-multi/hello"])
+t.expect_addition(["bin/$toolset/debug*/threading-multi/hello"])
 
 t.cleanup()

@@ -63,11 +63,11 @@ int volatile_memcmp(const volatile void *p1, const volatile void *p2, std::size_
    unsigned char u1, u2;
 
    for ( ; len-- ; s1++, s2++) {
-	   u1 = *s1;
-	   u2 = *s2;
-	   if (u1 != u2) {
-	      return (u1-u2);
-	   }
+      u1 = *s1;
+      u2 = *s2;
+      if (u1 != u2) {
+         return (u1-u2);
+      }
    }
    return 0;
 }

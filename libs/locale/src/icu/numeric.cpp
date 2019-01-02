@@ -12,6 +12,7 @@
 #include <limits>
 #include "formatter.hpp"
 #include <boost/locale/formatting.hpp>
+#include <boost/locale/hold_ptr.hpp>
 #include "all_generator.hpp"
 #include "cdata.hpp"
 #include <algorithm>
@@ -115,7 +116,7 @@ public:
     typedef std::basic_string<CharType> string_type;
     typedef CharType char_type;
     typedef formatter<CharType> formatter_type;
-    typedef std::auto_ptr<formatter_type> formatter_ptr;
+    typedef hold_ptr<formatter_type> formatter_ptr;
 
     num_format(cdata const &d,size_t refs = 0) : 
         std::num_put<CharType>(refs),
@@ -162,11 +163,13 @@ private:
     template<typename ValueType>
     iter_type do_real_put (iter_type out, std::ios_base &ios, char_type fill, ValueType val) const
     {
-        formatter_ptr formatter;
-        
-        if(use_parent<ValueType>(ios,val) || (formatter = formatter_type::create(ios,loc_,enc_)).get() == 0) {
+        if(use_parent<ValueType>(ios,val))
             return std::num_put<char_type>::do_put(out,ios,fill,val);
-        }
+
+        formatter_ptr formatter(formatter_type::create(ios,loc_,enc_));
+
+        if(formatter.get() == 0) 
+            return std::num_put<char_type>::do_put(out,ios,fill,val);
         
         size_t code_points;
         typedef typename details::cast_traits<ValueType>::cast_type cast_type;
@@ -220,7 +223,7 @@ protected:
     typedef std::basic_string<CharType> string_type;
     typedef CharType char_type;
     typedef formatter<CharType> formatter_type;
-    typedef std::auto_ptr<formatter_type> formatter_ptr;
+    typedef hold_ptr<formatter_type> formatter_ptr;
     typedef std::basic_istream<CharType> stream_type;
 
     virtual iter_type do_get(iter_type in, iter_type end, std::ios_base &ios,std::ios_base::iostate &err,long &val) const
@@ -280,10 +283,13 @@ private:
     template<typename ValueType>
     iter_type do_real_get(iter_type in,iter_type end,std::ios_base &ios,std::ios_base::iostate &err,ValueType &val) const
     {
-        formatter_ptr formatter;
         stream_type *stream_ptr = dynamic_cast<stream_type *>(&ios);
+        if(!stream_ptr || use_parent<ValueType>(ios,0)) {
+            return std::num_get<CharType>::do_get(in,end,ios,err,val);
+        }
 
-        if(!stream_ptr || use_parent<ValueType>(ios,0) || (formatter = formatter_type::create(ios,loc_,enc_)).get()==0) {
+        formatter_ptr formatter(formatter_type::create(ios,loc_,enc_));
+        if(formatter.get()==0) {
             return std::num_get<CharType>::do_get(in,end,ios,err,val);
         }
 

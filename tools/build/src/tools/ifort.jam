@@ -19,7 +19,7 @@ flags ifort OPTIONS <optimization>off : /Od ;
 flags ifort OPTIONS <optimization>speed : /O3 ;
 flags ifort OPTIONS <optimization>space : /O1 ;
 
-flags ifort OPTIONS <debug-symbols>on : /debug:full ;
+flags ifort OPTIONS <debug-symbols>on : "/debug:full" ;
 flags ifort OPTIONS <profiling>on : /Qprof_gen ;
 
 flags ifort.compile FFLAGS <runtime-debugging>off/<runtime-link>shared : /MD ;

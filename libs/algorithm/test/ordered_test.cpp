@@ -29,11 +29,13 @@ using namespace boost;
 
 namespace ba = boost::algorithm;
 
+BOOST_CXX14_CONSTEXPR bool less( int x, int y ) { return x < y; }
+
 static void
 test_ordered(void)
 {
-    const int strictlyIncreasingValues[] = { 1, 2, 3, 4, 5 };
-    const int randomValues[] = { 3, 6, 1, 2, 7 };
+    BOOST_CXX14_CONSTEXPR const int strictlyIncreasingValues[] = { 1, 2, 3, 4, 5 };
+    BOOST_CXX14_CONSTEXPR const int randomValues[] = { 3, 6, 1, 2, 7 };
     const int constantValues[] = { 1, 2, 2, 2, 5 };
           int nonConstantArray[] = { 1, 2, 2, 2, 5 };
     const int inOrderUntilTheEnd [] = { 0, 1, 2, 3, 4, 5, 6, 7, 6 };
@@ -74,18 +76,26 @@ test_ordered(void)
     BOOST_CHECK ( ba::is_sorted_until ( a_begin(randomValues), a_begin(randomValues))                           == a_begin(randomValues));
     BOOST_CHECK ( ba::is_sorted_until ( a_begin(randomValues), a_begin(randomValues) + 1, std::equal_to<int>()) == a_begin(randomValues) + 1);
     BOOST_CHECK ( ba::is_sorted_until ( a_begin(randomValues), a_begin(randomValues) + 1 )                      == a_begin(randomValues) + 1);
+
+    BOOST_CXX14_CONSTEXPR bool constexpr_res = (
+        ba::is_sorted ( boost::begin(strictlyIncreasingValues), boost::end(strictlyIncreasingValues) )
+        && !ba::is_sorted (a_range(randomValues))
+        && ba::is_sorted_until ( boost::begin(strictlyIncreasingValues), boost::end(strictlyIncreasingValues), less) == a_end(strictlyIncreasingValues)
+        && ba::is_sorted_until ( randomValues, less)                                                                 == &randomValues[2]
+    );
+    BOOST_CHECK ( constexpr_res );
 }
 
 
 static void
 test_increasing_decreasing(void)
 {
-    const int strictlyIncreasingValues[] = { 1, 2, 3, 4, 5 };
-    const int strictlyDecreasingValues[] = { 9, 8, 7, 6, 5 };
-    const int increasingValues[] = { 1, 2, 2, 2, 5 };
-    const int decreasingValues[] = { 9, 7, 7, 7, 5 };
-    const int randomValues[] = { 3, 6, 1, 2, 7 };
-    const int constantValues[] = { 7, 7, 7, 7, 7 };
+    BOOST_CXX14_CONSTEXPR const int strictlyIncreasingValues[] = { 1, 2, 3, 4, 5 };
+    BOOST_CXX14_CONSTEXPR const int strictlyDecreasingValues[] = { 9, 8, 7, 6, 5 };
+    BOOST_CXX14_CONSTEXPR const int increasingValues[] = { 1, 2, 2, 2, 5 };
+    BOOST_CXX14_CONSTEXPR const int decreasingValues[] = { 9, 7, 7, 7, 5 };
+    BOOST_CXX14_CONSTEXPR const int randomValues[] = { 3, 6, 1, 2, 7 };
+    BOOST_CXX14_CONSTEXPR const int constantValues[] = { 7, 7, 7, 7, 7 };
 
     // Test a strictly increasing sequence
     BOOST_CHECK (  ba::is_strictly_increasing (b_e(strictlyIncreasingValues)));
@@ -146,6 +156,15 @@ test_increasing_decreasing(void)
     BOOST_CHECK ( !ba::is_strictly_decreasing (strictlyIncreasingValues, strictlyIncreasingValues+2));
     BOOST_CHECK ( !ba::is_decreasing          (strictlyIncreasingValues, strictlyIncreasingValues+2));
     
+    BOOST_CXX14_CONSTEXPR bool constexpr_res = (
+            ba::is_increasing           (boost::begin(increasingValues),         boost::end(increasingValues))
+        &&  ba::is_decreasing           (boost::begin(decreasingValues),         boost::end(decreasingValues))
+        &&  ba::is_strictly_increasing  (boost::begin(strictlyIncreasingValues), boost::end(strictlyIncreasingValues))
+        &&  ba::is_strictly_decreasing  (boost::begin(strictlyDecreasingValues), boost::end(strictlyDecreasingValues))
+        && !ba::is_strictly_increasing  (boost::begin(increasingValues),         boost::end(increasingValues))
+        && !ba::is_strictly_decreasing  (boost::begin(decreasingValues),         boost::end(decreasingValues))
+    );
+    BOOST_CHECK ( constexpr_res );
 }
 
 BOOST_AUTO_TEST_CASE( test_main )

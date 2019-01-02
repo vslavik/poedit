@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Boost.Convert 2.0</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="next" href="boost_convert/introduction.html" title="Introduction">
 </head>
@@ -25,7 +25,7 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Vladimir</span> <span class="surname">Batov</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2009-2014 Vladimir Batov</p></div>
+<div><p class="copyright">Copyright &#169; 2009-2016 Vladimir Batov</p></div>
 <div><div class="legalnotice">
 <a name="convert.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. See copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>.
@@ -34,7 +34,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#boost_convert.rationale">Rationale</a></span></dt>
 <dt><span class="section"><a href="boost_convert/introduction.html">Introduction</a></span></dt>
 <dt><span class="section"><a href="boost_convert/getting_started.html">Getting Started</a></span></dt>
@@ -133,9 +133,11 @@
 </dl></dd>
 <dt><span class="section"><a href="boost_convert/supporting_tools.html">Supporting Tools</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_convert/supporting_tools.html#boost_convert.supporting_tools.boost_declare_has_member">BOOST_DECLARE_HAS_MEMBER</a></span></dt>
+<dt><span class="section"><a href="boost_convert/supporting_tools.html#boost_convert.supporting_tools.boost__cnv__range">boost::cnv::range</a></span></dt>
+<dt><span class="section"><a href="boost_convert/supporting_tools/boost__cnv__is_range.html">boost::cnv::is_range</a></span></dt>
+<dt><span class="section"><a href="boost_convert/supporting_tools/boost_declare_has_member.html">BOOST_DECLARE_HAS_MEMBER</a></span></dt>
 <dt><span class="section"><a href="boost_convert/supporting_tools/boost_declare_is_callable.html">BOOST_DECLARE_IS_CALLABLE</a></span></dt>
-<dt><span class="section"><a href="boost_convert/supporting_tools/_boost__cnv__is_cnv_.html"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">cnv</span><span class="special">::</span><span class="identifier">is_cnv</span></code></a></span></dt>
+<dt><span class="section"><a href="boost_convert/supporting_tools/boost__cnv__is_cnv.html">boost::cnv::is_cnv</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_convert/supported_compilers.html">Supported Compilers</a></span></dt>
 <dt><span class="section"><a href="boost_convert/acknowledgements.html">Acknowledgements</a></span></dt>
@@ -148,7 +150,6 @@
 <dt><span class="section"><a href="header/boost/convert/lexical_cast_hpp.html">Header &lt;boost/convert/lexical_cast.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="header/boost/convert/parameters_hpp.html">Header &lt;boost/convert/parameters.hpp&gt;</a></span></dt>
-<dd><dl></dl></dd>
 <dt><span class="section"><a href="header/boost/convert/printf_hpp.html">Header &lt;boost/convert/printf.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="header/boost/convert/spirit_hpp.html">Header &lt;boost/convert/spirit.hpp&gt;</a></span></dt>
@@ -168,7 +169,7 @@
 <a name="boost_convert.rationale"></a><a class="link" href="index.html#boost_convert.rationale" title="Rationale">Rationale</a>
 </h2></div></div></div>
 <p>
-      I was using textual configuration files extensively and also was processing
+      I was using textual configuration files extensively and was also processing
       and preparing considerable amounts of data in XML. Consequently, I had a need
       for an <span class="emphasis"><em>extendible</em></span> library that would provide a <span class="emphasis"><em>uniform</em></span>
       interface to convert various data between their internal binary representations
@@ -179,7 +180,7 @@
       and extendible design) looked very promising compared to others (see <a href="http://www.gotw.ca/publications/mill19.htm" target="_top">The String Formatters of Manor
       Farm</a> by H. Sutter for the discussion of alternatives). Unfortunately,
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           many deployed user types simply did not meet <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>
           requirements (namely, <a href="http://en.cppreference.com/w/cpp/concept/DefaultConstructible" target="_top"><span class="emphasis"><em>Default
@@ -188,13 +189,13 @@
 <li class="listitem">
           failure to convert a user-provided configuration parameter was not that
           rare or exceptional to justify the hassle and the overhead of exception
-          processing and, consequently, additional flexibility (<span class="emphasis"><em>if</em></span>,
-          <span class="emphasis"><em>when</em></span> and <span class="emphasis"><em>how</em></span>) to handle conversion
+          processing; consequently, additional flexibility (<span class="emphasis"><em>if</em></span>,
+          <span class="emphasis"><em>when</em></span> and <span class="emphasis"><em>how</em></span>) in handling conversion
           failures was needed;
         </li>
 <li class="listitem">
-          additional conversion-related functionality (formatting and locale support)
-          were needed.
+          additional conversion-related functionality (such as formatting and locale
+          support) were needed.
         </li>
 </ul></div>
 <p>
@@ -211,7 +212,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:23:23 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:07:26 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -110,17 +110,20 @@ int main() {
             hana::tuple<IllFormedDefault> t1(v);
             hana::tuple<IllFormedDefault> t2{v};
             hana::tuple<IllFormedDefault> t3 = {v};
+            (void)t1;(void)t2;(void)t3; // remove spurious unused variable warning on GCC
         }
         {
             hana::tuple<NoDefault> t1(0);
             hana::tuple<NoDefault> t2{0};
             hana::tuple<NoDefault> t3 = {0};
+            (void)t1;(void)t2;(void)t3; // remove spurious unused variable warning on GCC
         }
         {
             NoDefault v(0);
             hana::tuple<NoDefault> t1(v);
             hana::tuple<NoDefault> t2{v};
             hana::tuple<NoDefault> t3 = {v};
+            (void)t1;(void)t2;(void)t3; // remove spurious unused variable warning on GCC
         }
     }
 

@@ -19,8 +19,8 @@ import path ;
 
 
 # The type of output to generate.
-# "console" is formated text echoed to the console (the default);
-# "text" is formated text appended to the output file;
+# "console" is formatted text echoed to the console (the default);
+# "text" is formatted text appended to the output file;
 # "html" is HTML output to the file.
 #
 help-output = console ;
@@ -172,7 +172,10 @@ local rule set-class-doc (
     module-name ?= * ;
 
     $(module-name).$(name).is-class = true ;
-    $(module-name).$(name).super-name = $(super-name) ;
+    if $(super-name)
+    {
+        $(module-name).$(name).super-name = $(super-name) ;
+    }
     $(module-name).$(name).class-rules =
         [ MATCH "^($(name)[.].*)" : $($(module-name).rules) ] ;
     $(module-name).$($(module-name).$(name).class-rules).is-class-rule = true ;
@@ -292,74 +295,76 @@ local rule print-help-usage ( )
         "b2 [ options... ] targets..."
         ;
     print.list-start ;
-    print.list-item -a;
+    print.list-item -a\;
         Build all targets, even if they are current. ;
-    print.list-item -fx;
+    print.list-item -fx\;
         Read '"x"' as the Jamfile for building instead of searching for the
         Boost.Build system. ;
-    print.list-item -jx;
+    print.list-item -jx\;
         Run up to '"x"' commands concurrently. ;
-    print.list-item -n;
+    print.list-item -n\;
         Do not execute build commands. Instead print out the commands as they
         would be executed if building. ;
-    print.list-item -ox;
+    print.list-item -ox\;
         Output the used build commands to file '"x"'. ;
-    print.list-item -q;
+    print.list-item -q\;
         Quit as soon as a build failure is encountered. Without this option
         Boost.Jam will continue building as many targets as it can. ;
-    print.list-item -sx=y;
+    print.list-item -sx=y\;
         Sets a Jam variable '"x"' to the value '"y"', overriding any value that
         variable would have from the environment. ;
-    print.list-item -tx;
+    print.list-item -tx\;
         Rebuild the target '"x"', even if it is up-to-date. ;
-    print.list-item -v;
+    print.list-item -v\;
         Display the version of b2. ;
-    print.list-item --x;
+    print.list-item --x\;
         Any option not explicitly handled by Boost.Build remains available to
         build scripts using the '"ARGV"' variable. ;
-    print.list-item --abbreviate-paths;
+    print.list-item --abbreviate-paths\;
         Use abbreviated paths for targets. ;
-    print.list-item --hash;
+    print.list-item --hash\;
         Shorten target paths by using an MD5 hash. ;
-    print.list-item -dn;
+    print.list-item -dconsole\;
+        Run the interactive debugger.  Cannot be used with any other option. ;
+    print.list-item -dn\;
         Enables output of diagnostic messages. The debug level '"n"' and all
         below it are enabled by this option. ;
-    print.list-item -d+n;
+    print.list-item -d+n\;
         Enables output of diagnostic messages. Only the output for debug level
         '"n"' is enabled. ;
     print.list-end ;
     print.section "Debug Levels"
         Each debug level shows a different set of information. Usually with
         higher levels producing more verbose information. The following levels
-        are supported: ;
+        are supported\: ;
     print.list-start ;
-    print.list-item 0;
+    print.list-item 0\;
         Turn off all diagnostic output. Only errors are reported. ;
-    print.list-item 1;
+    print.list-item 1\;
         Show the actions taken for building targets, as they are executed. ;
-    print.list-item 2;
+    print.list-item 2\;
         Show "quiet" actions and display all action text, as they are executed. ;
-    print.list-item 3;
+    print.list-item 3\;
         Show dependency analysis, and target/source timestamps/paths. ;
-    print.list-item 4;
+    print.list-item 4\;
         Show arguments of shell invocations. ;
-    print.list-item 5;
+    print.list-item 5\;
         Show rule invocations and variable expansions. ;
-    print.list-item 6;
+    print.list-item 6\;
         Show directory/header file/archive scans, and attempts at binding to targets. ;
-    print.list-item 7;
+    print.list-item 7\;
         Show variable settings. ;
-    print.list-item 8;
+    print.list-item 8\;
         Show variable fetches, variable expansions, and evaluation of '"if"' expressions. ;
-    print.list-item 9;
+    print.list-item 9\;
         Show variable manipulation, scanner tokens, and memory usage. ;
-    print.list-item 10;
+    print.list-item 10\;
         Show execution times for rules. ;
-    print.list-item 11;
+    print.list-item 11\;
         Show parsing progress of Jamfiles. ;
-    print.list-item 12;
+    print.list-item 12\;
         Show graph for target dependencies. ;
-    print.list-item 13;
+    print.list-item 13\;
         Show changes in target status (fate). ;
     print.list-end ;
 }
@@ -372,7 +377,7 @@ local rule print-help-options (
     module-name
 )
 {
-    local options-to-list = [ MATCH ^[.]option[.](.*) : $($(module-name).variables) ] ;
+    local options-to-list = [ MATCH "^[.]option[.](.*)" : $($(module-name).variables) ] ;
     if $(options-to-list)
     {
         local option-title = $($(module-name)..option-description.initial) ;
@@ -391,7 +396,7 @@ local rule print-help-options (
             {
                 def = $($(module-name)..option.$(option).default) ;
             }
-            print.list-item $(option): $($(module-name)..option.$(option).docs)
+            print.list-item $(option)\: $($(module-name)..option.$(option).docs)
                 Default is $(def). ;
         }
         print.list-end ;
@@ -426,7 +431,7 @@ local rule print-help-module-section (
             }
             if $(show)
             {
-                print.list-item $(item): $($(module).$(item).brief) ;
+                print.list-item $(item)\: $($(module).$(item).brief) ;
             }
         }
         print.list-end ;
@@ -451,7 +456,7 @@ local rule print-help-all (
         for local module-name in [ sequence.insertion-sort $(documented-modules) ]
         {
             # The brief docs for each module.
-            print.list-item $(module-name): $($(module-name).brief) ;
+            print.list-item $(module-name)\: $($(module-name).brief) ;
         }
         print.list-end ;
     }
@@ -518,12 +523,16 @@ local rule print-help-rules (
                 signature ?= "" ;
                 print.section "Rule '$(module-name).$(rule-name) ( $(signature) )'"
                     $($(module-name).$(rule-name).docs) ;
-                if $($(module-name).$(rule-name).args)
+                if $($(module-name).$(rule-name).args) &&
+                    $($(module-name).$(rule-name).args.$($(module-name).$(rule-name).args).docs)
                 {
                     print.list-start ;
                     for local arg-name in $($(module-name).$(rule-name).args)
                     {
-                        print.list-item $(arg-name): $($(module-name).$(rule-name).args.$(arg-name).docs) ;
+                        if $($(module-name).$(rule-name).args.$(arg-name).docs)
+                        {
+                            print.list-item $(arg-name)\: $($(module-name).$(rule-name).args.$(arg-name).docs) ;
+                        }
                     }
                     print.list-end ;
                 }
@@ -558,7 +567,7 @@ local rule print-help-classes (
                     print.list-start ;
                     for local arg-name in $($(module-name).$(class-name).args)
                     {
-                        print.list-item $(arg-name): $($(module-name).$(class-name).args.$(arg-name).docs) ;
+                        print.list-item $(arg-name)\: $($(module-name).$(class-name).args.$(arg-name).docs) ;
                     }
                     print.list-end ;
                 }
@@ -648,7 +657,44 @@ local rule print-help-config (
 }
 
 
-ws = "	 " ;
+ws = "\t " ;
+
+# Extract the text from a single comment
+#
+local rule extract-one-comment (
+    var  # The name of the variable to extract from
+  : start # The initial part after the leading '#'
+)
+{
+    local m = [ MATCH ^(\\|)(.*) : $(start) ] ;
+    if $(m)
+    {
+        start = $(m[2]) ;
+        local comment ;
+        while true
+        {
+            local end = [ MATCH "(.*)(\\|#)(.*)" : $(start) ] ;
+            if $(end)
+            {
+                comment += $(end[1]) ;
+                $(var) = $(end[3]) $($(var)[2-]) ;
+                return $(comment) ;
+            }
+            else
+            {
+                comment += $(start) ;
+                $(var) = $($(var)[2-]) ;
+            }
+            start = $($(var)[1]) ;
+        }
+    }
+    else
+    {
+        $(var) = $($(var)[2-]) ;
+        if $(start) { return [ MATCH "^[$(ws)]?(.*)$" : $(start) ] ; }
+        else { return "" ; }
+    }
+}
 
 # Extract the text from a block of comments.
 #
@@ -661,9 +707,7 @@ local rule extract-comment (
     local l = [ MATCH "^[$(ws)]*(#)(.*)$" : $(line) ] ;
     while $(l[1]) && $($(var))
     {
-        if $(l[2]) { comment += [ MATCH "^[$(ws)]?(.*)$" : $(l[2]) ] ; }
-        else { comment += "" ; }
-        $(var) = $($(var)[2-]) ;
+        comment += [ extract-one-comment $(var) : $(l[2]) ] ;
         line = $($(var)[1]) ;
         l = [ MATCH "^[$(ws)]*(#)(.*)$" : $(line) ] ;
     }
@@ -871,14 +915,39 @@ local rule scan-variable (
 #
 local rule scan-class (
     syntax ?  # The syntax text for the class declaration.
+    : var  # The name of the variable to extract from.
 )
 {
     # [1] = class?, [2] = name, [3] = superclass
     local class-parts =
-        [ MATCH "^[$(ws)]*([^$(ws)]+)[$(ws)]+([^$(ws)]+)[$(ws)]+:*[$(ws)]*([^$(ws);]*)" : $(syntax) ] ;
+        [ MATCH "^[$(ws)]*([^$(ws)]+)[$(ws)]+([^$(ws)]+)[$(ws)]*:*[$(ws)]*([^$(ws);]*)" : $(syntax) ] ;
     if $(class-parts[1]) = "class" || $(class-parts[1]) = "class.class"
     {
+        # Scan within this class scope.
+        local scope-level = [ extract-token $(var) ] ;
+        local scope-name = $(class-parts[2]) ;
+        while $(scope-level) && $($(var))
+        {
+            local comment-block = [ extract-comment $(var) ] ;
+            local syntax-block = [ extract-syntax $(var) ] ;
+            if [ scan-rule $(syntax-block) : $(var) ]
+            {
+            }
+            else if [ MATCH "^(\\{)" : $(syntax-block) ]
+            {
+                scope-level += "{" ;
+            }
+            else if [ MATCH "^[^\\}]*([\\}])[$(ws)]*$"  : $(syntax-block) ]
+            {
+                scope-level = $(scope-level[2-]) ;
+            }
+        }
+
+        # This has to come after parsing the rules, because
+        # it looks up the rules for the class from the global list.
         set-class-doc $(class-parts[2]) $(module-name) : $(class-parts[3]) ;
+
+        return true ;
     }
 }
 
@@ -908,13 +977,13 @@ rule scan-module (
         syntax-block = [ extract-syntax text ] ;
         if $(.option.debug)
         {
-            ECHO "HELP:" comment block; '$(comment-block)' ;
-            ECHO "HELP:" syntax block; '$(syntax-block)' ;
+            ECHO "HELP:" comment block\; '$(comment-block)' ;
+            ECHO "HELP:" syntax block\; '$(syntax-block)' ;
         }
         if [ scan-rule $(syntax-block) : text ] { }
         else if [ scan-variable $(syntax-block) : text ] { }
-        else if [ scan-class $(syntax-block) ] { }
-        else if [ MATCH .*([cC]opyright).* : $(comment-block:J=" ") ]
+        else if [ scan-class $(syntax-block) : text ] { }
+        else if [ MATCH ".*([cC]opyright).*" : $(comment-block:J=" ") ]
         {
             # mark as the copy for the module.
             set-module-copyright $(module-name) : $(comment-block) ;
@@ -965,9 +1034,7 @@ local rule read-file (
             content = [ SHELL "cat \"$(file)\"" ] ;
         }
         local lines ;
-        local nl = "
-" ;
-        local << = "([^$(nl)]*)[$(nl)](.*)" ;
+        local << = "([^\r\n]*)[\r]?[\n](.*)" ;
         local line+ = [ MATCH "$(<<)" : "$(content)" ] ;
         while $(line+)
         {

@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2009: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -8,7 +8,7 @@ Copyright (c) 2008-2009: Joachim Faulhaber
 #ifndef BOOST_ICL_TEST_ICL_DYNAMIC_INTERVAL_HPP_JOFA_100930
 #define BOOST_ICL_TEST_ICL_DYNAMIC_INTERVAL_HPP_JOFA_100930
 
-template <class IntervalT> 
+template <class IntervalT>
 void dynamic_interval_ctor_4_ordered_types()
 {
     typedef typename domain_type_of<interval_traits<IntervalT> >::type T;
@@ -24,7 +24,7 @@ void dynamic_interval_ctor_4_ordered_types()
     BOOST_CHECK_EQUAL(IntervalT(), IntervalT(icl::identity_element<T>::value(), icl::identity_element<T>::value(), interval_bounds::right_open()));
 }
 
-template <class T> 
+template <class T>
 void dynamic_interval_bounds_4_bicremental_types()
 {
     typedef typename icl::interval<T>::type IntervalT;
@@ -44,12 +44,12 @@ void dynamic_interval_bounds_4_bicremental_types()
     check_border_containedness(C_I(0,1));
     check_border_containedness(C_I(2,5));
 
-    check_border_containedness(C_I(0,2));
-    check_border_containedness(C_I(2,5));
+    check_border_containedness(C_D(0,2));
+    check_border_containedness(C_D(2,5));
 
 }
 
-template <class T> 
+template <class T>
 void discrete_dynamic_interval_bounds_4_bicremental_types()
 {
     //CL typedef typename icl::interval<T>::type IntervalT;

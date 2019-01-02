@@ -7,60 +7,12 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/metaparse/config.hpp>
-#include <boost/metaparse/v1/fwd/string.hpp>
 
-#include <boost/mpl/char.hpp>
-
-#include <boost/preprocessor/repetition/enum_params.hpp>
-#include <boost/preprocessor/repetition/repeat.hpp>
-
-namespace boost
-{
-  namespace metaparse
-  {
-    namespace v1
-    {
-      namespace impl
-      {
-        template <class S, int N>
-        struct at_c;
-
-#ifdef BOOST_METAPARSE_VARIADIC_STRING
-        template <char C, char... Cs, int N>
-        struct at_c<string<C, Cs...>, N> : at_c<string<Cs...>, N - 1> {};
-
-        template <char C, char... Cs>
-        struct at_c<string<C, Cs...>, 0> : boost::mpl::char_<C> {};
+#if BOOST_METAPARSE_STD >= 2011
+#  include <boost/metaparse/v1/cpp11/impl/at_c.hpp>
 #else
-        #ifdef BOOST_METAPARSE_STRING_CASE
-        #  error BOOST_METAPARSE_STRING_CASE is already defined
-        #endif
-        #define BOOST_METAPARSE_STRING_CASE(z, n, unused) \
-          template < \
-            BOOST_PP_ENUM_PARAMS(BOOST_METAPARSE_LIMIT_STRING_SIZE, int C) \
-          > \
-          struct \
-            at_c< \
-              string< \
-                BOOST_PP_ENUM_PARAMS(BOOST_METAPARSE_LIMIT_STRING_SIZE, C) \
-              >, \
-              n \
-            > : \
-            boost::mpl::char_<BOOST_PP_CAT(C, n)> \
-          {};
-      
-        BOOST_PP_REPEAT(
-          BOOST_METAPARSE_LIMIT_STRING_SIZE,
-          BOOST_METAPARSE_STRING_CASE,
-          ~
-        )
-
-        #undef BOOST_METAPARSE_STRING_CASE
+#  include <boost/metaparse/v1/cpp98/impl/at_c.hpp>
 #endif
-      }
-    }
-  }
-}
 
 #endif
 

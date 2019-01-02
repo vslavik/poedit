@@ -64,9 +64,6 @@ main(int, char*[])
   Graph G(edge_array, edge_array + sizeof(edge_array)/sizeof(E), 5);
 #endif
 
-  typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
-  typedef boost::graph_traits<Graph>::vertices_size_type size_type;
-  
   std::cout << "DFS parenthesis:" << std::endl;
   depth_first_search(G, visitor(make_dfs_visitor(std::make_pair(open_paren(), 
                                                         close_paren()))));

@@ -1,11 +1,11 @@
 // Boost.Convert test and usage example
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 #include "./test.hpp"
 
-#if defined(BOOST_CONVERT_INTEL_SFINAE_BROKEN) && 1 < 0
+#if defined(BOOST_CONVERT_IS_NOT_SUPPORTED)
 int main(int, char const* []) { return 0; }
 #else
 
@@ -100,8 +100,8 @@ main(int, char const* [])
     convert<string>(11.23, take_double());
     convert<string>(11,    take_int());
     //[callable_example5
-    convert<string>(11, take_double()); // Compiler applies 'int' to 'double' promotion to call the converter.
-    convert<string>(11.23, take_int()); // Compiler applies 'double' to 'int' implicit truncation.
+    convert<string>(11, take_double()); // Compiler applies int-to-double promotion to call the converter.
+    convert<string>(11.23, take_int()); // Compiler applies double-to-int implicit truncation.
     //]
     //[callable_example7
     convert<string>(11.23, double_only()); // Fine.

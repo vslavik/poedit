@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_MAX_ELEMENT_HPP
 #define BOOST_COMPUTE_ALGORITHM_MAX_ELEMENT_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/algorithm/detail/find_extrema.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -43,6 +46,9 @@ namespace compute {
 ///     boost::compute::max_element(data.begin(), data.end(), compare_first, queue);
 /// \endcode
 ///
+/// Space complexity on CPUs: \Omega(1)<br>
+/// Space complexity on GPUs: \Omega(N)
+///
 /// \see min_element()
 template<class InputIterator, class Compare>
 inline InputIterator
@@ -51,6 +57,7 @@ max_element(InputIterator first,
             Compare compare,
             command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
     return detail::find_extrema(first, last, compare, false, queue);
 }
 
@@ -61,6 +68,7 @@ max_element(InputIterator first,
             InputIterator last,
             command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
     typedef typename std::iterator_traits<InputIterator>::value_type value_type;
 
     return ::boost::compute::max_element(

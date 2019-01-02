@@ -289,9 +289,11 @@ You can use a thread_joiner to ensure that the thread has been joined at the thr
 
 A running thread can be ['interrupted] by invoking the __interrupt__ member function of the corresponding __thread__ object. When the
 interrupted thread next executes one of the specified __interruption_points__ (or if it is currently __blocked__ whilst executing one)
-with interruption enabled, then a __thread_interrupted__ exception will be thrown in the interrupted thread. If not caught,
-this will cause the execution of the interrupted thread to terminate. As with any other exception, the stack will be unwound, and
-destructors for objects of automatic storage duration will be executed.
+with interruption enabled, then a __thread_interrupted__ exception will be thrown in the interrupted thread. Unless this exception is
+caught inside the interrupted thread's thread-main function, the stack unwinding process (as with any other exception) causes the
+destructors with automatic storage duration to be executed. Unlike other exceptions, when __thread_interrupted__ is propagated out of
+thread-main function, this does not cause the call to `std::terminate`; the effect is as though the thread-main function has returned
+normally.
 
 If a thread wishes to avoid being interrupted, it can create an instance of __disable_interruption__. Objects of this class disable
 interruption for the thread that created them on construction, and restore the interruption state to whatever it was before on
@@ -953,7 +955,7 @@ a default-constructed __thread_id__.]]
 
 [[Effects:] [If `*this` refers to a thread of execution, request that the thread will be interrupted the next time it enters one of
 the predefined __interruption_points__ with interruption enabled, or if it is currently __blocked__ in a call to one of the
-predefined __interruption_points__ with interruption enabled .]]
+predefined __interruption_points__ with interruption enabled. Otherwise do noting.]]
 
 [[Throws:] [Nothing]]
 

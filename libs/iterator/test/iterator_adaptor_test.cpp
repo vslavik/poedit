@@ -33,37 +33,6 @@
 
 using boost::dummyT;
 
-struct mult_functor {
-  typedef int result_type;
-  typedef int argument_type;
-  // Functors used with transform_iterator must be
-  // DefaultConstructible, as the transform_iterator must be
-  // DefaultConstructible to satisfy the requirements for
-  // TrivialIterator.
-  mult_functor() { }
-  mult_functor(int aa) : a(aa) { }
-  int operator()(int b) const { return a * b; }
-  int a;
-};
-
-template <class Pair>
-struct select1st_ 
-  : public std::unary_function<Pair, typename Pair::first_type>
-{
-  const typename Pair::first_type& operator()(const Pair& x) const {
-    return x.first;
-  }
-  typename Pair::first_type& operator()(Pair& x) const {
-    return x.first;
-  }
-};
-
-struct one_or_four {
-  bool operator()(dummyT x) const {
-    return x.foo() == 1 || x.foo() == 4;
-  }
-};
-
 typedef std::deque<int> storage;
 typedef std::deque<int*> pointer_deque;
 typedef std::set<storage::iterator> iterator_set;

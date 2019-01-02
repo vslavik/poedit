@@ -31,8 +31,9 @@ error_exit ()
     echo "###     ./build.sh gcc"
     echo "###"
     echo "### Toolsets supported by this script are:"
-    echo "###     acc, como, darwin, gcc, intel-darwin, intel-linux, kcc, kylix,"
-    echo "###     mipspro, pathscale, pgi, qcc, sun, sunpro, tru64cxx, vacpp"
+    echo "###     acc, clang, como, darwin, gcc, intel-darwin, intel-linux,"
+    echo "###     kcc, kylix, mipspro, pathscale, pgi, qcc, sun, sunpro,"
+    echo "###     tru64cxx, vacpp"
     echo "###"
     echo "### A special toolset; cc, is available which is used as a fallback"
     echo "### when a more specific toolset is not found and the cc command is"
@@ -79,6 +80,7 @@ Guess_Toolset ()
     elif test_uname AIX && test_path xlc; then BOOST_JAM_TOOLSET=vacpp    
     elif test_uname FreeBSD && test_path freebsd-version && test_path clang; then BOOST_JAM_TOOLSET=clang
     elif test_path gcc ; then BOOST_JAM_TOOLSET=gcc
+    elif test_path clang ; then BOOST_JAM_TOOLSET=clang
     elif test_path icc ; then BOOST_JAM_TOOLSET=intel-linux
     elif test -r /opt/intel/cc/9.0/bin/iccvars.sh ; then
         BOOST_JAM_TOOLSET=intel-linux

@@ -23,93 +23,7 @@
 
 using namespace boost::container;
 
-namespace boost {
-namespace container {
-
-//Explicit instantiation to detect compilation errors
-
-//map
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , test::simple_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , std::allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-//multimap
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , test::simple_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , std::allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-namespace container_detail {
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
-   , test::simple_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
-   , std::allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
-   , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-}  //container_detail {
-
-}} //boost::container
+typedef std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> pair_t;
 
 class recursive_map
 {
@@ -158,6 +72,118 @@ void test_move()
    move_assign.swap(original);
 }
 
+bool node_type_test()
+{
+   using namespace boost::container;
+   {
+      typedef map<test::movable_int, test::movable_int> map_type;
+      map_type src;
+      {
+         test::movable_int mv_1(1), mv_2(2), mv_3(3), mv_11(11), mv_12(12), mv_13(13);
+         src.try_emplace(boost::move(mv_1), boost::move(mv_11)); 
+         src.try_emplace(boost::move(mv_2), boost::move(mv_12)); 
+         src.try_emplace(boost::move(mv_3), boost::move(mv_13)); 
+      }
+      if(src.size() != 3)
+         return false;
+
+      map_type dst;
+      {
+         test::movable_int mv_3(3), mv_33(33);
+         dst.try_emplace(boost::move(mv_3), boost::move(mv_33)); 
+      }
+
+      if(dst.size() != 1)
+         return false;
+
+      const test::movable_int mv_1(1);
+      const test::movable_int mv_2(2);
+      const test::movable_int mv_3(3);
+      const test::movable_int mv_33(33);
+      const test::movable_int mv_13(13);
+      map_type::insert_return_type r;
+
+      r = dst.insert(src.extract(mv_33)); // Key version, try to insert empty node
+      if(! (r.position == dst.end() && r.inserted == false && r.node.empty()) )
+         return false;
+      r = dst.insert(src.extract(src.find(mv_1))); // Iterator version, successful
+      if(! (r.position == dst.find(mv_1) && r.inserted == true && r.node.empty()) )
+         return false;
+      r = dst.insert(dst.begin(), src.extract(mv_2)); // Key type version, successful
+      if(! (r.position == dst.find(mv_2) && r.inserted == true && r.node.empty()) )
+         return false;
+      r = dst.insert(src.extract(mv_3)); // Key type version, unsuccessful
+
+      if(!src.empty())
+         return false;
+      if(dst.size() != 3)
+         return false;
+      if(! (r.position == dst.find(mv_3) && r.inserted == false && r.node.key() == mv_3 && r.node.mapped() == mv_13) )
+         return false;
+   }
+
+   {
+      typedef multimap<test::movable_int, test::movable_int> multimap_type;
+      multimap_type src;
+      {
+         test::movable_int mv_1(1), mv_2(2), mv_3(3), mv_3bis(3), mv_11(11), mv_12(12), mv_13(13), mv_23(23);
+         src.emplace(boost::move(mv_1), boost::move(mv_11));
+         src.emplace(boost::move(mv_2), boost::move(mv_12));
+         src.emplace(boost::move(mv_3), boost::move(mv_13));
+         src.emplace_hint(src.begin(), boost::move(mv_3bis), boost::move(mv_23));
+      }
+      if(src.size() != 4)
+         return false;
+
+      multimap_type dst;
+      {
+         test::movable_int mv_3(3), mv_33(33);
+         dst.emplace(boost::move(mv_3), boost::move(mv_33)); 
+      }
+
+      if(dst.size() != 1)
+         return false;
+
+      const test::movable_int mv_1(1);
+      const test::movable_int mv_2(2);
+      const test::movable_int mv_3(3);
+      const test::movable_int mv_4(4);
+      const test::movable_int mv_33(33);
+      const test::movable_int mv_13(13);
+      const test::movable_int mv_23(23);
+      multimap_type::iterator r;
+
+      multimap_type::node_type nt(src.extract(mv_3));
+      r = dst.insert(dst.begin(), boost::move(nt));
+      if(! (r->first == mv_3 && r->second == mv_23 && dst.find(mv_3) == r && nt.empty()) )
+         return false;
+
+      nt = src.extract(src.find(mv_1));
+      r = dst.insert(boost::move(nt)); // Iterator version, successful
+      if(! (r->first == mv_1 && nt.empty()) )
+         return false;
+
+      nt = src.extract(mv_2);
+      r = dst.insert(boost::move(nt)); // Key type version, successful
+      if(! (r->first == mv_2 && nt.empty()) )
+         return false;
+
+      r = dst.insert(src.extract(mv_3)); // Key type version, successful
+      if(! (r->first == mv_3 && r->second == mv_13 && r == --multimap_type::iterator(dst.upper_bound(mv_3)) && nt.empty()) )
+         return false;
+
+      r = dst.insert(src.extract(mv_4)); // Key type version, unsuccessful
+      if(! (r == dst.end()) )
+         return false;
+
+      if(!src.empty())
+         return false;
+      if(dst.size() != 5)
+         return false;
+   }
+   return true;
+}
+
 template<class VoidAllocator, boost::container::tree_type_enum tree_type_value>
 struct GetAllocatorMap
 {
@@ -185,61 +211,6 @@ struct GetAllocatorMap
                  > multimap_type;
    };
 };
-
-template<class VoidAllocator, boost::container::tree_type_enum tree_type_value>
-int test_map_variants()
-{
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<int>::map_type MyMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::movable_int>::map_type MyMoveMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::movable_and_copyable_int>::map_type MyCopyMoveMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::copyable_int>::map_type MyCopyMap;
-
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<int>::multimap_type MyMultiMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::movable_int>::multimap_type MyMoveMultiMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::movable_and_copyable_int>::multimap_type MyCopyMoveMultiMap;
-   typedef typename GetAllocatorMap<VoidAllocator, tree_type_value>::template apply<test::copyable_int>::multimap_type MyCopyMultiMap;
-
-   typedef std::map<int, int>                                     MyStdMap;
-   typedef std::multimap<int, int>                                MyStdMultiMap;
-
-   if (0 != test::map_test<
-                  MyMap
-                  ,MyStdMap
-                  ,MyMultiMap
-                  ,MyStdMultiMap>()){
-      std::cout << "Error in map_test<MyBoostMap>" << std::endl;
-      return 1;
-   }
-
-   if (0 != test::map_test<
-                  MyMoveMap
-                  ,MyStdMap
-                  ,MyMoveMultiMap
-                  ,MyStdMultiMap>()){
-      std::cout << "Error in map_test<MyBoostMap>" << std::endl;
-      return 1;
-   }
-
-   if (0 != test::map_test<
-                  MyCopyMoveMap
-                  ,MyStdMap
-                  ,MyCopyMoveMultiMap
-                  ,MyStdMultiMap>()){
-      std::cout << "Error in map_test<MyBoostMap>" << std::endl;
-      return 1;
-   }
-
-   if (0 != test::map_test<
-                  MyCopyMap
-                  ,MyStdMap
-                  ,MyCopyMultiMap
-                  ,MyStdMultiMap>()){
-      std::cout << "Error in map_test<MyBoostMap>" << std::endl;
-      return 1;
-   }
-
-   return 0;
-}
 
 struct boost_container_map;
 struct boost_container_multimap;
@@ -270,6 +241,202 @@ struct alloc_propagate_base<boost_container_multimap>
    };
 };
 
+void test_merge_from_different_comparison()
+{
+   map<int, int> map1;
+   map<int, int, std::greater<int> > map2;
+   map1.merge(map2);
+}
+
+bool test_heterogeneous_lookups()
+{
+   typedef map<int, char, less_transparent> map_t;
+   typedef multimap<int, char, less_transparent> mmap_t;
+   typedef map_t::value_type value_type;
+
+   map_t map1;
+   mmap_t mmap1;
+
+   const map_t &cmap1 = map1;
+   const mmap_t &cmmap1 = mmap1;
+
+   map1.insert_or_assign(1, 'a');
+   map1.insert_or_assign(1, 'b');
+   map1.insert_or_assign(2, 'c');
+   map1.insert_or_assign(2, 'd');
+   map1.insert_or_assign(3, 'e');
+
+   mmap1.insert(value_type(1, 'a'));
+   mmap1.insert(value_type(1, 'b'));
+   mmap1.insert(value_type(2, 'c'));
+   mmap1.insert(value_type(2, 'd'));
+   mmap1.insert(value_type(3, 'e'));
+
+   const test::non_copymovable_int find_me(2);
+
+   //find
+   if(map1.find(find_me)->second != 'd')
+      return false;
+   if(cmap1.find(find_me)->second != 'd')
+      return false;
+   if(mmap1.find(find_me)->second != 'c')
+      return false;
+   if(cmmap1.find(find_me)->second != 'c')
+      return false;
+
+   //count
+   if(map1.count(find_me) != 1)
+      return false;
+   if(cmap1.count(find_me) != 1)
+      return false;
+   if(mmap1.count(find_me) != 2)
+      return false;
+   if(cmmap1.count(find_me) != 2)
+      return false;
+
+   //contains
+   if(!map1.contains(find_me))
+      return false;
+   if(!cmap1.contains(find_me))
+      return false;
+   if(!mmap1.contains(find_me))
+      return false;
+   if(!cmmap1.contains(find_me))
+      return false;
+
+   //lower_bound
+   if(map1.lower_bound(find_me)->second != 'd')
+      return false;
+   if(cmap1.lower_bound(find_me)->second != 'd')
+      return false;
+   if(mmap1.lower_bound(find_me)->second != 'c')
+      return false;
+   if(cmmap1.lower_bound(find_me)->second != 'c')
+      return false;
+
+   //upper_bound
+   if(map1.upper_bound(find_me)->second != 'e')
+      return false;
+   if(cmap1.upper_bound(find_me)->second != 'e')
+      return false;
+   if(mmap1.upper_bound(find_me)->second != 'e')
+      return false;
+   if(cmmap1.upper_bound(find_me)->second != 'e')
+      return false;
+
+   //equal_range
+   if(map1.equal_range(find_me).first->second != 'd')
+      return false;
+   if(cmap1.equal_range(find_me).second->second != 'e')
+      return false;
+   if(mmap1.equal_range(find_me).first->second != 'c')
+      return false;
+   if(cmmap1.equal_range(find_me).second->second != 'e')
+      return false;
+
+   return true;
+}
+
+bool constructor_template_auto_deduction_test()
+{
+
+#ifndef BOOST_CONTAINER_NO_CXX17_CTAD
+   using namespace boost::container;
+   const std::size_t NumElements = 100;
+   {
+      std::map<int, int> int_map;
+      for(std::size_t i = 0; i != NumElements; ++i){
+         int_map.insert(std::map<int, int>::value_type(static_cast<int>(i), static_cast<int>(i)));
+      }
+      std::multimap<int, int> int_mmap;
+      for (std::size_t i = 0; i != NumElements; ++i) {
+         int_mmap.insert(std::multimap<int, int>::value_type(static_cast<int>(i), static_cast<int>(i)));
+      }
+
+      typedef std::less<int> comp_int_t;
+      typedef std::allocator<std::pair<const int, int> > alloc_pair_int_t;
+
+      //range
+      {
+         auto fmap = map(int_map.begin(), int_map.end());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(int_mmap.begin(), int_mmap.end());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+comp
+      {
+         auto fmap = map(int_map.begin(), int_map.end(), comp_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(int_mmap.begin(), int_mmap.end(), comp_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+comp+alloc
+      {
+         auto fmap = map(int_map.begin(), int_map.end(), comp_int_t(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(int_mmap.begin(), int_mmap.end(), comp_int_t(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+alloc
+      {
+         auto fmap = map(int_map.begin(), int_map.end(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(int_mmap.begin(), int_mmap.end(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+
+      //ordered_unique_range / ordered_range
+
+      //range
+      {
+         auto fmap = map(ordered_unique_range, int_map.begin(), int_map.end());
+         if(!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(ordered_range, int_mmap.begin(), int_mmap.end());
+         if(!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+comp
+      {
+         auto fmap = map(ordered_unique_range, int_map.begin(), int_map.end(), comp_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(ordered_range, int_mmap.begin(), int_mmap.end(), comp_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+comp+alloc
+      {
+         auto fmap = map(ordered_unique_range, int_map.begin(), int_map.end(), comp_int_t(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(ordered_range, int_mmap.begin(), int_mmap.end(), comp_int_t(), alloc_pair_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+      //range+alloc
+      {
+         auto fmap = map(ordered_unique_range, int_map.begin(), int_map.end(),alloc_pair_int_t());
+         if (!CheckEqualContainers(int_map, fmap))
+            return false;
+         auto fmmap = multimap(ordered_range, int_mmap.begin(), int_mmap.end(),alloc_pair_int_t());
+         if (!CheckEqualContainers(int_mmap, fmmap))
+            return false;
+      }
+   }
+#endif
+
+   return true;
+}
+
 }}}   //namespace boost::container::test
 
 int main ()
@@ -290,37 +457,77 @@ int main ()
       test_move<multimap<recursive_multimap, recursive_multimap> >();
    }
 
-   ////////////////////////////////////
-   //    Testing allocator implementations
-   ////////////////////////////////////
-   //       std:allocator
-   if(test_map_variants< std::allocator<void>, red_black_tree >()){
-      std::cerr << "test_map_variants< std::allocator<void> > failed" << std::endl;
-      return 1;
-   }
-   //       boost::container::adaptive_pool
-   if(test_map_variants< adaptive_pool<void>, red_black_tree >()){
-      std::cerr << "test_map_variants< adaptive_pool<void> > failed" << std::endl;
-      return 1;
+   //Test std::pair value type as tree has workarounds to make old std::pair
+   //implementations movable that can break things
+   {
+      boost::container::map<pair_t, pair_t> s;
+      std::pair<const pair_t,pair_t> p;
+      s.insert(p);
+      s.emplace(p);
    }
 
    ////////////////////////////////////
-   //    Tree implementations
+   //    Testing allocator implementations
    ////////////////////////////////////
-   //       AVL
-   if(test_map_variants< std::allocator<void>, avl_tree >()){
-      std::cerr << "test_map_variants< std::allocator<void>, avl_tree > failed" << std::endl;
-      return 1;
-   }
-   //    SCAPEGOAT TREE
-   if(test_map_variants< std::allocator<void>, scapegoat_tree >()){
-      std::cerr << "test_map_variants< std::allocator<void>, scapegoat_tree > failed" << std::endl;
-      return 1;
-   }
-   //    SPLAY TREE
-   if(test_map_variants< std::allocator<void>, splay_tree >()){
-      std::cerr << "test_map_variants< std::allocator<void>, splay_tree > failed" << std::endl;
-      return 1;
+   {
+      typedef std::map<int, int>                                     MyStdMap;
+      typedef std::multimap<int, int>                                MyStdMultiMap;
+
+      if (0 != test::map_test
+         < GetAllocatorMap<std::allocator<void>, red_black_tree>::apply<int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<std::allocator<void>, red_black_tree>::apply<int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<std::allocator<void>, red_black_tree>" << std::endl;
+         return 1;
+      }
+
+      if (0 != test::map_test
+         < GetAllocatorMap<new_allocator<void>, avl_tree>::apply<int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<new_allocator<void>, avl_tree>::apply<int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<new_allocator<void>, avl_tree>" << std::endl;
+         return 1;
+      }
+
+      if (0 != test::map_test
+         < GetAllocatorMap<adaptive_pool<void>, scapegoat_tree>::apply<int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<adaptive_pool<void>, scapegoat_tree>::apply<int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<adaptive_pool<void>, scapegoat_tree>" << std::endl;
+         return 1;
+      }
+
+      ///////////
+
+     if (0 != test::map_test
+         < GetAllocatorMap<new_allocator<void>, splay_tree>::apply<test::movable_int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<new_allocator<void>, splay_tree>::apply<test::movable_int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<new_allocator<void>, splay_tree>" << std::endl;
+         return 1;
+      }
+
+      if (0 != test::map_test
+         < GetAllocatorMap<new_allocator<void>, red_black_tree>::apply<test::copyable_int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<new_allocator<void>, red_black_tree>::apply<test::copyable_int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<new_allocator<void>, red_black_tree>" << std::endl;
+         return 1;
+      }
+
+      if (0 != test::map_test
+         < GetAllocatorMap<new_allocator<void>, red_black_tree>::apply<test::movable_and_copyable_int>::map_type
+         , MyStdMap
+         , GetAllocatorMap<new_allocator<void>, red_black_tree>::apply<test::movable_and_copyable_int>::multimap_type
+         , MyStdMultiMap>()) {
+         std::cout << "Error in map_test<new_allocator<void>, red_black_tree>" << std::endl;
+         return 1;
+      }
    }
 
    ////////////////////////////////////
@@ -368,36 +575,47 @@ int main ()
    }
 
    ////////////////////////////////////
+   //    Node extraction/insertion testing functions
+   ////////////////////////////////////
+   if(!node_type_test())
+      return 1;
+
+   ////////////////////////////////////
+   //    Constructor Template Auto Deduction test
+   ////////////////////////////////////
+   if (!test::constructor_template_auto_deduction_test()) {
+      return 1;
+   }
+
+   if (!boost::container::test::instantiate_constructors<map<int, int>, multimap<int, int> >())
+      return 1;
+
+   test::test_merge_from_different_comparison();
+
+   if(!test::test_heterogeneous_lookups())
+      return 1;
+
+   ////////////////////////////////////
    //    Test optimize_size option
    ////////////////////////////////////
    //
    // map
    //
-   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
+   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int *const, int*> >
               , tree_assoc_options< optimize_size<false>, tree_type<red_black_tree> >::type > rbmap_size_optimized_no;
-   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
-              , tree_assoc_options< optimize_size<true>, tree_type<red_black_tree>  >::type > rbmap_size_optimized_yes;
-   BOOST_STATIC_ASSERT(sizeof(rbmap_size_optimized_yes) < sizeof(rbmap_size_optimized_no));
 
-   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
-              , tree_assoc_options< optimize_size<false>, tree_type<avl_tree> >::type > avlmap_size_optimized_no;
-   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
+   typedef map< int*, int*, std::less<int*>, std::allocator< std::pair<int *const, int*> >
               , tree_assoc_options< optimize_size<true>, tree_type<avl_tree>  >::type > avlmap_size_optimized_yes;
-   BOOST_STATIC_ASSERT(sizeof(avlmap_size_optimized_yes) < sizeof(avlmap_size_optimized_no));
    //
    // multimap
    //
-   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
-                   , tree_assoc_options< optimize_size<false>, tree_type<red_black_tree> >::type > rbmmap_size_optimized_no;
-   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
+   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int *const, int*> >
                    , tree_assoc_options< optimize_size<true>, tree_type<red_black_tree>  >::type > rbmmap_size_optimized_yes;
-   BOOST_STATIC_ASSERT(sizeof(rbmmap_size_optimized_yes) < sizeof(rbmmap_size_optimized_no));
-
-   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
+   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int *const, int*> >
                    , tree_assoc_options< optimize_size<false>, tree_type<avl_tree> >::type > avlmmap_size_optimized_no;
-   typedef multimap< int*, int*, std::less<int*>, std::allocator< std::pair<int const*, int*> >
-                   , tree_assoc_options< optimize_size<true>, tree_type<avl_tree>  >::type > avlmmap_size_optimized_yes;
-   BOOST_STATIC_ASSERT(sizeof(avlmmap_size_optimized_yes) < sizeof(avlmmap_size_optimized_no));
+
+   BOOST_STATIC_ASSERT(sizeof(rbmmap_size_optimized_yes) < sizeof(rbmap_size_optimized_no));
+   BOOST_STATIC_ASSERT(sizeof(avlmap_size_optimized_yes) < sizeof(avlmmap_size_optimized_no));
 
    return 0;
 }

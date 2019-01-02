@@ -200,6 +200,7 @@ namespace units {
 //[kitchen_sink_function_snippet_3
 /// the physical definition of work - computed for an arbitrary unit system 
 template<class System,class Y>
+constexpr
 quantity<unit<energy_dimension,System>,Y> 
 work(quantity<unit<force_dimension,System>,Y> F,
      quantity<unit<length_dimension,System>,Y> dx)
@@ -211,6 +212,7 @@ work(quantity<unit<force_dimension,System>,Y> F,
 //[kitchen_sink_function_snippet_4
 /// the ideal gas law in si units
 template<class Y>
+constexpr
 quantity<si::amount,Y> 
 idealGasLaw(const quantity<si::pressure,Y>& P,
             const quantity<si::volume,Y>& V,

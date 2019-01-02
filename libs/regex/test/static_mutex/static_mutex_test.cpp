@@ -16,11 +16,11 @@
   *   DESCRIPTION: test program for boost::static_mutex.
   */
 
-#include <iostream>
-#include <iomanip>
 #include <boost/regex/pending/static_mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/timer.hpp>
+#include <iostream>
+#include <iomanip>
 
 //
 // we cannot use the regular Boost.Test in here: it is not thread safe

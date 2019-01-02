@@ -7,6 +7,10 @@
       <firstname>Nicolai</firstname>
       <surname>Josuttis</surname>
     </author>
+    <maintainer>
+      <firstname>Marshall</firstname>
+      <surname>Clow</surname>
+    </maintainer>
 
     <copyright>
       <year>2001</year>
@@ -16,6 +20,11 @@
       <holder>Nicolai M. Josuttis</holder>
     </copyright>
    
+    <copyright>
+      <year>2012</year>
+      <holder>Marshall Clow</holder>
+    </copyright>
+
     <legalnotice>
       <para>Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <filename>LICENSE_1_0.txt</filename> or copy at 
@@ -176,6 +185,24 @@
               <returns><simpara>iterator for position after the last element</simpara></returns>
               <throws><simpara>will not throw</simpara></throws>
             </overloaded-method>
+
+            <overloaded-method name="cbegin" cv="const">
+              <signature>
+                <type>const_iterator</type>
+              </signature>
+
+              <returns><simpara>constant iterator for the first element</simpara></returns>
+              <throws><simpara>will not throw</simpara></throws>
+            </overloaded-method>
+
+            <overloaded-method name="cend" cv="const">
+              <signature>
+                <type>const_iterator</type>
+              </signature>
+
+              <returns><simpara>constant iterator for position after the last element</simpara></returns>
+              <throws><simpara>will not throw</simpara></throws>
+            </overloaded-method>
           </method-group>
 
           <method-group name="reverse iterator support">
@@ -199,6 +226,24 @@
               </signature>
 
               <returns><simpara>reverse iterator for position after the last element in reverse iteration</simpara></returns>
+            </overloaded-method>
+  
+            <overloaded-method name="crbegin" cv="const">
+              <signature>
+                <type>const_reverse_iterator</type>
+              </signature>
+
+              <returns><simpara>constant reverse iterator for the first element of reverse iteration</simpara></returns>
+              <throws><simpara>will not throw</simpara></throws>
+            </overloaded-method>
+
+            <overloaded-method name="crend" cv="const">
+              <signature>
+                <type>const_reverse_iterator</type>
+              </signature>
+
+              <returns><simpara>constant reverse iterator for position after the last element in reverse iteration</simpara></returns>
+              <throws><simpara>will not throw</simpara></throws>
             </overloaded-method>
           </method-group>
 
@@ -465,6 +510,49 @@
               <returns><simpara><code>!(x &lt; y)</code></simpara></returns>
             </function>
           </free-function-group>
+            
+          <free-function-group name="specializations">
+            <function name="boost::get">
+              <template>
+                <template-type-parameter name="T"/>
+                <template-nontype-parameter name="N">
+                  <type>std::size_t</type>
+                </template-nontype-parameter>
+                <template-nontype-parameter name="Idx">
+                  <type>std::size_t</type>
+                </template-nontype-parameter>
+              </template>
+
+              <type>T</type>
+              
+              <parameter name="arr">
+                <paramtype><classname>array</classname>&lt;T, N&gt;&amp;</paramtype>
+              </parameter>
+              <returns><simpara>element of array with index <code>Idx</code></simpara></returns>
+              <effects><simpara>Will <code>static_assert</code> if <code>Idx >= N</code></simpara></effects>
+            </function>
+
+            <function name="boost::get">
+              <template>
+                <template-type-parameter name="T"/>
+                <template-nontype-parameter name="N">
+                  <type>std::size_t</type>
+                </template-nontype-parameter>
+                <template-nontype-parameter name="Idx">
+                  <type>std::size_t</type>
+                </template-nontype-parameter>
+              </template>
+
+              <type>T</type>
+              
+              <parameter name="arr">
+                <paramtype>const <classname>array</classname>&lt;T, N&gt;&amp;</paramtype>
+              </parameter>
+              <returns><simpara>const element of array with index <code>Idx</code></simpara></returns>
+              <effects><simpara>Will <code>static_assert</code> if <code>Idx >= N</code></simpara></effects>
+            </function>
+          </free-function-group>
+
         </class>
       </namespace>
     </header>

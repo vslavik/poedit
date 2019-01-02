@@ -21,6 +21,7 @@
 
 
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_void.hpp>
 
@@ -94,8 +95,6 @@ public :
           >
     {};
 
-public :
-
     template <typename Point, typename PointOfSegment>
     inline typename calculation_type<Point, PointOfSegment>::type
     apply(Point const& p, PointOfSegment const& p1, PointOfSegment const& p2) const
@@ -137,7 +136,7 @@ public :
         subtract_point(w, projected);
 
         Strategy strategy;
-        boost::ignore_unused_variable_warning(strategy);
+        boost::ignore_unused(strategy);
 
         calculation_type const zero = calculation_type();
         calculation_type const c1 = dot_product(w, v);
@@ -159,6 +158,13 @@ public :
 
         return strategy.apply(p, projected);
     }
+
+    template <typename CT>
+    inline CT vertical_or_meridian(CT const& lat1, CT const& lat2) const
+    {
+        return lat1 - lat2;
+    }
+
 };
 
 #ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS

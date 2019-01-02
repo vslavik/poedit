@@ -3,6 +3,47 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.hp_cxx]]
+= HP C++ Compiler for Tru64 Unix
+
+The `hp_cxx` modules supports the
+http://h30097.www3.hp.com/cplus/?jumpid=reg_R1002_USEN[HP C++ Compiler]
+for Tru64 Unix.
+
+The module is initialized using the following syntax:
+
+----
+using hp_cxx : [version] : [c++-compile-command] : [compiler options] ;
+----
+
+This statement may be repeated several times, if you want to configure
+several versions of the compiler.
+
+If the command is not specified, Boost.Build will search for a binary
+named `hp_cxx` in PATH.
+
+The following options can be provided, using
+_`<option-name>option-value syntax`_:
+
+`cflags`::
+Specifies additional compiler flags that will be used when compiling C
+sources.
+
+`cxxflags`::
+Specifies additional compiler flags that will be used when compiling C++
+sources.
+
+`compileflags`::
+Specifies additional compiler flags that will be used when compiling both C
+and C++ sources.
+
+`linkflags`::
+Specifies additional command line options that will be passed to the linker.
+
+|# # end::doc[]
+
 #
 # HP CXX compiler
 # See http://h30097.www3.hp.com/cplus/?jumpid=reg_R1002_USEN
@@ -110,7 +151,7 @@ flags hp_cxx.link OPTIONS <c++abi> : -model ansi : : hack-hack ;
 flags hp_cxx.link OPTIONS <c++abi>cxxarm : -model arm ;
 
 # Display a descriptive tag together with each compiler message. This tag can
-# be used by the user to explicitely suppress the compiler message.
+# be used by the user to explicitly suppress the compiler message.
 flags hp_cxx.compile OPTIONS : -msg_display_tag ;
 
 flags hp_cxx.compile OPTIONS <cflags> ;

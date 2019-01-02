@@ -18,8 +18,10 @@
   <key id="d3" for="node" attr.name="name" attr.type="string">
     <default>hello</default>
   </key>
+  <key id="d4" for="graph" attr.name="description" attr.type="string"/>
 
   <graph id="G" edgedefault="directed">
+    <data key="d4">Root graph.</data>
     <node id="n0"/>
     <node id="n1"/>
     <node id="not a canonical node">
@@ -56,6 +58,7 @@
       <data key="d2">0.1</data>
     </edge>
     <graph id="Nested" edgedefault="directed">
+        <data key="d4">Nested graph.</data>
         <node id="n7"/>
         <node id="n8"/>
         <edge id="e8" source="n7" target="n8">

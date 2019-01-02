@@ -8,9 +8,9 @@ should consult your favorite textbook.
 
 Imagine that you want to approximate some function f(x) by way of a rational
 function R(x), where R(x) may be either a polynomial P(x) or a ratio of two
-polynomials P(x)/Q(x) (a rational function).  Initially we'll concentrate on the 
-polynomial case, as it's by far the easier to deal with, later we'll extend 
-to the full rational function case.  
+polynomials P(x)/Q(x) (a rational function).  Initially we'll concentrate on the
+polynomial case, as it's by far the easier to deal with, later we'll extend
+to the full rational function case.
 
 We want to find the "best" rational approximation, where
 "best" is defined to be the approximation that has the least deviation
@@ -61,11 +61,11 @@ the range \[-1, 1\].
 
 Before we can begin the Remez method, we must obtain an initial value
 for the location of the extrema of the error function.  We could "guess"
-these, but a much closer first approximation can be obtained by first  
+these, but a much closer first approximation can be obtained by first
 constructing an interpolated polynomial approximation to f(x).
 
 In order to obtain the N+1 coefficients of the interpolated polynomial
-we need N+1 points (x[sub 0]...x[sub N]): with our interpolated form 
+we need N+1 points (x[sub 0]...x[sub N]): with our interpolated form
 passing through each of those points
 that yields N+1 simultaneous equations:
 
@@ -73,12 +73,12 @@ f(x[sub i]) = P(x[sub i]) = c[sub 0] + c[sub 1]x[sub i] ... + c[sub N]x[sub i][s
 
 Which can be solved for the coefficients c[sub 0]...c[sub N] in P(x).
 
-Obviously this is not a minimax solution, indeed our only guarantee is that f(x) and 
+Obviously this is not a minimax solution, indeed our only guarantee is that f(x) and
 P(x) touch at N+1 locations, away from those points the error may be arbitrarily
 large.  However, we would clearly like this initial approximation to be as close to
 f(x) as possible, and it turns out that using the zeros of an orthogonal polynomial
-as the initial interpolation points is a good choice.  In our example we'll use the 
-zeros of a Chebyshev polynomial as these are particularly easy to calculate, 
+as the initial interpolation points is a good choice.  In our example we'll use the
+zeros of a Chebyshev polynomial as these are particularly easy to calculate,
 interpolating for a polynomial of degree 4, and measuring /relative error/
 we get the following error function:
 
@@ -86,7 +86,7 @@ we get the following error function:
 
 Which has a peak relative error of 1.2x10[super -3].
 
-While this is a pretty good approximation already, judging by the 
+While this is a pretty good approximation already, judging by the
 shape of the error function we can clearly do better.  Before starting
 on the Remez method propper, we have one more step to perform: locate
 all the extrema of the error function, and store
@@ -101,7 +101,7 @@ achieve, and typically is very close to the minimax solution.
 
 However, if we want to optimise for /relative error/, or if the approximation
 is a rational function, then the initial Chebyshev solution can be quite far
-from the ideal minimax solution.  
+from the ideal minimax solution.
 
 A more technical discussion of the theory involved can be found in this
 [@http://math.fullerton.edu/mathews/n2003/ChebyshevPolyMod.html online course].]
@@ -118,7 +118,7 @@ To obtain the error term E, and the coefficients of the polynomial P(x).
 
 This gives us a new approximation to f(x) that has the same error /E/ at
 each of the control points, and whose error function ['alternates in sign]
-at the control points.  This is still not necessarily the minimax 
+at the control points.  This is still not necessarily the minimax
 solution though: since the control points may not be at the extrema of the error
 function.  After this first step here's what our approximation's error
 function looks like:
@@ -131,10 +131,10 @@ dropped to 5.6x10[super -4].
 
 [h4 Remez Step 2]
 
-The second step is to locate the extrema of the new approximation, which we do 
+The second step is to locate the extrema of the new approximation, which we do
 in two stages:  first, since the error function changes sign at each
 control point, we must have N+1 roots of the error function located between
-each pair of N+2 control points.  Once these roots are found by standard root finding 
+each pair of N+2 control points.  Once these roots are found by standard root finding
 techniques, we know that N extrema are bracketed between each pair of
 roots, plus two more between the endpoints of the range and the first and last roots.
 The N+2 extrema can then be found using standard function minimisation techniques.
@@ -195,10 +195,10 @@ polynomial alternatives.  For example, if we takes our previous example
 of an approximation to e[super x], we obtained 5x10[super -4] accuracy
 with an order 4 polynomial.  If we move two of the unknowns into the denominator
 to give a pair of order 2 polynomials, and re-minimise, then the peak relative error drops
-to 8.7x10[super -5].  That's a 5 fold increase in accuracy, for the same number 
+to 8.7x10[super -5].  That's a 5 fold increase in accuracy, for the same number
 of terms overall.
 
-[h4 Practical Considerations]
+[h4:remez_practical Practical Considerations]
 
 Most treatises on approximation theory stop at this point.  However, from
 a practical point of view, most of the work involves finding the right
@@ -211,12 +211,12 @@ f(x) = R(x)
 
 But this will converge to a useful approximation only if f(x) is smooth.  In
 addition round-off errors when evaluating the rational form mean that this
-will never get closer than within a few epsilon of machine precision.  
+will never get closer than within a few epsilon of machine precision.
 Therefore this form of direct approximation is often reserved for situations
 where we want efficiency, rather than accuracy.
 
 The first step in improving the situation is generally to split f(x) into
-a dominant part that we can compute accurately by another method, and a 
+a dominant part that we can compute accurately by another method, and a
 slowly changing remainder which can be approximated by a rational approximation.
 We might be tempted to write:
 
@@ -235,7 +235,7 @@ to the constant /c/, that error will effectively get wiped out when R(x) is adde
 
 The difficult part is obviously finding the right g(x) to extract from your
 function: often the asymptotic behaviour of the function will give a clue, so
-for example the function __erfc becomes proportional to 
+for example the function __erfc becomes proportional to
 e[super -x[super 2]]\/x as x becomes large.  Therefore using:
 
 erfc(z) = (C + R(x)) e[super -x[super 2]]/x
@@ -262,15 +262,15 @@ the roots, the approximation is nonetheless useless.
 Assuming that the approximation does not have any fatal errors, and that the only
 issue is converging adequately on the minimax solution, the aim is to
 get as close as possible to the minimax solution before beginning the Remez method.
-Using the zeros of a Chebyshev polynomial for the initial interpolation is a 
+Using the zeros of a Chebyshev polynomial for the initial interpolation is a
 good start, but may not be ideal when dealing with relative errors and\/or
 rational (rather than polynomial) approximations.  One approach is to skew
 the initial interpolation points to one end: for example if we raise the
-roots of the Chebyshev polynomial to a positive power greater than 1 
-then the roots will be skewed towards the middle of the \[-1,1\] interval, 
+roots of the Chebyshev polynomial to a positive power greater than 1
+then the roots will be skewed towards the middle of the \[-1,1\] interval,
 while a positive power less than one
 will skew them towards either end.  More usefully, if we initially rescale the
-points over \[0,1\] and then raise to a positive power, we can skew them to the left 
+points over \[0,1\] and then raise to a positive power, we can skew them to the left
 or right.  Returning to our example of e[super x][space] over \[-1,1\], the initial
 interpolated form was some way from the minimax solution:
 
@@ -287,7 +287,7 @@ our desired minimax solution (5x10[super -4]).
 
 [h4 Remez Method Checklist]
 
-The following lists some of the things to check if the Remez method goes wrong, 
+The following lists some of the things to check if the Remez method goes wrong,
 it is by no means an exhaustive list, but is provided in the hopes that it will
 prove useful.
 
@@ -312,7 +312,7 @@ location, try starting from a different location.
 * If a rational function won't converge, one can minimise a polynomial
 (which presents no problems), then rotate one term from the numerator to
 the denominator and minimise again.  In theory one can continue moving
-terms one at a time from numerator to denominator, and then re-minimising, 
+terms one at a time from numerator to denominator, and then re-minimising,
 retaining the last set of control points at each stage.
 * Try using a smaller interval.  It may also be possible to optimise over
 one (small) interval, rescale the control points over a larger interval,
@@ -325,41 +325,41 @@ over, say \[0, b\], for some smallish value /b/.
 The original references for the Remez Method and it's extension
 to rational functions are unfortunately in Russian:
 
-Remez, E.Ya., ['Fundamentals of numerical methods for Chebyshev approximations], 
+Remez, E.Ya., ['Fundamentals of numerical methods for Chebyshev approximations],
 "Naukova Dumka", Kiev, 1969.
 
-Remez, E.Ya., Gavrilyuk, V.T., ['Computer development of certain approaches 
-to the approximate construction of solutions of Chebyshev problems 
+Remez, E.Ya., Gavrilyuk, V.T., ['Computer development of certain approaches
+to the approximate construction of solutions of Chebyshev problems
 nonlinearly depending on parameters], Ukr. Mat. Zh. 12 (1960), 324-338.
 
-Gavrilyuk, V.T., ['Generalization of the first polynomial algorithm of 
-E.Ya.Remez for the problem of constructing rational-fractional 
+Gavrilyuk, V.T., ['Generalization of the first polynomial algorithm of
+E.Ya.Remez for the problem of constructing rational-fractional
 Chebyshev approximations], Ukr. Mat. Zh. 16 (1961), 575-585.
 
 Some English language sources include:
 
-Fraser, W., Hart, J.F., ['On the computation of rational approximations 
+Fraser, W., Hart, J.F., ['On the computation of rational approximations
 to continuous functions], Comm. of the ACM 5 (1962), 401-403, 414.
 
-Ralston, A., ['Rational Chebyshev approximation by Remes' algorithms], 
+Ralston, A., ['Rational Chebyshev approximation by Remes' algorithms],
 Numer.Math. 7 (1965), no. 4, 322-330.
 
-A. Ralston, ['Rational Chebyshev approximation, Mathematical 
-Methods for Digital Computers v. 2] (Ralston A., Wilf H., eds.), 
+A. Ralston, ['Rational Chebyshev approximation, Mathematical
+Methods for Digital Computers v. 2] (Ralston A., Wilf H., eds.),
 Wiley, New York, 1967, pp. 264-284.
 
 Hart, J.F. e.a., ['Computer approximations], Wiley, New York a.o., 1968.
 
-Cody, W.J., Fraser, W., Hart, J.F., ['Rational Chebyshev approximation 
+Cody, W.J., Fraser, W., Hart, J.F., ['Rational Chebyshev approximation
 using linear equations], Numer.Math. 12 (1968), 242-251.
 
-Cody, W.J., ['A survey of practical rational and polynomial 
+Cody, W.J., ['A survey of practical rational and polynomial
 approximation of functions], SIAM Review 12 (1970), no. 3, 400-423.
 
-Barrar, R.B., Loeb, H.J., ['On the Remez algorithm for non-linear 
+Barrar, R.B., Loeb, H.J., ['On the Remez algorithm for non-linear
 families], Numer.Math. 15 (1970), 382-391.
 
-Dunham, Ch.B., ['Convergence of the Fraser-Hart algorithm for rational 
+Dunham, Ch.B., ['Convergence of the Fraser-Hart algorithm for rational
 Chebyshev approximation], Math. Comp. 29 (1975), no. 132, 1078-1082.
 
 G. L. Litvinov, ['Approximate construction of rational
@@ -368,7 +368,7 @@ Russian Journal of Mathematical Physics, vol.1, No. 3, 1994.
 
 [endsect][/section:remez The Remez Method]
 
-[/ 
+[/
   Copyright 2006 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at

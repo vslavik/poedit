@@ -234,7 +234,7 @@ time_duration td(duration_from_string(ts));</screen>
 	</thead>
 	<tbody>
           <row>
-	    <entry valign="top" morerows="1"><screen>long hours()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t hours()</screen></entry>
             <entry>Get the number of normalized hours (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -245,7 +245,7 @@ neg_td.hours(); // --> -1</screen></entry>
           </row>
 
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long minutes()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t minutes()</screen></entry>
             <entry>Get the number of minutes normalized +/-(0..59) (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -256,7 +256,7 @@ neg_td.minutes(); // --> -2</screen></entry>
         </row>
         
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long seconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t seconds()</screen></entry>
             <entry>Get the normalized number of second +/-(0..59) (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -267,7 +267,7 @@ neg_td.seconds(); // --> -3</screen></entry>
         </row>
         
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long total_seconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t total_seconds()</screen></entry>
 	    <entry>Get the total number of seconds truncating any fractional seconds (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -278,7 +278,7 @@ td.total_seconds();
           </row>
           
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long total_milliseconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t total_milliseconds()</screen></entry>
 	    <entry>Get the total number of milliseconds truncating any remaining digits (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -291,7 +291,7 @@ td.total_milliseconds();
           </row>
           
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long total_microseconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t total_microseconds()</screen></entry>
 	    <entry>Get the total number of microseconds truncating any remaining digits (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -304,7 +304,7 @@ td.total_microseconds();
           </row>
           
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long total_nanoseconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t total_nanoseconds()</screen></entry>
 	    <entry>Get the total number of nanoseconds truncating any remaining digits (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>
@@ -318,7 +318,7 @@ td.total_nanoseconds();
           </row>
           
 	  <row>
-	    <entry valign="top" morerows="1"><screen>long fractional_seconds()</screen></entry>
+	    <entry valign="top" morerows="1"><screen>boost::int64_t fractional_seconds()</screen></entry>
 	    <entry>Get the number of fractional seconds (will give unpredictable results if calling <code>time_duration</code> is a <code>special_value</code>).</entry>
 	  </row>
 	  <row>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Example source code: Adapting a legacy geometry object model</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../examples.html" title="Examples">
 <link rel="prev" href="example__adapting_a_legacy_geometry_object_model.html" title="Example: Adapting a legacy geometry object model">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h3>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h0"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpoint"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpoint">Adaption
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpoint"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpoint">Adaption
         of QPoint</a>
       </h3>
 <a name="adaption_of_qpoint_source_code"></a><pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -46,7 +46,7 @@
             <span class="special">{</span> <span class="keyword">typedef</span> <span class="identifier">point_tag</span> <span class="identifier">type</span><span class="special">;</span> <span class="special">};</span>
 
             <span class="keyword">template</span><span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">coordinate_type</span><span class="special">&lt;</span><span class="identifier">QPoint</span><span class="special">&gt;</span>
-            <span class="special">{</span> <span class="keyword">typedef</span> <span class="identifier">QPoint</span><span class="special">::</span><span class="keyword">double</span> <span class="identifier">type</span><span class="special">;</span> <span class="special">};</span>
+            <span class="special">{</span> <span class="keyword">typedef</span> <span class="keyword">double</span> <span class="identifier">type</span><span class="special">;</span> <span class="special">};</span>
 
             <span class="keyword">template</span><span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">coordinate_system</span><span class="special">&lt;</span><span class="identifier">QPoint</span><span class="special">&gt;</span>
             <span class="special">{</span> <span class="keyword">typedef</span> <span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span> <span class="identifier">type</span><span class="special">;</span> <span class="special">};</span>
@@ -86,7 +86,7 @@
 </pre>
 <h3>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h1"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qlinestring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qlinestring">Adaption
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qlinestring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qlinestring">Adaption
         of QLineString</a>
       </h3>
 <a name="adaption_of_qlinestring_source_code"></a><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
@@ -106,7 +106,7 @@
 </pre>
 <h4>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h2"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qlinestring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qlinestring">Boost.Range
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qlinestring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qlinestring">Boost.Range
         for QLineString</a>
       </h4>
 <a name="adaption_of_qlinestring_range_source_code"></a><pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">range</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -136,7 +136,7 @@
 </pre>
 <h3>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h3"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qring">Adaption
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qring">Adaption
         of QRing</a>
       </h3>
 <a name="adaption_of_qring_source_code"></a><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
@@ -156,7 +156,7 @@
 </pre>
 <h4>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h4"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qring">Boost.Iterator
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qring">Boost.Iterator
         for QRing</a>
       </h4>
 <a name="adaption_of_qring_iterator_source_code"></a><pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">iterator_facade</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -305,7 +305,7 @@
 </pre>
 <h4>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h5"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qring">Boost.Range
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qring"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_qring">Boost.Range
         for QRing</a>
       </h4>
 <a name="adaption_of_qring_range_source_code"></a><pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">RingIteratorImpl</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">QLineString</span><span class="special">*&gt;::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="identifier">QPoint</span><span class="special">&gt;</span> <span class="identifier">RingIterator</span><span class="special">;</span>
@@ -344,7 +344,7 @@
 </pre>
 <h3>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h6"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpolygon"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpolygon">Adaption
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpolygon"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.adaption_of_qpolygon">Adaption
         of QPolygon</a>
       </h3>
 <a name="adaption_of_qpolygon_source_code"></a><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -385,7 +385,7 @@
 </pre>
 <h4>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h7"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qrings_in_qpolygon"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qrings_in_qpolygon">Boost.Iterator
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qrings_in_qpolygon"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_iterator_for_qrings_in_qpolygon">Boost.Iterator
         for QRings in QPolygon</a>
       </h4>
 <a name="adaption_of_qpolygon_iterator_source_code"></a><pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">I</span><span class="special">,</span> <span class="comment">// Line iterator type</span>
@@ -442,7 +442,7 @@
 </pre>
 <h4>
 <a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.h8"></a>
-        <span><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_polygonringiterator"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_polygonringiterator">Boost.Range
+        <span class="phrase"><a name="geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_polygonringiterator"></a></span><a class="link" href="example_source_code__adapting_a_legacy_geometry_object_model.html#geometry.examples.example_source_code__adapting_a_legacy_geometry_object_model.boost_range_for_polygonringiterator">Boost.Range
         for PolygonRingIterator</a>
       </h4>
 <a name="adaption_of_qpolygon_range_source_code"></a><pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">PolyRingIterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">QRing</span><span class="special">*&gt;::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="identifier">QRing</span><span class="special">&gt;</span> <span class="identifier">PolygonRingIterator</span><span class="special">;</span>
@@ -522,8 +522,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

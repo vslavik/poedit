@@ -34,6 +34,7 @@ namespace {
     template<typename Container>
     void check_one_iter ( const Container &haystack, const std::string &needle, int expected ) {
         typedef typename Container::const_iterator iter_type;
+        typedef typename std::pair<iter_type, iter_type> ret_type;
         typedef std::string::const_iterator pattern_type;
 
         iter_type hBeg = haystack.begin ();
@@ -41,33 +42,40 @@ namespace {
         pattern_type nBeg = needle.begin ();
         pattern_type nEnd = needle.end ();
 
+//      iter_type ret0  = std::search                     (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret1  = ba::boyer_moore_search          (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret1r = ba::boyer_moore_search          (haystack, nBeg, nEnd);
+        ret_type ret2  = ba::boyer_moore_horspool_search (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret3  = ba::knuth_morris_pratt_search   (hBeg, hEnd, nBeg, nEnd);
+
         iter_type it0  = std::search                     (hBeg, hEnd, nBeg, nEnd);
-        iter_type it1  = ba::boyer_moore_search          (hBeg, hEnd, nBeg, nEnd);
-        iter_type it1r = ba::boyer_moore_search          (haystack, nBeg, nEnd);
-        iter_type it2  = ba::boyer_moore_horspool_search (hBeg, hEnd, nBeg, nEnd);
-        iter_type it3  = ba::knuth_morris_pratt_search   (hBeg, hEnd, nBeg, nEnd);
-        const int dist = it1 == hEnd ? -1 : std::distance ( hBeg, it1 );
+//         iter_type it1  = ret1.first;
+//         iter_type it1r = ret1r.first;
+//         iter_type it2  = ret2.first;
+//         iter_type it3  = ret3.first;
+        const int dist = ret1.first == hEnd ? -1 : std::distance ( hBeg, ret1.first );
 
         std::cout << "(Iterators) Pattern is " << needle.length () << ", haysstack is " << haystack.length () << " chars long; " << std::endl;
         try {
-            if ( it0 != it1 ) {
+            if ( it0 != ret1.first ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between std::search and boyer-moore search" ));
                 }
 
-            if ( it1 != it1r ) {
+            if ( ret1.first != ret1r.first || ret1.second != ret1r.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between iterator and range boyer_moore search" ));
                 }
 
-            if ( it1 != it2 ) {
+            if ( ret1.first != ret2.first || ret1.second != ret2.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and boyer-moore-horspool search" ));
                 }
 
-            if ( it1 != it3 )
+            if ( ret1.first != ret3.first || ret1.second != ret3.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and knuth-morris-pratt search" ));
+                }
 
             }
 
@@ -75,10 +83,10 @@ namespace {
             std::cout << "Searching for: " << needle << std::endl;
             std::cout << "Expected: " << expected << "\n";
             std::cout << "  std:    " << std::distance ( hBeg, it0 ) << "\n";
-            std::cout << "  bm:     " << std::distance ( hBeg, it1 ) << "\n";
-            std::cout << "  bm(r):  " << std::distance ( hBeg, it1r ) << "\n";
-            std::cout << "  bmh:    " << std::distance ( hBeg, it2 ) << "\n";
-            std::cout << "  kpm:    " << std::distance ( hBeg, it3 )<< "\n";
+            std::cout << "  bm:     " << std::distance ( hBeg, ret1.first ) << "\n";
+            std::cout << "  bm(r):  " << std::distance ( hBeg, ret1r.first ) << "\n";
+            std::cout << "  bmh:    " << std::distance ( hBeg, ret2.first ) << "\n";
+            std::cout << "  kpm:    " << std::distance ( hBeg, ret3.first )<< "\n";
             std::cout << std::flush;
             throw ;
             }
@@ -91,32 +99,35 @@ namespace {
     template<typename Container>
     void check_one_pointer ( const Container &haystack, const std::string &needle, int expected ) {
         typedef const typename Container::value_type *ptr_type;
+        typedef typename std::pair<ptr_type, ptr_type> ret_type;
+
         ptr_type hBeg = haystack.size () == 0 ? NULL : &*haystack.begin ();
         ptr_type hEnd = hBeg + haystack.size ();
         ptr_type nBeg = needle.size () == 0 ? NULL : &*needle.begin ();
         ptr_type nEnd = nBeg + needle.size ();
 
         ptr_type it0  = std::search                     (hBeg, hEnd, nBeg, nEnd);
-        ptr_type it1  = ba::boyer_moore_search          (hBeg, hEnd, nBeg, nEnd);
-        ptr_type it2  = ba::boyer_moore_horspool_search (hBeg, hEnd, nBeg, nEnd);
-        ptr_type it3  = ba::knuth_morris_pratt_search   (hBeg, hEnd, nBeg, nEnd);
-        const int dist = it1 == hEnd ? -1 : std::distance ( hBeg, it1 );
+        ret_type ret1 = ba::boyer_moore_search          (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret2 = ba::boyer_moore_horspool_search (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret3 = ba::knuth_morris_pratt_search   (hBeg, hEnd, nBeg, nEnd);
+        const int dist = ret1.first == hEnd ? -1 : std::distance ( hBeg, ret1.first );
 
         std::cout << "(Pointers) Pattern is " << needle.length () << ", haysstack is " << haystack.length () << " chars long; " << std::endl;
         try {
-            if ( it0 != it1 ) {
+            if ( it0 != ret1.first ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between std::search and boyer-moore search" ));
                 }
 
-            if ( it1 != it2 ) {
+            if ( ret1.first != ret2.first || ret1.second != ret2.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and boyer-moore-horspool search" ));
                 }
 
-            if ( it1 != it3 )
+            if ( ret1.first != ret3.first || ret1.second != ret3.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and knuth-morris-pratt search" ));
+                }
 
             }
 
@@ -124,9 +135,9 @@ namespace {
             std::cout << "Searching for: " << needle << std::endl;
             std::cout << "Expected: " << expected << "\n";
             std::cout << "  std:    " << std::distance ( hBeg, it0 ) << "\n";
-            std::cout << "  bm:     " << std::distance ( hBeg, it1 ) << "\n";
-            std::cout << "  bmh:    " << std::distance ( hBeg, it2 ) << "\n";
-            std::cout << "  kpm:    " << std::distance ( hBeg, it3 )<< "\n";
+            std::cout << "  bm:     " << std::distance ( hBeg, ret1.first ) << "\n";
+            std::cout << "  bmh:    " << std::distance ( hBeg, ret2.first ) << "\n";
+            std::cout << "  kpm:    " << std::distance ( hBeg, ret3.first )<< "\n";
             std::cout << std::flush;
             throw ;
             }
@@ -138,6 +149,7 @@ namespace {
     template<typename Container>
     void check_one_object ( const Container &haystack, const std::string &needle, int expected ) {
         typedef typename Container::const_iterator iter_type;
+        typedef typename std::pair<iter_type, iter_type> ret_type;
         typedef std::string::const_iterator pattern_type;
 
         iter_type hBeg = haystack.begin ();
@@ -150,58 +162,59 @@ namespace {
         ba::boyer_moore_horspool<pattern_type> bmh   ( nBeg, nEnd );
         ba::knuth_morris_pratt<pattern_type>   kmp   ( nBeg, nEnd );
         
-        iter_type it0  = std::search  (hBeg, hEnd, nBeg, nEnd);
-        iter_type it1  = bm           (hBeg, hEnd);
-        iter_type it1r = bm           (haystack);
-        iter_type rt1  = bm_r         (hBeg, hEnd);
-        iter_type rt1r = bm_r         (haystack);
-        iter_type it2  = bmh          (hBeg, hEnd);
-        iter_type it3  = kmp          (hBeg, hEnd);
-        const int dist = it1 == hEnd ? -1 : std::distance ( hBeg, it1 );
+        iter_type it0   = std::search  (hBeg, hEnd, nBeg, nEnd);
+        ret_type ret1   = bm           (hBeg, hEnd);
+        ret_type ret1r  = bm           (haystack);
+        ret_type retr1  = bm_r         (hBeg, hEnd);
+       ret_type retr1r = bm_r         (haystack);
+        ret_type ret2   = bmh          (hBeg, hEnd);
+        ret_type ret3   = kmp          (hBeg, hEnd);
+        const int dist  = ret1.first == hEnd ? -1 : std::distance ( hBeg, ret1.first );
 
         std::cout << "(Objects) Pattern is " << needle.length () << ", haysstack is " << haystack.length () << " chars long; " << std::endl;
         try {
-            if ( it0 != it1 ) {
+            if ( it0 != ret1.first ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between std::search and boyer-moore search" ));
                 }
 
-            if ( it1 != it1r ) {
+            if ( ret1.first != ret1r.first || ret1.second != ret1r.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between iterator and range boyer_moore search(1)" ));
                 }
 
-            if ( it1 != rt1 ) {
+            if ( ret1.first != retr1.first || ret1.second != retr1.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between iterator and range boyer_moore search(2)" ));
                 }
 
-            if ( rt1 != rt1r ) {
+            if ( ret1.first != retr1r.first || ret1.second != retr1r.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between iterator and range boyer_moore search(3)" ));
                 }
 
-            if ( it1 != it2 ) {
+            if ( ret1.first != ret2.first || ret1.second != ret2.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and boyer-moore-horspool search" ));
                 }
 
-            if ( it1 != it3 )
+            if ( ret1.first != ret3.first || ret1.second != ret3.second ) {
                 throw std::runtime_error ( 
                     std::string ( "results mismatch between boyer-moore and knuth-morris-pratt search" ));
+                }
 
             }
 
         catch ( ... ) {
             std::cout << "Searching for: " << needle << std::endl;
-            std::cout << "Expected: " << expected << "\n";
-            std::cout << "  std:    " << std::distance ( hBeg, it0 ) << "\n";
-            std::cout << "  bm:     " << std::distance ( hBeg, it1 ) << "\n";
-            std::cout << "  bm(r1):  " << std::distance ( hBeg, it1r ) << "\n";
-            std::cout << "  bm(r2):  " << std::distance ( hBeg, rt1 ) << "\n";
-            std::cout << "  bm(r3):  " << std::distance ( hBeg, rt1r ) << "\n";
-            std::cout << "  bmh:    " << std::distance ( hBeg, it2 ) << "\n";
-            std::cout << "  kpm:    " << std::distance ( hBeg, it3 )<< "\n";
+            std::cout << "Expected:  " << expected << "\n";
+            std::cout << "  std:     " << std::distance ( hBeg, it0 ) << "\n";
+            std::cout << "  bm:      " << std::distance ( hBeg, ret1.first ) << "\n";
+            std::cout << "  bm(r1):  " << std::distance ( hBeg, ret1r.first ) << "\n";
+            std::cout << "  bm(r2):  " << std::distance ( hBeg, retr1.first ) << "\n";
+            std::cout << "  bm(r3):  " << std::distance ( hBeg, retr1r.first ) << "\n";
+            std::cout << "  bmh:     " << std::distance ( hBeg, ret2.first ) << "\n";
+            std::cout << "  kpm:    " << std::distance ( hBeg, ret3.first )<< "\n";
             std::cout << std::flush;
             throw ;
             }

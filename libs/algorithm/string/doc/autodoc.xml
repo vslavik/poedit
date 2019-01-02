@@ -1901,7 +1901,7 @@
 <namespace name="algorithm">
 <class name="find_iterator"><template>
       <template-type-parameter name="IteratorT"/>
-    </template><purpose><classname alt="boost::algorithm::find_iterator">find_iterator</classname> </purpose><description><para>Find iterator encapsulates a Finder and allows for incremental searching in a string. Each increment moves the iterator to the next match.</para><para>Find iterator is a readable forward traversal iterator.</para><para>Dereferencing the iterator yields an iterator_range delimiting the current match. </para></description><method-group name="public member functions">
+    </template><inherit access="public">iterator_facade&lt; find_iterator&lt; IteratorT &gt;, const iterator_range&lt; IteratorT &gt;, forward_traversal_tag &gt;</inherit><purpose><classname alt="boost::algorithm::find_iterator">find_iterator</classname> </purpose><description><para>Find iterator encapsulates a Finder and allows for incremental searching in a string. Each increment moves the iterator to the next match.</para><para>Find iterator is a readable forward traversal iterator.</para><para>Dereferencing the iterator yields an iterator_range delimiting the current match. </para></description><method-group name="public member functions">
 <method name="eof" cv="const"><type>bool</type><purpose>Eof check. </purpose><description><para>Check the eof condition. Eof condition means that there is nothing more to be searched i.e. <classname alt="boost::algorithm::find_iterator">find_iterator</classname> is after the last match. </para></description></method>
 </method-group>
 <constructor><purpose>Default constructor. </purpose><description><para>Construct null iterator. All null iterators are equal.</para><para>
@@ -1921,7 +1921,7 @@
 </method-group>
 </class><class name="split_iterator"><template>
       <template-type-parameter name="IteratorT"/>
-    </template><purpose><classname alt="boost::algorithm::split_iterator">split_iterator</classname> </purpose><description><para>Split iterator encapsulates a Finder and allows for incremental searching in a string. Unlike the find iterator, split iterator iterates through gaps between matches.</para><para>Find iterator is a readable forward traversal iterator.</para><para>Dereferencing the iterator yields an iterator_range delimiting the current match. </para></description><method-group name="public member functions">
+    </template><inherit access="public">iterator_facade&lt; split_iterator&lt; IteratorT &gt;, const iterator_range&lt; IteratorT &gt;, forward_traversal_tag &gt;</inherit><purpose><classname alt="boost::algorithm::split_iterator">split_iterator</classname> </purpose><description><para>Split iterator encapsulates a Finder and allows for incremental searching in a string. Unlike the find iterator, split iterator iterates through gaps between matches.</para><para>Find iterator is a readable forward traversal iterator.</para><para>Dereferencing the iterator yields an iterator_range delimiting the current match. </para></description><method-group name="public member functions">
 <method name="eof" cv="const"><type>bool</type><purpose>Eof check. </purpose><description><para>Check the eof condition. Eof condition means that there is nothing more to be searched i.e. <classname alt="boost::algorithm::find_iterator">find_iterator</classname> is after the last match. </para></description></method>
 </method-group>
 <constructor><purpose>Default constructor. </purpose><description><para>Construct null iterator. All null iterators are equal.</para><para>
@@ -3979,8 +3979,7 @@
           <template-type-parameter name="Range1T"/>
           <template-type-parameter name="Range2T"/>
         </template><parameter name="Input"><paramtype>SequenceT &amp;</paramtype><description><para>An input string </para></description></parameter><parameter name="Search"><paramtype>const Range1T &amp;</paramtype><description><para>A substring to be searched for </para></description></parameter><parameter name="Format"><paramtype>const Range2T &amp;</paramtype><description><para>A substitute string </para></description></parameter><parameter name="Loc"><paramtype>const std::locale &amp;</paramtype><default>std::locale()</default><description><para>A locale used for case insensitive comparison </para></description></parameter><purpose>Replace last algorithm ( case insensitive ) </purpose><description><para>Replace the last match of the search string in the input with the format string.The input sequence is modified in-place. Searching is case insensitive.</para><para>
-
-</para></description><returns><para>A reference to the modified input </para></returns></function>
+</para></description></function>
 <overloaded-function name="replace_nth_copy"><signature><type>OutputIteratorT</type><template>
           <template-type-parameter name="OutputIteratorT"/>
           <template-type-parameter name="Range1T"/>
@@ -4040,8 +4039,7 @@
           <template-type-parameter name="Range1T"/>
           <template-type-parameter name="Range2T"/>
         </template><parameter name="Input"><paramtype>SequenceT &amp;</paramtype><description><para>An input string </para></description></parameter><parameter name="Search"><paramtype>const Range1T &amp;</paramtype><description><para>A substring to be searched for </para></description></parameter><parameter name="Format"><paramtype>const Range2T &amp;</paramtype><description><para>A substitute string </para></description></parameter><purpose>Replace all algorithm. </purpose><description><para>Replace all occurrences of the search string in the input with the format string. The input sequence is modified in-place.</para><para>
-
-</para></description><returns><para>A reference to the modified input </para></returns></function>
+</para></description></function>
 <overloaded-function name="ireplace_all_copy"><signature><type>OutputIteratorT</type><template>
           <template-type-parameter name="OutputIteratorT"/>
           <template-type-parameter name="Range1T"/>

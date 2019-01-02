@@ -176,6 +176,18 @@ int main() {
                     std::locale(std::locale::classic(), datefacet));
     }
 
+    // trac-11142: actually test delimiter_strings(...)
+    {
+        date_facet* datefacet = new date_facet();
+        datefacet->set_iso_extended_format();
+        period_formatter pf(period_formatter::AS_OPEN_RANGE, " / ", "[ ", " )", " ]");
+        pf.delimiter_strings(" to ", "from ", " inclusive", " exclusive");
+        datefacet->period_formatter(pf);
+        teststreaming("custom date facet date period - delimiter_strings", dp,
+            std::string("from 2004-10-13 to 2004-10-20 inclusive"),
+            std::locale(std::locale::classic(), datefacet));
+    }
+
     {
       date_facet* datefacet = new date_facet("%A %b %d, %Y");
       datefacet->short_month_names(short_month_names);
@@ -346,12 +358,12 @@ int main() {
 
   // greg_month tests
   {
-    for(int i = 0; i < 12; ++i) {
+    for(greg_month::value_type i = 0; i < 12; ++i) {
       greg_month m(i+1); // month numbers 1-12
       teststreaming("greg_month short", m, short_months[i], loc);
     }
     small_types_facet->month_format(L"%B"); // full name
-    for(int i = 0; i < 12; ++i) {
+    for(greg_month::value_type i = 0; i < 12; ++i) {
       greg_month m(i+1); // month numbers 1-12
       teststreaming("greg_month full", m, full_months[i], loc);
     }
@@ -359,12 +371,12 @@ int main() {
 
   // greg_weekday tests
   {
-    for(int i = 0; i < 7; ++i) {
+    for(greg_weekday::value_type i = 0; i < 7; ++i) {
       greg_weekday gw(i); // weekday numbers 0-6
       teststreaming("greg_weekday short", gw, short_weekdays[i], loc);
     }
     small_types_facet->weekday_format(L"%A"); // full name
-    for(int i = 0; i < 7; ++i) {
+    for(greg_weekday::value_type i = 0; i < 7; ++i) {
       greg_weekday gw(i); // weekday numbers 0-6
       teststreaming("greg_weekday full", gw, full_weekdays[i], loc);
     }

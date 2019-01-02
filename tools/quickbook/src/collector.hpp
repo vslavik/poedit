@@ -9,13 +9,13 @@
 #if !defined(BOOST_SPIRIT_QUICKBOOK_COLLECTOR_HPP)
 #define BOOST_SPIRIT_QUICKBOOK_COLLECTOR_HPP
 
-#include <string>
 #include <stack>
-#include <boost/ref.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
+#include <string>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/ref.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace quickbook
 {
@@ -32,16 +32,10 @@ namespace quickbook
             stream_ptr->flush();
             return *buffer_ptr.get();
         }
-    
-        std::ostream& get() const
-        {
-            return *stream_ptr.get();
-        }
-    
-        void clear()
-        {
-            buffer_ptr->clear();
-        }
+
+        std::ostream& get() const { return *stream_ptr.get(); }
+
+        void clear() { buffer_ptr->clear(); }
 
         void swap(std::string& other)
         {
@@ -55,8 +49,7 @@ namespace quickbook
             *buffer_ptr.get() += other;
         }
 
-    private:
-
+      private:
         boost::shared_ptr<std::string> buffer_ptr;
         boost::shared_ptr<ostream> stream_ptr;
     };
@@ -66,53 +59,35 @@ namespace quickbook
         collector();
         collector(string_stream& out);
         ~collector();
-        
+
         void push();
         void pop();
 
-        std::ostream& get() const
-        {
-            return top.get().get();
-        }
-        
-        std::string const& str() const
-        {
-            return top.get().str();
-        }
-        
-        void clear()
-        {
-            top.get().clear();
-        }
-        
-        void swap(std::string& other)
-        {
-            top.get().swap(other);
-        }
+        std::ostream& get() const { return top.get().get(); }
 
-        void append(std::string const& other)
-        {
-            top.get().append(other);
-        }
+        std::string const& str() const { return top.get().str(); }
 
-    private:
+        void clear() { top.get().clear(); }
 
+        void swap(std::string& other) { top.get().swap(other); }
+
+        void append(std::string const& other) { top.get().append(other); }
+
+      private:
         std::stack<string_stream> streams;
         boost::reference_wrapper<string_stream> main;
         boost::reference_wrapper<string_stream> top;
         string_stream default_;
     };
-    
+
     template <typename T>
-    inline collector& 
-    operator<<(collector& out, T const& val)
+    inline collector& operator<<(collector& out, T const& val)
     {
         out.get() << val;
         return out;
     }
 
-    inline collector& 
-    operator<<(collector& out, std::string const& val)
+    inline collector& operator<<(collector& out, std::string const& val)
     {
         out.append(val);
         return out;
@@ -120,4 +95,3 @@ namespace quickbook
 }
 
 #endif // BOOST_SPIRIT_QUICKBOOK_COLLECTOR_HPP
-

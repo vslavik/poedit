@@ -26,42 +26,42 @@ void expected_results()
       ".*",                          // platform
       ".*gmp.*",                     // test type(s)
       "Beta Function: Medium.*",     // test data group
-      "boost::math::beta", 2300, 1000); // test function
+      "beta", 2300, 1000); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*gmp.*",                     // test type(s)
       "Beta Function: Divergent.*",  // test data group
-      "boost::math::beta", 2200, 1000);   // test function
+      "beta", 2200, 1000);   // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
-      ".*mpfr_float_backend<18>.*",  // test type(s)
+      ".*mpfr_float_backend\\<18\\>.*",  // test type(s)
       "Beta Function: Small.*",      // test data group
-      "boost::math::beta", 1000, 750); // test function
+      "beta", 1000, 750); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "Beta Function: Small.*",      // test data group
-      "boost::math::beta", 8, 5);    // test function
+      "beta", 8, 5);    // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "Beta Function: Medium.*",     // test data group
-      "boost::math::beta", 1000, 750); // test function
+      "beta", 1000, 750); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
       "Beta Function: Divergent.*",  // test data group
-      "boost::math::beta", 1000, 700);   // test function
+      "beta", 1000, 700);   // test function
    //
    // Finish off by printing out the compiler/stdlib/platform names,
    // we do this to make it easier to mark up expected error rates.

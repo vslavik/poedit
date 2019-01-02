@@ -14,7 +14,6 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include <functional>
 #include <vector>
 
 namespace boost
@@ -22,9 +21,12 @@ namespace boost
     namespace
     {
         class TestTicket5486Pred
-            : public std::binary_function<int,int,bool>
         {
         public:
+            typedef int first_argument_type;
+            typedef int second_argument_type;
+            typedef bool result_type;
+
             explicit TestTicket5486Pred(int x) {}
             bool operator()(int,int) const { return true; }
         private:

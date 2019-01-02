@@ -142,14 +142,14 @@ int main()
       List::const_iterator   list_it (my_list.cbegin());
       Slist::const_iterator  slist_it(my_slist.cbegin());
       Set::const_reverse_iterator set_rit(my_set.crbegin());
-      MyClass *it_val(&values[NumElements-1]), *it_rbeg_val(&values[0]-1);
+      MyClass *it_val(&values[NumElements]), *it_rbeg_val(&values[0]);
 
       //Test the objects inserted in the base hook list
       for(; it_val != it_rbeg_val; --it_val, ++list_it, ++slist_it, ++set_rit){
-         if(&*list_it  != &*it_val)   return 1;
-         if(&*slist_it != &*it_val)   return 1;
-         if(&*set_rit  != &*it_val)   return 1;
-         if(my_uset.find(*it_val) == my_uset.cend())  return 1;
+         if(&*list_it  != &it_val[-1])   return 1;
+         if(&*slist_it != &it_val[-1])   return 1;
+         if(&*set_rit  != &it_val[-1])   return 1;
+         if(my_uset.find(it_val[-1]) == my_uset.cend())  return 1;
       }
    }
 

@@ -512,9 +512,9 @@ General default options go here:
 <xsl:param name="admon.graphics">1</xsl:param>
 <xsl:param name="admon.graphics.extension">.svg</xsl:param>
 <xsl:param name="draft.mode">no</xsl:param>
-<xsl:param name="admon.graphics.path">http://svn.boost.org/svn/boost/trunk/doc/src/images/</xsl:param>
-<xsl:param name="callout.graphics.path">http://svn.boost.org/svn/boost/trunk/doc/src/images/callouts/</xsl:param>
-<xsl:param name="img.src.path">http://svn.boost.org/svn/boost/trunk/doc/html/</xsl:param>
+<xsl:param name="admon.graphics.path">http://www.boost.org/doc/libs/develop/doc/src/images/</xsl:param>
+<xsl:param name="callout.graphics.path">http://www.boost.org/doc/libs/develop/doc/src/images/callouts/</xsl:param>
+<xsl:param name="img.src.path">http://www.boost.org/doc/libs/devlop/doc/html/</xsl:param>
 
 </xsl:stylesheet>
 

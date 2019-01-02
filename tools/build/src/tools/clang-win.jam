@@ -1,10 +1,10 @@
 # Copyright Vladimir Prus 2004.
+# Copyright Peter Dimov 2018
+#
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt
 # or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# Importing common is needed because the rules we inherit here depend on it.
-# That is nasty.
 import common ;
 import errors ;
 import feature ;
@@ -13,163 +13,155 @@ import msvc ;
 import os ;
 import toolset ;
 import generators ;
-import type ;
 import path ;
-import set ;
+import regex ;
 
 feature.extend-subfeature toolset clang : platform : win ;
 
-toolset.inherit-generators clang-win <toolset>clang <toolset-clang:platform>win : msvc ;
-toolset.inherit-flags clang-win : msvc : <debug-symbols>on/<debug-store>object <asynch-exceptions>off <asynch-exceptions>on : YLOPTION ;
+toolset.inherit-generators clang-win <toolset>clang <toolset-clang:platform>win : msvc : msvc.compile.c.pch msvc.compile.c++.pch ;
+toolset.inherit-flags clang-win : msvc ;
 toolset.inherit-rules clang-win : msvc ;
 
 # Override default do-nothing generators.
-generators.override clang-win.compile.c.pch   : pch.default-c-pch-generator   ;
-generators.override clang-win.compile.c++.pch : pch.default-cpp-pch-generator ;
 generators.override clang-win.compile.rc : rc.compile.resource ;
 generators.override clang-win.compile.mc : mc.compile ;
 
-toolset.flags clang-win.compile PCH_SOURCE <pch>on : <pch-source> ;
-
-toolset.flags clang-win.compile CFLAGS <debug-symbols>on/<debug-store>object : "" ;
-
-# Initializes the intel toolset for windows
-rule init ( version ? :     # the compiler version
-            command * :     # the command to invoke the compiler itself
-            options *       # Additional option: <compatibility>
-                            # either 'vc6', 'vc7', 'vc7.1'
-                            # or 'native'(default).
-          )
+if [ MATCH (--debug-(clang-(win-)?)?configuration) : [ modules.peek : ARGV ] ]
 {
-    local compatibility =
-      [ feature.get-values <compatibility> : $(options) ] ;
-    local condition = [  common.check-init-parameters clang-win
-        : version $(version) : compatibility $(compatibility) ] ;
-        
-    if ! $(compatibility)
+    local rule .notice ( messages * )
     {
-        import errors ;
-        errors.error "Please set <compatibility> property for visual studio version!" ;
+        ECHO "notice: [clang-win]" $(messages) ;
     }
-    local vc_version = [ MATCH vc([0-9]+) : $(compatibility) ] ;
-    if ! $(vc_version)
+}
+else
+{
+    local rule .notice ( messages * )
     {
-        errors.user-error "Invalid value for compatibility option:"
-            $(compatibility) ;
     }
-        
-    local m = [ MATCH ([0-9]+).* : $(version) ] ;
-    local major = $(m[1]) ;
-    
-    command = [ common.get-invocation-command clang-win : clang-cl.exe :
-        $(command) ] ;
-        
+}
+
+# [ get-option archiver : 32 : $(options) ]
+#
+# returns <archiver-32>, or <archiver>
+
+local rule get-option ( option : addr : options * )
+{
+    local r = [ feature.get-values "<$(option)-$(addr)>" : $(options) ] ;
+    r ?= [ feature.get-values "<$(option)>" : $(options) ] ;
+    return $(r) ;
+}
+
+# init
+#
+# options:
+#
+# <assembler>ml.exe (or <assembler-32>, or <assembler-64>)
+# <archiver>lib.exe
+# <manifest-tool>mt.exe
+# <resource-compiler>rc.exe
+# <mc-compiler>mc.exe
+# <idl-compiler>midl.exe
+
+rule init ( version ? : command * : options * )
+{
+    command = [ common.get-invocation-command-nodefault clang-win : clang-cl.exe : $(command) ] ;
+
+    if ! $(command)
+    {
+        errors.error "Cannot configure toolset clang-win: no 'clang-cl.exe' command found or given" ;
+    }
+
+    local compiler = "\"$(command)\"" ;
+    compiler = "$(compiler:J= )" ;
+
+    version ?= [ MATCH "version ([0-9.]+)" : [ SHELL "$(compiler) -v 2>&1" ] ] ;
+
+    .notice "using compiler '$(compiler)', version '$(version)'" ;
+
+    local condition = [  common.check-init-parameters clang-win : version $(version) ] ;
+
     common.handle-options clang-win : $(condition) : $(command) : $(options) ;
     
-    local setup ;
-    setup = [ get-visual-studio-vcvars $(vc_version) ] ; # Get visual studio vcvars bat file path
-    
-    local target_types ;
-    if [ MATCH ^(AMD64) : [ os.environ PROCESSOR_ARCHITECTURE ] ]
+    for local addr in 32 64
     {
-        target_types = x86 amd64 ;
-    }
-    else
-    {
-        target_types = x86 x86_amd64 ;
-    }
-    
-    for local c in $(target_types)
-    {
-        local cpu-conditions ;
-        local setup-call ;
-        setup-call = "call \""$(setup)"\" $(c) > nul " ;
-        cpu-conditions = $(condition)/$(.cpu-arch-$(c)) ;
-        
-        if [ os.name ] = NT
+        local config = [ SPLIT_BY_CHARACTERS [ SHELL "$(compiler) -m$(addr) -### foo.obj /link 2>&1" ] : "\n" ] ;
+
+        local match = 1 ;
+        local items ;
+
+        while $(match)
         {
-            setup-call = $(setup-call)"
-    " ;
-        }
-        else
-        {
-            setup-call = "cmd /S /C "$(setup-call)" \"&&\" " ;
-        }
-        
-        if $(.debug-configuration)
-        {
-            for local cpu-condition in $(cpu-conditions)
+            match = [ MATCH "^ *(\"[^\"]*\")(.*)" : $(config) ] ;
+
+            if $(match)
             {
-                ECHO "notice: [clang-cfg] condition: '$(cpu-condition)', setup: '$(setup-call)'" ;
+                items += $(match[1]) ;
+                config = $(match[2]) ;
             }
         }
-        
-        local compiler ;
-        compiler = [ path.native $(command) ] ;
-        compiler = "\"$(compiler)\"" ;
 
-        toolset.flags clang-win.compile .CC $(cpu-conditions) : $(setup-call)$(compiler) ;
-        toolset.flags clang-win.link .LD $(cpu-conditions) : $(setup-call)link /nologo ;
-        toolset.flags clang-win.archive .LD $(cpu-conditions) : $(setup-call)link /lib /nologo ;
-        toolset.flags clang-win.link .MT $(cpu-conditions) : $(setup-call)mt -nologo ;
-        toolset.flags clang-win.compile .MC $(cpu-conditions) : $(setup-call)mc ;
-        toolset.flags clang-win.compile .RC $(cpu-conditions) : $(setup-call)rc ;
+        local ml = [ regex.replace $(items[1]) "x64\\\\+link\\.exe" "x64\\ml64.exe" ] ;
+        ml = [ regex.replace $(ml) "x86\\\\+link\\.exe" "x86\\ml.exe" ] ;
+
+        if ! [ MATCH "(ml\\.exe)" "(ml64\\.exe)" : $(ml) ]
+        {
+            ml = ;
+        }
+
+        local assembler = [ get-option "assembler" : $(addr) : $(options) ] ;
+        assembler ?= $(ml) ;
+        if $(addr) = 32 { assembler ?= ml.exe ; } else { assembler ?= ml64.exe ; }
+
+        local link = [ regex.replace $(items[1]) "\\\\+HostX64\\\\+x86\\\\+" "\\HostX86\\x86\\" ] ;
+
+        local archiver = [ get-option "archiver" : $(addr) : $(options) ] ;
+        archiver ?= "$(link) /lib" ;
+        archiver ?= lib.exe ;
+
+        .notice "$(addr):" "using assembler '$(assembler)'" ;
+        .notice "$(addr):" "using archiver '$(archiver)'" ;
+
+        local manifest-tool = [ get-option "manifest-tool" : $(addr) : $(options) ] ;
+        local resource-compiler = [ get-option "resource-compiler" : $(addr) : $(options) ] ;
+        local mc-compiler = [ get-option "mc-compiler" : $(addr) : $(options) ] ;
+        local idl-compiler = [ get-option "idl-compiler" : $(addr) : $(options) ] ;
+
+        for local item in $(items)
+        {
+            match = [ MATCH "\"-libpath:(.*)\\\\+Lib\\\\.*\\\\um\\\\+x(.*)\"" : $(item) ] ;
+
+            if $(match)
+            {
+                local sdk-path = "$(match[1])\\bin\\x$(match[2])" ;
+                .notice "$(addr):" "using SDK path '$(sdk-path)'" ;
+
+                manifest-tool ?= "\"$(sdk-path)\\mt.exe\"" ;
+                resource-compiler ?= "\"$(sdk-path)\\rc.exe\"" ;
+                mc-compiler ?= "\"$(sdk-path)\\mc.exe\"" ;
+                idl-compiler ?= "\"$(sdk-path)\\midl.exe\"" ;
+            }
+        }
+
+        manifest-tool ?= mt.exe ;
+        resource-compiler ?= rc.exe ;
+        mc-compiler ?= mc.exe ;
+        idl-compiler ?= midl.exe ;
+
+        .notice "$(addr):" "using manifest-tool '$(manifest-tool)'" ;
+        .notice "$(addr):" "using resource-compiler '$(resource-compiler)'" ;
+        .notice "$(addr):" "using mc-compiler '$(mc-compiler)'" ;
+        .notice "$(addr):" "using idl-compiler '$(idl-compiler)'" ;
+
+        local cond = "$(condition)/<architecture>/<address-model>$(addr)" "$(condition)/<architecture>x86/<address-model>$(addr)" ;
+        if $(addr) = 32 { cond += "$(condition)/<architecture>/<address-model>" ; }
+
+        toolset.flags clang-win.compile .CC $(cond) : $(compiler) -m$(addr) ;
+        toolset.flags clang-win.link .LD $(cond) : $(compiler) -m$(addr) /link "/incremental:no" ;
+        toolset.flags clang-win.compile .ASM $(cond) : $(assembler) -nologo ;
+        toolset.flags clang-win.archive .LD $(cond) : $(archiver) /nologo ;
+        toolset.flags clang-win.link .MT $(cond) : $(manifest-tool) -nologo ;
+        toolset.flags clang-win.compile .MC $(cond) : $(mc-compiler) ;
+        toolset.flags clang-win.compile .RC $(cond) : $(resource-compiler) /nologo ;
+        toolset.flags clang-win.compile .IDL $(cond) : $(idl-compiler) ;
     }
-
-
-    local C++FLAGS ;
-    
-    if $(vc_version) = 10
-    {
-        C++FLAGS += -fmsc-version=1600 ;
-    }
-    else if $(vc_version) = 11
-    {
-        C++FLAGS += -fmsc-version=1700 ;
-    }
-    else if $(vc_version) = 12
-    {
-        C++FLAGS += -fmsc-version=1800 ;
-    }
-
-    toolset.flags clang-win CFLAGS $(condition) : $(C++FLAGS) ;
-
-    msvc.configure-version-specific clang-win : $(vc_version) : $(condition) ;
 }
-
-local rule get-visual-studio-vcvars ( version )
-{
-    local env_variable_name ;
-    env_variable_name = "VS"$(version:U)"0COMNTOOLS" ;
-    
-    local vc-path = [ os.environ $(env_variable_name) ] ;
-    vc-path = [ path.join $(vc-path) "../../VC/vcvarsall.bat" ] ;
-    path.native $(vc-path) ;
-}
-
-
-if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
-{
-    .debug-configuration = true ;
-}
-
-# Copied from msvc.jam
-# Supported CPU architectures.
-.cpu-arch-x86 =
-    <architecture>/<address-model>
-    <architecture>/<address-model>32
-    <architecture>x86/<address-model>
-    <architecture>x86/<address-model>32 ;
-
-.cpu-arch-amd64 =
-    <architecture>/<address-model>64
-    <architecture>x86/<address-model>64 ;
-
-.cpu-arch-x86_amd64 =
-    <architecture>/<address-model>64
-    <architecture>x86/<address-model>64 ;
-
-# toolset.flags clang-win.link LIBRARY_OPTION <toolset>clang : "" ;
-
-toolset.flags clang-win YLOPTION ;
-

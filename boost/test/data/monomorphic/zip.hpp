@@ -20,6 +20,9 @@
 #include <boost/test/data/monomorphic/fwd.hpp>
 #include <boost/test/data/monomorphic/sample_merge.hpp>
 
+#include <boost/core/enable_if.hpp>
+#include <boost/mpl/identity.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 
@@ -70,33 +73,50 @@ public:
         dataset2_iter   m_iter2;
     };
 
-    typedef typename iterator::iterator_sample   sample;
-
     //! Constructor
     //!
     //! The datasets are moved and not copied.
-    zip( DataSet1&& ds1, DataSet2&& ds2, data::size_t size )
+    zip( DataSet1&& ds1, DataSet2&& ds2/*, data::size_t size*/ )
     : m_ds1( std::forward<DataSet1>( ds1 ) )
     , m_ds2( std::forward<DataSet2>( ds2 ) )
-    , m_size( size )
+    //, m_size( size )
     {}
 
     //! Move constructor
     zip( zip&& j )
     : m_ds1( std::forward<DataSet1>( j.m_ds1 ) )
     , m_ds2( std::forward<DataSet2>( j.m_ds2 ) )
-    , m_size( j.m_size )
+    //, m_size( j.m_size )
     {}
 
     // dataset interface
-    data::size_t    size() const    { return m_size; }
+    data::size_t    size() const    { return zip_size(); }
     iterator        begin() const   { return iterator( m_ds1.begin(), m_ds2.begin() ); }
 
 private:
     // Data members
     DataSet1        m_ds1;
     DataSet2        m_ds2;
-    data::size_t    m_size;
+    //data::size_t    m_size;
+  
+  
+    //! Handles the sise of the resulting zipped dataset.
+    data::size_t zip_size() const
+    {
+        data::size_t ds1_size = m_ds1.size();
+        data::size_t ds2_size = m_ds2.size();
+
+        if( ds1_size == ds2_size )
+            return ds1_size;
+
+        if( ds1_size == 1 || ds1_size.is_inf() )
+            return ds2_size;
+
+        if( ds2_size == 1  || ds2_size.is_inf() )
+            return ds1_size;
+
+        BOOST_TEST_DS_ERROR( "Can't zip datasets of different sizes" );
+    }
 };
 
 //____________________________________________________________________________//
@@ -104,32 +124,6 @@ private:
 //! Zipped datasets results in a dataset.
 template<typename DataSet1, typename DataSet2>
 struct is_dataset<zip<DataSet1,DataSet2>> : mpl::true_ {};
-
-//____________________________________________________________________________//
-
-namespace ds_detail {
-
-//! Handles the sise of the resulting zipped dataset.
-template<typename DataSet1, typename DataSet2>
-inline data::size_t
-zip_size( DataSet1&& ds1, DataSet2&& ds2 )
-{
-    data::size_t ds1_size = ds1.size();
-    data::size_t ds2_size = ds2.size();
-
-    if( ds1_size == ds2_size )
-        return ds1_size;
-
-    if( ds1_size == 1 || ds1_size.is_inf() )
-        return ds2_size;
-
-    if( ds2_size == 1  || ds2_size.is_inf() )
-        return ds1_size;
-
-    BOOST_TEST_DS_ERROR( "Can't zip datasets of different sizes" );
-}
-
-} // namespace ds_detail
 
 //____________________________________________________________________________//
 
@@ -153,8 +147,8 @@ inline typename boost::lazy_enable_if_c<is_dataset<DataSet1>::value && is_datase
 operator^( DataSet1&& ds1, DataSet2&& ds2 )
 {
     return zip<DataSet1,DataSet2>( std::forward<DataSet1>( ds1 ),
-                                   std::forward<DataSet2>( ds2 ),
-                                   ds_detail::zip_size( ds1, ds2 ) );
+                                   std::forward<DataSet2>( ds2 )/*,
+                                   ds_detail::zip_size( ds1, ds2 )*/ );
 }
 
 //____________________________________________________________________________//

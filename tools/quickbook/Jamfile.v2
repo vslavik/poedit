@@ -9,13 +9,29 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+project quickbook
+    : requirements
+        <toolset>gcc:<c++-template-depth>300
+        <toolset>darwin:<c++-template-depth>300
+        <toolset>gcc:<cflags>-g0
+        <toolset>darwin:<cflags>-g0
+        <toolset>msvc:<cflags>/wd4709
+        <warnings>all
+        <define>BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
+    : default-build
+        <cxxstd>0x
+    ;
+
 import boostcpp ;
 import path ;
 import option ;
 
 local DIST_DIR = [ option.get distdir ] ;
-DIST_DIR ?= [ path.join $(BOOST_ROOT) dist ] ;
-DIST_DIR = [ path.root $(DIST_DIR) [ path.pwd ] ] ;
+if $(DIST_DIR) {
+    DIST_DIR = [ path.root [ path.make $(DIST_DIR) ] [ path.pwd ] ] ;
+} else {
+    DIST_DIR = [ path.join $(BOOST_ROOT) dist ] ;
+}
 local DIST_BIN = [ path.join $(DIST_DIR) bin ] ;
 
 # Install quickbook by default.

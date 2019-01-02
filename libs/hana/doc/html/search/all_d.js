@@ -28,7 +28,7 @@ var searchData=
   ['make_5ftuple',['make_tuple',['../structboost_1_1hana_1_1tuple.html#af3c175cfb83276339f91e867d738a2e6',1,'boost::hana::tuple']]],
   ['make_5ftype',['make_type',['../structboost_1_1hana_1_1type.html#a0c0e00c0ffe63703f3a04960d13c7b1c',1,'boost::hana::type']]],
   ['map',['map',['../structboost_1_1hana_1_1map.html',1,'boost::hana']]],
-  ['map',['map',['../structboost_1_1hana_1_1map.html#abd092d2810258d4f3bedb85c9dd4c6fd',1,'boost::hana::map::map()=default'],['../structboost_1_1hana_1_1map.html#a11b676101f99adfaa6b626367541e238',1,'boost::hana::map::map(map const &amp;other)=default'],['../structboost_1_1hana_1_1map.html#ac5841d20f15b8e4013da2153348c8a7a',1,'boost::hana::map::map(map &amp;&amp;other)=default']]],
+  ['map',['map',['../structboost_1_1hana_1_1map.html#a1ee432be0bd10f08a637a437e311e4e2',1,'boost::hana::map::map()=default'],['../structboost_1_1hana_1_1map.html#a943219d1c9692938167639d8ad2525b8',1,'boost::hana::map::map(map const &amp;other)=default'],['../structboost_1_1hana_1_1map.html#a675bb30af155b40f72cbe8607eefbe4e',1,'boost::hana::map::map(map &amp;&amp;other)=default'],['../structboost_1_1hana_1_1map.html#a4a4f472e036abf9bcbda81e831f46e32',1,'boost::hana::map::map(P &amp;&amp;...pairs)']]],
   ['map_2ehpp',['map.hpp',['../map_8hpp.html',1,'']]],
   ['map_2ehpp',['map.hpp',['../fwd_2map_8hpp.html',1,'']]],
   ['map_5ftag',['map_tag',['../structboost_1_1hana_1_1map__tag.html',1,'boost::hana']]],

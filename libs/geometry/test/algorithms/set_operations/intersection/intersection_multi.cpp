@@ -3,18 +3,16 @@
 
 // Copyright (c) 2010-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2016.
+// Modifications copyright (c) 2016, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <iostream>
 #include <string>
-
-// If defined, tests are run without rescaling-to-integer or robustness policy
-// This multi_intersection currently contains no tests for double then failing
-// #define BOOST_GEOMETRY_NO_ROBUSTNESS
-
-// #define BOOST_GEOMETRY_DEBUG_ASSEMBLE
 
 #include "test_intersection.hpp"
 #include <algorithms/test_overlay.hpp>
@@ -29,6 +27,15 @@
 #include <boost/geometry/geometries/multi_polygon.hpp>
 
 #include <boost/geometry/io/wkt/read.hpp>
+
+#define TEST_INTERSECTION(caseid, clips, points, area) \
+    (test_one<Polygon, MultiPolygon, MultiPolygon>) \
+    ( #caseid, caseid[0], caseid[1], clips, points, area)
+
+#define TEST_INTERSECTION_IGNORE(caseid, clips, points, area) \
+    { ut_settings ignore_validity; ignore_validity.test_validity = false; \
+    (test_one<Polygon, MultiPolygon, MultiPolygon>) \
+    ( #caseid, caseid[0], caseid[1], clips, points, area, ignore_validity); }
 
 template <typename Ring, typename Polygon, typename MultiPolygon>
 void test_areal()
@@ -104,10 +111,10 @@ void test_areal()
         3, 16, 6.15);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_77_multi",
         case_77_multi[0], case_77_multi[1],
-        5, 33, 9);
+        5, 27, 9.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_78_multi",
         case_78_multi[0], case_78_multi[1],
-        1, 0, 22); // In "get_turns" using partitioning, #points went from 17 to 16
+        1, 16, 22.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_101_multi",
         case_101_multi[0], case_101_multi[1],
         4, 22, 4.75);
@@ -123,24 +130,67 @@ void test_areal()
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_107_multi_inv_b",
         case_107_multi[1], case_107_multi[2],
         3, 13, 3.0);
-    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_1",
-        case_recursive_boxes_1[0], case_recursive_boxes_1[1],
-        10, 97, 47.0);
+
+#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
+    {
+        ut_settings ignore_validity; ignore_validity.test_validity = false;
+
+        // One intersection is missing (by rescaling)
+        test_one<Polygon, MultiPolygon, MultiPolygon>("case_108_multi",
+            case_108_multi[0], case_108_multi[1],
+            5, 33, 7.5,
+            ignore_validity);
+    }
+#endif
+
+    TEST_INTERSECTION(case_123_multi, 3, 13, 1.875);
+    TEST_INTERSECTION(case_124_multi, 2, 13, 2.0625);
+    TEST_INTERSECTION(case_125_multi, 3, 17, 2.1);
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_126_multi, 5, 27, 9.0);
+#else
+    TEST_INTERSECTION_IGNORE(case_126_multi, 3, 23, 9.0);
+#endif
+    TEST_INTERSECTION(case_127_multi, 3, 19, 24.0);
+    TEST_INTERSECTION(case_128_multi, 2, 26, 75.5);
+    TEST_INTERSECTION(case_129_multi, 1, 20, 20.5);
+    TEST_INTERSECTION(case_130_multi, 2, 30, 39.0);
+
+    TEST_INTERSECTION(case_133_multi, 2, 23, 40.625);
+    TEST_INTERSECTION(case_134_multi, 1, 23, 42.0);
+    TEST_INTERSECTION(case_135_multi, 1, 12, 7.0);
+    TEST_INTERSECTION(case_136_multi, 1, 12, 6.5);
+    TEST_INTERSECTION(case_137_multi, 1, 12, 6.5);
+
+    TEST_INTERSECTION(case_138_multi, 2, 23, 40.4);
+    TEST_INTERSECTION(case_139_multi, 2, 23, 40.546875);
+    TEST_INTERSECTION(case_140_multi, 2, 23, 40.546875);
+    TEST_INTERSECTION(case_141_multi, 3, -1, 74.5);
+
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_1, 10, 89, 47.0);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_1, 8, 97, 47.0);
+#endif
+
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_2",
         case_recursive_boxes_2[0], case_recursive_boxes_2[1],
-        1, 47, 90.0); // Area from SQL Server
+        1, 50, 90.0); // Area from SQL Server
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
         case_recursive_boxes_3[0], case_recursive_boxes_3[1],
-        19, 87, 12.5); // Area from SQL Server
+        19, 84, 12.5); // Area from SQL Server
 
-    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_4",
-        case_recursive_boxes_4[0], case_recursive_boxes_4[1],
-        13, 157, 67.0); // Area from SQL Server
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_4, 13, 158, 67.0);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_4, 8, 178, 67.0);
+#endif
 
     // Fixed by replacing handle_tangencies in less_by_segment_ratio sort order
+    // Should contain 6 output polygons
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_6",
         case_recursive_boxes_6[0], case_recursive_boxes_6[1],
-        6, 47, 19.0);
+        6, 42, 19.0);
 
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_7",
         case_recursive_boxes_7[0], case_recursive_boxes_7[1],
@@ -176,7 +226,7 @@ void test_areal()
         9, 43, 10.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_17",
         case_recursive_boxes_17[0], case_recursive_boxes_17[1],
-        6, -1, 7.75);
+        7, -1, 7.75);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_18",
         case_recursive_boxes_18[0], case_recursive_boxes_18[1],
         0, 0, 0.0);
@@ -238,6 +288,86 @@ void test_areal()
         case_recursive_boxes_37[0], case_recursive_boxes_37[1],
         2, 0, 1.0);
 
+    TEST_INTERSECTION(case_recursive_boxes_39, 3, 0, 3.0);
+    TEST_INTERSECTION(case_recursive_boxes_40, 1, 0, 1.0);
+    TEST_INTERSECTION(case_recursive_boxes_41, 1, 0, 23.5);
+    TEST_INTERSECTION(case_recursive_boxes_42, 1, 29, 95.0);
+    TEST_INTERSECTION(case_recursive_boxes_43, 2, 0, 22.5);
+    TEST_INTERSECTION(case_recursive_boxes_44, 2, 0, 3.0);
+    TEST_INTERSECTION(case_recursive_boxes_45, 7, 0, 12.0);
+    TEST_INTERSECTION(case_recursive_boxes_46, 6, -1, 7.0);
+    TEST_INTERSECTION(case_recursive_boxes_47, 1, 5, 1.0);
+    TEST_INTERSECTION(case_recursive_boxes_48, 1, 5, 1.0);
+    TEST_INTERSECTION(case_recursive_boxes_49, 7, 57, 20.0);
+    TEST_INTERSECTION(case_recursive_boxes_50, 9, 62, 26.0);
+    TEST_INTERSECTION(case_recursive_boxes_51, 14, 74, 19.0);
+    TEST_INTERSECTION(case_recursive_boxes_52, 8, -1, 22.0);
+    TEST_INTERSECTION(case_recursive_boxes_53, 1, -1, 19.75);
+    TEST_INTERSECTION(case_recursive_boxes_54, 3, -1, 10.0);
+    TEST_INTERSECTION(case_recursive_boxes_55, 5, -1, 2.25);
+    TEST_INTERSECTION(case_recursive_boxes_56, 1, -1, 0.5);
+    TEST_INTERSECTION(case_recursive_boxes_57, 10, -1, 9.5);
+    TEST_INTERSECTION(case_recursive_boxes_58, 1, -1, 0.25);
+    TEST_INTERSECTION(case_recursive_boxes_59, 8, -1, 8.25);
+    TEST_INTERSECTION(case_recursive_boxes_60, 8, -1, 10.0);
+    TEST_INTERSECTION(case_recursive_boxes_61, 2, -1, 20.0);
+    TEST_INTERSECTION(case_recursive_boxes_62, 9, -1, 10.5);
+
+    TEST_INTERSECTION(case_recursive_boxes_63, 11, -1, 5.75);
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_64, 5, -1, 17.25);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_64, 4, -1, 17.25);
+#endif
+    TEST_INTERSECTION(case_recursive_boxes_65, 3, -1, 17.25);
+
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_66, 4, -1, 16.0);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_66, 2, -1, 16.0);
+#endif
+
+    TEST_INTERSECTION(case_recursive_boxes_67, 5, -1, 2.5);
+    TEST_INTERSECTION(case_recursive_boxes_68, 8, -1, 9.5);
+    TEST_INTERSECTION(case_recursive_boxes_69, 6, -1, 3.25);
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_70, 6, -1, 18.5);
+#else
+    // Misses a necessary self-turn and therefore a ring
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_70, 3, -1, 18.0);
+#endif
+
+    TEST_INTERSECTION(case_recursive_boxes_71, 3, -1, 1.75);
+    TEST_INTERSECTION(case_recursive_boxes_72, 8, -1, 4.5);
+    TEST_INTERSECTION(case_recursive_boxes_73, 3, -1, 18.5);
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_74, 3, -1, 20.25);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_74, 2, -1, 20.25);
+#endif
+
+    TEST_INTERSECTION(case_recursive_boxes_75, 5, -1, 16.75);
+    TEST_INTERSECTION(case_recursive_boxes_76, 2, -1, 18.25);
+    TEST_INTERSECTION(case_recursive_boxes_77, 5, -1, 3.5);
+    TEST_INTERSECTION(case_recursive_boxes_78, 9, -1, 8.0);
+    TEST_INTERSECTION(case_recursive_boxes_79, 5, -1, 9.0);
+    TEST_INTERSECTION(case_recursive_boxes_80, 1, -1, 0.25);
+    TEST_INTERSECTION(case_recursive_boxes_81, 5, -1, 3.75);
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(case_recursive_boxes_82, 5, -1, 8.5);
+#else
+    TEST_INTERSECTION_IGNORE(case_recursive_boxes_82, 3, -1, 8.5);
+#endif
+
+    TEST_INTERSECTION(case_recursive_boxes_83, 5, -1, 10.25);
+    TEST_INTERSECTION(case_recursive_boxes_84, 1, -1, 0.5);
+#ifdef BOOST_GEOMETRY_NO_ROBUSTNESS
+    TEST_INTERSECTION(case_recursive_boxes_85, 1, -1, 0.25);
+#endif
+    TEST_INTERSECTION(case_recursive_boxes_86, 0, -1, 0.0);
+    TEST_INTERSECTION(case_recursive_boxes_87, 0, -1, 0.0);
+    TEST_INTERSECTION(case_recursive_boxes_88, 4, -1, 3.5);
+
     test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_a",
         ggl_list_20120915_h2[0], ggl_list_20120915_h2[1],
         2, 10, 6.0); // Area from SQL Server
@@ -249,13 +379,31 @@ void test_areal()
         ticket_9081[0], ticket_9081[1],
         2, 10, 0.0019812556);
 
+    // qcc-arm reports 1.7791215549400884e-14
     test_one<Polygon, MultiPolygon, MultiPolygon>("ticket_11018",
         ticket_11018[0], ticket_11018[1],
-        1, 4, 1.7791170511070893e-14);
+        1, 4,
+#ifdef BOOST_GEOMETRY_NO_ROBUSTNESS
+        9.896437631745599e-09
+#else
+        1.7791170511070893e-14, ut_settings(0.001)
+#endif
 
-    test_one<Polygon, MultiPolygon, MultiPolygon>("mysql_1",
-        mysql_1[0], mysql_1[1],
+    );
+
+    TEST_INTERSECTION(ticket_12503, 2, 13, 17.375);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("mysql_23023665_7",
+        mysql_23023665_7[0], mysql_23023665_7[1],
         2, 11, 9.80505786783);
+
+#ifndef BOOST_GEOMETRY_NO_SELF_TURNS
+    TEST_INTERSECTION(mysql_23023665_12, 2, 0, 11.812440191387557);
+#else
+    TEST_INTERSECTION_IGNORE(mysql_23023665_12, 1, -1, 11.812440191387557);
+#endif
+
+    TEST_INTERSECTION(mysql_regression_1_65_2017_08_31, 2, -1, 29.9022122);
 }
 
 template <typename Polygon, typename MultiPolygon, typename Box>
@@ -274,24 +422,24 @@ void test_linear()
     typedef typename bg::point_type<MultiLineString>::type point;
     test_one<point, MultiLineString, MultiLineString>("case_multi_ml_ml_1",
         "MULTILINESTRING((0 0,1 1))", "MULTILINESTRING((0 1,1 0))",
-        1, 1, 0);
+        1, 1, 0.0);
     test_one<point, MultiLineString, MultiLineString>("case_multi_ml_ml_2",
         "MULTILINESTRING((0 0,1 1),(0.5 0,1.5 1))", "MULTILINESTRING((0 1,1 0),(0.5 1,1.5 0))",
-        4, 4, 0);
+        4, 4, 0.0);
 
     test_one<point, LineString, MultiLineString>("case_multi_l_ml",
         "LINESTRING(0 0,1 1)", "MULTILINESTRING((0 1,1 0),(0.5 1,1.5 0))",
-        2, 2, 0);
+        2, 2, 0.0);
     test_one<point, MultiLineString, LineString>("case_multi_ml_l",
         "MULTILINESTRING((0 1,1 0),(0.5 1,1.5 0))", "LINESTRING(0 0,1 1)",
-        2, 2, 0);
+        2, 2, 0.0);
 
     test_one<LineString, MultiLineString, Box>("case_multi_ml_b",
         "MULTILINESTRING((0 0,3 3)(1 0,4 3))", "POLYGON((1 1,3 2))",
-        2, 4, 2 * std::sqrt(2.0));
+        2, 4, 2.0 * std::sqrt(2.0));
     test_one<LineString, Box, MultiLineString>("case_multi_b_ml",
         "POLYGON((1 1,3 2))", "MULTILINESTRING((0 0,3 3)(1 0,4 3))",
-        2, 4, 2 * std::sqrt(2.0));
+        2, 4, 2.0 * std::sqrt(2.0));
 }
 
 template <typename P>

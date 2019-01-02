@@ -29,6 +29,8 @@ namespace utf = boost::unit_test;
 
 #define EXPR_TYPE( expr ) ( assertion::seed() ->* expr )
 
+
+#if !defined(BOOST_TEST_FWD_ITERABLE_CXX03)
 // some broken compilers do not implement properly decltype on expressions
 // partial implementation of is_forward_iterable when decltype not available
 struct not_fwd_iterable_1 {
@@ -51,19 +53,54 @@ struct not_fwd_iterable_3 {
   bool size();
 };
 
+// this one does not have const_iterator, but should be forward iterable
+struct fwd_iterable_4 {
+  typedef int value_type;
+  struct iterator {
+    typedef unsigned int value_type;
+  };
+  iterator begin();
+  iterator end();
+  bool size();
+};
+
+struct fwd_iterable_custom {
+  typedef std::vector<int>::const_iterator custom_iterator; // named "exotic" on purpose
+
+  custom_iterator begin() const { return values.begin(); }
+  custom_iterator end() const { return values.end(); }
+
+#if !defined(BOOST_MSVC) || (BOOST_MSVC_FULL_VER > 180040629)
+#define MY_TEST_HAS_INIT_LIST
+  fwd_iterable_custom(std::initializer_list<int> ilist) : values{ilist}
+  {}
+#else
+  fwd_iterable_custom(int v1, int v2, int v3) {
+    values.push_back(v1);
+    values.push_back(v2);
+    values.push_back(v3);
+  }
+#endif
+private:
+  std::vector<int> values;
+};
+
 BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
 {
   {
     typedef std::vector<int> type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
     // should also work for references, but from is_forward_iterable
     typedef std::vector<int>& type;
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
 
@@ -71,21 +108,27 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     typedef std::list<int> type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
     typedef std::map<int, int> type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
     typedef std::set<int, int> type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
 
@@ -94,44 +137,103 @@ BOOST_AUTO_TEST_CASE( test_forward_iterable_concept )
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
     typedef not_fwd_iterable_1 type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
+
+
 
   {
     typedef not_fwd_iterable_2 type;
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
     typedef not_fwd_iterable_3 type;
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
+  {
+    typedef fwd_iterable_4 type;
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
+    BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
+  }
+
+  {
+    // for this one we should be able to get the size
+    typedef fwd_iterable_custom type;
+    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
+    BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
+
+#ifdef MY_TEST_HAS_INIT_LIST
+    fwd_iterable_custom a{3,4,5};
+#else
+    fwd_iterable_custom a(3,4,5);
+#endif
+    BOOST_TEST( utf::bt_iterator_traits<fwd_iterable_custom>::size(a) == 3 );
+  }
   {
     typedef char type;
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
     BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
   }
 
   {
-    // tables are not in the forward_iterable concept
+    // C-tables are in the forward_iterable concept, but are not containers
     typedef int type[10];
     BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
-    BOOST_CHECK_MESSAGE(!utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
-    BOOST_CHECK_MESSAGE(!utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
+    BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(!utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
+  }
+
+  {
+    // basic_cstring should be forward iterable and container
+    typedef boost::unit_test::basic_cstring<char> type;
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type>::value, "has_member_end failed");
+    BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type >::value, "is_container_forward_iterable failed");
+
+    typedef boost::unit_test::basic_cstring<const char> type2;
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_size<type2>::value, "has_member_size failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_begin<type2>::value, "has_member_begin failed");
+    BOOST_CHECK_MESSAGE(utf::ut_detail::has_member_end<type2>::value, "has_member_end failed");
+    BOOST_CHECK_MESSAGE(utf::is_forward_iterable< type2 >::value, "is_forward_iterable failed");
+    BOOST_CHECK_MESSAGE(utf::is_container_forward_iterable< type2 >::value, "is_container_forward_iterable failed");
   }
 }
+
+
+//is_container_forward_iterable_impl
+#endif
 
 BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
 {
@@ -146,7 +248,7 @@ BOOST_AUTO_TEST_CASE( test_basic_value_expression_construction )
     {
         predicate_result const& res = EXPR_TYPE( 0 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
     }
 
     {
@@ -315,7 +417,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
 
         predicate_result const& res = EXPR_TYPE( obj ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)Testee is false]" );
+        BOOST_TEST( res.message() == " ['Testee' evaluates to false]" );
         BOOST_TEST( Testee::s_copy_counter == expected_copy_count );
     }
 
@@ -325,7 +427,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
 
         predicate_result const& res = EXPR_TYPE( obj ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)Testee is false]" );
+        BOOST_TEST( res.message() == " ['Testee' evaluates to false]" );
         BOOST_TEST( Testee::s_copy_counter == expected_copy_count );
     }
 
@@ -334,7 +436,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
 
         predicate_result const& res = EXPR_TYPE( get_obj() ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)Testee is false]" );
+        BOOST_TEST( res.message() == " ['Testee' evaluates to false]" );
         BOOST_TEST( Testee::s_copy_counter == expected_copy_count );
     }
 
@@ -343,7 +445,7 @@ BOOST_AUTO_TEST_CASE( test_objects )
 
         predicate_result const& res = EXPR_TYPE( get_const_obj() ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)Testee is false]" );
+        BOOST_TEST( res.message() == " ['Testee' evaluates to false]" );
         BOOST_TEST( Testee::s_copy_counter == expected_copy_count );
     }
 
@@ -396,7 +498,7 @@ BOOST_AUTO_TEST_CASE( test_pointers )
 
         predicate_result const& res = EXPR_TYPE( *ptr ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)Testee is false]" );
+        BOOST_TEST( res.message() == " ['Testee' evaluates to false]" );
     }
 
     {
@@ -425,7 +527,7 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j = 0 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
     }
 
@@ -434,7 +536,7 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j -= 5 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
     }
 
@@ -443,7 +545,7 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j *= 0 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
     }
 
@@ -452,7 +554,7 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j /= 10 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
     }
 
@@ -461,7 +563,7 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j %= 2 ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
     }
 
@@ -470,9 +572,136 @@ BOOST_AUTO_TEST_CASE( test_mutating_ops )
 
         predicate_result const& res = EXPR_TYPE( j ^= j ).evaluate();
         BOOST_TEST( !res );
-        BOOST_TEST( res.message() == " [(bool)0 is false]" );
+        BOOST_TEST( res.message() == " ['0' evaluates to false]" );
         BOOST_TEST( j == 0 );
    }
+}
+
+BOOST_AUTO_TEST_CASE( test_specialized_comparator_string )
+{
+    using namespace boost::test_tools;
+
+    {
+        std::string s("abc");
+
+        predicate_result const& res = EXPR_TYPE( s == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( s == "abc" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( std::string("abc") == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( "abc" == std::string("a") ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( std::string("abc") == std::string("a") ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( test_comparison_with_arrays )
+{
+    using namespace boost::test_tools;
+
+    {
+        char c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( c_string_array == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( c_string_array == "abc" );
+    }
+
+    {
+        char c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( "a" == c_string_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [a != abc]" );
+        BOOST_TEST( "abc" == c_string_array );
+    }
+
+    {
+        char const c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( c_string_array == "a" ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [abc != a]" );
+        BOOST_TEST( c_string_array == "abc" );
+    }
+
+    {
+        char const c_string_array[] = "abc";
+
+        predicate_result const& res = EXPR_TYPE( "a" == c_string_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == " [a != abc]" );
+        BOOST_TEST( "abc" == c_string_array );
+    }
+
+
+    {
+        long int c_long_array[] = {3,4,7};
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( c_long_array == v_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 4 != 7. \nMismatch at position 2: 7 != 4. " );
+
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int c_long_array[] = {3,4,7};
+
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( v_long_array == c_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 7 != 4. \nMismatch at position 2: 4 != 7. " );
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int const c_long_array[] = {3,4,7};
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( c_long_array == v_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 4 != 7. \nMismatch at position 2: 7 != 4. " );
+
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
+    {
+        long int const c_long_array[] = {3,4,7};
+
+        std::vector<long int> v_long_array(c_long_array, c_long_array + sizeof(c_long_array)/sizeof(c_long_array[0]));
+        std::swap(v_long_array[1], v_long_array[2]);
+
+        predicate_result const& res = EXPR_TYPE( v_long_array == c_long_array ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == ". \nMismatch at position 1: 7 != 4. \nMismatch at position 2: 4 != 7. " );
+        std::swap(v_long_array[1], v_long_array[2]);
+        BOOST_TEST( c_long_array == v_long_array );
+    }
+
 }
 
 // EOF

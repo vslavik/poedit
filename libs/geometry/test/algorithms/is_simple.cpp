@@ -1,9 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -12,36 +13,7 @@
 #define BOOST_TEST_MODULE test_is_simple
 #endif
 
-#include <iostream>
-#include <string>
-
-#include <boost/assert.hpp>
-#include <boost/variant/variant.hpp>
-
-#include <boost/test/included/unit_test.hpp>
-
-#include <boost/geometry/geometries/point_xy.hpp>
-#include <boost/geometry/geometries/segment.hpp>
-#include <boost/geometry/geometries/linestring.hpp>
-#include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/geometries/box.hpp>
-#include <boost/geometry/geometries/multi_point.hpp>
-#include <boost/geometry/geometries/multi_linestring.hpp>
-#include <boost/geometry/geometries/multi_polygon.hpp>
-
-#include <boost/geometry/strategies/strategies.hpp>
-
-#include <boost/geometry/io/wkt/wkt.hpp>
-
-#include <boost/geometry/algorithms/intersection.hpp>
-#include <boost/geometry/algorithms/is_valid.hpp>
-#include <boost/geometry/algorithms/is_simple.hpp>
-
-#include <from_wkt.hpp>
-
-#ifdef BOOST_GEOMETRY_TEST_DEBUG
-#include "pretty_print_geometry.hpp"
-#endif
+#include "test_is_simple.hpp"
 
 
 namespace bg = ::boost::geometry;
@@ -58,41 +30,6 @@ typedef bg::model::multi_point<point_type>              multi_point_type;
 typedef bg::model::multi_polygon<open_ccw_polygon_type> multi_polygon_type;
 // box
 typedef bg::model::box<point_type>                      box_type;
-
-
-//----------------------------------------------------------------------------
-
-
-template <typename Geometry>
-void test_simple(Geometry const& geometry, bool expected_result,
-                 bool check_validity = true)
-{
-#ifdef BOOST_GEOMETRY_TEST_DEBUG
-    std::cout << "=======" << std::endl;
-#endif
-
-    bool simple = bg::is_simple(geometry);
-    BOOST_ASSERT( ! check_validity || bg::is_valid(geometry) );
-    BOOST_CHECK_MESSAGE( simple == expected_result,
-        "Expected: " << expected_result
-        << " detected: " << simple
-        << " wkt: " << bg::wkt(geometry) );
-
-#ifdef BOOST_GEOMETRY_TEST_DEBUG
-    std::cout << "Geometry: ";
-    pretty_print_geometry<Geometry>::apply(std::cout, geometry);
-    std::cout << std::endl;
-    std::cout << std::boolalpha;
-    std::cout << "is simple: " << simple << std::endl;
-    std::cout << "expected result: " << expected_result << std::endl;
-    std::cout << "=======" << std::endl;
-    std::cout << std::endl << std::endl;
-    std::cout << std::noboolalpha;
-#endif
-}
-
-
-//----------------------------------------------------------------------------
 
 
 BOOST_AUTO_TEST_CASE( test_is_simple_point )

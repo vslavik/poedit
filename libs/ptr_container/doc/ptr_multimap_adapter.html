@@ -3,15 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.3.10: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
 <title>Boost Pointer Container Library</title>
 <style type="text/css">
 
 /*
-:Author: David Goodger
-:Contact: goodger@users.sourceforge.net
-:Date: $Date$
-:Revision: $Revision$
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
@@ -20,10 +18,17 @@ See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
 */
 
-/* "! important" is used here to override other ``margin-top`` and
-   ``margin-bottom`` styles that are later in the stylesheet or 
-   more specific.  See http://www.w3.org/TR/CSS1#the-cascade */
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
 .first {
+  /* Override more specific margin styles with "! important". */
   margin-top: 0 ! important }
 
 .last, .with-subtitle {
@@ -31,6 +36,14 @@ customize this style sheet.
 
 .hidden {
   display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
 
 a.toc-backref {
   text-decoration: none ;
@@ -41,6 +54,10 @@ blockquote.epigraph {
 
 dl.docutils dd {
   margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
 
 /* Uncomment (and remove this text!) to get bold-faced definition list terms
 dl.docutils dt {
@@ -68,7 +85,7 @@ div.tip p.admonition-title {
 
 div.attention p.admonition-title, div.caution p.admonition-title,
 div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
+div.warning p.admonition-title, .code .error {
   color: red ;
   font-weight: bold ;
   font-family: sans-serif }
@@ -92,7 +109,8 @@ div.dedication p.topic-title {
   font-style: normal }
 
 div.figure {
-  margin-left: 2em }
+  margin-left: 2em ;
+  margin-right: 2em }
 
 div.footer, div.header {
   clear: both;
@@ -109,7 +127,7 @@ div.line-block div.line-block {
   margin-left: 1.5em }
 
 div.sidebar {
-  margin-left: 1em ;
+  margin: 0 0 0.5em 1em ;
   border: medium outset ;
   padding: 1em ;
   background-color: #ffffee ;
@@ -151,14 +169,52 @@ h2.subtitle {
 hr.docutils {
   width: 75% }
 
-img.align-left {
-  clear: left }
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
 
-img.align-right {
-  clear: right }
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
 
-img.borderless {
-  border: 0 }
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
 
 ol.simple, ul.simple {
   margin-bottom: 1em }
@@ -213,17 +269,20 @@ p.topic-title {
 pre.address {
   margin-bottom: 0 ;
   margin-top: 0 ;
-  font-family: serif ;
-  font-size: 100% }
+  font: inherit }
 
-pre.line-block {
-  font-family: serif ;
-  font-size: 100% }
-
-pre.literal-block, pre.doctest-block {
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
-  margin-right: 2em ;
-  background-color: #eeeeee }
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
 
 span.classifier {
   font-family: sans-serif ;
@@ -250,7 +309,8 @@ span.section-subtitle {
   font-size: 80% }
 
 table.citation {
-  border-left: solid thin gray }
+  border-left: solid 1px gray;
+  margin-left: 1px }
 
 table.docinfo {
   margin: 2em 4em }
@@ -260,7 +320,8 @@ table.docutils {
   margin-bottom: 0.5em }
 
 table.footnote {
-  border-left: solid thin black }
+  border-left: solid 1px black;
+  margin-left: 1px }
 
 table.docutils td, table.docutils th,
 table.docinfo td, table.docinfo th {
@@ -274,12 +335,24 @@ table.docutils th.field-name, table.docinfo th.docinfo-name {
   white-space: nowrap ;
   padding-left: 0 }
 
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
 h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
 h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
   font-size: 100% }
-
-tt.docutils {
-  background-color: #eeeeee }
 
 ul.auto-toc {
   list-style-type: none }
@@ -289,23 +362,24 @@ ul.auto-toc {
 <body>
 <div class="document" id="boost-pointer-container-library">
 <h1 class="title"><img alt="Boost" src="boost.png" /> Pointer Container Library</h1>
-<div class="section">
-<h1><a id="class-ptr-multimap-adapter" name="class-ptr-multimap-adapter">Class <tt class="docutils literal"><span class="pre">ptr_multimap_adapter</span></tt></a></h1>
+
+<div class="section" id="class-ptr-multimap-adapter">
+<h1>Class <tt class="docutils literal">ptr_multimap_adapter</tt></h1>
 <p>This class is used to build custom pointer containers with
 an underlying multimap-like container. The interface of the class is an extension
-of the interface from <tt class="docutils literal"><span class="pre">associative_ptr_container</span></tt>.</p>
+of the interface from <tt class="docutils literal">associative_ptr_container</tt>.</p>
 <p><strong>Hierarchy:</strong></p>
 <ul class="simple">
-<li><a class="reference" href="reversible_ptr_container.html">reversible_ptr_container</a><ul>
-<li><a class="reference" href="associative_ptr_container.html">associative_ptr_container</a><ul>
-<li><a class="reference" href="ptr_set_adapter.html">ptr_set_adapter</a></li>
-<li><a class="reference" href="ptr_multiset_adapter.html">ptr_multiset_adapter</a></li>
-<li><a class="reference" href="ptr_map_adapter.html">ptr_map_adapter</a></li>
-<li><tt class="docutils literal"><span class="pre">ptr_multi_map_adapter</span></tt><ul>
-<li><a class="reference" href="ptr_set.html">ptr_set</a></li>
-<li><a class="reference" href="ptr_multiset.html">ptr_multi_set</a></li>
-<li><a class="reference" href="ptr_map.html">ptr_map</a></li>
-<li><a class="reference" href="ptr_multimap.html">ptr_multimap</a></li>
+<li><a class="reference external" href="reversible_ptr_container.html">reversible_ptr_container</a><ul>
+<li><a class="reference external" href="associative_ptr_container.html">associative_ptr_container</a><ul>
+<li><a class="reference external" href="ptr_set_adapter.html">ptr_set_adapter</a></li>
+<li><a class="reference external" href="ptr_multiset_adapter.html">ptr_multiset_adapter</a></li>
+<li><a class="reference external" href="ptr_map_adapter.html">ptr_map_adapter</a></li>
+<li><tt class="docutils literal">ptr_multi_map_adapter</tt><ul>
+<li><a class="reference external" href="ptr_set.html">ptr_set</a></li>
+<li><a class="reference external" href="ptr_multiset.html">ptr_multi_set</a></li>
+<li><a class="reference external" href="ptr_map.html">ptr_map</a></li>
+<li><a class="reference external" href="ptr_multimap.html">ptr_multimap</a></li>
 </ul>
 </li>
 </ul>
@@ -315,22 +389,22 @@ of the interface from <tt class="docutils literal"><span class="pre">associative
 </ul>
 <p><strong>Navigate:</strong></p>
 <ul class="simple">
-<li><a class="reference" href="ptr_container.html">home</a></li>
-<li><a class="reference" href="reference.html">reference</a></li>
+<li><a class="reference external" href="ptr_container.html">home</a></li>
+<li><a class="reference external" href="reference.html">reference</a></li>
 </ul>
 <p><strong>Synopsis:</strong></p>
 <pre class="literal-block">
 namespace boost
 {
     template
-    &lt; 
+    &lt;
         T,
         class VoidPtrMultiMap,
-        class CloneAllocator = heap_clone_allocator 
+        class CloneAllocator = heap_clone_allocator
     &gt;
-    class ptr_multimap_adapter 
+    class ptr_multimap_adapter
     {
-    public: // <a class="reference" href="#typedefs">typedefs</a>
+    public: // <a class="reference internal" href="#typedefs">typedefs</a>
         typedef VoidPtrMap::key_type key_type;
         typedef T*                   mapped_type;
         typedef T&amp;                   mapped_reference;
@@ -339,14 +413,14 @@ namespace boost
         typedef ...                  reference;
         typedef ...                  const_reference;
         typedef ...                  pointer;
-        typedef ...                  const_pointer;  
-        
-    public: // <a class="reference" href="#modifiers">modifiers</a>         
-        iterator  insert( key_type&amp; k, T* x ); 
-        template&lt; class U &gt;
-        iterator  insert( const key_type&amp;, std::auto_ptr&lt;U&gt; x );                        
+        typedef ...                  const_pointer;
 
-    public: // <a class="reference" href="#pointer-container-requirements">pointer container requirements</a>
+    public: // <a class="reference internal" href="#modifiers">modifiers</a>
+        iterator  insert( key_type&amp; k, T* x );
+        template&lt; class U &gt;
+        iterator  insert( const key_type&amp;, <a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt; x );
+
+    public: // <a class="reference internal" href="#pointer-container-requirements">pointer container requirements</a>
         void      transfer( iterator object, ptr_multimap_adapter&amp; from );
         size_type transfer( iterator first, iterator last, ptr_multimap_adapter&amp; from );
         template&lt; class Range &gt;
@@ -355,24 +429,24 @@ namespace boost
 
     }; //  class 'ptr_multimap_adapter'
 
-} // namespace 'boost'  
+} // namespace 'boost'
 </pre>
 </div>
-<div class="section">
-<h1><a id="semantics" name="semantics">Semantics</a></h1>
+<div class="section" id="semantics">
+<h1>Semantics</h1>
 <p>. <span class="target" id="typedefs">typedefs</span>:</p>
-<div class="section">
-<h2><a id="semantics-typedefs" name="semantics-typedefs">Semantics: typedefs</a></h2>
+<div class="section" id="semantics-typedefs">
+<h2>Semantics: typedefs</h2>
 <p>The following types are implementation defined:</p>
 <pre class="literal-block">
 typedef ... value_type;
 typedef ... reference;
 typedef ... const_reference;
 typedef ... pointer;
-typedef ... const_pointer;  
+typedef ... const_pointer;
 </pre>
 <p>However, the structure of the type mimics <tt class="docutils literal"><span class="pre">std::pair</span></tt> s.t. one
-can use <tt class="docutils literal"><span class="pre">first</span></tt> and <tt class="docutils literal"><span class="pre">second</span></tt> members. The reference-types
+can use <tt class="docutils literal">first</tt> and <tt class="docutils literal">second</tt> members. The reference-types
 are not real references and the pointer-types are not real pointers.
 However, one may still write</p>
 <pre class="literal-block">
@@ -386,25 +460,25 @@ a_pointer-&gt;second-&gt;foo();
 map_type::const_pointer    a_cpointer   = &amp;*const_begin(m);
 </pre>
 <p>The difference compared to <tt class="docutils literal"><span class="pre">std::map&lt;Key,T*&gt;</span></tt> is that constness
-is propagated to the pointer (that is, to <tt class="docutils literal"><span class="pre">second</span></tt>) in <tt class="docutils literal"><span class="pre">const_itertor</span></tt>.</p>
+is propagated to the pointer (that is, to <tt class="docutils literal">second</tt>) in <tt class="docutils literal">const_itertor</tt>.</p>
 </div>
-<div class="section">
-<h2><a id="semantics-modifiers" name="semantics-modifiers"><span id="modifiers"></span>Semantics: modifiers</a></h2>
+<div class="section" id="semantics-modifiers">
+<span id="modifiers"></span><h2>Semantics: modifiers</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">iterator</span> <span class="pre">insert(</span> <span class="pre">key_type&amp;</span> <span class="pre">k,</span> <span class="pre">T*</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">iterator insert( key_type&amp; k, T* x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">0</span></tt></li>
-<li>Effects: Takes ownership of <tt class="docutils literal"><span class="pre">x</span></tt> and returns an iterator pointing to it.</li>
-<li>Throws: bad_pointer if <tt class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">0</span></tt></li>
+<li>Requirements: <tt class="docutils literal">x != 0</tt></li>
+<li>Effects: Takes ownership of <tt class="docutils literal">x</tt> and returns an iterator pointing to it.</li>
+<li>Throws: bad_pointer if <tt class="docutils literal">x == 0</tt></li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">U</span> <span class="pre">&gt;</span> <span class="pre">iterator</span> <span class="pre">insert(</span> <span class="pre">const</span> <span class="pre">key_type&amp;</span> <span class="pre">k,</span> <span class="pre">std::auto_ptr&lt;U&gt;</span> <span class="pre">x</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class U &gt; iterator insert( const key_type&amp; k, <span class="pre"><a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>&lt;U&gt;</span> x );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Equivalent to (but without the <tt class="docutils literal"><span class="pre">const_cast</span></tt>): <tt class="docutils literal"><span class="pre">return</span> <span class="pre">insert(</span> <span class="pre">const_cast&lt;key_type&amp;&gt;(k),</span> <span class="pre">x.release()</span> <span class="pre">);</span></tt></li>
+<li>Equivalent to (but without the <tt class="docutils literal">const_cast</tt>): <tt class="docutils literal">return insert( <span class="pre">const_cast&lt;key_type&amp;&gt;(k),</span> x.release() );</tt></li>
 </ul>
 </blockquote>
 </li>
@@ -424,42 +498,42 @@ is propagated to the pointer (that is, to <tt class="docutils literal"><span cla
 
     - Effects: returns the object with key ``key``
 
-    - Throws: ``bad_ptr_container_operation`` if the key does not exist                                  -->
+    - Throws: ``bad_ptr_container_operation`` if the key does not exist -->
 </div>
-<div class="section">
-<h2><a id="semantics-pointer-container-requirements" name="semantics-pointer-container-requirements"><span id="pointer-container-requirements"></span>Semantics: pointer container requirements</a></h2>
+<div class="section" id="semantics-pointer-container-requirements">
+<span id="pointer-container-requirements"></span><h2>Semantics: pointer container requirements</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">object,</span> <span class="pre">ptr_multimap_adapter&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void transfer( iterator object, ptr_multimap_adapter&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">from.empty()</span></tt></li>
-<li>Effects: Inserts the object defined by <tt class="docutils literal"><span class="pre">object</span></tt> into the container and remove it from <tt class="docutils literal"><span class="pre">from</span></tt>.</li>
-<li>Postconditions: <tt class="docutils literal"><span class="pre">size()</span></tt> is one more, <tt class="docutils literal"><span class="pre">from.size()</span></tt> is one less.</li>
+<li>Requirements: <tt class="docutils literal">not from.empty()</tt></li>
+<li>Effects: Inserts the object defined by <tt class="docutils literal">object</tt> into the container and remove it from <tt class="docutils literal">from</tt>.</li>
+<li>Postconditions: <tt class="docutils literal">size()</tt> is one more, <tt class="docutils literal">from.size()</tt> is one less.</li>
 <li>Exception safety: Strong guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">iterator</span> <span class="pre">first,</span> <span class="pre">iterator</span> <span class="pre">last,</span> <span class="pre">ptr_multimap_adapter&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void transfer( iterator first, iterator last, ptr_multimap_adapter&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Requirements: <tt class="docutils literal"><span class="pre">not</span> <span class="pre">from.empty()</span></tt></li>
-<li>Effects: Inserts the objects defined by the range <tt class="docutils literal"><span class="pre">[first,last)</span></tt> into the container and remove it from <tt class="docutils literal"><span class="pre">from</span></tt>.</li>
-<li>Postconditions: Let <tt class="docutils literal"><span class="pre">N</span> <span class="pre">==</span> <span class="pre">std::distance(first,last);</span></tt> then <tt class="docutils literal"><span class="pre">size()</span></tt> is <tt class="docutils literal"><span class="pre">N</span></tt> more, <tt class="docutils literal"><span class="pre">from.size()</span></tt> is <tt class="docutils literal"><span class="pre">N</span></tt> less.</li>
+<li>Requirements: <tt class="docutils literal">not from.empty()</tt></li>
+<li>Effects: Inserts the objects defined by the range <tt class="docutils literal">[first,last)</tt> into the container and remove it from <tt class="docutils literal">from</tt>.</li>
+<li>Postconditions: Let <tt class="docutils literal">N == <span class="pre">std::distance(first,last);</span></tt> then <tt class="docutils literal">size()</tt> is <tt class="docutils literal">N</tt> more, <tt class="docutils literal">from.size()</tt> is <tt class="docutils literal">N</tt> less.</li>
 <li>Exception safety: Basic guarantee</li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">template&lt;</span> <span class="pre">class</span> <span class="pre">Range</span> <span class="pre">&gt;</span> <span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">const</span> <span class="pre">Range&amp;</span> <span class="pre">r,</span> <span class="pre">ptr_multimap_adapter&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">template&lt; class Range &gt; void transfer( const Range&amp; r, ptr_multimap_adapter&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">transfer(</span> <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r),</span> <span class="pre">from</span> <span class="pre">);</span></tt></li>
+<li>Effects: <tt class="docutils literal">transfer( <span class="pre">boost::begin(r),</span> <span class="pre">boost::end(r),</span> from );</tt></li>
 </ul>
 </blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">void</span> <span class="pre">transfer(</span> <span class="pre">ptr_multimap_adapter&amp;</span> <span class="pre">from</span> <span class="pre">);</span></tt></p>
+<li><p class="first"><tt class="docutils literal">void transfer( ptr_multimap_adapter&amp; from );</tt></p>
 <blockquote>
 <ul class="simple">
-<li>Effects: <tt class="docutils literal"><span class="pre">transfer(</span> <span class="pre">from.begin(),</span> <span class="pre">from.end(),</span> <span class="pre">from</span> <span class="pre">);</span></tt>.</li>
+<li>Effects: <tt class="docutils literal">transfer( <span class="pre">from.begin(),</span> <span class="pre">from.end(),</span> from );</tt>.</li>
 <li>Postconditions: <tt class="docutils literal"><span class="pre">from.empty();</span></tt></li>
 <li>Exception safety: Basic guarantee</li>
 </ul>
@@ -470,7 +544,7 @@ is propagated to the pointer (that is, to <tt class="docutils literal"><span cla
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
+<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference external" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
 </tr>
 </tbody>
 </table>

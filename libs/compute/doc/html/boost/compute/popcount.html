@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template popcount</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.functional.popcount_hpp" title="Header &lt;boost/compute/functional/popcount.hpp&gt;">
 <link rel="prev" href="not2.html" title="Function template not2">
@@ -32,21 +32,21 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_compute/reference.html#header.boost.compute.functional.popcount_hpp" title="Header &lt;boost/compute/functional/popcount.hpp&gt;">boost/compute/functional/popcount.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-<span class="keyword">class</span> <a class="link" href="popcount.html" title="Class template popcount">popcount</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="popcount.html" title="Class template popcount">popcount</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">function</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="popcount.html#boost.compute.popcountconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="popcount.html#idp12046720-bb"><span class="identifier">popcount</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="popcount.html#idp49883888-bb"><span class="identifier">popcount</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp76842192"></a><h2>Description</h2>
+<a name="idp91581760"></a><h2>Description</h2>
 <p>Returns the number of non-zero bits in <code class="computeroutput">x</code>.</p>
 <p>See the documentation for <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/popcount.html" target="_top">popcount()</a> for more information. </p>
 <div class="refsect2">
-<a name="idp76844640"></a><h3>
+<a name="idp91584208"></a><h3>
 <a name="boost.compute.popcountconstruct-copy-destruct"></a><code class="computeroutput">popcount</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp12046720-bb"></a><span class="identifier">popcount</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp49883888-bb"></a><span class="identifier">popcount</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

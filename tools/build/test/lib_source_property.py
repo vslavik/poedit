@@ -25,7 +25,7 @@ void foo() {}
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a.obj")
+t.expect_addition("bin/$toolset/debug*/a.obj")
 
 t.rm("bin")
 
@@ -40,6 +40,6 @@ lib a : : <conditional>@test ;
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a.obj")
+t.expect_addition("bin/$toolset/debug*/a.obj")
 
 t.cleanup()

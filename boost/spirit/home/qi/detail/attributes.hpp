@@ -143,10 +143,12 @@ namespace boost { namespace spirit { namespace qi
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed, Transformed, qi::domain>
-      : qi::transform_attribute<Exposed, Transformed>
-    {};
+    namespace detail {
+        template <typename Exposed, typename Transformed>
+        struct transform_attribute_base<Exposed, Transformed, qi::domain>
+          : qi::transform_attribute<Exposed, Transformed>
+        {};
+    }
 
     template <typename Exposed, typename Transformed>
     struct transform_attribute<Exposed&, Transformed, qi::domain>

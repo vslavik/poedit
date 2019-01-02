@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -6,7 +6,7 @@
 #define BOOST_CONVERT_SPIRIT_BASED_CONVERTER_HPP
 
 #include <boost/convert/base.hpp>
-#include <boost/convert/detail/forward.hpp>
+#include <boost/convert/detail/config.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
 

@@ -37,6 +37,7 @@ entropy in bytes= 0.125 B
 #include <iostream>
 using std::cout;
 using std::endl;
+using std::log;
 
 #include <boost/units/quantity.hpp>
 #include <boost/units/io.hpp>
@@ -59,6 +60,7 @@ using namespace bu::information;
 // must be a unit of information.  Conversion to the requested return unit is 
 // accomplished automatically by the boost::units library.
 template <typename Sys>
+constexpr
 quantity<bu::unit<bu::information_dimension, Sys> > 
 bernoulli_entropy(double p, const bu::unit<bu::information_dimension, Sys>&) {
     typedef bu::unit<bu::information_dimension, Sys> requested_unit;

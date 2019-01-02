@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Scoped Threads</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
 <link rel="prev" href="thread_management.html" title="Thread Management">
 <link rel="next" href="synchronization.html" title="Synchronization">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.ScopedThreads"></a><a class="link" href="ScopedThreads.html" title="Scoped Threads">Scoped Threads</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.motivation">Motivation</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.thread_functors">Free Thread Functors</a></span></dt>
@@ -38,18 +38,19 @@
 </dl></div>
 <h4>
 <a name="thread.ScopedThreads.h0"></a>
-      <span><a name="thread.ScopedThreads.synopsis"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.synopsis">Synopsis</a>
+      <span class="phrase"><a name="thread.ScopedThreads.synopsis"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.synopsis">Synopsis</a>
     </h4>
 <pre class="programlisting"><span class="comment">//#include &lt;boost/thread/scoped_thread.hpp&gt;</span>
 
 <span class="keyword">struct</span> <span class="identifier">detach</span><span class="special">;</span>
 <span class="keyword">struct</span> <span class="identifier">join_if_joinable</span><span class="special">;</span>
 <span class="keyword">struct</span> <span class="identifier">interrupt_and_join_if_joinable</span><span class="special">;</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strict_scoped_thread</span><span class="special">;</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">scoped_thread</span><span class="special">;</span>
-<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&lt;</span><span class="identifier">Callable</span><span class="special">,</span> <span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">scoped_threadCallable</span><span class="special">,</span> <span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -95,7 +96,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.ScopedThreads.thread_functors"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.thread_functors" title="Free Thread Functors">Free Thread Functors</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.thread_functors.detach">Functor
         <code class="computeroutput"><span class="identifier">detach</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.thread_functors.join_if_joinable">Functor
@@ -116,7 +117,8 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">detach</span>
 <span class="special">{</span>
-  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Thread</span><span class="special">&gt;</span>
+  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
   <span class="special">{</span>
     <span class="identifier">t</span><span class="special">.</span><span class="identifier">detach</span><span class="special">();</span>
   <span class="special">}</span>
@@ -130,7 +132,8 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">join_if_joinable</span>
 <span class="special">{</span>
-  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Thread</span><span class="special">&gt;</span>
+  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
   <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">t</span><span class="special">.</span><span class="identifier">joinable</span><span class="special">())</span>
     <span class="special">{</span>
@@ -147,7 +150,8 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">interrupt_and_join_if_joinable</span>
 <span class="special">{</span>
-  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Thread</span><span class="special">&gt;</span>
+  <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Thread</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span>
   <span class="special">{</span>
     <span class="identifier">t</span><span class="special">.</span><span class="identifier">interrupt</span><span class="special">();</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">t</span><span class="special">.</span><span class="identifier">joinable</span><span class="special">())</span>
@@ -163,16 +167,15 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.ScopedThreads.strict_scoped_thread"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread" title="Class strict_scoped_thread">Class <code class="computeroutput"><span class="identifier">strict_scoped_thread</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
-<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.default_constructor">Constructor
-        from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a></a></span></dt>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.default_constructor">Constructor from a <code class="computeroutput"><span class="identifier">thread</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.call_constructor">Move
         Constructor from a Callable</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.destructor">Destructor</a></span></dt>
 </dl></div>
 <pre class="programlisting"><span class="comment">// #include &lt;boost/thread/scoped_thread.hpp&gt;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span> <span class="special">=</span> <span class="identifier">join_if_joinable</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strict_scoped_thread</span>
 <span class="special">{</span>
   <span class="identifier">thread</span> <span class="identifier">t_</span><span class="special">;</span> <span class="comment">// for exposition purposes only</span>
@@ -181,7 +184,7 @@
   <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">strict_scoped_thread</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
   <span class="identifier">strict_scoped_thread</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">strict_scoped_thread</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
 
-  <span class="keyword">explicit</span> <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">thread</span><span class="special">&amp;&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">Thread</span><span class="special">&amp;&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
   <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&amp;&amp;,</span> <span class="keyword">typename</span> <span class="special">...</span><span class="identifier">Args</span><span class="special">&gt;</span>
   <span class="keyword">explicit</span> <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;&amp;,</span> <span class="identifier">Args</span><span class="special">&amp;&amp;...);</span>
 
@@ -206,20 +209,19 @@
       </p>
 <h5>
 <a name="thread.ScopedThreads.strict_scoped_thread.h0"></a>
-        <span><a name="thread.ScopedThreads.strict_scoped_thread.example"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.example">Example</a>
+        <span class="phrase"><a name="thread.ScopedThreads.strict_scoped_thread.example"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">strict_scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">)));</span>
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.ScopedThreads.strict_scoped_thread.default_constructor"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread.default_constructor" title="Constructor from a thread">Constructor
-        from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a></a>
+<a name="thread.ScopedThreads.strict_scoped_thread.default_constructor"></a>Constructor from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">thread</span><span class="special">&amp;&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">strict_scoped_thread</span><span class="special">(</span><span class="identifier">Thread</span><span class="special">&amp;&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 move the thread to own <code class="computeroutput"><span class="identifier">t_</span></code>
@@ -241,7 +243,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Construct an internal thread in place.
@@ -266,7 +268,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to <code class="computeroutput"><span class="identifier">CallableThread</span><span class="special">()(</span><span class="identifier">t_</span><span class="special">)</span></code>.
@@ -284,15 +286,14 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.ScopedThreads.scoped_thread"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread" title="Class scoped_thread">Class <code class="computeroutput"><span class="identifier">scoped_thread</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.default_constructor">Default
         Constructor</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.move_constructor">Move
         Constructor</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.move_assignment">Move
         assignment operator</a></span></dt>
-<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.thread_constructor">Move
-        Constructor from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a></a></span></dt>
+<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.thread_constructor">Move Constructor from a <code class="computeroutput"><span class="identifier">thread</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.call_constructor">Move
         Constructor from a Callable</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.destructor">Destructor</a></span></dt>
@@ -321,7 +322,7 @@
 </dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">scoped_thread</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">scoped_thread</span>
 <span class="special">{</span>
   <span class="identifier">thread</span> <span class="identifier">t_</span><span class="special">;</span> <span class="comment">// for exposition purposes only</span>
@@ -371,7 +372,8 @@
 
 <span class="special">};</span>
 
-<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&lt;</span><span class="identifier">CallableThread</span><span class="special">,</span><span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">lhs</span><span class="special">,</span><span class="identifier">scoped_thread</span><span class="special">&lt;</span><span class="identifier">CallableThread</span><span class="special">,</span><span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <p>
         RAII <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
@@ -398,7 +400,7 @@
       </p>
 <h5>
 <a name="thread.ScopedThreads.scoped_thread.h0"></a>
-        <span><a name="thread.ScopedThreads.scoped_thread.example"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.example">Example</a>
+        <span class="phrase"><a name="thread.ScopedThreads.scoped_thread.example"></a></span><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">)));</span>
 <span class="identifier">t</span><span class="special">.</span><span class="identifier">interrupt</span><span class="special">();</span>
@@ -412,7 +414,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Constructs a scoped_thread instance that wraps to <span class="emphasis"><em>Not-a-Thread</em></span>.
@@ -437,7 +439,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Transfers ownership of the scoped_thread managed by <code class="computeroutput"><span class="identifier">other</span></code> (if any) to the newly constructed
@@ -465,24 +467,12 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
-<dd>
-<p>
-                Transfers ownership of the scoped_thread managed by <code class="computeroutput"><span class="identifier">other</span></code> (if any) to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
-              </p>
-<p>
-                - if defined <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE</span></code>:
-                If there was a <code class="computeroutput"><span class="identifier">scoped_thread</span></code>
-                previously associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> then that <code class="computeroutput"><span class="identifier">scoped_thread</span></code>
-                is detached, DEPRECATED
-              </p>
-<p>
-                - if defined <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE</span></code>:
-                If the <code class="computeroutput"><span class="identifier">scoped_thread</span></code>
-                is joinable calls to std::terminate.
-              </p>
-</dd>
+<dd><p>
+                Transfers ownership of the scoped_thread managed by <code class="computeroutput"><span class="identifier">other</span></code> (if any) to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
+                after having called to <code class="computeroutput"><span class="identifier">CallableThread</span><span class="special">()(</span><span class="identifier">t_</span><span class="special">)</span></code>.
+              </p></dd>
 <dt><span class="term">Postconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">other</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()==</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">()</span></code>
@@ -491,21 +481,21 @@
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
-                Nothing
+                Nothing: The <code class="computeroutput"><span class="identifier">CallableThread</span><span class="special">()(</span><span class="identifier">t_</span><span class="special">)</span></code> should not throw when joining the
+                thread as the scoped variable is on a scope outside the thread function.
               </p></dd>
 </dl>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.ScopedThreads.scoped_thread.thread_constructor"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.thread_constructor" title="Move Constructor from a thread">Move
-        Constructor from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a></a>
+<a name="thread.ScopedThreads.scoped_thread.thread_constructor"></a>Move Constructor from a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="identifier">scoped_thread</span><span class="special">(</span><span class="identifier">thread</span><span class="special">&amp;&amp;</span> <span class="identifier">t</span><span class="special">);</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Transfers ownership of the thread managed by <code class="computeroutput"><span class="identifier">other</span></code>
@@ -533,7 +523,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Construct an internal thread in place.
@@ -558,7 +548,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to <code class="computeroutput"><span class="identifier">CallableThread</span><span class="special">()(</span><span class="identifier">t_</span><span class="special">)</span></code>.
@@ -580,7 +570,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 Equivalent to return t_.joinable().
@@ -601,7 +591,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to t_.join().
@@ -619,7 +609,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">try_join_for</span><span class="special">(</span><span class="identifier">rel_time</span><span class="special">)</span></code>.
@@ -637,7 +627,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">try_join_until</span><span class="special">(</span><span class="identifier">abs_time</span><span class="special">)</span></code>.
@@ -654,7 +644,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">detach</span><span class="special">()</span></code>.
@@ -671,7 +661,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span></code>.
@@ -688,7 +678,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">interrupt</span><span class="special">()</span></code>.
@@ -705,7 +695,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">thread</span><span class="special">::</span><span class="identifier">hardware_concurrency</span><span class="special">()</span></code>.
@@ -722,7 +712,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">thread</span><span class="special">::</span><span class="identifier">physical_concurrency</span><span class="special">()</span></code>.
@@ -740,7 +730,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent to return <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">native_handle</span><span class="special">()</span></code>.
@@ -757,7 +747,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Equivalent <code class="computeroutput"><span class="identifier">t_</span><span class="special">.</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">t_</span><span class="special">)</span></code>.
@@ -773,11 +763,12 @@
 </h3></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">scoped_thread</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">CallableThread</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Thread</span> <span class="special">=</span> <span class="identifier">thread</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&lt;</span><span class="identifier">Callable</span><span class="special">,</span> <span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">scoped_threadCallable</span><span class="special">,</span> <span class="identifier">Thread</span><span class="special">&gt;&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               <code class="computeroutput"><span class="identifier">lhs</span><span class="special">.</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">rhs</span><span class="special">)</span></code>.
@@ -788,7 +779,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -17 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

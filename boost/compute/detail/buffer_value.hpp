@@ -124,7 +124,9 @@ public:
             const context &context = m_buffer.get_context();
             command_queue queue(context, context.get_device());
 
-            detail::write_single_value<T>(value, m_buffer, m_index / sizeof(T), queue);
+            detail::write_single_value<T>(
+                value, m_buffer, m_index / sizeof(T), queue
+            ).wait();
 
             return *this;
         }

@@ -18,7 +18,7 @@ boost::shared_mutex mutex;
 void thread2_func()
 {
   int i (0);
-  while (true)
+  for (;;)
   {
     if (mutex.timed_lock(boost::posix_time::milliseconds(500)))
     {
@@ -46,7 +46,7 @@ void thread3_func()
 
 void thread3_func_workaround()
 {
-  while (true)
+  for (;;)
   {
     if (mutex.timed_lock_shared(boost::posix_time::milliseconds(200)))
     {

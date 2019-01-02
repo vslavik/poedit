@@ -4,10 +4,12 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2016, 2017.
+// Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -58,8 +60,8 @@ struct envelope_one_point
             >::apply(point, box_corner);
     }
 
-    template <typename Point, typename Box>
-    static inline void apply(Point const& point, Box& mbr)
+    template <typename Point, typename Box, typename Strategy>
+    static inline void apply(Point const& point, Box& mbr, Strategy const&)
     {
         apply<min_corner>(point, mbr);
         apply<max_corner>(point, mbr);
@@ -69,8 +71,8 @@ struct envelope_one_point
 
 struct envelope_point_on_spheroid
 {
-    template<typename Point, typename Box>
-    static inline void apply(Point const& point, Box& mbr)
+    template<typename Point, typename Box, typename Strategy>
+    static inline void apply(Point const& point, Box& mbr, Strategy const& strategy)
     {
         Point normalized_point = detail::return_normalized<Point>(point);
 
@@ -88,7 +90,7 @@ struct envelope_point_on_spheroid
         envelope_one_point
             <
                 2, dimension<Point>::value
-            >::apply(normalized_point, mbr);
+            >::apply(normalized_point, mbr, strategy);
     }
 };
 
@@ -101,9 +103,15 @@ namespace dispatch
 {
 
 
-template <typename Point, typename CS_Tag>
-struct envelope<Point, point_tag, CS_Tag>
+template <typename Point>
+struct envelope<Point, point_tag, cartesian_tag>
     : detail::envelope::envelope_one_point<0, dimension<Point>::value>
+{};
+
+
+template <typename Point>
+struct envelope<Point, point_tag, spherical_polar_tag>
+    : detail::envelope::envelope_point_on_spheroid
 {};
 
 

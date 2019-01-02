@@ -145,17 +145,19 @@ void test_serialization_helper()
     add( vec, new Derived( 1 ), 1u );
     BOOST_CHECK_EQUAL( vec.size(), 2u );
 
-    std::ofstream ofs("filename");
-    OArchive oa(ofs);
-    oa << boost::serialization::make_nvp( "container", as_const(vec) );
-    ofs.close();
+    {
+        std::ofstream ofs("filename");
+        OArchive oa(ofs);
+        oa << boost::serialization::make_nvp( "container", as_const(vec) );
+    }
 
-    
-    std::ifstream ifs("filename", std::ios::binary);
-    IArchive ia(ifs);
     Cont vec2;
-    ia >> boost::serialization::make_nvp( "container", vec2 );
-    ifs.close();
+
+    {
+        std::ifstream ifs("filename", std::ios::binary);
+        IArchive ia(ifs);
+        ia >> boost::serialization::make_nvp( "container", vec2 );
+    }
 
     BOOST_CHECK_EQUAL( vec.size(), vec2.size() );
     BOOST_CHECK_EQUAL( (*vec2.begin()).i, -1 );
@@ -177,17 +179,19 @@ void test_serialization_unordered_set_helper()
     add( vec, new Derived( 1 ), 1u );
     BOOST_CHECK_EQUAL( vec.size(), 2u );
 
-    std::ofstream ofs("filename");
-    OArchive oa(ofs);
-    oa << boost::serialization::make_nvp( "container", as_const(vec) );
-    ofs.close();
+    {
+        std::ofstream ofs("filename");
+        OArchive oa(ofs);
+        oa << boost::serialization::make_nvp( "container", as_const(vec) );
+    }
 
-    
-    std::ifstream ifs("filename", std::ios::binary);
-    IArchive ia(ifs);
     Cont vec2;
-    ia >> boost::serialization::make_nvp( "container", vec2 );
-    ifs.close();
+
+    {
+        std::ifstream ifs("filename", std::ios::binary);
+        IArchive ia(ifs);
+        ia >> boost::serialization::make_nvp( "container", vec2 );
+    }
 
     BOOST_CHECK_EQUAL( vec.size(), vec2.size() );
     BOOST_CHECK_EQUAL( (*vec2.begin()).i, -1 );
@@ -203,17 +207,19 @@ void test_serialization_map_helper()
     m.insert( key2, new Derived( 1 ) );
     BOOST_CHECK_EQUAL( m.size(), 2u );
 
-    std::ofstream ofs("filename");
-    OArchive oa(ofs);
-    oa << boost::serialization::make_nvp( "container", as_const(m) );
-    ofs.close();
+    {
+        std::ofstream ofs("filename");
+        OArchive oa(ofs);
+        oa << boost::serialization::make_nvp( "container", as_const(m) );
+    }
 
-    
-    std::ifstream ifs("filename", std::ios::binary);
-    IArchive ia(ifs);
     Map m2;
-    ia >> boost::serialization::make_nvp( "container", m2 );
-    ifs.close();
+
+    {
+        std::ifstream ifs("filename", std::ios::binary);
+        IArchive ia(ifs);
+        ia >> boost::serialization::make_nvp( "container", m2 );
+    }
 
     BOOST_CHECK_EQUAL( m.size(), m2.size() );
     BOOST_CHECK_EQUAL( m2.find(key1)->second->i, -1 );
@@ -230,17 +236,20 @@ void test_serialization_map_helper()
 void test_hierarchy()
 {
     Base* p = new Derived();
-    std::ofstream ofs("filename");
-    boost::archive::text_oarchive oa(ofs);
-    oa << as_const(p);
-    ofs.close();
 
+    {
+        std::ofstream ofs("filename");
+        boost::archive::text_oarchive oa(ofs);
+        oa << as_const(p);
+    }
     
     Base* d = 0; 
-    std::ifstream ifs("filename", std::ios::binary);
-    boost::archive::text_iarchive ia(ifs);
-    ia >> d;
-    ifs.close();
+
+    {
+        std::ifstream ifs("filename", std::ios::binary);
+        boost::archive::text_iarchive ia(ifs);
+        ia >> d;
+    }
     
     BOOST_CHECK_EQUAL( p->i, d->i );
     BOOST_CHECK( p != d );
@@ -331,5 +340,3 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
 
     return test;
 }
-
-

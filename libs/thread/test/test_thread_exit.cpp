@@ -32,7 +32,7 @@ void tf1()
 BOOST_AUTO_TEST_CASE(test_thread_exit_func_runs_when_thread_exits)
 {
     exit_func_thread_id=boost::thread::id();
-    boost::thread t(tf1);
+    boost::thread t(&tf1);
     boost::thread::id const t_id=t.get_id();
     t.join();
     BOOST_CHECK(exit_func_thread_id==t_id);

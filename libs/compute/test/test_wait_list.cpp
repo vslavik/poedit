@@ -34,6 +34,18 @@ BOOST_AUTO_TEST_CASE(create_wait_list)
     BOOST_CHECK(events.get_event_ptr() == 0);
 }
 
+#ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
+BOOST_AUTO_TEST_CASE(create_wait_list_from_initializer_list)
+{
+    compute::event event0;
+    compute::event event1;
+    compute::event event2;
+    compute::wait_list events = { event0, event1, event2 };
+    BOOST_CHECK_EQUAL(events.size(), size_t(3));
+    CHECK_RANGE_EQUAL(compute::event, 3, events, (event0, event1, event2));
+}
+#endif // BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
+
 BOOST_AUTO_TEST_CASE(insert_future)
 {
     // create vector on the host

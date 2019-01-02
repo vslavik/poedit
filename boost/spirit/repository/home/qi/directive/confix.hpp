@@ -46,8 +46,10 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
-    using repository::confix_type;
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using repository::confix;
+#endif
+    using repository::confix_type;
 
     ///////////////////////////////////////////////////////////////////////////
     // the confix() generated parser

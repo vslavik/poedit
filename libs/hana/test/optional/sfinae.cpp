@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -8,6 +8,7 @@
 #include <boost/hana/optional.hpp>
 
 #include <laws/base.hpp>
+#include <support/tracked.hpp>
 namespace hana = boost::hana;
 using hana::test::ct_eq;
 
@@ -65,6 +66,6 @@ int main() {
     ));
 
     // using `sfinae` with a non-pod argument used to fail
-    hana::sfinae(undefined{})(hana::test::Tracked{1});
-    hana::sfinae([t = hana::test::Tracked{1}](auto) { return 1; })(hana::test::Tracked{1});
+    hana::sfinae(undefined{})(Tracked{1});
+    hana::sfinae([t = Tracked{1}](auto) { return 1; })(Tracked{1});
 }

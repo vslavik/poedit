@@ -1,7 +1,7 @@
 /*=============================================================================
     Boost.Wave: A Standard compliant C++ preprocessor library
     Persistent application configuration
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -74,9 +74,9 @@ namespace boost { namespace wave {
     ///////////////////////////////////////////////////////////////////////////
     //  Call this function to test the configuration of the calling application
     //  against the configuration of the linked library.
-    BOOST_WAVE_DECL bool test_configuration(unsigned int config, 
+    BOOST_WAVE_DECL bool test_configuration(unsigned int config,
         char const* pragma_keyword, char const* string_type);
-        
+
 ///////////////////////////////////////////////////////////////////////////////
 }}  // namespace boost::wave
 
@@ -87,5 +87,5 @@ namespace boost { namespace wave {
             BOOST_PP_STRINGIZE((BOOST_WAVE_STRINGTYPE))                       \
         )                                                                     \
     /**/
-    
+
 #endif // !BOOST_WAVE_CONFIG_CONSTANT_HPP

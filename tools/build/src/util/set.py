@@ -10,13 +10,11 @@ from .utility import to_seq
 def difference (b, a):
     """ Returns the elements of B that are not in A.
     """
-    assert is_iterable(b)
-    assert is_iterable(a)
+    a = set(a)
     result = []
-    for element in b:
-        if not element in a:
-            result.append (element)
-
+    for item in b:
+        if item not in a:
+            result.append(item)
     return result
 
 def intersection (set1, set2):

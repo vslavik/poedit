@@ -15,6 +15,7 @@
 // $Revision$
 
 #include <memory>
+#include <boost/config.hpp>
 
 namespace fsm { namespace aux {
 
@@ -25,13 +26,32 @@ struct base_event
  public:
     virtual ~base_event() {};
     
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     std::auto_ptr<base_event> clone() const
+    
+#else
+
+    std::unique_ptr<base_event> clone() const
+    
+#endif
+
     {
         return do_clone();
     }
  
  private:
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     virtual std::auto_ptr<base_event> do_clone() const = 0;
+    
+#else
+
+    virtual std::unique_ptr<base_event> do_clone() const = 0;
+    
+#endif
+
 };
 
 }}

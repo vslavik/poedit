@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(size)
 
 BOOST_AUTO_TEST_CASE(at)
 {
-    boost::compute::array<int, 3> array;
+    boost::compute::array<int, 3> array(context);
     array[0] = 3;
     array[1] = -2;
     array[2] = 5;

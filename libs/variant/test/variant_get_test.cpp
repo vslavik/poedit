@@ -3,11 +3,15 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2014-2015 Antony Polukhin
+// Copyright (c) 2014-2017 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
+
+#ifdef _MSC_VER
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
 
 #include "boost/variant/get.hpp"
 #include "boost/variant/variant.hpp"
@@ -50,13 +54,13 @@ typedef boost::variant<
 > var_req_t;
 struct recursive_structure { var_req_t var; };
 
-template <class T, class V, class TestType>
+template <class TypeInVariant, class V, class TestType>
 inline void check_polymorphic_get_on_types_impl_single_type(V* v)
 {
     typedef typename boost::add_reference<TestType>::type ref_test_t;
     typedef typename boost::add_reference<const TestType>::type cref_test_t;
-    const bool exact_same = !!boost::is_same<T, TestType>::value;
-    const bool ref_same = !!boost::is_same<T, ref_test_t>::value;
+    const bool exact_same = !!boost::is_same<TypeInVariant, TestType>::value;
+    const bool ref_same = !!boost::is_same<TypeInVariant, ref_test_t>::value;
 
     if (exact_same || ref_same) {
         BOOST_CHECK(boost::polymorphic_get<TestType>(v));
@@ -65,7 +69,11 @@ inline void check_polymorphic_get_on_types_impl_single_type(V* v)
         BOOST_CHECK(boost::polymorphic_strict_get<const TestType>(v));
         BOOST_CHECK(boost::polymorphic_relaxed_get<TestType>(v));
         BOOST_CHECK(boost::polymorphic_relaxed_get<const TestType>(v));
-    } else {
+
+        BOOST_CHECK(boost::polymorphic_get<cref_test_t>(v));
+        BOOST_CHECK(boost::polymorphic_strict_get<cref_test_t>(v));
+        BOOST_CHECK(boost::polymorphic_relaxed_get<cref_test_t>(v));
+
         if (ref_same) {
             BOOST_CHECK(boost::polymorphic_get<ref_test_t>(v));
             BOOST_CHECK(boost::polymorphic_get<cref_test_t>(v));
@@ -74,7 +82,7 @@ inline void check_polymorphic_get_on_types_impl_single_type(V* v)
             BOOST_CHECK(boost::polymorphic_relaxed_get<ref_test_t>(v));
             BOOST_CHECK(boost::polymorphic_relaxed_get<cref_test_t>(v));
         }
-
+    } else {
         BOOST_CHECK(!boost::polymorphic_get<TestType>(v));
         BOOST_CHECK(!boost::polymorphic_get<const TestType>(v));
         BOOST_CHECK(!boost::polymorphic_strict_get<TestType>(v));
@@ -103,7 +111,7 @@ inline void check_get_on_types_impl_single_type(V* v)
         BOOST_CHECK(boost::get<cref_test_t>(v));
         BOOST_CHECK(boost::strict_get<cref_test_t>(v));
         BOOST_CHECK(boost::relaxed_get<cref_test_t>(v));
-    } else {
+
         if (ref_same) {
             BOOST_CHECK(boost::get<ref_test_t>(v));
             BOOST_CHECK(boost::get<cref_test_t>(v));
@@ -112,7 +120,7 @@ inline void check_get_on_types_impl_single_type(V* v)
             BOOST_CHECK(boost::relaxed_get<ref_test_t>(v));
             BOOST_CHECK(boost::relaxed_get<cref_test_t>(v));
         }
-
+    } else {
         BOOST_CHECK(!boost::get<TestType>(v));
         BOOST_CHECK(!boost::get<const TestType>(v));
         BOOST_CHECK(!boost::strict_get<TestType>(v));
@@ -159,10 +167,14 @@ inline void check_get_on_types_impl(V* v)
     boost::strict_get<T>(*v);         // Must compile
     boost::strict_get<const T>(*v);   // Must compile
 
-    boost::polymorphic_get<T>(*v);              // Must compile
-    boost::polymorphic_get<const T>(*v);        // Must compile
-    boost::polymorphic_strict_get<T>(*v);         // Must compile
-    boost::polymorphic_strict_get<const T>(*v);   // Must compile
+    bool is_ref = boost::is_lvalue_reference<T>::value;
+    (void)is_ref;
+    if (!is_ref) {
+        boost::polymorphic_get<T>(*v);              // Must compile
+        boost::polymorphic_get<const T>(*v);        // Must compile
+        boost::polymorphic_strict_get<T>(*v);         // Must compile
+        boost::polymorphic_strict_get<const T>(*v);   // Must compile
+    }
 }
 
 template <class T, class V>
@@ -231,22 +243,27 @@ inline void get_ref_test()
     int i = 0;
     var_ref_t v(i);
     check_get_on_types<int>(&v);
+    check_get_on_types<int&>(&v);
 
     base b;
     var_ref_t v1(b);
     check_get_on_types<base>(&v1);
+    check_get_on_types<base&>(&v1);
 
     derived1 d1;
     var_ref_t v2(d1);
     check_get_on_types<derived1>(&v2);
+    check_get_on_types<derived1&>(&v2);
 
     derived2 d2;
     var_ref_t v3(d2);
     check_get_on_types<derived2>(&v3);
+    check_get_on_types<derived2&>(&v3);
 
     std::string s("Hello");
     var_ref_t v4(s);
     check_get_on_types<std::string>(&v4);
+    check_get_on_types<std::string&>(&v4);
 }
 
 
@@ -255,6 +272,7 @@ inline void get_cref_test()
     int i = 0;
     var_cref_t v(i);
     BOOST_CHECK(boost::get<const int>(&v));
+    BOOST_CHECK(boost::get<const int&>(&v));
     BOOST_CHECK(!boost::get<const base>(&v));
 
     base b;
@@ -342,6 +360,45 @@ inline void check_that_does_not_exist()
     check_that_does_not_exist_impl<var_req_t>();
 }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+class MoveonlyType {
+public:
+    MoveonlyType() {}
+    ~MoveonlyType() {}
+
+    MoveonlyType(MoveonlyType&&) {}
+    void operator=(MoveonlyType&&) {}
+
+private:
+    MoveonlyType(const MoveonlyType&);
+    void operator=(const MoveonlyType&);
+};
+
+const boost::variant<int, std::string> foo1() { return ""; }
+boost::variant<int, std::string> foo2() { return ""; }
+
+inline void get_rvref_test()
+{
+  boost::get<std::string>(foo1());
+  boost::get<std::string>(foo2());
+
+  boost::variant<MoveonlyType, int> v;
+
+  v = MoveonlyType();
+  boost::get<MoveonlyType>(boost::move(v));
+
+  v = 3;
+
+  v = MoveonlyType();
+  boost::get<MoveonlyType>(v);
+
+  boost::relaxed_get<MoveonlyType&>(boost::variant<MoveonlyType, int>());
+
+  v = MoveonlyType();
+  MoveonlyType moved_from_variant(boost::get<MoveonlyType>(boost::move(v)));
+}
+#endif  // BOOST_NO_CXX11_RVALUE_REFERENCES
+
 int test_main(int , char* [])
 {
     get_test();
@@ -350,6 +407,10 @@ int test_main(int , char* [])
     get_cref_test();
     get_recursive_test();
     check_that_does_not_exist();
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    get_rvref_test();
+#endif
 
     return boost::exit_success;
 }

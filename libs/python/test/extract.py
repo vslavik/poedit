@@ -21,11 +21,11 @@ case because they wrap Python objects instead of being wrapped by them.
 
     >>> assert not check_list(2)
     >>> try: x = extract_list(2)
-    ... except TypeError, x:
+    ... except TypeError as x:
     ...     if str(x) != 'Expecting an object of type list; got an object of type int instead':
-    ...         print x
+    ...         print(x)
     ... else:
-    ...     print 'expected an exception, got', x, 'instead'
+    ...     print('expected an exception, got', x, 'instead')
 
 Can't extract a list from a tuple. Use list(x) to convert a sequence
 to a list:
@@ -47,7 +47,7 @@ Can't get a char const* from a Python int:
     >>> try: x = extract_cstring(1)
     ... except TypeError: pass
     ... else:
-    ...     print 'expected an exception, got', x, 'instead'
+    ...     print('expected an exception, got', x, 'instead')
 
 Extract an std::string (class) rvalue from a native Python type
 
@@ -100,8 +100,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

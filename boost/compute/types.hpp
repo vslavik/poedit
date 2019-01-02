@@ -20,5 +20,6 @@
 #include <boost/compute/types/pair.hpp>
 #include <boost/compute/types/struct.hpp>
 #include <boost/compute/types/tuple.hpp>
+#include <boost/compute/types/size_t.hpp>
 
 #endif // BOOST_COMPUTE_TYPES_HPP

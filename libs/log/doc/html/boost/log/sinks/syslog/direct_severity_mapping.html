@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template direct_severity_mapping</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp" title="Header &lt;boost/log/sinks/syslog_backend.hpp&gt;">
 <link rel="prev" href="../synchronous_sink.html" title="Class template synchronous_sink">
@@ -30,27 +30,33 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="direct_severity_mapping.html#boost.log.sinks.syslog.direct_severity_mappingconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="direct_severity_mapping.html#idp22605520-bb"><span class="identifier">direct_severity_mapping</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="direct_severity_mapping.html#idp51891888-bb"><span class="identifier">direct_severity_mapping</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp99224240"></a><h2>Description</h2>
+<a name="idp116760720"></a><h2>Description</h2>
 <p>This type of mapping assumes that attribute with a particular name always provides values that map directly onto the Syslog levels. The mapping simply returns the extracted attribute value converted to the Syslog severity level. </p>
 <div class="refsect2">
-<a name="idp99225152"></a><h3>
+<a name="idp116761632"></a><h3>
 <a name="boost.log.sinks.syslog.direct_severity_mappingconstruct-copy-destruct"></a><code class="computeroutput">direct_severity_mapping</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp22605520-bb"></a><span class="identifier">direct_severity_mapping</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp51891888-bb"></a><span class="identifier">direct_severity_mapping</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">name</code></span></p></td>
 <td><p>Attribute name </p></td>

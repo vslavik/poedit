@@ -17,6 +17,7 @@
   *                using a global callback function.
   */
 
+#include <boost/regex.hpp>
 #include <string>
 #include <map>
 #include <boost/regex.hpp>

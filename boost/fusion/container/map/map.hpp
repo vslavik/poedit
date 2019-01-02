@@ -67,24 +67,21 @@ namespace boost { namespace fusion
           : base_type(std::forward<map>(seq))
         {}
 
-        template <typename Sequence>
+        template <typename Sequence, typename = typename enable_if<traits::is_sequence<Sequence>>::type>
         BOOST_FUSION_GPU_ENABLED
-        map(Sequence const& seq
-          , typename enable_if<traits::is_sequence<Sequence>, detail::enabler_>::type = detail::enabler)
+        map(Sequence const& seq)
           : base_type(begin(seq), detail::map_impl_from_iterator())
         {}
 
-        template <typename Sequence>
+        template <typename Sequence, typename = typename enable_if<traits::is_sequence<Sequence>>::type>
         BOOST_FUSION_GPU_ENABLED
-        map(Sequence& seq
-          , typename enable_if<traits::is_sequence<Sequence>, detail::enabler_>::type = detail::enabler)
+        map(Sequence& seq)
           : base_type(begin(seq), detail::map_impl_from_iterator())
         {}
 
-        template <typename Sequence>
+        template <typename Sequence, typename = typename enable_if<traits::is_sequence<Sequence>>::type>
         BOOST_FUSION_GPU_ENABLED
-        map(Sequence&& seq
-          , typename enable_if<traits::is_sequence<Sequence>, detail::enabler_>::type = detail::enabler)
+        map(Sequence&& seq)
           : base_type(begin(seq), detail::map_impl_from_iterator())
         {}
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Changelog</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="../boost/log/current_scope.html" title="Function current_scope">
@@ -21,13 +21,181 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
-      <span><a name="log.changelog.2_8__boost_1_61"></a></span><a class="link" href="changelog.html#log.changelog.2_8__boost_1_61">2.8,
+      <span class="phrase"><a name="log.changelog.2_15__boost_1_69"></a></span><a class="link" href="changelog.html#log.changelog.2_15__boost_1_69">2.15,
+      Boost 1.69</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Updated syslog sink backend to avoid using deprecated <a href="http://www.boost.org/doc/libs/release/doc/html/boost_asio.html" target="_top">Boost.ASIO</a>
+          interfaces. ( <a href="https://github.com/boostorg/log/issues/59" target="_top">GH#59</a>)
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Fixed a problem that could cause incorrect estimate of the total size of
+          rotated files in the target storage if the <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a> was writing directly into the target storage directory
+          and the log file name matched one of the old files in the storage, and
+          that file was picked as the old log file by <code class="computeroutput"><span class="identifier">file_collector</span><span class="special">::</span><span class="identifier">scan_for_files</span></code>.
+          Note that this configuration is still not fully supported and may result
+          in premature file deletion if multiple sinks write files directly into
+          the common target storage directory. It is recommended to configure sinks
+          to write log files into directories different from the target storage directory.
+        </li></ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
+      <span class="phrase"><a name="log.changelog.2_14__boost_1_68"></a></span><a class="link" href="changelog.html#log.changelog.2_14__boost_1_68">2.14,
+      Boost 1.68</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Improved support for VxWorks. ( <a href="https://github.com/boostorg/log/pull/39" target="_top">PR#39</a>)
+        </li></ul></div>
+<h4>
+<a name="log.changelog.h2"></a>
+      <span class="phrase"><a name="log.changelog.2_13__boost_1_67"></a></span><a class="link" href="changelog.html#log.changelog.2_13__boost_1_67">2.13,
+      Boost 1.67</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Updated library to use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator_traits</span></code>
+          where possible to work with allocators. This should improve compatibility
+          with C++ post C++17.
+        </li>
+<li class="listitem">
+          Added documentation for the "Append" <a class="link" href="detailed/utilities.html#log.detailed.utilities.setup.settings" title="Library initialization from a settings container">config
+          file</a> parameter for "TextFile" sinks. The parameter was
+          supported previously, only the documentation was missing.
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h3"></a>
+      <span class="phrase"><a name="log.changelog.2_12__boost_1_66"></a></span><a class="link" href="changelog.html#log.changelog.2_12__boost_1_66">2.12,
+      Boost 1.66</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Fixed a bug in <code class="computeroutput"><span class="identifier">file_collector</span><span class="special">::</span><span class="identifier">scan_for_files</span></code>
+          that caused zero file counter to be returned if the target directory contained
+          a file with the maximum counter value in the name. This used to cause incorrectly
+          named log files in the target directory after the user's application restart.
+        </li></ul></div>
+<h4>
+<a name="log.changelog.h4"></a>
+      <span class="phrase"><a name="log.changelog.2_11__boost_1_65"></a></span><a class="link" href="changelog.html#log.changelog.2_11__boost_1_65">2.11,
+      Boost 1.65</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Updated library build scripts to unify system macros configuration for
+          different platforms. In particular, this should improve compatibility with
+          Solaris.
+        </li></ul></div>
+<h4>
+<a name="log.changelog.h5"></a>
+      <span class="phrase"><a name="log.changelog.2_10__boost_1_63"></a></span><a class="link" href="changelog.html#log.changelog.2_10__boost_1_63">2.10,
+      Boost 1.63</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Removed the previously deprecated <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code>.
+          As previously suggested, <a href="http://www.boost.org/doc/libs/release/doc/html/boost_typeindex.html" target="_top">Boost.TypeIndex</a>
+          is recommended as a replacement.
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>New features:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added a way to access the current file name from the <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a>. The file name can be obtained with the <code class="computeroutput"><span class="identifier">get_current_file_name</span></code> method.
+        </li>
+<li class="listitem">
+          Added a way to disable log file rotation on <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a> destruction, which typically happens on program
+          termination. This can be done via <code class="computeroutput"><span class="identifier">enable_final_rotation</span></code>
+          backend constructor parameter or similarly named method, or with the <code class="computeroutput"><span class="identifier">EnableFinalRotation</span></code> parameter in the
+          settings.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed compilation errors for Android API prior to version 21.
+        </li>
+<li class="listitem">
+          Streaming operators now take scalar types and enums by value. This allows
+          to output static constants and bitfields directly into formatting stream
+          and record stream. ( <a href="https://svn.boost.org/trac/boost/ticket/11998" target="_top">#11998</a>)
+        </li>
+<li class="listitem">
+          Fixed auto-detection of native syslog API. ( <a href="https://svn.boost.org/trac/boost/ticket/12600" target="_top">#12600</a>)
+        </li>
+<li class="listitem">
+          In UDP socket based syslog backend implementation, changed the syslog message
+          format for better compliance with RFC3164.
+        </li>
+<li class="listitem">
+          File close handler installed in <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a> is no longer called if the file is not open yet.
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h6"></a>
+      <span class="phrase"><a name="log.changelog.2_9__boost_1_62"></a></span><a class="link" href="changelog.html#log.changelog.2_9__boost_1_62">2.9,
+      Boost 1.62</a>
+    </h4>
+<p>
+      <span class="bold"><strong>New features:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added new tools for inter-process logging on a local machine. The implementation
+          includes a <a class="link" href="detailed/utilities.html#log.detailed.utilities.ipc.object_name" title="Resource name wrapper">resource
+          name wrapper</a>, an <a class="link" href="detailed/utilities.html#log.detailed.utilities.ipc.reliable_message_queue" title="Reliable message queue">inter-process
+          message queue</a> and a <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_ipc_message_queue" title="Text IPC message queue backend">sink
+          backend</a>. The new functionality is optional and can be disabled by
+          defining <a class="link" href="installation/config.html" title="Configuring and building the library"><code class="computeroutput"><span class="identifier">BOOST_LOG_WITHOUT_IPC</span></code></a>
+          macro at library build time. Thanks to Lingxi Li for the initial patch.
+        </li>
+<li class="listitem">
+          Added a new character decorator called <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators.max_size" title="String length limiting decorator"><code class="computeroutput"><span class="identifier">max_size_decor</span></code></a>. The new decorator
+          allows to limit the output of its adopted formatter up to the specified
+          length. This can be useful with the new inter-process sink backend.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Fixed that logging streams could retain formatting settings across different
+          log records. ( <a href="https://svn.boost.org/trac/boost/ticket/12178" target="_top">#12178</a>)
+        </li></ul></div>
+<h4>
+<a name="log.changelog.h7"></a>
+      <span class="phrase"><a name="log.changelog.2_8__boost_1_61"></a></span><a class="link" href="changelog.html#log.changelog.2_8__boost_1_61">2.8,
       Boost 1.61</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           The support for <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_ref</span></code> and its specializations
           is deprecated; users are encouraged to switch to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_view</span></code>,
@@ -45,7 +213,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed various compilation problems for Windows CE.
         </li>
@@ -58,14 +226,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
-      <span><a name="log.changelog.2_7__boost_1_60"></a></span><a class="link" href="changelog.html#log.changelog.2_7__boost_1_60">2.7,
+<a name="log.changelog.h8"></a>
+      <span class="phrase"><a name="log.changelog.2_7__boost_1_60"></a></span><a class="link" href="changelog.html#log.changelog.2_7__boost_1_60">2.7,
       Boost 1.60</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           On Windows, the configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_WINNT6_API</span></code>
           is no longer used by the library. The target Windows version should be
@@ -89,7 +257,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed compilation for Android using Google NDK. ( <a href="https://svn.boost.org/trac/boost/ticket/11559" target="_top">#11559</a>)
         </li>
@@ -126,14 +294,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
-      <span><a name="log.changelog.2_6__boost_1_59"></a></span><a class="link" href="changelog.html#log.changelog.2_6__boost_1_59">2.6,
+<a name="log.changelog.h9"></a>
+      <span class="phrase"><a name="log.changelog.2_6__boost_1_59"></a></span><a class="link" href="changelog.html#log.changelog.2_6__boost_1_59">2.6,
       Boost 1.59</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           On systems with <a href="https://gcc.gnu.org/wiki/Visibility" target="_top">symbol
           visibility</a> support (e.g. Linux) the library is now built with all
@@ -146,7 +314,7 @@
           for its underlying type info management tool. This improved library compatibility
           with hidden symbol visibility mode on some compilers. This affected the
           following public interfaces:
-          <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">invalid_type</span></code> exceptions
                 thrown by the library now have <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>
@@ -203,7 +371,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_value_set</span><span class="special">::</span><span class="identifier">insert</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">attribute_value_set</span></code>
           constructor in some cases. The inserted elements could have made some previously
@@ -216,14 +384,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
-      <span><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
+<a name="log.changelog.h10"></a>
+      <span class="phrase"><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
       Boost 1.58</a>
     </h4>
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed thread id formatting. The thread identifiers could be presented as
           zeros on big-endian platforms. Also the lower 4 bits of the ids were lost
@@ -252,22 +420,22 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
-      <span><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
+<a name="log.changelog.h11"></a>
+      <span class="phrase"><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
       Boost 1.57</a>
     </h4>
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators" title="Character decorators">XML character
-          decorator</a> now escapes quote (") characters.
+          <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators.xml" title="XML character decorator">XML
+          character decorator</a> now escapes quote (") characters.
         </li>
 <li class="listitem">
           The exceptions thrown by asynchronous sinks created as a result of <a class="link" href="detailed/utilities.html#log.detailed.utilities.setup.settings" title="Library initialization from a settings container">initialization from settings</a>
           are now silently suppressed instead of terminating the application. If
-          special error handling is needed, it is recommended to <a class="link" href="extension/settings.html#log.extension.settings.adding_support_for_user_defined_sinks">register
+          special error handling is needed, it is recommended to <a class="link" href="extension/settings.html#log.extension.settings.sinks" title="Adding support for user-defined sinks">register
           a user-defined sink factory</a>. ( <a href="https://svn.boost.org/trac/boost/ticket/10638" target="_top">#10638</a>)
         </li>
 <li class="listitem">
@@ -276,14 +444,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
-      <span><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
+<a name="log.changelog.h12"></a>
+      <span class="phrase"><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
       Boost 1.56</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           For Windows targets, the library now compiles for Windows XP by default.
         </li>
@@ -344,7 +512,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed <a class="link" href="detailed/utilities.html#log.detailed.utilities.manipulators.dump" title="Binary dump manipulator"><code class="computeroutput"><span class="identifier">dump</span></code></a> manipulator output on AVX2-enabled
           CPUs (e.g. Intel Haswell).
@@ -372,14 +540,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
-      <span><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
+<a name="log.changelog.h13"></a>
+      <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
       Boost 1.55</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added a new configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_WITHOUT_DEFAULT_FACTORIES</span></code>.
           By defining this macro the user can disable compilation of the default
@@ -410,7 +578,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed <a class="link" href="detailed/attributes.html#log.detailed.attributes.timer" title="Stop watch (timer)"><code class="computeroutput"><span class="identifier">timer</span></code></a>
           attribute generating incorrect time readings on Windows on heavy thread
@@ -435,14 +603,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h7"></a>
-      <span><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
+<a name="log.changelog.h14"></a>
+      <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
 <p>
       <span class="bold"><strong>Breaking changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <code class="computeroutput"><a class="link" href="../boost/log/basic_formatting_ostream.html" title="Class template basic_formatting_ostream">basic_formatting_ostream</a></code>
           no longer derives from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span></code>,
           but rather reimplements its and its base classes interface closely. This
@@ -460,7 +628,7 @@
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Removed the use of deprecated macros of <a href="http://www.boost.org/doc/libs/release/libs/config/doc/html/index.html" target="_top">Boost.Config</a>.
         </li>
@@ -482,14 +650,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h8"></a>
-      <span><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
+<a name="log.changelog.h15"></a>
+      <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           The library is now compatible with Boost 1.53 or newer. <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>
           v2 no longer supported.
@@ -573,7 +741,7 @@
 <p>
       <span class="bold"><strong>Attributes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Changed the interface and the way of handling attribute values. The value
           is now a pimpl wrapper around the value holder. The <code class="computeroutput"><a class="link" href="../boost/log/attribute_value.html" title="Class attribute_value">attribute_value</a></code>
@@ -664,7 +832,7 @@
 <p>
       <span class="bold"><strong>Logging sources:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed compilation problems with exception handling logger feature.
         </li>
@@ -698,7 +866,7 @@
 <p>
       <span class="bold"><strong>Logging sinks:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Types for integral constants for syslog and event log were renamed to drop
           the <code class="computeroutput"><span class="identifier">_t</span></code> suffix.
@@ -747,7 +915,7 @@
 <p>
       <span class="bold"><strong>Filters and formatters:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           As a result of character type unification, filters no longer depend on
           the character type.
@@ -809,7 +977,7 @@
 <p>
       <span class="bold"><strong>Documentation changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Most code examples from the docs have been extracted into compilable standalone
           examples, which can be used for testing and experimenting with the library.
@@ -822,7 +990,7 @@
 <p>
       <span class="bold"><strong>Miscellaneous:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Fixed a bug: the logging core could enter an infinite loop inside <code class="computeroutput"><span class="identifier">push_record</span></code> if a sink throws and the
           exception is suppressed by the exception handler set in the core.
@@ -857,14 +1025,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h9"></a>
-      <span><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
+<a name="log.changelog.h16"></a>
+      <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
 <p>
       This release mostly fixes bugs in the code and documentation.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added support for <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>
           v3.
@@ -877,8 +1045,8 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h10"></a>
-      <span><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
+<a name="log.changelog.h17"></a>
+      <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
 <p>
@@ -886,7 +1054,7 @@
       release (2.0) will contain breaking changes and feature additions. The 1.0
       branch will not receive any feature updates.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Added some optimization for thread local storage. In Windows setups, if
           you dynamically load Boost.Log binaries during the application run time,
@@ -917,11 +1085,11 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h11"></a>
-      <span><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
+<a name="log.changelog.h18"></a>
+      <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Substantial documentation improvement. The tutorial section has been reorganized.
         </li>
@@ -1012,11 +1180,11 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h12"></a>
-      <span><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
+<a name="log.changelog.h19"></a>
+      <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Substantial documentation improvement.
         </li>
@@ -1046,8 +1214,8 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h13"></a>
-      <span><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
+<a name="log.changelog.h20"></a>
+      <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>
 <p>

@@ -93,7 +93,9 @@ namespace boost { namespace spirit { namespace x3
     /***/
 
     BOOST_SPIRIT_X3_CHAR_CLASSES(standard)
+#ifndef BOOST_SPIRIT_NO_STANDARD_WIDE
     BOOST_SPIRIT_X3_CHAR_CLASSES(standard_wide)
+#endif
     BOOST_SPIRIT_X3_CHAR_CLASSES(ascii)
     BOOST_SPIRIT_X3_CHAR_CLASSES(iso8859_1)
 

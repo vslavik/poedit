@@ -24,6 +24,7 @@
 #
 
 import "class" : new ;
+import param ;
 import project ;
 import property-set ;
 import targets ;
@@ -57,6 +58,9 @@ class alias-target-class : basic-target
 rule alias ( name : sources * : requirements * : default-build * :
     usage-requirements * )
 {
+    param.handle-named-params
+        sources requirements default-build usage-requirements ;
+
     local project = [ project.current ] ;
 
     targets.main-target-alternative

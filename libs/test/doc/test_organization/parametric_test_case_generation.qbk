@@ -119,17 +119,17 @@ particular:
 To define properly datasets, the notion of *sample* should be introduced first. A *sample* is defined as /polymorphic tuple/.
 The size of the tuple will be by definition the *arity* of the sample itself.
 
-A [classref boost::unit_test::data::monomorphic::dataset dataset] is a /collection of samples/, that
+A *dataset* is a /collection of samples/, that
 
 * is forward iterable,
 * can be queried for its `size`, which in turn can be infinite,
-* has an arity that is the arity of the samples it contains.
+* has an arity, which is the arity of the samples it contains.
 
 Hence the dataset implements the notion of /sequence/.
 
 The descriptive power of the datasets in __UTF__ comes from
 
-* the [classref boost::unit_test::data::monomorphic::dataset interface] for creating a custom datasets, which is quite simple,
+* the [link boost_test.tests_organization.test_cases.test_case_generation.datasets.dataset_interface interface] for creating a custom datasets, which is quite simple,
 * the [link boost_test.tests_organization.test_cases.test_case_generation.operations operations] they provide for combining different datasets
 * their interface with other type of collections (`stl` containers, `C` arrays)
 * the available built-in [link boost_test.tests_organization.test_cases.test_case_generation.generators /dataset generators/]
@@ -143,21 +143,27 @@ The descriptive power of the datasets in __UTF__ comes from
 As we will see in the next sections, datasets representing collections of different types may be combined together (e.g.. /zip/ or /grid/).
 These operations result in new datasets, in which the samples are of an augmented type.
 
-[/ TODO resurrect this example
-  [tip This [link boost_test.boost_test_examples.ref_dataset_example68 example] implements a dataset generating a Fibonacci sequence]
-]
+[h4 Dataset interface]
+The interface of the /dataset/ should implement the two following functions/fields:
+
+* `iterator begin()` where /iterator/ is a forward iterator,
+* `boost::unit_test::data::size_t size() const` indicates the size of the dataset. The returned type is a dedicated
+  class [classref boost::unit_test::data::size_t size_t] that can indicate an /infinite/ dataset size.
+* an enum called `arity` indicating the arity of the samples returned by the dataset
+
+Once a dataset class `D` is declared, it should be registered to the framework by specializing the class ``boost::unit_test::data::monomorphic::is_dataset``
+with the condition that ``boost::unit_test::data::monomorphic::is_dataset<D>::value`` evaluates to `true`.
+
+The following example implements a custom dataset generating a Fibonacci sequence.
+
+[bt_example dataset_example68..Example of custom dataset..run-fail]
 
 [endsect] [/ datasets]
-
-
 
 
 [/ ##################################################################################################################################  ]
 [/ Main code import for this section ]
 [import ../snippet/dataset_1/test_file.cpp]
-
-
-
 
 [/ ##################################################################################################################################  ]
 [section:datasets_auto_registration Declaring and registering test cases with datasets]
@@ -200,17 +206,32 @@ case of arity 1.
  For compilers *without C++11* support, the maximal supported arity is controlled by the macro
  __BOOST_TEST_DATASET_MAX_ARITY__, that can be overridden /prior/ to including the __UTF__ headers.]
 
-It should be emphasized that those macros do not declare a unique test case (as __BOOST_AUTO_TEST_CASE__ would do) but declare and
+[caution The macros __BOOST_DATA_TEST_CASE__ and __BOOST_DATA_TEST_CASE_F__ are available only for compilers with support for *variadic macros*.]
+
+[h4 Samples and test tree]
+It should be emphasized that those macros do not declare a single test case (as __BOOST_AUTO_TEST_CASE__ would do) but declare and
 register as many test cases as there are samples in the dataset given in argument. Each test case runs on exactly *one*
 sample of the dataset.
 
-Exactly as regular test cases, each test - or each sample - is executed within the test body in a /guarded manner/:
+More precisely, what
+``__BOOST_DATA_TEST_CASE__(test_case_name, dataset)``
+
+does is the following:
+
+* it registers a *test suite* named "`test_case_name`",
+* it registers as many test cases as they are in "`dataset`", each of which with the name corresponding to the index of the sample in the database prefixed by `_` and
+  starting at index `0` ("`_0`", "`_1`", ... "`_(N-1)`" where `N` is the size of the dataset)
+
+This make it easy to:
+
+* identify which sample is failing (say "`test_case_name/_3`")
+* allows a replay of one or several samples (or the full dataset) from the command line using the [link boost_test.runtime_config.test_unit_filtering test filtering facility] provided by the __UTF__
+
+Exactly as regular test cases, each test case (associated to a specific sample) is executed within the test body in a /guarded manner/:
 
 * the test execution are independent: if an error occurs for one sample, the remaining samples execution is not affected
-* in case of error, the [link boost_test.test_output.contexts context] within which the error occurred is reported in the [link boost_test.test_output log].
-  This context contains the sample for which the test failed, which would ease the debugging.
-
-[caution The macros __BOOST_DATA_TEST_CASE__ and __BOOST_DATA_TEST_CASE_F__ are available only for compilers with support for *variadic macros*.]
+* in case of error, the [link boost_test.test_output.test_tools_support_for_logging.contexts context] within which the error occurred is reported in the [link boost_test.test_output log] along with
+  the failing sample index. This context contains the sample for which the test failed, which would ease the debugging.
 
 [endsect]
 
@@ -255,9 +276,7 @@ The following properties hold:
 [warning In the expression `dsa + dsb`, `dsa` and/or `dsb` can be of infinite size. The resulting dataset will have an infinite size as well. If `dsa` is infinite, the content of
  `dsb` will never be reached. ]
 
-
 [bt_example dataset_example62..Example of join on datasets..run]
-
 
 [endsect]
 
@@ -284,8 +303,7 @@ The following properties hold:
    == dsa ^ dsb ^ dsc
   ``
 
-
-A particular handling of the size is performed if `dsa` and `dsb` are of different size. The rule is as follow:
+A particular handling is performed if `dsa` and `dsb` are of different size. The rule is as follow:
 
 * if the both zipped datasets have the same size, this is the size of the resulting dataset (this size can then be infinite).
 * otherwise if one of the dataset is of size 1 (singleton) or of infinite size, the resulting size is governed by the other dataset.
@@ -325,7 +343,8 @@ The following properties hold:
  will be automatically set by the __UTF__]
 
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
-and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is not copied between two successive evaluations of the first dimension.
+and twice for the second `xrange` - second dimension - to which it is zipped). Note that the state of the random engine is
+not copied between two successive evaluations of the first dimension.
 
 [bt_example dataset_example64..Example of Cartesian product..run-fail]
 

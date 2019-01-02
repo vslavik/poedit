@@ -24,6 +24,7 @@ Rotate rotates a geometry of specified angle about a fixed point (e.g. origin).
 [heading Synopsis]
 ``template<typename DegreeOrRadian, typename CalculationType, std::size_t Dimension1, std::size_t Dimension2>
 class strategy::transform::rotate_transformer
+      : public detail::rad_rotate_transformer< CalculationType, Dimension1, Dimension2 >
 {
   // ...
 };

@@ -206,8 +206,8 @@ BOOST_AUTO_TEST_CASE(test_timed_join)
 
 BOOST_AUTO_TEST_CASE(test_swap)
 {
-    boost::thread t(simple_thread);
-    boost::thread t2(simple_thread);
+    boost::thread t(&simple_thread);
+    boost::thread t2(&simple_thread);
     boost::thread::id id1=t.get_id();
     boost::thread::id id2=t2.get_id();
 

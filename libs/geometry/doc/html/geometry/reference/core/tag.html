@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>tag</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../core.html" title="Core Metafunctions">
 <link rel="prev" href="ring_type.html" title="ring_type">
@@ -27,13 +27,13 @@
 <a name="geometry.reference.core.tag"></a><a class="link" href="tag.html" title="tag">tag</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp91831776"></a>
+          <a class="indexterm" name="idp110223312"></a>
 Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
-          of the \3.
+          of the specified geometry type.
         </p>
 <h6>
 <a name="geometry.reference.core.tag.h0"></a>
-          <span><a name="geometry.reference.core.tag.description"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.description">Description</a>
+          <span class="phrase"><a name="geometry.reference.core.tag.description"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.description">Description</a>
         </h6>
 <p>
           With Boost.Geometry, tags are the driving force of the tag dispatching
@@ -41,7 +41,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
         </p>
 <h6>
 <a name="geometry.reference.core.tag.h1"></a>
-          <span><a name="geometry.reference.core.tag.synopsis"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.core.tag.synopsis"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
@@ -55,7 +55,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
         </p>
 <h6>
 <a name="geometry.reference.core.tag.h2"></a>
-          <span><a name="geometry.reference.core.tag.template_parameter_s_"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.template_parameter_s_">Template
+          <span class="phrase"><a name="geometry.reference.core.tag.template_parameter_s_"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -90,7 +90,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
 </table></div>
 <h6>
 <a name="geometry.reference.core.tag.h3"></a>
-          <span><a name="geometry.reference.core.tag.header"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.core.tag.header"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.header">Header</a>
         </h6>
 <p>
           Either
@@ -106,14 +106,14 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
         </p>
 <h6>
 <a name="geometry.reference.core.tag.h4"></a>
-          <span><a name="geometry.reference.core.tag.metafunction_result_type"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.metafunction_result_type">Metafunction
+          <span class="phrase"><a name="geometry.reference.core.tag.metafunction_result_type"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.metafunction_result_type">Metafunction
           result type</a>
         </h6>
 <p>
           The metafunction tag defines <span class="bold"><strong>type</strong></span> as one
           of the following tags:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               point_tag
             </li>
@@ -144,14 +144,14 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
 </ul></div>
 <h6>
 <a name="geometry.reference.core.tag.h5"></a>
-          <span><a name="geometry.reference.core.tag.complexity"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.complexity">Complexity</a>
+          <span class="phrase"><a name="geometry.reference.core.tag.complexity"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.complexity">Complexity</a>
         </h6>
 <p>
           Compile time
         </p>
 <h6>
 <a name="geometry.reference.core.tag.h6"></a>
-          <span><a name="geometry.reference.core.tag.example"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.example">Example</a>
+          <span class="phrase"><a name="geometry.reference.core.tag.example"></a></span><a class="link" href="tag.html#geometry.reference.core.tag.example">Example</a>
         </h6>
 <p>
           Shows how tag dispatching essentially works in Boost.Geometry
@@ -160,12 +160,12 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">assign</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">multi_polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">adapted</span><span class="special">/</span><span class="identifier">boost_tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">assign</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <a class="co" name="geometry.reference.core.tag.c0" href="tag.html#geometry.reference.core.tag.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
 
 <span class="identifier">BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS</span><span class="special">(</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">)</span>
 
@@ -246,6 +246,12 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
 </pre>
 <p>
         </p>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.core.tag.c1"></a><a href="#geometry.reference.core.tag.c0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              At the end to avoid conflicts with Boost.QVM
+            </p></td>
+</tr></table></div>
 <p>
           Output:
         </p>
@@ -256,8 +262,8 @@ Hello MULTIPOLYGON, you contain: 1 polygon(s)
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

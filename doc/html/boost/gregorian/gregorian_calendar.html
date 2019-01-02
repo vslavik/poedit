@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class gregorian_calendar</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.gregorian.greg_calendar_hpp" title="Header &lt;boost/date_time/gregorian/greg_calendar.hpp&gt;">
 <link rel="prev" href="../date_time/year_month_day_base.html" title="Struct template year_month_day_base">
@@ -33,7 +33,8 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../date_time/doxy.html#header.boost.date_time.gregorian.greg_calendar_hpp" title="Header &lt;boost/date_time/gregorian/greg_calendar.hpp&gt;">boost/date_time/gregorian/greg_calendar.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="gregorian_calendar.html" title="Class gregorian_calendar">gregorian_calendar</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="gregorian_calendar.html" title="Class gregorian_calendar">gregorian_calendar</a> <span class="special">:</span> <span class="keyword">public</span> date_time::gregorian_calendar_base&lt; greg_year_month_day, fancy_date_rep::int_type &gt;
+<span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <a class="link" href="greg_weekday.html" title="Class greg_weekday">greg_weekday</a>         <a name="boost.gregorian.gregorian_calendar.day_of_week_type"></a><span class="identifier">day_of_week_type</span><span class="special">;</span>  <span class="comment">// Type to hold a weekday (eg: Sunday, Monday,...) </span>

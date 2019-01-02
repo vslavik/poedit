@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;15.&#160;Boost.Interprocess</title>
+<title>Chapter&#160;18.&#160;Boost.Interprocess</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="heap/acknowledgements.html" title="Acknowledgements">
@@ -26,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="interprocess"></a>Chapter&#160;15.&#160;Boost.Interprocess</h2></div>
+<a name="interprocess"></a>Chapter&#160;18.&#160;Boost.Interprocess</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
@@ -40,7 +40,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="interprocess.html#interprocess.intro">Introduction</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="interprocess.html#interprocess.intro.introduction_building_interprocess">Building
@@ -206,7 +206,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.intro"></a><a class="link" href="interprocess.html#interprocess.intro" title="Introduction">Introduction</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="interprocess.html#interprocess.intro.introduction_building_interprocess">Building
       Boost.Interprocess</a></span></dt>
 <dt><span class="section"><a href="interprocess.html#interprocess.intro.tested_compilers">Tested compilers</a></span></dt>
@@ -216,7 +216,7 @@
       interprocess communication and synchronization mechanisms and offers a wide
       range of them:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Shared memory.
         </li>
@@ -249,7 +249,7 @@
       offers useful tools to construct C++ objects, including STL-like containers,
       in shared memory and memory mapped files:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Dynamic creation of anonymous and named objects in a shared memory or memory
           mapped file.
@@ -297,22 +297,29 @@
         <span class="bold"><strong>Boost.Interprocess</strong></span> has been tested in the
         following compilers/platforms:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            Visual &gt;= 7.1
+            Visual C++ &gt;= 7.1.
           </li>
 <li class="listitem">
-            GCC &gt;= 4.1
-          </li>
-<li class="listitem">
-            Intel 11
+            GCC &gt;= 4.1.
           </li>
 </ul></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          GCC &lt; 4.3 and MSVC &lt; 9.0 are deprecated and will be removed in the
+          next version.
+        </p></td></tr>
+</table></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:18:54 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:14:26 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

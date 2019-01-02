@@ -7,6 +7,7 @@
 #include <boost/hana/integral_constant.hpp>
 #include <boost/hana/type.hpp>
 
+#include <regex>
 #include <sstream>
 namespace hana = boost::hana;
 
@@ -22,20 +23,23 @@ int main() {
         ss << hana::experimental::print(
             hana::template_<foo::my_template>
         );
-        BOOST_HANA_RUNTIME_CHECK(ss.str() == "template<foo::my_template>");
+        BOOST_HANA_RUNTIME_CHECK(std::regex_match(ss.str(),
+            std::regex("template<(?:struct )?foo::my_template>")));
     }
     {
         std::ostringstream ss;
         ss << hana::experimental::print(
             hana::metafunction<foo::my_mf>
         );
-        BOOST_HANA_RUNTIME_CHECK(ss.str() == "metafunction<foo::my_mf>");
+        BOOST_HANA_RUNTIME_CHECK(std::regex_match(ss.str(),
+            std::regex("metafunction<(?:struct )?foo::my_mf>")));
     }
     {
         std::ostringstream ss;
         ss << hana::experimental::print(
             hana::metafunction_class<foo::my_mf_class>
         );
-        BOOST_HANA_RUNTIME_CHECK(ss.str() == "metafunction_class<foo::my_mf_class>");
+        BOOST_HANA_RUNTIME_CHECK(std::regex_match(ss.str(),
+            std::regex("metafunction_class<(?:struct )?foo::my_mf_class>")));
     }
 }

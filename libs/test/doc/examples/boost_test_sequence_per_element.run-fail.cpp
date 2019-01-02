@@ -17,13 +17,25 @@ BOOST_AUTO_TEST_CASE( test_sequence_per_element )
   std::vector<int> a{1,2,3};
   std::vector<long> b{1,5,3};
   std::list<short> c{1,5,3,4};
-  
+
   BOOST_TEST(a == b, tt::per_element()); // nok: a[1] != b[1]
-  
+
   BOOST_TEST(a != b, tt::per_element()); // nok: a[0] == b[0] ...
   BOOST_TEST(a <= b, tt::per_element()); // ok
   BOOST_TEST(b  < c, tt::per_element()); // nok: size mismatch
   BOOST_TEST(b >= c, tt::per_element()); // nok: size mismatch
   BOOST_TEST(b != c, tt::per_element()); // nok: size mismatch
+}
+
+BOOST_AUTO_TEST_CASE( test_compare_c_arrays_element_wise )
+{
+  int a[] = {1, 2, 3};
+  int b[] = {1, 5, 3};
+  std::vector<long> c{1, 5, 3};
+  BOOST_TEST(a == b, boost::test_tools::per_element());
+  BOOST_TEST(a != b, boost::test_tools::per_element());
+  BOOST_TEST(a < b, boost::test_tools::per_element());
+  BOOST_TEST(b < c, boost::test_tools::per_element());
+  BOOST_TEST(c < a, boost::test_tools::per_element());
 }
 //]

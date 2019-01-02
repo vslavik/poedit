@@ -11,6 +11,7 @@
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/graph/distributed/adjacency_list.hpp>
 #include <boost/graph/distributed/mpi_process_group.hpp>
 #include <boost/random/linear_congruential.hpp>

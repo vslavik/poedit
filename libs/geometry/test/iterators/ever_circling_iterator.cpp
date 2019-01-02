@@ -23,12 +23,14 @@
 #include <boost/geometry/io/wkt/read.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/geometries/register/linestring.hpp>
+
+#include <boost/range/adaptor/transformed.hpp>
+
 
 template <typename G>
-void test_geometry(std::string const& wkt)
+void test_geometry(G const& geo)
 {
-    G geo;
-    bg::read_wkt(wkt, geo);
     typedef typename boost::range_iterator<G const>::type iterator_type;
 
 
@@ -74,7 +76,7 @@ void test_geometry(std::string const& wkt)
     // Check the range_iterator-one
     {
         std::ostringstream out;
-        bg::ever_circling_range_iterator<G> it(geo);
+        bg::ever_circling_range_iterator<G const> it(geo);
         for (std::size_t i = 0; i < n; ++i, ++it)
         {
             out << bg::get<0>(*it);
@@ -83,10 +85,54 @@ void test_geometry(std::string const& wkt)
     }
 }
 
+template <typename G>
+void test_geometry(std::string const& wkt)
+{
+    G geo;
+    bg::read_wkt(wkt, geo);
+    test_geometry(geo);
+}
+
+
+template <typename P>
+P transform_point(P const& p)
+{
+    P result;
+    bg::set<0>(result, bg::get<0>(p) + 1);
+    bg::set<1>(result, bg::get<1>(p) + 1);
+    return result;
+}
+
+template <typename G>
+struct transformed_geometry_type
+{
+    typedef typename bg::point_type<G>::type point_type;
+    typedef boost::transformed_range<point_type(*)(point_type const&), G> type;
+};
+
+template <typename G>
+void test_transformed_geometry(G const& geo)
+{
+    typedef typename bg::point_type<G>::type point_type;
+    test_geometry(geo | boost::adaptors::transformed(&transform_point<point_type>));
+}
+
+template <typename G>
+void test_transformed_geometry(std::string const& wkt)
+{
+    G geo;
+    bg::read_wkt(wkt, geo);
+    test_transformed_geometry(geo);
+}
+
+
+BOOST_GEOMETRY_REGISTER_LINESTRING(transformed_geometry_type< bg::model::linestring< bg::model::d2::point_xy<double> > >::type)
+
 template <typename P>
 void test_all()
 {
     test_geometry<bg::model::linestring<P> >("linestring(1 1,2 2,3 3,4 4,5 5)");
+    test_transformed_geometry<bg::model::linestring<P> >("linestring(0 0,1 1,2 2,3 3,4 4)");
 }
 
 int test_main(int, char* [])

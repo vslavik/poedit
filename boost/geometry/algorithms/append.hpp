@@ -91,19 +91,23 @@ template <typename Polygon, typename Point>
 struct point_to_polygon
 {
     typedef typename ring_type<Polygon>::type ring_type;
+    typedef typename ring_return_type<Polygon>::type exterior_ring_type;
+    typedef typename interior_return_type<Polygon>::type interior_ring_range_type;
 
     static inline void apply(Polygon& polygon, Point const& point,
                 int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
+            exterior_ring_type ext_ring = exterior_ring(polygon);
             append_point<ring_type, Point>::apply(
-                        exterior_ring(polygon), point);
+                        ext_ring, point);
         }
         else if (ring_index < int(num_interior_rings(polygon)))
         {
+            interior_ring_range_type int_rings = interior_rings(polygon);
             append_point<ring_type, Point>::apply(
-                        range::at(interior_rings(polygon), ring_index), point);
+                        range::at(int_rings, ring_index), point);
         }
     }
 };
@@ -113,19 +117,23 @@ template <typename Polygon, typename Range>
 struct range_to_polygon
 {
     typedef typename ring_type<Polygon>::type ring_type;
+    typedef typename ring_return_type<Polygon>::type exterior_ring_type;
+    typedef typename interior_return_type<Polygon>::type interior_ring_range_type;
 
     static inline void apply(Polygon& polygon, Range const& range,
                 int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
+            exterior_ring_type ext_ring = exterior_ring(polygon);
             append_range<ring_type, Range>::apply(
-                        exterior_ring(polygon), range);
+                        ext_ring, range);
         }
         else if (ring_index < int(num_interior_rings(polygon)))
         {
+            interior_ring_range_type int_rings = interior_rings(polygon);
             append_range<ring_type, Range>::apply(
-                        range::at(interior_rings(polygon), ring_index), range);
+                        range::at(int_rings, ring_index), range);
         }
     }
 };
@@ -284,7 +292,7 @@ struct append
                              int ring_index,
                              int multi_index)
     {
-        concept::check<Geometry>();
+        concepts::check<Geometry>();
         dispatch::append<Geometry, RangeOrPoint>::apply(geometry,
                                                         range_or_point,
                                                         ring_index,

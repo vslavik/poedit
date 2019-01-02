@@ -44,6 +44,11 @@ class complex_data
       : id_(id), char_string_(name, void_alloc), int_vector_vector_(void_alloc)
    {}
    //Other members...
+   //<-
+   int get_id() { return id_; };
+   char_string get_char_string() { return char_string_; };
+   int_vector_vector get_int_vector_vector() { return int_vector_vector_; };
+   //->
 };
 
 //Definition of the map holding a string as key and complex_data as mapped type

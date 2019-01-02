@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::partition`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -49,9 +49,9 @@ BOOST_HANA_NAMESPACE_BEGIN
     namespace detail {
         template <bool ...B>
         struct partition_indices {
-            static constexpr bool results[] = {B..., false}; // avoid empty array
+            static constexpr detail::array<bool, sizeof...(B)> results{{B...}};
             static constexpr std::size_t left_size =
-                detail::count(results, results + sizeof...(B), true);
+                detail::count(results.begin(), results.end(), true);
             static constexpr std::size_t right_size = sizeof...(B) - left_size;
 
             static constexpr auto compute_left() {
@@ -72,16 +72,16 @@ BOOST_HANA_NAMESPACE_BEGIN
                 return indices;
             }
 
-            static constexpr auto left = compute_left();
-            static constexpr auto right = compute_right();
+            static constexpr auto left_indices = compute_left();
+            static constexpr auto right_indices = compute_right();
 
             template <typename S, typename Xs, std::size_t ...l, std::size_t ...r>
             static constexpr auto apply(Xs&& xs, std::index_sequence<l...>,
                                                  std::index_sequence<r...>)
             {
                 return hana::make<hana::pair_tag>(
-                    hana::make<S>(hana::at_c<left[l]>(static_cast<Xs&&>(xs))...),
-                    hana::make<S>(hana::at_c<right[r]>(static_cast<Xs&&>(xs))...)
+                    hana::make<S>(hana::at_c<left_indices[l]>(static_cast<Xs&&>(xs))...),
+                    hana::make<S>(hana::at_c<right_indices[r]>(static_cast<Xs&&>(xs))...)
                 );
             }
         };

@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2015.
+              Copyright Andrey Semashev 2007 - 2016.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -42,7 +42,7 @@ File rotation is implemented by the sink backend itself. The file name pattern a
 
 [example_sinks_file]
 
-[note The file size at rotation can be imprecise. The implementation counts the number of characters written to the file, but the underlying API can introduce additional auxiliary data, which would increase the log file's actual size on disk. For instance, it is well known that Windows and DOS operating systems have a special treatment with regard to new-line characters. Each new-line character is written as a two byte sequence 0x0D 0x0A instead of a single 0x0A. Other platform-specific character translations are also known.]
+[note The file size at rotation can be imprecise. The implementation counts the number of characters written to the file, but the underlying API can introduce additional auxiliary data, which would increase the log file's actual size on disk. For instance, it is well known that Windows and DOS operating systems have a special treatment with regard to new-line characters. Each new-line character is written as a two byte sequence 0x0D 0x0A instead of a single 0x0A. Other platform-specific character translations are also known. The actual size on disk can also be less than the number of written characters on compressed filesystems.]
 
 The time-based rotation is not limited by only time points. There are following options available out of the box:
 
@@ -94,6 +94,21 @@ If none of the above applies, one can specify his own predicate for time-based r
     }
 
 [note The log file rotation takes place on an attempt to write a new log record to the file. Thus the time-based rotation is not a strict threshold, either. The rotation will take place as soon as the library detects that the rotation should have happened.]
+
+In addition to time and size-based file rotation the backend also performs rotation on its destruction by default. This is done in order to maintain all log files collected in the target directory after program termination and ensure that temporary log files don't pile up in the directory the sink backend writes to. This behavior can be disabled with the `enable_final_rotation` parameter of the backend constructor or the similarly named method of the backend:
+
+    void init_logging()
+    {
+        // ...
+
+        boost::shared_ptr< sinks::text_file_backend > backend =
+            boost::make_shared< sinks::text_file_backend >(
+                keywords::file_name = "file_%5N.log",
+                keywords::enable_final_rotation = false
+            );
+
+        // ...
+    }
 
 The file name pattern may contain a number of wildcards, like the one you can see in the example above. Supported placeholders are:
 
@@ -157,6 +172,26 @@ You can see we used a regular [link log.detailed.expressions.formatters formatte
 If using formatters is not appropriate for some reason, you can provide your own file name composer. The composer is a mere function object that accepts a log record as a single argument and returns a value of the `text_multifile_backend::path_type` type.
 
 [note The multi-file backend has no knowledge of whether a particular file is going to be used or not. That is, if a log record has been written into file A, the library cannot tell whether there will be more records that fit into the file A or not. This makes it impossible to implement file rotation and removing unused files to free space on the file system. The user will have to implement such functionality himself.]
+
+[endsect]
+
+[section:text_ipc_message_queue Text IPC message queue backend]
+
+    #include <``[boost_log_sinks_text_ipc_message_queue_backend_hpp]``>
+
+Sometimes, it is convenient to pass log records between different processes on a local machine. For example, one could collect logs from multiple processes into a common logger process. Or create a log viewer which is able to monitor running processes. To implement this idea, a sink backend that sends logs across processes is needed. The text interprocess sink backend puts formatted log messages to an [link log.detailed.utilities.ipc.reliable_message_queue interprocess message queue], which can then be retrieved and processed by another process. In particular, one may choose to encode a log record with various attribute values into a JSON or XML formatted text message, and then decode the message at the receiving side for processing such as filtering and displaying.
+
+The backend is implemented by the [class_sinks_text_ipc_message_queue_backend] class template which should be instantiated with an interprocess message queue such as [class_ipc_reliable_message_queue]. The following example program illustrates a logger process.
+
+[example_sinks_ipc_logger]
+
+[@boost:/libs/log/example/doc/sinks_ipc_logger.cpp See the complete code].
+
+The same interprocess queue can be used to implement the receiving side as well. The following code displays the received log messages on the console.
+
+[example_sinks_ipc_receiver]
+
+[@boost:/libs/log/example/doc/sinks_ipc_receiver.cpp See the complete code].
 
 [endsect]
 

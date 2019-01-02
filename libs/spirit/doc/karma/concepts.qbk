@@ -329,22 +329,24 @@ word "recursive" in recursive descent generation.
 
 [heading Signature]
 
-Rules can have both consumed and inherited attributes. The rule's
-/Signature/ specifies both the consumed and inherited attributes. The
-specification uses the function declarator syntax: 
+Nonterminals can have both consumed and inherited attributes. The
+Nonterminal's /Signature/ specifies both the consumed and inherited
+attributes. The specification uses the function declarator syntax: 
 
     RT(A0, A1, A2, ..., AN)
 
-where `RT` is the rule's consumed attribute and `A0` ... `AN` are the
-rule's inherited attributes.
+where `RT` is the Nonterminal's consumed attribute and `A0` ... `AN`
+are the Nonterminal's inherited attributes.
+
+The default value is `void()` (no consumed and inherited attributes).
 
 [heading Attributes]
 
-The rule models a C++ function. The rule's consumed attribute is
-analogous to the function return value as it is the type -exposed- by the rule. 
-Its inherited attributes are analogous to function arguments. The inherited 
-attributes (arguments) can be passed in just like any __karma_lazy_argument__, 
-e.g.:
+The Nonterminal models a C++ function. The Nonterminal's consumed attribute is
+analogous to the function return value as it is the type -exposed- by the
+Nonterminal. Its inherited attributes are analogous to function arguments.
+The inherited attributes (arguments) can be passed in just like any
+__karma_lazy_argument__, e.g.:
 
     r(expr) // Evaluate expr at parse time and pass the result to the Nonterminal r
 
@@ -418,9 +420,8 @@ Nonterminal the following must be met:
 
 [table
     [[Expression]       [Description]]
-    [[`X::sig_type`]    [The Signature of `X`: An __mpl_fwd_sequence__.
-                        The first element is the Nonterminal's consumed attribute
-                        type and the rest are the inherited attribute types.]]
+    [[`X::sig_type`]    [The Signature of `X`: In a function signature form
+                        as described above in the Signature paragraph.]]
     [[`X::locals_type`] [The local variables of `X`: An __mpl_fwd_sequence__.]]
 ]
 

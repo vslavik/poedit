@@ -583,7 +583,7 @@ namespace boost { namespace polygon{
                        polygon_type>::type &
   convolve(polygon_type& polygon, const point_type& point) {
     std::vector<typename polygon_90_traits<polygon_type>::coordinate_type> coords;
-    coords.reserve(size(polygon));
+    coords.reserve(::boost::polygon::size(polygon));
     bool pingpong = true;
     for(typename polygon_90_traits<polygon_type>::compact_iterator_type iter = begin_compact(polygon);
         iter != end_compact(polygon); ++iter) {
@@ -603,7 +603,7 @@ namespace boost { namespace polygon{
                        polygon_type>::type &
   convolve(polygon_type& polygon, const point_type& point) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -655,7 +655,7 @@ namespace boost { namespace polygon{
   typename enable_if< typename is_any_mutable_polygon_without_holes_type<polygon_type>::type, polygon_type>::type &
   transform(polygon_type& polygon, const transform_type& tr) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -689,7 +689,7 @@ namespace boost { namespace polygon{
   typename enable_if< typename is_any_mutable_polygon_without_holes_type<polygon_type>::type, polygon_type>::type &
   scale_up(polygon_type& polygon, typename coordinate_traits<typename polygon_traits<polygon_type>::coordinate_type>::unsigned_area_type factor) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -728,7 +728,7 @@ namespace boost { namespace polygon{
     polygon_type>::type &
   scale_down(polygon_type& polygon, typename coordinate_traits<typename polygon_traits<polygon_type>::coordinate_type>::unsigned_area_type factor) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -824,7 +824,7 @@ namespace boost { namespace polygon{
   typename enable_if< typename is_any_mutable_polygon_without_holes_type<polygon_type>::type, polygon_type>::type &
   snap_to_45(polygon_type& polygon) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -863,7 +863,7 @@ namespace boost { namespace polygon{
     polygon_type>::type &
   scale_down(polygon_type& polygon, typename coordinate_traits<typename polygon_traits<polygon_type>::coordinate_type>::unsigned_area_type factor) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -903,7 +903,7 @@ namespace boost { namespace polygon{
     polygon_type>::type &
   scale(polygon_type& polygon, double factor) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -924,7 +924,7 @@ namespace boost { namespace polygon{
         typename geometry_domain<typename geometry_concept<polygon_type>::type>::type>::type>::type>::type * = 0
   ) {
     std::vector<typename std::iterator_traits<typename polygon_traits<polygon_type>::iterator_type>::value_type> points;
-    points.reserve(size(polygon));
+    points.reserve(::boost::polygon::size(polygon));
     for(typename polygon_traits<polygon_type>::iterator_type iter = begin_points(polygon);
         iter != end_points(polygon); ++iter) {
       points.push_back(*iter);
@@ -1183,8 +1183,11 @@ namespace boost { namespace polygon{
     typedef point_data<Unit> Point;
     typedef std::pair<Point, Point> half_edge;
 
-    class less_point : public std::binary_function<Point, Point, bool> {
+    class less_point {
     public:
+      typedef Point first_argument_type;
+      typedef Point second_argument_type;
+      typedef bool result_type;
       inline less_point() {}
       inline bool operator () (const Point& pt1, const Point& pt2) const {
         if(pt1.get(HORIZONTAL) < pt2.get(HORIZONTAL)) return true;

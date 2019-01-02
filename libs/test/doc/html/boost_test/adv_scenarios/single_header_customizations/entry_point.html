@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Customizing the module's entry point</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
-<link rel="up" href="../single_header_customizations.html" title="Single-header variant customizations">
-<link rel="prev" href="../single_header_customizations.html" title="Single-header variant customizations">
+<link rel="up" href="../single_header_customizations.html" title="Header-only variant customizations">
+<link rel="prev" href="multiple_translation_units.html" title="Header-only with multiple translation units">
 <link rel="next" href="init_func.html" title="Customizing the module's initialization function">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_func.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="multiple_translation_units.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_func.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -28,8 +28,9 @@
         the module's entry point</a>
 </h4></div></div></div>
 <p>
-          In this usage variant, in your single translation unit, you need to define
-          macros <a class="link" href="../../utf_reference/link_references/link_boost_test_no_main.html" title="BOOST_TEST_NO_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a> and <a class="link" href="../../utf_reference/link_references/link_boost_test_alternative_init_macro.html" title="BOOST_TEST_ALTERNATIVE_INIT_API"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a>
+          In this usage variant and in the translation unit containing the definition
+          of <a class="link" href="../../utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a>, you need to
+          define the macros <a class="link" href="../../utf_reference/link_references/link_boost_test_no_main.html" title="BOOST_TEST_NO_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a> and <a class="link" href="../../utf_reference/link_references/link_boost_test_alternative_init_macro.html" title="BOOST_TEST_ALTERNATIVE_INIT_API"><code class="computeroutput"><span class="identifier">BOOST_TEST_ALTERNATIVE_INIT_API</span></code></a>
           (their values are irrelevant) prior to including any of the framework's
           headers. Next, you have to define your custom entry point, and invoke the
           default <a class="link" href="../test_module_runner_overview.html" title="Test module runner">test
@@ -40,7 +41,7 @@
         </p>
 <h6>
 <a name="boost_test.adv_scenarios.single_header_customizations.entry_point.h0"></a>
-          <span><a name="boost_test.adv_scenarios.single_header_customizations.entry_point.example_descr"></a></span><a class="link" href="entry_point.html#boost_test.adv_scenarios.single_header_customizations.entry_point.example_descr">Example:
+          <span class="phrase"><a name="boost_test.adv_scenarios.single_header_customizations.entry_point.example_descr"></a></span><a class="link" href="entry_point.html#boost_test.adv_scenarios.single_header_customizations.entry_point.example_descr">Example:
           using custom entry point</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -95,7 +96,7 @@
 </table></div>
 <p>
           In the above example, a custom entry point was selected because the test
-          module, in addition to command line arguments needs to obtain also the
+          module, in addition to command line arguments, needs to obtain also the
           information about environment variables.
         </p>
 <div class="note"><table border="0" summary="Note">
@@ -107,7 +108,8 @@
             The above example also illustrates that it makes sense to define both
             <a class="link" href="../../utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> and <a class="link" href="../../utf_reference/link_references/link_boost_test_no_main.html" title="BOOST_TEST_NO_MAIN"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a>. This way,
             no <code class="computeroutput"><span class="identifier">main</span></code> is generated
-            by the framework, but the specified name is assigned to the <a class="link" href="../../tests_organization/test_suite/master_test_suite.html" title="Master Test Suite">Master
+            by the framework, but the name specified by <a class="link" href="../../utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> is assigned
+            to the <a class="link" href="../../tests_organization/test_suite/master_test_suite.html" title="Master Test Suite">Master
             Test Suite</a>.
           </p></td></tr>
 </table></div>
@@ -124,7 +126,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -132,7 +134,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_func.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="multiple_translation_units.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../single_header_customizations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="init_func.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

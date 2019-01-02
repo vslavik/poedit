@@ -189,7 +189,7 @@ actions extract
     $(.path)xgettext -k$(KEYWORD:E=i18n) -o $(<) $(>)
 }
 
-# Does realy updating of po file. The tricky part is that
+# Does really updating of po file. The tricky part is that
 # we're actually updating one of the sources:
 # $(<) is the NOTFILE target we're updating
 # $(>[1]) is the PO file to be really updated.

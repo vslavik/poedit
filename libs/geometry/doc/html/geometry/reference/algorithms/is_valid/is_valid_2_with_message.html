@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_valid (with message)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../is_valid.html" title="is_valid">
-<link rel="prev" href="is_valid_2_with_failure_value.html" title="is_valid (with failure value)">
+<link rel="prev" href="is_valid_3_with_message_and_strategy.html" title="is_valid (with message and strategy)">
 <link rel="next" href="../length.html" title="length">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_valid_2_with_failure_value.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../is_valid.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../length.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_valid_3_with_message_and_strategy.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../is_valid.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../length.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
@@ -28,12 +28,12 @@
           (with message)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp84272416"></a>
-Checks if a geometry \1.
+            <a class="indexterm" name="idp102223888"></a>
+Checks if a geometry is valid (in the OGC sense)
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h0"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.synopsis"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.synopsis">Synopsis</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.synopsis"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.synopsis">Synopsis</a>
           </h6>
 <p>
 </p>
@@ -43,7 +43,7 @@ Checks if a geometry \1.
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h1"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.parameters"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.parameters">Parameters</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.parameters"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.parameters">Parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -121,16 +121,17 @@ Checks if a geometry \1.
 </table></div>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h2"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.returns"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.returns">Returns</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.returns"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.returns">Returns</a>
           </h6>
 <p>
-            {is valid (in the OGC sense); furthermore, the following geometries are
-            considered valid: multi-geometries with no elements, linear geometries
-            containing spikes, areal geometries with duplicate (consecutive) points}
+            Returns true if the geometry is valid (in the OGC sense); furthermore,
+            the following geometries are considered valid: multi-geometries with
+            no elements, linear geometries containing spikes, areal geometries with
+            duplicate (consecutive) points
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h3"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.header"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.header">Header</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.header"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.header">Header</a>
           </h6>
 <p>
             Either
@@ -146,14 +147,14 @@ Checks if a geometry \1.
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h4"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.conformance"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.conformance">Conformance</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.conformance"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.conformance">Conformance</a>
           </h6>
 <p>
             The function is_valid is not defined by OGC.
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h5"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.supported_geometries"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.supported_geometries">Supported
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.supported_geometries"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.supported_geometries">Supported
             geometries</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -298,7 +299,7 @@ Checks if a geometry \1.
 </table></div>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h6"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.complexity"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.complexity">Complexity</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.complexity"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.complexity">Complexity</a>
           </h6>
 <p>
             Constant-time for points, segments, boxes and multi-points
@@ -314,7 +315,7 @@ Checks if a geometry \1.
           </p>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h7"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.example"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.example">Example</a>
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.example"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.example">Example</a>
           </h6>
 <p>
             Checks whether a geometry is valid and, if not valid, prints a message
@@ -362,17 +363,17 @@ why not valid? Geometry has disconnected interior
 </pre>
 <h6>
 <a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.h8"></a>
-            <span><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.see_also"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.see_also">See
+            <span class="phrase"><a name="geometry.reference.algorithms.is_valid.is_valid_2_with_message.see_also"></a></span><a class="link" href="is_valid_2_with_message.html#geometry.reference.algorithms.is_valid.is_valid_2_with_message.see_also">See
             also</a>
           </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                 <a class="link" href="../is_simple.html" title="is_simple">is_simple</a>
               </li></ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -380,7 +381,7 @@ why not valid? Geometry has disconnected interior
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_valid_2_with_failure_value.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../is_valid.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../length.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_valid_3_with_message_and_strategy.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../is_valid.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../length.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

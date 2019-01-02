@@ -1,45 +1,29 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_LOCATOR_HPP
+#define BOOST_GIL_LOCATOR_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/point.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_LOCATOR_H
-#define GIL_LOCATOR_H
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel 2D locator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n September 20, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cstddef>
 #include <cassert>
-#include "pixel_iterator.hpp"
-
-////////////////////////////////////////////////////////////////////////////////////////
-///                 Pixel 2D LOCATOR
-////////////////////////////////////////////////////////////////////////////////////////
-
+#include <cstddef>
 
 namespace boost { namespace gil {
 
+/// Pixel 2D locator
+
 //forward declarations
-template <typename P> ptrdiff_t memunit_step(const P*);
-template <typename P> P* memunit_advanced(const P* p, ptrdiff_t diff);
-template <typename P> P& memunit_advanced_ref(P* p, ptrdiff_t diff);
+template <typename P> std::ptrdiff_t memunit_step(const P*);
+template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
+template <typename P> P& memunit_advanced_ref(P* p, std::ptrdiff_t diff);
 template <typename Iterator, typename D> struct iterator_add_deref;
-template <typename T> class point2;
+template <typename T> class point;
 namespace detail {
     // helper class specialized for each axis of pixel_2d_locator
     template <std::size_t D, typename Loc>  class locator_axis;
@@ -62,7 +46,7 @@ template <typename T> struct transposed_type {
 /// \brief base class for models of PixelLocatorConcept
 /// \ingroup PixelLocatorModel PixelBasedModel
 ///
-/// Pixel locator is similar to a pixel iterator, but allows for 2D navigation of pixels within an image view. 
+/// Pixel locator is similar to a pixel iterator, but allows for 2D navigation of pixels within an image view.
 /// It has a 2D difference_type and supports random access operations like:
 /// \code
 ///     difference_type offset2(2,3);
@@ -76,7 +60,7 @@ template <typename T> struct transposed_type {
 /// It is called a locator because it doesn't implement the complete interface of a random access iterator.
 /// For example, increment and decrement operations don't make sense (no way to specify dimension).
 /// Also 2D difference between two locators cannot be computed without knowledge of the X position within the image.
-/// 
+///
 /// This base class provides most of the methods and typedefs needed to create a model of a locator. GIL provides two
 /// locator models as subclasses of \p pixel_2d_locator_base. A memory-based locator, \p memory_based_2d_locator and a virtual
 /// locator, \p virtual_2d_locator.
@@ -108,7 +92,7 @@ template <typename T> struct transposed_type {
 ///        // return the vertical distance to another locator. Some models need the horizontal distance to compute it
 ///        y_coord_t         y_distance_to(const my_locator& loc2, x_coord_t xDiff) const;
 ///
-///        // return true iff incrementing an x-iterator located at the last column will position it at the first 
+///        // return true iff incrementing an x-iterator located at the last column will position it at the first
 ///        // column of the next row. Some models need the image width to determine that.
 ///        bool              is_1d_traversable(x_coord_t width) const;
 /// };
@@ -128,7 +112,7 @@ public:
     typedef typename std::iterator_traits<x_iterator>::value_type       value_type;
     typedef typename std::iterator_traits<x_iterator>::reference        reference;    // result of dereferencing
     typedef typename std::iterator_traits<x_iterator>::difference_type  coord_t;      // 1D difference type (same for all dimensions)
-    typedef point2<coord_t>                                             difference_type; // result of operator-(locator,locator)
+    typedef point<coord_t>                                              difference_type; // result of operator-(locator,locator)
     typedef difference_type                                             point_t;
     template <std::size_t D> struct axis {
         typedef typename detail::locator_axis<D,Loc>::coord_t           coord_t;
@@ -159,12 +143,12 @@ public:
 
     Loc&              operator+=(const difference_type& d)         { concrete().x()+=d.x; concrete().y()+=d.y; return concrete(); }
     Loc&              operator-=(const difference_type& d)         { concrete().x()-=d.x; concrete().y()-=d.y; return concrete(); }
-    
+
     Loc               operator+(const difference_type& d)    const { return xy_at(d); }
     Loc               operator-(const difference_type& d)    const { return xy_at(-d); }
 
     // Some locators can cache 2D coordinates for faster subsequent access. By default there is no caching
-    typedef difference_type    cached_location_t;    
+    typedef difference_type    cached_location_t;
     cached_location_t cache_location(const difference_type& d)  const { return d; }
     cached_location_t cache_location(x_coord_t dx, y_coord_t dy)const { return difference_type(dx,dy); }
 
@@ -177,7 +161,7 @@ private:
 
 // helper classes for each axis of pixel_2d_locator_base
 namespace detail {
-    template <typename Loc> 
+    template <typename Loc>
     class locator_axis<0,Loc> {
         typedef typename Loc::point_t                       point_t;
     public:
@@ -190,7 +174,7 @@ namespace detail {
         inline iterator         operator()(const Loc& loc, const point_t& d) const { return loc.x_at(d); }
     };
 
-    template <typename Loc> 
+    template <typename Loc>
     class locator_axis<1,Loc> {
         typedef typename Loc::point_t                       point_t;
     public:
@@ -224,10 +208,10 @@ struct is_planar<pixel_2d_locator_base<Loc,XIt,YIt> > : public is_planar<XIt> {}
 /// while its base iterator provides horizontal navigation.
 ///
 /// Each instantiation is optimal in terms of size and efficiency.
-/// For example, xy locator over interleaved rgb image results in a step iterator consisting of 
-/// one std::ptrdiff_t for the row size and one native pointer (8 bytes total). ++locator.x() resolves to pointer 
-/// increment. At the other extreme, a 2D navigation of the even pixels of a planar CMYK image results in a step 
-/// iterator consisting of one std::ptrdiff_t for the doubled row size, and one step iterator consisting of 
+/// For example, xy locator over interleaved rgb image results in a step iterator consisting of
+/// one std::ptrdiff_t for the row size and one native pointer (8 bytes total). ++locator.x() resolves to pointer
+/// increment. At the other extreme, a 2D navigation of the even pixels of a planar CMYK image results in a step
+/// iterator consisting of one std::ptrdiff_t for the doubled row size, and one step iterator consisting of
 /// one std::ptrdiff_t for the horizontal step of two and a CMYK planar_pixel_iterator consisting of 4 pointers (24 bytes).
 /// In this case ++locator.x() results in four native pointer additions.
 ///
@@ -255,8 +239,8 @@ public:
 
     template <typename Deref> struct add_deref {
         typedef memory_based_2d_locator<typename iterator_add_deref<StepIterator,Deref>::type> type;
-        static type make(const memory_based_2d_locator<StepIterator>& loc, const Deref& nderef) { 
-            return type(iterator_add_deref<StepIterator,Deref>::make(loc.y(),nderef)); 
+        static type make(const memory_based_2d_locator<StepIterator>& loc, const Deref& nderef) {
+            return type(iterator_add_deref<StepIterator,Deref>::make(loc.y(),nderef));
         }
     };
 
@@ -278,8 +262,8 @@ public:
     x_iterator&           x()                                { return _p.base(); }
     y_iterator&           y()                                { return _p; }
 
-    // These are faster versions of functions already provided in the superclass 
-    x_iterator x_at      (x_coord_t dx, y_coord_t dy)  const { return memunit_advanced(x(), offset(dx,dy)); }    
+    // These are faster versions of functions already provided in the superclass
+    x_iterator x_at      (x_coord_t dx, y_coord_t dy)  const { return memunit_advanced(x(), offset(dx,dy)); }
     x_iterator x_at      (const difference_type& d)    const { return memunit_advanced(x(), offset(d.x,d.y)); }
     this_t     xy_at     (x_coord_t dx, y_coord_t dy)  const { return this_t(x_at( dx , dy ), row_size()); }
     this_t     xy_at     (const difference_type& d)    const { return this_t(x_at( d.x, d.y), row_size()); }
@@ -301,7 +285,7 @@ public:
     bool                   is_1d_traversable(x_coord_t width)   const { return row_size()-pixel_size()*width==0; }   // is there no gap at the end of each row?
 
     // Returns the vertical distance (it2.y-it1.y) between two x_iterators given the difference of their x positions
-    std::ptrdiff_t y_distance_to(const this_t& p2, x_coord_t xDiff) const { 
+    std::ptrdiff_t y_distance_to(const this_t& p2, x_coord_t xDiff) const {
         std::ptrdiff_t rowDiff=memunit_distance(x(),p2.x())-pixel_size()*xDiff;
         assert(( rowDiff % row_size())==0);
         return rowDiff / row_size();
@@ -356,7 +340,6 @@ template <typename SI>
 struct dynamic_y_step_type<memory_based_2d_locator<SI> > {
     typedef memory_based_2d_locator<SI> type;
 };
-
 } }  // namespace boost::gil
 
 #endif

@@ -67,7 +67,7 @@ namespace
       n = _atoi64(argv[1]);
 #endif
 
-    for (; argc > 2; ++argv, --argc) 
+    for (; argc > 2; ++argv, --argc)
     {
       if ( *(argv[2]+1) == 'p' )
         places = atoi( argv[2]+2 );
@@ -91,7 +91,7 @@ namespace
       }
     }
 
-    if (argc < 2) 
+    if (argc < 2)
     {
       cout << "Usage: loop_time_test n [Options]\n"
               "  The argument n specifies the number of test cases to run\n"
@@ -128,7 +128,7 @@ namespace
   void time()
   {
     T total = 0;
-    { 
+    {
  //     cout << "*************Endian integer approach...\n";
       EndianT x(0);
       boost::timer::cpu_timer t;
@@ -140,7 +140,7 @@ namespace
       total += x;
       cout << "<td align=\"right\">" << t.format(places, "%t") << " s</td>";
     }
-    { 
+    {
 //      cout << "***************Endian conversion approach...\n";
       T x(0);
       boost::timer::cpu_timer t;
@@ -158,7 +158,7 @@ namespace
     }
   }
 
- 
+
   void test_big_align_int16()
   {
     cout << "<tr><td>16-bit aligned big endian</td>";
@@ -186,7 +186,7 @@ namespace
     time<int16_t, little_int16_t>();
     cout << "</tr>\n";
   }
- 
+
   void test_big_align_int32()
   {
     cout << "<tr><td>32-bit aligned big endian</td>";
@@ -214,7 +214,7 @@ namespace
     time<int32_t, little_int32_t>();
     cout << "</tr>\n";
   }
- 
+
   void test_big_align_int64()
   {
     cout << "<tr><td>64-bit aligned big endian</td>";
@@ -250,10 +250,10 @@ namespace
 int cpp_main(int argc, char* argv[])
 {
   process_command_line(argc, argv);
-  
+
   cout
     << "<html>\n<head>\n<title>Endian Loop Time Test</title>\n</head>\n<body>\n"
-    << "<!-- boost-no-inspect -->\n" 
+    << "<!-- boost-no-inspect -->\n"
     << "<div align=\"center\"> <center>\n"
     << "<table border=\"1\" cellpadding=\"5\" cellspacing=\"0\""
     << "style=\"border-collapse: collapse\" bordercolor=\"#111111\">\n"
@@ -268,7 +268,7 @@ int cpp_main(int argc, char* argv[])
        "<td align=\"center\"><b>Endian<br>conversion<br>function</b></td>\n"
        "</tr>\n"
     ;
-  
+
   if (time_aligned)
   {
     if (time_16)

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>How the library works</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;21.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;25.&#160;Boost.Move">
 <link rel="prev" href="emulation_limitations.html" title="Emulation limitations">
 <link rel="next" href="thanks_to.html" title="Thanks and credits">
 </head>
@@ -47,7 +47,7 @@
 </pre>
 <p>
       which is convertible to the movable base class (usual C++ derived to base conversion).
-      When users mark their classes as <code class="computeroutput"><a class="link" href="../BOOST_MOVABLE_BUT_NOT_COPYABLE.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE</a></code>
+      When users mark their classes as <code class="computeroutput"><a class="link" href="../BOOST_MOVABL_1_3_26_20_7_3.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE</a></code>
       or <code class="computeroutput"><a class="link" href="../BOOST_COPYABLE_AND_MOVABLE.html" title="Macro BOOST_COPYABLE_AND_MOVABLE">BOOST_COPYABLE_AND_MOVABLE</a></code>,
       these macros define conversion operators to references to <code class="computeroutput"><span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">rv</span></code>:
     </p>
@@ -61,7 +61,7 @@
    <span class="comment">//More stuff...</span>
 </pre>
 <p>
-      <code class="computeroutput"><a class="link" href="../BOOST_MOVABLE_BUT_NOT_COPYABLE.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE</a></code>
+      <code class="computeroutput"><a class="link" href="../BOOST_MOVABL_1_3_26_20_7_3.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE</a></code>
       also declares a private copy constructor and assignment. <code class="computeroutput"><a class="link" href="../BOOST_COPYABLE_AND_MOVABLE.html" title="Macro BOOST_COPYABLE_AND_MOVABLE">BOOST_COPYABLE_AND_MOVABLE</a></code>
       defines a non-const copy constructor <code class="computeroutput"><span class="identifier">TYPE</span>
       <span class="special">&amp;</span><span class="keyword">operator</span><span class="special">=(</span><span class="identifier">TYPE</span><span class="special">&amp;)</span></code>
@@ -102,7 +102,7 @@
       and clean code for C++0x move semantics, without modifying any resolution overload.
       For C++03 compilers when overload resolution is performed these are the bindings:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           a) non-const rvalues (e.g.: temporaries), bind to <code class="computeroutput"><span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">rv</span><span class="special">&lt;</span> <span class="identifier">TYPE</span> <span class="special">&gt;&amp;</span></code>
         </li>
@@ -118,7 +118,7 @@
       The library does not define the equivalent of <code class="computeroutput"><a class="link" href="../BOOST_COPY_ASSIGN_REF.html" title="Macro BOOST_COPY_ASSIGN_REF">BOOST_COPY_ASSIGN_REF</a></code>
       for copy construction (say, <code class="computeroutput"><span class="identifier">BOOST_COPY_CTOR_REF</span></code>)
       because nearly all modern compilers implement RVO and this is much more efficient
-      than any move emulation. <code class="computeroutput"><a class="link" href="../boost/move_idp128042496.html" title="Function template move">move</a></code>
+      than any move emulation. <code class="computeroutput"><a class="link" href="../boost/move_1_3_26_20_12_1_1.html" title="Function template move">move</a></code>
       just casts <code class="computeroutput"><span class="identifier">TYPE</span> <span class="special">&amp;</span></code>
       into <code class="computeroutput"><span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">rv</span><span class="special">&lt;</span><span class="identifier">TYPE</span><span class="special">&gt;</span> <span class="special">&amp;</span></code>.
     </p>

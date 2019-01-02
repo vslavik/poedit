@@ -88,7 +88,7 @@ protected:
     //  the parameter 'result'.
     bool preprocess_file(std::string filename, std::string const& instr,
         std::string& result, std::string& error, std::string& hooks,
-        bool single_line = false);
+        std::string const& expected_cfg_macro, bool single_line = false);
 
     //  Add special predefined macros to the context object
     template <typename Context>

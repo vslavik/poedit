@@ -21,12 +21,94 @@
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+#include <boost/type_erasure/detail/meta.hpp>
 #include <boost/type_erasure/config.hpp>
 #include <boost/type_erasure/is_placeholder.hpp>
 
 namespace boost {
 namespace type_erasure {
 namespace detail {
+
+#ifdef BOOST_TYPE_ERASURE_USE_MP11
+
+template<class T>
+struct get_placeholders_in_argument_impl
+{
+    template<class Out>
+    using apply = ::boost::type_erasure::detail::eval_if<
+        ::boost::type_erasure::is_placeholder<T>::value,
+        ::boost::mp11::mp_set_push_back,
+        ::boost::type_erasure::detail::first,
+        Out, T
+    >;
+};
+
+template<class T>
+struct get_placeholders_in_argument_impl<T&>
+{
+    template<class Out>
+    using apply = typename ::boost::type_erasure::detail::get_placeholders_in_argument_impl<T>::template apply<Out>;
+};
+
+template<class T>
+struct get_placeholders_in_argument_impl<T&&>
+{
+    template<class Out>
+    using apply = typename ::boost::type_erasure::detail::get_placeholders_in_argument_impl<T>::template apply<Out>;
+};
+
+template<class T>
+struct get_placeholders_in_argument_impl<const T>
+{
+    template<class Out>
+    using apply = typename ::boost::type_erasure::detail::get_placeholders_in_argument_impl<T>::template apply<Out>;
+};
+
+template<class Out, class T>
+using get_placeholders_f = typename get_placeholders_in_argument_impl<T>::template apply<Out>;
+
+template<class Out, class... T>
+using get_placeholders_impl =
+    ::boost::mp11::mp_fold<
+        ::boost::mp11::mp_list<T...>,
+        Out,
+        ::boost::type_erasure::detail::get_placeholders_f
+    >;
+
+template<class R, class... T>
+struct get_placeholders_in_argument_impl<R(T...)>
+{
+    template<class Out>
+    using apply = ::boost::type_erasure::detail::get_placeholders_impl<Out, R, T...>;
+};
+
+template<class R, class C, class... T>
+struct get_placeholders_in_argument_impl<R (C::*)(T...)>
+{
+    template<class Out>
+    using apply = ::boost::type_erasure::detail::get_placeholders_impl<Out, R, C, T...>;
+};
+
+template<class R, class C, class... T>
+struct get_placeholders_in_argument_impl<R (C::*)(T...) const>
+{
+    template<class Out>
+    using apply = ::boost::type_erasure::detail::get_placeholders_impl<Out, R, C, T...>;
+};
+
+template<class T, class Out>
+struct get_placeholders;
+
+template<template<class...> class F, class... T, class Out>
+struct get_placeholders<F<T...>, Out>
+{
+    using type = ::boost::type_erasure::detail::get_placeholders_impl<Out, T...>;
+};
+
+template<class T, class Out>
+using get_placeholders_t = typename ::boost::type_erasure::detail::get_placeholders<T, Out>::type;
+
+#else
 
 template<class T, class Out>
 struct get_placeholders_in_argument
@@ -88,11 +170,19 @@ struct get_placeholders<T<U...>, Out>
 template<class R, class... T, class Out>
 struct get_placeholders_in_argument<R(T...), Out>
 {
-    typedef typename ::boost::type_erasure::detail::get_placeholders_in_argument<
-        R,
-        Out
-    >::type type0;
-    typedef typename get_placeholders_impl<type0, T...>::type type;
+    typedef typename get_placeholders_impl<Out, R, T...>::type type;
+};
+
+template<class R, class C, class... T, class Out>
+struct get_placeholders_in_argument<R (C::*)(T...), Out>
+{
+    typedef typename get_placeholders_impl<Out, R, C, T...>::type type;
+};
+
+template<class R, class C, class... T, class Out>
+struct get_placeholders_in_argument<R (C::*)(T...) const, Out>
+{
+    typedef typename get_placeholders_impl<Out, R, C, T...>::type type;
 };
 
 #else
@@ -100,6 +190,8 @@ struct get_placeholders_in_argument<R(T...), Out>
 #define BOOST_PP_FILENAME_1 <boost/type_erasure/detail/get_placeholders.hpp>
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_TYPE_ERASURE_MAX_ARITY)
 #include BOOST_PP_ITERATE()
+
+#endif
 
 #endif
 

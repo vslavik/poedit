@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2010: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -9,7 +9,7 @@ Copyright (c) 2008-2010: Joachim Faulhaber
 #define BOOST_ICL_TEST_ICL_DISCRETE_INTERVAL_HPP_JOFA_100930
 
 
-template <class T, class IntervalT> 
+template <class T, class IntervalT>
 void discrete_interval_traits()
 {
     BOOST_CHECK( is_interval<IntervalT>::value                        );
@@ -20,11 +20,11 @@ void discrete_interval_traits()
     BOOST_CHECK(!has_static_bounds<IntervalT>::value                  );
 }
 
-template <class T, class IntervalT> 
+template <class T, class IntervalT>
 void discrete_interval_ctor__dis_4_dyn_v_sta() // discrete && (dynamic or static)
 {
     BOOST_CHECK_EQUAL( IntervalT(MK_v(3)), IntervalT(MK_v(3)) );
-    BOOST_CHECK_EQUAL( icl::contains(IntervalT(MK_v(1)), MK_v(1)), true ); 
+    BOOST_CHECK_EQUAL( icl::contains(IntervalT(MK_v(1)), MK_v(1)), true );
 }
 
 template <class T, ICL_COMPARE Compare>
@@ -32,16 +32,14 @@ void distant_intervals_4_discrete_types()
 {
     typedef right_open_interval<T,Compare> L__D; // L__D for [..)
     typedef  left_open_interval<T,Compare> C__I; // C__I for (..]
-    typedef    closed_interval<T,Compare> L__I; // L__I for [..]
-    typedef      open_interval<T,Compare> C__D; // C__D for (..)
+    typedef     closed_interval<T,Compare> L__I; // L__I for [..]
+    typedef       open_interval<T,Compare> C__D; // C__D for (..)
     typedef typename icl::interval<T,Compare>::type IntervalT;
 
-    BOOST_CHECK( is_interval<L__D>::value ); 
-    BOOST_CHECK( has_difference<typename interval_traits<L__D>::domain_type>::value ); 
-    BOOST_CHECK( is_discrete<typename interval_traits<L__D>::domain_type>::value    ); 
-    BOOST_CHECK( (boost::is_same<typename interval_traits<L__D>::domain_type, T>::value)   ); 
-
-    typedef typename difference_type_of<T>::type DiffT;
+    BOOST_CHECK( is_interval<L__D>::value );
+    BOOST_CHECK( has_difference<typename interval_traits<L__D>::domain_type>::value );
+    BOOST_CHECK( is_discrete<typename interval_traits<L__D>::domain_type>::value    );
+    BOOST_CHECK( (boost::is_same<typename interval_traits<L__D>::domain_type, T>::value)   );
 
     test_inner_complement<T,Compare,L__D>(MK_I(L__D,0,4), MK_I(L__D,8,9));
     test_inner_complement<T,Compare,L__D>(MK_I(L__D,7,8), MK_I(L__D,2,3));

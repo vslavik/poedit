@@ -2,7 +2,7 @@
 // prioritised_handlers.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,7 +15,7 @@
 
 using boost::asio::ip::tcp;
 
-class handler_priority_queue
+class handler_priority_queue : public boost::asio::execution_context
 {
 public:
   void add(int priority, boost::function<void()> function)
@@ -33,43 +33,60 @@ public:
     }
   }
 
-  // A generic wrapper class for handlers to allow the invocation to be hooked.
-  template <typename Handler>
-  class wrapped_handler
+  class executor
   {
   public:
-    wrapped_handler(handler_priority_queue& q, int p, Handler h)
-      : queue_(q), priority_(p), handler_(h)
+    executor(handler_priority_queue& q, int p)
+      : context_(q), priority_(p)
     {
     }
 
-    void operator()()
+    handler_priority_queue& context() const
     {
-      handler_();
+      return context_;
     }
 
-    template <typename Arg1>
-    void operator()(Arg1 arg1)
+    template <typename Function, typename Allocator>
+    void dispatch(const Function& f, const Allocator&) const
     {
-      handler_(arg1);
+      context_.add(priority_, f);
     }
 
-    template <typename Arg1, typename Arg2>
-    void operator()(Arg1 arg1, Arg2 arg2)
+    template <typename Function, typename Allocator>
+    void post(const Function& f, const Allocator&) const
     {
-      handler_(arg1, arg2);
+      context_.add(priority_, f);
     }
 
-  //private:
-    handler_priority_queue& queue_;
+    template <typename Function, typename Allocator>
+    void defer(const Function& f, const Allocator&) const
+    {
+      context_.add(priority_, f);
+    }
+
+    void on_work_started() const {}
+    void on_work_finished() const {}
+
+    bool operator==(const executor& other) const
+    {
+      return &context_ == &other.context_ && priority_ == other.priority_;
+    }
+
+    bool operator!=(const executor& other) const
+    {
+      return !operator==(other);
+    }
+
+  private:
+    handler_priority_queue& context_;
     int priority_;
-    Handler handler_;
   };
 
   template <typename Handler>
-  wrapped_handler<Handler> wrap(int priority, Handler handler)
+  boost::asio::executor_binder<Handler, executor>
+  wrap(int priority, Handler handler)
   {
-    return wrapped_handler<Handler>(*this, priority, handler);
+    return boost::asio::bind_executor(executor(*this, priority), handler);
   }
 
 private:
@@ -100,14 +117,6 @@ private:
   std::priority_queue<queued_handler> handlers_;
 };
 
-// Custom invocation hook for wrapped handlers.
-template <typename Function, typename Handler>
-void asio_handler_invoke(Function f,
-    handler_priority_queue::wrapped_handler<Handler>* h)
-{
-  h->queue_.add(h->priority_, f);
-}
-
 //----------------------------------------------------------------------
 
 void high_priority_handler(const boost::system::error_code& /*ec*/)
@@ -127,32 +136,32 @@ void low_priority_handler()
 
 int main()
 {
-  boost::asio::io_service io_service;
+  boost::asio::io_context io_context;
 
   handler_priority_queue pri_queue;
 
   // Post a completion handler to be run immediately.
-  io_service.post(pri_queue.wrap(0, low_priority_handler));
+  boost::asio::post(io_context, pri_queue.wrap(0, low_priority_handler));
 
   // Start an asynchronous accept that will complete immediately.
   tcp::endpoint endpoint(boost::asio::ip::address_v4::loopback(), 0);
-  tcp::acceptor acceptor(io_service, endpoint);
-  tcp::socket server_socket(io_service);
+  tcp::acceptor acceptor(io_context, endpoint);
+  tcp::socket server_socket(io_context);
   acceptor.async_accept(server_socket,
       pri_queue.wrap(100, high_priority_handler));
-  tcp::socket client_socket(io_service);
+  tcp::socket client_socket(io_context);
   client_socket.connect(acceptor.local_endpoint());
 
   // Set a deadline timer to expire immediately.
-  boost::asio::deadline_timer timer(io_service);
-  timer.expires_at(boost::posix_time::neg_infin);
+  boost::asio::steady_timer timer(io_context);
+  timer.expires_at(boost::asio::steady_timer::time_point::min());
   timer.async_wait(pri_queue.wrap(42, middle_priority_handler));
 
-  while (io_service.run_one())
+  while (io_context.run_one())
   {
     // The custom invocation hook adds the handlers to the priority queue
     // rather than executing them from within the poll_one() call.
-    while (io_service.poll_one())
+    while (io_context.poll_one())
       ;
 
     pri_queue.execute_all();

@@ -7,7 +7,7 @@
 
 #include "identity.hpp"
 #include <boost/functional/overloaded_function.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 //[identity_make_checks
 template<typename F>

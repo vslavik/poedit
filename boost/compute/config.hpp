@@ -16,14 +16,13 @@
 #include <boost/compute/cl.hpp>
 
 // check for minimum required boost version
-#if BOOST_VERSION < 104800
-#error Boost.Compute requires Boost version 1.48 or later
+#if BOOST_VERSION < 105400
+#error Boost.Compute requires Boost version 1.54 or later
 #endif
 
 // the BOOST_COMPUTE_NO_VARIADIC_TEMPLATES macro is defined
 // if the compiler does not *fully* support variadic templates
 #if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || \
-    defined(BOOST_NO_VARIADIC_TEMPLATES) || \
     (defined(__GNUC__) && !defined(__clang__) && \
      __GNUC__ == 4 && __GNUC_MINOR__ <= 6)
   #define BOOST_COMPUTE_NO_VARIADIC_TEMPLATES
@@ -32,7 +31,6 @@
 // the BOOST_COMPUTE_NO_STD_TUPLE macro is defined if the
 // compiler/stdlib does not support std::tuple
 #if defined(BOOST_NO_CXX11_HDR_TUPLE) || \
-    defined(BOOST_NO_0X_HDR_TUPLE) || \
     defined(BOOST_COMPUTE_NO_VARIADIC_TEMPLATES)
   #define BOOST_COMPUTE_NO_STD_TUPLE
 #endif // BOOST_NO_CXX11_HDR_TUPLE
@@ -53,17 +51,15 @@
 #endif
 
 #if !defined(BOOST_COMPUTE_DOXYGEN_INVOKED) && \
-    (defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || defined(BOOST_NO_RVALUE_REFERENCES))
+    defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #  define BOOST_COMPUTE_NO_RVALUE_REFERENCES
 #endif // BOOST_NO_CXX11_RVALUE_REFERENCES
 
-#if defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) || \
-    defined(BOOST_NO_0X_HDR_INITIALIZER_LIST)
+#if defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
 #  define BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 #endif // BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 
-#if defined(BOOST_NO_CXX11_HDR_CHRONO) || \
-    defined(BOOST_NO_0X_HDR_CHRONO)
+#if defined(BOOST_NO_CXX11_HDR_CHRONO)
 #  define BOOST_COMPUTE_NO_HDR_CHRONO
 #endif // BOOST_NO_CXX11_HDR_CHRONO
 

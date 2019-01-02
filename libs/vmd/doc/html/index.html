@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="next" href="variadic_macro_data/vmd_naming.html" title="Naming conventions">
 </head>
@@ -25,11 +25,12 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Edward</span> <span class="surname">Diener</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2010-2015 Tropic Software East Inc</p></div>
+<div><p class="copyright">Copyright &#169; 2010-2017 Tropic Software
+      East Inc</p></div>
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#variadic_macro_data.vmd_intro">Introduction</a></span></dt>
 <dt><span class="section"><a href="variadic_macro_data/vmd_naming.html">Naming conventions</a></span></dt>
 <dt><span class="section"><a href="variadic_macro_data/vmd_whyhow.html">Why and how to use</a></span></dt>
@@ -235,14 +236,198 @@
 <a name="variadic_macro_data.vmd_intro"></a><a class="link" href="index.html#variadic_macro_data.vmd_intro" title="Introduction">Introduction</a>
 </h2></div></div></div>
 <p>
-      Welcome to version 1.9 of the Variadic Macro Data library.
+      Welcome to the Variadic Macro Data library.
     </p>
 <p>
       The Variadic Macro Data library, referred to hereafter as VMD for short, is
       a library of variadic macros which provide enhancements to the functionality
       in the Boost preprocessor library ( Boost PP ), especially as it relates to
-      preprocessor "data types".
+      preprocessor data types.
     </p>
+<p>
+      The preprocessor data types with which VMD has specific functionality are emptiness,
+      identifiers, numbers ( a subset of identifiers ), types ( a subset of identifiers
+      ), Boost PP arrays, Boost PP lists, Boost PP seqs, Boost PP tuples, and sequences.
+      The first four are basic preprocessor data types while the latter five are
+      composite preprocessor data types. A sequence is zero or more of the other
+      preprocessor data types following each other.
+    </p>
+<h4>
+<a name="variadic_macro_data.vmd_intro.h0"></a>
+      <span class="phrase"><a name="variadic_macro_data.vmd_intro.data_type_examples"></a></span><a class="link" href="index.html#variadic_macro_data.vmd_intro.data_type_examples">Data
+      type examples</a>
+    </h4>
+<div class="table">
+<a name="variadic_macro_data.vmd_intro.dwe"></a><p class="title"><b>Table&#160;1.1.&#160;Data types with examples</b></p>
+<div class="table-contents"><table class="table" summary="Data types with examples">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Type
+              </p>
+            </th>
+<th>
+              <p>
+                Example
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                identifier
+              </p>
+            </td>
+<td>
+              <p>
+                anyname
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                number
+              </p>
+            </td>
+<td>
+              <p>
+                47
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                type
+              </p>
+            </td>
+<td>
+              <p>
+                BOOST_VMD_TYPE_NUMBER
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                array
+              </p>
+            </td>
+<td>
+              <p>
+                (4,(an_identifier,156,BOOST_VMD_TYPE_IDENTIFIER))
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                list
+              </p>
+            </td>
+<td>
+              <p>
+                (78,(some_identifier,(BOOST_VMD_TYPE_TYPE,BOOST_PP_NIL)))
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                seq
+              </p>
+            </td>
+<td>
+              <p>
+                (identifier)(89)(245)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                tuple
+              </p>
+            </td>
+<td>
+              <p>
+                (any_id,175,BOOST_VMD_TYPE_LIST,happy,21)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                sequence
+              </p>
+            </td>
+<td>
+              <p>
+                tree 59 (56,BOOST_VMD_TYPE_SEQ) (128)(fire)(clown) (47,(BOOST_VMD_TYPE_TUPLE,BOOST_PP_NIL))
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+      Emptiness is the lack of any preprocessing tokens. A macro which expands to
+      nothing, as in:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">RETURN_NOTHING</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>
+</pre>
+<p>
+      is said to return emptiness. Conversely a macro could accept nothing when invoked,
+      such as in:
+    </p>
+<pre class="programlisting"><span class="identifier">RETURN_NOTHING</span><span class="special">()</span>
+</pre>
+<p>
+      Finally emptiness can be part of any composite data type as in:
+    </p>
+<pre class="programlisting"><span class="special">(</span><span class="number">45</span><span class="special">,,</span><span class="identifier">some_name</span><span class="special">)</span>
+</pre>
+<p>
+      where the second tuple element is empty.
+    </p>
+<h4>
+<a name="variadic_macro_data.vmd_intro.h1"></a>
+      <span class="phrase"><a name="variadic_macro_data.vmd_intro.what_is_the_advantage"></a></span><a class="link" href="index.html#variadic_macro_data.vmd_intro.what_is_the_advantage">What
+      is the advantage ?</a>
+    </h4>
+<p>
+      VMD can identify any of the preprocessor data types previously mentioned, and
+      can parse sequences into their individual preprocessor data types. You may
+      well ask why that is important.
+    </p>
+<p>
+      In Boost PP macro programming a great deal of the control logic of designing
+      a macro is based on the support Boost PP has for numbers and testing for the
+      value of a number, in particular 0 and 1 to represent boolean choices. Essentially
+      Boost PP often uses the value of a number to control the logic in a macro's
+      design.
+    </p>
+<p>
+      VMD does not attempt, in any way, to duplicate Boost PP's support for testing
+      the value of numbers or of the boolean 0 or 1 values, but just reuses that
+      functionality. What VMD offers, which goes beyond Boost PP, is a system for
+      deciphering the preprocessor data types, as well as comparing any of the preprocessor
+      data types for equality to any given value. This allows macro logic to be designed
+      in a more flexible way, relying on the type of data and/or the value of the
+      data. If this intrigues you, continue reading to understand how you can use
+      VMD to do macro programming.
+    </p>
+<h4>
+<a name="variadic_macro_data.vmd_intro.h2"></a>
+      <span class="phrase"><a name="variadic_macro_data.vmd_intro.functionality_areas"></a></span><a class="link" href="index.html#variadic_macro_data.vmd_intro.functionality_areas">Functionality
+      areas</a>
+    </h4>
 <p>
       The functionality of the library may be summed up as:
     </p>
@@ -282,7 +467,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:21:59 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:01:48 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

@@ -21,7 +21,6 @@
 #include "boost/core/lightweight_test.hpp"
 
 using boost::optional;
-using boost::make_optional;
 
 template<class Opt>
 void test2( Opt o, Opt buff )
@@ -42,10 +41,10 @@ void test2( Opt o, Opt buff )
 template<class T>
 void test( T v, T w )
 {
-  test2( make_optional(v), optional<T>  ());
-  test2( make_optional(v), make_optional(w));
+  test2( boost::make_optional(v), optional<T>  ());
+  test2( boost::make_optional(v), boost::make_optional(w));
   test2( optional<T>  () , optional<T>  ());
-  test2( optional<T>  () , make_optional(w));
+  test2( optional<T>  () , boost::make_optional(w));
 }
 
 

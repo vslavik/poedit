@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Memory allocation algorithms</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">
 <link rel="next" href="streams.html" title="Direct iostream formatting: vectorstream and bufferstream">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.memory_algorithms"></a><a class="link" href="memory_algorithms.html" title="Memory allocation algorithms">Memory allocation algorithms</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="memory_algorithms.html#interprocess.memory_algorithms.simple_seq_fit">simple_seq_fit:
       A simple shared memory management algorithm</a></span></dt>
 <dt><span class="section"><a href="memory_algorithms.html#interprocess.memory_algorithms.rbtree_best_fit">rbtree_best_fit:
@@ -141,7 +141,7 @@
 <p>
         In those systems a 1 byte allocation request means that:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             24 bytes of memory from the segment are used to form a block.
           </li>

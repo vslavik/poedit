@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Auxiliary Components</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="multi_array.html" title="Chapter&#160;22.&#160;Boost.MultiArray Reference Manual">
+<link rel="up" href="multi_array.html" title="Chapter&#160;27.&#160;Boost.MultiArray Reference Manual">
 <link rel="prev" href="array_types.html" title="Array Components">
-<link rel="next" href="mpi.html" title="Chapter&#160;23.&#160;Boost.MPI">
+<link rel="next" href="poly_collection.html" title="Chapter&#160;28.&#160;Boost.PolyCollection">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,16 +21,16 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="array_types.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="multi_array.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="mpi.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="array_types.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="multi_array.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="poly_collection.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="auxiliary"></a>Auxiliary Components</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="sect2"><a href="auxiliary.html#multi_array_types"><code class="literal">multi_array_types</code></a></span></dt>
 <dt><span class="sect2"><a href="auxiliary.html#extent_range"><code class="computeroutput">extent_range</code></a></span></dt>
 <dt><span class="sect2"><a href="auxiliary.html#extent_gen"><code class="computeroutput">extent_gen</code></a></span></dt>
-<dt><span class="sect2"><a href="auxiliary.html#idp298847392">Global Objects</a></span></dt>
+<dt><span class="sect2"><a href="auxiliary.html#id-1.3.28.7.5">Global Objects</a></span></dt>
 <dt><span class="sect2"><a href="auxiliary.html#generators">View and SubArray Generators</a></span></dt>
 <dt><span class="sect2"><a href="auxiliary.html#memory_layout">Memory Layout Specifiers</a></span></dt>
 <dt><span class="sect2"><a href="auxiliary.html#range_checking">Range Checking</a></span></dt>
@@ -95,7 +95,7 @@ public:
 };</pre>
 <p><b>Model Of.&#160;</b>DefaultConstructible,CopyConstructible</p>
 <p><b>Methods and Types.&#160;</b></p>
-<div class="variablelist"><dl>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term"><code class="function">extent_range(index start, index finish)</code></span></dt>
 <dd><p>  This constructor defines the half open interval
 <code class="literal">[start,finish)</code>. The expression
@@ -153,7 +153,7 @@ public:
 typedef *implementation_defined*&lt;0&gt; extent_gen;
 </pre>
 <p><b>Methods and Types.&#160;</b></p>
-<div class="variablelist"><dl>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term"><code class="function">template gen_type&lt;Ranges&gt;::type</code></span></dt>
 <dd><p>This type generator is used to specify the result of 
 <code class="literal">Ranges</code> chained calls to
@@ -178,8 +178,8 @@ declaration.</p></dd>
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp298847392"></a>Global Objects</h3></div></div></div>
-<div class="toc"><dl>
+<a name="id-1.3.28.7.5"></a>Global Objects</h3></div></div></div>
+<div class="toc"><dl class="toc">
 <dt><span class="sect3"><a href="auxiliary.html#extents"><code class="literal">extents</code></a></span></dt>
 <dt><span class="sect3"><a href="auxiliary.html#indices"><code class="literal">indices</code></a></span></dt>
 </dl></div>
@@ -276,7 +276,7 @@ In the above example, <code class="literal">view1_t</code> and
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="memory_layout"></a>Memory Layout Specifiers</h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="sect3"><a href="auxiliary.html#c_storage_order"><code class="literal">c_storage_order</code></a></span></dt>
 <dt><span class="sect3"><a href="auxiliary.html#fortran_storage_order"><code class="literal">fortran_storage_order</code></a></span></dt>
 <dt><span class="sect3"><a href="auxiliary.html#general_storage_order"><code class="literal">general_storage_order</code></a></span></dt>
@@ -470,7 +470,7 @@ including multi_array.hpp in an application.
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="array_types.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="multi_array.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="mpi.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="array_types.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="multi_array.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="poly_collection.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

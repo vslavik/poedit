@@ -8,7 +8,7 @@
 #include <vector>
 #include <utility>
 
-#include "boost/any.hpp"
+#include <boost/any.hpp>
 #include "test.hpp"
 
 namespace any_tests
@@ -41,6 +41,7 @@ namespace any_tests // test suite
     void test_with_func();
     void test_clear();
     void test_vectors();
+    void test_addressof();
 
     const test_case test_cases[] =
     {
@@ -56,7 +57,8 @@ namespace any_tests // test suite
         { "storing an array inside",        test_with_array        },
         { "implicit cast of returned value",test_with_func         },
         { "clear() methods",                test_clear             },
-        { "testing with vectors",           test_vectors           }
+        { "testing with vectors",           test_vectors           },
+        { "class with operator&()",         test_addressof         }
     };
 
     const test_case_iterator begin = test_cases;
@@ -357,12 +359,45 @@ namespace any_tests // test definitions
         check_equal(vec1.back(), 7, "back value of second vector extracted from boost::any");
         check_equal(vec1.front(), 7, "front value of second vector extracted from boost::any");
 
-    } 
+    }
+
+    template<typename T>
+    class class_with_address_op {
+    public:
+        class_with_address_op(const T* p)
+            : ptr(p)
+        {}
+
+	    const T** operator &() {
+            return &ptr;
+        }
+
+        const T* get() const {
+            return ptr;
+        }
+
+    private:
+        const T* ptr;
+    };
+
+    void test_addressof()
+    {
+        int val = 10;
+        const int* ptr = &val;
+        class_with_address_op<int> obj(ptr);
+        boost::any test_val(obj);
+
+        class_with_address_op<int> returned_obj = boost::any_cast<class_with_address_op<int> >(test_val);
+        check_equal(&val, returned_obj.get(), "any_cast incorrectly works with type that has operator&(): addresses differ");
+
+        check_true(!!boost::any_cast<class_with_address_op<int> >(&test_val), "any_cast incorrectly works with type that has operator&()");
+        check_equal(boost::unsafe_any_cast<class_with_address_op<int> >(&test_val)->get(), ptr, "unsafe_any_cast incorrectly works with type that has operator&()");
+    }
 
 }
 
 // Copyright Kevlin Henney, 2000, 2001. All rights reserved.
-// Copyright Antony Polukhin, 2013-2014.
+// Copyright Antony Polukhin, 2013-2017.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at

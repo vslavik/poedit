@@ -11,6 +11,10 @@
 
 #include <boost/locale/encoding.hpp>
 
+#include <fstream>
+#include <stdlib.h>
+#include <stdio.h>
+
 template<typename Char>
 std::basic_string<Char> to_correct_string(std::string const &e,std::locale /*l*/)
 {
@@ -33,6 +37,34 @@ bool has_std_locale(std::string const &name)
     catch(...) {
         return false;
     }
+}
+
+inline bool test_std_supports_SJIS_codecvt(std::string const &locale_name)
+{
+    bool res = true;
+    {
+    // Japan in Shift JIS/cp932
+        char const *japan_932 = "\x93\xfa\x96\x7b";
+        std::ofstream f("test-siftjis.txt");
+        f<<japan_932;
+        f.close();		
+    }
+    try {
+        std::wfstream test;
+        test.imbue(std::locale(locale_name.c_str()));
+        test.open("test-siftjis.txt");
+        // Japan in Unicode
+        std::wstring cmp = L"\u65e5\u672c";
+        std::wstring ref;
+        test >> ref;
+        res = ref == cmp;
+    }
+    catch(std::exception const &)
+    {
+        res = false;
+    }
+    remove("test-siftjis.txt");
+    return res;
 }
 
 std::string get_std_name(std::string const &name,std::string *real_name = 0)

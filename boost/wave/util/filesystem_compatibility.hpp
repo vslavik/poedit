@@ -59,7 +59,7 @@ namespace boost { namespace wave { namespace util
 
     inline boost::filesystem::path normalize(boost::filesystem::path& p)
     {
-        return p.normalize();
+        return p.normalize().make_preferred();
     }
 
     inline std::string native_file_string(boost::filesystem::path const& p)

@@ -87,7 +87,7 @@ namespace impl_icu {
         ///
         /// Would create a new spelling formatter only once.
         ///
-        static std::auto_ptr<formatter> create(std::ios_base &ios,icu::Locale const &l,std::string const &enc);
+        static formatter *create(std::ios_base &ios,icu::Locale const &l,std::string const &enc);
 
         virtual ~formatter()
         {
@@ -98,20 +98,20 @@ namespace impl_icu {
     /// Specialization for real implementation
     ///
     template<>
-    std::auto_ptr<formatter<char> > formatter<char>::create(std::ios_base &ios,icu::Locale const &l,std::string const &enc);
+    formatter<char> *formatter<char>::create(std::ios_base &ios,icu::Locale const &l,std::string const &enc);
 
     ///
     /// Specialization for real implementation
     ///
     template<>
-    std::auto_ptr<formatter<wchar_t> > formatter<wchar_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
+    formatter<wchar_t> *formatter<wchar_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
 
     #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     ///
     /// Specialization for real implementation
     ///
     template<>
-    std::auto_ptr<formatter<char16_t> > formatter<char16_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
+    formatter<char16_t> *formatter<char16_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
     #endif
 
     #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
@@ -119,7 +119,7 @@ namespace impl_icu {
     /// Specialization for real implementation
     ///
     template<>
-    std::auto_ptr<formatter<char32_t> > formatter<char32_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
+    formatter<char32_t> *formatter<char32_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
     #endif
 
 } // namespace impl_icu

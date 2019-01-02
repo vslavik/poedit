@@ -36,7 +36,7 @@ comparable_distance_result<Geometry1, Geometry2, Strategy>::type comparable_dist
 
 
 [heading Returns]
-The calculated \1
+The calculated comparable distance
 
 [heading Header]
 Either
@@ -73,7 +73,7 @@ default_comparable_distance_result<Geometry1, Geometry2>::type comparable_distan
 
 
 [heading Returns]
-The calculated \1
+The calculated comparable distance
 
 [heading Header]
 Either
@@ -93,10 +93,10 @@ Or
 [section:distance_3_with_strategy distance (with strategy)]
 
 '''<indexterm><primary>distance</primary></indexterm>'''
-Calculate the distance of two geometries using the specified strategy. 
+Calculate the distance between two geometries using the specified strategy. 
 
 [heading Description]
-The free function area calculates the area of a geometry. using the specified strategy. Reasons to specify a strategy include: use another coordinate system for calculations; construct the strategy beforehand (e.g. with the radius of the Earth); select a strategy when there are more than one available for a calculation.
+The free function distance calculates the distance between two geometries using the specified strategy. Reasons to specify a strategy include: use another coordinate system for calculations; construct the strategy beforehand (e.g. with the radius of the Earth); select a strategy when there are more than one available for a calculation.
 
 [heading Synopsis]
 ``template<typename Geometry1, typename Geometry2, typename Strategy>
@@ -113,7 +113,7 @@ distance_result<Geometry1, Geometry2, Strategy>::type distance(Geometry1 const &
 
 
 [heading Returns]
-The calculated \1 
+The calculated distance 
 
 [heading Header]
 Either
@@ -138,10 +138,10 @@ Or
 [section:distance_2 distance]
 
 '''<indexterm><primary>distance</primary></indexterm>'''
-Calculate the distance of two geometries. 
+Calculate the distance between two geometries. 
 
 [heading Description]
-The default strategy is used, corresponding to the coordinate system of the geometries 
+The free function distance calculates the distance between two geometries. It uses the default strategy, based on the coordinate system of the geometry.
 
 [heading Synopsis]
 ``template<typename Geometry1, typename Geometry2>
@@ -157,7 +157,7 @@ default_distance_result<Geometry1, Geometry2>::type distance(Geometry1 const & g
 
 
 [heading Returns]
-The calculated \1
+The calculated distance
 
 [heading Header]
 Either

@@ -143,7 +143,7 @@ struct eval_scale_list_impl
     {
         typedef typename eval_scale_list_impl<N-1>::template apply<typename Begin::next> next_iteration;
         typedef typename multiply_typeof_helper<typename next_iteration::type, typename Begin::item::value_type>::type type;
-        static type value()
+        static BOOST_CONSTEXPR type value()
         {
             return(next_iteration::value() * Begin::item::value());
         }
@@ -157,10 +157,9 @@ struct eval_scale_list_impl<0>
     struct apply
     {
         typedef one type;
-        static one value()
+        static BOOST_CONSTEXPR one value()
         {
-            one result;
-            return(result);
+            return(one());
         }
     };
 };
@@ -220,6 +219,22 @@ struct times_impl<boost::units::scale_dim_tag, boost::units::detail::static_rati
             boost::units::scale<
                 (T0::base),
                 typename mpl::times<typename T0::exponent, T1>::type
+            >
+        > type;
+    };
+};
+
+/// INTERNAL ONLY
+template<>
+struct divides_impl<boost::units::scale_dim_tag, boost::units::detail::static_rational_tag>
+{
+    template<class T0, class T1>
+    struct apply
+    {
+        typedef boost::units::scale_list_dim<
+            boost::units::scale<
+                (T0::base),
+                typename mpl::divides<typename T0::exponent, T1>::type
             >
         > type;
     };

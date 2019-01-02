@@ -10,6 +10,14 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 //
 
+#if defined( BOOST_NO_AUTO_PTR )
+
+int main()
+{
+}
+
+#else
+
 #if defined( __GNUC__ ) && ( __GNUC__ * 100 + __GNUC_MINOR__ >= 406 )
 # pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #elif defined( __clang__ ) && defined( __has_warning )
@@ -222,3 +230,5 @@ int main()
     test();
     return boost::report_errors();
 }
+
+#endif // #if defined( BOOST_NO_AUTO_PTR )

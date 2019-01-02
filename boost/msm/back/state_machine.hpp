@@ -2156,7 +2156,6 @@ private:
         {
             typedef typename get_flag_list<StateType>::type flags;
             typedef typename ::boost::mpl::contains<flags,Flag >::type found;
-            typedef typename is_composite_state<StateType>::type composite;
 
             BOOST_STATIC_CONSTANT(int, state_id = (get_state_id<stt,StateType>::type::value));
             if (found::type::value)

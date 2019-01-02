@@ -287,8 +287,9 @@ operators and functions associated with the index (vg. comparison and
   
   <span class=comment>// construct/copy/destroy:</span>
 
+  <span class=identifier>multi_index_container</span><span class=special>();</span>
   <span class=keyword>explicit</span> <span class=identifier>multi_index_container</span><span class=special>(
-    </span><span class=keyword>const</span> <span class=identifier>ctor_args_list</span><span class=special>&amp;</span> <span class=identifier>args_list</span><span class=special>=</span><span class=identifier>ctor_args_list</span><span class=special>(),
+    </span><span class=keyword>const</span> <span class=identifier>ctor_args_list</span><span class=special>&amp;</span> <span class=identifier>args_list</span><span class=special>,
     </span><span class=keyword>const</span> <span class=identifier>allocator_type</span><span class=special>&amp;</span> <span class=identifier>al</span><span class=special>=</span><span class=identifier>allocator_type</span><span class=special>());</span>
   <span class=keyword>explicit</span> <span class=identifier>multi_index_container</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>allocator_type</span><span class=special>&amp;</span> <span class=identifier>al</span><span class=special>);</span>
   <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>InputIterator</span><span class=special>&gt;</span>
@@ -671,8 +672,16 @@ as an associated tag type.
 
 <h4><a name="constructors">Constructors, copy and assignment</a></h4>
 
+<code>multi_index_container();</code>
+
+<blockquote>
+<b>Effects:</b> Constructs an empty <code>multi_index_container</code> using the
+default values of <code>ctor_args_list</code> and <code>allocator_type</code>.<br>
+<b>Complexity:</b> Constant.
+</blockquote>
+
 <code>explicit multi_index_container(<br>
-&nbsp;&nbsp;const ctor_args_list&amp; args_list=ctor_args_list(),<br>
+&nbsp;&nbsp;const ctor_args_list&amp; args_list,<br>
 &nbsp;&nbsp;const allocator_type&amp; al=allocator_type());</code>
 
 <blockquote>
@@ -992,9 +1001,9 @@ Index reference
 
 <br>
 
-<p>Revised October 12th 2013</p>
+<p>Revised April 13th 2018</p>
 
-<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2018 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

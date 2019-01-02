@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template type_name</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.type_traits.type_name_hpp" title="Header &lt;boost/compute/type_traits/type_name.hpp&gt;">
 <link rel="prev" href="type_definition.html" title="Function template type_definition">
@@ -34,19 +34,22 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <span class="identifier">type_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp83166032"></a><h2>Description</h2>
+<a name="idp98141488"></a><h2>Description</h2>
 <p>Returns the OpenCL type name for the type <code class="computeroutput">T</code> as a string.</p>
 <p>
 For example: </p>
-<pre class="programlisting"> <span class="identifier">type_name</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="string">"float"</span>
- <span class="identifier">type_name</span><span class="special">&lt;</span><span class="identifier">float4_</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="string">"float4"</span>
+<pre class="programlisting"><span class="identifier">type_name</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="string">"float"</span>
+<span class="identifier">type_name</span><span class="special">&lt;</span><span class="identifier">float4_</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="string">"float4"</span>
 </pre>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>type_definition&lt;T&gt;() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>a string containing the type name for <code class="computeroutput">T</code> </p></td>

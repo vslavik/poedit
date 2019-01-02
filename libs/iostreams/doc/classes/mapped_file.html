@@ -177,6 +177,8 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
     <SPAN CLASS='keyword'>void</SPAN> <A CLASS='documented' HREF='#mapped_file_source_close'>close</A>();
     size_type <A CLASS='documented' HREF='#mapped_file_source_size'>size</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>const</SPAN> <SPAN CLASS='keyword'>char</SPAN>* <A CLASS='documented' HREF='#mapped_file_source_data'>data</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_source_begin'>begin</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_source_end'>end</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>static</SPAN> <SPAN CLASS='keyword'>int</SPAN> <A CLASS='documented' HREF='#mapped_file_source_alignment'>alignment</A>();
 };
 
@@ -275,6 +277,20 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
     
 <P>Returns a pointer to the first byte of data in the mapping associated with this <CODE>mapped_file_source</CODE>.</P>
 
+<A NAME="mapped_file_source_begin"></A>
+<H4><CODE>mapped_file_source::begin</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator begin() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to the first byte of data in the mapping associated with this <CODE>mapped_file_source</CODE>.</P>
+
+<A NAME="mapped_file_source_end"></A>
+<H4><CODE>mapped_file_source::end</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator end() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to just past the last byte of data in the mapping associated with this <CODE>mapped_file_source</CODE>.</P>
+
 <A NAME="mapped_file_source_alignment"></A>
 <H4><CODE>mapped_file_source::alignment</CODE></H4>
 
@@ -314,6 +330,8 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
     <SPAN CLASS='keyword'>void</SPAN> <A CLASS='documented' HREF='#mapped_file_sink_close'>close</A>();
     size_type <A CLASS='documented' HREF='#mapped_file_sink_size'>size</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>char</SPAN>* <A CLASS='documented' HREF='#mapped_file_sink_data'>data</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_sink_begin'>begin</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_sink_end'>end</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>static</SPAN> <SPAN CLASS='keyword'>int</SPAN> <A CLASS='documented' HREF='#mapped_file_sink_alignment'>alignment</A>();
 };
 
@@ -429,6 +447,20 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
     
 <P>Returns a pointer to the first byte of data in the mapping associated with this <CODE>mapped_file_sink</CODE>.</P>
 
+<A NAME="mapped_file_sink_begin"></A>
+<H4><CODE>mapped_file_sink::begin</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator begin() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to the first byte of data in the mapping associated with this <CODE>mapped_file_sink</CODE>.</P>
+
+<A NAME="mapped_file_sink_end"></A>
+<H4><CODE>mapped_file_sink::end</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator end() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to just past the last byte of data in the mapping associated with this <CODE>mapped_file_sink</CODE>.</P>
+
 <A NAME="mapped_file_sink_alignment"></A>
 <H4><CODE>mapped_file_sink::alignment</CODE></H4>
 
@@ -479,6 +511,10 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
     size_type <A CLASS='documented' HREF='#mapped_file_size'>size</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>char</SPAN>* <A CLASS='documented' HREF='#mapped_file_data'>data</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>const</SPAN> <SPAN CLASS='keyword'>char</SPAN>* <A CLASS='documented' HREF='#mapped_file_const_data'>const_data</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_begin'>begin</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    const_iterator <A CLASS='documented' HREF='#mapped_file_const_begin'>const_begin</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    iterator <A CLASS='documented' HREF='#mapped_file_end'>end</A>() <SPAN CLASS='keyword'>const</SPAN>;
+    const_iterator <A CLASS='documented' HREF='#mapped_file_const_end'>const_end</A>() <SPAN CLASS='keyword'>const</SPAN>;
     <SPAN CLASS='keyword'>static</SPAN> <SPAN CLASS='keyword'>int</SPAN> <A CLASS='documented' HREF='#mapped_file_alignment'>alignment</A>();
 };
 
@@ -658,6 +694,34 @@ The memory-mapped file Devices are based on the work of Craig Henderson (<A CLAS
 <PRE CLASS="broken_ie">    <SPAN CLASS='keyword'>const</SPAN> <SPAN CLASS='keyword'>char</SPAN>* const_data() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
     
 <P>Returns a pointer to the first byte of data in the mapping associated with this <CODE>mapped_file</CODE>.</P>
+
+<A NAME="mapped_file_begin"></A>
+<H4><CODE>mapped_file::begin</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator begin() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to the first byte of data in the mapping associated with this <CODE>mapped_file</CODE>, if it was opened with write-access, and a null pointer iterator otherwise.</P>
+
+<A NAME="mapped_file_const_begin"></A>
+<H4><CODE>mapped_file::const_begin</CODE></H4>
+
+<PRE CLASS="broken_ie">    const_iterator const_begin() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns a const_iterator to the first byte of data in the mapping associated with this <CODE>mapped_file</CODE>.</P>
+
+<A NAME="mapped_file_end"></A>
+<H4><CODE>mapped_file::end</CODE></H4>
+
+<PRE CLASS="broken_ie">    iterator end() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns an iterator to just past the last byte of data in the mapping associated with this <CODE>mapped_file</CODE>, if it was opened with write-access, and a null pointer otherwise.</P>
+
+<A NAME="mapped_file_const_end"></A>
+<H4><CODE>mapped_file::const_end</CODE></H4>
+
+<PRE CLASS="broken_ie">    const_iterator const_end() <SPAN CLASS='keyword'>const</SPAN>;</PRE>
+    
+<P>Returns a const_iterator to just past the last byte of data in the mapping associated with this <CODE>mapped_file</CODE>.</P>
 
 <A NAME="mapped_file_alignment"></A>
 <H4><CODE>mapped_file::alignment</CODE></H4>

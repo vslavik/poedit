@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function random</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../header/boost/test/data/monomorphic/generators/random_hpp.html" title="Header &lt;boost/test/data/monomorphic/generators/random.hpp&gt;">
 <link rel="prev" href="monomorphic/random_t.html" title="Class template random_t">
@@ -38,18 +38,18 @@
   <span class="identifier">random</span><span class="special">(</span><span class="identifier">SampleType</span> begin<span class="special">,</span> <span class="identifier">SampleType</span> end<span class="special">)</span><span class="special">;</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Params<span class="special">&gt;</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">random</span><span class="special">(</span><span class="identifier">Params</span> <span class="keyword">const</span> <span class="special">&amp;</span> params<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp26686656"></a><h2>Description</h2>
+<a name="idp96219136"></a><h2>Description</h2>
 <p>The following overloads are available: </p>
-<pre class="programlisting"> <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
- <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="identifier">begin</span><span class="special">,</span> <span class="identifier">end</span><span class="special">)</span><span class="special">;</span>
- <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="identifier">params</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="identifier">begin</span><span class="special">,</span> <span class="identifier">end</span><span class="special">)</span><span class="special">;</span>
+<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">random</span><span class="special">(</span><span class="identifier">params</span><span class="special">)</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>The first overload uses the default distribution, which is uniform and which elements are <code class="computeroutput">double</code> type (the values are in [0, 1) ).</p></li>
 <li class="listitem"><p>The second overload generates numbers in the given interval. The distribution is uniform (in [begin, end) for real numbers, and in [begin, end] for integers). The type of the distribution is deduced from the type of the <code class="computeroutput">begin</code> and <code class="computeroutput">end</code> parameters.</p></li>
 <li class="listitem">
 <p>The third overload generates numbers using the named parameter inside <code class="computeroutput">params</code> , which are:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem"><p><code class="computeroutput">distribution:</code> the distribution used. In this overload, since the type of the samples cannot be deduced, the samples are of type <code class="computeroutput">double</code> and the distribution is uniform real in [0, 1).</p></li>
 <li class="listitem"><p><code class="computeroutput">seed:</code> the seed for generating the values</p></li>
 <li class="listitem"><p><code class="computeroutput">engine:</code> the random number generator engine</p></li>
@@ -74,7 +74,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

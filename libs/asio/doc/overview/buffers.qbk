@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -45,7 +45,7 @@ an opaque representation of contiguous memory, where:
   mechanisms for automatically determining the size of a buffer from an array,
   `boost::array` or `std::vector` of POD elements, or from a `std::string`.
 
-* Type safety violations must be explicitly requested using the `buffer_cast`
+* The underlying memory is explicitly accessed using the `data()` member
   function. In general an application should never need to do this, but it is
   required by the library implementation to pass the raw memory to the
   underlying operating system functions.
@@ -70,7 +70,7 @@ operations, such as the send or receive operations of a socket:
   of this function meets the `ConstBufferSequence` requirements.
 
 * The output sequence of the streambuf is accessible via the [link
-  boost_asio.reference.basic_streambuf.data prepare()] member function. The return
+  boost_asio.reference.basic_streambuf.prepare prepare()] member function. The return
   type of this function meets the `MutableBufferSequence` requirements.
 
 * Data is transferred from the front of the output sequence to the back of the

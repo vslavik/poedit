@@ -44,6 +44,7 @@ main()
     {
         typedef std::pair<int, std::string> pair_type;
         BOOST_MPL_ASSERT_NOT((traits::is_view<pair_type>));
+        BOOST_STATIC_ASSERT(!traits::is_view<pair_type>::value);
         pair_type p(123, "Hola!!!");
 
         std::cout << at_c<0>(p) << std::endl;

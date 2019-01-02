@@ -50,7 +50,7 @@ public:
             cl_mem_flags flags = read_write,
             void *host_ptr = 0)
     {
-    #ifdef CL_VERSION_1_2
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         cl_image_desc desc;
         desc.image_type = CL_MEM_OBJECT_IMAGE1D;
         desc.image_width = image_width;
@@ -61,7 +61,7 @@ public:
         desc.image_slice_pitch = 0;
         desc.num_mip_levels = 0;
         desc.num_samples = 0;
-    #ifdef CL_VERSION_2_0
+    #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         desc.mem_object = 0;
     #else
         desc.buffer = 0;
@@ -151,7 +151,7 @@ public:
     static std::vector<image_format>
     get_supported_formats(const context &context, cl_mem_flags flags = read_write)
     {
-    #ifdef CL_VERSION_1_2
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         return image_object::get_supported_formats(context, CL_MEM_OBJECT_IMAGE1D, flags);
     #else
         return std::vector<image_format>();
@@ -164,7 +164,7 @@ public:
                                     const context &context,
                                     cl_mem_flags flags = read_write)
     {
-    #ifdef CL_VERSION_1_2
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         return image_object::is_supported_format(
             format, context, CL_MEM_OBJECT_IMAGE1D, flags
         );

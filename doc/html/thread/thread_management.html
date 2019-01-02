@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Thread Management</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
 <link rel="prev" href="future.html" title="Future">
 <link rel="next" href="ScopedThreads.html" title="Scoped Threads">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.thread_management"></a><a class="link" href="thread_management.html" title="Thread Management">Thread Management</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.synopsis">Synopsis</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread">Class <code class="computeroutput"><span class="identifier">thread</span></code></a></span></dt>
@@ -85,7 +85,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.thread_management.tutorial"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial" title="Tutorial">Tutorial</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.launching">Launching
         threads</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.attributes">Thread
@@ -401,10 +401,13 @@
           thread next executes one of the specified <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption
           points</em></span></a> (or if it is currently <span class="emphasis"><em>blocked</em></span>
           whilst executing one) with interruption enabled, then a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread_interrupted</span></code>
-          exception will be thrown in the interrupted thread. If not caught, this
-          will cause the execution of the interrupted thread to terminate. As with
-          any other exception, the stack will be unwound, and destructors for objects
-          of automatic storage duration will be executed.
+          exception will be thrown in the interrupted thread. Unless this exception
+          is caught inside the interrupted thread's thread-main function, the stack
+          unwinding process (as with any other exception) causes the destructors
+          with automatic storage duration to be executed. Unlike other exceptions,
+          when <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread_interrupted</span></code> is propagated out
+          of thread-main function, this does not cause the call to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span></code>; the effect is as though the
+          thread-main function has returned normally.
         </p>
 <p>
           If a thread wishes to avoid being interrupted, it can create an instance
@@ -457,7 +460,7 @@
         </p>
 <a name="interruption_points"></a><h6>
 <a name="thread.thread_management.tutorial.interruption.h0"></a>
-          <span><a name="thread.thread_management.tutorial.interruption.predefined_interruption_points"></a></span><a class="link" href="thread_management.html#thread.thread_management.tutorial.interruption.predefined_interruption_points">Predefined
+          <span class="phrase"><a name="thread.thread_management.tutorial.interruption.predefined_interruption_points"></a></span><a class="link" href="thread_management.html#thread.thread_management.tutorial.interruption.predefined_interruption_points">Predefined
           Interruption Points</a>
         </h6>
 <p>
@@ -466,7 +469,7 @@
           enabled for the current thread, and interruption is requested for the current
           thread:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">join</span><span class="special">()</span></code></a>
             </li>
@@ -612,7 +615,7 @@
         </p>
 <h6>
 <a name="thread.thread_management.tutorial.native_from.h0"></a>
-          <span><a name="thread.thread_management.tutorial.native_from._code__phrase_role__identifier__pthread_exit__phrase___code__posix_limitation"></a></span><a class="link" href="thread_management.html#thread.thread_management.tutorial.native_from._code__phrase_role__identifier__pthread_exit__phrase___code__posix_limitation"><code class="computeroutput"><span class="identifier">pthread_exit</span></code> POSIX limitation</a>
+          <span class="phrase"><a name="thread.thread_management.tutorial.native_from._code__phrase_role__identifier__pthread_exit__phrase___code__posix_limitation"></a></span><a class="link" href="thread_management.html#thread.thread_management.tutorial.native_from._code__phrase_role__identifier__pthread_exit__phrase___code__posix_limitation"><code class="computeroutput"><span class="identifier">pthread_exit</span></code> POSIX limitation</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="identifier">pthread_exit</span></code> in glibc/NPTL
@@ -631,7 +634,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.thread_management.thread"></a><a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread">Class <code class="computeroutput"><span class="identifier">thread</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.default_constructor">Default
         Constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.move_constructor">Move
@@ -780,7 +783,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Constructs a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> instance that refers
@@ -806,7 +809,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Transfers ownership of the thread managed by <code class="computeroutput"><span class="identifier">other</span></code>
@@ -834,7 +837,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -874,7 +877,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">Callable</span></code> must be
@@ -920,7 +923,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">Callable</span></code> must be
@@ -967,7 +970,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">Callable</span></code> must be
@@ -1013,7 +1016,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">Callable</span></code> must be
@@ -1060,7 +1063,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">F</span></code> and each <code class="computeroutput"><span class="identifier">A</span></code>n must be copyable or movable.
@@ -1107,7 +1110,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -1148,7 +1151,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1171,7 +1174,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 the thread is joinable.
@@ -1252,7 +1255,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 the thread is joinable.
@@ -1320,7 +1323,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 the thread is joinable.
@@ -1387,7 +1390,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 the thread is joinable.
@@ -1452,7 +1455,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 the thread is joinable.
@@ -1496,7 +1499,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1520,7 +1523,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1529,7 +1532,7 @@
                 points</em></span></a> with interruption enabled, or if it is currently
                 <span class="emphasis"><em>blocked</em></span> in a call to one of the predefined
                 <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption points</em></span></a>
-                with interruption enabled .
+                with interruption enabled. Otherwise do noting.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -1547,7 +1550,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 The number of hardware threads available on the current system (e.g.
@@ -1570,7 +1573,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 The number of physical cores available on the current system. In
@@ -1594,7 +1597,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -1633,7 +1636,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()==</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span></code>
@@ -1665,7 +1668,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span></code>
@@ -1698,7 +1701,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Suspends the current thread until the specified time has been reached.
@@ -1741,7 +1744,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 See <a class="link" href="thread_management.html#thread.thread_management.this_thread.yield" title="Non-member function yield()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">yield</span><span class="special">()</span></code></a>.
@@ -1758,7 +1761,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Exchanges the threads of execution associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1789,7 +1792,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 <a class="link" href="thread_management.html#thread.thread_management.thread.swap" title="Member function swap()"><code class="computeroutput"><span class="identifier">lhs</span><span class="special">.</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">rhs</span><span class="special">)</span></code></a>.
@@ -1801,7 +1804,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.thread_management.thread.id"></a><a class="link" href="thread_management.html#thread.thread_management.thread.id" title="Class boost::thread::id">Class <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.id.constructor">Default
           constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.id.is_equal"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code></a></span></dt>
@@ -1841,7 +1844,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Constructs a <a class="link" href="thread_management.html#thread.thread_management.thread.id" title="Class boost::thread::id"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span></code></a> instance that represents
@@ -1862,7 +1865,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1885,7 +1888,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1908,7 +1911,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span><span class="special">!=</span><span class="identifier">y</span></code>
@@ -1937,7 +1940,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">y</span><span class="special">&lt;*</span><span class="keyword">this</span></code>
@@ -1957,7 +1960,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="special">!(</span><span class="identifier">y</span><span class="special">&lt;*</span><span class="keyword">this</span><span class="special">)</span></code>
@@ -1977,7 +1980,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="special">!(*</span><span class="keyword">this</span><span class="special">&lt;</span><span class="identifier">y</span><span class="special">)</span></code>
@@ -2000,7 +2003,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Writes a representation of the <a class="link" href="thread_management.html#thread.thread_management.thread.id" title="Class boost::thread::id"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span></code></a> instance <code class="computeroutput"><span class="identifier">x</span></code> to the stream <code class="computeroutput"><span class="identifier">os</span></code>, such that the representation
@@ -2021,7 +2024,7 @@
 <a name="thread.thread_management.thread.attributes"></a><a class="link" href="thread_management.html#thread.thread_management.thread.attributes" title="Class boost::thread::attributes EXTENSION">Class
         <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">attributes</span></code> EXTENSION</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.attributes.constructor">Default
           constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.attributes.set_stack_size">Member
@@ -2056,7 +2059,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Constructs a thread attributes instance with its default values.
@@ -2077,7 +2080,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores the stack size to be used to create a thread. This is a
@@ -2106,7 +2109,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   The stack size to be used on the creation of a thread. Note that
@@ -2131,7 +2134,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -2154,7 +2157,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.thread_management.this_thread"></a><a class="link" href="thread_management.html#thread.thread_management.this_thread" title="Namespace this_thread">Namespace <code class="computeroutput"><span class="identifier">this_thread</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.get_id">Non-member
         function <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.interruption_point">Non-member
@@ -2219,7 +2222,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 An instance of <a class="link" href="thread_management.html#thread.thread_management.thread.id" title="Class boost::thread::id"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span></code></a> that represents that
@@ -2247,7 +2250,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Check to see if the current thread has been interrupted.
@@ -2275,7 +2278,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="keyword">true</span></code> if interruption
@@ -2303,7 +2306,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="keyword">true</span></code> if interruption
@@ -2350,7 +2353,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Suspends the current thread until the time period specified by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed or the time
@@ -2391,7 +2394,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Suspends the current thread until the time point specified by <code class="computeroutput"><span class="identifier">abs_time</span></code> has been reached.
@@ -2436,7 +2439,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Suspends the current thread until the duration specified by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed.
@@ -2475,7 +2478,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Gives up the remainder of the current thread's time slice, to allow
@@ -2493,7 +2496,7 @@
 <a name="thread.thread_management.this_thread.disable_interruption"></a><a class="link" href="thread_management.html#thread.thread_management.this_thread.disable_interruption" title="Class disable_interruption EXTENSION">Class
         <code class="computeroutput"><span class="identifier">disable_interruption</span></code> EXTENSION</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.disable_interruption.constructor">Constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.disable_interruption.destructor">Destructor</a></span></dt>
 </dl></div>
@@ -2525,7 +2528,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores the current state of <a class="link" href="thread_management.html#thread.thread_management.this_thread.interruption_enabled" title="Non-member function interruption_enabled() EXTENSION"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">interruption_enabled</span><span class="special">()</span></code></a>
@@ -2552,7 +2555,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                   Must be called from the same thread from which <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> was constructed.
@@ -2581,7 +2584,7 @@
 <a name="thread.thread_management.this_thread.restore_interruption"></a><a class="link" href="thread_management.html#thread.thread_management.this_thread.restore_interruption" title="Class restore_interruption EXTENSION">Class
         <code class="computeroutput"><span class="identifier">restore_interruption</span></code> EXTENSION</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.restore_interruption.constructor">Constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.restore_interruption.destructor">Destructor</a></span></dt>
 </dl></div>
@@ -2614,7 +2617,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                   Must be called from the same thread from which <code class="computeroutput"><span class="identifier">disabler</span></code>
@@ -2646,7 +2649,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                   Must be called from the same thread from which <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> was constructed.
@@ -2680,7 +2683,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 A copy of <code class="computeroutput"><span class="identifier">func</span></code> is
@@ -2717,7 +2720,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.thread_management.threadgroup"></a><a class="link" href="thread_management.html#thread.thread_management.threadgroup" title="Class thread_group EXTENSION">Class <code class="computeroutput"><span class="identifier">thread_group</span></code> EXTENSION</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.constructor">Constructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.destructor">Destructor</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.create_thread">Member
@@ -2775,7 +2778,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Create a new thread group with no threads.
@@ -2791,7 +2794,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Destroy <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -2811,7 +2814,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Create a new <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object as-if by
@@ -2838,7 +2841,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                 The expression <code class="computeroutput"><span class="keyword">delete</span> <span class="identifier">thrd</span></code> is well-formed and will not
@@ -2867,7 +2870,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 If <code class="computeroutput"><span class="identifier">thrd</span></code> is a member
@@ -2891,7 +2894,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">is_this_thread_in</span><span class="special">()</span> <span class="special">==</span> <span class="keyword">false</span></code>.
@@ -2923,7 +2926,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 true if there is a thread <code class="computeroutput"><span class="identifier">th</span></code>
@@ -2941,7 +2944,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 true if there is a thread <code class="computeroutput"><span class="identifier">th</span></code>
@@ -2959,7 +2962,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Call <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code>
@@ -2977,7 +2980,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 The number of threads in the group.
@@ -2993,7 +2996,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -17 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -11,6 +11,8 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_RTREE_RSTAR_INSERT_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_RTREE_RSTAR_INSERT_HPP
 
+#include <boost/core/ignore_unused.hpp>
+
 #include <boost/geometry/index/detail/algorithms/content.hpp>
 
 namespace boost { namespace geometry { namespace index {
@@ -123,7 +125,7 @@ public:
         }
         BOOST_CATCH_END
 
-        ::boost::ignore_unused_variable_warning(parameters);
+        ::boost::ignore_unused(parameters);
     }
 
 private:

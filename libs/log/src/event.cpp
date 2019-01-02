@@ -20,9 +20,8 @@
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/throw_exception.hpp>
-#include <boost/system/error_code.hpp>
-#include <boost/system/system_error.hpp>
 #include <boost/log/detail/event.hpp>
+#include <boost/log/exceptions.hpp>
 
 #if defined(BOOST_LOG_EVENT_USE_FUTEX)
 
@@ -110,8 +109,7 @@ BOOST_LOG_API void futex_based_event::wait()
             }
             else if (BOOST_UNLIKELY(err != EINTR))
             {
-                BOOST_THROW_EXCEPTION(system::system_error(
-                    err, system::system_category(), "Failed to block on the futex"));
+                BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to block on the futex", (err));
             }
         }
 
@@ -127,8 +125,7 @@ BOOST_LOG_API void futex_based_event::set_signalled()
         if (BOOST_UNLIKELY(::syscall(BOOST_LOG_SYS_FUTEX, &m_state.storage(), BOOST_LOG_FUTEX_WAKE, 1, NULL, NULL, 0) < 0))
         {
             const int err = errno;
-            BOOST_THROW_EXCEPTION(system::system_error(
-                err, system::system_category(), "Failed to wake threads blocked on the futex"));
+            BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to wake threads blocked on the futex", (err));
         }
     }
 }
@@ -141,8 +138,7 @@ BOOST_LOG_API sem_based_event::sem_based_event() : m_state()
     if (BOOST_UNLIKELY(sem_init(&m_semaphore, 0, 0) != 0))
     {
         const int err = errno;
-        BOOST_THROW_EXCEPTION(system::system_error(
-            err, system::system_category(), "Failed to initialize semaphore"));
+        BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to initialize semaphore", (err));
     }
 }
 
@@ -163,8 +159,7 @@ BOOST_LOG_API void sem_based_event::wait()
             const int err = errno;
             if (BOOST_UNLIKELY(err != EINTR))
             {
-                BOOST_THROW_EXCEPTION(system::system_error(
-                    err, system::system_category(), "Failed to block on the semaphore"));
+                BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to block on the semaphore", (err));
             }
         }
         else
@@ -181,8 +176,7 @@ BOOST_LOG_API void sem_based_event::set_signalled()
         if (BOOST_UNLIKELY(sem_post(&m_semaphore) != 0))
         {
             const int err = errno;
-            BOOST_THROW_EXCEPTION(system::system_error(
-                err, system::system_category(), "Failed to wake the blocked thread"));
+            BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to wake the blocked thread", (err));
         }
     }
 }
@@ -197,8 +191,7 @@ BOOST_LOG_API winapi_based_event::winapi_based_event() :
     if (BOOST_UNLIKELY(!m_event))
     {
         const DWORD err = GetLastError();
-        BOOST_THROW_EXCEPTION(system::system_error(
-            err, system::system_category(), "Failed to create Windows event"));
+        BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to create Windows event", (err));
     }
 }
 
@@ -217,8 +210,7 @@ BOOST_LOG_API void winapi_based_event::wait()
         if (BOOST_UNLIKELY(WaitForSingleObject(m_event, INFINITE) != 0))
         {
             const DWORD err = GetLastError();
-            BOOST_THROW_EXCEPTION(system::system_error(
-                err, system::system_category(), "Failed to block on Windows event"));
+            BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to block on Windows event", (err));
         }
     }
     const_cast< volatile boost::uint32_t& >(m_state) = 0;
@@ -233,8 +225,7 @@ BOOST_LOG_API void winapi_based_event::set_signalled()
         {
             const DWORD err = GetLastError();
             const_cast< volatile boost::uint32_t& >(m_state) = 0;
-            BOOST_THROW_EXCEPTION(system::system_error(
-                err, system::system_category(), "Failed to wake the blocked thread"));
+            BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to wake the blocked thread", (err));
         }
     }
 }

@@ -31,19 +31,28 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/lexical_cast.hpp>
 
+#ifndef BOOST_NO_CXX11_HDR_RANDOM
+#include <random>
+typedef std::mt19937 random_generator_type;
+#else
+typedef boost::mt19937 random_generator_type;
+#endif
+
 using namespace boost;
 
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
 template <typename Generator>
 struct random_functor {
   random_functor(Generator& g) : g(g) { }
   std::size_t operator()(std::size_t n) {
     boost::uniform_int<std::size_t> distrib(0, n-1);
-    boost::variate_generator<boost::mt19937&, boost::uniform_int<std::size_t> >
+    boost::variate_generator<random_generator_type&, boost::uniform_int<std::size_t> >
       x(g, distrib);
     return x();
   }
   Generator& g;
 };
+#endif
 
 template<typename Graph1, typename Graph2>
 void randomly_permute_graph(const Graph1& g1, Graph2& g2)
@@ -56,13 +65,20 @@ void randomly_permute_graph(const Graph1& g1, Graph2& g2)
   typedef typename graph_traits<Graph2>::vertex_descriptor vertex2;
   typedef typename graph_traits<Graph1>::edge_iterator edge_iterator;
 
-  boost::mt19937 gen;
-  random_functor<boost::mt19937> rand_fun(gen);
+  random_generator_type gen;
+
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
+  random_functor<random_generator_type> rand_fun(gen);
+#endif
 
   // Decide new order
   std::vector<vertex1> orig_vertices;
   std::copy(vertices(g1).first, vertices(g1).second, std::back_inserter(orig_vertices));
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
   std::random_shuffle(orig_vertices.begin(), orig_vertices.end(), rand_fun);
+#else
+  std::shuffle(orig_vertices.begin(), orig_vertices.end(), gen);
+#endif
   std::map<vertex1, vertex2> vertex_map;
 
   for (std::size_t i = 0; i < num_vertices(g1); ++i) {
@@ -78,9 +94,9 @@ template<typename Graph>
 void generate_random_digraph(Graph& g, double edge_probability)
 {
   typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator;
-  boost::mt19937 random_gen;
+  random_generator_type random_gen;
   boost::uniform_real<double> distrib(0.0, 1.0);
-  boost::variate_generator<boost::mt19937&, boost::uniform_real<double> >
+  boost::variate_generator<random_generator_type&, boost::uniform_real<double> >
     random_dist(random_gen, distrib);
 
   for (vertex_iterator u = vertices(g).first; u != vertices(g).second; ++u) {

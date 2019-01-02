@@ -199,7 +199,7 @@ main()
   check("division", (hours(3)/2) == time_duration(1,30,0));
   check("division", (hours(3)/3) == hours(1));
   check("multiplication", time_duration(3,0,0)*2 == hours(6));
-  check("multiplication", hours(3600)*1000 == hours(3600000));
+  check("multiplication", hours(360)*1000 == hours(360000));
 
   // special_values operations
   time_duration pi_dur(pos_infin), ni_dur(neg_infin), ndt_dur(not_a_date_time);

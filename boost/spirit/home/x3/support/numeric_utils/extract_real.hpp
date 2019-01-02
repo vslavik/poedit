@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_EXTRACT_REAL_APRIL_18_2006_0901AM)
-#define SPIRIT_EXTRACT_REAL_APRIL_18_2006_0901AM
+#if !defined(BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM)
+#define BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM
 
 #include <cmath>
 #include <boost/limits.hpp>
@@ -180,6 +180,7 @@ namespace boost { namespace spirit { namespace x3
                     if (!is_same<T, unused_type>::value)
                         frac_digits =
                             static_cast<int>(std::distance(savef, first));
+                    BOOST_ASSERT(frac_digits >= 0);
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
                 {

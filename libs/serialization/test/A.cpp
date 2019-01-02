@@ -48,7 +48,7 @@ void accumulate(std::size_t & s, const T & t){
         s += *tptr++;
     }
 }
-
+A_DLL_DECL
 A::operator std::size_t () const {
     std::size_t retval = 0;
     accumulate(retval, b);
@@ -76,13 +76,14 @@ A::operator std::size_t () const {
 #if defined(_MSC_VER)
 #pragma warning(push) // Save warning settings.
 #pragma warning(disable : 4244) // Disable possible loss of data warning
+#endif
 
-#endif 
+A_DLL_DECL
 A::A() :
     b(true),
     #ifndef BOOST_NO_INT64_T
-    f(std::rand() * std::rand()),
-    g(std::rand() * std::rand()),
+    f(static_cast<boost::int64_t>(std::rand()) * static_cast<boost::int64_t>(std::rand())),
+    g(static_cast<boost::uint64_t>(std::rand()) * static_cast<boost::uint64_t>(std::rand())),
     #endif
     l(static_cast<enum h>(std::rand() % 3)),
     m(std::rand()),
@@ -111,8 +112,8 @@ A::A() :
 #pragma warning(pop) // Restore warnings to previous state.
 #endif 
 
-bool A::operator==(const A &rhs) const
-{
+A_DLL_DECL bool
+A::operator==(const A &rhs) const {
     if(b != rhs.b)
         return false;
     if(l != rhs.l)
@@ -160,13 +161,13 @@ bool A::operator==(const A &rhs) const
     return true;
 }
 
-bool A::operator!=(const A &rhs) const
-{
+A_DLL_DECL bool
+A::operator!=(const A &rhs) const {
     return ! (*this == rhs);
 }
 
-bool A::operator<(const A &rhs) const
-{
+A_DLL_DECL bool
+A::operator<(const A &rhs) const {
     if(b != rhs.b)
         return b < rhs.b;
     #ifndef BOOST_NO_INT64_T

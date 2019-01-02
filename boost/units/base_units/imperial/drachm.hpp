@@ -28,8 +28,8 @@ typedef scaled_base_unit<pound_base_unit, scale<16, static_rational<-2> > > drac
 
 template<>
 struct base_unit_info<imperial::drachm_base_unit> {
-    static const char* name()   { return("drachm"); }
-    static const char* symbol() { return("drachm"); }
+    static BOOST_CONSTEXPR const char* name()   { return("drachm"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("drachm"); }
 };
 
 } // namespace units

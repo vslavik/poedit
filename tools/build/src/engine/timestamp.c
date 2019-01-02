@@ -132,6 +132,16 @@ void timestamp_current( timestamp * const t )
     FILETIME ft;
     GetSystemTimeAsFileTime( &ft );
     timestamp_from_filetime( t, &ft );
+#elif defined(_POSIX_TIMERS) && defined(CLOCK_REALTIME) && \
+    (!defined(__GLIBC__) || (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 17))
+    /* Some older versions of XCode define _POSIX_TIMERS, but don't actually
+     * have clock_gettime.  Check CLOCK_REALTIME as well.  Prior to glibc 2.17,
+     * clock_gettime requires -lrt.  This is a non-critical feature, so
+     * we just disable it to keep bootstrapping simple.
+     */
+    struct timespec ts;
+    clock_gettime( CLOCK_REALTIME, &ts );
+    timestamp_init( t, ts.tv_sec, ts.tv_nsec );
 #else  /* OS_NT */
     timestamp_init( t, time( 0 ), 0 );
 #endif  /* OS_NT */
@@ -260,4 +270,12 @@ void timestamp_done()
         hashenumerate( bindhash, free_timestamps, 0 );
         hashdone( bindhash );
     }
+}
+
+/*
+ * timestamp_delta_seconds() - seconds from time a to b.
+ */
+double timestamp_delta_seconds( timestamp const * const a , timestamp const * const b )
+{
+	return ((b->secs*1000000.0+b->nsecs)-(a->secs*1000000.0+a->nsecs))/1000000.0;
 }

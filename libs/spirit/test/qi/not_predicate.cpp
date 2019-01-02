@@ -7,7 +7,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
 
 #include <iostream>
 #include "test.hpp"

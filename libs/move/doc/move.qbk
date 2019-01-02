@@ -18,10 +18,19 @@
     ]
 ]
 
-[important To be able to use containers of movable-only  values you will need to use containers
+[important To be able to use containers of movable-only values in C++03 mode you will need to use containers
 supporting move semantics, like [*Boost.Container] containers]
 
-[note Tested compilers: MSVC-7.1, 8.0, 9.0, GCC 4.3-MinGW in C++03 and C++0x modes, Intel 10.1]
+[section:tested_compilers Tested compilers]
+
+[*Boost.Move] has been tested in the following compilers/platforms:
+
+*  Visual C++ >= 7.1.
+*  GCC >= 4.1.
+
+[warning GCC < 4.3 and MSVC < 9.0 are deprecated and will be removed in the next version.]
+
+[endsect]
 
 [section:what_is_boost_move What is Boost.Move?]
 
@@ -663,6 +672,32 @@ However, "pass by value" is not optimal for classes (like containers, strings, e
 
 [endsect]
 
+[section:templated_assignment_operator Templated assignment operator in copyable and movable types]
+
+
+[import ../example/doc_template_assign.cpp]
+
+Given a movable and copyable class, if a templated assignment operator (*) is added:
+
+[template_assign_example_foo_bar]
+
+C++98 and C++11 compilers will behave different when assigning from a `[const] Foo` lvalue:
+
+[template_assign_example_main]
+
+This different behaviour is a side-effect of the move emulation that can't be easily avoided by
+[*Boost.Move]. One workaround is to SFINAE-out the templated assignment operator with `disable_if`:
+
+[c++]
+
+   template<class U> // Modified templated assignment
+   typename boost::disable_if<boost::is_same<U, Foo>, Foo&>::type
+      operator=(const U& rhs)
+   {  i = -rhs.i; return *this;  } //(2)
+
+
+[endsect]
+
 [endsect]
 
 [section:how_the_library_works How the library works]
@@ -758,9 +793,60 @@ and Klaus Triendl discovered how to bind const rlvalues using `class rv`.
 
 Many thanks to all boosters that have tested, reviewed and improved the library.
 
+Special thanks to:
+
+* Orson Peters, author of [@https://github.com/orlp/pdqsort Pattern-defeating quicksort (pdqsort)].
+* Andrey Astrelin, author of [@https://github.com/Mrrl/GrailSort Grail Sort].
+
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_69 Boost 1.69 Release]
+
+*  Deprecated GCC < 4.3 and MSVC < 9.0 (Visual 2008) compilers.
+*  Fixed bugs:
+   *  [@https://github.com/boostorg/move/issues/15 Git Issue #19: ['"Compilation error with IBM xlC++ on AIX"]].
+
+[endsect]
+
+[section:release_notes_boost_1_67 Boost 1.67 Release]
+
+*  Added pdqsort and heap_sort implementations, initially as a detail, they will be official in the future once better tested.
+
+[endsect]
+
+[section:release_notes_boost_1_66 Boost 1.66 Release]
+
+*  Fixed bugs:
+   *  [@https://github.com/boostorg/move/pull/14   Git Pull  #14: ['"Workaround for bogus [-Wignored-attributes] warning on GCC 6.x/7.x"]].
+   *  [@https://github.com/boostorg/move/issues/15 Git Issue #15: ['"Incorrect merge in adaptive_merge when the number of unique items is limited"]].
+
+[endsect]
+
+
+[section:release_notes_boost_1_65 Boost 1.65 Release]
+
+*  Fixed bug:
+   *  [@https://github.com/boostorg/move/pull/11 Git Pull #11: ['"replace 'std::random_shuffle' by '::random_shuffle'"]].
+   *  [@https://github.com/boostorg/move/pull/12 Git Pull #12: ['"Adds support for MSVC ARM64 target'"]].
+
+[endsect]
+
+[section:release_notes_boost_1_64 Boost 1.64 Release]
+
+*  Fixed bug:
+   *  [@https://svn.boost.org/trac/boost/ticket/12920 #12920 ['"movelib::unique_ptr: incorrect pointer type for nested array"]].
+
+[endsect]
+
+[section:release_notes_boost_1_62 Boost 1.62 Release]
+
+*  Documented new limitations reported in Trac tickets
+   [@https://svn.boost.org/trac/boost/ticket/12194 #12194 ['"Copy assignment on moveable and copyable classes uses wrong type"]] and
+   [@https://svn.boost.org/trac/boost/ticket/12307 #12307 ['"Copy assignment from const ref handled differently in C++11/C++98"]].
+
+[endsect]
 
 [section:release_notes_boost_1_61 Boost 1.61 Release]
 

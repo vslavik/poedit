@@ -25,18 +25,6 @@ void save_to(archive_type& ar, const temporal_type& tt)
 }
 
 int main(){
-  std::ostringstream oss;
-  
-  // NOTE: DATE_TIME_XML_SERIALIZE is only used in testing and is
-  // defined in the testing Jamfile
-#if defined(DATE_TIME_XML_SERIALIZE)
-  std::cout << "Running xml archive tests" << std::endl;
-  archive::xml_oarchive oa(oss);
-#else
-  std::cout << "Running text archive tests" << std::endl;
-  archive::text_oarchive oa(oss);
-#endif
-  
   date d(2002,Feb,12);
   date sv_d1(not_a_date_time);
   date sv_d2(pos_infin);
@@ -53,6 +41,20 @@ int main(){
   last_kday_of_month lkd(Saturday,Apr);
   first_kday_before fkdb(Thursday);
   first_kday_after fkda(Thursday);
+
+  std::ostringstream oss;
+
+  {
+
+  // NOTE: DATE_TIME_XML_SERIALIZE is only used in testing and is
+  // defined in the testing Jamfile
+#if defined(DATE_TIME_XML_SERIALIZE)
+  std::cout << "Running xml archive tests" << std::endl;
+  archive::xml_oarchive oa(oss);
+#else
+  std::cout << "Running text archive tests" << std::endl;
+  archive::text_oarchive oa(oss);
+#endif
 
   // load up the archive
   try{
@@ -96,14 +98,8 @@ int main(){
     check("Error writing to archive: " + s + "\nWritten data: \"" + oss.str() + "\"", false);
     return printTestStats();
   }
+  }
 
-  std::istringstream iss(oss.str());
-#if defined(DATE_TIME_XML_SERIALIZE)
-  archive::xml_iarchive ia(iss);
-#else
-  archive::text_iarchive ia(iss);
-#endif
-  
   // read from the archive
   date d2(not_a_date_time);
   date sv_d3(min_date_time);
@@ -121,6 +117,14 @@ int main(){
   last_kday_of_month lkd2(Monday,Jan);
   first_kday_before fkdb2(Monday);
   first_kday_after fkda2(Monday);
+
+  {
+  std::istringstream iss(oss.str());
+#if defined(DATE_TIME_XML_SERIALIZE)
+  archive::xml_iarchive ia(iss);
+#else
+  archive::text_iarchive ia(iss);
+#endif
 
   try{
 #if defined(DATE_TIME_XML_SERIALIZE)
@@ -162,6 +166,7 @@ int main(){
     std::string s(ae.what());
     check("Error reading from archive: " + s + "\nWritten data: \"" + oss.str() + "\"", false);
     return printTestStats();
+  }
   }
   
   check("date", d == d2);

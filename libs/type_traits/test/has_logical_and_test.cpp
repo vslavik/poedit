@@ -3,14 +3,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
-
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/has_logical_and.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 #define BOOST_TT_TRAIT_NAME has_logical_and
 #define BOOST_TT_TRAIT_OP &&

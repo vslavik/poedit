@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Partial Matches</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../index.html" title="Boost.Regex 5.1.1">
-<link rel="up" href="../index.html" title="Boost.Regex 5.1.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Boost.Regex 5.1.3">
+<link rel="up" href="../index.html" title="Boost.Regex 5.1.3">
 <link rel="prev" href="captures.html" title="Understanding Marked Sub-Expressions and Captures">
 <link rel="next" href="syntax.html" title="Regular Expression Syntax">
 </head>
@@ -29,7 +29,7 @@
 <p>
       The <a class="link" href="ref/match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a>
       <code class="computeroutput"><span class="identifier">match_partial</span></code> can be passed
-      to the following algorithms: <a class="link" href="ref/regex_match.html" title="regex_match"><code class="computeroutput"><span class="identifier">regex_match</span></code></a>, <a class="link" href="ref/regex_search.html" title="regex_search"><code class="computeroutput"><span class="identifier">regex_search</span></code></a>, and <a class="link" href="ref/deprecated_interfaces/regex_grep.html" title="regex_grep (Deprecated)"><code class="computeroutput"><span class="identifier">regex_grep</span></code></a>, and used with the iterator
+      to the following algorithms: <a class="link" href="ref/regex_match.html" title="regex_match"><code class="computeroutput"><span class="identifier">regex_match</span></code></a>, <a class="link" href="ref/regex_search.html" title="regex_search"><code class="computeroutput"><span class="identifier">regex_search</span></code></a>, and <a class="link" href="ref/deprecated/regex_grep.html" title="regex_grep (Deprecated)"><code class="computeroutput"><span class="identifier">regex_grep</span></code></a>, and used with the iterator
       <a class="link" href="ref/regex_iterator.html" title="regex_iterator"><code class="computeroutput"><span class="identifier">regex_iterator</span></code></a>.
       When used it indicates that partial as well as full matches should be found.
       A partial match is one that matched one or more characters at the end of the
@@ -42,7 +42,7 @@
       can be differentiated as shown in the following table (the variable M represents
       an instance of <a class="link" href="ref/match_results.html" title="match_results"><code class="computeroutput"><span class="identifier">match_results</span></code></a> as filled in by <a class="link" href="ref/regex_match.html" title="regex_match"><code class="computeroutput"><span class="identifier">regex_match</span></code></a>,
       <a class="link" href="ref/regex_search.html" title="regex_search"><code class="computeroutput"><span class="identifier">regex_search</span></code></a>
-      or <a class="link" href="ref/deprecated_interfaces/regex_grep.html" title="regex_grep (Deprecated)"><code class="computeroutput"><span class="identifier">regex_grep</span></code></a>):
+      or <a class="link" href="ref/deprecated/regex_grep.html" title="regex_grep (Deprecated)"><code class="computeroutput"><span class="identifier">regex_grep</span></code></a>):
     </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -164,7 +164,7 @@
       Be aware that using partial matches can sometimes result in somewhat imperfect
       behavior:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           There are some expressions, such as ".*abc" that will always
           produce a partial match. This problem can be reduced by careful construction
@@ -177,6 +177,17 @@
           match against the "ab" rather than a full match against "b".
           It's more efficient to work this way, but may not be the behavior you want
           in all situations.
+        </li>
+<li class="listitem">
+          There are situations where full matches are found even though partial matches
+          are also possible: for example if the partial string terminates with "abc"
+          and the regular expression is "\w+", then a full match is found
+          even though there may be more alphabetical characters to come. This particular
+          case can be detected by checking if the match found terminates at the end
+          of current input string. However, there are situations where that is not
+          possible: for example an expression such as "abc.*123" may always
+          have longer matches available since it could conceivably match the entire
+          input string (no matter how long it may be).
         </li>
 </ul></div>
 <p>

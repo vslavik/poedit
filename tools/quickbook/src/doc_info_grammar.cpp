@@ -9,19 +9,19 @@
 =============================================================================*/
 
 #include <map>
-#include <boost/foreach.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_loops.hpp>
-#include <boost/spirit/include/classic_symbols.hpp>
-#include <boost/spirit/include/classic_chset.hpp>
 #include <boost/spirit/include/classic_numerics.hpp>
-#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include <boost/spirit/include/classic_symbols.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
-#include "grammar_impl.hpp"
-#include "state.hpp"
+#include <boost/spirit/include/phoenix1_primitives.hpp>
 #include "actions.hpp"
 #include "doc_info_tags.hpp"
+#include "for.hpp"
+#include "grammar_impl.hpp"
 #include "phrase_tags.hpp"
+#include "state.hpp"
 
 namespace quickbook
 {
@@ -31,7 +31,8 @@ namespace quickbook
     {
         attribute_info(value::tag_type t, cl::rule<scanner>* r)
             : tag(t), rule(r)
-        {}
+        {
+        }
 
         value::tag_type tag;
         cl::rule<scanner>* rule;
@@ -41,77 +42,69 @@ namespace quickbook
     {
         struct assign_attribute_type
         {
-            assign_attribute_type(doc_info_grammar_local& l)
-                : l(l)
-            {}
+            assign_attribute_type(doc_info_grammar_local& l_) : l(l_) {}
 
-            void operator()(value::tag_type& t) const {
+            void operator()(value::tag_type& t) const
+            {
                 l.attribute_rule = *l.attribute_rules[t];
                 l.attribute_tag = t;
             }
-            
+
             doc_info_grammar_local& l;
         };
-        
+
         struct fallback_attribute_type
         {
-            fallback_attribute_type(doc_info_grammar_local& l)
-                : l(l)
-            {}
+            fallback_attribute_type(doc_info_grammar_local& l_) : l(l_) {}
 
-            void operator()(parse_iterator, parse_iterator) const {
+            void operator()(parse_iterator, parse_iterator) const
+            {
                 l.attribute_rule = l.doc_fallback;
                 l.attribute_tag = value::default_tag;
             }
-            
+
             doc_info_grammar_local& l;
         };
 
-        cl::rule<scanner>
-                        doc_info_block, doc_attribute, doc_info_attribute,
-                        doc_info_escaped_attributes,
-                        doc_title, doc_simple, doc_phrase, doc_fallback,
-                        doc_authors, doc_author,
-                        doc_copyright, doc_copyright_holder,
-                        doc_source_mode, doc_biblioid, doc_compatibility_mode,
-                        quickbook_version, macro, char_;
+        cl::rule<scanner> doc_info_block, doc_attribute, doc_info_attribute,
+            doc_info_escaped_attributes, doc_title, doc_simple, doc_phrase,
+            doc_fallback, doc_authors, doc_author, doc_copyright,
+            doc_copyright_holder, doc_source_mode, doc_biblioid,
+            doc_compatibility_mode, quickbook_version, macro, char_;
         cl::uint_parser<int, 10, 4, 4> doc_copyright_year;
         cl::symbols<> doc_types;
         cl::symbols<value::tag_type> doc_info_attributes;
         cl::symbols<value::tag_type> doc_attributes;
-        std::map<value::tag_type, cl::rule<scanner>* > attribute_rules;
+        std::map<value::tag_type, cl::rule<scanner>*> attribute_rules;
         value::tag_type attribute_tag;
         cl::rule<scanner> attribute_rule;
         assign_attribute_type assign_attribute;
         fallback_attribute_type fallback_attribute;
 
         doc_info_grammar_local()
-            : assign_attribute(*this)
-            , fallback_attribute(*this)
-        {}
+            : assign_attribute(*this), fallback_attribute(*this)
+        {
+        }
 
         bool source_mode_unset;
     };
 
     void quickbook_grammar::impl::init_doc_info()
     {
-        doc_info_grammar_local& local = cleanup_.add(
-            new doc_info_grammar_local);
+        doc_info_grammar_local& local =
+            cleanup_.add(new doc_info_grammar_local);
 
-        typedef cl::uint_parser<int, 10, 1, 2>  uint2_t;
+        typedef cl::uint_parser<int, 10, 1, 2> uint2_t;
 
-        local.doc_types =
-            "book", "article", "library", "chapter", "part"
-          , "appendix", "preface", "qandadiv", "qandaset"
-          , "reference", "set"
-        ;
+        local.doc_types = "book", "article", "library", "chapter", "part",
+        "appendix", "preface", "qandadiv", "qandaset", "reference", "set";
 
-        BOOST_FOREACH(value::tag_type t, doc_attributes::tags()) {
+        QUICKBOOK_FOR (value::tag_type t, doc_attributes::tags()) {
             local.doc_attributes.add(doc_attributes::name(t), t);
             local.doc_info_attributes.add(doc_attributes::name(t), t);
         }
 
-        BOOST_FOREACH(value::tag_type t, doc_info_attributes::tags()) {
+        QUICKBOOK_FOR (value::tag_type t, doc_info_attributes::tags()) {
             local.doc_info_attributes.add(doc_info_attributes::name(t), t);
         }
 
@@ -120,11 +113,14 @@ namespace quickbook
         plain_char_action plain_char(state);
         do_macro_action do_macro(state);
         scoped_parser<to_value_scoped_action> to_value(state);
-        member_action_value<quickbook::state, source_mode_type> change_source_mode(
-            state, &state::change_source_mode);
-        member_action_fixed_value<quickbook::state, source_mode_type> default_source_mode(
-            state, &state::change_source_mode, source_mode_tags::cpp);
-        
+        member_action_value<quickbook::state, source_mode_type>
+            change_source_mode(state, &state::change_source_mode);
+        member_action_fixed_value<quickbook::state, source_mode_type>
+            default_source_mode(
+                state, &state::change_source_mode, source_mode_tags::cpp);
+
+        // clang-format off
+
         doc_info_details =
                 cl::eps_p                   [ph::var(local.source_mode_unset) = true]
             >>  *(  space
@@ -321,5 +317,7 @@ namespace quickbook
             )
             >>  state.macro                     [do_macro]
             ;
+
+        // clang-format on
     }
 }

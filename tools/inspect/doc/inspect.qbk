@@ -48,9 +48,18 @@ The program is run in the directory to be scanned for errors. Sub-directories ar
 If the first program argument is -help, a usage message is displayed, showing all available program options:
 
 [pre
-Usage: inspect \[search-root\] \[-cvs\] \[-text\] \[-brief\] \[options...\]
- search-root default is the current directory
- Options:
+Usage: inspect \[search-root\] \[options...\]
+
+ search-root default is the current directory (i.e. '.')
+
+ Output Options:
+
+  -brief
+  -text
+  -version-string <version message>
+
+ Checks:
+
   -license
   -copyright
   -crlf
@@ -73,14 +82,14 @@ There are two types of options allowed, ones that control general operation and 
 
 [variablelist
 
-  [ [[^-cvs]]
-    [Only files and directories in the CVS tree of the current directory are scanned. Otherwise all files and sub-directories are included in the scan.] ]
-
   [ [[^-text]]
     [Generate plain text report instead of the default HTML.] ]
 
   [ [[^-brief]]
     [The default report style can be rather verobse. This generates a more condesed report, for example suitable to send as an email.] ]
+
+  [ [[^-version-string]]
+    [Description of the version of boost that is being inspected.] ]
 
   [ [[^-license]]
     [Checks for presense of approved license text.] ]

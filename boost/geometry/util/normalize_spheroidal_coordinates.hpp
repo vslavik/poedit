@@ -1,9 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2015-2016, Oracle and/or its affiliates.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+
+// Copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+// Contributed and/or modified by Adeel Ahmad, as part of Google Summer of Code 2018 program
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -26,8 +29,8 @@ namespace math
 namespace detail
 {
 
-
-template <typename CoordinateType, typename Units>
+// CoordinateType, radian, true
+template <typename CoordinateType, typename Units, bool IsEquatorial = true>
 struct constants_on_spheroid
 {
     static inline CoordinateType period()
@@ -38,6 +41,13 @@ struct constants_on_spheroid
     static inline CoordinateType half_period()
     {
         return math::pi<CoordinateType>();
+    }
+
+    static inline CoordinateType quarter_period()
+    {
+        static CoordinateType const
+            pi_half = math::pi<CoordinateType>() / CoordinateType(2);
+        return pi_half;
     }
 
     static inline CoordinateType min_longitude()
@@ -65,7 +75,22 @@ struct constants_on_spheroid
 };
 
 template <typename CoordinateType>
-struct constants_on_spheroid<CoordinateType, degree>
+struct constants_on_spheroid<CoordinateType, radian, false>
+    : constants_on_spheroid<CoordinateType, radian, true>
+{
+    static inline CoordinateType min_latitude()
+    {
+        return CoordinateType(0);
+    }
+
+    static inline CoordinateType max_latitude()
+    {
+        return math::pi<CoordinateType>();
+    }
+};
+
+template <typename CoordinateType>
+struct constants_on_spheroid<CoordinateType, degree, true>
 {
     static inline CoordinateType period()
     {
@@ -75,6 +100,11 @@ struct constants_on_spheroid<CoordinateType, degree>
     static inline CoordinateType half_period()
     {
         return CoordinateType(180.0);
+    }
+
+    static inline CoordinateType quarter_period()
+    {
+        return CoordinateType(90.0);
     }
 
     static inline CoordinateType min_longitude()
@@ -98,8 +128,94 @@ struct constants_on_spheroid<CoordinateType, degree>
     }
 };
 
+template <typename CoordinateType>
+struct constants_on_spheroid<CoordinateType, degree, false>
+    : constants_on_spheroid<CoordinateType, degree, true>
+{
+    static inline CoordinateType min_latitude()
+    {
+        return CoordinateType(0);
+    }
+
+    static inline CoordinateType max_latitude()
+    {
+        return CoordinateType(180.0);
+    }
+};
+
+
+} // namespace detail
+#endif // DOXYGEN_NO_DETAIL
+
 
 template <typename Units, typename CoordinateType>
+inline CoordinateType latitude_convert_ep(CoordinateType const& lat)
+{
+    typedef math::detail::constants_on_spheroid
+            <
+                CoordinateType,
+                Units
+            > constants;
+
+    return constants::quarter_period() - lat;
+}
+
+
+template <typename Units, bool IsEquatorial, typename T>
+static bool is_latitude_pole(T const& lat)
+{
+    typedef math::detail::constants_on_spheroid
+        <
+            T,
+            Units
+        > constants;
+
+    return math::equals(math::abs(IsEquatorial
+                                    ? lat
+                                    : math::latitude_convert_ep<Units>(lat)),
+                        constants::quarter_period());
+
+}
+
+
+template <typename Units, typename T>
+static bool is_longitude_antimeridian(T const& lon)
+{
+    typedef math::detail::constants_on_spheroid
+        <
+            T,
+            Units
+        > constants;
+
+    return math::equals(math::abs(lon), constants::half_period());
+
+}
+
+
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail
+{
+
+
+template <typename Units, bool IsEquatorial>
+struct latitude_convert_if_polar
+{
+    template <typename T>
+    static inline void apply(T & /*lat*/) {}
+};
+
+template <typename Units>
+struct latitude_convert_if_polar<Units, false>
+{
+    template <typename T>
+    static inline void apply(T & lat)
+    {
+        lat = latitude_convert_ep<Units>(lat);
+    }
+};
+
+
+template <typename Units, typename CoordinateType, bool IsEquatorial = true>
 class normalize_spheroidal_coordinates
 {
     typedef constants_on_spheroid<CoordinateType, Units> constants;
@@ -145,6 +261,8 @@ public:
                              CoordinateType& latitude,
                              bool normalize_poles = true)
     {
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude);
+
 #ifdef BOOST_GEOMETRY_NORMALIZE_LATITUDE
         // normalize latitude
         if (math::larger(latitude, constants::half_period()))
@@ -183,6 +301,8 @@ public:
             }
         }
 
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude);
+
 #ifdef BOOST_GEOMETRY_NORMALIZE_LATITUDE
         BOOST_GEOMETRY_ASSERT(! math::larger(constants::min_latitude(), latitude));
         BOOST_GEOMETRY_ASSERT(! math::larger(latitude, constants::max_latitude()));
@@ -216,6 +336,15 @@ inline void normalize_spheroidal_coordinates(CoordinateType& longitude,
         >::apply(longitude, latitude);
 }
 
+template <typename Units, bool IsEquatorial, typename CoordinateType>
+inline void normalize_spheroidal_coordinates(CoordinateType& longitude,
+                                             CoordinateType& latitude)
+{
+    detail::normalize_spheroidal_coordinates
+        <
+            Units, CoordinateType, IsEquatorial
+        >::apply(longitude, latitude);
+}
 
 /*!
 \brief Short utility to normalize the longitude on a spheroid.
@@ -235,6 +364,37 @@ inline void normalize_longitude(CoordinateType& longitude)
         >::apply(longitude);
 }
 
+/*!
+\brief Short utility to normalize the azimuth on a spheroid
+       in the range (-180, 180].
+\tparam Units The units of the coordindate system in the spheroid
+\tparam CoordinateType The type of the coordinates
+\param angle Angle
+\ingroup utility
+*/
+template <typename Units, typename CoordinateType>
+inline void normalize_azimuth(CoordinateType& angle)
+{
+    normalize_longitude<Units, CoordinateType>(angle);
+}
+
+/*!
+\brief Normalize the given values.
+\tparam ValueType The type of the values
+\param x Value x
+\param y Value y
+TODO: adl1995 - Merge this function with
+formulas/vertex_longitude.hpp
+*/
+template<typename ValueType>
+inline void normalize_unit_vector(ValueType& x, ValueType& y)
+{
+    ValueType h = boost::math::hypot(x, y);
+
+    BOOST_GEOMETRY_ASSERT(h > 0);
+
+    x /= h; y /= h;
+}
 
 /*!
 \brief Short utility to calculate difference between two longitudes
@@ -281,6 +441,41 @@ inline CoordinateType longitude_distance_unsigned(CoordinateType const& longitud
     }
     return diff;
 }
+
+/*!
+\brief The abs difference between longitudes in range [0, 180].
+\tparam Units The units of the coordindate system in the spheroid
+\tparam CoordinateType The type of the coordinates
+\param longitude1 Longitude 1
+\param longitude2 Longitude 2
+\ingroup utility
+*/
+template <typename Units, typename CoordinateType>
+inline CoordinateType longitude_difference(CoordinateType const& longitude1,
+                                           CoordinateType const& longitude2)
+{
+    return math::abs(math::longitude_distance_signed<Units>(longitude1, longitude2));
+}
+
+template <typename Units, typename CoordinateType>
+inline CoordinateType longitude_interval_distance_signed(CoordinateType const& longitude_a1,
+                                                         CoordinateType const& longitude_a2,
+                                                         CoordinateType const& longitude_b)
+{
+    CoordinateType const c0 = 0;
+    CoordinateType dist_a12 = longitude_distance_signed<Units>(longitude_a1, longitude_a2);
+    CoordinateType dist_a1b = longitude_distance_signed<Units>(longitude_a1, longitude_b);
+    if (dist_a12 < c0)
+    {
+        dist_a12 = -dist_a12;
+        dist_a1b = -dist_a1b;
+    }
+    
+    return dist_a1b < c0 ? dist_a1b
+         : dist_a1b > dist_a12 ? dist_a1b - dist_a12
+         : c0;
+}
+
 
 } // namespace math
 

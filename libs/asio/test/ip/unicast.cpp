@@ -2,7 +2,7 @@
 // unicast.cpp
 // ~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 // Test that header file is self-contained.
 #include <boost/asio/ip/unicast.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include "../unit_test.hpp"
 
@@ -36,8 +36,8 @@ void test()
 
   try
   {
-    io_service ios;
-    ip::udp::socket sock(ios);
+    io_context ioc;
+    ip::udp::socket sock(ioc);
 
     // hops class.
 
@@ -69,17 +69,17 @@ void test()
   using namespace boost::asio;
   namespace ip = boost::asio::ip;
 
-  io_service ios;
+  io_context ioc;
   boost::system::error_code ec;
 
   ip::udp::endpoint ep_v4(ip::address_v4::loopback(), 0);
-  ip::udp::socket sock_v4(ios);
+  ip::udp::socket sock_v4(ioc);
   sock_v4.open(ep_v4.protocol(), ec);
   sock_v4.bind(ep_v4, ec);
   bool have_v4 = !ec;
 
   ip::udp::endpoint ep_v6(ip::address_v6::loopback(), 0);
-  ip::udp::socket sock_v6(ios);
+  ip::udp::socket sock_v6(ioc);
   sock_v6.open(ep_v6.protocol(), ec);
   sock_v6.bind(ep_v6, ec);
   bool have_v6 = !ec;

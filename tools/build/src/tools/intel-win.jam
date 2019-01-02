@@ -76,7 +76,7 @@ local rule configure ( version ? : command * : options * )
     local compatibility =
       [ feature.get-values <compatibility> : $(options) ] ;
     # Allow to specify toolset and visual studio backend from commandline .e.g --toolset=intel-14.0-vc10
-    local vc_in_version = [ MATCH (vc[0-9]+(\\.[0-9]+)?)$ : $(version) ] ;
+    local vc_in_version = [ MATCH "(vc[0-9]+(\\.[0-9]+)?)$" : $(version) ] ;
     vc_in_version = $(vc_in_version[1]) ;
     if $(compatibility) && $(vc_in_version)
     {
@@ -103,7 +103,7 @@ local rule configure ( version ? : command * : options * )
         local msvc_versions = [ feature.values <toolset-msvc:version> ] ;
         if ! $(msvc_versions)
         {
-            ECHO notice: no msvc versions detected. trying auto detect ;
+            ECHO notice\: no msvc versions detected. trying auto detect ;
             toolset.using msvc : all ;
             msvc_versions = [ feature.values <toolset-msvc:version> ] ;
         }
@@ -117,7 +117,7 @@ local rule configure ( version ? : command * : options * )
             if [ MATCH "($(v))" : $(.iclvars-$(version)-supported-vcs) ]
             {
                 # Strip trailing .0 from msvc version as intel compiler uses atm only major version for Qvc
-                local m = [ MATCH ([0-9]+).0$ : $(v) ] ;
+                local m = [ MATCH "([0-9]+).0$" : $(v) ] ;
                 if $(m)
                 {
                     v = $(m) ;
@@ -145,7 +145,7 @@ local rule configure-really ( version ? : command * : options * : compatibility 
     local condition = [  common.check-init-parameters intel-win
         : version $(version) : compatibility $(compatibility) ] ;
         
-    local m = [ MATCH ([0-9]+).* : $(version) ] ;
+    local m = [ MATCH "([0-9]+).*" : $(version) ] ;
     local major = $(m[1]) ;
     if ! $(major)
     {
@@ -234,9 +234,21 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         local setup-call ;
         if $(major) >= 12
         {
-            local t = [ msvc.maybe-rewrite-setup intel-win : "\"$(setup)\"" :  "$(c) $(iclvars_vs_arg)" : $(version) : $(rewrite-setupscript) ] ;
-            setup-call = "call $(t) > nul " ;
             cpu-conditions = $(condition)/$(.cpu-arch-$(c)) ;
+
+            if ! $(setup)
+            {
+                # No setup script
+            }
+            else if $(rewrite-setupscript) = off || [ os.name ] != NT
+            {
+                setup-call = "call \"$(setup)\" $(c) $(iclvars_vs_arg)" ;
+            }
+            else
+            {
+                toolset.flags intel-win .SETUP-SCRIPT $(cpu-conditions) : $(setup) ;
+                toolset.flags intel-win .SETUP-OPTIONS $(cpu-conditions) : "$(c) $(iclvars_vs_arg)" ;
+            }
         }
         else
         {
@@ -244,15 +256,17 @@ local rule configure-really ( version ? : command * : options * : compatibility 
             cpu-conditions = $(condition) ;
         }
 
-        
-        if [ os.name ] = NT
+        if $(setup-call)
         {
-            setup-call = $(setup-call)"
-    " ;
-        }
-        else
-        {
-            setup-call = "cmd /S /C "$(setup-call)" \"&&\" " ;
+            if [ os.name ] = NT
+            {
+                setup-call = $(setup-call)"\n    " ;
+            }
+            else
+            {
+                setup-call = "cmd /S /C "$(setup-call)" \"&&\" " ;
+            }
+            toolset.flags intel-win .SETUP $(cpu-conditions) : $(setup-call) ;
         }
 
         if $(.debug-configuration)
@@ -266,13 +280,13 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         local cpu-assembler = $(assembler) ;
         cpu-assembler ?= $(default-assembler-$(c)) ;
         
-        toolset.flags intel-win.compile .CC $(cpu-conditions) : $(setup-call)icl ;
-        toolset.flags intel-win.link .LD $(cpu-conditions) : $(setup-call)xilink /nologo ;
-        toolset.flags intel-win.archive .LD $(cpu-conditions) : $(setup-call)xilink /lib /nologo ;
-        toolset.flags intel-win.link .MT $(cpu-conditions) : $(setup-call)mt -nologo ;
-        toolset.flags intel-win.compile .ASM $(cpu-conditions) : $(setup-call)$(cpu-assembler) -nologo ;
-        toolset.flags intel-win.compile .MC $(cpu-conditions) : $(setup-call)mc ;
-        toolset.flags intel-win.compile .RC $(cpu-conditions) : $(setup-call)rc ;
+        toolset.flags intel-win.compile .CC $(cpu-conditions) : icl ;
+        toolset.flags intel-win.link .LD $(cpu-conditions) : xilink /nologo ;
+        toolset.flags intel-win.archive .LD $(cpu-conditions) : xilink /lib /nologo ;
+        toolset.flags intel-win.link .MT $(cpu-conditions) : mt -nologo ;
+        toolset.flags intel-win.compile .ASM $(cpu-conditions) : $(cpu-assembler) -nologo ;
+        toolset.flags intel-win.compile .MC $(cpu-conditions) : mc ;
+        toolset.flags intel-win.compile .RC $(cpu-conditions) : rc ;
     }
 
     # Depending on the settings, running of tests require some runtime DLLs.
@@ -298,7 +312,7 @@ local rule configure-really ( version ? : command * : options * : compatibility 
 
     if $(major) > 5
     {
-        C++FLAGS += /Zc:forScope ;  # Add support for correct for loop scoping.
+        C++FLAGS += "/Zc:forScope" ; # Add support for correct for loop scoping.
     }
 
     # Add options recognized only by intel7 and above.
@@ -324,7 +338,7 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         if $(major) > 5
         {
             # Add support for wchar_t
-            C++FLAGS += /Zc:wchar_t
+            C++FLAGS += "/Zc:wchar_t"
               # Tell the dinkumware library about it.
               -D_NATIVE_WCHAR_T_DEFINED
               ;
@@ -372,7 +386,7 @@ local rule get-autodetect-versions
     local result ;
     for local v in $(.intel-autodetect-versions)
     {
-        local major = [ MATCH ([0-9]+).* : $(v) ] ; # Use only major version
+        local major = [ MATCH "([0-9]+).*" : $(v) ] ; # Use only major version
         if [ get-icl-path-from-environment $(major) ]
         {
             result += $(v) ;
@@ -475,6 +489,9 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
 .iclvars-14.0-supported-vcs = "12.0 11.0 10.0 9.0" ;
 .iclvars-15.0-supported-vcs = "12.0 11.0 10.0 9.0" ;
 .iclvars-16.0-supported-vcs = "14.0 12.0 11.0 10.0 9.0" ;
+.iclvars-17.0-supported-vcs = "14.0 12.0 11.0 10.0" ;
+.iclvars-18.0-supported-vcs = "14.1 14.0 12.0 11.0 10.0" ;
+.iclvars-version-alias-vc14.1 = vs2017 ;
 .iclvars-version-alias-vc14 = vs2015 ;
 .iclvars-version-alias-vc12 = vs2013 ;
 .iclvars-version-alias-vc11 = vs2012 ;

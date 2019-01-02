@@ -339,24 +339,21 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
   Supplying more, or less, than <i>P</i> arguments raises an exception.
   (unless it was set otherwise, see <a href="#exceptions">exceptions</a>)</p>
 
-  <p><br>
-  <br>
-  A specification <i>spec</i> has the form : [ <i>N</i><b>$</b> ] [
-  <i>flags</i> ] [ <i>width</i> ] [ <b>.</b> <i>precision</i> ]
-  <i>type-char</i><br>
-  <br>
-  Fields insided square brackets are optional. Each of those fields are
-  explained one by one in the following list :</p>
+  <p>A specification <i>spec</i> has the form: 
+      <pre>    [ <i>N</i><b>$</b> ] [ <i>flags</i> ] [ <i>width</i> ] [ <b>.</b> <i>precision</i> ] [ <i>argument-type</i> ] <i>conversion-specifier</i></pre>
+
+  Fields inside square brackets are optional.  Each of those fields are
+  explained one by one in the following list:</p>
 
   <ul>
     <li><i>N</i> <b>$</b> (optional field) specifies that the format
-    specification applies to the <i>N</i>-th argument. (it is called a
-    <i>positional format specification</i>)<br>
+    specification applies to the <i>N</i>-th argument (it is called a
+    <i>positional format specification</i>).<br>
     If this is not present, arguments are taken one by one. (and it is then
-    an error to later supply an argument number)</li>
+    an error to later supply an argument number)</li><br />
 
     <li>
-      <i>flags</i> is a sequences of any of those :
+      <i>flags</i> is a sequence of any of these:
 
       <blockquote>
         <table border="1" cellpadding="5" summary="">
@@ -432,7 +429,7 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
             alignment</td>
           </tr>
         </table>
-      </blockquote>
+      </blockquote><br />
     </li>
 
     <li><i>width</i> specifies a minimal width for the string resulting form
@@ -443,7 +440,7 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
     output of <a href="#user-defined">user-defined types</a> (that might call
     <i>operator&lt;&lt;</i> many times on several members), the width is
     handled after stream conversion of the whole argument object, in the
-    format class code.</li>
+    format class code.</li><br />
 
     <li>
       <i>precision</i> (preceded by a point), sets the stream's
@@ -465,22 +462,45 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
         meaning : the conversion string is truncated to the <i>precision</i>
         first chars. (Note that the eventual padding to <i>width</i> is done
         after truncation.)</li>
-      </ul>
+      </ul><br />
     </li>
 
     <li>
-      <i>type-char</i>. it does <b>not</b> impose the concerned argument to
-      be of a restricted set of types, but merely sets the flags that are
-      associated with this type specification.
+        <i>argument-type</i> is used by the printf family to properly process
+        the arguments being passed in through varargs.  With <code>boost::format</code>
+        the arguments are fed into format through <code>operator %</code> which
+        allows the template to carry the argument type.  Therefore the classical
+        printf style argument type is consumed and ignored.
+        Argument-types <code>hh</code>, <code>h</code>, <code>l</code>, <code>ll</code>, <code>j</code>, 
+        <code>z</code>, and <code>L</code> are recognized, as are the Microsoft extensions <code>w</code>,
+        <code>I</code> (capital i), <code>I32</code>, and <code>I64</code>.  Argument-type <code>t</code> 
+        from the ISO C99 standard is not recognized as an argument type, as it has been in use as a
+        conversion specifier for tabular output for many years in <code>boost::format</code>.
+    </li><br />
+
+    <li>
+      <i>conversion-specifier</i> does <b>not</b> impose the concerned argument 
+      to be of a restricted set of types, but merely sets the ios flags that are
+      associated with a type specification:
 
       <blockquote>
         <table border="1" cellpadding="5" summary="">
           <tr>
-            <td><b>Type-Char</b></td>
+            <td><b>conversion-specifier</b></td>
 
             <td><b>Meaning</b></td>
 
             <td><b>effect on stream</b></td>
+          </tr>
+
+          <tr>
+            <td><b>b</b></td>
+
+            <td>boolean string output</td>
+
+            <td>sets <i>boolalpha</i>; only works for type <code>bool</code><br />
+            To customize the resulting string, see 
+            <a href="http://en.cppreference.com/w/cpp/locale/numpunct/truefalsename">std::numpunct</a>.
           </tr>
 
           <tr>
@@ -497,6 +517,14 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
             <td>octal output</td>
 
             <td>sets <i>oct</i></td>
+          </tr>
+
+          <tr>
+            <td><b>a</b></td>
+
+            <td>hexadecimal exponent notation</td>
+
+            <td>sets floatfield bits to <i>scientific</i> | <i>fixed</i> (which is equivalent to <i>hexfloat</i>)</td>
           </tr>
 
           <tr>
@@ -524,13 +552,13 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
           </tr>
 
           <tr>
-            <td><b>X, E</b> or <b>G</b></td>
+            <td><b>X, A, E, F</b> or <b>G</b></td>
 
             <td>same effect as their lowercase counterparts, but using
             uppercase letters for number outputs. (exponents, hex digits,
             ..)</td>
 
-            <td>same effects as <i>'x'</i>, <i>'e'</i>, or <i>'g'</i>,
+            <td>same effects as <i>'x'</i>, <i>'a'</i>, <i>'e'</i>, <i>'f'</i>, or <i>'g'</i> respectively,
             <b>plus</b> <i>uppercase</i></td>
           </tr>
 
@@ -571,11 +599,8 @@ Jean, de Lattre de Tassigny,            +33 (0) 987 654 321
         </table>
       </blockquote>
 
-      <p>Note that the 'n' type specification is ignored (and so is the
-      corresponding argument), because it does not fit in this context.<br>
-      Also, printf 'l', 'L', or 'h' modifiers (to indicate wide, long or
-      short types) are supported (and simply have no effect on the internal
-      stream).</p>
+      <p>Note that the 'n' conversion-specifier is ignored (and so is the
+      corresponding argument), because it does not fit in this context.</p>
     </li>
   </ul><a name="new_directives" id="new_directives"></a>
 
@@ -643,6 +668,8 @@ cout &lt;&lt; format(s) % x1 % x2;
     <i>printf("%1$d:%2$.*3$d:%4$.*3$d\n", hour, min, precision, sec);</i><br>
     This class does not support this mechanism for now. so such precision or
     width fields are quietly ignored by the parsing.</li>
+
+    <li>argument-type is ignored</li>
   </ul>Also, note that the special <b>'n'</b> type-specification (used to
   tell printf to save in a variable the number of characters output by the
   formatting) has no effect in format.<br>
@@ -771,6 +798,8 @@ cout &lt;&lt; format("%1$d %2% %1%\n") % group(hex, showbase, 40) % 50;
     Nelson's library</a> was intented as demonstration of alternative
     solutions in discussions on Boost's list for the design of
     Boost.format.</li>
+
+    <li><a href="http://fmtlib.net/latest/index.html">{fmt}</a> by Victor Zverovich.</li>
   </ul><a name="exceptions" id="exceptions"></a>
   <hr>
 
@@ -863,27 +892,27 @@ cout &lt;&lt; my_fmt(" _%2%_ _%1%_ \n") % 1 ;
   incurred. The result may greatly depend on the compiler, standard library
   implementation, and the precise choice of format-string and arguments.</p>
 
-  <p>Since common stream implementations eventually call functions of the
-  printf family for the actual formatting of numbers, in general printf will
-  be noticeably faster than the direct stream operations And due to to the
+  <p>Common stream implementations eventually call functions of the
+  printf family for the actual formatting of numbers.  In general, printf
+  will be noticeably faster than the direct stream operations due to the
   reordering overhead (allocations to store the pieces of string, stream
-  initialisation at each item formatting, ..) the direct stream operations
-  would be faster than boost::format, (one cas expect a ratio ranging from 2
-  to 5 or more)</p>
+  initialisation at each item formatting, ..).  The direct stream operations
+  would be faster than boost::format - one can expect a ratio ranging from 2
+  to 5 or more.</p>
 
   <p>When iterated formattings are a performance bottleneck, performance can
   be slightly increased by parsing the format string into a format object,
-  and copying it at each formatting, in the following way.</p>
+  and copying it at each formatting, in the following way:</p>
 
   <blockquote>
     <pre>
     const boost::format fmter(fstring);
     dest &lt;&lt; boost::format(fmter) % arg1 % arg2 % arg3 ;
-</pre>
+    </pre>
   </blockquote>
 
   <p>As an example of performance results, the author measured the time of
-  execution of iterated formattings with 4 different methods</p>
+  execution of iterated formattings with 4 different methods:</p>
 
   <ol>
     <li>posix printf</li>
@@ -897,7 +926,7 @@ cout &lt;&lt; my_fmt(" _%2%_ _%1%_ \n") % 1 ;
   </ol>
 
   <p>the test was compiled with g++-3.3.3 and the following timings were
-  measured (in seconds, and ratios) :</p>
+  measured (in seconds, and ratios):</p>
 
   <blockquote>
     <pre>
@@ -931,18 +960,18 @@ template&lt;class charT, class Traits=std::char_traits&lt;charT&gt; &gt;
 class basic_format 
 {
 public:
-  typedef std::basic_string&lt;charT, Traits&gt; string_t;
-  typedef typename string_t::size_type     size_type;
+  typedef std::basic_string&lt;charT, Traits&gt; string_type;
+  typedef typename string_type::size_type     size_type;
   basic_format(const charT* str);
   basic_format(const charT* str, const std::locale &amp; loc);
-  basic_format(const string_t&amp; s);
-  basic_format(const string_t&amp; s, const std::locale &amp; loc);
+  basic_format(const string_type&amp; s);
+  basic_format(const string_type&amp; s, const std::locale &amp; loc);
   basic_format&amp; operator= (const basic_format&amp; x);
 
   void clear(); // reset buffers
-  basic_format&amp; parse(const string_t&amp;); // clears and parse a new format string
+  basic_format&amp; parse(const string_type&amp;); // clears and parse a new format string
 
-  string_t str() const;
+  string_type str() const;
   size_type size() const;
 
   // pass arguments through those operators :
@@ -1018,7 +1047,7 @@ std::basic_string&lt;charT,Traits&gt;  str(const basic_format&lt;charT,Traits&gt
   height="31" width="88"></a></p>
 
   <p>Revised 
-  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->02 December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38510" --></p>
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->23 October, 2017<!--webbot bot="Timestamp" endspan i-checksum="38510" --></p>
 
   <p><i>Copyright &copy; 2002 Samuel Krempp</i></p>
 

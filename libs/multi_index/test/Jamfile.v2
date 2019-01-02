@@ -1,6 +1,6 @@
 # Boost.MultiIndex tests Jamfile
 #
-# Copyright 2003-2015 Joaquín M López Muñoz.
+# Copyright 2003-2018 Joaquín M López Muñoz.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -26,6 +26,9 @@ rule change-test_update-exe-name ( name : type ? : property-set )
     }
 } 
 
+obj boost_multi_index_key_supported : check_bmi_key_supported.cpp  ;
+explicit boost_multi_index_key_supported ;
+
 test-suite "multi_index" :
     [ run test_basic.cpp            test_basic_main.cpp            ]
     [ run test_capacity.cpp         test_capacity_main.cpp         ]
@@ -35,6 +38,11 @@ test-suite "multi_index" :
     [ run test_copy_assignment.cpp  test_copy_assignment_main.cpp  ]
     [ run test_hash_ops.cpp         test_hash_ops_main.cpp         ]
     [ run test_iterators.cpp        test_iterators_main.cpp        ]
+    [ run test_key.cpp              test_key_main.cpp
+        : : :
+        [ check-target-builds boost_multi_index_key_supported
+            "BOOST_MULTI_INDEX_KEY_SUPPORTED defined"
+            : : <build>no                                        ] ]
     [ run test_key_extractors.cpp   test_key_extractors_main.cpp   ]
     [ run test_list_ops.cpp         test_list_ops_main.cpp         ]
     [ run test_modifiers.cpp        test_modifiers_main.cpp        ]
@@ -48,11 +56,11 @@ test-suite "multi_index" :
     [ run test_serialization.cpp    test_serialization1.cpp
           test_serialization2.cpp   test_serialization3.cpp
           test_serialization_main.cpp
-                /boost/serialization//boost_serialization          ]
+          /boost/serialization//boost_serialization                ]
     [ run test_set_ops.cpp          test_set_ops_main.cpp          ]
     [ run test_special_set_ops.cpp  test_special_set_ops_main.cpp  ]
     [ run test_update.cpp           test_update_main.cpp 
         : : : 
         -<tag>@$(BOOST_JAMROOT_MODULE)%$(BOOST_JAMROOT_MODULE).tag
-        <tag>@change-test_update-exe-name                          ] 
+        <tag>@change-test_update-exe-name                          ]
     ;

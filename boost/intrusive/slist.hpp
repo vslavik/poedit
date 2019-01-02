@@ -338,18 +338,24 @@ class slist_impl
       this->insert_after(this->cbefore_begin(), b, e);
    }
 
-   //! <b>Effects</b>: to-do
+   //! <b>Effects</b>: Constructs a container moving resources from another container.
+   //!   Internal value traits are move constructed and
+   //!   nodes belonging to x (except the node representing the "end") are linked to *this.
    //!
+   //! <b>Complexity</b>: Constant.
+   //!
+   //! <b>Throws</b>: If value_traits::node_traits::node's
+   //!   move constructor throws (this does not happen with predefined Boost.Intrusive hooks)
+   //!   or the move constructor of value traits throws.
    slist_impl(BOOST_RV_REF(slist_impl) x)
       : data_(::boost::move(x.priv_value_traits()))
    {
-      this->priv_size_traits().set_size(size_type(0));
-      node_algorithms::init_header(this->get_root_node());
+      this->set_default_constructed_state();
       //nothrow, no need to rollback to release elements on exception
       this->swap(x);
    }
 
-   //! <b>Effects</b>: to-do
+   //! <b>Effects</b>: Equivalent to swap
    //!
    slist_impl& operator=(BOOST_RV_REF(slist_impl) x)
    {  this->swap(x); return *this;  }
@@ -717,11 +723,7 @@ class slist_impl
       else{
          this->priv_swap_lists(this->get_root_node(), other.get_root_node(), detail::bool_<linear>());
       }
-      if(constant_time_size){
-         size_type backup = this->priv_size_traits().get_size();
-         this->priv_size_traits().set_size(other.priv_size_traits().get_size());
-         other.priv_size_traits().set_size(backup);
-      }
+      this->priv_size_traits().swap(other.priv_size_traits());
    }
 
    //! <b>Effects</b>: Moves backwards all the elements, so that the first
@@ -1120,7 +1122,7 @@ class slist_impl
    //!
    //! <b>Throws</b>: Nothing.
    //!
-   //! <b>Complexity</b>: Lineal to the elements (l - before_f + 1).
+   //! <b>Complexity</b>: Linear to the elements (l - before_f + 1).
    //!
    //! <b>Note</b>: Invalidates the iterators to the erased element.
    template<class Disposer>
@@ -1265,7 +1267,7 @@ class slist_impl
          if(l) *l = this->previous(this->cend());
       }
       else{
-         const_iterator last_x(x.previous(x.end()));  //<- constant time if cache_last is active
+         const_iterator last_x(x.previous(x.end()));  //constant time if cache_last is active
          node_ptr prev_n(prev.pointed_node());
          node_ptr last_x_n(last_x.pointed_node());
          if(cache_last){
@@ -1993,7 +1995,7 @@ class slist_impl
    {  x.swap(y);  }
 
    private:
-   void priv_splice_after(const node_ptr & prev_pos_n, slist_impl &x, const node_ptr & before_f_n, const node_ptr & before_l_n)
+   void priv_splice_after(node_ptr prev_pos_n, slist_impl &x, node_ptr before_f_n, node_ptr before_l_n)
    {
       if (cache_last && (before_f_n != before_l_n)){
          if(prev_pos_n == this->get_last_node()){
@@ -2006,7 +2008,7 @@ class slist_impl
       node_algorithms::transfer_after(prev_pos_n, before_f_n, before_l_n);
    }
 
-   void priv_incorporate_after(const node_ptr & prev_pos_n, const node_ptr & first_n, const node_ptr & before_l_n)
+   void priv_incorporate_after(node_ptr prev_pos_n, node_ptr first_n, node_ptr before_l_n)
    {
       if(cache_last){
          if(prev_pos_n == this->get_last_node()){
@@ -2106,11 +2108,11 @@ class slist_impl
    }
 
    //circular version
-   static void priv_swap_lists(const node_ptr & this_node, const node_ptr & other_node, detail::bool_<false>)
+   static void priv_swap_lists(node_ptr this_node, node_ptr other_node, detail::bool_<false>)
    {  node_algorithms::swap_nodes(this_node, other_node); }
 
    //linear version
-   static void priv_swap_lists(const node_ptr & this_node, const node_ptr & other_node, detail::bool_<true>)
+   static void priv_swap_lists(node_ptr this_node, node_ptr other_node, detail::bool_<true>)
    {  node_algorithms::swap_trailing_nodes(this_node, other_node); }
 
    static slist_impl &priv_container_from_end_iterator(const const_iterator &end_iterator)

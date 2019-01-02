@@ -1,13 +1,13 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 [section:test_suite Test suite]
-If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the master
-test suite as a root. Unlike real trees though, our tree in many cases consists only of leaves attached
+If you consider test cases as leaves on the test tree, the test suite can be considered as branch and the /master
+test suite/ as the /root/. Unlike real trees though, our tree in many cases consists only of leaves attached
 directly to the root. This is common for all test cases to reside directly in the master test suite. If you do
 want to construct a hierarchical test suite structure the __UTF__ provides both manual and automated
 test suite creation and registration facilities:
@@ -15,20 +15,20 @@ test suite creation and registration facilities:
 # Test suite with automated registration
 # Manually registered test suite
 
-In addition the __UTF__ presents a notion of the 
-[link boost_test.tests_organization.test_suite.master_test_suite Master Test Suite]. 
-The most important reason to learn about this component is that it provides an ability to access 
+In addition the __UTF__ presents a notion of the
+[link boost_test.tests_organization.test_suite.master_test_suite Master Test Suite].
+The most important reason to learn about this component is that it provides an ability to access
 command line arguments supplied to a test module.
 
 [#ref_BOOST_AUTO_TEST_SUITE][h3 Automated registration]
 The solution the __UTF__ presents for automated test suite creation and registration is designed to facilitate
-multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation 
-and registration. This facility should significantly simplify a test tree construction process in comparison with 
+multiple points of definition, arbitrary test suites depth and smooth integration with automated test case creation
+and registration. This facility should significantly simplify a test tree construction process in comparison with
 manual explicit registration case.
 
 
 The implementation is based on the order of file scope variables definitions within a single compilation unit.
-The semantic of this facility is very similar to the namespace feature of C++, including support for test suite 
+The semantic of this facility is very similar to the namespace feature of C++, including support for test suite
 extension. To start test suite use the macro __BOOST_AUTO_TEST_SUITE__. To end test suite use the macro
 __BOOST_AUTO_TEST_SUITE_END__. The same test suite can be restarted multiple times inside the same test file or in a
 different test files. In a result all test units will be part of the same test suite in a constructed test tree.
@@ -57,9 +57,9 @@ you can see from the output both `test_case1` and `test_case2` reside in the sam
 [bt_example example53..Test suite extension using automated registration facility..run-fail]
 
 [h3 Test suites with manual registration]
-To create a test suite manually you need to 
+To create a test suite manually you need to
 
-# create an instance of [classref boost::unit_test::test_suite] class, 
+# create an instance of [classref boost::unit_test::test_suite] class,
 # register it in test tree, and
 # populate it with test cases (or lower level test suites).
 
@@ -87,10 +87,10 @@ default no errors are expected.
 The third optional parameter - `timeout` - defines the timeout value for the test unit. As of now the __UTF__
 isn't able to set a timeout for the test suite execution, so this parameter makes sense only for test case
 registration. By default no timeout is set. See the method
-[memberref boost::execution_monitor::execute] for more details about the timeout value. [warning is the reference 
+[memberref boost::execution_monitor::execute] for more details about the timeout value. [warning is the reference
 good? It looks to me that [memberref boost::unit_test::test_suite::add] is better]
 
-To register group of test units in one function call, the [classref boost::unit_test::test_suite `test_suite`] class provides another 
+To register group of test units in one function call, the [classref boost::unit_test::test_suite `test_suite`] class provides another
 [memberref boost::unit_test::test_suite::add `add`] interface covered in the advanced section of this documentation.
 
 
@@ -123,8 +123,8 @@ The example below creates a test tree, which can be represented by the following
 [section:master_test_suite Master Test Suite]
 
 
-As defined in introduction section the master test suite is a root node of a test tree. Each test module built
-with the __UTF__ always has the master test suite defined. The __UTF__ maintain the master test suite instance
+As defined in introduction section the master test suite is the *root* node of the test tree. Each test module built
+with the __UTF__ always has the (unique) master test suite defined. The __UTF__ maintain the master test suite instance
 internally. All other test units are registered as direct or indirect children of the master test suite.
 
 ``
@@ -132,6 +132,7 @@ namespace boost {
 namespace unit_test {
 class master_test_suite_t : public test_suite
 {
+  /// implementation details
 public:
   int argc;
   char** argv;
@@ -192,7 +193,7 @@ macro value becomes the name of the master test suite. The name may include spac
 
 [bt_example example15..Naming master test suite explicitly in the test module initialization function..run]
 
-Without the __BOOST_TEST_MAIN__ and the __BOOST_TEST_MODULE__ flags defined, the test module initialization 
+Without the __BOOST_TEST_MAIN__ and the __BOOST_TEST_MODULE__ flags defined, the test module initialization
 function has to be manually implemented. The master test suite name can be reset at any point within this function.
 
 [endsect] [/ command line interface]

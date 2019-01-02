@@ -289,7 +289,7 @@ void mapped_file_test()
     {
         boost::iostreams::test::test_file orig;
         char name[50];
-        std::strcpy(name, orig.name().c_str());
+        std::strncpy(name, orig.name().c_str(), 50);
         
         mapped_file mf((char*) name);
 
@@ -301,6 +301,10 @@ void mapped_file_test()
         mf.close();
     }
 
+    // CYGWIN supports wide paths in boost::filesystem, but uses open() in the
+    // mapped file implementation and it is not configured to handle wide paths
+    // properly.  See github issue https://github.com/boostorg/iostreams/issues/61
+#ifndef __CYGWIN__
     //---------Check creating opening mapped_file with filesystem3 path------//
     {
         boost::iostreams::test::test_file orig;
@@ -314,6 +318,7 @@ void mapped_file_test()
 
         mf.close();
     }
+#endif
 }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1300)

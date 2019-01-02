@@ -12,7 +12,7 @@
 // definition the place holder 
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
-    BOOST_SPIRIT_TERMINAL(iter_pos);
+    BOOST_SPIRIT_TERMINAL(iter_pos)
 }}}} 
 
 ///////////////////////////////////////////////////////////////////////////////

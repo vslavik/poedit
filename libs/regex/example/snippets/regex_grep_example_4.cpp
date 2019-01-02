@@ -19,9 +19,9 @@
 
 #ifdef __BORLANDC__
 
+#include <boost/regex.hpp>
 #include <string>
 #include <map>
-#include <boost/regex.hpp>
 #include <functional>
 
 // purpose:

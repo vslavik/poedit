@@ -240,9 +240,9 @@ refer to the __bernoulli_numbers documentation for details.
   namespace boost { namespace math {
 
   template <class Policy>
-  boost::uint32_t prime(unsigned n, const Policy& pol);
+  constexpr boost::uint32_t prime(unsigned n, const Policy& pol);
 
-  boost::uint32_t prime(unsigned n);
+  constexpr boost::uint32_t prime(unsigned n);
 
   static const unsigned max_prime = 10000;
 
@@ -257,6 +257,8 @@ one of which takes an optional __Policy as the second parameter to control error
 The constant `max_prime` is the largest value you can pass to `prime` without incurring an error.
 
 Passing a value greater than `max_prime` results in a __domain_error being raised.
+
+This function is `constexpr` only if the compiler supports C++14 constexpr functions.
 
 [endsect] [/section:primes]
 

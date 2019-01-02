@@ -35,6 +35,9 @@ std::vector<int> const build_vector()
 int 
 main()
 {
+    BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::list<int> >::value));
+    BOOST_STATIC_ASSERT((!phx::stl::has_key_type<std::list<int> >::value));
+
     std::list<int> const data = build_list();
     test_empty(data);
     test_end(data);

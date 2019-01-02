@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Beta</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../sf_beta.html" title="Beta Functions">
 <link rel="prev" href="../sf_beta.html" title="Beta Functions">
 <link rel="next" href="ibeta_function.html" title="Incomplete Beta Functions">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.sf_beta.beta_function.h0"></a>
-        <span><a name="math_toolkit.sf_beta.beta_function.synopsis"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.sf_beta.beta_function.synopsis"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">beta</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -37,14 +37,14 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
 <h5>
 <a name="math_toolkit.sf_beta.beta_function.h1"></a>
-        <span><a name="math_toolkit.sf_beta.beta_function.description"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.sf_beta.beta_function.description"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.description">Description</a>
       </h5>
 <p>
         The beta function is defined by:
@@ -56,9 +56,9 @@
         <span class="inlinemediaobject"><img src="../../../graphs/beta.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -78,7 +78,7 @@
       </p>
 <h5>
 <a name="math_toolkit.sf_beta.beta_function.h2"></a>
-        <span><a name="math_toolkit.sf_beta.beta_function.accuracy"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.sf_beta.beta_function.accuracy"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.accuracy">Accuracy</a>
       </h5>
 <p>
         The following table shows peak errors for various domains of input arguments,
@@ -103,22 +103,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -131,26 +131,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.75&#949; (Mean = 0.828&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 2.65&#949; (Mean = 1.22&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 11.9&#949; (Mean = 7.03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 3.94&#949; (Mean = 1.44&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 1.14&#949; (Mean = 0.601&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.97&#949; (Mean = 0.934&#949;))
+                  2.1:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_beta_GSL_2_1_Beta_Function_Small_Values">And
+                  other failures.</a>)</span><br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 1.14&#949; (Mean = 0.574&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.86&#949; (Mean = 1.31&#949;)</span>
+                  <span class="blue">Max = 2.86&#949; (Mean = 1.22&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 364&#949; (Mean = 76.2&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.86&#949; (Mean = 1.22&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.23&#949; (Mean = 1.14&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -162,27 +162,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 99.1&#949; (Mean = 22.4&#949;)</span>
+                  <span class="blue">Max = 0.978&#949; (Mean = 0.0595&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.18e+03&#949; (Mean = 238&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 1.09e+03&#949; (Mean = 265&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 60.4&#949; (Mean = 19.4&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.07e+03&#949; (Mean =
-                  264&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0.978&#949; (Mean = 0.0578&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.18e+03&#949; (Mean = 238&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.09e+03&#949; (Mean = 265&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.5e+03&#949; (Mean = 329&#949;))
+                  <span class="blue">Max = 61.4&#949; (Mean = 19.4&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.07e+03&#949; (Mean = 264&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 107&#949; (Mean = 24.5&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 96.5&#949; (Mean = 22.4&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -194,26 +192,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 10.7&#949; (Mean = 2.22&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 10.3&#949; (Mean = 2.41&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 128&#949; (Mean = 23.8&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 12.1&#949; (Mean = 1.99&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 176&#949; (Mean = 28&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 175&#949; (Mean = 22&#949;))
+                  2.1:</em></span> Max = 12.1&#949; (Mean = 1.99&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 176&#949; (Mean = 28&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 19.7&#949; (Mean = 2.75&#949;)</span>
+                  <span class="blue">Max = 8.99&#949; (Mean = 2.44&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 128&#949; (Mean = 23.8&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 18.8&#949; (Mean = 2.71&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 11.4&#949; (Mean = 2.19&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -227,7 +224,7 @@
       </p>
 <h5>
 <a name="math_toolkit.sf_beta.beta_function.h3"></a>
-        <span><a name="math_toolkit.sf_beta.beta_function.testing"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.sf_beta.beta_function.testing"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.testing">Testing</a>
       </h5>
 <p>
         A mixture of spot tests of exact values, and randomly generated test data
@@ -236,7 +233,7 @@
       </p>
 <h5>
 <a name="math_toolkit.sf_beta.beta_function.h4"></a>
-        <span><a name="math_toolkit.sf_beta.beta_function.implementation"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.sf_beta.beta_function.implementation"></a></span><a class="link" href="beta_function.html#math_toolkit.sf_beta.beta_function.implementation">Implementation</a>
       </h5>
 <p>
         Traditional methods of evaluating the beta function either involve evaluating
@@ -301,10 +298,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

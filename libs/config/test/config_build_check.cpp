@@ -6,6 +6,8 @@
 //  See http://www.boost.org/libs/config for the most recent version.//
 //  Revision $Id$
 //
+// We include this as it contains some workarounds we may need (like a declaration for ::gets to get clang building):
+#include <boost/config.hpp>
 
 #  include "../test/boost_has_int128.ipp"
 #  include "../test/boost_no_constexpr.ipp"

@@ -1,27 +1,25 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-#include <boost/hana.hpp>
-
 #include <boost/hana/bool.hpp>
+#include <boost/hana/core/make.hpp>
 #include <boost/hana/tuple.hpp>
 
 #include <support/seq.hpp>
 
 #include <laws/base.hpp>
 #include <laws/searchable.hpp>
-using namespace boost::hana;
+namespace hana = boost::hana;
+using hana::test::ct_eq;
 
-
-using test::ct_eq;
 
 int main() {
     //////////////////////////////////////////////////////////////////////////
     // Laws with a minimal Searchable
     //////////////////////////////////////////////////////////////////////////
     {
-        auto eqs = make<tuple_tag>(
+        auto eqs = hana::make_tuple(
               ::seq()
             , ::seq(ct_eq<0>{})
             , ::seq(ct_eq<0>{}, ct_eq<1>{})
@@ -29,18 +27,18 @@ int main() {
             , ::seq(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}, ct_eq<3>{})
         );
 
-        auto eq_keys = make<tuple_tag>(ct_eq<0>{}, ct_eq<3>{}, ct_eq<10>{});
+        auto eq_keys = hana::make_tuple(ct_eq<0>{}, ct_eq<3>{}, ct_eq<10>{});
 
-        test::TestSearchable<::Seq>{eqs, eq_keys};
+        hana::test::TestSearchable<::Seq>{eqs, eq_keys};
 
-        auto bools = make<tuple_tag>(
-              ::seq(true_c)
-            , ::seq(false_c)
-            , ::seq(true_c, true_c)
-            , ::seq(true_c, false_c)
-            , ::seq(false_c, true_c)
-            , ::seq(false_c, false_c)
+        auto bools = hana::make_tuple(
+              ::seq(hana::true_c)
+            , ::seq(hana::false_c)
+            , ::seq(hana::true_c, hana::true_c)
+            , ::seq(hana::true_c, hana::false_c)
+            , ::seq(hana::false_c, hana::true_c)
+            , ::seq(hana::false_c, hana::false_c)
         );
-        test::TestSearchable<::Seq>{bools, make<tuple_tag>(true_c, false_c)};
+        hana::test::TestSearchable<::Seq>{bools, hana::make_tuple(hana::true_c, hana::false_c)};
     }
 }

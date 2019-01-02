@@ -29,7 +29,7 @@ union U
   big_int48_t          big_48;
   big_int56_t          big_56;
   big_int64_t          big_64;
-                   
+
   big_uint8_t          big_u8;
   big_uint16_t         big_u16;
   big_uint24_t         big_u24;
@@ -38,7 +38,7 @@ union U
   big_uint48_t         big_u48;
   big_uint56_t         big_u56;
   big_uint64_t         big_u64;
-                   
+
   little_int8_t        little_8;
   little_int16_t       little_16;
   little_int24_t       little_24;
@@ -47,7 +47,7 @@ union U
   little_int48_t       little_48;
   little_int56_t       little_56;
   little_int64_t       little_64;
-                   
+
   little_uint8_t       little_u8;
   little_uint16_t      little_u16;
   little_uint24_t      little_u24;
@@ -56,7 +56,7 @@ union U
   little_uint48_t      little_u48;
   little_uint56_t      little_u56;
   little_uint64_t      little_u64;
-                   
+
   native_int8_t        native_8;
   native_int16_t       native_16;
   native_int24_t       native_24;
@@ -65,7 +65,7 @@ union U
   native_int48_t       native_48;
   native_int56_t       native_56;
   native_int64_t       native_64;
-                   
+
   native_uint8_t       native_u8;
   native_uint16_t      native_u16;
   native_uint24_t      native_u24;

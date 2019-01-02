@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2018 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +10,6 @@
 
 #include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/mpl/convert_iterator.hpp>
-#include <boost/fusion/adapted/mpl/mpl_iterator.hpp>
 #include <boost/fusion/iterator/value_of.hpp>
 #include <boost/fusion/support/iterator_base.hpp>
 #include <boost/fusion/algorithm/query/detail/find_if.hpp>

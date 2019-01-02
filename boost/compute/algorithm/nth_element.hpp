@@ -11,18 +11,23 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_NTH_ELEMENT_HPP
 #define BOOST_COMPUTE_ALGORITHM_NTH_ELEMENT_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/fill_n.hpp>
 #include <boost/compute/algorithm/find.hpp>
 #include <boost/compute/algorithm/partition.hpp>
 #include <boost/compute/algorithm/sort.hpp>
 #include <boost/compute/functional/bind.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
 
 /// Rearranges the elements in the range [\p first, \p last) such that
 /// the \p nth element would be in that position in a sorted sequence.
+///
+/// Space complexity: \Omega(3n)
 template<class Iterator, class Compare>
 inline void nth_element(Iterator first,
                         Iterator nth,
@@ -30,6 +35,7 @@ inline void nth_element(Iterator first,
                         Compare compare,
                         command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
     if(nth == last) return;
 
     typedef typename std::iterator_traits<Iterator>::value_type value_type;
@@ -72,6 +78,7 @@ inline void nth_element(Iterator first,
                         Iterator last,
                         command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
     if(nth == last) return;
 
     typedef typename std::iterator_traits<Iterator>::value_type value_type;

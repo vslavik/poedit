@@ -7,7 +7,7 @@
 // See http://www.boost.org/libs/interprocess for documentation.
 //
 //////////////////////////////////////////////////////////////////////////////
-
+#define BOOST_CONTAINER_ADAPTIVE_NODE_POOL_CHECK_INVARIANTS
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/list.hpp>

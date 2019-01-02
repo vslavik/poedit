@@ -28,8 +28,8 @@ typedef scaled_base_unit<boost::units::si::second_base_unit, scale<86400, static
 
 template<>
 struct base_unit_info<metric::day_base_unit> {
-    static const char* name()   { return("day"); }
-    static const char* symbol() { return("d"); }
+    static BOOST_CONSTEXPR const char* name()   { return("day"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("d"); }
 };
 
 } // namespace units

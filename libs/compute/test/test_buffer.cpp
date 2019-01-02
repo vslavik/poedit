@@ -109,15 +109,20 @@ BOOST_AUTO_TEST_CASE(clone_buffer)
     BOOST_CHECK(buffer1.get_memory_flags() == buffer2.get_memory_flags());
 }
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_USE_CPP11
+std::mutex callback_mutex;
+std::condition_variable callback_condition_variable;
+
 static void BOOST_COMPUTE_CL_CALLBACK
-destructor_callback_function(cl_mem memobj, void *user_data)
+destructor_callback_function(cl_mem, void *user_data)
 {
-    (void) memobj;
+    std::lock_guard<std::mutex> lock(callback_mutex);
 
     bool *flag = static_cast<bool *>(user_data);
-
     *flag = true;
+
+    callback_condition_variable.notify_one();
 }
 
 BOOST_AUTO_TEST_CASE(destructor_callback)
@@ -134,13 +139,13 @@ BOOST_AUTO_TEST_CASE(destructor_callback)
         boost::compute::buffer buf(context, 128);
         buf.set_destructor_callback(destructor_callback_function, &invoked);
     }
+
+    std::unique_lock<std::mutex> lock(callback_mutex);
+    callback_condition_variable.wait_for(
+        lock, std::chrono::seconds(1), [&](){ return invoked; }
+    );
     BOOST_CHECK(invoked == true);
 }
-
-#ifdef BOOST_COMPUTE_USE_CPP11
-
-std::mutex callback_mutex;
-std::condition_variable callback_condition_variable;
 
 static void BOOST_COMPUTE_CL_CALLBACK
 destructor_templated_callback_function(bool *flag)
@@ -152,6 +157,13 @@ destructor_templated_callback_function(bool *flag)
 
 BOOST_AUTO_TEST_CASE(destructor_templated_callback)
 {
+    REQUIRES_OPENCL_VERSION(1,2);
+
+    if(!supports_destructor_callback(device))
+    {
+        return;
+    }
+
     bool invoked = false;
     {
         boost::compute::buffer buf(context, 128);
@@ -187,7 +199,7 @@ BOOST_AUTO_TEST_CASE(create_subbuffer)
     }
 }
 
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 BOOST_AUTO_TEST_CASE(create_buffer_doctest)
 {

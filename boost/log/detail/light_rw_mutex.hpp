@@ -36,7 +36,7 @@
 
 #if defined(BOOST_LOG_LWRWMUTEX_USE_SRWLOCK)
 
-#include <boost/detail/winapi/srw_lock.hpp>
+#include <boost/winapi/srw_lock.hpp>
 
 namespace boost {
 
@@ -47,28 +47,28 @@ namespace aux {
 //! A light read/write mutex that uses WinNT 6 and later APIs
 class light_rw_mutex
 {
-    boost::detail::winapi::SRWLOCK_ m_Mutex;
+    boost::winapi::SRWLOCK_ m_Mutex;
 
 public:
     light_rw_mutex()
     {
-        boost::detail::winapi::InitializeSRWLock(&m_Mutex);
+        boost::winapi::InitializeSRWLock(&m_Mutex);
     }
     void lock_shared()
     {
-        boost::detail::winapi::AcquireSRWLockShared(&m_Mutex);
+        boost::winapi::AcquireSRWLockShared(&m_Mutex);
     }
     void unlock_shared()
     {
-        boost::detail::winapi::ReleaseSRWLockShared(&m_Mutex);
+        boost::winapi::ReleaseSRWLockShared(&m_Mutex);
     }
     void lock()
     {
-        boost::detail::winapi::AcquireSRWLockExclusive(&m_Mutex);
+        boost::winapi::AcquireSRWLockExclusive(&m_Mutex);
     }
     void unlock()
     {
-        boost::detail::winapi::ReleaseSRWLockExclusive(&m_Mutex);
+        boost::winapi::ReleaseSRWLockExclusive(&m_Mutex);
     }
 
     // Noncopyable

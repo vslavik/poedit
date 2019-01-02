@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_post_increment</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_post_decrement.html" title="has_post_decrement">
@@ -120,7 +120,7 @@
 <p>
         <span class="bold"><strong>Known issues:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             This trait cannot detect whether postfix <code class="computeroutput"><span class="keyword">operator</span><span class="special">++</span></code> is public or not: if <code class="computeroutput"><span class="keyword">operator</span><span class="special">++</span></code>
             is defined as a private member of <code class="computeroutput"><span class="identifier">Lhs</span></code>
@@ -180,6 +180,44 @@
 <li class="listitem">
             <code class="computeroutput"><span class="keyword">volatile</span></code> qualifier is not
             properly handled and would lead to undefined behavior
+          </li>
+</ul></div>
+<p>
+        <span class="bold"><strong>Known issues:</strong></span>
+      </p>
+<p>
+        For modern compilers (those that support arbitrary SFINAE-expressions and
+        decltype/declval) this trait offers near perfect detection. In this situation
+        the macro <code class="computeroutput"><span class="identifier">BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION</span></code>
+        will be defined after including <code class="literal">&lt;boost/type_traits/has_post_increment.hpp&gt;</code>.
+        Please note however, that detection is based on function signature only,
+        in the case that the operator is a function template then has_post_increment
+        cannot perform introspection of the template function body to ensure that
+        the type meets all of the conceptual requirements of the actual code.
+      </p>
+<p>
+        For older compilers (<code class="computeroutput"><span class="identifier">BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION</span></code>
+        not defined) then there are a number of issues:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            This trait cannot detect whether unary <code class="computeroutput"><span class="keyword">operator</span></code>++
+            is public or not: if <code class="computeroutput"><span class="keyword">operator</span></code>++
+            is defined as a private class member of type T then instantiating <code class="literal">has_post_increment&lt;T&gt;</code>
+            will produce a compiler error. For this reason <code class="literal">has_post_increment</code>
+            cannot be used to determine whether a type has a public <code class="computeroutput"><span class="keyword">operator</span></code>++ or not.
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="keyword">volatile</span></code> qualifier is not
+            properly handled and would lead to undefined behavior
+          </li>
+<li class="listitem">
+            Capturless lambdas are not supported and will lead to a compiler error
+            if has_post_increment is instantiated on the lambda type.
+          </li>
+<li class="listitem">
+            Scoped enum types are not supported and will lead to a compiler error
+            if has_post_increment is instantiated on such a type.
           </li>
 </ul></div>
 </div>

@@ -361,7 +361,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="comment">   \param[in] first Iterator pointer to first element.</span></div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment">   \param[in] last Iterator pointing to one beyond the end of data.</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">   \param[in] getchar Number corresponding to the character offset from bracket functor equivalent to @c operator[].</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">   \param[in] get_character Number corresponding to the character offset from bracket functor equivalent to @c operator[].</span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="comment">   \param[in] length Functor to get the length of the string in characters.</span></div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">   \pre [@c first, @c last) is a valid range.</span></div>
@@ -390,7 +390,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> RandomAccessIter, <span class="keyword">class</span> Get_<span class="keywordtype">char</span>, <span class="keyword">class</span> Get_length&gt;</div>
 <div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="namespaceboost_1_1sort.html#a5143ec4f58cfe13eca2a0d6b6f6a6680">  301</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1sort.html#a950a2dbbe75f048a0b343dbf7c532dc0">string_sort</a>(RandomAccessIter first, RandomAccessIter last,</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                          Get_char getchar, Get_length length)</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                          Get_char get_character, Get_length length)</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  {</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="comment">//Don&#39;t sort if it&#39;s too small to optimize</span></div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">if</span> (last - first &lt; detail::min_sort_size)</div>
@@ -402,7 +402,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">if</span> (++first == last)</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;          <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      }</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">detail::string_sort</a>(first, last, getchar, length, getchar((*first), 0));</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">detail::string_sort</a>(first, last, get_character, length, get_character((*first), 0));</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    }</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  }</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;</div>
@@ -434,7 +434,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment">   \param[in] first Iterator pointer to first element.</span></div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment">   \param[in] last Iterator pointing to one beyond the end of data.</span></div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment">   \param[in] comp comparison functor.</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">   \param[in] getchar ???</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">   \param[in] get_character ???</span></div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="comment">   \param[in] length ???</span></div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="comment"></span></div>
@@ -463,7 +463,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class </span>RandomAccessIter, <span class="keyword">class </span>Get_char, <span class="keyword">class </span>Get_length,</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;            <span class="keyword">class </span>Compare&gt;</div>
 <div class="line"><a name="l00374"></a><span class="lineno"><a class="line" href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">  374</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1sort.html#a950a2dbbe75f048a0b343dbf7c532dc0">string_sort</a>(RandomAccessIter first, RandomAccessIter last,</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;                          Get_char getchar, Get_length length, Compare comp)</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;                          Get_char get_character, Get_length length, Compare comp)</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  {</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="comment">//Don&#39;t sort if it&#39;s too small to optimize</span></div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">if</span> (last - first &lt; detail::min_sort_size)</div>
@@ -475,8 +475,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <span class="keywordflow">if</span> (++first == last)</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;          <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      }</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">detail::string_sort</a>(first, last, getchar, length, comp,</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                          getchar((*first), 0));</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">detail::string_sort</a>(first, last, get_character, length, comp,</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                          get_character((*first), 0));</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    }</div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  }</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
@@ -507,7 +507,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">   \param[in] first Iterator pointer to first element.</span></div>
 <div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="comment">   \param[in] last Iterator pointing to one beyond the end of data.</span></div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="comment">   \param[in] comp comparison functor.</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="comment">   \param[in] getchar ???</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="comment">   \param[in] get_character ???</span></div>
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="comment">   \param[in] length ???</span></div>
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="comment"></span></div>
@@ -536,7 +536,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class </span>RandomAccessIter, <span class="keyword">class </span>Get_char, <span class="keyword">class </span>Get_length,</div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;            <span class="keyword">class </span>Compare&gt;</div>
 <div class="line"><a name="l00447"></a><span class="lineno"><a class="line" href="namespaceboost_1_1sort.html#a7940f1b2a7746c083a12a4e26077096b">  447</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1sort.html#a4ad4785d90f47d51ff1d2fac8c21bb48">reverse_string_sort</a>(RandomAccessIter first,</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    RandomAccessIter last, Get_char getchar, Get_length length, Compare comp)</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    RandomAccessIter last, Get_char get_character, Get_length length, Compare comp)</div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  {</div>
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="comment">//Don&#39;t sort if it&#39;s too small to optimize</span></div>
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <span class="keywordflow">if</span> (last - first &lt; detail::min_sort_size)</div>
@@ -550,8 +550,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;          <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;      }</div>
 <div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      <span class="comment">//making last just after the end of the non-empty part of the array</span></div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a7940f1b2a7746c083a12a4e26077096b">detail::reverse_string_sort</a>(first, last + 1, getchar, length, comp,</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                                  getchar((*last), 0));</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      <a class="code" href="namespaceboost_1_1sort.html#a7940f1b2a7746c083a12a4e26077096b">detail::reverse_string_sort</a>(first, last + 1, get_character, length, comp,</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                                  get_character((*last), 0));</div>
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    }</div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;  }</div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;}</div>
@@ -559,10 +559,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
 <div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="namespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdef"><b>Definition:</b> float_sort.hpp:27</div></div>
-<div class="ttc" id="namespaceboost_1_1sort_html_a82c4c0d7ba9873ecce7c674631dceae2"><div class="ttname"><a href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">boost::sort::string_sort</a></div><div class="ttdeci">void string_sort(RandomAccessIter first, RandomAccessIter last, Get_char getchar, Get_length length, Compare comp)</div><div class="ttdoc">String sort algorithm using random access iterators, wraps using default of unsigned char...</div><div class="ttdef"><b>Definition:</b> string_sort.hpp:374</div></div>
+<div class="ttc" id="namespaceboost_1_1sort_html_a82c4c0d7ba9873ecce7c674631dceae2"><div class="ttname"><a href="namespaceboost_1_1sort.html#a82c4c0d7ba9873ecce7c674631dceae2">boost::sort::string_sort</a></div><div class="ttdeci">void string_sort(RandomAccessIter first, RandomAccessIter last, Get_char get_character, Get_length length, Compare comp)</div><div class="ttdoc">String sort algorithm using random access iterators, wraps using default of unsigned char...</div><div class="ttdef"><b>Definition:</b> string_sort.hpp:374</div></div>
 <div class="ttc" id="namespaceboost_1_1sort_html_a950a2dbbe75f048a0b343dbf7c532dc0"><div class="ttname"><a href="namespaceboost_1_1sort.html#a950a2dbbe75f048a0b343dbf7c532dc0">boost::sort::string_sort</a></div><div class="ttdeci">void string_sort(RandomAccessIter first, RandomAccessIter last, Unsigned_char_type unused)</div><div class="ttdoc">String sort algorithm using random access iterators, allowing character-type overloads.  (All variants fall back to std::sort if the data size is too small, < detail::min_sort_size). </div><div class="ttdef"><b>Definition:</b> string_sort.hpp:73</div></div>
 <div class="ttc" id="namespaceboost_1_1sort_html_a4ad4785d90f47d51ff1d2fac8c21bb48"><div class="ttname"><a href="namespaceboost_1_1sort.html#a4ad4785d90f47d51ff1d2fac8c21bb48">boost::sort::reverse_string_sort</a></div><div class="ttdeci">void reverse_string_sort(RandomAccessIter first, RandomAccessIter last, Compare comp, Unsigned_char_type unused)</div><div class="ttdoc">String sort algorithm using random access iterators, allowing character-type overloads. </div><div class="ttdef"><b>Definition:</b> string_sort.hpp:183</div></div>
-<div class="ttc" id="namespaceboost_1_1sort_html_a7940f1b2a7746c083a12a4e26077096b"><div class="ttname"><a href="namespaceboost_1_1sort.html#a7940f1b2a7746c083a12a4e26077096b">boost::sort::reverse_string_sort</a></div><div class="ttdeci">void reverse_string_sort(RandomAccessIter first, RandomAccessIter last, Get_char getchar, Get_length length, Compare comp)</div><div class="ttdoc">Reverse String sort algorithm using random access iterators. </div><div class="ttdef"><b>Definition:</b> string_sort.hpp:447</div></div>
+<div class="ttc" id="namespaceboost_1_1sort_html_a7940f1b2a7746c083a12a4e26077096b"><div class="ttname"><a href="namespaceboost_1_1sort.html#a7940f1b2a7746c083a12a4e26077096b">boost::sort::reverse_string_sort</a></div><div class="ttdeci">void reverse_string_sort(RandomAccessIter first, RandomAccessIter last, Get_char get_character, Get_length length, Compare comp)</div><div class="ttdoc">Reverse String sort algorithm using random access iterators. </div><div class="ttdef"><b>Definition:</b> string_sort.hpp:447</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

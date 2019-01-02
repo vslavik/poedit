@@ -78,6 +78,41 @@ struct context : proto::callable_context<context<Args> >
         stream << stream.lit(x);
     }
 
+    void operator()(proto::tag::terminal, const uchar_ &x)
+    {
+        stream << "(uchar)(" << stream.lit(uint_(x)) << "u)";
+    } 
+
+    void operator()(proto::tag::terminal, const char_ &x)
+    {
+        stream << "(char)(" << stream.lit(int_(x)) << ")";
+    } 
+
+    void operator()(proto::tag::terminal, const ushort_ &x)
+    {
+        stream << "(ushort)(" << stream.lit(x) << "u)";
+    } 
+
+    void operator()(proto::tag::terminal, const short_ &x)
+    {
+        stream << "(short)(" << stream.lit(x) << ")";
+    } 
+
+    void operator()(proto::tag::terminal, const uint_ &x)
+    {
+        stream << "(" << stream.lit(x) << "u)";
+    } 
+
+    void operator()(proto::tag::terminal, const ulong_ &x)
+    {
+        stream << "(" << stream.lit(x) << "ul)";
+    } 
+
+    void operator()(proto::tag::terminal, const long_ &x)
+    {
+        stream << "(" << stream.lit(x) << "l)";
+    } 
+
     // handle placeholders
     template<int I>
     void operator()(proto::tag::terminal, placeholder<I>)

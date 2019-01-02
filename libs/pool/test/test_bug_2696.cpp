@@ -5,7 +5,7 @@
 * file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 */
 
-// Test of bug #2656 (https://svn.boost.org/trac/boost/ticket/2656)
+// Test of bug #2696 (https://svn.boost.org/trac/boost/ticket/2696)
 
 #include <boost/pool/pool.hpp>
 #include <boost/detail/lightweight_test.hpp>

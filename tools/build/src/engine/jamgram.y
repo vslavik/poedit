@@ -164,16 +164,16 @@ rules	: rule
 		{ $$.parse = $1.parse; }
 	| rule rules
 		{ $$.parse = prules( $1.parse, $2.parse ); }
-	| LOCAL_t list assign_list_opt _SEMIC_t block
-		{ $$.parse = plocal( $2.parse, $3.parse, $5.parse ); }
+	| LOCAL_t { yymode( SCAN_ASSIGN ); } list assign_list_opt _SEMIC_t { yymode( SCAN_NORMAL ); } block
+		{ $$.parse = plocal( $3.parse, $4.parse, $7.parse ); }
 	;
 
 null    : /* empty */
         { $$.parse = pnull(); }
         ;
 
-assign_list_opt : _EQUALS_t list
-                { $$.parse = $2.parse; $$.number = ASSIGN_SET; }
+assign_list_opt : _EQUALS_t { yymode( SCAN_PUNCT ); } list
+                { $$.parse = $3.parse; $$.number = ASSIGN_SET; }
         | null
 		{ $$.parse = $1.parse; $$.number = ASSIGN_APPEND; }
         ;
@@ -190,38 +190,41 @@ local_opt : LOCAL_t
                 { $$.number = 0; }
           ;
 
+else_opt : ELSE_t rule
+                { $$.parse = $2.parse; }
+          | /* empty */
+                { $$.parse = pnull(); }
+
 rule	: _LBRACE_t block _RBRACE_t
 		{ $$.parse = $2.parse; }
-	| INCLUDE_t list _SEMIC_t
-		{ $$.parse = pincl( $2.parse ); }
-	| ARG lol _SEMIC_t
-		{ $$.parse = prule( $1.string, $2.parse ); }
-	| arg assign list _SEMIC_t
-		{ $$.parse = pset( $1.parse, $3.parse, $2.number ); }
-	| arg ON_t list assign list _SEMIC_t
-		{ $$.parse = pset1( $1.parse, $3.parse, $5.parse, $4.number ); }
-	| RETURN_t list _SEMIC_t
-		{ $$.parse = preturn( $2.parse ); }
+	| INCLUDE_t { yymode( SCAN_PUNCT ); } list _SEMIC_t
+		{ $$.parse = pincl( $3.parse ); yymode( SCAN_NORMAL ); }
+	| ARG { yymode( SCAN_PUNCT ); } lol _SEMIC_t
+		{ $$.parse = prule( $1.string, $3.parse ); yymode( SCAN_NORMAL ); }
+	| arg assign { yymode( SCAN_PUNCT ); } list _SEMIC_t
+		{ $$.parse = pset( $1.parse, $4.parse, $2.number ); yymode( SCAN_NORMAL ); }
+	| arg ON_t { yymode( SCAN_ASSIGN ); } list assign { yymode( SCAN_PUNCT ); } list _SEMIC_t
+		{ $$.parse = pset1( $1.parse, $4.parse, $7.parse, $5.number ); yymode( SCAN_NORMAL ); }
+	| RETURN_t { yymode( SCAN_PUNCT ); } list _SEMIC_t
+		{ $$.parse = preturn( $3.parse ); yymode( SCAN_NORMAL ); }
     | BREAK_t _SEMIC_t
         { $$.parse = pbreak(); }
     | CONTINUE_t _SEMIC_t
         { $$.parse = pcontinue(); }
-	| FOR_t local_opt ARG IN_t list _LBRACE_t block _RBRACE_t
-		{ $$.parse = pfor( $3.string, $5.parse, $7.parse, $2.number ); }
-	| SWITCH_t list _LBRACE_t cases _RBRACE_t
-		{ $$.parse = pswitch( $2.parse, $4.parse ); }
-	| IF_t expr _LBRACE_t block _RBRACE_t
-		{ $$.parse = pif( $2.parse, $4.parse, pnull() ); }
-	| MODULE_t list _LBRACE_t block _RBRACE_t
-		{ $$.parse = pmodule( $2.parse, $4.parse ); }
-	| CLASS_t lol _LBRACE_t block _RBRACE_t
-		{ $$.parse = pclass( $2.parse, $4.parse ); }
-	| WHILE_t expr _LBRACE_t block _RBRACE_t
-		{ $$.parse = pwhile( $2.parse, $4.parse ); }
-	| IF_t expr _LBRACE_t block _RBRACE_t ELSE_t rule
-		{ $$.parse = pif( $2.parse, $4.parse, $7.parse ); }
-     | local_opt RULE_t ARG arglist_opt rule
-		{ $$.parse = psetc( $3.string, $5.parse, $4.parse, $1.number ); }
+	| FOR_t local_opt ARG IN_t { yymode( SCAN_PUNCT ); } list _LBRACE_t { yymode( SCAN_NORMAL ); } block _RBRACE_t
+		{ $$.parse = pfor( $3.string, $6.parse, $9.parse, $2.number ); }
+	| SWITCH_t { yymode( SCAN_PUNCT ); } list _LBRACE_t { yymode( SCAN_NORMAL ); } cases _RBRACE_t
+		{ $$.parse = pswitch( $3.parse, $6.parse ); }
+	| IF_t { yymode( SCAN_CONDB ); } expr _LBRACE_t { yymode( SCAN_NORMAL ); } block _RBRACE_t else_opt
+		{ $$.parse = pif( $3.parse, $6.parse, $8.parse ); }
+	| MODULE_t { yymode( SCAN_PUNCT ); } list _LBRACE_t { yymode( SCAN_NORMAL ); } block _RBRACE_t
+		{ $$.parse = pmodule( $3.parse, $6.parse ); }
+	| CLASS_t { yymode( SCAN_PUNCT ); } lol _LBRACE_t { yymode( SCAN_NORMAL ); } block _RBRACE_t
+		{ $$.parse = pclass( $3.parse, $6.parse ); }
+	| WHILE_t { yymode( SCAN_CONDB ); } expr { yymode( SCAN_NORMAL ); } _LBRACE_t block _RBRACE_t
+		{ $$.parse = pwhile( $3.parse, $6.parse ); }
+     | local_opt RULE_t { yymode( SCAN_PUNCT ); } ARG { yymode( SCAN_PARAMS ); } arglist_opt { yymode( SCAN_NORMAL ); } rule
+		{ $$.parse = psetc( $4.string, $8.parse, $6.parse, $1.number ); }
 	| ON_t arg rule
 		{ $$.parse = pon( $2.parse, $3.parse ); }
 	| ACTIONS_t eflags ARG bindlist _LBRACE_t
@@ -250,33 +253,33 @@ assign	: _EQUALS_t
  * expr - an expression for if
  */
 expr	: arg
-		{ $$.parse = peval( EXPR_EXISTS, $1.parse, pnull() ); }
-	| expr _EQUALS_t expr
-		{ $$.parse = peval( EXPR_EQUALS, $1.parse, $3.parse ); }
-	| expr _BANG_EQUALS_t expr
-		{ $$.parse = peval( EXPR_NOTEQ, $1.parse, $3.parse ); }
-	| expr _LANGLE_t expr
-		{ $$.parse = peval( EXPR_LESS, $1.parse, $3.parse ); }
-	| expr _LANGLE_EQUALS_t expr
-		{ $$.parse = peval( EXPR_LESSEQ, $1.parse, $3.parse ); }
-	| expr _RANGLE_t expr
-		{ $$.parse = peval( EXPR_MORE, $1.parse, $3.parse ); }
-	| expr _RANGLE_EQUALS_t expr
-		{ $$.parse = peval( EXPR_MOREEQ, $1.parse, $3.parse ); }
-	| expr _AMPER_t expr
-		{ $$.parse = peval( EXPR_AND, $1.parse, $3.parse ); }
-	| expr _AMPERAMPER_t expr
-		{ $$.parse = peval( EXPR_AND, $1.parse, $3.parse ); }
-	| expr _BAR_t expr
-		{ $$.parse = peval( EXPR_OR, $1.parse, $3.parse ); }
-	| expr _BARBAR_t expr
-		{ $$.parse = peval( EXPR_OR, $1.parse, $3.parse ); }
-	| arg IN_t list
-		{ $$.parse = peval( EXPR_IN, $1.parse, $3.parse ); }
-	| _BANG_t expr
-		{ $$.parse = peval( EXPR_NOT, $2.parse, pnull() ); }
-	| _LPAREN_t expr _RPAREN_t
-		{ $$.parse = $2.parse; }
+		{ $$.parse = peval( EXPR_EXISTS, $1.parse, pnull() ); yymode( SCAN_COND ); }
+	| expr _EQUALS_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_EQUALS, $1.parse, $4.parse ); }
+	| expr _BANG_EQUALS_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_NOTEQ, $1.parse, $4.parse ); }
+	| expr _LANGLE_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_LESS, $1.parse, $4.parse ); }
+	| expr _LANGLE_EQUALS_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_LESSEQ, $1.parse, $4.parse ); }
+	| expr _RANGLE_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_MORE, $1.parse, $4.parse ); }
+	| expr _RANGLE_EQUALS_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_MOREEQ, $1.parse, $4.parse ); }
+	| expr _AMPER_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_AND, $1.parse, $4.parse ); }
+	| expr _AMPERAMPER_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_AND, $1.parse, $4.parse ); }
+	| expr _BAR_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_OR, $1.parse, $4.parse ); }
+	| expr _BARBAR_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_OR, $1.parse, $4.parse ); }
+	| arg IN_t { yymode( SCAN_PUNCT ); } list
+		{ $$.parse = peval( EXPR_IN, $1.parse, $4.parse ); yymode( SCAN_COND ); }
+	| _BANG_t { yymode( SCAN_CONDB ); } expr
+		{ $$.parse = peval( EXPR_NOT, $3.parse, pnull() ); }
+	| _LPAREN_t { yymode( SCAN_CONDB ); } expr _RPAREN_t
+		{ $$.parse = $3.parse; }
 	;
 
 
@@ -292,8 +295,8 @@ cases	: /* empty */
 		{ $$.parse = pnode( $1.parse, $2.parse ); }
 	;
 
-case	: CASE_t ARG _COLON_t block
-		{ $$.parse = psnode( $2.string, $4.parse ); }
+case	: CASE_t { yymode( SCAN_CASE ); } ARG _COLON_t { yymode( SCAN_NORMAL ); } block
+		{ $$.parse = psnode( $3.string, $6.parse ); }
 	;
 
 /*
@@ -314,19 +317,19 @@ lol	: list
  */
 
 list	: listp
-		{ $$.parse = $1.parse; yymode( SCAN_NORMAL ); }
+		{ $$.parse = $1.parse; }
 	;
 
 listp	: /* empty */
-		{ $$.parse = pnull(); yymode( SCAN_PUNCT ); }
+		{ $$.parse = pnull(); }
 	| listp arg
         	{ $$.parse = pappend( $1.parse, $2.parse ); }
 	;
 
 arg	: ARG
 		{ $$.parse = plist( $1.string ); }
-	| _LBRACKET_t { yymode( SCAN_NORMAL ); } func _RBRACKET_t
-		{ $$.parse = $3.parse; }
+	| _LBRACKET_t { $$.number = yymode( SCAN_CALL ); } func _RBRACKET_t
+		{ $$.parse = $3.parse; yymode( $2.number ); }
 	;
 
 /*
@@ -334,12 +337,12 @@ arg	: ARG
  * This needs to be split cleanly out of 'rule'
  */
 
-func	: ARG lol
-		{ $$.parse = prule( $1.string, $2.parse ); }
-	| ON_t arg ARG lol
-		{ $$.parse = pon( $2.parse, prule( $3.string, $4.parse ) ); }
-	| ON_t arg RETURN_t list
-		{ $$.parse = pon( $2.parse, $4.parse ); }
+func	: ARG { yymode( SCAN_PUNCT ); } lol
+		{ $$.parse = prule( $1.string, $3.parse ); }
+	| ON_t arg ARG { yymode( SCAN_PUNCT ); } lol
+		{ $$.parse = pon( $2.parse, prule( $3.string, $5.parse ) ); }
+	| ON_t arg RETURN_t { yymode( SCAN_PUNCT ); } list
+		{ $$.parse = pon( $2.parse, $5.parse ); }
 	;
 
 
@@ -375,8 +378,8 @@ eflag	: UPDATED_t
 
 bindlist : /* empty */
 		{ $$.parse = pnull(); }
-	| BIND_t list
-		{ $$.parse = $2.parse; }
+	| BIND_t { yymode( SCAN_PUNCT ); } list
+		{ $$.parse = $3.parse; }
 	;
 
 

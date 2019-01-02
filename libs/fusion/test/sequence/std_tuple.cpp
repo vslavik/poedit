@@ -8,8 +8,10 @@
 #include <boost/config.hpp>
 
 // adapted/std_tuple.hpp only supports implementations using variadic templates
-#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
-    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if defined(BOOST_NO_CXX11_HDR_TUPLE) || \
+    defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#   error "does not meet requirements"
+#endif
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
@@ -19,8 +21,7 @@
 #include <tuple>
 #include <string>
 
-int
-main()
+int main()
 {
     using namespace boost::fusion;
     using namespace boost;
@@ -34,13 +35,3 @@ main()
 
     return boost::report_errors();
 }
-
-#else
-
-int
-main()
-{
-    return 0;
-}
-
-#endif

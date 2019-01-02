@@ -283,7 +283,7 @@ toolset kylix bc++ : -o : -D
 ## MIPS Pro
 toolset mipspro cc : "-o " : -D
     :
-    [ opt --release : -s -O3 -g0 -INLINE:none ]
+    [ opt --release : -s -O3 -g0 "-INLINE:none" ]
     [ opt --debug : -g -O0 -INLINE ]
     -I$(--python-include) -I$(--extra-include)
     : -L$(--python-lib[1]) -l$(--python-lib[2]) ;
@@ -342,7 +342,7 @@ toolset vacpp xlc : "-o " : -D
     [ opt --release : -s -O3 -qstrict -qinline ]
     [ opt --debug : -g -qNOOPTimize -qnoinline -pg ]
     -I$(--python-include) -I$(--extra-include)
-    : -L$(--python-lib[1]) -l$(--python-lib[2]) [ if-os AIX : -bmaxdata:0x40000000 ] ;
+    : -L$(--python-lib[1]) -l$(--python-lib[2]) [ if-os AIX : "-bmaxdata:0x40000000" ] ;
     
 ## IBM XL C/C++ for Linux (little endian)
 toolset xlcpp xlC :  "-o " : -D
@@ -357,7 +357,7 @@ toolset vc7 cl : /Fe /Fe /Fd /Fo : -D
     : /nologo
     [ opt --release : /ML /O2 /Ob2 /Gy /GF /GA /GB ]
     [ opt --debug : /MLd /DEBUG /Z7 /Od /Ob0 ]
-    -I$(--python-include) -I$(--extra-include)
+    -I$(--python-include) -I$(--extra-include) -D_WIN32_WINNT=0x0501
     : kernel32.lib advapi32.lib user32.lib $(--python-lib[1]) ;
 ## Microsoft Visual C++ 2005
 toolset vc8 cl : /Fe /Fe /Fd /Fo : -D
@@ -394,7 +394,15 @@ toolset vc12 cl : /Fe /Fe /Fd /Fo : -D
     [ opt --debug : /MTd /DEBUG /Z7 /Od /Ob0 /wd4996 ]
     -I$(--python-include) -I$(--extra-include)
     : kernel32.lib advapi32.lib user32.lib $(--python-lib[1]) ;
+## Microsoft Visual C++ 2015
 toolset vc14 cl : /Fe /Fe /Fd /Fo : -D
+    : /nologo
+    [ opt --release : /GL /MT /O2 /Ob2 /Gy /GF /GA /wd4996 ]
+    [ opt --debug : /MTd /DEBUG /Z7 /Od /Ob0 /wd4996 ]
+    -I$(--python-include) -I$(--extra-include)
+    : kernel32.lib advapi32.lib user32.lib $(--python-lib[1]) ;
+## Microsoft Visual C++ 2017
+toolset vc141 cl : /Fe /Fe /Fd /Fo : -D
     : /nologo
     [ opt --release : /GL /MT /O2 /Ob2 /Gy /GF /GA /wd4996 ]
     [ opt --debug : /MTd /DEBUG /Z7 /Od /Ob0 /wd4996 ]
@@ -419,15 +427,15 @@ if ! $(toolset)
     ECHO "###" ;
     ECHO "###" No toolset specified. Please use --toolset option. ;
     ECHO "###" ;
-    ECHO "###" Known toolsets are: $(toolsets:J=", ") ;
+    ECHO "###" Known toolsets "are:" $(toolsets:J=", ") ;
     EXIT "###" ;
 }
 if ! $(toolset) in $(toolsets)
 {
     ECHO "###" ;
-    ECHO "###" Unknown toolset: $(toolset) ;
+    ECHO "###" Unknown "toolset:" $(toolset) ;
     ECHO "###" ;
-    ECHO "###" Known toolsets are: $(toolsets:J=", ") ;
+    ECHO "###" Known toolsets "are:" $(toolsets:J=", ") ;
     EXIT "###" ;
 }
 --cc = $(tool.$(toolset).cc) ;
@@ -510,7 +518,7 @@ if --show-locate-target in $(ARGV)
 
 # We have some different files for UNIX, VMS, and NT.
 jam.source =
-    command.c compile.c constants.c debug.c execcmd.c frames.c function.c glob.c
+    command.c compile.c constants.c debug.c debugger.c execcmd.c frames.c function.c glob.c
     hash.c hcache.c headers.c hdrmacro.c jam.c jambase.c jamgram.c lists.c
     make.c make1.c mem.c object.c option.c output.c parse.c pathsys.c regexp.c
     rules.c scan.c search.c subst.c w32_getreg.c timestamp.c variable.c
@@ -543,6 +551,7 @@ if ! $(debug) || --noassert in $(ARGV)
 --defs += OPT_SEMAPHORE ;
 --defs += OPT_AT_FILES ;
 --defs += OPT_DEBUG_PROFILE ;
+--defs += JAM_DEBUGGER ;
 
 # Bug fixes
 --defs += OPT_FIX_TARGET_VARIABLES_EXT ;
@@ -594,15 +603,15 @@ ALWAYS clean ;
 # Utility rules and actions...
 rule .clean
 {
-    [DELETE] clean : $(<) ;
+    "[DELETE]" clean : $(<) ;
 }
-if $(OS) = NT { actions piecemeal together existing [DELETE] {
+if $(OS) = NT { actions piecemeal together existing "[DELETE]" {
     del /F /Q "$(>)"
 } }
-if $(UNIX) = true { actions piecemeal together existing [DELETE] {
+if $(UNIX) = true { actions piecemeal together existing "[DELETE]" {
     rm -f "$(>)"
 } }
-if $(OS) = VMS { actions piecemeal together existing [DELETE] {
+if $(OS) = VMS { actions piecemeal together existing "[DELETE]" {
     DELETE /NOCONF $(>:WJ=;*, );*
 } }
 if $(OS) = NT {
@@ -619,15 +628,15 @@ rule .mkdir
 {
     NOUPDATE $(<) ;
     if $(<:P) { DEPENDS $(<) : $(<:P) ; .mkdir $(<:P) ; }
-    if ! $(md<$(<)>) { [MKDIR] $(<) ; md<$(<)> = - ; }
+    if ! $(md<$(<)>) { "[MKDIR]" $(<) ; md<$(<)> = - ; }
 }
-if $(OS) = NT { actions [MKDIR] {
+if $(OS) = NT { actions "[MKDIR]" {
     md "$(<)"
 } }
-if $(UNIX) = true { actions [MKDIR] {
+if $(UNIX) = true { actions "[MKDIR]" {
     mkdir "$(<)"
 } }
-if $(OS) = VMS { actions [MKDIR] {
+if $(OS) = VMS { actions "[MKDIR]" {
     CREATE/DIR $(<:WJ=, )
 } }
 
@@ -654,38 +663,38 @@ rule .exe
             DEPENDS $(exe) : $(o) ;
             DEPENDS $(o) : $(s) ;
             DEPENDS $(o) : $(locate-target) ;
-            [COMPILE] $(o) : $(s) ;
+            "[COMPILE]" $(o) : $(s) ;
             .clean $(o) ;
         }
         DEPENDS $(exe) : $(objs) ;
         DEPENDS $(exe) : $(locate-target) ;
-        [COMPILE.LINK] $(exe) : $(objs) ;
+        "[COMPILE.LINK]" $(exe) : $(objs) ;
         .clean $(exe) ;
     }
     else
     {
         DEPENDS $(exe) : $(>) ;
         DEPENDS $(exe) : $(locate-target) ;
-        [COMPILE] $(exe) : $(>) ;
+        "[COMPILE]" $(exe) : $(>) ;
         .clean $(exe) ;
     }
     return $(exe) ;
 }
 
-if $(OS) = VMS { actions [COMPILE] {
+if $(OS) = VMS { actions "[COMPILE]" {
     $(--cc) $(--bin)$(<:WD=) $(--dir)$(<:D)$(./) $(--out)$(<:W) $(--def[1])$(--defs:J=$(--def[2]))$(--def[3]) $(--flags)  $(>:W) $(--libs)
 } }
-else if ! $(--def[2]) { actions [COMPILE] {
+else if ! $(--def[2]) { actions "[COMPILE]" {
     "$(--cc)" "$(--bin)$(<:D=)" "$(--dir)$(<:D)$(./)" $(--out)$(<) "$(--def)$(--defs)" "$(--flags)" "$(>)" "$(--libs)"
 } }
-else { actions [COMPILE] {
+else { actions "[COMPILE]" {
     "$(--cc)" "$(--bin)$(<:D=)" "$(--dir)$(<:D)$(./)" $(--out)$(<) "$(--def[1])$(--defs:J=$(--def[2]))$(--def[3])" "$(--flags)"  "$(>)" "$(--libs)"
 } }
 
-if $(OS) = VMS { actions [COMPILE.LINK] {
+if $(OS) = VMS { actions "[COMPILE.LINK]" {
     $(--link) $(--link-bin)$(<:WD=) $(--link-dir)$(<:WD)$(./) $(--link-out)$(<:W) $(--link-def)$(--link-defs) $(--link-flags) $(--link-libs) $(>:WJ=, )
 } }
-else { actions [COMPILE.LINK] {
+else { actions "[COMPILE.LINK]" {
     "$(--link)" "$(--link-bin)$(<:D=)" "$(--link-dir)$(<:D)$(./)" "$(--link-out)$(<)" "$(--link-def)$(--link-defs)" "$(--link-flags)"  "$(>)" "$(--link-libs)"
 } }
 
@@ -693,16 +702,16 @@ rule .link
 {
     DEPENDS all : $(<) ;
     DEPENDS $(<) : $(>) ;
-    [LINK] $(<) : $(>) ;
+    "[LINK]" $(<) : $(>) ;
     .clean $(<) ;
 }
-if $(OS) = NT { actions [LINK] {
+if $(OS) = NT { actions "[LINK]" {
     copy "$(>)" "$(<)"
 } }
-if $(UNIX) = true { actions [LINK] {
+if $(UNIX) = true { actions "[LINK]" {
     ln -fs "$(>)" "$(<)"
 } }
-if $(OS) = VMS { actions [LINK] {
+if $(OS) = VMS { actions "[LINK]" {
     COPY/REPLACE $(>:W) $(<:W)
 } }
 
@@ -710,31 +719,31 @@ rule .copy
 {
     DEPENDS all : $(<) ;
     DEPENDS $(<) : $(>) ;
-    [COPY] $(<) : $(>) ;
+    "[COPY]" $(<) : $(>) ;
     .clean $(<) ;
 }
 
 # Will be redefined later.
-if $(OS) = VMS { actions [COPY] {
+if $(OS) = VMS { actions "[COPY]" {
     COPY/REPLACE $(>:W) $(<:W)
 } }
-else { actions [COPY] {
+else { actions "[COPY]" {
 } }
 
 
 rule .move
 {
     DEPENDS $(<) : $(>) ;
-    [MOVE] $(<) : $(>) ;
+    "[MOVE]" $(<) : $(>) ;
 }
-if $(OS) = NT { actions [MOVE] {
+if $(OS) = NT { actions "[MOVE]" {
     del /f "$(<)"
     rename "$(>)" "$(<)"
 } }
-if $(UNIX) = true { actions [MOVE] {
+if $(UNIX) = true { actions "[MOVE]" {
     mv -f "$(>)" "$(<)"
 } }
-if $(OS) = VMS { actions [MOVE] {
+if $(OS) = VMS { actions "[MOVE]" {
     RENAME /NOCONF $(>:W) $(<:W)
 } }
 
@@ -746,9 +755,9 @@ rule .yyacc
     DEPENDS $(<) : $(exe) $(>) ;
     LEAVES $(<) ;
     yyacc.exe on $(<) = $(exe:R=$(locate-target)) ;
-    [YYACC] $(<) : $(>) ;
+    "[YYACC]" $(<) : $(>) ;
 }
-actions [YYACC] {
+actions "[YYACC]" {
     $(--chmod+w)$(<[1])
     $(--chmod+w)$(<[2])
     "$(yyacc.exe)" "$(<)" "$(>)"
@@ -792,9 +801,9 @@ rule .yacc
 {
     DEPENDS $(<) : $(>) ;
     LEAVES $(<) ;
-    [YACC] $(<) : $(>) ;
+    "[YACC]" $(<) : $(>) ;
 }
-if $(OS) = NT { actions [YACC] {
+if $(OS) = NT { actions "[YACC]" {
     "$(yacc)" "$(>)"
     if not errorlevel 1 (
         del /f "$(<[1])"
@@ -803,7 +812,7 @@ if $(OS) = NT { actions [YACC] {
         rename y.tab$(<[2]:S) "$(<[2])"
     ) else set _error_ =
 } }
-if $(UNIX) = true { actions [YACC] {
+if $(UNIX) = true { actions "[YACC]" {
     if ` "$(yacc)" "$(>)" ` ; then
         mv -f y.tab$(<[1]:S) "$(<[1])"
         mv -f y.tab$(<[2]:S) "$(<[2])"
@@ -811,7 +820,7 @@ if $(UNIX) = true { actions [YACC] {
         exit 1
     fi
 } }
-if $(OS) = VMS { actions [YACC] {
+if $(OS) = VMS { actions "[YACC]" {
     IF $(yacc) $(>)
     THEN
         RENAME /NOCONF y_tab$(<[1]:S) $(<[1]:W)
@@ -835,9 +844,9 @@ rule .mkjambase
     DEPENDS $(<) : $(exe) $(>) ;
     LEAVES $(<) ;
     mkjambase.exe on $(<) = $(exe:R=$(locate-target)) ;
-    [MKJAMBASE] $(<) : $(>) ;
+    "[MKJAMBASE]" $(<) : $(>) ;
 }
-actions [MKJAMBASE] {
+actions "[MKJAMBASE]" {
     $(--chmod+w)$(<)
     $(mkjambase.exe) "$(<)" "$(>)"
 }
@@ -945,13 +954,13 @@ if $(OS) = NT
         case 7z* : zip += a -r -tzip -mx=9 ;
         case zip : zip += -9r ;
     }
-    actions piecemeal [PACK] {
+    actions piecemeal "[PACK]" {
         "$(zip)" "$(<)" "$(>)"
     }
-    actions piecemeal [ZIP] {
+    actions piecemeal "[ZIP]" {
         "$(zip)" "$(<)" "$(>)"
     }
-    actions piecemeal [COPY] {
+    actions piecemeal "[COPY]" {
         copy /Y "$(>)" "$(<)" >NUL:
     }
 }
@@ -964,16 +973,16 @@ if $(UNIX) = true
         case star : tar += -c artype=pax -D -d -to-stdout ;
         case * : tar += -c -f - ;
     }
-    actions [PACK] {
+    actions "[PACK]" {
         "$(tar)" "$(>)" | gzip -c9 > "$(<)"
     }
-    #~ actions [PACK] {
+    #~ actions "[PACK]" {
     #~     tar cf "$(<:S=.tar)" "$(>)"
     #~ }
-    actions [ZIP] {
+    actions "[ZIP]" {
     gzip -c9 "$(>)" > "$(<)"
     }
-    actions [COPY] {
+    actions "[COPY]" {
         cp -Rpf "$(>)" "$(<)"
     }
 }
@@ -988,8 +997,8 @@ rule .binary
     DEPENDS $(zip) : $($(<).exe) ;
     DEPENDS dist : $(zip) ;
     #~ LOCATE on $(zip) = $(locate-target) ;
-    if $(OS) = NT { [ZIP] $(zip) : $($(<).exe) ; }
-    if $(UNIX) = true { [PACK] $(zip) : $($(<).exe) ; }
+    if $(OS) = NT { "[ZIP]" $(zip) : $($(<).exe) ; }
+    if $(UNIX) = true { "[PACK]" $(zip) : $($(<).exe) ; }
     .clean $(zip) ;
 }
 
@@ -1029,11 +1038,11 @@ rule .package ( dst-dir : src-files + )
         DEPENDS $(dst-file) : $(src-path) $(dst-file:D) ;
         .mkdir $(dst-file:D) ;
 
-        [COPY] $(dst-file) : $(src-path) ;
+        "[COPY]" $(dst-file) : $(src-path) ;
         .clean $(dst-file) ;
     }
 
-    [PACK] $(pack) : $(dst-files) ;
+    "[PACK]" $(pack) : $(dst-files) ;
     .clean $(pack) ;
 }
 
@@ -1065,10 +1074,10 @@ rule .rpm ( name : source )
     arch on $(target) = $(rpm-arch) ;
     if $(rpm-arch) = ppc { target-opt on $(target) = --target= ; }
     else { target-opt on $(target) = "--target " ; }
-    [RPM] $(target) : $(source) ;
+    "[RPM]" $(target) : $(source) ;
     .clean $(name).$(rpm-arch).rpm $(name).src.rpm ;
 }
-actions [RPM] {
+actions "[RPM]" {
     set -e
     export BOOST_JAM_TOOLSET="$(toolset)"
     $(rpm-tool) -ta $(target-opt)$(arch) $(>) | tee rpm.out

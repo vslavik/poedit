@@ -18,8 +18,8 @@
 #include <boost/type_index.hpp>
 #include <boost/move/core.hpp>
 #include <boost/smart_ptr/intrusive_ptr.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/utility/type_dispatch/type_dispatcher.hpp>
 #include <boost/log/attributes/attribute.hpp>
 #include <boost/log/attributes/value_extraction_fwd.hpp>

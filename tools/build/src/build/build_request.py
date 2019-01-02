@@ -56,7 +56,7 @@ def __x_product_aux (property_sets, seen_features):
 
     these_features = set()
     for p in property_sets[0].non_free():
-        these_features.add(p.feature())
+        these_features.add(p.feature)
 
     # Note: the algorithm as implemented here, as in original Jam code, appears to
     # detect conflicts based on features, not properties. For example, if command

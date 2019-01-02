@@ -2,6 +2,10 @@
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+
+// Copyright (c) 2016 Oracle and/or its affiliates.
+// Contributed and/or modified by Vissarion Fisikopoulos, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -15,7 +19,6 @@
 #include <boost/geometry/io/wkt/wkt.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 #include <boost/variant/variant.hpp>
-
 
 template <typename Geometry>
 void test_length(Geometry const& geometry, long double expected_length)
@@ -37,6 +40,25 @@ void test_length(Geometry const& geometry, long double expected_length)
     BOOST_CHECK_CLOSE(length, expected_length, 0.0001);
 }
 
+template <typename Geometry, typename Strategy>
+void test_length(Geometry const& geometry, long double expected_length, Strategy strategy)
+{
+    typename bg::default_length_result<Geometry>::type
+        length = bg::length(geometry, strategy);
+
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::ostringstream out;
+    out << typeid(typename bg::coordinate_type<Geometry>::type).name()
+        << std::endl
+        << typeid(typename bg::default_length_result<Geometry>::type).name()
+        << std::endl
+        << "length : " << bg::length(geometry, strategy)
+        << std::endl;
+    std::cout << out.str();
+#endif
+
+    BOOST_CHECK_CLOSE(length, expected_length, 0.0001);
+}
 
 template <typename Geometry>
 void test_geometry(std::string const& wkt, double expected_length)
@@ -46,6 +68,17 @@ void test_geometry(std::string const& wkt, double expected_length)
     test_length(geometry, expected_length);
 #if !defined(BOOST_GEOMETRY_TEST_DEBUG)
     test_length(boost::variant<Geometry>(geometry), expected_length);
+#endif
+}
+
+template <typename Geometry, typename Strategy>
+void test_geometry(std::string const& wkt, double expected_length, Strategy strategy)
+{
+    Geometry geometry;
+    bg::read_wkt(wkt, geometry);
+    test_length(geometry, expected_length, strategy);
+#if !defined(BOOST_GEOMETRY_TEST_DEBUG)
+    test_length(boost::variant<Geometry>(geometry), expected_length, strategy);
 #endif
 }
 

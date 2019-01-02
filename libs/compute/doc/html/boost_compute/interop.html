@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Interoperability</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="prev" href="advanced_topics.html" title="Advanced Topics">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_compute.interop"></a><a class="link" href="interop.html" title="Interoperability">Interoperability</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="interop.html#boost_compute.interop.opengl">OpenGL</a></span></dt></dl></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="interop.html#boost_compute.interop.opengl">OpenGL</a></span></dt></dl></div>
 <p>
       Boost.Compute provides a number of facilities to ease interoperability with
       other C and C++ libraries including <a href="http://en.wikipedia.org/wiki/OpenGL" target="_top">OpenGL</a>,
@@ -45,7 +45,7 @@
       </p>
 <p>
         Boost.Compute provides an easy way to create a shared OpenCL/OpenGL context
-        via the <code class="computeroutput"><a class="link" href="../boost/compute/opengl_create__idp12389680.html" title="Function opengl_create_shared_context">opengl_create_shared_context()</a></code>
+        via the <code class="computeroutput"><a class="link" href="../boost/compute/opengl_create__idp50227248.html" title="Function opengl_create_shared_context">opengl_create_shared_context()</a></code>
         function. This creates a Boost.Compute <code class="computeroutput">context</code>
         object which can be used to create OpenCL memory buffers corresponding to
         OpenGL memory objects (such as VBOs). This allows for OpenCL kernels to read
@@ -59,8 +59,8 @@
       </p>
 <p>
         Control of shared OpenCL/OpenGL memory objects is transfered between OpenCL
-        and OpenGL using the <code class="computeroutput"><a class="link" href="../boost/compute/opengl_enqueue_idp12360336.html" title="Function opengl_enqueue_acquire_gl_objects">opengl_enqueue_acquire_gl_objects()</a></code>
-        and <code class="computeroutput"><a class="link" href="../boost/compute/opengl_enqueue_idp12366848.html" title="Function opengl_enqueue_release_gl_objects">opengl_enqueue_release_gl_objects()</a></code>
+        and OpenGL using the <code class="computeroutput"><a class="link" href="../boost/compute/opengl_enqueue_idp50197904.html" title="Function opengl_enqueue_acquire_gl_objects">opengl_enqueue_acquire_gl_objects()</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/compute/opengl_enqueue_idp50204416.html" title="Function opengl_enqueue_release_gl_objects">opengl_enqueue_release_gl_objects()</a></code>
         functions.
       </p>
 <p>

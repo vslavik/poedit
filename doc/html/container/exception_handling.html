@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost.Container and C++ exceptions</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
 <link rel="prev" href="main_features.html" title="Main features">
 <link rel="next" href="non_standard_containers.html" title="Non-standard containers">
 </head>
@@ -34,7 +34,7 @@
       EASTL -- Electronic Arts Standard Template Library</a> exceptions can be
       disabled for several reasons:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <span class="quote">&#8220;<span class="quote"><span class="emphasis"><em>Exception handling incurs some kind of cost in all compiler
           implementations, including those that avoid the cost during normal execution.
@@ -88,7 +88,7 @@
       When dealing with user-defined classes, (e.g. when constructing user-defined
       classes):
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           If <code class="computeroutput"><span class="identifier">BOOST_NO_EXCEPTIONS</span></code>
           is defined, the library avoids using <code class="computeroutput"><span class="keyword">try</span></code>/<code class="computeroutput"><span class="keyword">catch</span></code>/<code class="computeroutput"><span class="keyword">throw</span></code>
@@ -106,7 +106,7 @@
       when an incorrect index is used in <code class="computeroutput"><span class="identifier">vector</span><span class="special">::</span><span class="identifier">at</span></code>), the
       library calls a throw-callback declared in <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#header.boost.container.throw_exception_hpp" title="Header &lt;boost/container/throw_exception.hpp&gt;">boost/container/throw_exception.hpp</a></code>:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           If <code class="computeroutput"><span class="identifier">BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS</span></code>
           is defined, then the programmer must provide its own definition for all
@@ -127,7 +127,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Employee - Parsing into structs]
+[section:employee Employee - Parsing into structs]
 
 It's a common question in the __spirit_list__: How do I parse and place
 the results into a C++ struct? Of course, at this point, you already
@@ -27,8 +27,8 @@ First, let's create a struct representing an employee:
         struct employee
         {
             int age;
-            std::string surname;
             std::string forename;
+            std::string surname;
             double salary;
         };
     }}
@@ -44,13 +44,14 @@ to be a fully conforming fusion tuple:
 
     BOOST_FUSION_ADAPT_STRUCT(
         client::ast::employee,
-        age, surname, forename, salary
+        age, forename, surname, salary
     )
 
 Now we'll write a parser for our employee. Inputs will be of the form:
 
-    employee{ age, "surname", "forename", salary }
+    employee{ age, "forename", "surname", salary }
 
+[#__tutorial_employee_parser__]
 Here goes:
 
     namespace parser
@@ -81,13 +82,18 @@ Here goes:
         BOOST_SPIRIT_DEFINE(employee);
     }
 
-The full cpp file for this example can be found here: [@../../../example/x3/employee.cpp]
+The full cpp file for this example can be found here:
+[@../../../example/x3/employee.cpp employee.cpp]
 
 Let's walk through this one step at a time (not necessarily from top to bottom).
 
 [heading Rule Declaration]
 
-    x3::rule<class employee, ast::employee> employee("employee");
+We are assuming that you already know about rules. We introduced rules in the
+previous [tutorial_roman Roman Numerals example]. Please go back and review
+the previous tutorial if you have to.
+
+    x3::rule<class employee, ast::employee> employee = "employee";
 
 [heading Lexeme]
 
@@ -176,6 +182,11 @@ is:
 
 [heading Rule Definition]
 
+Again, we are assuming that you already know about rules and rule
+definitions. We introduced rules in the previous [tutorial_roman Roman
+Numerals example]. Please go back and review the previous tutorial if you
+have to.
+
     employee =
         lit("employee")
         >> '{'
@@ -187,7 +198,6 @@ is:
         ;
 
     BOOST_SPIRIT_DEFINE(employee);
-
 
 Applying our collapsing rules above, the RHS has an attribute of:
 

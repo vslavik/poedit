@@ -59,6 +59,18 @@ int main()
     }
 
     {
+        // Trac #12895
+        boost::zip_iterator<
+            TUPLE<int*, std::string*>
+        > i(MAKE_TUPLE(&vi[0], &vs[0]));
+
+        BOOST_TEST(boost::fusion::at_c<0>(* i     ) == 42);
+        BOOST_TEST(boost::fusion::at_c<1>(* i     ) == "kokoro");
+        BOOST_TEST(boost::fusion::at_c<0>(*(i + 1)) == 72);
+        BOOST_TEST(boost::fusion::at_c<1>(*(i + 1)) == "pyonpyon");
+    }
+
+    {
         boost::zip_iterator<iterator_tuple> i1(MAKE_TUPLE(vi.begin(), vs.begin()));
         boost::zip_iterator<iterator_tuple> i2(MAKE_TUPLE(vi.end(),   vs.end()));
 

@@ -25,6 +25,7 @@ The only Boost libraries that *must* be built separately are:
 * Boost.GraphParallel_
 * Boost.IOStreams_
 * Boost.Locale_
+* Boost.Log_ (see `build documentation`__)
 * Boost.MPI_
 * Boost.ProgramOptions_
 * Boost.Python_ (see the `Boost.Python build documentation`__
@@ -37,7 +38,8 @@ The only Boost libraries that *must* be built separately are:
 * Boost.Timer_
 * Boost.Wave_
 
-__ ../../libs/python/doc/building.html
+__ ../../libs/log/doc/html/log/installation/config.html
+__ ../../libs/python/doc/html/building.html
 
 A few libraries have optional separately-compiled binaries:
 

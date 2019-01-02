@@ -74,3 +74,13 @@ boostbook standalone
 
 install pdfinstall : standalone/<format>pdf : <location>. <install-type>PDF ;
 explicit pdfinstall ;
+
+###############################################################################
+alias boostdoc
+    : ratio
+    :
+    : #<dependency>autodoc
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

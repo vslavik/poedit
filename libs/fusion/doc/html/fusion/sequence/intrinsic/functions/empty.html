@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>empty</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="end.html" title="end">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h0"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.description"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.description">Description</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.description"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.description">Description</a>
           </h6>
 <p>
             Returns a type convertible to <code class="computeroutput"><span class="keyword">bool</span></code>
@@ -37,7 +37,7 @@
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h1"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.synopsis"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.synopsis"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <a class="link" href="../metafunctions/empty.html" title="empty"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">empty</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -45,7 +45,7 @@
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h2"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.parameters"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.parameters">Parameters</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.parameters"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.parameters">Parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -91,7 +91,7 @@
 </table></div>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h3"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.expression_semantics"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.expression_semantics"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><span class="identifier">empty</span><span class="special">(</span><span class="identifier">seq</span><span class="special">);</span>
@@ -105,14 +105,14 @@
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h4"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.header"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.header">Header</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.header"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">intrinsic</span><span class="special">/</span><span class="identifier">empty</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">empty</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.empty.h5"></a>
-            <span><a name="fusion.sequence.intrinsic.functions.empty.example"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.example">Example</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.empty.example"></a></span><a class="link" href="empty.html#fusion.sequence.intrinsic.functions.empty.example">Example</a>
           </h6>
 <pre class="programlisting"><a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><span class="identifier">empty</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">false</span><span class="special">);</span>

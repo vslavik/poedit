@@ -197,8 +197,8 @@ int main()
                 
 
                 TEST(time_point.get(week_of_year()) == 6);
-                
-                if(backend_name!="icu" || BOOST_ICU_VER<408) {
+               
+                if(backend_name!="icu" || BOOST_ICU_VER<408 || BOOST_ICU_VER > 6000) {
                     TEST(time_point.get(week_of_month()) == 1);
                 }
                 else {
@@ -208,7 +208,7 @@ int main()
 
                 time_point = year(2010) + january() + day() * 3;
                 
-                if(backend_name!="icu" || BOOST_ICU_VER<408) {
+                if(backend_name!="icu" || BOOST_ICU_VER<408 || BOOST_ICU_VER > 6000) {
                     TEST(time_point.get(week_of_year()) == 53);
                 }
                 else {
@@ -217,7 +217,7 @@ int main()
                 
                 time_point = year()*2010 + january() + day() * 4;
                 
-                if(backend_name!="icu" || BOOST_ICU_VER<408) {
+                if(backend_name!="icu" || BOOST_ICU_VER<408 || BOOST_ICU_VER > 6000) {
                     TEST(time_point.get(week_of_year()) == 1);
                 }
                 else {
@@ -225,7 +225,7 @@ int main()
                 }
                 time_point = year()*2010 + january() + day() * 10;
                 
-                if(backend_name!="icu" || BOOST_ICU_VER<408) {
+                if(backend_name!="icu" || BOOST_ICU_VER<408 || BOOST_ICU_VER > 6000) {
                     TEST(time_point.get(week_of_year()) == 1);
                 }
                 else {
@@ -233,7 +233,7 @@ int main()
                 }
 
                 time_point = year()*2010 + january() + day() * 11;
-                if(backend_name!="icu" || BOOST_ICU_VER<408) {
+                if(backend_name!="icu" || BOOST_ICU_VER<408 || BOOST_ICU_VER > 6000) {
                     TEST(time_point.get(week_of_year()) == 2);
                 }
                 else {

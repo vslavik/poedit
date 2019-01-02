@@ -14,11 +14,14 @@
 #include <iterator>
 #include <utility>
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/device.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/algorithm/detail/reduce_by_key.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -51,6 +54,9 @@ namespace compute {
 ///
 /// \snippet test/test_reduce_by_key.cpp reduce_by_key_int
 ///
+/// Space complexity on GPUs: \Omega(2n)<br>
+/// Space complexity on CPUs: \Omega(1)
+///
 /// \see reduce()
 template<class InputKeyIterator, class InputValueIterator,
          class OutputKeyIterator, class OutputValueIterator,
@@ -65,6 +71,11 @@ reduce_by_key(InputKeyIterator keys_first,
               BinaryPredicate predicate,
               command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
+
     return detail::dispatch_reduce_by_key(keys_first, keys_last, values_first,
                                           keys_result, values_result,
                                           function, predicate,
@@ -84,6 +95,10 @@ reduce_by_key(InputKeyIterator keys_first,
               BinaryFunction function,
               command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
     typedef typename std::iterator_traits<InputKeyIterator>::value_type key_type;
 
     return reduce_by_key(keys_first, keys_last, values_first,
@@ -103,6 +118,10 @@ reduce_by_key(InputKeyIterator keys_first,
               OutputValueIterator values_result,
               command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
     typedef typename std::iterator_traits<InputKeyIterator>::value_type key_type;
     typedef typename std::iterator_traits<InputValueIterator>::value_type value_type;
 

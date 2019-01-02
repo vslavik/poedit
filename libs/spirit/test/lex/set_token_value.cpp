@@ -8,8 +8,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/spirit/include/phoenix_container.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/foreach.hpp>
 
@@ -52,7 +51,7 @@ struct handle_whitespace
     template <typename Iterator>
     unsigned int get_indent(Iterator& start, Iterator& end)
     {
-        return std::distance(start, end);
+        return static_cast<unsigned int>(std::distance(start, end));
     }
 
     template <typename Iterator>

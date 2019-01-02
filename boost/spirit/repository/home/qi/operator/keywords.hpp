@@ -31,6 +31,7 @@
 #include <boost/spirit/home/qi/action/action.hpp>
 #include <boost/spirit/home/qi/directive/hold.hpp>
 #include <boost/mpl/count_if.hpp>
+#include <boost/mpl/greater.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/copy.hpp>
 #include <boost/mpl/size.hpp>

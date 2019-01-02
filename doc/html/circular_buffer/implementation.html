@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Implementation</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
+<link rel="up" href="../circular_buffer.html" title="Chapter&#160;8.&#160;Boost.Circular Buffer">
 <link rel="prev" href="rationale.html" title="Rationale">
 <link rel="next" href="examples.html" title="More Examples">
 </head>
@@ -33,7 +33,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h0"></a>
-      <span><a name="circular_buffer.implementation.thread_safety"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.thread_safety">Thread-Safety</a>
+      <span class="phrase"><a name="circular_buffer.implementation.thread_safety"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.thread_safety">Thread-Safety</a>
     </h4>
 <p>
       The thread-safety of the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
@@ -55,7 +55,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h1"></a>
-      <span><a name="circular_buffer.implementation.overwrite_operation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.overwrite_operation">Overwrite
+      <span class="phrase"><a name="circular_buffer.implementation.overwrite_operation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.overwrite_operation">Overwrite
       Operation</a>
     </h4>
 <p>
@@ -79,14 +79,14 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h2"></a>
-      <span><a name="circular_buffer.implementation.writing_to_a_full_buffer"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.writing_to_a_full_buffer">Writing to
+      <span class="phrase"><a name="circular_buffer.implementation.writing_to_a_full_buffer"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.writing_to_a_full_buffer">Writing to
       a Full Buffer</a>
     </h4>
 <p>
       There are several options how to cope if a data source produces more data than
       can fit in the fixed-sized buffer:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Inform the data source to wait until there is room in the buffer (e.g.
           by throwing an overflow exception).
@@ -128,7 +128,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h3"></a>
-      <span><a name="circular_buffer.implementation.reading_removing_from_an_empty_b"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.reading_removing_from_an_empty_b">Reading/Removing
+      <span class="phrase"><a name="circular_buffer.implementation.reading_removing_from_an_empty_b"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.reading_removing_from_an_empty_b">Reading/Removing
       from an Empty Buffer</a>
     </h4>
 <p>
@@ -137,7 +137,7 @@
       that there are no elements stored in it. The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       does not implement such a behaviour for two reasons:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           It would introduce a performance overhead.
         </li>
@@ -147,18 +147,18 @@
 </ul></div>
 <p>
       It is considered to be a bug to read or remove an element (e.g. by calling
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8161488-bb">front()</a></code> or
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8635920-bb">pop_back()</a></code>)
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48478832-bb">front()</a></code> or
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48953264-bb">pop_back()</a></code>)
       from an empty std container and from an empty <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       as well. The data consumer has to test if the container is not empty before
-      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8333696-bb">empty()</a></code>.
+      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48651040-bb">empty()</a></code>.
       However, when reading from the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>,
-      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8140176-bb">at()</a></code>
+      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp48457520-bb">at()</a></code>
       method which throws an exception when the index is out of range.
     </p>
 <h4>
 <a name="circular_buffer.implementation.h4"></a>
-      <span><a name="circular_buffer.implementation.iterator_invalidation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.iterator_invalidation">Iterator
+      <span class="phrase"><a name="circular_buffer.implementation.iterator_invalidation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.iterator_invalidation">Iterator
       Invalidation</a>
     </h4>
 <p>
@@ -172,7 +172,7 @@
 <p>
       Consider following example:
     </p>
-<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_CB_DISABLE_DEBUG</span> <span class="comment">// The Debug Support has to be disabled, otherwise the code produces a runtime error.</span>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_CB_ENABLE_DEBUG</span> <span class="number">0</span> <span class="comment">// The Debug Support has to be disabled, otherwise the code produces a runtime error.</span>
 
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">circular_buffer</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">assert</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -209,7 +209,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h5"></a>
-      <span><a name="circular_buffer.implementation.move_emulation_and_rvalues"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.move_emulation_and_rvalues">Move emulation
+      <span class="phrase"><a name="circular_buffer.implementation.move_emulation_and_rvalues"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.move_emulation_and_rvalues">Move emulation
       and rvalues</a>
     </h4>
 <p>
@@ -218,7 +218,7 @@
       will use them, but if not it uses a close, but imperfect emulation. On such
       compilers:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Non-copyable objects can be stored in the containers. They can be constructed
           in place using <code class="computeroutput"><span class="identifier">emplace</span></code>,
@@ -255,7 +255,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h6"></a>
-      <span><a name="circular_buffer.implementation.exceptions_of_move_if_noexcept_t"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.exceptions_of_move_if_noexcept_t">Exceptions
+      <span class="phrase"><a name="circular_buffer.implementation.exceptions_of_move_if_noexcept_t"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.exceptions_of_move_if_noexcept_t">Exceptions
       of move_if_noexcept(T&amp;)</a>
     </h4>
 <p>
@@ -273,7 +273,7 @@
 <p>
       This leads us to the following situation:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           If <code class="computeroutput"><span class="identifier">value</span></code> has a noexcept
           move constructor and noexcept move assignment operator, then no exceptions
@@ -296,7 +296,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h7"></a>
-      <span><a name="circular_buffer.implementation.caveats"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.caveats">Caveats</a>
+      <span class="phrase"><a name="circular_buffer.implementation.caveats"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.caveats">Caveats</a>
     </h4>
 <p>
       The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> should
@@ -341,20 +341,20 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h8"></a>
-      <span><a name="circular_buffer.implementation.debug_support"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.debug_support">Debug
+      <span class="phrase"><a name="circular_buffer.implementation.debug_support"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.debug_support">Debug
       Support</a>
     </h4>
 <p>
-      In order to help a programmer to avoid and find common bugs, the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> contains a kind of
-      debug support.
+      In order to help a programmer to avoid and find common bugs, the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> can be enabled to
+      provide a kind of debug support.
     </p>
 <p>
-      The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> maintains
-      a list of valid iterators. As soon as any element gets destroyed all iterators
-      pointing to this element are removed from this list and explicitly invalidated
-      (an invalidation flag is set). The debug support also consists of many assertions
-      (<code class="computeroutput"><span class="identifier">BOOST_ASSERT</span></code> macros) which
-      ensure the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
+      When the debugging functionality is enabled, the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
+      maintains a list of valid iterators. As soon as any element gets destroyed
+      all iterators pointing to this element are removed from this list and explicitly
+      invalidated (an invalidation flag is set). The debug support also consists
+      of many assertions (<code class="computeroutput"><span class="identifier">BOOST_ASSERT</span></code>
+      macros) which ensure the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       and its iterators are used in the correct manner at runtime. In case an invalid
       iterator is used, the assertion will report an error. The connection of explicit
       iterator invalidation and assertions makes a very robust debug technique which
@@ -367,24 +367,37 @@
       the initialized memory from the uninitialized. For details refer the source
       code <a href="../../../boost/circular_buffer/debug.hpp" target="_top">circular_buffer/debug.hpp</a>.
     </p>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Since the debugging code makes <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
+        and its iterators more interconnected, thread safety guarantees of <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> are different when
+        debug support is enabled. In addition to the container itself, all iterators
+        tracked by the container (including any copies thereof) must be protected
+        from concurrent access. In particular, this includes copying, destroying
+        or obtaining iterators from the container, even if for read-only access.
+      </p></td></tr>
+</table></div>
 <p>
-      The debug support is enabled only in the debug mode (when the <code class="computeroutput"><span class="identifier">NDEBUG</span></code> is not defined). It can also be explicitly
-      disabled (only for <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>)
-      by defining macro BOOST_CB_DISABLE_DEBUG.
+      The debug support is disabled by default. To enable it, one has to define
+      <code class="computeroutput"><span class="identifier">BOOST_CB_ENABLE_DEBUG</span></code> macro
+      with the value of 1 while compiling the code using <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>.
     </p>
 <h4>
 <a name="circular_buffer.implementation.h9"></a>
-      <span><a name="circular_buffer.implementation.compatibility_with_interprocess_"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.compatibility_with_interprocess_">Compatibility
+      <span class="phrase"><a name="circular_buffer.implementation.compatibility_with_interprocess_"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.compatibility_with_interprocess_">Compatibility
       with Interprocess library</a>
     </h4>
 <p>
       The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> is
       compatible with the <a href="../../../libs/interprocess/index.html" target="_top">Boost.Interprocess</a>
       library used for interprocess communication. Considering that the circular_buffer's
-      debug support relies on 'raw' pointers (which is not permited by the Interprocess
-      library) the code has to compiled with <code class="computeroutput"><span class="special">-</span><span class="identifier">DBOOST_CB_DISABLE_DEBUG</span></code> or <code class="computeroutput"><span class="special">-</span><span class="identifier">DNDEBUG</span></code>
-      (which disables the Debug Support). Not doing that will cause the compilation
-      to fail.
+      debug support relies on 'raw' pointers (which is not permitted by the Interprocess
+      library) the code has to compiled with debug support disabled (i.e. with <code class="computeroutput"><span class="identifier">BOOST_CB_ENABLE_DEBUG</span></code> macro not defined or
+      defined to 0). Not doing that will cause the compilation to fail.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

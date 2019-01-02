@@ -158,7 +158,7 @@
         }
 
         <SPAN CLASS='comment'>// Check for errors</SPAN>
-        <SPAN CLASS="keyword">if</SPAN> (next < <SPAN CLASS='numeric_literal'>0</SPAN> || next >= container_.size())
+        <SPAN CLASS="keyword">if</SPAN> (next < <SPAN CLASS='numeric_literal'>0</SPAN> || next >= static_cast&lt;stream_offset>(container_.size()))
             <SPAN CLASS="keyword">throw</SPAN> ios_base::failure(<SPAN CLASS='numeric_literal'>"bad seek offset"</SPAN>);
 
         pos_ = next;

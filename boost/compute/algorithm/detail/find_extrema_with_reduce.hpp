@@ -128,7 +128,7 @@ inline void find_extrema_with_reduce(InputIterator input,
             // Next element
             k.decl<input_type>("next") << " = " << input[k.var<uint_>("idx")] << ";\n" <<
             "#ifdef BOOST_COMPUTE_USE_INPUT_IDX\n" <<
-            k.decl<input_type>("next_idx") << " = " << input_idx[k.var<uint_>("idx")] << ";\n" <<
+            k.decl<uint_>("next_idx") << " = " << input_idx[k.var<uint_>("idx")] << ";\n" <<
             "#endif\n" <<
 
             // Comparison between currently best element (acc) and next element
@@ -246,6 +246,7 @@ inline void find_extrema_with_reduce(InputIterator input,
     );
 }
 
+// Space complexity: \Omega(2 * work-group-size * work-groups-per-compute-unit)
 template<class InputIterator, class Compare>
 InputIterator find_extrema_with_reduce(InputIterator first,
                                        InputIterator last,

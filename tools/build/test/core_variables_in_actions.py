@@ -22,7 +22,7 @@ t.write("file.jam", """\
 rule dummy ( i )
 {
     local a = 1 2 3 ;
-    ECHO From rule: $(a)" seconds" ;
+    ECHO From "rule:" $(a)" seconds" ;
     a on $(i) = $(a) ;
 }
 

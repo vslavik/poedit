@@ -16,6 +16,9 @@
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
+#include <boost/type_erasure/detail/meta.hpp>
+
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
 
 namespace boost {
 namespace type_erasure {
@@ -33,6 +36,8 @@ struct normalize_placeholder;
 }
 }
 }
+
+#endif
 
 #endif
 

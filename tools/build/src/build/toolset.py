@@ -9,6 +9,7 @@
 
 """ Support for toolset definition.
 """
+import sys
 
 import feature, property, generators, property_set
 import b2.util.set
@@ -16,13 +17,14 @@ import bjam
 
 from b2.util import cached, qualify_jam_action, is_iterable_typed, is_iterable
 from b2.util.utility import *
-from b2.util import bjam_signature
+from b2.util import bjam_signature, sequence
 from b2.manager import get_manager
 
 __re_split_last_segment = re.compile (r'^(.+)\.([^\.])*')
 __re_two_ampersands = re.compile ('(&&)')
 __re_first_segment = re.compile ('([^.]*).*')
 __re_first_group = re.compile (r'[^.]*\.(.*)')
+_ignore_toolset_requirements = '--ignore-toolset-requirements' not in sys.argv
 
 # Flag is a mechanism to set a value
 # A single toolset flag. Specifies that when certain
@@ -69,15 +71,17 @@ def reset ():
     # not including any rules in that module.
     __flags = {}
 
-    # A cache for varaible settings. The key is generated from the rule name and the properties.
+    # A cache for variable settings. The key is generated from the rule name and the properties.
     __stv = {}
 
 reset ()
 
 # FIXME: --ignore-toolset-requirements
 def using(toolset_module, *args):
-     loaded_toolset_module= get_manager().projects().load_module(toolset_module, [os.getcwd()]);
-     loaded_toolset_module.init(*args)
+    if isinstance(toolset_module, (list, tuple)):
+        toolset_module = toolset_module[0]
+    loaded_toolset_module= get_manager().projects().load_module(toolset_module, [os.getcwd()]);
+    loaded_toolset_module.init(*args)
 
 # FIXME push-checking-for-flags-module ....
 # FIXME: investigate existing uses of 'hack-hack' parameter
@@ -110,7 +114,7 @@ def flags(rule_or_module, variable_name, condition, values = []):
                           are allowed. If left empty, the flag will
                           always used.
 
-                          Propery sets may use value-less properties
+                          Property sets may use value-less properties
                           ('<a>'  vs. '<a>value') to match absent
                           properties. This allows to separately match
 
@@ -182,16 +186,14 @@ def find_satisfied_condition(conditions, ps):
     'properties', or an empty list if no such element exists."""
     assert is_iterable_typed(conditions, property_set.PropertySet)
     assert isinstance(ps, property_set.PropertySet)
-    features = set(p.feature() for p in ps.all())
 
     for condition in conditions:
 
         found_all = True
         for i in condition.all():
 
-            found = False
-            if i.value():
-                found = i.value() in ps.get(i.feature())
+            if i.value:
+                found = i.value in ps.get(i.feature)
             else:
                 # Handle value-less properties like '<architecture>' (compare with
                 # '<architecture>x86').
@@ -204,7 +206,7 @@ def find_satisfied_condition(conditions, ps):
                 # <a> <b>foo      <a>foo <b>foo    no match
                 # <a>foo <b>foo   <b>foo           no match
                 # <a>foo <b>foo   <a>foo <b>foo    match
-                found = not i.feature() in features
+                found = not ps.get(i.feature)
 
             found_all = found_all and found
 
@@ -337,12 +339,12 @@ def __handle_flag_value (manager, value, ps):
 
         for value in values:
 
-            if f.dependency():
+            if f.dependency:
                 # the value of a dependency feature is a target
                 # and must be actualized
                 result.append(value.actualize())
 
-            elif f.path() or f.free():
+            elif f.path or f.free:
 
                 # Treat features with && in the value
                 # specially -- each &&-separated element is considered
@@ -354,11 +356,11 @@ def __handle_flag_value (manager, value, ps):
                 else:
                     result.extend(value.split ('&&'))
             else:
-                result.append (ungristed)
+                result.append (value)
     else:
         result.append (value)
 
-    return result
+    return sequence.unique(result, stable=True)
 
 def __add_flag (rule_or_module, variable_name, condition, values):
     """ Adds a new flag setting with the specified values.
@@ -393,10 +395,9 @@ def add_requirements(requirements):
     be conditional or indirect conditional."""
     assert is_iterable_typed(requirements, basestring)
 
-    #if ! $(.ignore-requirements)
-    #{
-    __requirements.extend(requirements)
-    #}
+    if _ignore_toolset_requirements:
+        __requirements.extend(requirements)
+
 
 # Make toolset 'toolset', defined in a module of the same name,
 # inherit from 'base'
@@ -409,7 +410,7 @@ def add_requirements(requirements):
 def inherit(toolset, base):
     assert isinstance(toolset, basestring)
     assert isinstance(base, basestring)
-    get_manager().projects().load_module(base, []);
+    get_manager().projects().load_module(base, ['.']);
 
     inherit_generators(toolset, [], base)
     inherit_flags(toolset, base)

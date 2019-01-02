@@ -1,13 +1,9 @@
 /*=============================================================================
-    Copyright (c) 2014 Kohei Takahashi
+    Copyright (c) 2014,2018 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/config.hpp>
-
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-
 #include <boost/core/lightweight_test.hpp>
 #include <boost/fusion/container/vector/vector.hpp>
 #include <boost/fusion/container/list/list.hpp>
@@ -28,13 +24,4 @@ int main()
 
     return boost::report_errors();
 }
-
-#else
-
-int main()
-{
-    // no thing to do
-}
-
-#endif
 

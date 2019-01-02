@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Main features</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
-<link rel="prev" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
+<link rel="prev" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
 <link rel="next" href="exception_handling.html" title="Boost.Container and C++ exceptions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="container.main_features"></a><a class="link" href="main_features.html" title="Main features">Main features</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="main_features.html#container.main_features.move_emplace">Efficient insertion</a></span></dt>
 <dt><span class="section"><a href="main_features.html#container.main_features.containers_of_incomplete_types">Containers
       of Incomplete Types</a></span></dt>
@@ -38,7 +38,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="container.main_features.move_emplace"></a><a class="link" href="main_features.html#container.main_features.move_emplace" title="Efficient insertion">Efficient insertion</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="main_features.html#container.main_features.move_emplace.move_containers">Move-aware
         containers</a></span></dt>
 <dt><span class="section"><a href="main_features.html#container.main_features.move_emplace.emplace">Emplace:
@@ -155,7 +155,7 @@
    <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">non_copy_movable</span><span class="special">&gt;</span> <span class="identifier">l</span><span class="special">;</span>
    <span class="identifier">non_copy_movable</span> <span class="identifier">ncm</span><span class="special">;</span>
 
-   <span class="comment">//A new element will be built calling non_copy_movable(int) contructor</span>
+   <span class="comment">//A new element will be built calling non_copy_movable(int) constructor</span>
    <span class="identifier">l</span><span class="special">.</span><span class="identifier">emplace</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="number">0</span><span class="special">);</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">==</span> <span class="number">1</span><span class="special">);</span>
 
@@ -174,7 +174,7 @@
 <a name="container.main_features.containers_of_incomplete_types"></a><a class="link" href="main_features.html#container.main_features.containers_of_incomplete_types" title="Containers of Incomplete Types">Containers
       of Incomplete Types</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="main_features.html#container.main_features.containers_of_incomplete_types.recursive_containers">Recursive
         containers</a></span></dt>
 <dt><span class="section"><a href="main_features.html#container.main_features.containers_of_incomplete_types.type_erasure">Type
@@ -231,12 +231,21 @@
         that component</em></span></span>&#8221;</span>.
       </p>
 <p>
+        Finally C++17 added support for incomplete types in <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>,
+        <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span></code> and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward_list</span></code>
+        (see <a href="https://wg21.link/n4569" target="_top"><span class="emphasis"><em>N4569: Minimal incomplete
+        type support for standard containers, revision 4</em></span></a> for details),
+        but no other containers like <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set</span><span class="special">/</span><span class="identifier">map</span><span class="special">/</span><span class="identifier">unordered_set</span><span class="special">/</span><span class="identifier">unordered_map</span></code>,
+      </p>
+<p>
         Fortunately all <span class="bold"><strong>Boost.Container</strong></span> containers
         except <code class="computeroutput"><a class="link" href="../boost/container/static_vector.html" title="Class template static_vector">static_vector</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/container/small_vector.html" title="Class template small_vector">small_vector</a></code>
         and <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
         are designed to support incomplete types. <code class="computeroutput"><a class="link" href="../boost/container/static_vector.html" title="Class template static_vector">static_vector</a></code>
-        is special because it statically allocates memory for <code class="computeroutput"><span class="identifier">value_type</span></code>
-        and this requires complete types and <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/container/small_vector.html" title="Class template small_vector">small_vector</a></code>
+        are special because they statically allocates memory for <code class="computeroutput"><span class="identifier">value_type</span></code>
+        and this requires complete types. <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
         implements Small String Optimization which also requires complete types.
       </p>
 <p>
@@ -431,7 +440,7 @@
 <a name="container.main_features.scary_iterators"></a><a class="link" href="main_features.html#container.main_features.scary_iterators" title="SCARY iterators">SCARY iterators</a>
 </h3></div></div></div>
 <p>
-        The paper N2913, titled <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf%2c" target="_top">SCARY
+        The paper N2913, titled <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf" target="_top">SCARY
         Iterator Assignment and Initialization</a>, proposed a requirement that
         a standard container's iterator types have no dependency on any type argument
         apart from the container's <code class="computeroutput"><span class="identifier">value_type</span></code>,
@@ -462,7 +471,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="container.main_features.other_features"></a><a class="link" href="main_features.html#container.main_features.other_features" title="Other features">Other features</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Default constructors don't allocate memory which improves performance
             and usually implies a no-throw guarantee (if predicate's or allocator's
@@ -487,7 +496,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

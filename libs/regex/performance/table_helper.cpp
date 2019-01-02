@@ -11,6 +11,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/functional/hash.hpp>
 #include <vector>
 #include <set>
 #include <iostream>
@@ -26,6 +27,12 @@ inline std::string sanitize_string(const std::string& s)
    while(result[0] == '_')
       result.erase(0);
    return result;
+}
+
+inline std::string sanitize_short_string(const std::string& s)
+{
+   unsigned id = boost::hash<std::string>()(s);
+   return sanitize_string("id" + boost::lexical_cast<std::string>(id));
 }
 
 std::string format_precision(double val, int digits)
@@ -320,7 +327,7 @@ void add_cell(boost::intmax_t val, const std::string& table_name, const std::str
       //
       // Add a section for this table as well:
       //
-      std::string section_id = "section_" + sanitize_string(table_name);
+      std::string section_id = "section_" + sanitize_short_string(table_name);
       if(content.find(section_id + "[]") == std::string::npos)
       {
          std::string new_section = "\n[template " + section_id + "[]\n[section:" + section_id + " " + table_name + "]\n[" + table_id + "]\n[endsect]\n]\n";

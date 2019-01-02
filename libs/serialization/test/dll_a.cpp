@@ -1,3 +1,4 @@
+
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // dll_a.cpp
 
@@ -20,12 +21,12 @@
 #include <boost/archive/text_iarchive.hpp>
 
 template
-BOOST_SYMBOL_EXPORT void A::serialize(
+A_DLL_DECL void A::serialize(
     boost::archive::text_oarchive &ar,
     const unsigned int /* file_version */
 );
 template
-BOOST_SYMBOL_EXPORT void A::serialize(
+A_DLL_DECL void A::serialize(
     boost::archive::text_iarchive &ar,
     const unsigned int /* file_version */
 );
@@ -36,13 +37,13 @@ BOOST_SYMBOL_EXPORT void A::serialize(
 #include <boost/archive/polymorphic_iarchive.hpp>
 
 template
-BOOST_SYMBOL_EXPORT void A::serialize(
-    boost::archive::polymorphic_oarchive &ar,
+A_DLL_DECL void A::serialize(
+    boost::archive::polymorphic_oarchive &,
     const unsigned int /* file_version */
 );
 template
-BOOST_SYMBOL_EXPORT void A::serialize(
-    boost::archive::polymorphic_iarchive &ar,
+A_DLL_DECL void A::serialize(
+    boost::archive::polymorphic_iarchive &,
     const unsigned int /* file_version */
 );
 

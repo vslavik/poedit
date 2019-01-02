@@ -28,7 +28,7 @@ struct my_lexer : boost::spirit::lex::lexer<BaseLexer>
     lex::token_def<lex::unused_type, wchar_t> token;
 };
 
-int main(int argc, char* argv[])
+int main()
 {
     typedef lex::lexertl::token<wchar_t const*> token_type;
     typedef lex::lexertl::lexer<token_type> lexer_type;

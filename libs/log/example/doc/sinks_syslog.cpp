@@ -5,6 +5,11 @@
  *          http://www.boost.org/LICENSE_1_0.txt)
  */
 
+#include <boost/config.hpp>
+#if !defined(BOOST_WINDOWS)
+#define BOOST_LOG_USE_NATIVE_SYSLOG
+#endif
+
 #include <string>
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared_object.hpp>

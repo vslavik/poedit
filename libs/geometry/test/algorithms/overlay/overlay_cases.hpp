@@ -3,10 +3,11 @@
 //
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2016.
+// Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -41,6 +42,17 @@ static std::string case_3[2] = {
         "POLYGON((1 2,2 4,4 3,3 1,1 2))",
         "POLYGON((1 1,1 4,4 4,4 1,1 1))" };
 
+static std::string case_3_sph[2] = {
+        "POLYGON((1 2,2 4.0012148518458881,4 3,3.0001521347633209 1.0003046174216719,1 2))",
+        "POLYGON((1 1,1 4,4 4,4 1,1 1))" };
+
+static std::string case_3_2[2] = {
+        "POLYGON((1 1,1 2,1 4,2 4,4 4,4 3,4 1,3 1,1 1))",
+        "POLYGON((1 1,1 4,4 4,4 1,1 1))" };
+
+static std::string case_3_2_sph[2] = {
+        "POLYGON((1 1,1 2,1 4,2 4.0012148518458881,4 4, 4 3,4 1,3.0001521347633209 1.0003046174216719,1 1))",
+        "POLYGON((1 1,1 4,4 4,4 1,1 1))" };
 
 static std::string case_4[2] = {
         "POLYGON((0 2,2 5,5 3,3 0,0 2))",
@@ -55,6 +67,10 @@ static std::string case_6[2] = {
         "POLYGON((0 1,2 5,5 2,0 1))",
         "POLYGON((1 3,2 5,5 2,1 3))" };
 
+static std::string case_6_sph[2] = {
+        "POLYGON((0 1,2 5,5 2,0 1))",
+        "POLYGON((0.99816884334995659 3.0004544452169379,2 5,5 2,0.99816884334995659 3.0004544452169379))" };
+
 static std::string case_7[2] = {
         "POLYGON((0 1,1 3,5 2,0 1))",
         "POLYGON((1 3,2 5,5 2,1 3))" };
@@ -63,9 +79,17 @@ static std::string case_8[2] = {
         "POLYGON((0 0,0 4,4 0,0 0))",
         "POLYGON((1 3,4 4,3 1,1 3))" };
 
+static std::string case_8_sph[2] = {
+        "POLYGON((0 0,0 4,4 0,0 0))",
+        "POLYGON((1.0023984691325358 3.0008039480973441,4 4,3.0005710779764270 1.0017165445544389,1.0023984691325358 3.0008039480973441))" };
+
 static std::string case_9[2] = {
         "POLYGON((0 0,0 4,4 0,0 0))",
         "POLYGON((2 2,2 4,5 4,2 2))" };
+
+static std::string case_9_sph[2] = {
+        "POLYGON((0 0,0 4,4 0,0 0))",
+        "POLYGON((2.0021918671997510 2.0014662914956771,2 4,5 4,2.0021918671997510 2.0014662914956771))" };
 
 static std::string ccw_case_9[2] = {
         "POLYGON((0 0,4 0,0 4,0 0))",
@@ -79,9 +103,17 @@ static std::string case_10[2] = {
         "POLYGON((0 0,2 4,4 0,0 0))",
         "POLYGON((1 2,2 5,3 2,2 4,1 2))" };
 
+static std::string case_10_sph[2] = {
+        "POLYGON((0 0,2 4,4 0,0 0))",
+        "POLYGON((1.0027234797707729 2.0081941097810105,2 5,2.9972765202292275 2.0081941097810105,2 4,1.0027234797707729 2.0081941097810105))" };
+
 static std::string case_11[2] = {
         "POLYGON((0 0,0 4,4 0,0 0))",
         "POLYGON((1 2,2 2,2 1,1 1))" };
+
+static std::string case_11_sph[2] = {
+        "POLYGON((0 0,0 4,4 0,0 0))",
+        "POLYGON((1 2,2 2.0036594926050890,2 1,1 1))" };
 
 static std::string case_12[2] = {
         "POLYGON((0 1,1 4,2 2,3 4,4 1,0 1))",
@@ -91,25 +123,49 @@ static std::string case_13[2] = {
         "POLYGON((0 1,1 2,3 0,0 1))",
         "POLYGON((0 3,2 3,2 1,0 3))" };
 
+static std::string case_13_sph[2] = {
+        "POLYGON((0 1,1 2,3 0,0 1))",
+        "POLYGON((0 2.9977189008308094,2 3,2 1.0004570537241211,0 2.9977189008308094))" };
+
 static std::string case_14[2] = {
         "POLYGON((0 0,0 4,2 2,4 0,0 0))",
         "POLYGON((1 3,4 4,3 1,1 3))" };
+
+static std::string case_14_sph[2] = {
+        "POLYGON((0 0,0 4,2 2.0036594926050877,4 0,0 0))",
+        "POLYGON((1.0023984691325358 3.0008039480973441,4 4,3.0005710779764270 1.0017165445544389,1.0023984691325358 3.0008039480973441))" };
 
 static std::string case_15[2] = {
         "POLYGON((0 0,0 4,1.5 2.5,2.5 1.5,4 0,0 0))",
         "POLYGON((1 3,4 4,3 1,1 3))" };
 
+static std::string case_15_sph[2] = {
+        "POLYGON((0 0,0 4,1.5 2.5037147591481679,2.5 1.5031461368777814,4 0,0 0))",
+        "POLYGON((1.0023984691325358 3.0008039480973441,4 4,3.0005710779764270 1.0017165445544389,1.0023984691325358 3.0008039480973441))" };
+
 static std::string case_16[2] = {
         "POLYGON((1 2,3 4,2 1,1 2))",
         "POLYGON((1 0,1 2,2 1,3 4,2 3,3 5,4 0,1 0))" };
+
+static std::string case_16_sph[2] = {
+        "POLYGON((1 2,3 4,2 1,1 2))",
+        "POLYGON((1 0,1 2,2 1,3 4,2.0013644968330810 3.0027358616998980,3 5,4 0,1 0))" };
 
 static std::string case_17[2] = {
         "POLYGON((0 0,0 4,4 0,0 0))",
         "POLYGON((1 1,1 3,3 1,1 1))" };
 
+static std::string case_17_sph[2] = {
+        "POLYGON((0 0,0 4,4 0,0 0))",
+        "POLYGON((1 1,1 3.0031983963093531,3 1.0022887548647623,1 1))" };
+
 static std::string case_18[2] = {
         "POLYGON((0 0,0 4,1.5 2.5,2.5 1.5,4 0,0 0))",
         "POLYGON((1 1,1 3,3 1,1 1))" };
+
+static std::string case_18_sph[2] = {
+        "POLYGON((0 0,0 4,1.5 2.5037147591481679,2.5 1.5031461368777814,4 0,0 0))",
+        "POLYGON((1 1,1 3.0031983963093531,3 1.0022887548647623,1 1))" };
 
 static std::string case_19[2] = {
         "POLYGON((2 0,1 3,5 2,2 0))",
@@ -451,6 +507,69 @@ static std::string case_99[2] =
         "POLYGON((0 0,0 40,40 40,40 0,0 0),(10 10,20 19,20 20,10 10),(20 20,30 30,20 21,20 20))",
         "POLYGON((10 10,10 30,30 30,30 10,10 10))"
     };
+
+static std::string case_100[2] =
+    {
+        "POLYGON((2 1,4 1,4 3,2 3,2 1),(3 1.5,4 3,2.5 2.5,3 1.5))",
+        "POLYGON((4 0,8 0,8 4,4 4,4 0))"
+    };
+
+static std::string case_101[2] =
+{
+    // Smaller adapted version of case_recursive_boxes_34, with only one cluster
+    "POLYGON((0 1,0 5,5 5,5 1,0 1))",
+    "POLYGON((3 6,4 5,5 4,3 2,1 4,3 6),(4 5,3 4,3.5 3.5,4 4,4 5))"
+};
+
+static std::string case_102[2] =
+{
+    // Smaller adapted version of case_recursive_boxes_34, with only one cluster
+    "POLYGON((1.25 3.75,1.25 5,5 5,5 3.75,1.25 3.75))",
+    "POLYGON((3 6,4 5,5 4,3 2,1 4,3 6),(4 5,3 4,3.5 3.5,4 4,4 5))"
+};
+
+static std::string case_103[2] =
+{
+    // intersection
+    // all points of [1] the same as some points of [0]
+    "POLYGON((0 0,0 1,1 1,1 0,0 0))",
+    "POLYGON((0 0,0 1,1 0,0 0))"
+};
+
+static std::string case_104[2] =
+{
+    // union in hole
+    // all points of [1] the same as some points of [0]
+    "POLYGON((0 0,0 10,10 10,10 0,0 0),(1 1,9 1,9 9,1 9,1 1))",
+    "POLYGON((1 1,1 9,9 9,9 1,1 1))"
+};
+
+static const std::string case_105[2] =
+{
+    // Multiple touching interiors
+    "POLYGON((0 0,0 10,10 10,10 0,0 0),(3 3,7 3,7 7,3 7,3 3))",
+    "POLYGON((0 0,0 10,10 10,10 0,0 0),(1 5,2 4,3 5,2 6,1 5),(4 2,5 1,6 2,5 3,4 2),(4 8,5 7,6 8,5 9,4 8),(7 5,8 4,9 5,8 6,7 5))"
+};
+
+static const std::string case_106[2] =
+{
+    // Smaller adapted version of case_126_multi
+    "POLYGON((5 5,5 10,10 10,10 5,5 5),(9 8,7 9,5 8,7 7,9 8))",
+    "POLYGON((0 3,6 3,6 9,0 9,0 3))"
+};
+
+static const std::string case_107[2] =
+{
+    // Same but with hole in second polygon too
+    "POLYGON((5 5,5 10,10 10,10 5,5 5),(9 8,7 9,5 8,7 7,9 8))",
+    "POLYGON((0 3,6 3,6 9,0 9,0 3),(2 6,4 7,6 6,4 5,2 6))"
+};
+
+static const std::string case_108[2] =
+{
+    "POLYGON((0 1,0 2,1 2,1 3,2 3,2 2,3 2,3 1,2 1,2 0,1 0,1 1,0 1))",
+    "POLYGON((1 1,1 2,2 2,2 1,1 1))"
+};
 
 static std::string case_many_situations[2] = {
         "POLYGON((2 6,2 14,10 18,18 14,18 6,16 5,14 4,12 3,10 2,8 3,6 4,4 5,2 6))",
@@ -1031,5 +1150,54 @@ static std::string mysql_21965285_b_inv[2] =
         "POLYGON((-20 -20,-20 20,20 20,20 -20,-20 -20),(1 1, -4 -3, 19 -8, 3 0, 1 1),(3 0, 8 12, 1 19, -3 16, -2 7, 3 0))"
     };
 
+static std::string mysql_23023665_1[2] =
+    {
+        "POLYGON((7 3,0 10,0 -6,9 -5,7 7,7 3),(0 8,2 3,2 -2,0 8))",
+        "POLYGON((0 8,-8 14,-11 18,-19 11,-3 1,0 8))"
+    };
+
+static std::string mysql_23023665_2[2] =
+    {
+        "POLYGON((0 0,0 10,10 10,10 0,0 0),(0 8,4 4,4 6,0 8))",
+        "POLYGON((0 8,-8 8,-10 4,0 8))"
+    };
+
+static std::string mysql_23023665_3[2] =
+    {
+        "POLYGON((5 0,15 18,-14 11,5 0),(0 3,-1 4,5 0,0 3))",
+        "POLYGON((6 0,-5 0,-1 -12,6 0))"
+    };
+
+// mysql_23023665_4 was duplicate with mysql_21964049
+
+static std::string mysql_23023665_5[2] =
+    {
+        "POLYGON((8 6,5 7,-1 4,-8 -7,0 -17,8 6),(3 6,5 5,0 -2,3 6))",
+        "POLYGON((3 5,-17 11,-8 -3,3 5))"
+    };
+
+static std::string mysql_23023665_6[2] =
+    {
+        "POLYGON((6 7,18 14, -8 1, 0 0, 18 -8, 6 7), (6 0, -4 3, 5 3, 6 0))",
+        "POLYGON((2 3,-3 5,-10 -1,2 3))"
+    };
+
+static std::string mysql_23023665_10[2] =
+    {
+        "POLYGON((0 5, -6 -17, 12 17, 0 5),(4 6, 5 5, 0 1, 4 6))",
+        "POLYGON((3 9, -15 -5, 13 -11, 3 9))"
+    };
+
+static std::string mysql_23023665_11[2] =
+    {
+        "POLYGON((5 6,-15 -13,1 -8,5 6))",
+        "POLYGON((0 8,-19 6,18 -17,20 8,11 17,0 8),(3 2,3 -1,1 0,3 2),(1 3,4 4,0 -1,1 3))"
+    };
+
+static std::string mysql_23023665_13[2] =
+{
+    "POLYGON((6 7,18 14,-8 1,0 0,18 -8,6 7),(6 0,-4 3,5 3,6 0))",
+    "POLYGON((0 7,-5 6,11 -13,0 7))"
+};
 
 #endif // BOOST_GEOMETRY_TEST_OVERLAY_CASES_HPP

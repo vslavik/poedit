@@ -48,7 +48,7 @@ public:
 
         *this <<
             "uint i = get_global_id(0);\n" <<
-            "uint i1 = i;\n" <<
+            "const uint i1 = i;\n" <<
             "uint j;\n" <<
             "for(j = 0; j<p_count; j++,i++)\n" <<
             "{\n" <<

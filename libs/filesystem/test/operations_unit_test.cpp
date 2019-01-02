@@ -46,8 +46,6 @@ using std::string;
 
 namespace
 {
-  const path temp_dir(initial_path() / unique_path("op-unit_test-%%%%-%%%%-%%%%"));
-
   bool cleanup = true;
 
   void check(bool ok, const char* file, int line)
@@ -179,7 +177,7 @@ namespace
 
     recursive_directory_iterator end;
 
-    recursive_directory_iterator it("..");
+    recursive_directory_iterator it(".");
 
     CHECK(!it->path().empty());
 
@@ -206,16 +204,16 @@ namespace
       //cout << "  " << it->path() << "\n";
     }
 
-    CHECK(recursive_directory_iterator("..") != recursive_directory_iterator());
+    CHECK(recursive_directory_iterator(".") != recursive_directory_iterator());
     CHECK(recursive_directory_iterator() == end);
 
 #ifndef BOOST_NO_CXX11_RANGE_BASED_FOR
-    for (directory_entry& x : recursive_directory_iterator(".."))
+    for (directory_entry& x : recursive_directory_iterator("."))
     {
       CHECK(!x.path().empty());
       //cout << "  " << x.path() << "\n";
     }
-    const recursive_directory_iterator dir_itr("..");
+    const recursive_directory_iterator dir_itr(".");
     for (directory_entry& x : dir_itr)
     {
       CHECK(!x.path().empty());
@@ -223,7 +221,7 @@ namespace
     }
 #endif
 
-    for (recursive_directory_iterator itr("..");
+    for (recursive_directory_iterator itr(".");
       itr != recursive_directory_iterator(); ++itr)
     {
       CHECK(!itr->path().empty());
@@ -317,7 +315,7 @@ namespace
 
   //  string_file_tests  ---------------------------------------------------------------//
 
-  void string_file_tests()
+  void string_file_tests(const path& temp_dir)
   {
     cout << "string_file_tests..." << endl;
     std::string contents("0123456789");
@@ -338,7 +336,7 @@ namespace
 //                                                                                      //
 //--------------------------------------------------------------------------------------//
 
-int cpp_main(int, char*[])
+int cpp_main(int argc, char* argv[])
 {
 // document state of critical macros
 #ifdef BOOST_POSIX_API
@@ -352,6 +350,24 @@ int cpp_main(int, char*[])
   
   cout << "current_path() is " << current_path().string() << endl;
 
+  if (argc >= 2)
+  {
+    cout << "argv[1] is '" << argv[1] << "', changing current_path() to it" << endl;
+
+    error_code ec;
+    current_path( argv[1], ec );
+
+    if (ec)
+    {
+      cout << "current_path('" << argv[1] << "') failed: " << ec << ": " << ec.message() << endl;
+    }
+
+    cout << "current_path() is " << current_path().string() << endl;
+  }
+
+  const path temp_dir(current_path() / ".." / unique_path("op-unit_test-%%%%-%%%%-%%%%"));
+  cout << "temp_dir is " << temp_dir.string() << endl;
+
   create_directory(temp_dir);
 
   file_status_test();
@@ -362,7 +378,7 @@ int cpp_main(int, char*[])
   directory_entry_test();
   directory_entry_overload_test();
   error_handling_test();
-  string_file_tests();
+  string_file_tests(temp_dir);
 
   cout << unique_path() << endl;
   cout << unique_path("foo-%%%%%-%%%%%-bar") << endl;

@@ -25,5 +25,12 @@ install images : [ glob $(BOOST_ROOT)/doc/src/images/*.png ]
 explicit css ;
 explicit images ;
 
-alias boostdoc : standalone
-    : : : <implicit-dependency>standalone ;
+###############################################################################
+alias boostdoc
+    : atomic
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

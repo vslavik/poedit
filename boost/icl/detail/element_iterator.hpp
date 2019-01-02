@@ -89,7 +89,7 @@ struct elemental;
 
     template< class DomainT, class CodomainT, 
               ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE) Interval >
-    struct elemental<std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare)const, CodomainT> >
+    struct elemental<std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare) const, CodomainT> >
     {
         typedef std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare), CodomainT> segment_type;
         typedef ICL_INTERVAL_TYPE(Interval,DomainT,Compare)                       interval_type;
@@ -113,7 +113,7 @@ struct elemental;
     };
 
     template< class CodomainT, ICL_INTERVAL(ICL_COMPARE) Interval >
-    struct elemental<std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare)const, CodomainT> >
+    struct elemental<std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare) const, CodomainT> >
     {
         typedef std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare), CodomainT> segment_type;
         typedef ICL_INTERVAL_TYPE(Interval,DomainT,Compare)                       interval_type;
@@ -161,7 +161,7 @@ struct segment_adapter<SegmentIteratorT, ICL_INTERVAL_TYPE(Interval,DomainT,Comp
 
 template < class SegmentIteratorT, class DomainT, class CodomainT, 
            ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE) Interval >
-struct segment_adapter<SegmentIteratorT, std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare)const, CodomainT> >
+struct segment_adapter<SegmentIteratorT, std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare) const, CodomainT> >
 {
     typedef segment_adapter                         type;
     typedef ICL_INTERVAL_TYPE(Interval,DomainT,Compare)               interval_type;
@@ -214,7 +214,7 @@ struct segment_adapter
 };
 
 template < class SegmentIteratorT, class CodomainT, ICL_INTERVAL(ICL_COMPARE) Interval >
-struct segment_adapter<SegmentIteratorT, std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare)const, CodomainT> >
+struct segment_adapter<SegmentIteratorT, std::pair<ICL_INTERVAL_TYPE(Interval,DomainT,Compare) const, CodomainT> >
 {
     typedef segment_adapter                                type;
     typedef ICL_INTERVAL_TYPE(Interval,DomainT,Compare)    interval_type;

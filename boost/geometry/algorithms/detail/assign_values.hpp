@@ -7,6 +7,11 @@
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -34,6 +39,7 @@
 #include <boost/geometry/geometries/concepts/check.hpp>
 
 
+#include <boost/geometry/util/is_inverse_spheroidal_coordinates.hpp>
 #include <boost/geometry/util/for_each_coordinate.hpp>
 
 
@@ -86,12 +92,13 @@ struct assign_inverse_box_or_segment
         typedef typename coordinate_type<point_type>::type bound_type;
 
         initialize<0, 0, dimension<BoxOrSegment>::type::value>::apply(
-            geometry, boost::numeric::bounds<bound_type>::highest()
+            geometry, geometry::bounds<bound_type>::highest()
         );
         initialize<1, 0, dimension<BoxOrSegment>::type::value>::apply(
-            geometry, boost::numeric::bounds<bound_type>::lowest()
+            geometry, geometry::bounds<bound_type>::lowest()
         );
     }
+
 };
 
 

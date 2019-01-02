@@ -22,7 +22,7 @@ public:
 
   //! @returns true on success, false otherwise
   bool process() {
-    if(!is_processed) return true;
+    if(is_processed) return true;
 
     // ...
     is_processed = true;

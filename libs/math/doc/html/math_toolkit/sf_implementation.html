@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Additional Implementation Notes</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.4.0">
-<link rel="up" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
-<link rel="prev" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.8.0">
+<link rel="up" href="../backgrounders.html" title="Chapter&#160;20.&#160;Backgrounders">
+<link rel="prev" href="../backgrounders.html" title="Chapter&#160;20.&#160;Backgrounders">
 <link rel="next" href="special_tut.html" title="Tutorial: How to Write a New Special Function">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -34,7 +34,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h0"></a>
-      <span><a name="math_toolkit.sf_implementation.implementation_philosophy"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.implementation_philosophy">Implementation
+      <span class="phrase"><a name="math_toolkit.sf_implementation.implementation_philosophy"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.implementation_philosophy">Implementation
       philosophy</a>
     </h5>
 <p>
@@ -87,7 +87,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h1"></a>
-      <span><a name="math_toolkit.sf_implementation.accuracy_and_representation_of_t"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.accuracy_and_representation_of_t">Accuracy
+      <span class="phrase"><a name="math_toolkit.sf_implementation.accuracy_and_representation_of_t"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.accuracy_and_representation_of_t">Accuracy
       and Representation of Test Values</a>
     </h5>
 <p>
@@ -130,13 +130,13 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h2"></a>
-      <span><a name="math_toolkit.sf_implementation.tolerance_of_tests"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.tolerance_of_tests">Tolerance
+      <span class="phrase"><a name="math_toolkit.sf_implementation.tolerance_of_tests"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.tolerance_of_tests">Tolerance
       of Tests</a>
     </h5>
 <p>
       The tolerances need to be set to the maximum of:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Some epsilon value.
         </li>
@@ -156,7 +156,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h3"></a>
-      <span><a name="math_toolkit.sf_implementation.handling_unsuitable_arguments"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_unsuitable_arguments">Handling
+      <span class="phrase"><a name="math_toolkit.sf_implementation.handling_unsuitable_arguments"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_unsuitable_arguments">Handling
       Unsuitable Arguments</a>
     </h5>
 <p>
@@ -165,7 +165,7 @@
       is proposed that signalling a domain error is mandatory when the argument would
       give an mathematically undefined result.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Guideline 1
         </li></ul></div>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -182,7 +182,7 @@
         a domain error whenever evaluated with argument values for which the mathematical
         function is undefined.
       </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Guideline 2
         </li></ul></div>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -223,7 +223,7 @@
 </table></div>
 <h5>
 <a name="math_toolkit.sf_implementation.h4"></a>
-      <span><a name="math_toolkit.sf_implementation.handling_of_functions_that_are_n"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_of_functions_that_are_n">Handling
+      <span class="phrase"><a name="math_toolkit.sf_implementation.handling_of_functions_that_are_n"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_of_functions_that_are_n">Handling
       of Functions that are Not Mathematically defined</a>
     </h5>
 <p>
@@ -258,7 +258,7 @@
 </table></div>
 <h5>
 <a name="math_toolkit.sf_implementation.h5"></a>
-      <span><a name="math_toolkit.sf_implementation.median_of_distributions"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.median_of_distributions">Median of
+      <span class="phrase"><a name="math_toolkit.sf_implementation.median_of_distributions"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.median_of_distributions">Median of
       distributions</a>
     </h5>
 <p>
@@ -293,7 +293,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h6"></a>
-      <span><a name="math_toolkit.sf_implementation.handling_of_floating_point_infin"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_of_floating_point_infin">Handling
+      <span class="phrase"><a name="math_toolkit.sf_implementation.handling_of_floating_point_infin"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.handling_of_floating_point_infin">Handling
       of Floating-Point Infinity</a>
     </h5>
 <p>
@@ -351,7 +351,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h7"></a>
-      <span><a name="math_toolkit.sf_implementation.scale_shape_and_location"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.scale_shape_and_location">Scale, Shape
+      <span class="phrase"><a name="math_toolkit.sf_implementation.scale_shape_and_location"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.scale_shape_and_location">Scale, Shape
       and Location</a>
     </h5>
 <p>
@@ -378,10 +378,10 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h8"></a>
-      <span><a name="math_toolkit.sf_implementation.notes_on_implementation_of_speci"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.notes_on_implementation_of_speci">Notes
+      <span class="phrase"><a name="math_toolkit.sf_implementation.notes_on_implementation_of_speci"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.notes_on_implementation_of_speci">Notes
       on Implementation of Specific Functions &amp; Distributions</a>
     </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Default parameters for the Triangular Distribution. We are uncertain about
           the best default parameters. Some sources suggest that the Standard Triangular
           Distribution has lower = 0, mode = half and upper = 1. However as a approximation
@@ -390,7 +390,7 @@
         </li></ul></div>
 <h5>
 <a name="math_toolkit.sf_implementation.h9"></a>
-      <span><a name="math_toolkit.sf_implementation.rational_approximations_used"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.rational_approximations_used">Rational
+      <span class="phrase"><a name="math_toolkit.sf_implementation.rational_approximations_used"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.rational_approximations_used">Rational
       Approximations Used</a>
     </h5>
 <p>
@@ -431,7 +431,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h10"></a>
-      <span><a name="math_toolkit.sf_implementation.representation_of_mathematical_c"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.representation_of_mathematical_c">Representation
+      <span class="phrase"><a name="math_toolkit.sf_implementation.representation_of_mathematical_c"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.representation_of_mathematical_c">Representation
       of Mathematical Constants</a>
     </h5>
 <p>
@@ -493,7 +493,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.sf_implementation.h11"></a>
-      <span><a name="math_toolkit.sf_implementation.thread_safety"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.thread_safety">Thread
+      <span class="phrase"><a name="math_toolkit.sf_implementation.thread_safety"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.thread_safety">Thread
       safety</a>
     </h5>
 <p>
@@ -520,7 +520,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h12"></a>
-      <span><a name="math_toolkit.sf_implementation.sources_of_test_data"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.sources_of_test_data">Sources
+      <span class="phrase"><a name="math_toolkit.sf_implementation.sources_of_test_data"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.sources_of_test_data">Sources
       of Test Data</a>
     </h5>
 <p>
@@ -561,7 +561,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h13"></a>
-      <span><a name="math_toolkit.sf_implementation.testing_for_invalid_parameters_t"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.testing_for_invalid_parameters_t">Testing
+      <span class="phrase"><a name="math_toolkit.sf_implementation.testing_for_invalid_parameters_t"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.testing_for_invalid_parameters_t">Testing
       for Invalid Parameters to Functions and Constructors</a>
     </h5>
 <p>
@@ -590,7 +590,7 @@
 <p>
       Checks made are:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Infinity or NaN (if available) passed in place of each of the valid params.
         </li>
@@ -627,7 +627,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h14"></a>
-      <span><a name="math_toolkit.sf_implementation.creating_and_managing_the_equati"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.creating_and_managing_the_equati">Creating
+      <span class="phrase"><a name="math_toolkit.sf_implementation.creating_and_managing_the_equati"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.creating_and_managing_the_equati">Creating
       and Managing the Equations</a>
     </h5>
 <p>
@@ -648,7 +648,7 @@
       these files and should not currently be used.
     </p>
 <p>
-      Conversion to SVG was achieved using <a href="http://www.grigoriev.ru/svgmath/" target="_top">SVGMath</a>
+      Conversion to SVG was achieved using <a href="https://sourceforge.net/projects/svgmath/" target="_top">SVGMath</a>
       and a command line such as:
     </p>
 <pre class="programlisting">$for file in *.mml; do
@@ -829,7 +829,7 @@ done
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h15"></a>
-      <span><a name="math_toolkit.sf_implementation.producing_graphs"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.producing_graphs">Producing
+      <span class="phrase"><a name="math_toolkit.sf_implementation.producing_graphs"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.producing_graphs">Producing
       Graphs</a>
     </h5>
 <p>
@@ -845,10 +845,11 @@ done
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

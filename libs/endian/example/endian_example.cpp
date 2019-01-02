@@ -18,7 +18,7 @@
 
 using namespace boost::endian;
 
-namespace 
+namespace
 {
   //  This is an extract from a very widely used GIS file format. Why the designer
   //  decided to mix big and little endians in the same file is not known. But
@@ -39,7 +39,7 @@ namespace
 int main(int, char* [])
 {
   header h;
-  
+
   BOOST_STATIC_ASSERT(sizeof(h) == 16U);  // reality check
 
   h.file_code   = 0x01020304;
@@ -54,7 +54,7 @@ int main(int, char* [])
   //  does bulk I/O operations, <cstdio> fopen/fwrite is used for I/O in this example.
 
   std::FILE* fi = std::fopen(filename, "wb");  // MUST BE BINARY
-  
+
   if (!fi)
   {
     std::cout << "could not open " << filename << '\n';

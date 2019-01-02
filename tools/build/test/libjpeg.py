@@ -13,8 +13,8 @@ t = BoostBuild.Tester(arguments=['toolset=mock', '--ignore-site-config', '--user
 MockToolset.create(t)
 
 # Build from source
-t.write("libjpeg/jpeg.h", 'libjpeg')
-t.write("libjpeg/jpeg.c", 'jpeg')
+t.write("libjpeg/jpeglib.h", 'libjpeg')
+t.write("libjpeg/jerror.c", 'jpeg')
 
 t.write("Jamroot.jam", """
 path-constant here : . ;
@@ -39,7 +39,7 @@ t.rm('libjpeg')
 common_stuff = '''
 source_file('test.cpp', 'test.cpp')
 source_file('main.cpp', 'int main() {}')
-source_file('jpeg.h.cpp', '#include <jpeg.h>')
+source_file('jpeg.h.cpp', '#include <stdio.h>\\n#include <jpeglib.h>\\n')
 action('-c -x c++ $main.cpp -o $main.o')
 '''
 t.write('test.cpp', 'test.cpp')
@@ -88,7 +88,7 @@ using libjpeg : : <name>mylibjpeg <include>$(here)/libjpeg <search>$(here)/libjp
 exe test : test.cpp /libjpeg//libjpeg : : <link>static <link>shared ;
 """)
 
-t.write('libjpeg/jpeg.h', 'libjpeg')
+t.write('libjpeg/jpeglib.h', 'libjpeg')
 
 MockToolset.set_expected(t, common_stuff + '''
 action('$main.o -L./libjpeg --static-lib=mylibjpeg -o $config.exe')

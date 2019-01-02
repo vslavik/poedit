@@ -125,7 +125,7 @@ The third macro of this section provides maximum initialization flexibility, all
         // Do something that needs to be done on logger initialization,
         // e.g. add a stop watch attribute.
         src::severity_logger_mt< > lg;
-        lg.add_attribute("StopWatch", boost::make_shared< attrs::timer >());
+        lg.add_attribute("StopWatch", attrs::timer());
         // The initializing routine must return the logger instance
         return lg;
     }
@@ -148,14 +148,14 @@ For example:
 
 
     // my_logger.cpp
-    // ===========
+    // =============
 
     #include "my_logger.h"
 
     BOOST_LOG_GLOBAL_LOGGER_INIT(my_logger, src::severity_logger_mt)
     {
         src::severity_logger_mt< > lg;
-        lg.add_attribute("StopWatch", boost::make_shared< attrs::timer >());
+        lg.add_attribute("StopWatch", attrs::timer());
         return lg;
     }
 

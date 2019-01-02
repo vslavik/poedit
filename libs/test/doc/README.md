@@ -1,7 +1,7 @@
 This folder contains the documentation for the Boost.Test library.
 Any contribution or submission to the library should be accompanied by the corresponding documentation.
 
-The format of the documentation uses [http://www.boost.org/tools/quickbook/index.html Quickbook].
+The format of the documentation uses [Quickbook](http://www.boost.org/tools/quickbook/index.html).
 
 How to build the documentation
 ==============================

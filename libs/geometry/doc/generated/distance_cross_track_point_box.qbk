@@ -33,7 +33,7 @@ class strategy::distance::cross_track_point_box
 [table
 [[Parameter] [Default] [Description]]
 [[typename CalculationType] [void] [numeric type for calculation (e.g. high precision); if [*void] then it is extracted automatically from the coordinate type and (if necessary) promoted to floating point ]]
-[[typename Strategy] [cross_track<CalculationType>] [underlying point-segment distance strategy, defaults to cross track]]
+[[typename Strategy] [haversine<double, CalculationType>] [underlying point-point distance strategy  ]]
 ]
 
 [heading Constructor(s)]
@@ -88,9 +88,6 @@ return_type< Point, Box >::type apply(Point const & point, Box const & box)``
 
 [heading Header]
 `#include <boost/geometry/strategies/spherical/distance_cross_track_point_box.hpp>`
-
-[heading See also]
-[link geometry.reference.algorithms.distance.distance_3_with_strategy distance (with strategy)]
 
 [endsect]
 

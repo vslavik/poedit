@@ -28,8 +28,8 @@ typedef scaled_base_unit<pound_base_unit, scale<2, static_rational<-4> > > ounce
 
 template<>
 struct base_unit_info<us::ounce_base_unit> {
-    static const char* name()   { return("ounce"); }
-    static const char* symbol() { return("oz"); }
+    static BOOST_CONSTEXPR const char* name()   { return("ounce"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("oz"); }
 };
 
 } // namespace units

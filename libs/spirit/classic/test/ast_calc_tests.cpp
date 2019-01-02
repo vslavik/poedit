@@ -124,8 +124,8 @@ struct dyn_calculator : public grammar<dyn_calculator>
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-typedef char const*                         iterator_t;
-typedef tree_match<iterator_t>              parse_tree_match_t;
+typedef char const*                         parser_iterator_t;
+typedef tree_match<parser_iterator_t>       parse_tree_match_t;
 typedef parse_tree_match_t::tree_iterator   iter_t;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         case calculator::expressionID:
@@ -199,11 +199,11 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         default:
-            BOOST_TEST(0); // error
+            std::abort(); // error
     }
 
     return 0;

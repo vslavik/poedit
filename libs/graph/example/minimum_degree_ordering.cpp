@@ -99,13 +99,10 @@ int main(int argc, char* argv[])
   if ( argc >= 4 )
   delta = atoi(argv[3]);
   
-  typedef double Type;
- 
   harwell_boeing hbs(argv[1]);
 
   //must be BGL directed graph now
   typedef adjacency_list<vecS, vecS, directedS>  Graph;
-  typedef graph_traits<Graph>::vertex_descriptor Vertex;
 
   int n = hbs.nrows();
 

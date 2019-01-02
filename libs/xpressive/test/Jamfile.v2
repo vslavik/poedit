@@ -27,10 +27,10 @@ project
     ;
 
 test-suite "xpressive"
-       : [ run regress.cpp : : : <toolset>msvc:<cxxflags>/bigobj <dependency>regress.txt ]
-         [ run regress_u.cpp : : : <toolset>msvc:<cxxflags>/bigobj <dependency>regress.txt ]
-         [ run c_traits.cpp : : : <toolset>msvc:<cxxflags>/bigobj <dependency>regress.txt ]
-         [ run c_traits_u.cpp : : : <toolset>msvc:<cxxflags>/bigobj <dependency>regress.txt ]
+       : [ run regress.cpp : : regress.txt : <toolset>msvc:<cxxflags>/bigobj ]
+         [ run regress_u.cpp : : regress.txt : <toolset>msvc:<cxxflags>/bigobj ]
+         [ run c_traits.cpp : : regress.txt : <toolset>msvc:<cxxflags>/bigobj ]
+         [ run c_traits_u.cpp : : regress.txt : <toolset>msvc:<cxxflags>/bigobj ]
          [ run test1.cpp ]
          [ run test2.cpp ]
          [ run test3.cpp ]

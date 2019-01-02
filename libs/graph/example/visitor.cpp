@@ -84,7 +84,6 @@ main(int, char*[])
   Graph G(edges, edges + sizeof(edges)/sizeof(E), 5);
 #endif
 
-  typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
   typedef boost::graph_traits<Graph>::vertices_size_type size_type;
   
   std::vector<size_type> d(num_vertices(G));  

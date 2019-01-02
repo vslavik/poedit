@@ -13,6 +13,8 @@
 
 namespace quickbook
 {
+    // clang-format off
+
     QUICKBOOK_VALUE_TAGS(phrase_tags, 0x500,
         (image)
         (url)(link)(anchor)
@@ -37,6 +39,8 @@ namespace quickbook
         (inline_code_block)
         (next_source_mode)
     )
+
+    // clang-format on
 }
 
 #endif

@@ -179,7 +179,7 @@ void test_spot(
    {
       //
       // We can only check this if P is not too close to 1,
-      // so that we can guarentee Q is reasonably free of error:
+      // so that we can guarantee Q is reasonably free of error:
       //
       BOOST_CHECK_CLOSE(
          cdf(complement(dist, cs)), Q, tol);
@@ -244,7 +244,7 @@ void test_spots(RealType)
    BOOST_MATH_STD_USING
    boost::math::non_central_beta_distribution<RealType> dist(100, 3, 63);
    BOOST_CHECK_CLOSE(mean(dist), RealType(4.82280451915522329944315287538684030781836554279474240490936e13L) * exp(-RealType(31.5)) * 100 / 103, tolerance);
-   // Variance only guarentees small absolute error:
+   // Variance only guarantees small absolute error:
    BOOST_CHECK_SMALL(variance(dist) 
       - static_cast<RealType>(RealType(4.85592267707818899235900237275021938334418424134218087127572e13L)
       * exp(RealType(-31.5)) * 100 * 101 / (103 * 104) - 

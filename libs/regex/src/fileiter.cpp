@@ -832,7 +832,7 @@ bool iswild(const char* mask, const char* name)
             ++mask;
             continue;
          }
-         // fall through:
+         // fall through
       default:
          if(BOOST_REGEX_FI_TRANSLATE(*mask) != BOOST_REGEX_FI_TRANSLATE(*name))
             return false;

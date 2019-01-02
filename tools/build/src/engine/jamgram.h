@@ -1,19 +1,19 @@
-/* A Bison parser, made by GNU Bison 2.6.4.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
-   
+
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -26,75 +26,74 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
-/* Enabling traces.  */
+/* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
 #endif
 
-/* Tokens.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     _BANG_t = 258,
-     _BANG_EQUALS_t = 259,
-     _AMPER_t = 260,
-     _AMPERAMPER_t = 261,
-     _LPAREN_t = 262,
-     _RPAREN_t = 263,
-     _PLUS_EQUALS_t = 264,
-     _COLON_t = 265,
-     _SEMIC_t = 266,
-     _LANGLE_t = 267,
-     _LANGLE_EQUALS_t = 268,
-     _EQUALS_t = 269,
-     _RANGLE_t = 270,
-     _RANGLE_EQUALS_t = 271,
-     _QUESTION_EQUALS_t = 272,
-     _LBRACKET_t = 273,
-     _RBRACKET_t = 274,
-     ACTIONS_t = 275,
-     BIND_t = 276,
-     BREAK_t = 277,
-     CASE_t = 278,
-     CLASS_t = 279,
-     CONTINUE_t = 280,
-     DEFAULT_t = 281,
-     ELSE_t = 282,
-     EXISTING_t = 283,
-     FOR_t = 284,
-     IF_t = 285,
-     IGNORE_t = 286,
-     IN_t = 287,
-     INCLUDE_t = 288,
-     LOCAL_t = 289,
-     MODULE_t = 290,
-     ON_t = 291,
-     PIECEMEAL_t = 292,
-     QUIETLY_t = 293,
-     RETURN_t = 294,
-     RULE_t = 295,
-     SWITCH_t = 296,
-     TOGETHER_t = 297,
-     UPDATED_t = 298,
-     WHILE_t = 299,
-     _LBRACE_t = 300,
-     _BAR_t = 301,
-     _BARBAR_t = 302,
-     _RBRACE_t = 303,
-     ARG = 304,
-     STRING = 305
-   };
+  enum yytokentype
+  {
+    _BANG_t = 258,
+    _BANG_EQUALS_t = 259,
+    _AMPER_t = 260,
+    _AMPERAMPER_t = 261,
+    _LPAREN_t = 262,
+    _RPAREN_t = 263,
+    _PLUS_EQUALS_t = 264,
+    _COLON_t = 265,
+    _SEMIC_t = 266,
+    _LANGLE_t = 267,
+    _LANGLE_EQUALS_t = 268,
+    _EQUALS_t = 269,
+    _RANGLE_t = 270,
+    _RANGLE_EQUALS_t = 271,
+    _QUESTION_EQUALS_t = 272,
+    _LBRACKET_t = 273,
+    _RBRACKET_t = 274,
+    ACTIONS_t = 275,
+    BIND_t = 276,
+    BREAK_t = 277,
+    CASE_t = 278,
+    CLASS_t = 279,
+    CONTINUE_t = 280,
+    DEFAULT_t = 281,
+    ELSE_t = 282,
+    EXISTING_t = 283,
+    FOR_t = 284,
+    IF_t = 285,
+    IGNORE_t = 286,
+    IN_t = 287,
+    INCLUDE_t = 288,
+    LOCAL_t = 289,
+    MODULE_t = 290,
+    ON_t = 291,
+    PIECEMEAL_t = 292,
+    QUIETLY_t = 293,
+    RETURN_t = 294,
+    RULE_t = 295,
+    SWITCH_t = 296,
+    TOGETHER_t = 297,
+    UPDATED_t = 298,
+    WHILE_t = 299,
+    _LBRACE_t = 300,
+    _BAR_t = 301,
+    _BARBAR_t = 302,
+    _RBRACE_t = 303,
+    ARG = 304,
+    STRING = 305
+  };
 #endif
 /* Tokens.  */
 #define _BANG_t 258
@@ -146,29 +145,16 @@ extern int yydebug;
 #define ARG 304
 #define STRING 305
 
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+
 extern YYSTYPE yylval;
 
-#ifdef YYPARSE_PARAM
-#if defined __STDC__ || defined __cplusplus
-int yyparse (void *YYPARSE_PARAM);
-#else
-int yyparse ();
-#endif
-#else /* ! YYPARSE_PARAM */
-#if defined __STDC__ || defined __cplusplus
 int yyparse (void);
-#else
-int yyparse ();
-#endif
-#endif /* ! YYPARSE_PARAM */
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

@@ -2,19 +2,19 @@
 <library-reference id="local_time_reference"><title>Local Time Reference</title><header name="boost/date_time/local_time/conversion.hpp">
 <namespace name="boost">
 <namespace name="local_time">
+
+
+
+
+
+
+
+
+
+
+
+
 <function name="to_tm"><type>std::tm</type><parameter name="lt"><paramtype>const <classname>local_date_time</classname> &amp;</paramtype></parameter><purpose>Function that creates a tm struct from a local_date_time. </purpose></function>
-
-
-
-
-
-
-
-
-
-
-
-
 </namespace>
 </namespace>
 </header>
@@ -23,7 +23,7 @@
 <namespace name="local_time">
 <class name="custom_time_zone_base"><template>
       <template-type-parameter name="CharT"/>
-    </template><purpose>A real time zone. </purpose><typedef name="time_duration_type"><type>boost::posix_time::time_duration</type></typedef>
+    </template><inherit access="public">date_time::time_zone_base&lt; posix_time::ptime, CharT &gt;</inherit><purpose>A real time zone. </purpose><typedef name="time_duration_type"><type>boost::posix_time::time_duration</type></typedef>
 <typedef name="base_type"><type>date_time::time_zone_base&lt; posix_time::ptime, CharT &gt;</type></typedef>
 <typedef name="string_type"><type>base_type::string_type</type></typedef>
 <typedef name="stringstream_type"><type>base_type::stringstream_type</type></typedef>
@@ -35,8 +35,8 @@
 <method name="dst_zone_name" cv="const" specifiers="virtual"><type>string_type</type></method>
 <method name="std_zone_name" cv="const" specifiers="virtual"><type>string_type</type></method>
 <method name="has_dst" cv="const" specifiers="virtual"><type>bool</type><purpose>True if zone uses daylight savings adjustments. </purpose></method>
-<method name="dst_local_start_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST starts -- NADT if has_dst is false. </purpose></method>
-<method name="dst_local_end_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST ends -- NADT if has_dst is false. </purpose></method>
+<method name="dst_local_start_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST starts – NADT if has_dst is false. </purpose></method>
+<method name="dst_local_end_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST ends – NADT if has_dst is false. </purpose></method>
 <method name="base_utc_offset" cv="const" specifiers="virtual"><type>time_duration_type</type><purpose>Base offset from UTC for zone (eg: -07:30:00) </purpose></method>
 <method name="dst_offset" cv="const" specifiers="virtual"><type>time_duration_type</type><purpose>Adjustment forward or back made while DST is in effect. </purpose></method>
 <method name="to_posix_string" cv="const" specifiers="virtual"><type>string_type</type><purpose>Returns a POSIX time_zone string for this object. </purpose></method>
@@ -68,7 +68,6 @@
 
 
 
-
 <function name="operator+"><type><classname>local_date_time</classname></type><parameter name="t"><paramtype>const <classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="m"><paramtype>const boost::gregorian::months &amp;</paramtype></parameter><description><para>Adds a months object and a local_date_time. Result will be same day-of-month as local_date_time unless original day was the last day of month. see date_time::months_duration for more details </para></description></function>
 <function name="operator+="><type><classname>local_date_time</classname></type><parameter name="t"><paramtype><classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="m"><paramtype>const boost::gregorian::months &amp;</paramtype></parameter><description><para>Adds a months object to a local_date_time. Result will be same day-of-month as local_date_time unless original day was the last day of month. see date_time::months_duration for more details </para></description></function>
 <function name="operator-"><type><classname>local_date_time</classname></type><parameter name="t"><paramtype>const <classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="m"><paramtype>const boost::gregorian::months &amp;</paramtype></parameter><description><para>Subtracts a months object and a local_date_time. Result will be same day-of-month as local_date_time unless original day was the last day of month. see date_time::months_duration for more details </para></description></function>
@@ -77,6 +76,7 @@
 <function name="operator+="><type><classname>local_date_time</classname></type><parameter name="t"><paramtype><classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="y"><paramtype>const boost::gregorian::years &amp;</paramtype></parameter><description><para>Adds a years object to a local_date_time. Result will be same month and day-of-month as local_date_time unless original day was the last day of month. see date_time::years_duration for more details </para></description></function>
 <function name="operator-"><type><classname>local_date_time</classname></type><parameter name="t"><paramtype>const <classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="y"><paramtype>const boost::gregorian::years &amp;</paramtype></parameter><description><para>Subtracts a years object and a local_date_time. Result will be same month and day-of-month as local_date_time unless original day was the last day of month. see date_time::years_duration for more details </para></description></function>
 <function name="operator-="><type><classname>local_date_time</classname></type><parameter name="t"><paramtype><classname>local_date_time</classname> &amp;</paramtype></parameter><parameter name="y"><paramtype>const boost::gregorian::years &amp;</paramtype></parameter><description><para>Subtracts a years object from a local_date_time. Result will be same month and day-of-month as local_date_time unless original day was the last day of month. see date_time::years_duration for more details </para></description></function>
+
 </namespace>
 </namespace>
 </header>
@@ -124,19 +124,19 @@
 <header name="boost/date_time/local_time/local_date_time.hpp">
 <namespace name="boost">
 <namespace name="local_time">
-<struct name="ambiguous_result"><purpose>simple exception for reporting when STD or DST cannot be determined </purpose><method-group name="public member functions">
+<struct name="ambiguous_result"><inherit access="public">logic_error</inherit><purpose>simple exception for reporting when STD or DST cannot be determined </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="msg"><paramtype>std::string const &amp;</paramtype><default>std::string()</default></parameter></constructor>
-</struct><struct name="time_label_invalid"><purpose>simple exception for when time label given cannot exist </purpose><method-group name="public member functions">
+</struct><struct name="time_label_invalid"><inherit access="public">logic_error</inherit><purpose>simple exception for when time label given cannot exist </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="msg"><paramtype>std::string const &amp;</paramtype><default>std::string()</default></parameter></constructor>
-</struct><struct name="dst_not_valid"><method-group name="public member functions">
+</struct><struct name="dst_not_valid"><inherit access="public">logic_error</inherit><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="msg"><paramtype>std::string const &amp;</paramtype><default>std::string()</default></parameter></constructor>
 </struct><class name="local_date_time_base"><template>
       <template-type-parameter name="utc_time_"><default>posix_time::ptime</default></template-type-parameter>
       <template-type-parameter name="tz_type"><default>date_time::time_zone_base&lt;utc_time_,char&gt;</default></template-type-parameter>
-    </template><purpose>Representation of "wall-clock" time in a particular time zone. </purpose><description><para>Representation of "wall-clock" time in a particular time zone Local_date_time_base holds a time value (date and time offset from 00:00) along with a time zone. The time value is stored as UTC and conversions to wall clock time are made as needed. This approach allows for operations between wall-clock times in different time zones, and daylight savings time considerations, to be made. Time zones are required to be in the form of a boost::shared_ptr&lt;time_zone_base&gt;. </para></description><enum name="DST_CALC_OPTIONS"><enumvalue name="EXCEPTION_ON_ERROR"/><enumvalue name="NOT_DATE_TIME_ON_ERROR"/></enum>
+    </template><inherit access="public">date_time::base_time&lt; utc_time_, boost::posix_time::posix_time_system &gt;</inherit><purpose>Representation of "wall-clock" time in a particular time zone. </purpose><description><para>Representation of "wall-clock" time in a particular time zone Local_date_time_base holds a time value (date and time offset from 00:00) along with a time zone. The time value is stored as UTC and conversions to wall clock time are made as needed. This approach allows for operations between wall-clock times in different time zones, and daylight savings time considerations, to be made. Time zones are required to be in the form of a boost::shared_ptr&lt;time_zone_base&gt;. </para></description><enum name="DST_CALC_OPTIONS"><enumvalue name="EXCEPTION_ON_ERROR"/><enumvalue name="NOT_DATE_TIME_ON_ERROR"/></enum>
 <typedef name="utc_time_type"><type>utc_time_</type></typedef>
 <typedef name="time_duration_type"><type>utc_time_type::time_duration_type</type></typedef>
 <typedef name="date_type"><type>utc_time_type::date_type</type></typedef>
@@ -166,13 +166,13 @@
 <method name="operator+="><type><classname>local_date_time_base</classname></type><parameter name="td"><paramtype>const time_duration_type &amp;</paramtype></parameter><purpose>Local_date_time += time_duration. </purpose></method>
 <method name="operator-" cv="const"><type><classname>local_date_time_base</classname></type><parameter name="td"><paramtype>const time_duration_type &amp;</paramtype></parameter><purpose>Local_date_time - time_duration. </purpose></method>
 <method name="operator-="><type><classname>local_date_time_base</classname></type><parameter name="td"><paramtype>const time_duration_type &amp;</paramtype></parameter><purpose>Local_date_time -= time_duration. </purpose></method>
-<method name="operator-" cv="const"><type>time_duration_type</type><parameter name="rhs"><paramtype>const <classname>local_date_time_base</classname> &amp;</paramtype></parameter><purpose>local_date_time -= local_date_time --&gt; time_duration_type </purpose></method>
+<method name="operator-" cv="const"><type>time_duration_type</type><parameter name="rhs"><paramtype>const <classname>local_date_time_base</classname> &amp;</paramtype></parameter><purpose>local_date_time -= local_date_time –&gt; time_duration_type </purpose></method>
 </method-group>
 <constructor><parameter name="t"><paramtype>utc_time_type</paramtype><description><para>A UTC time </para></description></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype><description><para>Timezone for to adjust the UTC time to. </para></description></parameter><description><para>This constructor interprets the passed time as a UTC time. So, for example, if the passed timezone is UTC-5 then the time will be adjusted back 5 hours. The time zone allows for automatic calculation of whether the particular time is adjusted for daylight savings, etc. If the time zone shared pointer is null then time stays unadjusted. 
 </para></description></constructor>
-<constructor><parameter name="d"><paramtype>date_type</paramtype></parameter><parameter name="td"><paramtype>time_duration_type</paramtype></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype></parameter><parameter name="dst_flag"><paramtype>bool</paramtype></parameter><description><para>This constructs a local time -- the passed time information understood to be in the passed tz. The DST flag must be passed to indicate whether the time is in daylight savings or not. 
-</para></description><throws><simpara><classname>--</classname> <classname alt="boost::local_time::time_label_invalid">time_label_invalid</classname> if the time passed does not exist in the given locale. The non-existent case occurs typically during the shift-back from daylight savings time. When the clock is shifted forward a range of times (2 am to 3 am in the US) is skipped and hence is invalid. <classname alt="boost::local_time::dst_not_valid">dst_not_valid</classname> if the DST flag is passed for a period where DST is not active. </simpara></throws></constructor>
-<constructor><parameter name="d"><paramtype>date_type</paramtype></parameter><parameter name="td"><paramtype>time_duration_type</paramtype></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype></parameter><parameter name="calc_option"><paramtype>DST_CALC_OPTIONS</paramtype></parameter><description><para>This constructs a local time -- the passed time information understood to be in the passed tz. The DST flag is calculated according to the specified rule. </para></description></constructor>
+<constructor><parameter name="d"><paramtype>date_type</paramtype></parameter><parameter name="td"><paramtype>time_duration_type</paramtype></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype></parameter><parameter name="dst_flag"><paramtype>bool</paramtype></parameter><description><para>This constructs a local time – the passed time information understood to be in the passed tz. The DST flag must be passed to indicate whether the time is in daylight savings or not. 
+</para></description><throws><simpara><classname>&amp;ndash;</classname> <classname alt="boost::local_time::time_label_invalid">time_label_invalid</classname> if the time passed does not exist in the given locale. The non-existent case occurs typically during the shift-back from daylight savings time. When the clock is shifted forward a range of times (2 am to 3 am in the US) is skipped and hence is invalid. <classname alt="boost::local_time::dst_not_valid">dst_not_valid</classname> if the DST flag is passed for a period where DST is not active. </simpara></throws></constructor>
+<constructor><parameter name="d"><paramtype>date_type</paramtype></parameter><parameter name="td"><paramtype>time_duration_type</paramtype></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype></parameter><parameter name="calc_option"><paramtype>DST_CALC_OPTIONS</paramtype></parameter><description><para>This constructs a local time – the passed time information understood to be in the passed tz. The DST flag is calculated according to the specified rule. </para></description></constructor>
 <destructor><purpose>Simple destructor, releases time zone if last referrer. </purpose></destructor>
 <constructor><parameter name="rhs"><paramtype>const <classname>local_date_time_base</classname> &amp;</paramtype></parameter><purpose>Copy constructor. </purpose></constructor>
 <constructor specifiers="explicit"><parameter name="sv"><paramtype>const boost::date_time::special_values</paramtype></parameter><parameter name="tz"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype><default>boost::shared_ptr&lt; tz_type &gt;()</default></parameter><purpose>Special values constructor. </purpose></constructor>
@@ -181,7 +181,7 @@
 </method-group>
 <method-group name="private member functions">
 <method name="construction_adjustment"><type>utc_time_type</type><parameter name="t"><paramtype>utc_time_type</paramtype></parameter><parameter name="z"><paramtype>boost::shared_ptr&lt; tz_type &gt;</paramtype></parameter><parameter name="dst_flag"><paramtype>bool</paramtype></parameter><description><para>Adjust the passed in time to UTC? </para></description></method>
-<method name="zone_as_offset" cv="const"><type>std::string</type><parameter name="td"><paramtype>const time_duration_type &amp;</paramtype></parameter><parameter name="separator"><paramtype>const std::string &amp;</paramtype></parameter><description><para>Simple formatting code -- todo remove this? </para></description></method>
+<method name="zone_as_offset" cv="const"><type>std::string</type><parameter name="td"><paramtype>const time_duration_type &amp;</paramtype></parameter><parameter name="separator"><paramtype>const std::string &amp;</paramtype></parameter><description><para>Simple formatting code – todo remove this? </para></description></method>
 </method-group>
 </class><typedef name="local_date_time"><purpose>Use the default parameters to define local_date_time. </purpose><type><classname>local_date_time_base</classname></type></typedef>
 
@@ -209,7 +209,6 @@
 <typedef name="local_time_facet"><type>boost::date_time::time_facet&lt; <classname>local_date_time</classname>, char &gt;</type></typedef>
 <typedef name="wlocal_time_input_facet"><type>boost::date_time::time_input_facet&lt; local_date_time::utc_time_type, wchar_t &gt;</type></typedef>
 <typedef name="local_time_input_facet"><type>boost::date_time::time_input_facet&lt; local_date_time::utc_time_type, char &gt;</type></typedef>
-
 <function name="operator&lt;&lt;"><type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type><template>
           <template-type-parameter name="CharT"/>
           <template-type-parameter name="TraitsT"/>
@@ -226,6 +225,7 @@
           <template-type-parameter name="CharT"/>
           <template-type-parameter name="Traits"/>
         </template><parameter name="is"><paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype></parameter><parameter name="tp"><paramtype>boost::local_time::local_time_period &amp;</paramtype></parameter><purpose>input operator for local_time_period </purpose></function>
+
 
 
 
@@ -269,15 +269,15 @@
 <header name="boost/date_time/local_time/posix_time_zone.hpp">
 <namespace name="boost">
 <namespace name="local_time">
-<struct name="bad_offset"><purpose>simple exception for UTC and Daylight savings start/end offsets </purpose><method-group name="public member functions">
+<struct name="bad_offset"><inherit access="public">out_of_range</inherit><purpose>simple exception for UTC and Daylight savings start/end offsets </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="msg"><paramtype>std::string const &amp;</paramtype><default>std::string()</default></parameter></constructor>
-</struct><struct name="bad_adjustment"><purpose>simple exception for UTC daylight savings adjustment </purpose><method-group name="public member functions">
+</struct><struct name="bad_adjustment"><inherit access="public">out_of_range</inherit><purpose>simple exception for UTC daylight savings adjustment </purpose><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="msg"><paramtype>std::string const &amp;</paramtype><default>std::string()</default></parameter></constructor>
 </struct><class name="posix_time_zone_base"><template>
       <template-type-parameter name="CharT"/>
-    </template><purpose>A time zone class constructed from a POSIX time zone string. </purpose><description><para>A POSIX time zone string takes the form of:<sbr/>
+    </template><inherit access="public">date_time::time_zone_base&lt; posix_time::ptime, CharT &gt;</inherit><purpose>A time zone class constructed from a POSIX time zone string. </purpose><description><para>A POSIX time zone string takes the form of:<sbr/>
  "std offset dst [offset],start[/time],end[/time]" (w/no spaces) 'std' specifies the abbrev of the time zone.<sbr/>
  'offset' is the offset from UTC.<sbr/>
  'dst' specifies the abbrev of the time zone during daylight savings time.<sbr/>
@@ -312,8 +312,8 @@
 <method name="std_zone_name" cv="const" specifiers="virtual"><type>string_type</type><purpose>String for the zone when not in daylight savings (eg: Eastern Standard Time) </purpose><description><para>The full STD name is not extracted from the posix time zone string. Therefore, the STD abbreviation is used in it's place </para></description></method>
 <method name="dst_zone_name" cv="const" specifiers="virtual"><type>string_type</type><purpose>String for the timezone when in daylight savings (eg: Eastern Daylight Time) </purpose><description><para>The full DST name is not extracted from the posix time zone string. Therefore, the STD abbreviation is used in it's place. For time zones that have no DST, an empty string is used </para></description></method>
 <method name="has_dst" cv="const" specifiers="virtual"><type>bool</type><purpose>True if zone uses daylight savings adjustments otherwise false. </purpose></method>
-<method name="dst_local_start_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST starts -- NADT if has_dst is false. </purpose></method>
-<method name="dst_local_end_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST ends -- NADT if has_dst is false. </purpose></method>
+<method name="dst_local_start_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST starts – NADT if has_dst is false. </purpose></method>
+<method name="dst_local_end_time" cv="const" specifiers="virtual"><type>posix_time::ptime</type><parameter name="y"><paramtype>gregorian::greg_year</paramtype></parameter><purpose>Local time that DST ends – NADT if has_dst is false. </purpose></method>
 <method name="base_utc_offset" cv="const" specifiers="virtual"><type>time_duration_type</type><purpose>Base offset from UTC for zone (eg: -07:30:00) </purpose></method>
 <method name="dst_offset" cv="const" specifiers="virtual"><type>time_duration_type</type><purpose>Adjustment forward or back made while DST is in effect. </purpose></method>
 <method name="to_posix_string" cv="const" specifiers="virtual"><type>string_type</type><purpose>Returns a POSIX time_zone string for this object. </purpose></method>

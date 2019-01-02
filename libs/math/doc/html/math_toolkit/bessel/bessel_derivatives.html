@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Derivatives of the Bessel Functions</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../bessel.html" title="Bessel Functions">
 <link rel="prev" href="sph_bessel.html" title="Spherical Bessel Functions of the First and Second Kinds">
 <link rel="next" href="../hankel.html" title="Hankel Functions">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.bessel.bessel_derivatives.h0"></a>
-        <span><a name="math_toolkit.bessel.bessel_derivatives.synopsis"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_derivatives.synopsis"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.synopsis">Synopsis</a>
       </h5>
 <p>
         <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">bessel_prime</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
@@ -37,42 +37,42 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_i_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_i_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_i_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_k_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_k_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_k_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_bessel_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">sph_neumann_prime</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <h5>
 <a name="math_toolkit.bessel.bessel_derivatives.h1"></a>
-        <span><a name="math_toolkit.bessel.bessel_derivatives.description"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_derivatives.description"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.description">Description</a>
       </h5>
 <p>
         These functions return the first derivative with respect to <span class="emphasis"><em>x</em></span>
@@ -85,9 +85,9 @@
         an integer.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -96,7 +96,7 @@
       </p>
 <h5>
 <a name="math_toolkit.bessel.bessel_derivatives.h2"></a>
-        <span><a name="math_toolkit.bessel.bessel_derivatives.testing"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_derivatives.testing"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.testing">Testing</a>
       </h5>
 <p>
         There are two sets of test values: spot values calculated using <a href="http://www.wolframalpha.com/" target="_top">wolframalpha.com</a>,
@@ -105,7 +105,7 @@
       </p>
 <h5>
 <a name="math_toolkit.bessel.bessel_derivatives.h3"></a>
-        <span><a name="math_toolkit.bessel.bessel_derivatives.accuracy"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_derivatives.accuracy"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.accuracy">Accuracy</a>
       </h5>
 <p>
         The accuracy of these functions is broadly similar to the underlying Bessel
@@ -126,22 +126,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -154,22 +154,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.885&#949; (Mean = 0.567&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.83&#949; (Mean = 2.84&#949;)</span>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.259&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.52&#949; (Mean = 2.26&#949;)</span>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.259&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.354&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -181,22 +181,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.61&#949; (Mean = 0.786&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.3&#949; (Mean = 1.28&#949;)</span>
+                  <span class="blue">Max = 1.97&#949; (Mean = 0.757&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.3&#949; (Mean = 1.29&#949;)</span>
+                  <span class="blue">Max = 1.97&#949; (Mean = 0.757&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.36&#949; (Mean = 0.782&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -204,11 +204,6 @@
 <td>
                 <p>
                   Bessel I'n: Mathworld Data (Integer Version)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 3.61&#949; (Mean = 1.22&#949;)</span>
                 </p>
               </td>
 <td>
@@ -224,6 +219,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 701&#949; (Mean = 212&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.61&#949; (Mean = 1.22&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -245,22 +245,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -273,22 +273,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.885&#949; (Mean = 0.567&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.83&#949; (Mean = 2.84&#949;)</span>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.259&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.52&#949; (Mean = 2.26&#949;)</span>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.259&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.82&#949; (Mean = 0.354&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -300,22 +300,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.61&#949; (Mean = 0.786&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.3&#949; (Mean = 1.28&#949;)</span>
+                  <span class="blue">Max = 1.97&#949; (Mean = 0.757&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.3&#949; (Mean = 1.29&#949;)</span>
+                  <span class="blue">Max = 1.97&#949; (Mean = 0.757&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.36&#949; (Mean = 0.782&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -323,11 +323,6 @@
 <td>
                 <p>
                   Bessel I'n: Mathworld Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 3.61&#949; (Mean = 1.22&#949;)</span>
                 </p>
               </td>
 <td>
@@ -345,16 +340,16 @@
                   <span class="blue">Max = 701&#949; (Mean = 212&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.61&#949; (Mean = 1.22&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel I'v: Mathworld Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 3.76e+003&#949; (Mean = 1.19e+003&#949;)</span>
                 </p>
               </td>
 <td>
@@ -372,6 +367,11 @@
                   <span class="blue">Max = 2.89e+03&#949; (Mean = 914&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.76e+03&#949; (Mean = 1.19e+03&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -381,17 +381,12 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 9.85&#949; (Mean = 1.83&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.79&#949; (Mean = 1.13&#949;)</span>
+                  <span class="blue">Max = 3.95&#949; (Mean = 1.06&#949;)</span>
                 </p>
               </td>
 <td>
@@ -399,16 +394,16 @@
                   <span class="blue">Max = 195&#949; (Mean = 37.1&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 9.85&#949; (Mean = 1.82&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel I'v: Random Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 14&#949; (Mean = 2.46&#949;)</span>
                 </p>
               </td>
 <td>
@@ -426,16 +421,16 @@
                   <span class="blue">Max = 336&#949; (Mean = 68.5&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14&#949; (Mean = 2.5&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel I'v: Mathworld Data (large values)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 59.5&#949; (Mean = 26.8&#949;)</span>
                 </p>
               </td>
 <td>
@@ -450,7 +445,12 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 43.9&#949; (Mean = 20.7&#949;)</span>
+                  <span class="blue">Max = 42.6&#949; (Mean = 20.2&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 59.5&#949; (Mean = 26.6&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -472,22 +472,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -500,22 +500,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.62&#949; (Mean = 2.55&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 18.9&#949; (Mean = 6.81&#949;)</span>
+                  <span class="blue">Max = 18.9&#949; (Mean = 6.82&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 18.9&#949; (Mean = 6.72&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.62&#949; (Mean = 2.55&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -527,22 +527,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.67&#949; (Mean = 1.74&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 8.08&#949; (Mean = 4.57&#949;)</span>
+                  <span class="blue">Max = 7.44&#949; (Mean = 3.34&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 7.44&#949; (Mean = 3.31&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.67&#949; (Mean = 1.74&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -554,11 +554,6 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.999&#949; (Mean = 0.627&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
@@ -572,16 +567,16 @@
                   <span class="blue">Max = 7.9&#949; (Mean = 3.37&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.999&#949; (Mean = 0.627&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel J1': Mathworld Data (tricky cases) (Integer Version)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 288&#949; (Mean = 129&#949;)</span>
                 </p>
               </td>
 <td>
@@ -599,16 +594,16 @@
                   <span class="blue">Max = 5.88e+05&#949; (Mean = 2.63e+05&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 288&#949; (Mean = 129&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel JN': Mathworld Data (Integer Version)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 14&#949; (Mean = 6.13&#949;)</span>
                 </p>
               </td>
 <td>
@@ -624,6 +619,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 1.29e+03&#949; (Mean = 355&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14&#949; (Mean = 6.13&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -645,22 +645,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -673,22 +673,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.62&#949; (Mean = 2.55&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 18.9&#949; (Mean = 6.81&#949;)</span>
+                  <span class="blue">Max = 18.9&#949; (Mean = 6.82&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 18.9&#949; (Mean = 6.72&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.62&#949; (Mean = 2.55&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -700,22 +700,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.67&#949; (Mean = 1.74&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 8.08&#949; (Mean = 4.57&#949;)</span>
+                  <span class="blue">Max = 7.44&#949; (Mean = 3.34&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 7.44&#949; (Mean = 3.31&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.67&#949; (Mean = 1.74&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -727,11 +727,6 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.999&#949; (Mean = 0.627&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
@@ -745,16 +740,16 @@
                   <span class="blue">Max = 7.9&#949; (Mean = 3.37&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.999&#949; (Mean = 0.627&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel J1': Mathworld Data (tricky cases)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 288&#949; (Mean = 129&#949;)</span>
                 </p>
               </td>
 <td>
@@ -772,16 +767,16 @@
                   <span class="blue">Max = 5.88e+05&#949; (Mean = 2.63e+05&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 288&#949; (Mean = 129&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel JN': Mathworld Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 14&#949; (Mean = 6.13&#949;)</span>
                 </p>
               </td>
 <td>
@@ -799,16 +794,16 @@
                   <span class="blue">Max = 1.29e+03&#949; (Mean = 355&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14&#949; (Mean = 6.13&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel J': Mathworld Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 23.7&#949; (Mean = 8.01&#949;)</span>
                 </p>
               </td>
 <td>
@@ -826,16 +821,16 @@
                   <span class="blue">Max = 42.5&#949; (Mean = 9.32&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 23.7&#949; (Mean = 8&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel J': Mathworld Data (large values)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 2.9&#949; (Mean = 1.61&#949;)</span>
                 </p>
               </td>
 <td>
@@ -853,6 +848,11 @@
                   <span class="blue">Max = 989&#949; (Mean = 495&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.9&#949; (Mean = 1.61&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
@@ -862,22 +862,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 6.34&#949; (Mean = 0.997&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0.593&#949; (Mean = 0.0396&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 17.3&#949; (Mean = 2.47&#949;)</span>
+                  <span class="blue">Max = 11.3&#949; (Mean = 1.85&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 79.4&#949; (Mean = 16.2&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.34&#949; (Mean = 0.999&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -889,12 +889,7 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 176&#949; (Mean = 9.76&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0.885&#949; (Mean = 0.0457&#949;)</span>
+                  <span class="blue">Max = 0.885&#949; (Mean = 0.033&#949;)</span>
                 </p>
               </td>
 <td>
@@ -907,16 +902,16 @@
                   <span class="blue">Max = 279&#949; (Mean = 27.2&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 176&#949; (Mean = 9.75&#949;)</span>
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
                 <p>
                   Bessel J': Random Data (Tricky large values)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 379&#949; (Mean = 45.4&#949;)</span>
                 </p>
               </td>
 <td>
@@ -932,6 +927,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 474&#949; (Mean = 64.5&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 379&#949; (Mean = 45.4&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -953,22 +953,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -981,22 +981,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1&#949; (Mean = 0.573&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.8&#949; (Mean = 1.02&#949;)</span>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.329&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.8&#949; (Mean = 1.02&#949;)</span>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.329&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.39&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1008,22 +1008,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.09&#949; (Mean = 0.607&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.96&#949; (Mean = 1&#949;)</span>
+                  <span class="blue">Max = 0.736&#949; (Mean = 0.389&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.96&#949; (Mean = 1.04&#949;)</span>
+                  <span class="blue">Max = 0.736&#949; (Mean = 0.389&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.761&#949; (Mean = 0.444&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1035,22 +1035,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.17&#949; (Mean = 1.74&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.47&#949; (Mean = 2.05&#949;)</span>
+                  <span class="blue">Max = 2.16&#949; (Mean = 1.08&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.47&#949; (Mean = 1.93&#949;)</span>
+                  <span class="blue">Max = 2.16&#949; (Mean = 1.08&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.17&#949; (Mean = 1.75&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1072,22 +1072,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -1100,22 +1100,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1&#949; (Mean = 0.573&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.8&#949; (Mean = 1.02&#949;)</span>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.329&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.8&#949; (Mean = 1.02&#949;)</span>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.329&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.39&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1127,22 +1127,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.09&#949; (Mean = 0.607&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.96&#949; (Mean = 1&#949;)</span>
+                  <span class="blue">Max = 0.736&#949; (Mean = 0.389&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.96&#949; (Mean = 1.04&#949;)</span>
+                  <span class="blue">Max = 0.736&#949; (Mean = 0.389&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.761&#949; (Mean = 0.444&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1154,22 +1154,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.17&#949; (Mean = 1.74&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.47&#949; (Mean = 2.05&#949;)</span>
+                  <span class="blue">Max = 2.16&#949; (Mean = 1.08&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.47&#949; (Mean = 1.93&#949;)</span>
+                  <span class="blue">Max = 2.16&#949; (Mean = 1.08&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.17&#949; (Mean = 1.75&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1181,22 +1181,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.94&#949; (Mean = 1.43&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.94&#949; (Mean = 2.49&#949;)</span>
+                  <span class="blue">Max = 3.94&#949; (Mean = 2.44&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.94&#949; (Mean = 2.35&#949;)</span>
+                  <span class="blue">Max = 3.94&#949; (Mean = 2.34&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.94&#949; (Mean = 1.47&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1204,11 +1204,6 @@
 <td>
                 <p>
                   Bessel K'v: Mathworld Data (large values)
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 18.6&#949; (Mean = 12.1&#949;)</span>
                 </p>
               </td>
 <td>
@@ -1223,7 +1218,12 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 59.8&#949; (Mean = 43.4&#949;)</span>
+                  <span class="blue">Max = 58.7&#949; (Mean = 42.6&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 18.6&#949; (Mean = 11.8&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1235,22 +1235,22 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 8.18&#949; (Mean = 1.45&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.53&#949; (Mean = 1.12&#949;)</span>
+                  <span class="blue">Max = 4.45&#949; (Mean = 1.19&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.45&#949; (Mean = 1.23&#949;)</span>
+                  <span class="blue">Max = 4.45&#949; (Mean = 1.19&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 9.67&#949; (Mean = 1.73&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1258,11 +1258,6 @@
 <td>
                 <p>
                   Bessel K'v: Random Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 8.32&#949; (Mean = 1.65&#949;)</span>
                 </p>
               </td>
 <td>
@@ -1277,7 +1272,12 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.95&#949; (Mean = 1.55&#949;)</span>
+                  <span class="blue">Max = 7.95&#949; (Mean = 1.52&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 8.32&#949; (Mean = 1.65&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1299,22 +1299,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -1322,11 +1322,6 @@
 <td>
                 <p>
                   Bessel j': Random Data
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 307&#949; (Mean = 25.2&#949;)</span>
                 </p>
               </td>
 <td>
@@ -1342,6 +1337,11 @@
 <td>
                 <p>
                   <span class="blue">Max = 167&#949; (Mean = 33.2&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 307&#949; (Mean = 25.2&#949;)</span>
                 </p>
               </td>
 </tr></tbody>
@@ -1362,22 +1362,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -1389,12 +1389,7 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 296&#949; (Mean = 25.6&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0.752&#949; (Mean = 0.062&#949;)</span>
+                  <span class="blue">Max = 0.988&#949; (Mean = 0.0869&#949;)</span>
                 </p>
               </td>
 <td>
@@ -1407,12 +1402,17 @@
                   <span class="blue">Max = 158&#949; (Mean = 20.2&#949;)</span>
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 296&#949; (Mean = 25.6&#949;)</span>
+                </p>
+              </td>
 </tr></tbody>
 </table></div>
 </div>
 <br class="table-break"><h5>
 <a name="math_toolkit.bessel.bessel_derivatives.h4"></a>
-        <span><a name="math_toolkit.bessel.bessel_derivatives.implementation"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_derivatives.implementation"></a></span><a class="link" href="bessel_derivatives.html#math_toolkit.bessel.bessel_derivatives.implementation">Implementation</a>
       </h5>
 <p>
         In the general case, the derivatives are calculated using the relations:
@@ -1435,10 +1435,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

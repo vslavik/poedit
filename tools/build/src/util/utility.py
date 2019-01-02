@@ -59,17 +59,28 @@ def replace_grist (features, new_grist):
     """
     assert is_iterable_typed(features, basestring) or isinstance(features, basestring)
     assert isinstance(new_grist, basestring)
-    def replace_grist_one (name, new_grist):
-        split = __re_grist_and_value.match (name)
-        if not split:
-            return new_grist + name
-        else:
-            return new_grist + split.group (2)
+    # this function is used a lot in the build phase and the original implementation
+    # was extremely slow; thus some of the weird-looking optimizations for this function.
+    single_item = False
+    if isinstance(features, str):
+        features = [features]
+        single_item = True
 
-    if isinstance (features, str):
-        return replace_grist_one (features, new_grist)
-    else:
-        return [ replace_grist_one (feature, new_grist) for feature in features ]
+    result = []
+    for feature in features:
+        # '<feature>value' -> ('<feature', '>', 'value')
+        # 'something' -> ('something', '', '')
+        # '<toolset>msvc/<feature>value' -> ('<toolset', '>', 'msvc/<feature>value')
+        grist, split, value = feature.partition('>')
+        # if a partition didn't occur, then grist is just 'something'
+        # set the value to be the grist
+        if not value and not split:
+            value = grist
+        result.append(new_grist + value)
+
+    if single_item:
+        return result[0]
+    return result
 
 def get_value (property):
     """ Gets the value of a property, that is, the part following the grist, if any.
@@ -124,7 +135,7 @@ def forward_slashes (s):
     """ Converts all backslashes to forward slashes.
     """
     assert isinstance(s, basestring)
-    return __re_backslash.sub ('/', s)
+    return s.replace('\\', '/')
 
 
 def split_action_id (id):

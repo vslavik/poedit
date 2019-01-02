@@ -149,16 +149,21 @@ undirected graphs).
       BOOST_CONCEPT_ASSERT(( MultiPassInputIteratorConcept&lt;in_edge_iterator&gt; ));
 
       p = in_edges(v, g);
+      n = in_degree(v, g);
+      n = degree(v, g);
       e = *p.first;
       const_constraints(g);
     }
     void const_constraints(const G&amp; g) {
       p = in_edges(v, g);
+      n = in_degree(v, g);
+      n = degree(v, g);
       e = *p.first;
     }
     std::pair&lt;in_edge_iterator, in_edge_iterator&gt; p;
     typename boost::graph_traits&lt;G&gt;::vertex_descriptor v;
     typename boost::graph_traits&lt;G&gt;::edge_descriptor e;
+    typename boost::graph_traits&lt;G&gt;::degree_size_type n;
     G g;
   };
 </PRE>

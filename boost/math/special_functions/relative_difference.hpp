@@ -69,7 +69,7 @@ namespace boost{
          return (std::max)(fabs((a - b) / a), fabs((a - b) / b));
       }
 
-#if defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
+#if (defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)) && (LDBL_MAX_EXP <= DBL_MAX_EXP)
       template <>
       inline boost::math::tools::promote_args<double, double>::type relative_difference(const double& arg_a, const double& arg_b)
       {

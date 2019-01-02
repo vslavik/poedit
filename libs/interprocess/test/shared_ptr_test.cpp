@@ -48,10 +48,9 @@ class derived_class
 
 int simple_test()
 {
-   typedef allocator<base_class, managed_shared_memory::segment_manager>
-      base_class_allocator;
-   typedef deleter<base_class, managed_shared_memory::segment_manager>
-      base_deleter_t;
+   typedef managed_shared_memory::segment_manager  segment_mngr_t;
+   typedef allocator<base_class, segment_mngr_t>   base_class_allocator;
+   typedef deleter<base_class, segment_mngr_t>     base_deleter_t;
    typedef shared_ptr<base_class, base_class_allocator, base_deleter_t>    base_shared_ptr;
 
    std::string process_name;
@@ -97,35 +96,31 @@ int simple_test()
 
 int string_shared_ptr_vector_insertion_test()
 {
+   typedef managed_shared_memory::segment_manager segment_mngr_t;
+
    //Allocator of chars
-   typedef allocator<char, managed_shared_memory::segment_manager >
-      char_allocator_t;
+   typedef allocator<char, segment_mngr_t> char_allocator_t;
 
    //A shared memory string class
-   typedef basic_string<char, std::char_traits<char>,
-                        char_allocator_t> string_t;
+   typedef basic_string<char, std::char_traits<char>, char_allocator_t> string_t;
 
    //A shared memory string allocator
-   typedef allocator<string_t, managed_shared_memory::segment_manager>
-      string_allocator_t;
+   typedef allocator<string_t, segment_mngr_t> string_allocator_t;
 
    //A deleter for shared_ptr<> that erases a shared memory string
-   typedef deleter<string_t, managed_shared_memory::segment_manager>
-      string_deleter_t;
+   typedef deleter<string_t, segment_mngr_t> string_deleter_t;
 
    //A shared pointer that points to a shared memory string and its instantiation
    typedef shared_ptr<string_t, string_allocator_t, string_deleter_t> string_shared_ptr_t;
 
    //An allocator for shared pointers to a string in shared memory
-   typedef allocator<string_shared_ptr_t, managed_shared_memory::segment_manager>
-      string_shared_ptr_allocator_t;
+   typedef allocator<string_shared_ptr_t, segment_mngr_t> string_shared_ptr_allocator_t;
 
    //A weak pointer that points to a shared memory string and its instantiation
    typedef weak_ptr<string_t, string_allocator_t, string_deleter_t> string_weak_ptr_t;
 
    //An allocator for weak pointers to a string in shared memory
-   typedef allocator<string_weak_ptr_t, managed_shared_memory::segment_manager >
-      string_weak_ptr_allocator_t;
+   typedef allocator<string_weak_ptr_t, segment_mngr_t > string_weak_ptr_allocator_t;
 
    //A vector of shared pointers to strings (all in shared memory) and its instantiation
    typedef vector<string_shared_ptr_t, string_shared_ptr_allocator_t>
@@ -156,8 +151,7 @@ int string_shared_ptr_vector_insertion_test()
          //Create a string in shared memory, to avoid leaks with exceptions use
          //scoped ptr until we store this pointer in the shared ptr
          scoped_ptr<string_t, string_deleter_t> scoped_string
-         (shmem.construct<string_t>(anonymous_instance)(string_allocator),
-            deleter);
+            (shmem.construct<string_t>(anonymous_instance)(string_allocator), deleter);
          //Now construct a shared pointer to a string
          string_shared_ptr_t string_shared_ptr (scoped_string.get(),
                                                 string_shared_ptr_allocator,
@@ -262,6 +256,7 @@ int string_shared_ptr_vector_insertion_test()
    shared_memory_object::remove(process_name.c_str());
    return 0;
 }
+
 //
 //  This part is taken from shared_ptr_basic_test.cpp
 //
@@ -279,7 +274,7 @@ struct X
 {
    X(){ ++cnt;   }
    // virtual destructor deliberately omitted
-   ~X(){   --cnt;    }
+   virtual ~X(){   --cnt;    }
 
    virtual int id() const
    {  return 1;   }
@@ -292,7 +287,7 @@ struct X
 struct Y: public X
 {
    Y(){  ++cnt;   }
-   ~Y(){ --cnt;   }
+   virtual ~Y(){ --cnt;   }
 
    virtual int id() const
    {  return 2;   }
@@ -402,21 +397,13 @@ void test_is_nonzero(shared_ptr<T, A, D> const & p)
 
 int basic_shared_ptr_test()
 {
-   typedef allocator<void, managed_shared_memory::segment_manager>
-      v_allocator_t;
-
-   typedef deleter<X, managed_shared_memory::segment_manager>
-      x_deleter_t;
-
-   typedef deleter<Y, managed_shared_memory::segment_manager>
-      y_deleter_t;
-
+   typedef managed_shared_memory::segment_manager  segment_mngr_t;
+   typedef allocator<void, segment_mngr_t> v_allocator_t;
+   typedef deleter<X, segment_mngr_t> x_deleter_t;
+   typedef deleter<Y, segment_mngr_t> y_deleter_t;
    typedef shared_ptr<X, v_allocator_t, x_deleter_t> x_shared_ptr;
-
    typedef shared_ptr<Y, v_allocator_t, y_deleter_t> y_shared_ptr;
-
    typedef weak_ptr<X, v_allocator_t, x_deleter_t> x_weak_ptr;
-
    typedef weak_ptr<Y, v_allocator_t, y_deleter_t> y_weak_ptr;
 
    std::string process_name;
@@ -557,11 +544,9 @@ struct alias_tester
 
 void test_alias()
 {
-   typedef allocator<void, managed_shared_memory::segment_manager>
-      v_allocator_t;
-
-   typedef deleter<int, managed_shared_memory::segment_manager>
-      int_deleter_t;
+   typedef managed_shared_memory::segment_manager  segment_mngr_t;
+   typedef allocator<void, segment_mngr_t> v_allocator_t;
+   typedef deleter<int, segment_mngr_t>    int_deleter_t;
 
    typedef shared_ptr<int, v_allocator_t, int_deleter_t> int_shared_ptr;
    typedef shared_ptr<const int, v_allocator_t, int_deleter_t> const_int_shared_ptr;
