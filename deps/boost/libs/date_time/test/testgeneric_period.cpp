@@ -59,14 +59,6 @@ int main(){
   check("End", p1.end() == 10);
   check("Length", p1.length() == 9);
   check("is_null (not)", !p1.is_null());
-  {
-    a_period p1(1, 10);
-    check("First", p1.begin() == 1); 
-    check("Last", p1.last() == 9);
-    check("End", p1.end() == 10);
-    check("Length", p1.length() == 9);
-    check("is_null (not)", !p1.is_null());
-  }
 
   a_period p2(5, 30);
   check("First", p2.begin() == 5); 
@@ -165,117 +157,117 @@ int main(){
 
   {
     std::cout << std::endl;
-    a_period p1(0, -2);
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -3);
-    check("End", p1.end() == -2);
-    check("Length", p1.length() == -2);
-    check("is_null", p1.is_null());
+    a_period p1x(0, -2);
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -3);
+    check("End", p1x.end() == -2);
+    check("Length", p1x.length() == -2);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, -1);
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -2);
-    check("End", p1.end() == -1);
-    check("Length", p1.length() == -1);
-    check("is_null", p1.is_null());
+    a_period p1x(0, -1);
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -2);
+    check("End", p1x.end() == -1);
+    check("Length", p1x.length() == -1);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, 0);
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -1);
-    check("End", p1.end() == 0);
-    check("Length", p1.length() == 0);
-    check("is_null", p1.is_null());
+    a_period p1x(0, 0);
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -1);
+    check("End", p1x.end() == 0);
+    check("Length", p1x.length() == 0);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, 1);
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == 0);
-    check("End", p1.end() == 1);
-    check("Length", p1.length() == 1);
-    check("is_null", !p1.is_null());
+    a_period p1x(0, 1);
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == 0);
+    check("End", p1x.end() == 1);
+    check("Length", p1x.length() == 1);
+    check("is_null", !p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, 2);
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == 1);
-    check("End", p1.end() == 2);
-    check("Length", p1.length() == 2);
-    check("is_null", !p1.is_null());
+    a_period p1x(0, 2);
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == 1);
+    check("End", p1x.end() == 2);
+    check("Length", p1x.length() == 2);
+    check("is_null", !p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, duration_type<int>(-1));
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -2);
-    check("End", p1.end() == -1);
-    check("Length", p1.length() == -1);
-    check("is_null", p1.is_null());
+    a_period p1x(0, duration_type<int>(-1));
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -2);
+    check("End", p1x.end() == -1);
+    check("Length", p1x.length() == -1);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, duration_type<int>(-2));
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -3);
-    check("End", p1.end() == -2);
-    check("Length", p1.length() == -2);
-    check("is_null", p1.is_null());
+    a_period p1x(0, duration_type<int>(-2));
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -3);
+    check("End", p1x.end() == -2);
+    check("Length", p1x.length() == -2);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, duration_type<int>(0));
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == -1);
-    check("End", p1.end() == 0);
-    check("Length", p1.length() == 0);
-    check("is_null", p1.is_null());
+    a_period p1x(0, duration_type<int>(0));
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == -1);
+    check("End", p1x.end() == 0);
+    check("Length", p1x.length() == 0);
+    check("is_null", p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, duration_type<int>(1));
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == 0);
-    check("End", p1.end() == 1);
-    check("Length", p1.length() == 1);
-    check("is_null", !p1.is_null());
+    a_period p1x(0, duration_type<int>(1));
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == 0);
+    check("End", p1x.end() == 1);
+    check("Length", p1x.length() == 1);
+    check("is_null", !p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(0, duration_type<int>(2));
-    check("First", p1.begin() == 0); 
-    check("Last", p1.last() == 1);
-    check("End", p1.end() == 2);
-    check("Length", p1.length() == 2);
-    check("is_null", !p1.is_null());
+    a_period p1x(0, duration_type<int>(2));
+    check("First", p1x.begin() == 0); 
+    check("Last", p1x.last() == 1);
+    check("End", p1x.end() == 2);
+    check("Length", p1x.length() == 2);
+    check("is_null", !p1x.is_null());
   }
   {
     std::cout << std::endl;
-    a_period p1(1,1); // length should be 0
-    a_period p2(1,2); // length should be 1
-    a_period p3(1,3); // length should be 2
-    check("Length p1", p1.length() == 0);
-    check("Length p2", p2.length() == 1);
-    check("Length p3", p3.length() == 2);
-    check("is_null p1 (not)", p1.is_null());
-    check("is_null p2 (not)", !p2.is_null());
+    a_period p1x(1,1); // length should be 0
+    a_period p2x(1,2); // length should be 1
+    a_period p3x(1,3); // length should be 2
+    check("Length p1", p1x.length() == 0);
+    check("Length p2", p2x.length() == 1);
+    check("Length p3", p3x.length() == 2);
+    check("is_null p1 (not)", p1x.is_null());
+    check("is_null p2 (not)", !p2x.is_null());
   }
 
   {
-    a_period p1(1,2); // length should be 1
-    p1.shift(duration_type<int>(1));
-    a_period p2(2,3); // shifted result
-    check("shift", p1 == p2);
+    a_period p1x(1,2); // length should be 1
+    p1x.shift(duration_type<int>(1));
+    a_period p2x(2,3); // shifted result
+    check("shift", p1x == p2x);
   }
   {
-    a_period p1(5,duration_type<int>(3)); 
-    a_period p2(3,10); // expanded result
-    p1.expand(duration_type<int>(2)); //from 2000-Jan-01--2000-Jan-04
-    check("expand", p1 == p2);
+    a_period p1x(5,duration_type<int>(3)); 
+    a_period p2x(3,10); // expanded result
+    p1x.expand(duration_type<int>(2)); //from 2000-Jan-01--2000-Jan-04
+    check("expand", p1x == p2x);
   } 
   return printTestStats();
 }

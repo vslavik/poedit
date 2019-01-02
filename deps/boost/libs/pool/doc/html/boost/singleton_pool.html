@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template singleton_pool</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Pool">
 <link rel="up" href="../header/boost/pool/singleton_pool_hpp.html" title="Header &lt;boost/pool/singleton_pool.hpp&gt;">
 <link rel="prev" href="../header/boost/pool/singleton_pool_hpp.html" title="Header &lt;boost/pool/singleton_pool.hpp&gt;">
@@ -46,29 +46,29 @@
 
   <span class="keyword">struct</span> <a class="link" href="singleton_pool/object_creator.html" title="Struct object_creator">object_creator</a> <span class="special">{</span>
     <span class="comment">// <a class="link" href="singleton_pool/object_creator.html#boost.singleton_pool.object_creatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="singleton_pool/object_creator.html#idp6950496-bb"><span class="identifier">object_creator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="singleton_pool/object_creator.html#idp23214688-bb"><span class="identifier">object_creator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="singleton_pool/object_creator.html#idp6948656-bb">public member functions</a></span>
-    <span class="keyword">void</span> <a class="link" href="singleton_pool/object_creator.html#idp6949216-bb"><span class="identifier">do_nothing</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="singleton_pool/object_creator.html#idp23213072-bb">public member functions</a></span>
+    <span class="keyword">void</span> <a class="link" href="singleton_pool/object_creator.html#idp23213568-bb"><span class="identifier">do_nothing</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="singleton_pool.html#boost.singleton_poolconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="singleton_pool.html#idp6965008-bb"><span class="identifier">singleton_pool</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="singleton_pool.html#idp23227488-bb"><span class="identifier">singleton_pool</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="singleton_pool.html#idp6965296-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp6965856-bb"><span class="identifier">malloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp6967424-bb"><span class="identifier">ordered_malloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp6969008-bb"><span class="identifier">ordered_malloc</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp6971280-bb"><span class="identifier">is_from</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp6974000-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp6976272-bb"><span class="identifier">ordered_free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp6978544-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp6981504-bb"><span class="identifier">ordered_free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp6984464-bb"><span class="identifier">release_memory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp6986048-bb"><span class="identifier">purge_memory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="singleton_pool.html#idp23227744-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp23228240-bb"><span class="identifier">malloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp23229616-bb"><span class="identifier">ordered_malloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="singleton_pool.html#idp23231072-bb"><span class="identifier">ordered_malloc</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp23233152-bb"><span class="identifier">is_from</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp23235616-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp23237696-bb"><span class="identifier">ordered_free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp23239776-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="singleton_pool.html#idp23242480-bb"><span class="identifier">ordered_free</span></a><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp23245184-bb"><span class="identifier">release_memory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="singleton_pool.html#idp23246640-bb"><span class="identifier">purge_memory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="singleton_pool.html#idp6987792-bb">private static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">pool_type</span> <span class="special">&amp;</span> <a class="link" href="singleton_pool.html#idp6988368-bb"><span class="identifier">get_pool</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="singleton_pool.html#idp23248224-bb">private static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">pool_type</span> <span class="special">&amp;</span> <a class="link" href="singleton_pool.html#idp23248720-bb"><span class="identifier">get_pool</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="identifier">requested_size</span><span class="special">;</span>  <span class="comment">// The size of each chunk allocated by this pool. </span>
@@ -76,7 +76,7 @@
   <span class="keyword">static</span> <a class="link" href="pool.html" title="Class template pool">pool</a><span class="special">&lt;</span> <span class="identifier">UserAllocator</span> <span class="special">&gt;</span> <span class="identifier">p</span><span class="special">;</span>  <span class="comment">// For exposition only! </span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp8253744"></a><h2>Description</h2>
+<a name="idp89540656"></a><h2>Description</h2>
 <p>The <a class="link" href="singleton_pool.html" title="Class template singleton_pool">singleton_pool</a> class allows other pool interfaces for types of the same size to share the same pool. Template parameters are as follows:</p>
 <p><span class="bold"><strong>Tag</strong></span> User-specified type to uniquely identify this pool: allows different unbounded sets of singleton pools to exist.</p>
 <p><span class="bold"><strong>RequestedSize</strong></span> The size of each chunk returned by member function <code class="computeroutput">malloc()</code>.</p>
@@ -86,8 +86,8 @@
 <p><span class="bold"><strong>MaxSize</strong></span>The value of this parameter is passed to the underlying Pool when it is created and specifies the maximum number of chunks to allocate in any single allocation request (defaults to 0).</p>
 <p><span class="bold"><strong>Notes:</strong></span></p>
 <p>The underlying pool <span class="emphasis"><em>p</em></span> referenced by the static functions in <a class="link" href="singleton_pool.html" title="Class template singleton_pool">singleton_pool</a> is actually declared in a way that is:</p>
-<p>1 Thread-safe if there is only one thread running before main() begins and after main() ends -- all of the static functions of <a class="link" href="singleton_pool.html" title="Class template singleton_pool">singleton_pool</a> synchronize their access to p.</p>
-<p>2 Guaranteed to be constructed before it is used -- thus, the simple static object in the synopsis above would actually be an incorrect implementation. The actual implementation to guarantee this is considerably more complicated.</p>
+<p>1 Thread-safe if there is only one thread running before main() begins and after main() ends &#8211; all of the static functions of <a class="link" href="singleton_pool.html" title="Class template singleton_pool">singleton_pool</a> synchronize their access to p.</p>
+<p>2 Guaranteed to be constructed before it is used &#8211; thus, the simple static object in the synopsis above would actually be an incorrect implementation. The actual implementation to guarantee this is considerably more complicated.</p>
 <p>3 Note too that a different underlying pool p exists for each different set of template parameters, including implementation-specific ones.</p>
 <p>4 The underlying pool is constructed "as if" by:</p>
 <p>pool&lt;UserAllocator&gt; p(RequestedSize, NextSize, MaxSize);</p>
@@ -101,7 +101,7 @@
 <p>
 </p>
 <div class="refsect2">
-<a name="idp8275968"></a><h3>
+<a name="idp89563248"></a><h3>
 <a name="boost.singleton_pooltypes"></a><code class="computeroutput">singleton_pool</code> 
         public
        types</h3>
@@ -112,34 +112,37 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp8282912"></a><h3>
+<a name="idp89570256"></a><h3>
 <a name="boost.singleton_poolconstruct-copy-destruct"></a><code class="computeroutput">singleton_pool</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp6965008-bb"></a><span class="identifier">singleton_pool</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp23227488-bb"></a><span class="identifier">singleton_pool</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp8288784"></a><h3>
-<a name="idp6965296-bb"></a><code class="computeroutput">singleton_pool</code> public static functions</h3>
+<a name="idp89576128"></a><h3>
+<a name="idp23227744-bb"></a><code class="computeroutput">singleton_pool</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp6965856-bb"></a><span class="identifier">malloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp23228240-bb"></a><span class="identifier">malloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.malloc(); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp6967424-bb"></a><span class="identifier">ordered_malloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp23229616-bb"></a><span class="identifier">ordered_malloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.ordered_malloc(); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp6969008-bb"></a><span class="identifier">ordered_malloc</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <span class="special">*</span> <a name="idp23231072-bb"></a><span class="identifier">ordered_malloc</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.ordered_malloc(n); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp6971280-bb"></a><span class="identifier">is_from</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp23233152-bb"></a><span class="identifier">is_from</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.is_from(chunk); synchronized. 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>true if chunk is from SingletonPool::is_from(chunk) </p></td>
@@ -147,35 +150,35 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp6974000-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp23235616-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.free(chunk); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp6976272-bb"></a><span class="identifier">ordered_free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp23237696-bb"></a><span class="identifier">ordered_free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.ordered_free(chunk); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp6978544-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp23239776-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.free(chunk, n); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp6981504-bb"></a><span class="identifier">ordered_free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp23242480-bb"></a><span class="identifier">ordered_free</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span><span class="keyword">const</span> ptr<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.ordered_free(chunk, n); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp6984464-bb"></a><span class="identifier">release_memory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp23245184-bb"></a><span class="identifier">release_memory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.release_memory(); synchronized. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp6986048-bb"></a><span class="identifier">purge_memory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp23246640-bb"></a><span class="identifier">purge_memory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Equivalent to SingletonPool::p.purge_memory(); synchronized. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp8362768"></a><h3>
-<a name="idp6987792-bb"></a><code class="computeroutput">singleton_pool</code> private static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pool_type</span> <span class="special">&amp;</span> <a name="idp6988368-bb"></a><span class="identifier">get_pool</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp89649856"></a><h3>
+<a name="idp23248224-bb"></a><code class="computeroutput">singleton_pool</code> private static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">pool_type</span> <span class="special">&amp;</span> <a name="idp23248720-bb"></a><span class="identifier">get_pool</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

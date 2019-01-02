@@ -41,10 +41,14 @@ and it's never going to be executed, even though it's present in test file. ]
 You need to be sure you exhausted all possible ways to employ automatic registration APIs first before you opt
 to use manual registration. Specifically:
 
-* If you need optionally include/exclude some of the test cases, consider using enable/disable/enable_if decorators instead
-* If you need to register some parametrized test cases based on some data, consider data-driven test cases instead
-* If you need to specify complicated test unit dependencies, you can use depends_on decorator instead
-* if you need to share the logic between the test units consider using fixtures instead
+* If you need optionally include/exclude some of the test cases, consider using 
+  __decorator_enabled__ / __decorator_disabled__ / __decorator_enable_if__ decorators instead
+* If you need to register some parametrized test cases based on some data, consider 
+  [link boost_test.tests_organization.test_cases.test_case_generation data-driven] test cases instead
+* If you need to specify complicated test unit dependencies, you can use __decorator_depends_on__ 
+  decorator instead
+* if you need to share the logic between the test units consider using 
+  [link boost_test.tests_organization.fixtures fixtures] instead
 
 [/ ############################################# ]
 [include nullary_tests.qbk]

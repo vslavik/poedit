@@ -165,7 +165,7 @@ class install-target-class : basic-target
                 if $(ename)
                 {
                     import errors : error : $(__name__) : errors.error ;
-                    errors.error In 'install': <name> property specified with
+                    errors.error In "'install':" <name> property specified with
                         target that requires relinking. ;
                 }
                 else
@@ -456,7 +456,7 @@ class installed-shared-lib-generator : generator
             # 'Z' are numbers, we need to create NNN.XXX and NNN.XXX.YYY
             # symbolic links.
             local m = [ MATCH
-                (.*)\\.([0123456789]+)\\.([0123456789]+)\\.([0123456789]+)$ :
+                "(.*)\\.([0123456789]+)\\.([0123456789]+)\\.([0123456789]+)$" :
                 [ $(copied).name ] ] ;
             if $(m)
             {

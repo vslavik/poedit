@@ -15,7 +15,7 @@
 #include <boost/spirit/repository/include/qi_seek.hpp>
 
 
-int main(int argc, char *argv[])
+int main()
 {
     //[reference_qi_seek_namespace
     namespace qi = boost::spirit::qi;

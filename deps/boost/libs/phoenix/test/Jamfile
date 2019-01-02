@@ -9,6 +9,16 @@
 
 # bring in rules for testing
 import testing ;
+import os ;
+
+import ../../config/checks/config : requires ;
+
+if [ os.environ CI ]
+{
+    CI_DEFINES = <define>CI_SKIP_KNOWN_FAILURE=1 ;
+    CI_DEFINES += <define>RUNNING_ON_TRAVIS=1 ;   # for backward compatibility
+    CI_DEFINES += <define>RUNNING_ON_APPVEYOR=1 ; # for backward compatibility
+}
 
 project
     : requirements
@@ -16,6 +26,7 @@ project
         <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>msvc:<define>_CRT_SECURE_NO_DEPRECATE
         <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
+        $(CI_DEFINES)
     ;
 
 local multi-threading = <library>/boost/thread
@@ -97,27 +108,44 @@ test-suite phoenix_container :
     [ run container/container_tests5b.cpp ] 
     [ run container/container_tests6a.cpp ] 
     [ run container/container_tests6b.cpp ] 
+    [ run container/container_tests7a.cpp ]
+    [ run container/container_tests7b.cpp ]
+    [ run container/container_tests8a.cpp ]
+    [ run container/container_tests8b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests9a.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests9b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests10a.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests10b.cpp : : : [ requires cxx11_hdr_unordered_map ] ]
+    [ run container/container_tests11a.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests11b.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests12a.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
+    [ run container/container_tests12b.cpp : : : [ requires cxx11_hdr_unordered_set ] ]
     ;
 
 test-suite phoenix_scope :
-#    [ run scope/lambda_tests.cpp ]
-#    [ run scope/lambda_tests1.cpp ]
-    [ run scope/lambda_tests1a.cpp ]
-#    [ run scope/lambda_tests1b.cpp ]
-    [ run scope/lambda_tests1b1p.cpp ]
-    [ run scope/lambda_tests1b1q.cpp ]
-    [ run scope/lambda_tests1b1r.cpp ]
-    [ run scope/lambda_tests1b1s.cpp ]
-    [ run scope/lambda_tests1b1t.cpp ]
-    [ run scope/lambda_tests1b2p.cpp ]
-    [ run scope/lambda_tests1b2q.cpp ]
-    [ run scope/lambda_tests1b2r.cpp ]
+    [ run scope/lambda_tests1.cpp ]
     [ run scope/lambda_tests2.cpp ]
-    [ run scope/lambda_tests2a.cpp ]
     [ run scope/lambda_tests3.cpp ]
-    [ run scope/lambda_tests3a.cpp ]
-#    [ run scope/lambda_tests3a1.cpp ]
-    [ run scope/lambda_tests3b.cpp ]
+    [ run scope/lambda_tests4.cpp ]
+    [ run scope/lambda_tests5.cpp ]
+    [ run scope/lambda_tests6.cpp ]
+    [ run scope/lambda_tests7.cpp ]
+    [ run scope/lambda_tests8.cpp ]
+    [ run scope/lambda_tests9.cpp ]
+    [ run scope/lambda_tests10.cpp ]
+    [ run scope/lambda_tests11.cpp ]
+    [ run scope/lambda_tests12.cpp ]
+    [ run scope/lambda_tests13.cpp ]
+    [ run scope/lambda_tests14.cpp ]
+    [ run scope/lambda_tests15.cpp ]
+    [ run scope/lambda_tests16.cpp ]
+    [ run scope/lambda_tests17.cpp ]
+    [ run scope/lambda_tests18.cpp ]
+    [ run scope/lambda_tests19.cpp ]
+    [ run scope/lambda_tests20.cpp ]
+    [ run scope/lambda_tests21.cpp ]
+    [ run scope/lambda_tests22.cpp ]
+    [ run scope/lambda_tests23.cpp ]
 #    [ run scope/lambda_tests_phx2.cpp ]
     [ run scope/let_tests.cpp ]
     [ run scope/let_tests_113.cpp ]
@@ -197,6 +225,8 @@ test-suite phoenix_regression :
     [ run regression/bug7165.cpp ]
     [ compile-fail regression/bug7166.cpp ]
     [ run regression/bug7624.cpp ]
+    [ compile regression/from_array.cpp ]
+    [ run regression/actor_assignment.cpp ]
     ;
 
 test-suite phoenix_include :

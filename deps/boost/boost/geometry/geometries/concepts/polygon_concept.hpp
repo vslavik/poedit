@@ -15,6 +15,7 @@
 #define BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_POLYGON_CONCEPT_HPP
 
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/range/concepts.hpp>
 
 #include <boost/geometry/core/access.hpp>
@@ -27,7 +28,7 @@
 #include <boost/geometry/geometries/concepts/ring_concept.hpp>
 
 
-namespace boost { namespace geometry { namespace concept
+namespace boost { namespace geometry { namespace concepts
 {
 
 /*!
@@ -48,8 +49,8 @@ class Polygon
     typedef typename point_type<PolygonType>::type point_type;
     typedef typename ring_type<PolygonType>::type ring_type;
 
-    BOOST_CONCEPT_ASSERT( (concept::Point<point_type>) );
-    BOOST_CONCEPT_ASSERT( (concept::Ring<ring_type>) );
+    BOOST_CONCEPT_ASSERT( (concepts::Point<point_type>) );
+    BOOST_CONCEPT_ASSERT( (concepts::Ring<ring_type>) );
 
     //BOOST_CONCEPT_ASSERT( (boost::RandomAccessRangeConcept<interior_type>) );
 
@@ -65,12 +66,8 @@ class Polygon
             ring_const_type ce = traits::exterior_ring<PolygonType>::get(*cpoly);
             interior_const_type ci = traits::interior_rings<PolygonType>::get(*cpoly);
 
-            boost::ignore_unused_variable_warning(e);
-            boost::ignore_unused_variable_warning(i);
-            boost::ignore_unused_variable_warning(ce);
-            boost::ignore_unused_variable_warning(ci);
-            boost::ignore_unused_variable_warning(poly);
-            boost::ignore_unused_variable_warning(cpoly);
+            boost::ignore_unused(poly, cpoly);
+            boost::ignore_unused(e, i, ce, ci);
         }
     };
 
@@ -101,8 +98,8 @@ class ConstPolygon
     typedef typename point_type<const_polygon_type>::type point_type;
     typedef typename ring_type<const_polygon_type>::type ring_type;
 
-    BOOST_CONCEPT_ASSERT( (concept::ConstPoint<point_type>) );
-    BOOST_CONCEPT_ASSERT( (concept::ConstRing<ring_type>) );
+    BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point_type>) );
+    BOOST_CONCEPT_ASSERT( (concepts::ConstRing<ring_type>) );
 
     ////BOOST_CONCEPT_ASSERT( (boost::RandomAccessRangeConcept<interior_type>) );
 
@@ -115,9 +112,7 @@ class ConstPolygon
             ring_const_type ce = traits::exterior_ring<const_polygon_type>::get(*cpoly);
             interior_const_type ci = traits::interior_rings<const_polygon_type>::get(*cpoly);
 
-            boost::ignore_unused_variable_warning(ce);
-            boost::ignore_unused_variable_warning(ci);
-            boost::ignore_unused_variable_warning(cpoly);
+            boost::ignore_unused(ce, ci, cpoly);
         }
     };
 
@@ -130,6 +125,6 @@ public:
 #endif
 };
 
-}}} // namespace boost::geometry::concept
+}}} // namespace boost::geometry::concepts
 
 #endif // BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_POLYGON_CONCEPT_HPP

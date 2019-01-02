@@ -6,9 +6,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include "test.hpp"
 
-
-#ifdef BOOST_MP_USER_DEFINED_LITERALS
-
+#if ! (BOOST_WORKAROUND(BOOST_MSVC, <= 1900) && defined(CI_SUPPRESS_KNOWN_ISSUES)) && defined(BOOST_MP_USER_DEFINED_LITERALS)
 
 using namespace boost::multiprecision;
 

@@ -7,18 +7,15 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#include <limits>
-#include <map>
-
-#define BOOST_TEST_MODULE voronoi_predicates_test
-#include <boost/test/test_case_template.hpp>
-
+#include <boost/core/lightweight_test.hpp>
 #include <boost/polygon/detail/voronoi_ctypes.hpp>
 #include <boost/polygon/detail/voronoi_predicates.hpp>
 #include <boost/polygon/detail/voronoi_structures.hpp>
-using namespace boost::polygon::detail;
-
 #include <boost/polygon/voronoi_geometry_type.hpp>
+#include <limits>
+#include <map>
+
+using namespace boost::polygon::detail;
 using namespace boost::polygon;
 
 ulp_comparison<double> ulp_cmp;
@@ -44,43 +41,44 @@ VP::circle_formation_predicate<site_type, circle_type, CEP_type, MP_CFF_type> mp
 VP::circle_formation_predicate<site_type, circle_type, CEP_type, lazy_CFF_type> lazy_predicate;
 
 #define CHECK_ORIENTATION(P1, P2, P3, R1, R2) \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P1, P2, P3) == R1, true); \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P1, P3, P2) == R2, true); \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P2, P1, P3) == R2, true); \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P2, P3, P1) == R1, true); \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P3, P1, P2) == R1, true); \
-    BOOST_CHECK_EQUAL(VP::ot::eval(P3, P2, P1) == R2, true)
+    BOOST_TEST_EQ(VP::ot::eval(P1, P2, P3) == R1, true); \
+    BOOST_TEST_EQ(VP::ot::eval(P1, P3, P2) == R2, true); \
+    BOOST_TEST_EQ(VP::ot::eval(P2, P1, P3) == R2, true); \
+    BOOST_TEST_EQ(VP::ot::eval(P2, P3, P1) == R1, true); \
+    BOOST_TEST_EQ(VP::ot::eval(P3, P1, P2) == R1, true); \
+    BOOST_TEST_EQ(VP::ot::eval(P3, P2, P1) == R2, true)
 
 #define CHECK_EVENT_COMPARISON(A, B, R1, R2) \
-    BOOST_CHECK_EQUAL(event_comparison(A, B), R1); \
-    BOOST_CHECK_EQUAL(event_comparison(B, A), R2)
+    BOOST_TEST_EQ(event_comparison(A, B), R1); \
+    BOOST_TEST_EQ(event_comparison(B, A), R2)
 
 #define CHECK_DISTANCE_PREDICATE(S1, S2, P3, RES) \
-    BOOST_CHECK_EQUAL(distance_predicate(S1, S2, P3), RES)
+    BOOST_TEST_EQ(distance_predicate(S1, S2, P3), RES)
 
 #define CHECK_NODE_COMPARISON(node, nodes, res, sz) \
     for (int i = 0; i < sz; ++i) { \
-      BOOST_CHECK_EQUAL(node_comparison(node, nodes[i]), res[i]); \
-      BOOST_CHECK_EQUAL(node_comparison(nodes[i], node), !res[i]); \
+      BOOST_TEST_EQ(node_comparison(node, nodes[i]), res[i]); \
+      BOOST_TEST_EQ(node_comparison(nodes[i], node), !res[i]); \
     }
 
 #define CHECK_CIRCLE(circle, c_x, c_y, l_x) \
-    BOOST_CHECK_EQUAL(ulp_cmp(c1.x(), c_x, 10), ulp_comparison<double>::EQUAL); \
-    BOOST_CHECK_EQUAL(ulp_cmp(c1.y(), c_y, 10), ulp_comparison<double>::EQUAL); \
-    BOOST_CHECK_EQUAL(ulp_cmp(c1.lower_x(), l_x, 10), ulp_comparison<double>::EQUAL)
+    BOOST_TEST_EQ(ulp_cmp(c1.x(), c_x, 10), ulp_comparison<double>::EQUAL); \
+    BOOST_TEST_EQ(ulp_cmp(c1.y(), c_y, 10), ulp_comparison<double>::EQUAL); \
+    BOOST_TEST_EQ(ulp_cmp(c1.lower_x(), l_x, 10), ulp_comparison<double>::EQUAL)
 
 #define CHECK_CIRCLE_EXISTENCE(s1, s2, s3, RES) \
   { circle_type c1; \
-    BOOST_CHECK_EQUAL(lazy_predicate(s1, s2, s3, c1), RES); }
+    BOOST_TEST_EQ(lazy_predicate(s1, s2, s3, c1), RES); }
 
 #define CHECK_CIRCLE_FORMATION_PREDICATE(s1, s2, s3, c_x, c_y, l_x) \
   { circle_type c1, c2; \
-    BOOST_CHECK_EQUAL(mp_predicate(s1, s2, s3, c1), true); \
-    BOOST_CHECK_EQUAL(lazy_predicate(s1, s2, s3, c2), true); \
+    BOOST_TEST_EQ(mp_predicate(s1, s2, s3, c1), true); \
+    BOOST_TEST_EQ(lazy_predicate(s1, s2, s3, c2), true); \
     CHECK_CIRCLE(c1, c_x, c_y, l_x); \
     CHECK_CIRCLE(c2, c_x, c_y, l_x); }
 
-BOOST_AUTO_TEST_CASE(orientation_test) {
+void orientation_test()
+{
   int min_int = (std::numeric_limits<int>::min)();
   int max_int = (std::numeric_limits<int>::max)();
   point_type point1(min_int, min_int);
@@ -93,14 +91,16 @@ BOOST_AUTO_TEST_CASE(orientation_test) {
   CHECK_ORIENTATION(point1, point5, point3, VP::ot::RIGHT, VP::ot::LEFT);
 }
 
-BOOST_AUTO_TEST_CASE(event_comparison_test1) {
+void event_comparison_test1()
+{
   site_type site(1, 2);
   CHECK_EVENT_COMPARISON(site, site_type(0, 2), false, true);
   CHECK_EVENT_COMPARISON(site, site_type(1, 3), true, false);
   CHECK_EVENT_COMPARISON(site, site_type(1, 2), false, false);
 }
 
-BOOST_AUTO_TEST_CASE(event_comparison_test2) {
+void event_comparison_test2()
+{
   site_type site(0, 0, 0, 2);
   CHECK_EVENT_COMPARISON(site, site_type(0, 2), true, false);
   CHECK_EVENT_COMPARISON(site, site_type(0, 0), false, true);
@@ -109,7 +109,8 @@ BOOST_AUTO_TEST_CASE(event_comparison_test2) {
   CHECK_EVENT_COMPARISON(site, site_type(0, 0, 1, 1), true, false);
 }
 
-BOOST_AUTO_TEST_CASE(event_comparison_test3) {
+void event_comparison_test3()
+{
   site_type site(0, 0, 10, 10);
   CHECK_EVENT_COMPARISON(site, site_type(0, 0), false, true);
   CHECK_EVENT_COMPARISON(site, site_type(0, -1), false, true);
@@ -120,7 +121,8 @@ BOOST_AUTO_TEST_CASE(event_comparison_test3) {
   CHECK_EVENT_COMPARISON(site, site_type(0, 0, 9, 10), false, true);
 }
 
-BOOST_AUTO_TEST_CASE(event_comparison_test4) {
+void event_comparison_test4()
+{
   circle_type circle(1, 2, 3);
   CHECK_EVENT_COMPARISON(circle, circle_type(1, 2, 3), false, false);
   CHECK_EVENT_COMPARISON(circle, circle_type(1, 3, 3), true, false);
@@ -129,7 +131,8 @@ BOOST_AUTO_TEST_CASE(event_comparison_test4) {
   CHECK_EVENT_COMPARISON(circle, circle_type(-1, 2, 3), false, false);
 }
 
-BOOST_AUTO_TEST_CASE(event_comparison_test5) {
+void event_comparison_test5()
+{
   circle_type circle(1, 2, 3);
   CHECK_EVENT_COMPARISON(circle, site_type(0, 100), false, true);
   CHECK_EVENT_COMPARISON(circle, site_type(3, 0), false, false);
@@ -138,7 +141,8 @@ BOOST_AUTO_TEST_CASE(event_comparison_test5) {
   CHECK_EVENT_COMPARISON(circle, site_type(4, 2), true, false);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test1) {
+void distance_predicate_test1()
+{
   site_type site1(-5, 0);
   site1.sorted_index(1);
   site_type site2(-8, 9);
@@ -153,7 +157,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test1) {
   CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, 6), true);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test2) {
+void distance_predicate_test2()
+{
   site_type site1(-4, 0, -4, 20);
   site1.sorted_index(0);
   site_type site2(-2, 10);
@@ -164,7 +169,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test2) {
   CHECK_DISTANCE_PREDICATE(site1, site2, point_type(0, 9), true);
 }
 
-BOOST_AUTO_TEST_CASE(disntace_predicate_test3) {
+void distance_predicate_test3()
+{
   site_type site1(-5, 5, 2, -2);
   site1.sorted_index(0);
   site1.inverse();
@@ -180,7 +186,8 @@ BOOST_AUTO_TEST_CASE(disntace_predicate_test3) {
   CHECK_DISTANCE_PREDICATE(site2, site1, point_type(0, 5), false);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test4) {
+void distance_predicate_test4()
+{
   site_type site1(-5, 5, 2, -2);
   site1.sorted_index(0);
   site_type site2(-2, -4);
@@ -205,7 +212,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test4) {
   CHECK_DISTANCE_PREDICATE(site3, site1, point_type(0, -9), false);
 }
 
-BOOST_AUTO_TEST_CASE(disntace_predicate_test5) {
+void distance_predicate_test5()
+{
   site_type site1(-5, 5, 2, -2);
   site1.sorted_index(0);
   site_type site2 = site1;
@@ -232,7 +240,8 @@ BOOST_AUTO_TEST_CASE(disntace_predicate_test5) {
   CHECK_DISTANCE_PREDICATE(site5, site1, point_type(0, -1), true);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test6) {
+void distance_predicate_test6()
+{
   site_type site1(-5, 0, 2, 7);
   site_type site2 = site1;
   site2.inverse();
@@ -241,7 +250,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test6) {
   CHECK_DISTANCE_PREDICATE(site1, site2, point_type(-1, 5), true);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test7) {
+void distance_predicate_test7()
+{
   site_type site1(-5, 5, 2, -2);
   site1.sorted_index(1);
   site1.inverse();
@@ -268,7 +278,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test7) {
   CHECK_DISTANCE_PREDICATE(site3, site1, site7, true);
 }
 
-BOOST_AUTO_TEST_CASE(distance_predicate_test8) {
+void distance_predicate_test8()
+{
   site_type site1(-5, 3, -2, 2);
   site1.sorted_index(0);
   site1.inverse();
@@ -277,7 +288,8 @@ BOOST_AUTO_TEST_CASE(distance_predicate_test8) {
   CHECK_DISTANCE_PREDICATE(site1, site2, point_type(-4, 2), false);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test1) {
+void node_comparison_test1()
+{
   beach_line_type beach_line;
   site_type site1(0, 0);
   site1.sorted_index(0);
@@ -291,11 +303,12 @@ BOOST_AUTO_TEST_CASE(node_comparison_test1) {
   int cur_index = 0;
   for (bieach_line_iterator it = beach_line.begin();
        it != beach_line.end(); ++it, ++cur_index) {
-    BOOST_CHECK_EQUAL(it->second, cur_index);
+    BOOST_TEST_EQ(it->second, cur_index);
   }
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test2) {
+void node_comparison_test2()
+{
   beach_line_type beach_line;
   site_type site1(0, 1);
   site1.sorted_index(0);
@@ -310,11 +323,12 @@ BOOST_AUTO_TEST_CASE(node_comparison_test2) {
   int cur_index = 0;
   for (bieach_line_iterator it = beach_line.begin();
        it != beach_line.end(); ++it, ++cur_index) {
-    BOOST_CHECK_EQUAL(it->second, cur_index);
+    BOOST_TEST_EQ(it->second, cur_index);
   }
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test3) {
+void node_comparison_test3()
+{
   key_type node(site_type(1, 0).sorted_index(1), site_type(0, 2).sorted_index(0));
   key_type nodes[] = {
     key_type(site_type(2, -10).sorted_index(2)),
@@ -328,7 +342,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test3) {
   CHECK_NODE_COMPARISON(node, nodes, res, 6);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test4) {
+void node_comparison_test4()
+{
   key_type node(site_type(0, 1).sorted_index(0), site_type(1, 0).sorted_index(1));
   key_type nodes[] = {
     key_type(site_type(2, -3).sorted_index(2)),
@@ -342,7 +357,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test4) {
   CHECK_NODE_COMPARISON(node, nodes, res, 6);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test5) {
+void node_comparison_test5()
+{
   key_type node(site_type(0, 0).sorted_index(0), site_type(1, 2).sorted_index(1));
   key_type nodes[] = {
     key_type(site_type(2, -10).sorted_index(2)),
@@ -356,7 +372,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test5) {
   CHECK_NODE_COMPARISON(node, nodes, res, 6);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test6) {
+void node_comparison_test6()
+{
   key_type node(site_type(1, 1).sorted_index(1), site_type(0, 0).sorted_index(0));
   key_type nodes[] = {
     key_type(site_type(2, -3).sorted_index(2)),
@@ -371,7 +388,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test6) {
   CHECK_NODE_COMPARISON(node, nodes, res, 7);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test7) {
+void node_comparison_test7()
+{
   key_type node(site_type(0, 0).sorted_index(0), site_type(0, 2).sorted_index(1));
   key_type nodes[] = {
     key_type(site_type(1, 0).sorted_index(2)),
@@ -382,7 +400,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test7) {
   CHECK_NODE_COMPARISON(node, nodes, res, 3);
 }
 
-BOOST_AUTO_TEST_CASE(node_comparison_test8) {
+void node_comparison_test8()
+{
   key_type node(site_type(0, 0).sorted_index(0), site_type(1, 1).sorted_index(2));
   key_type nodes[] = {
     key_type(site_type(1, 0).sorted_index(1)),
@@ -394,7 +413,8 @@ BOOST_AUTO_TEST_CASE(node_comparison_test8) {
   CHECK_NODE_COMPARISON(node, nodes, res, 4);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test1) {
+void circle_formation_predicate_test1()
+{
   site_type site1(0, 0);
   site1.sorted_index(1);
   site_type site2(-8, 0);
@@ -404,7 +424,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test1) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 3.0, 1.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test2) {
+void circle_formation_predicate_test2()
+{
   int min_int = (std::numeric_limits<int>::min)();
   int max_int = (std::numeric_limits<int>::max)();
   site_type site1(min_int, min_int);
@@ -419,7 +440,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test2) {
   CHECK_CIRCLE_EXISTENCE(site1, site3, site4, false);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test3) {
+void circle_formation_predicate_test3()
+{
   site_type site1(-4, 0);
   site1.sorted_index(0);
   site_type site2(0, 4);
@@ -435,7 +457,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test3) {
   CHECK_CIRCLE_EXISTENCE(site4, site5, site3, false);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test4) {
+void circle_formation_predicate_test4()
+{
   site_type site1(-4, 0, -4, 20);
   site1.sorted_index(0);
   site_type site2(-2, 10);
@@ -446,7 +469,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test4) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 14.0, 6.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test5) {
+void circle_formation_predicate_test5()
+{
   site_type site1(1, 0, 7, 0);
   site1.sorted_index(2);
   site1.inverse();
@@ -460,7 +484,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test5) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site4, site2, site1, 1.0, 2.0, 3.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test6) {
+void circle_formation_predicate_test6()
+{
   site_type site1(-1, 2, 8, -10);
   site1.sorted_index(1);
   site1.inverse();
@@ -471,7 +496,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test6) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 6.0, 1.0, 11.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test7) {
+void circle_formation_predicate_test7()
+{
   site_type site1(1, 0, 6, 0);
   site1.sorted_index(2);
   site1.inverse();
@@ -482,7 +508,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test7) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 5.0, 6.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test8) {
+void circle_formation_predicate_test8()
+{
   site_type site1(1, 0, 5, 0);
   site1.sorted_index(2);
   site1.inverse();
@@ -493,7 +520,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test8) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site3, site2, site1, 1.0, 5.0, 6.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test9) {
+void circle_formation_predicate_test9()
+{
   site_type site1(0, 0, 4, 0);
   site1.sorted_index(1);
   site_type site2(0, 0, 0, 4);
@@ -504,7 +532,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test9) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 2.0, 2.0, 4.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test10) {
+void circle_formation_predicate_test10()
+{
   site_type site1(1, 0, 41, 30);
   site1.sorted_index(1);
   site_type site2(-39, 30, 1, 60);
@@ -515,7 +544,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test10) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 1.0, 30.0, 25.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test11) {
+void circle_formation_predicate_test11()
+{
   site_type site1(0, 0, 0, 10);
   site1.sorted_index(2);
   site1.inverse();
@@ -526,7 +556,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test11) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 10.0, 0.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test12) {
+void circle_formation_predicate_test12()
+{
   site_type site1(0, 0, 0, 10);
   site1.sorted_index(2);
   site1.inverse();
@@ -537,7 +568,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test12) {
   CHECK_CIRCLE_EXISTENCE(site1, site2, site3, false);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test13) {
+void circle_formation_predicate_test13()
+{
   site_type site1(0, 0, 0, 10);
   site1.sorted_index(2);
   site1.inverse();
@@ -549,7 +581,8 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test13) {
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 0.0, 0.0);
 }
 
-BOOST_AUTO_TEST_CASE(circle_formation_predicate_test14) {
+void circle_formation_predicate_test14()
+{
   site_type site1(0, 0, 0, 10);
   site1.sorted_index(2);
   site1.inverse();
@@ -559,4 +592,45 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test14) {
   site_type site3(-8, 0);
   site3.sorted_index(0);
   CHECK_CIRCLE_EXISTENCE(site1, site2, site3, false);
+}
+
+int main()
+{
+    orientation_test();
+    event_comparison_test1();
+    event_comparison_test2();
+    event_comparison_test3();
+    event_comparison_test4();
+    event_comparison_test5();
+    distance_predicate_test1();
+    distance_predicate_test2();
+    distance_predicate_test3();
+    distance_predicate_test4();
+    distance_predicate_test5();
+    distance_predicate_test6();
+    distance_predicate_test7();
+    distance_predicate_test8();
+    node_comparison_test1();
+    node_comparison_test2();
+    node_comparison_test3();
+    node_comparison_test4();
+    node_comparison_test5();
+    node_comparison_test6();
+    node_comparison_test7();
+    node_comparison_test8();
+    circle_formation_predicate_test1();
+    circle_formation_predicate_test2();
+    circle_formation_predicate_test3();
+    circle_formation_predicate_test4();
+    circle_formation_predicate_test5();
+    circle_formation_predicate_test6();
+    circle_formation_predicate_test7();
+    circle_formation_predicate_test8();
+    circle_formation_predicate_test9();
+    circle_formation_predicate_test10();
+    circle_formation_predicate_test11();
+    circle_formation_predicate_test12();
+    circle_formation_predicate_test13();
+    circle_formation_predicate_test14();
+    return boost::report_errors();
 }

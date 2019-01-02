@@ -59,7 +59,7 @@ void expected_results()
       "HP-UX|Sun Solaris",                          // platform
       largest_type,                // test type(s)
       ".*(Y'[nv]|y').*Random.*",           // test data group
-      ".*", 30000, 30000);             // test function
+      ".*", 150000, 30000);             // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib

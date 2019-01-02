@@ -5,14 +5,23 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/is_final.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 #include <iostream>
+
+#if !defined(BOOST_NO_CXX11_FINAL)
+template <class T>
+struct final_template final
+{};
+#endif
+template <class T>
+struct non_final_template
+{};
 
 TT_TEST_BEGIN(is_final)
 
@@ -38,9 +47,15 @@ TT_TEST_BEGIN(is_final)
 #  ifndef BOOST_IS_FINAL
    BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_final<final_UDT>::value, true, false);
    BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_final<final_UDT const>::value, true, false);
+   BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_final<final_template<int> >::value, true, false);
+   BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_final<final_template<int> const>::value, true, false);
 #  else
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<final_UDT>::value, true);
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<final_UDT const>::value, true);
+#    if !BOOST_WORKAROUND(BOOST_MSVC, <= 1800)
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<final_template<int> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<final_template<int> const>::value, true);
+#    endif
 #  endif
 #else
    std::cout <<
@@ -67,6 +82,7 @@ TT_TEST_BEGIN(is_final)
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<foo2_t>::value, false);
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<foo3_t>::value, false);
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<foo4_t>::value, false);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_final<non_final_template<int> >::value, false);
 
 TT_TEST_END
 

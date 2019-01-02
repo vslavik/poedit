@@ -52,11 +52,20 @@ struct perform_test
         bulirsch_stoer< state_type > stepper( 1e-9, 0.0, 0.0, 0.0 );
         state_type x( 3, 10.0 );
 
-        auto iter = boost::find_if(
+        print( boost::find_if(
             make_adaptive_time_range( stepper, rhs, x, 0.0, 1.0, 0.01 ),
-            []( const std::pair< const state_type &, double > &x )
-        { return ( x.first[0] < 0.0 ); } );
+            pred ) );
 
+    }
+
+    static bool pred( const std::pair< const state_type &, double > &x )
+    {
+        return ( x.first[0] < 0.0 );
+    }
+
+    template<class Iterator>
+    void print( Iterator iter )
+    {
         std::cout << iter->second << "\t" << iter->first[0] << "\t"
                   << iter->first[1] << "\t" << iter->first[2] << "\n";
     }

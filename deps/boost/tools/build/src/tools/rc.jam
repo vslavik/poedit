@@ -50,7 +50,7 @@ rule configure ( command ? : condition ? : options * )
         flags rc.compile.resource INCLUDES <include> ;
         if $(.debug-configuration)
         {
-            ECHO notice: using rc compiler :: $(condition) :: $(command) ;
+            ECHO "notice:" using rc compiler "::" $(condition) "::" $(command) ;
         }
     }
 }

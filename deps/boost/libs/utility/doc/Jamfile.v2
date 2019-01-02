@@ -117,3 +117,11 @@ boostbook standalone_string_ref
         # How far down we go with TOC's
         <xsl:param>generate.section.toc.level=1
      ;
+
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease :
+    standalone_base_from_member standalone_compressed_pair
+    standalone_declval standalone_string_ref ;
+explicit boostrelease ;

@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -33,7 +33,7 @@ Windows handles.
 
 Move support allows you to write code like:
 
-  tcp::socket make_socket(io_service& i)
+  tcp::socket make_socket(io_context& i)
   {
     tcp::socket s(i);
     ...
@@ -58,13 +58,12 @@ or:
   {
   private:
     tcp::acceptor acceptor_;
-    tcp::socket socket_;
     ...
-    void handle_accept(error_code ec)
+    void handle_accept(error_code ec, tcp::socket socket)
     {
       if (!ec)
-        std::make_shared<connection>(std::move(socket_))->go();
-      acceptor_.async_accept(socket_, ...);
+        std::make_shared<connection>(std::move(socket))->go();
+      acceptor_.async_accept(...);
     }
     ...
   };

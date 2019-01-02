@@ -4,6 +4,7 @@
 # http://www.boost.org/LICENSE_1_0.txt.
 
 import modules ;
+import testing ;
 
 project : requirements
    # default to all warnings on:
@@ -26,7 +27,6 @@ rule path_options ( properties * )
     return $(result) ;
 }
 
-
 #
 # ICU configuration:
 #
@@ -48,88 +48,50 @@ if ! $(disable-icu)
    }
    else
    {
-      lib icuuc : :                                                               <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuuc : : <toolset>msvc                     <variant>debug <name>icuucd <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuuc : : <toolset>intel <target-os>windows <variant>debug <name>icuucd <link>shared <runtime-link>shared <conditional>@path_options ;
+      lib icuuc : :                                                               <runtime-link>shared <conditional>@path_options ;
+      lib icuuc : : <toolset>msvc                     <variant>debug <name>icuucd <runtime-link>shared <conditional>@path_options ;
+      lib icuuc : : <toolset>intel <target-os>windows <variant>debug <name>icuucd <runtime-link>shared <conditional>@path_options ;
+      lib icuuc : :                                                  <name>sicuuc <runtime-link>static <conditional>@path_options ;
+      lib icuuc : : <toolset>msvc                     <variant>debug <name>sicuucd <runtime-link>static <conditional>@path_options ;
+      lib icuuc : : <toolset>intel <target-os>windows <variant>debug <name>sicuucd <runtime-link>static <conditional>@path_options ;
       lib icuuc : : <name>this_is_an_invalid_library_name ;
 
-      lib icudt : : <name>icudata                                   <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icudt : : <name>icudt   <toolset>msvc                     <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icudt : : <name>icudt   <toolset>intel <target-os>windows <link>shared <runtime-link>shared <conditional>@path_options ;
+      lib icudt : : <name>icudata                                   <runtime-link>shared <conditional>@path_options ;
+      lib icudt : : <name>icudt   <toolset>msvc                     <runtime-link>shared <conditional>@path_options ;
+      lib icudt : : <name>icudt   <toolset>intel <target-os>windows <runtime-link>shared <conditional>@path_options ;
+      lib icudt : : <name>sicudata                                   <runtime-link>static <conditional>@path_options ;
+      lib icudt : : <name>sicudt   <toolset>msvc                     <runtime-link>static <conditional>@path_options ;
+      lib icudt : : <name>sicudt   <toolset>intel <target-os>windows <runtime-link>static <conditional>@path_options ;
       lib icudt : : <name>this_is_an_invalid_library_name ;
 
-      lib icuin : :                                                    <name>icui18n <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>msvc                     <variant>debug   <name>icuind  <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>msvc                                      <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>intel <target-os>windows <variant>debug   <name>icuind  <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>intel <target-os>windows                  <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
+      lib icuin : :                                                    <name>icui18n <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>msvc                     <variant>debug   <name>icuind  <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>msvc                                      <name>icuin   <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>intel <target-os>windows <variant>debug   <name>icuind  <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>intel <target-os>windows                  <name>icuin   <runtime-link>shared <conditional>@path_options ;
+      lib icuin : :                                                    <name>sicui18n <runtime-link>static <conditional>@path_options ;
+      lib icuin : : <toolset>msvc                     <variant>debug   <name>sicuind  <runtime-link>static <conditional>@path_options ;
+      lib icuin : : <toolset>msvc                                      <name>sicuin   <runtime-link>static <conditional>@path_options ;
+      lib icuin : : <toolset>intel <target-os>windows <variant>debug   <name>sicuind  <runtime-link>static <conditional>@path_options ;
+      lib icuin : : <toolset>intel <target-os>windows                  <name>sicuin   <runtime-link>static <conditional>@path_options ;
       lib icuin : : <name>this_is_an_invalid_library_name ;
-
-      if $(ICU_PATH)
-      {
-         icuucd_name = [ GLOB $(ICU_PATH)/bin : icuuc??d.dll ] ;
-         if ! $(icuucd_name)
-         {
-            icuucd_name = [ GLOB $(ICU_PATH)/bin64 : icuuc??d.dll ] ;
-         }
-         icuuc_name = [ GLOB $(ICU_PATH)/bin : icuuc??.dll ] ;
-         if ! $(icuuc_name)
-         {
-            icuuc_name = [ GLOB $(ICU_PATH)/bin64 : icuuc??.dll ] ;
-         }
-         icudt_name = [ GLOB $(ICU_PATH)/bin : icudt??.dll ] ;
-         if ! $(icudt_name)
-         {
-            icudt_name = [ GLOB $(ICU_PATH)/bin64 : icudt??.dll ] ;
-         }
-         icuin_name = [ GLOB $(ICU_PATH)/bin : icuin??.dll ] ;
-         if ! $(icuin_name)
-         {
-            icuin_name = [ GLOB $(ICU_PATH)/bin64 : icuin??.dll ] ;
-         }
-         icuind_name = [ GLOB $(ICU_PATH)/bin : icuin??d.dll ] ;
-         if ! $(icuind_name)
-         {
-            icuind_name = [ GLOB $(ICU_PATH)/bin64 : icuin??d.dll ] ;
-         }
-
-         #ECHO $(icuucd_name:B) $(icuuc_name:B) $(icudt_name:B) $(icuin_name:B) $(icuind_name:B) ;
-      }
 
       ICU_OPTS = 
          <include>$(ICU_PATH)/include 
-         <library>icuuc/<link>shared/<runtime-link>shared 
-         <library>icudt/<link>shared/<runtime-link>shared 
-         <library>icuin/<link>shared/<runtime-link>shared 
+         <runtime-link>shared:<library>icuuc/<link>shared
+         <runtime-link>shared:<library>icudt/<link>shared
+         <runtime-link>shared:<library>icuin/<link>shared
+         <runtime-link>static:<library>icuuc
+         <runtime-link>static:<library>icudt
+         <runtime-link>static:<library>icuin
          <define>BOOST_HAS_ICU=1 
-         <runtime-link>shared
-         # As of ICU-54 this does not work anymore (release mode):
-         #<toolset>msvc:<linkflags>/delayload:$(icuucd_name:B).dll
-         #<toolset>msvc:<linkflags>/delayload:$(icuuc_name:B).dll
-         #<toolset>msvc:<linkflags>/delayload:$(icudt_name:B).dll
-         #<toolset>msvc:<linkflags>/delayload:$(icuin_name:B).dll
-         #<toolset>msvc:<linkflags>/delayload:$(icuind_name:B).dll
-         #<toolset>msvc:<linkflags>delayimp.lib 
+         <runtime-link>static:<define>U_STATIC_IMPLEMENTATION=1
          ;
    }
 
 }
 
-actions regex_simple_run_action
-{
-      $(>) > $(<)
-}
-
-rule regex-run-simple ( sources + : args * : input-files * : requirements * : target-name )
-{
-   exe $(target-name)_exe : $(sources) : $(requirements) ;
-   explicit $(target-name)_exe ;
-   make $(target-name).output : $(target-name)_exe : @regex_simple_run_action ;
-   explicit $(target-name).output ;
-   alias $(target-name) : $(target-name).output ;
-}
-
-regex-run-simple has_icu_test.cpp : : : $(ICU_OPTS) : has_icu ;
+unit-test has_icu : has_icu_test.cpp : $(ICU_OPTS) ;
 explicit has_icu ;
 
 alias icu_options : : : : [ check-target-builds has_icu : $(ICU_OPTS) : ] ;
@@ -157,10 +119,7 @@ SOURCES =
 lib boost_regex : ../src/$(SOURCES) icu_options
     :         
 	     <link>shared:<define>BOOST_REGEX_DYN_LINK=1
-	     #<toolset>gcc-mw:<link>static
-	     #<toolset>gcc-mingw:<link>static
 	     <toolset>gcc-cygwin:<link>static
-        <toolset>sun:<link>static
     ;
 
 boost-install boost_regex ;

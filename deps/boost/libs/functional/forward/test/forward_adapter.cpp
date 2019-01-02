@@ -12,7 +12,7 @@
 #   pragma warning(disable: 4244) // no conversion warnings, please
 #endif
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/functional/forward_adapter.hpp>
 
 #include <boost/type_traits/is_same.hpp>
@@ -43,6 +43,10 @@ public:
     long operator()(int & l, int const & r) 
     {
         return -(l=r+val);
+    }
+    char operator()(int& l, int& r)
+    {
+        return l=r+val;
     }
 
     template <typename Sig>
@@ -89,8 +93,11 @@ int main()
         // lvalue,lvalue
         BOOST_TEST(( is_same<
             result_of< f(int&, int&) >::type, char >::value ));
+        // result_of works differently for C++11 here, so compare
+        // with using it against test_func.
         BOOST_TEST(( is_same<
-            result_of< f const (int&, int&) >::type, char >::value ));
+            result_of< f const (int&, int&) >::type,
+            result_of< test_func<> const (int&, int&)>::type >::value ));
     }
 
     {

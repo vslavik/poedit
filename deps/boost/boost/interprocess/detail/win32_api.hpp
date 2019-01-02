@@ -31,9 +31,45 @@
 #include <string>
 #include <vector>
 
+//#define BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME
+//#define BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED
+//#define BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED
+
+#ifdef BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME_VALUE 1 
+#else
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME_VALUE 0
+#endif
+
+#ifdef BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED_VALUE 1 
+#else
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED_VALUE 0
+#endif
+
+#ifdef BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED_VALUE 1 
+#else
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED_VALUE 0
+#endif
+
+#define BOOST_INTERPROCESS_BOOTSTAMP_VALUE_SUM \
+   (BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED_VALUE + \
+    BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED_VALUE + \
+    BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME_VALUE)
+
+#if 1 < BOOST_INTERPROCESS_BOOTSTAMP_VALUE_SUM
+#  error "Only one of BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME, \
+          BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED and \
+          BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED can be defined"
+#endif
+
+#if 0 == BOOST_INTERPROCESS_BOOTSTAMP_VALUE_SUM
+#  define BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED
+#endif
+
 #ifdef BOOST_USE_WINDOWS_H
 #include <windows.h>
-
 #  if defined(BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME)
 #  include <wbemidl.h>
 #  include <objbase.h>
@@ -63,10 +99,24 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+
+#if defined(BOOST_GCC)
 //Ignore -pedantic errors here (anonymous structs, etc.)
-#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-pedantic"
+#  if (BOOST_GCC >= 40600)
+#     pragma GCC diagnostic push
+#     if (BOOST_GCC >= 40800)
+#        pragma GCC diagnostic ignored "-Wpedantic"
+#     else
+#        pragma GCC diagnostic ignored "-pedantic"
+#     endif
+#     pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#  else
+#     pragma GCC system_header
+#  endif
+//When loading DLLs we have no option but reinterpret casting function types  
+#  if (BOOST_GCC >= 80000)
+#        pragma GCC diagnostic ignored "-Wcast-function-type"
+#  endif
 #endif
 
 namespace boost  {
@@ -1154,6 +1204,23 @@ const unsigned long COINIT_MULTITHREADED_BIPC       = 0x0;
 const unsigned long COINIT_DISABLE_OLE1DDE_BIPC     = 0x4;
 const unsigned long COINIT_SPEED_OVER_MEMORY_BIPC   = 0x4;
 
+// Registry types
+#define reg_none                       ( 0 )   // No value type
+#define reg_sz                         ( 1 )   // Unicode nul terminated string
+#define reg_expand_sz                  ( 2 )   // Unicode nul terminated string
+                                               // (with environment variable references)
+#define reg_binary                     ( 3 )   // Free form binary
+#define reg_dword                      ( 4 )   // 32-bit number
+#define reg_dword_little_endian        ( 4 )   // 32-bit number (same as REG_DWORD)
+#define reg_dword_big_endian           ( 5 )   // 32-bit number
+#define reg_link                       ( 6 )   // Symbolic Link (unicode)
+#define reg_multi_sz                   ( 7 )   // Multiple Unicode strings
+#define reg_resource_list              ( 8 )   // Resource list in the resource map
+#define reg_full_resource_descriptor   ( 9 )  // Resource list in the hardware description
+#define reg_resource_requirements_list ( 10 )
+#define reg_qword                      ( 11 )  // 64-bit number
+#define reg_qword_little_endian        ( 11 )  // 64-bit number (same as reg_qword)
+
 
 //If the user needs to change default COM initialization model,
 //it can define BOOST_INTERPROCESS_WINDOWS_COINIT_MODEL to one of these:
@@ -1474,7 +1541,6 @@ struct function_address_holder
          , NtOpenFile
          , NtClose
          , NtQueryTimerResolution
-         , NtSetTimerResolution
          , QueryPerformanceCounter
          , QueryPerformanceFrequency
          , NumFunction
@@ -1557,7 +1623,6 @@ const char *function_address_holder<Dummy>::FunctionNames[function_address_holde
    "NtOpenFile",
    "NtClose",
    "NtQueryTimerResolution",
-   "NtSetTimerResolution",
    "QueryPerformanceCounter",
    "QueryPerformanceFrequency"
 };
@@ -1565,7 +1630,6 @@ const char *function_address_holder<Dummy>::FunctionNames[function_address_holde
 template<int Dummy>
 unsigned int function_address_holder<Dummy>::FunctionModules[function_address_holder<Dummy>::NumFunction] =
 {
-   NtDll_dll,
    NtDll_dll,
    NtDll_dll,
    NtDll_dll,
@@ -1614,8 +1678,8 @@ struct library_unloader
 
 inline bool get_system_time_of_day_information(system_timeofday_information &info)
 {
-   NtQuerySystemInformation_t pNtQuerySystemInformation = (NtQuerySystemInformation_t)
-         dll_func::get(dll_func::NtQuerySystemInformation);
+   NtQuerySystemInformation_t pNtQuerySystemInformation = reinterpret_cast<NtQuerySystemInformation_t>
+         (dll_func::get(dll_func::NtQuerySystemInformation));
    unsigned long res;
    long status = pNtQuerySystemInformation(system_time_of_day_information, &info, sizeof(info), &res);
    if(status){
@@ -1646,28 +1710,6 @@ inline bool get_boot_and_system_time(unsigned char (&bootsystemstamp) [BootAndSy
    return true;
 }
 
-inline bool get_boot_time_str(char *bootstamp_str, std::size_t &s)
-   //will write BootstampLength chars
-{
-   if(s < (BootstampLength*2))
-      return false;
-   system_timeofday_information info;
-   bool ret = get_system_time_of_day_information(info);
-   if(!ret){
-      return false;
-   }
-   const char Characters [] =
-      { '0', '1', '2', '3', '4', '5', '6', '7'
-      , '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-   std::size_t char_counter = 0;
-   for(std::size_t i = 0; i != static_cast<std::size_t>(BootstampLength); ++i){
-      bootstamp_str[char_counter++] = Characters[(info.Reserved1[i]&0xF0)>>4];
-      bootstamp_str[char_counter++] = Characters[(info.Reserved1[i]&0x0F)];
-   }
-   s = BootstampLength*2;
-   return true;
-}
-
 //Writes the hexadecimal value of the buffer, in the wide character string.
 //str must be twice length
 inline void buffer_to_wide_str(const void *buf, std::size_t length, wchar_t *str)
@@ -1681,6 +1723,37 @@ inline void buffer_to_wide_str(const void *buf, std::size_t length, wchar_t *str
       str[char_counter++] = Characters[(chbuf[i]&0xF0)>>4];
       str[char_counter++] = Characters[(chbuf[i]&0x0F)];
    }
+}
+
+//Writes the hexadecimal value of the buffer, in the narrow character string.
+//str must be twice length
+inline void buffer_to_narrow_str(const void *buf, std::size_t length, char *str)
+{
+   const char Characters [] =
+      { '0', '1', '2', '3', '4', '5', '6', '7'
+      , '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+   std::size_t char_counter = 0;
+   const char *chbuf = static_cast<const char *>(buf);
+   for(std::size_t i = 0; i != length; ++i){
+      str[char_counter++] = Characters[(chbuf[i]&0xF0)>>4];
+      str[char_counter++] = Characters[(chbuf[i]&0x0F)];
+   }
+}
+
+inline bool get_boot_time_str(char *bootstamp_str, std::size_t &s)
+   //will write BootstampLength chars
+{
+   if(s < (BootstampLength*2))
+      return false;
+   system_timeofday_information info;
+   bool ret = get_system_time_of_day_information(info);
+   if(!ret){
+      return false;
+   }
+
+   buffer_to_narrow_str(info.Reserved1, BootstampLength, bootstamp_str);
+   s = BootstampLength*2;
+   return true;
 }
 
 inline bool get_boot_and_system_time_wstr(wchar_t *bootsystemstamp, std::size_t &s)
@@ -1740,7 +1813,7 @@ class nt_query_mem_deleter
       (SystemTimeOfDayInfoLength + sizeof(unsigned long) + sizeof(boost::uint32_t))*2;
 
    public:
-   nt_query_mem_deleter(std::size_t object_name_information_size)
+   explicit nt_query_mem_deleter(std::size_t object_name_information_size)
       : m_size(object_name_information_size + rename_offset + rename_suffix)
       , m_buf(new char [m_size])
    {}
@@ -1778,7 +1851,7 @@ class nt_query_mem_deleter
 class c_heap_deleter
 {
    public:
-   c_heap_deleter(std::size_t size)
+   explicit c_heap_deleter(std::size_t size)
       : m_buf(::malloc(size))
    {}
 
@@ -1822,9 +1895,9 @@ inline bool unlink_file(const char *filename)
    //  file name can't be used to open this file again
    try{
       NtSetInformationFile_t pNtSetInformationFile =
-         (NtSetInformationFile_t)dll_func::get(dll_func::NtSetInformationFile);
+         reinterpret_cast<NtSetInformationFile_t>(dll_func::get(dll_func::NtSetInformationFile));
 
-      NtQueryObject_t pNtQueryObject = (NtQueryObject_t)dll_func::get(dll_func::NtQueryObject);
+      NtQueryObject_t pNtQueryObject = reinterpret_cast<NtQueryObject_t>(dll_func::get(dll_func::NtQueryObject));
 
       //First step: Obtain a handle to the file using Win32 rules. This resolves relative paths
       void *fh = create_file(filename, generic_read | delete_access, open_existing, 0, 0);
@@ -1896,8 +1969,8 @@ inline bool unlink_file(const char *filename)
       {
          //Don't use pNtSetInformationFile with file_disposition_information as it can return STATUS_CANNOT_DELETE
          //if the file is still mapped. Reopen it with NtOpenFile and file_delete_on_close
-         NtOpenFile_t pNtOpenFile = (NtOpenFile_t)dll_func::get(dll_func::NtOpenFile);
-         NtClose_t pNtClose = (NtClose_t)dll_func::get(dll_func::NtClose);
+         NtOpenFile_t pNtOpenFile = reinterpret_cast<NtOpenFile_t>(dll_func::get(dll_func::NtOpenFile));
+         NtClose_t pNtClose = reinterpret_cast<NtClose_t>(dll_func::get(dll_func::NtClose));
          const wchar_t empty_str [] = L"";
          unicode_string_t ustring = { sizeof(empty_str) - sizeof (wchar_t)   //length in bytes without null
                                     , sizeof(empty_str)   //total size in bytes of memory allocated for Buffer.
@@ -1927,13 +2000,35 @@ struct reg_closer
    ~reg_closer(){ reg_close_key(key_);  }
 };
 
-inline void get_shared_documents_folder(std::string &s)
+inline bool get_registry_value_buffer(hkey key_type, const char *subkey_name, const char *value_name, void *buf, std::size_t &buflen)
 {
-   #if 1 //Original registry search code
+   bool bret = false;
+   hkey key;
+   if (reg_open_key_ex( key_type
+                     , subkey_name
+                     , 0
+                     , key_query_value
+                     , &key) == 0){
+      reg_closer key_closer(key);
+
+      //Obtain the value
+      unsigned long size = buflen;
+      unsigned long type;
+      buflen = 0;
+      bret = 0 == reg_query_value_ex( key, value_name, 0, &type, (unsigned char*)buf, &size);
+      if(bret)
+         buflen = (std::size_t)size;
+   }
+   return bret;
+}
+
+inline bool get_registry_value_string(hkey key_type, const char *subkey_name, const char *value_name, std::string &s)
+{
+   bool bret = false;
    s.clear();
    hkey key;
-   if (reg_open_key_ex( hkey_local_machine
-                     , "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"
+   if (reg_open_key_ex( key_type
+                     , subkey_name
                      , 0
                      , key_query_value
                      , &key) == 0){
@@ -1942,19 +2037,28 @@ inline void get_shared_documents_folder(std::string &s)
       //Obtain the value
       unsigned long size;
       unsigned long type;
-      const char *const reg_value = "Common AppData";
-      //long err = (*pRegQueryValue)( key, reg_value, 0, &type, 0, &size);
-      long err = reg_query_value_ex( key, reg_value, 0, &type, 0, &size);
-      if(!err){
+      long err = reg_query_value_ex( key, value_name, 0, &type, 0, &size);
+      if((reg_sz == type || reg_expand_sz == type) && !err){
          //Size includes terminating NULL
          s.resize(size);
-         //err = (*pRegQueryValue)( key, reg_value, 0, &type, (unsigned char*)(&s[0]), &size);
-         err = reg_query_value_ex( key, reg_value, 0, &type, (unsigned char*)(&s[0]), &size);
-         if(!err)
+         err = reg_query_value_ex( key, value_name, 0, &type, (unsigned char*)(&s[0]), &size);
+         if(!err){
             s.erase(s.end()-1);
+            bret = true;
+         }
          (void)err;
       }
    }
+   return bret;
+}
+
+inline void get_shared_documents_folder(std::string &s)
+{
+   #if 1 //Original registry search code
+   get_registry_value_string( hkey_local_machine
+                            , "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"
+                            , "Common AppData"
+                            , s);
    #else //registry alternative: SHGetFolderPath
    const int BIPC_CSIDL_COMMON_APPDATA = 0x0023;  // All Users\Application Data
    const int BIPC_CSIDL_FLAG_CREATE = 0x8000;     // new for Win2K, or this in to force creation of folder
@@ -2167,7 +2271,9 @@ inline bool get_last_bootup_time( std::string& str )
    return ret;
 }
 
-#else
+#endif   //BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME
+
+#if defined(BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED)
 
 // Loop through the buffer and obtain the contents of the
 // requested record in the buffer.
@@ -2263,7 +2369,41 @@ inline bool get_last_bootup_time(std::string &stamp)
    return true;
 }
 
-#endif
+#endif   //BOOST_INTERPROCESS_BOOTSTAMP_IS_EVENTLOG_BASED
+
+#if defined(BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED)
+
+inline bool get_last_bootup_time(std::string &stamp)
+{
+   unsigned dword_val = 0;
+   std::size_t dword_size = sizeof(dword_val);
+   bool b_ret = get_registry_value_buffer( hkey_local_machine
+      , "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters"
+      , "BootId", &dword_val, dword_size);
+   if (b_ret)
+   {
+      char dword_str[sizeof(dword_val)*2u+1];
+      buffer_to_narrow_str(&dword_val, dword_size, dword_str);
+      dword_str[sizeof(dword_val)*2] = '\0';
+      stamp = dword_str;
+
+      b_ret = get_registry_value_buffer( hkey_local_machine
+         , "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power"
+         , "HybridBootAnimationTime", &dword_val, dword_size);
+      //Old Windows versions have no HybridBootAnimationTime
+      if(b_ret)
+      {
+         buffer_to_narrow_str(&dword_val, dword_size, dword_str);
+         dword_str[sizeof(dword_val)*2] = '\0';
+         stamp += "_";
+         stamp += dword_str;
+      }
+      b_ret = true;
+   }
+   return b_ret;
+}
+
+#endif   //BOOST_INTERPROCESS_BOOTSTAMP_IS_SESSION_MANAGER_BASED
 
 inline bool is_directory(const char *path)
 {
@@ -2276,7 +2416,7 @@ inline bool is_directory(const char *path)
 inline bool get_file_mapping_size(void *file_mapping_hnd, __int64 &size)
 {
    NtQuerySection_t pNtQuerySection =
-      (NtQuerySection_t)dll_func::get(dll_func::NtQuerySection);
+      reinterpret_cast<NtQuerySection_t>(dll_func::get(dll_func::NtQuerySection));
    //Obtain file name
    interprocess_section_basic_information info;
    unsigned long ntstatus =
@@ -2289,7 +2429,7 @@ inline bool get_semaphore_info(void *handle, long &count, long &limit)
 {
    winapi::interprocess_semaphore_basic_information info;
    winapi::NtQuerySemaphore_t pNtQuerySemaphore =
-         (winapi::NtQuerySemaphore_t)dll_func::get(winapi::dll_func::NtQuerySemaphore);
+         reinterpret_cast<winapi::NtQuerySemaphore_t>(dll_func::get(winapi::dll_func::NtQuerySemaphore));
    unsigned int ret_len;
    long status = pNtQuerySemaphore(handle, winapi::semaphore_basic_information, &info, sizeof(info), &ret_len);
    count = info.count;
@@ -2300,28 +2440,21 @@ inline bool get_semaphore_info(void *handle, long &count, long &limit)
 inline bool query_timer_resolution(unsigned long *lowres, unsigned long *highres, unsigned long *curres)
 {
    winapi::NtQueryTimerResolution_t pNtQueryTimerResolution =
-         (winapi::NtQueryTimerResolution_t)dll_func::get(winapi::dll_func::NtQueryTimerResolution);
+         reinterpret_cast<winapi::NtQueryTimerResolution_t>(dll_func::get(winapi::dll_func::NtQueryTimerResolution));
    return !pNtQueryTimerResolution(lowres, highres, curres);
-}
-
-inline bool set_timer_resolution(unsigned long RequestedResolution, int Set, unsigned long* ActualResolution)
-{
-   winapi::NtSetTimerResolution_t pNtSetTimerResolution =
-         (winapi::NtSetTimerResolution_t)dll_func::get(winapi::dll_func::NtSetTimerResolution);
-   return !pNtSetTimerResolution(RequestedResolution, Set, ActualResolution);
 }
 
 inline bool query_performance_counter(__int64 *lpPerformanceCount)
 {
-   QueryPerformanceCounter_t pQueryPerformanceCounter = (QueryPerformanceCounter_t)
-         dll_func::get(dll_func::QueryPerformanceCounter);
+   QueryPerformanceCounter_t pQueryPerformanceCounter = reinterpret_cast<QueryPerformanceCounter_t>
+         (dll_func::get(dll_func::QueryPerformanceCounter));
    return 0 != pQueryPerformanceCounter(lpPerformanceCount);
 }
 
 inline bool query_performance_frequency(__int64 *lpFrequency)
 {
-   QueryPerformanceCounter_t pQueryPerformanceFrequency = (QueryPerformanceFrequency_t)
-         dll_func::get(dll_func::QueryPerformanceFrequency);
+   QueryPerformanceCounter_t pQueryPerformanceFrequency = reinterpret_cast<QueryPerformanceFrequency_t>
+         (dll_func::get(dll_func::QueryPerformanceFrequency));
    return 0 != pQueryPerformanceFrequency(lpFrequency);
 }
 

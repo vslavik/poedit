@@ -11,6 +11,8 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_MERGE_HPP
 #define BOOST_COMPUTE_ALGORITHM_MERGE_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/copy.hpp>
@@ -18,6 +20,7 @@
 #include <boost/compute/algorithm/detail/serial_merge.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/parameter_cache.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -37,6 +40,8 @@ namespace compute {
 ///
 /// \return \c OutputIterator to the end of the result range
 ///
+/// Space complexity: \Omega(distance(\p first1, \p last1) + distance(\p first2, \p last2))
+///
 /// \see inplace_merge()
 template<class InputIterator1,
          class InputIterator2,
@@ -50,6 +55,9 @@ inline OutputIterator merge(InputIterator1 first1,
                             Compare comp,
                             command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
     typedef typename std::iterator_traits<InputIterator1>::value_type input1_type;
     typedef typename std::iterator_traits<InputIterator2>::value_type input2_type;
     typedef typename std::iterator_traits<OutputIterator>::value_type output_type;
@@ -94,6 +102,9 @@ inline OutputIterator merge(InputIterator1 first1,
                             OutputIterator result,
                             command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type;
     less<value_type> less_than;
     return merge(first1, last1, first2, last2, result, less_than, queue);

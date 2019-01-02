@@ -288,7 +288,7 @@ TARGETS * targetchain( TARGETS * chain, TARGETS * targets )
 }
 
 /*
- * action_free - decrement the ACTIONs refrence count and (maybe) free it.
+ * action_free - decrement the ACTIONs reference count and (maybe) free it.
  */
 
 void action_free( ACTION * action )

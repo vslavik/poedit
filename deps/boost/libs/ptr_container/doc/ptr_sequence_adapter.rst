@@ -65,11 +65,11 @@ containers from.
             public: // `modifiers`_
                 void      push_back( T* x );
                 template< class U >
-                void      push_back( std::auto_ptr<U> x );
+                void      push_back( compatible-smart-ptr<U> x );
                 auto_type pop_back();
                 iterator  insert( iterator position, T* x );
                 template< class U >
-                iterator  insert( iterator position, std::auto_ptr<U> x );
+                iterator  insert( iterator position, compatible-smart-ptr<U> x );
                 template< class InputIterator >
                 void      insert( iterator position, InputIterator first, InputIterator last );
                 template< class InputRange >
@@ -234,7 +234,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
 
-- ``template< class U > void push_back( std::auto_ptr<U> x );``
+- ``template< class U > void push_back( compatible-smart-ptr<U> x );``
 
     - Effects: ``push_back( x.release() );``
     
@@ -269,7 +269,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
     
-- ``template< class U > iterator insert( iterator position, std::auto_ptr<U> x );``
+- ``template< class U > iterator insert( iterator position, compatible-smart-ptr<U> x );``
 
     - Effects: ``return insert( position, x.release() );``
 

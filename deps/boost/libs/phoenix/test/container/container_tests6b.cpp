@@ -54,6 +54,9 @@ std::vector<int> const build_vector()
 int
 main()
 {
+    BOOST_STATIC_ASSERT((phx::stl::has_mapped_type<std::multimap<int, int> >::value));
+    BOOST_STATIC_ASSERT((phx::stl::has_key_type<std::multimap<int, int> >::value));
+
     std::multimap<int, int> const data = build_multimap();
     test_multimap_insert(data);
     test_key_comp(data);

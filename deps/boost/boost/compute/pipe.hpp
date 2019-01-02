@@ -18,7 +18,7 @@
 #include <boost/compute/detail/get_object_info.hpp>
 
 // pipe objects require opencl 2.0
-#if defined(CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+#if defined(BOOST_COMPUTE_CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
 
 namespace boost {
 namespace compute {
@@ -149,6 +149,6 @@ struct set_kernel_arg<pipe>
 } // end compute namespace
 } // end boost namespace
 
-#endif // CL_VERSION_2_0
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
 
 #endif // BOOST_COMPUTE_PIPE_HPP

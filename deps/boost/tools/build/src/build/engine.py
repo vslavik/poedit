@@ -16,21 +16,23 @@ from b2.util import set_jam_action, is_iterable
 class BjamAction(object):
     """Class representing bjam action defined from Python."""
 
-    def __init__(self, action_name, function):
+    def __init__(self, action_name, function, has_command=False):
         assert isinstance(action_name, basestring)
         assert callable(function) or function is None
         self.action_name = action_name
         self.function = function
+        self.has_command = has_command
 
     def __call__(self, targets, sources, property_set_):
         assert is_iterable(targets)
         assert is_iterable(sources)
         assert isinstance(property_set_, property_set.PropertySet)
-        # Bjam actions defined from Python have only the command
-        # to execute, and no associated jam procedural code. So
-        # passing 'property_set' to it is not necessary.
-        bjam_interface.call("set-update-action", self.action_name,
-                            targets, sources, [])
+        if self.has_command:
+            # Bjam actions defined from Python have only the command
+            # to execute, and no associated jam procedural code. So
+            # passing 'property_set' to it is not necessary.
+            bjam_interface.call("set-update-action", self.action_name,
+                                targets, sources, [])
         if self.function:
             self.function(targets, sources, property_set_)
 
@@ -134,8 +136,11 @@ class Engine:
         assert isinstance(variable, basestring)
         assert is_iterable(value)
 
-        for target in targets:
-            self.do_set_target_variable (target, variable, value, append)
+        if targets:
+            if append:
+                bjam_interface.call("set-target-variable", targets, variable, value, "true")
+            else:
+                bjam_interface.call("set-target-variable", targets, variable, value)
 
     def set_update_action (self, action_name, targets, sources, properties=None):
         """ Binds a target to the corresponding update action.
@@ -158,7 +163,7 @@ class Engine:
 
         self.do_set_update_action (action_name, targets, sources, properties)
 
-    def register_action (self, action_name, command, bound_list = [], flags = [],
+    def register_action (self, action_name, command='', bound_list = [], flags = [],
                          function = None):
         """Creates a new build engine action.
 
@@ -190,7 +195,8 @@ class Engine:
         if command:
             bjam_interface.define_action(action_name, command, bound_list, bjam_flags)
 
-        self.actions[action_name] = BjamAction(action_name, function)
+        self.actions[action_name] = BjamAction(
+            action_name, function, has_command=bool(command))
 
     def register_bjam_action (self, action_name, function=None):
         """Informs self that 'action_name' is declared in bjam.
@@ -206,7 +212,7 @@ class Engine:
         # action is already registered.
         assert isinstance(action_name, basestring)
         assert function is None or callable(function)
-        if not self.actions.has_key(action_name):
+        if action_name not in self.actions:
             self.actions[action_name] = BjamNativeAction(action_name, function)
 
     # Overridables

@@ -17,7 +17,7 @@
    T factorial(unsigned i, const ``__Policy``&);
    
    template <class T>
-   T unchecked_factorial(unsigned i);
+   constexpr T unchecked_factorial(unsigned i);
    
    template <class T>
    struct max_factorial;
@@ -72,7 +72,7 @@ If [^i] is so large that the result can not be represented in type T, then
 calls __overflow_error.
 
    template <class T>
-   T unchecked_factorial(unsigned i);
+   constexpr T unchecked_factorial(unsigned i);
 
 Returns [^i!].
 
@@ -92,6 +92,8 @@ This traits class defines the largest value that can be passed to
 [^unchecked_factorial].  The member `value` can be used where integral
 constant expressions are required: for example to define the size of
 further tables that depend on the factorials.
+
+This function is `constexpr` only if the compiler supports C++14 constexpr functions.
 
 [h4 Accuracy]
 

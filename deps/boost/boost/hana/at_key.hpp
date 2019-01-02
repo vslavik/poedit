@@ -2,7 +2,8 @@
 @file
 Defines `boost::hana::at_key`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
+@copyright Jason Rice 2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -24,6 +25,7 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/find_if.hpp>
 #include <boost/hana/first.hpp>
 #include <boost/hana/functional/on.hpp>
+#include <boost/hana/index_if.hpp>
 #include <boost/hana/length.hpp>
 #include <boost/hana/optional.hpp>
 #include <boost/hana/second.hpp>
@@ -67,42 +69,16 @@ BOOST_HANA_NAMESPACE_BEGIN
                 return hana::equal(t, u);
             }
         };
-
-        //! @todo This causes an awful duplication of code with `find_if`.
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N, bool Done>
-        struct advance_until;
-
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N>
-        struct advance_until<Xs, Pred, i, N, false>
-            : advance_until<Xs, Pred, i + 1, N, static_cast<bool>(detail::decay<decltype(
-                std::declval<Pred>()(hana::at_c<i>(std::declval<Xs>()))
-            )>::type::value)>
-        { };
-
-        template <typename Xs, typename Pred, std::size_t N>
-        struct advance_until<Xs, Pred, N, N, false> {
-            template <typename Ys>
-            static constexpr auto apply(Ys&&) = delete;
-        };
-
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N>
-        struct advance_until<Xs, Pred, i, N, true> {
-            template <typename Ys>
-            static constexpr decltype(auto) apply(Ys&& ys) {
-                return hana::at_c<i - 1>(static_cast<Ys&&>(ys));
-            }
-        };
     }
 
     template <typename S>
     struct at_key_impl<S, when<hana::Sequence<S>::value>> {
         template <typename Xs, typename Key>
-        static constexpr decltype(auto) apply(Xs&& xs, Key const&) {
-            constexpr std::size_t N = decltype(hana::length(xs))::value;
-            using Pred = at_key_detail::equal_to<Key>;
-            return at_key_detail::advance_until<Xs&&, Pred, 0, N, false>::apply(
-                static_cast<Xs&&>(xs)
-            );
+        static constexpr decltype(auto) apply(Xs&& xs, Key const& key) {
+            using Result = decltype(hana::index_if(
+                static_cast<Xs&&>(xs), at_key_detail::equal_to<Key>{key}));
+
+            return hana::at(static_cast<Xs&&>(xs), Result{}.value());
         }
     };
 

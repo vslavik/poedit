@@ -6,8 +6,7 @@
 
 #include <cstdlib>
 #include <iostream>
-
-#include <boost/config.hpp>
+#include <memory>
 
 #include <boost/coroutine2/all.hpp>
 
@@ -16,17 +15,13 @@ __declspec(noinline) void access( char *buf);
 #else // GCC
 void access( char *buf) __attribute__ ((noinline));
 #endif
-void access( char *buf)
-{
+void access( char *buf) {
   buf[0] = '\0';
 }
 
-void bar( int i)
-{
+void bar( int i) {
     char buf[4 * 1024];
-
-    if ( i > 0)
-    {
+    if ( i > 0) {
         access( buf);
         std::cout << i << ". iteration" << std::endl;
         bar( i - 1);
@@ -35,7 +30,6 @@ void bar( int i)
 
 int main() {
     int count = 384;
-
 #if defined(BOOST_USE_SEGMENTED_STACKS)
     std::cout << "using segmented_stack stacks: allocates " << count << " * 4kB == " << 4 * count << "kB on stack, ";
     std::cout << "initial stack size = " << boost::context::segmented_stack::traits_type::default_size() / 1024 << "kB" << std::endl;
@@ -45,16 +39,10 @@ int main() {
     std::cout << "initial stack size = " << boost::context::fixedsize_stack::traits_type::default_size() / 1024 << "kB" << std::endl;
     std::cout << "application might fail" << std::endl;
 #endif
-
-    boost::coroutines2::coroutine< void >::push_type sink(
-        [&]( boost::coroutines2::coroutine< void >::pull_type & source) {
+    boost::coroutines2::coroutine< void >::pull_type coro{
+        [count](boost::coroutines2::coroutine< void >::push_type & coro){
             bar( count);
-            source();
-        });
-    
-    sink();
-
-    std::cout << "main: Done" << std::endl;
-
-    return 0;
+        }};
+    std::cout << "main: done" << std::endl;
+    return EXIT_SUCCESS;
 }

@@ -1,6 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+from __future__ import print_function
 """
 >>> from args_ext import *
 
@@ -26,7 +27,7 @@
 
 >>> try: f(1, 2, 'hello', bar = 'baz')
 ... except TypeError: pass
-... else: print 'expected an exception: unknown keyword'
+... else: print('expected an exception: unknown keyword')
 
 
    Exercise the functions using default stubs
@@ -72,7 +73,7 @@
 
 >>> try: q.f(1, 2, 'hello', bar = 'baz')
 ... except TypeError: pass
-... else: print 'expected an exception: unknown keyword'
+... else: print('expected an exception: unknown keyword')
 
    Exercise member functions using default stubs
    
@@ -95,10 +96,10 @@
 
 >>> xfuncs = (X.inner0, X.inner1, X.inner2, X.inner3, X.inner4, X.inner5)
 >>> for f in xfuncs:
-...    print f(q,1).value(),
-...    print f(q, n = 1).value(),
-...    print f(q, n = 0).value(),
-...    print f.__doc__.splitlines()[1:5]
+...    print(f(q,1).value(), end=' ')
+...    print(f(q, n = 1).value(), end=' ')
+...    print(f(q, n = 0).value(), end=' ')
+...    print(f.__doc__.splitlines()[1:5])
 1 1 0 ['inner0( (X)self, (bool)n) -> Y :', '    docstring', '', '    C++ signature :']
 1 1 0 ['inner1( (X)self, (bool)n) -> Y :', '    docstring', '', '    C++ signature :']
 1 1 0 ['inner2( (X)self, (bool)n) -> Y :', '    docstring', '', '    C++ signature :']
@@ -135,10 +136,10 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
 
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     import args_ext
     help(args_ext)
     sys.exit(status)

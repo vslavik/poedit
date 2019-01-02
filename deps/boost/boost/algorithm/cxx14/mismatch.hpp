@@ -2,7 +2,7 @@
    Copyright (c) Marshall Clow 2008-2012.
 
    Distributed under the Boost Software License, Version 1.0. (See accompanying
-   file LICENSE10.txt or copy at http://www.boost.org/LICENSE10.txt)
+   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 */
 
 /// \file  mismatch.hpp
@@ -12,8 +12,8 @@
 #ifndef BOOST_ALGORITHM_MISMATCH_HPP
 #define BOOST_ALGORITHM_MISMATCH_HPP
 
-#include <algorithm>    // for std::mismatch
 #include <utility>      // for std::pair
+#include <boost/config.hpp>
 
 namespace boost { namespace algorithm {
 
@@ -28,7 +28,7 @@ namespace boost { namespace algorithm {
 /// \param last2     One past the end of the second range.
 /// \param pred      A predicate for comparing the elements of the ranges
 template <class InputIterator1, class InputIterator2, class BinaryPredicate>
-std::pair<InputIterator1, InputIterator2> mismatch (
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator1, InputIterator2> mismatch (
                     InputIterator1 first1, InputIterator1 last1,
                     InputIterator2 first2, InputIterator2 last2,
                     BinaryPredicate pred )
@@ -48,7 +48,7 @@ std::pair<InputIterator1, InputIterator2> mismatch (
 /// \param first2    The start of the second range.
 /// \param last2     One past the end of the second range.
 template <class InputIterator1, class InputIterator2>
-std::pair<InputIterator1, InputIterator2> mismatch (
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator1, InputIterator2> mismatch (
                     InputIterator1 first1, InputIterator1 last1,
                     InputIterator2 first2, InputIterator2 last2 )
 {

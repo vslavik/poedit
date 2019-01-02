@@ -143,12 +143,13 @@ local multi-threading = <library>/boost/thread//boost_thread
     test-suite "spirit.classic.utility.support"
         # This test doesn't actually use multiple threads
         : [ spirit-run scoped_lock_tests.cpp : : : $(multi-threading) ]
+          [ compile threads_disabled_compile.cpp ]
         ;
 
     test-suite "spirit.classic.iterator"
         : [ spirit-run fixed_size_queue_tests.cpp ]
           [ compile-fail fixed_size_queue_fail_tests.cpp ]
-          [ spirit-run file_iterator_tests.cpp ]
+          [ spirit-run file_iterator_tests.cpp : : : <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS ]
           [ spirit-run multi_pass_tests.cpp : : : $(opt-metrowerks) ]
           [ spirit-run sf_bug_720917.cpp : : : $(opt-metrowerks) ]
           [ spirit-run position_iterator_tests.cpp : : : $(opt-metrowerks) ]

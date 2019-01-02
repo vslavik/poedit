@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -14,6 +14,7 @@
 #include <support/tracked_move_only.hpp>
 
 #include <string>
+#include <type_traits>
 #include <utility>
 namespace hana = boost::hana;
 
@@ -32,6 +33,39 @@ constexpr bool in_constexpr_context() {
 
 static_assert(in_constexpr_context(), "");
 
+
+struct NoMove {
+    NoMove() = default;
+    NoMove(NoMove const&) = delete;
+    NoMove(NoMove&&) = delete;
+    friend auto operator==(NoMove const&, NoMove const&) { return hana::true_c; }
+    friend auto operator!=(NoMove const&, NoMove const&) { return hana::false_c; }
+};
+
+// Note: It is also useful to check with a non-empty class, because that
+//       triggers different instantiations due to EBO.
+struct NoMove_nonempty {
+    NoMove_nonempty() = default;
+    NoMove_nonempty(NoMove_nonempty const&) = delete;
+    NoMove_nonempty(NoMove_nonempty&&) = delete;
+    int i;
+    friend auto operator==(NoMove_nonempty const&, NoMove_nonempty const&) { return hana::true_c; }
+    friend auto operator!=(NoMove_nonempty const&, NoMove_nonempty const&) { return hana::false_c; }
+};
+
+namespace boost { namespace hana {
+    template <>
+    struct hash_impl<NoMove> {
+        static constexpr auto apply(NoMove const&)
+        { return hana::type_c<NoMove>; };
+    };
+
+    template <>
+    struct hash_impl<NoMove_nonempty> {
+        static constexpr auto apply(NoMove_nonempty const&)
+        { return hana::type_c<NoMove_nonempty>; };
+    };
+}}
 
 int main() {
     {
@@ -75,5 +109,15 @@ int main() {
         BOOST_HANA_RUNTIME_CHECK(
             moved == hana::make_map(hana::make_pair(hana::int_c<2>, std::string{"abcdef"}))
         );
+    }
+
+    {
+        using Map1 = hana::map<hana::pair<NoMove, NoMove>>;
+        Map1 map1;
+        static_assert(!std::is_move_constructible<Map1>::value, "");
+
+        using Map2 = hana::map<hana::pair<NoMove_nonempty, NoMove_nonempty>>;
+        Map2 map2;
+        static_assert(!std::is_move_constructible<Map2>::value, "");
     }
 }

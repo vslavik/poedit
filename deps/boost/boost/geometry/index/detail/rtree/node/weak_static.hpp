@@ -2,7 +2,7 @@
 //
 // R-tree nodes based on static conversion, storing static-size containers
 //
-// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2018 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -75,47 +75,46 @@ struct visitor<Value, Parameters, Box, Allocators, node_weak_static_tag, IsVisit
 
 template <typename Allocator, typename Value, typename Parameters, typename Box>
 class allocators<Allocator, Value, Parameters, Box, node_weak_static_tag>
-    : public Allocator::template rebind<
-        typename internal_node<
-            Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, node_weak_static_tag>,
-            node_weak_static_tag
-        >::type
-    >::other
-    , public Allocator::template rebind<
-        typename leaf<
-            Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, node_weak_static_tag>,
-            node_weak_static_tag
-        >::type
-    >::other
+    : public detail::rtree::internal_node_alloc<Allocator, Value, Parameters, Box, node_weak_static_tag>::type
+    , public detail::rtree::leaf_alloc<Allocator, Value, Parameters, Box, node_weak_static_tag>::type
 {
-    typedef typename Allocator::template rebind<
-        Value
-    >::other value_allocator_type;
+    typedef detail::rtree::internal_node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_weak_static_tag
+        > internal_node_alloc;
+
+    typedef detail::rtree::leaf_alloc
+        <
+            Allocator, Value, Parameters, Box, node_weak_static_tag
+        > leaf_alloc;
+
+    typedef detail::rtree::node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_weak_static_tag
+        > node_alloc;
+
+public:
+    typedef typename internal_node_alloc::type internal_node_allocator_type;
+    typedef typename leaf_alloc::type leaf_allocator_type;
+    typedef typename node_alloc::traits::pointer node_pointer;
+
+private:
+    typedef typename boost::container::allocator_traits
+        <
+            leaf_allocator_type
+        >::template rebind_alloc<Value> value_allocator_type;
+    typedef boost::container::allocator_traits<value_allocator_type> value_allocator_traits;
 
 public:
     typedef Allocator allocator_type;
 
     typedef Value value_type;
-    typedef value_type & reference;
-    typedef const value_type & const_reference;
-    typedef typename value_allocator_type::size_type size_type;
-    typedef typename value_allocator_type::difference_type difference_type;
-    typedef typename value_allocator_type::pointer pointer;
-    typedef typename value_allocator_type::const_pointer const_pointer;
-
-    typedef typename Allocator::template rebind<
-        typename node<Value, Parameters, Box, allocators, node_weak_static_tag>::type
-    >::other::pointer node_pointer;
-
-    typedef typename Allocator::template rebind<
-        typename internal_node<Value, Parameters, Box, allocators, node_weak_static_tag>::type
-    >::other internal_node_allocator_type;
-
-    typedef typename Allocator::template rebind<
-        typename leaf<Value, Parameters, Box, allocators, node_weak_static_tag>::type
-    >::other leaf_allocator_type;
+    typedef typename value_allocator_traits::reference reference;
+    typedef typename value_allocator_traits::const_reference const_reference;
+    typedef typename value_allocator_traits::size_type size_type;
+    typedef typename value_allocator_traits::difference_type difference_type;
+    typedef typename value_allocator_traits::pointer pointer;
+    typedef typename value_allocator_traits::const_pointer const_pointer;
 
     inline allocators()
         : internal_node_allocator_type()

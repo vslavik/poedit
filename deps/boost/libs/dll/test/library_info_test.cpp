@@ -44,6 +44,10 @@ int main(int argc, char* argv[])
     BOOST_TEST(std::find(symb.begin(), symb.end(), "say_hello") == symb.end());
     BOOST_TEST(lib_info.symbols(std::string("boostdll")) == symb);
 
+    std::vector<std::string> empty = lib_info.symbols("empty");
+    BOOST_TEST(empty.empty() == true);
+
+    BOOST_TEST(lib_info.symbols("section_that_does_not_exist").empty());
 
     // Self testing
     std::cout << "Self: " << argv[0];

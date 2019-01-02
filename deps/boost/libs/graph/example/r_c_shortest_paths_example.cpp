@@ -200,7 +200,6 @@ public:
 
 // example graph structure and cost from 
 // http://www.boost.org/libs/graph/example/dijkstra-example.cpp
-const int num_nodes = 5;
 enum nodes { A, B, C, D, E };
 char name[] = "ABCDE";
 

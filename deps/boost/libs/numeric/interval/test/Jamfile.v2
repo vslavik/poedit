@@ -14,6 +14,8 @@ project
     # Enable dynamic rounding on Tru64 (Alpha CPU).
     <toolset>hp_cxx,<os>OSF:<cflags>"-fprm d"
     <toolset>gcc,<os>OSF:<cflags>-mfp-rounding-mode=d
+    <toolset>gcc:<cxxflags>-frounding-math
+    <toolset>msvc:<cxxflags>/fp\:strict
   ;
 
 # bring in rules for testing
@@ -26,7 +28,7 @@ import testing ;
     [ run libs/numeric/interval/test/add.cpp      ]
     [ run libs/numeric/interval/test/det.cpp      ]
     [ run libs/numeric/interval/test/fmod.cpp     ]
-    [ run libs/numeric/interval/test/msvc_x64_flags.cpp ]
+    [ run libs/numeric/interval/test/msvc_x64_flags.cpp : : : <build>no <toolset>msvc:<build>yes ]
     [ run libs/numeric/interval/test/mul.cpp      ]
     [ run libs/numeric/interval/test/overflow.cpp ]
     [ run libs/numeric/interval/test/pi.cpp       ]
@@ -42,9 +44,12 @@ import testing ;
         ../../../test/build//boost_test_exec_monitor/<link>static ]
     [ run libs/numeric/interval/test/cmp_set.cpp
         ../../../test/build//boost_test_exec_monitor/<link>static ]
-    [ run libs/numeric/interval/test/cmp_tribool.cpp
-        ../../../test/build//boost_test_exec_monitor/<link>static ]
+ # https://github.com/boostorg/interval/issues/15
+ #  [ run libs/numeric/interval/test/cmp_tribool.cpp
+ #      ../../../test/build//boost_test_exec_monitor/<link>static ]
     [ run libs/numeric/interval/test/test_float.cpp
-        ../../../test/build//boost_test_exec_monitor/<link>static ]
+        ../../../test/build//boost_test_exec_monitor/<link>static 
+      : : : <build>yes <toolset>msvc-10.0:<build>no ]
+            # https://github.com/boostorg/interval/issues/17
   ;
 }

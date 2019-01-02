@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(test2)
 struct if_either
 {
   std::string tc1, tc2;
-  if_either(std::string t1, std::string t2) 
+  if_either(std::string t1, std::string t2)
     : tc1(t1), tc2(t2) {}
 
   tt::assertion_result operator()(utf::test_unit_id)

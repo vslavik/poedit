@@ -183,6 +183,7 @@ address of the stack.]]
 [endsect]
 
 
+[#segmented]
 [section:segmented Class ['segmented_stack]]
 
 __boost_coroutine__ supports usage of a __segmented__, e. g. the size of
@@ -193,10 +194,12 @@ In contrast to __protected_fixedsize__ and __fixedsize__ it creates a
 stack which grows on demand.
 
 [note Segmented stacks are currently only supported by [*gcc] from version
-[*4.7] and [*clang] from version [*3.4] onwards. In order to use a
-__segmented_stack__ __boost_coroutine__ must be built with
-property `segmented-stacks`, e.g. [*toolset=gcc segmented-stacks=on] at b2/bjam
+[*4.7] [*clang] from version [*3.4] onwards. In order to use a
+__segmented_stack__ __boost_context__ must be built with
+property `segmented-stacks`, e.g. [*toolset=gcc segmented-stacks=on] and
+applying `BOOST_USE_SEGMENTED_STACKS` and `BOOST_USE_UCONTEXT` at b2/bjam
 command line.]
+
 
         #include <boost/coroutine2/segmented_stack.hpp>
 
@@ -318,6 +321,16 @@ structures.
 ]
 
 [endsect]
+
+
+[section:valgrind Support for valgrind]
+
+Running programs that switch stacks under valgrind causes problems.
+Property (b2 command-line) `valgrind=on` let valgrind treat the memory regions
+as stack space which suppresses the errors.
+
+[endsect]
+
 
 
 [endsect]

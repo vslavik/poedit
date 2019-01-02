@@ -9,19 +9,19 @@
 #if !defined(BOOST_SPIRIT_QUICKBOOK_TEMPLATE_STACK_HPP)
 #define BOOST_SPIRIT_QUICKBOOK_TEMPLATE_STACK_HPP
 
-#include <string>
-#include <deque>
-#include <vector>
 #include <cassert>
-#include <boost/tuple/tuple.hpp>
+#include <deque>
+#include <string>
+#include <vector>
 #include <boost/assert.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/next_prior.hpp>
 #include <boost/spirit/include/classic_functor_parser.hpp>
 #include <boost/spirit/include/classic_symbols.hpp>
-#include <boost/next_prior.hpp>
-#include <boost/filesystem/path.hpp>
+#include <boost/tuple/tuple.hpp>
 #include "fwd.hpp"
-#include "values.hpp"
 #include "template_tags.hpp"
+#include "values.hpp"
 
 namespace quickbook
 {
@@ -32,10 +32,10 @@ namespace quickbook
     struct template_symbol
     {
         template_symbol(
-                std::string const& identifier,
-                std::vector<std::string> const& params,
-                value const& content,
-                template_scope const* parent = 0);
+            std::string const& identifier,
+            std::vector<std::string> const& params,
+            value const& content,
+            template_scope const* parent = 0);
 
         std::string identifier;
         std::vector<std::string> params;
@@ -45,7 +45,7 @@ namespace quickbook
     };
 
     typedef boost::spirit::classic::symbols<template_symbol> template_symbols;
-    
+
     // template scope
     //
     // 1.4-: parent_scope is the previous scope on the dynamic
@@ -57,7 +57,7 @@ namespace quickbook
     // correct lookup chain for that version of quickboook.
     //
     // symbols contains the templates defined in this scope.
-    
+
     struct template_scope
     {
         template_scope() : parent_scope(), parent_1_4() {}
@@ -74,29 +74,28 @@ namespace quickbook
         {
             typedef boost::spirit::classic::nil_t result_t;
 
-            parser(template_stack& ts)
-                : ts(ts) {}
+            parser(template_stack& ts_) : ts(ts_) {}
 
             template <typename Scanner>
-            std::ptrdiff_t
-            operator()(Scanner const& scan, result_t) const
+            std::ptrdiff_t operator()(Scanner const& scan, result_t) const
             {
                 // search all scopes for the longest matching symbol.
                 typename Scanner::iterator_t f = scan.first;
                 std::ptrdiff_t len = -1;
-                for (template_scope const* i = &*ts.scopes.begin(); i; i = i->parent_scope)
-                {
+                for (template_scope const* i = &*ts.scopes.begin(); i;
+                     i = i->parent_scope) {
                     boost::spirit::classic::match<> m = i->symbols.parse(scan);
-                    if (m.length() > len)
-                        len = m.length();
+                    if (m.length() > len) len = m.length();
                     scan.first = f;
                 }
-                if (len >= 0)
-                    scan.first = boost::next(f, len);
+                if (len >= 0) scan.first = boost::next(f, len);
                 return len;
             }
 
             template_stack& ts;
+
+          private:
+            parser& operator=(parser const&);
         };
 
         template_stack();
@@ -105,7 +104,8 @@ namespace quickbook
         template_symbols const& top() const;
         template_scope const& top_scope() const;
         // Add the given template symbol to the current scope.
-        // If it doesn't have a scope, sets the symbol's scope to the current scope.
+        // If it doesn't have a scope, sets the symbol's scope to the current
+        // scope.
         bool add(template_symbol const&);
         void push();
         void pop();
@@ -114,13 +114,13 @@ namespace quickbook
 
         boost::spirit::classic::functor_parser<parser> scope;
 
-    private:
-
+      private:
         friend struct parser;
         deque scopes;
         template_scope const* parent_1_4;
+
+        template_stack& operator=(template_stack const&);
     };
 }
 
 #endif // BOOST_SPIRIT_QUICKBOOK_TEMPLATE_STACK_HPP
-

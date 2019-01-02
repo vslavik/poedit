@@ -2,7 +2,7 @@
 // main.cpp
 // ~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -30,24 +30,24 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     // Launch the initial server coroutine.
-    http::server4::server(io_service, argv[1], argv[2],
+    http::server4::server(io_context, argv[1], argv[2],
         http::server4::file_handler(argv[3]))();
 
     // Wait for signals indicating time to shut down.
-    boost::asio::signal_set signals(io_service);
+    boost::asio::signal_set signals(io_context);
     signals.add(SIGINT);
     signals.add(SIGTERM);
 #if defined(SIGQUIT)
     signals.add(SIGQUIT);
 #endif // defined(SIGQUIT)
     signals.async_wait(boost::bind(
-          &boost::asio::io_service::stop, &io_service));
+          &boost::asio::io_context::stop, &io_context));
 
     // Run the server.
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

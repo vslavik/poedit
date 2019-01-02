@@ -53,9 +53,10 @@ import os.path
 
 from virtual_target import Subvariant
 from . import virtual_target, type, property_set, property
+from b2.exceptions import BaseBoostBuildException
 from b2.util.logger import *
 from b2.util.utility import *
-from b2.util import set as set_, is_iterable_typed, is_iterable
+from b2.util import set as set_, is_iterable_typed, is_iterable, bjam_signature
 from b2.util.sequence import unique
 import b2.util.sequence as sequence
 from b2.manager import get_manager
@@ -138,7 +139,7 @@ def invalidate_extendable_viable_source_target_type_cache():
     __vstg_cached_generators = []
 
     for g in generators_with_cached_source_types:
-        if __viable_source_types_cache.has_key(g):
+        if g in __viable_source_types_cache:
             if __viable_source_types_cache[g] == ["*"]:
                 __vstg_cached_generators.append(g)
             else:
@@ -148,7 +149,7 @@ def invalidate_extendable_viable_source_target_type_cache():
     types_with_cached_sources_types = __vst_cached_types
     __vst_cached_types = []
     for t in types_with_cached_sources_types:
-        if __viable_source_types_cache.has_key(t):
+        if t in __viable_source_types_cache:
             if __viable_source_types_cache[t] == ["*"]:
                 __vst_cached_types.append(t)
             else:
@@ -157,6 +158,13 @@ def invalidate_extendable_viable_source_target_type_cache():
 def dout(message):
     if debug():
         print __indent + message
+
+
+class InvalidTargetSource(BaseBoostBuildException):
+    """
+    Should be raised when a target contains a source that is invalid.
+    """
+
 
 class Generator:
     """ Creates a generator.
@@ -336,10 +344,15 @@ class Generator:
             assert isinstance(name, basestring) or name is None
             assert isinstance(prop_set, property_set.PropertySet)
             assert is_iterable_typed(sources, virtual_target.VirtualTarget)
-
         if project.manager ().logger ().on ():
             project.manager ().logger ().log (__name__, "  generator '%s'" % self.id_)
             project.manager ().logger ().log (__name__, "  composing: '%s'" % self.composing_)
+
+        if not sources:
+            s = 'An empty source list was passed in to the "{}" generator'.format(self.id_)
+            if name:
+                s += ' for target "{}"'.format(name)
+            raise InvalidTargetSource(s)
 
         if not self.composing_ and len (sources) > 1 and len (self.source_types_) > 1:
             raise BaseException ("Unsupported source/source_type combination")
@@ -368,24 +381,22 @@ class Generator:
             assert isinstance(prop_set, property_set.PropertySet)
             assert is_iterable_typed(sources, virtual_target.VirtualTarget)
         # consumed: Targets that this generator will consume directly.
-        # bypassed: Targets that can't be consumed and will be returned as-is.
 
         if self.composing_:
-            (consumed, bypassed) = self.convert_multiple_sources_to_consumable_types (project, prop_set, sources)
+            consumed = self.convert_multiple_sources_to_consumable_types (project, prop_set, sources)
         else:
-            (consumed, bypassed) = self.convert_to_consumable_types (project, name, prop_set, sources)
+            consumed = self.convert_to_consumable_types (project, name, prop_set, sources)
 
         result = []
         if consumed:
             result = self.construct_result (consumed, project, name, prop_set)
-            result.extend (bypassed)
 
         if result:
             if project.manager ().logger ().on ():
                 project.manager ().logger ().log (__name__, "  SUCCESS: ", result)
 
         else:
-                project.manager ().logger ().log (__name__, "  FAILURE")
+            project.manager ().logger ().log (__name__, "  FAILURE")
 
         return result
 
@@ -412,12 +423,9 @@ class Generator:
         if len (self.source_types_) < 2 and not self.composing_:
 
             for r in consumed:
-                result.extend (self.generated_targets ([r], prop_set, project, name))
-
-        else:
-
-            if consumed:
-                result.extend (self.generated_targets (consumed, prop_set, project, name))
+                result.extend(self.generated_targets([r], prop_set, project, name))
+        elif consumed:
+            result.extend(self.generated_targets(consumed, prop_set, project, name))
 
         return result
 
@@ -527,7 +535,6 @@ class Generator:
 
             Returns a pair:
                 consumed: all targets that can be consumed.
-                bypassed: all targets that cannot be consumed.
         """
         if __debug__:
             from .targets import ProjectTarget
@@ -537,7 +544,6 @@ class Generator:
             assert is_iterable_typed(sources, virtual_target.VirtualTarget)
             assert isinstance(only_one, bool)
         consumed = []
-        bypassed = []
         missing_types = []
 
         if len (sources) > 1:
@@ -574,59 +580,45 @@ class Generator:
                 if t.type() in missing_types:
                     consumed.append(t)
 
-                else:
-                    bypassed.append(t)
-
         consumed = unique(consumed)
-        bypassed = unique(bypassed)
 
-        # remove elements of 'bypassed' that are in 'consumed'
-
-        # Suppose the target type of current generator, X is produced from
-        # X_1 and X_2, which are produced from Y by one generator.
-        # When creating X_1 from Y, X_2 will be added to 'bypassed'
-        # Likewise, when creating X_2 from Y, X_1 will be added to 'bypassed'
-        # But they are also in 'consumed'. We have to remove them from
-        # bypassed, so that generators up the call stack don't try to convert
-        # them.
-
-        # In this particular case, X_1 instance in 'consumed' and X_1 instance
-        # in 'bypassed' will be the same: because they have the same source and
-        # action name, and 'virtual-target.register' won't allow two different
-        # instances. Therefore, it's OK to use 'set.difference'.
-
-        bypassed = set.difference(bypassed, consumed)
-
-        return (consumed, bypassed)
+        return consumed
 
 
     def convert_multiple_sources_to_consumable_types (self, project, prop_set, sources):
         """ Converts several files to consumable types.
         """
-        consumed = []
-        bypassed = []
         if __debug__:
             from .targets import ProjectTarget
 
             assert isinstance(project, ProjectTarget)
             assert isinstance(prop_set, property_set.PropertySet)
             assert is_iterable_typed(sources, virtual_target.VirtualTarget)
+        if not self.source_types_:
+            return list(sources)
 
-        assert isinstance(project, ProjectTarget)
-        assert isinstance(prop_set, property_set.PropertySet)
-        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
-        # We process each source one-by-one, trying to convert it to
-        # a usable type.
-        for s in sources:
-            # TODO: need to check for failure on each source.
-            (c, b) = self.convert_to_consumable_types (project, None, prop_set, [s], True)
-            if not c:
-                project.manager ().logger ().log (__name__, " failed to convert ", s)
+        acceptable_types = set()
+        for t in self.source_types_:
+            acceptable_types.update(type.all_derived(t))
 
-            consumed.extend (c)
-            bypassed.extend (b)
+        result = []
+        for source in sources:
+            if source.type() not in acceptable_types:
+                transformed = construct_types(
+                    project, None,self.source_types_, prop_set, [source])
+                # construct_types returns [prop_set, [targets]]
+                for t in transformed[1]:
+                    if t.type() in self.source_types_:
+                        result.append(t)
+                if not transformed:
+                    project.manager().logger().log(__name__, "  failed to convert ", source)
+            else:
+                result.append(source)
 
-        return (consumed, bypassed)
+        result = sequence.unique(result, stable=True)
+        return result
+
+
 
     def consume_directly (self, source):
         assert isinstance(source, virtual_target.VirtualTarget)
@@ -642,7 +634,7 @@ class Generator:
         for st in source_types:
             # The 'source' if of right type already)
             if real_source_type == st or type.is_derived (real_source_type, st):
-                consumed.append (source)
+                consumed = [source]
 
             else:
                missing_types.append (st)
@@ -671,7 +663,7 @@ def register (g):
     __generators [id] = g
 
     # A generator can produce several targets of the
-    # same type. We want unique occurence of that generator
+    # same type. We want unique occurrence of that generator
     # in .generators.$(t) in that case, otherwise, it will
     # be tried twice and we'll get false ambiguity.
     for t in sequence.unique(g.target_types()):
@@ -726,6 +718,7 @@ def check_register_types(fn):
     return wrapper
 
 
+@bjam_signature([['id'], ['source_types', '*'], ['target_types', '*'], ['requirements', '*']])
 @check_register_types
 def register_standard (id, source_types, target_types, requirements = []):
     """ Creates new instance of the 'generator' class and registers it.
@@ -755,7 +748,7 @@ def override (overrider_id, overridee_id):
     """Make generator 'overrider-id' be preferred to
     'overridee-id'. If, when searching for generators
     that could produce a target of certain type,
-    both those generators are amoung viable generators,
+    both those generators are among viable generators,
     the overridden generator is immediately discarded.
 
     The overridden generators are discarded immediately
@@ -831,7 +824,7 @@ def viable_source_types (target_type):
     """ Helper rule, caches the result of '__viable_source_types_real'.
     """
     assert isinstance(target_type, basestring)
-    if not __viable_source_types_cache.has_key(target_type):
+    if target_type not in __viable_source_types_cache:
         __vst_cached_types.append(target_type)
         __viable_source_types_cache [target_type] = __viable_source_types_real (target_type)
     return __viable_source_types_cache [target_type]
@@ -867,7 +860,7 @@ def viable_source_types_for_generator (generator):
     """ Caches the result of 'viable_source_types_for_generator'.
     """
     assert isinstance(generator, Generator)
-    if not __viable_source_types_cache.has_key(generator):
+    if generator not in __viable_source_types_cache:
         __vstg_cached_generators.append(generator)
         __viable_source_types_cache[generator] = viable_source_types_for_generator_real (generator)
 
@@ -1077,7 +1070,7 @@ def find_viable_generators (target_type, prop_set):
     # Generators which override 'all'.
     all_overrides = []
 
-    # Generators which are overriden
+    # Generators which are overridden
     overriden_ids = []
 
     for g in viable_generators:

@@ -80,8 +80,8 @@ namespace boost { namespace geometry { namespace traits {
 template <typename G>
 void test_linestring()
 {
-    BOOST_CONCEPT_ASSERT( (bg::concept::Linestring<G>) );
-    BOOST_CONCEPT_ASSERT( (bg::concept::ConstLinestring<G>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::Linestring<G>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::ConstLinestring<G>) );
 
     G geometry;
     typedef typename bg::point_type<G>::type P;

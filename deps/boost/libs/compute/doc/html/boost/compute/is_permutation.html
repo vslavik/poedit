@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template is_permutation</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.is_permutation_hpp" title="Header &lt;boost/compute/algorithm/is_permutation.hpp&gt;">
 <link rel="prev" href="is_partitioned.html" title="Function template is_partitioned">
@@ -37,17 +37,23 @@
                       <span class="identifier">InputIterator2</span> first2<span class="special">,</span> <span class="identifier">InputIterator2</span> last2<span class="special">,</span> 
                       <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp66332784"></a><h2>Description</h2>
+<a name="idp80718704"></a><h2>Description</h2>
 <p>Checks if the range [first1, last1) can be permuted into the range [first2, last2) 
 
-</p>
-<div class="variablelist"><table border="0">
+Space complexity: (distance(<code class="computeroutput">first1</code>, <code class="computeroutput">last1</code>) + distance(<code class="computeroutput">first2</code>, <code class="computeroutput">last2</code>)) </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first1</code></span></p></td>
@@ -67,7 +73,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">queue</code></span></p></td>
-<td><p>Queue on which to execute </p></td>
+<td><p>Queue on which to execute</p></td>
 </tr>
 </tbody>
 </table></div></td>

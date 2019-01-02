@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::experimental::print`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -41,6 +41,9 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 BOOST_HANA_NAMESPACE_BEGIN namespace experimental {
+    template <typename T>
+    struct Printable;
+
     //! @cond
     template <typename T, typename = void>
     struct print_impl : print_impl<T, hana::when<true>> { };
@@ -70,7 +73,16 @@ BOOST_HANA_NAMESPACE_BEGIN namespace experimental {
     struct print_t {
         template <typename T>
         std::string operator()(T const& t) const {
-            using Print = print_impl<typename hana::tag_of<T>::type>;
+            using Tag = typename hana::tag_of<T>::type;
+            using Print = BOOST_HANA_DISPATCH_IF(print_impl<Tag>,
+                hana::experimental::Printable<Tag>::value
+            );
+
+        #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
+            static_assert(hana::experimental::Printable<Tag>::value,
+            "hana::experimental::print(t) requires 't' to be Printable");
+        #endif
+
             return Print::apply(t);
         }
     };
@@ -87,7 +99,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace experimental {
 
     namespace print_detail {
         std::string strip_type_junk(std::string const& str) {
-            return std::regex_replace(str, std::regex("^([a-z_]+::)*([a-z_]*)_t<"), "$2<");
+            return std::regex_replace(str, std::regex("(?:struct )?([a-z_]+::)*([a-z_]*)_t<((?:struct )?[a-z:<>_]*)>"), "$2<$3>");
         }
     }
 
@@ -107,6 +119,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace experimental {
     };
 
     // model for OutputStreamable types
+    //! @cond
     template <typename S>
     struct print_impl<S, hana::when_valid<decltype(
         std::declval<std::ostringstream&>() << std::declval<S const&>()
@@ -118,6 +131,7 @@ BOOST_HANA_NAMESPACE_BEGIN namespace experimental {
             return os.str();
         }
     };
+    //! @endcond
 
     // model for hana::optional
     template <>

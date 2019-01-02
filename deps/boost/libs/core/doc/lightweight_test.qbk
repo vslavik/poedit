@@ -1,7 +1,8 @@
 [/
   Copyright 2010, 2011 Beman Dawes
   Copyright 2013 Ion Gaztanaga
-  Copyright 2014 Peter Dimov
+  Copyright 2014, 2017 Peter Dimov
+  Copyright 2017 Kohei Takahashi
 
   Distributed under the Boost Software License, Version 1.0.
 
@@ -32,9 +33,18 @@ When using `lightweight_test.hpp`, *do not forget* to
 
 ``
 #define BOOST_TEST(expression) /*unspecified*/
+#define BOOST_TEST_NOT(expression) /*unspecified*/
 #define BOOST_ERROR(message) /*unspecified*/
 #define BOOST_TEST_EQ(expr1, expr2) /*unspecified*/
 #define BOOST_TEST_NE(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_LT(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_LE(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_GT(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_GE(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_CSTR_EQ(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_CSTR_NE(expr1, expr2) /*unspecified*/
+#define BOOST_TEST_ALL_EQ(begin1, end1, begin2, end2) /* unspecified */
+#define BOOST_TEST_ALL_WITH(begin1, end1, begin2, end2, predicate) /* unspecified */
 #define BOOST_TEST_THROWS(expr, excep) /*unspecified*/
 
 namespace boost
@@ -56,6 +66,17 @@ message containing `expression`.
 
 [endsect]
 
+[section BOOST_TEST_NOT]
+
+``
+BOOST_TEST_NOT(expression)
+``
+
+If expression is true increases the error count and outputs a
+message containing `!(expression)`.
+
+[endsect]
+
 [section BOOST_ERROR]
 
 ``
@@ -73,7 +94,7 @@ Increases error count and outputs a message containing
 BOOST_TEST_EQ(expr1, expr2)
 ``
 
-If `expr1 != expr2` increases the error count and outputs a
+If `expr1 == expr2` is not true increases the error count and outputs a
 message containing both expressions.
 
 [endsect]
@@ -84,8 +105,92 @@ message containing both expressions.
 BOOST_TEST_NE(expr1, expr2)
 ``
 
-If `expr1 == expr2` increases the error count and outputs a
+If `expr1 != expr2` is not true increases the error count and outputs a
 message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_LT]
+
+``
+BOOST_TEST_LT(expr1, expr2)
+``
+
+If `expr1 < expr2` is not true increases the error count and outputs a
+message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_LE]
+
+``
+BOOST_TEST_LE(expr1, expr2)
+``
+
+If `expr1 <= expr2` is not true increases the error count and outputs a
+message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_GT]
+
+``
+BOOST_TEST_GT(expr1, expr2)
+``
+
+If `expr1 > expr2` is not true increases the error count and outputs a
+message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_GE]
+
+``
+BOOST_TEST_GE(expr1, expr2)
+``
+
+If `expr1 >= expr2` is not true increases the error count and outputs a
+message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_CSTR_EQ]
+
+``
+BOOST_TEST_CSTR_EQ(expr1, expr2)
+``
+
+Specialization of `BOOST_TEST_EQ` which interprets `expr1` and `expr2` as pointers to null-terminated byte strings (C strings). If `std::strcmp(expr1, expr2) != 0`, increase the error count and output a message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_CSTR_NE]
+
+``
+BOOST_TEST_CSTR_NE(expr1, expr2)
+``
+
+Specialization of `BOOST_TEST_NE` which interprets `expr1` and `expr2` as pointers to null-terminated byte strings (C strings). If `std::strcmp(expr1, expr2) == 0`, increase the error count and output a message containing both expressions.
+
+[endsect]
+
+[section BOOST_TEST_ALL_EQ]
+
+``
+BOOST_TEST_ALL_EQ(begin1, end1, begin2, end2)
+``
+
+Compares the content of two sequences. If they have different sizes, or if any pairwise element differs, increases the error count and outputs a message containing at most 8 differing elements.
+
+[endsect]
+
+[section BOOST_TEST_ALL_WITH]
+
+``
+BOOST_TEST_ALL_WITH(begin1, end1, begin2, end2, predicate)
+``
+
+Compares the content of two sequences. If they have different sizes, or if any pairwise element do not fulfill the binary predicate, increases the error count and outputs a message containing at most 8 differing elements.
 
 [endsect]
 

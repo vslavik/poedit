@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Notes</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="prev" href="functional/generation/metafunctions/mk_unfused.html" title="make_unfused">
@@ -28,7 +28,7 @@
 </h2></div></div></div>
 <h4>
 <a name="fusion.notes.h0"></a>
-      <span><a name="fusion.notes.recursive_inlined_functions"></a></span><a class="link" href="notes.html#fusion.notes.recursive_inlined_functions">Recursive
+      <span class="phrase"><a name="fusion.notes.recursive_inlined_functions"></a></span><a class="link" href="notes.html#fusion.notes.recursive_inlined_functions">Recursive
       Inlined Functions</a>
     </h4>
 <p>
@@ -41,7 +41,7 @@
     </p>
 <h4>
 <a name="fusion.notes.h1"></a>
-      <span><a name="fusion.notes.overloaded_functions"></a></span><a class="link" href="notes.html#fusion.notes.overloaded_functions">Overloaded
+      <span class="phrase"><a name="fusion.notes.overloaded_functions"></a></span><a class="link" href="notes.html#fusion.notes.overloaded_functions">Overloaded
       Functions</a>
     </h4>
 <p>
@@ -52,7 +52,7 @@
     </p>
 <h4>
 <a name="fusion.notes.h2"></a>
-      <span><a name="fusion.notes.tag_dispatching"></a></span><a class="link" href="notes.html#fusion.notes.tag_dispatching">Tag
+      <span class="phrase"><a name="fusion.notes.tag_dispatching"></a></span><a class="link" href="notes.html#fusion.notes.tag_dispatching">Tag
       Dispatching</a>
     </h4>
 <p>
@@ -104,29 +104,29 @@
 </ol></div>
 <h4>
 <a name="fusion.notes.h3"></a>
-      <span><a name="fusion.notes.extensibility"></a></span><a class="link" href="notes.html#fusion.notes.extensibility">Extensibility</a>
+      <span class="phrase"><a name="fusion.notes.extensibility"></a></span><a class="link" href="notes.html#fusion.notes.extensibility">Extensibility</a>
     </h4>
 <p>
-      Unlike <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, there
-      is no extensible sequence concept in fusion. This does not mean that Fusion
-      sequences are not extensible. In fact, all Fusion sequences are inherently
-      extensible. It is just that the manner of sequence extension in Fusion is different
-      from both <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
-      and <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> on account
-      of the lazy nature of fusion <a class="link" href="algorithm.html" title="Algorithm">Algorithms</a>.
+      Unlike <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>, there is no
+      extensible sequence concept in fusion. This does not mean that Fusion sequences
+      are not extensible. In fact, all Fusion sequences are inherently extensible.
+      It is just that the manner of sequence extension in Fusion is different from
+      both <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
+      and <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> on account of the
+      lazy nature of fusion <a class="link" href="algorithm.html" title="Algorithm">Algorithms</a>.
       <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
-      containers extend themselves in place though member functions such as <a class="link" href="algorithm/transformation/functions/push_back.html" title="push_back"><code class="computeroutput"><span class="identifier">push_back</span></code></a> and <a class="link" href="algorithm/transformation/functions/insert.html" title="insert"><code class="computeroutput"><span class="identifier">insert</span></code></a>. <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+      containers extend themselves in place though member functions such as <a class="link" href="algorithm/transformation/functions/push_back.html" title="push_back"><code class="computeroutput"><span class="identifier">push_back</span></code></a> and <a class="link" href="algorithm/transformation/functions/insert.html" title="insert"><code class="computeroutput"><span class="identifier">insert</span></code></a>. <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
       sequences, on the other hand, are extended through "intrinsic" functions
-      that actually return whole sequences. <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      is purely functional and can not have side effects. For example, <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>'s
+      that actually return whole sequences. <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+      is purely functional and can not have side effects. For example, <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>'s
       <code class="computeroutput"><span class="identifier">push_back</span></code> does not actually
       mutate an <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span></code>. It can't do that. Instead, it returns
       an extended <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span></code>.
     </p>
 <p>
-      Like <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, Fusion
-      too is purely functional and can not have side effects. With runtime efficiency
-      in mind, Fusion sequences are extended through generic functions that return
+      Like <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>, Fusion too is
+      purely functional and can not have side effects. With runtime efficiency in
+      mind, Fusion sequences are extended through generic functions that return
       <a class="link" href="view.html" title="View">Views</a>. <a class="link" href="view.html" title="View">Views</a>
       are sequences that do not actually contain data, but instead impart an alternative
       presentation over the data from one or more underlying sequences. <a class="link" href="view.html" title="View">Views</a>
@@ -139,7 +139,7 @@
     </p>
 <h4>
 <a name="fusion.notes.h4"></a>
-      <span><a name="fusion.notes.element_conversion"></a></span><a class="link" href="notes.html#fusion.notes.element_conversion">Element
+      <span class="phrase"><a name="fusion.notes.element_conversion"></a></span><a class="link" href="notes.html#fusion.notes.element_conversion">Element
       Conversion</a>
     </h4>
 <p>
@@ -160,7 +160,7 @@
       <span class="bold"><strong>Arrays:</strong></span>
     </p>
 <p>
-      Array arguments are deduced to reference to const types. For example <sup>[<a name="fusion.notes.f0" href="#ftn.fusion.notes.f0" class="footnote">14</a>]</sup>:
+      Array arguments are deduced to reference to const types. For example <a href="#ftn.fusion.notes.f0" class="footnote" name="fusion.notes.f0"><sup class="footnote">[14]</sup></a>:
     </p>
 <pre class="programlisting"><a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a><span class="special">(</span><span class="string">"Donald"</span><span class="special">,</span> <span class="string">"Daisy"</span><span class="special">)</span>
 </pre>
@@ -189,7 +189,7 @@
 </pre>
 <h4>
 <a name="fusion.notes.h5"></a>
-      <span><a name="fusion.notes.reference_wrappers"></a></span><a class="link" href="notes.html#fusion.notes.reference_wrappers">Reference
+      <span class="phrase"><a name="fusion.notes.reference_wrappers"></a></span><a class="link" href="notes.html#fusion.notes.reference_wrappers">Reference
       Wrappers</a>
     </h4>
 <p>
@@ -224,8 +224,8 @@
 <a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a><span class="special">(</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">ca</span><span class="special">));</span>             <span class="comment">// creates list&lt;const A&amp;&gt;</span>
 </pre>
 <p>
-      See <a href="http://www.boost.org/doc/html/ref.html" target="_top">Boost.Ref</a> for
-      details.
+      See <a href="http://www.boost.org/libs/core/ref.html" target="_top">Ref utility</a>
+      for details.
     </p>
 <p>
       Since C++11, the standard reference wrappers (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ref</span></code> and
@@ -233,7 +233,7 @@
     </p>
 <h4>
 <a name="fusion.notes.h6"></a>
-      <span><a name="fusion.notes.adt_attribute_proxy"></a></span><a class="link" href="notes.html#fusion.notes.adt_attribute_proxy">adt_attribute_proxy</a>
+      <span class="phrase"><a name="fusion.notes.adt_attribute_proxy"></a></span><a class="link" href="notes.html#fusion.notes.adt_attribute_proxy">adt_attribute_proxy</a>
     </h4>
 <p>
       To adapt arbitrary data types that do not allow direct access to their members,
@@ -276,7 +276,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">type_name</span></code></span></dt>
 <dd><p>
             The type to be adapted, with M attributes
@@ -463,8 +463,8 @@
       </p></td></tr>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.fusion.notes.f0" href="#fusion.notes.f0" class="para">14</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.fusion.notes.f0" class="footnote"><p><a href="#fusion.notes.f0" class="para"><sup class="para">[14] </sup></a>
         Note that the type of a string literal is an array of const characters, not
         <code class="computeroutput"><span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span></code>. To get <a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a> to create a <a class="link" href="container/list.html" title="list"><code class="computeroutput"><span class="identifier">list</span></code></a> with an element of a non-const
         array type one must use the <code class="computeroutput"><span class="identifier">ref</span></code>

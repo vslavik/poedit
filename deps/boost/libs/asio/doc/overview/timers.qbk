@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +14,7 @@ calculated relative to the current time.
 As a simple example, to perform a synchronous wait operation on a timer using a
 relative time one may write:
 
-  io_service i;
+  io_context i;
   ...
   deadline_timer t(i);
   t.expires_from_now(boost::posix_time::seconds(5));
@@ -25,7 +25,7 @@ timer:
 
   void handler(boost::system::error_code ec) { ... }
   ...
-  io_service i;
+  io_context i;
   ...
   deadline_timer t(i);
   t.expires_from_now(boost::posix_time::milliseconds(400));
@@ -47,7 +47,6 @@ or as an absolute time to allow composition of timers:
 
 [link boost_asio.reference.basic_deadline_timer basic_deadline_timer],
 [link boost_asio.reference.deadline_timer deadline_timer],
-[link boost_asio.reference.deadline_timer_service deadline_timer_service],
 [link boost_asio.tutorial.tuttimer1 timer tutorials].
 
 [endsect]

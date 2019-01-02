@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>ref</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
-<link rel="prev" href="null_deleter.html" title="null_deleter">
+<link rel="prev" href="quick_exit.html" title="quick_exit">
 <link rel="next" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,21 +20,21 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="null_deleter.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost/reference_wrapper.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="quick_exit.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost/reference_wrapper.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="core.ref"></a><a class="link" href="ref.html" title="ref">ref</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="ref.html#core.ref.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="ref.html#core.reference">Reference</a></span></dt>
 <dt><span class="section"><a href="ref.html#core.ref.acknowledgments">Acknowledgments</a></span></dt>
 </dl></div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp6469472"></a>Authors</h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp99855392"></a>Authors</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Jaakko J&#228;rvi
         </li>
@@ -113,19 +113,15 @@
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="header.boost.core.ref_hpp"></a>Header &lt;<a href="../../../../../boost/core/ref.hpp" target="_top">boost/core/ref.hpp</a>&gt;</h4></div></div></div>
-<pre class="synopsis">
-
-<a class="link" href="../BOOST_REF_CONST.html" title="Macro BOOST_REF_CONST">BOOST_REF_CONST</a>
-<a class="link" href="../BOOST_REF_DELETE.html" title="Macro BOOST_REF_DELETE">BOOST_REF_DELETE</a></pre>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a><span class="special">;</span>
 
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/is_reference_wrapper.html" title="Struct template is_reference_wrapper">is_reference_wrapper</a><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/unwrap_reference.html" title="Struct template unwrap_reference">unwrap_reference</a><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <a class="link" href="../boost/ref_idm14304.html" title="Function template ref"><span class="identifier">ref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="keyword">const</span>  <span class="special">&gt;</span> <span class="keyword">const</span> <a class="link" href="../boost/cref_idm10384.html" title="Function template cref"><span class="identifier">cref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="../boost/ref_idm6464.html" title="Function template ref"><span class="identifier">ref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="../boost/cref_idm3408.html" title="Function template cref"><span class="identifier">cref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <a class="link" href="../boost/ref_idp21062816.html" title="Function template ref"><span class="identifier">ref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="../boost/reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="keyword">const</span>  <span class="special">&gt;</span> <span class="keyword">const</span> <a class="link" href="../boost/cref_idp21067632.html" title="Function template cref"><span class="identifier">cref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="../boost/ref_idp21072448.html" title="Function template ref"><span class="identifier">ref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="../boost/cref_idp29601008.html" title="Function template cref"><span class="identifier">cref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="../boost/unwrap_reference.html" title="Struct template unwrap_reference">unwrap_reference</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">&amp;</span> <a class="link" href="../boost/unwrap_ref.html" title="Function template unwrap_ref"><span class="identifier">unwrap_ref</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span></pre>
 </div>
@@ -155,7 +151,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="null_deleter.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost/reference_wrapper.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="quick_exit.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost/reference_wrapper.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

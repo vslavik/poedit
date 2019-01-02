@@ -26,6 +26,8 @@ int rand_int()
 
 int main(int argc, char *argv[])
 {
+    using boost::compute::int_;
+
     perf_parse_args(argc, argv);
 
     std::cout << "size: " << PERF_N << std::endl;
@@ -37,12 +39,12 @@ int main(int argc, char *argv[])
     std::cout << "device: " << device.name() << std::endl;
 
     // create vector of random numbers on the host
-    std::vector<int> host_vector(PERF_N);
+    std::vector<int_> host_vector(PERF_N);
     std::generate(host_vector.begin(), host_vector.end(), rand_int);
 
     // create vector on the device and copy the data
-    boost::compute::vector<int> device_vector(PERF_N, context);
-    boost::compute::vector<int> device_res(PERF_N,context);
+    boost::compute::vector<int_> device_vector(PERF_N, context);
+    boost::compute::vector<int_> device_res(PERF_N,context);
     boost::compute::copy(
         host_vector.begin(),
         host_vector.end(),

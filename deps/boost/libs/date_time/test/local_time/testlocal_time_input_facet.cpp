@@ -184,8 +184,8 @@ int main() {
   {
     std::istringstream iss("2005-Aug-25 12:15:00 MST-07");
     local_time_input_facet* f = new local_time_input_facet("%Y-%b-%d %H:%M:%S %z");
-    std::locale loc(std::locale::classic(), f);
-    iss.imbue(loc);
+    std::locale locx(std::locale::classic(), f);
+    iss.imbue(locx);
     iss >> ldt1;
     check("Wrong format flag makes UTC", ldt1.zone_as_posix_string() == std::string("UTC+00"));
     check("Wrong format flag makes UTC", ldt1.utc_time() == ldt1.local_time());

@@ -96,13 +96,21 @@ R dynamic_any_cast_impl(Any& arg, const static_binding<Map>& map)
     >::type normalized;
     typedef typename ::boost::mpl::fold<
         normalized,
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         ::boost::mpl::set0<>,
+#else
+        ::boost::mp11::mp_list<>,
+#endif
         ::boost::type_erasure::detail::get_placeholders<
             ::boost::mpl::_2,
             ::boost::mpl::_1
         >
     >::type placeholders;
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
     typedef ::boost::type_erasure::detail::substitution_map< ::boost::mpl::map0<> > identity_map;
+#else
+    typedef ::boost::type_erasure::detail::make_identity_placeholder_map<normalized> identity_map;
+#endif
     ::boost::type_erasure::dynamic_binding<placeholders> my_binding(
         ::boost::type_erasure::binding_of(arg),
         ::boost::type_erasure::make_binding<identity_map>());
@@ -153,7 +161,7 @@ R dynamic_any_cast_impl(Any& arg, const static_binding<Map>& map)
  *
  * \throws bad_any_cast if the concepts used by R were
  *         not previously registered via a call to
- *         @ref register_binding.
+ *         \register_binding.
  *
  * Example:
  * \code

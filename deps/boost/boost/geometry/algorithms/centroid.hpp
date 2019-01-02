@@ -3,7 +3,7 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
-// Copyright (c) 2014-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2014-2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2014, 2015.
 // Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
@@ -26,6 +26,7 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range.hpp>
+#include <boost/throw_exception.hpp>
 
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/variant/static_visitor.hpp>
@@ -183,7 +184,7 @@ inline bool range_ok(Range const& range, Point& centroid)
     else if (n <= 0)
     {
 #if ! defined(BOOST_GEOMETRY_CENTROID_NO_THROW)
-        throw centroid_exception();
+        BOOST_THROW_EXCEPTION(centroid_exception());
 #else
         return false;
 #endif
@@ -366,7 +367,7 @@ struct centroid_multi
         // to calculate the centroid
         if (geometry::is_empty(multi))
         {
-            throw centroid_exception();
+            BOOST_THROW_EXCEPTION(centroid_exception());
         }
 #endif
 
@@ -545,7 +546,7 @@ struct centroid
     template <typename Point, typename Strategy>
     static inline void apply(Geometry const& geometry, Point& out, Strategy const& strategy)
     {
-        concept::check_concepts_and_equal_dimensions<Point, Geometry const>();
+        concepts::check_concepts_and_equal_dimensions<Point, Geometry const>();
         resolve_strategy::centroid<Geometry>::apply(geometry, out, strategy);
     }
 };

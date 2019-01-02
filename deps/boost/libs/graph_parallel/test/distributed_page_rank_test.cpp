@@ -9,6 +9,7 @@
 
 #include <boost/graph/use_mpi.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/graph/distributed/page_rank.hpp>
 #include <boost/test/minimal.hpp>
 #include <boost/graph/distributed/adjacency_list.hpp>

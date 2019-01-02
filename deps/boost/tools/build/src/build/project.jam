@@ -96,7 +96,7 @@ rule load-used-projects ( module-name )
 # 'jamroot'. With the latter, we would get duplicate matches on Windows and
 # would have to eliminate duplicates.
 JAMROOT ?= [ modules.peek : JAMROOT ] ;
-JAMROOT ?= project-root.jam [Jj]amroot [Jj]amroot. [Jj]amroot.jam ;
+JAMROOT ?= project-root.jam "[Jj]amroot" "[Jj]amroot." "[Jj]amroot.jam" ;
 
 
 # Loads parent of Jamfile at 'location'. Issues an error if nothing is found.
@@ -191,7 +191,7 @@ rule module-name ( jamfile-location )
 # Default patterns to search for the Jamfiles to use for build declarations.
 #
 JAMFILE = [ modules.peek : JAMFILE ] ;
-JAMFILE ?= [Bb]uild.jam [Jj]amfile.v2 [Jj]amfile [Jj]amfile. [Jj]amfile.jam ;
+JAMFILE ?= "[Bb]uild.jam" "[Jj]amfile.v2" "[Jj]amfile" "[Jj]amfile." "[Jj]amfile.jam" ;
 
 
 # Find the Jamfile at the given location. This returns the exact names of all
@@ -234,7 +234,7 @@ rule find-jamfile (
     #
     if $(jamfile-to-load[2-])
     {
-        local v2-jamfiles = [ MATCH ^(.*[Jj]amfile\\.v2)|(.*[Bb]uild\\.jam)$ :
+        local v2-jamfiles = [ MATCH "^(.*[Jj]amfile\\.v2)|(.*[Bb]uild\\.jam)$" :
             $(jamfile-to-load) ] ;
 
         if $(v2-jamfiles) && ! $(v2-jamfiles[2])
@@ -259,10 +259,55 @@ rule find-jamfile (
         errors.error Unable to load Jamfile.
             : Could not find a Jamfile in directory '$(dir)'.
             : Attempted to find it with pattern '$(JAMFILE:J=" ")'.
-            : Please consult the documentation at 'http://www.boost.org'. ;
+            : Please consult the documentation at "'http://www.boost.org'." ;
     }
 
     return $(jamfile-to-load) ;
+}
+
+
+# Default patterns to search for auto-include of package manager build declarations.
+#
+PACKAGE_MANAGER_BUILD_INFO(CONAN) = "conanbuildinfo.jam" ;
+
+# Default to using the package manager build info in this priority order:
+# 1. Configuration, user, project, etc.
+# 2. Command line argument "--use-package-manager=<name>".
+# 3. Environment variable "PACKAGE_MANAGER_BUILD_INFO".
+# 4. Conan, others.
+#
+local .use-package-manager = [ MATCH "^--use-package-manager=(.*)$" : [ modules.peek : ARGV ] ] ;
+PACKAGE_MANAGER_BUILD_INFO ?= $(PACKAGE_MANAGER_BUILD_INFO($(.use-package-manager:U))) ;
+PACKAGE_MANAGER_BUILD_INFO ?= [ modules.peek : PACKAGE_MANAGER_BUILD_INFO ] ;
+PACKAGE_MANAGER_BUILD_INFO ?= $(PACKAGE_MANAGER_BUILD_INFO(CONAN)) ;
+
+
+# Load the configured package manager build information file.
+#
+rule load-package-manager-build-info ( )
+{
+    # This first variable is the one from the configuration (user, project, etc).
+    local package-manager-build-info = [ modules.peek [ CALLER_MODULE ] : PACKAGE_MANAGER_BUILD_INFO ] ;
+    # And this is the rest as it takes it from the settings in the "project" module.
+    # I.e. the variable assignments above.
+    package-manager-build-info ?= $(PACKAGE_MANAGER_BUILD_INFO) ;
+    if $(package-manager-build-info)
+    {
+        local pm = [ path.glob $(dir) : $(package-manager-build-info) ] ;
+        pm = $(pm[1]) ;
+        local cm = [ CALLER_MODULE ] ;
+        local pm-tag = "$(cm)<$(pm:B)>" ;
+        if $(pm) && ! ( $(pm-tag) in $(.package-manager-build-info) )
+        {
+            .package-manager-build-info += $(pm-tag) ;
+            # We found a matching builf info to load, but we have to be careful
+            # as the loading can affect the current project since it can define
+            # sub-projects. Hence we save and restore the current project.
+            local saved-project = $(.current-project) ;
+            modules.load $(cm) : $(pm) ;
+            .current-project = $(saved-project) ;
+        }
+    }
 }
 
 
@@ -304,6 +349,11 @@ local rule load-jamfile ( dir : jamfile-module : synthesize ? )
         # Initialize the Jamfile module before loading.
         initialize $(jamfile-module) : [ path.parent $(jamfile-to-load) ] :
             $(jamfile-to-load:BS) ;
+
+        # Auto-load package manager(s) build information.
+        IMPORT project : load-package-manager-build-info
+            : $(jamfile-module) : project.load-package-manager-build-info ;
+        modules.call-in $(jamfile-module) : project.load-package-manager-build-info ;
 
         if ! $(jamfile-module) in $(.jamfile-modules)
         {
@@ -441,7 +491,7 @@ rule initialize (
     local jamroot ;
 
     local parent-module ;
-    if $(module-name) = test-config
+    if $(module-name) in test-config all-config
     {
         # No parent.
     }
@@ -502,7 +552,7 @@ rule initialize (
         }
         else
         {
-            local cfgs = project site test user ;
+            local cfgs = project site test user all ;
             if ! $(module-name) in $(cfgs)-config
             {
                 # This is a standalone project with known location. Set its
@@ -627,7 +677,7 @@ rule register-id ( id : module )
     {
         import errors ;
         errors.user-error Project id may not contain two consecutive slash
-            characters (project id: '$(id)'). ;
+            characters (project "id:" '$(id)'). ;
     }
 
     local orig-module = $($(id).jamfile-module) ;
@@ -645,16 +695,16 @@ rule register-id ( id : module )
         import errors ;
         errors.user-error Attempt to redeclare already registered project id
             '$(id)'.
-            : Original project:
-            : "   " Name: $(orig-name:E=---)
-            : "   " Module: $(orig-module)
-            : "   " Main id: $(orig-main-id:E=---)
-            : "   " File: $(orig-file:E=---)
-            : "   " Location: $(orig-location:E=---)
-            : New project:
-            : "   " Module: $(module)
-            : "   " File: $(new-file:E=---)
-            : "   " Location: $(new-location:E=---) ;
+            : Original "project:"
+            : "   " "Name:" $(orig-name:E=---)
+            : "   " "Module:" $(orig-module)
+            : "   " "Main id: "$(orig-main-id:E=---)
+            : "   " "File:" $(orig-file:E=---)
+            : "   " "Location:" $(orig-location:E=---)
+            : New "project:"
+            : "   " "Module:" $(module)
+            : "   " "File:" $(new-file:E=---)
+            : "   " "Location:" $(new-location:E=---) ;
     }
 
     $(id).jamfile-module = $(module) ;
@@ -703,7 +753,7 @@ class project-attributes
             {
                 import errors : error : errors.error ;
                 errors.error Requirements for project at '$(self.location)'
-                    conflict with parent's. : Explanation: $(result[2-]) ;
+                    conflict with parent's. : "Explanation:" $(result[2-]) ;
             }
 
             self.requirements = $(result) ;
@@ -833,7 +883,7 @@ rule current ( )
 # Temporarily changes the current project to 'project'. Should be followed by
 # 'pop-current'.
 #
-rule push-current ( project )
+rule push-current ( project ? )
 {
     .saved-current-project += $(.current-project) ;
     .current-project = $(project) ;
@@ -900,9 +950,9 @@ rule get-jamroot-module ( project )
 
 # Returns the project target corresponding to the 'project-module'.
 #
-rule target ( project-module )
+rule target ( project-module : allow-missing ? )
 {
-    if ! $(.target.$(project-module))
+    if ! $(.target.$(project-module)) && ! $(allow-missing)
     {
         import errors ;
         errors.user-error Project target requested but not yet assigned for
@@ -1261,13 +1311,13 @@ module project-rules
     rule conditional ( condition + : requirements * )
     {
         local condition = $(condition:J=,) ;
-        if [ MATCH (:) : $(condition) ]
+        if [ MATCH "(:)" : $(condition) ]
         {
             return $(condition)$(requirements) ;
         }
         else
         {
-            return $(condition):$(requirements) ;
+            return "$(condition):$(requirements)" ;
         }
     }
 
@@ -1283,5 +1333,23 @@ module project-rules
         }
         import option ;
         option.set $(name) : $(value) ;
+    }
+
+    # This allows one to manually import a package manager build information file.
+    # The argument can be either a symbolic name of a supported package manager or
+    # the a glob pattern to load a b2 jam file.
+    #
+    rule use-packages ( name-or-glob-pattern ? )
+    {
+        local m = [ CALLER_MODULE ] ;
+        local glob-pattern = $(name-or-glob-pattern) ;
+        local glob-for-name = [ modules.peek project : PACKAGE_MANAGER_BUILD_INFO($(name-or-glob-pattern:U)) ] ;
+        if $(glob-for-name)
+        {
+            glob-pattern = $(glob-for-name) ;
+        }
+        modules.call-in $(m) : constant PACKAGE_MANAGER_BUILD_INFO : $(glob-pattern) ;
+        IMPORT project : load-package-manager-build-info : $(m) : project.load-package-manager-build-info ;
+        modules.call-in $(m) : project.load-package-manager-build-info ;
     }
 }

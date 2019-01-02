@@ -1,39 +1,43 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-// channel.cpp : Tests channel
 //
-
-#include <exception>
-#include <boost/gil/gil_config.hpp>
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#include <boost/gil/channel.hpp>
 #include <boost/gil/channel_algorithm.hpp>
-#include <boost/gil/gil_concept.hpp>
+#include <boost/gil/typedefs.hpp>
+
+#include <cstdint>
+#include <exception>
+#include <iostream>
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
+#endif
+
 
 using namespace boost::gil;
 using namespace std;
 
 void error_if(bool);
 
-bits8   c8_min   =  channel_traits<bits8  >::min_value();
-bits8   c8_max   =  channel_traits<bits8  >::max_value();
-bits8s  c8s_min  =  channel_traits<bits8s >::min_value();
-bits8s  c8s_max  =  channel_traits<bits8s >::max_value();
-bits16  c16_min  =  channel_traits<bits16 >::min_value();
-bits16  c16_max  =  channel_traits<bits16 >::max_value();
-bits16s c16s_min =  channel_traits<bits16s>::min_value();
-bits16s c16s_max =  channel_traits<bits16s>::max_value();
-bits32  c32_min  =  channel_traits<bits32 >::min_value();
-bits32  c32_max  =  channel_traits<bits32 >::max_value();
-bits32s c32s_min =  channel_traits<bits32s>::min_value();
-bits32s c32s_max =  channel_traits<bits32s>::max_value();
-bits32f c32f_min =  channel_traits<bits32f>::min_value();
-bits32f c32f_max =  channel_traits<bits32f>::max_value();
+auto c8_min   = channel_traits<uint8_t>::min_value();
+auto c8_max   = channel_traits<uint8_t>::max_value();
+auto c8s_min  = channel_traits<int8_t>::min_value();
+auto c8s_max  = channel_traits<int8_t>::max_value();
+auto c16_min  = channel_traits<uint16_t>::min_value();
+auto c16_max  = channel_traits<uint16_t>::max_value();
+auto c16s_min = channel_traits<int16_t>::min_value();
+auto c16s_max = channel_traits<int16_t>::max_value();
+auto c32_min  = channel_traits<uint32_t>::min_value();
+auto c32_max  = channel_traits<uint32_t>::max_value();
+auto c32s_min = channel_traits<int32_t>::min_value();
+auto c32s_max = channel_traits<int32_t>::max_value();
+auto c32f_min = channel_traits<float32_t>::min_value();
+auto c32f_max = channel_traits<float32_t>::max_value();
 
 
 template <typename ChannelTestCore>
@@ -213,12 +217,12 @@ protected:
 
 
 template <typename ChannelValue>
-void test_channel_value() { 
+void test_channel_value() {
     do_test<value_core<ChannelValue> >().test_all();
 }
 
 template <typename ChannelRef>
-void test_channel_reference() { 
+void test_channel_reference() {
     do_test<reference_core<ChannelRef> >().test_all();
 }
 
@@ -263,14 +267,14 @@ struct channel_archetype {
     // less-than comparable
     friend bool operator<(const channel_archetype&,const channel_archetype&) { return false; }
     // convertible to a scalar
-    operator bits8() const { return 0; }
+    operator std::uint8_t() const { return 0; }
 
-    
+
     channel_archetype& operator++() { return *this; }
     channel_archetype& operator--() { return *this; }
     channel_archetype  operator++(int) { return *this; }
     channel_archetype  operator--(int) { return *this; }
-    
+
     template <typename Scalar> channel_archetype operator+=(Scalar) { return *this; }
     template <typename Scalar> channel_archetype operator-=(Scalar) { return *this; }
     template <typename Scalar> channel_archetype operator*=(Scalar) { return *this; }
@@ -292,7 +296,7 @@ struct channel_value_archetype : public channel_archetype {
     channel_value_archetype() {}                                        // default constructible
     channel_value_archetype(const channel_value_archetype&) {}          // copy constructible
     channel_value_archetype& operator=(const channel_value_archetype&){return *this;} // assignable
-    channel_value_archetype(bits8) {}
+    channel_value_archetype(std::uint8_t) {}
 };
 
 channel_value_archetype channel_archetype::min_value() { return channel_value_archetype(); }
@@ -300,11 +304,11 @@ channel_value_archetype channel_archetype::max_value() { return channel_value_ar
 
 
 void test_packed_channel_reference() {
-    typedef packed_channel_reference<boost::uint16_t, 0,5,true> channel16_0_5_reference_t;
-    typedef packed_channel_reference<boost::uint16_t, 5,6,true> channel16_5_6_reference_t;
-    typedef packed_channel_reference<boost::uint16_t, 11,5,true> channel16_11_5_reference_t;
+    typedef packed_channel_reference<std::uint16_t, 0,5,true> channel16_0_5_reference_t;
+    typedef packed_channel_reference<std::uint16_t, 5,6,true> channel16_5_6_reference_t;
+    typedef packed_channel_reference<std::uint16_t, 11,5,true> channel16_11_5_reference_t;
 
-    boost::uint16_t data=0;
+    std::uint16_t data=0;
     channel16_0_5_reference_t   channel1(&data);
     channel16_5_6_reference_t   channel2(&data);
     channel16_11_5_reference_t  channel3(&data);
@@ -320,10 +324,10 @@ void test_packed_channel_reference() {
 }
 
 void test_packed_dynamic_channel_reference() {
-    typedef packed_dynamic_channel_reference<boost::uint16_t,5,true> channel16_5_reference_t;
-    typedef packed_dynamic_channel_reference<boost::uint16_t,6,true> channel16_6_reference_t;
+    typedef packed_dynamic_channel_reference<std::uint16_t,5,true> channel16_5_reference_t;
+    typedef packed_dynamic_channel_reference<std::uint16_t,6,true> channel16_6_reference_t;
 
-    boost::uint16_t data=0;
+    std::uint16_t data=0;
     channel16_5_reference_t  channel1(&data,0);
     channel16_6_reference_t  channel2(&data,5);
     channel16_5_reference_t  channel3(&data,11);
@@ -337,14 +341,14 @@ void test_packed_dynamic_channel_reference() {
 }
 
 void test_channel() {
-    test_channel_value_impl<bits8>();
-    test_channel_value_impl<bits8s>();
-    test_channel_value_impl<bits16>();
-    test_channel_value_impl<bits16s>();
-    test_channel_value_impl<bits32>();
-    test_channel_value_impl<bits32s>();
+    test_channel_value_impl<uint8_t>();
+    test_channel_value_impl<int8_t>();
+    test_channel_value_impl<uint16_t>();
+    test_channel_value_impl<int16_t>();
+    test_channel_value_impl<uint32_t>();
+    test_channel_value_impl<int16_t>();
 
-    test_channel_value_impl<bits32f>();
+    test_channel_value_impl<float32_t>();
 
     test_packed_channel_reference();
     test_packed_dynamic_channel_reference();
@@ -357,16 +361,29 @@ void test_channel() {
     do_test<reference_core<const channel_archetype&> >();
 }
 
-int main(int argc, char* argv[]) {
-    test_channel();
-    return 0;
+int main()
+{
+    try
+    {
+        test_channel();
+
+        return EXIT_SUCCESS;
+    }
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
 
-// TODO: 
+// TODO:
 // - provide algorithm performance overloads for scoped channel and packed channels
 // - Update concepts and documentation
 // - What to do about pointer types?!
 // - Performance!!
 //      - is channel_convert the same as native?
-//      - is operator++ on bits32f the same as native? How about if operator++ is defined in scoped_channel to do _value++?
-
+//      - is operator++ on float32_t the same as native? How about if operator++ is defined in scoped_channel to do _value++?

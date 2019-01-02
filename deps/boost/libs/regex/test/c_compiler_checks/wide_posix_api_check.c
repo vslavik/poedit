@@ -20,11 +20,11 @@
 #define UNICODE
 #define _UNICODE
 
+#include <boost/regex.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <boost/regex.h>
 
 #ifndef BOOST_NO_WREGEX
 #include <wchar.h>
@@ -50,7 +50,7 @@ int main()
       regerror(result, &re, buf, sizeof(buf));
       for(i = 0; i < 256; ++i)
          nbuf[i] = (char)(buf[i]);
-      printf(nbuf);
+      puts(nbuf);
       return result;
    }
    if(re.re_nsub != 0)
@@ -66,7 +66,7 @@ int main()
       regerror(result, &re, buf, sizeof(buf));
       for(i = 0; i < 256; ++i)
          nbuf[i] = (char)(buf[i]);
-      printf(nbuf);
+      puts(nbuf);
       regfree(&re);
       return result;
    }

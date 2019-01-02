@@ -2,7 +2,7 @@
 // posix_chat_client.cpp
 // ~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,14 +24,14 @@ namespace posix = boost::asio::posix;
 class posix_chat_client
 {
 public:
-  posix_chat_client(boost::asio::io_service& io_service,
-      tcp::resolver::iterator endpoint_iterator)
-    : socket_(io_service),
-      input_(io_service, ::dup(STDIN_FILENO)),
-      output_(io_service, ::dup(STDOUT_FILENO)),
+  posix_chat_client(boost::asio::io_context& io_context,
+      const tcp::resolver::results_type& endpoints)
+    : socket_(io_context),
+      input_(io_context, ::dup(STDIN_FILENO)),
+      output_(io_context, ::dup(STDOUT_FILENO)),
       input_buffer_(chat_message::max_body_length)
   {
-    boost::asio::async_connect(socket_, endpoint_iterator,
+    boost::asio::async_connect(socket_, endpoints,
         boost::bind(&posix_chat_client::handle_connect, this,
           boost::asio::placeholders::error));
   }
@@ -182,15 +182,14 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    tcp::resolver resolver(io_service);
-    tcp::resolver::query query(argv[1], argv[2]);
-    tcp::resolver::iterator iterator = resolver.resolve(query);
+    tcp::resolver resolver(io_context);
+    tcp::resolver::results_type endpoints = resolver.resolve(argv[1], argv[2]);
 
-    posix_chat_client c(io_service, iterator);
+    posix_chat_client c(io_context, endpoints);
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

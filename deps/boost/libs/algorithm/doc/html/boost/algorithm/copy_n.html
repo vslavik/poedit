@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template copy_n</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost Algorithm Library">
 <link rel="up" href="../../header/boost/algorithm/cxx11/copy_n_hpp.html" title="Header &lt;boost/algorithm/cxx11/copy_n.hpp&gt;">
 <link rel="prev" href="../../header/boost/algorithm/cxx11/copy_n_hpp.html" title="Header &lt;boost/algorithm/cxx11/copy_n.hpp&gt;">
@@ -33,9 +33,10 @@
 
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> InputIterator<span class="special">,</span> <span class="keyword">typename</span> Size<span class="special">,</span> <span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
-  <span class="identifier">OutputIterator</span> <span class="identifier">copy_n</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">Size</span> n<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">)</span><span class="special">;</span></pre></div>
+  <span class="identifier">BOOST_CXX14_CONSTEXPR</span> <span class="identifier">OutputIterator</span> 
+  <span class="identifier">copy_n</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">Size</span> n<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp8652784"></a><h2>Description</h2>
+<a name="idp108135168"></a><h2>Description</h2>
 <p>
 
 </p>
@@ -44,17 +45,23 @@
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>This function is part of the C++2011 standard library. We will use the standard one if it is available, otherwise we have our own implementation. </p></td></tr>
+<tr><td align="left" valign="top"><p>This function is part of the C++2011 standard library. </p></td></tr>
 </table></div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

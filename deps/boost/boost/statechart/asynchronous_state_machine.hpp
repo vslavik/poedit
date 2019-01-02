@@ -31,7 +31,7 @@ class event_base;
 template< class MostDerived,
           class InitialState,
           class Scheduler = fifo_scheduler<>,
-          class Allocator = std::allocator< void >,
+          class Allocator = std::allocator< none >,
           class ExceptionTranslator = null_exception_translator >
 class asynchronous_state_machine : public state_machine<
   MostDerived, InitialState, Allocator, ExceptionTranslator >,

@@ -55,6 +55,10 @@ public:
     ///        name of the platform (e.g. "NVIDIA CUDA")
     /// \li \c BOOST_COMPUTE_DEFAULT_VENDOR -
     ///        name of the device vendor (e.g. "NVIDIA")
+    /// \li \c BOOST_COMPUTE_DEFAULT_ENFORCE -
+    ///        If this is set to "1", then throw a no_device_found() exception
+    ///        if any of the above environment variables is set, but a matching
+    ///        device was not found.
     ///
     /// The default device is determined once on the first time this function
     /// is called. Calling this function multiple times will always result in
@@ -184,14 +188,16 @@ public:
         cl_uint count = 0;
         clGetPlatformIDs(0, 0, &count);
 
-        std::vector<cl_platform_id> platform_ids(count);
-        clGetPlatformIDs(count, &platform_ids[0], 0);
-
         std::vector<platform> platforms;
-        for(size_t i = 0; i < platform_ids.size(); i++){
-            platforms.push_back(platform(platform_ids[i]));
-        }
+        if(count > 0)
+        {
+            std::vector<cl_platform_id> platform_ids(count);
+            clGetPlatformIDs(count, &platform_ids[0], 0);
 
+            for(size_t i = 0; i < platform_ids.size(); i++){
+                platforms.push_back(platform(platform_ids[i]));
+            }
+        }
         return platforms;
     }
 
@@ -218,6 +224,7 @@ private:
         const char *type     = detail::getenv("BOOST_COMPUTE_DEFAULT_DEVICE_TYPE");
         const char *platform = detail::getenv("BOOST_COMPUTE_DEFAULT_PLATFORM");
         const char *vendor   = detail::getenv("BOOST_COMPUTE_DEFAULT_VENDOR");
+        const char *enforce  = detail::getenv("BOOST_COMPUTE_DEFAULT_ENFORCE");
 
         if(name || type || platform || vendor){
             for(size_t i = 0; i < devices_.size(); i++){
@@ -241,6 +248,9 @@ private:
 
                 return device;
             }
+
+            if(enforce && enforce[0] == '1')
+                BOOST_THROW_EXCEPTION(no_device_found());
         }
 
         // find the first gpu device

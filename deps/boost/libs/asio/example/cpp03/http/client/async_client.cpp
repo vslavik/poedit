@@ -2,7 +2,7 @@
 // async_client.cpp
 // ~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,10 +20,10 @@ using boost::asio::ip::tcp;
 class client
 {
 public:
-  client(boost::asio::io_service& io_service,
+  client(boost::asio::io_context& io_context,
       const std::string& server, const std::string& path)
-    : resolver_(io_service),
-      socket_(io_service)
+    : resolver_(io_context),
+      socket_(io_context)
   {
     // Form the request. We specify the "Connection: close" header so that the
     // server will close the socket after transmitting the response. This will
@@ -36,22 +36,21 @@ public:
 
     // Start an asynchronous resolve to translate the server and service names
     // into a list of endpoints.
-    tcp::resolver::query query(server, "http");
-    resolver_.async_resolve(query,
+    resolver_.async_resolve(server, "http",
         boost::bind(&client::handle_resolve, this,
           boost::asio::placeholders::error,
-          boost::asio::placeholders::iterator));
+          boost::asio::placeholders::results));
   }
 
 private:
   void handle_resolve(const boost::system::error_code& err,
-      tcp::resolver::iterator endpoint_iterator)
+      const tcp::resolver::results_type& endpoints)
   {
     if (!err)
     {
       // Attempt a connection to each endpoint in the list until we
       // successfully establish a connection.
-      boost::asio::async_connect(socket_, endpoint_iterator,
+      boost::asio::async_connect(socket_, endpoints,
           boost::bind(&client::handle_connect, this,
             boost::asio::placeholders::error));
     }
@@ -192,9 +191,9 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
-    client c(io_service, argv[1], argv[2]);
-    io_service.run();
+    boost::asio::io_context io_context;
+    client c(io_context, argv[1], argv[2]);
+    io_context.run();
   }
   catch (std::exception& e)
   {

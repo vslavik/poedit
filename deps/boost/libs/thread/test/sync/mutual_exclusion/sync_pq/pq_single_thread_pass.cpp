@@ -20,8 +20,11 @@
 #include <boost/thread/concurrent_queues/sync_priority_queue.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
+#include "../../../timming.hpp"
 
 using namespace boost::chrono;
+typedef boost::chrono::milliseconds ms;
+typedef boost::chrono::nanoseconds ns;
 
 typedef boost::concurrent::sync_priority_queue<int> sync_pq;
 
@@ -46,6 +49,7 @@ public:
   }
 };
 
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
 void test_pull_for()
 {
@@ -53,9 +57,9 @@ void test_pull_for()
   steady_clock::time_point start = steady_clock::now();
   int val;
   boost::queue_op_status st = pq.pull_for(milliseconds(500), val);
-  steady_clock::duration diff = steady_clock::now() - start;
+  ns d = steady_clock::now() - start - milliseconds(500);
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
   BOOST_TEST(boost::queue_op_status::timeout == st);
-  BOOST_TEST(diff < milliseconds(550) && diff > milliseconds(500));
 }
 
 void test_pull_until()
@@ -64,9 +68,9 @@ void test_pull_until()
   steady_clock::time_point start = steady_clock::now();
   int val;
   boost::queue_op_status st = pq.pull_until(start + milliseconds(500), val);
-  steady_clock::duration diff = steady_clock::now() - start;
+  ns d = steady_clock::now() - start - milliseconds(500);
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
   BOOST_TEST(boost::queue_op_status::timeout == st);
-  BOOST_TEST(diff < milliseconds(550) && diff > milliseconds(500));
 }
 
 void test_nonblocking_pull()
@@ -75,9 +79,9 @@ void test_nonblocking_pull()
   steady_clock::time_point start = steady_clock::now();
   int val;
   boost::queue_op_status st = pq.nonblocking_pull(val);
-  steady_clock::duration diff = steady_clock::now() - start;
+  ns d = steady_clock::now() - start;
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
   BOOST_TEST(boost::queue_op_status::empty == st);
-  BOOST_TEST(diff < milliseconds(5));
 }
 
 void test_pull_for_when_not_empty()
@@ -87,10 +91,10 @@ void test_pull_for_when_not_empty()
   steady_clock::time_point start = steady_clock::now();
   int val;
   boost::queue_op_status st = pq.pull_for(milliseconds(500), val);
-  steady_clock::duration diff = steady_clock::now() - start;
+  ns d = steady_clock::now() - start;
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
   BOOST_TEST(boost::queue_op_status::success == st);
   BOOST_TEST(1 == val);
-  BOOST_TEST(diff < milliseconds(5));
 }
 
 void test_pull_until_when_not_empty()
@@ -100,10 +104,10 @@ void test_pull_until_when_not_empty()
   steady_clock::time_point start = steady_clock::now();
   int val;
   boost::queue_op_status st = pq.pull_until(start + milliseconds(500), val);
-  steady_clock::duration diff = steady_clock::now() - start;
+  ns d = steady_clock::now() - start;
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
   BOOST_TEST(boost::queue_op_status::success == st);
   BOOST_TEST(1 == val);
-  BOOST_TEST(diff < milliseconds(5));
 }
 
 int main()

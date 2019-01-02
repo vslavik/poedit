@@ -29,7 +29,10 @@
 
 [/  Links   ]
 
-[def _iterator_           [@../../libs/iterator/doc/index.html Boost.Iterator]]
+[def _iterator_           [@../../../iterator/doc/index.html Boost.Iterator]]
+[def _concept_check_      [@../../../concept_check/index.html Boost.ConceptCheck]]
+
+[template sub[x]'''<subscript>'''[x]'''</subscript>''']
 
 [section:intro Introduction]
 
@@ -71,19 +74,23 @@ and a _GOTW_50_.  New-style iterators go well beyond
 patching up `vector<bool>`, though: there are lots of other
 iterators already in use which can't be adequately represented by
 the existing concepts.  For details about the new iterator
-concepts, see our [@./new-iter-concepts.html Standard Proposal for New-Style Iterators].
+concepts, see our [@../new-iter-concepts.html Standard Proposal for New-Style Iterators].
 
 [h2 Iterator Facade and Adaptor]
 
-[def _facade_ [@./iterator_facade.html facade]]
-[def _adaptor_ [@./iterator_adaptor.html adaptor]]
+[/
+[def _facade_ [link iterator.generic.facade facade]]
+[def _adaptor_ [link iterator.generic.adaptor adaptor]]
+]
+[def _facade_ [@../iterator_facade.html facade]]
+[def _adaptor_ [@../iterator_adaptor.html adaptor]]
 
 Writing standard-conforming iterators is tricky, but the need comes
 up often.  In order to ease the implementation of new iterators,
 the Boost.Iterator library provides the _facade_ class template,
 which implements many useful defaults and compile-time checks
 designed to help the iterator author ensure that his iterator is
-correct.  
+correct.
 
 It is also common to define a new iterator that is similar to some
 underlying iterator or iterator-like type, but that modifies some
@@ -92,9 +99,9 @@ library supplies the _adaptor_ class template, which is specially
 designed to take advantage of as much of the underlying type's
 behavior as possible.
 
-Both _facade_ and _adaptor_ as well as many of the `specialized
-adaptors`_ mentioned below have been proposed for standardization 
-([@./facade-and-adaptor.html Standard Proposal For Iterator Facade and Adaptor]).
+Both _facade_ and _adaptor_ as well as many of the [link iterator.specialized specialized
+adaptors] mentioned below have been proposed for standardization
+([@../facade-and-adaptor.html Standard Proposal For Iterator Facade and Adaptor]).
 
 [h2 Specialized Adaptors]
 
@@ -103,15 +110,17 @@ iterator templates based on the Boost [link
 iterator.intro.iterator_facade_and_adaptor iterator facade and adaptor]
 templates.
 
-[def _counting_    [@./counting_iterator.html         `counting_iterator`]]
-[def _filter_      [@./filter_iterator.html           `filter_iterator`]]
-[def _function_    [@./function_output_iterator.html  `function_output_iterator`]]
-[def _indirect_    [@./indirect_iterator.html         `indirect_iterator`]]
-[def _permutation_ [@./permutation_iterator.html      `permutation_iterator`]]
-[def _reverse_     [@./reverse_iterator.html          `reverse_iterator`]]
-[def _shared_      [@./shared_container_iterator.html `shared_container_iterator`]]
-[def _transform_   [@./transform_iterator.html        `transform_iterator`]]
-[def _zip_         [@./zip_iterator.html              `zip_iterator`]]
+[def _counting_    [link iterator.specialized.counting `counting_iterator`]]
+[def _filter_      [link iterator.specialized.filter `filter_iterator`]]
+[def _function_input_ [@../function_input_iterator.html `function_input_iterator`]]
+[def _function_output_ [link iterator.specialized.function_output `function_output_iterator`]]
+[def _generator_   [@../generator_iterator.htm `generator_iterator`]]
+[def _indirect_    [link iterator.specialized.indirect `indirect_iterator`]]
+[def _permutation_ [link iterator.specialized.permutation `permutation_iterator`]]
+[def _reverse_     [link iterator.specialized.reverse `reverse_iterator`]]
+[def _shared_      [link iterator.specialized.shared_container `shared_container_iterator`]]
+[def _transform_   [link iterator.specialized.transform `transform_iterator`]]
+[def _zip_         [link iterator.specialized.zip `zip_iterator`]]
 
 [def _shared_ptr_  [@../../smart_ptr/shared_ptr.htm `shared_ptr`]]
 
@@ -121,9 +130,17 @@ templates.
 * _filter_: an iterator over the subset of elements of some
   sequence which satisfy a given predicate
 
-* _function_: an output iterator wrapping a unary function
+* _function_input_: an input iterator wrapping a generator (nullary
+  function object); each time the iterator is dereferenced, the function object
+  is called to get the value to return.
+
+* _function_output_: an output iterator wrapping a unary function
   object; each time an element is written into the dereferenced
   iterator, it is passed as a parameter to the function object.
+
+* _generator_: an input iterator wrapping a generator (nullary
+  function object); each time the iterator is dereferenced, the function object
+  is called to get the value to return. An outdated analogue of _function_input_.
 
 * _indirect_: an iterator over the objects *pointed-to* by the
   elements of some sequence.
@@ -133,7 +150,7 @@ templates.
 
 * _reverse_: an iterator which traverses the elements of some
   bidirectional sequence in reverse.  Corrects many of the
-  shortcomings of C++98's ``std::reverse_iterator``.
+  shortcomings of C++98's `std::reverse_iterator`.
 
 * _shared_: an iterator over elements of a container whose
   lifetime is maintained by a _shared_ptr_ stored in the iterator.
@@ -141,7 +158,7 @@ templates.
 * _transform_: an iterator over elements which are the result of
   applying some functional transformation to the elements of an
   underlying sequence.  This component also replaces the old
-  ``projection_iterator_adaptor``.
+  `projection_iterator_adaptor`.
 
 * _zip_: an iterator over tuples of the elements at corresponding
   positions of heterogeneous underlying iterators.
@@ -150,9 +167,9 @@ templates.
 
 [h3 Traits]
 
-[def _pointee_          [@./pointee.html         `pointee.hpp`]]
-[def _iterator_traits_  [@./iterator_traits.html `iterator_traits.hpp`]]
-[def _interoperable_    [@./interoperable.html   `interoperable.hpp`]]
+[def _pointee_          [link iterator.utilities.traits `pointee.hpp`]]
+[def _iterator_traits_  [link iterator.utilities.iterator_traits `iterator_traits.hpp`]]
+[def _interoperable_    [@../interoperable.html   `interoperable.hpp`]]
 [def _MPL_              [@../../mpl/doc/index.html   [*MPL]]]
 
 * _pointee_: Provides the capability to deduce the referent types
@@ -163,18 +180,39 @@ templates.
   retrieve an iterator's traits.  Also corrects for the deficiencies
   of broken implementations of `std::iterator_traits`.
 
-[\ * |interoperable|_ (PDF__): Provides an _MPL_ compatible metafunction for
-     testing iterator interoperability
+[/
+* _interoperable_: Provides an _MPL_ compatible metafunction for
+  testing iterator interoperability
 ]
 
 [h3 Testing and Concept Checking]
 
-[def _iterator_concepts_  [@./iterator_concepts.html `iterator_concepts.hpp`]]
-[def _iterator_archetypes_  [@./iterator_archetypes.html `iterator_archetypes.hpp`]]
+[def _iterator_concepts_  [link iterator.concepts `iterator_concepts.hpp`]]
+[def _iterator_archetypes_  [link iterator.utilities.archetypes `iterator_archetypes.hpp`]]
 
 * _iterator_concepts_: Concept checking classes for the new iterator concepts.
 
 * _iterator_archetypes_: Concept archetype classes for the new iterators concepts.
+
+[h2 Iterator Algorithms]
+
+The library provides a number of generic algorithms for use with iterators. These
+algorithms take advantage of the new concepts defined by the library to provide
+better performance and functionality.
+
+[def _advance_          [link iterator.algorithms.advance `advance.hpp`]]
+[def _distance_         [link iterator.algorithms.distance `distance.hpp`]]
+[def _next_prior_       [link iterator.algorithms.next_prior `next_prior.hpp`]]
+
+* _advance_: Provides `advance()` function for advancing an iterator a given number
+  of positions forward or backward.
+
+* _distance_: Provides `distance()` function for computing distance between two
+  iterators.
+
+* _next_prior_: Provides `next()` and `prior()` functions for obtaining
+  next and prior iterators to a given iterator. The functions are also compatible
+  with non-iterator types.
 
 [endsect]
 
@@ -196,11 +234,13 @@ templates.
 
 [include concept_checking.qbk]
 
-[include traits.qbk]
+[include iterator_traits.qbk]
 
-[include utilities.qbk]
+[include type_traits.qbk]
 
 [endsect]
+
+[include algorithms.qbk]
 
 [section:upgrading Upgrading from the old Boost Iterator Adaptor Library]
 
@@ -266,4 +306,3 @@ library you see today.
 
 [endsect]
 
-  

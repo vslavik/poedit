@@ -2,7 +2,7 @@
 // random_access_handle.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 // Test that header file is self-contained.
 #include <boost/asio/windows/random_access_handle.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include "../archetypes/async_result.hpp"
 #include "../unit_test.hpp"
 
@@ -46,7 +46,7 @@ void test()
 
   try
   {
-    io_service ios;
+    io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
     boost::asio::uint64_t offset = 0;
@@ -55,9 +55,9 @@ void test()
 
     // basic_random_access_handle constructors.
 
-    win::random_access_handle handle1(ios);
+    win::random_access_handle handle1(ioc);
     HANDLE native_handle1 = INVALID_HANDLE_VALUE;
-    win::random_access_handle handle2(ios, native_handle1);
+    win::random_access_handle handle2(ioc, native_handle1);
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     win::random_access_handle handle3(std::move(handle2));
@@ -66,14 +66,19 @@ void test()
     // basic_random_access_handle operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
-    handle1 = win::random_access_handle(ios);
+    handle1 = win::random_access_handle(ioc);
     handle1 = std::move(handle2);
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
-    io_service& ios_ref = handle1.get_io_service();
-    (void)ios_ref;
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+    io_context& ioc_ref = handle1.get_io_context();
+    (void)ioc_ref;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+
+    io_context::executor_type ex = handle1.get_executor();
+    (void)ex;
 
     // basic_handle functions.
 
@@ -95,12 +100,9 @@ void test()
     handle1.close();
     handle1.close(ec);
 
-    win::random_access_handle::native_type native_handle3 = handle1.native();
-    (void)native_handle3;
-
-    win::random_access_handle::native_handle_type native_handle4
+    win::random_access_handle::native_handle_type native_handle3
       = handle1.native_handle();
-    (void)native_handle4;
+    (void)native_handle3;
 
     handle1.cancel();
     handle1.cancel(ec);

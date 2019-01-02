@@ -161,7 +161,7 @@ appears to be working with a C++ compiler and we're ready to move on.
 
 [section:config Configure and Build]
 
-[section:bjam Build Environement]
+[section:bjam Build Environment]
 
 As the rest of Boost, Boost.MPI uses version 2 of the
 [@http://www.boost.org/doc/html/bbv2.html Boost.Build] system for
@@ -253,16 +253,16 @@ You can refer to the your specific MPI environment documentation.
 Most of the time though, your wrapper have an option that provide that information, it usually starts with `--show`:
 [pre
 $ mpiicc -show
-icc -I/softs/intel//impi/5.0.3.048/intel64/include -L/softs/intel//impi/5.0.3.048/intel64/lib/release_mt -L/softs/intel//impi/5.0.3.048/intel64/lib -Xlinker --enable-new-dtags -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib/release_mt -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib/release_mt -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib -lmpifort -lmpi -lmpigi -ldl -lrt -lpthread
+icc -I/softs/...\/include ... -L/softs/...\/lib ... -Xlinker -rpath -Xlinker \/softs/...\/lib .... -lmpi -ldl -lrt -lpthread
 $ 
 ]
-[
+[pre
 $ mpicc --showme
-icc -I/opt/mpi/bullxmpi/1.2.8.3/include -pthread -L/opt/mpi/bullxmpi/1.2.8.3/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
+icc -I/opt/...\/include -pthread -L/opt/...\/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
 $ mpicc --showme:compile
 -I/opt/mpi/bullxmpi/1.2.8.3/include -pthread
 $ mpicc --showme:link
--pthread -L/opt/mpi/bullxmpi/1.2.8.3/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
+-pthread -L/opt/...\/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
 $ 
 ]
 
@@ -568,7 +568,7 @@ boost::mpi::request::wait wait] method). Multiple requests
 can be completed at the same time with the [funcref
 boost::mpi::wait_all wait_all] operation. 
 
-Important note: The MPI standard requires users to keep the request
+[important The MPI standard requires users to keep the request
 handle for a non-blocking communication, and to call the "wait"
 operation (or successfully test for completion) to complete the send
 or receive. Unlike most C MPI implementations, which allow the user to
@@ -579,7 +579,7 @@ completed. Moreover, the MPI standard does not guarantee that the
 receive makes any progress before a call to "wait" or "test", although
 most implementations of the C MPI do allow receives to progress before
 the call to "wait" or "test". Boost.MPI, on the other hand, generally
-requires "test" or "wait" calls to make progress.
+requires "test" or "wait" calls to make progress.]
 
 If you run this program multiple times, you may see some strange
 results: namely, some runs will produce:
@@ -765,7 +765,7 @@ The [funcref boost::mpi::gather `gather`] collective gathers
 the values produced by every process in a communicator into a vector
 of values on the "root" process (specified by an argument to
 `gather`). The /i/th element in the vector will correspond to the
-value gathered fro mthe /i/th process. For instance, in the following
+value gathered from the /i/th process. For instance, in the following
 program each process computes its own random number. All of these
 random numbers are gathered at process 0 (the "root" in this case),
 which prints out the values that correspond to each processor. 
@@ -821,6 +821,62 @@ which is semantically equivalent to calling `gather` followed by a
 
 [endsect]
 
+[section:scatter Scatter]
+The [funcref boost::mpi::scatter `scatter`] collective scatters
+the values from a vector in the "root" process in a communicator into 
+values in all the processes of the communicator.
+ The /i/th element in the vector will correspond to the
+value received by the /i/th process. For instance, in the following
+program, the root process produces a vector of random nomber and send 
+one value to each process that will print it. (`random_scatter.cpp`)
+
+  #include <boost/mpi.hpp>
+  #include <boost/mpi/collectives.hpp>
+  #include <iostream>
+  #include <cstdlib>
+  #include <vector>
+  
+  namespace mpi = boost::mpi;
+  
+  int main(int argc, char* argv[])
+  {
+    mpi::environment env(argc, argv);
+    mpi::communicator world;
+    
+    std::srand(time(0) + world.rank());
+    std::vector<int> all;
+    int mine = -1;
+    if (world.rank() == 0) {
+      all.resize(world.size());
+      std::generate(all.begin(), all.end(), std::rand);
+    }
+    mpi::scatter(world, all, mine, 0);
+    for (int r = 0; r < world.size(); ++r) {
+      world.barrier();
+      if (r == world.rank()) {
+        std::cout << "Rank " << r << " got " << mine << '\n';
+      }
+    }
+    return 0;
+  }
+
+Executing this program with seven processes will result in output such
+as the following. Although the random values will change from one run
+to the next, the order of the processes in the output will remain the
+same because of the barrier.
+
+[pre
+Rank 0 got 1409381269
+Rank 1 got 17045268
+Rank 2 got 440120016
+Rank 3 got 936998224
+Rank 4 got 1827129182
+Rank 5 got 1951746047
+Rank 6 got 2117359639
+]
+
+[endsect]
+
 [section:reduce Reduce] 
 
 The [funcref boost::mpi::reduce `reduce`] collective
@@ -861,7 +917,7 @@ The use of `mpi::minimum<int>` indicates that the minimum value
 should be computed. `mpi::minimum<int>` is a binary function object
 that compares its two parameters via `<` and returns the smaller
 value. Any associative binary function or function object will
-work. For instance, to concatenate strings with `reduce` one could use
+work provided it's stateless. For instance, to concatenate strings with `reduce` one could use
 the function object `std::plus<std::string>` (`string_cat.cpp`):
 
   #include <boost/mpi.hpp>
@@ -901,6 +957,7 @@ following output:
 The result is zero one two three four five six
 ]
 
+[h4 Binary operations for reduce]
 Any kind of binary function objects can be used with `reduce`. For
 instance, and there are many such function objects in the C++ standard
 `<functional>` header and the Boost.MPI header
@@ -944,6 +1001,10 @@ objects in `<functional>` to `MPI_Op` values predefined by MPI (e.g.,
 take advantage of this mapping, see the class template [classref
 boost::mpi::is_mpi_op `is_mpi_op`].
 
+[warning Due to the unerlying MPI limitations, it is important to note that the opertation must be stateless.]
+
+[h4 All process variant]
+
 Like [link mpi.gather `gather`], `reduce` has an "all"
 variant called [funcref boost::mpi::all_reduce `all_reduce`]
 that performs the reduction operation and broadcasts the result to all
@@ -967,7 +1028,7 @@ the `random_min.cpp` example:
     int my_number = std::rand();
     int minimum;
   
-    all_reduce(world, my_number, minimum, mpi::minimum<int>());
+    mpi::all_reduce(world, my_number, minimum, mpi::minimum<int>());
     
     if (world.rank() == 0) {
         std::cout << "The minimum value is " << minimum << std::endl;
@@ -998,7 +1059,7 @@ flag of the MPI C mapping), as in the following example (`in_place_global_min.cp
     std::srand(world.rank());
     int my_number = std::rand();
   
-    all_reduce(world, my_number, mpi::minimum<int>());
+    mpi::all_reduce(world, my_number, mpi::minimum<int>());
     
     if (world.rank() == 0) {
         std::cout << "The minimum value is " << my_number << std::endl;
@@ -1096,6 +1157,42 @@ facilities to compute the union (`|`), intersection (`&`), and
 difference (`-`) of two groups, generate arbitrary subgroups, etc.
 
 [endsect]
+
+[section:cartesian_communicator Cartesian communicator]
+
+A communicator can be organised as a cartesian grid, here a basic example:
+
+  #include <vector>
+  #include <iostream>
+
+  #include <boost/mpi/communicator.hpp>
+  #include <boost/mpi/collectives.hpp>
+  #include <boost/mpi/environment.hpp>
+  #include <boost/mpi/cartesian_communicator.hpp>
+  
+  #include <boost/test/minimal.hpp>
+  
+  namespace mpi = boost::mpi;
+  int test_main(int argc, char* argv[])
+  {
+    mpi::environment  env;
+    mpi::communicator world;
+    
+    if (world.size() != 24)  return -1;
+    mpi::cartesian_dimension dims[] = {{2, true}, {3,true}, {4,true}};
+    mpi::cartesian_communicator cart(world, mpi::cartesian_topology(dims));
+    for (int r = 0; r < cart.size(); ++r) {
+      cart.barrier();
+      if (r == cart.rank()) {
+        std::vector<int> c = cart.coordinates(r);
+        std::cout << "rk :" << r << " coords: " 
+                  << c[0] << ' ' << c[1] << ' ' << c[2] << '\n';
+      }
+    }
+    return 0;
+  }
+
+
 
 [section:skeleton_and_content Separating structure from content]
 
@@ -1733,9 +1830,10 @@ algorithms.
   [[`MPI_CART`] [unnecessary; use [memberref boost::mpi::communicator::has_cartesian_topology `communicator::has_cartesian_topology`]]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node133.html#Node133
-  `MPI_Cart_create`]] [unsupported]]
+  `MPI_Cart_create`]] [[classref boost::mpi::cartesian_communicator `cartesian_communicator`]
+  constructor]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node134.html#Node134
-  `MPI_Dims_create`]] [unsupported]]
+  `MPI_Dims_create`]] [[funcref boost::mpi::cartesian_dimensions `cartesian_dimensions`]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node135.html#Node135
   `MPI_Graph_create`]] [[classref
   boost::mpi::graph_communicator
@@ -1753,13 +1851,13 @@ algorithms.
   `MPI_Graph_get`]] [[funcref boost::mpi::vertices
   `vertices`], [funcref boost::mpi::edges `edges`]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
-  `MPI_Cartdim_get`]] [unsupported]]
+  `MPI_Cartdim_get`]] [[memberref boost::mpi::cartesian_communicator::ndims `cartesian_communicator::ndims` ]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
-  `MPI_Cart_get`]] [unsupported]]
+  `MPI_Cart_get`]] [[memberref boost::mpi::cartesian_communicator::topology `cartesian_communicator::topology` ]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
-  `MPI_Cart_rank`]] [unsupported]]
+  `MPI_Cart_rank`]] [[memberref boost::mpi::cartesian_communicator::rank `cartesian_communicator::rank` ]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
-  `MPI_Cart_coords`]] [unsupported]]
+  `MPI_Cart_coords`]] [[memberref boost::mpi::cartesian_communicator::coordinates `cartesian_communicator::coordinates` ]]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Graph_neighbors_count`]] [[funcref boost::mpi::out_degree
   `out_degree`]]]
@@ -1769,7 +1867,8 @@ algorithms.
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node137.html#Node137
   `MPI_Cart_shift`]] [unsupported]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node138.html#Node138
-  `MPI_Cart_sub`]] [unsupported]]
+  `MPI_Cart_sub`]]  [[classref boost::mpi::cartesian_communicator `cartesian_communicator`]
+  constructor]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node139.html#Node139
   `MPI_Cart_map`]] [unsupported]]
   [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node139.html#Node139

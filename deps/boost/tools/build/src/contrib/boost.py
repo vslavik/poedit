@@ -87,7 +87,7 @@ def debug():
 # version number, e.g. 1.35, if specifying a pre-built version with
 # versioned layout. It may be a symbolic name, e.g. 'trunk' if specifying
 # a source tree. The options are specified as named parameters (like
-# properties). The following paramters are available:
+# properties). The following parameters are available:
 #
 # <root>/path-to-boost-root: Specify a source tree.
 #
@@ -166,7 +166,7 @@ def use_project(version = None):
                 ( root and lib ) or \
                 ( lib and not inc ) or \
                 ( not lib and inc ):
-                get_manager().errors()("Ambiguous parameters, use either <root> or <inlude> with <library>.")
+                get_manager().errors()("Ambiguous parameters, use either <root> or <include> with <library>.")
             elif not root and not inc:
                 root = bjam.variable("BOOST_ROOT")
 

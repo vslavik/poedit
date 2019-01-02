@@ -14,6 +14,6 @@ var group__group_assertions =
     [ "BOOST_HANA_CONSTANT_CHECK", "group__group-assertions.html#ga4bf9e0c46c44e21fbe5c5fbb3ace8356", null ],
     [ "BOOST_HANA_CHECK_MSG", "group__group-assertions.html#ga7af67ae500a237fe350f1bfceb4a5afa", null ],
     [ "BOOST_HANA_CHECK", "group__group-assertions.html#ga512de1fcd31e8a34931ffb2c891afd36", null ],
-    [ "BOOST_HANA_CONSTEXPR_CHECK_MSG", "group__group-assertions.html#gaa76ba567944adfec0dce60cc20be35bc", null ],
-    [ "BOOST_HANA_CONSTEXPR_CHECK", "group__group-assertions.html#ga5150cd7df438a22056a39529d21562d2", null ]
+    [ "BOOST_HANA_CONSTEXPR_CHECK_MSG", "group__group-assertions.html#gabf13a9c600ad4fd014ede3c2fd42b1a4", null ],
+    [ "BOOST_HANA_CONSTEXPR_CHECK", "group__group-assertions.html#gac7aafc41e4dcc7d1f1929fb00f010d2a", null ]
 ];

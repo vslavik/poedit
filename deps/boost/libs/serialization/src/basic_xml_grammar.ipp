@@ -21,6 +21,9 @@
 #  pragma warning(disable : 4244 4511 4512)
 #endif
 
+#include <cerrno>   // errno
+#include <cstring>  // strerror(errno)
+
 // spirit stuff
 #include <boost/spirit/include/classic_operators.hpp>
 #include <boost/spirit/include/classic_actions.hpp>
@@ -31,7 +34,6 @@
 #endif
 
 // for head_iterator test
-//#include <boost/bind.hpp> 
 #include <boost/function.hpp>
 
 #include <boost/io/ios_state.hpp>
@@ -145,8 +147,7 @@ template<class String>
 struct append_char {
     String & contents;
     void operator()(const unsigned int char_value) const {
-        const typename String::value_type z = char_value;
-        contents += z;
+        contents += static_cast<typename String::value_type>(char_value);
     }
     append_char(String & contents_)
         : contents(contents_)
@@ -182,22 +183,28 @@ bool basic_xml_grammar<CharType>::my_parse(
         return false;
     }
     
-    boost::io::ios_flags_saver ifs(is);
     is >> std::noskipws;
 
     std::basic_string<CharType> arg;
     
-    CharType val;
-    do{
-        typename basic_xml_grammar<CharType>::IStream::int_type
-            result = is.get();
-        if(is.fail())
+    for(;;){
+        CharType result;
+        is.get(result);
+        if(is.fail()){
+            boost::serialization::throw_exception(
+                boost::archive::archive_exception(
+                    archive_exception::input_stream_error,
+                    std::strerror(errno)
+                )
+            );
+        }
+        if(is.eof())
             return false;
-        val = static_cast<CharType>(result);
-        arg += val;
+        arg += result;
+        if(result == delimiter)
+            break;
     }
-    while(val != delimiter);
-    
+
     // read just one more character.  This will be the newline after the tag
     // this is so that the next operation will return fail if the archive
     // is terminated.  This will permit the archive to be used for debug
@@ -227,7 +234,7 @@ bool basic_xml_grammar<CharType>::parse_string(IStream & is, StringType & s){
     bool result = my_parse(is, content, '<');
     // note: unget caused a problem with dinkumware.  replace with
  // is.unget();
-    // putback another dilimiter instead
+    // putback another delimiter instead
     is.putback('<');
     if(result)
         s = rv.contents;

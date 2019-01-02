@@ -5,7 +5,7 @@
 #ifndef POINTEE_DWA2002323_HPP
 # define POINTEE_DWA2002323_HPP
 
-# include <boost/type_traits/object_traits.hpp>
+# include <boost/python/detail/type_traits.hpp>
 
 namespace boost { namespace python { namespace detail { 
 

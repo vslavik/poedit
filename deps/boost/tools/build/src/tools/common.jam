@@ -19,6 +19,7 @@ import path ;
 import sequence ;
 import toolset ;
 import virtual-target ;
+import numbers ;
 
 if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
 {
@@ -178,7 +179,7 @@ rule check-init-parameters ( toolset requirement * : * )
             # because in that case it will be impossible to register versionless
             # intel-linux and intel-win toolsets of a specific version.
             local t = $(toolset) ;
-            local m = [ MATCH ([^-]*)- : $(toolset) ] ;
+            local m = [ MATCH "([^-]*)-" : $(toolset) ] ;
             if $(m)
             {
                 t = $(m[1]) ;
@@ -208,6 +209,13 @@ rule check-init-parameters ( toolset requirement * : * )
         }
         sig = $(sig)$(value:E="")- ;
     }
+    # We also need to consider requirements on the toolset as we can
+    # configure the same toolset multiple times with different options that
+    # are selected with the requirements.
+    if $(requirement)
+    {
+        sig = $(sig)$(requirement:J=,) ;
+    }
     if $(sig) in $(.all-signatures)
     {
         local message =
@@ -235,7 +243,7 @@ rule check-init-parameters ( toolset requirement * : * )
     {
         local r = <toolset>$(toolset) $(requirement) ;
         r = $(r:J=,) ;
-        toolset.add-requirements $(r):$(subcondition) ;
+        toolset.add-requirements "$(r):$(subcondition)" ;
     }
 
     # We add the requirements, if any, to the condition to scope the toolset
@@ -244,7 +252,7 @@ rule check-init-parameters ( toolset requirement * : * )
 
     if $(.show-configuration)
     {
-        ECHO notice: $(condition) ;
+        ECHO "notice:" $(condition) ;
     }
     return $(condition:J=/) ;
 }
@@ -268,9 +276,9 @@ rule get-invocation-command-nodefault ( toolset : tool :
         command = [ find-tool $(tool) : $(additional-paths) : $(path-last) ] ;
         if ! $(command) && $(.debug-configuration)
         {
-            ECHO warning: toolset $(toolset) initialization: can not find tool
+            ECHO "warning:" toolset $(toolset) "initialization:" can not find tool
                 $(tool) ;
-            ECHO warning: initialized from [ errors.nearest-user-location ] ;
+            ECHO "warning:" initialized from [ errors.nearest-user-location ] ;
         }
     }
     else
@@ -278,10 +286,10 @@ rule get-invocation-command-nodefault ( toolset : tool :
         command = [ check-tool $(user-provided-command) ] ;
         if ! $(command) && $(.debug-configuration)
         {
-            ECHO warning: toolset $(toolset) initialization: ;
-            ECHO warning: can not find user-provided command
+            ECHO "warning:" toolset $(toolset) "initialization:" ;
+            ECHO "warning:" can not find user-provided command
                 '$(user-provided-command)' ;
-            ECHO warning: initialized from [ errors.nearest-user-location ] ;
+            ECHO "warning:" initialized from [ errors.nearest-user-location ] ;
         }
     }
 
@@ -402,7 +410,7 @@ local rule check-tool-aux ( command )
 
 
 # Checks that a tool can be invoked by 'command'. If command is not an absolute
-# path, checks if it can be found in 'path'. If comand is an absolute path,
+# path, checks if it can be found in 'path'. If command is an absolute path,
 # check that it exists. Returns 'command' if ok or empty string otherwise.
 #
 local rule check-tool ( xcommand + )
@@ -428,7 +436,7 @@ rule handle-options ( toolset : condition * : command * : options * )
 {
     if $(.debug-configuration)
     {
-        ECHO notice: will use '$(command)' for $(toolset), condition
+        ECHO "notice:" will use '$(command)' for $(toolset), condition
             $(condition:E=(empty)) ;
     }
 
@@ -675,8 +683,8 @@ rule MkDir
         {
             switch $(s)
             {
-                case *:   : s = ;
-                case *:\\ : s = ;
+                case "*:"   : s = ;
+                case "*:\\" : s = ;
             }
         }
 
@@ -708,14 +716,14 @@ rule MkDir
 
 if [ os.name ] = NT
 {
-    actions mkdir
+    actions quietly mkdir
     {
         if not exist "$(<)\\" mkdir "$(<)"
     }
 }
 else
 {
-    actions mkdir
+    actions quietly mkdir
     {
         mkdir -p "$(<)"
     }
@@ -857,6 +865,10 @@ rule format-name ( format * : name : type ? : property-set )
                 result += [ join-tag $(f:G=) : [ address-model-tag $(name) :
                     $(type) : $(property-set) ] ] ;
 
+            case <arch-and-model> :
+                result += [ join-tag $(f:G=) : [ arch-and-model-tag $(name) :
+                    $(type) : $(property-set) ] ] ;
+
             case <version:*> :
                 local key = [ MATCH <version:(.*)> : $(f:G) ] ;
                 local version = [ $(property-set).get <$(key)> ] ;
@@ -906,6 +918,7 @@ local rule toolset-tag ( name : type ? : property-set )
             {
                case darwin : tag += clang-darwin ;
                case linux  : tag += clang ;
+               case win    : tag += clangw ;
             }
         }
         case como* : tag += como ;
@@ -914,9 +927,9 @@ local rule toolset-tag ( name : type ? : property-set )
         case edg* : tag += edg ;
         case gcc* :
         {
-            switch [ $(property-set).get <toolset-gcc:flavor> ]
+            switch [ $(property-set).get <target-os> ]
             {
-                case *mingw* : tag += mgw ;
+                case *windows* : tag += mgw ;
                 case * : tag += gcc ;
             }
         }
@@ -940,7 +953,7 @@ local rule toolset-tag ( name : type ? : property-set )
         case tru64cxx* : tag += tru ;
         case vacpp* : tag += xlc ;
     }
-    local version = [ MATCH <toolset.*version>([0123456789]+)[.]([0123456789]*)
+    local version = [ MATCH "<toolset.*version>([0123456789]+)[.]([0123456789]*)"
         : $(properties) ] ;
     # For historical reasons, vc6.0 and vc7.0 use different naming.
     if $(tag) = vc
@@ -955,6 +968,19 @@ local rule toolset-tag ( name : type ? : property-set )
             version = 7 ;
         }
     }
+
+    # From GCC 5, versioning changes and minor becomes patch
+    if $(tag) = gcc && [ numbers.less 4 $(version[1]) ]
+    {
+        version = $(version[1]) ;
+    }
+
+    # Ditto, from Clang 4
+    if $(tag) in clang clangw && [ numbers.less 3 $(version[1]) ]
+    {
+        version = $(version[1]) ;
+    }
+
     # On intel, version is not added, because it does not matter and it is the
     # version of vc used as backend that matters. Ideally, we should encode the
     # backend version but that would break compatibility with V1.
@@ -1016,7 +1042,7 @@ local rule runtime-tag ( name : type ? : property-set )
 # "<qt>4.6.0" will result in tag "qt460"
 local rule qt-tag ( name : type ? : property-set )
 {
-    local v = [ MATCH ([0123456789]+)[.]?([0123456789]*)[.]?([0123456789]*) :
+    local v = [ MATCH "([0123456789]+)[.]?([0123456789]*)[.]?([0123456789]*)" :
         [ $(property-set).get <qt> ] ] ;
     return qt$(v:J=) ;
 }
@@ -1029,6 +1055,19 @@ local rule address-model-tag ( name : type ? : property-set )
     return [ $(property-set).get <address-model> ] ;
 }
 
+# Create a tag for the architecture and model
+# <architecture>x86 <address-model>32 would generate "x32"
+# This relies on the fact that all architectures start with
+# unique letters.
+local rule arch-and-model-tag ( name : type ? : property-set )
+{
+    local architecture = [ $(property-set).get <architecture> ] ;
+    local address-model = [ $(property-set).get <address-model> ] ;
+
+    local arch = [ MATCH ^(.) : $(architecture) ] ;
+
+    return $(arch)$(address-model) ;
+}
 
 rule __test__ ( )
 {

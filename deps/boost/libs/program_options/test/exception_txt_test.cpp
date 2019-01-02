@@ -620,7 +620,27 @@ void test_invalid_command_line_style_exception_msg()
     }
 }
 
+void test_empty_value_inner(options_description &opts, variables_map& vm) {
+    positional_options_description popts;
+    opts.add_options()("foo", value<uint32_t>()->value_name("<time>")->required());
+    popts.add("foo", 1);
+    vector<string> tokens(1, "");
+    parsed_options parsed = command_line_parser(tokens)
+        .style(command_line_style::default_style & ~command_line_style::allow_guessing)
+        .options(opts)
+        .positional(popts)
+        .run();
+    store(parsed, vm);
+}
 
+void test_empty_value() {
+    // Test that passing empty token for an option that requires integer does not result
+    // in out-of-range error in error reporting code.
+    test_exception<invalid_option_value>(
+        "test_empty_value",
+        "the argument for option '--foo' is invalid",
+        test_empty_value_inner);
+}
 
 int main(int /*ac*/, char** /*av*/)
 {
@@ -633,6 +653,7 @@ int main(int /*ac*/, char** /*av*/)
    test_multiple_values_not_allowed_exception_msg();
    test_required_option_exception_msg();
    test_at_least_one_value_required_exception_msg();
+   test_empty_value();
 
    string test_name;
    string expected_message;

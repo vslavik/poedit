@@ -1,10 +1,9 @@
 /*
-(c) 2015 Glen Joseph Fernandes
-<glenjofe -at- gmail.com>
+Copyright 2015 Glen Joseph Fernandes
+(glenjofe@gmail.com)
 
-Distributed under the Boost Software
-License, Version 1.0.
-http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software License, Version 1.0.
+(http://www.boost.org/LICENSE_1_0.txt)
 */
 #ifndef BOOST_ALIGN_DETAIL_ELEMENT_TYPE_HPP
 #define BOOST_ALIGN_DETAIL_ELEMENT_TYPE_HPP
@@ -22,14 +21,9 @@ namespace alignment {
 namespace detail {
 
 #if !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
-template<class T>
-struct element_type {
-    typedef typename
-        std::remove_cv<typename
-        std::remove_all_extents<typename
-        std::remove_reference<T>::
-        type>::type>::type type;
-};
+using std::remove_reference;
+using std::remove_all_extents;
+using std::remove_cv;
 #else
 template<class T>
 struct remove_reference {
@@ -64,43 +58,34 @@ struct remove_all_extents<T[N]> {
 };
 
 template<class T>
-struct remove_const {
-    typedef T type;
-};
-
-template<class T>
-struct remove_const<const T> {
-    typedef T type;
-};
-
-template<class T>
-struct remove_volatile {
-    typedef T type;
-};
-
-template<class T>
-struct remove_volatile<volatile T> {
-    typedef T type;
-};
-
-template<class T>
 struct remove_cv {
-    typedef typename remove_volatile<typename
-        remove_const<T>::type>::type type;
+    typedef T type;
 };
 
 template<class T>
-struct element_type {
-    typedef typename
-        remove_cv<typename
-        remove_all_extents<typename
-        remove_reference<T>::
-        type>::type>::type type;
+struct remove_cv<const T> {
+    typedef T type;
+};
+
+template<class T>
+struct remove_cv<volatile T> {
+    typedef T type;
+};
+
+template<class T>
+struct remove_cv<const volatile T> {
+    typedef T type;
 };
 #endif
 
-} /* .detail */
-} /* .alignment */
-} /* .boost */
+template<class T>
+struct element_type {
+    typedef typename remove_cv<typename remove_all_extents<typename
+        remove_reference<T>::type>::type>::type type;
+};
+
+} /* detail */
+} /* alignment */
+} /* boost */
 
 #endif

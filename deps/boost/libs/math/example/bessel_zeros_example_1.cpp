@@ -181,7 +181,7 @@ We set the precision of the output stream, and show trailing zeros to display a 
               std::ostream_iterator<float_type>(std::cout, "\n"));
 //] [/bessel_zeros_example_2]
   }
-  catch (std::exception ex)
+  catch (std::exception const& ex)
   {
     std::cout << "Thrown exception " << ex.what() << std::endl;
   }

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template count</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.count_hpp" title="Header &lt;boost/compute/algorithm/count.hpp&gt;">
 <link rel="prev" href="copy_n.html" title="Function template copy_n">
@@ -36,8 +36,10 @@
   <span class="identifier">size_t</span> <span class="identifier">count</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">,</span> 
                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp64963904"></a><h2>Description</h2>
+<a name="idp79336640"></a><h2>Description</h2>
 <p>Returns the number of occurrences of <code class="computeroutput">value</code> in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>).</p>
+<p>Space complexity on CPUs: (1)<br>
+ Space complexity on GPUs: (n)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>count_if() </p>
 <p>

@@ -70,7 +70,7 @@ typedef boost::fast_pool_allocator< int > MyAllocator;
 typedef sc::fifo_scheduler< 
   sc::fifo_worker< MyAllocator >, MyAllocator > MyScheduler;
 #else
-typedef std::allocator< void > MyAllocator;
+typedef std::allocator< sc::none > MyAllocator;
 typedef sc::fifo_scheduler<> MyScheduler;
 #endif
 

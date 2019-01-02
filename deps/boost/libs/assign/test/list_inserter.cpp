@@ -11,7 +11,7 @@
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
-#  pragma warn -8091 // supress warning in Boost.Test
+#  pragma warn -8091 // suppress warning in Boost.Test
 #  pragma warn -8057 // unused argument argc/argv in Boost.Test
 #endif
 
@@ -113,8 +113,11 @@ void check_list_inserter()
     BOOST_CHECK_EQUAL( m.size(), 2u );
     BOOST_CHECK_EQUAL( m["foo"], 2 );
 
-    
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) || BOOST_WORKAROUND(BOOST_MSVC, <=1300)
+
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) \
+    || BOOST_WORKAROUND(BOOST_MSVC, <=1300) \
+    || BOOST_WORKAROUND(BOOST_MSVC, ==1700) \
+    || !defined( BOOST_NO_CXX11_HDR_INITIALIZER_LIST )
 #else
 
     typedef vector<int>                   score_type;
@@ -127,7 +130,7 @@ void check_list_inserter()
     BOOST_CHECK_EQUAL( team_score.size(), 3u );
     BOOST_CHECK_EQUAL( team_score[ "Team Foo" ][1], 1 );
     BOOST_CHECK_EQUAL( team_score[ "Team Bar" ][0], 0 );
-   
+
     team_score = list_of< score_pair >
                         ( "Team Foo",    list_of(1)(1)(0) )
                         ( "Team Bar",    list_of(0)(0)(0) )
@@ -135,7 +138,6 @@ void check_list_inserter()
     BOOST_CHECK_EQUAL( team_score.size(), 3u );
     BOOST_CHECK_EQUAL( team_score[ "Team Foo" ][1], 1 );
     BOOST_CHECK_EQUAL( team_score[ "Team Bar" ][0], 0 );
-
 #endif
                         
 }

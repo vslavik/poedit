@@ -66,8 +66,8 @@ rule generate_objs ( suffix : variant_count : build_opts * )
    return $(result) ;
 }
 
-lib test_instances_mpf : [ generate_objs "_mpf" : 4 : <define>TEST_MPF_50 ] : [ check-target-builds ../../../config//has_gmp : : <build>no ] ;
-lib test_instances_mpfr : [ generate_objs "_mpfr" : 3 : <define>TEST_MPFR_50 ] : [ check-target-builds ../../../config//has_mpfr : : <build>no ] ;
+lib test_instances_mpf : [ generate_objs "_mpf" : 5 : <define>TEST_MPF_50 ] : [ check-target-builds ../../../config//has_gmp : : <build>no ] ;
+lib test_instances_mpfr : [ generate_objs "_mpfr" : 4 : <define>TEST_MPFR_50 ] : [ check-target-builds ../../../config//has_mpfr : : <build>no ] ;
 lib test_instances_cpp_dec_float : [ generate_objs "_cpp_dec_float" : 3 : <define>TEST_CPP_DEC_FLOAT ] : ;
 lib test_instances_cpp_bin_float : [ generate_objs "_cpp_bin_float" : 1 : <define>TEST_CPP_BIN_FLOAT ] : ;
 lib test_instances_float128 : [ generate_objs "_float128" : 1 : <define>TEST_FLOAT128 ] : [ check-target-builds ../../../config//has_float128 : : <build>no ] ;

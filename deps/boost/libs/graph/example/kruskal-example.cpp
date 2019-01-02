@@ -17,7 +17,6 @@ main()
   typedef adjacency_list < vecS, vecS, undirectedS,
     no_property, property < edge_weight_t, int > > Graph;
   typedef graph_traits < Graph >::edge_descriptor Edge;
-  typedef graph_traits < Graph >::vertex_descriptor Vertex;
   typedef std::pair<int, int> E;
 
   const int num_nodes = 5;

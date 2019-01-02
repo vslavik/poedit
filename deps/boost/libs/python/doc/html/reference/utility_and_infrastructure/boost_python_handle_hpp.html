@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>boost/python/handle.hpp</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python Reference Manual">
 <link rel="up" href="../utility_and_infrastructure.html" title="Chapter&#160;7.&#160;Utility and Infrastructure">
 <link rel="prev" href="boost_python_pointee_hpp.html" title="boost/python/pointee.hpp">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="utility_and_infrastructure.boost_python_handle_hpp"></a><a class="link" href="boost_python_handle_hpp.html" title="boost/python/handle.hpp">boost/python/handle.hpp</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="boost_python_handle_hpp.html#utility_and_infrastructure.boost_python_handle_hpp.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="boost_python_handle_hpp.html#utility_and_infrastructure.boost_python_handle_hpp.class_template_handle">Class
         template <code class="computeroutput"><span class="identifier">handle</span></code></a></span></dt>
@@ -42,7 +42,7 @@
 <a name="utility_and_infrastructure.boost_python_handle_hpp.class_template_handle"></a><a class="link" href="boost_python_handle_hpp.html#utility_and_infrastructure.boost_python_handle_hpp.class_template_handle" title="Class template handle">Class
         template <code class="computeroutput"><span class="identifier">handle</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="boost_python_handle_hpp.html#utility_and_infrastructure.boost_python_handle_hpp.class_template_handle.class_template_handle_constructo">Class
           template <code class="computeroutput"><span class="identifier">handle</span></code> constructors
           and destructor</a></span></dt>
@@ -135,7 +135,7 @@
 <pre class="programlisting"><span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">handle</span><span class="special">();</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">Py_XDECREF</span><span class="special">(</span><span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">PyObject</span><span class="special">*&gt;(</span><span class="identifier">m_p</span><span class="special">))</span></code>
@@ -147,7 +147,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><pre class="programlisting"><span class="identifier">Py_XINCREF</span><span class="special">(</span><span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">PyObject</span><span class="special">*&gt;(</span><span class="identifier">p</span><span class="special">));</span>
 <span class="identifier">m_p</span> <span class="special">=</span> <span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">*&gt;(</span><span class="identifier">p</span><span class="special">);</span>
@@ -158,7 +158,7 @@
 <span class="keyword">explicit</span> <span class="identifier">handle</span><span class="special">(</span><span class="identifier">null_ok</span><span class="special">&lt;</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">borrowed</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;</span> <span class="special">&gt;*</span> <span class="identifier">p</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><pre class="programlisting"><span class="identifier">Py_XINCREF</span><span class="special">(</span><span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">PyObject</span><span class="special">*&gt;(</span><span class="identifier">p</span><span class="special">));</span>
       <span class="identifier">m_p</span> <span class="special">=</span> <span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">*&gt;(</span><span class="identifier">p</span><span class="special">);</span>
@@ -169,7 +169,7 @@
 <span class="keyword">explicit</span> <span class="identifier">handle</span><span class="special">(</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">borrowed</span><span class="special">&lt;</span><span class="identifier">Y</span><span class="special">&gt;*</span> <span class="identifier">p</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><pre class="programlisting"><span class="identifier">Py_XINCREF</span><span class="special">(</span><span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">PyObject</span><span class="special">*&gt;(</span><span class="identifier">p</span><span class="special">));</span>
       <span class="identifier">m_p</span> <span class="special">=</span> <span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">*&gt;(</span><span class="identifier">expect_non_null</span><span class="special">(</span><span class="identifier">p</span><span class="special">));</span>
@@ -181,7 +181,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">m_p</span> <span class="special">=</span>
@@ -194,7 +194,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">m_p</span> <span class="special">=</span>
@@ -206,7 +206,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">m_p</span> <span class="special">=</span>
@@ -220,7 +220,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   m_p = r.m_p; Py_XINCREF(upcast&lt;PyObject*&gt;(m_p));
@@ -239,7 +239,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">Py_XINCREF</span><span class="special">(</span><span class="identifier">upcast</span><span class="special">&lt;</span><span class="identifier">PyObject</span><span class="special">*&gt;(</span><span class="identifier">r</span><span class="special">.</span><span class="identifier">m_p</span><span class="special">));</span>
@@ -254,7 +254,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">T</span><span class="special">*</span>
@@ -270,7 +270,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span>
@@ -289,7 +289,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">m_p</span><span class="special">;</span></code>
@@ -300,7 +300,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="special">*</span><span class="identifier">m_p</span><span class="special">;</span></code>
@@ -311,7 +311,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="number">0</span></code> if <code class="computeroutput"><span class="identifier">m_p</span> <span class="special">==</span>

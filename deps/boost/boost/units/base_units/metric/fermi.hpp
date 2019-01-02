@@ -26,8 +26,8 @@ typedef scaled_base_unit<boost::units::si::meter_base_unit, scale<10, static_rat
 
 template<>
 struct base_unit_info<metric::fermi_base_unit> {
-    static const char* name()   { return("fermi"); }
-    static const char* symbol() { return("fm"); }
+    static BOOST_CONSTEXPR const char* name()   { return("fermi"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("fm"); }
 };
 
 }

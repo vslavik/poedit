@@ -43,7 +43,7 @@ bool failure_test(temporal_type component,
 
 // for tests that are expected to fail quietly
 template<class temporal_type>
-bool failure_test(temporal_type component,
+bool failure_test(temporal_type& component,
                   const std::string& input,
                   boost::posix_time::time_input_facet* facet)
 {
@@ -178,38 +178,38 @@ do_all_tests()
   check_equal("Multiple literal '%'s in time_duration format", td, time_duration(15,15,0));
 
   { /****** iso format tests (and custom 'scrunched-together formats) ******/
-    time_input_facet *facet = new time_input_facet();
-    facet->set_iso_format();
-    facet->time_duration_format("%H""%M""%S""%F"); // iso format
+    time_input_facet *facet2 = new time_input_facet();
+    facet2->set_iso_format();
+    facet2->time_duration_format("%H""%M""%S""%F"); // iso format
     std::stringstream ss;
-    ss.imbue(std::locale(std::locale::classic(), facet));
-    ptime pt(not_a_date_time);
-    time_duration td(not_a_date_time);
-    date d(2002,Oct,17);
+    ss.imbue(std::locale(std::locale::classic(), facet2));
+    ptime pt2(not_a_date_time);
+    time_duration tdx(not_a_date_time);
+    date dx(2002,Oct,17);
 #if defined(BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG)
     time_duration td2(23,12,17,123450000);
 #else
     time_duration td2(23,12,17,123450);
 #endif
-    ptime result(d, td2);
+    ptime result(dx, td2);
 
     ss.str("20021017T231217.12345");
-    ss >> pt;
-    check_equal("iso_format ptime", pt, result);
+    ss >> pt2;
+    check_equal("iso_format ptime", pt2, result);
     ss.str("");
-    facet->set_iso_extended_format();
+    facet2->set_iso_extended_format();
     ss.str("2002-10-17 23:12:17.12345");
-    ss >> pt;
-    check_equal("iso_extended_format ptime", pt, result);
+    ss >> pt2;
+    check_equal("iso_extended_format ptime", pt2, result);
     ss.str("");
     ss.str("231217.12345");
-    ss >> td;
-    check_equal("iso_format time_duration", td, td2);
+    ss >> tdx;
+    check_equal("iso_format time_duration", tdx, td2);
     ss.str("");
     ss.str("-infinity");
-    ss >> td;
+    ss >> tdx;
     check_equal("iso_format time_duration (special_value)",
-        td, time_duration(neg_infin));
+        tdx, time_duration(neg_infin));
     ss.str("");
     // the above tests prove correct parsing of time values in these formats.
     // these tests show they also handle special_values & exceptions properly
@@ -217,35 +217,35 @@ do_all_tests()
     ss.exceptions(std::ios_base::failbit); // we need exceptions turned on here
     int count = 0;
     try {
-      facet->time_duration_format("%H""%M""%S""%F");
+      facet2->time_duration_format("%H""%M""%S""%F");
       ss.str("not-a-date-time");
       ++count;
-      ss >> td;
-      check_equal("special value w/ hours flag", td, nadt);
+      ss >> tdx;
+      check_equal("special value w/ hours flag", tdx, nadt);
       ss.str("");
-      facet->time_duration_format("%M""%S""%F");
+      facet2->time_duration_format("%M""%S""%F");
       ss.str("not-a-date-time");
       ++count;
-      ss >> td;
-      check_equal("special value w/ minutes flag", td, nadt);
+      ss >> tdx;
+      check_equal("special value w/ minutes flag", tdx, nadt);
       ss.str("");
-      facet->time_duration_format("%S""%F");
+      facet2->time_duration_format("%S""%F");
       ss.str("not-a-date-time");
       ++count;
-      ss >> td;
-      check_equal("special value w/ seconds flag", td, nadt);
+      ss >> tdx;
+      check_equal("special value w/ seconds flag", tdx, nadt);
       ss.str("");
-      facet->time_duration_format("%s");
+      facet2->time_duration_format("%s");
       ss.str("not-a-date-time");
       ++count;
-      ss >> td;
-      check_equal("special value w/ sec w/frac_sec (always) flag", td, nadt);
+      ss >> tdx;
+      check_equal("special value w/ sec w/frac_sec (always) flag", tdx, nadt);
       ss.str("");
-      facet->time_duration_format("%f");
+      facet2->time_duration_format("%f");
       ss.str("not-a-date-time");
       ++count;
-      ss >> td;
-      check_equal("special value w/ frac_sec (always) flag", td, nadt);
+      ss >> tdx;
+      check_equal("special value w/ frac_sec (always) flag", tdx, nadt);
       ss.str("");
     }
     catch(...) {
@@ -332,16 +332,16 @@ do_all_tests()
       (tp.end() == ptime(date(2005,12,31),time_duration(23,59,59,1))) );
   {
     std::stringstream ss;
-    ptime pt(not_a_date_time);
+    ptime ptx(not_a_date_time);
     ptime pt2 = second_clock::local_time();
     ptime pt3(neg_infin);
     ptime pt4(pos_infin);
-    time_period tp(pt2, pt); // ptime/nadt
-    time_period tp2(pt, pt); // nadt/nadt
+    time_period tpx(pt2, ptx); // ptime/nadt
+    time_period tp2(ptx, ptx); // nadt/nadt
     time_period tp3(pt3, pt4);
-    ss << tp;
+    ss << tpx;
     ss >> tp2;
-    check_equal("Special values period (reversibility test)", tp, tp2);
+    check_equal("Special values period (reversibility test)", tpx, tp2);
     ss.str("[-infinity/+infinity]");
     ss >> tp2;
     check_equal("Special values period (infinities)", tp3, tp2);
@@ -411,8 +411,26 @@ do_all_tests()
     boost::date_time::date_generator_parser<date, char> dgp; // default constructor
     time_input_facet tif("%Y-%m-%d %H:%M:%s", fdp, svp, pp, dgp);
   }
-#endif // USE_DATE_TIME_PRE_1_33_FACET_IO
 
+  // trac 13194 (https://svn.boost.org/trac10/ticket/13194)
+  {
+      const std::string value = "December 07:27:10.435945 5 2017";
+      boost::posix_time::time_input_facet* facet4 = new boost::posix_time::time_input_facet("%B %H:%M:%s %e %Y");
+      boost::posix_time::ptime ptx;
+      check("trac 13194 %e on \"5\" failbit set", !failure_test(ptx, value, facet4)); // proves failbit was not set
+      check_equal("trac 13194 %e on \" 5\" valid value", "2017-12-05T07:27:10.435945000", to_iso_extended_string(ptx));
+  }
+
+  // trac 12910
+  {
+      const std::string value = "263-08:09:10";
+      boost::posix_time::time_input_facet* facet = new boost::posix_time::time_input_facet("%j-%H:%M:%S");
+      boost::posix_time::ptime pt;
+      check("trac 12910 %j without %Y no failbit", !failure_test(pt, value, facet)); // proves failbit was not set
+      check_equal("trac 12910 %j without %Y value", "1400-09-20T08:09:10", to_iso_extended_string(pt));
+  }
+
+#endif // USE_DATE_TIME_PRE_1_33_FACET_IO
 }
 
 

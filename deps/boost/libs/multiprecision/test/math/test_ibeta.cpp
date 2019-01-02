@@ -32,6 +32,13 @@ void expected_results()
       ".*mpfr_float_backend<18>.*",     // test type(s)
       "(?i).*small.*",                  // test data group
       ".*", 2000, 500);                  // test function
+   add_expected_result(
+      "[^|]*",                          // compiler
+      "[^|]*",                          // stdlib
+      "[^|]*",                          // platform
+      ".*mpfr_float_backend<0>.*",     // test type(s)
+      "(?i).*small.*",                  // test data group
+      ".*", 1000, 100);                  // test function
 #ifdef BOOST_INTEL
    add_expected_result(
       "[^|]*",                          // compiler

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>addressof</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
@@ -26,12 +26,12 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="core.addressof"></a><a class="link" href="addressof.html" title="addressof">addressof</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="addressof.html#core.addressof.header_boost_core_addressof_hpp">Header
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="addressof.html#core.addressof.header_boost_core_addressof_hpp">Header
       &lt;boost/core/addressof.hpp&gt;</a></span></dt></dl></div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp176048"></a>Authors</h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp95746992"></a>Authors</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Brad King
         </li>
@@ -40,6 +40,9 @@
         </li>
 <li class="listitem">
           Peter Dimov
+        </li>
+<li class="listitem">
+          Glen Fernandes
         </li>
 </ul></div>
 </div>
@@ -89,6 +92,23 @@
     <span class="comment">// nonaddressable* xpe = &amp;x; /* error */</span>
 <span class="special">}</span>
 </pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="core.addressof.header_boost_core_addressof_hpp.notes"></a><a class="link" href="addressof.html#core.addressof.header_boost_core_addressof_hpp.notes" title="Notes">Notes</a>
+</h4></div></div></div>
+<p>
+          In C++11 and above, <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">addressof</span></code>
+          is conditionally <code class="computeroutput"><span class="keyword">constexpr</span></code>
+          when possible. This is indicated by <code class="computeroutput"><span class="identifier">BOOST_CORE_NO_CONSTEXPR_ADDRESSOF</span></code>
+          not being defined.
+        </p>
+<p>
+          With supported compilers, <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">addressof</span></code>
+          is always <code class="computeroutput"><span class="keyword">constexpr</span></code> by leveraging
+          compiler intrinsics. This is indicated by <code class="computeroutput"><span class="identifier">BOOST_CORE_HAS_BUILTIN_ADDRESSOF</span></code>
+          being defined.
+        </p>
 </div>
 </div>
 </div>

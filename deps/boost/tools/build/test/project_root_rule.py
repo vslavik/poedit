@@ -29,6 +29,6 @@ my-lib foo ;
 
 t.run_build_system(subdir="sub")
 
-t.expect_addition("sub/bin/$toolset/debug/link-static/foo.lib")
+t.expect_addition("sub/bin/$toolset/debug*/foo.lib")
 
 t.cleanup()

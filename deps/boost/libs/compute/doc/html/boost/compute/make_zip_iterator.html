@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template make_zip_iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.iterator.zip_iterator_hpp" title="Header &lt;boost/compute/iterator/zip_iterator.hpp&gt;">
 <link rel="prev" href="zip_iterator.html" title="Class template zip_iterator">
@@ -35,23 +35,29 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IteratorTuple<span class="special">&gt;</span> 
   <a class="link" href="zip_iterator.html" title="Class template zip_iterator">zip_iterator</a><span class="special">&lt;</span> <span class="identifier">IteratorTuple</span> <span class="special">&gt;</span> <span class="identifier">make_zip_iterator</span><span class="special">(</span><span class="identifier">IteratorTuple</span> iterators<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp81315472"></a><h2>Description</h2>
+<a name="idp96116928"></a><h2>Description</h2>
 <p>Creates a <code class="computeroutput"><a class="link" href="zip_iterator.html" title="Class template zip_iterator">zip_iterator</a></code> for <code class="computeroutput">iterators</code>.</p>
 <p>
 
 For example, to zip together iterators from three vectors (<code class="computeroutput">a</code>, <code class="computeroutput">b</code>, and <code class="computeroutput">c</code>): </p>
-<pre class="programlisting"> <span class="keyword">auto</span> <span class="identifier">zipped</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">make_zip_iterator</span><span class="special">(</span>
-     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_tuple</span><span class="special">(</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">)</span>
- <span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">zipped</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">make_zip_iterator</span><span class="special">(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_tuple</span><span class="special">(</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">)</span>
+<span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">iterators</code></span></p></td>
 <td><p>a tuple of input iterators to zip together</p></td>

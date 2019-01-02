@@ -195,7 +195,6 @@ public:
     return static_cast<bool>(groups[get(id, x)]);
   }
 
-
   void pop()
   {
     // Fill in smallest_value. This is the group x.

@@ -11,17 +11,15 @@
 using namespace boost::unit_test;
 
 struct MyConfig {
-  MyConfig()
-  {
+  MyConfig() {
     unit_test_log.set_format( OF_XML );
   }
   ~MyConfig() {}
 };
 
-BOOST_GLOBAL_FIXTURE( MyConfig );
+BOOST_TEST_GLOBAL_CONFIGURATION( MyConfig );
 
-BOOST_AUTO_TEST_CASE( test_case0 )
-{
+BOOST_AUTO_TEST_CASE( test_case0 ) {
   BOOST_TEST( false );
 }
 //]

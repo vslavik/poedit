@@ -239,7 +239,7 @@
             off_ = string::npos;
             <SPAN CLASS="keyword">return</SPAN> <SPAN CLASS="keyword">true</SPAN>;
         } <SPAN CLASS="keyword">else</SPAN> {
-            off_ += result;
+            off_ += <SPAN CLASS="keyword">static_cast</SPAN>&lt;string::size_type&gt;(result);
             <SPAN CLASS="keyword">return</SPAN> <SPAN CLASS="keyword">false</SPAN>;
         }
     }</PRE>

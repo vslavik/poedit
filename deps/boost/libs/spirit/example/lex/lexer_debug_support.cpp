@@ -65,7 +65,7 @@ struct language_grammar : qi::grammar<Iterator>
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-int main(int argc, char* argv[])
+int main()
 {
     // iterator type used to expose the underlying input stream
     typedef std::string::iterator base_iterator_type;

@@ -415,7 +415,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 os_ << "            std::size_t index = *curr_++\n";
             }
-            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            bol = (index == '\\n') ? true : false;\n";
             os_ << "            std::size_t const state_ = ptr_[\n";
             os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
@@ -442,7 +442,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 os_ << "            std::size_t index = *curr_++\n";
             }
-            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            bol = (index == '\\n') ? true : false;\n";
             os_ << "            std::size_t const state_ = ptr_[\n";
             os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
@@ -469,7 +469,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 os_ << "            std::size_t index = *curr_++\n";
             }
-            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            bol = (index == '\\n') ? true : false;\n";
             os_ << "            std::size_t const state_ = ptr_[\n";
             os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
@@ -577,7 +577,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         if (sm_.data()._seen_BOL_assertion)
         {
-            os_ << "        bol_ = (*start_token_ == '\n') ? true : false;\n";
+            os_ << "        bol_ = (*start_token_ == '\\n') ? true : false;\n";
         }
 
         os_ << "        id_ = npos;\n";
@@ -749,7 +749,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     }
                     if (iter_->eol_index != boost::lexer::npos)
                     {
-                        os_ << "\n    if (ch_ == '\n') goto state" << dfa_
+                        os_ << "\n    if (ch_ == '\\n') goto state" << dfa_
                             << '_' << iter_->eol_index << ";\n";
                     }
                     os_ << "    ++curr_;\n";

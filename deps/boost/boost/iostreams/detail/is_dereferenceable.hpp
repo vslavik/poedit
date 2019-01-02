@@ -38,8 +38,7 @@ namespace is_dereferenceable_
   // This is a last-resort operator* for when none other is found
   tag operator*(any const&);
 
-# if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3202)) \
-    || BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+# if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3202))
 #  define BOOST_comma(a,b) (a)
 # else 
   // In case an operator++ is found that returns void, we'll use ++x,0
@@ -67,10 +66,15 @@ namespace is_dereferenceable_
 
 # undef BOOST_comma
 
-template<typename T>
-struct is_dereferenceable : public boost::integral_constant<bool, is_dereferenceable_::impl<T>::value> {};
+template<typename T> 
+struct is_dereferenceable 
+    : public ::boost::integral_constant<bool, is_dereferenceable_::impl<T>::value >
+{ 
+    BOOST_MPL_AUX_LAMBDA_SUPPORT(1,is_dereferenceable,(T))
+};
 
 } } 
+
 
 } // End namespaces detail, iostreams, boost.
 

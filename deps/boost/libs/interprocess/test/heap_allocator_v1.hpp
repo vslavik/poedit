@@ -120,7 +120,10 @@ class heap_allocator_v1
 
    //!Deallocates memory previously allocated. Never throws
    void deallocate(const pointer &ptr, size_type)
-   {  return ::delete[] ipcdetail::to_raw_pointer(ptr) ;  }
+   {
+      char *ptr_raw = (char*)ipcdetail::to_raw_pointer(ptr);
+      ::delete[] ptr_raw;
+   }
 
    //!Construct object, calling constructor.
    //!Throws if T(const T&) throws

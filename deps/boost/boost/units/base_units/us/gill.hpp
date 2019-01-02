@@ -28,8 +28,8 @@ typedef scaled_base_unit<pint_base_unit, scale<2, static_rational<-2> > > gill_b
 
 template<>
 struct base_unit_info<us::gill_base_unit> {
-    static const char* name()   { return("gill (U.S.)"); }
-    static const char* symbol() { return("gi"); }
+    static BOOST_CONSTEXPR const char* name()   { return("gill (U.S.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("gi"); }
 };
 
 } // namespace units

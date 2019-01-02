@@ -4,8 +4,8 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2015-2016.
-// Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015-2017.
+// Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -33,9 +33,7 @@ namespace boost { namespace geometry { namespace strategy
 namespace within
 {
 
-
-template <typename Geometry, std::size_t Dimension, typename CSTag>
-struct within_range
+struct within_coord
 {
     template <typename Value1, typename Value2>
     static inline bool apply(Value1 const& value, Value2 const& min_value, Value2 const& max_value)
@@ -44,9 +42,7 @@ struct within_range
     }
 };
 
-
-template <typename Geometry, std::size_t Dimension, typename CSTag>
-struct covered_by_range
+struct covered_by_coord
 {
     template <typename Value1, typename Value2>
     static inline bool apply(Value1 const& value, Value2 const& min_value, Value2 const& max_value)
@@ -55,32 +51,47 @@ struct covered_by_range
     }
 };
 
+template <typename Geometry, std::size_t Dimension, typename CSTag>
+struct within_range
+    : within_coord
+{};
+
+
+template <typename Geometry, std::size_t Dimension, typename CSTag>
+struct covered_by_range
+    : covered_by_coord
+{};
+
 
 // NOTE: the result would be the same if instead of structs defined below
 // the above xxx_range were used with the following arguments:
 // (min_value + diff_min, min_value, max_value)
-struct within_longitude_range
+struct within_longitude_diff
 {
     template <typename CalcT>
     static inline bool apply(CalcT const& diff_min, CalcT const& min_value, CalcT const& max_value)
     {
         CalcT const c0 = 0;
-        return diff_min > c0 && min_value + diff_min < max_value;
+        return diff_min > c0
+            && (min_value + diff_min < max_value
+             /*|| max_value - diff_min > min_value*/);
     }
 };
 
-struct covered_by_longitude_range
+struct covered_by_longitude_diff
 {
     template <typename CalcT>
     static inline bool apply(CalcT const& diff_min, CalcT const& min_value, CalcT const& max_value)
     {
-        return min_value + diff_min <= max_value;
+        return min_value + diff_min <= max_value
+            /*|| max_value - diff_min >= min_value*/;
     }
 };
 
 
 template <typename Geometry,
-          typename ResultCheck>
+          typename CoordCheck,
+          typename DiffCheck>
 struct longitude_range
 {
     template <typename Value1, typename Value2>
@@ -92,6 +103,11 @@ struct longitude_range
             >::type calc_t;
         typedef typename coordinate_system<Geometry>::type::units units_t;
         typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+
+        if (CoordCheck::apply(value, min_value, max_value))
+        {
+            return true;
+        }
 
         // min <= max <=> diff >= 0
         calc_t const diff_ing = max_value - min_value;
@@ -105,7 +121,7 @@ struct longitude_range
         // calculate positive longitude translation with min_value as origin
         calc_t const diff_min = math::longitude_distance_unsigned<units_t, calc_t>(min_value, value);
 
-        return ResultCheck::template apply<calc_t>(diff_min, min_value, max_value);
+        return DiffCheck::template apply<calc_t>(diff_min, min_value, max_value);
     }
 };
 
@@ -113,13 +129,13 @@ struct longitude_range
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag
 template <typename Geometry>
 struct within_range<Geometry, 0, spherical_tag>
-    : longitude_range<Geometry, within_longitude_range>
+    : longitude_range<Geometry, within_coord, within_longitude_diff>
 {};
 
 
 template <typename Geometry>
 struct covered_by_range<Geometry, 0, spherical_tag>
-    : longitude_range<Geometry, covered_by_longitude_range>
+    : longitude_range<Geometry, covered_by_coord, covered_by_longitude_diff>
 {};
 
 
@@ -203,10 +219,10 @@ namespace within { namespace services
 template <typename Point, typename Box>
 struct default_strategy
     <
+        Point, Box,
         point_tag, box_tag,
-        point_tag, areal_tag,
-        cartesian_tag, cartesian_tag,
-        Point, Box
+        pointlike_tag, areal_tag,
+        cartesian_tag, cartesian_tag
     >
 {
     typedef within::point_in_box<Point, Box> type;
@@ -216,10 +232,10 @@ struct default_strategy
 template <typename Point, typename Box>
 struct default_strategy
     <
+        Point, Box,
         point_tag, box_tag,
-        point_tag, areal_tag,
-        spherical_tag, spherical_tag,
-        Point, Box
+        pointlike_tag, areal_tag,
+        spherical_tag, spherical_tag
     >
 {
     typedef within::point_in_box<Point, Box> type;
@@ -236,10 +252,10 @@ namespace covered_by { namespace services
 template <typename Point, typename Box>
 struct default_strategy
     <
+        Point, Box,
         point_tag, box_tag,
-        point_tag, areal_tag,
-        cartesian_tag, cartesian_tag,
-        Point, Box
+        pointlike_tag, areal_tag,
+        cartesian_tag, cartesian_tag
     >
 {
     typedef within::point_in_box
@@ -253,10 +269,10 @@ struct default_strategy
 template <typename Point, typename Box>
 struct default_strategy
     <
+        Point, Box,
         point_tag, box_tag,
-        point_tag, areal_tag,
-        spherical_tag, spherical_tag,
-        Point, Box
+        pointlike_tag, areal_tag,
+        spherical_tag, spherical_tag
     >
 {
     typedef within::point_in_box

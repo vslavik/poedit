@@ -8,7 +8,6 @@
 #include <boost/typeof/typeof.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/mpl/size_t.hpp>
 
 namespace boost { namespace type_of {
 

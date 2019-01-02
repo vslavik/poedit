@@ -7,6 +7,44 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 [section History]
 
+[heading 1.9]
+
+* Fixes for `BOOST_COMP_NVCC*` predefs. (from Benjamin Worpitz)
+* Add specific version information for Cygwin OS predef. (from James E. King III)
+
+[heading 1.8]
+
+* Add support for __ARM_ARCH macro. (from Tim Blechmann)
+* Add detection for PTX architecture. (from Benjamin Worpitz)
+* Add nvcc compiler detection. (from Benjamin Worpitz)
+* Add support for detecting CUDA. (from Benjamin Worpitz)
+* Remove reference to obsolete BOOST_ARCH_AMD64. (from Peter Kolbus)
+
+[heading 1.7]
+
+* Fix BOOST_ARCH_PARISK/BOOST_ARCH_PARISC typo.
+* Improved Windows Universal Platform detection. (from James E. King, III)
+* Add detection for CloudABI with cloudlibc. (from James E. King, III)
+
+[heading 1.6]
+
+* Fix Intel C/C++ version 9999 detection to be 12.1.0.
+* Addition of `BOOST_PREDEF_WORKAROUND` and `BOOST_PREDEF_TESTED_AT` macros
+  for defect workarounds and detection.
+* Add ARM64 MSVC SIMD detection. (from Minmin Gong)
+* Add detection of iOS simulator vs device as a platform choice. (from Ruslan
+  Baratov)
+* Fix MinGW incorrect header guard. (from Ruslan Baratov)
+
+[heading 1.5]
+
+* Fix Intel C/C++ compiler version specification.
+* Add `BOOST_VERSION_NUMBER_MAJOR`, `BOOST_VERSION_NUMBER_MINOR`,
+  `BOOST_VERSION_NUMBER_PATCH` macros to extract components from valid version
+  numbers.
+* Change VS version numbering. Version after VS2015 will use the compiler
+  version instead of the varied product versions.
+
 [heading 1.4.1]
 
 * Small fixes for some redefinition errors, and mispelled macros.

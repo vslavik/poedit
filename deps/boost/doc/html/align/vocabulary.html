@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Vocabulary</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
+<link rel="up" href="../align.html" title="Chapter&#160;3.&#160;Boost.Align">
 <link rel="prev" href="reference.html" title="Reference">
 <link rel="next" href="compatibility.html" title="Compatibility">
 </head>
@@ -29,66 +29,58 @@
 </h2></div></div></div>
 <h4>
 <a name="align.vocabulary.h0"></a>
-      <span><a name="align.vocabulary.basic_align"></a></span><a class="link" href="vocabulary.html#align.vocabulary.basic_align">[basic.align]</a>
+      <span class="phrase"><a name="align.vocabulary.basic_align"></a></span><a class="link" href="vocabulary.html#align.vocabulary.basic_align">[basic.align]</a>
     </h4>
 <p>
-      Object types have <span class="bold"><strong>alignment requirements</strong></span> which
-      place restrictions on the addresses at which an object of that type may be
-      allocated. An <span class="bold"><strong>alignment</strong></span> is an implementation-defined
-      integer value representing the number of bytes between successive addresses
-      at which a given object can be allocated. An object type imposes an alignment
-      requirement on every object of that type; stricter alignment can be requested
-      using the alignment specifier.
+      Object types have <span class="emphasis"><em>alignment requirements</em></span> which place restrictions
+      on the addresses at which an object of that type may be allocated. An <span class="emphasis"><em>alignment</em></span>
+      is an implementation-defined integer value representing the number of bytes
+      between successive addresses at which a given object can be allocated. An object
+      type imposes an alignment requirement on every object of that type; stricter
+      alignment can be requested using the alignment specifier.
     </p>
 <p>
-      A <span class="bold"><strong>fundamental alignment</strong></span> is represented by
-      an alignment less than or equal to the greatest alignment supported by the
-      implementation in all contexts, which is equal to <code class="computeroutput"><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max_align_t</span><span class="special">)</span></code>.
+      A <span class="emphasis"><em>fundamental alignment</em></span> is represented by an alignment
+      less than or equal to the greatest alignment supported by the implementation
+      in all contexts, which is equal to <code class="computeroutput"><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max_align_t</span><span class="special">)</span></code>.
       The alignment required for a type might be different when it is used as the
-      type of a complete object and when it is used as the type of a subobject.
+      type of a complete object and when it is used as the type of a subobject. [<span class="emphasis"><em>Example:</em></span>
     </p>
-<div class="tip"><table border="0" summary="Tip">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../doc/src/images/tip.png"></td>
-<th align="left">Tip</th>
-</tr>
-<tr><td align="left" valign="top">
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">B</span> <span class="special">{</span> <span class="keyword">long</span> <span class="keyword">double</span> <span class="identifier">d</span><span class="special">;</span> <span class="special">};</span>
-<span class="keyword">struct</span> <span class="identifier">D</span> <span class="special">:</span> <span class="keyword">virtual</span> <span class="identifier">B</span> <span class="special">{</span> <span class="keyword">char</span> <span class="identifier">c</span><span class="special">;</span> <span class="special">};</span>
-</pre>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          <code class="computeroutput"><span class="keyword">struct</span> <span class="identifier">B</span>
+          <span class="special">{</span> <span class="keyword">long</span>
+          <span class="keyword">double</span> <span class="identifier">d</span><span class="special">;</span> <span class="special">};</span></code>
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="keyword">struct</span> <span class="identifier">D</span>
+          <span class="special">:</span> <span class="keyword">virtual</span>
+          <span class="identifier">B</span> <span class="special">{</span>
+          <span class="keyword">char</span> <span class="identifier">c</span><span class="special">;</span> <span class="special">};</span></code>
+        </li>
+</ol></div>
 <p>
-        When <code class="computeroutput"><span class="identifier">D</span></code> is the type of a complete
-        object, it will have a subobject of type <code class="computeroutput"><span class="identifier">B</span></code>,
-        so it must be aligned appropriately for a <code class="computeroutput"><span class="keyword">long</span>
-        <span class="keyword">double</span></code>. If <code class="computeroutput"><span class="identifier">D</span></code>
-        appears as a subobject of another object that also has <code class="computeroutput"><span class="identifier">B</span></code>
-        as a virtual base class, the <code class="computeroutput"><span class="identifier">B</span></code>
-        subobject might be part of a different subobject, reducing the alignment
-        requirements on the <code class="computeroutput"><span class="identifier">D</span></code> subobject.
-      </p>
-</td></tr>
-</table></div>
-<p>
-      The result of the <code class="computeroutput"><span class="keyword">alignof</span></code> operator
-      reflects the alignment requirement of the type in the complete-object case.
+      When <code class="computeroutput"><span class="identifier">D</span></code> is the type of a complete
+      object, it will have a subobject of type <code class="computeroutput"><span class="identifier">B</span></code>,
+      so it must be aligned appropriately for a <code class="computeroutput"><span class="keyword">long</span>
+      <span class="keyword">double</span></code>. If <code class="computeroutput"><span class="identifier">D</span></code>
+      appears as a subobject of another object that also has <code class="computeroutput"><span class="identifier">B</span></code>
+      as a virtual base class, the <code class="computeroutput"><span class="identifier">B</span></code>
+      subobject might be part of a different subobject, reducing the alignment requirements
+      on the <code class="computeroutput"><span class="identifier">D</span></code> subobject. &#8212;<span class="emphasis"><em>end
+      example</em></span>] The result of the <code class="computeroutput"><span class="keyword">alignof</span></code>
+      operator reflects the alignment requirement of the type in the complete-object
+      case.
     </p>
 <p>
-      An <span class="bold"><strong>extended alignment</strong></span> is represented by an
-      alignment greater than <code class="computeroutput"><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max_align_t</span><span class="special">)</span></code>.
-      It is implementation-defined whether any extended alignments are supported
-      and the contexts in which they are supported. A type having an extended alignment
-      requirement is an <span class="bold"><strong>over-aligned type</strong></span>.
+      An <span class="emphasis"><em>extended alignment</em></span> is represented by an alignment greater
+      than <code class="computeroutput"><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max_align_t</span><span class="special">)</span></code>. It is implementation-defined whether any
+      extended alignments are supported and the contexts in which they are supported.
+      A type having an extended alignment requirement is an <span class="emphasis"><em>over-aligned
+      type</em></span>. [<span class="emphasis"><em>Note:</em></span> Every over-aligned type is or
+      contains a class type to which extended alignment applies (possibly through
+      a non-static data member). &#8212;<span class="emphasis"><em>end note</em></span>]
     </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-        Every over-aligned type is or contains a class type to which extended alignment
-        applies (possibly through a non-static data member).
-      </p></td></tr>
-</table></div>
 <p>
       Alignments are represented as values of the type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
       Valid alignments include only those values returned by an <code class="computeroutput"><span class="keyword">alignof</span></code>
@@ -97,32 +89,24 @@
       integral power of two.
     </p>
 <p>
-      Alignments have an order from <span class="bold"><strong>weaker</strong></span> to <span class="bold"><strong>stronger</strong></span> or <span class="bold"><strong>stricter</strong></span>
-      alignments. Stricter alignments have larger alignment values. An address that
-      satisfies an alignment requirement also satisfies any weaker valid alignment
-      requirement.
+      Alignments have an order from <span class="emphasis"><em>weaker</em></span> to <span class="emphasis"><em>stronger</em></span>
+      or <span class="emphasis"><em>stricter</em></span> alignments. Stricter alignments have larger
+      alignment values. An address that satisfies an alignment requirement also satisfies
+      any weaker valid alignment requirement.
     </p>
 <p>
       The alignment requirement of a complete type can be queried using an <code class="computeroutput"><span class="keyword">alignof</span></code> expression. Furthermore, the types
       <code class="computeroutput"><span class="keyword">char</span></code>, <code class="computeroutput"><span class="keyword">signed</span>
       <span class="keyword">char</span></code>, and <code class="computeroutput"><span class="keyword">unsigned</span>
       <span class="keyword">char</span></code> shall have the weakest alignment
-      requirement.
+      requirement. [<span class="emphasis"><em>Note:</em></span> This enables the character types to
+      be used as the underlying type for an aligned memory area. &#8212;<span class="emphasis"><em>end
+      note</em></span>]
     </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-        This enables the character types to be used as the underlying type for an
-        aligned memory area.
-      </p></td></tr>
-</table></div>
 <p>
       Comparing alignments is meaningful and provides the obvious results:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Two alignments are equal when their numeric values are equal.
         </li>
@@ -133,17 +117,12 @@
           When an alignment is larger than another it represents a stricter alignment.
         </li>
 </ul></div>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-        The runtime pointer alignment function can be used to obtain an aligned pointer
-        within a buffer; the aligned-storage templates in the library can be used
-        to obtain aligned storage.
-      </p></td></tr>
-</table></div>
+<p>
+      [<span class="emphasis"><em>Note:</em></span> The runtime pointer alignment function can be used
+      to obtain an aligned pointer within a buffer; the aligned-storage templates
+      in the library can be used to obtain aligned storage. &#8212;<span class="emphasis"><em>end
+      note</em></span>]
+    </p>
 <p>
       If a request for a specific extended alignment in a specific context is not
       supported by an implementation, the program is ill-formed. Additionally, a
@@ -153,7 +132,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014, 2015 Glen Joseph Fernandes<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014-2017 Glen
+      Joseph Fernandes<p>
         Distributed under the Boost Software License, Version 1.0.
       </p>
 </div></td>

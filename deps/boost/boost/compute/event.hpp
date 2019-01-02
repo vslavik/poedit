@@ -74,7 +74,7 @@ public:
         marker = CL_COMMAND_MARKER,
         aquire_gl_objects = CL_COMMAND_ACQUIRE_GL_OBJECTS,
         release_gl_object = CL_COMMAND_RELEASE_GL_OBJECTS
-        #if defined(CL_VERSION_1_1)
+        #if defined(BOOST_COMPUTE_CL_VERSION_1_1)
         ,
         read_buffer_rect = CL_COMMAND_READ_BUFFER_RECT,
         write_buffer_rect = CL_COMMAND_WRITE_BUFFER_RECT,
@@ -218,7 +218,7 @@ public:
         }
     }
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Registers a function to be called when the event status changes to
     /// \p status (by default CL_COMPLETE). The callback is passed the OpenCL
     /// event object, the event status, and a pointer to arbitrary user data.
@@ -254,7 +254,7 @@ public:
             new boost::function<void()>(callback)
         );
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
     /// Returns the total duration of the event from \p start to \p end.
     ///
@@ -300,7 +300,7 @@ public:
     }
 
 private:
-    #ifdef CL_VERSION_1_1
+    #ifdef BOOST_COMPUTE_CL_VERSION_1_1
     /// \internal_
     static void BOOST_COMPUTE_CL_CALLBACK
     event_callback_invoker(cl_event, cl_int, void *user_data)
@@ -312,7 +312,7 @@ private:
 
         delete callback;
     }
-    #endif // CL_VERSION_1_1
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 protected:
     cl_event m_event;
@@ -326,7 +326,7 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(event,
     ((cl_uint, CL_EVENT_REFERENCE_COUNT))
 )
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(event,
     ((cl_context, CL_EVENT_CONTEXT))
 )

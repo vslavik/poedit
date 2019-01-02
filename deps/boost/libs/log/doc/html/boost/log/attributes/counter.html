@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template counter</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../attributes.html#header.boost.log.attributes.counter_hpp" title="Header &lt;boost/log/attributes/counter.hpp&gt;">
 <link rel="prev" href="make_constant.html" title="Function template make_constant">
@@ -37,37 +37,43 @@
   <span class="keyword">class</span> <a class="link" href="counter/impl.html" title="Class impl">impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">attribute</span><span class="special">::</span><span class="identifier">impl</span> <span class="special">{</span>
   <span class="keyword">public</span><span class="special">:</span>
     <span class="comment">// <a class="link" href="counter/impl.html#boost.log.attributes.counter.implconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="counter/impl.html#idp19836736-bb"><span class="identifier">impl</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">value_type</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+    <a class="link" href="counter/impl.html#idp48928592-bb"><span class="identifier">impl</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">value_type</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="counter/impl.html#idp19833840-bb">public member functions</a></span>
-    <span class="keyword">virtual</span> <a class="link" href="../attribute_value.html" title="Class attribute_value">attribute_value</a> <a class="link" href="counter/impl.html#idp19834400-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="counter/impl.html#idp48925696-bb">public member functions</a></span>
+    <span class="keyword">virtual</span> <a class="link" href="../attribute_value.html" title="Class attribute_value">attribute_value</a> <a class="link" href="counter/impl.html#idp48926256-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="counter.html#boost.log.attributes.counterconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="counter.html#idp19840528-bb"><span class="identifier">counter</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">value_type</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="counter.html#idp19844704-bb"><span class="identifier">counter</span></a><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="counter.html#idp48932384-bb"><span class="identifier">counter</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">value_type</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="counter.html#idp48936560-bb"><span class="identifier">counter</span></a><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp79942464"></a><h2>Description</h2>
+<a name="idp96614384"></a><h2>Description</h2>
 <p>This attribute acts as a counter - it returns a monotonously changing value each time requested. The attribute value type can be specified as a template parameter. The type must be an integral type. </p>
 <div class="refsect2">
-<a name="idp79943344"></a><h3>
+<a name="idp96615264"></a><h3>
 <a name="boost.log.attributes.counterconstruct-copy-destruct"></a><code class="computeroutput">counter</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp19840528-bb"></a><span class="identifier">counter</span><span class="special">(</span><span class="identifier">value_type</span> initial <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">0</span><span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp48932384-bb"></a><span class="identifier">counter</span><span class="special">(</span><span class="identifier">value_type</span> initial <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">0</span><span class="special">,</span> 
                  <span class="identifier">value_type</span> step <span class="special">=</span> <span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">initial</code></span></p></td>
@@ -83,7 +89,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp19844704-bb"></a><span class="identifier">counter</span><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span> source<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp48936560-bb"></a><span class="identifier">counter</span><span class="special">(</span><a class="link" href="cast_source.html" title="Class cast_source">cast_source</a> <span class="keyword">const</span> <span class="special">&amp;</span> source<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor for casting support </p>
 </li>
 </ol></div>

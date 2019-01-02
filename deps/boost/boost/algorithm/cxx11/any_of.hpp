@@ -14,7 +14,6 @@
 #ifndef BOOST_ALGORITHM_ANY_OF_HPP
 #define BOOST_ALGORITHM_ANY_OF_HPP
 
-#include <algorithm>    // for std::any_of, if available
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -29,7 +28,7 @@ namespace boost { namespace algorithm {
 /// \param p     A predicate for testing the elements of the sequence
 ///
 template<typename InputIterator, typename Predicate> 
-bool any_of ( InputIterator first, InputIterator last, Predicate p ) 
+BOOST_CXX14_CONSTEXPR bool any_of ( InputIterator first, InputIterator last, Predicate p ) 
 {
     for ( ; first != last; ++first )
         if ( p(*first)) 
@@ -45,7 +44,7 @@ bool any_of ( InputIterator first, InputIterator last, Predicate p )
 /// \param p    A predicate for testing the elements of the range
 ///
 template<typename Range, typename Predicate> 
-bool any_of ( const Range &r, Predicate p )
+BOOST_CXX14_CONSTEXPR bool any_of ( const Range &r, Predicate p )
 {
     return boost::algorithm::any_of (boost::begin (r), boost::end (r), p);
 } 
@@ -59,7 +58,7 @@ bool any_of ( const Range &r, Predicate p )
 /// \param val   A value to compare against
 ///
 template<typename InputIterator, typename V> 
-bool any_of_equal ( InputIterator first, InputIterator last, const V &val ) 
+BOOST_CXX14_CONSTEXPR bool any_of_equal ( InputIterator first, InputIterator last, const V &val ) 
 {
     for ( ; first != last; ++first )
         if ( val == *first )
@@ -75,7 +74,7 @@ bool any_of_equal ( InputIterator first, InputIterator last, const V &val )
 /// \param val   A value to compare against
 ///
 template<typename Range, typename V> 
-bool any_of_equal ( const Range &r, const V &val ) 
+BOOST_CXX14_CONSTEXPR bool any_of_equal ( const Range &r, const V &val ) 
 {
     return boost::algorithm::any_of_equal (boost::begin (r), boost::end (r), val);
 }

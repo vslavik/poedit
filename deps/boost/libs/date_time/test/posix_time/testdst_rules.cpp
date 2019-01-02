@@ -55,7 +55,7 @@ main()
 
   //The following defines the US dst boundaries, except that the
   //start and end dates are hard coded.
-  typedef boost::date_time::us_dst_rules<date, time_duration, 120, 60> us_dst;
+  typedef boost::date_time::us_dst_rules<date, time_duration, 120, 60> us_dst_local;
   date dst_start(2002,Apr, 7);
   date dst_end(2002,Oct, 27);
 
@@ -68,29 +68,29 @@ main()
   ptime t8(dst_end, time_duration(1,59,59));   //ambiguous 
   ptime t9(dst_end, time_duration(2,0,0));   //always not dst
 
-  check("dst start", us_dst::local_dst_start_day(2002) == dst_start);
-  check("dst end",   us_dst::local_dst_end_day(2002) == dst_end);
-  check("dst boundary",   us_dst::is_dst_boundary_day(dst_start));
-  check("dst boundary",   us_dst::is_dst_boundary_day(dst_end));
+  check("dst start", us_dst_local::local_dst_start_day(2002) == dst_start);
+  check("dst end",   us_dst_local::local_dst_end_day(2002) == dst_end);
+  check("dst boundary",   us_dst_local::is_dst_boundary_day(dst_start));
+  check("dst boundary",   us_dst_local::is_dst_boundary_day(dst_end));
   check("check if time is dst -- not",   
-        us_dst::local_is_dst(t.date(), t.time_of_day())==boost::date_time::is_not_in_dst);
+        us_dst_local::local_is_dst(t.date(), t.time_of_day())==boost::date_time::is_not_in_dst);
   check("label on dst boundary invalid", 
-        us_dst::local_is_dst(t3a.date(),t3a.time_of_day())==boost::date_time::invalid_time_label);
+        us_dst_local::local_is_dst(t3a.date(),t3a.time_of_day())==boost::date_time::invalid_time_label);
   check("label on dst boundary invalid",   
-        us_dst::local_is_dst(t3b.date(),t3b.time_of_day())==boost::date_time::invalid_time_label);
+        us_dst_local::local_is_dst(t3b.date(),t3b.time_of_day())==boost::date_time::invalid_time_label);
    check("check if time is dst -- not",   
-         us_dst::local_is_dst(t4.date(),t4.time_of_day())==boost::date_time::is_not_in_dst);
+         us_dst_local::local_is_dst(t4.date(),t4.time_of_day())==boost::date_time::is_not_in_dst);
    check("check if time is dst -- yes",   
-         us_dst::local_is_dst(t5.date(),t5.time_of_day())==boost::date_time::is_in_dst);
+         us_dst_local::local_is_dst(t5.date(),t5.time_of_day())==boost::date_time::is_in_dst);
 
    check("check if time is dst -- not",   
-         us_dst::local_is_dst(t6.date(),t6.time_of_day())==boost::date_time::is_in_dst);
+         us_dst_local::local_is_dst(t6.date(),t6.time_of_day())==boost::date_time::is_in_dst);
    check("check if time is dst -- ambig", 
-         us_dst::local_is_dst(t7.date(),t7.time_of_day())==boost::date_time::ambiguous);
+         us_dst_local::local_is_dst(t7.date(),t7.time_of_day())==boost::date_time::ambiguous);
    check("check if time is dst -- ambig", 
-         us_dst::local_is_dst(t8.date(),t8.time_of_day())==boost::date_time::ambiguous);
+         us_dst_local::local_is_dst(t8.date(),t8.time_of_day())==boost::date_time::ambiguous);
    check("check if time is dst -- not",   
-         us_dst::local_is_dst(t9.date(),t9.time_of_day())==boost::date_time::is_not_in_dst);
+         us_dst_local::local_is_dst(t9.date(),t9.time_of_day())==boost::date_time::is_not_in_dst);
 
 
   //Now try a local without dst

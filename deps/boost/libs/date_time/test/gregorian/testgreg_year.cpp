@@ -8,41 +8,38 @@
 #include "boost/date_time/gregorian/greg_year.hpp"
 #include "../testfrmwk.hpp"
 #include <iostream>
+#include <sstream>
 
+void test_yearlimit(int yr, bool allowed)
+{
+    std::stringstream sdesc;
+    sdesc << "should" << (allowed ? "" : " not") << " be able to make a year " << yr;
+
+    try {
+        boost::gregorian::greg_year chkyr(yr);
+        check(sdesc.str(), allowed);
+        if (allowed) {
+            check_equal("year operator ==", chkyr, yr);
+        }
+    }
+    catch (std::out_of_range&) { check(sdesc.str(), !allowed); }
+}
 
 int
 main() 
 {
+  // trac-13159 better limit testing
+  test_yearlimit(    0, false);
+  test_yearlimit( 1399, false);
+  test_yearlimit( 1400,  true);
+  test_yearlimit( 1401,  true);
+  test_yearlimit( 9999,  true);
+  test_yearlimit(10000, false);
+  test_yearlimit(10001, false);
 
-  using namespace boost::gregorian;
-  greg_year d1(1400);
-  check("Basic of min", d1 == 1400);
-  greg_year d2(10000);
-  check("Basic test of max", d2 == 10000);
-  try {
-    greg_year bad(0);
-    check("Bad year creation", false); //oh oh, fail
-    //unreachable
-    std::cout << "Shouldn't reach here: " << bad << std::endl;
-  }
-  catch(std::exception &) {
-    check("Bad year creation", true); //good
-    
-  }
-  try {
-    greg_year bad(10001);
-    check("Bad year creation2", false); //oh oh, fail
-    //unreachable
-    std::cout << "Shouldn't reach here: " << bad << std::endl;
-  }
-  catch(std::exception&) {
-    check("Bad year creation2", true); //good
-    
-  }
-  check("traits min year", (greg_year::min)() ==  1400);
-  check("traits max year", (greg_year::max)() == 10000);
+  check("traits min year", (boost::gregorian::greg_year::min)() == 1400);
+  check("traits max year", (boost::gregorian::greg_year::max)() == 9999);
 
-  printTestStats();
-  return 0;
+  return printTestStats();
 }
 

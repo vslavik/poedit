@@ -4,7 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/static_assert.hpp>
 #include <boost/python/detail/if_else.hpp>
-#include <boost/type_traits/same_traits.hpp>
+#include <boost/python/detail/type_traits.hpp>
 
     typedef char c1;
     typedef char c2[2];
@@ -35,10 +35,10 @@ struct choose
 
 int main()
 {
-    BOOST_STATIC_ASSERT((boost::is_same<choose<1>::type,c1>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose<2>::type,c2>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose<3>::type,c3>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose<4>::type,c4>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<choose<5>::type,void*>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose<1>::type,c1>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose<2>::type,c2>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose<3>::type,c3>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose<4>::type,c4>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose<5>::type,void*>::value));
     return 0;
 }

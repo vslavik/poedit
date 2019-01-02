@@ -630,7 +630,7 @@ class segment_manager
    //!the named allocations performed in this segment manager
    const_named_iterator named_begin() const
    {
-      return make_transform_iterator
+      return (make_transform_iterator)
          (m_header.m_named_index.begin(), named_transform());
    }
 
@@ -638,7 +638,7 @@ class segment_manager
    //!the named allocations performed in this segment manager
    const_named_iterator named_end() const
    {
-      return make_transform_iterator
+      return (make_transform_iterator)
          (m_header.m_named_index.end(), named_transform());
    }
 
@@ -646,7 +646,7 @@ class segment_manager
    //!the unique allocations performed in this segment manager
    const_unique_iterator unique_begin() const
    {
-      return make_transform_iterator
+      return (make_transform_iterator)
          (m_header.m_unique_index.begin(), unique_transform());
    }
 
@@ -654,7 +654,7 @@ class segment_manager
    //!the unique allocations performed in this segment manager
    const_unique_iterator unique_end() const
    {
-      return make_transform_iterator
+      return (make_transform_iterator)
          (m_header.m_unique_index.end(), unique_transform());
    }
 

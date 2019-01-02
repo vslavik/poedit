@@ -12,10 +12,12 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using decay_t = typename decay<T>::type; // C++11 and above
+
 __type Let `U` be the result of `remove_reference<T>::type`, then if `U` is
 an array type, the result is `remove_extent<U>::type*`, otherwise if `U` is a 
-function type then the result is `U*`, otherwise the result is `U`.
+function type then the result is `U*`, otherwise the result is `remove_cv<U>::type`.
 
 __std_ref 3.9.1.
 

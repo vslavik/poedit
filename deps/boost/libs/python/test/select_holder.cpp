@@ -6,7 +6,7 @@
 #include <boost/python/has_back_reference.hpp>
 #include <boost/python/detail/not_specified.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits/same_traits.hpp>
+#include <boost/python/detail/type_traits.hpp>
 #include <boost/function/function0.hpp>
 #include <boost/mpl/bool.hpp>
 #include <memory>
@@ -29,7 +29,7 @@ namespace boost { namespace python
 template <class T, class U>
 void assert_same(U* = 0, T* = 0)
 {
-    BOOST_STATIC_ASSERT((boost::is_same<T,U>::value));
+    BOOST_STATIC_ASSERT((boost::python::detail::is_same<T,U>::value));
     
 }
 

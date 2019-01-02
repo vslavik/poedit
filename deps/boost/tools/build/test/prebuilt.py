@@ -27,8 +27,8 @@ t.expand_toolset("ext/jamfile.jam")
 # is picked, depending of variant. This also checks that correct includes for
 # prebuilt libraries are used.
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/hello.exe")
-t.expect_addition("bin/$toolset/release/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
+t.expect_addition("bin/$toolset/release*/hello.exe")
 
 t.rm("bin")
 
@@ -37,7 +37,7 @@ t.rm("bin")
 t.copy("ext/jamfile3.jam", "ext/jamfile.jam")
 t.expand_toolset("ext/jamfile.jam")
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/hello.exe")
-t.expect_addition("bin/$toolset/release/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
+t.expect_addition("bin/$toolset/release*/hello.exe")
 
 t.cleanup()

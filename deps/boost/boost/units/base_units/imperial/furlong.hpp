@@ -28,8 +28,8 @@ typedef scaled_base_unit<yard_base_unit, scale<220, static_rational<1> > > furlo
 
 template<>
 struct base_unit_info<imperial::furlong_base_unit> {
-    static const char* name()   { return("furlong"); }
-    static const char* symbol() { return("furlong"); }
+    static BOOST_CONSTEXPR const char* name()   { return("furlong"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("furlong"); }
 };
 
 } // namespace units

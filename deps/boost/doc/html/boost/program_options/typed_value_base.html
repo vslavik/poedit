@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class typed_value_base</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../program_options/reference.html#header.boost.program_options.value_semantic_hpp" title="Header &lt;boost/program_options/value_semantic.hpp&gt;">
 <link rel="prev" href="untyped_value.html" title="Class untyped_value">
@@ -36,25 +36,25 @@
 <span class="keyword">class</span> <a class="link" href="typed_value_base.html" title="Class typed_value_base">typed_value_base</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="typed_value_base.html#boost.program_options.typed_value_baseconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="typed_value_base.html#idp77941680-bb"><span class="special">~</span><span class="identifier">typed_value_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="typed_value_base.html#id-1_3_32_9_10_1_1_6_3-bb"><span class="special">~</span><span class="identifier">typed_value_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="typed_value_base.html#idp178774912-bb">public member functions</a></span>
-  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a class="link" href="typed_value_base.html#idp178775472-bb"><span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="typed_value_base.html#id-1_3_32_9_10_1_1_6_2-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a class="link" href="typed_value_base.html#id-1_3_32_9_10_1_1_6_2_1-bb"><span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp312688352"></a><h2>Description</h2>
+<a name="id-1.3.32.9.11.8.4"></a><h2>Description</h2>
 <p>Base class for all option that have a fixed type, and are willing to announce this type to the outside world. Any 'value_semantics' for which you want to find out the type can be dynamic_cast-ed to <a class="link" href="typed_value_base.html" title="Class typed_value_base">typed_value_base</a>. If conversion succeeds, the 'type' method can be called. </p>
 <div class="refsect2">
-<a name="idp312690192"></a><h3>
+<a name="id-1.3.32.9.11.8.4.3"></a><h3>
 <a name="boost.program_options.typed_value_baseconstruct-copy-destruct"></a><code class="computeroutput">typed_value_base</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp77941680-bb"></a><span class="special">~</span><span class="identifier">typed_value_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="id-1_3_32_9_10_1_1_6_3-bb"></a><span class="special">~</span><span class="identifier">typed_value_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp312696640"></a><h3>
-<a name="idp178774912-bb"></a><code class="computeroutput">typed_value_base</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a name="idp178775472-bb"></a><span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre></li></ol></div>
+<a name="id-1.3.32.9.11.8.4.4"></a><h3>
+<a name="id-1_3_32_9_10_1_1_6_2-bb"></a><code class="computeroutput">typed_value_base</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a name="id-1_3_32_9_10_1_1_6_2_1-bb"></a><span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

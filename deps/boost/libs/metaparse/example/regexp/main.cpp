@@ -134,7 +134,7 @@ void test_string(const std::string& s)
   using std::cout;
   using std::endl;
 
-#ifdef BOOST_NO_CXX11_CONSTEXPR
+#if BOOST_METAPARSE_STD < 2011
   typedef boost::metaparse::string<'.','(','b','c',')'> regexp;
 #else
   typedef BOOST_METAPARSE_STRING(".(bc)") regexp;

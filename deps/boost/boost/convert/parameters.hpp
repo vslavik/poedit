@@ -1,33 +1,30 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 #ifndef BOOST_CONVERT_PARAMETERS_HPP
 #define BOOST_CONVERT_PARAMETERS_HPP
 
-#include <boost/convert/detail/boost_parameter_ext.hpp>
+#include <boost/parameter/name.hpp>
 
-namespace boost
+namespace boost { namespace cnv
 {
-    namespace cnv
-    {
-        struct adjust { enum type { left, right, center };};
-        struct base { enum type { bin =2, dec =10, hex =16, oct =8 };};
-        struct notation { enum type { fixed, scientific };};
+    enum class   adjust { left, right, center };
+    enum class     base { bin =2, oct =8, dec =10, hex =16 };
+    enum class notation { fixed, scientific };
 
-        namespace parameter
-        {
-            BOOST_PARAMETER_KEYWORD(type,     adjust)
-            BOOST_PARAMETER_KEYWORD(type,       base)
-            BOOST_PARAMETER_KEYWORD(type,       fill)
-            BOOST_PARAMETER_KEYWORD(type,     locale)
-            BOOST_PARAMETER_KEYWORD(type,   notation)
-            BOOST_PARAMETER_KEYWORD(type,  precision)
-            BOOST_PARAMETER_KEYWORD(type,     skipws)
-            BOOST_PARAMETER_KEYWORD(type,  uppercase)
-            BOOST_PARAMETER_KEYWORD(type,      width)
-        }
+    namespace parameter
+    {
+        BOOST_PARAMETER_NAME((   adjust, type)    adjust)
+        BOOST_PARAMETER_NAME((     base, type)      base)
+        BOOST_PARAMETER_NAME((     fill, type)      fill)
+        BOOST_PARAMETER_NAME((   locale, type)    locale)
+        BOOST_PARAMETER_NAME(( notation, type)  notation)
+        BOOST_PARAMETER_NAME((precision, type) precision)
+        BOOST_PARAMETER_NAME((   skipws, type)    skipws)
+        BOOST_PARAMETER_NAME((uppercase, type) uppercase)
+        BOOST_PARAMETER_NAME((    width, type)     width)
     }
-}
+}}
 
 #endif // BOOST_CONVERT_PARAMETERS_HPP

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template make_counting_iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.iterator.counting_iterator_hpp" title="Header &lt;boost/compute/iterator/counting_iterator.hpp&gt;">
 <link rel="prev" href="counting_iterator.html" title="Class template counting_iterator">
@@ -35,21 +35,27 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
   <a class="link" href="counting_iterator.html" title="Class template counting_iterator">counting_iterator</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="identifier">make_counting_iterator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> init<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp79862752"></a><h2>Description</h2>
+<a name="idp94559472"></a><h2>Description</h2>
 <p>Returns a new <code class="computeroutput"><a class="link" href="counting_iterator.html" title="Class template counting_iterator">counting_iterator</a></code> starting at <code class="computeroutput">init</code>.</p>
 <p>
 
 For example, to create a counting iterator which returns unsigned integers and increments from one: </p>
-<pre class="programlisting"> <span class="keyword">auto</span> <span class="identifier">iter</span> <span class="special">=</span> <span class="identifier">make_counting_iterator</span><span class="special">&lt;</span><span class="identifier">uint_</span><span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">iter</span> <span class="special">=</span> <span class="identifier">make_counting_iterator</span><span class="special">&lt;</span><span class="identifier">uint_</span><span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">init</code></span></p></td>
 <td><p>the initial value</p></td>

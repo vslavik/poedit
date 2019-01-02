@@ -6,17 +6,20 @@
 # This module defines rules to apply an XSLT stylesheet to an XML file using the
 # xsltproc driver, part of libxslt.
 
+import "class" : new ;
 import common ;
 import feature ;
+import generators ;
 import modules ;
 import os ;
 import path ;
 import regex ;
 import sequence ;
+import toolset ;
+import virtual-target ;
 
-
-feature.feature xsl:param : : free ;
-feature.feature xsl:path : : free ;
+feature.feature "xsl:param" : : free ;
+feature.feature "xsl:path" : : free ;
 feature.feature catalog : : free ;
 
 
@@ -72,6 +75,11 @@ rule check-xsltproc ( )
     }
 }
 
+rule name ( )
+{
+    freeze-config ;
+    return $(.xsltproc) ;
+}
 
 # Returns a non-empty string if a cygwin xsltproc binary was specified.
 #
@@ -103,42 +111,59 @@ rule .is-cygwin ( xsltproc )
     }
 }
 
+class xsltproc-action : action
+{
+    rule adjust-properties ( property-set )
+    {
+        local s = [ $(self.targets[1]).creating-subvariant ] ;
+        if $(s)
+        {
+            return [ $(property-set).add-raw
+                [ $(s).implicit-includes "xsl:path" : XML ] ] ;
+        }
+        else
+        {
+            return $(property-set) ;
+        }
+    }
+}
+
+class xsltproc-generator : generator
+{
+    rule action-class ( )
+    {
+        return xsltproc-action ;
+    }
+}
+
+rule register-generator ( id : source-types + : target-types + : requirements * )
+{
+    if ! $(id) in $(.known-rules)
+    {
+        .known-rules += $(id) ;
+        flags $(id) ;
+    }
+    generators.register [ new xsltproc-generator $(id) :
+        $(source-types) : $(target-types) : $(requirements) ] ;
+}
+
+IMPORT xsltproc : register-generator : : generators.register-xslt ;
+
+rule flags ( rulename )
+{
+    toolset.uses-features $(rulename) : <xsl:param> <catalog> : unchecked ;
+    toolset.flags $(rulename) XSL-PATH : <xsl:path> : unchecked ;
+    toolset.flags $(rulename) FLAGS : <flags> : unchecked ;
+}
 
 rule compute-xslt-flags ( target : properties * )
 {
-    # Raw flags.
-    local flags = [ feature.get-values <flags> : $(properties) ] ;
-
+    local flags ;
     # Translate <xsl:param> into command line flags.
     for local param in [ feature.get-values <xsl:param> : $(properties) ]
     {
         local namevalue = [ regex.split $(param) "=" ] ;
         flags += --stringparam $(namevalue[1]) \"$(namevalue[2])\" ;
-    }
-
-    # Translate <xsl:path>.
-    for local path in [ feature.get-values <xsl:path> : $(properties) ]
-    {
-        flags += --path \"$(path:G=)\" ;
-    }
-
-    # Take care of implicit dependencies.
-    local other-deps ;
-    for local dep in [ feature.get-values <implicit-dependency> : $(properties)
-        ]
-    {
-        other-deps += [ $(dep:G=).creating-subvariant ] ;
-    }
-
-    local implicit-target-directories ;
-    for local dep in [ sequence.unique $(other-deps) ]
-    {
-        implicit-target-directories += [ $(dep).all-target-directories ] ;
-    }
-
-    for local dir in $(implicit-target-directories)
-    {
-        flags += --path \"$(dir:T)\" ;
     }
 
     return $(flags) ;
@@ -181,25 +206,27 @@ rule xslt-dir ( target : source stylesheet : properties * : dirname )
         $(dirname) : xslt-xsltproc-dir ] ;
 }
 
+_ = " " ;
+
 actions xslt-xsltproc.windows
 {
-    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --xinclude -o "$(<)" "$(STYLESHEET:W)" "$(>:W)"
+    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --path$(_)"$(XSL-PATH:W)" --xinclude -o "$(<)" "$(STYLESHEET:W)" "$(>:W)"
 }
 
 
 actions xslt-xsltproc bind STYLESHEET
 {
-    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --xinclude -o "$(<)" "$(STYLESHEET:T)" "$(>:T)"
+    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --path$(_)"$(XSL-PATH:T)" --xinclude -o "$(<)" "$(STYLESHEET:T)" "$(>:T)"
 }
 
 
 actions xslt-xsltproc-dir.windows bind STYLESHEET
 {
-    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --xinclude -o "$(<:D)/" "$(STYLESHEET:W)" "$(>:W)"
+    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --path$(_)"$(XSL-PATH:W)" --xinclude -o "$(<:D)/" "$(STYLESHEET:W)" "$(>:W)"
 }
 
 
 actions xslt-xsltproc-dir bind STYLESHEET
 {
-    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --xinclude -o "$(<:D)/" "$(STYLESHEET:T)" "$(>:T)"
+    $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --path$(_)"$(XSL-PATH:T)" --xinclude -o "$(<:D)/" "$(STYLESHEET:T)" "$(>:T)"
 }

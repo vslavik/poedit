@@ -1,10 +1,9 @@
 /*
-(c) 2014 Glen Joseph Fernandes
-<glenjofe -at- gmail.com>
+Copyright 2014 Glen Joseph Fernandes
+(glenjofe@gmail.com)
 
-Distributed under the Boost Software
-License, Version 1.0.
-http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software License, Version 1.0.
+(http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <boost/config.hpp>
 #if !defined(BOOST_NO_CXX11_SMART_PTR)
@@ -13,14 +12,14 @@ http://boost.org/LICENSE_1_0.txt
 
 class type {
 public:
-    static unsigned int instances;
+    static unsigned instances;
 
-    explicit type() {
-        instances++;
+    type() {
+        ++instances;
     }
 
     ~type() {
-        instances--;
+        --instances;
     }
 
 private:
@@ -28,63 +27,61 @@ private:
     type& operator=(const type&);
 };
 
-unsigned int type::instances = 0;
+unsigned type::instances = 0;
 
 int main()
 {
     {
-        std::unique_ptr<int[]> a1 = boost::make_unique_noinit<int[]>(3);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<int[]> result =
+            boost::make_unique_noinit<int[]>(3);
+        BOOST_TEST(result.get() != 0);
     }
-
     {
-        std::unique_ptr<int[][2]> a1 = boost::make_unique_noinit<int[][2]>(2);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<int[][2]> result =
+            boost::make_unique_noinit<int[][2]>(2);
+        BOOST_TEST(result.get() != 0);
     }
-    
     BOOST_TEST(type::instances == 0);
     {
-        std::unique_ptr<type[]> a1 = boost::make_unique_noinit<type[]>(3);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<type[]> result =
+            boost::make_unique_noinit<type[]>(3);
+        BOOST_TEST(result.get() != 0);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
-
     BOOST_TEST(type::instances == 0);
     {
-        std::unique_ptr<type[][2]> a1 = boost::make_unique_noinit<type[][2]>(2);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<type[][2]> result =
+            boost::make_unique_noinit<type[][2]>(2);
+        BOOST_TEST(result.get() != 0);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
-
     BOOST_TEST(type::instances == 0);
     {
-        std::unique_ptr<const type[]> a1 = boost::make_unique_noinit<const type[]>(3);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<const type[]> result =
+            boost::make_unique_noinit<const type[]>(3);
+        BOOST_TEST(result.get() != 0);
         BOOST_TEST(type::instances == 3);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
-
     BOOST_TEST(type::instances == 0);
     {
-        std::unique_ptr<const type[][2]> a1 = boost::make_unique_noinit<const type[][2]>(2);
-        BOOST_TEST(a1.get() != 0);
+        std::unique_ptr<const type[][2]> result =
+            boost::make_unique_noinit<const type[][2]>(2);
+        BOOST_TEST(result.get() != 0);
         BOOST_TEST(type::instances == 4);
-        a1.reset();
+        result.reset();
         BOOST_TEST(type::instances == 0);
     }
-
     return boost::report_errors();
 }
 #else
-
 int main()
 {
     return 0;
 }
-
 #endif

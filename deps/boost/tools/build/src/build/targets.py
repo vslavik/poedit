@@ -82,6 +82,7 @@ from virtual_target import Subvariant
 from b2.exceptions import *
 from b2.util.sequence import unique
 from b2.util import path, bjam_signature, safe_isinstance, is_iterable_typed
+from b2.build import errors
 from b2.build.errors import user_error_checkpoint
 
 import b2.build.build_request as build_request
@@ -155,6 +156,8 @@ class TargetRegistry:
          'project' is the project where the main taret is to be declared."""
         assert is_iterable_typed(specification, basestring)
         assert isinstance(project, ProjectTarget)
+        # create a copy since the list is being modified
+        specification = list(specification)
         specification.extend(toolset.requirements())
 
         requirements = property_set.refine_from_user_input(
@@ -202,7 +205,7 @@ class TargetRegistry:
         """ Helper rules to detect cycles in main target references.
         """
         assert isinstance(main_target_instance, MainTarget)
-        if self.targets_being_built_.has_key(id(main_target_instance)):
+        if id(main_target_instance) in self.targets_being_built_:
             names = []
             for t in self.targets_being_built_.values() + [main_target_instance]:
                 names.append (t.full_name())
@@ -213,7 +216,7 @@ class TargetRegistry:
 
     def end_building (self, main_target_instance):
         assert isinstance(main_target_instance, MainTarget)
-        assert (self.targets_being_built_.has_key (id (main_target_instance)))
+        assert (id(main_target_instance) in self.targets_being_built_)
         del self.targets_being_built_ [id (main_target_instance)]
 
     def create_typed_target (self, type, project, name, sources, requirements, default_build, usage_requirements):
@@ -308,6 +311,7 @@ class AbstractTarget:
 
         self.name_ = name
         self.project_ = project
+        self.location_ = errors.nearest_user_location()
 
     def manager (self):
         return self.manager_
@@ -469,7 +473,7 @@ class ProjectTarget (AbstractTarget):
         that should be build only by explicit request."""
 
         # Record the name of the target, not instance, since this
-        # rule is called before main target instaces are created.
+        # rule is called before main target instances are created.
         assert is_iterable_typed(target_names, basestring)
         self.explicit_targets_.update(target_names)
 
@@ -499,7 +503,7 @@ class ProjectTarget (AbstractTarget):
         if not self.built_main_targets_:
             self.build_main_targets()
 
-        return self.main_target_.has_key(name)
+        return name in self.main_target_
 
     def create_main_target (self, name):
         """ Returns a 'MainTarget' class instance corresponding to the 'name'.
@@ -527,8 +531,16 @@ class ProjectTarget (AbstractTarget):
         target_part = None
 
         if split:
-            project_part = split.group (1)
-            target_part = split.group (2)
+            project_part = split.group(1)
+            target_part = split.group(2)
+            if not target_part:
+                get_manager().errors()(
+                    'Project ID, "{}", is not a valid target reference. There should '
+                    'be either a target name after the "//" or the "//" should be removed '
+                    'from the target reference.'
+                    .format(id)
+                )
+
 
         project_registry = self.project_.manager ().projects ()
 
@@ -595,7 +607,7 @@ class ProjectTarget (AbstractTarget):
 
         for a in self.alternatives_:
             name = a.name ()
-            if not self.main_target_.has_key (name):
+            if name not in self.main_target_:
                 t = MainTarget (name, self.project_)
                 self.main_target_ [name] = t
 
@@ -613,7 +625,7 @@ class ProjectTarget (AbstractTarget):
         to the location of project.
         """
         assert isinstance(name, basestring)
-        assert isinstance(value, basestring)
+        assert is_iterable_typed(value, basestring)
         assert isinstance(path, int)  # will also match bools
         if path:
             l = self.location_
@@ -625,10 +637,10 @@ class ProjectTarget (AbstractTarget):
                 # targets in config files, but that's for later.
                 l = self.get('source-location')
 
-            value = os.path.join(l, value)
+            value = os.path.join(l, value[0])
             # Now make the value absolute path. Constants should be in
             # platform-native form.
-            value = os.path.normpath(os.path.join(os.getcwd(), value))
+            value = [os.path.normpath(os.path.join(os.getcwd(), value))]
 
         self.constants_[name] = value
         bjam.call("set-variable", self.project_module(), name, value)
@@ -658,12 +670,13 @@ class MainTarget (AbstractTarget):
     def __init__ (self, name, project):
         AbstractTarget.__init__ (self, name, project)
         self.alternatives_ = []
+        self.best_alternative = None
         self.default_build_ = property_set.empty ()
 
     def add_alternative (self, target):
         """ Add a new alternative for this target.
         """
-        assert isinstance(target, AbstractTarget)
+        assert isinstance(target, BasicTarget)
         d = target.default_build ()
 
         if self.alternatives_ and self.default_build_ != d:
@@ -769,6 +782,7 @@ class MainTarget (AbstractTarget):
         """
         assert isinstance(prop_set, property_set.PropertySet)
         best_alternative = self.__select_alternatives (prop_set, debug=0)
+        self.best_alternative = best_alternative
 
         if not best_alternative:
             # FIXME: revive.
@@ -790,7 +804,7 @@ class MainTarget (AbstractTarget):
 
 class FileReference (AbstractTarget):
     """ Abstract target which refers to a source file.
-        This is artificial creature; it's usefull so that sources to
+        This is artificial creature; it's useful so that sources to
         a target can be represented as list of abstract target instances.
     """
     def __init__ (self, manager, file, project):
@@ -881,9 +895,9 @@ class BasicTarget (AbstractTarget):
     """
     def __init__ (self, name, project, sources, requirements = None, default_build = None, usage_requirements = None):
         assert is_iterable_typed(sources, basestring)
-        assert isinstance(requirements, property_set.PropertySet)
-        assert isinstance(default_build, property_set.PropertySet)
-        assert isinstance(usage_requirements, property_set.PropertySet)
+        assert isinstance(requirements, property_set.PropertySet) or requirements is None
+        assert isinstance(default_build, property_set.PropertySet) or default_build is None
+        assert isinstance(usage_requirements, property_set.PropertySet) or usage_requirements is None
         AbstractTarget.__init__ (self, name, project)
 
         for s in sources:
@@ -955,14 +969,14 @@ class BasicTarget (AbstractTarget):
         free_unconditional = []
         other = []
         for p in requirements.all():
-            if p.feature().free() and not p.condition() and p.feature().name() != 'conditional':
+            if p.feature.free and not p.condition and p.feature.name != 'conditional':
                 free_unconditional.append(p)
             else:
                 other.append(p)
         other = property_set.create(other)
 
         key = (build_request, other)
-        if not self.request_cache.has_key(key):
+        if key not in self.request_cache:
             self.request_cache[key] = self.__common_properties2 (build_request, other)
 
         return self.request_cache[key].add_raw(free_unconditional)
@@ -1069,7 +1083,7 @@ class BasicTarget (AbstractTarget):
 
     def __common_properties2(self, build_request, requirements):
         # This guarantees that default properties are present
-        # in result, unless they are overrided by some requirement.
+        # in result, unless they are overridden by some requirement.
         # TODO: There is possibility that we've added <foo>bar, which is composite
         # and expands to <foo2>bar2, but default value of <foo2> is not bar2,
         # in which case it's not clear what to do.
@@ -1143,10 +1157,10 @@ class BasicTarget (AbstractTarget):
         usage_requirements = []
         for p in properties:
 
-            result = generate_from_reference(p.value(), self.project_, ps)
+            result = generate_from_reference(p.value, self.project_, ps)
 
             for t in result.targets():
-                result_properties.append(property.Property(p.feature(), t))
+                result_properties.append(property.Property(p.feature, t))
 
             usage_requirements += result.usage_requirements().all()
 
@@ -1179,7 +1193,7 @@ class BasicTarget (AbstractTarget):
 
         self.manager().targets().push_target(self)
 
-        if not self.generated_.has_key(ps):
+        if ps not in self.generated_:
 
             # Apply free features form the command line.  If user
             # said
@@ -1313,9 +1327,18 @@ class BasicTarget (AbstractTarget):
         # they are propagated only to direct dependents. We might need
         # a more general mechanism, but for now, only those two
         # features are special.
-        removed_pch = filter(lambda prop: prop.feature().name() not in ['<pch-header>', '<pch-file>'], subvariant.sources_usage_requirements().all())
-        result = result.add(property_set.PropertySet(removed_pch))
+        properties = []
+        for p in subvariant.sources_usage_requirements().all():
+            if p.feature.name not in ('pch-header', 'pch-file'):
+                properties.append(p)
+        if 'shared' in rproperties.get('link'):
+            new_properties = []
+            for p in properties:
+                if p.feature.name != 'library':
+                    new_properties.append(p)
+            properties = new_properties
 
+        result = result.add_raw(properties)
         return result
 
     def create_subvariant (self, root_targets, all_targets,
@@ -1348,8 +1371,8 @@ class BasicTarget (AbstractTarget):
 
     def construct (self, name, source_targets, properties):
         """ Constructs the virtual targets for this abstract targets and
-            the dependecy graph. Returns a tuple consisting of the properties and the list of virtual targets.
-            Should be overrided in derived classes.
+            the dependency graph. Returns a tuple consisting of the properties and the list of virtual targets.
+            Should be overridden in derived classes.
         """
         raise BaseException ("method should be defined in derived classes")
 
@@ -1398,11 +1421,9 @@ def apply_default_build(property_set_, default_build):
     assert isinstance(property_set_, property_set.PropertySet)
     assert isinstance(default_build, property_set.PropertySet)
 
-    specified_features = set(p.feature() for p in property_set_.all())
-
     defaults_to_apply = []
     for d in default_build.all():
-        if not d.feature() in specified_features:
+        if not property_set_.get(d.feature):
             defaults_to_apply.append(d)
 
     # 2. If there's any defaults to be applied, form the new
@@ -1426,10 +1447,16 @@ def apply_default_build(property_set_, default_build):
         # be an indication that
         # build_request.expand-no-defaults is the wrong rule
         # to use here.
-        compressed = feature.compress_subproperties(property_set_.all())
+        properties = build_request.expand_no_defaults(
+            [property_set.create([p]) for p in
+             feature.compress_subproperties(property_set_.all()) + defaults_to_apply]
+        )
 
-        result = build_request.expand_no_defaults(
-            b2.build.property_set.create(feature.expand([p])) for p in (compressed + defaults_to_apply))
+        if properties:
+            for p in properties:
+                result.append(property_set.create(feature.expand(p.all())))
+        else:
+            result = [property_set.empty()]
 
     else:
         result.append (property_set_)

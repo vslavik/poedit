@@ -12,7 +12,7 @@
 #include <boost/phoenix/statement/sequence.hpp>
 #include <boost/phoenix/bind.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 namespace test
 {
@@ -33,4 +33,5 @@ int main()
     BOOST_TEST(test::x == 0);
     BOOST_TEST(test::y == 1);
     BOOST_TEST(test::z == 1);
+    return boost::report_errors();
 }

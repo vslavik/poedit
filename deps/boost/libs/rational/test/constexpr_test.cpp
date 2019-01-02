@@ -8,10 +8,13 @@
 
 int main()
 {
-#ifndef BOOST_NO_CONSTEXPR
+#ifndef BOOST_NO_CXX11_CONSTEXPR
    constexpr boost::rational<int> i1;
    constexpr boost::rational<int> i2(3);
-   constexpr boost::rational<short> i3(i2);
+   constexpr boost::rational<long long> i3(i2);
+   constexpr boost::rational<short> i4(i2);
+   constexpr boost::rational<long long> i5(23u); // converting constructor
+   // constexpr boost::rational<short> i6(23u); // Not supported, needs an explicit typecast in constructor.
 
    static_assert(i1.numerator() == 0, "constexpr test");
    static_assert(i1.denominator() == 1, "constexpr test");

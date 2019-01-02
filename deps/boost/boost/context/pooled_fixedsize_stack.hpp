@@ -14,6 +14,7 @@
 
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
+#include <boost/intrusive_ptr.hpp>
 #include <boost/pool/pool.hpp>
 
 #include <boost/context/detail/config.hpp>

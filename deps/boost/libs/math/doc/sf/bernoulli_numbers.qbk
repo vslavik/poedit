@@ -60,7 +60,7 @@ Refer to __policy_section for more details.
   struct max_bernoulli_b2n<T>;
 
   template<class T>
-  inline T unchecked_bernoulli_b2n(unsigned n);
+  inline constexpr T unchecked_bernoulli_b2n(unsigned n);
 
 `unchecked_bernoulli_b2n` provides access to Bernoulli numbers [*without any checks for overflow or invalid parameters].
 It is implemented as a direct (and very fast) table lookup, and while not recommended for general use it can be useful
@@ -69,6 +69,8 @@ inside inner loops where the ultimate performance is required, and error checkin
 The largest value you can pass to `unchecked_bernoulli_b2n<>` is `max_bernoulli_b2n<>::value`: passing values greater than
 that will result in a buffer overrun error, so it's clearly important to place the error handling in your own code
 when using this direct interface.
+
+This function is `constexpr` only if the compiler supports C++14 constexpr functions.
 
 The value of `boost::math::max_bernoulli_b2n<T>::value` varies by the type T, for types `float`/`double`/`long double`
 it's the largest value which doesn't overflow the target type: for example, `boost::math::max_bernoulli_b2n<double>::value` is 129.

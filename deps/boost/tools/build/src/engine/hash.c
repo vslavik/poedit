@@ -24,9 +24,9 @@
 
 #include <assert.h>
 
-/* */
+/*
 #define HASH_DEBUG_PROFILE 1
-/* */
+*/
 
 /* Header attached to all hash table data items. */
 
@@ -248,7 +248,7 @@ static void hashrehash( struct hash * hp )
         BJAM_FREE( (char *)hp->tab.base );
 
     hp->tab.nel = hp->items.nel * hp->bloat;
-    hp->tab.base = (ITEM * *)BJAM_MALLOC( hp->tab.nel * sizeof( ITEM * * ) );
+    hp->tab.base = (ITEM * *)BJAM_MALLOC( hp->tab.nel * sizeof( ITEM * ) );
 
     memset( (char *)hp->tab.base, '\0', hp->tab.nel * sizeof( ITEM * ) );
 

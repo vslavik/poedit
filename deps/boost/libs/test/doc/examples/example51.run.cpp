@@ -13,7 +13,7 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_CASE( test_case0 )
 {
-  if( runtime_config::get<log_level>( runtime_config::LOG_LEVEL ) < log_warnings )
+  if( runtime_config::get<log_level>( runtime_config::btrt_log_level ) < log_warnings )
     unit_test_log.set_threshold_level( log_warnings );
 
   BOOST_WARN( sizeof(int) > 4 );

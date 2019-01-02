@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct internal_error</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../header/boost/test/framework_hpp.html" title="Header &lt;boost/test/framework.hpp&gt;">
 <link rel="prev" href="context_generator.html" title="Struct context_generator">
@@ -32,24 +32,24 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/boost/test/framework_hpp.html" title="Header &lt;boost/test/framework.hpp&gt;">boost/test/framework.hpp</a>&gt;
 
 </span>
-<span class="keyword">struct</span> <a class="link" href="internal_error.html" title="Struct internal_error">internal_error</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="internal_error.html" title="Struct internal_error">internal_error</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">runtime_error</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="internal_error.html#boost.unit_test.framework.internal_errorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="internal_error.html#idp26985168-bb"><span class="identifier">internal_error</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="internal_error.html#idp69037440-bb"><span class="identifier">internal_error</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp29422576"></a><h2>Description</h2>
+<a name="idp99576848"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp29422992"></a><h3>
+<a name="idp99577232"></a><h3>
 <a name="boost.unit_test.framework.internal_errorconstruct-copy-destruct"></a><code class="computeroutput">internal_error</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp26985168-bb"></a><span class="identifier">internal_error</span><span class="special">(</span><span class="identifier">const_string</span> m<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp69037440-bb"></a><span class="identifier">internal_error</span><span class="special">(</span><span class="identifier">const_string</span> m<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -7,8 +7,10 @@
 
 // For more information, see http://www.boost.org
 
-#include <boost/test/minimal.hpp>
 #include <boost/function.hpp>
+#include <boost/core/lightweight_test.hpp>
+
+#define BOOST_CHECK BOOST_TEST
 
 struct tried_to_copy { };
 
@@ -40,7 +42,7 @@ struct MaybeThrowOnCopy {
 
 bool MaybeThrowOnCopy::throwOnCopy = false;
 
-int test_main(int, char* [])
+int main()
 {
   boost::function0<int> f;
   boost::function0<int> g;
@@ -56,5 +58,5 @@ int test_main(int, char* [])
   BOOST_CHECK(f() == 2);
   BOOST_CHECK(g() == 1);
   
-  return 0;
+  return boost::report_errors();
 }

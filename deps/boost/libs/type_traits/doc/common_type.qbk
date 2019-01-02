@@ -15,6 +15,7 @@ __header ` #include <boost/type_traits/common_type.hpp>` or ` #include <boost/ty
 
     namespace boost {
       template <class... T> struct common_type;
+      template<class... T> using common_type_t = typename common_type<T...>::type; // C++11 and above
     }
 
 

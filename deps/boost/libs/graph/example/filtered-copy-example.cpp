@@ -29,7 +29,6 @@ int
 main()
 {
   using namespace boost;
-  typedef int weight_t;
   typedef adjacency_list < vecS, vecS, bidirectionalS,
     property < vertex_name_t, char > > graph_t;
 

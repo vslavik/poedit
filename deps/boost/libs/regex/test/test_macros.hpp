@@ -65,8 +65,8 @@ void report_unexpected_exception(const E& e, int severity, const char* file, int
 }
 
 #define BOOST_MP_UNEXPECTED_EXCEPTION_CHECK(severity) \
-   catch(const std::exception& e) \
-   {  report_unexpected_exception(e, severity, __FILE__, __LINE__, BOOST_CURRENT_FUNCTION); }\
+   catch(const std::exception& __e) \
+   {  report_unexpected_exception(__e, severity, __FILE__, __LINE__, BOOST_CURRENT_FUNCTION); }\
    catch(...)\
    {  BOOST_LIGHTWEIGHT_TEST_OSTREAM << "Exception of unknown type was thrown" << std::endl; report_severity(severity); }
 

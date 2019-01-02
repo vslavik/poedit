@@ -12,11 +12,12 @@
 #ifndef BOOST_ASSIGN_ASSIGNMENT_EXCEPTION_HPP
 #define BOOST_ASSIGN_ASSIGNMENT_EXCEPTION_HPP
 
-#if defined(_MSC_VER)
+#include <boost/config.hpp>
+#include <exception>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 # pragma once
 #endif
-
-#include <exception>
 
 namespace boost
 {    
@@ -28,12 +29,12 @@ namespace boost
             assignment_exception( const char* _what ) 
             : what_( _what )
             { }
-        
-            virtual const char* what() const throw()
+
+            virtual const char* what() const BOOST_NOEXCEPT_OR_NOTHROW
             {
                 return what_;
             }
-        
+
         private:
                 const char* what_;
         };

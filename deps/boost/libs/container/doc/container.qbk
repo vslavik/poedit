@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2009-2013 Ion Gazta\u00F1aga
+ / Copyright (c) 2009-2018 Ion Gazta\u00F1aga
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,7 +8,7 @@
 [library Boost.Container
     [quickbook 1.5]
     [authors [Gaztanaga, Ion]]
-    [copyright 2009-2015 Ion Gaztanaga]
+    [copyright 2009-2018 Ion Gaztanaga]
     [id container]
     [dirname container]
     [purpose Containers library]
@@ -25,16 +25,19 @@
 [section:intro Introduction]
 
 [*Boost.Container] library implements several well-known containers, including
-STL containers. The aim of the library is to offers advanced features not present
+STL containers. The aim of the library is to offer advanced features not present
 in standard containers or to offer the latest standard draft features for compilers
 that don't comply with the latest C++ standard.
 
 In short, what does [*Boost.Container] offer?
 
-* Move semantics are implemented, including move emulation for pre-C++11 compilers.
-* New advanced features (e.g. placement insertion, recursive containers) are present.
+* Emplacement and move semantics are implemented, including emulation for pre-C++11 compilers.
+* Polymorphic allocators and memory resources, including implementation and emulation for pre-C++17 compilers
+* New advanced features (e.g. recursive containers, configuration options for containers) are present.
 * Containers support stateful allocators and are compatible with [*Boost.Interprocess]
   (they can be safely placed in shared memory).
+* Users obtain a more uniform performance across all plataforms,
+  including [link container.main_features.scary_iterators SCARY iterators].
 * The library offers new useful containers:
   * [classref boost::container::flat_map flat_map],
     [classref boost::container::flat_set flat_set],
@@ -44,6 +47,12 @@ In short, what does [*Boost.Container] offer?
     searches.
   * [classref boost::container::stable_vector stable_vector]: a std::list and std::vector hybrid
     container: vector-like random-access iterators and list-like iterator stability in insertions and erasures.
+  * [classref boost::container::static_vector static_vector ]: a vector-like container that internally embeds
+    (statically allocates) all needed memory up to the maximum capacity. Maximum capacity can't be increased and
+    it's specified at compile time.
+  * [classref boost::container::small_vector small_vector ]: a vector-like container that internally embeds
+    (statically allocates) a minimum amount of memory, but dynamically allocates elements when capacity
+    has to be increased. This minimum capacity is specified at compile time.
   * [classref boost::container::slist slist]: the classic pre-standard singly linked list implementation
     offering constant-time `size()`. Note that C++11 `forward_list` has no `size()`.
 
@@ -52,8 +61,8 @@ In short, what does [*Boost.Container] offer?
 There is no need to compile [*Boost.Container], since it's a header-only library,
 just include your Boost header directory in your compiler include path *except if you use*:
 
-*  [link container.extended_functionality.extended_allocators Extended Allocators]
-*  Some [link container.extended_functionality.polymorphic_memory_resources Polymorphic Memory Resources] classes.
+*  [link container.extended_allocators Extended Allocators]
+*  Some [link container.cpp_conformance.polymorphic_memory_resources Polymorphic Memory Resources] classes.
    
 Those exceptions are are implemented as a separately compiled library, so in those cases you must install binaries
 in a location that can be found by your linker.
@@ -68,7 +77,8 @@ instructions, that's already been done for you.
 
 *  Visual C++ >= 7.1.
 *  GCC >= 4.1.
-*  Intel C++ >= 9.0
+
+[warning GCC < 4.3 and MSVC < 9.0 are deprecated and will be removed in the next version.]
 
 [endsect]
 
@@ -157,11 +167,17 @@ the effects are undefined in the following cases: (...) In particular - if an in
 is used as a template argument when instantiating a template component,
 unless specifically allowed for that component]].
 
+Finally C++17 added support for incomplete types in `std::vector`, `std::list` and `std::forward_list`
+(see [@https://wg21.link/n4569 ['N4569: Minimal incomplete type support for standard containers, revision 4]]
+for details), but no other containers like `std::set/map/unordered_set/unordered_map`, 
+
 Fortunately all [*Boost.Container] containers except
 [classref boost::container::static_vector static_vector] and
+[classref boost::container::small_vector small_vector] and
 [classref boost::container::basic_string basic_string] are designed to support incomplete types.
-[classref boost::container::static_vector static_vector] is special because
-it statically allocates memory for `value_type` and this requires complete types and
+[classref boost::container::static_vector static_vector] and 
+[classref boost::container::small_vector small_vector] are special because
+they statically allocates memory for `value_type` and this requires complete types.
 [classref boost::container::basic_string basic_string] implements Small String Optimization which
 also requires complete types.
 
@@ -210,7 +226,7 @@ Finally, we can just compile, link, and run!
 
 [section:scary_iterators SCARY iterators]
 
-The paper N2913, titled [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf,
+The paper N2913, titled [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf
 SCARY Iterator Assignment and Initialization], proposed a requirement that a standard container's
 iterator types have no dependency on any type argument apart from the container's `value_type`,
 `difference_type`, `pointer type`, and `const_pointer` type. In particular, according to the proposal,
@@ -311,7 +327,7 @@ can a stable design approach the behavior of `vector` (random access iterators, 
 insertion/deletion, minimal memory overhead, etc.)?
 The following image describes the layout of a possible data structure upon which to base the design of a stable vector:
 
-[$../../libs/container/doc/html/images/stable_vector.png  [width 50%] [align center] ]
+[$../../libs/container/doc/images/stable_vector.png  [width 50%] [align center] ]
 
 Each element is stored in its own separate node. All the nodes are referenced from a contiguous array of pointers, but
 also every node contains an "up" pointer referring back to the associated array cell. This up pointer is the key element
@@ -350,8 +366,8 @@ operations provide stronger exception safety guarantees than in vector:
     [[erase]     [no-throw unless copy/move construction/assignment  of `T` throw (basic)]     [no-throw]]
 ]
 
-[*Memory overhead]. The C++ standard does not specifiy requirements on memory consumption, but virtually any implementation
-of `vector` has the same behavior wih respect to memory usage: the memory allocated by a `vector` v with n elements of type T
+[*Memory overhead]. The C++ standard does not specify requirements on memory consumption, but virtually any implementation
+of `vector` has the same behavior with respect to memory usage: the memory allocated by a `vector` v with n elements of type T
 is
 
 m[sub v] = c\u2219e,
@@ -426,11 +442,10 @@ functions), implemented on top of std::vector. AssocVector differs from a map in
 its erase functions (AssocVector::erase invalidates all iterators into the object) and in the
 complexity guarantees of insert and erase (linear as opposed to constant). ]]
 
-[*Boost.Container] `flat_[multi]map/set` containers are ordered-vector based associative containers
-based on Austern's and Alexandrescu's guidelines. These ordered vector containers have also
-benefited recently with the addition of `move semantics` to C++, speeding up insertion
-and erasure times considerably. Flat associative containers have the following
-attributes:
+[*Boost.Container] `flat_[multi]map/set` containers are ordered, vector-like container based, associative
+containers following  Austern's and Alexandrescu's guidelines. These ordered vector containers have also
+benefited with the addition of `move semantics` to C++11, speeding up insertion and
+erasure times considerably. Flat associative containers have the following attributes:
 
 * Faster lookup than standard associative containers
 * Much faster iteration than standard associative containers.
@@ -534,7 +549,7 @@ stateful allocators, etc.
 
 [endsect]
 
-[section:extended_functionality Extended functionality]
+[section:extended_functionality Extended functionality: Basic extensions]
 
 [section:default_initialialization Default initialization for vector-like containers]
 
@@ -549,7 +564,7 @@ shortly after new elements are added to the container.
 
 [*Boost.Container] offers two new members for `vector`, `static_vector` and `stable_vector`:
 `explicit container::container(size_type n, default_init_t)` and
-`explicit container::resize(size_type n, default_init_t)`, where new elements are constructed
+`container::resize(size_type n, default_init_t)`, where new elements are constructed
 using [@http://en.cppreference.com/w/cpp/language/default_initialization default initialization].
 
 [endsect]
@@ -567,46 +582,6 @@ duplicates. When an `ordered_range_t` overload is used, the
 user notifies the container that the input range is ordered according to the container predicate but it might
 have duplicates. With this information, the container can avoid multiple predicate calls and improve insertion
 times.
-
-[endsect]
-
-[section:configurable_tree_based_associative_containers Configurable tree-based associative ordered containers]
-
-[classref boost::container::set set], [classref boost::container::multiset multiset],
-[classref boost::container::map map] and [classref boost::container::multimap multimap] associative containers
-are implemented as binary search trees which offer the needed complexity and stability guarantees required by the
-C++ standard for associative containers.
-
-[*Boost.Container] offers the possibility to configure at compile time some parameters of the binary search tree
-implementation. This configuration is passed as the last template parameter and defined using the utility class
-[classref boost::container::tree_assoc_options tree_assoc_options].
-
-The following parameters can be configured:
-
-*  The underlying [*tree implementation] type ([classref boost::container::tree_type tree_type]).
-   By default these containers use a red-black tree but the user can use other tree types:
-   *  [@http://en.wikipedia.org/wiki/Red%E2%80%93black_tree Red-Black Tree]
-   *  [@http://en.wikipedia.org/wiki/Avl_trees AVL tree]
-   *  [@http://en.wikipedia.org/wiki/Scapegoat_tree Scapegoat tree]. In this case Insertion and Deletion
-      are amortized O(log n) instead of O(log n).
-   *  [@http://en.wikipedia.org/wiki/Splay_tree Splay tree]. In this case Searches, Insertions and Deletions
-      are amortized O(log n) instead of O(log n).
-
-*  Whether the [*size saving] mechanisms are used to implement the tree nodes
-   ([classref boost::container::optimize_size optimize_size]). By default this option is activated and is only
-   meaningful to red-black and avl trees (in other cases, this option will be ignored).
-   This option will try to put rebalancing metadata inside the "parent" pointer of the node if the pointer
-   type has enough alignment. Usually, due to alignment issues, the metadata uses the size of a pointer yielding
-   to four pointer size overhead per node, whereas activating this option usually leads to 3 pointer size overhead.
-   Although some mask operations must be performed to extract
-   data from this special "parent" pointer, in several systems this option also improves performance due to the
-   improved cache usage produced by the node size reduction.
-
-See the following example to see how [classref boost::container::tree_assoc_options tree_assoc_options] can be
-used to customize these containers:
-
-[import ../example/doc_custom_tree.cpp]
-[doc_custom_tree]
 
 [endsect]
 
@@ -648,7 +623,81 @@ then the operation is constant time, even with an O(1) size.
 
 [endsect]
 
-[section:extended_allocators Extended allocators]
+[endsect]
+
+[section:configurable_containers Extended functionality: Configurable containers]
+
+[section:configurable_tree_based_associative_containers Configurable tree-based associative ordered containers]
+
+[classref boost::container::set set], [classref boost::container::multiset multiset],
+[classref boost::container::map map] and [classref boost::container::multimap multimap] associative containers
+are implemented as binary search trees which offer the needed complexity and stability guarantees required by the
+C++ standard for associative containers.
+
+[*Boost.Container] offers the possibility to configure at compile time some parameters of the binary search tree
+implementation. This configuration is passed as the last template parameter and defined using the utility class
+[classref boost::container::tree_assoc_options tree_assoc_options]. The following parameters can be configured:
+
+*  The underlying [*tree implementation] type ([classref boost::container::tree_type tree_type]).
+   By default these containers use a red-black tree but the user can use other tree types:
+   *  [@http://en.wikipedia.org/wiki/Red%E2%80%93black_tree Red-Black Tree]
+   *  [@http://en.wikipedia.org/wiki/Avl_trees AVL tree]
+   *  [@http://en.wikipedia.org/wiki/Scapegoat_tree Scapegoat tree]. In this case Insertion and Deletion
+      are amortized O(log n) instead of O(log n).
+   *  [@http://en.wikipedia.org/wiki/Splay_tree Splay tree]. In this case Searches, Insertions and Deletions
+      are amortized O(log n) instead of O(log n).
+
+*  Whether the [*size saving] mechanisms are used to implement the tree nodes
+   ([classref boost::container::optimize_size optimize_size]). By default this option is activated and is only
+   meaningful to red-black and avl trees (in other cases, this option will be ignored).
+   This option will try to put rebalancing metadata inside the "parent" pointer of the node if the pointer
+   type has enough alignment. Usually, due to alignment issues, the metadata uses the size of a pointer yielding
+   to four pointer size overhead per node, whereas activating this option usually leads to 3 pointer size overhead.
+   Although some mask operations must be performed to extract
+   data from this special "parent" pointer, in several systems this option also improves performance due to the
+   improved cache usage produced by the node size reduction.
+
+See the following example to see how [classref boost::container::tree_assoc_options tree_assoc_options] can be
+used to customize these containers:
+
+[import ../example/doc_custom_tree.cpp]
+[doc_custom_tree]
+
+[endsect]
+
+[section:configurable_vectors Configurable vectors]
+
+[*Boost.Container] offers the possibility to configure at compile time some parameters of
+[classref boost::container::vector vector] implementation. This configuration is passed as
+the last template parameter and defined using the utility class
+[classref boost::container::vector_options vector_options]. The following parameters can be configured:
+
+*  [classref boost::container::growth_factor growth_factor]: the growth policy of the vector.
+   The rate at which the capacity of a vector grows is implementation dependent and
+   implementations choose exponential growth in order to meet the amortized constant time requirement for push_back.
+   A higher growth factor will make it faster as it will require less data movement, but it will have a greater memory
+   impact (on average, more memory will be unused). A user can provide it's own implementation and some predefined
+   policies are available: [classref boost::container::growth_factor_50 growth_factor_50],
+   [classref boost::container::growth_factor_60 growth_factor_60] and
+   [classref boost::container::growth_factor_50 growth_factor_100].
+
+*  [classref boost::container::stored_size stored_size]: the type that will be used to store size-related
+   parameters inside of the vector. Sometimes, when the maximum capacity to be used is much less than the
+   theoretical maximum that a vector can hold, it's interesting to use smaller unsigned integer types to represent
+   `size()` and `capacity()` inside vector, so that the size of an empty vector is minimized and cache 
+   performance might be improved. See [classref boost::container::stored_size stored_size] for more details.
+
+See the following example to see how [classref boost::container::vector_options vector_options] can be
+used to customize `vector` container:
+
+[import ../example/doc_custom_vector.cpp]
+[doc_custom_vector]
+
+[endsect]
+
+[endsect]
+
+[section:extended_allocators Extended functionality: Extended allocators]
 
 Many C++ programmers have ever wondered where does good old realloc fit in C++. And that's a good question.
 Could we improve [classref boost::container::vector vector] performance using memory expansion mechanisms
@@ -701,155 +750,12 @@ Use them simply specifying the new allocator in the corresponding template argum
 
 [endsect]
 
-[section:polymorphic_memory_resources Polymorphic Memory Resources ]
-
-The document
-[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4480.html C++ Extensions for Library Fundamentals (Final draft: N4480)]
-includes classes that provide allocator type erasure and runtime polymorphism. As Pablo Halpern, the author of the proposal,
-explains in the paper ([@https://isocpp.org/files/papers/N3916.pdf N3916 Polymorphic Memory Resources (r2)]):
-
-["['A significant impediment to effective memory management in C++ has been the 
-inability to use allocators in non-generic contexts.  In large software systems,
-most of  the application program consists of non-generic procedural or
-object-oriented code that is compiled once and linked many times.]]
-
-["['Allocators in C++, however, have historically relied solely on
-compile-time polymorphism, and therefore have not been suitable for use in vocabulary
-types, which are passed through interfaces between separately-compiled modules,
-because the allocator type necessarily affects the type of the object that uses it.
-This proposal builds upon the improvements made to allocators in 
-C++11 and describes a set of facilities for runtime polymorphic memory 
-resources that interoperate with the existing compile-time polymorphic 
-allocators.]]
-
-[*Boost.Container] implements nearly all classes of the proposal under
-the namespace `boost::container::pmr`. There are two groups,
-
-*  Header only utilities (these don't require the separately compiled library): 
-   *	[classref boost::container::pmr::memory_resource memory_resource].
-   *	[classref boost::container::pmr::resource_adaptor resource_adaptor].
-
-*  Utilities that require the the separately compiled library: 
-   *	[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].
-   *	[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource].
-   *	[classref boost::container::pmr::unsynchronized_pool_resource unsynchronized_pool_resource].
-   *	[classref boost::container::pmr::synchronized_pool_resource synchronized_pool_resource].
-   *  Global resource functions: [funcref  boost::container::pmr::get_default_resource get_default_resource]/
-      [funcref  boost::container::pmr::set_default_resource set_default_resource]/
-      [funcref  boost::container::pmr::new_delete_resource  new_delete_resource]/
-      [funcref  boost::container::pmr::null_memory_resource null_memory_resource]
-   *  Aliases for boost containers using the polymorphic allocator
-      (like [classref boost::container::pmr::vector pmr::vector], etc.)
-
-[*Boost.Container]'s polymorphic resource library is usable from C++03 containers,
-and offers some alternative utilities if the required C++11 features of the
-['Library Fundamentals] specification are not available.
-
-[import ../example/doc_pmr.cpp]
-
-Let's review the usage example given in
-[@https://isocpp.org/files/papers/N3916.pdf N3916] and see how it can be implemented
-using [*Boost.Container]: ['Suppose we are processing a series of shopping lists, where a shopping list is a
-container of strings, and storing them in a collection (a list) of shopping lists.
-Each shopping list being processed uses a bounded amount of memory that is needed for
-a short period of time, while the collection of shopping lists uses an unbounded
-amount of memory and will exist for a longer period of time. For efficiency, we can
-use a more time-efficient memory allocator based on a finite buffer for the temporary
-shopping lists.]
-
-Let's see how `ShoppingList` can be defined to support an polymorphic memory resource
-that can allocate memory from different underlying mechanisms. The most important
-details are:
-
-* It should declare that supports an allocator defining an `allocator_type` typedef.
-  This `allocator_type` will be of type [classref boost::container::pmr::memory_resource memory_resource *],
-  which is a base class for polymorphic resources.
-* It must define constructors that take the 
-  the allocator as argument. It can be implemented in two ways:
-   * `ShoppingList` has constructors taking
-      [classref boost::container::pmr::memory_resource memory_resource*] as the last argument.
-   * `ShoppingList` has constructors taking
-      [classref boost::container::allocator_arg_t allocator_arg_t] as the first argument
-     and [classref boost::container::pmr::memory_resource memory_resource*] as the second argument.
-
-[*Note:] ['In C++03 compilers, it is required that the programmer specializes as `true`
-[classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix] or
-[classref boost::container::constructible_with_allocator_prefix constructible_with_allocator_prefix]
-as in C++03 there is no way to automatically detect the chosen option at compile time. If
-no specialization is done, [*Boost.Container] assumes the suffix option].
-
-[doc_pmr_ShoppingList_hpp]
-
-['However, this time-efficient allocator is not appropriate for the longer
-lived collection of shopping lists. This example shows how those temporary shopping
-lists, using a time-efficient allocator, can be used to populate the long lived collection
-of shopping lists, using a general purpose allocator, something that would be
-annoyingly difficult without the polymorphic allocators.]
-
-In [*Boost.Container] for the time-efficient allocation we can use
-[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource],
-providing an external buffer that will be used until it's exhausted. In the default
-configuration, when the buffer is exhausted, the default memory resource will be used
-instead.
-
-[doc_pmr_main_cpp]
-
-['Notice that the shopping lists within `folder` use the default allocator resource
-whereas the shopping list `temporaryShoppingList` uses the short-lived but very fast
-`buf_rsrc`. Despite using different allocators, you can insert
-`temporaryShoppingList` into folder because they have the same `ShoppingList`
-type. Also, while `ShoppingList` uses memory_resource directly,
-[classref boost::container::pmr::list pmr::list],
-[classref boost::container::pmr::vector pmr::vector]
-and [classref boost::container::pmr::string pmr::string] all use 
-[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].]
-
-['The resource passed to the `ShoppingList` constructor is propagated to the vector and
-each string within that `ShoppingList`. Similarly, the resource used to construct
-`folder` is propagated to the constructors of the ShoppingLists that are inserted into
-the list (and to the strings within those `ShoppingLists`). The
-[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator]
-template is designed to be almost interchangeable with a pointer to
-[classref boost::container::pmr::memory_resource memory_resource],
-thus producing a ['bridge] between the template-policy
-style of allocator and the polymorphic-base-class style of allocator.]
-
-This example actually shows how easy is to use [*Boost.Container] to write
-type-erasured allocator-capable classes even in C++03 compilers.
-
-[endsect]
-
-[/
-/a__section:previous_element_slist Previous element for slist__a
-/
-/The C++11 `std::forward_list` class implement a singly linked list, similar to `slist`, and these
-/containers only offer forward iterators and implement insertions and splice operations that operate with ranges
-/to be inserted ['after] that position. In those cases, sometimes it's interesting to obtain an iterator pointing
-/to the previous element of another element. This operation can be implemented
-/
-/a__endsect__a
-]
-
-[/
-/a__section:get_stored_allocator Obtain stored allocator__a
-/
-/STL containers offer a `get_allocator()` member to obtain a copy of the allocator that
-/the container is using to allocate and construct elements. For performance reasons, some
-/applications need o
-/
-/http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2271.html
-/
-/a__endsect__a
-/]
-
-[endsect]
-
-[section:Cpp11_conformance C++11/C++14 Conformance]
+[section:cpp_conformance C++11/C++14/C++17 Conformance]
 
 [*Boost.Container] aims for full C++11 conformance except reasoned deviations,
 backporting as much as possible for C++03. Obviously, this conformance is a work
-in progress so this section explains what C++11 features are implemented and which of them
-have been backported to C++03 compilers.
+in progress so this section explains what C++11/C++14/C++17 features are implemented and which
+of them have been backported to earlier standard conformig compilers.
 
 [section:move_emplace Move and Emplace]
 
@@ -966,6 +872,128 @@ past the end of the same empty sequence (example taken from N3644):
 
 [endsect]
 
+[section:polymorphic_memory_resources Polymorphic Memory Resources ]
+
+The document
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4480.html C++ Extensions for Library Fundamentals (final draft)]
+includes classes that provide allocator type erasure and runtime polymorphism. As Pablo Halpern, the author of the proposal,
+explains in the paper ([@https://isocpp.org/files/papers/N3916.pdf N3916 Polymorphic Memory Resources (r2)]):
+
+["['A significant impediment to effective memory management in C++ has been the 
+inability to use allocators in non-generic contexts.  In large software systems,
+most of  the application program consists of non-generic procedural or
+object-oriented code that is compiled once and linked many times.]]
+
+["['Allocators in C++, however, have historically relied solely on
+compile-time polymorphism, and therefore have not been suitable for use in vocabulary
+types, which are passed through interfaces between separately-compiled modules,
+because the allocator type necessarily affects the type of the object that uses it.
+This proposal builds upon the improvements made to allocators in 
+C++11 and describes a set of facilities for runtime polymorphic memory 
+resources that interoperate with the existing compile-time polymorphic 
+allocators.]]
+
+Most utilities from the Fundamentals TS were merged into C++17, but
+[*Boost.Container] offers them for C++03, C++11 and C++14 compilers.
+
+[*Boost.Container] implements nearly all classes of the proposal under
+the namespace `boost::container::pmr`. There are two groups,
+
+*  Header only utilities (these don't require the separately compiled library): 
+   *	[classref boost::container::pmr::memory_resource memory_resource].
+   *	[classref boost::container::pmr::resource_adaptor resource_adaptor].
+
+*  Utilities that require the the separately compiled library: 
+   *	[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].
+   *	[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource].
+   *	[classref boost::container::pmr::unsynchronized_pool_resource unsynchronized_pool_resource].
+   *	[classref boost::container::pmr::synchronized_pool_resource synchronized_pool_resource].
+   *  Global resource functions: [funcref  boost::container::pmr::get_default_resource get_default_resource]/
+      [funcref  boost::container::pmr::set_default_resource set_default_resource]/
+      [funcref  boost::container::pmr::new_delete_resource  new_delete_resource]/
+      [funcref  boost::container::pmr::null_memory_resource null_memory_resource]
+   *  Aliases for boost containers using the polymorphic allocator
+      (like [classref boost::container::pmr::vector pmr::vector], etc.)
+
+[*Boost.Container]'s polymorphic resource library is usable from C++03 containers,
+and offers some alternative utilities if the required C++11 features of the
+['Library Fundamentals] specification are not available.
+
+[import ../example/doc_pmr.cpp]
+
+Let's review the usage example given in
+[@https://isocpp.org/files/papers/N3916.pdf N3916] and see how it can be implemented
+using [*Boost.Container]: ['Suppose we are processing a series of shopping lists, where a shopping list is a
+container of strings, and storing them in a collection (a list) of shopping lists.
+Each shopping list being processed uses a bounded amount of memory that is needed for
+a short period of time, while the collection of shopping lists uses an unbounded
+amount of memory and will exist for a longer period of time. For efficiency, we can
+use a more time-efficient memory allocator based on a finite buffer for the temporary
+shopping lists.]
+
+Let's see how `ShoppingList` can be defined to support an polymorphic memory resource
+that can allocate memory from different underlying mechanisms. The most important
+details are:
+
+* It should declare that supports an allocator defining an `allocator_type` typedef.
+  This `allocator_type` will be of type [classref boost::container::pmr::memory_resource memory_resource *],
+  which is a base class for polymorphic resources.
+* It must define constructors that take the 
+  the allocator as argument. It can be implemented in two ways:
+   * `ShoppingList` has constructors taking
+      [classref boost::container::pmr::memory_resource memory_resource*] as the last argument.
+   * `ShoppingList` has constructors taking
+      [classref boost::container::allocator_arg_t allocator_arg_t] as the first argument
+     and [classref boost::container::pmr::memory_resource memory_resource*] as the second argument.
+
+[*Note:] ['In C++03 compilers, it is required that the programmer specializes as `true`
+[classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix] or
+[classref boost::container::constructible_with_allocator_prefix constructible_with_allocator_prefix]
+as in C++03 there is no way to automatically detect the chosen option at compile time. If
+no specialization is done, [*Boost.Container] assumes the suffix option].
+
+[doc_pmr_ShoppingList_hpp]
+
+['However, this time-efficient allocator is not appropriate for the longer
+lived collection of shopping lists. This example shows how those temporary shopping
+lists, using a time-efficient allocator, can be used to populate the long lived collection
+of shopping lists, using a general purpose allocator, something that would be
+annoyingly difficult without the polymorphic allocators.]
+
+In [*Boost.Container] for the time-efficient allocation we can use
+[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource],
+providing an external buffer that will be used until it's exhausted. In the default
+configuration, when the buffer is exhausted, the default memory resource will be used
+instead.
+
+[doc_pmr_main_cpp]
+
+['Notice that the shopping lists within `folder` use the default allocator resource
+whereas the shopping list `temporaryShoppingList` uses the short-lived but very fast
+`buf_rsrc`. Despite using different allocators, you can insert
+`temporaryShoppingList` into folder because they have the same `ShoppingList`
+type. Also, while `ShoppingList` uses memory_resource directly,
+[classref boost::container::pmr::list pmr::list],
+[classref boost::container::pmr::vector pmr::vector]
+and [classref boost::container::pmr::string pmr::string] all use 
+[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].]
+
+['The resource passed to the `ShoppingList` constructor is propagated to the vector and
+each string within that `ShoppingList`. Similarly, the resource used to construct
+`folder` is propagated to the constructors of the ShoppingLists that are inserted into
+the list (and to the strings within those `ShoppingLists`). The
+[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator]
+template is designed to be almost interchangeable with a pointer to
+[classref boost::container::pmr::memory_resource memory_resource],
+thus producing a ['bridge] between the template-policy
+style of allocator and the polymorphic-base-class style of allocator.]
+
+This example actually shows how easy is to use [*Boost.Container] to write
+type-erasured allocator-capable classes even in C++03 compilers.
+
+[endsect]
+
+
 [section:forward_list `forward_list<T>`]
 
 [*Boost.Container] does not offer C++11 `forward_list` container yet, but it will be available in future
@@ -986,7 +1014,7 @@ members.
 
 This strong exception guarantee also precludes the possibility of using some type of
 in-place reallocations that can further improve the insertion performance of `vector` See
-[link container.extended_functionality.extended_allocators Extended Allocators] to know more
+[link container.extended_allocators Extended Allocators] to know more
 about these optimizations.
 
 [classref boost::container::vector vector] always uses move constructors/assignments
@@ -1153,10 +1181,10 @@ collect them containers and build [*Boost.Container], a library targeted to a wi
 With so many high quality standard library implementations out there, why would you want to
 use [*Boost.Container]? There are several reasons for that:
 
-* If you have a C++03 compiler, you can have access to C++11 features and have an easy
-  code migration when you change your compiler.
+* Even if you have a earlier standard conforming compiler, you still can have access to many
+  of the latest C++ standard features and have an easy code migration when you change your compiler.
 * It's compatible with [*Boost.Interprocess] shared memory allocators.
-* You have extremely useful new containers like `stable_vector` and `flat_[multi]set/map`.
+* You have extremely useful new containers like `[stable/static/small]_vector` and `flat_[multi]set/map`.
 * If you work on multiple platforms, you'll have a portable behaviour without depending
   on the std-lib implementation conformance of each platform. Some examples:
    * Default constructors don't allocate memory at all, which improves performance and
@@ -1213,24 +1241,163 @@ use [*Boost.Container]? There are several reasons for that:
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_69_00 Boost 1.69 Release]
+
+* Deprecated GCC < 4.3 and MSVC < 9.0 (Visual 2008) compilers.
+
+* Implemented C++20 `contains()` for associative containers as specified in
+   [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0458r2.html
+   P0458R2: Checking for Existence of an Element in Associative Containers].
+
+* Fixed serious bug in heterogeneous lookup functions (is_transparent was broken).
+
+* Fixed bugs:
+   * [@https://github.com/boostorg/container/issues/77 GitHub #77: ['"warning: 'sbrk' is deprecated"]].
+   * [@https://github.com/boostorg/container/issues/79 GitHub #79: ['"Mark small_vector move operations noexcept"]].
+   * [@https://github.com/boostorg/container/issues/80 GitHub #80: ['"flat_map deduction guides are ambiguous"]].
+   * [@https://github.com/boostorg/container/issues/81 GitHub #81: ['"Vector with custom allocator does not support value types with operator&"]].
+   * [@https://github.com/boostorg/container/issues/82 GitHub #82: ['"Function definition in header file"]].
+   * [@https://github.com/boostorg/container/issues/83 GitHub #83: ['"Iterator zero incrementing leads to assert on empty vector"]].
+   * [@https://github.com/boostorg/container/pull/84   GitHub #84: ['"Allow vector to be assigned to itself"]].
+   * [@https://github.com/boostorg/container/pull/85   GitHub #85: ['"container: misc-typos"]].
+   * [@https://github.com/boostorg/container/pull/86   GitHub #86: ['"Add missing warning re-enabling include"]].
+   * [@https://github.com/boostorg/container/issues/89 GitHub #89: ['"UBSAN failures detected in preflight CI PR"]].
+   * [@https://github.com/boostorg/container/issues/90 GitHub #90: ['"Build fails on clang-5 with libstdc++7-dev (C++17 issue)"]].
+   * [@https://github.com/boostorg/container/issues/93 GitHub #93: ['"vector::erase memory leak"]].
+
+[endsect]
+
+[section:release_notes_boost_1_68_00 Boost 1.68 Release]
+
+* Improved correctness of [classref boost::container::adaptive_pool adaptive_pool] and many parameters are now compile-time
+  constants instead of runtime constants.
+
+* Implemented C++14's heterogeneous lookup functions for `[multi]map/[multi]set/flat_[multi]map/flat_[multi]set`.
+
+* Added [@https://github.com/boostorg/container/pull/71 GitHub #71: ['"Constructor Template Auto Deduction guides "]].
+
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/13533 Trac #13533:  ['"Boost vector resize causes assert(false)"]].
+   * [@https://github.com/boostorg/container/issues/73 GitHub #73: ['"triviality of pair"]].
+   * [@https://github.com/boostorg/container/issues/74 GitHub #74: ['"vector assignment not using memcpy"]].
+   * [@https://github.com/boostorg/container/issues/75 GitHub #75: ['"flat_set: Heap overflow"]].
+   * [@https://github.com/boostorg/container/issues/76 GitHub #76: ['"flat_set: undefined behaviour on empty range"]].
+   * Fixed race condition bug in [classref boost::container::pmr::unsynchronized_pool_resource unsynchronized_pool_resource]
+     found by Arthur O'Dowyer in his blog post
+     [@https://quuxplusone.github.io/blog/2018/06/05/libcpp-memory-resource/ <memory_resource> for libc++]
+
+* Implemented proposed resolution for 
+  [@https://cplusplus.github.io/LWG/issue3120 ['"LWG 3120 Unclear behavior of monotonic_buffer_resource::release()"]].
+  After `release()` the original buffer is recovered for the next allocation.
+
+[endsect]
+
+[section:release_notes_boost_1_67_00 Boost 1.67 Release]
+
+* ['vector] can now have options, using [classref boost::container::vector_options vector_options].
+  The growth factor and the stored size type can be specified.
+
+* Improved range insertion in ['flat_[multi]map/set] containers overall complexity is reduced to O(NlogN).
+
+* Fixed bugs:
+   * [@https://github.com/boostorg/container/pull/61 GitHub #61: ['"Compile problems on Android ndk r16 beta 1"]].
+   * [@https://github.com/boostorg/container/pull/64 GitHub #64: ['"Fix splice for slist"]].
+   * [@https://github.com/boostorg/container/issues/58 GitHub #65: ['"`pmr::monotonic_buffer_resource::allocate()` can return a pointer to freed memory after `release()` is called"]].
+   * [@https://svn.boost.org/trac/boost/ticket/13500 Trac #13500:  ['"Memory leak when using erase on string vectors"]].
+
+[endsect]
+
+[section:release_notes_boost_1_66_00 Boost 1.66 Release]
+
+* ['flat_[multi]map/set] can now work as container adaptors, as proposed in [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0429r1.pdf P0429R1].
+  The allocator argument is checked for ['size()] and ['empty()] members. If so, the argument is interpreted as the required underlying container.
+  This means that ['static_vector], ['stable_vector] and ['small_vector] can be used now with flat associative containers.
+
+* Fixed bugs:
+   * [@https://github.com/boostorg/container/pull/54 GitHub #54: ['"no sbrk() in VxWorks, configure dlmalloc to use only mmap"]].
+   * [@https://github.com/boostorg/container/issues/58 GitHub #58: ['"Comparing strings does not compile in gcc 7+ in C++17 mode"]].
+   * [@https://github.com/boostorg/container/issues/59 GitHub #59: ['"basic_string::npos is missing its definition"]].
+
+[endsect]
+
+[section:release_notes_boost_1_65_00 Boost 1.65 Release]
+
+* Implemented `extract_sequence`, `adopt_sequence` functions for flat_[multi]map/set associative containers.
+
+* Fixed bugs:
+   * [@https://github.com/boostorg/container/pull/48 GitHub #48: ['"Replace deprecated/removed C++98 binders"]].
+   * [@https://github.com/boostorg/container/pull/49 GitHub #49: ['"Remove useless allocator copy in map"]].
+   * [@https://github.com/boostorg/container/pull/50 GitHub #50: ['"Fixed bug Trac #13038"]].
+   * [@https://github.com/boostorg/container/pull/51 GitHub #51: ['"Fix integer rollover that triggers clang ubsan when U is unsigned"]].
+
+[endsect]
+
+[section:release_notes_boost_1_64_00 Boost 1.64 Release]
+
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/11333 Trac #11333: ['"boost::basic_string_ref should interop with boost::container::basic_string"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12749 Trac #12749: ['"container::pmr::polymorphic_allocator compilation error"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12915 Trac #12915: ['"Buffer overflow in boost::container::vector (affects flat_set)"]].
+   * [@https://github.com/boostorg/container/pull/45 GitHub #45: ['"emplace_back must return reference to back(), not to *end()"]].
+   * [@https://github.com/boostorg/container/pull/46 GitHub #46: ['"Fix use of propagate_on_container_swap"]].
+
+[endsect]
+
+[section:release_notes_boost_1_63_00 Boost 1.63 Release]
+
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/12534 Trac #12534: ['"flat_map fails to compile if included after type_traits is instantiated under gcc"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12577 Trac #12577: ['"Null reference in pair.hpp triggers runtime warning with -fsanitize=undefined"]].
+   * [@https://github.com/boostorg/container/pull/41 GitHub #40: ['Fix parameter types in copy_move_algo.hpp: iterator_traits::difference_type -> allocator_traits::size_type]].
+   * [@https://github.com/boostorg/container/pull/41 GitHub #41: ['Avoid -Wunreachable-code in do_allocate()]].
+
+[endsect]
+
+[section:release_notes_boost_1_62_00 Boost 1.62 Release]
+
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/9481  Trac #9481:  ['"Minor comment typo in Boost.Container"]].
+   * [@https://svn.boost.org/trac/boost/ticket/9689  Trac #9689:  ['"Add piecewise_construct to boost::container"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11170 Trac #11170: ['"Doc slip for index_of"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11802 Trac #11802: ['"Incorrect ordering after using insert() with ordered_range_t on a flat_multiset with a non-default sort order"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12117 Trac #12117: ['"flat_set constructor with ordered_unique_range"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12177 Trac #12177: ['"vector::priv_merge uses unqualified uintptr_t"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12183 Trac #12183: ['"GCC 6.1 thinks boost::container::string violates strict aliasing"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12256 Trac #12256: ['"set<std::pair<int,int>>::insert cause compilation error in debug configuration in Visual Studio 2012"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12273 Trac #12273: ['"static_vector max_size() and capacity() should be constant expressions"]].
+     Added constant `static_vector<>::static_capacity` to use the configured capacity in constant expressions.
+   * [@https://svn.boost.org/trac/boost/ticket/12286 Trac #12286: ['"PMR flat_map from Boost Container does not compile"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12296 Trac #12296: ['"{deque,string} combine for a memory leak"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12319 Trac #12319: ['"flat_set` should be nothrow move constructible"]].
+
+* Revised noexcept expressions of default and move constructors in all containers.
+* Implemented C++17's `insert_or_assign`/`try_emplace` for [classref boost::container::map map] and [classref boost::container::flat_map flat_map].
+* Implemented C++17's [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0083r3.pdf ['Splicing Maps and Sets (Revision 5)]]
+   for [classref boost::container::map map], [classref boost::container::multimap multimap],
+   [classref boost::container::set set], [classref boost::container::multiset multiset].
+* Implemented C++17's [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0084r2.pdf ['P0084R2 Emplace Return Type]]
+  in `deque`, `vector`, `stable_vector`, `small_vector`, `static_vector`, `list` and `slist`.
+
+[endsect]
+
 [section:release_notes_boost_1_61_00 Boost 1.61 Release]
 
 * [classref boost::container::small_vector] supports more constructors and assignments.
 * Fixed bugs:
-   * [@https://svn.boost.org/trac/boost/ticket/11820 Trac #11820 : ['"compiler error when using operator[] of map"]].
-   * [@https://svn.boost.org/trac/boost/ticket/11856 Trac #11856 : ['"pool_resource.cpp error: declaration changes meaning"]].
-   * [@https://svn.boost.org/trac/boost/ticket/11866 Trac #11866 : ['"small_vector does not have range constructor"]].
-   * [@https://svn.boost.org/trac/boost/ticket/11867 Trac #11867 : ['"small_vector should have constructor and assignment operator taking other small_vector"]].
-   * [@https://svn.boost.org/trac/boost/ticket/11912 Trac #11912 : ['"flat_map use of vector::priv_forward_range_insert_expand_backwards may cause move with same source"]].
-   * [@https://svn.boost.org/trac/boost/ticket/11957 Trac #11957 : ['"static_vector::max_size() is higher than the capacity"]].
-   * [@https://svn.boost.org/trac/boost/ticket/12014 Trac #12014 : ['"boost::container::set can not insert const (ref) range"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11820 Trac #11820: ['"compiler error when using operator[] of map"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11856 Trac #11856: ['"pool_resource.cpp error: declaration changes meaning"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11866 Trac #11866: ['"small_vector does not have range constructor"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11867 Trac #11867: ['"small_vector should have constructor and assignment operator taking other small_vector"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11912 Trac #11912: ['"flat_map use of vector::priv_forward_range_insert_expand_backwards may cause move with same source"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11957 Trac #11957: ['"static_vector::max_size() is higher than the capacity"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12014 Trac #12014: ['"boost::container::set can not insert const (ref) range"]].
    * [@https://github.com/boostorg/container/pull/33 GitHub #33: ['Make sure std::string constructor is available]].
 
 [endsect]
 
 [section:release_notes_boost_1_60_00 Boost 1.60 Release]
 
-* Implemented [link container.extended_functionality.polymorphic_memory_resources Polymorphic Memory Resources].
+* Implemented [link container.cpp_conformance.polymorphic_memory_resources Polymorphic Memory Resources].
 * Add more BOOST_ASSERT checks to test preconditions in some operations (like `pop_back`, `pop_front`, `back`, `front`, etc.)
 * Added C++11 `back`/`front` operations to [classref boost::container::basic_string basic_string].
 * Fixed bugs:
@@ -1288,9 +1455,9 @@ use [*Boost.Container]? There are several reasons for that:
 
 [section:release_notes_boost_1_56_00 Boost 1.56 Release]
 
-* Added DlMalloc-based [link container.extended_functionality.extended_allocators Extended Allocators].
+* Added DlMalloc-based [link container.extended_allocators Extended Allocators].
 
-* [link container.extended_functionality.configurable_tree_based_associative_containers Improved configurability]
+* [link container.configurable_containers.configurable_tree_based_associative_containers Improved configurability]
    of tree-based ordered associative containers. AVL, Scapegoat and Splay trees are now available
    to implement [classref boost::container::set set], [classref boost::container::multiset multiset],
    [classref boost::container::map map] and [classref boost::container::multimap multimap].

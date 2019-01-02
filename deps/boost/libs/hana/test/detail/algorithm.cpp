@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -16,7 +16,7 @@ namespace hana = boost::hana;
 // Oh, and we also make sure they can be used in a constexpr context.
 constexpr bool constexpr_context() {
     int x = 0, y = 1;
-    hana::detail::swap(x, y);
+    hana::detail::constexpr_swap(x, y);
 
     int array[6] = {1, 2, 3, 4, 5, 6};
     int* first = array;

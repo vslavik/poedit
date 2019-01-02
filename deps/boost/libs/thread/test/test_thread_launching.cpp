@@ -22,7 +22,7 @@ void normal_function()
 
 BOOST_AUTO_TEST_CASE(test_thread_function_no_arguments)
 {
-    boost::thread function(normal_function);
+    boost::thread function(&normal_function);
     function.join();
     BOOST_CHECK(normal_function_called);
 }
@@ -36,7 +36,7 @@ void normal_function_one_arg(int i)
 
 BOOST_AUTO_TEST_CASE(test_thread_function_one_argument)
 {
-    boost::thread function(normal_function_one_arg,42);
+    boost::thread function(&normal_function_one_arg,42);
     function.join();
     BOOST_CHECK_EQUAL(42,nfoa_res);
 }

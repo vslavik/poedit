@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -10,6 +10,7 @@
 #include <boost/hana/mod.hpp>
 #include <boost/hana/not.hpp>
 #include <boost/hana/not_equal.hpp>
+#include <boost/hana/traits.hpp>
 #include <boost/hana/tuple.hpp>
 #include <boost/hana/type.hpp>
 
@@ -26,10 +27,13 @@ int main() {
     BOOST_HANA_CONSTEXPR_CHECK(hana::any_of(hana::make_tuple(1, 2), is_odd));
     BOOST_HANA_CONSTANT_CHECK(!hana::any_of(hana::make_tuple(2_c, 4_c), is_odd));
 
-    BOOST_HANA_CONSTANT_CHECK(hana::any_of(
-        hana::make_tuple(hana::type_c<void>, hana::type_c<char&>), hana::trait<std::is_void>
-    ));
-    BOOST_HANA_CONSTANT_CHECK(!hana::any_of(
-        hana::make_tuple(hana::type_c<void>, hana::type_c<char&>), hana::trait<std::is_integral>
-    ));
+    BOOST_HANA_CONSTANT_CHECK(
+      hana::any_of(hana::make_tuple(hana::type<void>{}, hana::type<char&>{}),
+                   hana::traits::is_void)
+    );
+
+    BOOST_HANA_CONSTANT_CHECK(
+      !hana::any_of(hana::make_tuple(hana::type<void>{}, hana::type<char&>{}),
+                    hana::traits::is_integral)
+    );
 }

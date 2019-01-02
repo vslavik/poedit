@@ -10,19 +10,19 @@
 //  This test verifiies that the error_category vtable does not suffer from
 //  order-of-initialization problems.
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/system/error_code.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 struct foo
 {
   foo()
   {
     boost::system::error_code ec;
-    ec == boost::system::posix::permission_denied;
+    BOOST_TEST_NE( ec, boost::system::errc::permission_denied );
   }
 } f;
 
-int main( int, char ** )
+int main()
 {
-  return ::boost::report_errors();
+  return boost::report_errors();
 }

@@ -10,6 +10,8 @@
 #include <boost/spirit/home/x3/numeric/bool.hpp>
 #include <boost/spirit/home/x3/numeric/int.hpp>
 #include <boost/spirit/home/x3/numeric/uint.hpp>
+#ifndef BOOST_SPIRIT_NO_REAL_NUMBERS
 #include <boost/spirit/home/x3/numeric/real.hpp>
+#endif
 
 #endif

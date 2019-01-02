@@ -7,36 +7,48 @@
 ``
 
    namespace boost{ namespace math{
-   
+
    template <class T>
    ``__sf_result`` legendre_p(int n, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_p(int n, T x, const ``__Policy``&);
-   
+
+   template <class T>
+   ``__sf_result`` legendre_p_prime(int n, T x);
+
+   template <class T, class ``__Policy``>
+   ``__sf_result`` legendre_p_prime(int n, T x, const ``__Policy``&);
+
+   template <class T, class ``__Policy``>
+   std::vector<T> legendre_p_zeros(int l, const ``__Policy``&);
+
+   template <class T>
+   std::vector<T> legendre_p_zeros(int l);
+
    template <class T>
    ``__sf_result`` legendre_p(int n, int m, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_p(int n, int m, T x, const ``__Policy``&);
-   
+
    template <class T>
    ``__sf_result`` legendre_q(unsigned n, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_q(unsigned n, T x, const ``__Policy``&);
-   
+
    template <class T1, class T2, class T3>
    ``__sf_result`` legendre_next(unsigned l, T1 x, T2 Pl, T3 Plm1);
-   
+
    template <class T1, class T2, class T3>
    ``__sf_result`` legendre_next(unsigned l, unsigned m, T1 x, T2 Pl, T3 Plm1);
 
-   
+
    }} // namespaces
-   
+
 The return type of these functions is computed using the __arg_promotion_rules:
-note than when there is a single template argument the result is the same type 
+note than when there is a single template argument the result is the same type
 as that argument or `double` if the template argument is an integer type.
 
 [optional_policy]
@@ -45,10 +57,10 @@ as that argument or `double` if the template argument is an integer type.
 
    template <class T>
    ``__sf_result`` legendre_p(int l, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_p(int l, T x, const ``__Policy``&);
-   
+
 Returns the Legendre Polynomial of the first kind:
 
 [equation legendre_0]
@@ -59,17 +71,43 @@ Negative orders are handled via the reflection formula:
 
 P[sub -l-1](x) = P[sub l](x)
 
-The following graph illustrates the behaviour of the first few 
+The following graph illustrates the behaviour of the first few
 Legendre Polynomials:
 
 [graph legendre_p]
-   
+
+    template <class T>
+    ``__sf_result`` legendre_p_prime(int n, T x);
+
+    template <class T, class ``__Policy``>
+    ``__sf_result`` legendre_p_prime(int n, T x, const ``__Policy``&);
+
+Returns the derivatives of the Legendre polynomials.
+
+    template <class T, class ``__Policy``>
+    std::vector<T> legendre_p_zeros(int l, const ``__Policy``&);
+
+    template <class T>
+    std::vector<T> legendre_p_zeros(int l);
+
+The zeros of the Legendre polynomials are calculated by Newton's method using an initial guess given by Tricomi with root bracketing provided by Szego.
+
+Since the Legendre polynomials are alternatively even and odd, only the non-negative zeros are returned.
+For the odd Legendre polynomials, the first zero is always zero.
+The rest of the zeros are returned in increasing order.
+
+Note that the argument to the routine is an integer, and the output is a floating-point type.
+Hence the template argument is mandatory.
+The time to extract a single root is linear in `l` (this is scaling to evaluate the Legendre polynomials), so recovering all roots is [bigo](`l`[super 2]).
+Algorithms with linear scaling [@ https://doi.org/10.1137/06067016X exist] for recovering all roots, but requires tooling not currently built into boost.math.
+This implementation proceeds under the assumption that calculating zeros of these functions will not be a bottleneck for any workflow.
+
    template <class T>
    ``__sf_result`` legendre_p(int l, int m, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_p(int l, int m, T x, const ``__Policy``&);
-   
+
 Returns the associated Legendre polynomial of the first kind:
 
 [equation legendre_1]
@@ -84,31 +122,31 @@ Negative values of /l/ and /m/ are handled via the identity relations:
 includes a leading Condon-Shortley phase term of (-1)[super m].  This
 matches the definition given by Abramowitz and Stegun (8.6.6) and that
 used by [@http://mathworld.wolfram.com/LegendrePolynomial.html Mathworld]
-and [@http://documents.wolfram.com/mathematica/functions/LegendreP 
+and [@http://documents.wolfram.com/mathematica/functions/LegendreP
 Mathematica's LegendreP function].  However, uses in the literature
 do not always include this phase term, and strangely the specification
-for the associated Legendre function in the C++ TR1 (assoc_legendre) 
-also omits it, in spite of stating that it uses Abramowitz and Stegun 
+for the associated Legendre function in the C++ TR1 (assoc_legendre)
+also omits it, in spite of stating that it uses Abramowitz and Stegun
 as the final arbiter on these matters.
 
-See: 
+See:
 
-[@http://mathworld.wolfram.com/LegendrePolynomial.html 
-Weisstein, Eric W. "Legendre Polynomial." 
+[@http://mathworld.wolfram.com/LegendrePolynomial.html
+Weisstein, Eric W. "Legendre Polynomial."
 From MathWorld--A Wolfram Web Resource].
 
-Abramowitz, M. and Stegun, I. A. (Eds.). "Legendre Functions" and 
-"Orthogonal Polynomials." Ch. 22 in Chs. 8 and 22 in Handbook of 
-Mathematical Functions with Formulas, Graphs, and Mathematical Tables, 
-9th printing. New York: Dover, pp. 331-339 and 771-802, 1972. 
+Abramowitz, M. and Stegun, I. A. (Eds.). "Legendre Functions" and
+"Orthogonal Polynomials." Ch. 22 in Chs. 8 and 22 in Handbook of
+Mathematical Functions with Formulas, Graphs, and Mathematical Tables,
+9th printing. New York: Dover, pp. 331-339 and 771-802, 1972.
  ]
-   
+
    template <class T>
    ``__sf_result`` legendre_q(unsigned n, T x);
-   
+
    template <class T, class ``__Policy``>
    ``__sf_result`` legendre_q(unsigned n, T x, const ``__Policy``&);
-   
+
 Returns the value of the Legendre polynomial that is the second solution
 to the Legendre differential equation, for example:
 
@@ -120,10 +158,10 @@ The following graph illustrates the first few Legendre functions of the
 second kind:
 
 [graph legendre_q]
-   
+
    template <class T1, class T2, class T3>
    ``__sf_result`` legendre_next(unsigned l, T1 x, T2 Pl, T3 Plm1);
-   
+
 Implements the three term recurrence relation for the Legendre
 polynomials, this function can be used to create a sequence of
 values evaluated at the same /x/, and for rising /l/.  This recurrence
@@ -143,7 +181,7 @@ values using:
    // Double check values:
    for(unsigned l = 1; l < 10; ++l)
       assert(v[l] == legendre_p(l, x));
-      
+
 Formally the arguments are:
 
 [variablelist
@@ -152,7 +190,7 @@ Formally the arguments are:
 [[Pl][The value of the polynomial evaluated at degree /l/.]]
 [[Plm1][The value of the polynomial evaluated at degree /l-1/.]]
 ]
-   
+
    template <class T1, class T2, class T3>
    ``__sf_result`` legendre_next(unsigned l, unsigned m, T1 x, T2 Pl, T3 Plm1);
 
@@ -175,7 +213,7 @@ values using:
    // Double check values:
    for(unsigned l = 1; l < 10; ++l)
       assert(v[l] == legendre_p(10 + l, m, x));
-      
+
 Formally the arguments are:
 
 [variablelist
@@ -185,12 +223,12 @@ Formally the arguments are:
 [[Pl][The value of the polynomial evaluated at degree /l/.]]
 [[Plm1][The value of the polynomial evaluated at degree /l-1/.]]
 ]
-   
+
 [h4 Accuracy]
 
-The following table shows peak errors (in units of epsilon) 
-for various domains of input arguments.  
-Note that only results for the widest floating point type on the system are 
+The following table shows peak errors (in units of epsilon)
+for various domains of input arguments.
+Note that only results for the widest floating point type on the system are
 given as narrower types have __zero_error.
 
 [table_legendre_p]
@@ -206,7 +244,7 @@ are likely to grow arbitrarily large when the function is very close to a root.
 
 [h4 Testing]
 
-A mixture of spot tests of values calculated using functions.wolfram.com, 
+A mixture of spot tests of values calculated using functions.wolfram.com,
 and randomly generated test data are
 used: the test data was computed using
 [@http://shoup.net/ntl/doc/RR.txt NTL::RR] at 1000-bit precision.
@@ -214,15 +252,14 @@ used: the test data was computed using
 [h4 Implementation]
 
 These functions are implemented using the stable three term
-recurrence relations.  These relations guarentee low absolute error
-but cannot guarentee low relative error near one of the roots of the
+recurrence relations.  These relations guarantee low absolute error
+but cannot guarantee low relative error near one of the roots of the
 polynomials.
 
 [endsect][/section:beta_function The Beta Function]
-[/ 
+[/
   Copyright 2006 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
 ]
-

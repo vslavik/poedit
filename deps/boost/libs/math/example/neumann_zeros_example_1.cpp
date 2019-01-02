@@ -65,7 +65,7 @@ int main()
 //] //[/neumann_zeros_example_2]
     }
   }
-  catch (std::exception ex)
+  catch (std::exception const& ex)
   {
     std::cout << "Thrown exception " << ex.what() << std::endl;
   }

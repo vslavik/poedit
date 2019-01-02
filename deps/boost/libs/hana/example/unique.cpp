@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -25,14 +25,14 @@ int main() {
     auto objects = hana::make_tuple(1, 2, "abc"s, 'd', "efg"s, "hij"s, 3.4f);
     BOOST_HANA_RUNTIME_CHECK(
         hana::unique(objects, [](auto const& t, auto const& u) {
-            return hana::decltype_(t) == hana::decltype_(u);
+            return hana::typeid_(t) == hana::typeid_(u);
         })
         == hana::make_tuple(1, "abc"s, 'd', "efg"s, 3.4f)
     );
 
     // unique.by is syntactic sugar
     BOOST_HANA_RUNTIME_CHECK(
-        hana::unique.by(hana::comparing(hana::decltype_), objects) ==
+        hana::unique.by(hana::comparing(hana::typeid_), objects) ==
             hana::make_tuple(1, "abc"s, 'd', "efg"s, 3.4f)
     );
 }

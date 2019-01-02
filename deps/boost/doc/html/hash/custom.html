@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extending boost::hash for a custom data type</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../hash.html" title="Chapter&#160;13.&#160;Boost.Functional/Hash">
+<link rel="up" href="../hash.html" title="Chapter&#160;10.&#160;Boost.ContainerHash">
 <link rel="prev" href="tutorial.html" title="Tutorial">
 <link rel="next" href="combine.html" title="Combining hash values">
 </head>
@@ -29,7 +29,7 @@
 </h2></div></div></div>
 <p>
       <code class="computeroutput"><a class="link" href="../boost/hash.html" title="Struct template hash">boost::hash</a></code> is implemented by calling
-      the function <code class="computeroutput"><a class="link" href="reference.html#boost.hash_value_idp6284240">hash_value</a></code>.
+      the function <code class="computeroutput"><a class="link" href="reference.html#boost.hash_va_1_3_11_11_2_2_27_1">hash_value</a></code>.
       The namespace isn't specified so that it can detect overloads via argument
       dependant lookup. So if there is a free function <code class="computeroutput"><span class="identifier">hash_value</span></code>
       in the same namespace as a custom type, it will get called.
@@ -90,8 +90,8 @@
 <span class="identifier">assert</span><span class="special">(</span><span class="identifier">books</span><span class="special">.</span><span class="identifier">find</span><span class="special">(</span><span class="identifier">dandelion</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">books</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
 </pre>
 <p>
-      The full example can be found in: <a href="../../../libs/functional/hash/examples/books.hpp" target="_top">/libs/functional/hash/examples/books.hpp</a>
-      and <a href="../../../libs/functional/hash/examples/books.cpp" target="_top">/libs/functional/hash/examples/books.cpp</a>.
+      The full example can be found in: <a href="../../../libs/container_hash/examples/books.hpp" target="_top">/libs/container_hash/examples/books.hpp</a>
+      and <a href="../../../libs/container_hash/examples/books.cpp" target="_top">/libs/container_hash/examples/books.cpp</a>.
     </p>
 <div class="tip"><table border="0" summary="Tip">
 <tr>

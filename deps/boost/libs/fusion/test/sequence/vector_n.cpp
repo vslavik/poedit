@@ -94,7 +94,7 @@ main()
     }
 
     {
-        vector2<int, int> t1(123, 456);
+        vector2<int, short> t1(123, 456);
         vector2<double, float> t2(t1);
         (void)t2;
     }

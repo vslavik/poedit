@@ -35,11 +35,11 @@ namespace wave {
 namespace grammars {
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  expression_grammar_gen template class
 //
-//      This template helps separating the compilation of the 
-//      expression_grammar class from the compilation of the main 
+//      This template helps separating the compilation of the
+//      expression_grammar class from the compilation of the main
 //      pp_iterator. This is done to safe compilation time.
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,15 +52,15 @@ struct BOOST_WAVE_DECL expression_grammar_gen {
         token_sequence_type;
 
     static bool evaluate(
-        typename token_sequence_type::const_iterator const &first, 
-        typename token_sequence_type::const_iterator const &last, 
+        typename token_sequence_type::const_iterator const &first,
+        typename token_sequence_type::const_iterator const &last,
         typename token_type::position_type const &tok,
         bool if_block_status, value_error &status);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 }   //  namespace grammars
-}   //  namespace wave 
+}   //  namespace wave
 }   //  namespace boost
 
 #ifdef BOOST_MSVC

@@ -127,10 +127,10 @@
       future<typename decay<T>::type> make_ready_future(T&& value);  // EXTENSION
     future<void> make_ready_future();  // EXTENSION
 
-    exceptional_ptr make_exceptional(exception_ptr ex);  // EXTENSION
+    exceptional_ptr make_exceptional_future(exception_ptr ex);  // EXTENSION
     template <typename E>
-      exceptional_ptr make_exceptional(E ex);  // EXTENSION
-    exceptional_ptr make_exceptional();  // EXTENSION
+      exceptional_ptr make_exceptional_future(E ex);  // EXTENSION
+    exceptional_ptr make_exceptional_future();  // EXTENSION
 
     
     template <typename T>
@@ -349,7 +349,7 @@ The object's `name` virtual function returns a pointer to the string "future".]]
 
       // move support
       __unique_future__(__unique_future__ && other) noexcept;
-      __unique_future__(__unique_future__<__unique_future__<R>>&& rhs);  // EXTENSION
+      explicit __unique_future__(__unique_future__<__unique_future__<R>>&& rhs);  // EXTENSION
       __unique_future__& operator=(__unique_future__ && other) noexcept;
       
       // factories
@@ -358,7 +358,7 @@ The object's `name` virtual function returns a pointer to the string "future".]]
       template<typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(F&& func); // EXTENSION
-      template<typename S, typename F>
+      template<typename Ex, typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(Ex& executor, F&& func); // EXTENSION
       template<typename F>
@@ -453,7 +453,7 @@ associated with `*this`. `other` is not associated with any shared state.]]
 [///////////////////////////////////////////////////////////////////]
 [section:unwrap_move_constructor Unwrap Move Constructor - EXTENSION]
 
-      __unique_future__(__unique_future__<__unique_future__<R>>&& other);  // EXTENSION
+      explicit __unique_future__(__unique_future__<__unique_future__<R>>&& other);  // EXTENSION
 
 [warning This constructor is experimental and subject to change in future versions. 
 There are not too much tests yet, so it is possible that you can find out some trivial bugs :(] 
@@ -898,7 +898,7 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
       template<typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(F&& func); // EXTENSION
-      template<typename S, typename F>
+      template<typename Ex, typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(Ex& executor, F&& func); // EXTENSION
       template<typename F>
@@ -1387,7 +1387,7 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
       template<typename F>
       __unique_future__<typename boost::result_of<F(shared_future)>::type> 
       then(F&& func) const; // EXTENSION
-      template<typename S, typename F>
+      template<typename Ex, typename F>
       __unique_future__<typename boost::result_of<F(shared_future)>::type> 
       then(Ex& executor, F&& func) const; // EXTENSION
       template<typename F>
@@ -1507,6 +1507,13 @@ executor, then the parent is filled by immediately calling `.wait()`, and the po
 
       template<typename F>
       void set_wait_callback(F f); // EXTENSION
+
+      void set_value_deferred(see below);  // EXTENSION
+      void set_exception_deferred(exception_ptr p);  // EXTENSION
+      template <typename E>
+      void set_exception_deferred(E e); // EXTENSION
+      void notify_deferred(); // EXTENSION
+
     };
 
 [///////////////////////////////////////////////]
@@ -1683,9 +1690,10 @@ Stores the value r in the shared state without making that state ready immediate
 Schedules that state to be made ready when the current thread exits, after all objects of thread storage duration 
 associated with the current thread have been destroyed.]]
 
+[[Postconditions:] [the result associated with `*this` is set as deferred]]
 
 [[Throws:] [
-- __promise_already_satisfied__ if the result associated with `*this` is already ['ready]. 
+- __promise_already_satisfied__ if the result associated with `*this` is already ['ready] or deferred. 
 
 - __broken_promise__ if `*this` has no shared state. 
 
@@ -1711,11 +1719,11 @@ Stores the exception pointer p in the shared state without making that state rea
 Schedules that state to be made ready when the current thread exits, after all objects of thread storage duration
  associated with the current thread have been destroyed.]]
 
-[[Postconditions:] [All futures waiting on the shared state are ['ready] and __unique_future_has_exception__ or
-__shared_future_has_exception__ for those futures shall return `true`.]]
+[[Postconditions:] [the result associated with `*this` is set as deferred]]
+
 
 [[Throws:] [
-- __promise_already_satisfied__ if the result associated with `*this` is already ['ready]. 
+- __promise_already_satisfied__ if the result associated with `*this` is already ['ready] or deferred. 
 
 - __broken_promise__ if `*this` has no shared state. 
 
@@ -1745,6 +1753,82 @@ or __shared_future__ associated with this result, and the result is not ['ready]
 ]
 
 [endsect]
+[///////////////////////////////////////////////]
+[section:set_value Member Function `set_value_deferred()` EXTENSION]
+
+    void set_value_deferred(R&& r);
+    void set_value_deferred(const R& r);
+    void promise<R&>:: set_value_deferred(R& r);
+    void promise<void>:: set_value_deferred();
+
+[variablelist
+
+[[Effects:] [
+- If BOOST_THREAD_PROVIDES_PROMISE_LAZY is defined and if `*this` was not associated with a result, allocate storage for a new shared state and associate it with `*this`. 
+
+- Stores the value `r` in the shared state without making that state ready immediately. Threads blocked waiting for the asynchronous result are not woken. They will be woken only when `notify_deferred` is called.
+]]
+
+[[Postconditions:] [the result associated with `*this` is set as deferred]]
+
+[[Throws:] [
+- __promise_already_satisfied__ if the result associated with `*this` is already ['ready] or deferred. 
+
+- __broken_promise__ if `*this` has no shared state. 
+
+- `std::bad_alloc` if the memory required for storage of the result cannot be allocated. 
+
+- Any exception thrown by the copy or move-constructor of `R`.]]
+
+]
+
+[endsect]
+[///////////////////////////////////////////////////////]
+[section:set_exception Member Function `set_exception_deferred()` EXTENSION]
+
+    void set_exception_deferred(boost::exception_ptr e);
+    template <typename E>
+    void set_exception_deferred(E e); // EXTENSION
+
+[variablelist
+
+[[Effects:] [
+- If BOOST_THREAD_PROVIDES_PROMISE_LAZY is defined and if `*this` was not associated with a result, allocate storage for a new shared state and associate it with `*this`. 
+
+- Store the exception `e` in the shared state associated with `*this`without making that state ready immediately. Threads blocked waiting for the asynchronous result are not woken. They will be woken only when `notify_deferred` is called.]]
+
+[[Postconditions:] [the result associated with `*this` is set as deferred]]
+
+
+[[Throws:] [
+- __promise_already_satisfied__ if the result associated with `*this` is already ['ready] or deferred. 
+
+- __broken_promise__ if `*this` has no shared state. 
+
+- `std::bad_alloc` if the memory required for storage of the result cannot be allocated.
+]]
+
+]
+
+[endsect]
+
+[///////////////////////////////////////////////]
+[section:set_value Member Function `notify_deferred()` EXTENSION]
+
+[variablelist
+
+[[Effects:] [
+Any threads blocked waiting for the asynchronous result are woken.
+]]
+
+[[Postconditions:] [All futures waiting on the shared state are ['ready] and __unique_future_has_value__ or
+__shared_future_has_value__ for those futures shall return `true`.]]
+
+[[Postconditions:] [the result associated with `*this` is ready.]]
+
+]
+[endsect]
+
 
 [endsect]
 [////////////////////////////////////////////////////]
@@ -2451,12 +2535,12 @@ Otherwise the value is copied to the shared state of the returned future.
     
 [endsect]
 [/////////////////////////////////////////////////////////////////////////////]
-[section:make_exceptional Non-member function `make_exceptional()` EXTENSION]
+[section:make_exceptional_future Non-member function `make_exceptional_future()` EXTENSION]
 
-    exceptional_ptr make_exceptional(exception_ptr ex);  // EXTENSION
+    exceptional_ptr make_exceptional_future(exception_ptr ex);  // EXTENSION
     template <typename E>
-      exceptional_ptr make_exceptional(E ex);  // EXTENSION
-    exceptional_ptr make_exceptional();  // EXTENSION
+      exceptional_ptr make_exceptional_future(E ex);  // EXTENSION
+    exceptional_ptr make_exceptional_future();  // EXTENSION
 
 [variablelist
 

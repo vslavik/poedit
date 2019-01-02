@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>User's Guide</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../accumulators.html" title="Chapter&#160;1.&#160;Boost.Accumulators">
 <link rel="prev" href="../accumulators.html" title="Chapter&#160;1.&#160;Boost.Accumulators">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="accumulators.user_s_guide"></a><a class="link" href="user_s_guide.html" title="User's Guide">User's Guide</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework">The
       Accumulators Framework</a></span></dt>
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library">The
@@ -42,7 +42,7 @@
     </p>
 <h3>
 <a name="accumulators.user_s_guide.h0"></a>
-      <span><a name="accumulators.user_s_guide.hello__world_"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.hello__world_">Hello,
+      <span class="phrase"><a name="accumulators.user_s_guide.hello__world_"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.hello__world_">Hello,
       World!</a>
     </h3>
 <p>
@@ -71,7 +71,7 @@
 
     <span class="comment">// Display the results ...</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Mean:   "</span> <span class="special">&lt;&lt;</span> <span class="identifier">mean</span><span class="special">(</span><span class="identifier">acc</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Moment: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">accumulators</span><span class="special">::</span><span class="identifier">moment</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">acc</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Moment: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">moment</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">acc</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
@@ -87,7 +87,7 @@ Moment: 9.635
 <a name="accumulators.user_s_guide.the_accumulators_framework"></a><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework" title="The Accumulators Framework">The
       Accumulators Framework</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.using___accumulator_set___">Using
         <code class="literal">accumulator_set&lt;&gt;</code></a></span></dt>
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extracting_results">Extracting
@@ -106,7 +106,7 @@ Moment: 9.635
         The Accumulators Framework is framework for performing incremental calculations.
         Usage of the framework follows the following pattern:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Users build a computational object, called an <span class="emphasis"><em><code class="computeroutput"><a class="link" href="../boost/accumulators/accumulator_set.html" title="Struct template accumulator_set">accumulator_set&lt;&gt;</a></code></em></span>,
             by selecting the computations in which they are interested, or authoring
@@ -131,14 +131,14 @@ Moment: 9.635
       </p>
 <h3>
 <a name="accumulators.user_s_guide.the_accumulators_framework.h0"></a>
-        <span><a name="accumulators.user_s_guide.the_accumulators_framework.terminology"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.terminology">Terminology</a>
+        <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.terminology"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.terminology">Terminology</a>
       </h3>
 <p>
         The following terms are used in the rest of the documentation.
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Sample</span></dt>
 <dd><p>
               <a name="sample_type"></a>A datum that is pushed into an <code class="computeroutput"><a class="link" href="../boost/accumulators/accumulator_set.html" title="Struct template accumulator_set">accumulator_set&lt;&gt;</a></code>. The type of the
@@ -185,7 +185,7 @@ Moment: 9.635
 </div>
 <h3>
 <a name="accumulators.user_s_guide.the_accumulators_framework.h1"></a>
-        <span><a name="accumulators.user_s_guide.the_accumulators_framework.overview"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.overview">Overview</a>
+        <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.overview"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.overview">Overview</a>
       </h3>
 <p>
         Here is a list of the important types and functions in the Accumulator Framework
@@ -332,7 +332,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Sample</span></code></span></dt>
 <dd><p>
                 The type of the data that will be accumulated.
@@ -693,7 +693,7 @@ Moment: 9.635
 <a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework"></a><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework" title="Extending the Accumulators Framework">Extending
         the Accumulators Framework</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator">Defining
           a New Accumulator</a></span></dt>
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_feature">Defining
@@ -774,7 +774,7 @@ Moment: 9.635
           </p>
 <div class="variablelist">
 <p class="title"><b>Optional Accumulator Member Functions</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="literal">on_drop(Args)</code></span></dt>
 <dd><p>
                   Defines an action to be taken when this accumulator is dropped.
@@ -785,7 +785,7 @@ Moment: 9.635
 </div>
 <h4>
 <a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.h0"></a>
-            <span><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.accessing_other_accumulators_in_the_set"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.accessing_other_accumulators_in_the_set">Accessing
+            <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.accessing_other_accumulators_in_the_set"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.accessing_other_accumulators_in_the_set">Accessing
             Other Accumulators in the Set</a>
           </h4>
 <p>
@@ -845,7 +845,7 @@ Moment: 9.635
           </p>
 <h4>
 <a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.h1"></a>
-            <span><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.infix_notation_and_the_numeric_operators_sub_library"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.infix_notation_and_the_numeric_operators_sub_library">Infix
+            <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.infix_notation_and_the_numeric_operators_sub_library"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.infix_notation_and_the_numeric_operators_sub_library">Infix
             Notation and the Numeric Operators Sub-Library</a>
           </h4>
 <p>
@@ -870,7 +870,7 @@ Moment: 9.635
           </p>
 <h4>
 <a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.h2"></a>
-            <span><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.droppable_accumulators"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.droppable_accumulators">Droppable
+            <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.droppable_accumulators"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.extending_the_accumulators_framework.defining_a_new_accumulator.droppable_accumulators">Droppable
             Accumulators</a>
           </h4>
 <p>
@@ -953,7 +953,7 @@ Moment: 9.635
             The following rules more precisely specify how droppable and non-droppable
             accumulators behave within an accumulator set.
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 There are two types of accumulators: droppable and non-droppable.
                 The default is non-droppable.
@@ -1011,7 +1011,7 @@ Moment: 9.635
 <p>
             And as an optimization:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                 If the user specifies the non-droppable feature <code class="computeroutput"><span class="identifier">X</span></code>,
                 which depends on <code class="computeroutput"><span class="identifier">Y</span></code>
                 and <code class="computeroutput"><span class="identifier">Z</span></code>, then the accumulators
@@ -1179,7 +1179,7 @@ Moment: 9.635
             that implements that feature. And every accumulator provides a nested
             <code class="computeroutput"><span class="identifier">result_type</span></code> typedef that
             tells what its return type is. The extractor simply delegates its work
-            to the <code class="computeroutput"><a class="link" href="reference.html#boost.accumulators.extract_result_idp33688736">extract_result()</a></code>
+            to the <code class="computeroutput"><a class="link" href="reference.html#boost.accumulators.extract_1_3_2_6_2_3_1_1_13">extract_result()</a></code>
             function.
           </p>
 </div>
@@ -1383,7 +1383,7 @@ Moment: 9.635
 </h4></div></div></div>
 <h3>
 <a name="accumulators.user_s_guide.the_accumulators_framework.concepts.h0"></a>
-          <span><a name="accumulators.user_s_guide.the_accumulators_framework.concepts.accumulator_concept"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.concepts.accumulator_concept">Accumulator
+          <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.concepts.accumulator_concept"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.concepts.accumulator_concept">Accumulator
           Concept</a>
         </h3>
 <p>
@@ -1519,7 +1519,7 @@ Moment: 9.635
 </div>
 <br class="table-break"><h3>
 <a name="accumulators.user_s_guide.the_accumulators_framework.concepts.h1"></a>
-          <span><a name="accumulators.user_s_guide.the_accumulators_framework.concepts.feature_concept"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.concepts.feature_concept">Feature
+          <span class="phrase"><a name="accumulators.user_s_guide.the_accumulators_framework.concepts.feature_concept"></a></span><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_accumulators_framework.concepts.feature_concept">Feature
           Concept</a>
         </h3>
 <p>
@@ -1622,7 +1622,7 @@ Moment: 9.635
 <a name="accumulators.user_s_guide.the_statistical_accumulators_library"></a><a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library" title="The Statistical Accumulators Library">The
       Statistical Accumulators Library</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count">count</a></span></dt>
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.covariance">covariance</a></span></dt>
 <dt><span class="section"><a href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.density">density</a></span></dt>
@@ -1703,7 +1703,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -1760,7 +1760,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/count_impl.html" title="Struct count_impl">count_impl</a></code>
             </li></ul></div>
 </div>
@@ -1775,7 +1775,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -1837,7 +1837,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/covariance_impl.html" title="Struct template covariance_impl">covariance_impl</a></code>
             </li>
@@ -1859,7 +1859,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -1922,7 +1922,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/density_impl.html" title="Struct template density_impl">density_impl</a></code>
             </li>
@@ -1949,7 +1949,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2007,7 +2007,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/error_of_mean_impl.html" title="Struct template error_of_mean_impl">error_of_mean_impl</a></code>
             </li>
@@ -2029,7 +2029,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2099,7 +2099,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/extended_p_square_impl.html" title="Struct template extended_p_square_impl">extended_p_square_impl</a></code>
             </li>
@@ -2117,7 +2117,7 @@ Moment: 9.635
           Quantile estimation using the extended <code class="literal">P^2</code> algorithm
           for weighted and unweighted samples. By default, the calculation is linear
           and unweighted, but quadratic and weighted variants are also provided.
-          For further implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/extended_p_squ_idp34161184.html" title="Struct template extended_p_square_quantile_impl">extended_p_square_quantile_impl</a></code>.
+          For further implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/exte_1_3_2_6_3_59_1_1_22_5.html" title="Struct template extended_p_square_quantile_impl">extended_p_square_quantile_impl</a></code>.
         </p>
 <p>
           All the variants share the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">quantile</span></code>
@@ -2125,7 +2125,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2235,9 +2235,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/extended_p_squ_idp34161184.html" title="Struct template extended_p_square_quantile_impl">extended_p_square_quantile_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/exte_1_3_2_6_3_59_1_1_22_5.html" title="Struct template extended_p_square_quantile_impl">extended_p_square_quantile_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.extended_p_square" title="extended_p_square"><code class="literal">extended_p_square</code></a>
@@ -2260,7 +2260,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2327,7 +2327,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/kurtosis_impl.html" title="Struct template kurtosis_impl">kurtosis_impl</a></code>
             </li>
@@ -2348,7 +2348,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2410,7 +2410,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/max_impl.html" title="Struct template max_impl">max_impl</a></code>
             </li></ul></div>
 </div>
@@ -2428,7 +2428,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd><p>
                 For samples, <code class="computeroutput"><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">fdiv</span><span class="special">&lt;</span><em class="replaceable"><code>sample-type</code></em><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;::</span><span class="identifier">result_type</span></code> <br> For weights,
@@ -2541,7 +2541,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/mean_impl.html" title="Struct template mean_impl">mean_impl</a></code>
             </li>
@@ -2566,7 +2566,7 @@ Moment: 9.635
           the density estimator, or the <code class="literal">P^2</code> cumulative distribution
           estimator. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/median_impl.html" title="Struct template median_impl">median_impl</a></code>,
           <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/with_density_median_impl.html" title="Struct template with_density_median_impl">with_density_median_impl</a></code>,
-          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/with_p_square__idp34379616.html" title="Struct template with_p_square_cumulative_distribution_median_impl">with_p_square_cumulative_distribution_median_impl</a></code>.
+          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wit_1_3_2_6_3_59_1_1_22_10.html" title="Struct template with_p_square_cumulative_distribution_median_impl">with_p_square_cumulative_distribution_median_impl</a></code>.
         </p>
 <p>
           The three median accumulators all satisfy the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">median</span></code>
@@ -2574,7 +2574,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2660,7 +2660,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/median_impl.html" title="Struct template median_impl">median_impl</a></code>
             </li>
@@ -2668,7 +2668,7 @@ Moment: 9.635
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/with_density_median_impl.html" title="Struct template with_density_median_impl">with_density_median_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/with_p_square__idp34379616.html" title="Struct template with_p_square_cumulative_distribution_median_impl">with_p_square_cumulative_distribution_median_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wit_1_3_2_6_3_59_1_1_22_10.html" title="Struct template with_p_square_cumulative_distribution_median_impl">with_p_square_cumulative_distribution_median_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -2690,7 +2690,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2752,7 +2752,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/min_impl.html" title="Struct template min_impl">min_impl</a></code>
             </li></ul></div>
 </div>
@@ -2766,7 +2766,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2836,7 +2836,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/moment_impl.html" title="Struct template moment_impl">moment_impl</a></code>
             </li>
@@ -2851,11 +2851,11 @@ Moment: 9.635
 </h4></div></div></div>
 <p>
           Histogram calculation of the cumulative distribution with the <code class="literal">P^2</code>
-          algorithm. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/p_square_cumul_idp34448032.html" title="Struct template p_square_cumulative_distribution_impl">p_square_cumulative_distribution_impl</a></code>
+          algorithm. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/p_s_1_3_2_6_3_59_1_1_22_18.html" title="Struct template p_square_cumulative_distribution_impl">p_square_cumulative_distribution_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -2940,9 +2940,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/p_square_cumul_idp34448032.html" title="Struct template p_square_cumulative_distribution_impl">p_square_cumulative_distribution_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/p_s_1_3_2_6_3_59_1_1_22_18.html" title="Struct template p_square_cumulative_distribution_impl">p_square_cumulative_distribution_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -2960,7 +2960,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3057,7 +3057,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/p_square_quantile_impl.html" title="Struct template p_square_quantile_impl">p_square_quantile_impl</a></code>
             </li>
@@ -3074,7 +3074,7 @@ Moment: 9.635
 <p>
           Peaks Over Threshold method for quantile and tail mean estimation. For
           implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/peaks_over_threshold_impl.html" title="Struct template peaks_over_threshold_impl">peaks_over_threshold_impl</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/peaks_over_thr_idp34632016.html" title="Struct template peaks_over_threshold_prob_impl">peaks_over_threshold_prob_impl</a></code>.
+          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/pea_1_3_2_6_3_59_1_1_22_15.html" title="Struct template peaks_over_threshold_prob_impl">peaks_over_threshold_prob_impl</a></code>.
         </p>
 <p>
           Both <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">peaks_over_threshold</span></code> and <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">peaks_over_threshold_prob</span><span class="special">&lt;&gt;</span></code>
@@ -3085,7 +3085,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3145,12 +3145,12 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/peaks_over_threshold_impl.html" title="Struct template peaks_over_threshold_impl">peaks_over_threshold_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/peaks_over_thr_idp34632016.html" title="Struct template peaks_over_threshold_prob_impl">peaks_over_threshold_prob_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/pea_1_3_2_6_3_59_1_1_22_15.html" title="Struct template peaks_over_threshold_prob_impl">peaks_over_threshold_prob_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -3183,7 +3183,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3289,7 +3289,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/pot_quantile_impl.html" title="Struct template pot_quantile_impl">pot_quantile_impl</a></code>
             </li>
@@ -3315,7 +3315,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3372,7 +3372,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/pot_tail_mean_impl.html" title="Struct template pot_tail_mean_impl">pot_tail_mean_impl</a></code>
             </li>
@@ -3393,7 +3393,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3462,7 +3462,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/rolling_count_impl.html" title="Struct template rolling_count_impl">rolling_count_impl</a></code>
             </li></ul></div>
 </div>
@@ -3475,7 +3475,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3544,7 +3544,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/rolling_sum_impl.html" title="Struct template rolling_sum_impl">rolling_sum_impl</a></code>
             </li></ul></div>
 </div>
@@ -3563,11 +3563,11 @@ Moment: 9.635
           <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">immediate_rolling_mean</span></code> feature. Both
           can be extracted using the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">rolling_mean</span><span class="special">()</span></code> extractor. For more implementation details,
           see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_rolling_mean_impl.html" title="Struct template lazy_rolling_mean_impl">lazy_rolling_mean_impl</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_roll_idp34804096.html" title="Struct template immediate_rolling_mean_impl">immediate_rolling_mean_impl</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immed_1_3_2_6_3_23_1_1_6_2.html" title="Struct template immediate_rolling_mean_impl">immediate_rolling_mean_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3639,12 +3639,12 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_rolling_mean_impl.html" title="Struct template lazy_rolling_mean_impl">lazy_rolling_mean_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_roll_idp34804096.html" title="Struct template immediate_rolling_mean_impl">immediate_rolling_mean_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immed_1_3_2_6_3_23_1_1_6_2.html" title="Struct template immediate_rolling_mean_impl">immediate_rolling_mean_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.rolling_count" title="rolling_count"><code class="literal">rolling_count</code></a>
@@ -3666,7 +3666,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3729,7 +3729,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/rolling_moment_impl.html" title="Struct template rolling_moment_impl">rolling_moment_impl</a></code>
             </li></ul></div>
 </div>
@@ -3743,11 +3743,11 @@ Moment: 9.635
           feature, and the iterative calculation with the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">immediate_rolling_variance</span></code>
           feature. Both can be extracted using the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">rolling_variance</span><span class="special">()</span></code> extractor. For more implementation details,
           see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_rolling_variance_impl.html" title="Struct template lazy_rolling_variance_impl">lazy_rolling_variance_impl</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_roll_idp34899664.html" title="Struct template immediate_rolling_variance_impl">immediate_rolling_variance_impl</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immed_1_3_2_6_3_26_1_1_6_2.html" title="Struct template immediate_rolling_variance_impl">immediate_rolling_variance_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3823,12 +3823,12 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_rolling_variance_impl.html" title="Struct template lazy_rolling_variance_impl">lazy_rolling_variance_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_roll_idp34899664.html" title="Struct template immediate_rolling_variance_impl">immediate_rolling_variance_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immed_1_3_2_6_3_26_1_1_6_2.html" title="Struct template immediate_rolling_variance_impl">immediate_rolling_variance_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.rolling_count" title="rolling_count"><code class="literal">rolling_count</code></a>
@@ -3856,7 +3856,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -3921,7 +3921,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/skewness_impl.html" title="Struct template skewness_impl">skewness_impl</a></code>
             </li>
@@ -3945,7 +3945,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd><p>
                 <code class="computeroutput"><em class="replaceable"><code>sample-type</code></em></code> for summing samples <br> <code class="computeroutput"><em class="replaceable"><code>weight-type</code></em></code> for summing
@@ -4033,7 +4033,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/sum_impl.html" title="Struct template sum_impl">sum_impl</a></code>
             </li>
@@ -4061,7 +4061,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4122,7 +4122,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/tail_impl.html" title="Struct template tail_impl">tail_impl</a></code>
             </li>
@@ -4144,7 +4144,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4198,7 +4198,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/coherent_tail_mean_impl.html" title="Struct template coherent_tail_mean_impl">coherent_tail_mean_impl</a></code>
             </li>
@@ -4229,11 +4229,11 @@ Moment: 9.635
           <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">non_coherent_tail_mean</span><span class="special">&lt;</span><span class="identifier">left</span><span class="special">&gt;</span></code>,
           and the right non-choherent tail mean feature is <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">non_coherent_tail_mean</span><span class="special">&lt;</span><span class="identifier">right</span><span class="special">&gt;</span></code>. They both share the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">abstract_non_coherent_tail_mean</span></code> feature
           and can be extracted with the <code class="computeroutput"><span class="identifier">non_coherent_tail_mean</span><span class="special">()</span></code> extractor. For more implementation details,
-          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_coherent_t_idp35190416.html" title="Struct template non_coherent_tail_mean_impl">non_coherent_tail_mean_impl</a></code>
+          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_1_3_2_6_3_59_1_1_22_25.html" title="Struct template non_coherent_tail_mean_impl">non_coherent_tail_mean_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4330,9 +4330,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_coherent_t_idp35190416.html" title="Struct template non_coherent_tail_mean_impl">non_coherent_tail_mean_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_1_3_2_6_3_59_1_1_22_25.html" title="Struct template non_coherent_tail_mean_impl">non_coherent_tail_mean_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -4356,7 +4356,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4452,7 +4452,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/tail_quantile_impl.html" title="Struct template tail_quantile_impl">tail_quantile_impl</a></code>
             </li>
@@ -4485,7 +4485,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4571,7 +4571,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/tail_variate_impl.html" title="Struct template tail_variate_impl">tail_variate_impl</a></code>
             </li>
@@ -4600,7 +4600,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4758,7 +4758,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/tail_variate_means_impl.html" title="Struct template tail_variate_means_impl">tail_variate_means_impl</a></code>
             </li>
@@ -4785,7 +4785,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4866,7 +4866,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_variance_impl.html" title="Struct template lazy_variance_impl">lazy_variance_impl</a></code>
             </li>
@@ -4896,7 +4896,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -4966,7 +4966,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_covariance_impl.html" title="Struct template weighted_covariance_impl">weighted_covariance_impl</a></code>
             </li>
@@ -4992,7 +4992,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5047,7 +5047,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_density_impl.html" title="Struct template weighted_density_impl">weighted_density_impl</a></code>
             </li>
@@ -5071,11 +5071,11 @@ Moment: 9.635
 </h4></div></div></div>
 <p>
           Multiple quantile estimation with the extended <code class="literal">P^2</code> algorithm
-          for weighted samples. For further details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_exten_idp35565744.html" title="Struct template weighted_extended_p_square_impl">weighted_extended_p_square_impl</a></code>.
+          for weighted samples. For further details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_41.html" title="Struct template weighted_extended_p_square_impl">weighted_extended_p_square_impl</a></code>.
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5184,9 +5184,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_exten_idp35565744.html" title="Struct template weighted_extended_p_square_impl">weighted_extended_p_square_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_41.html" title="Struct template weighted_extended_p_square_impl">weighted_extended_p_square_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -5209,7 +5209,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5279,7 +5279,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_kurtosis_impl.html" title="Struct template weighted_kurtosis_impl">weighted_kurtosis_impl</a></code>
             </li>
@@ -5301,11 +5301,11 @@ Moment: 9.635
           either lazy (in the result extractor), or immediate (in the accumulator).
           The lazy implementation is the default. For more implementation details,
           see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_mean_impl.html" title="Struct template weighted_mean_impl">weighted_mean_impl</a></code>
-          or. <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_weig_idp35666720.html" title="Struct template immediate_weighted_mean_impl">immediate_weighted_mean_impl</a></code>
+          or. <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/imm_1_3_2_6_3_59_1_1_22_38.html" title="Struct template immediate_weighted_mean_impl">immediate_weighted_mean_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd><p>
                 For samples, <code class="computeroutput"><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">fdiv</span><span class="special">&lt;</span><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">multiplies</span><span class="special">&lt;</span><em class="replaceable"><code>sample-type</code></em><span class="special">,</span> <em class="replaceable"><code>weight-type</code></em><span class="special">&gt;::</span><span class="identifier">result_type</span><span class="special">,</span> <em class="replaceable"><code>weight-type</code></em><span class="special">&gt;::</span><span class="identifier">result_type</span></code> <br> For variates,
@@ -5406,12 +5406,12 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_mean_impl.html" title="Struct template weighted_mean_impl">weighted_mean_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/immediate_weig_idp35666720.html" title="Struct template immediate_weighted_mean_impl">immediate_weighted_mean_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/imm_1_3_2_6_3_59_1_1_22_38.html" title="Struct template immediate_weighted_mean_impl">immediate_weighted_mean_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.weighted_sum" title="weighted_sum and variants"><code class="literal">weighted_sum</code></a>
@@ -5440,7 +5440,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5531,7 +5531,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_median_impl.html" title="Struct template weighted_median_impl">weighted_median_impl</a></code>
             </li>
@@ -5562,7 +5562,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5630,7 +5630,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_moment_impl.html" title="Struct template weighted_moment_impl">weighted_moment_impl</a></code>
             </li>
@@ -5648,11 +5648,11 @@ Moment: 9.635
 </h4></div></div></div>
 <p>
           Histogram calculation of the cumulative distribution with the <code class="literal">P^2</code>
-          algorithm for weighted samples. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_p_squ_idp35771984.html" title="Struct template weighted_p_square_cumulative_distribution_impl">weighted_p_square_cumulative_distribution_impl</a></code>
+          algorithm for weighted samples. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_43.html" title="Struct template weighted_p_square_cumulative_distribution_impl">weighted_p_square_cumulative_distribution_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5761,9 +5761,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_p_squ_idp35771984.html" title="Struct template weighted_p_square_cumulative_distribution_impl">weighted_p_square_cumulative_distribution_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_43.html" title="Struct template weighted_p_square_cumulative_distribution_impl">weighted_p_square_cumulative_distribution_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -5780,11 +5780,11 @@ Moment: 9.635
 </h4></div></div></div>
 <p>
           Single quantile estimation with the <code class="literal">P^2</code> algorithm. For
-          more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_p_squ_idp35804064.html" title="Struct template weighted_p_square_quantile_impl">weighted_p_square_quantile_impl</a></code>
+          more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_44.html" title="Struct template weighted_p_square_quantile_impl">weighted_p_square_quantile_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5903,9 +5903,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_p_squ_idp35804064.html" title="Struct template weighted_p_square_quantile_impl">weighted_p_square_quantile_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_44.html" title="Struct template weighted_p_square_quantile_impl">weighted_p_square_quantile_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.count" title="count"><code class="literal">count</code></a>
@@ -5922,8 +5922,8 @@ Moment: 9.635
 </h4></div></div></div>
 <p>
           Weighted peaks over threshold method for weighted quantile and weighted
-          tail mean estimation. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_peaks_idp35853536.html" title="Struct template weighted_peaks_over_threshold_impl">weighted_peaks_over_threshold_impl</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_peaks_idp35868384.html" title="Struct template weighted_peaks_over_threshold_prob_impl">weighted_peaks_over_threshold_prob_impl</a></code>.
+          tail mean estimation. For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_39.html" title="Struct template weighted_peaks_over_threshold_impl">weighted_peaks_over_threshold_impl</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_40.html" title="Struct template weighted_peaks_over_threshold_prob_impl">weighted_peaks_over_threshold_prob_impl</a></code>.
         </p>
 <p>
           Both <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">weighted_peaks_over_threshold</span><span class="special">&lt;</span><em class="replaceable"><code>left-or-right</code></em><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">weighted_peaks_over_threshold_prob</span><span class="special">&lt;</span><em class="replaceable"><code>left-or-right</code></em><span class="special">&gt;</span></code>
@@ -5932,7 +5932,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -5992,12 +5992,12 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_peaks_idp35853536.html" title="Struct template weighted_peaks_over_threshold_impl">weighted_peaks_over_threshold_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_39.html" title="Struct template weighted_peaks_over_threshold_impl">weighted_peaks_over_threshold_impl</a></code>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_peaks_idp35868384.html" title="Struct template weighted_peaks_over_threshold_prob_impl">weighted_peaks_over_threshold_prob_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_40.html" title="Struct template weighted_peaks_over_threshold_prob_impl">weighted_peaks_over_threshold_prob_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.sum" title="sum and variants"><code class="literal">sum</code></a>
@@ -6024,7 +6024,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -6093,7 +6093,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_skewness_impl.html" title="Struct template weighted_skewness_impl">weighted_skewness_impl</a></code>
             </li>
@@ -6117,7 +6117,7 @@ Moment: 9.635
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">multiplies</span><span class="special">&lt;</span><em class="replaceable"><code>sample-type</code></em><span class="special">,</span> <em class="replaceable"><code>weight-type</code></em><span class="special">&gt;::</span><span class="identifier">result_type</span></code> for summing weighted
@@ -6192,7 +6192,7 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_sum_impl.html" title="Struct template weighted_sum_impl">weighted_sum_impl</a></code>
             </li>
@@ -6213,11 +6213,11 @@ Moment: 9.635
           They both share the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">abstract_non_coherent_tail_mean</span></code>
           feature with the unweighted non-coherent tail mean accumulators and can
           be extracted with either the <code class="computeroutput"><span class="identifier">non_coherent_tail_mean</span><span class="special">()</span></code> or the <code class="computeroutput"><span class="identifier">non_coherent_weighted_tail_mean</span><span class="special">()</span></code> extractors. For more implementation details,
-          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_coherent_w_idp35977840.html" title="Struct template non_coherent_weighted_tail_mean_impl">non_coherent_weighted_tail_mean_impl</a></code>.
+          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_1_3_2_6_3_59_1_1_22_48.html" title="Struct template non_coherent_weighted_tail_mean_impl">non_coherent_weighted_tail_mean_impl</a></code>.
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -6308,9 +6308,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_coherent_w_idp35977840.html" title="Struct template non_coherent_weighted_tail_mean_impl">non_coherent_weighted_tail_mean_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/non_1_3_2_6_3_59_1_1_22_48.html" title="Struct template non_coherent_weighted_tail_mean_impl">non_coherent_weighted_tail_mean_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.sum" title="sum and variants"><code class="literal">sum</code></a>
@@ -6331,11 +6331,11 @@ Moment: 9.635
           and the right weighted tail quantile feature is <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">weighted_tail_quantile</span><span class="special">&lt;</span><span class="identifier">right</span><span class="special">&gt;</span></code>. They both share the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">quantile</span></code> feature with the unweighted
           tail quantile accumulators and can be extracted with either the <code class="computeroutput"><span class="identifier">quantile</span><span class="special">()</span></code>
           or the <code class="computeroutput"><span class="identifier">weighted_tail_quantile</span><span class="special">()</span></code> extractors. For more implementation details,
-          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_tail__idp36025344.html" title="Struct template weighted_tail_quantile_impl">weighted_tail_quantile_impl</a></code>
+          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_49.html" title="Struct template weighted_tail_quantile_impl">weighted_tail_quantile_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -6421,9 +6421,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_tail__idp36025344.html" title="Struct template weighted_tail_quantile_impl">weighted_tail_quantile_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_49.html" title="Struct template weighted_tail_quantile_impl">weighted_tail_quantile_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.sum" title="sum and variants"><code class="literal">sum</code></a>
@@ -6453,11 +6453,11 @@ Moment: 9.635
           the <code class="computeroutput"><span class="identifier">relative_tail_variate_means</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">relative_weighted_tail_variate_means</span><span class="special">()</span></code> extractors.
         </p>
 <p>
-          For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_tail__idp36077680.html" title="Struct template weighted_tail_variate_means_impl">weighted_tail_variate_means_impl</a></code>
+          For more implementation details, see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_50.html" title="Struct template weighted_tail_variate_means_impl">weighted_tail_variate_means_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -6606,9 +6606,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_tail__idp36077680.html" title="Struct template weighted_tail_variate_means_impl">weighted_tail_variate_means_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/wei_1_3_2_6_3_59_1_1_22_50.html" title="Struct template weighted_tail_variate_means_impl">weighted_tail_variate_means_impl</a></code>
             </li>
 <li class="listitem">
               <a class="link" href="user_s_guide.html#accumulators.user_s_guide.the_statistical_accumulators_library.non_coherent_weighted_tail_mean" title="non_coherent_weighted_tail_mean"><code class="literal">non_coherent_weighted_tail_mean</code></a>
@@ -6631,12 +6631,12 @@ Moment: 9.635
           is associated with the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">lazy_weighted_variance</span></code>
           feature, and the iterative calculation with the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">weighted_variance</span></code>
           feature. Both can be extracted using the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">weighted_variance</span><span class="special">()</span></code> extractor. For more implementation details,
-          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_weighted__idp36143792.html" title="Struct template lazy_weighted_variance_impl">lazy_weighted_variance_impl</a></code>
+          see <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/laz_1_3_2_6_3_59_1_1_22_51.html" title="Struct template lazy_weighted_variance_impl">lazy_weighted_variance_impl</a></code>
           and <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_variance_impl.html" title="Struct template weighted_variance_impl">weighted_variance_impl</a></code>
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Result Type</span></dt>
 <dd>
 <p>
@@ -6743,9 +6743,9 @@ Moment: 9.635
 <p>
           <span class="bold"><strong>See also</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/lazy_weighted__idp36143792.html" title="Struct template lazy_weighted_variance_impl">lazy_weighted_variance_impl</a></code>
+              <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/laz_1_3_2_6_3_59_1_1_22_51.html" title="Struct template lazy_weighted_variance_impl">lazy_weighted_variance_impl</a></code>
             </li>
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/accumulators/impl/weighted_variance_impl.html" title="Struct template weighted_variance_impl">weighted_variance_impl</a></code>

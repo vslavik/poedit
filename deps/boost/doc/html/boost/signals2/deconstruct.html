@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function deconstruct</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../signals2/reference.html#header.boost.signals2.deconstruct_hpp" title="Header &lt;boost/signals2/deconstruct.hpp&gt;">
 <link rel="prev" href="scoped_connection.html" title="Class scoped_connection">
@@ -42,7 +42,7 @@
   <a class="link" href="postconstructor_invoker.html" title="Class postconstructor_invoker">postconstructor_invoker</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> 
   <span class="identifier">deconstruct</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">A1</span> <span class="special">&amp;</span> arg1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">A2</span> <span class="special">&amp;</span> arg2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">AN</span> <span class="special">&amp;</span> argN<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp395398864"></a><h2>Description</h2>
+<a name="id-1.3.37.6.4.3.4"></a><h2>Description</h2>
 <p>Creates an object and its owning <code class="computeroutput">shared_ptr&lt;T&gt;</code>
             (wrapped inside a <code class="computeroutput"><a class="link" href="postconstructor_invoker.html" title="Class postconstructor_invoker">postconstructor_invoker</a></code>)
             using only a single allocation,
@@ -85,10 +85,13 @@
             template type
             <code class="computeroutput">T</code>.  Arguments may also be passed to the class' associated
             <code class="computeroutput">adl_postconstruct</code> function by using the
-            <code class="computeroutput"><a class="link" href="postconstructor_invoker.html#idp82580864-bb">postconstructor_invoker::postconstruct()</a></code> methods.
+            <code class="computeroutput"><a class="link" href="postconstructor_invoker.html#id-1_3_37_6_3_3_1_3_1_2-bb">postconstructor_invoker::postconstruct()</a></code> methods.
           </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Notes:</span></p></td>

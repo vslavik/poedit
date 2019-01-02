@@ -1,15 +1,16 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2014 Barend Gehrels, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
-  Copyright (c) 2009-2014 Bruno Lalande, Paris, France.
-  Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
+  Copyright (c) 2009-2017 Barend Gehrels, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2017 Mateusz Loskot, London, UK.
+  Copyright (c) 2009-2017 Bruno Lalande, Paris, France.
+  Copyright (c) 2013-2017 Adam Wulkiewicz, Lodz, Poland.
 
-  This file was modified by Oracle on 2014.
-  Modifications copyright (c) 2014, Oracle and/or its affiliates.
+  This file was modified by Oracle on 2014, 2017, 2018.
+  Modifications copyright (c) 2014-2018, Oracle and/or its affiliates.
 
   Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+  Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -44,6 +45,7 @@
 
 [section:adapted Adapted models]
 [include reference/geometries/adapted/c_array.qbk]
+[include reference/geometries/adapted/std_array.qbk]
 [include reference/geometries/adapted/boost_array.qbk]
 [include reference/geometries/adapted/boost_fusion.qbk]
 [include reference/geometries/adapted/boost_tuple.qbk]
@@ -88,16 +90,38 @@
 [include generated/clear.qbk]
 [include generated/convert.qbk]
 [include generated/convex_hull.qbk]
+
+[section:correct correct]
 [include generated/correct.qbk]
+[endsect]
 
 [section:covered_by covered_by]
 [include generated/covered_by.qbk]
 [endsect]
 
+[section:crosses crosses]
 [include generated/crosses.qbk]
+[endsect]
 
+[section:densify densify]
+[include generated/densify.qbk]
+[endsect]
+
+[section:difference difference]
 [include generated/difference.qbk]
+[endsect]
+
+[section:discrete_frechet_distance discrete_frechet_distance]
+[include generated/discrete_frechet_distance.qbk]
+[endsect]
+
+[section:discrete_hausdorff_distance discrete_hausdorff_distance]
+[include generated/discrete_hausdorff_distance.qbk]
+[endsect]
+
+[section:disjoint disjoint]
 [include generated/disjoint.qbk]
+[endsect]
 
 [section:distance distance]
 [include generated/distance.qbk]
@@ -107,16 +131,21 @@
 [include generated/envelope.qbk]
 [endsect]
 
+[section:equals equals]
 [include generated/equals.qbk]
+[endsect]
+
+[section:expand expand]
 [include generated/expand.qbk]
+[endsect]
 
 [section:for_each for_each]
 [include generated/for_each.qbk]
 [endsect]
 
-[/section:intersection intersection]
+[section:intersection intersection]
 [include generated/intersection.qbk]
-[/endsect]
+[endsect]
 
 [section:intersects intersects]
 [include generated/intersects.qbk]
@@ -124,7 +153,9 @@
 
 [include generated/is_empty.qbk]
 
+[section:is_simple is_simple]
 [include generated/is_simple.qbk]
+[endsect]
 
 [section:is_valid is_valid]
 [include generated/is_valid.qbk]
@@ -143,26 +174,32 @@
 [include generated/num_points.qbk]
 [include generated/num_segments.qbk]
 
-
+[section:overlaps overlaps]
 [include generated/overlaps.qbk]
+[endsect]
 
 [section:perimeter perimeter]
 [include generated/perimeter.qbk]
 [endsect]
 
+[section:relate relate]
 [include generated/relate.qbk]
+[endsect]
 
+[section:relation relation]
 [include generated/relation.qbk]
+[endsect]
 
 [include generated/reverse.qbk]
+
 
 [section:simplify simplify]
 [include generated/simplify.qbk]
 [endsect]
 
-[/section:sym_difference sym_difference]
+[section:sym_difference sym_difference]
 [include generated/sym_difference.qbk]
-[/endsect]
+[endsect]
 
 [section:touches touches]
 [include generated/touches.qbk]
@@ -172,9 +209,9 @@
 [include generated/transform.qbk]
 [endsect]
 
-[/section:union union]
+[section:union_ union_]
 [include generated/union.qbk]
-[/endsect]
+[endsect]
 
 [include generated/unique.qbk]
 
@@ -246,6 +283,9 @@
 
 
 [section:io IO (input/output)]
+[section:dsv DSV (Delimiter-Separated Values)]
+[include generated/dsv.qbk]
+[endsect]
 [section:wkt WKT (Well-Known Text)]
 [include reference/io/wkt_format.qbk]
 [include generated/wkt.qbk]
@@ -307,17 +347,14 @@
 
 [endsect]
 
+[section:srs SRS]
+[include generated/srs_spheroid.qbk]
+[endsect]
 
 [section:strategies Strategies]
-[include generated/distance_pythagoras.qbk]
-[include generated/distance_pythagoras_box_box.qbk]
-[include generated/distance_pythagoras_point_box.qbk]
-[include generated/distance_haversine.qbk]
-[include generated/distance_projected_point.qbk]
-[include generated/distance_cross_track.qbk]
-[include generated/distance_cross_track_point_box.qbk]
-[include generated/area_surveyor.qbk]
-[include generated/area_huiller.qbk]
+[include generated/area_cartesian.qbk]
+[include generated/area_spherical.qbk]
+[include generated/area_geographic.qbk]
 [include generated/buffer_join_round.qbk]
 [include generated/buffer_join_miter.qbk]
 [include generated/buffer_end_round.qbk]
@@ -330,16 +367,27 @@
 [include generated/centroid_average.qbk]
 [include generated/centroid_bashein_detmer.qbk]
 [include generated/convex_hull_graham_andrew.qbk]
+[include generated/densify_cartesian.qbk]
+[include generated/densify_geographic.qbk]
+[include generated/densify_spherical.qbk]
+[include generated/distance_pythagoras.qbk]
+[include generated/distance_pythagoras_box_box.qbk]
+[include generated/distance_pythagoras_point_box.qbk]
+[include generated/distance_haversine.qbk]
+[include generated/distance_projected_point.qbk]
+[include generated/distance_cross_track.qbk]
+[include generated/distance_cross_track_point_box.qbk]
 [include generated/side_side_by_triangle.qbk]
 [include generated/side_side_by_cross_track.qbk]
 [include generated/side_spherical_side_formula.qbk]
+[include generated/side_geographic.qbk]
 [include generated/simplify_douglas_peucker.qbk]
 [include generated/transform_inverse_transformer.qbk]
 [include generated/transform_map_transformer.qbk]
 [include generated/transform_rotate_transformer.qbk]
 [include generated/transform_scale_transformer.qbk]
 [include generated/transform_translate_transformer.qbk]
-[include generated/transform_ublas_transformer.qbk]
+[include generated/transform_matrix_transformer.qbk]
 [include generated/within_winding.qbk]
 [include generated/within_franklin.qbk]
 [include generated/within_crossings_multiply.qbk]

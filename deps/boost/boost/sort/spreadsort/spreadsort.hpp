@@ -12,6 +12,8 @@ Some improvements suggested by:
 Phil Endecott and Frank Gennari
 float_mem_cast fix provided by:
 Scott McMurray
+ Range support provided by:
+ Alexander Zaitsev
 */
 
 #ifndef BOOST_SORT_SPREADSORT_HPP
@@ -25,6 +27,8 @@ Scott McMurray
 #include <boost/sort/spreadsort/integer_sort.hpp>
 #include <boost/sort/spreadsort/float_sort.hpp>
 #include <boost/sort/spreadsort/string_sort.hpp>
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
 
 namespace boost {
 namespace sort {
@@ -139,6 +143,25 @@ namespace spreadsort {
     boost::uint16_t unused = 0;
     string_sort(first, last, unused);
   }
+
+/*!
+\brief Generic @c spreadsort variant detects value_type and calls required sort function.
+\note Sorting other data types requires picking between @c integer_sort, @c float_sort and @c string_sort directly,
+as @c spreadsort won't accept types that don't have the appropriate @c type_traits.
+
+\param[in] range Range [first, last) for sorting.
+
+\pre [@c first, @c last) is a valid range.
+\post The elements in the range [@c first, @c last) are sorted in ascending order.
+*/
+
+template <class Range>
+void spreadsort(Range& range)
+{
+    spreadsort(boost::begin(range), boost::end(range));
+}
+
+
 } // namespace spreadsort
 } // namespace sort
 } // namespace boost

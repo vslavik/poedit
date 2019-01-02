@@ -6,6 +6,8 @@
 [template ticket[number]'''<ulink
     url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">'''#[number]'''</ulink>''']
 
+[template pull_request[number][@https://github.com/boostorg/unordered/pull/[number] GitHub #[number]]]
+
 [section:changes Change Log]
 
 [h2 Review Version]
@@ -52,7 +54,7 @@ First official release.
   Document that the equality and inequality operators are undefined for two
   objects if their equality predicates aren't equivalent. Thanks to Daniel
   Krügler.
-* [@https://svn.boost.org/trac/boost/ticket/1710 Ticket 1710]: 
+* [@https://svn.boost.org/trac/boost/ticket/1710 Ticket 1710]:
   Use a larger prime number list. Thanks to Thorsten Ottosen and Hervé
   Brönnimann.
 * Use
@@ -99,13 +101,13 @@ First official release.
   has been rewritten to use templates instead of macros for the implementation
   classes.
 
-* The container objcet is now smaller thanks to using `boost::compressed_pair`
+* The container object is now smaller thanks to using `boost::compressed_pair`
   for EBO and a slightly different function buffer - now using a bool instead
   of a member pointer.
 
 * Buckets are allocated lazily which means that constructing an empty container
   will not allocate any memory.
-  
+
 [h2 Boost 1.42.0]
 
 * Support instantiating the containers with incomplete value types.
@@ -170,7 +172,7 @@ C++11 support has resulted in some breaking changes:
   longer does so. It does emulate the new `piecewise_construct`
   pair constructors - only you need to use
   `boost::piecewise_construct`. To use the old emulation of
-  the variadic consturctors define
+  the variadic constructors define
   `BOOST_UNORDERED_DEPRECATED_PAIR_CONSTRUCT`.
 
 [h2 Boost 1.49.0]
@@ -207,7 +209,7 @@ C++11 support has resulted in some breaking changes:
 * Fix construction/destruction issue when using a C++11 compiler with a
   C++03 allocator ([ticket 7100]).
 * Remove a `try..catch` to support compiling without exceptions.
-* Adjust SFINAE use to try to supprt g++ 3.4 ([ticket 7175]).
+* Adjust SFINAE use to try to support g++ 3.4 ([ticket 7175]).
 * Updated to use the new config macros.
 
 [h2 Boost 1.52.0]
@@ -268,5 +270,91 @@ C++11 support has resulted in some breaking changes:
 * Fix rare exception safety issue in move assignment.
 * Fix potential overflow when calculating number of buckets to allocate
   ([@https://github.com/boostorg/unordered/pull/4 GitHub #4]).
+
+[h2 Boost 1.62.0]
+
+* Remove use of deprecated `boost::iterator`.
+* Remove `BOOST_NO_STD_DISTANCE` workaround.
+* Remove `BOOST_UNORDERED_DEPRECATED_EQUALITY` warning.
+* Simpler implementation of assignment, fixes an exception safety issue
+  for `unordered_multiset` and `unordered_multimap`. Might be a little slower.
+* Stop using return value SFINAE which some older compilers have issues
+  with.
+
+[h2 Boost 1.63.0]
+
+* Check hint iterator in `insert`/`emplace_hint`.
+* Fix some warnings, mostly in the tests.
+* Manually write out `emplace_args` for small numbers of arguments -
+  should make template error messages a little more bearable.
+* Remove superfluous use of `boost::forward` in emplace arguments,
+  which fixes emplacing string literals in old versions of Visual C++.
+* Fix an exception safety issue in assignment. If bucket allocation
+  throws an exception, it can overwrite the hash and equality functions while
+  leaving the existing elements in place. This would mean that the function
+  objects wouldn't match the container elements, so elements might be in the
+  wrong bucket and equivalent elements would be incorrectly handled.
+* Various reference documentation improvements.
+* Better allocator support ([ticket 12459]).
+* Make the no argument constructors implicit.
+* Implement missing allocator aware constructors.
+* Fix assigning the hash/key equality functions for empty containers.
+* Remove unary/binary_function from the examples in the documentation.
+  They are removed in C++17.
+* Support 10 constructor arguments in emplace. It was meant to support up to 10
+  arguments, but an off by one error in the preprocessor code meant it only
+  supported up to 9.
+
+[h2 Boost 1.64.0]
+* Initial support for new C++17 member functions:
+  `insert_or_assign` and `try_emplace` in `unordered_map`,
+* Initial support for `merge` and `extract`.
+  Does not include transferring nodes between
+  `unordered_map` and `unordered_multimap` or between `unordered_set` and
+  `unordered_multiset` yet. That will hopefully be in the next version of
+  Boost.
+
+[h2 Boost 1.65.0]
+
+* Add deprecated attributes to `quick_erase` and `erase_return_void`.
+  I really will remove them in a future version this time.
+* Small standards compliance fixes:
+  * `noexpect` specs for `swap` free functions.
+  * Add missing `insert(P&&)` methods.
+
+[h2 Boost 1.66.0]
+
+* Simpler move construction implementation.
+* Documentation fixes ([pull_request 6]).
+
+[h2 Boost 1.67.0]
+
+* Improved C++17 support:
+  * Add template deduction guides from the standard.
+  * Use a simple implementation of `optional` in node handles, so
+    that they're closer to the standard.
+  * Add missing `noexcept` specifications to `swap`, `operator=`
+    and node handles, and change the implementation to match.
+    Using `std::allocator_traits::is_always_equal`, or our own
+    implementation when not available, and
+    `boost::is_nothrow_swappable` in the implementation.
+* Improved C++20 support:
+  * Use `boost::to_address`, which has the proposed C++20 semantics,
+    rather than the old custom implementation.
+* Add `element_type` to iterators, so that `std::pointer_traits`
+  will work.
+* Use `std::piecewise_construct` on recent versions of Visual C++,
+  and other uses of the Dinkumware standard library,
+  now using Boost.Predef to check compiler and library versions.
+* Use `std::iterator_traits` rather than the boost iterator traits
+  in order to remove dependency on Boost.Iterator.
+* Remove iterators' inheritance from `std::iterator`, which is
+  deprecated in C++17, thanks to Daniela Engert
+  ([@https://github.com/boostorg/unordered/pull/7 PR#7]).
+* Stop using `BOOST_DEDUCED_TYPENAME`.
+* Update some Boost include paths.
+* Rename some internal methods, and variables.
+* Various testing improvements.
+* Miscellaneous internal changes.
 
 [endsect]

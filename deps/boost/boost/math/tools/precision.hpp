@@ -180,9 +180,9 @@ inline BOOST_MATH_CONSTEXPR long double epsilon<long double>(const mpl::true_& B
 template <class T>
 inline T epsilon(const mpl::false_& BOOST_MATH_APPEND_EXPLICIT_TEMPLATE_TYPE(T))
 {
+   // Note: don't cache result as precision may vary at runtime:
    BOOST_MATH_STD_USING  // for ADL of std names
-   static const T eps = ldexp(static_cast<T>(1), 1-policies::digits<T, policies::policy<> >());
-   return eps;
+   return ldexp(static_cast<T>(1), 1-policies::digits<T, policies::policy<> >());
 }
 
 template <class T>
@@ -290,6 +290,13 @@ inline T root_epsilon_imp(const T*, const Tag&)
 }
 
 template <class T>
+inline T root_epsilon_imp(const T*, const mpl::int_<0>&)
+{
+   BOOST_MATH_STD_USING
+   return sqrt(tools::epsilon<T>());
+}
+
+template <class T>
 inline BOOST_MATH_CONSTEXPR T cbrt_epsilon_imp(const mpl::int_<24>&) BOOST_MATH_NOEXCEPT(T)
 {
    return static_cast<T>(0.0049215666011518482998719164346805794944150447839903L);
@@ -319,6 +326,13 @@ inline T cbrt_epsilon_imp(const T*, const Tag&)
    BOOST_MATH_STD_USING;
    static const T cbrt_eps = pow(tools::epsilon<T>(), T(1) / 3);
    return cbrt_eps;
+}
+
+template <class T>
+inline T cbrt_epsilon_imp(const T*, const mpl::int_<0>&)
+{
+   BOOST_MATH_STD_USING;
+   return pow(tools::epsilon<T>(), T(1) / 3);
 }
 
 template <class T>
@@ -354,9 +368,16 @@ inline T forth_root_epsilon_imp(const T*, const Tag&)
 }
 
 template <class T>
+inline T forth_root_epsilon_imp(const T*, const mpl::int_<0>&)
+{
+   BOOST_MATH_STD_USING
+   return sqrt(sqrt(tools::epsilon<T>()));
+}
+
+template <class T>
 struct root_epsilon_traits
 {
-   typedef mpl::int_< (::std::numeric_limits<T>::radix == 2) ? std::numeric_limits<T>::digits : 0> tag_type;
+   typedef mpl::int_< (::std::numeric_limits<T>::radix == 2) && (::std::numeric_limits<T>::digits != INT_MAX) ? std::numeric_limits<T>::digits : 0> tag_type;
    BOOST_STATIC_CONSTANT(bool, has_noexcept = (tag_type::value == 113) || (tag_type::value == 64) || (tag_type::value == 53) || (tag_type::value == 24));
 };
 

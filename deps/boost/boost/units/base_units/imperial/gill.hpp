@@ -29,8 +29,8 @@ typedef scaled_base_unit<pint_base_unit, scale<4, static_rational<-1> > > gill_b
 
 template<>
 struct base_unit_info<imperial::gill_base_unit> {
-    static const char* name()   { return("gill (imp.)"); }
-    static const char* symbol() { return("gill"); }
+    static BOOST_CONSTEXPR const char* name()   { return("gill (imp.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("gill"); }
 };
 
 } // namespace units

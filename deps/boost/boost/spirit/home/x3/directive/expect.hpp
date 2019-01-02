@@ -4,20 +4,21 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_EXPECT_MARCH_16_2012_1024PM)
-#define SPIRIT_EXPECT_MARCH_16_2012_1024PM
+#if !defined(BOOST_SPIRIT_X3_EXPECT_MARCH_16_2012_1024PM)
+#define BOOST_SPIRIT_X3_EXPECT_MARCH_16_2012_1024PM
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
+#include <boost/config.hpp> // for BOOST_SYMBOL_VISIBLE
 #include <boost/throw_exception.hpp>
 #include <stdexcept>
 
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Iterator>
-    struct expectation_failure : std::runtime_error
+    struct BOOST_SYMBOL_VISIBLE expectation_failure : std::runtime_error
     {
     public:
 

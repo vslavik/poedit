@@ -18,9 +18,11 @@
 #include <boost/intrusive/detail/simple_disposers.hpp>
 #include <boost/intrusive/detail/iterator.hpp>
 #include <boost/move/utility_core.hpp>
+#include <boost/move/adl_move_swap.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/static_assert.hpp>
 #include "iterator_test.hpp"
+#include <cstdlib>
 
 namespace boost {
 namespace intrusive {
@@ -551,6 +553,19 @@ void test_maybe_unique_container(Container & c, Data & d, detail::false_)//is_un
 template< class Container, class Data >
 void test_maybe_unique_container(Container & c, Data & d, detail::true_)//!is_unique
 {  test_non_unique_container(c, d);  }
+
+template< class RandomIt >
+void random_shuffle( RandomIt first, RandomIt last )
+{
+   typedef typename boost::intrusive::iterator_traits<RandomIt>::difference_type difference_type;
+   difference_type n = last - first;
+   for (difference_type i = n-1; i > 0; --i) {
+      difference_type j = std::rand() % (i+1);
+      if(j != i) {
+         boost::adl_move_swap(first[i], first[j]);
+      }
+   }
+}
 
 }}}
 

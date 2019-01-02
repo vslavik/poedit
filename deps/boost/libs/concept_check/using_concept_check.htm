@@ -43,7 +43,7 @@
   <tt>EqualityComparableConcept</tt> class. The class corresponds to the
   EqualityComparable requirements described in 20.1.1 of the C++ Standard,
   and to the <a href=
-  "http://www.sgi.com/tech/stl/EqualityComparable.html">EqualityComparable</a>
+  "http://www.boost.org/sgi/stl/EqualityComparable.html">EqualityComparable</a>
   concept documented in the SGI STL.</p>
   <pre>
 template &lt;class T&gt;
@@ -51,8 +51,8 @@ struct EqualityComparable;
 </pre>
 
   <p>The template argument is the type to be checked. That is, the purpose of
-  <tt>EqualityComparable&lt;<em>X</em>&gt;</tt> is to make sure that
-  <tt><em>X</em></tt> models the EqualityComparable concept.</p>
+  <tt>EqualityComparable&lt;<em>T</em>&gt;</tt> is to make sure that
+  <tt><em>T</em></tt> models the EqualityComparable concept.</p>
 
   <h4><tt>BOOST_CONCEPT_ASSERT()</tt></h4>
 
@@ -112,9 +112,9 @@ int main() {
   a sequence of adjacent concept checking template specializations,
   <strong>in double parentheses</strong>, and the function's return type must
   also be parenthesized. For example, the standard <code>stable_sort</code>
-  algorithm might be declared as follows: class</p>
+  algorithm might be declared as follows: </p>
   <pre>
-template&lt;typename RanIter&gt;
+template &lt;class RanIter&gt;
 BOOST_CONCEPT_REQUIRES(
     ((Mutable_RandomAccessIterator&lt;RanIter&gt;))
     ((LessThanComparable&lt;typename Mutable_RandomAccessIterator&lt;RanIter&gt;::value_type&gt;)),

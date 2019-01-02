@@ -19,7 +19,6 @@
 #include <boost/iostreams/char_traits.hpp>
 #include <boost/iostreams/concepts.hpp>
 #include <boost/iostreams/constants.hpp>
-#include <boost/iostreams/detail/buffer.hpp>
 #include <boost/iostreams/detail/iostream.hpp>  // seekdir, streamsize.
 #include <boost/iostreams/detail/streambuf.hpp>
 #include <boost/iostreams/operations.hpp>

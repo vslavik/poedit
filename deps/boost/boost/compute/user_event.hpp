@@ -17,7 +17,7 @@
 namespace boost {
 namespace compute {
 
-#if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+#if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
 /// \class user_event
 /// \brief An user-created event.
 ///
@@ -80,7 +80,7 @@ public:
         }
     }
 };
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 } // end compute namespace
 } // end boost namespace

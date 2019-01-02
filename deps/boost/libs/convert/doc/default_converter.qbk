@@ -1,5 +1,5 @@
 [/
-  Copyright (c) Vladimir Batov 2009-2014
+  Copyright (c) Vladimir Batov 2009-2016
   Distributed under the Boost Software License, Version 1.0.
   See copy at http://www.boost.org/LICENSE_1_0.txt.
 ]
@@ -8,7 +8,7 @@
 
 [import ../example/default_converter.cpp]
 
-The explicitly provided converter as in
+The explicit converter as in
 
  int i = boost::convert<int>("123", converter).value();
  
@@ -32,7 +32,7 @@ the code compiles and deploys `boost::cnv::cstream` when `boost::convert()` is c
 
 [default_converter_example1]
 
-The trade-off for the convenience is the rigid converter configuration (which in certain contexts might be the desired behavior) and potentially performance impact. When a converter is not provided explicitly, the default converter is created, potentially configured, deployed and destroyed for every `boost::convert()` call. Consequently, if efficiency of this particular component is important, then the implementation of `boost::cnv::by_default` will need to take that into account and to make sure those operations are cheap.
+The trade-off for the convenience is the rigid converter configuration (which in certain contexts might be the desired behavior) and a potential performance impact. When a converter is not provided explicitly, the default converter is created, potentially configured, deployed and destroyed for every `boost::convert()` call. Consequently, if efficiency of this particular component is important, then the implementation of `boost::cnv::by_default` will need to take that into account and to make sure those operations are cheap.
 
 [endsect]
 

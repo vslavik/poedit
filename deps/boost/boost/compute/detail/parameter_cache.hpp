@@ -24,6 +24,7 @@
 #include <boost/compute/version.hpp>
 
 #ifdef BOOST_COMPUTE_USE_OFFLINE_CACHE
+#include <cstdio>  
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/compute/detail/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -117,9 +118,16 @@ private:
     static std::string version_string()
     {
         char buf[32];
-        std::snprintf(buf, sizeof(buf), "%d.%d.%d", BOOST_COMPUTE_VERSION_MAJOR,
-                                                    BOOST_COMPUTE_VERSION_MINOR,
-                                                    BOOST_COMPUTE_VERSION_PATCH);
+        // snprintf is in Visual Studio since Visual Studio 2015 (_MSC_VER == 1900)
+        #if defined (_MSC_VER) && _MSC_VER < 1900
+            #define DETAIL_SNPRINTF sprintf_s
+        #else
+            #define DETAIL_SNPRINTF std::snprintf
+        #endif
+        DETAIL_SNPRINTF(buf, sizeof(buf), "%d.%d.%d", BOOST_COMPUTE_VERSION_MAJOR,
+                                                      BOOST_COMPUTE_VERSION_MINOR,
+                                                      BOOST_COMPUTE_VERSION_PATCH);
+        #undef DETAIL_SNPRINTF
         return buf;
     }
 
@@ -161,7 +169,7 @@ private:
         try {
             read_json(m_file_name, pt);
         }
-        catch(boost::property_tree::json_parser::json_parser_error &e){
+        catch(boost::property_tree::json_parser::json_parser_error&){
             // no saved cache file, ignore
             return;
         }

@@ -6,8 +6,6 @@
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_CB_DISABLE_DEBUG
-
 #include "test.hpp"
 
 int MyInteger::ms_exception_trigger = 0;

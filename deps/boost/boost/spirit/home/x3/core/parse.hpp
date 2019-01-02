@@ -10,7 +10,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
-#include <boost/concept_check.hpp>
+#include <boost/iterator/iterator_concepts.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -23,11 +23,12 @@ namespace boost { namespace spirit { namespace x3
       , Parser const& p
       , Attribute& attr)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got a
-        // compilation error here, then you are using an input_iterator while
-        // calling this function. You need to supply at least a forward_iterator
-        // instead.
-        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+        // Make sure the iterator is at least a readable forward traversal iterator.
+        // If you got a compilation error here, then you are using a weaker iterator
+        // while calling this function, you need to supply a readable forward traversal
+        // iterator instead.
+        BOOST_CONCEPT_ASSERT((boost_concepts::ReadableIteratorConcept<Iterator>));
+        BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversalConcept<Iterator>));
 
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
@@ -101,11 +102,12 @@ namespace boost { namespace spirit { namespace x3
       , Attribute& attr
       , skip_flag post_skip = skip_flag::post_skip)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got a
-        // compilation error here, then you are using an input_iterator while
-        // calling this function. You need to supply at least a forward_iterator
-        // instead.
-        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+        // Make sure the iterator is at least a readable forward traversal iterator.
+        // If you got a compilation error here, then you are using a weaker iterator
+        // while calling this function, you need to supply a readable forward traversal
+        // iterator instead.
+        BOOST_CONCEPT_ASSERT((boost_concepts::ReadableIteratorConcept<Iterator>));
+        BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversalConcept<Iterator>));
         
         static_assert(!std::is_same<Skipper, unused_type>::value,
             "Error! Skipper cannot be unused_type.");

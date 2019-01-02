@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
 
     Grammar for universal character validation (see C++ standard: Annex E)
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -32,12 +32,12 @@ namespace impl {
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename StringT>
-inline bool 
+inline bool
 is_trigraph(StringT const& trigraph)
 {
     if (trigraph.size() < 3 || '?' != trigraph[0] || '?' != trigraph[1])
         return false;
-        
+
     switch (trigraph[2]) {
     case '\'': case '=': case '/': case '(':
     case ')':  case '<': case '>': case '!':
@@ -55,11 +55,11 @@ is_trigraph(StringT const& trigraph)
 //
 //  convert_trigraph
 //
-//    The function convert_trigraph() converts a single trigraph character 
+//    The function convert_trigraph() converts a single trigraph character
 //    sequence into the corresponding character.
 //
 //    If the given character sequence doesn't form a valid trigraph sequence
-//    no conversion is performed. 
+//    no conversion is performed.
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename StringT>
@@ -88,11 +88,11 @@ StringT result (trigraph);
 //
 //  convert_trigraphs
 //
-//    The function convert_trigraph() converts all trigraphs in the given 
+//    The function convert_trigraph() converts all trigraphs in the given
 //    string into the corresponding characters.
 //
-//    If one of the given character sequences doesn't form a valid trigraph 
-//    sequence no conversion is performed. 
+//    If one of the given character sequences doesn't form a valid trigraph
+//    sequence no conversion is performed.
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename StringT>
@@ -105,7 +105,7 @@ convert_trigraphs(StringT const &value)
     if (StringT::npos != pos1) {
         do {
             result += value.substr(pos, pos1-pos);
-            StringT trigraph (value.substr(pos1)); 
+            StringT trigraph (value.substr(pos1));
             if (is_trigraph(trigraph)) {
                 result += convert_trigraph(trigraph);
                 pos1 = value.find_first_of ("?", pos = pos1+3);
@@ -124,7 +124,7 @@ convert_trigraphs(StringT const &value)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}   // namespace impl           
+}   // namespace impl
 }   // namespace cpplexer
 }   // namespace wave
 }   // namespace boost

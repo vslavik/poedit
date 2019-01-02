@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function Output Iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
 <link rel="up" href="../specialized.html" title="Specialized Adaptors">
 <link rel="prev" href="filter.html" title="Filter Iterator">
@@ -37,7 +37,7 @@
       </p>
 <h3>
 <a name="iterator.specialized.function_output.h0"></a>
-        <span><a name="iterator.specialized.function_output.example"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.example">Example</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.example"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.example">Example</a>
       </h3>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">string_appender</span>
 <span class="special">{</span>
@@ -63,7 +63,7 @@
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span> <span class="special">=</span> <span class="string">""</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">(</span><span class="identifier">string_appender</span><span class="special">(</span><span class="identifier">s</span><span class="special">)));</span>
+      <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">(</span><span class="identifier">string_appender</span><span class="special">(</span><span class="identifier">s</span><span class="special">)));</span>
 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
@@ -72,11 +72,11 @@
 </pre>
 <h3>
 <a name="iterator.specialized.function_output.h1"></a>
-        <span><a name="iterator.specialized.function_output.reference"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.reference">Reference</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.reference"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.reference">Reference</a>
       </h3>
 <h4>
 <a name="iterator.specialized.function_output.h2"></a>
-        <span><a name="iterator.specialized.function_output.synopsis"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.synopsis">Synopsis</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.synopsis"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.synopsis">Synopsis</a>
       </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">UnaryFunction</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">function_output_iterator</span> <span class="special">{</span>
@@ -100,7 +100,7 @@
 </pre>
 <h4>
 <a name="iterator.specialized.function_output.h3"></a>
-        <span><a name="iterator.specialized.function_output.requirements"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.requirements">Requirements</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.requirements"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.requirements">Requirements</a>
       </h4>
 <p>
         <code class="computeroutput"><span class="identifier">UnaryFunction</span></code> must be Assignable
@@ -108,7 +108,7 @@
       </p>
 <h4>
 <a name="iterator.specialized.function_output.h4"></a>
-        <span><a name="iterator.specialized.function_output.concepts"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.concepts">Concepts</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.concepts"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.concepts">Concepts</a>
       </h4>
 <p>
         <code class="computeroutput"><span class="identifier">function_output_iterator</span></code>
@@ -116,7 +116,7 @@
       </p>
 <h4>
 <a name="iterator.specialized.function_output.h5"></a>
-        <span><a name="iterator.specialized.function_output.operations"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.operations">Operations</a>
+        <span class="phrase"><a name="iterator.specialized.function_output.operations"></a></span><a class="link" href="function_output.html#iterator.specialized.function_output.operations">Operations</a>
       </h4>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">function_output_iterator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">UnaryFunction</span><span class="special">&amp;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">UnaryFunction</span><span class="special">());</span>
 </pre>

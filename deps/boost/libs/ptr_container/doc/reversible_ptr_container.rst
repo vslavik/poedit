@@ -70,7 +70,7 @@ Its purpose is to present the general interface of all the pointer containers.
                 explicit reversible_ptr_container( const reversible_ptr_container& r );                
                 template< class Derived >
                 explicit reversible_ptr_container( const reversible_ptr_container<Derived>& r );
-                explicit reversible_ptr_container( std::auto_ptr<reversible_ptr_container> r );
+                explicit reversible_ptr_container( compatible-smart-ptr<reversible_ptr_container> r );
                 template< class InputIterator >
                 reversible_ptr_container( InputIterator first, InputIterator last );
                 
@@ -79,7 +79,7 @@ Its purpose is to present the general interface of all the pointer containers.
                 reversible_ptr_container&  operator=( const reversible_ptr_container& r );
                 template<class Derived>
                 reversible_ptr_container&  operator=( const reversible_ptr_container<Derived>& r );
-                reversible_ptr_container&  operator=( std::auto_ptr<reversible_ptr_container> r );
+                reversible_ptr_container&  operator=( compatible-smart-ptr<reversible_ptr_container> r );
                 allocator_type             get_allocator() const;                                      
             
             public: // `iterators`_
@@ -106,9 +106,9 @@ Its purpose is to present the general interface of all the pointer containers.
             public: // `pointer container requirements`_
                 auto_type                                replace( iterator position, T* x );
                 template< class U >
-                auto_type                                replace( iterator position, std::auto_ptr<U> x );    
-                std::auto_ptr<reversible_ptr_container>  clone() const;    
-                std::auto_ptr<reversible_ptr_container>  release();
+                auto_type                                replace( iterator position, compatible-smart-ptr<U> x );    
+                compatible-smart-ptr<reversible_ptr_container>  clone() const;    
+                compatible-smart-ptr<reversible_ptr_container>  release();
                 auto_type                                release( iterator position );
                             
             }; //  class 'reversible_ptr_container'
@@ -214,9 +214,10 @@ operations
     ~auto_type();
     operator *implementation-defined bool*\ ();
 
+
 The destructor will delete the stored object *using the clone allocator of the container*
-(this explains why we cannot use ``std::auto_ptr<T>``). It might help to
-think it is just an ``std::auto_ptr<T>``. You can also return
+(this explains why we cannot use ``std::auto_ptr<T>`` nor ``std::unique_ptr<T>``). It might help to
+think it is just a ``compatible-smart-ptr<T>``. You can also return
 the pointer from a function or assign it to another pointer via the ``move()``
 function
 
@@ -254,7 +255,7 @@ Semantics: construct/copy/destroy
     
     - Requirements: ``Derived`` is derived from ``T`` 
 
-- ``explicit reversible_ptr_container( std::auto_ptr< reversible_ptr_container > r );``
+- ``explicit reversible_ptr_container( compatible-smart-ptr< reversible_ptr_container > r );``
 
     - Effects: Constructs a container by taking ownership of the supplied pointers
 
@@ -288,7 +289,7 @@ Semantics: construct/copy/destroy
     
     - Exception safety: Strong guarantee
 
-- ``reversible_ptr_container& operator=( std::auto_ptr<reversible_ptr_container> r );``
+- ``reversible_ptr_container& operator=( compatible-smart-ptr<reversible_ptr_container> r );``
 
     - Effects: Deletes the stored objects and then takes ownership of the supplied pointers
 
@@ -400,11 +401,11 @@ Semantics: pointer container requirements
 
     - Exception safety: Strong guarantee
     
-- ``template< class U > auto_type replace( iterator position, std::auto_ptr<U> x );``
+- ``template< class U > auto_type replace( iterator position, compatible-smart-ptr<U> x );``
 
     - Effects: ``return replace( position, x.release() );``     
 
-- ``std::auto_ptr< reversible_ptr_container > clone() const;``
+- ``compatible-smart-ptr< reversible_ptr_container > clone() const;``
 
     - Effects: Returns a deep copy of the container
 
@@ -412,7 +413,7 @@ Semantics: pointer container requirements
 
     - Complexity: Linear
 
-- ``std::auto_ptr< reversible_ptr_container > release();``
+- ``compatible-smart-ptr< reversible_ptr_container > release();``
 
     - Effects: Releases ownership of the container. This is a useful way of returning a container from a function.
 

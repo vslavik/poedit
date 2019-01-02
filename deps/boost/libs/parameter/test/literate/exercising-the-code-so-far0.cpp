@@ -4,6 +4,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <memory>
+#include <boost/config.hpp>
 
 using namespace boost::parameter;
 
@@ -77,7 +78,17 @@ typedef boost::python::class_<
 > c1;
 
 typedef boost::python::class_<
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     D, held_type<std::auto_ptr<D> >, base_list<bases<B> >
+    
+#else
+
+    D, held_type<std::unique_ptr<D> >, base_list<bases<B> >
+    
+#endif
+
 > c2;
 
 BOOST_MPL_ASSERT((boost::is_same<c1::class_type, B>));
@@ -89,7 +100,19 @@ BOOST_MPL_ASSERT((
 
 BOOST_MPL_ASSERT((boost::is_same<c2::class_type, D>));
 BOOST_MPL_ASSERT((boost::is_same<c2::base_list, bases<B> >));
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
 BOOST_MPL_ASSERT((
     boost::is_same<c2::held_type, std::auto_ptr<D> >
 ));
+
+#else
+
+BOOST_MPL_ASSERT((
+    boost::is_same<c2::held_type, std::unique_ptr<D> >
+));
+
+#endif
+
 BOOST_MPL_ASSERT((boost::is_same<c2::copyable, void>));

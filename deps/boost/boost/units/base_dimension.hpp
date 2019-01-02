@@ -83,21 +83,21 @@ class base_dimension :
         /// check_base_dimension will trigger an error earlier
         /// for compilers with less strict name lookup.
         /// INTERNAL ONLY
-        friend Derived* 
+        friend BOOST_CONSTEXPR Derived* 
         check_double_register(const units::base_dimension_ordinal<N>&) 
         { return(0); }
 
         /// Register this ordinal
         /// INTERNAL ONLY
-        friend detail::yes 
+        friend BOOST_CONSTEXPR detail::yes 
         boost_units_is_registered(const units::base_dimension_ordinal<N>&) 
-        { detail::yes result; return(result); }
+        { return(detail::yes()); }
         
         /// But make sure we can identify the current instantiation!
         /// INTERNAL ONLY
-        friend detail::yes 
+        friend BOOST_CONSTEXPR detail::yes 
         boost_units_is_registered(const units::base_dimension_pair<Derived, N>&) 
-        { detail::yes result; return(result); }
+        { return(detail::yes()); }
 };
 
 } // namespace units

@@ -41,14 +41,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost {
-namespace wave { 
+namespace wave {
 namespace grammars {
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace closures {
 
-    struct intlit_closure 
-    :   boost::spirit::classic::closure<intlit_closure, uint_literal_type> 
+    struct intlit_closure
+    :   boost::spirit::classic::closure<intlit_closure, uint_literal_type>
     {
         member1 val;
     };
@@ -65,10 +65,10 @@ struct intlit_grammar :
 {
     intlit_grammar(bool &is_unsigned_) : is_unsigned(is_unsigned_)
     {
-        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "intlit_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "intlit_grammar",
             TRACE_INTLIT_GRAMMAR);
     }
-    
+
     template <typename ScannerT>
     struct definition
     {
@@ -84,15 +84,15 @@ struct intlit_grammar :
         {
             using namespace boost::spirit::classic;
             namespace phx = phoenix;
- 
-            
+
+
             int_lit = (
-                    sub_int_lit = 
+                    sub_int_lit =
                         (   ch_p('0')[self.val = 0] >> (hex_lit | oct_lit)
                         |   dec_lit
                         )
                         >> !as_lower_d[
-                                (ch_p('u')[phx::var(self.is_unsigned) = true] || ch_p('l')) 
+                                (ch_p('u')[phx::var(self.is_unsigned) = true] || ch_p('l'))
                             |   (ch_p('l') || ch_p('u')[phx::var(self.is_unsigned) = true])
                             ]
                     ,
@@ -105,7 +105,7 @@ struct intlit_grammar :
                                 phx::var(self.is_unsigned) = true
                             ]
                     ,
-                        
+
                     oct_lit =
                        !uint_parser<uint_literal_type, 8>()
                         [
@@ -113,7 +113,7 @@ struct intlit_grammar :
                             phx::var(self.is_unsigned) = true
                         ]
                     ,
-                        
+
                     dec_lit =
                         uint_parser<uint_literal_type, 10>()
                         [
@@ -121,7 +121,7 @@ struct intlit_grammar :
                         ]
                     )
                 ;
-                
+
             BOOST_SPIRIT_DEBUG_TRACE_RULE(int_lit, TRACE_INTLIT_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(sub_int_lit, TRACE_INTLIT_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(hex_lit, TRACE_INTLIT_GRAMMAR);
@@ -133,33 +133,33 @@ struct intlit_grammar :
         rule_t const& start() const
         { return int_lit; }
     };
-    
+
     bool &is_unsigned;
 };
 
 #undef TRACE_INTLIT_GRAMMAR
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
-//  The following function is defined here, to allow the separation of 
+//
+//  The following function is defined here, to allow the separation of
 //  the compilation of the intlit_grammar from the function using it.
-//  
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 #if BOOST_WAVE_SEPARATE_GRAMMAR_INSTANTIATION != 0
 #define BOOST_WAVE_INTLITGRAMMAR_GEN_INLINE
 #else
 #define BOOST_WAVE_INTLITGRAMMAR_GEN_INLINE inline
-#endif 
+#endif
 
 template <typename TokenT>
-BOOST_WAVE_INTLITGRAMMAR_GEN_INLINE 
-uint_literal_type 
-intlit_grammar_gen<TokenT>::evaluate(TokenT const &token, 
+BOOST_WAVE_INTLITGRAMMAR_GEN_INLINE
+uint_literal_type
+intlit_grammar_gen<TokenT>::evaluate(TokenT const &token,
     bool &is_unsigned)
 {
     using namespace boost::spirit::classic;
-    
+
 intlit_grammar g(is_unsigned);
 uint_literal_type result = 0;
 typename TokenT::string_type const &token_val = token.get_value();
@@ -167,7 +167,7 @@ parse_info<typename TokenT::string_type::const_iterator> hit =
     parse(token_val.begin(), token_val.end(), g[spirit_assign_actor(result)]);
 
     if (!hit.hit) {
-        BOOST_WAVE_THROW(preprocess_exception, ill_formed_integer_literal, 
+        BOOST_WAVE_THROW(preprocess_exception, ill_formed_integer_literal,
             token_val.c_str(), token.get_position());
     }
     return result;

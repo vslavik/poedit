@@ -78,6 +78,35 @@ problem cases in other libraries:
 
 [table_cyl_bessel_k]
 
+The following error plot are based on an exhaustive search of the functions domain for I0, I1, K0, and K1, 
+MSVC-15.5 at `double` precision, and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+
+[graph i0__double]
+
+[graph i0__80_bit_long_double]
+
+[graph i0____float128]
+
+[graph i1__double]
+
+[graph i1__80_bit_long_double]
+
+[graph i1____float128]
+
+[graph k0__double]
+
+[graph k0__80_bit_long_double]
+
+[graph k0____float128]
+
+[graph k1__double]
+
+[graph k1__80_bit_long_double]
+
+[graph k1____float128]
+
+
 [h4 Implementation]
 
 The following are handled as special cases first:
@@ -89,16 +118,32 @@ odd if [nu][space] is odd and even if [nu][space] is even, and we can reflect to
 
 For I[sub v][space] with v equal to 0, 1 or 0.5 are handled as special cases.
 
-The 0 and 1 cases use minimax rational approximations on
-finite and infinite intervals. The coefficients are from:
+The 0 and 1 cases use polynomial approximations on
+finite and infinite intervals. The approximating forms
+are based on 
+[@http://www.advanpix.com/2015/11/11/rational-approximations-for-the-modified-bessel-function-of-the-first-kind-i0-computations-double-precision/ 
+"Rational Approximations for the Modified Bessel Function of the First Kind - I[sub 0](x) for Computations with Double Precision"]
+by Pavel Holoborodko, extended by us to deal with up to 128-bit precision (with different approximations for each target precision).
 
-* J.M. Blair and C.A. Edwards, ['Stable rational minimax approximations
-    to the modified Bessel functions I_0(x) and I_1(x)], Atomic Energy of Canada
-    Limited Report 4928, Chalk River, 1974.
-* S. Moshier, ['Methods and Programs for Mathematical Functions],
-    Ellis Horwood Ltd, Chichester, 1989.    
+[equation bessel21]
 
-While the 0.5 case is a simple trigonometric function:
+[equation bessel20]
+
+[equation bessel17]
+
+[equation bessel18]
+
+Similarly we have:
+
+[equation bessel22]
+
+[equation bessel23]
+
+[equation bessel24]
+
+[equation bessel25]
+
+The 0.5 case is a simple trigonometric function:
 
 I[sub 0.5](x) = sqrt(2 / [pi]x) * sinh(x)
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template iset_index</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../interprocess/indexes_reference.html#header.boost.interprocess.indexes.iset_index_hpp" title="Header &lt;boost/interprocess/indexes/iset_index.hpp&gt;">
 <link rel="prev" href="flat_map_index.html" title="Class template flat_map_index">
@@ -33,7 +33,7 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../interprocess/indexes_reference.html#header.boost.interprocess.indexes.iset_index_hpp" title="Header &lt;boost/interprocess/indexes/iset_index.hpp&gt;">boost/interprocess/indexes/iset_index.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MapConfig<span class="special">&gt;</span> 
-<span class="keyword">class</span> <a class="link" href="iset_index.html" title="Class template iset_index">iset_index</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="iset_index.html" title="Class template iset_index">iset_index</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">iset_index_aux</span><span class="special">::</span><span class="identifier">index_t</span><span class="special">&lt;</span> <span class="identifier">MapConfig</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">index_type</span><span class="special">::</span><span class="identifier">iterator</span>           <a name="boost.interprocess.iset_index.iterator"></a><span class="identifier">iterator</span><span class="special">;</span>          
@@ -42,43 +42,43 @@
   <span class="keyword">typedef</span> <span class="identifier">index_type</span><span class="special">::</span><span class="identifier">value_type</span>         <a name="boost.interprocess.iset_index.value_type"></a><span class="identifier">value_type</span><span class="special">;</span>        
 
   <span class="comment">// <a class="link" href="iset_index.html#boost.interprocess.iset_indexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="iset_index.html#idp22715520-bb"><span class="identifier">iset_index</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="iset_index.html#idp66814416-bb"><span class="identifier">iset_index</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="iset_index.html#idp22705968-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="iset_index.html#idp22706528-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="iset_index.html#idp22708576-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">iterator</span> <a class="link" href="iset_index.html#idp22709728-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">const_iterator</span> <a class="link" href="iset_index.html#idp22711280-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="iset_index.html#idp66804864-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="iset_index.html#idp66805424-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="iset_index.html#idp66807472-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">iterator</span> <a class="link" href="iset_index.html#idp66808624-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">const_iterator</span> <a class="link" href="iset_index.html#idp66810176-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-  <a class="link" href="iset_index.html#idp22713104-bb"><span class="identifier">insert_check</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="iset_index.html#idp66812000-bb"><span class="identifier">insert_check</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp167137552"></a><h2>Description</h2>
+<a name="id-1.3.19.17.3.28.4.4"></a><h2>Description</h2>
 <p>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </p>
 <div class="refsect2">
-<a name="idp167138384"></a><h3>
+<a name="id-1.3.19.17.3.28.4.4.3"></a><h3>
 <a name="boost.interprocess.iset_indexconstruct-copy-destruct"></a><code class="computeroutput">iset_index</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp22715520-bb"></a><span class="identifier">iset_index</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp66814416-bb"></a><span class="identifier">iset_index</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Takes a pointer to the segment manager. Can throw </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp167147584"></a><h3>
-<a name="idp22705968-bb"></a><code class="computeroutput">iset_index</code> public member functions</h3>
+<a name="id-1.3.19.17.3.28.4.4.4"></a><h3>
+<a name="idp66804864-bb"></a><code class="computeroutput">iset_index</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp22706528-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp66805424-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">MapConfig</span><span class="special">::</span><span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span></pre>
 <p>This reserves memory to optimize the insertion of n elements in the index </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp22708576-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>This frees all unnecessary memory. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idp22709728-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp22711280-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp66807472-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>This frees all unnecessary memory. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idp66808624-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp66810176-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-<a name="idp22713104-bb"></a><span class="identifier">insert_check</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">,</span> 
+<a name="idp66812000-bb"></a><span class="identifier">insert_check</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">,</span> 
              <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span> commit_data<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>

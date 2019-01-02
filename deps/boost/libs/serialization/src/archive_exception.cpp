@@ -77,6 +77,14 @@ archive_exception::archive_exception(
         break;
     case input_stream_error:
         length = append(length, "input stream error");
+        if(NULL != e1){
+            length = append(length, "-");
+            length = append(length, e1);
+        }
+        if(NULL != e2){
+            length = append(length, "-");
+            length = append(length, e2);
+        }
         break;
     case invalid_class_name:
         length = append(length, "class name too long");
@@ -105,6 +113,14 @@ archive_exception::archive_exception(
         break;
     case output_stream_error:
         length = append(length, "output stream error");
+        if(NULL != e1){
+            length = append(length, "-");
+            length = append(length, e1);
+        }
+        if(NULL != e2){
+            length = append(length, "-");
+            length = append(length, e2);
+        }
         break;
     default:
         BOOST_ASSERT(false);

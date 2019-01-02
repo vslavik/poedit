@@ -22,6 +22,13 @@ void expected_results()
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
+      "RG: two values the same",                      // test data group
+      ".*", 10000, 700);              // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*",                          // test type(s)
       ".*RJ.*",                      // test data group
       ".*", 2700, 250);              // test function
    add_expected_result(

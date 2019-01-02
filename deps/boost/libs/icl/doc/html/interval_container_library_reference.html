@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Interval Container Library Reference</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Icl">
 <link rel="up" href="index.html" title="Chapter&#160;1.&#160;Boost.Icl">
 <link rel="prev" href="boost_icl/acknowledgments.html" title="Acknowledgments">
@@ -25,7 +25,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interval_container_library_reference"></a>Interval Container Library Reference</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="interval_container_library_reference.html#header.boost.icl.closed_interval_hpp">Header &lt;boost/icl/closed_interval.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="header/boost/icl/continuous_interval_hpp.html">Header &lt;boost/icl/continuous_interval.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="header/boost/icl/discrete_interval_hpp.html">Header &lt;boost/icl/discrete_interval.hpp&gt;</a></span></dt>
@@ -62,13 +62,13 @@
       <span class="keyword">class</span> <a class="link" href="boost/icl/closed_interval.html" title="Class template closed_interval">closed_interval</a><span class="special">;</span>
 
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DomainT<span class="special">,</span> <span class="identifier">ICL_COMPARE</span> Compare<span class="special">&gt;</span> 
-      <span class="keyword">struct</span> <a class="link" href="boost/icl/interval_traits_i_idm13856.html" title="Struct template interval_traits&lt;icl::closed_interval&lt; DomainT, Compare &gt;&gt;">interval_traits</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
+      <span class="keyword">struct</span> <a class="link" href="boost/icl/interval_trait_idp44259104.html" title="Struct template interval_traits&lt;icl::closed_interval&lt; DomainT, Compare &gt;&gt;">interval_traits</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DomainT<span class="special">,</span> <span class="identifier">ICL_COMPARE</span> Compare<span class="special">&gt;</span> 
-      <span class="keyword">struct</span> <a class="link" href="boost/icl/interval_bound_idp25705920.html" title="Struct template interval_bound_type&lt;closed_interval&lt; DomainT, Compare &gt;&gt;">interval_bound_type</a><span class="special">&lt;</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
+      <span class="keyword">struct</span> <a class="link" href="boost/icl/interval_bound_idp44274656.html" title="Struct template interval_bound_type&lt;closed_interval&lt; DomainT, Compare &gt;&gt;">interval_bound_type</a><span class="special">&lt;</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DomainT<span class="special">,</span> <span class="identifier">ICL_COMPARE</span> Compare<span class="special">&gt;</span> 
-      <span class="keyword">struct</span> <a class="link" href="boost/icl/type_to_string_idp25712672.html" title="Struct template type_to_string&lt;icl::closed_interval&lt; DomainT, Compare &gt;&gt;">type_to_string</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
+      <span class="keyword">struct</span> <a class="link" href="boost/icl/type_to_string_idp70462912.html" title="Struct template type_to_string&lt;icl::closed_interval&lt; DomainT, Compare &gt;&gt;">type_to_string</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span><span class="special">,</span> <span class="identifier">Compare</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> DomainT<span class="special">&gt;</span> 
-      <span class="keyword">struct</span> <a class="link" href="boost/icl/value_size_icl_idp25717328.html" title="Struct template value_size&lt;icl::closed_interval&lt; DomainT &gt;&gt;">value_size</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
+      <span class="keyword">struct</span> <a class="link" href="boost/icl/value_size_icl_idp70467568.html" title="Struct template value_size&lt;icl::closed_interval&lt; DomainT &gt;&gt;">value_size</a><span class="special">&lt;</span><span class="identifier">icl</span><span class="special">::</span><span class="identifier">closed_interval</span><span class="special">&lt;</span> <span class="identifier">DomainT</span> <span class="special">&gt;</span><span class="special">&gt;</span><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>

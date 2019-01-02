@@ -10,6 +10,7 @@
 
 #include "jam.h"
 #include "execcmd.h"
+#include "output.h"
 
 #include <assert.h>
 #include <stdio.h>

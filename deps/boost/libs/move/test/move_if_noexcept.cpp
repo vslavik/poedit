@@ -139,7 +139,7 @@ int main()
       movable m4(function(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
    {
       movable m;
       movable m2(boost::move_if_noexcept(m));
@@ -149,7 +149,7 @@ int main()
       movable m4(functionr(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
    {
       movable m;
       movable m2(boost::move_if_noexcept(m));
@@ -159,7 +159,7 @@ int main()
       movable m4(function2(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
    {
       movable m;
       movable m2(boost::move_if_noexcept(m));
@@ -169,7 +169,7 @@ int main()
       movable m4(function2r(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
    {
       movable m;
       movable m2(boost::move_if_noexcept(m));
@@ -177,7 +177,7 @@ int main()
       BOOST_CHECK(!m2.moved());
       movable m3(move_return_function());
       BOOST_CHECK(!m3.moved());
-	}
+   }
    {
       movable m;
       movable m2(boost::move_if_noexcept(m));
@@ -185,7 +185,7 @@ int main()
       BOOST_CHECK(!m2.moved());
       movable m3(move_return_function2());
       BOOST_CHECK(!m3.moved());
-	}
+   }
 
    // copy_movable may throw during move, so it must be copied
    {
@@ -197,7 +197,7 @@ int main()
       copy_movable m4(function(boost::move_if_noexcept(m3)));
       BOOST_CHECK(!m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
 
 
    // copy_movable_noexcept can not throw during move
@@ -210,7 +210,7 @@ int main()
       copy_movable_noexcept m4(function(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
 
    // movable_throwable can not throw during move but it has no copy constructor
    {
@@ -222,7 +222,7 @@ int main()
       movable_throwable m4(function(boost::move_if_noexcept(m3)));
       BOOST_CHECK(m3.moved());
       BOOST_CHECK(!m4.moved());
-	}
+   }
 
    return boost::report_errors();
 }

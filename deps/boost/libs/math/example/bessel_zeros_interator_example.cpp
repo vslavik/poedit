@@ -74,7 +74,7 @@ int main()
     // nu = 1.00000, sum = 0.124990, exact = 0.125000
 //] [/bessel_zeros_iterator_example_2]
    }
-  catch (std::exception ex)
+  catch (std::exception const& ex)
   {
     std::cout << "Thrown exception " << ex.what() << std::endl;
   }

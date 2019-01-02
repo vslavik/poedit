@@ -156,6 +156,42 @@ rule merge ( s1 * : s2 * : ordered * )
     return $(result__) ;
 }
 
+# Compares two sequences lexicagraphically
+#
+rule compare ( s1 * : s2 * : ordered * )
+{
+    if ! $(ordered)
+    {
+        if $(s1) < $(s2)
+        {
+            return true ;
+        }
+    }
+    else
+    {
+        while true
+        {
+            if ! $(s2[1])-is-defined
+            {
+                return ;
+            }
+            else if ! $(s1[1])-is-defined
+            {
+                return true ;
+            }
+            else if [ $(ordered) $(s1[1]) $(s2[1]) ]
+            {
+                return true ;
+            }
+            else if [ $(ordered) $(s2[1]) $(s1[1]) ]
+            {
+                return ;
+            }
+            s1 = $(s1[2-]) ;
+            s2 = $(s2[2-]) ;
+        }
+    }
+}
 
 # Join the elements of s into one long string. If joint is supplied, it is used
 # as a separator.

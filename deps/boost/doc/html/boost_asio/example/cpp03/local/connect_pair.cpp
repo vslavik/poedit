@@ -2,7 +2,7 @@
 // connect_pair.cpp
 // ~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,8 +23,8 @@ using boost::asio::local::stream_protocol;
 class uppercase_filter
 {
 public:
-  uppercase_filter(boost::asio::io_service& io_service)
-    : socket_(io_service)
+  uppercase_filter(boost::asio::io_context& io_context)
+    : socket_(io_context)
   {
   }
 
@@ -82,11 +82,11 @@ private:
   boost::array<char, 512> data_;
 };
 
-void run(boost::asio::io_service* io_service)
+void run(boost::asio::io_context* io_context)
 {
   try
   {
-    io_service->run();
+    io_context->run();
   }
   catch (std::exception& e)
   {
@@ -99,16 +99,16 @@ int main()
 {
   try
   {
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     // Create filter and establish a connection to it.
-    uppercase_filter filter(io_service);
-    stream_protocol::socket socket(io_service);
+    uppercase_filter filter(io_context);
+    stream_protocol::socket socket(io_context);
     boost::asio::local::connect_pair(socket, filter.socket());
     filter.start();
 
-    // The io_service runs in a background thread to perform filtering.
-    boost::thread thread(boost::bind(run, &io_service));
+    // The io_context runs in a background thread to perform filtering.
+    boost::thread thread(boost::bind(run, &io_context));
 
     for (;;)
     {

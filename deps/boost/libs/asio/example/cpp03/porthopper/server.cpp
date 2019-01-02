@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,27 +22,28 @@ using boost::asio::ip::tcp;
 using boost::asio::ip::udp;
 
 typedef boost::shared_ptr<tcp::socket> tcp_socket_ptr;
-typedef boost::shared_ptr<boost::asio::deadline_timer> timer_ptr;
+typedef boost::shared_ptr<boost::asio::steady_timer> timer_ptr;
 typedef boost::shared_ptr<control_request> control_request_ptr;
 
 class server
 {
 public:
   // Construct the server to wait for incoming control connections.
-  server(boost::asio::io_service& io_service, unsigned short port)
-    : acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
-      timer_(io_service),
-      udp_socket_(io_service, udp::endpoint(udp::v4(), 0)),
+  server(boost::asio::io_context& io_context, unsigned short port)
+    : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)),
+      timer_(io_context),
+      udp_socket_(io_context, udp::endpoint(udp::v4(), 0)),
       next_frame_number_(1)
   {
     // Start waiting for a new control connection.
-    tcp_socket_ptr new_socket(new tcp::socket(acceptor_.get_io_service()));
+    tcp_socket_ptr new_socket(
+        new tcp::socket(acceptor_.get_executor().context()));
     acceptor_.async_accept(*new_socket,
         boost::bind(&server::handle_accept, this,
           boost::asio::placeholders::error, new_socket));
 
     // Start the timer used to generate outgoing frames.
-    timer_.expires_from_now(boost::posix_time::milliseconds(100));
+    timer_.expires_after(boost::asio::chrono::milliseconds(100));
     timer_.async_wait(boost::bind(&server::handle_timer, this));
   }
 
@@ -59,7 +60,8 @@ public:
     }
 
     // Start waiting for a new control connection.
-    tcp_socket_ptr new_socket(new tcp::socket(acceptor_.get_io_service()));
+    tcp_socket_ptr new_socket(
+        new tcp::socket(acceptor_.get_executor().context()));
     acceptor_.async_accept(*new_socket,
         boost::bind(&server::handle_accept, this,
           boost::asio::placeholders::error, new_socket));
@@ -73,8 +75,8 @@ public:
     {
       // Delay handling of the control request to simulate network latency.
       timer_ptr delay_timer(
-          new boost::asio::deadline_timer(acceptor_.get_io_service()));
-      delay_timer->expires_from_now(boost::posix_time::seconds(2));
+          new boost::asio::steady_timer(acceptor_.get_executor().context()));
+      delay_timer->expires_after(boost::asio::chrono::seconds(2));
       delay_timer->async_wait(
           boost::bind(&server::handle_control_request_timer, this,
             socket, request, delay_timer));
@@ -140,7 +142,7 @@ public:
     }
 
     // Wait for next timeout.
-    timer_.expires_from_now(boost::posix_time::milliseconds(100));
+    timer_.expires_after(boost::asio::chrono::milliseconds(100));
     timer_.async_wait(boost::bind(&server::handle_timer, this));
   }
 
@@ -149,7 +151,7 @@ private:
   tcp::acceptor acceptor_;
 
   // The timer used for generating data.
-  boost::asio::deadline_timer timer_;
+  boost::asio::steady_timer timer_;
 
   // The socket used to send data to subscribers.
   udp::socket udp_socket_;
@@ -171,12 +173,12 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     using namespace std; // For atoi.
-    server s(io_service, atoi(argv[1]));
+    server s(io_context, atoi(argv[1]));
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

@@ -70,31 +70,31 @@ else
 
 lib no_eh_eg_support : ../test/no_eh_test_support.cpp ;
 
-run cpp_int_snips.cpp no_eh_eg_support ;
-run cpp_int_import_export.cpp no_eh_eg_support ;
-run cpp_bin_float_import_export.cpp no_eh_eg_support ;
+test-suite examples :
 
-run cpp_dec_float_snips.cpp no_eh_eg_support ;
+      [ run cpp_int_snips.cpp no_eh_eg_support ]
+      [ run cpp_int_import_export.cpp no_eh_eg_support ]
+      [ run cpp_bin_float_import_export.cpp no_eh_eg_support ]
 
-run cpp_bin_float_snips.cpp no_eh_eg_support ;
+      [ run cpp_dec_float_snips.cpp no_eh_eg_support ]
 
-run debug_adaptor_snips.cpp no_eh_eg_support ;
-run float128_snips.cpp quadmath no_eh_eg_support : : : [ check-target-builds ../config//has_float128 : : <build>no ] ;
-run floating_point_examples.cpp no_eh_eg_support ;
-run gauss_laguerre_quadrature.cpp no_eh_eg_support : : : release [ requires cxx11_lambdas ] ;
-run hypergeometric_luke_algorithms.cpp no_eh_eg_support ../../chrono/build//boost_chrono ../../system/build//boost_system : : : [ requires cxx11_nullptr ]  ;
-run integer_examples.cpp no_eh_eg_support ;
-run logged_adaptor.cpp no_eh_eg_support mpfi mpfr gmp :  :  : [ check-target-builds ../config//has_mpfi : : <build>no ] ;
-run mixed_integer_arithmetic.cpp no_eh_eg_support ;
-run numeric_limits_snips.cpp no_eh_eg_support /boost//test_exec_monitor : : : [ requires cxx11_numeric_limits ]   ;
-run random_snips.cpp gmp no_eh_eg_support : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
-run safe_prime.cpp no_eh_eg_support ;
+      [ run cpp_bin_float_snips.cpp no_eh_eg_support ]
 
-run gmp_snips.cpp gmp no_eh_eg_support : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
-run mpfi_snips.cpp mpfi mpfr gmp no_eh_eg_support :  :  : [ check-target-builds ../config//has_mpfi : : <build>no ] ;
-run mpfr_snips.cpp mpfr gmp no_eh_eg_support : : : [ check-target-builds ../config//has_mpfr : : <build>no ] ;
-run tommath_snips.cpp $(TOMMATH) no_eh_eg_support : : : [ check-target-builds ../config//has_tommath : : <build>no ] ;
+      [ run debug_adaptor_snips.cpp no_eh_eg_support ]
+      [ run float128_snips.cpp quadmath no_eh_eg_support : : : [ check-target-builds ../config//has_float128 : : <build>no ] ]
+      [ run floating_point_examples.cpp no_eh_eg_support ]
+      [ run gauss_laguerre_quadrature.cpp no_eh_eg_support : : : release [ requires cxx11_lambdas ] ]
+      [ run hypergeometric_luke_algorithms.cpp no_eh_eg_support ../../chrono/build//boost_chrono ../../system/build//boost_system : : : [ requires cxx11_nullptr ]  ]
+      [ run integer_examples.cpp no_eh_eg_support ]
+      [ run logged_adaptor.cpp no_eh_eg_support mpfi mpfr gmp :  :  : [ check-target-builds ../config//has_mpfi : : <build>no ] ]
+      [ run mixed_integer_arithmetic.cpp no_eh_eg_support ]
+      [ run numeric_limits_snips.cpp no_eh_eg_support /boost//test_exec_monitor : : : [ requires cxx11_numeric_limits ]  [ check-target-builds ../config//has_float128 : <source>quadmath ] ]
+      [ run random_snips.cpp gmp no_eh_eg_support : : : [ requires cxx11_explicit_conversion_operators ] [ check-target-builds ../config//has_gmp : : <build>no ] ]
+      [ run safe_prime.cpp no_eh_eg_support ]
 
+      [ run gmp_snips.cpp gmp no_eh_eg_support : : : [ check-target-builds ../config//has_gmp : : <build>no ] ]
+      [ run mpfi_snips.cpp mpfi mpfr gmp no_eh_eg_support :  :  : [ check-target-builds ../config//has_mpfi : : <build>no ] ]
+      [ run mpfr_snips.cpp mpfr gmp no_eh_eg_support : : : [ check-target-builds ../config//has_mpfr : : <build>no ] ]
+      [ run tommath_snips.cpp $(TOMMATH) no_eh_eg_support : : : [ check-target-builds ../config//has_tommath : : <build>no ] ]
 
-
-
+;

@@ -15,7 +15,7 @@
 int main()
 {
    using namespace boost::container;
-   using boost::container::container_detail::is_same;
+   using boost::container::dtl::is_same;
 
    typedef set<int, std::less<int>, pmr::polymorphic_allocator<int> > intcontainer_t;
    BOOST_STATIC_ASSERT(( is_same<intcontainer_t, pmr::set_of<int>::type >::value ));

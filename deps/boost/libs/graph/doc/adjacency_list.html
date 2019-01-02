@@ -1,7 +1,7 @@
 <HTML>
 <!--
      Copyright (c) Jeremy Siek 2000
-    
+
      Distributed under the Boost Software License, Version 1.0.
      (See accompanying file LICENSE_1_0.txt or copy at
      http://www.boost.org/LICENSE_1_0.txt)
@@ -459,7 +459,7 @@ and<br>
 <br><br>
 This describes whether the graph class allows the insertion of
 parallel edges (edges with the same source and target). The two tags
-are <TT>allow_parallel_edge-_tag</TT> and
+are <TT>allow_parallel_edge_tag</TT> and
 <TT>disallow_parallel_edge_tag</TT>. The
 <TT>setS</TT> and <TT>hash_setS</TT> variants disallow
 parallel edges while the others allow parallel edges.
@@ -474,9 +474,9 @@ The type used for dealing with the number of vertices in the graph.
 
 <hr>
 
-<tt>graph_traits&lt;adjacency_list&gt;::edge_size_type</tt><br>
+<tt>graph_traits&lt;adjacency_list&gt;::edges_size_type</tt><br>
 and<br>
-<tt>adjacency_list_traits&lt;OutEdgeList, VertexList, Directed_list, EdgeList&gt;::edge_size_type</tt><br>
+<tt>adjacency_list_traits&lt;OutEdgeList, VertexList, Directed_list, EdgeList&gt;::edges_size_type</tt><br>
 <br><br>
 The type used for dealing with the number of edges in the graph.
 
@@ -836,7 +836,7 @@ add_edge(vertex_descriptor&nbsp;u, vertex_descriptor&nbsp;v,
 </pre>
 Adds edge <i>(u,v)</i> to the graph and attaches <TT>p</TT> as the
 value of the edge's internal property storage.  Also see the previous
-<TT>add_edge()</TT> member function for more details.
+<TT>add_edge()</TT> non-member function for more details.
 
 <hr>
 

@@ -75,7 +75,7 @@ private:
   // give boost::signals2::deconstruct access to private constructor
   friend class boost::signals2::deconstruct_access;
   // private constructor to force use of deconstruct
-  TextView()
+  TextView() : m_document(0)
   {}
 
   Document*               m_document;

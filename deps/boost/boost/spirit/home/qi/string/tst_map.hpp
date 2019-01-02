@@ -15,6 +15,7 @@
 #include <boost/spirit/home/qi/string/detail/tst.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/pool/object_pool.hpp>
+#include <boost/foreach.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {

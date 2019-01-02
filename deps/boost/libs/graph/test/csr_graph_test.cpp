@@ -464,6 +464,8 @@ int test_main(int argc, char* argv[])
     // Check in edge access
     typedef boost::graph_traits<BidirCSRGraphT>::in_edge_iterator in_edge_iterator;
     std::pair<in_edge_iterator, in_edge_iterator> ie(in_edges(vertex(0, g2b), g2b));
+    // quiet unused variable warning 
+    ie.first = ie.second;
 
     std::cout << "Testing CSR graph built using add_edges" << std::endl;
     // Test building a graph using add_edges on unsorted lists

@@ -459,6 +459,12 @@ basic_iarchive_impl::load_pointer(
     cobject_id & co = cobject_id_vector[i];
     bpis_ptr = co.bpis_ptr;
 
+    if (bpis_ptr == NULL) {
+        boost::serialization::throw_exception(
+            archive_exception(archive_exception::unregistered_class)
+        );
+    }
+
     load_preamble(ar, co);
 
     // extra line to evade borland issue
@@ -487,7 +493,7 @@ basic_iarchive_impl::load_pointer(
         m_pending.version = co.file_version;
 
         // predict next object id to be created
-        const unsigned int ui = object_id_vector.size();
+        const size_t ui = object_id_vector.size();
 
         serialization::state_saver<object_id_type> w_end(m_moveable_objects.end);
 

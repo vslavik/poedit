@@ -22,9 +22,7 @@
 #include <boost/test/tree/fixture.hpp>
 
 #include <boost/test/tools/assertion_result.hpp>
-
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
-#include <boost/test/utils/trivial_singleton.hpp>
 
 // Boost
 #include <boost/shared_ptr.hpp>
@@ -46,35 +44,40 @@ class test_unit;
 namespace decorator {
 
 // ************************************************************************** //
-// **************             decorator::collector             ************** //
+// **************             decorator::collector_t             ************** //
 // ************************************************************************** //
 
 class base;
 typedef boost::shared_ptr<base> base_ptr;
 
-class BOOST_TEST_DECL collector : public singleton<collector> {
+class BOOST_TEST_DECL collector_t {
+
 public:
-    collector&              operator*( base const& d );
+    collector_t&            operator*( base const& d );
 
     void                    store_in( test_unit& tu );
 
     void                    reset();
 
-private:
-    BOOST_TEST_SINGLETON_CONS( collector )
+    std::vector<base_ptr>   get_lazy_decorators() const;
 
+    // singleton pattern
+    BOOST_TEST_SINGLETON_CONS( collector_t )
+
+    private:
     // Data members
     std::vector<base_ptr>   m_tu_decorators;
 };
 
+
 // ************************************************************************** //
-// **************               decorator::base                ************** //
+// **************              decorator::base                 ************** //
 // ************************************************************************** //
 
 class BOOST_TEST_DECL base {
 public:
     // composition interface
-    collector&              operator*() const;
+    collector_t&              operator*() const;
 
     // application interface
     virtual void            apply( test_unit& tu ) = 0;

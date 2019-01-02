@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>fixture (decorator)</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_org_reference.html" title="Tests declaration and organization">
 <link rel="prev" href="decorator_enable_if.html" title="enable_if (decorator)">
@@ -40,20 +40,44 @@
           a pair of functions (like <code class="computeroutput"><span class="identifier">set_up</span></code>
           and <code class="computeroutput"><span class="identifier">tear_down</span></code>) to be called
           before and after the corresponding test unit. At the suite level the <code class="computeroutput"><span class="identifier">set_up</span></code> function is called once -- before
-          the suite execution starts and <code class="computeroutput"><span class="identifier">tear_down</span></code>
+          the suite execution starts -- and <code class="computeroutput"><span class="identifier">tear_down</span></code>
           function is called once -- after the suite execution ends. It comes in
-          three forms. First expects two functions for set-up and tear-down (the
-          second one can be skipped). The second expects a <code class="computeroutput"><span class="identifier">DefaultConstructible</span></code>
-          class. Its default constructor will be used as set-up function and its
-          destructor as a tear-down function. Third requires a class with one-argument
-          public constructor. Argument <code class="computeroutput"><span class="identifier">arg</span></code>
-          is forwarded to the constructor and this is the set-up function, its destructor
-          is the tear-down function. There is no way to get access to the members
-          of these fixtures from within the test case or test suite.
+          three forms.
         </p>
+<p>
+          First expects two functions for set-up and tear-down (the second one can
+          be skipped).
+        </p>
+<p>
+          The second expects a <code class="computeroutput"><span class="identifier">DefaultConstructible</span></code>
+          class. Its default constructor will be used as set-up function and its
+          destructor as a tear-down function.
+        </p>
+<p>
+          The third form requires a class with one-argument public constructor. Argument
+          <code class="computeroutput"><span class="identifier">arg</span></code> is forwarded to the
+          constructor.
+        </p>
+<p>
+          For the second and third form, the framework detects if there is a <code class="computeroutput"><span class="identifier">setup</span></code> and/or <code class="computeroutput"><span class="identifier">teardown</span></code>
+          function implemented in the class, with the same declaration as described
+          in the <a class="link" href="../../tests_organization/fixtures/models.html" title="Fixture models">fixture
+          model</a>. If those member function are declared, they will be called
+          right after construction and just before destruction respectively.
+        </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            There is no way to get access to the members of these fixtures from within
+            the test case or test suite.
+          </p></td></tr>
+</table></div>
 <h6>
 <a name="boost_test.utf_reference.test_org_reference.decorator_fixture.h0"></a>
-          <span><a name="boost_test.utf_reference.test_org_reference.decorator_fixture.example_descr"></a></span><a class="link" href="decorator_fixture.html#boost_test.utf_reference.test_org_reference.decorator_fixture.example_descr">Example:
+          <span class="phrase"><a name="boost_test.utf_reference.test_org_reference.decorator_fixture.example_descr"></a></span><a class="link" href="decorator_fixture.html#boost_test.utf_reference.test_org_reference.decorator_fixture.example_descr">Example:
           decorator fixture</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -128,7 +152,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

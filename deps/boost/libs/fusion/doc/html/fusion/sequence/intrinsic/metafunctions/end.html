@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>end</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../metafunctions.html" title="Metafunctions">
 <link rel="prev" href="begin.html" title="begin">
@@ -28,14 +28,14 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.end.h0"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.end.description"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.description">Description</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.end.description"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.description">Description</a>
           </h6>
 <p>
             Returns the result type of <a class="link" href="../functions/end.html" title="end"><code class="computeroutput"><span class="identifier">end</span></code></a>.
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.end.h1"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.end.synopsis"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.end.synopsis"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Seq</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">end</span>
@@ -90,7 +90,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.sequence.intrinsic.metafunctions.end.h2"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.end.expression_semantics"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.end.expression_semantics"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">end</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -98,7 +98,7 @@
 <p>
             <span class="bold"><strong>Return type</strong></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 A model of <a class="link" href="../../../iterator/concepts/forward_iterator.html" title="Forward Iterator">Forward
                 Iterator</a> if <code class="computeroutput"><span class="identifier">seq</span></code>
@@ -124,14 +124,14 @@
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.end.h3"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.end.header"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.header">Header</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.end.header"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">intrinsic</span><span class="special">/</span><span class="identifier">end</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">end</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.end.h4"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.end.example"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.example">Example</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.end.example"></a></span><a class="link" href="end.html#fusion.sequence.intrinsic.metafunctions.end.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">;</span>
 <span class="keyword">typedef</span> <a class="link" href="../../../iterator/metafunctions/prior.html" title="prior"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">prior</span></code></a><span class="special">&lt;</span><a class="link" href="end.html" title="end"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">end</span></code></a><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">first</span><span class="special">;</span>

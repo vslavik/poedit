@@ -8,7 +8,7 @@
         [@http://www.boost.org/LICENSE_1_0.txt])
     ]
     [authors [Maddock, John]]
-    [version 5.1.1]
+    [version 5.1.3]
     [/last-revision $Date$]
 ]
 
@@ -32,15 +32,15 @@
 [template regex_search[] [link boost_regex.ref.regex_search `regex_search`]]
 [template regex_match[] [link boost_regex.ref.regex_match `regex_match`]]
 [template regex_replace[] [link boost_regex.ref.regex_replace `regex_replace`]]
-[template regex_grep[] [link boost_regex.ref.deprecated_interfaces.regex_grep `regex_grep`]]
-[template regex_split[] [link boost_regex.ref.deprecated_interfaces.regex_split `regex_split`]]
+[template regex_grep[] [link boost_regex.ref.deprecated.regex_grep `regex_grep`]]
+[template regex_split[] [link boost_regex.ref.deprecated.regex_split `regex_split`]]
 [template match_results_format[] [link boost_regex.match_results_format `match_results<>::format`]]
 [template perl_format[] [link boost_regex.format.perl_format Perl]]
 [template sed_format[] [link boost_regex.format.sed_format Sed]]
 [template boost_extended_format[] [link boost_regex.format.boost_format_syntax Boost-Extended]]
 
 [/depricated stuff:]
-[template RegEx[] [link boost_regex.ref.deprecated_interfaces.old_regex `RegEx`]]
+[template RegEx[] [link boost_regex.ref.deprecated.old_regex `RegEx`]]
 [template regcomp[] [link boost_regex.ref.posix.regcomp `regcomp`]]
 [template regexec[] [link boost_regex.ref.posix.regexec `regexec`]]
 [template regerror[] [link boost_regex.ref.posix.regerror `regerror`]]
@@ -81,20 +81,20 @@ PDF version of this manual is also available].
 [include posix_api.qbk]
 [include concepts.qbk]
 
-[section Deprecated Interfaces]
+[section:deprecated Deprecated Interfaces]
 [include regex_format.qbk]
 [include regex_grep.qbk]
 [include regex_split.qbk]
 [include old_regex.qbk]
 [endsect]
 
-[section Internal Details]
+[section:internals Internal Details]
 [include unicode_iterators.qbk]
 [endsect]
 
 [endsect]
 
-[section Background Information]
+[section:background Background Information]
 
 [include headers.qbk]
 [include locale.qbk]

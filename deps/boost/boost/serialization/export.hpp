@@ -42,8 +42,6 @@
 
 #include <boost/archive/detail/register_archive.hpp>
 
-#include <iostream>
-
 namespace boost {
 namespace archive {
 namespace detail {

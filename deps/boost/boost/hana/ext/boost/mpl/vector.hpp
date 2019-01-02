@@ -2,7 +2,7 @@
 @file
 Adapts `boost::mpl::vector` for use with Hana.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -99,9 +99,25 @@ BOOST_HANA_NAMESPACE_BEGIN
         using vector_tag = ::boost::mpl::sequence_tag< ::boost::mpl::vector<>>::type;
     }}}
 
+    namespace mpl_detail {
+        // When `BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES` is not defined (e.g. on
+        // MSVC), different MPL sequences (like vector0 and vector1) have different
+        // tags, so we need to take that into account when we compare them.
+#ifndef BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES
+        template <typename T1, typename T2>
+        struct is_same_mpl_vector_tag : std::false_type { };
+
+        template <template <long> class Tag, long x, long y>
+        struct is_same_mpl_vector_tag<Tag<x>, Tag<y>> : std::true_type { };
+#else
+        template <typename T1, typename T2>
+        struct is_same_mpl_vector_tag : std::is_same<T1, T2> { };
+#endif
+    }
+
     template <typename T>
     struct tag_of<T, when<
-        std::is_same<
+        mpl_detail::is_same_mpl_vector_tag<
             typename ::boost::mpl::sequence_tag<T>::type,
             ::boost::mpl::sequence_tag< ::boost::mpl::vector<>>::type
         >::value

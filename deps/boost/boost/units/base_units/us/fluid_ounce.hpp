@@ -28,8 +28,8 @@ typedef scaled_base_unit<pint_base_unit, scale<16, static_rational<-1> > > fluid
 
 template<>
 struct base_unit_info<us::fluid_ounce_base_unit> {
-    static const char* name()   { return("fluid ounce (U.S.)"); }
-    static const char* symbol() { return("fl oz"); }
+    static BOOST_CONSTEXPR const char* name()   { return("fluid ounce (U.S.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("fl oz"); }
 };
 
 } // namespace units

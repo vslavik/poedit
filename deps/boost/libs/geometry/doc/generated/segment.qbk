@@ -27,6 +27,7 @@ From Wikipedia: In geometry, a line segment is a part of a line that is bounded 
 [heading Synopsis]
 ``template<typename Point>
 class model::segment
+      : public std::pair< Point, Point >
 {
   // ...
 };

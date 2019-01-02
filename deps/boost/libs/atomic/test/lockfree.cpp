@@ -35,10 +35,12 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
     if (lock_free_macro_val == 2)
         BOOST_TEST(value.is_lock_free());
 
+    BOOST_TEST(boost::atomic<T>::is_always_lock_free == (lock_free_expect == 2));
+
     std::cout << "atomic<" << type_name << "> is " << lock_free_level[lock_free_macro_val] << " lock free\n";
 }
 
-#if defined(__GNUC__) && defined(__i386__)
+#if (defined(__GNUC__) || defined(__SUNPRO_CC)) && defined(__i386__)
 
 #define EXPECT_CHAR_LOCK_FREE 2
 #define EXPECT_SHORT_LOCK_FREE 2
@@ -53,7 +55,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_POINTER_LOCK_FREE 2
 #define EXPECT_BOOL_LOCK_FREE 2
 
-#elif defined(__GNUC__) && defined(__x86_64__)
+#elif (defined(__GNUC__) || defined(__SUNPRO_CC)) && defined(__x86_64__)
 
 #define EXPECT_CHAR_LOCK_FREE 2
 #define EXPECT_SHORT_LOCK_FREE 2
@@ -135,13 +137,13 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_POINTER_LOCK_FREE 2
 #define EXPECT_BOOL_LOCK_FREE 2
 
-#elif defined(__GNUC__) && defined(__sparc_v9__)
+#elif (defined(__GNUC__) || defined(__SUNPRO_CC)) && (defined(__sparcv8plus) || defined(__sparc_v9__))
 
 #define EXPECT_CHAR_LOCK_FREE 2
 #define EXPECT_SHORT_LOCK_FREE 2
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
-#define EXPECT_LLONG_LOCK_FREE 0
+#define EXPECT_LLONG_LOCK_FREE 2
 #define EXPECT_INT128_LOCK_FREE 0
 #define EXPECT_POINTER_LOCK_FREE 2
 #define EXPECT_BOOL_LOCK_FREE 2
@@ -152,7 +154,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_SHORT_LOCK_FREE 2
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
-#if defined(_WIN64) || defined(BOOST_ATOMIC_DETAIL_X86_HAS_CMPXCHG8B) || defined(_M_AMD64) || defined(_M_IA64) || (_MSC_VER >= 1700 && defined(_M_ARM))
+#if defined(_WIN64) || defined(BOOST_ATOMIC_DETAIL_X86_HAS_CMPXCHG8B) || defined(_M_AMD64) || defined(_M_IA64) || (_MSC_VER >= 1700 && (defined(_M_ARM) || defined(_M_ARM64)))
 #define EXPECT_LLONG_LOCK_FREE 2
 #else
 #define EXPECT_LLONG_LOCK_FREE 0
@@ -188,6 +190,26 @@ int main(int, char *[])
 #endif
     verify_lock_free<void *>("void *", BOOST_ATOMIC_POINTER_LOCK_FREE, EXPECT_SHORT_LOCK_FREE);
     verify_lock_free<bool>("bool", BOOST_ATOMIC_BOOL_LOCK_FREE, EXPECT_BOOL_LOCK_FREE);
+
+#ifndef BOOST_ATOMIC_NO_FLOATING_POINT
+
+    verify_lock_free<float>("float", BOOST_ATOMIC_FLOAT_LOCK_FREE,
+        sizeof(float) == 1 ? EXPECT_CHAR_LOCK_FREE : (sizeof(float) == 2 ? EXPECT_SHORT_LOCK_FREE :
+        (sizeof(float) <= 4 ? EXPECT_INT_LOCK_FREE : (sizeof(float) <= 8 ? EXPECT_LLONG_LOCK_FREE : (sizeof(float) <= 16 ? EXPECT_INT128_LOCK_FREE : 0)))));
+
+    verify_lock_free<double>("double", BOOST_ATOMIC_DOUBLE_LOCK_FREE,
+        sizeof(double) == 1 ? EXPECT_CHAR_LOCK_FREE : (sizeof(double) == 2 ? EXPECT_SHORT_LOCK_FREE :
+        (sizeof(double) <= 4 ? EXPECT_INT_LOCK_FREE : (sizeof(double) <= 8 ? EXPECT_LLONG_LOCK_FREE : (sizeof(double) <= 16 ? EXPECT_INT128_LOCK_FREE : 0)))));
+
+    verify_lock_free<long double>("long double", BOOST_ATOMIC_LONG_DOUBLE_LOCK_FREE,
+        sizeof(long double) == 1 ? EXPECT_CHAR_LOCK_FREE : (sizeof(long double) == 2 ? EXPECT_SHORT_LOCK_FREE :
+        (sizeof(long double) <= 4 ? EXPECT_INT_LOCK_FREE : (sizeof(long double) <= 8 ? EXPECT_LLONG_LOCK_FREE : (sizeof(long double) <= 16 ? EXPECT_INT128_LOCK_FREE : 0)))));
+
+#ifdef BOOST_HAS_FLOAT128
+    verify_lock_free<boost::float128_type>("float128", BOOST_ATOMIC_INT128_LOCK_FREE, EXPECT_INT128_LOCK_FREE);
+#endif
+
+#endif // BOOST_ATOMIC_NO_FLOATING_POINT
 
     bool any_lock_free =
         BOOST_ATOMIC_CHAR_LOCK_FREE > 0 ||

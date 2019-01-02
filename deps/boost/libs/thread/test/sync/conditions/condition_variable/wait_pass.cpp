@@ -17,11 +17,13 @@
 
 // void wait(unique_lock<mutex>& lock);
 
-#include <iostream>
+
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <cassert>
+#include <iostream>
 
 #if defined BOOST_THREAD_USES_CHRONO
 
@@ -35,31 +37,40 @@ int runs = 0;
 
 void f()
 {
-  boost::unique_lock<boost::mutex> lk(mut);
-  BOOST_TEST(test2 == 0);
-  test1 = 1;
-  cv.notify_one();
-  while (test2 == 0) {
-      cv.wait(lk);
+  try {
+    boost::unique_lock<boost::mutex> lk(mut);
+    assert(test2 == 0);
+    test1 = 1;
+    cv.notify_one();
+    while (test2 == 0) {
+        cv.wait(lk);
+    }
+    assert(test2 != 0);
+  } catch(...) {
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
+    assert(false);
   }
-  BOOST_TEST(test2 != 0);
 }
 
 int main()
 {
-  boost::unique_lock<boost::mutex>lk(mut);
-  boost::thread t(f);
-  BOOST_TEST(test1 == 0);
-  while (test1 == 0)
-  {
-      cv.wait(lk);
+  try {
+    boost::unique_lock<boost::mutex>lk(mut);
+    boost::thread t(f);
+    BOOST_TEST(test1 == 0);
+    while (test1 == 0)
+    {
+        cv.wait(lk);
+    }
+    BOOST_TEST(test1 != 0);
+    test2 = 1;
+    lk.unlock();
+    cv.notify_one();
+    t.join();
+  } catch(...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
-  BOOST_TEST(test1 != 0);
-  test2 = 1;
-  lk.unlock();
-  cv.notify_one();
-  t.join();
-
   return boost::report_errors();
 }
 #else

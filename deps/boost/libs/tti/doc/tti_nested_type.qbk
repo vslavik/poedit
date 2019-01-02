@@ -44,6 +44,7 @@ Its general explanation is given as:
     `member_type_'name'`
     
     class T = enclosing type
+    
     class U = (optional) marker type
     
     returns = the type of 'name' if it exists, else a marker type, as the typedef 'type'.
@@ -153,6 +154,7 @@ These two metafunctions are 'boost::tti::valid_member_type' and 'boost::tti::val
     [classref boost::tti::valid_member_type]
     
     class T = a type
+    
     class U = (optional) marker type
     
     returns = true if the type exists, false if it does not.
@@ -242,10 +244,10 @@ whose enclosing type is eventually T, as represented by the following structure:
 In our TTI code we first create a series of member type macros for each of our nested 
 types:
 
- BOOST_TTI_MEMBER_TYPE(FindType)
  BOOST_TTI_MEMBER_TYPE(AType)
  BOOST_TTI_MEMBER_TYPE(BType)
  BOOST_TTI_MEMBER_TYPE(CType)
+ BOOST_TTI_MEMBER_TYPE(FindType)
 
 Next we can create a typedef to reflect a nested type called FindType which has the relationship
 as specified above by instantiating our macro metafunctions. We have to do this in the reverse

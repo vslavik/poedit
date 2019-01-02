@@ -1,3 +1,5 @@
+// clang-format off
+
 //[foo_cpp_copyright
 /*=============================================================================
     Copyright (c) 2011 Daniel James

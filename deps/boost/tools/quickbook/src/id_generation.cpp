@@ -7,17 +7,15 @@
 =============================================================================*/
 
 #include <cctype>
-#include "document_state_impl.hpp"
-#include <boost/make_shared.hpp>
-#include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/foreach.hpp>
-#include <boost/range/algorithm.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/range/algorithm/sort.hpp>
+#include <boost/unordered_map.hpp>
+#include "document_state_impl.hpp"
+#include "for.hpp"
 
-// TODO: This should possibly try to always generate valid XML ids:
-// http://www.w3.org/TR/REC-xml/#NT-NameStartChar
-
-namespace quickbook {
+namespace quickbook
+{
     //
     // The maximum size of a generated part of an id.
     //
@@ -27,13 +25,16 @@ namespace quickbook {
     static const std::size_t max_size = 32;
 
     typedef std::vector<id_placeholder const*> placeholder_index;
-    placeholder_index index_placeholders(document_state_impl const&, boost::string_ref);
+    placeholder_index index_placeholders(
+        document_state_impl const&, quickbook::string_view);
 
     void generate_id_block(
-            placeholder_index::iterator, placeholder_index::iterator,
-            std::vector<std::string>& generated_ids);
+        placeholder_index::iterator,
+        placeholder_index::iterator,
+        std::vector<std::string>& generated_ids);
 
-    std::vector<std::string> generate_ids(document_state_impl const& state, boost::string_ref xml)
+    std::vector<std::string> generate_ids(
+        document_state_impl const& state, quickbook::string_view xml)
     {
         std::vector<std::string> generated_ids(state.placeholders.size());
 
@@ -52,7 +53,8 @@ namespace quickbook {
             //
             // So find the group of placeholders with the same number of dots.
             iterator group_begin = it, group_end = it;
-            while (group_end != end && (*group_end)->num_dots == (*it)->num_dots)
+            while (group_end != end &&
+                   (*group_end)->num_dots == (*it)->num_dots)
                 ++group_end;
 
             generate_id_block(group_begin, group_end, generated_ids);
@@ -73,19 +75,22 @@ namespace quickbook {
     {
         std::vector<unsigned>& order;
 
-        placeholder_compare(std::vector<unsigned>& order) : order(order) {}
+        placeholder_compare(std::vector<unsigned>& order_) : order(order_) {}
 
         bool operator()(id_placeholder const* x, id_placeholder const* y) const
         {
             bool x_explicit = x->category.c >= id_category::explicit_id;
             bool y_explicit = y->category.c >= id_category::explicit_id;
 
-            return
-                x->num_dots < y->num_dots ? true :
-                x->num_dots > y->num_dots ? false :
-                x_explicit > y_explicit ? true :
-                x_explicit < y_explicit ? false :
-                order[x->index] < order[y->index];
+            return x->num_dots < y->num_dots
+                       ? true
+                       : x->num_dots > y->num_dots
+                             ? false
+                             : x_explicit > y_explicit
+                                   ? true
+                                   : x_explicit < y_explicit
+                                         ? false
+                                         : order[x->index] < order[y->index];
         }
     };
 
@@ -95,14 +100,13 @@ namespace quickbook {
         std::vector<unsigned>& order;
         unsigned count;
 
-        get_placeholder_order_callback(document_state_impl const& state,
-                std::vector<unsigned>& order)
-          : state(state),
-            order(order),
-            count(0)
-        {}
+        get_placeholder_order_callback(
+            document_state_impl const& state_, std::vector<unsigned>& order_)
+            : state(state_), order(order_), count(0)
+        {
+        }
 
-        void id_value(boost::string_ref value)
+        void id_value(quickbook::string_view value)
         {
             set_placeholder_order(state.get_placeholder(value));
         }
@@ -117,8 +121,7 @@ namespace quickbook {
     };
 
     placeholder_index index_placeholders(
-            document_state_impl const& state,
-            boost::string_ref xml)
+        document_state_impl const& state, quickbook::string_view xml)
     {
         // The order that the placeholder appear in the xml source.
         std::vector<unsigned> order(state.placeholders.size());
@@ -129,7 +132,7 @@ namespace quickbook {
 
         placeholder_index sorted_placeholders;
         sorted_placeholders.reserve(state.placeholders.size());
-        BOOST_FOREACH(id_placeholder const& p, state.placeholders)
+        QUICKBOOK_FOR (id_placeholder const& p, state.placeholders)
             if (order[p.index]) sorted_placeholders.push_back(&p);
         boost::sort(sorted_placeholders, placeholder_compare(order));
 
@@ -146,26 +149,30 @@ namespace quickbook {
         chosen_id_map chosen_ids;
         std::vector<std::string>& generated_ids;
 
-        generate_id_block_type(std::vector<std::string>& generated_ids) :
-            generated_ids(generated_ids) {}
+        explicit generate_id_block_type(
+            std::vector<std::string>& generated_ids_)
+            : generated_ids(generated_ids_)
+        {
+        }
 
-        void generate(placeholder_index::iterator begin,
-            placeholder_index::iterator end);
+        void generate(
+            placeholder_index::iterator begin, placeholder_index::iterator end);
 
         std::string resolve_id(id_placeholder const*);
         std::string generate_id(id_placeholder const*, std::string const&);
     };
 
-    void generate_id_block(placeholder_index::iterator begin,
-            placeholder_index::iterator end,
-            std::vector<std::string>& generated_ids)
+    void generate_id_block(
+        placeholder_index::iterator begin,
+        placeholder_index::iterator end,
+        std::vector<std::string>& generated_ids)
     {
         generate_id_block_type impl(generated_ids);
         impl.generate(begin, end);
     }
 
-    void generate_id_block_type::generate(placeholder_index::iterator begin,
-            placeholder_index::iterator end)
+    void generate_id_block_type::generate(
+        placeholder_index::iterator begin, placeholder_index::iterator end)
     {
         std::vector<std::string> resolved_ids;
 
@@ -173,18 +180,15 @@ namespace quickbook {
             resolved_ids.push_back(resolve_id(*i));
 
         unsigned index = 0;
-        for (placeholder_index::iterator i = begin; i != end; ++i, ++index)
-        {
-            generated_ids[(**i).index] =
-                generate_id(*i, resolved_ids[index]);
+        for (placeholder_index::iterator i = begin; i != end; ++i, ++index) {
+            generated_ids[(**i).index] = generate_id(*i, resolved_ids[index]);
         }
     }
 
     std::string generate_id_block_type::resolve_id(id_placeholder const* p)
     {
-        std::string id = p->parent ?
-            generated_ids[p->parent->index] + "." + p->id :
-            p->id;
+        std::string id =
+            p->parent ? generated_ids[p->parent->index] + "." + p->id : p->id;
 
         if (p->category.c > id_category::numbered) {
             // Reserve the id if it isn't already reserved.
@@ -192,19 +196,17 @@ namespace quickbook {
 
             // If it was reserved by a placeholder with a lower category,
             // then overwrite it.
-            if (p->category.c > pos->second->category.c)
-                pos->second = p;
+            if (p->category.c > pos->second->category.c) pos->second = p;
         }
 
         return id;
     }
 
-    std::string generate_id_block_type::generate_id(id_placeholder const* p,
-            std::string const& resolved_id)
+    std::string generate_id_block_type::generate_id(
+        id_placeholder const* p, std::string const& resolved_id)
     {
         if (p->category.c > id_category::numbered &&
-                chosen_ids.at(resolved_id) == p)
-        {
+            chosen_ids.at(resolved_id) == p) {
             return resolved_id;
         }
 
@@ -220,14 +222,14 @@ namespace quickbook {
         }
         else {
             parent_id = resolved_id.substr(0, child_start + 1);
-            base_id = normalize_id(resolved_id.substr(child_start + 1),
-                    max_size - 1);
+            base_id =
+                normalize_id(resolved_id.substr(child_start + 1), max_size - 1);
         }
 
         // Since we're adding digits, don't want an id that ends in
         // a digit.
 
-        unsigned int length = base_id.size();
+        std::string::size_type length = base_id.size();
 
         if (length > 0 && std::isdigit(base_id[length - 1])) {
             if (length < max_size - 1) {
@@ -235,7 +237,7 @@ namespace quickbook {
                 ++length;
             }
             else {
-                while (length > 0 && std::isdigit(base_id[length -1]))
+                while (length > 0 && std::isdigit(base_id[length - 1]))
                     --length;
                 base_id.erase(length);
             }
@@ -243,10 +245,8 @@ namespace quickbook {
 
         unsigned count = 0;
 
-        while (true)
-        {
-            std::string postfix =
-                boost::lexical_cast<std::string>(count++);
+        for (;;) {
+            std::string postfix = boost::lexical_cast<std::string>(count++);
 
             if ((base_id.size() + postfix.size()) > max_size) {
                 // The id is now too long, so reduce the length and
@@ -259,7 +259,7 @@ namespace quickbook {
                 --length;
 
                 // Trim any trailing digits.
-                while (length > 0 && std::isdigit(base_id[length -1]))
+                while (length > 0 && std::isdigit(base_id[length - 1]))
                     --length;
 
                 base_id.erase(length);
@@ -287,28 +287,23 @@ namespace quickbook {
     {
         document_state_impl const& state;
         std::vector<std::string> const* ids;
-        boost::string_ref::const_iterator source_pos;
+        string_iterator source_pos;
         std::string result;
 
-        replace_ids_callback(document_state_impl const& state,
-                std::vector<std::string> const* ids)
-          : state(state),
-            ids(ids),
-            source_pos(),
-            result()
-        {}
-
-        void start(boost::string_ref xml)
+        replace_ids_callback(
+            document_state_impl const& state_,
+            std::vector<std::string> const* ids_)
+            : state(state_), ids(ids_), source_pos(), result()
         {
-            source_pos = xml.begin();
         }
 
-        void id_value(boost::string_ref value)
+        void start(quickbook::string_view xml) { source_pos = xml.begin(); }
+
+        void id_value(quickbook::string_view value)
         {
-            if (id_placeholder const* p = state.get_placeholder(value))
-            {
-                boost::string_ref id = ids ?
-                    (*ids)[p->index] : p->unresolved_id;
+            if (id_placeholder const* p = state.get_placeholder(value)) {
+                quickbook::string_view id =
+                    ids ? (*ids)[p->index] : p->unresolved_id;
 
                 result.append(source_pos, value.begin());
                 result.append(id.begin(), id.end());
@@ -316,15 +311,17 @@ namespace quickbook {
             }
         }
 
-        void finish(boost::string_ref xml)
+        void finish(quickbook::string_view xml)
         {
             result.append(source_pos, xml.end());
             source_pos = xml.end();
         }
     };
 
-    std::string replace_ids(document_state_impl const& state, boost::string_ref xml,
-            std::vector<std::string> const* ids)
+    std::string replace_ids(
+        document_state_impl const& state,
+        quickbook::string_view xml,
+        std::vector<std::string> const* ids)
     {
         xml_processor processor;
         replace_ids_callback callback(state, ids);
@@ -338,12 +335,12 @@ namespace quickbook {
     // Normalizes generated ids.
     //
 
-    std::string normalize_id(boost::string_ref src_id)
+    std::string normalize_id(quickbook::string_view src_id)
     {
         return normalize_id(src_id, max_size);
     }
 
-    std::string normalize_id(boost::string_ref src_id, std::size_t size)
+    std::string normalize_id(quickbook::string_view src_id, std::size_t size)
     {
         std::string id(src_id.begin(), src_id.end());
 
@@ -362,7 +359,7 @@ namespace quickbook {
                 if (id[src] == '_') {
                     do {
                         ++src;
-                    } while(src < id.length() && id[src] == '_');
+                    } while (src < id.length() && id[src] == '_');
 
                     if (src < id.length()) id[dst++] = '_';
                 }

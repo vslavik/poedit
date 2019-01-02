@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The Lanczos Approximation</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.4.0">
-<link rel="up" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.8.0">
+<link rel="up" href="../backgrounders.html" title="Chapter&#160;20.&#160;Backgrounders">
 <link rel="prev" href="relative_error.html" title="Relative Error">
 <link rel="next" href="remez.html" title="The Remez Method">
 </head>
@@ -28,7 +28,7 @@
 </h2></div></div></div>
 <h5>
 <a name="math_toolkit.lanczos.h0"></a>
-      <span><a name="math_toolkit.lanczos.motivation"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.motivation">Motivation</a>
+      <span class="phrase"><a name="math_toolkit.lanczos.motivation"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.motivation">Motivation</a>
     </h5>
 <p>
       <span class="emphasis"><em>Why base gamma and gamma-like functions on the Lanczos approximation?</em></span>
@@ -45,7 +45,7 @@
       approximation does have a couple of properties that make it worthy of further
       consideration:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           The approximation has an easy to compute truncation error that holds for
           all <span class="emphasis"><em>z &gt; 0</em></span>. In practice that means we can use the
@@ -99,7 +99,7 @@
     </p>
 <h5>
 <a name="math_toolkit.lanczos.h1"></a>
-      <span><a name="math_toolkit.lanczos.the_approximation"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.the_approximation">The
+      <span class="phrase"><a name="math_toolkit.lanczos.the_approximation"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.the_approximation">The
       Approximation</a>
     </h5>
 <p>
@@ -162,7 +162,7 @@
 </table></div>
 <h5>
 <a name="math_toolkit.lanczos.h2"></a>
-      <span><a name="math_toolkit.lanczos.computing_the_coefficients"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.computing_the_coefficients">Computing
+      <span class="phrase"><a name="math_toolkit.lanczos.computing_the_coefficients"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.computing_the_coefficients">Computing
       the Coefficients</a>
     </h5>
 <p>
@@ -205,7 +205,7 @@
     </p>
 <h5>
 <a name="math_toolkit.lanczos.h3"></a>
-      <span><a name="math_toolkit.lanczos.choosing_the_right_parameters"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.choosing_the_right_parameters">Choosing
+      <span class="phrase"><a name="math_toolkit.lanczos.choosing_the_right_parameters"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.choosing_the_right_parameters">Choosing
       the Right Parameters</a>
     </h5>
 <p>
@@ -228,7 +228,7 @@
       to float precision with double precision arithmetic.
     </p>
 <div class="table">
-<a name="math_toolkit.lanczos.optimal_choices_for_n_and_g_when"></a><p class="title"><b>Table&#160;17.1.&#160;Optimal choices for N and g when computing with guard digits (source:
+<a name="math_toolkit.lanczos.optimal_choices_for_n_and_g_when"></a><p class="title"><b>Table&#160;20.1.&#160;Optimal choices for N and g when computing with guard digits (source:
       Pugh)</b></p>
 <div class="table-contents"><table class="table" summary="Optimal choices for N and g when computing with guard digits (source:
       Pugh)">
@@ -372,7 +372,7 @@
       epsilon for the type in question.
     </p>
 <div class="table">
-<a name="math_toolkit.lanczos.optimum_value_for_n_and_g_when_c"></a><p class="title"><b>Table&#160;17.2.&#160;Optimum value for N and g when computing at fixed precision</b></p>
+<a name="math_toolkit.lanczos.optimum_value_for_n_and_g_when_c"></a><p class="title"><b>Table&#160;20.2.&#160;Optimum value for N and g when computing at fixed precision</b></p>
 <div class="table-contents"><table class="table" summary="Optimum value for N and g when computing at fixed precision">
 <colgroup>
 <col>
@@ -536,7 +536,7 @@
     </p>
 <h5>
 <a name="math_toolkit.lanczos.h4"></a>
-      <span><a name="math_toolkit.lanczos.references"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.references">References</a>
+      <span class="phrase"><a name="math_toolkit.lanczos.references"></a></span><a class="link" href="lanczos.html#math_toolkit.lanczos.references">References</a>
     </h5>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
@@ -560,10 +560,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

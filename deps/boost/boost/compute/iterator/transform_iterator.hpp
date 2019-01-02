@@ -76,9 +76,9 @@ struct transform_iterator_index_expr
     {
     }
 
-    InputIterator m_input_iter;
-    UnaryFunction m_transform_expr;
-    IndexExpr m_index_expr;
+    const InputIterator m_input_iter;
+    const UnaryFunction m_transform_expr;
+    const IndexExpr m_index_expr;
 };
 
 template<class InputIterator, class UnaryFunction, class IndexExpr>

@@ -1,9 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -37,6 +38,8 @@
 #include <boost/geometry/algorithms/distance.hpp>
 #include <boost/geometry/algorithms/comparable_distance.hpp>
 
+#include <boost/geometry/strategies/strategies.hpp>
+
 #include <from_wkt.hpp>
 #include <string_from_type.hpp>
 
@@ -61,8 +64,6 @@ void test_empty_input(Geometry1 const& geometry1, Geometry2 const& geometry2)
     BOOST_CHECK_MESSAGE(false, "A empty_input_exception should have been thrown" );
 }
 #endif // BOOST_GEOMETRY_TEST_DISTANCE_HPP
-
-
 
 //========================================================================
 
@@ -170,6 +171,11 @@ struct test_distance_of_geometries
     : public test_distance_of_geometries<Geometry1, Geometry2, 0, 0>
 {};
 
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+#define ENABLE_IF_DEBUG(ID) ID
+#else
+#define ENABLE_IF_DEBUG(ID)
+#endif
 
 template <typename Geometry1, typename Geometry2>
 class test_distance_of_geometries<Geometry1, Geometry2, 0, 0>
@@ -184,7 +190,7 @@ private:
         typename Strategy
     >
     static inline
-    void base_test(std::string const& header,
+    void base_test(std::string const& ENABLE_IF_DEBUG(header),
                    G1 const& g1, G2 const& g2,
                    DistanceType const& expected_distance,
                    ComparableDistanceType const& expected_comparable_distance,

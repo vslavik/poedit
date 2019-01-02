@@ -31,6 +31,7 @@ template < class ValueTraits, bool ConstantTimeSize, bool CacheBegin, bool Compa
 struct rebinder
 {
    typedef unordered_rebinder_common<ValueTraits, DefaultHolder, Map> common_t;
+   typedef typename ValueContainer< typename ValueTraits::value_type >::type value_cont_type;
 
    template < class Option1 =void
             , class Option2 =void
@@ -85,8 +86,8 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Base
          , typename testval_traits_t::auto_base_value_traits   //store_hash<true>
          >::type base_hook_t;
       test::test_unordered
-         < base_hook_t                       //cache_begin, compare_hash, incremental
-         , rebinder<base_hook_t, ConstantTimeSize, ConstantTimeSize, !ConstantTimeSize, !!ConstantTimeSize, Map, DefaultHolder>
+         <  //cache_begin, compare_hash, incremental
+            rebinder<base_hook_t, ConstantTimeSize, ConstantTimeSize, !ConstantTimeSize, !!ConstantTimeSize, Map, DefaultHolder>
          >::test_all(data);
    }
 };
@@ -112,8 +113,8 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Memb
          , typename testval_traits_t::auto_member_value_traits //store_hash<true>, optimize_multikey<true>
          >::type member_hook_t;
       test::test_unordered
-         < member_hook_t                           //cache_begin, compare_hash, incremental
-         , rebinder<member_hook_t, ConstantTimeSize, false, !ConstantTimeSize, false, !ConstantTimeSize, DefaultHolder>
+         < //cache_begin, compare_hash, incremental
+           rebinder<member_hook_t, ConstantTimeSize, false, !ConstantTimeSize, false, !ConstantTimeSize, DefaultHolder>
          >::test_all(data);
    }
 };
@@ -135,8 +136,8 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, NonM
       typedef testvalue_traits< unordered_hooks<VoidPointer> > testval_traits_t;
       //nonmember
       test::test_unordered
-         < typename testval_traits_t::nonhook_value_traits                  //cache_begin, compare_hash, incremental
-         , rebinder<typename testval_traits_t::nonhook_value_traits, ConstantTimeSize, false, false, false, Map, DefaultHolder>
+         < //cache_begin, compare_hash, incremental
+           rebinder<typename testval_traits_t::nonhook_value_traits, ConstantTimeSize, false, false, false, Map, DefaultHolder>
          >::test_all(data);
    }
 };

@@ -11,6 +11,9 @@
 #ifndef BOOST_COMPUTE_RANDOM_BERNOULLI_DISTRIBUTION_HPP
 #define BOOST_COMPUTE_RANDOM_BERNOULLI_DISTRIBUTION_HPP
 
+#include <boost/assert.hpp>
+#include <boost/type_traits.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/function.hpp>
 #include <boost/compute/types/fundamental.hpp>
@@ -84,6 +87,11 @@ public:
 
 private:
     RealType m_p;
+
+    BOOST_STATIC_ASSERT_MSG(
+        boost::is_floating_point<RealType>::value,
+        "Template argument must be a floating point type"
+    );
 };
 
 } // end compute namespace

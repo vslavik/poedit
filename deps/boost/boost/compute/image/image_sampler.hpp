@@ -55,7 +55,7 @@ public:
     {
         cl_int error = 0;
 
-        #ifdef CL_VERSION_2_0
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         std::vector<cl_sampler_properties> sampler_properties;
         sampler_properties.push_back(CL_SAMPLER_NORMALIZED_COORDS);
         sampler_properties.push_back(cl_sampler_properties(normalized_coords));

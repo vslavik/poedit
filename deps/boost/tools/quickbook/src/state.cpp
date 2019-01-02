@@ -9,17 +9,17 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include "state.hpp"
-#include "state_save.hpp"
 #include "document_state.hpp"
-#include "quickbook.hpp"
+#include "for.hpp"
 #include "grammar.hpp"
-#include "native_text.hpp"
-#include "utils.hpp"
+#include "path.hpp"
 #include "phrase_tags.hpp"
-#include <boost/foreach.hpp>
+#include "quickbook.hpp"
+#include "state_save.hpp"
+#include "utils.hpp"
 
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
-#pragma warning(disable:4355)
+#pragma warning(disable : 4355)
 #endif
 
 namespace quickbook
@@ -29,8 +29,11 @@ namespace quickbook
 
     unsigned qbk_version_n = 0; // qbk_major_version * 100 + qbk_minor_version
 
-    state::state(fs::path const& filein_, fs::path const& xinclude_base_,
-            string_stream& out_, document_state& document)
+    state::state(
+        fs::path const& filein_,
+        fs::path const& xinclude_base_,
+        string_stream& out_,
+        document_state& document_)
         : grammar_()
 
         , order_pos(0)
@@ -41,11 +44,12 @@ namespace quickbook
         , anchors()
         , warned_about_breaks(false)
         , conditional(true)
-        , document(document)
+        , document(document_)
         , callouts()
         , callout_depth(0)
         , dependencies()
         , explicit_list(false)
+        , strict_mode(false)
 
         , imported(false)
         , macro()
@@ -66,84 +70,85 @@ namespace quickbook
         , values(&current_file)
     {
         // add the predefined macros
-        macro.add
-            ("__DATE__", std::string(quickbook_get_date))
-            ("__TIME__", std::string(quickbook_get_time))
-            ("__FILENAME__", std::string())
-        ;
+        macro.add("__DATE__", std::string(quickbook_get_date))(
+            "__TIME__",
+            std::string(quickbook_get_time))("__FILENAME__", std::string());
         update_filename_macro();
 
-        boost::scoped_ptr<quickbook_grammar> g(
-            new quickbook_grammar(*this));
+        boost::scoped_ptr<quickbook_grammar> g(new quickbook_grammar(*this));
         grammar_.swap(g);
     }
 
-    quickbook_grammar& state::grammar() const {
-        return *grammar_;
+    quickbook_grammar& state::grammar() const { return *grammar_; }
+
+    void state::update_filename_macro()
+    {
+        *boost::spirit::classic::find(macro, "__FILENAME__") =
+            detail::encode_string(
+                detail::path_to_generic(current_path.abstract_file_path));
     }
 
-    void state::update_filename_macro() {
-        *boost::spirit::classic::find(macro, "__FILENAME__")
-            = detail::encode_string(
-                    detail::path_to_generic(current_path.abstract_file_path));
-    }
-    
-    unsigned state::get_new_order_pos() {
-        return ++order_pos;
-    }
+    unsigned state::get_new_order_pos() { return ++order_pos; }
 
-    void state::push_output() {
+    void state::push_output()
+    {
         out.push();
         phrase.push();
         in_list_save.push(in_list);
     }
 
-    void state::pop_output() {
+    void state::pop_output()
+    {
         phrase.pop();
         out.pop();
         in_list = in_list_save.top();
         in_list_save.pop();
     }
 
-    source_mode_info state::tagged_source_mode() const {
+    source_mode_info state::tagged_source_mode() const
+    {
         source_mode_info result;
 
-        BOOST_FOREACH(source_mode_info const& s, tagged_source_mode_stack) {
+        QUICKBOOK_FOR (source_mode_info const& s, tagged_source_mode_stack) {
             result.update(s);
         }
 
         return result;
     }
 
-    source_mode_info state::current_source_mode() const {
+    source_mode_info state::current_source_mode() const
+    {
         source_mode_info result = source_mode;
 
         result.update(document.section_source_mode());
 
-        BOOST_FOREACH(source_mode_info const& s, tagged_source_mode_stack) {
+        QUICKBOOK_FOR (source_mode_info const& s, tagged_source_mode_stack) {
             result.update(s);
         }
 
         return result;
     }
 
-    void state::change_source_mode(source_mode_type s) {
+    void state::change_source_mode(source_mode_type s)
+    {
         source_mode = source_mode_info(s, get_new_order_pos());
     }
 
-    void state::push_tagged_source_mode(source_mode_type s) {
+    void state::push_tagged_source_mode(source_mode_type s)
+    {
         tagged_source_mode_stack.push_back(
             source_mode_info(s, s ? get_new_order_pos() : 0));
     }
 
-    void state::pop_tagged_source_mode() {
+    void state::pop_tagged_source_mode()
+    {
         assert(!tagged_source_mode_stack.empty());
         tagged_source_mode_stack.pop_back();
     }
 
-    state_save::state_save(quickbook::state& state, scope_flags scope)
-        : state(state)
-        , scope(scope)
+    state_save::state_save(quickbook::state& state_, scope_flags scope_)
+        : state(state_)
+        , scope(scope_)
         , qbk_version(qbk_version_n)
         , imported(state.imported)
         , current_file(state.current_file)

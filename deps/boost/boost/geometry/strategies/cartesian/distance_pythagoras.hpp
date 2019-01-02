@@ -91,8 +91,8 @@ public :
     static inline typename calculation_type<Point1, Point2>::type
     apply(Point1 const& p1, Point2 const& p2)
     {
-        BOOST_CONCEPT_ASSERT( (concept::ConstPoint<Point1>) );
-        BOOST_CONCEPT_ASSERT( (concept::ConstPoint<Point2>) );
+        BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<Point1>) );
+        BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<Point2>) );
 
         // Calculate distance using Pythagoras
         // (Leave comment above for Doxygen)

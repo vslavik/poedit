@@ -61,14 +61,14 @@ int main(){
           d4 - months(-14) == date(2007,Jan,1));
     }
     {
-      months m1(5), m2(3), m3(10);
-      check("months & int multipliable", months(15) == m1 * 3);
-      m1 *= 3;
-      check("months & int multipliable", months(15) == m1);
-      //check("int * months", months(12) == 4 * m2);
-      check("months & int dividable", months(3) == m3 / 3);
-      m3 /= 3;
-      check("months & int dividable", months(3) == m3);
+      months m1x(5), m2x(3), m3x(10);
+      check("months & int multipliable", months(15) == m1x * 3);
+      m1x *= 3;
+      check("months & int multipliable", months(15) == m1x);
+      //check("int * months", months(12) == 4 * m2x);
+      check("months & int dividable", months(3) == m3x / 3);
+      m3x /= 3;
+      check("months & int dividable", months(3) == m3x);
     }
     {
       months m(-5), m_pos(pos_infin), m_neg(neg_infin), m_nadt(not_a_date_time);
@@ -116,14 +116,14 @@ int main(){
     y3 -= y2;
     check("years & years subtractable", years(-1) == y3);
     {
-      years y1(5), y2(3), y3(10);
-      check("years & int multipliable", years(15) == y1 * 3);
-      y1 *= 3;
-      check("years & int multipliable", years(15) == y1);
-      //check("int * years", years(12) == 4 * y2);
-      check("years & int dividable", years(3) == y3 / 3);
-      y3 /= 3;
-      check("years & int dividable", years(3) == y3);
+      years y1x(5), y2x(3), y3x(10);
+      check("years & int multipliable", years(15) == y1x * 3);
+      y1x *= 3;
+      check("years & int multipliable", years(15) == y1x);
+      //check("int * years", years(12) == 4 * y2x);
+      check("years & int dividable", years(3) == y3x / 3);
+      y3x /= 3;
+      check("years & int dividable", years(3) == y3x);
     }
     {
       years m(15), y_pos(pos_infin), y_neg(neg_infin), y_nadt(not_a_date_time);
@@ -154,6 +154,24 @@ int main(){
       check("date - years", date(1994, Feb, 28) == d - years(6));
       d -= years(6);
       check("date -= years", date(1994, Feb, 28) == d);
+    }
+
+    try {
+      date d1(1400, 6, 1);
+      const date d2 = d1 + years(8599);
+      check("date + many years != overflow", d2 == date(9999, 6, 1));
+    }
+    catch (...) {
+      check("date + many years != overflow", false);
+    }
+
+    try {
+      date d1(9999, 1, 1);
+      const date d2 = d1 - years(8599);
+      check("date - many years != overflow", d2 == date(1400, 1, 1));
+    }
+    catch (...) {
+      check("date - many years != overflow", false);
     }
 
   }

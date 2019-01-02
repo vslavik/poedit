@@ -8,7 +8,7 @@
 ]
 
 [chapter Change Log
-    [quickbook 1.6]
+    [quickbook 1.7]
     [compatibility-mode 1.5]
     [id quickbook.change_log]
     [source-mode teletype]
@@ -69,7 +69,7 @@
 * __cond__. Ala C++ #ifdef.
 * Searching of included and imported files in an extensible search path with
   `--include-path` (`-I`) option.
-  
+
 [heading:version_1_5 Version 1.5 - Boost 1.41.0 to 1.42.0]
 
 * Support multiple copyright entrys in document info.
@@ -335,3 +335,53 @@ Boost 1.46.1:
 [heading Version 1.6.2 - Boost 1.61]
 
 * Better file URL generation for `xinclude`.
+
+[heading Version 1.6.3 - Boost 1.64]
+
+* Improved some error messages.
+* Fix `--no-self-linked-headers` options.
+* Hide 'debug' command line option in help text.
+* Changes to test and build setup to support continuous integration.
+* Fix a crash when templates are called with no arguments.
+  Only affected files with quickbook version less than 1.5.
+
+[heading Version 1.6.4 - Boost 1.65]
+
+* Changes to all language versions:
+  * `endsect` can now have an id, if it doesn't match the current section
+    it's an error.
+* 1.7 changes:
+  * Can now write out conditional content if a macro isn't defined,
+    using `[?!macro_name content]`.
+* Support for strict parsing using the `--strict` paramters. This is still
+  under development so new errors could be added.
+* `--no-output` command line parameter to process the quickbook documents
+  but not actually generate any files.
+
+[heading Version 1.7.0 - Boost 1.66]
+
+* Last version to compile with C++03.
+* Minor improvements to some warning and error messages.
+* Stopped normalizing paths in dependency lists.
+* Fix xmlbase when it's the same directory as the existing xinclude base.
+
+[heading Version 1.7.1 - Boost 1.67]
+
+* Now uses C++11, no longer tested with C++03 compilers.
+* Fix parsing escaped docbook with the new version of Spirit.
+* Reformatted code with clang-format.
+
+[heading Version 1.7.2 - Boost 1.68]
+
+* More use of C++11 features.
+* Some basic direct generation of HTML (i.e. without using BoostBook).
+  At the command line use `--output-format html` to generate chunked HTML,
+  `--output-format onehtml` to generate a single HTML page.
+
+  It's also useful to pass the path to the root of the boost distribution
+  using the `--boost-root path` option. Or to use outside of boost,
+  the `--css-path` and `--graphics-path` options.
+
+  While this isn't ready for production, it might be useful to quickly preview
+  changes to quickbook documentation, especially if you don't have boostbook
+  set up.

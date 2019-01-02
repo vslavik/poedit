@@ -14,6 +14,8 @@
 //  20 Jul 99  header name changed to .hpp
 //  20 Apr 99  additional error tests added.
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <boost/config.hpp>
 
 #if defined(BOOST_MSVC)

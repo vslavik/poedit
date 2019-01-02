@@ -18,7 +18,7 @@
 #include <map>
 #include <string>
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/log/core/core.hpp>
 #include <boost/log/attributes/constant.hpp>

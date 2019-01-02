@@ -21,18 +21,18 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, Derived> base_type;
         mutable T val;
-        with_value_holder(Subject const& subject, T const& val)
+        with_value_holder(Subject const& subject, T&& val)
           : base_type(subject)
-          , val(val) {}
+          , val(std::forward<T>(val)) {}
     };
     
     template <typename Subject, typename Derived, typename T>
-    struct with_value_holder<Subject, Derived, T const>
+    struct with_value_holder<Subject, Derived, T&>
       : unary_parser<Subject, Derived>
     {
         typedef unary_parser<Subject, Derived> base_type;
-        T val;
-        with_value_holder(Subject const& subject, T const& val)
+        T& val;
+        with_value_holder(Subject const& subject, T& val)
           : base_type(subject)
           , val(val) {}
     };
@@ -47,8 +47,8 @@ namespace boost { namespace spirit { namespace x3
 
         typedef Subject subject_type;
 
-        with_directive(Subject const& subject, T const& val)
-          : base_type(subject, val) {}
+        with_directive(Subject const& subject, T&& val)
+          : base_type(subject, std::forward<T>(val)) {}
 
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
@@ -63,44 +63,23 @@ namespace boost { namespace spirit { namespace x3
         }
     };
    
-    template <typename ID, typename T, typename NextContext = unused_type>
-    struct with_context
-    {
-        typedef context<ID, T, NextContext> type;
-    };
-    
-    template <typename ID, typename T>
-    struct with_context<ID, T, unused_type>
-    {
-        typedef context<ID, T> type;
-    };
-
     template <typename ID, typename T>
     struct with_gen
     {
-        T& val;
-
-        with_gen(T& val)
-          : val(val) {}
+        T&& val;
 
         template <typename Subject>
         with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
         operator[](Subject const& subject) const
         {
-            return { as_parser(subject), val };
+            return { as_parser(subject), std::forward<T>(val) };
         }
     };
 
     template <typename ID, typename T>
-    inline with_gen<ID, T> with(T& val)
+    inline with_gen<ID, T> with(T&& val)
     {
-        return { val };
-    }
-    
-    template <typename ID, typename T>
-    inline with_gen<ID, T const> with(T const& val)
-    {
-        return { val };
+        return { std::forward<T>(val) };
     }
 }}}
 

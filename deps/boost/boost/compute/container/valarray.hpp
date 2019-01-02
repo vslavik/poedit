@@ -67,6 +67,7 @@ public:
     valarray(const valarray<T> &other)
         : m_buffer(other.m_buffer.get_context(), other.size() * sizeof(T))
     {
+        copy(other.begin(), other.end(), begin());
     }
 
     valarray(const std::valarray<T> &valarray,

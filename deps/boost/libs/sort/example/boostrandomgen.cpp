@@ -16,7 +16,7 @@
 #include <string>
 #include <boost/random.hpp>
 
-using namespace std;
+using std::string;
 using namespace boost;
 
 int main(int argc, const char ** argv) {
@@ -37,8 +37,8 @@ int main(int argc, const char ** argv) {
     printf("could not open input.txt for writing!\n");
     return 1;
   }
-  int min_int = (numeric_limits<int>::min)();
-  int max_int = (numeric_limits<int>::max)();
+  int min_int = (std::numeric_limits<int>::min)();
+  int max_int = (std::numeric_limits<int>::max)();
   if (mod_shift < 31 && mod_shift >= 0) {
     max_int %= 1 << mod_shift;
     if (-max_int > min_int)
@@ -48,7 +48,7 @@ int main(int argc, const char ** argv) {
   result.resize(count);
   mt19937 rng;
   if (argc > 3 && (string(argv[3]) == "-normal")) {
-    normal_distribution<> everything(0, max_int/4);      
+    boost::normal_distribution<> everything(0, max_int/4);      
     variate_generator<mt19937&,normal_distribution<> > gen(rng, everything);
     generate(result.begin(), result.end(), gen);
   }

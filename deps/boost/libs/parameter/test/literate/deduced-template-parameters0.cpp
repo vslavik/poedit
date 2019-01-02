@@ -3,6 +3,7 @@
 #include <boost/mpl/is_sequence.hpp>
 #include <boost/noncopyable.hpp>
 #include <memory>
+#include <boost/config.hpp>
 
 using namespace boost::parameter;
 using boost::mpl::_;
@@ -86,7 +87,16 @@ struct D {};
 using boost::python::bases;
 typedef boost::python::class_<B, boost::noncopyable> c1;
 
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
 typedef boost::python::class_<D, std::auto_ptr<D>, bases<B> > c2;
+
+#else
+
+typedef boost::python::class_<D, std::unique_ptr<D>, bases<B> > c2;
+
+#endif
+
 BOOST_MPL_ASSERT((boost::is_same<c1::class_type, B>));
 BOOST_MPL_ASSERT((boost::is_same<c1::base_list, bases<> >));
 BOOST_MPL_ASSERT((boost::is_same<c1::held_type, B>));
@@ -96,8 +106,19 @@ BOOST_MPL_ASSERT((
 
 BOOST_MPL_ASSERT((boost::is_same<c2::class_type, D>));
 BOOST_MPL_ASSERT((boost::is_same<c2::base_list, bases<B> >));
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
 BOOST_MPL_ASSERT((
     boost::is_same<c2::held_type, std::auto_ptr<D> >
 ));
-BOOST_MPL_ASSERT((boost::is_same<c2::copyable, void>));
 
+#else
+
+BOOST_MPL_ASSERT((
+    boost::is_same<c2::held_type, std::unique_ptr<D> >
+));
+
+#endif
+
+BOOST_MPL_ASSERT((boost::is_same<c2::copyable, void>));

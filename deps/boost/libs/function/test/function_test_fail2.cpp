@@ -7,21 +7,12 @@
 
 // For more information, see http://www.boost.org
 
-#include <boost/test/minimal.hpp>
 #include <boost/function.hpp>
-
-using namespace std;
-using namespace boost;
 
 static int bad_fn(float f) { return static_cast<int>(f); }
 
-int
-test_main(int, char*[])
+void test()
 {
-  function0<int> f1;
-  f1 = bad_fn;
-
-  BOOST_ERROR("This should not have compiled.");
-
-  return 0;
+    boost::function0<int> f1;
+    f1 = bad_fn;
 }

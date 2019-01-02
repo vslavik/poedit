@@ -28,7 +28,13 @@
 #include <boost/type_traits/is_abstract.hpp>
 #include <boost/type_traits/has_left_shift.hpp>
 
+#include <ios>
+#include <iostream>
 #include <limits>
+
+#if !defined(BOOST_NO_CXX11_NULLPTR)
+#include <cstddef>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -39,21 +45,51 @@ namespace test_tools {
 namespace tt_detail {
 
 // ************************************************************************** //
+// **************          boost_test_print_type               ************** //
+// ************************************************************************** //
+
+    namespace impl {
+        template <class T>
+        std::ostream& boost_test_print_type(std::ostream& ostr, T const& t) {
+            BOOST_STATIC_ASSERT_MSG( (boost::has_left_shift<std::ostream,T>::value),
+                                    "Type has to implement operator<< to be printable");
+            ostr << t;
+            return ostr;
+        }
+
+        struct boost_test_print_type_impl {
+            template <class R>
+            std::ostream& operator()(std::ostream& ostr, R const& r) const {
+                return boost_test_print_type(ostr, r);
+            }
+        };
+    }
+
+    // To avoid ODR violations, see N4381
+    template <class T> struct static_const { static const T value; };
+    template <class T> const T static_const<T>::value = T();
+
+    namespace {
+        static const impl::boost_test_print_type_impl& boost_test_print_type =
+            static_const<impl::boost_test_print_type_impl>::value;
+    }
+
+
+// ************************************************************************** //
 // **************                print_log_value               ************** //
 // ************************************************************************** //
 
 template<typename T>
 struct print_log_value {
-    BOOST_STATIC_ASSERT_MSG( (boost::has_left_shift<std::ostream,T>::value),
-                             "Type has to implement operator<< to be printable");
-
     void    operator()( std::ostream& ostr, T const& t )
     {
         typedef typename mpl::or_<is_array<T>,is_function<T>,is_abstract<T> >::type cant_use_nl;
 
         std::streamsize old_precision = set_precision( ostr, cant_use_nl() );
 
-        ostr << t;
+        //ostr << t;
+        using boost::test_tools::tt_detail::boost_test_print_type;
+        boost_test_print_type(ostr, t);
 
         if( old_precision != (std::streamsize)-1 )
             ostr.precision( old_precision );
@@ -99,10 +135,7 @@ struct print_log_value< T[N] > {
 
 template<>
 struct BOOST_TEST_DECL print_log_value<bool> {
-    void    operator()( std::ostream& ostr, bool t )
-    {
-         ostr << std::boolalpha << t;
-    }
+    void    operator()( std::ostream& ostr, bool t );
 };
 
 //____________________________________________________________________________//
@@ -132,6 +165,16 @@ template<>
 struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
     void    operator()( std::ostream& ostr, wchar_t const* t );
 };
+
+#if !defined(BOOST_NO_CXX11_NULLPTR)
+template<>
+struct print_log_value<std::nullptr_t> {
+    // declaration and definition is here because of #12969 https://svn.boost.org/trac10/ticket/12969
+    void    operator()( std::ostream& ostr, std::nullptr_t /*t*/ ) {
+        ostr << "nullptr";
+    }
+};
+#endif
 
 //____________________________________________________________________________//
 

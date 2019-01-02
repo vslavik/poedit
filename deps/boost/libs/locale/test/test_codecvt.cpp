@@ -10,6 +10,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string.h>
+#include <wchar.h>
 #include <memory.h>
 #define BOOST_LOCALE_ERROR_LIMIT -1
 #include "test_locale.hpp"

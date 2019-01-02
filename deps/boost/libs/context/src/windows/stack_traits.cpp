@@ -68,12 +68,6 @@ std::size_t pagesize() BOOST_NOEXCEPT_OR_NOTHROW {
     return static_cast< std::size_t >( system_info().dwPageSize);
 }
 
-std::size_t page_count( std::size_t stacksize) BOOST_NOEXCEPT_OR_NOTHROW {
-    return static_cast< std::size_t >(
-        std::floor(
-            static_cast< float >( stacksize) / pagesize() ) );
-}
-
 }
 
 namespace boost {
@@ -96,14 +90,7 @@ stack_traits::page_size() BOOST_NOEXCEPT_OR_NOTHROW {
 BOOST_CONTEXT_DECL
 std::size_t
 stack_traits::default_size() BOOST_NOEXCEPT_OR_NOTHROW {
-    const std::size_t size = 64 * 1024; // 64 kB
-    if ( is_unbounded() ) {
-        return (std::max)( size, minimum_size() );
-    }
-    BOOST_ASSERT( maximum_size() >= minimum_size() );
-    return maximum_size() == minimum_size()
-        ? minimum_size()
-        : ( std::min)( size, maximum_size() );
+    return 128 * 1024;
 }
 
 // because Windows seams not to provide a limit for minimum stacksize

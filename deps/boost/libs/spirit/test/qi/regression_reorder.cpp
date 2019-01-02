@@ -6,12 +6,16 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_string.hpp>
+#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_directive.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/fusion/include/nview.hpp>
 
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
-namespace phx = boost::phoenix;
 namespace fusion = boost::fusion;
 namespace mpl = boost::mpl;
 

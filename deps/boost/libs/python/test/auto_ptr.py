@@ -28,7 +28,7 @@
 >>> if not broken_auto_ptr:
 ...     try: x.value()
 ...     except TypeError: pass
-...     else: print 'expected a TypeError exception'
+...     else: print('expected a TypeError exception')
 
 >>> x = make()
 >>> look(x)
@@ -51,7 +51,7 @@
 
 >>> try: maybe_steal(y, 0)
 ... except TypeError: pass
-... else: print 'expected a TypeError exception'
+... else: print('expected a TypeError exception')
 
 >>> y.value()
 42
@@ -62,24 +62,24 @@
 >>> if not broken_auto_ptr:
 ...     try: y.value()
 ...     except TypeError: pass
-...     else: print 'expected a TypeError exception'
+...     else: print('expected a TypeError exception')
 
->>> print look.__doc__.splitlines()[1]
+>>> print(look.__doc__.splitlines()[1])
 look( (X)arg1) -> int :
 
->>> print steal.__doc__.splitlines()[1]
+>>> print(steal.__doc__.splitlines()[1])
 steal( (X)arg1) -> int :
 
->>> print maybe_steal.__doc__.splitlines()[1]
+>>> print(maybe_steal.__doc__.splitlines()[1])
 maybe_steal( (X)arg1, (bool)arg2) -> int :
 
->>> print make.__doc__.splitlines()[1]
+>>> print(make.__doc__.splitlines()[1])
 make() -> X :
 
->>> print callback.__doc__.splitlines()[1]
+>>> print(callback.__doc__.splitlines()[1])
 callback( (object)arg1) -> X :
 
->>> print extract.__doc__.splitlines()[1]
+>>> print(extract.__doc__.splitlines()[1])
 extract( (object)arg1) -> X :
 
 '''
@@ -93,8 +93,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

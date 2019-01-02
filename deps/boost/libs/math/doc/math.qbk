@@ -1,15 +1,15 @@
 [book Math Toolkit
-    [quickbook 1.6]
-    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014 Nikhar Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan Råde, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
+    [quickbook 1.7]
+    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2017 Nikhar Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan Råde, Gautam Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
     [/purpose ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22]
     [license
         Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
         [@http://www.boost.org/LICENSE_1_0.txt])
     ]
-    [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Guazzone, Marco], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Murphy, Jeremy W.], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
+    [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Guazzone, Marco], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Murphy, Jeremy W.], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [Thompson, Nicholas], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
     [/last-revision $Date$]
-    [version 2.4.0]
+    [version 2.8.0]
 ]
 
 [template mathpart[id title]
@@ -103,36 +103,37 @@ and use the function's name as the link text.]
 
 [/ links to roots]
 
-[def __root_finding_with_derivatives [link math_toolkit.roots.roots_deriv root-finding with derivatives]] [/Newton, Halley & Schoeder]
-[def __root_finding_without_derivatives [link math_toolkit.roots.roots_noderiv root-finding without derivatives]]
-[def __root_finding_TOMS748 [link math_toolkit.roots.roots_noderiv.TOMS748 TOMS 748 algorithm]]
-[def __bracket_solve [link math_toolkit.roots.roots_noderiv.bracket_solve bracket and solve]]
-[def __root_termination [link math_toolkit.roots.roots_noderiv.root_termination predefined termination functors]]
-[def __root_finding_examples [link math_toolkit.roots.root_finding_examples root-finding examples]]
-[def __brent_minima [link math_toolkit.roots.brent_minima Brent's method]]
-[def __brent_minima_example [link math_toolkit.roots.brent_minima.example Brent's method example]]
-[def __newton[link math_toolkit.roots.roots_deriv.newton Newton-Raphson iteration]]
-[def __halley [link math_toolkit.roots.roots_deriv.halley Halley]]
-[def __schroder [link math_toolkit.roots.roots_deriv.schroder Schr'''&#xf6;'''der]]
-[def __brent_minima_example [link math_toolkit.roots.brent_minima.example Brent minima finding example]]
-[def __bisection [link math_toolkit.roots.roots_noderiv.bisect bisection]]
-[def __bisect [link math_toolkit.roots.roots_noderiv.bisect bisect]]
+[def __root_finding_with_derivatives [link math_toolkit.roots_deriv root-finding with derivatives]] [/Newton, Halley & Schoeder]
+[def __root_finding_without_derivatives [link math_toolkit.roots_noderiv root-finding without derivatives]]
+[def __root_finding_TOMS748 [link math_toolkit.roots_noderiv.TOMS748 TOMS 748 algorithm]]
+[def __bracket_solve [link math_toolkit.roots_noderiv.bracket_solve bracket and solve]]
+[def __root_termination [link math_toolkit.roots_noderiv.root_termination predefined termination functors]]
+[def __root_finding_examples [link math_toolkit.root_finding_examples root-finding examples]]
+[def __brent_minima [link math_toolkit.brent_minima Brent's method]]
+[def __brent_minima_example [link math_toolkit.brent_minima.example Brent's method example]]
+[def __newton[link math_toolkit.roots_deriv.newton Newton-Raphson iteration]]
+[def __halley [link math_toolkit.roots_deriv.halley Halley]]
+[def __schroder [link math_toolkit.roots_deriv.schroder Schr'''&#xf6;'''der]]
+[def __brent_minima_example [link math_toolkit.brent_minima.example Brent minima finding example]]
+[def __bisection [link math_toolkit.roots_noderiv.bisect bisection]]
+[def __bisect [link math_toolkit.roots_noderiv.bisect bisect]]
 [def __bisection_wikipedia [@https://en.wikipedia.org/wiki/Bisection bisection]]
-[def __root_finding_example_without_derivatives [link math_toolkit.roots.root_finding_examples.no_derivatives root-finding without derivatives]]
-[def __root_finding_example_cbrt_without_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_no_derivatives root-finding without derivatives]]
-[def __root_finding_example_cbrt_with_1_derivative [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_1st_derivative root-finding with 1st derivatives]]
-[def __root_finding_example_cbrt_with_2_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_2_derivatives root-finding with 1st and 2nd derivatives]]
-[def __root_finding_examples [link math_toolkit.roots.root_finding_examples root-finding examples]]
-[def __no_derivatives   [link math_toolkit.roots.root_finding_examples.no_derivatives no derivatives]]
-[def __cbrt_no_derivatives  [link math_toolkit.roots.root_finding_examples.cbrt_no_derivatives cbrt no derivatives]]
-[def __cbrt_no_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_no_derivatives without derivatives]]
-[def __cbrt_1st_derivative [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_1st_derivative cube-root with 1st derivative]]
-[def __cbrt_2_derivatives [link math_toolkit..roots.root_finding_examples.cbrt_eg.cbrt_2_derivatives cube-root with 1st  & 2nd derivative]]
-[def __fifth_root [link math_toolkit.roots.root_finding_examples.5th_root_eg fifth root]]
-[def __nth_root [link math_toolkit.roots.root_finding_examples.nth_root nth root]]
-[def __multiprecision_root [link math_toolkit.roots.root_finding_examples.multiprecision_root multiprecision root]]
-[def __polynomial_arithmetic [link math_toolkit.roots.polynomial_arithmetic polynomial arithmetic]]
-[def __evaluation [link math_toolkit.roots.rational.polynomial_evaluation polynomial \& rational evaluation]]
+[def __root_finding_example_without_derivatives [link math_toolkit.root_finding_examples.no_derivatives root-finding without derivatives]]
+[def __root_finding_example_cbrt_without_derivatives [link math_toolkit.root_finding_examples.cbrt_eg.cbrt_no_derivatives root-finding without derivatives]]
+[def __root_finding_example_cbrt_with_1_derivative [link math_toolkit.root_finding_examples.cbrt_eg.cbrt_1st_derivative root-finding with 1st derivatives]]
+[def __root_finding_example_cbrt_with_2_derivatives [link math_toolkit.root_finding_examples.cbrt_eg.cbrt_2_derivatives root-finding with 1st and 2nd derivatives]]
+[def __root_finding_examples [link math_toolkit.root_finding_examples root-finding examples]]
+[def __no_derivatives   [link math_toolkit.root_finding_examples.no_derivatives no derivatives]]
+[def __cbrt_no_derivatives  [link math_toolkit.root_finding_examples.cbrt_no_derivatives cbrt no derivatives]]
+[def __cbrt_no_derivatives [link math_toolkit.root_finding_examples.cbrt_eg.cbrt_no_derivatives without derivatives]]
+[def __cbrt_1st_derivative [link math_toolkit.root_finding_examples.cbrt_eg.cbrt_1st_derivative cube-root with 1st derivative]]
+[def __cbrt_2_derivatives [link math_toolkit..root_finding_examples.cbrt_eg.cbrt_2_derivatives cube-root with 1st  & 2nd derivative]]
+[def __fifth_root [link math_toolkit.root_finding_examples.5th_root_eg fifth root]]
+[def __nth_root [link math_toolkit.root_finding_examples.nth_root nth root]]
+[def __multiprecision_root [link math_toolkit.root_finding_examples.multiprecision_root multiprecision root]]
+[def __polynomial_arithmetic [link math_toolkit.polynomial_arithmetic polynomial arithmetic]]
+[def __evaluation [link math_toolkit.rational.polynomial_evaluation polynomial \& rational evaluation]]
+
 [/gammas]
 [def __lgamma [link math_toolkit.sf_gamma.lgamma lgamma]]
 [def __digamma [link math_toolkit.sf_gamma.digamma digamma]]
@@ -215,6 +216,15 @@ and use the function's name as the link text.]
 [def __sph_hankel_1  [link math_toolkit.hankel.sph_hankel sph_hankel_1]]
 [def __sph_hankel_2  [link math_toolkit.hankel.sph_hankel sph_hankel_2]]
 
+[/Lambert W function]
+[def __lambert_w [link math_toolkit.sf_lambert_w.lambert_w_function lambert_w]]
+[def __lambert_w_implementation [link math_toolkit.lambert_w.implementation implementation]]
+[def __lambert_w_precision[link math_toolkit.lambert_w.precision precision]]
+[def __lambert_w_examples [link math_toolkit.lambert_w.examples examples]]
+[def __lambert_w_wm1_near_zero [link math_toolkit.lambert_w.wm1_near_zero wm1_near_zero]]
+[def __lambert_w_references [link math_toolkit.lambert_w.references references]]
+
+
 [/Airy Functions]
 [def __airy_ai [link math_toolkit.airy.ai airy_ai]]
 [def __airy_bi [link math_toolkit.airy.bi airy_bi]]
@@ -260,7 +270,6 @@ and use the function's name as the link text.]
 [def __float_advance [link math_toolkit.next_float.float_advance float_advance]]
 [def __ulp [link math_toolkit.next_float.ulp ulp]]
 
-
 [/powers etc]
 [def __expm1 [link math_toolkit.powers.expm1 expm1]]
 [def __log1p [link math_toolkit.powers.log1p log1p]]
@@ -296,6 +305,8 @@ and use the function's name as the link text.]
 [def __expint [link math_toolkit.expint.expint_i expint]]
 [def __spherical_harmonic [link math_toolkit.sf_poly.sph_harm spherical_harmonic]]
 [def __owens_t [link math_toolkit.owens_t Owens T]]
+[def __constants_intro [link math_toolkit.constants_intro  constants]]
+[def __constants[link math_toolkit.constants  constants]]
 
 [/tools]
 [def __tuple [link math_toolkit.internals.tuples boost::math::tuple]]
@@ -369,9 +380,7 @@ and use the function's name as the link text.]
 [def __promotion_policy [link math_toolkit.pol_ref.internal_promotion internal promotion policy]]
 [def __precision_policy [link math_toolkit.pol_ref.precision_pol precision policy]]
 [def __policy_macros [link math_toolkit.pol_ref.policy_defaults Using Macros to Change the Policy Defaults]]
-[def __random_variate [@http://en.wikipedia.org/wiki/Random_variate random variate]]
-[def __random_variable [@http://en.wikipedia.org/wiki/Random_variable random variable]]
-[def __probability_distribution [@http://en.wikipedia.org/wiki/Probability_distribution probability_distribution]]
+
 
 [def __usual_accessors __cdf, __pdf, __quantile, __hazard,
    __chf, __mean, __median, __mode, __variance, __sd, __skewness,
@@ -379,6 +388,8 @@ and use the function's name as the link text.]
 
 [def __real_concept [link math_toolkit.real_concepts  real concept]]
 [def __next_float [link math_toolkit.next_float Adjacent Floating-Point Values]]
+[def __remez_practical [link math_toolkit.remez.practical remez_practical]]
+
 
 [/ External links]
 [def __gsl [@http://www.gnu.org/software/gsl/ GSL-1.9]]
@@ -406,6 +417,8 @@ and use the function's name as the link text.]
 [def __errno [@http://en.wikipedia.org/wiki/Errno `::errno`]]
 [def __Mathworld [@http://mathworld.wolfram.com Wolfram MathWorld]]
 [def __Mathematica [@http://www.wolfram.com/products/mathematica/index.html Wolfram Mathematica]]
+[def __Maple [@https://www.maplesoft.com Maple]]
+
 [def __WolframAlpha [@http://www.wolframalpha.com/ Wolfram Alpha]]
 [def __TOMS748 [@http://portal.acm.org/citation.cfm?id=210111 TOMS Algorithm 748: enclosing zeros of continuous functions]]
 [def __TOMS910 [@http://portal.acm.org/citation.cfm?id=1916469 TOMS Algorithm 910: A Portable C++ Multiple-Precision System for Special-Function Calculations]]
@@ -420,10 +433,21 @@ and use the function's name as the link text.]
 [def __epsilon [@http://en.wikipedia.org/wiki/Machine_epsilon machine epsilon]]
 [def __ADL [@http://en.cppreference.com/w/cpp/language/adl Argument Dependent Lookup (ADL)]]
 [def __function_template_instantiation [@http://en.cppreference.com/w/cpp/language/function_template Function template instantiation]]
-[def __fundamental_types [@http://en.cppreference.com/w/cpp/language/types fundamental types]]
+[def __fundamental_types [@http://en.cppreference.com/w/cpp/language/types fundamental (built-in) types]]
 [def __guard_digits [@http://en.wikipedia.org/wiki/Guard_digit guard digits]]
 [def __SSE2 [@http://en.wikipedia.org/wiki/SSE2 SSE2 instructions]]
 [def __representable [@http://en.wikipedia.org/wiki/Floating_point#Representable_numbers.2C_conversion_and_rounding representable]]
+[def __short_float [@http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2016.pdf N2016 short float type]]
+[def __random_variate [@http://en.wikipedia.org/wiki/Random_variate random variate]]
+[def __random_variable [@http://en.wikipedia.org/wiki/Random_variable random variable]]
+[def __probability_distribution [@http://en.wikipedia.org/wiki/Probability_distribution probability_distribution]]
+[def __C_math [@http://www.cplusplus.com/reference/cmath/ C math functions]]
+[def __Lambert_W [@http://en.wikipedia.org/wiki/Lambert_W_function Lambert W function]]
+[def __CUDA [@https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support CUDA NVidia GPU C/C++ language support]]
+[def __Luu_thesis [@http://discovery.ucl.ac.uk/1482128/1/Luu_thesis.pdf Thomas Luu, Thesis, University College London (2015)]]
+[def __rational_function [@https://en.wikipedia.org/wiki/Rational_function rational function]]
+[def __remez [@http://en.wikipedia.org/wiki/Remez_algorithm Remez algorithm]]
+[def __ULP [@https://en.wikipedia.org/wiki/Unit_in_the_last_place Unit in the Last Place]]
 
 [/ Some composite templates]
 [template super[x]'''<superscript>'''[x]'''</superscript>''']
@@ -560,8 +584,10 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 
 [section:sf_poly Polynomials]
 [include sf/legendre.qbk]
+[include sf/legendre_stieltjes.qbk]
 [include sf/laguerre.qbk]
 [include sf/hermite.qbk]
+[include sf/chebyshev.qbk]
 [include sf/spherical_harmonic.qbk]
 [endsect] [/section:sf_poly Polynomials]
 
@@ -587,6 +613,9 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 
 [include sf/jacobi_elliptic.qbk]
 
+[/ Lambert W function]
+[include sf/lambert_w.qbk]
+
 [section:zetas Zeta Functions]
 [include sf/zeta.qbk]
 [endsect]
@@ -609,19 +638,34 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include tr1/tr1_ref.qbk]
 [endmathpart]
 
+[mathpart root_finding Root Finding \& Minimization Algorithms]
+[include roots/roots_overview.qbk]
+[endmathpart] [/mathpart roots Root Finding Algorithms]
+
+
+[mathpart poly Polynomials and Rational Functions]
+[include internals/polynomial.qbk]
+[include internals/rational.qbk]
+[endmathpart]
+
+[mathpart interpolation Interpolation]
+[include interpolators/cubic_b_spline.qbk]
+[include interpolators/barycentric_rational_interpolation.qbk]
+[endmathpart]
+
+[mathpart quadrature Quadrature and Differentiation]
+[include quadrature/trapezoidal.qbk]
+[include quadrature/gauss.qbk]
+[include quadrature/gauss_kronrod.qbk]
+[include quadrature/double_exponential.qbk]
+[include quadrature/naive_monte_carlo.qbk]
+[include differentiation/numerical_differentiation.qbk]
+[endmathpart]
+
 [include complex/complex-tr1.qbk]
 [include quaternion/math-quaternion.qbk]
 [include octonion/math-octonion.qbk]
 [include gcd/math-gcd.qbk]
-
-[mathpart rooting Tools: Root Finding \& Minimization Algorithms, Polynomial  Arithmetic \& Evaluation]
-[section:roots Root finding]
-[include roots/roots_overview.qbk]
-[include internals/polynomial.qbk]
-[include internals/rational.qbk]
-[endsect] [/section:roots Root finding]
-
-[endmathpart] [/mathpart roots Root Finding Algorithms]
 
 [mathpart internals Internal Details: Series, Rationals and Continued Fractions, Testing, and Development Tools]
 
@@ -654,6 +698,7 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include background/lanczos.qbk]
 [include background/remez.qbk]
 [include background/references.qbk]
+
 
 [section:logs_and_tables Error logs and tables]
 
@@ -700,7 +745,3 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
 ]
-
-
-
-

@@ -58,7 +58,7 @@ public:
     {
         cl_int error = 0;
 
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         cl_image_desc desc;
         desc.image_type = CL_MEM_OBJECT_IMAGE2D;
         desc.image_width = image_width;
@@ -69,7 +69,7 @@ public:
         desc.image_slice_pitch = 0;
         desc.num_mip_levels = 0;
         desc.num_samples = 0;
-        #ifdef CL_VERSION_2_0
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         desc.mem_object = 0;
         #else
         desc.buffer = 0;
@@ -108,7 +108,7 @@ public:
     {
         cl_int error = 0;
 
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         cl_image_desc desc;
         desc.image_type = CL_MEM_OBJECT_IMAGE2D;
         desc.image_width = image_width;
@@ -119,7 +119,7 @@ public:
         desc.image_slice_pitch = 0;
         desc.num_mip_levels = 0;
         desc.num_samples = 0;
-        #ifdef CL_VERSION_2_0
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         desc.mem_object = 0;
         #else
         desc.buffer = 0;

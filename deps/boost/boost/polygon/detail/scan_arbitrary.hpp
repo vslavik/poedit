@@ -316,8 +316,11 @@ namespace boost { namespace polygon{
       return true;
     }
 
-    class less_point_down_slope : public std::binary_function<Point, Point, bool> {
+    class less_point_down_slope {
     public:
+      typedef Point first_argument_type;
+      typedef Point second_argument_type;
+      typedef bool result_type;
       inline less_point_down_slope() {}
       inline bool operator () (const Point& pt1, const Point& pt2) const {
         if(pt1.get(HORIZONTAL) < pt2.get(HORIZONTAL)) return true;

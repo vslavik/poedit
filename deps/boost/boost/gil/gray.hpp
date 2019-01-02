@@ -1,31 +1,18 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_GRAY_HPP
+#define BOOST_GIL_GRAY_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_GRAY_H
-#define GIL_GRAY_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Support for grayscale color space and variants
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on March 8, 2006
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include "gil_config.hpp"
-#include "utilities.hpp"
-#include <boost/type_traits.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
+#include <boost/type_traits.hpp>
+
+#include <boost/gil/utilities.hpp>
 
 namespace boost { namespace gil {
 

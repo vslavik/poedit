@@ -27,30 +27,34 @@ namespace pmr {
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
-         ,class Options = tree_assoc_defaults >
+         ,class Options = void >
 using map = boost::container::map<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options>;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
-         ,class Options = tree_assoc_defaults >
+         ,class Options = void >
 using multimap = boost::container::multimap<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options>;
 
 #endif
 
+//! A portable metafunction to obtain a map
+//! that uses a polymorphic allocator
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
-         ,class Options = tree_assoc_defaults >
+         ,class Options = void >
 struct map_of
 {
    typedef boost::container::map<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options> type;
 };
 
+//! A portable metafunction to obtain a multimap
+//! that uses a polymorphic allocator
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
-         ,class Options = tree_assoc_defaults >
+         ,class Options = void >
 struct multimap_of
 {
    typedef boost::container::multimap<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options> type;

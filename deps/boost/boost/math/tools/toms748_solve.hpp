@@ -199,7 +199,7 @@ T quadratic_interpolate(const T& a, const T& b, T const& d,
    // Point d must lie outside of the interval [a,b], it is the third
    // best approximation to the root, after a and b.
    //
-   // Note: this does not guarentee to find a root
+   // Note: this does not guarantee to find a root
    // inside [a, b], so we fall back to a secant step should
    // the result be out of range.
    //
@@ -254,7 +254,7 @@ T cubic_interpolate(const T& a, const T& b, const T& d,
    // and are the third and forth best approximations
    // to the root that we have found so far.
    //
-   // Note: this does not guarentee to find a root
+   // Note: this does not guarantee to find a root
    // inside [a, b], so we fall back to quadratic
    // interpolation in case of an erroneous result.
    //
@@ -301,6 +301,12 @@ std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, const T& fax, const
    BOOST_MATH_STD_USING  // For ADL of std math functions
 
    static const char* function = "boost::math::tools::toms748_solve<%1%>";
+
+   //
+   // Sanity check - are we allowed to iterate at all?
+   //
+   if (max_iter == 0)
+      return std::make_pair(ax, bx);
 
    boost::uintmax_t count = max_iter;
    T a, b, fa, fb, c, u, fu, a0, b0, d, fd, e, fe;
@@ -477,6 +483,8 @@ inline std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, const T& fax
 template <class F, class T, class Tol, class Policy>
 inline std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, Tol tol, boost::uintmax_t& max_iter, const Policy& pol)
 {
+   if (max_iter <= 2)
+      return std::make_pair(ax, bx);
    max_iter -= 2;
    std::pair<T, T> r = toms748_solve(f, ax, bx, f(ax), f(bx), tol, max_iter, pol);
    max_iter += 2;

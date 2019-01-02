@@ -75,6 +75,17 @@ void test()
    typedef bml::unique_ptr<int[5], Deleter> P;
    BOOST_STATIC_ASSERT((bmupmu::is_same<P::pointer, Deleter::pointer>::value));
    }
+   //Unbounded array of bounded array unique_ptr
+   {
+   typedef int int_5_t [5];
+   typedef bml::unique_ptr<int_5_t[]> P;
+   BOOST_STATIC_ASSERT((bmupmu::is_same<P::pointer, int_5_t*>::value));
+   }
+   {
+   typedef int int_5_t [5];
+   typedef bml::unique_ptr<int_5_t[], Deleter> P;
+   BOOST_STATIC_ASSERT((bmupmu::is_same<P::pointer, Deleter::pointer>::value));
+   }
 }
 
 }  //namespace unique_ptr_pointer_type {

@@ -2,7 +2,7 @@
 // daytime_client.cpp
 // ~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,32 +12,32 @@
 #include <future>
 #include <iostream>
 #include <thread>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include <boost/asio/use_future.hpp>
 
 using boost::asio::ip::udp;
 
-void get_daytime(boost::asio::io_service& io_service, const char* hostname)
+void get_daytime(boost::asio::io_context& io_context, const char* hostname)
 {
   try
   {
-    udp::resolver resolver(io_service);
+    udp::resolver resolver(io_context);
 
-    std::future<udp::resolver::iterator> iter =
+    std::future<udp::resolver::results_type> endpoints =
       resolver.async_resolve(
-          {udp::v4(), hostname, "daytime"},
+          udp::v4(), hostname, "daytime",
           boost::asio::use_future);
 
-    // The async_resolve operation above returns the endpoint iterator as a
-    // future value that is not retrieved ...
+    // The async_resolve operation above returns the endpoints as a future
+    // value that is not retrieved ...
 
-    udp::socket socket(io_service, udp::v4());
+    udp::socket socket(io_context, udp::v4());
 
     std::array<char, 1> send_buf  = {{ 0 }};
     std::future<std::size_t> send_length =
       socket.async_send_to(boost::asio::buffer(send_buf),
-          *iter.get(), // ... until here. This call may block.
+          *endpoints.get().begin(), // ... until here. This call may block.
           boost::asio::use_future);
 
     // Do other things here while the send completes.
@@ -74,15 +74,15 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    // We run the io_service off in its own thread so that it operates
+    // We run the io_context off in its own thread so that it operates
     // completely asynchronously with respect to the rest of the program.
-    boost::asio::io_service io_service;
-    boost::asio::io_service::work work(io_service);
-    std::thread thread([&io_service](){ io_service.run(); });
+    boost::asio::io_context io_context;
+    auto work = boost::asio::make_work_guard(io_context);
+    std::thread thread([&io_context](){ io_context.run(); });
 
-    get_daytime(io_service, argv[1]);
+    get_daytime(io_context, argv[1]);
 
-    io_service.stop();
+    io_context.stop();
     thread.join();
   }
   catch (std::exception& e)

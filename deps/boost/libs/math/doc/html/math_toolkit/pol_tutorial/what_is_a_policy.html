@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>So Just What is a Policy Anyway?</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../pol_tutorial.html" title="Policy Tutorial">
 <link rel="prev" href="../pol_tutorial.html" title="Policy Tutorial">
 <link rel="next" href="policy_tut_defaults.html" title="Policies Have Sensible Defaults">
@@ -31,7 +31,7 @@
         A policy is a compile-time mechanism for customising the behaviour of a special
         function, or a statistical distribution. With Policies you can control:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             What action to take when an error occurs.
           </li>
@@ -52,29 +52,43 @@
           </li>
 </ul></div>
 <p>
-        Some of these policies could arguably be runtime variables, but then we couldn't
-        use compile-time dispatch internally to select the best evaluation method
-        for the given policies.
+        Some of these policies could arguably be run-time variables, but then we
+        couldn't use compile-time dispatch internally to select the best evaluation
+        method for the given policies.
       </p>
 <p>
         For this reason a Policy is a <span class="emphasis"><em>type</em></span>: in fact it's an
         instance of the class template <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">policy</span><span class="special">&lt;&gt;</span></code>. This class is just a compile-time-container
-        of user-selected policies (sometimes called a type-list):
+        of user-selected policies (sometimes called a type-list).
+      </p>
+<p>
+        Over a dozen <a class="link" href="policy_tut_defaults.html" title="Policies Have Sensible Defaults">policy
+        defaults</a> are provided, so most of the time you can ignore the policy
+        framework, but you can overwrite the defaults with your own policies to give
+        detailed control, for example:
       </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">;</span>
-<span class="comment">//</span>
-<span class="comment">// Define a policy that sets ::errno on overflow, and does</span>
-<span class="comment">// not promote double to long double internally:</span>
-<span class="comment">//</span>
-<span class="keyword">typedef</span> <span class="identifier">policy</span><span class="special">&lt;</span><span class="identifier">domain_error</span><span class="special">&lt;</span><span class="identifier">errno_on_error</span><span class="special">&gt;,</span> <span class="identifier">promote_double</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">mypolicy</span><span class="special">;</span>
+
+<span class="comment">// Define a policy that sets ::errno on overflow,</span>
+<span class="comment">// and does not promote double to long double internally,</span>
+<span class="comment">// and only aims for precision of only 3 decimal digits,</span>
+<span class="comment">// to an error-handling policy, usually to trade precision for speed:</span>
+
+<span class="keyword">typedef</span> <span class="identifier">policy</span>
+<span class="special">&lt;</span>
+  <span class="identifier">domain_error</span><span class="special">&lt;</span><span class="identifier">errno_on_error</span><span class="special">&gt;,</span>
+  <span class="identifier">promote_double</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;,</span>
+  <span class="identifier">digits10</span><span class="special">&lt;</span><span class="number">3</span><span class="special">&gt;</span>
+<span class="special">&gt;</span> <span class="identifier">my_policy</span><span class="special">;</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

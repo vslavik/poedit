@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Examples</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;37.&#160;Boost.TypeIndex 4.0">
+<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;41.&#160;Boost.TypeIndex 4.1">
 <link rel="prev" href="how_it_works.html" title="How it works">
 <link rel="next" href="../boost_typeindex_header_reference.html" title="Boost.TypeIndex Header Reference">
 </head>
@@ -27,17 +27,23 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_typeindex.examples"></a><a class="link" href="examples.html" title="Examples">Examples</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="examples.html#boost_typeindex.examples.getting_human_readable_and_mangl">Getting
       human readable and mangled type names</a></span></dt>
 <dt><span class="section"><a href="examples.html#boost_typeindex.examples.storing_information_about_a_type">Storing
       information about a type in container </a></span></dt>
 <dt><span class="section"><a href="examples.html#boost_typeindex.examples.getting_through_the_inheritance_">Getting
       through the inheritance to receive a real type name </a></span></dt>
+<dt><span class="section"><a href="examples.html#boost_typeindex.examples.using_runtime_cast_where_rtti_is">Using
+      runtime_cast where RTTI is unavailable or undesirable </a></span></dt>
 <dt><span class="section"><a href="examples.html#boost_typeindex.examples.exact_type_matching_storing_type">Exact
       type matching: storing type with const, volatile and reference qualifiers</a></span></dt>
 <dt><span class="section"><a href="examples.html#boost_typeindex.examples.table_of_raw_name_and_pretty_nam">Table
       of raw_name() and pretty_name() outputs with and without RTTI </a></span></dt>
+<dt><span class="section"><a href="examples.html#boost_typeindex.examples.c_14_checking_namespace_at_compi">C++14:
+      Checking namespace at compile time </a></span></dt>
+<dt><span class="section"><a href="examples.html#boost_typeindex.examples.c_14_checking_lexigraphical_orde">C++14:
+      Checking lexigraphical order of provided types </a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -131,7 +137,6 @@
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">unordered_set</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">functional</span><span class="special">/</span><span class="identifier">hash</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;</span>
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
@@ -167,6 +172,7 @@
         Example works with and without RTTI."
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">/</span><span class="identifier">runtime_cast</span><span class="special">/</span><span class="identifier">register_runtime_class</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
 <span class="keyword">struct</span> <span class="identifier">A</span> <span class="special">{</span>
@@ -175,6 +181,7 @@
 <span class="special">};</span>
 <span class="keyword">struct</span> <span class="identifier">B</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">A</span> <span class="special">{</span> <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span> <span class="special">};</span>
 <span class="keyword">struct</span> <span class="identifier">C</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">B</span> <span class="special">{</span> <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span> <span class="special">};</span>
+<span class="keyword">struct</span> <span class="identifier">D</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">C</span> <span class="special">{</span> <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">(</span><span class="identifier">BOOST_TYPE_INDEX_NO_BASE_CLASS</span><span class="special">)</span> <span class="special">};</span>
 
 <span class="keyword">void</span> <span class="identifier">print_real_type</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">A</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_id_runtime</span><span class="special">(</span><span class="identifier">a</span><span class="special">).</span><span class="identifier">pretty_name</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
@@ -185,6 +192,102 @@
     <span class="keyword">const</span> <span class="identifier">A</span><span class="special">&amp;</span> <span class="identifier">c_as_a</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">;</span>
     <span class="identifier">print_real_type</span><span class="special">(</span><span class="identifier">c_as_a</span><span class="special">);</span>    <span class="comment">// Outputs `struct C`</span>
     <span class="identifier">print_real_type</span><span class="special">(</span><span class="identifier">B</span><span class="special">());</span>       <span class="comment">// Outputs `struct B`</span>
+</pre>
+<p>
+        It's also possible to use type_id_runtime with the BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS,
+        which adds additional information for runtime_cast to work.
+      </p>
+<pre class="programlisting">    <span class="identifier">D</span> <span class="identifier">d</span><span class="special">;</span>
+    <span class="keyword">const</span> <span class="identifier">A</span><span class="special">&amp;</span> <span class="identifier">d_as_a</span> <span class="special">=</span> <span class="identifier">d</span><span class="special">;</span>
+    <span class="identifier">print_real_type</span><span class="special">(</span><span class="identifier">d_as_a</span><span class="special">);</span>    <span class="comment">// Outputs `struct D`</span>
+
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_typeindex.examples.using_runtime_cast_where_rtti_is"></a><a class="link" href="examples.html#boost_typeindex.examples.using_runtime_cast_where_rtti_is" title="Using runtime_cast where RTTI is unavailable or undesirable">Using
+      runtime_cast where RTTI is unavailable or undesirable </a>
+</h3></div></div></div>
+<p>
+        The following example shows that <code class="computeroutput"><span class="identifier">runtime_cast</span></code>
+        is able to find a valid pointer in various class hierarchies regardless of
+        inheritance or type relation.
+      </p>
+<p>
+        Example works with and without RTTI."
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">/</span><span class="identifier">runtime_cast</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+
+<span class="keyword">struct</span> <span class="identifier">A</span> <span class="special">{</span>
+    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">(</span><span class="identifier">BOOST_TYPE_INDEX_NO_BASE_CLASS</span><span class="special">)</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">A</span><span class="special">()</span>
+    <span class="special">{}</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">B</span> <span class="special">{</span>
+    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">(</span><span class="identifier">BOOST_TYPE_INDEX_NO_BASE_CLASS</span><span class="special">)</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">B</span><span class="special">()</span>
+    <span class="special">{}</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">C</span> <span class="special">:</span> <span class="identifier">A</span> <span class="special">{</span>
+    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">((</span><span class="identifier">A</span><span class="special">))</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">D</span> <span class="special">:</span> <span class="identifier">B</span> <span class="special">{</span>
+    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">((</span><span class="identifier">B</span><span class="special">))</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">E</span> <span class="special">:</span> <span class="identifier">C</span><span class="special">,</span> <span class="identifier">D</span> <span class="special">{</span>
+    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS</span><span class="special">((</span><span class="identifier">C</span><span class="special">)(</span><span class="identifier">D</span><span class="special">))</span>
+<span class="special">};</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">C</span> <span class="identifier">c</span><span class="special">;</span>
+    <span class="identifier">A</span><span class="special">*</span> <span class="identifier">a</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">c</span><span class="special">;</span>
+
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">C</span><span class="special">*</span> <span class="identifier">cp</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">runtime_cast</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">*&gt;(</span><span class="identifier">a</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Yes, a points to a C: "</span>
+                  <span class="special">&lt;&lt;</span> <span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="string">"-&gt;"</span> <span class="special">&lt;&lt;</span> <span class="identifier">cp</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="keyword">else</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Error: Expected a to point to a C"</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">E</span><span class="special">*</span> <span class="identifier">ce</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">runtime_cast</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">*&gt;(</span><span class="identifier">a</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Error: Expected a to not points to an E: "</span>
+                  <span class="special">&lt;&lt;</span> <span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="string">"-&gt;"</span> <span class="special">&lt;&lt;</span> <span class="identifier">ce</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="keyword">else</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"But, a does not point to an E"</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">E</span> <span class="identifier">e</span><span class="special">;</span>
+    <span class="identifier">C</span><span class="special">*</span> <span class="identifier">cp2</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">e</span><span class="special">;</span>
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">D</span><span class="special">*</span> <span class="identifier">dp</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">runtime_cast</span><span class="special">&lt;</span><span class="identifier">D</span><span class="special">*&gt;(</span><span class="identifier">cp2</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Yes, we can cross-cast from a C* to a D* when we actually have an E: "</span>
+                  <span class="special">&lt;&lt;</span> <span class="identifier">cp2</span> <span class="special">&lt;&lt;</span> <span class="string">"-&gt;"</span> <span class="special">&lt;&lt;</span> <span class="identifier">dp</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="keyword">else</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Error: Expected cp to point to a D"</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+</pre>
+<p>
+        Alternatively, we can use runtime_pointer_cast so we don't need to specity
+        the target as a pointer. This works for smart_ptr types too.
+      </p>
+<pre class="programlisting">    <span class="identifier">A</span><span class="special">*</span> <span class="identifier">ap</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">e</span><span class="special">;</span>
+    <span class="keyword">if</span><span class="special">(</span><span class="identifier">B</span><span class="special">*</span> <span class="identifier">bp</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">runtime_pointer_cast</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;(</span><span class="identifier">ap</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Yes, we can cross-cast and up-cast at the same time."</span>
+                  <span class="special">&lt;&lt;</span> <span class="identifier">ap</span> <span class="special">&lt;&lt;</span> <span class="string">"-&gt;"</span> <span class="special">&lt;&lt;</span> <span class="identifier">bp</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="keyword">else</span> <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Error: Expected ap to point to a B"</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 </div>
@@ -208,6 +311,8 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">stdexcept</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
+
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;</span>
 
 <span class="keyword">class</span> <span class="identifier">type_erased_unary_function</span> <span class="special">{</span>
@@ -320,7 +425,7 @@
         Code from the example will produce the following table:
       </p>
 <div class="table">
-<a name="boost_typeindex.examples.table_of_raw_name_and_pretty_nam.id"></a><p class="title"><b>Table&#160;37.2.&#160;Table of names</b></p>
+<a name="boost_typeindex.examples.table_of_raw_name_and_pretty_nam.id"></a><p class="title"><b>Table&#160;41.2.&#160;Table of names</b></p>
 <div class="table-contents"><table class="table" summary="Table of names">
 <colgroup>
 <col>
@@ -505,10 +610,150 @@
         </p></td></tr>
 </table></div>
 </div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_typeindex.examples.c_14_checking_namespace_at_compi"></a><a class="link" href="examples.html#boost_typeindex.examples.c_14_checking_namespace_at_compi" title="C++14: Checking namespace at compile time">C++14:
+      Checking namespace at compile time </a>
+</h3></div></div></div>
+<p>
+        The following example shows that <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">ctti_type_index</span></code>
+        is usable at compile time on a C++14 compatible compilers.
+      </p>
+<p>
+        In this example we'll create and use a constexpr function that checks namespace
+        of the provided type.
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">/</span><span class="identifier">ctti_type_index</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// Helper function that returns true if `name` starts with `substr`</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">N</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">starts_with</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">name</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">(&amp;</span><span class="identifier">substr</span><span class="special">)[</span><span class="identifier">N</span><span class="special">])</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+
+<span class="comment">// Function that returns true if `T` declared in namespace `ns`</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">N</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">in_namespace</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">(&amp;</span><span class="identifier">ns</span><span class="special">)[</span><span class="identifier">N</span><span class="special">])</span> <span class="keyword">noexcept</span> <span class="special">{</span>
+    <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">name</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">ctti_type_index</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;().</span><span class="identifier">raw_name</span><span class="special">();</span>
+
+    <span class="comment">// Some compilers add `class ` or `struct ` before the namespace, so we need to skip those words first</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">starts_with</span><span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="string">"class "</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">name</span> <span class="special">+=</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="string">"class "</span><span class="special">)</span> <span class="special">-</span> <span class="number">1</span><span class="special">;</span>
+    <span class="special">}</span> <span class="keyword">else</span> <span class="keyword">if</span> <span class="special">(</span><span class="identifier">starts_with</span><span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="string">"struct "</span><span class="special">))</span> <span class="special">{</span>
+        <span class="identifier">name</span> <span class="special">+=</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="string">"struct "</span><span class="special">)</span> <span class="special">-</span> <span class="number">1</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="identifier">starts_with</span><span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">ns</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">starts_with</span><span class="special">(</span><span class="identifier">name</span> <span class="special">+</span> <span class="identifier">N</span> <span class="special">-</span> <span class="number">1</span><span class="special">,</span> <span class="string">"::"</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+        Now when we have that wonderfull function, we can do static assertions and
+        other compile-time validations:
+      </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">my_project</span> <span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">serializer</span> <span class="special">{</span>
+        <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+        <span class="keyword">void</span> <span class="identifier">serialize</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">value</span><span class="special">)</span> <span class="special">{</span>
+            <span class="keyword">static_assert</span><span class="special">(</span>
+                <span class="identifier">in_namespace</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="string">"my_project::types"</span><span class="special">)</span> <span class="special">||</span> <span class="identifier">in_namespace</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="string">"my_project::types_ext"</span><span class="special">),</span>
+                <span class="string">"Only types from namespaces `my_project::types` and `my_project::types_ext` are allowed to be serialized using `my_project::serializer`"</span>
+            <span class="special">);</span>
+
+            <span class="comment">// Actual implementation of the serialization goes below</span>
+            <span class="comment">// ...</span>
+            <span class="identifier">do_something</span><span class="special">(</span><span class="identifier">value</span><span class="special">);</span>
+        <span class="special">}</span>
+    <span class="special">};</span>
+
+    <span class="keyword">namespace</span> <span class="identifier">types</span> <span class="special">{</span>
+        <span class="keyword">struct</span> <span class="identifier">foo</span><span class="special">{};</span>
+        <span class="keyword">struct</span> <span class="identifier">bar</span><span class="special">{};</span>
+    <span class="special">}</span>
+<span class="special">}</span> <span class="comment">// namespace my_project</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">my_project</span><span class="special">::</span><span class="identifier">serializer</span> <span class="identifier">s</span><span class="special">;</span>
+    <span class="identifier">my_project</span><span class="special">::</span><span class="identifier">types</span><span class="special">::</span><span class="identifier">foo</span> <span class="identifier">f</span><span class="special">;</span>
+    <span class="identifier">my_project</span><span class="special">::</span><span class="identifier">types</span><span class="special">::</span><span class="identifier">bar</span> <span class="identifier">b</span><span class="special">;</span>
+
+    <span class="identifier">s</span><span class="special">.</span><span class="identifier">serialize</span><span class="special">(</span><span class="identifier">f</span><span class="special">);</span>
+    <span class="identifier">s</span><span class="special">.</span><span class="identifier">serialize</span><span class="special">(</span><span class="identifier">b</span><span class="special">);</span>
+
+    <span class="comment">// short sh = 0;</span>
+    <span class="comment">// s.serialize(sh); // Fails the static_assert!</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_typeindex.examples.c_14_checking_lexigraphical_orde"></a><a class="link" href="examples.html#boost_typeindex.examples.c_14_checking_lexigraphical_orde" title="C++14: Checking lexigraphical order of provided types">C++14:
+      Checking lexigraphical order of provided types </a>
+</h3></div></div></div>
+<p>
+        The following example shows that <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">ctti_type_index</span></code>
+        is usable at compile time on a C++14 compatible compilers to check order
+        of template parameters.
+      </p>
+<p>
+        Consider the situation when we have a function that accepts std::tuple, boost::variant
+        or some other class that uses variadic templates:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">types</span><span class="special">{};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">do_something</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">...&gt;&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<p>
+        Such functions may be very usefull, however they may significantly increase
+        the size of the resulting program. Each instantionation of such function
+        with different templates order consumes space in the resulting program:
+      </p>
+<pre class="programlisting"><span class="comment">// Types are same, but different order leads to new instantionation of do_something function.</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&gt;</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&gt;</span>
+<span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span>
+</pre>
+<p>
+        One of the ways to reduce instantinations count is to force the types to
+        have some order:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_index</span><span class="special">/</span><span class="identifier">ctti_type_index</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// Implementing type trait that returns true if the types are sorted lexographicaly</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_asc_sorted</span><span class="special">(</span><span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">...&gt;)</span> <span class="keyword">noexcept</span> <span class="special">{</span>
+    <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Lhs</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Rhs</span><span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">TN</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_asc_sorted</span><span class="special">(</span><span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">Lhs</span><span class="special">,</span> <span class="identifier">Rhs</span><span class="special">,</span> <span class="identifier">TN</span><span class="special">...&gt;)</span> <span class="keyword">noexcept</span> <span class="special">{</span>
+    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">;</span>
+    <span class="keyword">return</span> <span class="identifier">ctti_type_index</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="identifier">Lhs</span><span class="special">&gt;()</span> <span class="special">&lt;=</span> <span class="identifier">ctti_type_index</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="identifier">Rhs</span><span class="special">&gt;()</span>
+        <span class="special">&amp;&amp;</span> <span class="identifier">is_asc_sorted</span><span class="special">(</span><span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">Rhs</span><span class="special">,</span> <span class="identifier">TN</span><span class="special">...&gt;());</span>
+<span class="special">}</span>
+
+
+<span class="comment">// Using the newly created `is_asc_sorted` trait:</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">do_something</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">...&gt;&amp;</span> <span class="comment">/*value*/</span><span class="special">)</span> <span class="keyword">noexcept</span> <span class="special">{</span>
+    <span class="keyword">static_assert</span><span class="special">(</span>
+        <span class="identifier">is_asc_sorted</span><span class="special">(</span> <span class="identifier">types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">...&gt;()</span> <span class="special">),</span>
+        <span class="string">"T... for do_something(const types&lt;T...&gt;&amp; t) must be sorted ascending"</span>
+    <span class="special">);</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+    <span class="identifier">do_something</span><span class="special">(</span> <span class="identifier">types</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;()</span> <span class="special">);</span>
+    <span class="comment">// do_something( types&lt;bool, int, double&gt;() ); // Fails the static_assert!</span>
+<span class="special">}</span>
+</pre>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2012-2014 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012-2016 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

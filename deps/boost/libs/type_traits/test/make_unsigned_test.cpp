@@ -4,14 +4,14 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.tt.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_type.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/make_unsigned.hpp>
 #endif
+#include "test.hpp"
+#include "check_type.hpp"
+#include "check_integral_constant.hpp"
 
 TT_TEST_BEGIN(make_unsigned)
 // signed types:

@@ -1,6 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 //
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+//
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -76,7 +82,7 @@ struct box_visitor
     {}
 
     template <typename Item>
-    inline void apply(Item const& item1, Item const& item2)
+    inline bool apply(Item const& item1, Item const& item2)
     {
         if (bg::intersects(item1.box, item2.box))
         {
@@ -85,40 +91,45 @@ struct box_visitor
             area += bg::area(b);
             count++;
         }
+        return true;
     }
 };
 
 struct point_in_box_visitor
 {
     int count;
+
     point_in_box_visitor()
         : count(0)
     {}
 
     template <typename Point, typename BoxItem>
-    inline void apply(Point const& point, BoxItem const& box_item)
+    inline bool apply(Point const& point, BoxItem const& box_item)
     {
         if (bg::within(point, box_item.box))
         {
             count++;
         }
+        return true;
     }
 };
 
 struct reversed_point_in_box_visitor
 {
     int count;
+
     reversed_point_in_box_visitor()
         : count(0)
     {}
 
     template <typename BoxItem, typename Point>
-    inline void apply(BoxItem const& box_item, Point const& point)
+    inline bool apply(BoxItem const& box_item, Point const& point)
     {
         if (bg::within(point, box_item.box))
         {
             count++;
         }
+        return true;
     }
 };
 
@@ -143,8 +154,8 @@ void test_boxes(std::string const& wkt_box_list, double expected_area, int expec
     box_visitor<Box> visitor;
     bg::partition
         <
-            Box, get_box, ovelaps_box
-        >::apply(boxes, visitor, 1);
+            Box
+        >::apply(boxes, visitor, get_box(), ovelaps_box(), 1);
 
     BOOST_CHECK_CLOSE(visitor.area, expected_area, 0.001);
     BOOST_CHECK_EQUAL(visitor.count, expected_count);
@@ -194,12 +205,13 @@ struct point_visitor
     {}
 
     template <typename Item>
-    inline void apply(Item const& item1, Item const& item2)
+    inline bool apply(Item const& item1, Item const& item2)
     {
         if (bg::equals(item1, item2))
         {
             count++;
         }
+        return true;
     }
 };
 
@@ -221,8 +233,9 @@ void test_points(std::string const& wkt1, std::string const& wkt2, int expected_
     point_visitor visitor;
     bg::partition
         <
-            bg::model::box<point_item>, get_point, ovelaps_point
-        >::apply(mp1, mp2, visitor, 1);
+            bg::model::box<point_item>
+        >::apply(mp1, mp2, visitor, get_point(), ovelaps_point(),
+                 get_point(), ovelaps_point(), 1);
 
     BOOST_CHECK_EQUAL(visitor.count, expected_count);
 }
@@ -369,12 +382,10 @@ void test_many_points(int seed, int size, int count)
     bg::partition
         <
             bg::model::box<point_item>,
-            get_point, ovelaps_point,
-            get_point, ovelaps_point,
             bg::detail::partition::include_all_policy,
-            bg::detail::partition::include_all_policy,
-            box_visitor_type
-        >::apply(mp1, mp2, visitor, 2, box_visitor);
+            bg::detail::partition::include_all_policy
+        >::apply(mp1, mp2, visitor, get_point(), ovelaps_point(),
+                 get_point(), ovelaps_point(), 2, box_visitor);
 
     BOOST_CHECK_EQUAL(visitor.count, expected_count);
 
@@ -479,12 +490,10 @@ void test_many_boxes(int seed, int size, int count)
     bg::partition
         <
             box_type,
-            get_box, ovelaps_box,
-            get_box, ovelaps_box,
             bg::detail::partition::include_all_policy,
-            bg::detail::partition::include_all_policy,
-            partition_box_visitor_type
-        >::apply(boxes, visitor, 2, partition_box_visitor);
+            bg::detail::partition::include_all_policy
+        >::apply(boxes, visitor, get_box(), ovelaps_box(),
+                 2, partition_box_visitor);
 
     BOOST_CHECK_EQUAL(visitor.count, expected_count);
     BOOST_CHECK_CLOSE(visitor.area, expected_area, 0.001);
@@ -549,12 +558,10 @@ void test_two_collections(int seed1, int seed2, int size, int count)
     bg::partition
         <
             box_type,
-            get_box, ovelaps_box,
-            get_box, ovelaps_box,
             bg::detail::partition::include_all_policy,
-            bg::detail::partition::include_all_policy,
-            partition_box_visitor_type
-        >::apply(boxes1, boxes2, visitor, 2, partition_box_visitor);
+            bg::detail::partition::include_all_policy
+        >::apply(boxes1, boxes2, visitor, get_box(), ovelaps_box(),
+                 get_box(), ovelaps_box(), 2, partition_box_visitor);
 
     BOOST_CHECK_EQUAL(visitor.count, expected_count);
     BOOST_CHECK_CLOSE(visitor.area, expected_area, 0.001);
@@ -617,23 +624,19 @@ void test_heterogenuous_collections(int seed1, int seed2, int size, int count)
     bg::partition
         <
             box_type,
-            get_point, ovelaps_point,
-            get_box, ovelaps_box,
             bg::detail::partition::include_all_policy,
-            bg::detail::partition::include_all_policy,
-            partition_box_visitor_type
-        >::apply(points, boxes, visitor1, 2, partition_box_visitor);
+            bg::detail::partition::include_all_policy
+        >::apply(points, boxes, visitor1, get_point(), ovelaps_point(),
+                 get_box(), ovelaps_box(), 2, partition_box_visitor);
 
     reversed_point_in_box_visitor visitor2;
     bg::partition
         <
             box_type,
-            get_box, ovelaps_box,
-            get_point, ovelaps_point,
             bg::detail::partition::include_all_policy,
-            bg::detail::partition::include_all_policy,
-            partition_box_visitor_type
-        >::apply(boxes, points, visitor2, 2, partition_box_visitor);
+            bg::detail::partition::include_all_policy
+        >::apply(boxes, points, visitor2, get_box(), ovelaps_box(),
+                 get_point(), ovelaps_point(), 2, partition_box_visitor);
 
     BOOST_CHECK_EQUAL(visitor1.count, expected_count);
     BOOST_CHECK_EQUAL(visitor2.count, expected_count);

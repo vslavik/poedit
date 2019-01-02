@@ -70,7 +70,7 @@ private:
 BOOST_AUTO_TEST_CASE( test_main )
 {
    int newton_limits = static_cast<int>(std::numeric_limits<double>::digits * 0.6);
-   int halley_limits = static_cast<int>(std::numeric_limits<double>::digits * 0.4);
+
    double arg = 1e-50;
    while(arg < 1e50)
    {

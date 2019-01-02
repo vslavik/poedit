@@ -89,8 +89,10 @@ struct iunordered_set_index_aux
    };
 
     struct hash_function
-      : std::unary_function<value_type, std::size_t>
     {
+        typedef value_type argument_type;
+        typedef std::size_t result_type;
+
         std::size_t operator()(const value_type &val) const
         {
             const char_type *beg = ipcdetail::to_raw_pointer(val.name()),

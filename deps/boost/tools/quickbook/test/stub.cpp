@@ -7,6 +7,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+// clang-format off
+
 /*` This should appear when =stub.cpp= is included. */
 
 #include <string>

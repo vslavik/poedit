@@ -138,10 +138,17 @@ public:
         }
 
         operation_type const op = acceptable_operation<MultiPolygon>::value;
+        if ( base::check_turn(turn, method_touch_interior, op)
+          || base::check_turn(turn, method_touch, op))
+        {
+            return true;
+        }
 
-        return base::check_turn(turn, method_touch_interior, op)
-            || base::check_turn(turn, method_touch, op)
-            ;
+        // Turn is acceptable only in case of a touch(interior) and both lines
+        // (polygons) do not cross
+        return (turn.method == method_touch
+                || turn.method == method_touch_interior)
+                && turn.touch_only;
     }
 };   
 

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Bessel Functions of the First and Second Kinds</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../bessel.html" title="Bessel Functions">
 <link rel="prev" href="bessel_over.html" title="Bessel Function Overview">
 <link rel="next" href="bessel_root.html" title="Finding Zeros of Bessel Functions of the First and Second Kinds">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.bessel.bessel_first.h0"></a>
-        <span><a name="math_toolkit.bessel.bessel_first.synopsis"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_first.synopsis"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.synopsis">Synopsis</a>
       </h5>
 <p>
         <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">bessel</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
@@ -37,18 +37,18 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">cyl_neumann</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <h5>
 <a name="math_toolkit.bessel.bessel_first.h1"></a>
-        <span><a name="math_toolkit.bessel.bessel_first.description"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_first.description"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.description">Description</a>
       </h5>
 <p>
         The functions <a class="link" href="bessel_first.html" title="Bessel Functions of the First and Second Kinds">cyl_bessel_j</a>
@@ -77,9 +77,9 @@
         an integer.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -109,7 +109,7 @@
       </p>
 <h5>
 <a name="math_toolkit.bessel.bessel_first.h2"></a>
-        <span><a name="math_toolkit.bessel.bessel_first.testing"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_first.testing"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.testing">Testing</a>
       </h5>
 <p>
         There are two sets of test values: spot values calculated using <a href="http://functions.wolfram.com" target="_top">functions.wolfram.com</a>,
@@ -118,7 +118,7 @@
       </p>
 <h5>
 <a name="math_toolkit.bessel.bessel_first.h3"></a>
-        <span><a name="math_toolkit.bessel.bessel_first.accuracy"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_first.accuracy"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.accuracy">Accuracy</a>
       </h5>
 <p>
         The following tables show how the accuracy of these functions varies on various
@@ -149,22 +149,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -177,30 +177,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.52&#949; (Mean = 1.2&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.89&#949; (Mean = 0.988&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 6.55&#949; (Mean = 2.89&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 5.04&#949; (Mean = 1.78&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j_integer_orders___tr1_cmath__Bessel_J0_Mathworld_Data_Integer_Version_">And
+                  <span class="blue">Max = 6.55&#949; (Mean = 2.86&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 5.04&#949; (Mean = 1.78&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j_integer_orders___cmath__Bessel_J0_Mathworld_Data_Integer_Version_">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 1.12&#949; (Mean = 0.488&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_0_2_Bessel_J0_Mathworld_Data_Integer_Version_">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.12&#949; (Mean = 0.568&#949;))
+                  2.1:</em></span> Max = 1.12&#949; (Mean = 0.488&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 0.629&#949; (Mean = 0.223&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_2_3_Bessel_J0_Mathworld_Data_Integer_Version_">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 6.55&#949; (Mean = 2.86&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.52&#949; (Mean = 1.2&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.89&#949; (Mean = 0.988&#949;))
                 </p>
               </td>
 </tr>
@@ -212,30 +210,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1e+007&#949; (Mean = 4.09e+006&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> <span class="red">Max
-                  = 2.54e+008&#949; (Mean = 1.04e+008&#949;))</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 1.63e+08&#949; (Mean = 6.67e+07&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 4.79e+08&#949; (Mean
+                  <span class="blue">Max = 1.64e+08&#949; (Mean = 6.69e+07&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 4.79e+08&#949; (Mean
                   = 1.96e+08&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.98e+04&#949; (Mean = 3.26e+04&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1e+07&#949; (Mean = 4.11e+06&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.04e+07&#949; (Mean = 4.29e+06&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = 2.54e+08&#949; (Mean
-                  = 1.04e+08&#949;))</span>
+                  <span class="blue">Max = 8e+04&#949; (Mean = 3.27e+04&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1e+07&#949; (Mean = 4.11e+06&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 1.04e+07&#949; (Mean = 4.29e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 1.64e+08&#949; (Mean = 6.69e+07&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1e+07&#949; (Mean = 4.09e+06&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> <span class="red">Max
+                  = 2.54e+08&#949; (Mean = 1.04e+08&#949;))</span>
                 </p>
               </td>
 </tr>
@@ -247,30 +243,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.73&#949; (Mean = 0.976&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 11.4&#949; (Mean = 4.15&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 2.66&#949; (Mean = 1.38&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 6.1&#949; (Mean = 2.95&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j_integer_orders___tr1_cmath__Bessel_J1_Mathworld_Data_Integer_Version_">And
+                  <span class="blue">Max = 3.59&#949; (Mean = 1.33&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 6.1&#949; (Mean = 2.95&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j_integer_orders___cmath__Bessel_J1_Mathworld_Data_Integer_Version_">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 1.89&#949; (Mean = 0.721&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_0_2_Bessel_J1_Mathworld_Data_Integer_Version_">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 2.88&#949; (Mean = 1.12&#949;))
+                  2.1:</em></span> Max = 1.89&#949; (Mean = 0.721&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 0.946&#949; (Mean = 0.39&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_2_3_Bessel_J1_Mathworld_Data_Integer_Version_">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 1.44&#949; (Mean = 0.637&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.73&#949; (Mean = 0.976&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 11.4&#949; (Mean = 4.15&#949;))
                 </p>
               </td>
 </tr>
@@ -282,29 +276,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.23e+004&#949; (Mean = 1.45e+004&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.44e+007&#949; (Mean
-                  = 6.5e+006&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 2.18e+05&#949; (Mean = 9.76e+04&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 2.15e+06&#949; (Mean
+                  <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 2.15e+06&#949; (Mean
                   = 1.58e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 106&#949; (Mean = 47.5&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.26e+06&#949; (Mean = 6.28e+05&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 2.93e+06&#949; (Mean = 1.7e+06&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 9.56e+05&#949; (Mean = 4.99e+05&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.26e+06&#949; (Mean = 6.28e+05&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 2.93e+06&#949; (Mean = 1.7e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 2.18e+05&#949; (Mean = 9.76e+04&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.23e+04&#949; (Mean = 1.45e+04&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.44e+07&#949; (Mean
+                  = 6.5e+06&#949;))
                 </p>
               </td>
 </tr>
@@ -316,34 +309,32 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 14.7&#949; (Mean = 5.4&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> <span class="red">Max =
-                  +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_Microsoft_Visual_C_version_12_0_Win32_double_cyl_bessel_j_integer_orders___math_h__Bessel_JN_Mathworld_Data_Integer_Version_">And
-                  other failures.</a>)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 6.85&#949; (Mean = 3.41&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 2.13e+19&#949; (Mean = 5.16e+18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j_integer_orders___tr1_cmath__Bessel_JN_Mathworld_Data_Integer_Version_">And
+                  <span class="blue">Max = 6.85&#949; (Mean = 3.35&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 2.13e+19&#949; (Mean
+                  = 5.16e+18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j_integer_orders___cmath__Bessel_JN_Mathworld_Data_Integer_Version_">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 6.9e+05&#949; (Mean = 2.53e+05&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_integer_orders__GSL_1_16_Bessel_JN_Mathworld_Data_Integer_Version_">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_0_2_Bessel_JN_Mathworld_Data_Integer_Version_">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_integer_orders__Cephes_Bessel_JN_Mathworld_Data_Integer_Version_">And
+                  2.1:</em></span> Max = 6.9e+05&#949; (Mean = 2.53e+05&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_integer_orders__GSL_2_1_Bessel_JN_Mathworld_Data_Integer_Version_">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_integer_orders__Rmath_3_2_3_Bessel_JN_Mathworld_Data_Integer_Version_">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 463&#949; (Mean = 112&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14.7&#949; (Mean = 5.4&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> <span class="red">Max =
+                  +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_Microsoft_Visual_C_version_14_1_Win32_double_cyl_bessel_j_integer_orders___math_h__Bessel_JN_Mathworld_Data_Integer_Version_">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 </tr>
@@ -365,22 +356,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -393,30 +384,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 2.52&#949; (Mean = 1.2&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 6.55&#949; (Mean = 2.89&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 5.04&#949; (Mean = 1.78&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j__tr1_cmath__Bessel_J0_Mathworld_Data">And
+                  <span class="blue">Max = 6.55&#949; (Mean = 2.86&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 5.04&#949; (Mean = 1.78&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j__cmath__Bessel_J0_Mathworld_Data">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 0.629&#949; (Mean = 0.223&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_J0_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_Rmath_3_0_2_Bessel_J0_Mathworld_Data">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.12&#949; (Mean = 0.568&#949;))
+                  2.1:</em></span> Max = 0.629&#949; (Mean = 0.223&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_J0_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 0.629&#949; (Mean = 0.223&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_Rmath_3_2_3_Bessel_J0_Mathworld_Data">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 6.55&#949; (Mean = 2.86&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.52&#949; (Mean = 1.2&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -428,28 +417,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1e+007&#949; (Mean = 4.09e+006&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 1.63e+08&#949; (Mean = 6.67e+07&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 4.79e+08&#949; (Mean
+                  <span class="blue">Max = 1.64e+08&#949; (Mean = 6.69e+07&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 4.79e+08&#949; (Mean
                   = 1.96e+08&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.98e+04&#949; (Mean = 3.26e+04&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 6.5e+07&#949; (Mean = 2.66e+07&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.04e+07&#949; (Mean = 4.29e+06&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = 2.54e+08&#949; (Mean
-                  = 1.04e+08&#949;))</span>
+                  <span class="blue">Max = 8e+04&#949; (Mean = 3.27e+04&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 6.5e+07&#949; (Mean = 2.66e+07&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 1.04e+07&#949; (Mean = 4.29e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 1.64e+08&#949; (Mean = 6.69e+07&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1e+07&#949; (Mean = 4.09e+06&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -461,30 +448,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.73&#949; (Mean = 0.976&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 2.66&#949; (Mean = 1.38&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 6.1&#949; (Mean = 2.95&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j__tr1_cmath__Bessel_J1_Mathworld_Data">And
+                  <span class="blue">Max = 3.59&#949; (Mean = 1.33&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 6.1&#949; (Mean = 2.95&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j__cmath__Bessel_J1_Mathworld_Data">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 6.62&#949; (Mean = 2.35&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_J1_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_Rmath_3_0_2_Bessel_J1_Mathworld_Data">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 2.88&#949; (Mean = 1.12&#949;))
+                  2.1:</em></span> Max = 6.62&#949; (Mean = 2.35&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_J1_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 0.946&#949; (Mean = 0.39&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_Rmath_3_2_3_Bessel_J1_Mathworld_Data">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 1.44&#949; (Mean = 0.637&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.73&#949; (Mean = 0.976&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -496,27 +481,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 3.23e+004&#949; (Mean = 1.45e+004&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 2.18e+05&#949; (Mean = 9.76e+04&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 2.15e+06&#949; (Mean
+                  <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 2.15e+06&#949; (Mean
                   = 1.58e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 106&#949; (Mean = 47.5&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 8.75e+05&#949; (Mean = 5.32e+05&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 2.93e+06&#949; (Mean = 1.7e+06&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 9.56e+05&#949; (Mean = 4.99e+05&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 8.75e+05&#949; (Mean = 5.32e+05&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 2.93e+06&#949; (Mean = 1.7e+06&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 2.18e+05&#949; (Mean = 9.76e+04&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.23e+04&#949; (Mean = 1.45e+04&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -528,30 +512,29 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 14.7&#949; (Mean = 5.4&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 6.85&#949; (Mean = 3.41&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 2.13e+19&#949; (Mean = 5.16e+18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j__tr1_cmath__Bessel_JN_Mathworld_Data">And
+                  <span class="blue">Max = 6.85&#949; (Mean = 3.35&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 2.13e+19&#949; (Mean
+                  = 5.16e+18&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j__cmath__Bessel_JN_Mathworld_Data">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 6.9e+05&#949; (Mean = 2.15e+05&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_JN_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_Rmath_3_0_2_Bessel_JN_Mathworld_Data">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 5.53e+05&#949; (Mean = 1.9e+05&#949;))
+                  2.1:</em></span> Max = 6.9e+05&#949; (Mean = 2.15e+05&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_JN_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_Rmath_3_2_3_Bessel_JN_Mathworld_Data">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 463&#949; (Mean = 112&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14.7&#949; (Mean = 5.4&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -563,31 +546,30 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 14.9&#949; (Mean = 3.82&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 14.7&#949; (Mean = 4.05&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 3.49e+05&#949; (Mean =
-                  7.89e+04&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j__tr1_cmath__Bessel_J_Mathworld_Data">And
+                  <span class="blue">Max = 14.7&#949; (Mean = 4.11&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 3.49e+05&#949; (Mean = 8.09e+04&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j__cmath__Bessel_J_Mathworld_Data">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 10&#949; (Mean = 2.19&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.39e+05&#949; (Mean = 5.24e+04&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_J_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_Rmath_3_0_2_Bessel_J_Mathworld_Data">And
-                  other failures.</a>)</span><br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 5.47e+05&#949; (Mean = 1.3e+05&#949;))
+                  <span class="blue">Max = 10&#949; (Mean = 2.24&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.39e+05&#949; (Mean = 5.37e+04&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_J_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_Rmath_3_2_3_Bessel_J_Mathworld_Data">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 14.7&#949; (Mean = 4.12&#949;)</span>
+                  <span class="blue">Max = 14.7&#949; (Mean = 4.22&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 14.9&#949; (Mean = 3.89&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -599,30 +581,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 9.31&#949; (Mean = 5.52&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 607&#949; (Mean = 305&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 34.9&#949; (Mean = 17.4&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_bessel_j__tr1_cmath__Bessel_J_Mathworld_Data_large_values_">And
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 34.9&#949; (Mean = 17.4&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_bessel_j__cmath__Bessel_J_Mathworld_Data_large_values_">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.536&#949; (Mean = 0.268&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 4.91e+03&#949; (Mean = 2.46e+03&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_J_Mathworld_Data_large_values_">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  Max = 35.9&#949; (Mean = 18.1&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_Cephes_Bessel_J_Mathworld_Data_large_values_">And
-                  other failures.</a>)</span>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 4.91e+03&#949; (Mean = 2.46e+03&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_J_Mathworld_Data_large_values_">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 5.9&#949; (Mean = 3.76&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 607&#949; (Mean = 305&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 9.31&#949; (Mean = 5.52&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -634,27 +614,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 17.5&#949; (Mean = 1.46&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 50.8&#949; (Mean = 4.15&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.12e+03&#949; (Mean =
-                  88.7&#949;))
+                  <span class="blue">Max = 50.8&#949; (Mean = 3.69&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.12e+03&#949; (Mean = 88.7&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 75.7&#949; (Mean = 5.36&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 3.93&#949; (Mean = 1.22&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 91.4&#949; (Mean = 6.47&#949;))
+                  2.1:</em></span> Max = 75.7&#949; (Mean = 5.36&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 3.93&#949; (Mean = 1.22&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 99.6&#949; (Mean = 22&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 17.5&#949; (Mean = 1.46&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -666,27 +644,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 9.24&#949; (Mean = 1.36&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 9.81&#949; (Mean = 1.59&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 501&#949; (Mean = 52.3&#949;))
+                  <span class="blue">Max = 11.4&#949; (Mean = 1.68&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 501&#949; (Mean = 52.3&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 15.5&#949; (Mean = 3.33&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_bessel_j_GSL_1_16_Bessel_J_Random_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  Max = 6.74&#949; (Mean = 1.3&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span> Max
-                  = 16.7&#949; (Mean = 2.5&#949;))
+                  2.1:</em></span> Max = 15.5&#949; (Mean = 3.33&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_bessel_j_GSL_2_1_Bessel_J_Random_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 6.74&#949; (Mean = 1.3&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 260&#949; (Mean = 34&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 9.24&#949; (Mean = 1.17&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -698,27 +675,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 59.2&#949; (Mean = 8.67&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 785&#949; (Mean = 94.2&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 5.01e+17&#949; (Mean = 6.23e+16&#949;))</span>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 5.01e+17&#949; (Mean
+                  = 6.23e+16&#949;))</span>
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 2.48e+05&#949; (Mean = 5.11e+04&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 71.6&#949; (Mean = 11.7&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 2.48e+05&#949; (Mean = 3.02e+04&#949;))
+                  2.1:</em></span> Max = 2.48e+05&#949; (Mean = 5.11e+04&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 71.6&#949; (Mean = 11.7&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 785&#949; (Mean = 97.4&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 59.2&#949; (Mean = 8.67&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -740,22 +716,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -768,28 +744,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.61&#949; (Mean = 2.29&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 5.37e+003&#949; (Mean = 1.81e+003&#949;))
+                  <span class="blue">Max = 5.53&#949; (Mean = 2.4&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 2.05e+05&#949; (Mean = 6.87e+04&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 6.46&#949; (Mean = 2.38&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 167&#949; (Mean = 56.5&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 5.37e+03&#949; (Mean = 1.81e+03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 5.59&#949; (Mean = 2.54&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 2.05e+05&#949; (Mean =
-                  6.87e+04&#949;))
+                  2.1:</em></span> Max = 6.46&#949; (Mean = 2.38&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 167&#949; (Mean = 56.5&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 5.53&#949; (Mean = 2.4&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.61&#949; (Mean = 2.29&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 5.37e+03&#949; (Mean = 1.81e+03&#949;))
                 </p>
               </td>
 </tr>
@@ -801,28 +775,26 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.75&#949; (Mean = 1.72&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.86e+004&#949; (Mean = 6.2e+003&#949;))
+                  <span class="blue">Max = 6.33&#949; (Mean = 2.25&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 9.71e+03&#949; (Mean = 4.08e+03&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 1.51&#949; (Mean = 0.839&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 193&#949; (Mean = 64.4&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
-                  Max = 1.86e+04&#949; (Mean = 6.2e+03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 12.7&#949; (Mean = 4.34&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 9.71e+03&#949; (Mean =
-                  4.08e+03&#949;))
+                  2.1:</em></span> Max = 1.51&#949; (Mean = 0.839&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 193&#949; (Mean = 64.4&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 6.33&#949; (Mean = 2.29&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.75&#949; (Mean = 1.72&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.86e+04&#949; (Mean = 6.2e+03&#949;))
                 </p>
               </td>
 </tr>
@@ -834,29 +806,28 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 35&#949; (Mean = 11.8&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 2.49e+005&#949; (Mean = 8.14e+004&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0.993&#949; (Mean = 0.314&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.41e+05&#949; (Mean = 7.62e+04&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.24e+04&#949; (Mean = 4e+03&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 2.49e+05&#949; (Mean = 8.14e+04&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 55.2&#949; (Mean = 17.7&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 2.2e+20&#949; (Mean = 6.97e+19&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_neumann_integer_orders___tr1_cmath__Yn_Mathworld_Data_Integer_Version_">And
+                  <span class="blue">Max = 55.2&#949; (Mean = 17.8&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 2.2e+20&#949; (Mean
+                  = 6.97e+19&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_neumann_integer_orders___cmath__Yn_Mathworld_Data_Integer_Version_">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
+                  <span class="blue">Max = 0.993&#949; (Mean = 0.314&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.41e+05&#949; (Mean = 7.62e+04&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 1.24e+04&#949; (Mean = 4e+03&#949;))
+                </p>
+              </td>
+<td>
+                <p>
                   <span class="blue">Max = 55.2&#949; (Mean = 17.8&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 35&#949; (Mean = 11.9&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 2.49e+05&#949; (Mean = 8.14e+04&#949;))
                 </p>
               </td>
 </tr>
@@ -878,22 +849,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -906,26 +877,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.61&#949; (Mean = 2.29&#949;)</span>
+                  <span class="blue">Max = 5.53&#949; (Mean = 2.4&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 2.05e+05&#949; (Mean = 6.87e+04&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 60.9&#949; (Mean = 20.4&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 167&#949; (Mean = 56.5&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 5.59&#949; (Mean = 2.54&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 2.05e+05&#949; (Mean =
-                  6.87e+04&#949;))
+                  2.1:</em></span> Max = 60.9&#949; (Mean = 20.4&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 167&#949; (Mean = 56.5&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 5.53&#949; (Mean = 2.4&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.61&#949; (Mean = 2.29&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -937,26 +907,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.75&#949; (Mean = 1.72&#949;)</span>
+                  <span class="blue">Max = 6.33&#949; (Mean = 2.25&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 9.71e+03&#949; (Mean = 4.08e+03&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 23.4&#949; (Mean = 8.1&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 193&#949; (Mean = 64.4&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 12.7&#949; (Mean = 4.34&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 9.71e+03&#949; (Mean =
-                  4.08e+03&#949;))
+                  2.1:</em></span> Max = 23.4&#949; (Mean = 8.1&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 193&#949; (Mean = 64.4&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 6.33&#949; (Mean = 2.29&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.75&#949; (Mean = 1.72&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -968,29 +937,29 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 35&#949; (Mean = 11.8&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0.993&#949; (Mean = 0.314&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.41e+05&#949; (Mean = 7.62e+04&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_neumann_GSL_1_16_Yn_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  Max = 1.24e+04&#949; (Mean = 4e+03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 55.2&#949; (Mean = 17.7&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 2.2e+20&#949; (Mean = 6.97e+19&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_neumann__tr1_cmath__Yn_Mathworld_Data">And
+                  <span class="blue">Max = 55.2&#949; (Mean = 17.8&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 2.2e+20&#949; (Mean
+                  = 6.97e+19&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_neumann__cmath__Yn_Mathworld_Data">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
+                  <span class="blue">Max = 0.993&#949; (Mean = 0.314&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.41e+05&#949; (Mean = 7.62e+04&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_neumann_GSL_2_1_Yn_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 1.24e+04&#949; (Mean = 4e+03&#949;))
+                </p>
+              </td>
+<td>
+                <p>
                   <span class="blue">Max = 55.2&#949; (Mean = 17.8&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 35&#949; (Mean = 11.9&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1002,29 +971,29 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 7.89&#949; (Mean = 3.27&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 10&#949; (Mean = 3.02&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.07e+05&#949; (Mean = 3.22e+04&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_neumann_GSL_1_16_Yv_Mathworld_Data">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  Max = 1.05e+03&#949; (Mean = 326&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 10.7&#949; (Mean = 4.92&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = 3.49e+15&#949; (Mean = 1.05e+15&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_neumann__tr1_cmath__Yv_Mathworld_Data">And
+                  <span class="blue">Max = 10.7&#949; (Mean = 4.93&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max = 3.49e+15&#949; (Mean
+                  = 1.05e+15&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_neumann__cmath__Yv_Mathworld_Data">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
+                  <span class="blue">Max = 10&#949; (Mean = 3.02&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.07e+05&#949; (Mean = 3.22e+04&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_neumann_GSL_2_1_Yv_Mathworld_Data">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 243&#949; (Mean = 73.9&#949;))
+                </p>
+              </td>
+<td>
+                <p>
                   <span class="blue">Max = 10.7&#949; (Mean = 5.1&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 7.89&#949; (Mean = 3.27&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1036,29 +1005,27 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.682&#949; (Mean = 0.35&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 60.8&#949; (Mean = 23&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_neumann_GSL_1_16_Yv_Mathworld_Data_large_values_">And
-                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
-                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_cyl_neumann_Rmath_3_0_2_Yv_Mathworld_Data_large_values_">And
-                  other failures.</a>)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 1.57&#949; (Mean = 1.17&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 43.2&#949; (Mean = 16.3&#949;)
-                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_neumann__tr1_cmath__Yv_Mathworld_Data_large_values_">And
+                  <span class="blue">Max = 1.7&#949; (Mean = 1.33&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 43.2&#949; (Mean = 16.3&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_neumann__cmath__Yv_Mathworld_Data_large_values_">And
                   other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.57&#949; (Mean = 1.24&#949;)</span>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  2.1:</em></span> Max = 60.8&#949; (Mean = 23&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_cyl_neumann_GSL_2_1_Yv_Mathworld_Data_large_values_">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span>
+                  Max = 0.682&#949; (Mean = 0.335&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.7&#949; (Mean = 1.33&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.682&#949; (Mean = 0.423&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1070,26 +1037,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 4.17&#949; (Mean = 1.24&#949;)</span>
+                  <span class="blue">Max = 10.8&#949; (Mean = 3.04&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 2.59e+03&#949; (Mean = 500&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 34.4&#949; (Mean = 8.9&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 83&#949; (Mean = 14.2&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 11.8&#949; (Mean = 3.28&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 2.59e+03&#949; (Mean =
-                  500&#949;))
+                  2.1:</em></span> Max = 34.4&#949; (Mean = 8.9&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 83&#949; (Mean = 14.2&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 10.8&#949; (Mean = 3.04&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.17&#949; (Mean = 1.24&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1101,26 +1067,25 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 117&#949; (Mean = 10.2&#949;)</span>
+                  <span class="blue">Max = 338&#949; (Mean = 27.5&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 4.01e+03&#949; (Mean = 348&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 500&#949; (Mean = 47.8&#949;))<br> (<span class="emphasis"><em>Rmath
-                  3.0.2:</em></span> Max = 691&#949; (Mean = 67.9&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 338&#949; (Mean = 28.2&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 4.01e+03&#949; (Mean =
-                  348&#949;))
+                  2.1:</em></span> Max = 500&#949; (Mean = 47.8&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.2.3:</em></span> Max = 691&#949; (Mean = 67.9&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 338&#949; (Mean = 27.5&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 117&#949; (Mean = 10.2&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1132,27 +1097,27 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.23e+003&#949; (Mean = 69.9&#949;)</span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 1.53&#949; (Mean = 0.102&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.41e+06&#949; (Mean = 7.67e+04&#949;))<br>
-                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.79e+05&#949; (Mean = 9.64e+03&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 2.08e+03&#949; (Mean = 149&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
-                  = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_cyl_neumann__tr1_cmath__Yv_Random_Data">And
+                  <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> <span class="red">Max
+                  = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_long_double_cyl_neumann__cmath__Yv_Random_Data">And
                   other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
+                  <span class="blue">Max = 1.53&#949; (Mean = 0.102&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.41e+06&#949; (Mean = 7.67e+04&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.2.3:</em></span> Max = 1.79e+05&#949; (Mean = 9.64e+03&#949;))
+                </p>
+              </td>
+<td>
+                <p>
                   <span class="blue">Max = 2.08e+03&#949; (Mean = 149&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.23e+03&#949; (Mean = 69.9&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -1180,9 +1145,22 @@
         and the result checked against our test data: no errors in the test data
         were found.
       </p>
+<p>
+        The following error plot are based on an exhaustive search of the functions
+        domain for J0 and Y0, MSVC-15.5 at <code class="computeroutput"><span class="keyword">double</span></code>
+        precision, other compilers and precisions are very similar - the plots simply
+        illustrate the relatively large errors as you approach a zero, and the very
+        low errors elsewhere.
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/j0__double.svg" align="middle"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/y0__double.svg" align="middle"></span>
+      </p>
 <h5>
 <a name="math_toolkit.bessel.bessel_first.h4"></a>
-        <span><a name="math_toolkit.bessel.bessel_first.implementation"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.bessel.bessel_first.implementation"></a></span><a class="link" href="bessel_first.html#math_toolkit.bessel.bessel_first.implementation">Implementation</a>
       </h5>
 <p>
         The implementation is mostly about filtering off various special cases:
@@ -1370,10 +1348,11 @@ are also computed by recursions (involving gamma functions), but
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Motivation</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="prev" href="intro.html" title="Introduction">
@@ -35,7 +35,7 @@
     </p>
 <h4>
 <a name="coroutine2.motivation.h0"></a>
-      <span><a name="coroutine2.motivation.event_driven_model"></a></span><a class="link" href="motivation.html#coroutine2.motivation.event_driven_model">event-driven
+      <span class="phrase"><a name="coroutine2.motivation.event_driven_model"></a></span><a class="link" href="motivation.html#coroutine2.motivation.event_driven_model">event-driven
       model</a>
     </h4>
 <p>
@@ -56,7 +56,7 @@
     </p>
 <h4>
 <a name="coroutine2.motivation.h1"></a>
-      <span><a name="coroutine2.motivation.event_based_asynchronous_paradigm"></a></span><a class="link" href="motivation.html#coroutine2.motivation.event_based_asynchronous_paradigm">event-based
+      <span class="phrase"><a name="coroutine2.motivation.event_based_asynchronous_paradigm"></a></span><a class="link" href="motivation.html#coroutine2.motivation.event_based_asynchronous_paradigm">event-based
       asynchronous paradigm</a>
     </h4>
 <p>
@@ -77,7 +77,7 @@
       systems use events. Although asynchronous programming can be done using threads,
       they come with their own costs:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           hard to program (traps for the unwary)
         </li>
@@ -94,7 +94,7 @@
 <p>
       The event-based asynchronous model avoids those issues:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           simpler because of the single stream of instructions
         </li>
@@ -179,7 +179,7 @@
       coroutines, hiding the complexity of event-driven programming and permitting
       the style of classic sequential code. The application is not required to pass
       callback functions to asynchronous operations and local state is kept as local
-      variables. Therefore the code is much easier to read and understand. <sup>[<a name="coroutine2.motivation.f0" href="#ftn.coroutine2.motivation.f0" class="footnote">4</a>]</sup>.
+      variables. Therefore the code is much easier to read and understand. <a href="#ftn.coroutine2.motivation.f0" class="footnote" name="coroutine2.motivation.f0"><sup class="footnote">[4]</sup></a>.
     </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">session</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span><span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">){</span>
     <span class="comment">// construct TCP-socket from io_service</span>
@@ -227,7 +227,7 @@
     </p>
 <h4>
 <a name="coroutine2.motivation.h2"></a>
-      <span><a name="coroutine2.motivation.recursive_descent_parsing"></a></span><a class="link" href="motivation.html#coroutine2.motivation.recursive_descent_parsing">recursive
+      <span class="phrase"><a name="coroutine2.motivation.recursive_descent_parsing"></a></span><a class="link" href="motivation.html#coroutine2.motivation.recursive_descent_parsing">recursive
       descent parsing</a>
     </h4>
 <p>
@@ -347,7 +347,7 @@
     </p>
 <h4>
 <a name="coroutine2.motivation.h3"></a>
-      <span><a name="coroutine2.motivation._same_fringe__problem"></a></span><a class="link" href="motivation.html#coroutine2.motivation._same_fringe__problem">'same
+      <span class="phrase"><a name="coroutine2.motivation._same_fringe__problem"></a></span><a class="link" href="motivation.html#coroutine2.motivation._same_fringe__problem">'same
       fringe' problem</a>
     </h4>
 <p>
@@ -500,7 +500,7 @@
 </pre>
 <h4>
 <a name="coroutine2.motivation.h4"></a>
-      <span><a name="coroutine2.motivation.chaining_coroutines"></a></span><a class="link" href="motivation.html#coroutine2.motivation.chaining_coroutines">chaining
+      <span class="phrase"><a name="coroutine2.motivation.chaining_coroutines"></a></span><a class="link" href="motivation.html#coroutine2.motivation.chaining_coroutines">chaining
       coroutines</a>
     </h4>
 <p>
@@ -630,8 +630,8 @@
 <span class="special">}</span>
 </pre>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.coroutine2.motivation.f0" href="#coroutine2.motivation.f0" class="para">4</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.coroutine2.motivation.f0" class="footnote"><p><a href="#coroutine2.motivation.f0" class="para"><sup class="para">[4] </sup></a>
         Christopher Kohlhoff, <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3964.pdf" target="_top">N3964
         - Library Foundations for Asynchronous Operations, Revision 1</a>
       </p></div>

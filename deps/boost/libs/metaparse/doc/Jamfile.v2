@@ -35,5 +35,12 @@ boostbook standalone
 install html : ../../../doc/src/boostbook.css ;
 install ../ : ../../../boost.png ;
 
-alias boostdoc : standalone
-    : : : <implicit-dependency>standalone ;
+###############################################################################
+alias boostdoc
+    : metaparse
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

@@ -20,6 +20,7 @@ var group__group_Sequence =
     [ "sort", "group__group-Sequence.html#gac000a79eb7b9d44ecc8982c93daa40e5", null ],
     [ "span", "group__group-Sequence.html#ga9bdde56d805517bce8e387f5bcd1887e", null ],
     [ "take_back", "group__group-Sequence.html#ga8d302de01b94b4b17f3bd81e09f42920", null ],
+    [ "take_back_c", "group__group-Sequence.html#gaa4d4818952083e3b27c83b0ed645e322", null ],
     [ "take_front", "group__group-Sequence.html#ga5112e6070d29b4f7fde3f44825da3316", null ],
     [ "take_front_c", "group__group-Sequence.html#ga3779f62fea92af00113a9290f1c680eb", null ],
     [ "take_while", "group__group-Sequence.html#ga2d4db4ec5ec5bc16fe74f57de12697fd", null ],

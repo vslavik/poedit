@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;44.&#160;Quickbook 1.6</title>
+<title>Chapter&#160;50.&#160;Quickbook 1.7</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="tools.html" title="Part&#160;II.&#160;Boost Tools">
 <link rel="prev" href="boostbook/dtd/rationale.html" title="BoostBook element rationale">
@@ -26,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="quickbook"></a>Chapter&#160;44.&#160;Quickbook 1.6</h2></div>
+<a name="quickbook"></a>Chapter&#160;50.&#160;Quickbook 1.7</h2></div>
 <div><div class="authorgroup">
 <div class="author"><h3 class="author">
 <span class="firstname">Joel</span> <span class="surname">de Guzman</span>
@@ -37,7 +37,7 @@
 </div></div>
 <div><p class="copyright">Copyright &#169; 2002, 2004, 2006 Joel de Guzman,
       Eric Niebler</p></div>
-<div><p class="copyright">Copyright &#169; 2010, 2011 Daniel James</p></div>
+<div><p class="copyright">Copyright &#169; 2010-2017 Daniel James</p></div>
 <div><div class="legalnotice">
 <a name="quickbook.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -47,9 +47,11 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="quickbook.html#quickbook.intro">Introduction</a></span></dt>
 <dt><span class="section"><a href="quickbook/change_log.html">Change Log</a></span></dt>
+<dt><span class="section"><a href="quickbook/command_line.html">Command Line Usage</a></span></dt>
+<dd><dl><dt><span class="section"><a href="quickbook/command_line.html#quickbook.command_line.options">Command Line Options</a></span></dt></dl></dd>
 <dt><span class="section"><a href="quickbook/syntax.html">Syntax Summary</a></span></dt>
 <dd><dl><dt><span class="section"><a href="quickbook/syntax.html#quickbook.syntax.comments">Comments</a></span></dt></dl></dd>
 <dt><span class="section"><a href="quickbook/syntax/structure.html">Document Structure</a></span></dt>
@@ -125,6 +127,7 @@
 </dl></dd>
 <dt><span class="section"><a href="quickbook/versions.html">Language Versions</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="quickbook/versions.html#quickbook.versions.upgrading">Upgrading to a new version</a></span></dt>
 <dt><span class="section"><a href="quickbook/versions.html#quickbook.versions.stable">Stable Versions</a></span></dt>
 <dt><span class="section"><a href="quickbook/versions.html#language_versions.1_6">Quickbook 1.6</a></span></dt>
 <dt><span class="section"><a href="quickbook/versions.html#language_versions.1_7">Quickbook 1.7</a></span></dt>
@@ -199,7 +202,7 @@
 <p>
       Features include:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           generate <a href="http://www.boost.org/doc/html/boostbook.html" target="_top">BoostBook</a>
           xml, to generate HTML, PostScript and PDF

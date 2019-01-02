@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::lazy`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -74,7 +74,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             X, typename detail::decay<Args>::type...
         > operator()(Args&& ...args) const& {
             return {detail::lazy_secret{},
-                    hana::get_impl<0>(storage_), static_cast<Args&&>(args)...};
+                    hana::at_c<0>(storage_), static_cast<Args&&>(args)...};
         }
 
         template <typename ...Args>
@@ -83,7 +83,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             X, typename detail::decay<Args>::type...
         > operator()(Args&& ...args) && {
             return {detail::lazy_secret{},
-                static_cast<X&&>(hana::get_impl<0>(storage_)),
+                static_cast<X&&>(hana::at_c<0>(storage_)),
                 static_cast<Args&&>(args)...
             };
         }
@@ -117,39 +117,39 @@ BOOST_HANA_NAMESPACE_BEGIN
         template <std::size_t ...n, typename F, typename ...Args>
         static constexpr decltype(auto)
         apply(lazy_apply_t<std::index_sequence<n...>, F, Args...> const& expr) {
-            return hana::get_impl<0>(expr.storage_)(
-                hana::get_impl<n+1>(expr.storage_)...
+            return hana::at_c<0>(expr.storage_)(
+                hana::at_c<n+1>(expr.storage_)...
             );
         }
 
         template <std::size_t ...n, typename F, typename ...Args>
         static constexpr decltype(auto)
         apply(lazy_apply_t<std::index_sequence<n...>, F, Args...>& expr) {
-            return hana::get_impl<0>(expr.storage_)(
-                hana::get_impl<n+1>(expr.storage_)...
+            return hana::at_c<0>(expr.storage_)(
+                hana::at_c<n+1>(expr.storage_)...
             );
         }
 
         template <std::size_t ...n, typename F, typename ...Args>
         static constexpr decltype(auto)
         apply(lazy_apply_t<std::index_sequence<n...>, F, Args...>&& expr) {
-            return static_cast<F&&>(hana::get_impl<0>(expr.storage_))(
-                static_cast<Args&&>(hana::get_impl<n+1>(expr.storage_))...
+            return static_cast<F&&>(hana::at_c<0>(expr.storage_))(
+                static_cast<Args&&>(hana::at_c<n+1>(expr.storage_))...
             );
         }
 
         // lazy_value_t
         template <typename X>
         static constexpr X const& apply(lazy_value_t<X> const& expr)
-        { return hana::get_impl<0>(expr.storage_); }
+        { return hana::at_c<0>(expr.storage_); }
 
         template <typename X>
         static constexpr X& apply(lazy_value_t<X>& expr)
-        { return hana::get_impl<0>(expr.storage_); }
+        { return hana::at_c<0>(expr.storage_); }
 
         template <typename X>
         static constexpr X apply(lazy_value_t<X>&& expr)
-        { return static_cast<X&&>(hana::get_impl<0>(expr.storage_)); }
+        { return static_cast<X&&>(hana::at_c<0>(expr.storage_)); }
     };
 
     //////////////////////////////////////////////////////////////////////////

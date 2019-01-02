@@ -19,7 +19,7 @@
 #   * pdf: Generates pdf documentation.
 #   * ps: Generates postscript output.
 #   * docbook: Generates docbook XML.
-#   * fo: Generates XSL formating objects.
+#   * fo: Generates XSL formatting objects.
 #   * tests: Extracts test cases from the boostbook XML.
 #
 # <format> is an implicit feature, so for example, typing pdf on the command
@@ -33,6 +33,7 @@ import generators ;
 import make ;
 import modules ;
 import os ;
+import param ;
 import path ;
 import print ;
 import project ;
@@ -58,13 +59,10 @@ feature.feature format
     : implicit composite propagated ;
 
 type.register DTDXML : dtdxml ;
-type.register XML : xml ;
 type.register BOOSTBOOK : boostbook : XML ;
-type.register DOCBOOK : docbook : XML ;
 type.register FO : fo : XML ;
-type.register PDF : pdf ;
 type.register PS : ps ;
-type.register XSLT : xsl : XML ;
+type.register XSLT : xsl xslt : XML ;
 type.register HTMLDIR ;
 type.register XHTMLDIR ;
 type.register HTMLHELP ;
@@ -97,7 +95,7 @@ rule init (
         find-tools $(docbook-xsl-dir) : $(docbook-dtd-dir) : $(boostbook-dir) ;
 
         # Register generators only if we were called via "using boostbook ;"
-        local reg-gen = generators.register-standard ;
+        local reg-gen = generators.register-xslt ;
         $(reg-gen) boostbook.dtdxml-to-boostbook  : DTDXML  : XML ;
         $(reg-gen) boostbook.boostbook-to-docbook : XML     : DOCBOOK ;
         $(reg-gen) boostbook.boostbook-to-tests   : XML     : TESTS ;
@@ -171,8 +169,8 @@ local rule modify-config ( )
 
 rule print-error ( location message * )
 {
-    ECHO error: at $(location) ;
-    ECHO error: $(message) ;
+    ECHO "error:" at $(location) ;
+    ECHO "error:" $(message) ;
     EXIT ;
 }
 
@@ -205,12 +203,12 @@ rule check-docbook-xsl-dir ( )
     {
         if ! [ path.glob $(.docbook-xsl-dir) : common/common.xsl ]
         {
-            .error-message = [ make-error BoostBook: could not find docbook XSL stylesheets
-                in: [ path.native $(.docbook-xsl-dir) ] ] ;
+            .error-message = [ make-error "BoostBook:" could not find docbook XSL stylesheets
+                "in:" [ path.native $(.docbook-xsl-dir) ] ] ;
         }
         else if $(.debug-configuration)
         {
-            ECHO notice: BoostBook: found docbook XSL stylesheets in: [
+            ECHO "notice:" "BoostBook:" found docbook XSL stylesheets "in:" [
                 path.native $(.docbook-xsl-dir) ] ;
         }
     }
@@ -223,12 +221,12 @@ rule check-docbook-dtd-dir ( )
     {
         if ! [ path.glob $(.docbook-dtd-dir) : docbookx.dtd ]
         {
-            .error-message = [ make-error BoostBook: could not find docbook DTD in: [
+            .error-message = [ make-error "BoostBook:" could not find docbook DTD "in:" [
                 path.native $(.docbook-dtd-dir) ] ] ;
         }
         else if $(.debug-configuration)
         {
-            ECHO notice: BoostBook: found docbook DTD in: [ path.native
+            ECHO "notice:" "BoostBook:" found docbook DTD "in:" [ path.native
                 $(.docbook-dtd-dir) ] ;
         }
     }
@@ -239,16 +237,16 @@ rule check-boostbook-xsl-dir ( )
 {
     if ! $(.boostbook-xsl-dir)
     {
-        .error-message = [ make-error BoostBook: could not find boostbook XSL stylesheets. ] ;
+        .error-message = [ make-error "BoostBook:" could not find boostbook XSL "stylesheets." ] ;
     }
     else if ! [ path.glob $(.boostbook-xsl-dir) : docbook.xsl ]
     {
-        .error-message = [ make-error  BoostBook: could not find docbook XSL stylesheets in:
+        .error-message = [ make-error  "BoostBook:" could not find docbook XSL stylesheets "in:"
             [ path.native $(.boostbook-xsl-dir) ] ] ;
     }
     else if $(.debug-configuration)
     {
-        ECHO notice: BoostBook: found boostbook XSL stylesheets in: [
+        ECHO "notice:" "BoostBook:" found boostbook XSL stylesheets "in:" [
             path.native $(.boostbook-xsl-dir) ] ;
     }
 }
@@ -258,16 +256,16 @@ rule check-boostbook-dtd-dir ( )
 {
     if ! $(.boostbook-dtd-dir)
     {
-        .error-message = [ make-error BoostBook: could not find boostbook DTD. ] ;
+        .error-message = [ make-error "BoostBook:" could not find boostbook DTD. ] ;
     }
     else if ! [ path.glob $(.boostbook-dtd-dir) : boostbook.dtd ]
     {
-        .error-message = [ make-error BoostBook: could not find boostbook DTD in: [
+        .error-message = [ make-error "BoostBook:" could not find boostbook DTD "in:" [
             path.native $(.boostbook-dtd-dir) ] ] ;
     }
     else if $(.debug-configuration)
     {
-        ECHO notice: BoostBook: found boostbook DTD in: [ path.native
+        ECHO "notice:" "BoostBook:" found boostbook DTD "in:" [ path.native
             $(.boostbook-dtd-dir) ] ;
     }
 }
@@ -277,7 +275,7 @@ rule check-boostbook-dir ( boostbook-dir ? )
 {
     if $(boostbook-dir) && ! [ path.glob $(boostbook-dir) : xsl ]
     {
-        .error-message = [ make-error BoostBook: could not find boostbook in: [ path.native
+        .error-message = [ make-error "BoostBook:" could not find boostbook "in:" [ path.native
             $(boostbook-dir) ] ] ;
     }
 }
@@ -386,8 +384,8 @@ rule find-tools ( docbook-xsl-dir ? : docbook-dtd-dir ? : boostbook-dir ? )
 
     if $(.debug-configuration)
     {
-        ECHO notice: Boost.Book: searching XSL/DTD "in" ;
-        ECHO notice: [ sequence.transform path.native : $(boostbook-dir) ] ;
+        ECHO "notice:" "Boost.Book:" searching XSL/DTD "in" ;
+        ECHO "notice:" [ sequence.transform path.native : $(boostbook-dir) ] ;
     }
     local boostbook-xsl-dir ;
     for local dir in $(boostbook-dir)
@@ -512,7 +510,7 @@ rule format-catalog-path ( path )
     {
         if [ os.name ] = NT
         {
-            drive = [ MATCH ^/(.):(.*)$ : $(path) ] ;
+            drive = [ MATCH "^/(.):(.*)$" : $(path) ] ;
             result = /cygdrive/$(drive[1])$(drive[2]) ;
         }
     }
@@ -719,11 +717,14 @@ class boostbook-target-class : basic-target
 
 # Declare a boostbook target.
 #
-rule boostbook ( target-name : sources * : requirements * : default-build * )
+rule boostbook ( target-name : sources * : requirements * : default-build * :
+    usage-requirements * )
 {
+    param.handle-named-params
+        sources requirements default-build usage-requirements ;
     return [ targets.create-metatarget boostbook-target-class :
         [ project.current ] : $(target-name) : $(sources) : $(requirements) :
-        $(default-build) ] ;
+        $(default-build) : $(usage-requirements) ] ;
 }
 
 
@@ -737,41 +738,3 @@ rule boostbook-to-tests ( target : source : properties * )
     xsltproc.xslt $(target) : $(source) $(stylesheet) : $(properties)
         <xsl:param>boost.root=$(boost_root) ;
 }
-
-
-#############################################################################
-# Dependency scanners
-#############################################################################
-# XInclude scanner. Mostly stolen from c-scanner. :)
-# Note that this assumes an "xi" prefix for XIncludes. This is not always the
-# case for XML documents, but we assume it is true for anything we encounter.
-#
-class xinclude-scanner : scanner
-{
-    import scanner ;
-
-    rule __init__ ( includes * )
-    {
-        scanner.__init__ ;
-        self.includes = $(includes) ;
-    }
-
-    rule pattern ( )
-    {
-        return "xi:include[ ]*href=\"([^\"]*)\"" ;
-    }
-
-    rule process ( target : matches * : binding )
-    {
-        local target_path = [ NORMALIZE_PATH $(binding:D) ] ;
-
-        NOCARE $(matches) ;
-        INCLUDES $(target) : $(matches) ;
-        SEARCH on $(matches) = $(target_path) $(self.includes:G=) ;
-
-        scanner.propagate $(__name__) : $(matches) : $(target) ;
-    }
-}
-
-scanner.register xinclude-scanner : xsl:path ;
-type.set-scanner XML : xinclude-scanner ;

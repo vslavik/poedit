@@ -22,6 +22,8 @@
 #include <boost/type_traits.hpp>
 #include <boost/test/test_tools.hpp>
 #include <vector>
+#include <iterator>
+#include <utility>
 
 void check_iterator_pair()
 {
@@ -39,23 +41,23 @@ void check_iterator_pair()
 
 
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_value<pair_t>::type,
-                          boost::detail::iterator_traits<pair_t::first_type>::value_type>::value ));
+                          std::iterator_traits<pair_t::first_type>::value_type>::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<pair_t>::type, pair_t::first_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_const_iterator<pair_t>::type, pair_t::first_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_difference<pair_t>::type,
-                          boost::detail::iterator_traits<pair_t::first_type>::difference_type >::value ));
+                          std::iterator_traits<pair_t::first_type>::difference_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_size<pair_t>::type, std::size_t >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<pair_t>::type, pair_t::first_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<const_pair_t>::type, const_pair_t::first_type >::value ));
 
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_value<const_pair_tt>::type,
-                          boost::detail::iterator_traits<const_pair_t::first_type>::value_type>::value ));
+                          std::iterator_traits<const_pair_t::first_type>::value_type>::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<const_pair_tt>::type, const_pair_tt::first_type >::value ));
     //
     // This behavior is not supported with v2.
     //BOOST_STATIC_ASSERT(( is_same< range_const_iterator<const_pair_tt>::type, const_pair_tt::first_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_difference<const_pair_tt>::type,
-                          boost::detail::iterator_traits<const_pair_tt::first_type>::difference_type >::value ));
+                          std::iterator_traits<const_pair_tt::first_type>::difference_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_size<const_pair_tt>::type, std::size_t >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<const_pair_tt>::type, const_pair_tt::first_type >::value ));
     BOOST_STATIC_ASSERT(( boost::is_same< boost::range_iterator<const_pair_tt>::type, const_pair_tt::first_type >::value ));

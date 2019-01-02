@@ -59,20 +59,26 @@ wait_any(ForwardIterator first, ForwardIterator last)
   ForwardIterator current = first;
   while (true) {
     // Check if we have found a completed request. If so, return it.
-    if (current->m_requests[0] != MPI_REQUEST_NULL &&
-        (current->m_requests[1] != MPI_REQUEST_NULL ||
-         current->m_handler)) {
-      if (optional<status> result = current->test())
+    bool current_is_active = 
+      ( current->m_requests[0] != MPI_REQUEST_NULL ||
+        current->m_requests[1] != MPI_REQUEST_NULL) ;
+    if (current_is_active) {
+      optional<status> result = current->test();
+      if (bool(result)) {
         return std::make_pair(*result, current);
+      }
     }
-
+    
     // Check if this request (and all others before it) are "trivial"
     // requests, e.g., they can be represented with a single
     // MPI_Request.
-    all_trivial_requests = 
-      all_trivial_requests
-      && !current->m_handler 
-      && current->m_requests[1] == MPI_REQUEST_NULL;
+    // We could probably ignore non trivial request that are inactive,
+    // but we can assume that a mix of trivial and non trivial requests
+    // is unlikely enough not to care.
+    bool current_trivial_request =
+      ( !bool(current->m_handler) &&
+        current->m_requests[1] == MPI_REQUEST_NULL);
+    all_trivial_requests = all_trivial_requests && current_trivial_request;
 
     // Move to the next request.
     ++n;

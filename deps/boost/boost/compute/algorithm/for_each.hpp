@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_FOR_EACH_HPP
 #define BOOST_COMPUTE_ALGORITHM_FOR_EACH_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -45,6 +48,8 @@ struct for_each_kernel : public meta_kernel
 
 /// Calls \p function on each element in the range [\p first, \p last).
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see transform()
 template<class InputIterator, class UnaryFunction>
 inline UnaryFunction for_each(InputIterator first,
@@ -52,6 +57,8 @@ inline UnaryFunction for_each(InputIterator first,
                               UnaryFunction function,
                               command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+
     detail::for_each_kernel<InputIterator, UnaryFunction> kernel(first, last, function);
 
     kernel.exec(queue);

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Concept BidirectionalIterator</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Concept reference">
 <link rel="up" href="index.html" title="Concept reference">
 <link rel="prev" href="ForwardIterator.html" title="Concept ForwardIterator">
@@ -29,7 +29,7 @@
 <p>BidirectionalIterator</p>
 </div>
 <div class="refsect1">
-<a name="idp31323232"></a><h2>Description</h2>
+<a name="idp67492992"></a><h2>Description</h2>
 <p>A bidirectional iterator is an iterator that can read through a sequence
   of values.  It can move in either direction through the sequence, and can
   be either mutable (data pointed to by it can be changed) or not mutable.</p>
@@ -39,12 +39,12 @@
   incrementable).</p>
 </div>
 <div class="refsect1">
-<a name="idp31325040"></a><h2>Refinement of</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><a class="link" href="ForwardIterator.html" title="Concept ForwardIterator">ForwardIterator</a></p></li></ul></div>
+<a name="idp67494800"></a><h2>Refinement of</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="link" href="ForwardIterator.html" title="Concept ForwardIterator">ForwardIterator</a></p></li></ul></div>
 </div>
 <div class="refsect1">
-<a name="idp31326592"></a><h2>Associated types</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp67496352"></a><h2>Associated types</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p><span class="bold"><strong>value_type</strong></span></p>
 <pre class="literallayout">std::iterator_traits&lt;Iter&gt;::value_type</pre>
@@ -58,8 +58,8 @@
 </ul></div>
 </div>
 <div class="refsect1">
-<a name="idp31331344"></a><h2>Notation</h2>
-<div class="variablelist"><dl>
+<a name="idp67501104"></a><h2>Notation</h2>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term">Iter</span></dt>
 <dd>A type playing the role of iterator-type in the <a class="link" href="BidirectionalIterator.html" title="Concept BidirectionalIterator">BidirectionalIterator</a> concept.</dd>
 <dt>
@@ -71,8 +71,8 @@
 </dl></div>
 </div>
 <div class="refsect1">
-<a name="idp31335856"></a><h2>Type expressions</h2>
-<div class="variablelist"><dl>
+<a name="idp67505616"></a><h2>Type expressions</h2>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term">Category tag</span></dt>
 <dd><p><span class="type">category</span> must be
                   derived from <span class="type">std::bidirectional_iterator_tag</span>.
@@ -80,7 +80,7 @@
 </dl></div>
 </div>
 <div class="refsect1">
-<a name="idp31337952"></a><h2>Valid expressions</h2>
+<a name="idp67507712"></a><h2>Valid expressions</h2>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -122,14 +122,14 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="idp31349296"></a><h2>Complexity</h2>
+<a name="idp69208160"></a><h2>Complexity</h2>
 <p>
   All iterator operations must take amortized constant time.
   </p>
 </div>
 <div class="refsect1">
-<a name="idp31349936"></a><h2>Invariants</h2>
-<div class="variablelist"><dl>
+<a name="idp69208800"></a><h2>Invariants</h2>
+<div class="variablelist"><dl class="variablelist">
 <dt><span class="term">Predecrement must return object</span></dt>
 <dd><p>
   <code class="computeroutput">&amp;i = &amp;(--i)</code>
@@ -147,15 +147,15 @@
 </dl></div>
 </div>
 <div class="refsect1">
-<a name="idp31358416"></a><h2>Models</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<a name="idp69217280"></a><h2>Models</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><span class="simplelist"><span class="type">T *</span></span></li>
 <li class="listitem"><span class="simplelist"><span class="type">std::list&lt;T&gt;::iterator</span></span></li>
 </ul></div>
 </div>
 <div class="refsect1">
-<a name="idp31360832"></a><h2>See also</h2>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><a class="link" href="RandomAccessIterator.html" title="Concept RandomAccessIterator">RandomAccessIterator</a></p></li></ul></div>
+<a name="idp69219696"></a><h2>See also</h2>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="link" href="RandomAccessIterator.html" title="Concept RandomAccessIterator">RandomAccessIterator</a></p></li></ul></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

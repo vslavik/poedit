@@ -32,7 +32,13 @@ private:
 
 template<int> struct X { };
 
+
+#if __cplusplus < 201400L
+// Some C++14 compilers reject this (clang), some C++11 compilers reject "constexpr const" (GCC-4.6)
+constexpr A a = 42;
+#else
 constexpr const A a = 42;
+#endif
 
 X<a> xx; // OK: unique conversion to int
 

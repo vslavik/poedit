@@ -267,8 +267,13 @@ T newton_raphson_iterate(F f, T guess, T min, T max, int digits, boost::uintmax_
 #endif
       if(fabs(delta * 2) > fabs(delta2))
       {
-         // last two steps haven't converged, try bisection:
+         // last two steps haven't converged.
          delta = (delta > 0) ? (result - min) / 2 : (result - max) / 2;
+         if (fabs(delta) > fabs(result))
+            delta = sign(delta) * result; // protect against huge jumps!
+         // reset delta2 so we don't take this branch next time round:
+         delta1 = delta;
+         delta2 = 3 * delta;
       }
       guess = result;
       result -= delta;
@@ -350,12 +355,11 @@ namespace detail{
          T f0(0), f1, f2;
       T result = guess;
 
-      T factor = static_cast<T>(ldexp(1.0, 1 - digits));
+      T factor = ldexp(static_cast<T>(1.0), 1 - digits);
       T delta = (std::max)(T(10000000 * guess), T(10000000));  // arbitarily large delta
       T last_f0 = 0;
       T delta1 = delta;
       T delta2 = delta;
-
       bool out_of_bounds_sentry = false;
 
 #ifdef BOOST_MATH_INSTRUMENT
@@ -415,13 +419,14 @@ namespace detail{
          T convergence = fabs(delta / delta2);
          if((convergence > 0.8) && (convergence < 2))
          {
-            // last two steps haven't converged, try bisection:
+            // last two steps haven't converged.
             delta = (delta > 0) ? (result - min) / 2 : (result - max) / 2;
-            if(fabs(delta) > result)
+            if (fabs(delta) > result)
                delta = sign(delta) * result; // protect against huge jumps!
             // reset delta2 so that this branch will *not* be taken on the
             // next iteration:
             delta2 = delta * 3;
+            delta1 = delta;
             BOOST_MATH_INSTRUMENT_VARIABLE(delta);
          }
          guess = result;

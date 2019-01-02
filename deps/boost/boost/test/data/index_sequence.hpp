@@ -49,6 +49,11 @@ struct make_index_sequence<B,E,typename std::enable_if<E==B+1,void>::type> {
     typedef index_sequence<B> type;
 };
 
+template <>
+struct make_index_sequence<0, 0> {
+    typedef index_sequence<> type;
+};
+
 template <typename... T>
 using index_sequence_for = typename make_index_sequence<0, sizeof...(T)>::type;
 

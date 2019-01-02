@@ -2,8 +2,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013, 2014, 2015.
-// Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014, 2015, 2017.
+// Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -37,10 +37,10 @@ struct point_geometry
 
     static const bool interruption_enabled = true;
 
-    template <typename Result>
-    static inline void apply(Point const& point, Geometry const& geometry, Result & result)
+    template <typename Result, typename Strategy>
+    static inline void apply(Point const& point, Geometry const& geometry, Result & result, Strategy const& strategy)
     {
-        int pig = detail::within::point_in_geometry(point, geometry);
+        int pig = detail::within::point_in_geometry(point, geometry, strategy);
 
         if ( pig > 0 ) // within
         {
@@ -60,29 +60,27 @@ struct point_geometry
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
 
-        // the point is on the boundary
-        if ( pig == 0 )
+        typedef detail::relate::topology_check<Geometry> tc_t;
+        if ( relate::may_update<exterior, interior, tc_t::interior, Transpose>(result)
+          || relate::may_update<exterior, boundary, tc_t::boundary, Transpose>(result) )
         {
-            // NOTE: even for MLs, if there is at least one boundary point,
-            // somewhere there must be another one
-
-            // check if there are other boundaries outside
-            typedef detail::relate::topology_check<Geometry> tc_t;
-            //tc_t tc(geometry, point);
-            //if ( tc.has_interior )
+            // the point is on the boundary
+            if ( pig == 0 )
+            {
+                // NOTE: even for MLs, if there is at least one boundary point,
+                // somewhere there must be another one
                 relate::set<exterior, interior, tc_t::interior, Transpose>(result);
-            //if ( tc.has_boundary )
                 relate::set<exterior, boundary, tc_t::boundary, Transpose>(result);
-        }
-        else
-        {
-            // check if there is a boundary in Geometry
-            typedef detail::relate::topology_check<Geometry> tc_t;
-            tc_t tc(geometry);
-            if ( tc.has_interior )
-                relate::set<exterior, interior, tc_t::interior, Transpose>(result);
-            if ( tc.has_boundary )
-                relate::set<exterior, boundary, tc_t::boundary, Transpose>(result);
+            }
+            else
+            {
+                // check if there is a boundary in Geometry
+                tc_t tc(geometry);
+                if ( tc.has_interior() )
+                    relate::set<exterior, interior, tc_t::interior, Transpose>(result);
+                if ( tc.has_boundary() )
+                    relate::set<exterior, boundary, tc_t::boundary, Transpose>(result);
+            }
         }
     }
 };
@@ -95,10 +93,10 @@ struct geometry_point
 
     static const bool interruption_enabled = true;
 
-    template <typename Result>
-    static inline void apply(Geometry const& geometry, Point const& point, Result & result)
+    template <typename Result, typename Strategy>
+    static inline void apply(Geometry const& geometry, Point const& point, Result & result, Strategy const& strategy)
     {
-        point_geometry<Point, Geometry, true>::apply(point, geometry, result);
+        point_geometry<Point, Geometry, true>::apply(point, geometry, result, strategy);
     }
 };
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function transform</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.transform_hpp" title="Header &lt;boost/compute/algorithm/transform.hpp&gt;">
 <link rel="prev" href="swap_ranges.html" title="Function template swap_ranges">
@@ -45,11 +45,11 @@
             <span class="identifier">InputIterator2</span> first2<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">,</span> <span class="identifier">BinaryOperator</span> op<span class="special">,</span> 
             <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp69337728"></a><h2>Description</h2>
-<p>Transforms the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) using <code class="computeroutput">transform</code> and stores the results in the range beginning at <code class="computeroutput">result</code>.</p>
+<a name="idp83767648"></a><h2>Description</h2>
+<p>Transforms the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) using operator <code class="computeroutput">op</code> and stores the results in the range beginning at <code class="computeroutput">result</code>.</p>
 <p>For example, to calculate the absolute value for each element in a vector:</p>
 <pre class="programlisting"></pre>
-<p> </p>
+<p> Space complexity: (1)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>copy() </p>
 <p>

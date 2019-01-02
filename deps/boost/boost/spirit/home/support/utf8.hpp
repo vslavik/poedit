@@ -67,6 +67,44 @@ namespace boost { namespace spirit
         }
         return result;
     }
+
+    // Assume wchar_t content is UTF-16 on Windows and UCS-4 on Unix
+#if defined(_WIN32) || defined(__CYGWIN__)
+    inline utf8_string to_utf8(wchar_t value)
+    {
+        utf8_string result;
+        typedef std::back_insert_iterator<utf8_string> insert_iter;
+        insert_iter out_iter(result);
+        utf8_output_iterator<insert_iter> utf8_iter(out_iter);
+
+        u16_to_u32_iterator<wchar_t const*, ucs4_char> ucs4_iter(&value);
+        *utf8_iter++ = *ucs4_iter;
+
+        return result;
+    }
+
+    inline utf8_string to_utf8(wchar_t const* str)
+    {
+        utf8_string result;
+        typedef std::back_insert_iterator<utf8_string> insert_iter;
+        insert_iter out_iter(result);
+        utf8_output_iterator<insert_iter> utf8_iter(out_iter);
+
+        u16_to_u32_iterator<wchar_t const*, ucs4_char> ucs4_iter(str);
+        for (ucs4_char c; (c = *ucs4_iter) != ucs4_char(); ++ucs4_iter) {
+            *utf8_iter++ = c;
+        }
+
+        return result;
+    }
+
+    template <typename Traits, typename Allocator>
+    inline utf8_string
+    to_utf8(std::basic_string<wchar_t, Traits, Allocator> const& str)
+    {
+        return to_utf8(str.c_str());
+    }
+#endif
 }}
 
 #endif

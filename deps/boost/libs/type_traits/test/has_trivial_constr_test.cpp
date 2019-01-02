@@ -4,13 +4,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/has_trivial_constructor.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 
 class bug11324_base
@@ -207,6 +207,7 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_constructor<bug11324_derived>::v
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_constructor<private_construct>::value, false);
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_constructor<deleted_construct>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::has_trivial_constructor<std::pair<deleted_construct, int> >::value), false);
 #endif
 
 TT_TEST_END

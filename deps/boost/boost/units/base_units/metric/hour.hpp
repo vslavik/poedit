@@ -27,8 +27,8 @@ typedef scaled_base_unit<boost::units::si::second_base_unit, scale<60, static_ra
 
 template<>
 struct base_unit_info<metric::hour_base_unit> {
-    static const char* name()   { return("hour"); }
-    static const char* symbol() { return("h"); }
+    static BOOST_CONSTEXPR const char* name()   { return("hour"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("h"); }
 };
 
 }

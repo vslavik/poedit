@@ -37,6 +37,11 @@
 
 #endif
 
+//! Defined when the initializer_list implementation is buggy, such as for VS2013
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#  define BOOST_TEST_ERRONEOUS_INIT_LIST
+#endif
+
 //____________________________________________________________________________//
 
 #define BOOST_TEST_DS_ERROR( msg )        BOOST_TEST_I_THROW( std::logic_error( msg ) )

@@ -82,7 +82,7 @@ void pri_queue_test_update_shuffled(void)
     PUSH_WITH_HANDLES(handles, q, data);
 
     test_data shuffled (data);
-    std::random_shuffle(shuffled.begin(), shuffled.end());
+    random_shuffle(shuffled.begin(), shuffled.end());
 
     for (int i = 0; i != test_size; ++i)
         q.update(handles[i], shuffled[i]);

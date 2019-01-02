@@ -2,7 +2,7 @@
 //
 // R-tree nodes based on Boost.Variant, storing dynamic-size containers
 //
-// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2018 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,6 +10,8 @@
 
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_RTREE_NODE_VARIANT_DYNAMIC_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_RTREE_NODE_VARIANT_DYNAMIC_HPP
+
+#include <boost/core/pointer_traits.hpp>
 
 namespace boost { namespace geometry { namespace index {
 
@@ -20,18 +22,17 @@ namespace detail { namespace rtree {
 template <typename Value, typename Parameters, typename Box, typename Allocators, typename Tag>
 struct variant_internal_node
 {
-    typedef boost::container::vector
+    typedef rtree::ptr_pair<Box, typename Allocators::node_pointer> element_type;
+    typedef typename boost::container::allocator_traits
         <
-            rtree::ptr_pair<Box, typename Allocators::node_pointer>,
-            typename Allocators::node_allocator_type::template rebind
-                <
-                    rtree::ptr_pair<Box, typename Allocators::node_pointer>
-                >::other
-        > elements_type;
+            typename Allocators::node_allocator_type
+        >::template rebind_alloc<element_type> allocator_type;
+
+    typedef boost::container::vector<element_type, allocator_type> elements_type;
 
     template <typename Al>
     inline variant_internal_node(Al const& al)
-        : elements(al)
+        : elements(allocator_type(al))
     {}
 
     elements_type elements;
@@ -40,18 +41,16 @@ struct variant_internal_node
 template <typename Value, typename Parameters, typename Box, typename Allocators, typename Tag>
 struct variant_leaf
 {
-    typedef boost::container::vector
+    typedef typename boost::container::allocator_traits
         <
-            Value,
-            typename Allocators::node_allocator_type::template rebind
-                <
-                    Value
-                >::other
-        > elements_type;
+            typename Allocators::node_allocator_type
+        >::template rebind_alloc<Value> allocator_type;
 
-     template <typename Al>
+    typedef boost::container::vector<Value, allocator_type> elements_type;
+
+    template <typename Al>
     inline variant_leaf(Al const& al)
-        : elements(al)
+        : elements(allocator_type(al))
     {}
 
     elements_type elements;
@@ -90,38 +89,59 @@ struct visitor<Value, Parameters, Box, Allocators, node_variant_dynamic_tag, IsV
 
 // allocators
 
+template <typename Allocator, typename Value, typename Parameters, typename Box, typename Tag>
+struct node_alloc
+{
+    typedef typename node
+        <
+            Value, Parameters, Box,
+            allocators<Allocator, Value, Parameters, Box, Tag>,
+            Tag
+        >::type node_type;
+
+    typedef typename boost::container::allocator_traits
+        <
+            Allocator
+        >::template rebind_alloc<node_type> type;
+
+    typedef boost::container::allocator_traits<type> traits;
+};
+
+
 template <typename Allocator, typename Value, typename Parameters, typename Box>
 class allocators<Allocator, Value, Parameters, Box, node_variant_dynamic_tag>
-    : public Allocator::template rebind<
-        typename node<
-            Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, node_variant_dynamic_tag>,
-            node_variant_dynamic_tag
+    : public detail::rtree::node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_variant_dynamic_tag
         >::type
-    >::other
 {
-    typedef typename Allocator::template rebind<
-        Value
-    >::other value_allocator_type;
+    typedef detail::rtree::node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_variant_dynamic_tag
+        > node_alloc;
+
+public:
+    typedef typename node_alloc::type node_allocator_type;
+    typedef typename node_alloc::traits::pointer node_pointer;
+
+private:
+    typedef typename boost::container::allocator_traits
+        <
+            node_allocator_type // node_allocator_type for consistency with variant_leaf
+        >::template rebind_alloc<Value> value_allocator_type;
+    typedef boost::container::allocator_traits<value_allocator_type> value_allocator_traits;
+    
 
 public:
     typedef Allocator allocator_type;
 
     typedef Value value_type;
-    typedef typename value_allocator_type::reference reference;
-    typedef typename value_allocator_type::const_reference const_reference;
-    typedef typename value_allocator_type::size_type size_type;
-    typedef typename value_allocator_type::difference_type difference_type;
-    typedef typename value_allocator_type::pointer pointer;
-    typedef typename value_allocator_type::const_pointer const_pointer;
-
-    typedef typename Allocator::template rebind<
-        typename node<Value, Parameters, Box, allocators, node_variant_dynamic_tag>::type
-    >::other::pointer node_pointer;
-
-    typedef typename Allocator::template rebind<
-        typename node<Value, Parameters, Box, allocators, node_variant_dynamic_tag>::type
-    >::other node_allocator_type;
+    typedef typename value_allocator_traits::reference reference;
+    typedef typename value_allocator_traits::const_reference const_reference;
+    typedef typename value_allocator_traits::size_type size_type;
+    typedef typename value_allocator_traits::difference_type difference_type;
+    typedef typename value_allocator_traits::pointer pointer;
+    typedef typename value_allocator_traits::const_pointer const_pointer;
 
     inline allocators()
         : node_allocator_type()
@@ -183,7 +203,7 @@ struct create_variant_node
 
         scoped_deallocator<AllocNode> deallocator(p, alloc_node);
 
-        Al::construct(alloc_node, boost::addressof(*p), Node(alloc_node)); // implicit cast to Variant
+        Al::construct(alloc_node, boost::to_address(p), Node(alloc_node)); // implicit cast to Variant
 
         deallocator.release();
         return p;

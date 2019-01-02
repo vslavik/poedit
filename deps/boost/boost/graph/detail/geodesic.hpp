@@ -82,8 +82,11 @@ namespace detail {
     // Similar to std::plus<T>, but maximizes parameters
     // rather than adding them.
     template <typename T>
-    struct maximize : public std::binary_function<T, T, T>
+    struct maximize
     {
+        typedef T result_type;
+        typedef T first_argument_type;
+        typedef T second_argument_type;
         T operator ()(T x, T y) const
         { BOOST_USING_STD_MAX(); return max BOOST_PREVENT_MACRO_SUBSTITUTION (x, y); }
     };
@@ -93,11 +96,10 @@ namespace detail {
     // types, but should be specialized for those types that have
     // discrete notions of reciprocals.
     template <typename T>
-    struct reciprocal : public std::unary_function<T, T>
+    struct reciprocal
     {
-        typedef std::unary_function<T, T> function_type;
-        typedef typename function_type::result_type result_type;
-        typedef typename function_type::argument_type argument_type;
+        typedef T result_type;
+        typedef T argument_type;
         T operator ()(T t)
         { return T(1) / t; }
     };

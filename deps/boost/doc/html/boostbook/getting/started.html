@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Getting Started</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../boostbook.html" title="Chapter&#160;43.&#160;The BoostBook Documentation Format">
-<link rel="prev" href="../../boostbook.html" title="Chapter&#160;43.&#160;The BoostBook Documentation Format">
+<link rel="up" href="../../boostbook.html" title="Chapter&#160;49.&#160;The BoostBook Documentation Format">
+<link rel="prev" href="../../boostbook.html" title="Chapter&#160;49.&#160;The BoostBook Documentation Format">
 <link rel="next" href="../documenting.html" title="Documenting libraries">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,17 +26,17 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boostbook.getting.started"></a>Getting Started</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="started.html#boostbook.setup.autounix">Automatic setup for Unix-like systems</a></span></dt>
 <dt><span class="section"><a href="started.html#boostbook.setup.manual">Manual setup for all systems</a></span></dt>
 <dt><span class="section"><a href="started.html#boostbook.setup.running">Running BoostBook</a></span></dt>
 <dt><span class="section"><a href="started.html#boostbook.setup.troubleshooting">Troubleshooting</a></span></dt>
 </dl></div>
 <p>To use the Boost documentation tools, you will need several tools:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p class="simpara"><span class="command"><strong>xsltproc</strong></span>:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">Windows with <a href="http://www.cygwin.com/" target="_top">Cygwin</a>: select the libxml2 and libxslt packages.</li>
 <li class="listitem">Windows without Cygwin: Download the <a href="http://www.zlatkovic.com/pub/libxml/" target="_top">binary packages</a>
             from Igor Zlatkovic. At the very least, you'll need iconv, zlib, libxml2 and libxslt.</li>
@@ -71,7 +71,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boostbook.setup.manual"></a>Manual setup for all systems</h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="started.html#boostbook.setup.xsltproc">Configuring <span class="command"><strong>xsltproc</strong></span></a></span></dt>
 <dt><span class="section"><a href="started.html#boostbook.setup.docbook">Configuring local DocBook XSL and DTD distributions</a></span></dt>
 <dt><span class="section"><a href="started.html#boostbook.setup.doxygen">Configuring Doxygen for Documentation Extraction</a></span></dt>
@@ -113,7 +113,7 @@
         packages:
 
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>Norman Walsh's DocBook XSL stylesheets,
           available at the <a href="http://docbook.sourceforge.net" target="_top">DocBook sourceforge
           site</a>. Extract the DocBook XSL stylesheets to a
@@ -241,12 +241,12 @@ Cannot find function named 'next'</pre>
     documentation in a single (large!) HTML file with the command line
     <code class="computeroutput">bjam onehtml</code>, or Unix man pages with the command
     line <code class="computeroutput">bjam man</code>. The complete list of output
-    formats is listed in <a class="xref" href="started.html#boostbook.output.formats" title="Table&#160;43.1.&#160;BoostBook Output Formats">Table&#160;43.1, &#8220;BoostBook Output Formats&#8221;</a>. Several output formats can
+    formats is listed in <a class="xref" href="started.html#boostbook.output.formats" title="Table&#160;49.1.&#160;BoostBook Output Formats">Table&#160;49.1, &#8220;BoostBook Output Formats&#8221;</a>. Several output formats can
     be passed to a single invocation of <code class="computeroutput">bjam</code>, e.g.,
     <code class="computeroutput">bjam html man docbook</code> would generate HTML
     (multiple files), man pages, and DocBook documentation.</p>
 <div class="table">
-<a name="boostbook.output.formats"></a><p class="title"><b>Table&#160;43.1.&#160;BoostBook Output Formats</b></p>
+<a name="boostbook.output.formats"></a><p class="title"><b>Table&#160;49.1.&#160;BoostBook Output Formats</b></p>
 <div class="table-contents"><table class="table" summary="BoostBook Output Formats">
 <colgroup>
 <col>

@@ -38,7 +38,7 @@ This is how a minimal single-file test program looks like:
 
 ``
 #define __BOOST_TEST_MODULE__ My Test /*< Macro __BOOST_TEST_MODULE__ defines the name of our program, which will be used in messages. >*/
-#include <boost/test/included/unit_test.hpp> /*< This includes all the __UTF__ in a "single header mode"; it even defines function `main`, which will call the subsequently defined test cases. >*/
+#include <boost/test/included/unit_test.hpp> /*< This includes all the __UTF__ in a "header-only" mode; it even defines function `main`, which will call the subsequently defined test cases. >*/
 
 __BOOST_AUTO_TEST_CASE__(first_test) /*< Macro __BOOST_AUTO_TEST_CASE__ declares a ['test case] named `first_test`, which in turn will run the content of `first_test` inside the 
 controlled testing environment.>*/

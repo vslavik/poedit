@@ -46,7 +46,7 @@
 [def __min_capacity [memberref boost::circular_buffer_space_optimized::min_capacity() min_capacity]]
 [def __capacity_control [memberref boost::circular_buffer_space_optimized::capacity_control () capacity_control ]]
 
-[def __debug_support  [link circular_buffer.implmentation.debug_support debug support]]
+[def __debug_support  [link circular_buffer.implementation.debug_support debug support]]
 
 [include ../../../tools/auto_index/include/auto_index_helpers.qbk]
 [/ Must be first included file!]
@@ -114,7 +114,7 @@ Here is a simple example to introduce the class __cb.
 
 [circular_buffer_example_1]
 
-This example shows contruction, inserting elements, overwriting and popping.
+This example shows construction, inserting elements, overwriting and popping.
 
 [circular_buffer_example_2]
 
@@ -334,9 +334,9 @@ so for example: iterators `(begin() - 1)` and `(end() + 1)` are both invalid.
 [h3 Debug Support]
 
 In order to help a programmer to avoid and find common bugs,
-the __cb contains a kind of debug support.
+the __cb can be enabled to provide a kind of debug support.
 
-The __cb maintains a list of valid iterators.
+When the debugging functionality is enabled, the __cb maintains a list of valid iterators.
 As soon as any element gets destroyed all iterators pointing to this element
 are removed from this list and explicitly invalidated (an invalidation flag is set).
 The debug support also consists of many assertions (`BOOST_ASSERT` macros)
@@ -349,9 +349,13 @@ Moreover, the uninitialized memory allocated by __cb is filled with the value `0
 When debugging the code, this can help the programmer  to recognize the initialized memory from the uninitialized.
 For details refer the source code [@boost:boost/circular_buffer/debug.hpp circular_buffer/debug.hpp].
 
-The debug support is enabled only in the debug mode (when the `NDEBUG` is not defined).
-It can also be explicitly disabled (only for __cb)
-by defining macro BOOST_CB_DISABLE_DEBUG.
+[caution Since the debugging code makes __cb and its iterators more interconnected, thread safety guarantees of __cb
+are different when debug support is enabled. In addition to the container itself, all iterators tracked by the container
+(including any copies thereof) must be protected from concurrent access. In particular, this includes copying, destroying or
+obtaining iterators from the container, even if for read-only access.]
+
+The debug support is disabled by default. To enable it, one has to define `BOOST_CB_ENABLE_DEBUG` macro with the value of 1
+while compiling the code using __cb.
 
 [h3 Compatibility with Interprocess library]
 
@@ -359,8 +363,8 @@ The __cb is compatible with the [@boost:libs/interprocess/index.html  Boost.Inte
 [/ This should be in @boost:libs/interprocess/doc/index.html ]
 library used for interprocess communication.
 Considering that the circular_buffer's debug support relies on 'raw' pointers
-(which is not permited by the Interprocess library)
-the code has to compiled with `-DBOOST_CB_DISABLE_DEBUG` or `-DNDEBUG` (which disables the Debug Support).
+(which is not permitted by the Interprocess library)
+the code has to compiled with debug support disabled (i.e. with `BOOST_CB_ENABLE_DEBUG` macro not defined or defined to 0).
 Not doing that will cause the compilation to fail.
 
 [endsect] [/section:implementation Implementation ]
@@ -534,7 +538,7 @@ Type: Patches
 
 [h4 Boost 1.56]
 
-* C++11 allocator model support implemented by Glen Fernandes using Boost allocator_traits.
+* C++11 allocator model support implemented by Glen Fernandes.
 
 [h4 Boost 1.55]
 

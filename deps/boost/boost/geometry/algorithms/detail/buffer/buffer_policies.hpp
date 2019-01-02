@@ -2,6 +2,10 @@
 
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -52,20 +56,22 @@ public :
             typename Rings,
             typename Turns,
             typename Geometry,
+            typename Strategy,
             typename RobustPolicy,
             typename Visitor
         >
     static inline void apply(std::size_t size_at_start,
                 Rings& rings, typename boost::range_value<Rings>::type& ring,
                 Turns& turns,
-                typename boost::range_value<Turns>::type const& turn,
+                typename boost::range_value<Turns>::type const& /*turn*/,
                 Operation& operation,
-                detail::overlay::traverse_error_type traverse_error,
+                detail::overlay::traverse_error_type /*traverse_error*/,
                 Geometry const& ,
                 Geometry const& ,
+                Strategy const& ,
                 RobustPolicy const& ,
                 state_type& state,
-                Visitor& visitor
+                Visitor& /*visitor*/
                 )
     {
 #if defined(BOOST_GEOMETRY_COUNT_BACKTRACK_WARNINGS)
@@ -92,17 +98,17 @@ g_backtrack_warning_count++;
 struct buffer_overlay_visitor
 {
 public :
-    void print(char const* header)
+    void print(char const* /*header*/)
     {
     }
 
     template <typename Turns>
-    void print(char const* header, Turns const& turns, int turn_index)
+    void print(char const* /*header*/, Turns const& /*turns*/, int /*turn_index*/)
     {
     }
 
     template <typename Turns>
-    void print(char const* header, Turns const& turns, int turn_index, int op_index)
+    void print(char const* /*header*/, Turns const& /*turns*/, int /*turn_index*/, int /*op_index*/)
     {
     }
 
@@ -113,13 +119,17 @@ public :
     void visit_clusters(Clusters const& , Turns const& ) {}
 
     template <typename Turns, typename Turn, typename Operation>
-    void visit_traverse(Turns const& turns, Turn const& turn, Operation const& op, const char* header)
+    void visit_traverse(Turns const& /*turns*/, Turn const& /*turn*/, Operation const& /*op*/, const char* /*header*/)
     {
     }
 
     template <typename Turns, typename Turn, typename Operation>
     void visit_traverse_reject(Turns const& , Turn const& , Operation const& ,
             detail::overlay::traverse_error_type )
+    {}
+
+    template <typename Rings>
+    void visit_generated_rings(Rings const& )
     {}
 };
 

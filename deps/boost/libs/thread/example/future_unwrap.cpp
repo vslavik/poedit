@@ -20,6 +20,10 @@
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_UNWRAP
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 int p1()
 {
   BOOST_THREAD_LOG << "P1" << BOOST_THREAD_END_LOG;
@@ -44,7 +48,7 @@ int main()
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     {
-      boost::future<int> inner_future = boost::async(boost::launch::async, &p2);
+      boost::future<int> inner_future = boost::async(boost::launch::async, &p2).unwrap();
       inner_future.wait();
       int ii = inner_future.get();
       BOOST_THREAD_LOG << "ii= "<< ii << "" << BOOST_THREAD_END_LOG;

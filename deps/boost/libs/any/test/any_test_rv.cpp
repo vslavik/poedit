@@ -12,7 +12,7 @@
 #include <string>
 #include <utility>
 
-#include "boost/any.hpp"
+#include <boost/any.hpp>
 #include "test.hpp"
 #include <boost/move/move.hpp>
 
@@ -153,7 +153,7 @@ namespace any_tests // test definitions
         move_copy_conting_class::moves_count = 0;
         any value(value0); 
 
-        check_false(value0.empty(), "copyed value is not empty");
+        check_false(value0.empty(), "copied value is not empty");
         check_false(value.empty(), "empty");
         check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
@@ -173,7 +173,7 @@ namespace any_tests // test definitions
         move_copy_conting_class::moves_count = 0;
         value = value0; 
 
-        check_false(value0.empty(), "copyied value is not empty");
+        check_false(value0.empty(), "copied value is not empty");
         check_false(value.empty(), "empty");
         check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");

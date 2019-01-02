@@ -60,9 +60,9 @@ struct permutation_iterator_access_expr
     {
     }
 
-    ElementIterator m_element_iter;
-    IndexIterator m_index_iter;
-    IndexExpr m_expr;
+    const ElementIterator m_element_iter;
+    const IndexIterator m_index_iter;
+    const IndexExpr m_expr;
 };
 
 template<class ElementIterator, class IndexIterator, class IndexExpr>

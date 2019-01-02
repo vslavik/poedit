@@ -8,8 +8,10 @@
 
 // The std_tuple_iterator adaptor only supports implementations
 // using variadic templates
-#if !defined(BOOST_NO_CXX11_HDR_TUPLE) && \
-    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if defined(BOOST_NO_CXX11_HDR_TUPLE) || \
+    defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#   error "does not meet requirements"
+#endif
 
 #include <boost/fusion/adapted/std_tuple.hpp>
 
@@ -17,20 +19,8 @@
 #define FUSION_TRAVERSAL_TAG random_access_traversal_tag
 #include "./iterator.hpp"
 
-int
-main()
+int main()
 {
     test();
     return boost::report_errors();
 }
-
-#else
-
-int
-main()
-{
-    return 0;
-}
-
-#endif
-

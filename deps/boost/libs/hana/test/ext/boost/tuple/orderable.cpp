@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -10,20 +10,20 @@
 #include <laws/orderable.hpp>
 
 #include <boost/tuple/tuple.hpp>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 template <int i>
-using eq = test::ct_eq<i>;
+using eq = hana::test::ct_eq<i>;
 
 template <int i>
-using ord = test::ct_ord<i>;
+using ord = hana::test::ct_ord<i>;
 
 int main() {
     //////////////////////////////////////////////////////////////////////////
     // Setup for the laws below
     //////////////////////////////////////////////////////////////////////////
-    auto eq_tuples = make<tuple_tag>(
+    auto eq_tuples = hana::make_tuple(
           ::boost::make_tuple()
         , ::boost::make_tuple(eq<0>{})
         , ::boost::make_tuple(eq<0>{}, eq<1>{})
@@ -31,7 +31,7 @@ int main() {
         , ::boost::make_tuple(eq<0>{}, eq<1>{}, eq<2>{}, eq<3>{}, eq<4>{})
     );
 
-    auto ord_tuples = make<tuple_tag>(
+    auto ord_tuples = hana::make_tuple(
           ::boost::make_tuple()
         , ::boost::make_tuple(ord<0>{})
         , ::boost::make_tuple(ord<0>{}, ord<1>{})
@@ -42,6 +42,6 @@ int main() {
     //////////////////////////////////////////////////////////////////////////
     // Comparable and Orderable
     //////////////////////////////////////////////////////////////////////////
-    test::TestComparable<ext::boost::tuple_tag>{eq_tuples};
-    test::TestOrderable<ext::boost::tuple_tag>{ord_tuples};
+    hana::test::TestComparable<hana::ext::boost::tuple_tag>{eq_tuples};
+    hana::test::TestOrderable<hana::ext::boost::tuple_tag>{ord_tuples};
 }

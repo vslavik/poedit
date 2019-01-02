@@ -11,14 +11,20 @@
 #ifndef BOOST_TYPE_ERASURE_CONCEPT_OF_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_CONCEPT_OF_HPP_INCLUDED
 
+#include <boost/config.hpp>
+
 namespace boost {
 namespace type_erasure {
+
+#ifndef BOOST_TYPE_ERASURE_DOXYGEN
 
 template<class Concept, class T>
 class any;
 
 template<class Concept, class T>
 class param;
+
+#endif
 
 /**
  * A metafunction returning the concept corresponding
@@ -51,6 +57,13 @@ struct concept_of< ::boost::type_erasure::param<Concept, T> >
 {
     typedef Concept type;
 };
+
+#ifndef BOOST_NO_CXX11_TEMPLATE_ALIASES
+
+template<class T>
+using concept_of_t = typename ::boost::type_erasure::concept_of<T>::type;
+
+#endif
 
 }
 }

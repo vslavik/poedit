@@ -850,6 +850,8 @@ void weak_ptr_constructor()
 
 void auto_ptr_constructor()
 {
+#if !defined( BOOST_NO_AUTO_PTR )
+
     {
         std::auto_ptr<int> p;
         boost::shared_ptr<int> pi(p);
@@ -1136,6 +1138,8 @@ void auto_ptr_constructor()
 
     BOOST_TEST(X::instances == 0);
     BOOST_TEST(Y::instances == 0);
+
+#endif // #if !defined( BOOST_NO_AUTO_PTR )
 }
 
 void test()
@@ -1420,6 +1424,8 @@ void conversion_assignment()
 
 void auto_ptr_assignment()
 {
+#if !defined( BOOST_NO_AUTO_PTR )
+
     {
         boost::shared_ptr<int> p1;
 
@@ -1516,6 +1522,8 @@ void auto_ptr_assignment()
         BOOST_TEST(X::instances == 0);
         BOOST_TEST(Y::instances == 0);
     }
+
+#endif // #if !defined( BOOST_NO_AUTO_PTR )
 }
 
 void test()

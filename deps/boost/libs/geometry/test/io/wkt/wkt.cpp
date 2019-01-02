@@ -226,7 +226,7 @@ void test_all()
     test_wrong_wkt<P>("POINT(1 2", "expected ')'");
     test_wrong_wkt<P>("POINT 1 2)", "expected '('");
     test_wrong_wkt<P>("POINT(1 2,)", "expected ')'");
-    test_wrong_wkt<P>("POINT(1 2)foo", "too much tokens at 'foo'");
+    test_wrong_wkt<P>("POINT(1 2)foo", "too many tokens at 'foo'");
     test_wrong_wkt<P>("POINT(1 2 3)", "expected ')'");
     test_wrong_wkt<P>("POINT(a 2 3)", "bad lexical cast");
     test_wrong_wkt<P>("POINT 2 3", "expected '('");
@@ -234,13 +234,13 @@ void test_all()
 
     test_wrong_wkt<P>("PIONT (1 2)", "should start with 'point'");
 
-    test_wrong_wkt<bg::model::linestring<P> >("LINESTRING())", "too much tokens");
+    test_wrong_wkt<bg::model::linestring<P> >("LINESTRING())", "too many tokens");
 
     test_wrong_wkt<bg::model::polygon<P> >("POLYGON((1 1,1 4,4 4,4 1,1 1)"
                 ",((2 2,2 3,3 3,3 2,2 2))", "bad lexical cast");
 
     test_wrong_wkt<bg::model::box<P> >("BOX(1 1,2 2,3 3)", "box should have 2");
-    test_wrong_wkt<bg::model::box<P> >("BOX(1 1,2 2) )", "too much tokens");
+    test_wrong_wkt<bg::model::box<P> >("BOX(1 1,2 2) )", "too many tokens");
 
     if ( BOOST_GEOMETRY_CONDITION(boost::is_floating_point<T>::type::value
                                || ! boost::is_fundamental<T>::type::value ) )

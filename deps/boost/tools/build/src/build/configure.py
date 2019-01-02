@@ -1,5 +1,5 @@
 # Status: ported.
-# Base revison: 64488
+# Base revision: 64488
 #
 # Copyright (c) 2010 Vladimir Prus.
 #

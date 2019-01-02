@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for copying and assignment.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -234,4 +234,13 @@ void test_copy_assignment()
 
   holder h((holder()));
   h=holder();
+
+#if !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+{
+  /* testcase for https://svn.boost.org/trac10/ticket/13518 */
+
+  multi_index_container<int> x={};
+}
+#endif
+
 }

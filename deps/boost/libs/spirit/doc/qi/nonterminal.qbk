@@ -123,10 +123,11 @@ not defined in __qi_nonterminal__.
     [[`r = p;`]                                 [Rule definition. This is equivalent to `r %= p`
                                                 (see below) if there are no semantic actions attached
                                                 anywhere in `p`.]]
-    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
-                                                compatible with the synthesized attribute of `r`. When `p`
+    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` must be
+                                                compatible with the synthesized attribute of `r`. If `p`
                                                 is successful, its attribute is automatically propagated
-                                                to `r`'s synthesized attribute.]]
+                                                to `r`'s synthesized attribute.  Semantic actions, if present,
+                                                may not change the attribute's type.]]
     [[`r.name()`]                               [Retrieve the current name of the rule object.]]
     [[`r.name(name)`]                           [Set the current name of the rule object to be `name`.]]
 ]

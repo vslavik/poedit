@@ -23,7 +23,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 
-#define BOOST_PP_FILENAME_1 "qi/test_attr.hpp"
+#define BOOST_PP_FILENAME_1 "test_attr.hpp"
 #define BOOST_PP_ITERATION_LIMITS (1, SPIRIT_ARGUMENTS_LIMIT)
 #include BOOST_PP_ITERATE()
 

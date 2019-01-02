@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Falling Factorial</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../factorials.html" title="Factorials and Binomial Coefficients">
 <link rel="prev" href="sf_rising_factorial.html" title="Rising Factorial">
 <link rel="next" href="sf_binomial.html" title="Binomial Coefficients">
@@ -34,8 +34,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">falling_factorial</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">i</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">falling_factorial</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">i</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">falling_factorial</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">i</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -51,9 +51,9 @@
         Argument <span class="emphasis"><em>x</em></span> can be either positive or negative however.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -67,7 +67,7 @@
       </p>
 <h5>
 <a name="math_toolkit.factorials.sf_falling_factorial.h0"></a>
-        <span><a name="math_toolkit.factorials.sf_falling_factorial.accuracy"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.factorials.sf_falling_factorial.accuracy"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.accuracy">Accuracy</a>
       </h5>
 <p>
         The accuracy will be the same as the <a class="link" href="../sf_gamma/gamma_ratios.html" title="Ratios of Gamma Functions">tgamma_delta_ratio</a>
@@ -75,14 +75,14 @@
       </p>
 <h5>
 <a name="math_toolkit.factorials.sf_falling_factorial.h1"></a>
-        <span><a name="math_toolkit.factorials.sf_falling_factorial.testing"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.factorials.sf_falling_factorial.testing"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.testing">Testing</a>
       </h5>
 <p>
         The spot tests for the falling factorials use data generated by functions.wolfram.com.
       </p>
 <h5>
 <a name="math_toolkit.factorials.sf_falling_factorial.h2"></a>
-        <span><a name="math_toolkit.factorials.sf_falling_factorial.implementation"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.factorials.sf_falling_factorial.implementation"></a></span><a class="link" href="sf_falling_factorial.html#math_toolkit.factorials.sf_falling_factorial.implementation">Implementation</a>
       </h5>
 <p>
         Rising and falling factorials are implemented as ratios of gamma functions
@@ -93,10 +93,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

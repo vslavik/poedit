@@ -82,11 +82,40 @@ void test_value()
     test_rtree<bgi::rtree<Value, bgi::rstar<4> > >();
 }
 
+template <typename Rtree>
+void test_ticket_12413()
+{
+    typedef typename Rtree::value_type pair_t;
+    typedef typename pair_t::first_type point_t;
+
+    Rtree rtree;
+    rtree.insert(std::make_pair(point_t(-1.558444, 52.38664), 792));
+    rtree.insert(std::make_pair(point_t(-1.558444, 52.38664), 793));
+    rtree.insert(std::make_pair(point_t(-2.088824, 51.907406), 800));
+    rtree.insert(std::make_pair(point_t(-1.576363, 53.784089), 799));
+    rtree.insert(std::make_pair(point_t(-77.038816, 38.897282), 801));
+    rtree.insert(std::make_pair(point_t(-1.558444, 52.38664), 794));
+    rtree.insert(std::make_pair(point_t(-0.141588, 51.501009), 797));
+    rtree.insert(std::make_pair(point_t(-118.410468, 34.103003), 798));
+    rtree.insert(std::make_pair(point_t(-0.127592, 51.503407), 796));
+
+    size_t num_removed = rtree.remove(std::make_pair(point_t(-0.127592, 51.503407), 796));
+
+    BOOST_CHECK_EQUAL(num_removed, 1);
+}
+
 template <typename Point>
 void test_cs()
 {
     test_value<Point>();
     test_value<bg::model::box<Point> >();
+
+    {
+        typedef std::pair<Point, unsigned> value_t;
+        test_ticket_12413<bgi::rtree<value_t, bgi::linear<4> > >();
+        test_ticket_12413<bgi::rtree<value_t, bgi::quadratic<4> > >();
+        test_ticket_12413<bgi::rtree<value_t, bgi::rstar<4> > >();
+    }
 }
 
 int test_main(int, char* [])

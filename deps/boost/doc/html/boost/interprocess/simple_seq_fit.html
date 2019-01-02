@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template simple_seq_fit</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../interprocess/indexes_reference.html#header.boost.interprocess.mem_algo.simple_seq_fit_hpp" title="Header &lt;boost/interprocess/mem_algo/simple_seq_fit.hpp&gt;">
 <link rel="prev" href="rbtree_best_fit.html" title="Class template rbtree_best_fit">
@@ -39,18 +39,18 @@
   <span class="keyword">typedef</span> <span class="identifier">base_t</span><span class="special">::</span><span class="identifier">size_type</span> <a name="boost.interprocess.simple_seq_fit.size_type"></a><span class="identifier">size_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="simple_seq_fit.html#boost.interprocess.simple_seq_fitconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="simple_seq_fit.html#idp23272656-bb"><span class="identifier">simple_seq_fit</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="simple_seq_fit.html#idp67373168-bb"><span class="identifier">simple_seq_fit</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp170188000"></a><h2>Description</h2>
+<a name="id-1.3.19.17.3.43.4.4"></a><h2>Description</h2>
 <p>This class implements the simple sequential fit algorithm with a simply linked list of free buffers. </p>
 <div class="refsect2">
-<a name="idp170188784"></a><h3>
+<a name="id-1.3.19.17.3.43.4.4.3"></a><h3>
 <a name="boost.interprocess.simple_seq_fitconstruct-copy-destruct"></a><code class="computeroutput">simple_seq_fit</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp23272656-bb"></a><span class="identifier">simple_seq_fit</span><span class="special">(</span><span class="identifier">size_type</span> segment_size<span class="special">,</span> <span class="identifier">size_type</span> extra_hdr_bytes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp67373168-bb"></a><span class="identifier">simple_seq_fit</span><span class="special">(</span><span class="identifier">size_type</span> segment_size<span class="special">,</span> <span class="identifier">size_type</span> extra_hdr_bytes<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. "size" is the total size of the managed memory segment, "extra_hdr_bytes" indicates the extra bytes beginning in the sizeof(simple_seq_fit) offset that the allocator should not use at all. </p>
 </li></ol></div>
 </div>

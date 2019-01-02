@@ -3,6 +3,10 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +19,7 @@
 #include <boost/foreach.hpp>
 
 #include <boost/geometry/algorithms/intersection.hpp>
+#include <boost/geometry/algorithms/make.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -31,6 +36,7 @@ void test_with_point(std::string const& caseid,
                 T pi_x, T pi_y, T pj_x, T pj_y, T pk_x, T pk_y,
                 T qi_x, T qi_y, T qj_x, T qj_y, T qk_x, T qk_y,
                 bg::detail::overlay::method_type expected_method,
+                bool expected_touch_only,
                 T ip_x, T ip_y,
                 std::string const& expected,
                 T ip_x2, T ip_y2)
@@ -42,6 +48,11 @@ void test_with_point(std::string const& caseid,
     P qj = bg::make<P>(qj_x, qj_y);
     P qk = bg::make<P>(qk_x, qk_y);
 
+    typedef typename bg::strategy::intersection::services::default_strategy
+        <
+            typename bg::cs_tag<P>::type
+        >::type strategy_type;
+
     typedef typename bg::detail::no_rescale_policy rescale_policy_type;
 
     typedef bg::detail::overlay::turn_info
@@ -52,13 +63,14 @@ void test_with_point(std::string const& caseid,
     typedef std::vector<turn_info> tp_vector;
     turn_info model;
     tp_vector info;
+    strategy_type strategy;
     rescale_policy_type rescale_policy;
     bg::detail::overlay::get_turn_info
         <
             bg::detail::overlay::assign_null_policy
         >::apply(pi, pj, pk, qi, qj, qk,
                  false, false, false, false, // dummy parameters
-        model, rescale_policy, std::back_inserter(info));
+        model, strategy, rescale_policy, std::back_inserter(info));
 
 
     if (info.size() == 0)
@@ -89,6 +101,10 @@ void test_with_point(std::string const& caseid,
     if (! info.empty())
     {
         BOOST_CHECK_EQUAL(info[0].method, expected_method);
+        BOOST_CHECK_MESSAGE(info[0].touch_only == expected_touch_only,
+                caseid
+                << " detected: " << info[0].touch_only
+                << " expected: " << expected_touch_only);
         BOOST_CHECK_CLOSE(bg::get<0>(info[0].point), ip_x, 0.001);
         BOOST_CHECK_CLOSE(bg::get<1>(info[0].point), ip_y, 0.001);
 
@@ -153,6 +169,8 @@ void test_with_point(std::string const& caseid,
 
             op.clear();
             op += bg::method_char(it->method);
+            op += ' ';
+            op += (it->touch_only ? 'o' : '*');
             if (info.size() != 1)
             {
                 op += ch;
@@ -172,6 +190,7 @@ void test_both(std::string const& caseid,
                 T qi_x, T qi_y, T qj_x, T qj_y, T qk_x, T qk_y,
                 bg::detail::overlay::method_type method
                     = bg::detail::overlay::method_none,
+                bool expected_touch_only = false,
                 T ip_x = -1, T ip_y = -1,
                 std::string const& expected = "",
                 T ip_x2 = -1, T ip_y2 = -1)
@@ -179,9 +198,7 @@ void test_both(std::string const& caseid,
     test_with_point<P, double>(caseid,
             pi_x, pi_y, pj_x, pj_y, pk_x, pk_y,
             qi_x, qi_y, qj_x, qj_y, qk_x, qk_y,
-            method, ip_x, ip_y, expected, ip_x2, ip_y2);
-
-    //return;
+            method, expected_touch_only, ip_x, ip_y, expected, ip_x2, ip_y2);
 
     std::string reversed(expected.rbegin(), expected.rend());
     
@@ -194,7 +211,7 @@ void test_both(std::string const& caseid,
     test_with_point<P, double>(caseid + "_r",
             qi_x, qi_y, qj_x, qj_y, qk_x, qk_y, // q
             pi_x, pi_y, pj_x, pj_y, pk_x, pk_y, // p
-            method, ip_x, ip_y, reversed, ip_x2, ip_y2);
+            method, expected_touch_only, ip_x, ip_y, reversed, ip_x2, ip_y2);
 }
 
 
@@ -212,27 +229,27 @@ void test_all()
     test_both<P, double>("il1",
             5, 1,   5, 6,   7, 8, // p
             3, 3,   7, 5,   8, 3, // q
-            method_crosses, 5, 4, "ui");
+            method_crosses, false, 5, 4, "ui");
 
     test_both<P, double>("il2",
             5, 1,   5, 6,   7, 8, // p
             3, 5,   7, 5,   3, 3, // q
-            method_crosses, 5, 5, "ui");
+            method_crosses, false, 5, 5, "ui");
 
     test_both<P, double>("il3",
             5, 1,   5, 6,   7, 8, // p
             3, 3,   7, 5,   3, 5, // q
-            method_crosses, 5, 4, "ui");
+            method_crosses, false, 5, 4, "ui");
 
     test_both<P, double>("il4",
             5, 1,   5, 6,   7, 8, // p
             3, 3,   7, 5,   4, 8, // q
-            method_crosses, 5, 4, "ui");
+            method_crosses, false, 5, 4, "ui");
 
     test_both<P, double>("ir1",
             5, 1,   5, 6,   7, 8, // p
             7, 5,   3, 3,   2, 5, // q
-            method_crosses, 5, 4, "iu");
+            method_crosses, false, 5, 4, "iu");
 
 
     // ------------------------------------------------------------------------
@@ -241,52 +258,52 @@ void test_all()
     test_both<P, double>("ml1",
             5, 1,   5, 6,   7, 8, // p
             3, 3,   5, 4,   7, 3, // q
-            method_touch_interior, 5, 4, "ui");
+            method_touch_interior, false, 5, 4, "ui");
 
     test_both<P, double>("ml2",
             5, 1,   5, 6,   7, 8, // p
             3, 3,   5, 4,   3, 6, // q
-            method_touch_interior, 5, 4, "iu");
+            method_touch_interior, true, 5, 4, "iu");
 
     test_both<P, double>("ml3",
             5, 1,   5, 6,   7, 8, // p
             3, 6,   5, 4,   3, 3, // q
-            method_touch_interior, 5, 4, "uu");
+            method_touch_interior, true, 5, 4, "uu");
 
     test_both<P, double>("mr1",
             5, 1,   5, 6,   7, 8, // p
             7, 3,   5, 4,   3, 3, // q
-            method_touch_interior, 5, 4, "iu");
+            method_touch_interior, false, 5, 4, "iu");
 
     test_both<P, double>("mr2",
             5, 1,   5, 6,   7, 8, // p
             7, 3,   5, 4,   7, 6, // q
-            method_touch_interior, 5, 4, "ui");
+            method_touch_interior, true, 5, 4, "ui");
 
     test_both<P, double>("mr3",
             5, 1,   5, 6,   7, 8, // p
             7, 6,   5, 4,   7, 3, // q
-            method_touch_interior, 5, 4, "ii");
+            method_touch_interior, true, 5, 4, "ii");
 
     test_both<P, double>("mcl",
             5, 1,   5, 6,   7, 8, // p
             3, 2,   5, 3,   5, 5, // q
-            method_touch_interior, 5, 3, "cc");
+            method_touch_interior, false, 5, 3, "cc");
 
     test_both<P, double>("mcr",
             5, 1,   5, 6,   7, 8, // p
             7, 2,   5, 3,   5, 5, // q
-            method_touch_interior, 5, 3, "cc");
+            method_touch_interior, false, 5, 3, "cc");
 
     test_both<P, double>("mclo",
             5, 1,   5, 6,   7, 8, // p
             3, 4,   5, 5,   5, 3, // q
-            method_touch_interior, 5, 5, "ux");
+            method_touch_interior, false, 5, 5, "ux");
 
     test_both<P, double>("mcro",
             5, 1,   5, 6,   7, 8, // p
             7, 4,   5, 5,   5, 3, // q
-            method_touch_interior, 5, 5, "ix");
+            method_touch_interior, false, 5, 5, "ix");
 
     // ------------------------------------------------------------------------
     // COLLINEAR
@@ -294,53 +311,53 @@ void test_all()
     test_both<P, double>("cll1",
             5, 1,   5, 6,   3, 8, // p
             5, 5,   5, 7,   3, 8, // q
-            method_collinear, 5, 6, "ui");
+            method_collinear, false, 5, 6, "ui");
     test_both<P, double>("cll2",
             5, 1,   5, 6,   3, 8, // p
             5, 3,   5, 5,   3, 6, // q
-            method_collinear, 5, 5, "iu");
+            method_collinear, false, 5, 5, "iu");
     test_both<P, double>("clr1",
             5, 1,   5, 6,   3, 8, // p
             5, 5,   5, 7,   6, 8, // q
-            method_collinear, 5, 6, "ui");
+            method_collinear, false, 5, 6, "ui");
     test_both<P, double>("clr2",
             5, 1,   5, 6,   3, 8, // p
             5, 3,   5, 5,   6, 6, // q
-            method_collinear, 5, 5, "ui");
+            method_collinear, false, 5, 5, "ui");
 
     test_both<P, double>("crl1",
             5, 1,   5, 6,   7, 8, // p
             5, 5,   5, 7,   3, 8, // q
-            method_collinear, 5, 6, "iu");
+            method_collinear, false, 5, 6, "iu");
     test_both<P, double>("crl2",
             5, 1,   5, 6,   7, 8, // p
             5, 3,   5, 5,   3, 6, // q
-            method_collinear, 5, 5, "iu");
+            method_collinear, false, 5, 5, "iu");
     test_both<P, double>("crr1",
             5, 1,   5, 6,   7, 8, // p
             5, 5,   5, 7,   6, 8, // q
-            method_collinear, 5, 6, "iu");
+            method_collinear, false, 5, 6, "iu");
     test_both<P, double>("crr2",
             5, 1,   5, 6,   7, 8, // p
             5, 3,   5, 5,   6, 6, // q
-            method_collinear, 5, 5, "ui");
+            method_collinear, false, 5, 5, "ui");
 
     // The next two cases are changed (BSG 2013-09-24), they contain turn info (#buffer_rt_g)
     // In new approach they are changed back (BSG 2013-10-20)
     test_both<P, double>("ccx1",
             5, 1,   5, 6,   5, 8, // p
             5, 5,   5, 7,   3, 8, // q
-            method_collinear, 5, 6, "cc"); // "iu");
+            method_collinear, false, 5, 6, "cc"); // "iu");
     test_both<P, double>("cxc1",
             5, 1,   5, 6,   7, 8, // p
             5, 3,   5, 5,   5, 7, // q
-            method_collinear, 5, 5, "cc"); // "iu");
+            method_collinear, false, 5, 5, "cc"); // "iu");
 
     // Bug in case #54 of "overlay_cases.hpp"
     test_both<P, double>("c_bug1",
             5, 0,   2, 0,   2, 2, // p
             4, 0,   1, 0,   1, 2, // q
-            method_collinear, 2, 0, "iu");
+            method_collinear, false, 2, 0, "iu");
 
 
     // ------------------------------------------------------------------------
@@ -350,66 +367,66 @@ void test_all()
     test_both<P, double>("clo1",
             5, 2,   5, 6,   3, 8, // p
             5, 7,   5, 5,   3, 3, // q
-            method_collinear, 5, 6, "ixxu", 5, 5);
+            method_collinear, false, 5, 6, "ixxu", 5, 5);
     test_both<P, double>("clo2",
             5, 2,   5, 6,   3, 8, // p
             5, 7,   5, 5,   5, 2, // q
-            method_collinear, 5, 6, "ix");
+            method_collinear, false, 5, 6, "ix");
                 // actually "xxix", xx is skipped everywhere
     test_both<P, double>("clo3",
             5, 2,   5, 6,   3, 8, // p
             5, 7,   5, 5,   7, 3, // q
-            method_collinear, 5, 6, "ixxi", 5, 5);
+            method_collinear, false, 5, 6, "ixxi", 5, 5);
 
     test_both<P, double>("cco1",
             5, 2,   5, 6,   5, 8, // p
             5, 7,   5, 5,   3, 3, // q
-            method_collinear, 5, 5, "xu"); // "xuxx"
+            method_collinear, false, 5, 5, "xu"); // "xuxx"
     test_both<P, double>("cco2",
             5, 2,   5, 6,   5, 8, // p
             5, 7,   5, 5,   5, 2); // q "xxxx"
     test_both<P, double>("cco3",
             5, 2,   5, 6,   5, 8, // p
             5, 7,   5, 5,   7, 3, // q
-            method_collinear, 5, 5, "xi"); // "xixx"
+            method_collinear, false, 5, 5, "xi"); // "xixx"
 
 
     test_both<P, double>("cro1",
             5, 2,   5, 6,   7, 8, // p
             5, 7,   5, 5,   3, 3, // q
-            method_collinear, 5, 6, "uxxu", 5, 5);
+            method_collinear, false, 5, 6, "uxxu", 5, 5);
     test_both<P, double>("cro2",
             5, 2,   5, 6,   7, 8, // p
             5, 7,   5, 5,   5, 2, // q
-            method_collinear, 5, 6, "ux"); // "xxux"
+            method_collinear, false, 5, 6, "ux"); // "xxux"
     test_both<P, double>("cro3",
             5, 2,   5, 6,   7, 8, // p
             5, 7,   5, 5,   7, 3, // q
-            method_collinear, 5, 6, "uxxi", 5, 5);
+            method_collinear, false, 5, 6, "uxxi", 5, 5);
 
     test_both<P, double>("cxo1",
             5, 2,   5, 6,   3, 8, // p
             5, 5,   5, 3,   3, 1, // q
-            method_collinear, 5, 3, "xu");
+            method_collinear, false, 5, 3, "xu");
     test_both<P, double>("cxo2",
             5, 2,   5, 6,   3, 8, // p
             5, 5,   5, 3,   5, 0); // q   "xx"
     test_both<P, double>("cxo3",
             5, 2,   5, 6,   3, 8, // p
             5, 5,   5, 3,   7, 1, // q
-            method_collinear, 5, 3, "xi");
+            method_collinear, false, 5, 3, "xi");
 
     test_both<P, double>("cxo4",
             5, 2,   5, 6,   3, 8, // p
             5, 7,   5, 1,   3, 0, // q
-            method_collinear, 5, 6, "ix");
+            method_collinear, false, 5, 6, "ix");
     test_both<P, double>("cxo5",
             5, 2,   5, 6,   5, 8, // p
             5, 7,   5, 1,   3, 0); // q  "xx"
     test_both<P, double>("cxo6",
             5, 2,   5, 6,   7, 8, // p
             5, 7,   5, 1,   3, 0, // q
-            method_collinear, 5, 6, "ux");
+            method_collinear, false, 5, 6, "ux");
 
 
     // Verify
@@ -430,61 +447,61 @@ void test_all()
     test_both<P, double>("blr1",
             5, 1,   5, 6,   4, 4, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
     test_both<P, double>("blr2",
             5, 1,   5, 6,   1, 4, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("blr3",
             5, 1,   5, 6,   3, 6, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, false, 5, 6, "iu");
     test_both<P, double>("blr4",
             5, 1,   5, 6,   1, 8, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "xu");
+            method_touch, false, 5, 6, "xu");
     test_both<P, double>("blr5",
             5, 1,   5, 6,   4, 8, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
     test_both<P, double>("blr6",
             5, 1,   5, 6,   6, 4, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
 
     test_both<P, double>("blr7",
             5, 1,   5, 6,   3, 6, // p
             3, 7,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ix");
+            method_touch, false, 5, 6, "ix");
     test_both<P, double>("blr8",
             5, 1,   5, 6,   3, 6, // p
             3, 6,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "xx");
+            method_touch, false, 5, 6, "xx");
     test_both<P, double>("blr9",
             5, 1,   5, 6,   3, 6, // p
             3, 5,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ux");
+            method_touch, false, 5, 6, "ux");
 
     // Variants
     test_both<P, double>("blr7-a",
             5, 1,   5, 6,   3, 6, // p
             5, 8,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ix");
+            method_touch, false, 5, 6, "ix");
     test_both<P, double>("blr7-b", // in fact NOT "both-left"
             5, 1,   5, 6,   3, 6, // p
             6, 8,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ix");
+            method_touch, false, 5, 6, "ix");
 
     // To check if "collinear-check" on other side
     // does not apply to this side
     test_both<P, double>("blr6-c1",
             5, 1,   5, 6,   7, 5, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
     test_both<P, double>("blr6-c2",
             5, 1,   5, 6,   7, 7, // p
             3, 7,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
 
 
 
@@ -492,75 +509,75 @@ void test_all()
     test_both<P, double>("brr1",
             5, 1,   5, 6,   6, 4, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
     test_both<P, double>("brr2",
             5, 1,   5, 6,   9, 4, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "xu");
+            method_touch, false, 5, 6, "xu");
     test_both<P, double>("brr3",
             5, 1,   5, 6,   7, 6, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "iu");
+            method_touch, false, 5, 6, "iu");
     test_both<P, double>("brr4",
             5, 1,   5, 6,   9, 8, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("brr5",
             5, 1,   5, 6,   6, 8, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
     test_both<P, double>("brr6",
             5, 1,   5, 6,   4, 4, // p
             7, 5,   5, 6,   7, 7, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
 
     // Both right, Q turns left
     test_both<P, double>("brl1",
             5, 1,   5, 6,   6, 4, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
     test_both<P, double>("brl2",
             5, 1,   5, 6,   9, 4, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("brl3",
             5, 1,   5, 6,   7, 6, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("brl4",
             5, 1,   5, 6,   9, 8, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "xi");
+            method_touch, false, 5, 6, "xi");
     test_both<P, double>("brl5",
             5, 1,   5, 6,   6, 8, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
     test_both<P, double>("brl6",
             5, 1,   5, 6,   4, 4, // p
             7, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
     test_both<P, double>("brl7",
             5, 1,   5, 6,   7, 6, // p
             7, 7,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ux");
+            method_touch, false, 5, 6, "ux");
     test_both<P, double>("brl8",
             5, 1,   5, 6,   7, 6, // p
             7, 6,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "xx");
+            method_touch, false, 5, 6, "xx");
     test_both<P, double>("brl9",
             5, 1,   5, 6,   7, 6, // p
             7, 5,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ix");
+            method_touch, false, 5, 6, "ix");
 
     // Variants
     test_both<P, double>("brl7-a",
             5, 1,   5, 6,   7, 6, // p
             5, 8,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ux");
+            method_touch, false, 5, 6, "ux");
     test_both<P, double>("brl7-b", // in fact NOT "both right"
             5, 1,   5, 6,   7, 6, // p
             4, 8,   5, 6,   5, 3, // q
-            method_touch, 5, 6, "ux");
+            method_touch, false, 5, 6, "ux");
 
 
 
@@ -568,251 +585,251 @@ void test_all()
     test_both<P, double>("bll1",
             5, 1,   5, 6,   4, 4, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
     test_both<P, double>("bll2",
             5, 1,   5, 6,   1, 4, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "xi");
+            method_touch, false, 5, 6, "xi");
     test_both<P, double>("bll3",
             5, 1,   5, 6,   3, 6, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("bll4",
             5, 1,   5, 6,   1, 8, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("bll5",
             5, 1,   5, 6,   4, 8, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
     test_both<P, double>("bll6",
             5, 1,   5, 6,   6, 4, // p
             3, 5,   5, 6,   3, 7, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
 
     // TOUCH - COLLINEAR + one side
     // Collinear/left, Q turns right
     test_both<P, double>("t-clr1",
             5, 1,   5, 6,   4, 4, // p
             5, 8,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
     test_both<P, double>("t-clr2",
             5, 1,   5, 6,   1, 4, // p
             5, 8,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("t-clr3",
             5, 1,   5, 6,   3, 6, // p
             5, 8,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, false, 5, 6, "iu");
     test_both<P, double>("t-clr4",
             5, 1,   5, 6,   5, 8, // p
             5, 8,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "xu");
+            method_touch, false, 5, 6, "xu");
     // 5 n.a.
     test_both<P, double>("t-clr6",
             5, 1,   5, 6,   6, 4, // p
             5, 8,   5, 6,   3, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
 
     // Collinear/right, Q turns right
     test_both<P, double>("t-crr1",
             5, 1,   5, 6,   6, 4, // p
             7, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
     test_both<P, double>("t-crr2",
             5, 1,   5, 6,   9, 4, // p
             7, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "xu");
+            method_touch, false, 5, 6, "xu");
     test_both<P, double>("t-crr3",
             5, 1,   5, 6,   7, 6, // p
             7, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "iu");
+            method_touch, false, 5, 6, "iu");
     test_both<P, double>("t-crr4",
             5, 1,   5, 6,   5, 9, // p
             7, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     // 5 n.a.
     test_both<P, double>("t-crr6",
             5, 1,   5, 6,   4, 4, // p
             7, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
 
     // Collinear/right, Q turns left
     test_both<P, double>("t-crl1",
             5, 1,   5, 6,   6, 4, // p
             5, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
     test_both<P, double>("t-crl2",
             5, 1,   5, 6,   9, 4, // p
             5, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("t-crl3",
             5, 1,   5, 6,   7, 6, // p
             5, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("t-crl4",
             5, 1,   5, 6,   5, 8, // p
             5, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "xi");
+            method_touch, false, 5, 6, "xi");
     // 5 n.a.
     test_both<P, double>("t-crl6",
             5, 1,   5, 6,   4, 4, // p
             5, 7,   5, 6,   7, 5, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
 
     // Collinear/left, Q turns left
     test_both<P, double>("t-cll1",
             5, 1,   5, 6,   4, 4, // p
             3, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
     test_both<P, double>("t-cll2",
             5, 1,   5, 6,   1, 4, // p
             3, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "xi");
+            method_touch, false, 5, 6, "xi");
     test_both<P, double>("t-cll3",
             5, 1,   5, 6,   3, 6, // p
             3, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("t-cll4",
             5, 1,   5, 6,   5, 9, // p
             3, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     // 5 n.a.
     test_both<P, double>("t-cll6",
             5, 1,   5, 6,   6, 4, // p
             3, 5,   5, 6,   5, 8, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
 
     // Left to right
     test_both<P, double>("lr1",
             5, 1,   5, 6,   3, 3, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ii");
+            method_touch, true, 5, 6, "ii");
     test_both<P, double>("lr2",
             5, 1,   5, 6,   1, 5, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "xi");
+            method_touch, false, 5, 6, "xi");
     test_both<P, double>("lr3",
             5, 1,   5, 6,   4, 8, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("lr4",
             5, 1,   5, 6,   9, 5, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("lr5",
             5, 1,   5, 6,   7, 3, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, true, 5, 6, "iu");
     // otherwise case more thoroughly
     test_both<P, double>("lr3a",
             5, 1,   5, 6,   1, 6, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("lr3b",
             5, 1,   5, 6,   5, 10, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("lr3c",
             5, 1,   5, 6,   8, 9, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("lr3d",
             5, 1,   5, 6,   9, 7, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
     test_both<P, double>("lr3e",
             5, 1,   5, 6,   9, 6, // p
             1, 5,   5, 6,   9, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, false, 5, 6, "ui");
 
     // Right to left
     test_both<P, double>("rl1",
             5, 1,   5, 6,   3, 3, // p
             9, 5,   5, 6,   1, 5, // q
-            method_touch, 5, 6, "ui");
+            method_touch, true, 5, 6, "ui");
     test_both<P, double>("rl2",
             5, 1,   5, 6,   1, 5, // p
             9, 5,   5, 6,   1, 5, // q
-            method_touch, 5, 6, "cc");
+            method_touch, false, 5, 6, "cc");
     test_both<P, double>("rl3",
             5, 1,   5, 6,   4, 8, // p
             9, 5,   5, 6,   1, 5, // q
-            method_touch, 5, 6, "iu");
+            method_touch, false, 5, 6, "iu");
     test_both<P, double>("rl4",
             5, 1,   5, 6,   9, 5, // p
             9, 5,   5, 6,   1, 5, // q
-            method_touch, 5, 6, "xu");
+            method_touch, false, 5, 6, "xu");
     test_both<P, double>("rl5",
             5, 1,   5, 6,   7, 3, // p
             9, 5,   5, 6,   1, 5, // q
-            method_touch, 5, 6, "uu");
+            method_touch, true, 5, 6, "uu");
 
     // Equal (p1/q1 are equal)
     test_both<P, double>("ebl1",
             5, 1,   5, 6,   3, 4, // p
             5, 1,   5, 6,   3, 8, // q
-            method_equal, 5, 6, "ui");
+            method_equal, false, 5, 6, "ui");
     test_both<P, double>("ebl2",
             5, 1,   5, 6,   3, 8, // p
             5, 1,   5, 6,   3, 4, // q
-            method_equal, 5, 6, "iu");
+            method_equal, false, 5, 6, "iu");
     test_both<P, double>("ebl3",
             5, 1,   5, 6,   3, 8, // p
             5, 1,   5, 6,   3, 8, // q
-            method_equal, 5, 6, "cc");
+            method_equal, false, 5, 6, "cc");
 
     test_both<P, double>("ebl3-c1",
             5, 1,   5, 6,   10, 1, // p
             5, 1,   5, 6,   3, 8, // q
-            method_equal, 5, 6, "iu");
+            method_equal, false, 5, 6, "iu");
 
     test_both<P, double>("ebr1",
             5, 1,   5, 6,   7, 4, // p
             5, 1,   5, 6,   7, 8, // q
-            method_equal, 5, 6, "iu");
+            method_equal, false, 5, 6, "iu");
     test_both<P, double>("ebr2",
             5, 1,   5, 6,   7, 8, // p
             5, 1,   5, 6,   7, 4, // q
-            method_equal, 5, 6, "ui");
+            method_equal, false, 5, 6, "ui");
     test_both<P, double>("ebr3",
             5, 1,   5, 6,   7, 8, // p
             5, 1,   5, 6,   7, 8, // q
-            method_equal, 5, 6, "cc");
+            method_equal, false, 5, 6, "cc");
 
     test_both<P, double>("ebr3-c1",
             5, 1,   5, 6,   0, 1, // p
             5, 1,   5, 6,   7, 8, // q
-            method_equal, 5, 6, "ui");
+            method_equal, false, 5, 6, "ui");
 
     test_both<P, double>("elr1",
             5, 1,   5, 6,   7, 8, // p
             5, 1,   5, 6,   3, 8, // q
-            method_equal, 5, 6, "iu");
+            method_equal, false, 5, 6, "iu");
     test_both<P, double>("elr2",
             5, 1,   5, 6,   3, 8, // p
             5, 1,   5, 6,   7, 8, // q
-            method_equal, 5, 6, "ui");
+            method_equal, false, 5, 6, "ui");
     test_both<P, double>("ec1",
             5, 1,   5, 6,   5, 8, // p
             5, 1,   5, 6,   5, 8, // q
-            method_equal, 5, 6, "cc");
+            method_equal, false, 5, 6, "cc");
     test_both<P, double>("ec2",
             5, 1,   5, 6,   5, 8, // p
             5, 1,   5, 6,   5, 7, // q
-            method_equal, 5, 6, "cc");
+            method_equal, false, 5, 6, "cc");
 
     test_both<P, double>("snl-1",
             0, 3,   2, 3,   4, 3, // p
             4, 3,   2, 3,   0, 3, // q
-            method_touch, 2, 3, "xx");
+            method_touch, false, 2, 3, "xx");
 
     // BSG 2012-05-26 to be decided what's the problem here and what it tests...
     // Anyway, test results are not filled out.
     //test_both<P, double>("issue_buffer_mill",
     //        5.1983614873206241 , 6.7259025813913107 , 5.0499999999999998 , 6.4291796067500622 , 5.1983614873206241 , 6.7259025813913107, // p
     //        5.0499999999999998 , 6.4291796067500622 , 5.0499999999999998 , 6.4291796067500622 , 5.1983614873206241 , 6.7259025813913107, // q
-    //        method_collinear, 2, 0, "tt");
+    //        method_collinear, false, 2, 0, "tt");
 
 }
 

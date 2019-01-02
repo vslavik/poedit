@@ -38,6 +38,73 @@
     </td>
 </table>
 
+<h2>1.66.0</h2>
+<ul>
+  <li>Clean up some tutorial example code and fix the wording for it in the 
+  tutorial. Thanks to Anmol-Singh-Jaggi for pull request #11.</li>
+</ul>
+
+<h2>1.64.0</h2>
+<ul>
+  <li><code>is_empty()</code>overload with <code>error_code</code> parameter 
+  should not throw on error. Thanks to ldqrk for pull request #42</li>
+  <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/10731">#10731</a> and
+  <a href="https://svn.boost.org/trac/boost/ticket/9480">#9480</a>, <i>Evaluate 
+  path.extension only once</i>. Thanks to Daniel Krügler for pull request #41.</li>
+  <li>Fix error propagation in <code>space(p, ec)</code>. Thanks to cmuellner 
+  for pull request #39.</li>
+  <li>Add test/config_info.cpp to increase macro state reporting in hopes of 
+  easing debugging on remote machines.</li>
+  <li>Fix <code>operations_test</code> failure on MinGW: MinGW defines 
+  __MINGW32__ rather than _MSC_VER, so also test for __MINGW32__ to see if 
+  setenv/unsetenv workaround needed.</li>
+</ul>
+
+<h2>1.63.0</h2>
+<ul>
+  <li dir="ltr">
+  <p dir="ltr"><b>Deprecated <code>generic()</code> function name</b>: The undocumented experimental class
+  <code>path</code> member function <code>generic()</code> has been renamed <code>
+  generic_path()</code>. Fixes
+  <a href="https://svn.boost.org/trac/boost/ticket/11855">#11855</a>, <i>generic 
+  gives problems in C++/CLI.</i> Unless the macro BOOST_FILESYSTEM_NO_DEPRECATED 
+  is defined, the original <code>generic()</code> will continue to be supplied 
+  as a workaround for existing user code. But <code>generic()</code>is 
+  deprecated. User code should migrate to the new name.</li>
+  <li><b>New:</b> Class <code>path</code> adds constexpr constants <code>
+  separator</code> and <code>dot</code> of the type appropriate for the 
+  platform, and adds query functions <a href="reference.html#filename_is_dot">
+  <code>filename_is_do</code>t</a> and <code>
+  <a href="reference.html#filename_is_dot­_dot">filename_is_dot_dot</a></code>. 
+  These add convenience and the implementations may be more efficient that user 
+  coded equivalent functions.</li>
+  <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/12578">#12578</a>, <i>
+  Make directory iterators able to detect when a copy has advanced to the end</i>. 
+  This bug in <code>directory_iterator</code> and <code>
+  recursive_directory_iterator</code> equality testing has existed more than a 
+  dozen years. Nowadays test driven development would likely have detected the 
+  problem in early development. Sigh.</li>
+  <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/12495">#12495</a>, <i>
+  <code>create_directories()</code> crashes when passed empty string as path</i>, 
+  from Samantha Ritter. Also affected <code>create_directory()</code>. Charles 
+  Olivi submitted a pull request with some particularly helpful test cases.</li>
+  <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/7307">#7307</a>, <i>
+  remove_all(dirname,ec) throws on write protected directories.</i> This is a 
+  tough one to test. There are three internal function calls where errors might 
+  arise, and it would take too much time to write tests for each of those cases. 
+  Someday we will have Titus Winter&#39;s mock installable file system, but for now 
+  are relying on code inspection rather than testing.</li>
+  <li>Fix a cygwin warning and a cygwin error. Thanks to thtrummer for pull 
+  request #30.</li>
+  <li>Fixed two broken links in reference docs. Thanks to tbeu for pull 
+  request #34.</li>
+  <li>Fix reference doc signatures for <code>path</code> stem(), extension() 
+  member functions. Thanks to faithandbrave for pull request #31</li>
+  <li>Fix broken link to <a href="https://svn.boost.org/trac/boost/ticket/7506">#7506</a> in 1.60.0 Release History (Daniel Krügler).</li>
+  <li>Refactor <code>push_directory()</code>internal logic so it is easier to 
+  reason about.</li>
+</ul>
+
 <h2>1.60.0</h2>
 <ul>
   <li dir="ltr">
@@ -71,8 +138,7 @@
   <li>Fix a race condition in <code>unique_path</code> by applying
   <a href="https://github.com/boostorg/filesystem/pull/15">pull request #15</a> 
   from Sebastian Redl. Also fixes
-  <a href="unique_path%20Fails%20on%20Windows%20for%20Temporary%20User%20Profiles">
-  #5706</a>, <i><code>unique_path</code> Fails on Windows for Temporary User 
+  <a href="https://svn.boost.org/trac/boost/ticket/7506">#7506</a>, <i><code>unique_path</code> Fails on Windows for Temporary User 
   Profiles</i>.</li>
   <li>Fix bug in <i><code>file_status</code></i> and <i><code>
   recursive_directory_iterator</code></i>: C++ turns an explicit constructor 
@@ -394,7 +460,7 @@
 </ul>
 <hr>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->25 October, 2015<!--webbot bot="Timestamp" endspan i-checksum="38877" --></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->07 August, 2017<!--webbot bot="Timestamp" endspan i-checksum="34770" --></p>
 <p>&copy; Copyright Beman Dawes, 2011</p>
 <p> Use, modification, and distribution are subject to the Boost Software 
 License, Version 1.0. See <a href="http://www.boost.org/LICENSE_1_0.txt">

@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
     std::cout << "device: " << device.name() << std::endl;
 
     // create vector of random numbers on the host
-    std::vector<int> host_keys(PERF_N);
+    std::vector<int_> host_keys(PERF_N);
     std::generate(host_keys.begin(), host_keys.end(), rand);
-    std::vector<long> host_values(PERF_N);
+    std::vector<long_> host_values(PERF_N);
     std::copy(host_keys.begin(), host_keys.end(), host_values.begin());
 
     // create vector on the device and copy the data

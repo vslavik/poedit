@@ -8,12 +8,12 @@
 #ifndef BOOST_IOSTREAMS_DETAIL_LINKED_STREAMBUF_HPP_INCLUDED
 #define BOOST_IOSTREAMS_DETAIL_LINKED_STREAMBUF_HPP_INCLUDED
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
-#include <typeinfo>
 #include <boost/config.hpp>                        // member template friends.
+#include <boost/core/typeinfo.hpp>
 #include <boost/iostreams/detail/char_traits.hpp>
 #include <boost/iostreams/detail/ios.hpp>          // openmode.
 #include <boost/iostreams/detail/streambuf.hpp>
@@ -91,7 +91,7 @@ protected:
     virtual bool auto_close() const = 0;
     virtual void set_auto_close(bool) = 0;
     virtual bool strict_sync() = 0;
-    virtual const std::type_info& component_type() const = 0;
+    virtual const boost::core::typeinfo& component_type() const = 0;
     virtual void* component_impl() = 0;
 #ifndef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
     private:

@@ -31,9 +31,16 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/graph/graphviz.hpp>
 
+#ifndef BOOST_NO_CXX11_HDR_RANDOM
+#include <random>
+typedef std::mt19937 random_generator_type;
+#else
+typedef boost::mt19937 random_generator_type;
+#endif
+
 using namespace boost;
 
-
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
 template <typename Generator>
 struct random_functor {
   random_functor(Generator& g) : g(g) { }
@@ -45,7 +52,7 @@ struct random_functor {
   }
   Generator& g;
 };
-
+#endif
 
 template<typename Graph1, typename Graph2>
 void randomly_permute_graph(Graph1& g1, const Graph2& g2) {
@@ -56,14 +63,20 @@ void randomly_permute_graph(Graph1& g1, const Graph2& g2) {
   typedef typename graph_traits<Graph2>::vertex_descriptor vertex2;
   typedef typename graph_traits<Graph1>::vertex_iterator vertex_iterator;
   typedef typename graph_traits<Graph2>::edge_iterator edge_iterator;
-  
-  boost::mt19937 gen;
-  random_functor<boost::mt19937> rand_fun(gen);
+
+  random_generator_type gen;
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
+  random_functor<random_generator_type> rand_fun(gen);
+#endif
   
   // Decide new order
   std::vector<vertex2> orig_vertices;
   std::copy(vertices(g2).first, vertices(g2).second, std::back_inserter(orig_vertices));
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
   std::random_shuffle(orig_vertices.begin(), orig_vertices.end(), rand_fun);
+#else
+  std::shuffle(orig_vertices.begin(), orig_vertices.end(), gen);
+#endif
   std::map<vertex2, vertex1> vertex_map;
   
   std::size_t i = 0;
@@ -94,9 +107,9 @@ void generate_random_digraph(Graph& g, double edge_probability,
   BOOST_REQUIRE(0 <= max_vertex_name);
 
   typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator;
-  boost::mt19937 random_gen;
+  random_generator_type random_gen;
   boost::uniform_real<double> dist_real(0.0, 1.0);
-  boost::variate_generator<boost::mt19937&, boost::uniform_real<double> >
+  boost::variate_generator<random_generator_type&, boost::uniform_real<double> >
     random_real_dist(random_gen, dist_real);
 
   for (vertex_iterator u = vertices(g).first; u != vertices(g).second; ++u) {
@@ -113,14 +126,14 @@ void generate_random_digraph(Graph& g, double edge_probability,
   
   {
     boost::uniform_int<int> dist_int(0, max_edge_name);
-    boost::variate_generator<boost::mt19937&, boost::uniform_int<int> >
+    boost::variate_generator<random_generator_type&, boost::uniform_int<int> >
       random_int_dist(random_gen, dist_int);
     randomize_property<vertex_name_t>(g, random_int_dist);
   }
 
   {
     boost::uniform_int<int> dist_int(0, max_vertex_name);
-    boost::variate_generator<boost::mt19937&, boost::uniform_int<int> >
+    boost::variate_generator<random_generator_type&, boost::uniform_int<int> >
       random_int_dist(random_gen, dist_int);
     
     randomize_property<edge_name_t>(g, random_int_dist);
@@ -170,6 +183,23 @@ private:
   bool output_;
 };
 
+// we pretend this is something more complicated which calculates indices somehow
+template<typename G>
+struct IndirectIndexMap {
+  typedef std::size_t value_type;
+  typedef value_type reference;
+  typedef typename boost::graph_traits<G>::vertex_descriptor key_type;
+  typedef boost::readable_property_map_tag category;
+  explicit IndirectIndexMap(const G &g) : g(g) {}
+public:
+  const G &g;
+};
+
+template<typename G>
+std::size_t get(const IndirectIndexMap<G> &map, typename boost::graph_traits<G>::vertex_descriptor v) {
+  // we pretend this is something more complicated which calculates indices somehow
+  return get(vertex_index_t(), map.g, v);
+}
 
 void test_vf2_sub_graph_iso(int n1, int n2, double edge_probability, 
                             int max_parallel_edges, double parallel_edge_probability,
@@ -219,6 +249,11 @@ void test_vf2_sub_graph_iso(int n1, int n2, double edge_probability,
   std::cout << std::endl;
   BOOST_CHECK(vf2_subgraph_iso(g1, g2, callback, vertex_order_by_mult(g1),
                                edges_equivalent(edge_comp).vertices_equivalent(vertex_comp)));
+  BOOST_CHECK(vf2_subgraph_iso(g1, g2, callback,
+                               IndirectIndexMap<graph1>(g1),
+                               IndirectIndexMap<graph2>(g2),
+                               vertex_order_by_mult(g1),
+                               edge_comp, vertex_comp));
 
   std::clock_t end1 = std::clock();
   std::cout << "vf2_subgraph_iso: elapsed time (clock cycles): " << (end1 - start) << std::endl;

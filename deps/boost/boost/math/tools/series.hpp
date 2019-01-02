@@ -35,7 +35,7 @@ inline typename Functor::result_type sum_series(Functor& func, const U& factor, 
       next_term = func();
       result += next_term;
    }
-   while((fabs(factor * result) < fabs(next_term)) && --counter);
+   while((abs(factor * result) < abs(next_term)) && --counter);
 
    // set max_terms to the actual number of terms of the series evaluated:
    max_terms = max_terms - counter;

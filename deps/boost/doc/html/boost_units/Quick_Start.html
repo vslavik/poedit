@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Quick Start</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_units.html" title="Chapter&#160;39.&#160;Boost.Units 1.1.0">
-<link rel="prev" href="../boost_units.html" title="Chapter&#160;39.&#160;Boost.Units 1.1.0">
+<link rel="up" href="../boost_units.html" title="Chapter&#160;43.&#160;Boost.Units 1.1.0">
+<link rel="prev" href="../boost_units.html" title="Chapter&#160;43.&#160;Boost.Units 1.1.0">
 <link rel="next" href="Dimensional_Analysis.html" title="Dimensional Analysis">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -31,7 +31,7 @@
       Before discussing the basics of the library, we first define a few terms that
       will be used frequently in the following :
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <span class="bold"><strong>Base dimension</strong></span> : A base dimension is loosely
           defined as a measurable entity of interest; in conventional dimensional
@@ -107,6 +107,7 @@
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">si</span><span class="special">;</span>
 
+<span class="keyword">constexpr</span>
 <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">energy</span><span class="special">&gt;</span>
 <span class="identifier">work</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">force</span><span class="special">&gt;&amp;</span> <span class="identifier">F</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">length</span><span class="special">&gt;&amp;</span> <span class="identifier">dx</span><span class="special">)</span>
 <span class="special">{</span>

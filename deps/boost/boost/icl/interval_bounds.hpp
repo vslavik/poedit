@@ -41,8 +41,8 @@ public:
     interval_bounds all  ()const { return interval_bounds(_bits & _all  ); }
     interval_bounds left ()const { return interval_bounds(_bits & _left ); }
     interval_bounds right()const { return interval_bounds(_bits & _right); }
-    interval_bounds reverse_left ()const { return interval_bounds((~_bits>>1) & _right); }
-    interval_bounds reverse_right()const { return interval_bounds((~_bits<<1) & _left ); }
+    interval_bounds reverse_left ()const { return interval_bounds((bound_type(~_bits)>>1) & _right); }
+    interval_bounds reverse_right()const { return interval_bounds((bound_type(~_bits)<<1) & _left ); }
 
     bound_type bits()const{ return _bits; }
 

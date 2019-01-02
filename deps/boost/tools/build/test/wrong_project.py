@@ -34,6 +34,6 @@ def init():
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a.exe")
+t.expect_addition("bin/$toolset/debug*/a.exe")
 
 t.cleanup()

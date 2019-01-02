@@ -9,7 +9,7 @@
 
 #include <boost/phoenix.hpp>
 #include <boost/range/as_literal.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::phoenix::placeholders;
 using namespace boost::phoenix;
@@ -27,4 +27,5 @@ int main()
 #endif
     BOOST_TEST(X == *Y);
 
+    return boost::report_errors();
 }

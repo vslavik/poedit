@@ -1,15 +1,23 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-#include <boost/hana.hpp>
-
 #include <boost/hana/lazy.hpp>
 
+#include <boost/hana/ap.hpp>
 #include <boost/hana/assert.hpp>
+#include <boost/hana/chain.hpp>
 #include <boost/hana/concept/comparable.hpp>
 #include <boost/hana/config.hpp>
+#include <boost/hana/duplicate.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/eval.hpp>
+#include <boost/hana/extend.hpp>
+#include <boost/hana/extract.hpp>
+#include <boost/hana/flatten.hpp>
 #include <boost/hana/functional/compose.hpp>
+#include <boost/hana/lift.hpp>
+#include <boost/hana/transform.hpp>
 #include <boost/hana/tuple.hpp>
 
 #include <laws/applicative.hpp>
@@ -17,10 +25,12 @@
 #include <laws/comonad.hpp>
 #include <laws/functor.hpp>
 #include <laws/monad.hpp>
+#include <support/tracked.hpp>
 
 #include <array>
 #include <iostream>
-using namespace boost::hana;
+namespace hana = boost::hana;
+using hana::test::ct_eq;
 
 
 namespace boost { namespace hana {
@@ -31,7 +41,7 @@ namespace boost { namespace hana {
     struct equal_impl<lazy_tag, lazy_tag> {
         template <typename X, typename Y>
         static constexpr auto apply(X x, Y y)
-        { return equal(eval(x), eval(y)); }
+        { return hana::equal(hana::eval(x), hana::eval(y)); }
     };
 }}
 
@@ -40,15 +50,18 @@ auto invalid = [](auto x)
 
 
 int main() {
-    test::_injection<0> f{};
-    using test::ct_eq;
+    hana::test::_injection<0> f{};
 
-    auto eqs = make<tuple_tag>(make_lazy(ct_eq<0>{}), make_lazy(ct_eq<1>{}), make_lazy(ct_eq<2>{}));
-    auto eq_elems = make<tuple_tag>(ct_eq<0>{}, ct_eq<1>{}, ct_eq<1>{});
-    auto nested = make<tuple_tag>(
-        make_lazy(make_lazy(ct_eq<0>{})),
-        make_lazy(make_lazy(ct_eq<1>{})),
-        make_lazy(make_lazy(ct_eq<2>{}))
+    auto eqs = hana::make_tuple(
+        hana::make_lazy(ct_eq<0>{}),
+        hana::make_lazy(ct_eq<1>{}),
+        hana::make_lazy(ct_eq<2>{})
+    );
+    auto eq_elems = hana::make_tuple(ct_eq<0>{}, ct_eq<1>{}, ct_eq<1>{});
+    auto nested = hana::make_tuple(
+        hana::make_lazy(hana::make_lazy(ct_eq<0>{})),
+        hana::make_lazy(hana::make_lazy(ct_eq<1>{})),
+        hana::make_lazy(hana::make_lazy(ct_eq<2>{}))
     );
 
     //////////////////////////////////////////////////////////////////////////
@@ -57,71 +70,71 @@ int main() {
     {
         // lazy
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                make_lazy(f)(),
-                make_lazy(f())
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::make_lazy(f)(),
+                hana::make_lazy(f())
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                make_lazy(f)(ct_eq<0>{}),
-                make_lazy(f(ct_eq<0>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::make_lazy(f)(ct_eq<0>{}),
+                hana::make_lazy(f(ct_eq<0>{}))
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                make_lazy(f)(ct_eq<0>{}, ct_eq<1>{}),
-                make_lazy(f(ct_eq<0>{}, ct_eq<1>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::make_lazy(f)(ct_eq<0>{}, ct_eq<1>{}),
+                hana::make_lazy(f(ct_eq<0>{}, ct_eq<1>{}))
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                make_lazy(f)(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}),
-                make_lazy(f(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::make_lazy(f)(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}),
+                hana::make_lazy(f(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}))
             ));
 
             // The function is not applied.
-            make_lazy(invalid)();
-            make_lazy(invalid)(ct_eq<0>{});
-            make_lazy(invalid)(ct_eq<0>{}, ct_eq<1>{});
-            make_lazy(invalid)(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{});
+            hana::make_lazy(invalid)();
+            hana::make_lazy(invalid)(ct_eq<0>{});
+            hana::make_lazy(invalid)(ct_eq<0>{}, ct_eq<1>{});
+            hana::make_lazy(invalid)(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{});
         }
 
         // eval
         {
             // With lazy expressions
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(make_lazy(ct_eq<0>{})),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(hana::make_lazy(ct_eq<0>{})),
                 ct_eq<0>{}
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(make_lazy(ct_eq<1>{})),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(hana::make_lazy(ct_eq<1>{})),
                 ct_eq<1>{}
             ));
 
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(make_lazy(f)()),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(hana::make_lazy(f)()),
                 f()
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(make_lazy(f)(ct_eq<3>{})),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(hana::make_lazy(f)(ct_eq<3>{})),
                 f(ct_eq<3>{})
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(make_lazy(f)(ct_eq<3>{}, ct_eq<4>{})),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(hana::make_lazy(f)(ct_eq<3>{}, ct_eq<4>{})),
                 f(ct_eq<3>{}, ct_eq<4>{})
             ));
 
             // Should call a nullary function
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval([]{ return ct_eq<3>{}; }),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval([]{ return ct_eq<3>{}; }),
                 ct_eq<3>{}
             ));
 
             // Should call a unary function with hana::id.
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval([](auto _) { return _(ct_eq<3>{}); }),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval([](auto _) { return _(ct_eq<3>{}); }),
                 ct_eq<3>{}
             ));
 
             // For overloaded function objects that are both nullary and unary,
             // the nullary overload should be preferred.
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                eval(f),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::eval(f),
                 f()
             ));
         }
@@ -129,8 +142,8 @@ int main() {
         // Make sure this does not move from a destroyed object, as that
         // used to be the case.
         {
-            auto x = flatten(make_lazy(make_lazy(test::Tracked{1})));
-            auto z = eval(x); (void)z;
+            auto x = hana::flatten(hana::make_lazy(hana::make_lazy(Tracked{1})));
+            auto z = hana::eval(x); (void)z;
         }
 
         // In some cases where a type has a constructor that is way too
@@ -140,13 +153,13 @@ int main() {
         // make sure this does not happen.
         {
             {
-                auto expr = make_lazy(test::trap_construct{});
+                auto expr = hana::make_lazy(hana::test::trap_construct{});
                 auto implicit_copy = expr;          (void)implicit_copy;
                 decltype(expr) explicit_copy(expr); (void)explicit_copy;
             }
 
             {
-                auto expr = make_lazy(test::trap_construct{})();
+                auto expr = hana::make_lazy(hana::test::trap_construct{})();
                 auto implicit_copy = expr;          (void)implicit_copy;
                 decltype(expr) explicit_copy(expr); (void)explicit_copy;
             }
@@ -159,14 +172,14 @@ int main() {
     {
         // transform
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                transform(make_lazy(ct_eq<0>{}), f),
-                make_lazy(f(ct_eq<0>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::transform(hana::make_lazy(ct_eq<0>{}), f),
+                hana::make_lazy(f(ct_eq<0>{}))
             ));
         }
 
         // laws
-        test::TestFunctor<lazy_tag>{eqs, eq_elems};
+        hana::test::TestFunctor<hana::lazy_tag>{eqs, eq_elems};
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -175,82 +188,82 @@ int main() {
     {
         // ap
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                ap(make_lazy(f), make_lazy(ct_eq<0>{})),
-                make_lazy(f(ct_eq<0>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::ap(hana::make_lazy(f), hana::make_lazy(ct_eq<0>{})),
+                hana::make_lazy(f(ct_eq<0>{}))
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                ap(make_lazy(f), make_lazy(ct_eq<0>{}), make_lazy(ct_eq<1>{})),
-                make_lazy(f(ct_eq<0>{}, ct_eq<1>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::ap(hana::make_lazy(f), hana::make_lazy(ct_eq<0>{}), hana::make_lazy(ct_eq<1>{})),
+                hana::make_lazy(f(ct_eq<0>{}, ct_eq<1>{}))
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                ap(make_lazy(f), make_lazy(ct_eq<0>{}), make_lazy(ct_eq<1>{}), make_lazy(ct_eq<2>{})),
-                make_lazy(f(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::ap(hana::make_lazy(f), hana::make_lazy(ct_eq<0>{}), hana::make_lazy(ct_eq<1>{}), hana::make_lazy(ct_eq<2>{})),
+                hana::make_lazy(f(ct_eq<0>{}, ct_eq<1>{}, ct_eq<2>{}))
             ));
 
             // The function is not applied.
-            ap(make_lazy(invalid), make_lazy(ct_eq<0>{}));
-            ap(make_lazy(invalid), make_lazy(ct_eq<0>{}), make_lazy(ct_eq<1>{}));
-            ap(make_lazy(invalid), make_lazy(ct_eq<0>{}), make_lazy(ct_eq<1>{}), make_lazy(ct_eq<2>{}));
+            hana::ap(hana::make_lazy(invalid), hana::make_lazy(ct_eq<0>{}));
+            hana::ap(hana::make_lazy(invalid), hana::make_lazy(ct_eq<0>{}), hana::make_lazy(ct_eq<1>{}));
+            hana::ap(hana::make_lazy(invalid), hana::make_lazy(ct_eq<0>{}), hana::make_lazy(ct_eq<1>{}), hana::make_lazy(ct_eq<2>{}));
         }
 
         // lift
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                lift<lazy_tag>(ct_eq<0>{}),
-                make_lazy(ct_eq<0>{})
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::lift<hana::lazy_tag>(ct_eq<0>{}),
+                hana::make_lazy(ct_eq<0>{})
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                lift<lazy_tag>(ct_eq<1>{}),
-                make_lazy(ct_eq<1>{})
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::lift<hana::lazy_tag>(ct_eq<1>{}),
+                hana::make_lazy(ct_eq<1>{})
             ));
         }
 
         // laws
-        test::TestApplicative<lazy_tag>{eqs};
+        hana::test::TestApplicative<hana::lazy_tag>{eqs};
     }
 
     //////////////////////////////////////////////////////////////////////////
     // Monad
     //////////////////////////////////////////////////////////////////////////
     {
-        auto f_ = compose(make_lazy, f);
+        auto f_ = hana::compose(hana::make_lazy, f);
 
         // chain
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                chain(make_lazy(ct_eq<0>{}), f_),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::chain(hana::make_lazy(ct_eq<0>{}), f_),
                 f_(ct_eq<0>{})
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                chain(make_lazy(ct_eq<1>{}), f_),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::chain(hana::make_lazy(ct_eq<1>{}), f_),
                 f_(ct_eq<1>{})
             ));
 
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                make_lazy(ct_eq<1>{}) | f_,
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::make_lazy(ct_eq<1>{}) | f_,
                 f_(ct_eq<1>{})
             ));
         }
 
         // flatten
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                flatten(make_lazy(make_lazy(ct_eq<0>{}))),
-                make_lazy(ct_eq<0>{})
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::flatten(hana::make_lazy(hana::make_lazy(ct_eq<0>{}))),
+                hana::make_lazy(ct_eq<0>{})
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                flatten(make_lazy(make_lazy(ct_eq<1>{}))),
-                make_lazy(ct_eq<1>{})
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::flatten(hana::make_lazy(hana::make_lazy(ct_eq<1>{}))),
+                hana::make_lazy(ct_eq<1>{})
             ));
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                flatten(make_lazy(make_lazy(make_lazy(ct_eq<1>{})))),
-                make_lazy(make_lazy(ct_eq<1>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::flatten(hana::make_lazy(hana::make_lazy(hana::make_lazy(ct_eq<1>{})))),
+                hana::make_lazy(hana::make_lazy(ct_eq<1>{}))
             ));
         }
 
         // laws
-        test::TestMonad<lazy_tag>{eqs, nested};
+        hana::test::TestMonad<hana::lazy_tag>{eqs, nested};
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -259,30 +272,30 @@ int main() {
     {
         // extract
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                extract(make_lazy(ct_eq<4>{})),
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::extract(hana::make_lazy(ct_eq<4>{})),
                 ct_eq<4>{}
             ));
         }
 
         // duplicate
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                duplicate(make_lazy(ct_eq<4>{})),
-                make_lazy(make_lazy(ct_eq<4>{}))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::duplicate(hana::make_lazy(ct_eq<4>{})),
+                hana::make_lazy(hana::make_lazy(ct_eq<4>{}))
             ));
         }
 
         // extend
         {
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                extend(make_lazy(ct_eq<4>{}), f),
-                make_lazy(f(make_lazy(ct_eq<4>{})))
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::extend(hana::make_lazy(ct_eq<4>{}), f),
+                hana::make_lazy(f(hana::make_lazy(ct_eq<4>{})))
             ));
         }
 
         // laws
-        test::TestComonad<lazy_tag>{eqs};
+        hana::test::TestComonad<hana::lazy_tag>{eqs};
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -293,14 +306,14 @@ int main() {
         int dummy = 0;
 
         std::cout << "creating the monadic chain...\n";
-        auto chain = make_lazy(dummy)
+        auto chain = hana::make_lazy(dummy)
             | [&](int dummy) {
                 std::cout << "executing the first computation...\n";
                 executed[0] = true;
                 BOOST_HANA_RUNTIME_CHECK(
                     executed == std::array<bool, 3>{{true, false, false}}
                 );
-                return make_lazy(dummy);
+                return hana::make_lazy(dummy);
             }
             | [&](int dummy) {
                 std::cout << "executing the second computation...\n";
@@ -308,7 +321,7 @@ int main() {
                 BOOST_HANA_RUNTIME_CHECK(
                     executed == std::array<bool, 3>{{true, true, false}}
                 );
-                return make_lazy(dummy);
+                return hana::make_lazy(dummy);
             }
             | [&](int dummy) {
                 std::cout << "executing the third computation...\n";
@@ -316,7 +329,7 @@ int main() {
                 BOOST_HANA_RUNTIME_CHECK(
                     executed == std::array<bool, 3>{{true, true, true}}
                 );
-                return make_lazy(dummy);
+                return hana::make_lazy(dummy);
             };
 
         BOOST_HANA_RUNTIME_CHECK(
@@ -324,6 +337,6 @@ int main() {
         );
 
         std::cout << "evaluating the chain...\n";
-        eval(chain);
+        hana::eval(chain);
     }
 }

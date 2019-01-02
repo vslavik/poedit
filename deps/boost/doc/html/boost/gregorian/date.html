@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class date</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.gregorian.greg_date_hpp" title="Header &lt;boost/date_time/gregorian/greg_date.hpp&gt;">
 <link rel="prev" href="gregorian_calendar.html" title="Class gregorian_calendar">
@@ -33,7 +33,9 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../date_time/doxy.html#header.boost.date_time.gregorian.greg_date_hpp" title="Header &lt;boost/date_time/gregorian/greg_date.hpp&gt;">boost/date_time/gregorian/greg_date.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="date.html" title="Class date">date</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="date.html" title="Class date">date</a> <span class="special">:</span>
+  <span class="keyword">public</span> <span class="identifier">date_time</span><span class="special">::</span><span class="identifier">date</span><span class="special">&lt;</span> <span class="identifier">date</span><span class="special">,</span> <span class="identifier">gregorian_calendar</span><span class="special">,</span> <span class="identifier">date_duration</span> <span class="special">&gt;</span>
+<span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">gregorian_calendar</span><span class="special">::</span><span class="identifier">year_type</span>        <a name="boost.gregorian.date.year_type"></a><span class="identifier">year_type</span><span class="special">;</span>       
@@ -46,60 +48,60 @@
   <span class="keyword">typedef</span> <a class="link" href="date_duration.html" title="Class date_duration">date_duration</a>                        <a name="boost.gregorian.date.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="date.html#boost.gregorian.dateconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="date.html#idp80164928-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="date.html#idp80165472-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">,</span> <span class="identifier">day_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="date.html#idp80168080-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ymd_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="date.html#idp80169632-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_int_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="date.html#idp75884208-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">date_rep_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="date.html#idp75885760-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">special_values</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_13-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_14-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">,</span> <span class="identifier">day_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_15-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ymd_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_16-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_int_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_17-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">date_rep_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_18-bb"><span class="identifier">date</span></a><span class="special">(</span><span class="identifier">special_values</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="date.html#idp73268960-bb">public member functions</a></span>
-  <span class="identifier">date_int_type</span> <a class="link" href="date.html#idp73269488-bb"><span class="identifier">julian_day</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_year_type</span> <a class="link" href="date.html#idp73270864-bb"><span class="identifier">day_of_year</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">date_int_type</span> <a class="link" href="date.html#idp73272240-bb"><span class="identifier">modjulian_day</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="date.html#idp73273616-bb"><span class="identifier">week_number</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">date_int_type</span> <a class="link" href="date.html#idp73275040-bb"><span class="identifier">day_number</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="date.html" title="Class date">date</a> <a class="link" href="date.html#idp73276416-bb"><span class="identifier">end_of_month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12-bb">public member functions</a></span>
+  <span class="identifier">date_int_type</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_1-bb"><span class="identifier">julian_day</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_year_type</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_2-bb"><span class="identifier">day_of_year</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">date_int_type</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_3-bb"><span class="identifier">modjulian_day</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_4-bb"><span class="identifier">week_number</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">date_int_type</span> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_5-bb"><span class="identifier">day_number</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="date.html" title="Class date">date</a> <a class="link" href="date.html#id-1_3_14_15_4_6_1_1_1_12_6-bb"><span class="identifier">end_of_month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp123949104"></a><h2>Description</h2>
+<a name="id-1.3.14.15.4.6.3.4"></a><h2>Description</h2>
 <p>This class is the primary interface for programming with greogorian dates. The is a lightweight type that can be freely passed by value. All comparison operators are supported. </p>
 <div class="refsect2">
-<a name="idp123949968"></a><h3>
+<a name="id-1.3.14.15.4.6.3.4.3"></a><h3>
 <a name="boost.gregorian.dateconstruct-copy-destruct"></a><code class="computeroutput">date</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp80164928-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor constructs with not_a_date_time. </li>
+<pre class="literallayout"><a name="id-1_3_14_15_4_6_1_1_1_13-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Default constructor constructs with not_a_date_time. </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp80165472-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">,</span> <span class="identifier">day_type</span> d<span class="special">)</span><span class="special">;</span></pre>Main constructor with year, month, day. </li>
+<pre class="literallayout"><a name="id-1_3_14_15_4_6_1_1_1_14-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">,</span> <span class="identifier">day_type</span> d<span class="special">)</span><span class="special">;</span></pre>Main constructor with year, month, day. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp80168080-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ymd_type</span> <span class="special">&amp;</span> ymd<span class="special">)</span><span class="special">;</span></pre>Constructor from a ymd_type structure. </li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id-1_3_14_15_4_6_1_1_1_15-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ymd_type</span> <span class="special">&amp;</span> ymd<span class="special">)</span><span class="special">;</span></pre>Constructor from a ymd_type structure. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp80169632-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_int_type</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>Needed copy constructor. </li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id-1_3_14_15_4_6_1_1_1_16-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_int_type</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>Needed copy constructor. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp75884208-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">date_rep_type</span> rhs<span class="special">)</span><span class="special">;</span></pre>Needed copy constructor. </li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id-1_3_14_15_4_6_1_1_1_17-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">date_rep_type</span> rhs<span class="special">)</span><span class="special">;</span></pre>Needed copy constructor. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp75885760-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">special_values</span> sv<span class="special">)</span><span class="special">;</span></pre>Constructor for infinities, not a date, max and min date. </li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id-1_3_14_15_4_6_1_1_1_18-bb"></a><span class="identifier">date</span><span class="special">(</span><span class="identifier">special_values</span> sv<span class="special">)</span><span class="special">;</span></pre>Constructor for infinities, not a date, max and min date. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp123986592"></a><h3>
-<a name="idp73268960-bb"></a><code class="computeroutput">date</code> public member functions</h3>
+<a name="id-1.3.14.15.4.6.3.4.4"></a><h3>
+<a name="id-1_3_14_15_4_6_1_1_1_12-bb"></a><code class="computeroutput">date</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="idp73269488-bb"></a><span class="identifier">julian_day</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the Julian Day number for the date. </li>
+<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="id-1_3_14_15_4_6_1_1_1_12_1-bb"></a><span class="identifier">julian_day</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the Julian Day number for the date. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">day_of_year_type</span> <a name="idp73270864-bb"></a><span class="identifier">day_of_year</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the day of year 1..365 or 1..366 (for leap year) </li>
+<pre class="literallayout"><span class="identifier">day_of_year_type</span> <a name="id-1_3_14_15_4_6_1_1_1_12_2-bb"></a><span class="identifier">day_of_year</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the day of year 1..365 or 1..366 (for leap year) </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="idp73272240-bb"></a><span class="identifier">modjulian_day</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the Modified Julian Day number for the date. </li>
+<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="id-1_3_14_15_4_6_1_1_1_12_3-bb"></a><span class="identifier">modjulian_day</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the Modified Julian Day number for the date. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp73273616-bb"></a><span class="identifier">week_number</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the iso 8601 week number 1..53. </li>
+<pre class="literallayout"><span class="keyword">int</span> <a name="id-1_3_14_15_4_6_1_1_1_12_4-bb"></a><span class="identifier">week_number</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the iso 8601 week number 1..53. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="idp73275040-bb"></a><span class="identifier">day_number</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the day number from the calendar. </li>
+<pre class="literallayout"><span class="identifier">date_int_type</span> <a name="id-1_3_14_15_4_6_1_1_1_12_5-bb"></a><span class="identifier">day_number</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the day number from the calendar. </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="date.html" title="Class date">date</a> <a name="idp73276416-bb"></a><span class="identifier">end_of_month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the last day of the current month. </li>
+<pre class="literallayout"><a class="link" href="date.html" title="Class date">date</a> <a name="id-1_3_14_15_4_6_1_1_1_12_6-bb"></a><span class="identifier">end_of_month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return the last day of the current month. </li>
 </ol></div>
 </div>
 </div>

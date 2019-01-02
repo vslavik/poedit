@@ -66,7 +66,7 @@ rule match ( pattern : string : indices * )
 }
 
 
-# Matches all elements of 'list' agains the 'pattern' and returns a list of
+# Matches all elements of 'list' against the 'pattern' and returns a list of
 # elements indicated by indices of all successful matches. If 'indices' is
 # omitted returns a list of first parenthesised groups of all successful
 # matches.
@@ -98,7 +98,7 @@ rule escape ( string : symbols : escape-symbol )
     local m = 1 ;
     while $(m)
     {
-        m = [ MATCH ^([^$(symbols)]*)([$(symbols)])(.*) : $(string) ] ;
+        m = [ MATCH "^([^$(symbols)]*)([$(symbols)])(.*)" : $(string) ] ;
         if $(m)
         {
             m += "" ;  # Supposedly a bug fix; borrowed from regex.split
@@ -180,13 +180,13 @@ rule __test__ ( )
         : match (.)(.)(.)(.) : abcd ;
 
     assert.result ababab cddc
-        : match ((ab)*)([cd]+) : abababcddc : 1 3 ;
+        : match "((ab)*)([cd]+)" : abababcddc : 1 3 ;
 
     assert.result a.h c.h
         : transform <a.h> \"b.h\" <c.h> : <(.*)> ;
 
     assert.result a.h b.h c.h
-        : transform <a.h> \"b.h\" <c.h> : <([^>]*)>|\"([^\"]*)\" : 1 2 ;
+        : transform <a.h> \"b.h\" <c.h> : "<([^>]*)>|\"([^\"]*)\"" : 1 2 ;
 
     assert.result "^<?xml version=\"1.0\"^>"
         : escape "<?xml version=\"1.0\">" : "&|()<>^" : "^" ;

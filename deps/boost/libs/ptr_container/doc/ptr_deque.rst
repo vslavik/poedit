@@ -57,13 +57,13 @@ to store the pointers.
             public: // modifiers_
                 void      push_front( T* x );
 		template< class U >
-		void      push_front( std::auto_ptr<U> x );
+		void      push_front( compatible-smart-ptr<U> x );
                 auto_type pop_front();
 
             public: // `pointer container requirements`_
                auto_type replace( size_type idx, T* x );
 	       template< class U >
-	       auto_type replace( size_type idx, std::auto_ptr<U> x );    
+	       auto_type replace( size_type idx, compatible-smart-ptr<U> x );    
                bool      is_null( size_type idx ) const;   
     
             };
@@ -93,7 +93,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
 
-- ``template< class U > void push_front( std::auto_ptr<U> x );``
+- ``template< class U > void push_front( compatible-smart-ptr<U> x );``
 
     - Effects: ``push_front( x.release() );``
 
@@ -156,7 +156,7 @@ Semantics: pointer container requirements
 
     - Exception safety: Strong guarantee
     
-- ``template< class U > auto_type replace( size_type idx, std::auto_ptr<U> x );``
+- ``template< class U > auto_type replace( size_type idx, compatible-smart-ptr<U> x );``
 
     - Effects: ``return replace( idx, x.release() );``
 

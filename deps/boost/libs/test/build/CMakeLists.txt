@@ -1,4 +1,4 @@
-# Copyright 2001, Raffi Enficiaud
+# Copyright 2014, Raffi Enficiaud
 
 # Use, modification, and distribution are subject to the
 # Boost Software License, Version 1.0. (See accompanying file
@@ -14,7 +14,7 @@ set(CMAKE_MACOSX_RPATH ON)
 
 add_definitions(-DBOOST_TEST_NO_LIB)
 
-# build type, by default to release (with optimisations) 
+# build type, by default to release (with optimisations)
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
@@ -85,10 +85,12 @@ set(BOOST_UTF_SRC
     ${BOOST_TEST_ROOT_DIR}/src/decorator.cpp
     ${BOOST_TEST_ROOT_DIR}/src/execution_monitor.cpp
     ${BOOST_TEST_ROOT_DIR}/src/framework.cpp
+    ${BOOST_TEST_ROOT_DIR}/src/junit_log_formatter.cpp
     ${BOOST_TEST_ROOT_DIR}/src/plain_report_formatter.cpp
     ${BOOST_TEST_ROOT_DIR}/src/progress_monitor.cpp
     ${BOOST_TEST_ROOT_DIR}/src/results_collector.cpp
     ${BOOST_TEST_ROOT_DIR}/src/results_reporter.cpp
+    ${BOOST_TEST_ROOT_DIR}/src/test_framework_init_observer.cpp
     ${BOOST_TEST_ROOT_DIR}/src/test_tools.cpp
     ${BOOST_TEST_ROOT_DIR}/src/test_tree.cpp
     ${BOOST_TEST_ROOT_DIR}/src/unit_test_log.cpp
@@ -100,10 +102,10 @@ set(BOOST_UTF_SRC
     )
 
 add_library(boost_test_framework
-            SHARED
+            STATIC
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
-target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=1")
+#target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
 target_include_directories(boost_test_framework PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
@@ -129,17 +131,17 @@ file(GLOB_RECURSE
 
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
-  add_executable(${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
-  target_include_directories(${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
-  set_target_properties(${_hh} PROPERTIES FOLDER "Doc examples")
+  add_executable(doc-${_hh} ${_h} ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
+  target_include_directories(doc-${_hh} PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
+  set_target_properties(doc-${_hh} PROPERTIES FOLDER "Doc examples")
 
-  add_test(NAME doc-${_hh}
-           COMMAND ${_hh})
+  add_test(NAME doc-${_hh}-test
+           COMMAND doc-${_hh})
   get_filename_component(_ext ${_h} EXT)
   string(FIND ${_ext} "fail" _index_fail)
   if(${_index_fail} GREATER -1)
     message(STATUS "test ${_hh}.${_ext} = ${_index_fail}")
-    set_tests_properties(doc-${_hh} PROPERTIES WILL_FAIL TRUE)
+    set_tests_properties(doc-${_hh}-test PROPERTIES WILL_FAIL TRUE)
   endif()
 endforeach()
 
@@ -155,7 +157,7 @@ file(GLOB
 add_executable(boost_test_datasets ${BOOST_TEST_UNITTESTS_DATASET})
 target_include_directories(boost_test_datasets PUBLIC ${BOOST_TEST_ROOT_DIR}/include/)
 target_link_libraries(boost_test_datasets boost_test_framework)
-target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=1")
+#target_compile_definitions(boost_test_datasets PUBLIC "BOOST_TEST_DYN_LINK=0")
 set_target_properties(boost_test_datasets PROPERTIES FOLDER "Unit tests")
 add_test(NAME bt-unittest-dataset
          COMMAND boost_test_datasets)
@@ -170,8 +172,10 @@ set(BOOST_UTF_TESTS_IND_FILES
     framework-ts
     usage-variants-ts
     utils-ts
-    test-organization-ts)
-    
+    test-organization-ts
+    smoke-ts
+  )
+
 
 foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
 
@@ -188,6 +192,7 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
     #get_filename_component(_v "${_v}" DIRECTORY)
     message("adding ${_ts}/${_name}")
     add_executable(${_name} ${_hh})
+    target_link_libraries(${_name} PRIVATE boost_test_framework)
     set_target_properties(${_name} PROPERTIES FOLDER "Unit tests/${_ts}")
     add_test(NAME bt-unittest-${_name}
              COMMAND ${_name})
@@ -196,4 +201,3 @@ foreach(_ts IN LISTS BOOST_UTF_TESTS_IND_FILES)
   unset(_boost_utf_current_tsuite)
 
 endforeach() # test suite
-

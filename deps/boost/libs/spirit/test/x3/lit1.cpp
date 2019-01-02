@@ -7,6 +7,7 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/vector.hpp>
 
 #include <string>
 #include "test.hpp"
@@ -72,6 +73,12 @@ main()
         s.clear();
         BOOST_TEST((test_attr("x", string("x"), s)));
         BOOST_TEST(s == "x");
+    }
+
+    { // single-element fusion vector tests
+        boost::fusion::vector<std::string> s;
+        BOOST_TEST(test_attr("kimpo", string("kimpo"), s));
+        BOOST_TEST(boost::fusion::at_c<0>(s) == "kimpo");
     }
 
     return boost::report_errors();

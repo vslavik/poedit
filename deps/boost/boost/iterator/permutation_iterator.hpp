@@ -21,13 +21,13 @@ template< class ElementIterator
 class permutation_iterator
   : public iterator_adaptor<
              permutation_iterator<ElementIterator, IndexIterator>
-           , IndexIterator, typename boost::detail::iterator_traits<ElementIterator>::value_type
-           , use_default, typename boost::detail::iterator_traits<ElementIterator>::reference>
+           , IndexIterator, typename std::iterator_traits<ElementIterator>::value_type
+           , use_default, typename std::iterator_traits<ElementIterator>::reference>
 {
   typedef iterator_adaptor<
             permutation_iterator<ElementIterator, IndexIterator>
-          , IndexIterator, typename boost::detail::iterator_traits<ElementIterator>::value_type
-          , use_default, typename boost::detail::iterator_traits<ElementIterator>::reference> super_t;
+          , IndexIterator, typename std::iterator_traits<ElementIterator>::value_type
+          , use_default, typename std::iterator_traits<ElementIterator>::reference> super_t;
 
   friend class iterator_core_access;
 

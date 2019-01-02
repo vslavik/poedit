@@ -1,5 +1,5 @@
-# -*- coding: latin-1 -*-
-# Copyright Gottfried Ganßauge 2003..2006.  Distributed under the Boost
+# -*- coding: utf-8 -*-
+# Copyright Gottfried GanÃŸauge 2003..2006.  Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -35,13 +35,13 @@ RuntimeError: success
    
 >>> try: use(0)
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 
    ... and from strings to opaque objects
    
 >>> try: use("")
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 
    Now check the same for another opaque pointer type
    
@@ -52,19 +52,19 @@ Traceback (most recent call last):
 RuntimeError: success
 >>> try: use2(0)
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 >>> try: use2("")
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 
    Check that opaque types are distinct
 
 >>> try: use(get2())
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 >>> try: use2(get())
 ... except TypeError: pass
-... else: print 'expected a TypeError'
+... else: print('expected a TypeError')
 
    This used to result in a segmentation violation
 
@@ -80,8 +80,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

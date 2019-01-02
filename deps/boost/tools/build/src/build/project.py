@@ -156,7 +156,7 @@ class ProjectRegistry:
             #
             # While "build-project" and "use-project" can potentially refer
             # to child projects from parent projects, we do not immediately
-            # load child projects when seing those attributes. Instead,
+            # load child projects when seeing those attributes. Instead,
             # we record the minimal information that will be used only later.
 
             self.load_used_projects(mname)
@@ -184,7 +184,7 @@ class ProjectRegistry:
 
         if not found:
             print "error: Could not find parent for project at '%s'" % location
-            print "error: Did not find Jamfile or project-root.jam in any parent directory."
+            print "error: Did not find Jamfile.jam or Jamroot.jam in any parent directory."
             sys.exit(1)
 
         return self.load(os.path.dirname(found[0]))
@@ -298,16 +298,17 @@ Please consult the documentation at 'http://boost.org/boost-build2'."""
         # See if the Jamfile is where it should be.
         is_jamroot = False
         jamfile_to_load = b2.util.path.glob([dir], self.JAMROOT)
-        if not jamfile_to_load:
-            jamfile_to_load = self.find_jamfile(dir)
-        else:
+        if jamfile_to_load:
             if len(jamfile_to_load) > 1:
-                get_manager().errors()("Multiple Jamfiles found at '%s'\n" +\
-                                       "Filenames are: %s"
-                                       % (dir, [os.path.basename(j) for j in jamfile_to_load]))
-
+                get_manager().errors()(
+                    "Multiple Jamfiles found at '{}'\n"
+                    "Filenames are: {}"
+                    .format(dir, ' '.join(os.path.basename(j) for j in jamfile_to_load))
+                )
             is_jamroot = True
             jamfile_to_load = jamfile_to_load[0]
+        else:
+            jamfile_to_load = self.find_jamfile(dir)
 
         dir = os.path.dirname(jamfile_to_load)
         if not dir:
@@ -321,47 +322,67 @@ Please consult the documentation at 'http://boost.org/boost-build2'."""
         # same project we're loading now.  Checking inside .jamfile-modules
         # prevents that second attempt from messing up.
         if not jamfile_module in self.jamfile_modules:
-            self.jamfile_modules[jamfile_module] = True
-
+            previous_project = self.current_project
             # Initialize the jamfile module before loading.
-            #
             self.initialize(jamfile_module, dir, os.path.basename(jamfile_to_load))
 
-            saved_project = self.current_project
+            if not jamfile_module in self.jamfile_modules:
+                saved_project = self.current_project
+                self.jamfile_modules[jamfile_module] = True
 
-            bjam.call("load", jamfile_module, jamfile_to_load)
-            basename = os.path.basename(jamfile_to_load)
+                bjam.call("load", jamfile_module, jamfile_to_load)
 
-            if is_jamroot:
-                jamfile = self.find_jamfile(dir, no_errors=True)
-                if jamfile:
-                    bjam.call("load", jamfile_module, jamfile)
+                if is_jamroot:
+                    jamfile = self.find_jamfile(dir, no_errors=True)
+                    if jamfile:
+                        bjam.call("load", jamfile_module, jamfile)
 
-        # Now do some checks
-        if self.current_project != saved_project:
+                # Now do some checks
+                if self.current_project != saved_project:
+                    from textwrap import dedent
+                    self.manager.errors()(dedent(
+                        """
+                        The value of the .current-project variable has magically changed
+                        after loading a Jamfile. This means some of the targets might be
+                        defined a the wrong project.
+                        after loading %s
+                        expected value %s
+                        actual value %s
+                        """
+                        % (jamfile_module, saved_project, self.current_project)
+                    ))
+
+                self.end_load(previous_project)
+
+                if self.global_build_dir:
+                    id = self.attributeDefault(jamfile_module, "id", None)
+                    project_root = self.attribute(jamfile_module, "project-root")
+                    location = self.attribute(jamfile_module, "location")
+
+                    if location and project_root == dir:
+                        # This is Jamroot
+                        if not id:
+                            # FIXME: go via errors module, so that contexts are
+                            # shown?
+                            print "warning: the --build-dir option was specified"
+                            print "warning: but Jamroot at '%s'" % dir
+                            print "warning: specified no project id"
+                            print "warning: the --build-dir option will be ignored"
+
+    def end_load(self, previous_project=None):
+        if not self.current_project:
             self.manager.errors()(
-"""The value of the .current-project variable
-has magically changed after loading a Jamfile.
-This means some of the targets might be defined a the wrong project.
-after loading %s
-expected value %s
-actual value %s""" % (jamfile_module, saved_project, self.current_project))
+                'Ending project loading requested when there was no project currently '
+                'being loaded.'
+            )
 
-        if self.global_build_dir:
-            id = self.attributeDefault(jamfile_module, "id", None)
-            project_root = self.attribute(jamfile_module, "project-root")
-            location = self.attribute(jamfile_module, "location")
+        if not previous_project and self.saved_current_project:
+            self.manager.errors()(
+                'Ending project loading requested with no "previous project" when there '
+                'other projects still being loaded recursively.'
+            )
 
-            if location and project_root == dir:
-                # This is Jamroot
-                if not id:
-                    # FIXME: go via errors module, so that contexts are
-                    # shown?
-                    print "warning: the --build-dir option was specified"
-                    print "warning: but Jamroot at '%s'" % dir
-                    print "warning: specified no project id"
-                    print "warning: the --build-dir option will be ignored"
-
+        self.current_project = previous_project
 
     def load_standalone(self, jamfile_module, file):
         """Loads 'file' as standalone project that has no location
@@ -388,51 +409,20 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         else:
             return 0
 
-    def initialize(self, module_name, location=None, basename=None):
+    def initialize(self, module_name, location=None, basename=None, standalone_path=''):
         """Initialize the module for a project.
 
         module-name is the name of the project module.
         location is the location (directory) of the project to initialize.
                  If not specified, standalone project will be initialized
+        standalone_path is the path to the source-location.
+                        this should only be called from the python side.
         """
         assert isinstance(module_name, basestring)
         assert isinstance(location, basestring) or location is None
         assert isinstance(basename, basestring) or basename is None
-        if "--debug-loading" in self.manager.argv():
-            print "Initializing project '%s'" % module_name
-
-        # TODO: need to consider if standalone projects can do anything but defining
-        # prebuilt targets. If so, we need to give more sensible "location", so that
-        # source paths are correct.
-        if not location:
-            location = ""
-
-        attributes = ProjectAttributes(self.manager, location, module_name)
-        self.module2attributes[module_name] = attributes
-
-        python_standalone = False
-        if location:
-            attributes.set("source-location", [location], exact=1)
-        elif not module_name in ["test-config", "site-config", "user-config", "project-config"]:
-            # This is a standalone project with known location. Set source location
-            # so that it can declare targets. This is intended so that you can put
-            # a .jam file in your sources and use it via 'using'. Standard modules
-            # (in 'tools' subdir) may not assume source dir is set.
-            attributes.set("source-location", self.loaded_tool_module_path_[module_name], exact=1)
-            python_standalone = True
-
-        attributes.set("requirements", property_set.empty(), exact=True)
-        attributes.set("usage-requirements", property_set.empty(), exact=True)
-        attributes.set("default-build", property_set.empty(), exact=True)
-        attributes.set("projects-to-build", [], exact=True)
-        attributes.set("project-root", None, exact=True)
-        attributes.set("build-dir", None, exact=True)
-
-        self.project_rules_.init_project(module_name, python_standalone)
-
         jamroot = False
-
-        parent_module = None;
+        parent_module = None
         if module_name == "test-config":
             # No parent
             pass
@@ -447,37 +437,74 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
             # --- i.e
             # if the project is not standalone.
             parent_module = self.load_parent(location)
-        else:
+        elif location:
             # It's either jamroot, or standalone project.
             # If it's jamroot, inherit from user-config.
+            # If project-config module exist, inherit from it.
+            parent_module = 'user-config'
+            if 'project-config' in self.module2attributes:
+                parent_module = 'project-config'
+            jamroot = True
+
+        # TODO: need to consider if standalone projects can do anything but defining
+        # prebuilt targets. If so, we need to give more sensible "location", so that
+        # source paths are correct.
+        if not location:
+            location = ""
+
+        # the call to load_parent() above can end up loading this module again
+        # make sure we don't reinitialize the module's attributes
+        if module_name not in self.module2attributes:
+            if "--debug-loading" in self.manager.argv():
+                print "Initializing project '%s'" % module_name
+            attributes = ProjectAttributes(self.manager, location, module_name)
+            self.module2attributes[module_name] = attributes
+
+            python_standalone = False
             if location:
-                # If project-config module exist, inherit from it.
-                if self.module2attributes.has_key("project-config"):
-                    parent_module = "project-config"
-                else:
-                    parent_module = "user-config" ;
+                attributes.set("source-location", [location], exact=1)
+            elif not module_name in ["test-config", "site-config", "user-config", "project-config"]:
+                # This is a standalone project with known location. Set source location
+                # so that it can declare targets. This is intended so that you can put
+                # a .jam file in your sources and use it via 'using'. Standard modules
+                # (in 'tools' subdir) may not assume source dir is set.
+                source_location = standalone_path
+                if not source_location:
+                    source_location = self.loaded_tool_module_path_.get(module_name)
+                if not source_location:
+                    self.manager.errors()('Standalone module path not found for "{}"'
+                                          .format(module_name))
+                attributes.set("source-location", [source_location], exact=1)
+                python_standalone = True
 
-                jamroot = True ;
+            attributes.set("requirements", property_set.empty(), exact=True)
+            attributes.set("usage-requirements", property_set.empty(), exact=True)
+            attributes.set("default-build", property_set.empty(), exact=True)
+            attributes.set("projects-to-build", [], exact=True)
+            attributes.set("project-root", None, exact=True)
+            attributes.set("build-dir", None, exact=True)
 
-        if parent_module:
-            self.inherit_attributes(module_name, parent_module)
-            attributes.set("parent-module", parent_module, exact=1)
+            self.project_rules_.init_project(module_name, python_standalone)
 
-        if jamroot:
-            attributes.set("project-root", location, exact=1)
+            if parent_module:
+                self.inherit_attributes(module_name, parent_module)
+                attributes.set("parent-module", parent_module, exact=1)
 
-        parent = None
-        if parent_module:
-            parent = self.target(parent_module)
+            if jamroot:
+                attributes.set("project-root", location, exact=1)
 
-        if not self.module2target.has_key(module_name):
-            target = b2.build.targets.ProjectTarget(self.manager,
-                module_name, module_name, parent,
-                self.attribute(module_name, "requirements"),
-                # FIXME: why we need to pass this? It's not
-                # passed in jam code.
-                self.attribute(module_name, "default-build"))
-            self.module2target[module_name] = target
+            parent = None
+            if parent_module:
+                parent = self.target(parent_module)
+
+            if module_name not in self.module2target:
+                target = b2.build.targets.ProjectTarget(self.manager,
+                    module_name, module_name, parent,
+                    self.attribute(module_name, "requirements"),
+                    # FIXME: why we need to pass this? It's not
+                    # passed in jam code.
+                    self.attribute(module_name, "default-build"))
+                self.module2target[module_name] = target
 
         self.current_project = self.target(module_name)
 
@@ -529,6 +556,11 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
 
     def current(self):
         """Returns the project which is currently being loaded."""
+        if not self.current_project:
+            get_manager().errors()(
+                'Reference to the project currently being loaded requested '
+                'when there was no project module being loaded.'
+            )
         return self.current_project
 
     def set_current(self, c):
@@ -547,8 +579,10 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         self.current_project = project
 
     def pop_current(self):
-        self.current_project = self.saved_current_project[-1]
-        del self.saved_current_project[-1]
+        if self.saved_current_project:
+            self.current_project = self.saved_current_project.pop()
+        else:
+            self.current_project = None
 
     def attributes(self, project):
         """Returns the project-attribute instance for the
@@ -564,7 +598,7 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         try:
             return self.module2attributes[project].get(attribute)
         except:
-            raise BaseException("No attribute '%s' for project" % (attribute, project))
+            raise BaseException("No attribute '%s' for project %s" % (attribute, project))
 
     def attributeDefault(self, project, attribute, default):
         """Returns the value of the specified attribute in the
@@ -577,7 +611,7 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
     def target(self, project_module):
         """Returns the project target corresponding to the 'project-module'."""
         assert isinstance(project_module, basestring)
-        if not self.module2target.has_key(project_module):
+        if project_module not in self.module2target:
             self.module2target[project_module] = \
                 b2.build.targets.ProjectTarget(project_module, project_module,
                               self.attribute(project_module, "requirements"))
@@ -595,17 +629,17 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         if not declared_id or declared_id != id:
             # The project at 'location' either have no id or
             # that id is not equal to the 'id' parameter.
-            if self.id2module.has_key(id) and self.id2module[id] != project_module:
+            if id in self.id2module and self.id2module[id] != project_module:
                 self.manager.errors()(
 """Attempt to redeclare already existing project id '%s' at location '%s'""" % (id, location))
             self.id2module[id] = project_module
 
-        self.current_module = saved_project
+        self.current_project = saved_project
 
     def add_rule(self, name, callable_):
         """Makes rule 'name' available to all subsequently loaded Jamfiles.
 
-        Calling that rule wil relay to 'callable'."""
+        Calling that rule will relay to 'callable'."""
         assert isinstance(name, basestring)
         assert callable(callable_)
         self.project_rules_.add_rule(name, callable_)
@@ -669,7 +703,7 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         pkgutil.walk_packages() will find any python package
         provided a directory contains an __init__.py. This has the
         added benefit of allowing libraries to be installed and
-        automatically avaiable within the contrib directory.
+        automatically available within the contrib directory.
 
         *Note*: pkgutil.walk_packages() will import any subpackage
         in order to access its __path__variable. Meaning:
@@ -690,7 +724,7 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         self.__python_module_cache = cache
 
     def load_module(self, name, extra_path=None):
-        """Load a Python module that should be useable from Jamfiles.
+        """Load a Python module that should be usable from Jamfiles.
 
         There are generally two types of modules Jamfiles might want to
         use:
@@ -725,15 +759,21 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
             # find_module is used so that the pyc's can be used.
             # an ImportError is raised if not found
             f, location, description = imp.find_module(name, paths)
+        except ImportError:
+            # if the module is not found in the b2 package,
+            # this error will be handled later
+            pass
+        else:
+            # we've found the module, now let's try loading it.
+            # it's possible that the module itself contains an ImportError
+            # which is why we're loading it in this else clause so that the
+            # proper error message is shown to the end user.
+            # TODO: does this module name really need to be mangled like this?
             mname = name + "__for_jamfile"
             self.loaded_tool_module_path_[mname] = location
             module = imp.load_module(mname, f, location, description)
             self.loaded_tool_modules_[name] = module
             return module
-        except ImportError:
-            # if the module is not found in the b2 package,
-            # this error will be handled later
-            pass
 
         # the cache is created here due to possibly importing packages
         # that end up calling get_manager() which might fail
@@ -750,12 +790,17 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         # the module exists within the BOOST_BUILD_PATH,
         # load it.
         elif mname:
-            # __import__ can be used here since the module
-            # is guaranteed to be found under the `b2` namespace.
+            # in some cases, self.loaded_tool_module_path_ needs to
+            # have the path to the file during the import
+            # (project.initialize() for example),
+            # so the path needs to be set *before* importing the module.
+            path = os.path.join(b2.__path__[0], *mname.split('.')[1:])
+            self.loaded_tool_module_path_[mname] = path
+            # mname is guaranteed to be importable since it was
+            # found within the cache
             __import__(mname)
             module = sys.modules[mname]
             self.loaded_tool_modules_[name] = module
-            self.loaded_tool_module_path_[mname] = module.__file__
             return module
 
         self.manager.errors()("Cannot find module '%s'" % name)
@@ -1104,8 +1149,8 @@ attribute is allowed only for top-level 'project' invocations""")
         assert is_iterable_typed(name, basestring)
         assert is_iterable_typed(value, basestring)
         if len(value) > 1:
-            self.registry.manager.error()("path constant should have one element")
-        self.registry.current().add_constant(name[0], value[0], path=1)
+            self.registry.manager.errors()("path constant should have one element")
+        self.registry.current().add_constant(name[0], value, path=1)
 
     def use_project(self, id, where):
         # See comment in 'load' for explanation why we record the
@@ -1128,7 +1173,7 @@ attribute is allowed only for top-level 'project' invocations""")
 
     def always(self, target_names):
         assert is_iterable_typed(target_names, basestring)
-        self.registry.current().mark_targets_as_alays(target_names)
+        self.registry.current().mark_targets_as_always(target_names)
 
     def glob(self, wildcards, excludes=None):
         assert is_iterable_typed(wildcards, basestring)
@@ -1167,7 +1212,7 @@ attribute is allowed only for top-level 'project' invocations""")
         location = current.get('location')
 
         m = self.registry.load_module(toolset[0], [location])
-        if not m.__dict__.has_key("init"):
+        if "init" not in m.__dict__:
             self.registry.manager.errors()(
                 "Tool module '%s' does not define the 'init' method" % toolset[0])
         m.init(*args)

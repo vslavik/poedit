@@ -61,6 +61,7 @@ void basic_tests()
    TEST_REGEX_SEARCH("\\(\\)", basic, "", match_default, make_array(0, 0, 0, 0, -2, -2));
    TEST_INVALID_REGEX("\\(", basic);
    TEST_INVALID_REGEX("\\)", basic);
+   TEST_INVALID_REGEX("\\", basic);
    TEST_INVALID_REGEX("\\(aa", basic);
    TEST_INVALID_REGEX("aa\\)", basic);
    TEST_REGEX_SEARCH("()", basic, "()", match_default, make_array(0, 2, -2, -2));

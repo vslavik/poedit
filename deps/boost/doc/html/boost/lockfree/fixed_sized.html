@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template fixed_sized</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../lockfree/reference.html#header.boost.lockfree.policies_hpp" title="Header &lt;boost/lockfree/policies.hpp&gt;">
 <link rel="prev" href="../../lockfree/reference.html" title="Reference">
@@ -33,10 +33,11 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../lockfree/reference.html#header.boost.lockfree.policies_hpp" title="Header &lt;boost/lockfree/policies.hpp&gt;">boost/lockfree/policies.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> IsFixedSized<span class="special">&gt;</span> 
-<span class="keyword">struct</span> <a class="link" href="fixed_sized.html" title="Struct template fixed_sized">fixed_sized</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="fixed_sized.html" title="Struct template fixed_sized">fixed_sized</a> <span class="special">:</span> <span class="keyword">public</span> boost::parameter::template_keyword&lt; tag::fixed_sized, boost::mpl::bool_&lt; IsFixedSized &gt; &gt;
+<span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp252907040"></a><h2>Description</h2>
+<a name="id-1.3.23.6.2.3.4"></a><h2>Description</h2>
 <p>Configures a data structure as <span class="bold"><strong>fixed-sized</strong></span>.</p>
 <p>The internal nodes are stored inside an array and they are addressed by array indexing. This limits the possible size of the queue to the number of elements that can be addressed by the index type (usually 2**16-2), but on platforms that lack double-width compare-and-exchange instructions, this is the best way to achieve lock-freedom. This implies that a data structure is bounded. </p>
 </div>

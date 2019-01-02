@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,7 @@ independence, etc. To create a connection one might simply write:
 The iostream class can also be used in conjunction with an acceptor to create
 simple servers. For example:
 
-  io_service ios;
+  io_context ioc;
 
   ip::tcp::endpoint endpoint(tcp::v4(), 80);
   ip::tcp::acceptor acceptor(ios, endpoint);
@@ -28,7 +28,7 @@ simple servers. For example:
   for (;;)
   {
     ip::tcp::iostream stream;
-    acceptor.accept(*stream.rdbuf());
+    acceptor.accept(stream.socket());
     ...
   }
 

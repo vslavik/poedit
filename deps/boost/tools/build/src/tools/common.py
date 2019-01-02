@@ -182,7 +182,7 @@ def check_init_parameters(toolset, requirement, *args):
         The return value from this rule is a condition to be used for flags settings.
     """
     assert isinstance(toolset, basestring)
-    assert is_iterable_typed(requirement, basestring)
+    assert is_iterable_typed(requirement, basestring) or requirement is None
     from b2.build import toolset as b2_toolset
     if requirement is None:
         requirement = []
@@ -204,7 +204,7 @@ def check_init_parameters(toolset, requirement, *args):
         ### if $(value)-is-not-empty
         if value is not None:
             condition = condition + '-' + value
-            if __had_unspecified_value.has_key(str_toolset_name):
+            if str_toolset_name in __had_unspecified_value:
                 raise BaseException("'%s' initialization: parameter '%s' inconsistent\n" \
                 "no value was specified in earlier initialization\n" \
                 "an explicit value is specified now" % (toolset, name))
@@ -220,8 +220,8 @@ def check_init_parameters(toolset, requirement, *args):
             if m:
                 t = m.group(1)
 
-            if not __had_value.has_key(str_toolset_name):
-                if not __declared_subfeature.has_key(str((t, name))):
+            if str_toolset_name not in __had_value:
+                if str((t, name)) not in __declared_subfeature:
                     feature.subfeature('toolset', t, name, [], ['propagated'])
                     __declared_subfeature[str((t, name))] = True
 
@@ -231,7 +231,7 @@ def check_init_parameters(toolset, requirement, *args):
             subcondition += ['<toolset-' + t + ':' + name + '>' + value ]
 
         else:
-            if __had_value.has_key(str_toolset_name):
+            if str_toolset_name in __had_value:
                 raise BaseException ("'%s' initialization: parameter '%s' inconsistent\n" \
                 "an explicit value was specified in an earlier initialization\n" \
                 "no value is specified now" % (toolset, name))
@@ -247,7 +247,7 @@ def check_init_parameters(toolset, requirement, *args):
     if requirement:
         sig += '-' + '-'.join(requirement)
 
-    if __all_signatures.has_key(sig):
+    if sig in __all_signatures:
         message = "duplicate initialization of '%s' with the following parameters: " % toolset
 
         for arg in args:
@@ -314,9 +314,8 @@ def get_invocation_command_nodefault(
             #FIXME
             #ECHO "warning: initialized from" [ errors.nearest-user-location ]
             command = []
-        command = ' '.join(command)
-
-    assert(isinstance(command, str))
+        if command:
+            command = ' '.join(command)
 
     return command
 
@@ -351,7 +350,7 @@ def get_invocation_command(toolset, tool, user_provided_command = [],
 def get_absolute_tool_path(command):
     """
         Given an invocation command,
-        return the absolute path to the command. This works even if commnad
+        return the absolute path to the command. This works even if command
         has not path element and is present in PATH.
     """
     assert isinstance(command, basestring)
@@ -426,7 +425,7 @@ def check_tool_aux(command):
 def check_tool(command):
     """ Checks that a tool can be invoked by 'command'.
         If command is not an absolute path, checks if it can be found in 'path'.
-        If comand is absolute path, check that it exists. Returns 'command'
+        If command is absolute path, check that it exists. Returns 'command'
         if ok and empty string otherwise.
     """
     assert is_iterable_typed(command, basestring)
@@ -542,9 +541,16 @@ def prepend_path_variable_command(variable, paths):
     """
     assert isinstance(variable, basestring)
     assert is_iterable_typed(paths, basestring)
+    return path_variable_setting_command(
+        variable, paths + [expand_variable(variable)])
 
-    return path_variable_setting_command(variable,
-        paths + os.environ.get(variable, "").split(os.pathsep))
+
+def expand_variable(variable):
+    """Produce a string that expands the shell variable."""
+    if os.name == 'nt':
+        return '%{}%'.format(variable)
+    return '${%s}' % variable
+
 
 def file_creation_command():
     """
@@ -575,10 +581,7 @@ def mkdir(engine, target):
         __mkdir_set.add(target)
 
         # Schedule the mkdir build action.
-        if os_name() == 'NT':
-            engine.set_update_action("common.MkDir1-quick-fix-for-windows", target, [])
-        else:
-            engine.set_update_action("common.MkDir1-quick-fix-for-unix", target, [])
+        engine.set_update_action("common.MkDir", target, [])
 
         # Prepare a Jam 'dirs' target that can be used to make the build only
         # construct all the target directories.
@@ -816,62 +819,37 @@ def runtime_tag(name, target_type, prop_set ):
     return tag
 
 
-## TODO:
-##rule __test__ ( )
-##{
-##    import assert ;
-##
-##    local nl = "
-##" ;
-##
-##    local save-os = [ modules.peek os : .name ] ;
-##
-##    modules.poke os : .name : LINUX ;
-##
-##    assert.result "PATH=foo:bar:baz$(nl)export PATH$(nl)"
-##        : path-variable-setting-command PATH : foo bar baz ;
-##
-##    assert.result "PATH=foo:bar:$PATH$(nl)export PATH$(nl)"
-##        : prepend-path-variable-command PATH : foo bar ;
-##
-##    modules.poke os : .name : NT ;
-##
-##    assert.result "set PATH=foo;bar;baz$(nl)"
-##        : path-variable-setting-command PATH : foo bar baz ;
-##
-##    assert.result "set PATH=foo;bar;%PATH%$(nl)"
-##        : prepend-path-variable-command PATH : foo bar ;
-##
-##    modules.poke os : .name : $(save-os) ;
-##}
-
 def init(manager):
+    global __RM, __CP, __IGNORE, __LN
     engine = manager.engine()
 
-    engine.register_action("common.MkDir1-quick-fix-for-unix", 'mkdir -p "$(<)"')
-    engine.register_action("common.MkDir1-quick-fix-for-windows", 'if not exist "$(<)\\" mkdir "$(<)"')
-
+    # register the make() and alias() rules globally
     import b2.tools.make
     import b2.build.alias
 
-    global __RM, __CP, __IGNORE, __LN
+    windows_hack = ''
     # ported from trunk@47281
     if os_name() == 'NT':
         __RM = 'del /f /q'
-        __CP = 'copy'
+        __CP = 'copy /b'
+        windows_hack = '+ this-file-does-not-exist-A698EE7806899E69'
         __IGNORE = '2>nul >nul & setlocal'
         __LN = __CP
         #if not __LN:
         #    __LN = CP
+        MKDIR = 'if not exist "$(<)\\" mkdir "$(<)"'
     else:
         __RM = 'rm -f'
         __CP = 'cp'
         __IGNORE = ''
         __LN = 'ln'
+        MKDIR = 'mkdir -p "$(<)"'
 
-    engine.register_action("common.Clean", __RM + ' "$(>)"',
-                           flags=['piecemeal', 'together', 'existing'])
-    engine.register_action("common.copy", __CP + ' "$(>)" "$(<)"')
+    engine.register_action("common.MkDir", MKDIR + __IGNORE)
+
+    engine.register_action(
+        "common.Clean", __RM + ' "$(>)"', flags=['piecemeal', 'together', 'existing'])
+    engine.register_action("common.copy", '{} "$(>)" {}  "$(<)"'.format(__CP, windows_hack))
     engine.register_action("common.RmTemps", __RM + ' "$(>)" ' + __IGNORE,
                            flags=['quietly', 'updated', 'piecemeal', 'together'])
 

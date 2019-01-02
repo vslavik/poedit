@@ -8,8 +8,6 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #  include <boost/type_traits/type_with_alignment.hpp> // max_align and long_long_type
@@ -18,6 +16,8 @@
 #  include <boost/type_traits/aligned_storage.hpp>
 #  include <boost/type_traits/is_pod.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 template <class T>
 union must_be_pod
@@ -35,7 +35,14 @@ template <class T>
 void do_check(const T&)
 {
    typedef typename tt::aligned_storage<T::value,T::value>::type t1;
+#if defined(BOOST_GCC) && (BOOST_GCC < 40800)
+   // In order to test this with warnings-as-errors with GCC, we need 
+   // a slightly different initializer here to suppress spurious
+   // GCC warnings (ie to work around a GCC buglet).
+   t1 as1 = {{{ 0, }}};
+#else
    t1 as1 = { 0, };
+#endif
    must_be_pod<t1> pod1;
    no_unused_warning(as1);
    no_unused_warning(pod1);
@@ -46,7 +53,11 @@ void do_check(const T&)
    BOOST_CHECK(::tt::is_pod<t1>::value == true);
 #endif
    typedef typename tt::aligned_storage<T::value*2,T::value>::type t2;
+#if defined(BOOST_GCC) && (BOOST_GCC < 40800)
+   t2 as2 = {{{ 0, }}};
+#else
    t2 as2 = { 0, };
+#endif
    must_be_pod<t2> pod2;
    no_unused_warning(as2);
    no_unused_warning(pod2);
@@ -60,7 +71,11 @@ void do_check(const T&)
 #ifndef TEST_STD
    // Non-Tr1 behaviour:
    typedef typename tt::aligned_storage<T::value,(std::size_t)(-1L)>::type t3;
+#if defined(BOOST_GCC) && (BOOST_GCC < 40800)
+   t3 as3 = {{{ 0, }}};
+#else
    t3 as3 = { 0, };
+#endif
    must_be_pod<t3> pod3;
    no_unused_warning(as3);
    no_unused_warning(pod3);

@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -27,7 +27,7 @@ struct seq_type {
 
 struct seq_t {
     template <typename ...Xs>
-    constexpr decltype(auto) operator()(Xs ...xs) const {
+    constexpr auto operator()(Xs&& ...xs) const {
         auto storage = boost::hana::make_tuple(xs...);
         return seq_type<decltype(storage)>(storage);
     }

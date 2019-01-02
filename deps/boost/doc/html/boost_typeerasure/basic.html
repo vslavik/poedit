@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Basic Usage</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;36.&#160;Boost.TypeErasure">
+<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;40.&#160;Boost.TypeErasure">
 <link rel="prev" href="reading.html" title="How to read this documentation">
 <link rel="next" href="composing_concepts.html" title="Composing Concepts">
 </head>
@@ -56,7 +56,7 @@
 <p>
       <code class="computeroutput"><a class="link" href="../boost/type_erasure/copy_constructible.html" title="Struct template copy_constructible">copy_constructible</a></code>
       is a builtin concept that allows us to copy and destroy the object. <code class="computeroutput"><a class="link" href="../boost/type_erasure/typeid_.html" title="Struct template typeid_">typeid_</a></code> provides run-time type
-      information so that we can use <code class="computeroutput"><a class="link" href="../boost/type_erasure/any_cast_idp323619904.html" title="Function any_cast">any_cast</a></code>.
+      information so that we can use <code class="computeroutput"><a class="link" href="../boost/type_erasure/any_cast.html" title="Function any_cast">any_cast</a></code>.
       <code class="computeroutput"><a class="link" href="../boost/type_erasure/relaxed.html" title="Struct relaxed">relaxed</a></code> enables various
       useful defaults. Without <code class="computeroutput"><a class="link" href="../boost/type_erasure/relaxed.html" title="Struct relaxed">relaxed</a></code>,
       <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> supports <span class="emphasis"><em>exactly</em></span>
@@ -92,7 +92,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_MEMBER</span><span class="special">((</span><span class="identifier">has_push_back</span><span class="special">),</span> <span class="identifier">push_back</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_MEMBER</span><span class="special">(</span><span class="identifier">push_back</span><span class="special">)</span>
 
 <span class="keyword">void</span> <span class="identifier">append_many</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">has_push_back</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">(</span><span class="keyword">int</span><span class="special">)&gt;,</span> <span class="identifier">_self</span><span class="special">&amp;&gt;</span> <span class="identifier">container</span><span class="special">)</span> <span class="special">{</span>
     <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="number">10</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
@@ -104,11 +104,8 @@
 <p>
       We use the macro <code class="computeroutput"><a class="link" href="../BOOST_TYPE_ERASURE_MEMBER.html" title="Macro BOOST_TYPE_ERASURE_MEMBER">BOOST_TYPE_ERASURE_MEMBER</a></code>
       to define a concept called <code class="computeroutput"><span class="identifier">has_push_back</span></code>.
-      The second parameter is the name of the member function and the last macro
-      parameter indicates the number of arguments which is <code class="computeroutput"><span class="number">1</span></code>
-      since <code class="computeroutput"><span class="identifier">push_back</span></code> is unary. When
-      we use <code class="computeroutput"><span class="identifier">has_push_back</span></code>, we have
-      to tell it the signature of the function, <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span></code>.
+      When we use <code class="computeroutput"><span class="identifier">has_push_back</span></code>,
+      we have to tell it the signature of the function, <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span></code>.
       This means that the type we store in the any has to have a member that looks
       like:
     </p>
@@ -135,16 +132,12 @@
       stores a reference to an external object instead of allocating its own object.
     </p>
 <p>
-      There's actually another <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>
-      here. The second parameter of <code class="computeroutput"><span class="identifier">has_push_back</span></code>
-      defaults to <code class="computeroutput"><span class="identifier">_self</span></code>. If we wanted
-      to define a const member function, we would have to change it to <code class="computeroutput"><span class="keyword">const</span> <span class="identifier">_self</span></code>,
-      as shown below.
+      Member functions can be const.
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_MEMBER</span><span class="special">((</span><span class="identifier">has_empty</span><span class="special">),</span> <span class="identifier">empty</span><span class="special">,</span> <span class="number">0</span><span class="special">)</span>
-<span class="keyword">bool</span> <span class="identifier">is_empty</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">has_empty</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">(),</span> <span class="keyword">const</span> <span class="identifier">_self</span><span class="special">&gt;,</span> <span class="keyword">const</span> <span class="identifier">_self</span><span class="special">&amp;&gt;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">{</span>
+<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_MEMBER</span><span class="special">(</span><span class="identifier">empty</span><span class="special">)</span>
+<span class="keyword">bool</span> <span class="identifier">is_empty</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">has_empty</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">()</span> <span class="keyword">const</span><span class="special">&gt;,</span> <span class="keyword">const</span> <span class="identifier">_self</span><span class="special">&amp;&gt;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">{</span>
     <span class="keyword">return</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">empty</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
@@ -155,7 +148,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">((</span><span class="identifier">has_getline</span><span class="special">),</span> <span class="identifier">getline</span><span class="special">,</span> <span class="number">2</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">(</span><span class="identifier">getline</span><span class="special">)</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">read_lines</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">has_getline</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">(</span><span class="identifier">_self</span><span class="special">&amp;,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;)&gt;,</span> <span class="identifier">_self</span><span class="special">&amp;&gt;</span> <span class="identifier">stream</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">result</span><span class="special">;</span>

@@ -8,7 +8,7 @@
 #ifndef BOOST_IOSTREAMS_DETAIL_DIRECT_ADAPTER_HPP_INCLUDED
 #define BOOST_IOSTREAMS_DETAIL_DIRECT_ADAPTER_HPP_INCLUDED
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif              
 
@@ -58,6 +58,7 @@ protected:
     explicit direct_adapter_base(const Direct& d);
     typedef is_convertible<category, two_sequence> is_double;
     struct pointers {
+        pointers() : beg(0), ptr(0), end(0) { }
         char_type *beg, *ptr, *end;
     };
     void init_input(mpl::true_);

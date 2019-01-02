@@ -61,6 +61,9 @@ typedef boost::multiprecision::float128 real_type;
 #elif defined(TEST_CPP_BIN_FLOAT_QUAD)
 #include <boost/multiprecision/cpp_bin_float.hpp>
 typedef boost::multiprecision::cpp_bin_float_quad real_type;
+#elif defined(TEST_CPP_BIN_FLOAT_OCT)
+#include <boost/multiprecision/cpp_bin_float.hpp>
+typedef boost::multiprecision::cpp_bin_float_oct real_type;
 #else
 typedef double real_type;
 #endif

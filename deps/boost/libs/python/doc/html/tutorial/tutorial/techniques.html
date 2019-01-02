@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>General Techniques</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python Tutorial">
 <link rel="up" href="../index.html" title="Boost.Python Tutorial">
 <link rel="prev" href="exception.html" title="Exception Translation">
@@ -18,7 +18,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tutorial.techniques"></a><a class="link" href="techniques.html" title="General Techniques">General Techniques</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="techniques.html#tutorial.techniques.creating_packages">Creating Packages</a></span></dt>
 <dt><span class="section"><a href="techniques.html#tutorial.techniques.extending_wrapped_objects_in_pyt">Extending
       Wrapped Objects in Python</a></span></dt>
@@ -158,12 +158,12 @@
     __init__.py
     core/
         __init__.py
-        <span class="underline">core.pyd
+        _core.pyd
     filters/
-        \</span>_init__.py
-        <span class="underline">filters.pyd
+        __init__.py
+        _filters.pyd
     io/
-        \</span>_init__.py
+        __init__.py
         _io.pyd
 </pre>
 <p>
@@ -273,7 +273,7 @@
         <span class="bold"><strong>All</strong></span> point instances created from C++ will
         also have this member function! This technique has several advantages:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Cut down compile times to zero for these additional functions
           </li>
@@ -288,38 +288,6 @@
             the interface)
           </li>
 </ul></div>
-<p>
-        You can even add a little syntactic sugar with the use of metaclasses. Let's
-        create a special metaclass that "injects" methods in other classes.
-      </p>
-<pre class="programlisting"><span class="comment"># The one Boost.Python uses for all wrapped classes.</span>
-<span class="comment"># You can use here any class exported by Boost instead of "point"</span>
-<span class="identifier">BoostPythonMetaclass</span> <span class="special">=</span> <span class="identifier">point</span><span class="special">.</span><span class="identifier">__class__</span>
-
-<span class="keyword">class</span> <span class="identifier">injector</span><span class="special">(</span><span class="identifier">object</span><span class="special">):</span>
-    <span class="keyword">class</span> <span class="identifier">__metaclass__</span><span class="special">(</span><span class="identifier">BoostPythonMetaclass</span><span class="special">):</span>
-        <span class="keyword">def</span> <span class="identifier">__init__</span><span class="special">(</span><span class="identifier">self</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">bases</span><span class="special">,</span> <span class="identifier">dict</span><span class="special">):</span>
-            <span class="keyword">for</span> <span class="identifier">b</span> <span class="keyword">in</span> <span class="identifier">bases</span><span class="special">:</span>
-                <span class="keyword">if</span> <span class="identifier">type</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="keyword">not</span> <span class="keyword">in</span> <span class="special">(</span><span class="identifier">self</span><span class="special">,</span> <span class="identifier">type</span><span class="special">):</span>
-                    <span class="keyword">for</span> <span class="identifier">k</span><span class="special">,</span><span class="identifier">v</span> <span class="keyword">in</span> <span class="identifier">dict</span><span class="special">.</span><span class="identifier">items</span><span class="special">():</span>
-                        <span class="identifier">setattr</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">v</span><span class="special">)</span>
-            <span class="keyword">return</span> <span class="identifier">type</span><span class="special">.</span><span class="identifier">__init__</span><span class="special">(</span><span class="identifier">self</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">bases</span><span class="special">,</span> <span class="identifier">dict</span><span class="special">)</span>
-
-<span class="comment"># inject some methods in the point foo</span>
-<span class="keyword">class</span> <span class="identifier">more_point</span><span class="special">(</span><span class="identifier">injector</span><span class="special">,</span> <span class="identifier">point</span><span class="special">):</span>
-    <span class="keyword">def</span> <span class="identifier">__repr__</span><span class="special">(</span><span class="identifier">self</span><span class="special">):</span>
-        <span class="keyword">return</span> <span class="string">'Point(x=%s, y=%s)'</span> <span class="special">%</span> <span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">x</span><span class="special">,</span> <span class="identifier">self</span><span class="special">.</span><span class="identifier">y</span><span class="special">)</span>
-    <span class="keyword">def</span> <span class="identifier">foo</span><span class="special">(</span><span class="identifier">self</span><span class="special">):</span>
-        <span class="keyword">print</span> <span class="string">'foo!'</span>
-</pre>
-<p>
-        Now let's see how it got:
-      </p>
-<pre class="programlisting"><span class="special">&gt;&gt;&gt;</span> <span class="keyword">print</span> <span class="identifier">point</span><span class="special">()</span>
-<span class="identifier">Point</span><span class="special">(</span><span class="identifier">x</span><span class="special">=</span><span class="number">10</span><span class="special">,</span> <span class="identifier">y</span><span class="special">=</span><span class="number">10</span><span class="special">)</span>
-<span class="special">&gt;&gt;&gt;</span> <span class="identifier">point</span><span class="special">().</span><span class="identifier">foo</span><span class="special">()</span>
-<span class="identifier">foo</span><span class="special">!</span>
-</pre>
 <p>
         Another useful idea is to replace constructors with factory functions:
       </p>

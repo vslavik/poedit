@@ -28,8 +28,8 @@ typedef scaled_base_unit<pint_base_unit, scale<2, static_rational<-7> > > fluid_
 
 template<>
 struct base_unit_info<us::fluid_dram_base_unit> {
-    static const char* name()   { return("fluid dram (U.S.)"); }
-    static const char* symbol() { return("fl dr"); }
+    static BOOST_CONSTEXPR const char* name()   { return("fluid dram (U.S.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("fl dr"); }
 };
 
 } // namespace units

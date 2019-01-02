@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_random.html" title="Chapter&#160;27.&#160;Boost.Random">
-<link rel="prev" href="../boost_random.html" title="Chapter&#160;27.&#160;Boost.Random">
+<link rel="up" href="../boost_random.html" title="Chapter&#160;34.&#160;Boost.Random">
+<link rel="prev" href="../boost_random.html" title="Chapter&#160;34.&#160;Boost.Random">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -27,13 +27,15 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_random.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial">Tutorial</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tutorial.html#boost_random.tutorial.generating_integers_in_a_range">Generating
       integers in a range</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#boost_random.tutorial.generating_integers_with_different_probabilities">Generating
       integers with different probabilities</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#boost_random.tutorial.generating_a_random_password">Generating
       a random password</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#boost_random.tutorial.generating_quasi_random_line_sphere_intersections">Generating
+      quasi-random line-sphere intersections</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -201,6 +203,7 @@
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">random</span><span class="special">/</span><span class="identifier">random_device</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">random</span><span class="special">/</span><span class="identifier">uniform_int_distribution</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
     <a class="co" name="boost_random.tutorial.generating_a_random_password.c0" href="tutorial.html#boost_random.tutorial.generating_a_random_password.c1"><img src="../../../doc/src/images/callouts/1.png" alt="1" border="0"></a><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">chars</span><span class="special">(</span>
@@ -242,6 +245,106 @@
           </p></td>
 </tr>
 </table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_random.tutorial.generating_quasi_random_line_sphere_intersections"></a><a class="link" href="tutorial.html#boost_random.tutorial.generating_quasi_random_line_sphere_intersections" title="Generating quasi-random line-sphere intersections">Generating
+      quasi-random line-sphere intersections</a>
+</h3></div></div></div>
+<p>
+        For the source of this example see <a href="../../..//libs/random/example/intersections.cpp" target="_top">intersections.cpp</a>.
+      </p>
+<p>
+        This example demonstrates generating quasi-randomly distributed chord entry
+        and exit points on an S<sup>2</sup> sphere.
+      </p>
+<p>
+        First we include the headers we need for <code class="computeroutput"><a class="link" href="../boost/random/niederreiter_base2.html" title="Type definition niederreiter_base2">niederreiter_base2</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/random/uniform_01.html" title="Class template uniform_01">uniform_01</a></code> distribution.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">random</span><span class="special">/</span><span class="identifier">niederreiter_base2</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">random</span><span class="special">/</span><span class="identifier">uniform_01</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">constants</span><span class="special">/</span><span class="identifier">constants</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        We use 4-dimensional <code class="computeroutput"><a class="link" href="../boost/random/niederreiter_base2.html" title="Type definition niederreiter_base2">niederreiter_base2</a></code>
+        as a source of randomness.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">random</span><span class="special">::</span><span class="identifier">niederreiter_base2</span> <span class="identifier">gen</span><span class="special">(</span><span class="number">4</span><span class="special">);</span>
+
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">point_t</span><span class="special">;</span>
+
+  <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">n_points</span> <span class="special">=</span> <span class="number">100</span><span class="special">;</span> <span class="comment">// we will generate 100 points</span>
+
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">point_t</span><span class="special">&gt;</span> <span class="identifier">points</span><span class="special">;</span>
+  <span class="identifier">points</span><span class="special">.</span><span class="identifier">reserve</span><span class="special">(</span><span class="identifier">n_points</span><span class="special">);</span>
+
+  <a class="co" name="boost_random.tutorial.generating_quasi_random_line_sphere_intersections.c0" href="tutorial.html#boost_random.tutorial.generating_quasi_random_line_sphere_intersections.c1"><img src="../../../doc/src/images/callouts/1.png" alt="1" border="0"></a><span class="identifier">boost</span><span class="special">::</span><span class="identifier">random</span><span class="special">::</span><span class="identifier">uniform_01</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">dist</span><span class="special">;</span>
+
+  <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">!=</span> <span class="identifier">n_points</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+  <span class="special">{</span>
+</pre>
+<p>
+      </p>
+<p>
+        Using formula from J. Rovira et al., "Point sampling with uniformly
+        distributed lines", 2005 to compute uniformly distributed chord entry
+        and exit points on the surface of a sphere.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">cos_theta</span> <span class="special">=</span> <span class="number">1</span> <span class="special">-</span> <span class="number">2</span> <span class="special">*</span> <span class="identifier">dist</span><span class="special">(</span><span class="identifier">gen</span><span class="special">);</span>
+<span class="keyword">double</span> <span class="identifier">sin_theta</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">sqrt</span><span class="special">(</span><span class="number">1</span> <span class="special">-</span> <span class="identifier">cos_theta</span> <span class="special">*</span> <span class="identifier">cos_theta</span><span class="special">);</span>
+<span class="keyword">double</span> <span class="identifier">phi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">constants</span><span class="special">::</span><span class="identifier">two_pi</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;()</span> <span class="special">*</span> <span class="identifier">dist</span><span class="special">(</span><span class="identifier">gen</span><span class="special">);</span>
+<span class="keyword">double</span> <span class="identifier">sin_phi</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">sin</span><span class="special">(</span><span class="identifier">phi</span><span class="special">),</span> <span class="identifier">cos_phi</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cos</span><span class="special">(</span><span class="identifier">phi</span><span class="special">);</span>
+
+<span class="identifier">point_t</span> <span class="identifier">point_on_sphere</span><span class="special">(</span><span class="identifier">sin_theta</span><span class="special">*</span><span class="identifier">sin_phi</span><span class="special">,</span> <span class="identifier">cos_theta</span><span class="special">,</span> <span class="identifier">sin_theta</span><span class="special">*</span><span class="identifier">cos_phi</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+<p>
+        Here we assume that our sphere is a unit sphere at origin. If your sphere
+        was different then now would be the time to scale and translate the <code class="computeroutput"><span class="identifier">point_on_sphere</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting">  <span class="identifier">points</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">point_on_sphere</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Vector <code class="computeroutput"><span class="identifier">points</span></code> now holds generated
+        3D points on a sphere.
+      </p>
+<p>
+</p>
+<pre class="programlisting">  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="boost_random.tutorial.generating_quasi_random_line_sphere_intersections.c1"></a><a href="#boost_random.tutorial.generating_quasi_random_line_sphere_intersections.c0"><img src="../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+            <code class="computeroutput"><a class="link" href="../boost/random/niederreiter_base2.html" title="Type definition niederreiter_base2">niederreiter_base2</a></code>
+            produces integers in the range [0, 2<sup>64</sup>-1]. However, we want numbers in
+            the range [0, 1). The distribution <code class="computeroutput"><a class="link" href="../boost/random/uniform_01.html" title="Class template uniform_01">uniform_01</a></code>
+            performs this transformation.
+          </p></td>
+</tr></table></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

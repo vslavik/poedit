@@ -13,14 +13,6 @@
 namespace phoenix = boost::phoenix;
 namespace proto = boost::proto;
 
-struct invert_actions
-{
-    template <typename Rule>
-    struct when
-        : proto::_
-    {};
-};
-
 using phoenix::evaluator;
 
 #ifdef _MSC_VER
@@ -28,6 +20,19 @@ using phoenix::evaluator;
 // F(G(...))
 #define evaluator(A0, A1) proto::call<phoenix::evaluator(A0, A1)>
 #endif
+
+struct invert_actions
+{
+    template <typename Rule>
+    struct when
+        : proto::nary_expr<
+              proto::_
+            , proto::vararg<
+                  proto::when<proto::_, evaluator(proto::_, phoenix::_context)>
+              >
+          >
+    {};
+};
 
 template <>
 struct invert_actions::when<phoenix::rule::plus>

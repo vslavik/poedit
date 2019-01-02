@@ -10,6 +10,7 @@
 #ifndef BOOST_PHOENIX_STATEMENT_TRY_CATCH_HPP
 #define BOOST_PHOENIX_STATEMENT_TRY_CATCH_HPP
 
+#include <boost/phoenix/config.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/call.hpp>
 #include <boost/phoenix/core/expression.hpp>
@@ -135,7 +136,8 @@ namespace boost { namespace phoenix
 
         template <typename Catch, typename Exception, typename Context>
         typename enable_if<proto::matches<Catch, rule::non_captured_catch> >::type
-        eval_catch_body(Catch const &c, Exception & /*unused*/, Context const &ctx) const
+        eval_catch_body(Catch const &c, Exception & /*unused*/, Context const &ctx
+            BOOST_PHOENIX_SFINAE_AND_OVERLOADS) const
         {
             phoenix::eval(proto::child_c<1>(c), ctx);
         }

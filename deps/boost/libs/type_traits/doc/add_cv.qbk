@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using add_cv_t = typename add_cv<T>::type; // C++11 and above
+
 __type The same type as `T const volatile` for all `T`.  
 
 __std_ref 3.9.3.

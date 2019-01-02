@@ -1,4 +1,4 @@
-/* Copyright 2003-2013 Joaquin M Lopez Munoz.
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -20,6 +20,7 @@
 #include <boost/multi_index/detail/rnd_index_node.hpp>
 #include <boost/noncopyable.hpp>
 #include <cstddef>
+#include <memory>
 
 namespace boost{
 
@@ -43,7 +44,14 @@ public:
   typedef typename node_impl_type::pointer              value_type;
   typedef typename boost::detail::allocator::rebind_to<
     Allocator,value_type
-  >::type::pointer                                      pointer;
+  >::type                                               value_allocator;
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+  typedef typename value_allocator::pointer             pointer;
+#else
+  typedef typename std::allocator_traits<
+    value_allocator
+  >::pointer                                            pointer;
+#endif
 
   random_access_index_ptr_array(
     const Allocator& al,value_type end_,std::size_t sz):

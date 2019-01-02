@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Searching Algorithms</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost Algorithm Library">
 <link rel="up" href="../index.html" title="The Boost Algorithm Library">
 <link rel="prev" href="../index.html" title="The Boost Algorithm Library">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="algorithm.Searching"></a><a class="link" href="Searching.html" title="Searching Algorithms">Searching Algorithms</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore">Boyer-Moore
       Search</a></span></dt>
 <dt><span class="section"><a href="../the_boost_algorithm_library/Searching/BoyerMooreHorspool.html">Boyer-Moore-Horspool
@@ -41,7 +41,7 @@
 </h3></div></div></div>
 <h5>
 <a name="the_boost_algorithm_library.Searching.BoyerMoore.h0"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.overview"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.overview">Overview</a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.overview"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.overview">Overview</a>
       </h5>
 <p>
         The header file 'boyer_moore.hpp' contains an implementation of the Boyer-Moore
@@ -71,7 +71,7 @@
       </p>
 <h5>
 <a name="the_boost_algorithm_library.Searching.BoyerMoore.h1"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.interface"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.interface">Interface</a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.interface"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.interface">Interface</a>
       </h5>
 <p>
         For flexibility, the Boyer-Moore algorithm has two interfaces; an object-based
@@ -91,7 +91,7 @@
     <span class="special">~</span><span class="identifier">boyer_moore</span> <span class="special">();</span>
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">corpusIter</span><span class="special">&gt;</span>
-    <span class="identifier">corpusIter</span> <span class="keyword">operator</span> <span class="special">()</span> <span class="special">(</span> <span class="identifier">corpusIter</span> <span class="identifier">corpus_first</span><span class="special">,</span> <span class="identifier">corpusIter</span> <span class="identifier">corpus_last</span> <span class="special">);</span>
+    <span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">corpusIter</span><span class="special">,</span> <span class="identifier">corpusIter</span><span class="special">&gt;</span> <span class="keyword">operator</span> <span class="special">()</span> <span class="special">(</span> <span class="identifier">corpusIter</span> <span class="identifier">corpus_first</span><span class="special">,</span> <span class="identifier">corpusIter</span> <span class="identifier">corpus_last</span> <span class="special">);</span>
     <span class="special">};</span>
 </pre>
 <p>
@@ -102,7 +102,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">patIter</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">corpusIter</span><span class="special">&gt;</span>
-<span class="identifier">corpusIter</span> <span class="identifier">boyer_moore_search</span> <span class="special">(</span>
+<span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">corpusIter</span><span class="special">,</span> <span class="identifier">corpusIter</span><span class="special">&gt;</span> <span class="identifier">boyer_moore_search</span> <span class="special">(</span>
         <span class="identifier">corpusIter</span> <span class="identifier">corpus_first</span><span class="special">,</span> <span class="identifier">corpusIter</span> <span class="identifier">corpus_last</span><span class="special">,</span>
         <span class="identifier">patIter</span> <span class="identifier">pat_first</span><span class="special">,</span> <span class="identifier">patIter</span> <span class="identifier">pat_last</span> <span class="special">);</span>
 </pre>
@@ -116,13 +116,43 @@
         and <code class="computeroutput"><span class="identifier">curpusIter</span><span class="special">::</span><span class="identifier">value_type</span></code> need to be the same type.
       </p>
 <p>
-        The return value of the function is an iterator pointing to the start of
-        the pattern in the corpus. If the pattern is not found, it returns the end
-        of the corpus (<code class="computeroutput"><span class="identifier">corpus_last</span></code>).
+        The return value of the function is a pair of iterators pointing to the position
+        of the pattern in the corpus. If the pattern is empty, it returns at empty
+        range at the start of the corpus (<code class="computeroutput"><span class="identifier">corpus_first</span></code>,
+        <code class="computeroutput"><span class="identifier">corpus_first</span></code>). If the pattern
+        is not found, it returns at empty range at the end of the corpus (<code class="computeroutput"><span class="identifier">corpus_last</span></code>, <code class="computeroutput"><span class="identifier">corpus_last</span></code>).
       </p>
 <h5>
 <a name="the_boost_algorithm_library.Searching.BoyerMoore.h2"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.performance"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.performance">Performance</a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.compatibility_note"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.compatibility_note">Compatibility
+        Note</a>
+      </h5>
+<p>
+        Earlier versions of this searcher returned only a single iterator. As explained
+        in <a href="https://cplusplusmusings.wordpress.com/2016/02/01/sometimes-you-get-things-wrong/" target="_top">https://cplusplusmusings.wordpress.com/2016/02/01/sometimes-you-get-things-wrong/</a>,
+        this was a suboptimal interface choice, and has been changed, starting in
+        the 1.62.0 release. Old code that is expecting a single iterator return value
+        can be updated by replacing the return value of the searcher's <code class="computeroutput"><span class="keyword">operator</span> <span class="special">()</span></code>
+        with the <code class="computeroutput"><span class="special">.</span><span class="identifier">first</span></code>
+        field of the pair.
+      </p>
+<p>
+        Instead of:
+</p>
+<pre class="programlisting"><span class="identifier">iterator</span> <span class="identifier">foo</span> <span class="special">=</span> <span class="identifier">searcher</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+<p>
+        you now write:
+</p>
+<pre class="programlisting"><span class="identifier">iterator</span> <span class="identifier">foo</span> <span class="special">=</span> <span class="identifier">searcher</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">).</span><span class="identifier">first</span><span class="special">;</span>
+</pre>
+<p>
+      </p>
+<h5>
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h3"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.performance"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.performance">Performance</a>
       </h5>
 <p>
         The execution time of the Boyer-Moore algorithm, while still linear in the
@@ -136,8 +166,8 @@
         of the text as possible where the string cannot match.
       </p>
 <h5>
-<a name="the_boost_algorithm_library.Searching.BoyerMoore.h3"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.memory_use"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.memory_use">Memory
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h4"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.memory_use"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.memory_use">Memory
         Use</a>
       </h5>
 <p>
@@ -147,8 +177,8 @@
         this table contains 256 entries.
       </p>
 <h5>
-<a name="the_boost_algorithm_library.Searching.BoyerMoore.h4"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.complexity"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.complexity">Complexity</a>
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h5"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.complexity"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.complexity">Complexity</a>
       </h5>
 <p>
         The worst-case performance to find a pattern in the corpus is <span class="emphasis"><em>O(N)</em></span>
@@ -157,8 +187,8 @@
         be checked.
       </p>
 <h5>
-<a name="the_boost_algorithm_library.Searching.BoyerMoore.h5"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.exception_safety"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.exception_safety">Exception
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h6"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.exception_safety"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.exception_safety">Exception
         Safety</a>
       </h5>
 <p>
@@ -168,10 +198,10 @@
         guarantee.
       </p>
 <h5>
-<a name="the_boost_algorithm_library.Searching.BoyerMoore.h6"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.notes"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.notes">Notes</a>
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h7"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.notes"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.notes">Notes</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             When using the object-based interface, the pattern must remain unchanged
             for during the searches; i.e, from the time the object is constructed
@@ -183,8 +213,8 @@
           </li>
 </ul></div>
 <h5>
-<a name="the_boost_algorithm_library.Searching.BoyerMoore.h7"></a>
-        <span><a name="the_boost_algorithm_library.Searching.BoyerMoore.customization_points"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.customization_points">Customization
+<a name="the_boost_algorithm_library.Searching.BoyerMoore.h8"></a>
+        <span class="phrase"><a name="the_boost_algorithm_library.Searching.BoyerMoore.customization_points"></a></span><a class="link" href="Searching.html#the_boost_algorithm_library.Searching.BoyerMoore.customization_points">Customization
         points</a>
       </h5>
 <p>

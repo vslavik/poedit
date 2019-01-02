@@ -49,19 +49,27 @@ test_set(){
     std::set<A> aset;
     aset.insert(A());
     aset.insert(A());
+    const A * a_ptr = & * aset.begin();
     {   
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
         oa << boost::serialization::make_nvp("aset", aset);
+        // serialize a pointer into the set
+        oa << boost::serialization::make_nvp("a_ptr", a_ptr);
     }
     std::set<A> aset1;
+    A * a_ptr1;
     {
         test_istream is(testfile, TEST_STREAM_FLAGS);
         test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
         ia >> boost::serialization::make_nvp("aset", aset1);
+        // deserialize a pointer into the set
+        ia >> boost::serialization::make_nvp("a_ptr1", a_ptr1);
     }
-    BOOST_CHECK(aset == aset1);
-    std::remove(testfile);    
+    BOOST_CHECK_EQUAL(aset, aset1);
+    BOOST_CHECK_EQUAL(*a_ptr1, * aset1.begin());
+    BOOST_CHECK_EQUAL(a_ptr1, & * aset1.begin());
+    std::remove(testfile);
 }
 
 void
@@ -72,18 +80,26 @@ test_multiset(){
     std::multiset<A> amultiset;
     amultiset.insert(A());
     amultiset.insert(A());
-    {   
+    const A * a_ptr = & * amultiset.begin();
+    {
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
         oa << boost::serialization::make_nvp("amultiset", amultiset);
+        // serialize a pointer into the set
+        oa << boost::serialization::make_nvp("a_ptr", a_ptr);
     }
     std::multiset<A> amultiset1;
+    A * a_ptr1;
     {
         test_istream is(testfile, TEST_STREAM_FLAGS);
         test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
         ia >> boost::serialization::make_nvp("amultiset", amultiset1);
+        // deserialize a pointer into the set
+        ia >> boost::serialization::make_nvp("a_ptr1", a_ptr1);
     }
     BOOST_CHECK(amultiset == amultiset1);
+    BOOST_CHECK_EQUAL(*a_ptr1, * amultiset1.begin());
+    BOOST_CHECK_EQUAL(a_ptr1, & * amultiset1.begin());
     std::remove(testfile);
 }
 

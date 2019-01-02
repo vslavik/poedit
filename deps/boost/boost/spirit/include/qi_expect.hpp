@@ -14,5 +14,6 @@
 #endif
 
 #include <boost/spirit/home/qi/operator/expect.hpp>
+#include <boost/spirit/home/qi/directive/expect.hpp>
 
 #endif

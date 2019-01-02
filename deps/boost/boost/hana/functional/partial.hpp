@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::partial`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -64,8 +64,6 @@ BOOST_HANA_NAMESPACE_BEGIN
 
     template <std::size_t ...n, typename F, typename ...X>
     struct partial_t<std::index_sequence<n...>, F, X...> {
-        // Not needed in theory; workaround for a bug in libstdc++'s tuple,
-        // which instantiates the default constructor of elements too eagerly.
         partial_t() = default;
 
         template <typename ...T>
@@ -77,24 +75,24 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...Y>
         constexpr decltype(auto) operator()(Y&& ...y) const& {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)...,
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)...,
                 static_cast<Y&&>(y)...
             );
         }
 
         template <typename ...Y>
         constexpr decltype(auto) operator()(Y&& ...y) & {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)...,
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)...,
                 static_cast<Y&&>(y)...
             );
         }
 
         template <typename ...Y>
         constexpr decltype(auto) operator()(Y&& ...y) && {
-            return static_cast<F&&>(hana::get_impl<0>(storage_))(
-                static_cast<X&&>(hana::get_impl<n+1>(storage_))...,
+            return static_cast<F&&>(hana::at_c<0>(storage_))(
+                static_cast<X&&>(hana::at_c<n+1>(storage_))...,
                 static_cast<Y&&>(y)...
             );
         }

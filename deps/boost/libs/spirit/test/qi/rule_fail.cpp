@@ -13,18 +13,17 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
 
 // this test must fail compiling
 int main()
 {
     char const* input = "some input, it doesn't matter";
-    char const* end = &input[strlen(input)+1];
+    char const* end = &input[strlen(input)];
 
     rule<char const*, rule<char const*> > def;
     def = int_ >> *(',' >> int_);
 
-    bool r = phrase_parse(input, end, def,
+    phrase_parse(input, end, def,
         qi::space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;

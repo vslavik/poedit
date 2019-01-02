@@ -1,43 +1,29 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_PLANAR_PIXEL_REFERENCE_HPP
+#define BOOST_GIL_PLANAR_PIXEL_REFERENCE_HPP
 
-    See http://stlab.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_PLANAR_REF_H
-#define GIL_PLANAR_REF_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief planar pixel reference class
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 28, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/channel.hpp>
+#include <boost/gil/color_base.hpp>
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/planar_pixel_iterator.hpp>
 
 #include <boost/mpl/range_c.hpp>
-#include "gil_config.hpp"
-#include "gil_concept.hpp"
-#include "color_base.hpp"
-#include "channel.hpp"
-#include "pixel.hpp"
-#include "planar_pixel_iterator.hpp"
 
 namespace boost { namespace gil {
 
-/// \defgroup ColorBaseModelPlanarRef planar_pixel_reference 
+/// \defgroup ColorBaseModelPlanarRef planar_pixel_reference
 /// \ingroup ColorBaseModel
 /// \brief A homogeneous color base whose element is a channel reference. Models HomogeneousColorBaseConcept, HomogeneousPixelConcept.
 /// This class is used as a reference proxy to a planar pixel.
 
-/// \defgroup PixelModelPlanarRef planar_pixel_reference 
+/// \defgroup PixelModelPlanarRef planar_pixel_reference
 /// \ingroup PixelModel
 /// \brief A reference proxy to a planar pixel. Models HomogeneousColorBaseConcept, HomogeneousPixelConcept.
 
@@ -46,9 +32,9 @@ namespace boost { namespace gil {
 /// \brief A reference proxy to a planar pixel. Models: HomogeneousColorBaseConcept, HomogeneousPixelConcept
 ///
 /// A reference to a planar pixel is a proxy class containing references to each of the corresponding channels.
-/// 
+///
 template <typename ChannelReference, typename ColorSpace>        // ChannelReference is a channel reference (const or mutable)
-struct planar_pixel_reference 
+struct planar_pixel_reference
    : public detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value> {
     typedef detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value> parent_t;
 private:
@@ -64,7 +50,7 @@ public:
     planar_pixel_reference(ChannelReference v0, ChannelReference v1) : parent_t(v0,v1) {}
     planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2) : parent_t(v0,v1,v2) {}
     planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2, ChannelReference v3) : parent_t(v0,v1,v2,v3) {}
-    planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2, ChannelReference v3, ChannelReference v4) : parent_t(v0,v1,v2,v3,v4) {}
+planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2, ChannelReference v3, ChannelReference v4) : parent_t(v0,v1,v2,v3,v4) {}
     planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2, ChannelReference v3, ChannelReference v4, ChannelReference v5) : parent_t(v0,v1,v2,v3,v4,v5) {}
 
     template <typename P>                         planar_pixel_reference(const P& p)        : parent_t(p) { check_compatible<P>();}
@@ -161,7 +147,7 @@ struct channel_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
     typedef typename channel_traits<ChannelReference>::value_type type;
 }; 
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 namespace std {
 // We are forced to define swap inside std namespace because on some platforms (Visual Studio 8) STL calls swap qualified.
@@ -178,7 +164,6 @@ void swap(const boost::gil::planar_pixel_reference<CR,CS> x, R& y) {
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
 
-
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
@@ -186,13 +171,13 @@ void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, con
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
 
-
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
 void swap(const boost::gil::planar_pixel_reference<CR,CS> x, const boost::gil::planar_pixel_reference<CR,CS> y) { 
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
+
 }   // namespace std
 
 #endif

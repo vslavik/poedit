@@ -13,6 +13,7 @@
 #include <boost/thread/future.hpp>
 #include <boost/static_assert.hpp>
 #include <cassert>
+#include <iostream>
 #include <boost/thread/executors/basic_thread_pool.hpp>
 
 struct TestCallback

@@ -37,10 +37,10 @@ struct scaled_base_unit;
 template<long Base, class Exponent>
 struct scale
 {
-    static const long base = Base;
+    BOOST_STATIC_CONSTEXPR long base = Base;
     typedef Exponent exponent;
     typedef double value_type;
-    static value_type value() { return(detail::static_rational_power<Exponent>(static_cast<double>(base))); }
+    static BOOST_CONSTEXPR value_type value() { return(detail::static_rational_power<Exponent>(static_cast<double>(base))); }
     // These need to be defined in specializations for
     // printing to work.
     // static std::string name();
@@ -48,22 +48,22 @@ struct scale
 };
 
 template<long Base, class Exponent>
-const long scale<Base, Exponent>::base;
+BOOST_CONSTEXPR_OR_CONST long scale<Base, Exponent>::base;
 
 /// INTERNAL ONLY
 template<long Base>
 struct scale<Base, static_rational<0> >
 {
-    static const long base = Base;
+    BOOST_STATIC_CONSTEXPR long base = Base;
     typedef static_rational<0> exponent;
     typedef one value_type;
-    static one value() { one result; return(result); }
+    static BOOST_CONSTEXPR one value() { return(one()); }
     static std::string name() { return(""); }
     static std::string symbol() { return(""); }
 };
 
 template<long Base>
-const long scale<Base, static_rational<0> >::base;
+BOOST_CONSTEXPR_OR_CONST long scale<Base, static_rational<0> >::base;
 
 template<long Base,class Exponent>
 std::string symbol_string(const scale<Base,Exponent>&)
@@ -83,10 +83,10 @@ std::string name_string(const scale<Base,Exponent>&)
 template<>                                                                   \
 struct scale<base_, exponent_ >                                              \
 {                                                                            \
-    static const long base = base_;                                          \
+    BOOST_STATIC_CONSTEXPR long base = base_;                                \
     typedef exponent_ exponent;                                              \
     typedef double value_type;                                               \
-    static value_type value()   { return(val_); }                            \
+    static BOOST_CONSTEXPR value_type value()   { return(val_); }            \
     static std::string name()   { return(#name_); }                          \
     static std::string symbol() { return(#symbol_); }                        \
 }

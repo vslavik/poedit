@@ -3,10 +3,9 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/type_traits/has_operator.hpp>
 #include "test.hpp"
 #include "check_integral_constant.hpp"
-
-#include <boost/type_traits/has_operator.hpp>
 #include "has_prefix_classes.hpp"
 
 TT_TEST_BEGIN(BOOST_TT_TRAIT_NAME)

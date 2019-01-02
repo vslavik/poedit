@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Error Functions</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../sf_erf.html" title="Error Functions">
 <link rel="prev" href="../sf_erf.html" title="Error Functions">
 <link rel="next" href="error_inv.html" title="Error Function Inverses">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.sf_erf.error_function.h0"></a>
-        <span><a name="math_toolkit.sf_erf.error_function.synopsis"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.sf_erf.error_function.synopsis"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">erf</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -37,14 +37,14 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -53,20 +53,20 @@
         type calculation rules</em></span></a>: the return type is <code class="computeroutput"><span class="keyword">double</span></code> if T is an integer type, and T otherwise.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
 <a name="math_toolkit.sf_erf.error_function.h1"></a>
-        <span><a name="math_toolkit.sf_erf.error_function.description"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.sf_erf.error_function.description"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.description">Description</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erf</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the <a href="http://en.wikipedia.org/wiki/Error_function" target="_top">error
@@ -82,8 +82,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">erfc</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the complement of the <a href="http://functions.wolfram.com/GammaBetaErf/Erfc/" target="_top">error
@@ -97,7 +97,7 @@
       </p>
 <h5>
 <a name="math_toolkit.sf_erf.error_function.h2"></a>
-        <span><a name="math_toolkit.sf_erf.error_function.accuracy"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.sf_erf.error_function.accuracy"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.accuracy">Accuracy</a>
       </h5>
 <p>
         The following table shows the peak errors (in units of epsilon) found on
@@ -123,22 +123,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -151,28 +151,27 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0.996&#949; (Mean = 0.182&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.57&#949; (Mean = 0.317&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 0.925&#949; (Mean = 0.193&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 0.944&#949; (Mean = 0.191&#949;))<br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 0.944&#949; (Mean = 0.191&#949;))<br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.944&#949; (Mean = 0.191&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.841&#949; (Mean = 0.0687&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.06&#949; (Mean = 0.319&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.13&#949; (Mean = 0.442&#949;))
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.06&#949; (Mean = 0.319&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.925&#949; (Mean = 0.193&#949;)</span><br> <br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.944&#949; (Mean = 0.194&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.996&#949; (Mean = 0.182&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.57&#949; (Mean = 0.317&#949;))
                 </p>
               </td>
 </tr>
@@ -184,28 +183,27 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1&#949; (Mean = 0.169&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.19&#949; (Mean = 0.244&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 1.5&#949; (Mean = 0.193&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 0.921&#949; (Mean = 0.0723&#949;))<br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 0.921&#949; (Mean = 0.0723&#949;))<br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.921&#949; (Mean = 0.0723&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 1&#949; (Mean = 0.119&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.31&#949; (Mean = 0.368&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.34&#949; (Mean = 0.279&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.31&#949; (Mean = 0.368&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.5&#949; (Mean = 0.202&#949;)</span><br> <br>
+                  <span class="blue">Max = 1.5&#949; (Mean = 0.197&#949;)</span><br> <br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.921&#949; (Mean = 0.071&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1&#949; (Mean = 0.171&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.19&#949; (Mean = 0.244&#949;))
                 </p>
               </td>
 </tr>
@@ -217,13 +215,7 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
-                  Max = 0&#949; (Mean = 0&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span>
                   Max = 0&#949; (Mean = 0&#949;))<br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
                   Max = 0&#949; (Mean = 0&#949;))
                 </p>
@@ -231,7 +223,12 @@
 <td>
                 <p>
                   <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
-                  1.16:</em></span> Max = 0&#949; (Mean = 0&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  2.1:</em></span> Max = 0&#949; (Mean = 0&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
                   Max = 0&#949; (Mean = 0&#949;))
                 </p>
               </td>
@@ -260,22 +257,22 @@
               </th>
 <th>
                 <p>
-                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  GNU C++ version 7.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> long double
+                  GNU C++ version 7.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  GNU C++ version 5.1.0<br> linux<br> double
+                  Sun compiler version 0x5150<br> Sun Solaris<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  Microsoft Visual C++ version 14.1<br> Win32<br> double
                 </p>
               </th>
 </tr></thead>
@@ -288,13 +285,7 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
-                  Max = 0&#949; (Mean = 0&#949;))
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;cmath&gt;:</em></span>
                   Max = 0&#949; (Mean = 0&#949;))<br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
                   Max = 0&#949; (Mean = 0&#949;))
                 </p>
@@ -302,8 +293,13 @@
 <td>
                 <p>
                   <span class="blue">Max = 0.658&#949; (Mean = 0.0537&#949;)</span><br>
-                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.01&#949; (Mean = 0.485&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 0.786&#949; (Mean = 0.0642&#949;))
+                  <br> (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 1.01&#949; (Mean = 0.485&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>&lt;math.h&gt;:</em></span>
+                  Max = 0&#949; (Mean = 0&#949;))
                 </p>
               </td>
 <td>
@@ -321,28 +317,27 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.65&#949; (Mean = 0.373&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 2.36&#949; (Mean = 0.539&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 1.76&#949; (Mean = 0.365&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.35&#949; (Mean = 0.307&#949;))<br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.35&#949; (Mean = 0.307&#949;))<br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.35&#949; (Mean = 0.307&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.983&#949; (Mean = 0.213&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 2.64&#949; (Mean = 0.662&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 3.59&#949; (Mean = 0.779&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 2.64&#949; (Mean = 0.662&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.76&#949; (Mean = 0.383&#949;)</span><br> <br>
+                  <span class="blue">Max = 1.76&#949; (Mean = 0.38&#949;)</span><br> <br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 2.81&#949; (Mean = 0.739&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.65&#949; (Mean = 0.373&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 2.36&#949; (Mean = 0.539&#949;))
                 </p>
               </td>
 </tr>
@@ -354,22 +349,15 @@
               </td>
 <td>
                 <p>
-                  <span class="blue">Max = 1.14&#949; (Mean = 0.248&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.84&#949; (Mean = 0.331&#949;))
-                </p>
-              </td>
-<td>
-                <p>
                   <span class="blue">Max = 1.57&#949; (Mean = 0.542&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.26&#949; (Mean = 0.441&#949;))<br>
+                  (<span class="emphasis"><em>&lt;cmath&gt;:</em></span> Max = 1.26&#949; (Mean = 0.441&#949;))<br>
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.26&#949; (Mean = 0.441&#949;))
                 </p>
               </td>
 <td>
                 <p>
                   <span class="blue">Max = 0.868&#949; (Mean = 0.147&#949;)</span><br> <br>
-                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 3.9&#949; (Mean = 0.472&#949;))<br>
-                  (<span class="emphasis"><em>Cephes:</em></span> Max = 2.74&#949; (Mean = 0.413&#949;))
+                  (<span class="emphasis"><em>GSL 2.1:</em></span> Max = 3.9&#949; (Mean = 0.472&#949;))
                 </p>
               </td>
 <td>
@@ -378,13 +366,34 @@
                   (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 4.91&#949; (Mean = 1.54&#949;))
                 </p>
               </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.14&#949; (Mean = 0.248&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 1.84&#949; (Mean = 0.331&#949;))
+                </p>
+              </td>
 </tr>
 </tbody>
 </table></div>
 </div>
-<br class="table-break"><h5>
+<br class="table-break"><p>
+        The following error plot are based on an exhaustive search of the functions
+        domain, MSVC-15.5 at <code class="computeroutput"><span class="keyword">double</span></code>
+        precision, and GCC-7.1/Ubuntu for <code class="computeroutput"><span class="keyword">long</span>
+        <span class="keyword">double</span></code> and <code class="computeroutput"><span class="identifier">__float128</span></code>.
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/erf__double.svg" align="middle"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/erf__80_bit_long_double.svg" align="middle"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/erf____float128.svg" align="middle"></span>
+      </p>
+<h5>
 <a name="math_toolkit.sf_erf.error_function.h3"></a>
-        <span><a name="math_toolkit.sf_erf.error_function.testing"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.sf_erf.error_function.testing"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.testing">Testing</a>
       </h5>
 <p>
         The tests for these functions come in two parts: basic sanity checks use
@@ -398,7 +407,7 @@
       </p>
 <h5>
 <a name="math_toolkit.sf_erf.error_function.h4"></a>
-        <span><a name="math_toolkit.sf_erf.error_function.implementation"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.sf_erf.error_function.implementation"></a></span><a class="link" href="error_function.html#math_toolkit.sf_erf.error_function.implementation">Implementation</a>
       </h5>
 <p>
         All versions of these functions first use the usual reflection formulas to
@@ -475,10 +484,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -142,7 +142,7 @@ bool test_expected_container(const Container &ec, const std::pair<EmplaceInt, Em
 static EmplaceInt expected [10];
 
 typedef std::pair<EmplaceInt, EmplaceInt> EmplaceIntPair;
-static boost::container::container_detail::aligned_storage<sizeof(EmplaceIntPair)*10>::type pair_storage;
+static boost::container::dtl::aligned_storage<sizeof(EmplaceIntPair)*10>::type pair_storage;
 
 static EmplaceIntPair* initialize_emplace_int_pair()
 {

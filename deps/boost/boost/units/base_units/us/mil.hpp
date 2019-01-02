@@ -28,8 +28,8 @@ typedef scaled_base_unit<yard_base_unit, scale<36000, static_rational<-1> > > mi
 
 template<>
 struct base_unit_info<us::mil_base_unit> {
-    static const char* name()   { return("mil"); }
-    static const char* symbol() { return("mil"); }
+    static BOOST_CONSTEXPR const char* name()   { return("mil"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("mil"); }
 };
 
 } // namespace units

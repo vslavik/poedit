@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>unfused</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../adapters.html" title="Adapters">
 <link rel="prev" href="fused_function_object.html" title="fused_function_object">
@@ -28,7 +28,7 @@
 </h4></div></div></div>
 <h6>
 <a name="fusion.functional.adapters.unfused.h0"></a>
-          <span><a name="fusion.functional.adapters.unfused.description"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.description">Description</a>
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.description"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.description">Description</a>
         </h6>
 <p>
           An n-ary <a class="link" href="../concepts/poly.html" title="Polymorphic Function Object">Polymorphic Function
@@ -47,7 +47,8 @@
         </p>
 <p>
           Only LValue arguments are accepted. To overcome this limitation, apply
-          <a href="http://www.boost.org/libs/functional/forward/doc/html/index.html" target="_top">Boost.Functional/Forward</a>.
+          <a href="http://www.boost.org/libs/functional/forward" target="_top">Boost.Functional/Forward
+          Library</a>.
         </p>
 <p>
           The type of the target function is allowed to be const qualified or a reference.
@@ -58,20 +59,20 @@
         </p>
 <h6>
 <a name="fusion.functional.adapters.unfused.h1"></a>
-          <span><a name="fusion.functional.adapters.unfused.header"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.header">Header</a>
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.header"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">functional</span><span class="special">/</span><span class="identifier">adapter</span><span class="special">/</span><span class="identifier">unfused</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.functional.adapters.unfused.h2"></a>
-          <span><a name="fusion.functional.adapters.unfused.synopsis"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.synopsis">Synopsis</a>
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.synopsis"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Function</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">AllowNullary</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">unfused</span><span class="special">;</span>
 </pre>
 <h6>
 <a name="fusion.functional.adapters.unfused.h3"></a>
-          <span><a name="fusion.functional.adapters.unfused.template_parameters"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.template_parameters">Template
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.template_parameters"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.template_parameters">Template
           parameters</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -134,10 +135,10 @@
 </table></div>
 <h6>
 <a name="fusion.functional.adapters.unfused.h4"></a>
-          <span><a name="fusion.functional.adapters.unfused.model_of"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.model_of">Model
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.model_of"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.model_of">Model
           of</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="../concepts/poly.html" title="Polymorphic Function Object">Polymorphic Function
               Object</a>
@@ -149,7 +150,7 @@
 </ul></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">F</span></code></span></dt>
 <dd><p>
                 A possibly const qualified, unary <a class="link" href="../concepts/poly.html" title="Polymorphic Function Object">Polymorphic
@@ -176,7 +177,7 @@
 </div>
 <h6>
 <a name="fusion.functional.adapters.unfused.h5"></a>
-          <span><a name="fusion.functional.adapters.unfused.expression_semantics"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.expression_semantics">Expression
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.expression_semantics"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.expression_semantics">Expression
           Semantics</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -241,7 +242,7 @@
 </table></div>
 <h6>
 <a name="fusion.functional.adapters.unfused.h6"></a>
-          <span><a name="fusion.functional.adapters.unfused.example"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.example">Example</a>
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.example"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.example">Example</a>
         </h6>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">fused_incrementer</span>
 <span class="special">{</span>
@@ -268,10 +269,10 @@
 </pre>
 <h6>
 <a name="fusion.functional.adapters.unfused.h7"></a>
-          <span><a name="fusion.functional.adapters.unfused.see_also"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.see_also">See
+          <span class="phrase"><a name="fusion.functional.adapters.unfused.see_also"></a></span><a class="link" href="unfused.html#fusion.functional.adapters.unfused.see_also">See
           also</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="unfused_typed.html" title="unfused_typed"><code class="computeroutput"><span class="identifier">unfused_typed</span></code></a>
             </li>

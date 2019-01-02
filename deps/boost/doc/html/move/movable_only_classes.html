@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Movable but Non-Copyable Types</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;21.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;25.&#160;Boost.Move">
 <link rel="prev" href="composition_inheritance.html" title="Composition or inheritance">
 <link rel="next" href="move_and_containers.html" title="Containers and move semantics">
 </head>
@@ -31,7 +31,7 @@
       Some types are not amenable to copy semantics but can still be made movable.
       For example:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <code class="computeroutput"><span class="identifier">unique_ptr</span></code> (non-shared,
           non-copyable ownership)
@@ -65,10 +65,10 @@
       To write a movable but not copyable type in portable syntax, you need to follow
       these simple steps:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Put the following macro in the <span class="bold"><strong>private</strong></span>
-          section: <code class="computeroutput"><a class="link" href="../BOOST_MOVABLE_BUT_NOT_COPYABLE.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE(classname)</a></code>
+          section: <code class="computeroutput"><a class="link" href="../BOOST_MOVABL_1_3_26_20_7_3.html" title="Macro BOOST_MOVABLE_BUT_NOT_COPYABLE">BOOST_MOVABLE_BUT_NOT_COPYABLE(classname)</a></code>
         </li>
 <li class="listitem">
           Write a move constructor and a move assignment taking the parameter as

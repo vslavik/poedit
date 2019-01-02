@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>fused_procedure</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../adapters.html" title="Adapters">
 <link rel="prev" href="fused.html" title="fused">
@@ -28,7 +28,7 @@
 </h4></div></div></div>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h0"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.description"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.description">Description</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.description"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.description">Description</a>
         </h6>
 <p>
           An unary <a class="link" href="../concepts/poly.html" title="Polymorphic Function Object">Polymorphic Function
@@ -54,7 +54,7 @@
           object can be specified as a reference, pointer, or smart pointer. In case
           of the latter, a freestanding <code class="literal">get_pointer</code> function must
           be defined (Boost provides this function for <code class="literal">std::auto_ptr</code>
-          and <a href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></code></a>).
+          and <a href="http://www.boost.org/libs/smart_ptr#shared_ptr" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></code></a>).
         </p>
 <p>
           The target function must not be a pointer to a member object (dereferencing
@@ -63,20 +63,20 @@
         </p>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h1"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.header"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.header">Header</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.header"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">functional</span><span class="special">/</span><span class="identifier">adapter</span><span class="special">/</span><span class="identifier">fused_procedure</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h2"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.synopsis"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.synopsis">Synopsis</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.synopsis"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Function</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">fused_procedure</span><span class="special">;</span>
 </pre>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h3"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.template_parameters"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.template_parameters">Template
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.template_parameters"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.template_parameters">Template
           parameters</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -120,9 +120,9 @@
 </table></div>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h4"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.model_of"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.model_of">Model of</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.model_of"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.model_of">Model of</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="../concepts/poly.html" title="Polymorphic Function Object">Polymorphic Function
               Object</a>
@@ -134,7 +134,7 @@
 </ul></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">R</span></code></span></dt>
 <dd><p>
                 A possibly const qualified <a class="link" href="../concepts/callable.html" title="Callable Object">Callable
@@ -157,7 +157,7 @@
 </div>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h5"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.expression_semantics"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.expression_semantics">Expression
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.expression_semantics"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.expression_semantics">Expression
           Semantics</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -222,7 +222,7 @@
 </table></div>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h6"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.example"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.example">Example</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.example"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.example">Example</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">SequenceOfSequences</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Func</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">n_ary_for_each</span><span class="special">(</span><span class="identifier">SequenceOfSequences</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">Func</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">f</span><span class="special">)</span>
@@ -242,9 +242,9 @@
 </pre>
 <h6>
 <a name="fusion.functional.adapters.fused_procedure.h7"></a>
-          <span><a name="fusion.functional.adapters.fused_procedure.see_also"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.see_also">See also</a>
+          <span class="phrase"><a name="fusion.functional.adapters.fused_procedure.see_also"></a></span><a class="link" href="fused_procedure.html#fusion.functional.adapters.fused_procedure.see_also">See also</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="fused.html" title="fused"><code class="computeroutput"><span class="identifier">fused</span></code></a>
             </li>

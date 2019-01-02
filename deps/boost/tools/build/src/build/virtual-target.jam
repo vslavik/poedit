@@ -58,9 +58,12 @@
 # builtin.jam modules. They are shown in the diagram to give the big picture.
 
 import "class" : new ;
+import feature ;
 import path ;
+import property-set ;
 import sequence ;
 import set ;
+import toolset ;
 import type ;
 import utility ;
 
@@ -118,6 +121,11 @@ class virtual-target
         .always = 1 ;
     }
 
+    rule fail-expected ( )
+    {
+        .fail-expected = 1 ;
+    }
+
     # Generates all the actual targets and sets up build actions for this
     # target.
     #
@@ -136,6 +144,11 @@ class virtual-target
         if $(.always)
         {
             ALWAYS $(actual-name) ;
+        }
+
+        if $(.fail-expected)
+        {
+            FAIL_EXPECTED $(actual-name) ;
         }
 
         if ! $(scanner)
@@ -194,6 +207,14 @@ class virtual-target
     {
         import errors : error : errors.error ;
         errors.error "method should be defined in derived classes" ;
+    }
+
+    # Returns additional properties that are relevant for this target
+    # beyond those required by the action.
+    #
+    rule relevant ( )
+    {
+        return [ property-set.empty ] ;
     }
 
 # implementation
@@ -288,7 +309,7 @@ class abstract-file-target : virtual-target
     }
 
     # Gets or sets the subvariant which created this target. Subvariant is set
-    # when target is brought into existance and is never changed after that. In
+    # when target is brought into existence and is never changed after that. In
     # particular, if a target is shared by multiple subvariants, only the first
     # one is stored.
     #
@@ -794,7 +815,9 @@ class action
             # rules.
             .action on $(actual-targets) = $(__name__) ;
 
-            indirect.call $(self.action-name) $(actual-targets)
+            #indirect.call $(self.action-name) $(actual-targets)
+            #    : $(self.actual-sources) : [ $(properties).raw ] ;
+            execute $(self.action-name) $(actual-targets)
                 : $(self.actual-sources) : [ $(properties).raw ] ;
 
             # Since we set up the creating action here, we set up the action for
@@ -864,6 +887,19 @@ class action
     rule adjust-properties ( property-set )
     {
         return $(property-set) ;
+    }
+
+    # Execute the action rule on the given targets, sources, and properties.
+    # Since this does the final call to the engine action rule this takes
+    # engine level targets and raw properties. One could override this, for
+    # example, to set additional variables on the target that might be
+    # difficult to determine just using toolset flags.
+    # Note, you must call this base rule when overriding as otherwise the
+    # actions will not execute and the engine will not run commands.
+    #
+    rule execute ( action-name targets + : sources * : properties * )
+    {
+        indirect.call $(action-name) $(targets) : $(sources) : $(properties) ;
     }
 }
 
@@ -984,10 +1020,10 @@ rule register ( target )
             {
                 local ps1 = [ $(a1).properties ] ;
                 local ps2 = [ $(a2).properties ] ;
-                local p1 = [ $(ps1).base ] [ $(ps1).free ] [ set.difference
-                    [ $(ps1).dependency ] : [ $(ps1).incidental ] ] ;
-                local p2 = [ $(ps2).base ] [ $(ps2).free ] [ set.difference
-                    [ $(ps2).dependency ] : [ $(ps2).incidental ] ] ;
+                local relevant = [ toolset.relevant [ $(a1).action-name ] ] ;
+                relevant = [ $(relevant).add [ $(target).relevant ] ] ;
+                local p1 = [ $(ps1).relevant $(relevant) ] ;
+                local p2 = [ $(ps2).relevant $(relevant) ] ;
                 if $(p1) = $(p2)
                 {
                     result = $(t) ;
@@ -1084,8 +1120,17 @@ rule register-actual-name ( actual-name : virtual-target )
         if $(action1) && $(action2)
         {
             local p1 = [ $(action1).properties ] ;
-            p1 = [ $(p1).raw ] ;
             local p2 = [ $(action2).properties ] ;
+            # Only show features that are relevant for either target.
+            local relevant = [ $(p1).get <relevant> ] [ $(p2).get <relevant> ] ;
+            relevant = [ feature.expand-relevant $(relevant) ] ;
+            # The presence of relevant can potentially mess things up,
+            # so we always need to show it.
+            relevant += relevant ;
+            relevant = [ property-set.create <relevant>$(relevant) ] ;
+            p1 = [ $(p1).relevant $(relevant) ] ;
+            p2 = [ $(p2).relevant $(relevant) ] ;
+            p1 = [ $(p1).raw ] ;
             p2 = [ $(p2).raw ] ;
             properties-removed = [ set.difference $(p1) : $(p2) ] ;
             properties-removed ?= "none" ;
@@ -1319,11 +1364,11 @@ class subvariant
 
     rule all-target-directories ( target-type ? )
     {
-        if ! $(self.target-directories)
+        if ! $(self.target-directories.$(target-type:E=))
         {
             compute-target-directories $(target-type) ;
         }
-        return $(self.target-directories) ;
+        return $(self.target-directories.$(target-type:E=)) ;
     }
 
     rule compute-target-directories ( target-type ? )
@@ -1343,6 +1388,6 @@ class subvariant
         {
             result += [ $(d).all-target-directories $(target-type) ] ;
         }
-        self.target-directories = $(result) ;
+        self.target-directories.$(target-type:E=) = $(result) ;
     }
 }

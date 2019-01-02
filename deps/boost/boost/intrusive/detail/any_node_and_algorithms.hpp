@@ -23,8 +23,9 @@
 
 #include <boost/intrusive/detail/workaround.hpp>
 #include <boost/intrusive/pointer_rebind.hpp>
-#include <cstddef>
 #include <boost/intrusive/detail/mpl.hpp>
+#include <boost/intrusive/detail/algo_type.hpp>
+#include <cstddef>
 
 namespace boost {
 namespace intrusive {
@@ -51,13 +52,13 @@ struct any_list_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_next(const const_node_ptr & n)
    {  return n->node_ptr_1;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_next(const node_ptr & n, const node_ptr & next)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_next(node_ptr n, node_ptr next)
    {  n->node_ptr_1 = next;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_previous(const const_node_ptr & n)
    {  return n->node_ptr_2;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_previous(const node_ptr & n, const node_ptr & prev)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_previous(node_ptr n, node_ptr prev)
    {  n->node_ptr_2 = prev;  }
 };
 
@@ -72,7 +73,7 @@ struct any_slist_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_next(const const_node_ptr & n)
    {  return n->node_ptr_1;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_next(const node_ptr & n, const node_ptr & next)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_next(node_ptr n, node_ptr next)
    {  n->node_ptr_1 = next;  }
 };
 
@@ -92,13 +93,13 @@ struct any_unordered_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_next(const const_node_ptr & n)
    {  return n->node_ptr_1;   }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_next(const node_ptr & n, const node_ptr & next)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_next(node_ptr n, node_ptr next)
    {  n->node_ptr_1 = next;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_prev_in_group(const const_node_ptr & n)
    {  return n->node_ptr_2;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_prev_in_group(const node_ptr & n, const node_ptr & prev)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_prev_in_group(node_ptr n, node_ptr prev)
    {  n->node_ptr_2 = prev;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static std::size_t get_hash(const const_node_ptr & n)
@@ -121,19 +122,19 @@ struct any_rbtree_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_parent(const const_node_ptr & n)
    {  return n->node_ptr_1;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(const node_ptr & n, const node_ptr & p)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(node_ptr n, node_ptr p)
    {  n->node_ptr_1 = p;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_left(const const_node_ptr & n)
    {  return n->node_ptr_2;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_left(const node_ptr & n, const node_ptr & l)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_left(node_ptr n, node_ptr l)
    {  n->node_ptr_2 = l;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_right(const const_node_ptr & n)
    {  return n->node_ptr_3;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_right(const node_ptr & n, const node_ptr & r)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_right(node_ptr n, node_ptr r)
    {  n->node_ptr_3 = r;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static color get_color(const const_node_ptr & n)
@@ -162,19 +163,19 @@ struct any_avltree_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_parent(const const_node_ptr & n)
    {  return n->node_ptr_1;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(const node_ptr & n, const node_ptr & p)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(node_ptr n, node_ptr p)
    {  n->node_ptr_1 = p;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_left(const const_node_ptr & n)
    {  return n->node_ptr_2;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_left(const node_ptr & n, const node_ptr & l)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_left(node_ptr n, node_ptr l)
    {  n->node_ptr_2 = l;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_right(const const_node_ptr & n)
    {  return n->node_ptr_3;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_right(const node_ptr & n, const node_ptr & r)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_right(node_ptr n, node_ptr r)
    {  n->node_ptr_3 = r;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static balance get_balance(const const_node_ptr & n)
@@ -204,19 +205,19 @@ struct any_tree_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_parent(const const_node_ptr & n)
    {  return n->node_ptr_1;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(const node_ptr & n, const node_ptr & p)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_parent(node_ptr n, node_ptr p)
    {  n->node_ptr_1 = p;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_left(const const_node_ptr & n)
    {  return n->node_ptr_2;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_left(const node_ptr & n, const node_ptr & l)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_left(node_ptr n, node_ptr l)
    {  n->node_ptr_2 = l;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_right(const const_node_ptr & n)
    {  return n->node_ptr_3;  }
 
-   BOOST_INTRUSIVE_FORCEINLINE static void set_right(const node_ptr & n, const node_ptr & r)
+   BOOST_INTRUSIVE_FORCEINLINE static void set_right(node_ptr n, node_ptr r)
    {  n->node_ptr_3 = r;  }
 };
 
@@ -278,6 +279,17 @@ class any_algorithms
       any_algorithms<VoidPointer>::template function_not_available_for_any_hooks<node_ptr>();
    }
 };
+
+///@cond
+
+template<class NodeTraits>
+struct get_algo<AnyAlgorithm, NodeTraits>
+{
+   typedef typename pointer_rebind<typename NodeTraits::node_ptr, void>::type void_pointer;
+   typedef any_algorithms<void_pointer> type;
+};
+
+///@endcond
 
 } //namespace intrusive
 } //namespace boost

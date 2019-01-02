@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>count</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="find_if.html" title="find_if">
@@ -28,14 +28,14 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.query.functions.count.h0"></a>
-            <span><a name="fusion.algorithm.query.functions.count.description"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.description">Description</a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.description"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.description">Description</a>
           </h6>
 <p>
             Returns the number of elements of a given type within a sequence.
           </p>
 <h6>
 <a name="fusion.algorithm.query.functions.count.h1"></a>
-            <span><a name="fusion.algorithm.query.functions.count.synopsis"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.synopsis"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span>
@@ -114,7 +114,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.query.functions.count.h2"></a>
-            <span><a name="fusion.algorithm.query.functions.count.expression_semantics"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.expression_semantics"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="count.html" title="count"><code class="computeroutput"><span class="identifier">count</span></code></a><span class="special">(</span><span class="identifier">seq</span><span class="special">,</span> <span class="identifier">t</span><span class="special">);</span>
@@ -129,21 +129,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.query.functions.count.h3"></a>
-            <span><a name="fusion.algorithm.query.functions.count.complexity"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.complexity">Complexity</a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.complexity"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.complexity">Complexity</a>
           </h6>
 <p>
             Linear. At most <code class="computeroutput"><a class="link" href="../../../sequence/intrinsic/metafunctions/size.html" title="size"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">size</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">&gt;::</span><span class="identifier">value</span></code> comparisons.
           </p>
 <h6>
 <a name="fusion.algorithm.query.functions.count.h4"></a>
-            <span><a name="fusion.algorithm.query.functions.count.header"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.header">Header</a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.header"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">query</span><span class="special">/</span><span class="identifier">count</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">count</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.query.functions.count.h5"></a>
-            <span><a name="fusion.algorithm.query.functions.count.example"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.example">Example</a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.count.example"></a></span><a class="link" href="count.html#fusion.algorithm.query.functions.count.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">const</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span><span class="number">2</span><span class="special">,</span><span class="number">3</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><a class="link" href="count.html" title="count"><code class="computeroutput"><span class="identifier">count</span></code></a><span class="special">(</span><span class="identifier">vec</span><span class="special">,</span><span class="number">2</span><span class="special">)</span> <span class="special">==</span> <span class="number">1</span><span class="special">);</span>

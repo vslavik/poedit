@@ -2,7 +2,7 @@
 // connection.cpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,9 +16,9 @@
 namespace http {
 namespace server2 {
 
-connection::connection(boost::asio::io_service& io_service,
+connection::connection(boost::asio::io_context& io_context,
     request_handler& handler)
-  : socket_(io_service),
+  : socket_(io_context),
     request_handler_(handler)
 {
 }

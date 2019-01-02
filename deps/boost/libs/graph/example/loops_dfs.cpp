@@ -50,7 +50,6 @@ find_loops(typename graph_traits < Graph >::vertex_descriptor entry,
 {
   BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<Graph> ));
   typedef typename graph_traits < Graph >::edge_descriptor Edge;
-  typedef typename graph_traits < Graph >::vertex_descriptor Vertex;
   std::vector < Edge > back_edges;
   std::vector < default_color_type > color_map(num_vertices(g));
   depth_first_visit(g, entry,
@@ -58,7 +57,7 @@ find_loops(typename graph_traits < Graph >::vertex_descriptor entry,
                     make_iterator_property_map(color_map.begin(),
                                                get(vertex_index, g), color_map[0]));
 
-  for (std::vector < Edge >::size_type i = 0; i < back_edges.size(); ++i) {
+  for (typename std::vector < Edge >::size_type i = 0; i < back_edges.size(); ++i) {
     typename Loops::value_type x;
     loops.push_back(x);
     compute_loop_extent(back_edges[i], g, loops.back());

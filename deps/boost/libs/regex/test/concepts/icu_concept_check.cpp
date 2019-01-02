@@ -33,7 +33,34 @@
 #include <boost/regex/concepts.hpp>
 #endif
 
+template <class I>
+void check_token_iterator(I i)
+{
+   typedef typename I::value_type value_type;
+   typedef typename value_type::value_type char_type;
+   typedef std::basic_string<char_type> string_type;
 
+   I j;
+
+   std::vector<string_type> v;
+
+   while (i != j)
+   {
+      v.push_back(i->str());
+      ++i;
+   }
+
+}
+
+template <class I>
+void check_iterator(I i)
+{
+   typedef typename I::value_type value_type;
+
+   std::vector <value_type> v(i, I());
+   (void)v;
+
+}
 int main()
 {
    // VC6 and VC7 can't cope with the iterator architypes, 
@@ -149,6 +176,64 @@ int main()
    s2 = boost::u32regex_replace(s2, e1, (const wchar_t*)(pb));
    s1 = boost::u32regex_replace(s1, e1, s1);
    s2 = boost::u32regex_replace(s2, e1, s2);
+
+   std::vector<int> subs1;
+   int subs2[2] = { 1, 2 };
+
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, 0, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, 0));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1));
+
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, subs2));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, subs2));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, subs2));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, subs2));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, subs2));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, subs2, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, subs2));
+
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const char*)(pb), e1, subs1));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const UChar*)(pb), e1, subs1));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator((const wchar_t*)(pb), e1, subs1));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s1, e1, subs1));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(s2, e1, subs1));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, subs1, boost::regex_constants::match_default));
+   check_token_iterator(boost::make_u32regex_token_iterator(us, e1, subs1));
+
+   check_iterator(boost::make_u32regex_iterator((const char*)(pb), e1, boost::regex_constants::match_default));
+   check_iterator(boost::make_u32regex_iterator((const char*)(pb), e1));
+   check_iterator(boost::make_u32regex_iterator((const UChar*)(pb), e1, boost::regex_constants::match_default));
+   check_iterator(boost::make_u32regex_iterator((const UChar*)(pb), e1));
+   check_iterator(boost::make_u32regex_iterator((const wchar_t*)(pb), e1, boost::regex_constants::match_default));
+   check_iterator(boost::make_u32regex_iterator((const wchar_t*)(pb), e1));
+   check_iterator(boost::make_u32regex_iterator(s1, e1, boost::regex_constants::match_default));
+   check_iterator(boost::make_u32regex_iterator(s2, e1));
+   check_iterator(boost::make_u32regex_iterator(us, e1));
 
 #endif   
    return 0;

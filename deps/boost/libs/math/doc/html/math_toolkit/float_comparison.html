@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Floating-point Comparison</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../utils.html" title="Chapter&#160;2.&#160;Floating Point Utilities">
 <link rel="prev" href="next_float/ulp.html" title="Obtaining the Size of a Unit In the Last Place - ULP">
 <link rel="next" href="../cstdfloat.html" title="Chapter&#160;3.&#160;Specified-width floating-point typedefs">
@@ -49,7 +49,7 @@
 <p>
       Some background reading is:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Knuth D.E. The art of computer programming, vol II, section 4.2, especially
           Floating-Point Comparison 4.2.2, pages 198-220.
@@ -77,7 +77,7 @@
       they are tolerably close enough to each other, but first we must decide what
       kind of comparison we require:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Absolute difference/error: the absolute difference between two values
           <span class="emphasis"><em>a</em></span> and <span class="emphasis"><em>b</em></span> is simply <code class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">b</span><span class="special">)</span></code>. This is the only meaningful comparison
@@ -107,27 +107,27 @@
 </ul></div>
 <h6>
 <a name="math_toolkit.float_comparison.h0"></a>
-      <span><a name="math_toolkit.float_comparison.fp_relative"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.fp_relative">Relative
+      <span class="phrase"><a name="math_toolkit.float_comparison.fp_relative"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.fp_relative">Relative
       Comparison of Floating-point Values</a>
     </h6>
 <p>
-      <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">relative_distance</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+      <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">relative_difference</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
     </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span>
-<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">relative_distance</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">U</span> <span class="identifier">b</span><span class="special">);</span>
+<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">relative_difference</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">U</span> <span class="identifier">b</span><span class="special">);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span>
-<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">epsilon_distance</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">U</span> <span class="identifier">b</span><span class="special">);</span>
+<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">epsilon_difference</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">U</span> <span class="identifier">b</span><span class="special">);</span>
 </pre>
 <p>
-      The function <code class="computeroutput"><span class="identifier">relative_distance</span></code>
+      The function <code class="computeroutput"><span class="identifier">relative_difference</span></code>
       returns the relative distance/error <span class="emphasis"><em>E</em></span> between two values
       as defined by:
     </p>
 <pre class="programlisting">E = fabs((a - b) / min(a,b))</pre>
 <p>
       The function <code class="computeroutput"><span class="identifier">epsilon_difference</span></code>
-      is a convenience function that returns <code class="computeroutput"><span class="identifier">relative_distance</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span>
+      is a convenience function that returns <code class="computeroutput"><span class="identifier">relative_difference</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span>
       <span class="identifier">b</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">eps</span></code> where
       <code class="computeroutput"><span class="identifier">eps</span></code> is the machine epsilon
       for the result type.
@@ -135,7 +135,7 @@
 <p>
       The following special cases are handled as follows:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           If either of <span class="emphasis"><em>a</em></span> or <span class="emphasis"><em>b</em></span> is a NaN,
           then returns the largest representable value for T: for example for type
@@ -174,7 +174,7 @@
     </p>
 <h6>
 <a name="math_toolkit.float_comparison.h1"></a>
-      <span><a name="math_toolkit.float_comparison.examples"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.examples">Examples</a>
+      <span class="phrase"><a name="math_toolkit.float_comparison.examples"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.examples">Examples</a>
     </h6>
 <p>
       Some using statements will ensure that the functions we need are accessible.
@@ -191,10 +191,9 @@
 </pre>
 <p>
       The following examples display values with all possibly significant digits.
-      Newer compilers should provide <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limitsFPT</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span></code>
-      for this purpose, and here we use <code class="computeroutput"><span class="keyword">float</span></code>
-      precision where <code class="computeroutput"><span class="identifier">max_digits10</span></code>
-      = 9 to avoid displaying a distracting number of decimal digits.
+      Newer compilers should provide <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">FPT</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span></code> for this purpose, and here we
+      use <code class="computeroutput"><span class="keyword">float</span></code> precision where <code class="computeroutput"><span class="identifier">max_digits10</span></code> = 9 to avoid displaying a distracting
+      number of decimal digits.
     </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -360,7 +359,7 @@ epsilon_difference = 0.000000000</pre>
     </p>
 <h6>
 <a name="math_toolkit.float_comparison.h2"></a>
-      <span><a name="math_toolkit.float_comparison.small"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.small">Handling
+      <span class="phrase"><a name="math_toolkit.float_comparison.small"></a></span><a class="link" href="float_comparison.html#math_toolkit.float_comparison.small">Handling
       Absolute Errors</a>
     </h6>
 <p>
@@ -396,10 +395,11 @@ epsilon_difference = 0.000000000</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

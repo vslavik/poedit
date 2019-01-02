@@ -12,8 +12,6 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <iostream>
 #include "test.hpp"

@@ -7,7 +7,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

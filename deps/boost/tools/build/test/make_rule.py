@@ -28,8 +28,8 @@ make foo.bar : : creator : <test_feature>12345678 ;
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/foo.bar")
-t.fail_test(string.find(t.read("bin/$toolset/debug/foo.bar"), "12345678") == -1)
+t.expect_addition("bin/foo.bar")
+t.fail_test(string.find(t.read("bin/foo.bar"), "12345678") == -1)
 
 
 # Regression test. Make sure that if a main target is requested two times, and

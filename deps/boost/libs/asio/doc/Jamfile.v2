@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+# Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -31,7 +31,10 @@ local example-names = cpp03/allocation cpp03/buffers cpp03/chat cpp03/echo
   cpp03/iostreams cpp03/local cpp03/multicast cpp03/nonblocking cpp03/porthopper
   cpp03/serialization cpp03/services cpp03/socks4 cpp03/spawn cpp03/ssl
   cpp03/timeouts cpp03/timers cpp03/windows cpp11/allocation cpp11/buffers
-  cpp11/chat cpp11/echo cpp11/futures cpp11/http/server cpp11/spawn ;
+  cpp11/chat cpp11/echo cpp11/executors cpp11/fork cpp11/futures
+  cpp11/handler_tracking cpp11/http/server cpp11/invocation cpp11/local
+  cpp11/multicast cpp11/nonblockng cpp11/operations cpp11/socks4 cpp11/ssl
+  cpp11/timeouts cpp11/timers cpp11/spawn cpp17/coroutines_ts ;
 
 for local l in $(example-names)
 {
@@ -91,6 +94,7 @@ boostbook asio
   :
     asio_doc
   :
+    <name>../../../doc/html
     <xsl:param>chapter.autolabel=0
     <xsl:param>chunk.section.depth=8
     <xsl:param>chunk.first.sections=1
@@ -108,4 +112,8 @@ boostbook asio
 
 explicit asio ;
 
-
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : asio ;
+explicit boostrelease ;

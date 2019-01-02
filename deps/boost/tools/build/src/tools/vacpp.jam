@@ -4,6 +4,29 @@
 # (See accompanying file LICENSE_1_0.txt
 # or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.vacpp]]
+= IBM Visual Age
+
+The `vacpp` module supports the http://www.ibm.com/software/ad/vacpp[IBM
+Visual Age] C++ Compiler, for the AIX operating system. Versions 7.1 and
+8.0 are known to work.
+
+The module is initialized using the following syntax:
+
+----
+using vacpp ;
+----
+
+The module does not accept any initialization options. The compiler
+should be installed in the `/usr/vacpp/bin` directory.
+
+Later versions of Visual Age are known as XL C/C++. They were not tested
+with the the `vacpp` module.
+
+|# # end::doc[]
+
 #
 # Boost.Build V2 toolset for the IBM XL C++ compiler
 #
@@ -80,7 +103,7 @@ if [ os.name ] = AIX
     # searched during load-time. Note that the AIX linker does not have an
     # -soname equivalent, this is as close as it gets.
     #
-    # The above options are definately for AIX 5.x, and most likely also for
+    # The above options are definitely for AIX 5.x, and most likely also for
     # AIX 4.x and AIX 6.x. For details about the AIX linker see:
     # http://download.boulder.ibm.com/ibmdl/pub/software/dw/aix/es-aix_ll.pdf
     #

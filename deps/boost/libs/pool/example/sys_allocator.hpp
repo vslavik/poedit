@@ -86,7 +86,7 @@ struct new_delete_allocator
   static pointer allocate(const size_type n, const void* = 0)
   { return (pointer) new char[n * sizeof(T)]; }
   static void deallocate(const pointer p, const size_type)
-  { delete [] p; }
+  { delete [] (char*)p; }
   static size_type max_size() { return (std::numeric_limits<size_type>::max)(); }
 
   bool operator==(const new_delete_allocator &) const { return true; }

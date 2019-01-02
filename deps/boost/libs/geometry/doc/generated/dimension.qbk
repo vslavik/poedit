@@ -16,11 +16,12 @@
 [section:dimension dimension]
 
 '''<indexterm><primary>dimension</primary></indexterm>'''
-Metafunction defining [*value] as the number of coordinates (the number of axes of any geometry) of the \3. 
+Metafunction defining [*value] as the number of coordinates (the number of axes of any geometry) of the point type making up the specified geometry type. 
 
 [heading Synopsis]
 ``template<typename Geometry>
 struct dimension
+      : public core_dispatch::dimension< tag< Geometry >::type, geometry::util::bare_type< Geometry >::type >
 {
   // ...
 };

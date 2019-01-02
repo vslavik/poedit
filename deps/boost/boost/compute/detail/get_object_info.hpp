@@ -37,6 +37,16 @@ struct bound_info_function
     }
 
     template<class Info>
+    cl_int operator()(Info info, size_t input_size, const void *input,
+                      size_t size, void *value, size_t *size_ret) const
+    {
+        return m_function(
+            m_object, m_aux_info, info,
+            input_size, input, size, value, size_ret
+        );
+    }
+
+    template<class Info>
     cl_int operator()(Info info, size_t size, void *value, size_t *size_ret) const
     {
         return m_function(m_object, m_aux_info, info, size, value, size_ret);
@@ -90,6 +100,20 @@ struct get_object_info_impl
         T value;
 
         cl_int ret = function(info, sizeof(T), &value, 0);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+
+        return value;
+    }
+
+    template<class Function, class Info>
+    T operator()(Function function, Info info,
+                 const size_t input_size, const void* input) const
+    {
+        T value;
+
+        cl_int ret = function(info, input_size, input, sizeof(T), &value, 0);
         if(ret != CL_SUCCESS){
             BOOST_THROW_EXCEPTION(opencl_error(ret));
         }
@@ -159,8 +183,46 @@ struct get_object_info_impl<std::vector<T> >
             BOOST_THROW_EXCEPTION(opencl_error(ret));
         }
 
+        if(size == 0) return std::vector<T>();
+
         std::vector<T> vector(size / sizeof(T));
         ret = function(info, size, &vector[0], 0);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+
+        return vector;
+    }
+
+    template<class Function, class Info>
+    std::vector<T> operator()(Function function, Info info,
+                              const size_t input_size, const void* input) const
+    {
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_1
+        // For CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT in clGetKernelSubGroupInfo
+        // we can't get param_value_size using param_value_size_ret
+        if(info == CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT)
+        {
+            std::vector<T> vector(3);
+            cl_int ret = function(
+                info, input_size, input,
+                sizeof(T) * vector.size(), &vector[0], 0
+            );
+            if(ret != CL_SUCCESS){
+                BOOST_THROW_EXCEPTION(opencl_error(ret));
+            }
+            return vector;
+        }
+        #endif
+        size_t size = 0;
+
+        cl_int ret = function(info, input_size, input, 0, 0, &size);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+
+        std::vector<T> vector(size / sizeof(T));
+        ret = function(info, input_size, input, size, &vector[0], 0);
         if(ret != CL_SUCCESS){
             BOOST_THROW_EXCEPTION(opencl_error(ret));
         }
@@ -180,6 +242,12 @@ template<class T, class Function, class Object, class Info, class AuxInfo>
 inline T get_object_info(Function f, Object o, Info i, AuxInfo j)
 {
     return get_object_info_impl<T>()(bind_info_function(f, o, j), i);
+}
+
+template<class T, class Function, class Object, class Info, class AuxInfo>
+inline T get_object_info(Function f, Object o, Info i, AuxInfo j, const size_t k, const void * l)
+{
+    return get_object_info_impl<T>()(bind_info_function(f, o, j), i, k, l);
 }
 
 // returns the value type for the clGet*Info() call on Object with Enum.

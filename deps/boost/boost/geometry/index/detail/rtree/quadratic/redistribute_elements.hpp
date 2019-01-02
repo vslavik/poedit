@@ -13,6 +13,8 @@
 
 #include <algorithm>
 
+#include <boost/core/ignore_unused.hpp>
+
 #include <boost/geometry/index/detail/algorithms/content.hpp>
 #include <boost/geometry/index/detail/algorithms/union_content.hpp>
 
@@ -75,7 +77,7 @@ inline void pick_seeds(Elements const& elements,
         }
     }
 
-    ::boost::ignore_unused_variable_warning(parameters);
+    ::boost::ignore_unused(parameters);
 }
 
 } // namespace quadratic

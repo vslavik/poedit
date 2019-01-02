@@ -20,7 +20,7 @@ struct g : public grammar<g>
     template <typename ScannerT>
     struct definition
     {
-        definition(g const& self)
+        definition(g const& /*self*/)
         {
             g_count++;
         }

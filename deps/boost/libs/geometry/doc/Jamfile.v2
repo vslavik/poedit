@@ -17,11 +17,23 @@ using quickbook ;
 path-constant here : . ;
 path-constant images_location : html ;
 
+import testing ;
+testing.make-test run-pyd :
+    $(here)/make_qbk.py
+    :
+    <pythonpath>$(here)
+    <dependency>src/docutils/tools/doxygen_xml2qbk//doxygen_xml2qbk
+    <testing.arg>"--release-build --doxygen-xml2qbk"
+    <testing.input-file>src/docutils/tools/doxygen_xml2qbk//doxygen_xml2qbk
+    :
+    make_qbk ;
+explicit make_qbk ;
+
 boostbook geometry 
     : geometry.qbk
     : <dependency>Jamfile.v2
         <dependency>quickref.xml
-        <dependency>generated/point.qbk
+#        <dependency>generated/point.qbk
         <xsl:param>chunk.section.depth=4
 #    <auto-index>off
 #    <auto-index-internal>on
@@ -36,8 +48,14 @@ boostbook geometry
        <quickbook-define>enable_index
        <include>$(here)
        <format>pdf:<xsl:param>img.src.path=$(images_location)/    
+       <dependency>make_qbk
 ;
 
 install pdfinstall : geometry/<format>pdf : <location>. <name>geometry.pdf <install-type>PDF ;
 explicit pdfinstall ;
 
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : geometry ;
+explicit boostrelease ;

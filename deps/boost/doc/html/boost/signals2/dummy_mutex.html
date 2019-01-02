@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class dummy_mutex</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../signals2/reference.html#header.boost.signals2.dummy_mutex_hpp" title="Header &lt;boost/signals2/dummy_mutex.hpp&gt;">
 <link rel="prev" href="postconstructor_invoker.html" title="Class postconstructor_invoker">
@@ -35,31 +35,34 @@
 </span>
 <span class="keyword">class</span> <a class="link" href="dummy_mutex.html" title="Class dummy_mutex">dummy_mutex</a> <span class="special">:</span> <span class="keyword">public</span> noncopyable <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-  <span class="keyword">void</span> <a class="link" href="dummy_mutex.html#idp71095488-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="dummy_mutex.html#idp78215408-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="dummy_mutex.html#idp74092432-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="dummy_mutex.html#id-1_3_37_6_4_3_1_1_4_1-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="dummy_mutex.html#id-1_3_37_6_4_3_1_1_4_2-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="dummy_mutex.html#id-1_3_37_6_4_3_1_1_4_3-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp395621584"></a><h2>Description</h2>
+<a name="id-1.3.37.6.5.3.4"></a><h2>Description</h2>
 <p>You may wish to use the <code class="computeroutput">dummy_mutex</code> class for the <code class="computeroutput">Mutex</code>
           template type of your signals if you are not concerned about thread safety.
           This may give slightly faster
           performance, since <code class="computeroutput">dummy_mutex</code> performs no actual locking.
           </p>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp71095488-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id-1_3_37_6_4_3_1_1_4_1-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>No effect.
               </p>
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp78215408-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="id-1_3_37_6_4_3_1_1_4_2-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>No effect.
               </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p><code class="computeroutput">true</code>.</p></td>
 </tr></tbody>
 </table></div>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp74092432-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="id-1_3_37_6_4_3_1_1_4_3-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>No effect.
               </p>
 </div>

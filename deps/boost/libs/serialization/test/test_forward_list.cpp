@@ -1,5 +1,5 @@
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
-// test_list.cpp
+// test_forward_list.cpp
 
 // (C) Copyright 2002 Robert Ramey - http://www.rrsd.com . 
 // Use, modification and distribution is subject to the Boost Software
@@ -18,9 +18,6 @@ namespace std{
 #endif
 
 #include <boost/config.hpp>
-#ifdef BOOST_NO_CXX11_HDR_FORWARD_LIST
-#error this test presumes support for forward_list.hpp
-#endif
 #include <boost/serialization/forward_list.hpp>
 
 #include <boost/archive/archive_exception.hpp>

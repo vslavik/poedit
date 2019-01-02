@@ -9,7 +9,7 @@
 
 import BoostBuild
 
-t = BoostBuild.Tester(["-d1"], pass_d0=False, pass_toolset=False)
+t = BoostBuild.Tester(["-d1"], pass_toolset=False)
 
 t.write("file.jam", """\
 prefix = "echo \\"" ;
@@ -24,7 +24,7 @@ actions go
     $(prefix)stdout$(suffix)
     $(prefix)stderr$(suffix) 1>&2
 }
-ECHO {{{ $(XXX) }}} ;
+ECHO "{{{" $(XXX) "}}}" ;
 ALWAYS all ;
 go all ;
 """)

@@ -14,7 +14,6 @@
 #include <boost/compute/kernel.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/command_queue.hpp>
-#include <boost/compute/algorithm/detail/scan_on_cpu.hpp>
 #include <boost/compute/container/vector.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/memory/local_buffer.hpp>

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Some Miscellaneous Examples of the Normal (Gaussian) Distribution</title>
 <link rel="stylesheet" href="../../../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../normal_example.html" title="Normal Distribution Examples">
 <link rel="prev" href="../normal_example.html" title="Normal Distribution Examples">
 <link rel="next" href="../inverse_chi_squared_eg.html" title="Inverse Chi-Squared Distribution Bayes Example">
@@ -33,7 +33,7 @@
           </p>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h0"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.traditional_tables"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.traditional_tables">Traditional
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.traditional_tables"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.traditional_tables">Traditional
             Tables</a>
           </h5>
 <p>
@@ -163,7 +163,7 @@
           </p>
 <pre class="programlisting"><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"level of significance (alpha)"</span> <span class="special">&lt;&lt;</span> <span class="identifier">setprecision</span><span class="special">(</span><span class="number">4</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
 <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"2-sided       1 -sided          z(alpha) "</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
-<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">alpha</span><span class="special">)/</span><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">alpha</span><span class="special">[</span><span class="number">0</span><span class="special">]);</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">alpha</span><span class="special">)/</span><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">alpha</span><span class="special">[</span><span class="number">0</span><span class="special">]);</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
 <span class="special">{</span>
   <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">setw</span><span class="special">(</span><span class="number">15</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">alpha</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">setw</span><span class="special">(</span><span class="number">15</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">alpha</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">/</span><span class="number">2</span> <span class="special">&lt;&lt;</span> <span class="identifier">setw</span><span class="special">(</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">quantile</span><span class="special">(</span><span class="identifier">complement</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span>  <span class="identifier">alpha</span><span class="special">[</span><span class="identifier">i</span><span class="special">]/</span><span class="number">2</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
   <span class="comment">// Use quantile(complement(s, alpha[i]/2)) to avoid potential loss of accuracy from quantile(s,  1 - alpha[i]/2)</span>
@@ -190,7 +190,7 @@
           </p>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h1"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.standard_deviations_either_side_"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.standard_deviations_either_side_">Standard
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.standard_deviations_either_side_"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.standard_deviations_either_side_">Standard
             deviations either side of the Mean</a>
           </h5>
 <p>
@@ -236,12 +236,12 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
           </p>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h2"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.some_simple_examples"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.some_simple_examples">Some
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.some_simple_examples"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.some_simple_examples">Some
             simple examples</a>
           </h5>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h3"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.life_of_light_bulbs"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.life_of_light_bulbs">Life
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.life_of_light_bulbs"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.life_of_light_bulbs">Life
             of light bulbs</a>
           </h5>
 <p>
@@ -295,7 +295,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 </table></div>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h4"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.how_many_onions"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.how_many_onions">How
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.how_many_onions"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.how_many_onions">How
             many onions?</a>
           </h5>
 <p>
@@ -327,7 +327,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 </pre>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h5"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.packing_beef"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.packing_beef">Packing
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.packing_beef"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.packing_beef">Packing
             beef</a>
           </h5>
 <p>
@@ -433,7 +433,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 <p>
             Now we are getting really close, but to do the job properly, we could
             use root finding method, for example the tools provided, and used elsewhere,
-            in the Math Toolkit, see <a class="link" href="../../../roots/roots_noderiv.html" title="Root Finding Without Derivatives">root-finding
+            in the Math Toolkit, see <a class="link" href="../../../roots_noderiv.html" title="Root Finding Without Derivatives">root-finding
             without derivatives</a>.
           </p>
 <p>
@@ -473,7 +473,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
           </p>
 <h5>
 <a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.h6"></a>
-            <span><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.length_of_bolts"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.length_of_bolts">Length
+            <span class="phrase"><a name="math_toolkit.stat_tut.weg.normal_example.normal_misc.length_of_bolts"></a></span><a class="link" href="normal_misc.html#math_toolkit.stat_tut.weg.normal_example.normal_misc.length_of_bolts">Length
             of bolts</a>
           </h5>
 <p>
@@ -501,10 +501,11 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

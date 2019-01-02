@@ -42,6 +42,7 @@
 #ifdef __clang__
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wshadow"
+    #pragma clang diagnostic ignored "-Wnon-virtual-dtor"
 #endif
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>

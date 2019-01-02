@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Unit Test Framework API reference</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
 <link rel="prev" href="acknowledgements.html" title="Acknowledgements">
@@ -27,11 +27,11 @@
 <a name="boost_test.utf_reference"></a><a class="link" href="utf_reference.html" title="Unit Test Framework API reference"><span class="emphasis"><em>Unit Test Framework</em></span>
     API reference</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="utf_reference/test_org_reference.html">Tests declaration
       and organization</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code></a></span></dt>
+<dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code> and <code class="computeroutput"><span class="identifier">BOOST_TEST_CASE_NAME</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_auto_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_case_auto_template.html"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_TEMPLATE</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_case_template.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE_TEMPLATE</span></code></a></span></dt>
@@ -45,6 +45,7 @@
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_case_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_CASE</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_suite_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_SUITE</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_global_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_GLOBAL_FIXTURE</span></code></a></span></dt>
+<dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_global_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_GLOBAL_FIXTURE</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/test_org_boost_test_decorator.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DECORATOR</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/test_org_reference/decorator_depends_on.html">depends_on
         (decorator)</a></span></dt>
@@ -120,6 +121,7 @@
 <dt><span class="section"><a href="utf_reference/rt_param_reference/log_format.html"><code class="computeroutput"><span class="identifier">log_format</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/rt_param_reference/log_level.html"><code class="computeroutput"><span class="identifier">log_level</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/rt_param_reference/log_sink.html"><code class="computeroutput"><span class="identifier">log_sink</span></code></a></span></dt>
+<dt><span class="section"><a href="utf_reference/rt_param_reference/logger.html"><code class="computeroutput"><span class="identifier">logger</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/rt_param_reference/output_format.html"><code class="computeroutput"><span class="identifier">output_format</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/rt_param_reference/random.html"><code class="computeroutput"><span class="identifier">random</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/rt_param_reference/report_format.html"><code class="computeroutput"><span class="identifier">report_format</span></code></a></span></dt>
@@ -143,6 +145,8 @@
 <dt><span class="section"><a href="utf_reference/link_references/link_boost_test_no_lib.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_LIB</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/link_references/link_boost_test_dyn_link.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DYN_LINK</span></code></a></span></dt>
 <dt><span class="section"><a href="utf_reference/link_references/link_boost_test_no_main.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_NO_MAIN</span></code></a></span></dt>
+<dt><span class="section"><a href="utf_reference/link_references/link_boost_test_global_configuration.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_GLOBAL_CONFIGURATION</span></code></a></span></dt>
+<dt><span class="section"><a href="utf_reference/link_references/config_disable_alt_stack.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DISABLE_ALT_STACK</span></code></a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="reference.html">Reference</a></span></dt>
 <dd><dl>
@@ -180,6 +184,8 @@
 <dt><span class="section"><a href="../header/boost/test/debug_hpp.html">Header &lt;boost/test/debug.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/debug_config_hpp.html">Header &lt;boost/test/debug_config.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="../header/boost/test/detail/global_typedef_hpp.html">Header &lt;boost/test/detail/global_typedef.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/execution_monitor_hpp.html">Header &lt;boost/test/execution_monitor.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/framework_hpp.html">Header &lt;boost/test/framework.hpp&gt;</a></span></dt>
@@ -214,9 +220,13 @@
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/tools/output_test_stream_hpp.html">Header &lt;boost/test/tools/output_test_stream.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
+<dt><span class="section"><a href="../header/boost/test/tree/observer_hpp.html">Header &lt;boost/test/tree/observer.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/tree/test_unit_hpp.html">Header &lt;boost/test/tree/test_unit.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/unit_test_hpp.html">Header &lt;boost/test/unit_test.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="../header/boost/test/unit_test_log_hpp.html">Header &lt;boost/test/unit_test_log.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
 <dt><span class="section"><a href="../header/boost/test/unit_test_log_formatter_hpp.html">Header &lt;boost/test/unit_test_log_formatter.hpp&gt;</a></span></dt>
 <dd><dl></dl></dd>
@@ -233,7 +243,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

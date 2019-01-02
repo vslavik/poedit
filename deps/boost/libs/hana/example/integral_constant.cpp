@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -44,7 +44,7 @@ BOOST_HANA_RUNTIME_CHECK(s == "xxxxxyyyyyzzzzz");
 
 //! [times_higher_order]
 std::string s;
-BOOST_HANA_CONSTEXPR_LAMBDA auto functions = hana::make_tuple(
+auto functions = hana::make_tuple(
     [&] { s += "x"; },
     [&] { s += "y"; },
     [&] { s += "z"; }

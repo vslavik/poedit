@@ -125,8 +125,11 @@ void deconstruct_ptr_test()
 
 class deconstructed_esft : public boost::enable_shared_from_this<deconstructed_esft>
 {
-  friend void adl_postconstruct(boost::shared_ptr<void>, deconstructed_esft *)
-  {}
+public:
+  deconstructed_esft() : x(0) {}
+
+private:
+  friend void adl_postconstruct(boost::shared_ptr<void>, deconstructed_esft *) {}
   int x;
 };
 

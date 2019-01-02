@@ -673,7 +673,7 @@ inline long double nexttoward BOOST_PREVENT_MACRO_SUBSTITUTION(long double x, lo
 { return boost::math::tr1::nexttowardl BOOST_PREVENT_MACRO_SUBSTITUTION(x, y); }
 template <class T1, class T2>
 inline typename tools::promote_args<T1, T2>::type nexttoward BOOST_PREVENT_MACRO_SUBSTITUTION(T1 x, T2 y)
-{ return boost::math::tr1::nexttoward BOOST_PREVENT_MACRO_SUBSTITUTION(static_cast<typename tools::promote_args<T1, T2>::type>(x), static_cast<long double>(y)); }
+{ return static_cast<typename tools::promote_args<T1, T2>::type>(boost::math::tr1::nexttoward BOOST_PREVENT_MACRO_SUBSTITUTION(static_cast<typename tools::promote_args<T1, T2>::type>(x), static_cast<long double>(y))); }
 #if 0
 double remainder BOOST_PREVENT_MACRO_SUBSTITUTION(double x, double y);
 float remainderf BOOST_PREVENT_MACRO_SUBSTITUTION(float x, float y);

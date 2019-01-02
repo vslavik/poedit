@@ -40,7 +40,7 @@
 
     int count;
     if ((count = ::MultiByteToWideChar(codepage, MB_PRECOMPOSED, from,
-      from_end - from, to, to_end - to)) == 0) 
+      static_cast<int>(from_end - from), to, static_cast<int>(to_end - to))) == 0) 
     {
       return error;  // conversion failed
     }
@@ -60,7 +60,7 @@
 
     int count;
     if ((count = ::WideCharToMultiByte(codepage, WC_NO_BEST_FIT_CHARS, from,
-      from_end - from, to, to_end - to, 0, 0)) == 0)
+      static_cast<int>(from_end - from), to, static_cast<int>(to_end - to), 0, 0)) == 0)
     {
       return error;  // conversion failed
     }

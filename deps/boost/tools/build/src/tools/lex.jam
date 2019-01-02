@@ -5,8 +5,7 @@
 import type ;
 import generators ;
 import feature ;
-import property ;
-
+import toolset : flags ;
 
 feature.feature flex.prefix : : free ;
 type.register LEX : l ;
@@ -18,14 +17,7 @@ rule init ( )
 {
 }
 
-rule lex ( target : source : properties * )
-{   
-    local r = [ property.select flex.prefix : $(properties) ] ;
-    if $(r)
-    {
-        PREFIX on $(<) = $(r:G=) ;
-    }
-}
+flags lex.lex PREFIX <flex.prefix> ;
 
 actions lex 
 {

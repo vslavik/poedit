@@ -118,7 +118,11 @@ namespace impl
                     this->tail_means_.begin()
                   , this->tail_means_.end()
                   , this->tail_means_.begin()
+#ifdef BOOST_NO_CXX98_BINDERS
+                  , std::bind(std::divides<float_type>(), std::placeholders::_1, factor)
+#else
                   , std::bind2nd(std::divides<float_type>(), factor)
+#endif
                 );
             }
             else

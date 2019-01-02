@@ -42,9 +42,9 @@ Consider the following functions which have distinct signatures:
 
 Instead of calling them using their separate names (here `BOOST_TEST` is equivalent to `assert`):
 [footnote
-In most of the examples presented in this documentation, the Boost.Detail/LightweightTest (=boost/detail/lightweight_test.hpp=) macro `BOOST_TEST` is used to check correctness conditions (conceptually similar to `assert`).
+In most of the examples presented in this documentation, the Boost.Core/LightweightTest (=boost/core/lightweight_test.hpp=) macro `BOOST_TEST` is used to check correctness conditions (conceptually similar to `assert`).
 A failure of the checked condition does not abort the execution of the program, it will instead make `boost::report_errors` return a non-zero program exit code.
-Using Boost.Detail/LightweightTest allows to add the examples to the library regression tests so to make sure that they always compile and run correctly.
+Using Boost.Core/LightweightTest allows to add the examples to the library regression tests so to make sure that they always compile and run correctly.
 ]
 
 [identity_calls]

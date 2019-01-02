@@ -128,7 +128,7 @@
 
       <method name="target_type" cv="const">
         <type>const std::type_info&amp;</type>
-        <returns><simpara><code>typeid</code> of the target function object, or <code>typeid(void)</code> if <code>this-&gt;<methodname>empty</methodname>()</code>.</simpara></returns>
+        <returns><simpara><code>typeid</code> of the target function object, or <code>typeid(void)</code> if <code>this-&gt;<methodname>empty</methodname>()</code>. Works even with RTTI off.</simpara></returns>
         <throws><simpara>Will not throw.</simpara></throws>
       </method>
     </method-group>

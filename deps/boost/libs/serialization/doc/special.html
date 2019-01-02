@@ -568,10 +568,10 @@ void myclass::serialize(Archive & ar, const unsigned int version){
 	...
 }
 
-BOOST_EXPORT_CLASS_IMPLEMENT(my_class)
+BOOST_CLASS_EXPORT_IMPLEMENT(my_class)
 
 #include &lt;boost/archive/text_oarchive&gt;
-#include &lt;boost/archive/text_iarchive&lt;
+#include &lt;boost/archive/text_iarchive&gt;
 template myclass::serialize(boost::archive::text_oarchive & ar, const unsigned int version);
 template myclass::serialize(boost::archive::text_iarchive & ar, const unsigned int version);
 ... // repeat for each archive class to be used.

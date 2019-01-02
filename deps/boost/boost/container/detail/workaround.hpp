@@ -29,10 +29,26 @@
    #define BOOST_CONTAINER_UNIMPLEMENTED_PACK_EXPANSION_TO_FIXED_LIST
 #endif
 
-#if !defined(BOOST_FALLTHOUGH)
-   #define BOOST_CONTAINER_FALLTHOUGH
-#else
-   #define BOOST_CONTAINER_FALLTHOUGH BOOST_FALLTHOUGH;
+#if defined(BOOST_GCC_VERSION)
+#  if (BOOST_GCC_VERSION < 40700) || !defined(BOOST_GCC_CXX11)
+#     define BOOST_CONTAINER_NO_CXX11_DELEGATING_CONSTRUCTORS
+#  endif
+#elif defined(BOOST_MSVC)
+#  if _MSC_FULL_VER < 180020827
+#     define BOOST_CONTAINER_NO_CXX11_DELEGATING_CONSTRUCTORS
+#  endif
+#elif defined(BOOST_CLANG)
+#  if !__has_feature(cxx_delegating_constructors)
+#     define BOOST_CONTAINER_NO_CXX11_DELEGATING_CONSTRUCTORS
+#  endif
+#endif
+
+#if defined(BOOST_MSVC) && (_MSC_VER < 1400)
+   #define BOOST_CONTAINER_TEMPLATED_CONVERSION_OPERATOR_BROKEN
+#endif
+
+#if !defined(BOOST_NO_CXX11_HDR_TUPLE) || (defined(BOOST_MSVC) && (BOOST_MSVC == 1700 || BOOST_MSVC == 1600))
+#define BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE
 #endif
 
 //Macros for documentation purposes. For code, expands to the argument
@@ -85,8 +101,29 @@
 #elif defined(BOOST_MSVC) && defined(_DEBUG)
    //"__forceinline" and MSVC seems to have some bugs in debug mode
    #define BOOST_CONTAINER_FORCEINLINE inline
+#elif defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4 && (__GNUC_MINOR__ < 5)))
+   //Older GCCs have problems with forceinline
+   #define BOOST_CONTAINER_FORCEINLINE inline
 #else
    #define BOOST_CONTAINER_FORCEINLINE BOOST_FORCEINLINE
+#endif
+
+#if !defined(__has_feature)
+#define BOOST_CONTAINER_HAS_FEATURE(feature) 0
+#else
+#define BOOST_CONTAINER_HAS_FEATURE(feature) __has_feature(feature)
+#endif
+
+//Detect address sanitizer
+#if defined(__SANITIZE_ADDRESS__) || BOOST_CONTAINER_HAS_FEATURE(address_sanitizer)
+#define BOOST_CONTAINER_ASAN
+#endif
+
+
+#if (__cplusplus >= 201703L)
+//CTAD supported
+#else
+#define BOOST_CONTAINER_NO_CXX17_CTAD
 #endif
 
 #endif   //#ifndef BOOST_CONTAINER_DETAIL_WORKAROUND_HPP

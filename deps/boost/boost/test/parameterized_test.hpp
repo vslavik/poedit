@@ -14,6 +14,7 @@
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
+#include <boost/test/utils/string_cast.hpp>
 
 // Boost
 #include <boost/type_traits/remove_reference.hpp>
@@ -65,6 +66,7 @@ public:
     , m_tc_line( tc_line )
     , m_par_begin( par_begin )
     , m_par_end( par_end )
+    , m_index( 0 )
     {}
 
     virtual test_unit* next() const
@@ -72,9 +74,10 @@ public:
         if( m_par_begin == m_par_end )
             return (test_unit*)0;
 
-        test_unit* res = new test_case( m_tc_name, m_tc_file, m_tc_line, boost::bind( m_test_func, *m_par_begin ) );
+        test_unit* res = new test_case( m_tc_name + "_" + utils::string_cast(m_index), m_tc_file, m_tc_line, boost::bind( m_test_func, *m_par_begin ) );
 
         ++m_par_begin;
+        ++m_index;
 
         return res;
     }
@@ -87,6 +90,7 @@ private:
     std::size_t             m_tc_line;
     mutable ParamIter       m_par_begin;
     ParamIter               m_par_end;
+    mutable std::size_t     m_index;
 };
 
 //____________________________________________________________________________//

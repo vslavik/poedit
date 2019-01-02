@@ -20,6 +20,18 @@ int test_main(int, char*[])
 
   tribool x;
 
+  #if !defined(BOOST_NO_CWCHAR) && !defined(BOOST_NO_STD_WSTRING)
+  std::wostringstream wout;
+  wout << std::boolalpha << tribool(false);
+  BOOST_CHECK(wout.str() == L"false");
+  wout.str(std::wstring());
+  wout << std::boolalpha << tribool(true);
+  BOOST_CHECK(wout.str() == L"true");
+  wout.str(std::wstring());
+  wout << std::boolalpha << tribool(indeterminate);
+  BOOST_CHECK(wout.str() == L"indeterminate");
+  #endif
+
   // Check tribool output
   std::ostringstream out;
 

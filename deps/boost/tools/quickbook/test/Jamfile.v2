@@ -9,6 +9,8 @@
 project quickbook/test
     : requirements
         <toolset>msvc:<debug-symbols>off
+        <cxxstd>98:<build>no
+        <cxxstd>03:<build>no
     ;
 
 build-project doc-info ;
@@ -44,11 +46,17 @@ test-suite quickbook.test :
         command_line_macro-1_1.quickbook :
         <testing.arg>-Dsomething[] ]
     [ quickbook-test cond_phrase-1_5 ]
-    [ quickbook-test elements-1_5 ]
+    [ quickbook-test cond_phrase-1_7 ]
+    # TODO: This test generates invalid boostbook, so it breaks when generating html
+    # [ quickbook-test elements-1_5 ]
     [ quickbook-test elements-1_6 ]
+    [ quickbook-error-test endsect-wrong-id-1_4-fail ]
+    [ quickbook-error-test endsect-wrong-id-1_7-fail ]
+    [ quickbook-error-test endsect-unopened-1_7-fail ]
     [ quickbook-test escape-1_1 ]
     [ quickbook-test escape-1_6 ]
     [ quickbook-error-test escape-mismatched-1_5-fail ]
+    [ quickbook-test footnotes-1_7 ]
     [ quickbook-test heading-1_1 ]
     [ quickbook-test heading-1_3 ]
     [ quickbook-test heading-1_5 ]
@@ -88,6 +96,14 @@ test-suite quickbook.test :
     [ quickbook-test mismatched_brackets1-1_1 ]
     [ quickbook-test mismatched_brackets2-1_1 ]
     [ quickbook-test mismatched_brackets3-1_1 ]
+    [ quickbook-error-test mismatched_brackets1-1_1-strict-fail :
+        mismatched_brackets1-1_1.quickbook : <testing.arg>--strict ]
+    [ quickbook-error-test mismatched_brackets2-1_1-strict-fail :
+        mismatched_brackets2-1_1.quickbook : <testing.arg>--strict ]
+    [ quickbook-error-test mismatched_brackets3-1_1-strict-fail :
+        mismatched_brackets3-1_1.quickbook : <testing.arg>--strict ]
+    [ quickbook-error-test mismatched_brackets1-1_7-strict-fail :
+        mismatched_brackets1-1_1.quickbook : <testing.arg>--strict ]
     [ quickbook-test newline-1_1 ]
     [ quickbook-test para_test-1_5 ]
     [ quickbook-error-test post_process-fail ]
@@ -99,17 +115,29 @@ test-suite quickbook.test :
     [ quickbook-test section-1_4 ]
     [ quickbook-test section-1_5-unclosed ]
     [ quickbook-test section-1_5 ]
+    [ quickbook-error-test section-1_5-unclosed-strict-fail :
+        section-1_5-unclosed : <testing.arg>--strict ]
+    [ quickbook-test section-1_5-strict :
+        section-1_5.quickbook : : <testing.arg>--strict ]
     [ quickbook-test section-1_7 ]
     [ quickbook-test simple_markup-1_5 ]
     [ quickbook-test source_mode-1_7 ]
+    [ quickbook-test stray_close_bracket-1_1 ]
+    [ quickbook-error-test stray_close_bracket-1_1-strict-fail :
+        stray_close_bracket-1_1.quickbook :
+        <testing.arg>--strict ]
+    [ quickbook-error-test stray_close_bracket-1_7-fail ]
     [ quickbook-test svg-1_1 ]
     [ quickbook-test table-1_3 ]
     [ quickbook-test table-1_5 ]
     [ quickbook-test table-1_6 ]
     [ quickbook-test table-1_7 ]
     [ quickbook-error-test template_arguments1-1_1-fail ]
+    [ quickbook-error-test template_arguments1-1_5-fail ]
     [ quickbook-error-test template_arguments2-1_1-fail ]
+    [ quickbook-error-test template_arguments2-1_5-fail ]
     [ quickbook-error-test template_arguments3-1_1-fail ]
+    [ quickbook-error-test template_arguments3-1_5-fail ]
     [ quickbook-test template_section-1_5 ]
     [ quickbook-error-test template_section1-1_5-fail ]
     [ quickbook-error-test template_section2-1_5-fail ]
@@ -139,3 +167,7 @@ test-suite quickbook.test :
 
     [ quickbook-test quickbook_manual-1_4 ]
     ;
+
+# for `b2 quick` in status
+alias quick : quickbook_manual-1_4 ;
+explicit quick ;

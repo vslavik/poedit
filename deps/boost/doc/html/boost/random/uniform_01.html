@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template uniform_01</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_random/reference.html#header.boost.random.uniform_01_hpp" title="Header &lt;boost/random/uniform_01.hpp&gt;">
 <link rel="prev" href="triangle_distribution/param_type.html" title="Class param_type">
@@ -39,25 +39,25 @@
   <span class="keyword">typedef</span> <span class="identifier">RealType</span> <a name="boost.random.uniform_01.input_type"></a><span class="identifier">input_type</span><span class="special">;</span> 
   <span class="keyword">typedef</span> <span class="identifier">RealType</span> <a name="boost.random.uniform_01.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="uniform_01.html#idp181147712-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#idp181148272-bb"><span class="identifier">min</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#idp181149392-bb"><span class="identifier">max</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="uniform_01.html#idp181150512-bb"><span class="identifier">reset</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Engine<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#idp68194784-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Engine</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="uniform_01.html#id-1_3_35_5_6_45_1_1_1_5-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#id-1_3_35_5_6_45_1_1_1_5_1-bb"><span class="identifier">min</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#id-1_3_35_5_6_45_1_1_1_5_2-bb"><span class="identifier">max</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="uniform_01.html#id-1_3_35_5_6_45_1_1_1_5_3-bb"><span class="identifier">reset</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Engine<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="uniform_01.html#id-1_3_35_5_6_45_1_1_1_5_4-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Engine</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp382781792"></a><h2>Description</h2>
-<p>The distribution function <a class="link" href="uniform_01.html" title="Class template uniform_01">uniform_01</a> models a  <a class="link" href="../../boost_random/reference.html#boost_random.reference.concepts.random_distribution" title="Random Distribution">random distribution</a> . On each invocation, it returns a random floating-point value uniformly distributed in the range [0..1).</p>
+<a name="id-1.3.35.5.6.44.3.4"></a><h2>Description</h2>
+<p>The distribution function <a class="link" href="uniform_01.html" title="Class template uniform_01">uniform_01</a> models a <a class="link" href="../../boost_random/reference.html#boost_random.reference.concepts.random_distribution" title="Random Distribution">random distribution</a> . On each invocation, it returns a random floating-point value uniformly distributed in the range [0..1).</p>
 <p>The template parameter RealType shall denote a float-like value type with support for binary operators +, -, and /.</p>
 <p>Note: The current implementation is buggy, because it may not fill all of the mantissa with random bits. I'm unsure how to fill a (to-be-invented) <code class="computeroutput">boost::bigfloat</code> class with random bits efficiently. It's probably time for a traits class. </p>
 <div class="refsect2">
-<a name="idp382785984"></a><h3>
-<a name="idp181147712-bb"></a><code class="computeroutput">uniform_01</code> public member functions</h3>
+<a name="id-1.3.35.5.6.44.3.4.5"></a><h3>
+<a name="id-1_3_35_5_6_45_1_1_1_5-bb"></a><code class="computeroutput">uniform_01</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp181148272-bb"></a><span class="identifier">min</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp181149392-bb"></a><span class="identifier">max</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp181150512-bb"></a><span class="identifier">reset</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Engine<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp68194784-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Engine</span> <span class="special">&amp;</span> eng<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="id-1_3_35_5_6_45_1_1_1_5_1-bb"></a><span class="identifier">min</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="id-1_3_35_5_6_45_1_1_1_5_2-bb"></a><span class="identifier">max</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="id-1_3_35_5_6_45_1_1_1_5_3-bb"></a><span class="identifier">reset</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Engine<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="id-1_3_35_5_6_45_1_1_1_5_4-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Engine</span> <span class="special">&amp;</span> eng<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

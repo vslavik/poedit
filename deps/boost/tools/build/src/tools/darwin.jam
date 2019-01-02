@@ -85,7 +85,7 @@ rule init ( version ? : command * : options * : requirement * )
           : [ SHELL "/usr/bin/sw_vers -productVersion" ] ] ;
         if $(.debug-configuration)
         {
-            ECHO notice: OSX version on this machine is $(.host-osx-version) ;
+            ECHO notice\: OSX version on this machine is $(.host-osx-version) ;
         }
     }
                       
@@ -150,14 +150,11 @@ rule init ( version ? : command * : options * : requirement * )
     # - GCC on Darwin with -pedantic, suppress unsupported long long warning
     flags darwin.compile OPTIONS $(condition)/<warnings>all : -Wno-long-long ;
 
-    # - GCC on El Capitan (10.11) does not suport -finline-functions
+    # - GCC on El Capitan (10.11) does not support -finline-functions
     if "10.11.0" <= $(.host-osx-version)
     {
         flags darwin.compile OPTIONS $(condition)/<inlining>full : -Wno-inline ;
     }
-
-    # - Set the link flags common with the GCC toolset.
-    gcc.init-link-flags darwin darwin $(condition) ;
 
     # - The symbol strip program.
     local strip ;
@@ -186,7 +183,7 @@ rule init ( version ? : command * : options * : requirement * )
         flags darwin.link .STRIP $(condition) : $(strip[1]) ;
         if $(.debug-configuration)
         {
-            ECHO notice: using strip for $(condition) at $(strip[1]) ;
+            ECHO notice\: using strip for $(condition) at $(strip[1]) ;
         }
     }
 
@@ -198,7 +195,7 @@ rule init ( version ? : command * : options * : requirement * )
     flags darwin.archive .LIBTOOL $(condition) : $(archiver[1]) ;
     if $(.debug-configuration)
     {
-        ECHO notice: using archiver for $(condition) at $(archiver[1]) ;
+        ECHO notice\: using archiver for $(condition) at $(archiver[1]) ;
     }
     
     # - Initialize the SDKs available in the root for this tool.
@@ -223,6 +220,10 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
     {
         switch $(version[1])
         {
+            case appletv* :
+            {
+                return $(version[1])-$(version[2-]:J=.) ;
+            }
             case iphone* :
             {
                 return $(version[1])-$(version[2-]:J=.) ;
@@ -242,7 +243,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
     {
         if $(.debug-configuration)
         {
-            ECHO notice: available sdk for $(condition)/<macosx-version>$(version-feature) at $(root) ;
+            ECHO notice\: available sdk for $(condition)/<macosx-version>$(version-feature) at $(root) ;
         }
         
         # Add the version to the features for specifying them.
@@ -265,6 +266,30 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
         # Then device variation options.
         switch $(version[1])
         {
+            case appletvsim* :
+            {
+                local N = $(version[2]) ;
+                if ! $(version[3]) { N += 00 ; }
+                else if [ regex.match (..) : $(version[3]) ] { N += $(version[3]) ; }
+                else { N += 0$(version[3]) ; }
+                if ! $(version[4]) { N += 00 ; }
+                else if [ regex.match (..) : $(version[4]) ] { N += $(version[4]) ; }
+                else { N += 0$(version[4]) ; }
+                N = $(N:J=) ;
+                flags darwin.compile OPTIONS <macosx-version-min>$(version-feature)
+                    : -D__IPHONE_OS_VERSION_MIN_REQUIRED=$(N) ;
+                flags darwin.link OPTIONS <macosx-version-min>$(version-feature)
+                    : -D__IPHONE_OS_VERSION_MIN_REQUIRED=$(N) ;
+            }
+
+            case appletv* :
+            {
+                flags darwin.compile OPTIONS <macosx-version-min>$(version-feature)
+                    : -mtvos-version-min=$(version[2-]:J=.) ;
+                flags darwin.link OPTIONS <macosx-version-min>$(version-feature)
+                    : -mtvos-version-min=$(version[2-]:J=.) ;
+            }
+
             case iphonesim* :
             {
                 local N = $(version[2]) ;
@@ -280,7 +305,7 @@ local rule init-sdk ( condition * : root ? : version + : version-feature ? )
                 flags darwin.link OPTIONS <macosx-version-min>$(version-feature)
                     : -D__IPHONE_OS_VERSION_MIN_REQUIRED=$(N) ;
             }
-            
+
             case iphone* :
             {
                 flags darwin.compile OPTIONS <macosx-version-min>$(version-feature)
@@ -340,11 +365,11 @@ local rule init-available-sdk-versions ( condition * : root ? )
 {
     root ?= /Developer ;
     local sdks-root = $(root)/SDKs ;
-    local sdks = [ GLOB $(sdks-root) : MacOSX*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
+    local sdks = [ GLOB $(sdks-root) : MacOSX*.sdk AppleTVOS*.sdk AppleTVSimulator*.sdk iPhoneOS*.sdk iPhoneSimulator*.sdk ] ;
     local result ;
     for local sdk in $(sdks)
     {
-        local sdk-match = [ MATCH ([^0-9]+)([0-9]+)[.]([0-9x]+)[.]?([0-9x]+)? : $(sdk:D=) ] ;
+        local sdk-match = [ MATCH "([^0-9]+)([0-9]+)[.]([0-9x]+)[.]?([0-9x]+)?" : $(sdk:D=) ] ;
         local sdk-platform = $(sdk-match[1]:L) ;
         local sdk-version = $(sdk-match[2-]) ;
         if $(sdk-version)
@@ -354,6 +379,14 @@ local rule init-available-sdk-versions ( condition * : root ? )
                 case macosx :
                 {
                     sdk-version = mac $(sdk-version) ;
+                }
+                case appletvos :
+                {
+                    sdk-version = appletv $(sdk-version) ;
+                }
+                case appletvsimulator :
+                {
+                    sdk-version = appletvsim $(sdk-version) ;
                 }
                 case iphoneos :
                 {
@@ -480,20 +513,10 @@ rule setup-address-model ( targets * : sources * : properties * )
     }            
 }
 
-rule setup-threading ( targets * : sources * : properties * )
-{
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-}
-
-rule setup-fpic ( targets * : sources * : properties * )
-{
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
-}
-
 rule compile.m ( targets * : sources * : properties * )
 {
     LANG on $(<) = "-x objective-c" ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
+    gcc.set-fpic-options $(targets) : $(sources) : $(properties) ;
     setup-address-model $(targets) : $(sources) : $(properties) ;
 }
 
@@ -505,7 +528,7 @@ actions compile.m
 rule compile.mm  ( targets * : sources * : properties * )
 {
     LANG on $(<) = "-x objective-c++" ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
+    gcc.set-fpic-options $(targets) : $(sources) : $(properties) ;
     setup-address-model $(targets) : $(sources) : $(properties) ;
 }
 

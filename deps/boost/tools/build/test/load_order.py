@@ -32,7 +32,7 @@ int main() {}
 
 t.run_build_system()
 
-t.expect_addition("child/bin/$toolset/debug/main.exe")
+t.expect_addition("child/bin/$toolset/debug*/main.exe")
 t.fail_test(t.stdout().find("Setting child requirements") < t.stdout().find(
     "Setting parent requirements"))
 
@@ -49,7 +49,7 @@ int main() {}
 """)
 
 t.run_build_system(subdir="src/app")
-t.expect_addition("src/app/bin/$toolset/debug/test.exe")
+t.expect_addition("src/app/bin/$toolset/debug*/test.exe")
 
 
 # child/child2 used to be loaded before child

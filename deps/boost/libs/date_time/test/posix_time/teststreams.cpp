@@ -124,14 +124,14 @@ main()
 
   }
   {
-    date d1(2001,Aug,1), d2(2003,May,13);
+    date d1x(2001,Aug,1), d2x(2003,May,13);
 #ifdef BOOST_DATE_TIME_HAS_NANOSECONDS
-    time_duration td1(15,32,18,20304000), td2(1,2,3);
+    time_duration td1x(15,32,18,20304000), td2x(1,2,3);
 #else
-    time_duration td1(15,32,18,20304), td2(1,2,3);
+    time_duration td1x(15,32,18,20304), td2x(1,2,3);
 #endif
 
-    time_period result(ptime(d1,td1), ptime(d2,td2));
+    time_period result(ptime(d1x,td1x), ptime(d2x,td2x));
     std::istringstream iss("[2001-Aug-01 15:32:18.020304/2003-May-13 01:02:03]");
     iss >> tp;
     check("Stream in time_period", tp == result);
@@ -150,11 +150,11 @@ main()
     
     std::wistringstream wiss3(L"[2004-Jan-01 02:03:04/2004-May-13 01:00:00]");
     wiss3 >> tp;
-    date d1 = date(2004,Jan,1);
-    date d2 = date(2004,May,13);
-    time_duration td1 = time_duration(2,3,4);
-    time_duration td2 = time_duration(1,0,0);
-    time_period result = time_period(ptime(d1,td1), ptime(d2,td2));
+    date d1x = date(2004,Jan,1);
+    date d2x = date(2004,May,13);
+    time_duration td1x = time_duration(2,3,4);
+    time_duration td2x = time_duration(1,0,0);
+    time_period result = time_period(ptime(d1x,td1x), ptime(d2x,td2x));
     check("Wide stream in time_period", tp == result);
   }
 #else

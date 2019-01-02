@@ -173,14 +173,14 @@ class expand_bwd_test_allocator
 
 //!Equality test for same type of expand_bwd_test_allocator
 template<class T> inline
-bool operator==(const expand_bwd_test_allocator<T>  &alloc1,
-                const expand_bwd_test_allocator<T>  &alloc2)
+bool operator==(const expand_bwd_test_allocator<T>  &,
+                const expand_bwd_test_allocator<T>  &)
 {  return false; }
 
 //!Inequality test for same type of expand_bwd_test_allocator
 template<class T> inline
-bool operator!=(const expand_bwd_test_allocator<T>  &alloc1,
-                const expand_bwd_test_allocator<T>  &alloc2)
+bool operator!=(const expand_bwd_test_allocator<T>  &,
+                const expand_bwd_test_allocator<T>  &)
 {  return true; }
 
 }  //namespace test {

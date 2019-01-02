@@ -217,17 +217,6 @@ namespace { // anon
         }
     }
 
-    plural_ptr un_factory(int value,plural_ptr op)
-    {
-        switch(value) {
-        case '!': return plural_ptr(new l_not(op));
-        case '~': return plural_ptr(new bin_not(op));
-        case '-': return plural_ptr(new minus(op));
-        default:
-            return plural_ptr();
-        }
-    }
-
     static inline bool is_in(int v,int *p)
     {
         int len=*p;

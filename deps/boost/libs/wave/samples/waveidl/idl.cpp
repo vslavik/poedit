@@ -438,7 +438,8 @@ main (int argc, char *argv[])
     po::options_description desc_generic ("Options allowed additionally in a config file");
 
         desc_generic.add_options()
-            ("output,o", "specify a file to use for output instead of stdout")
+            ("output,o", po::value<string>()->composing(),
+                "specify a file to use for output instead of stdout")
             ("include,I", po::value<cmd_line_util::include_paths>()->composing(), 
                 "specify an additional include directory")
             ("sysinclude,S", po::value<vector<string> >()->composing(), 

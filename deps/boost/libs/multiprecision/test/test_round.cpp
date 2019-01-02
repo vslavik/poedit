@@ -329,97 +329,99 @@ void test()
    //
    // Finish off by testing the error handlers:
    //
+   T result;
 #ifndef BOOST_NO_EXCEPTIONS
-   BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>(-1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(lround(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(lround(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(iround(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(iround(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(lround(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(lround(static_cast<T>(-1e20))), boost::math::rounding_error);
 #ifdef BOOST_HAS_LONG_LONG
-   BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(llround(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(llround(static_cast<T>(-1e20))), boost::math::rounding_error);
 #endif
    if(std::numeric_limits<T>::has_infinity)
    {
-      BOOST_CHECK_THROW(static_cast<T>(round(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(iround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(iround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_EQUAL(static_cast<T>(round(std::numeric_limits<T>::infinity())), std::numeric_limits<T>::infinity()); // See C99 Annex F.
+      BOOST_CHECK_THROW(result = static_cast<T>(iround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(iround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
    #ifdef BOOST_HAS_LONG_LONG
-      BOOST_CHECK_THROW(static_cast<T>(llround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(llround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(llround(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(llround(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
    #endif
    }
    if(std::numeric_limits<T>::has_quiet_NaN)
    {
-      BOOST_CHECK_THROW(static_cast<T>(round(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(iround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK((boost::multiprecision::isnan)(round(std::numeric_limits<T>::quiet_NaN())));
+      BOOST_CHECK_THROW(result = static_cast<T>(iround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
    #ifdef BOOST_HAS_LONG_LONG
-      BOOST_CHECK_THROW(static_cast<T>(llround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(llround(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
    #endif
    }
-   BOOST_CHECK_THROW(static_cast<T>(itrunc(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(itrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(ltrunc(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(ltrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(itrunc(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(itrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
 #ifdef BOOST_HAS_LONG_LONG
-   BOOST_CHECK_THROW(static_cast<T>(lltrunc(static_cast<T>(1e20))), boost::math::rounding_error);
-   BOOST_CHECK_THROW(static_cast<T>(lltrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(static_cast<T>(1e20))), boost::math::rounding_error);
+   BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(static_cast<T>(-1e20))), boost::math::rounding_error);
 #endif
    if(std::numeric_limits<T>::has_infinity)
    {
-      BOOST_CHECK_THROW(static_cast<T>(trunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(itrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(itrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(ltrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(ltrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_EQUAL(static_cast<T>(trunc(std::numeric_limits<T>::infinity())), std::numeric_limits<T>::infinity());
+      BOOST_CHECK_EQUAL(static_cast<T>(trunc(-std::numeric_limits<T>::infinity())), -std::numeric_limits<T>::infinity());
+      BOOST_CHECK_THROW(result = static_cast<T>(itrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(itrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
    #ifdef BOOST_HAS_LONG_LONG
-      BOOST_CHECK_THROW(static_cast<T>(lltrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lltrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(std::numeric_limits<T>::infinity())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(-std::numeric_limits<T>::infinity())), boost::math::rounding_error);
    #endif
    }
    if(std::numeric_limits<T>::has_quiet_NaN)
    {
-      BOOST_CHECK_THROW(static_cast<T>(trunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(itrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(ltrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK((boost::multiprecision::isnan)(trunc(std::numeric_limits<T>::quiet_NaN())));
+      BOOST_CHECK_THROW(result = static_cast<T>(itrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
    #ifdef BOOST_HAS_LONG_LONG
-      BOOST_CHECK_THROW(static_cast<T>(lltrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(std::numeric_limits<T>::quiet_NaN())), boost::math::rounding_error);
    #endif
    }
    if(std::numeric_limits<T>::digits >= std::numeric_limits<int>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(itrunc(static_cast<T>((std::numeric_limits<int>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(itrunc(static_cast<T>((std::numeric_limits<int>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(itrunc(static_cast<T>((std::numeric_limits<int>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(itrunc(static_cast<T>((std::numeric_limits<int>::min)()) - 1)), boost::math::rounding_error);
    }
    if(std::numeric_limits<T>::digits >= std::numeric_limits<long>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(ltrunc(static_cast<T>((std::numeric_limits<long>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(ltrunc(static_cast<T>((std::numeric_limits<long>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(static_cast<T>((std::numeric_limits<long>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(ltrunc(static_cast<T>((std::numeric_limits<long>::min)()) - 1)), boost::math::rounding_error);
    }
 #ifndef BOOST_NO_LONG_LONG
    if(std::numeric_limits<T>::digits >= std::numeric_limits<boost::long_long_type>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(lltrunc(static_cast<T>((std::numeric_limits<boost::long_long_type>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lltrunc(static_cast<T>((std::numeric_limits<boost::long_long_type>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(static_cast<T>((std::numeric_limits<boost::long_long_type>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lltrunc(static_cast<T>((std::numeric_limits<boost::long_long_type>::min)()) - 1)), boost::math::rounding_error);
    }
 #endif
    if(std::numeric_limits<T>::digits >= std::numeric_limits<int>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>((std::numeric_limits<int>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>((std::numeric_limits<int>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(iround(static_cast<T>((std::numeric_limits<int>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(iround(static_cast<T>((std::numeric_limits<int>::min)()) - 1)), boost::math::rounding_error);
    }
    if(std::numeric_limits<T>::digits >= std::numeric_limits<long>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(lround(static_cast<T>((std::numeric_limits<long>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(lround(static_cast<T>((std::numeric_limits<long>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lround(static_cast<T>((std::numeric_limits<long>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(lround(static_cast<T>((std::numeric_limits<long>::min)()) - 1)), boost::math::rounding_error);
    }
 #ifndef BOOST_NO_LONG_LONG
    if(std::numeric_limits<T>::digits >= std::numeric_limits<boost::long_long_type>::digits)
    {
-      BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::max)()) + 1)), boost::math::rounding_error);
-      BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::min)()) - 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::max)()) + 1)), boost::math::rounding_error);
+      BOOST_CHECK_THROW(result = static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::min)()) - 1)), boost::math::rounding_error);
    }
 #endif
 #endif
@@ -450,13 +452,14 @@ int main()
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<62> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<61, long long> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<60, long long> > >();
-   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<void> > > >();
-   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<void> > > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<char> > > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<char> > > >();
 #endif
 #endif
 #ifdef TEST_CPP_BIN_FLOAT
    test<boost::multiprecision::cpp_bin_float_50>();
    test<boost::multiprecision::cpp_bin_float_100>();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<35, boost::multiprecision::digit_base_10, std::allocator<char>, boost::long_long_type> > >();
 #endif
 #ifdef TEST_BACKEND
    test<boost::multiprecision::number<boost::multiprecision::concepts::number_backend_float_architype> >();

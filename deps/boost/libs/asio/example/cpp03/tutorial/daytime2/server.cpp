@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,13 +26,13 @@ int main()
 {
   try
   {
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 13));
+    tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 13));
 
     for (;;)
     {
-      tcp::socket socket(io_service);
+      tcp::socket socket(io_context);
       acceptor.accept(socket);
 
       std::string message = make_daytime_string();

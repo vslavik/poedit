@@ -136,7 +136,7 @@ BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::checked_int512_
 BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::uint512_t>() = std::declval<boost::multiprecision::limb_type>()));
 BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::checked_uint512_t>() = std::declval<boost::multiprecision::limb_type>()));
 
-#if defined(BOOST_LITTLE_ENDIAN)
+#if defined(BOOST_LITTLE_ENDIAN) && !defined(BOOST_MP_TEST_NO_LE)
 //
 // We can also nothrow construct from a double_limb_type (or smaller obviously) as long as double_limb_type is smaller than the type
 // in question (so don't test 128-bit integers in case double_limb_type is __int128).

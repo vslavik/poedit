@@ -83,6 +83,15 @@ class BOOST_MPI_DECL request
   static optional<status> 
   handle_serialized_array_irecv(request* self, request_action action);
 
+  /**
+   * INTERNAL ONLY
+   *
+   * Handles the non-blocking receive of a dynamic array of primitive values.
+   */
+  template<typename T, class A>
+  static optional<status> 
+  handle_dynamic_primitive_array_irecv(request* self, request_action action);
+
  public: // template friends are not portable
 
   /// INTERNAL ONLY

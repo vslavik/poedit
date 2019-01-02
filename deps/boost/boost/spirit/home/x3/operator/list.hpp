@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_LIST_MARCH_24_2007_1031AM)
-#define SPIRIT_LIST_MARCH_24_2007_1031AM
+#if !defined(BOOST_SPIRIT_X3_LIST_MARCH_24_2007_1031AM)
+#define BOOST_SPIRIT_X3_LIST_MARCH_24_2007_1031AM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
@@ -35,15 +35,14 @@ namespace boost { namespace spirit { namespace x3
                 this->left, first, last, context, rcontext, attr))
                 return false;
 
-            Iterator save = first;
-            while (this->right.parse(first, last, context, rcontext, unused)
+            Iterator iter = first;
+            while (this->right.parse(iter, last, context, rcontext, unused)
                 && detail::parse_into_container(
-                    this->left, first, last, context, rcontext, attr))
+                    this->left, iter, last, context, rcontext, attr))
             {
-                save = first;
+                first = iter;
             }
 
-            first = save;
             return true;
         }
     };

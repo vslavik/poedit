@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class execution_exception</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../header/boost/test/execution_monitor_hpp.html" title="Header &lt;boost/test/execution_monitor.hpp&gt;">
 <link rel="prev" href="../header/boost/test/execution_monitor_hpp.html" title="Header &lt;boost/test/execution_monitor.hpp&gt;">
@@ -40,7 +40,8 @@
 
   <span class="keyword">struct</span> <a class="link" href="execution_exception/location.html" title="Struct location">location</a> <span class="special">{</span>
     <span class="comment">// <a class="link" href="execution_exception/location.html#boost.execution_exception.locationconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <span class="keyword">explicit</span> <a class="link" href="execution_exception/location.html#idp26890944-bb"><span class="identifier">location</span></a><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="execution_exception/location.html#idp68938384-bb"><span class="identifier">location</span></a><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="execution_exception/location.html#idp68941872-bb"><span class="identifier">location</span></a><span class="special">(</span><span class="identifier">const_string</span><span class="special">,</span> <span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
 
     <span class="comment">// public data members</span>
     <span class="identifier">const_string</span> <span class="identifier">m_file_name</span><span class="special">;</span>    <span class="comment">// File name. </span>
@@ -49,27 +50,33 @@
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">enum</span> <a class="link" href="execution_exception/error_code.html" title="Type error_code">error_code</a><span class="special">;</span>
   <span class="comment">// <a class="link" href="execution_exception.html#boost.execution_exceptionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="execution_exception.html#idp26894432-bb"><span class="identifier">execution_exception</span></a><span class="special">(</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">const_string</span><span class="special">,</span> <a class="link" href="execution_exception/location.html" title="Struct location">location</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="execution_exception.html#idp68945072-bb"><span class="identifier">execution_exception</span></a><span class="special">(</span><span class="identifier">error_code</span><span class="special">,</span> <span class="identifier">const_string</span><span class="special">,</span> <a class="link" href="execution_exception/location.html" title="Struct location">location</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp28772256"></a><h2>Description</h2>
+<a name="idp98875280"></a><h2>Description</h2>
 <p>The instance of this class is thrown out of execution_monitor::execute invocation when failure is detected. Regardless of a kind of failure occurred the instance will provide a uniform way to catch and report it.</p>
 <p>One important design rationale for this class is that we should be ready to work after fatal memory corruptions or out of memory conditions. To facilitate this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory. </p>
 <div class="refsect2">
-<a name="idp28773744"></a><h3>
+<a name="idp98876768"></a><h3>
 <a name="boost.execution_exceptionconstruct-copy-destruct"></a><code class="computeroutput">execution_exception</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp26894432-bb"></a><span class="identifier">execution_exception</span><span class="special">(</span><span class="identifier">error_code</span> ec<span class="special">,</span> <span class="identifier">const_string</span> what_msg<span class="special">,</span> 
+<pre class="literallayout"><a name="idp68945072-bb"></a><span class="identifier">execution_exception</span><span class="special">(</span><span class="identifier">error_code</span> ec<span class="special">,</span> <span class="identifier">const_string</span> what_msg<span class="special">,</span> 
                     <a class="link" href="execution_exception/location.html" title="Struct location">location</a> <span class="keyword">const</span> <span class="special">&amp;</span> location<span class="special">)</span><span class="special">;</span></pre>Constructs instance based on message, location and error code. <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">ec</code></span></p></td>
@@ -93,7 +100,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

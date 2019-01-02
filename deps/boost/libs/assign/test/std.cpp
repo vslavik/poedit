@@ -12,7 +12,7 @@
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
-#  pragma warn -8091 // supress warning in Boost.Test
+#  pragma warn -8091 // suppress warning in Boost.Test
 #  pragma warn -8057 // unused argument argc/argv in Boost.Test
 #endif
 
@@ -21,7 +21,19 @@
 #include <utility>
 #include <string>
 
-using namespace std;
+using std::deque;
+using std::list;
+using std::vector;
+using std::set;
+using std::multiset;
+using std::map;
+using std::multimap;
+using std::stack;
+using std::queue;
+using std::priority_queue;
+using std::string;
+using std::pair;
+using std::make_pair;
 using namespace boost::assign;  
     
 template< typename K, typename V >

@@ -122,12 +122,6 @@ void out_action
         out_putc( '\n' );
     }
 
-    /* If the process expired, make user aware with an explicit message, but do
-     * this only for non-quiet actions.
-     */
-    if ( exit_reason == EXIT_TIMEOUT && action )
-        out_printf( "%ld second time limit exceeded\n", globs.timeout );
-
     /* Print out the command output, if requested, or if the program failed, but
      * only output for non-quiet actions.
      */
@@ -140,9 +134,6 @@ void out_action
         if ( err_d && ( globs.pipe_action & 2 /* STDERR_FILENO */ ) )
             err_data( err_d );
     }
-
-    out_flush();
-    err_flush();
 }
 
 

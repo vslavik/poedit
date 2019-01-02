@@ -72,7 +72,7 @@ int main( int argc, char * argv[] )
 
     bool caught_exception = false;
     try { derived = polymorphic_cast<Derived*>( base ); }
-    catch (std::bad_cast)
+    catch (const std::bad_cast&)
         { cout<<"caught bad_cast\n"; caught_exception = true; }
     BOOST_TEST( caught_exception );
     //  the following is just so generated code can be inspected

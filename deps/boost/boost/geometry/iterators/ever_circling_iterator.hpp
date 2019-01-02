@@ -15,7 +15,6 @@
 #define BOOST_GEOMETRY_ITERATORS_EVER_CIRCLING_ITERATOR_HPP
 
 #include <boost/range.hpp>
-#include <boost/iterator.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_categories.hpp>
 
@@ -101,9 +100,22 @@ struct ever_circling_range_iterator
     <
         ever_circling_range_iterator<Range>,
         typename boost::range_value<Range>::type const,
-        boost::random_access_traversal_tag
+        boost::random_access_traversal_tag,
+        typename boost::range_reference<Range const>::type,
+        typename boost::range_difference<Range>::type
     >
 {
+private:
+    typedef boost::iterator_facade
+        <
+            ever_circling_range_iterator<Range>,
+            typename boost::range_value<Range>::type const,
+            boost::random_access_traversal_tag,
+            typename boost::range_reference<Range const>::type,
+            typename boost::range_difference<Range>::type
+        > base_type;
+
+public:
     /// Constructor including the range it is based on
     explicit inline ever_circling_range_iterator(Range& range)
         : m_range(&range)
@@ -119,12 +131,13 @@ struct ever_circling_range_iterator
         , m_index(0)
     {}
 
-    typedef std::ptrdiff_t difference_type;
+    typedef typename base_type::reference reference;
+    typedef typename base_type::difference_type difference_type;
 
 private:
     friend class boost::iterator_core_access;
 
-    inline typename boost::range_value<Range>::type const& dereference() const
+    inline reference dereference() const
     {
         return *m_iterator;
     }

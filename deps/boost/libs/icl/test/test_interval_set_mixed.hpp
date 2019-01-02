@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2009: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -8,14 +8,11 @@ Copyright (c) 2008-2009: Joachim Faulhaber
 #ifndef LIBS_ICL_TEST_TEST_INTERVAL_SET_MIXED_HPP_JOFA_090702
 #define LIBS_ICL_TEST_TEST_INTERVAL_SET_MIXED_HPP_JOFA_090702
 
-template <class T> 
+template <class T>
 void interval_set_mixed_ctor_4_ordered_types()
-{         
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
+{
     T v0 = boost::icl::identity_element<T>::value();
-    
+
     split_interval_set<T>    split_set(v0);
     separate_interval_set<T> sep_set(split_set);
     interval_set<T>          join_set(sep_set);
@@ -24,14 +21,11 @@ void interval_set_mixed_ctor_4_ordered_types()
     BOOST_CHECK_EQUAL( hull(split_set).lower(), hull(join_set).lower() );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_equal_4_ordered_types()
-{         
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
+{
     T v0 = boost::icl::identity_element<T>::value();
-    
+
     split_interval_set<T>    split_empty, split_single(v0);
     separate_interval_set<T> sep_empty, sep_single(v0);
     interval_set<T>          join_empty, join_single(v0);
@@ -91,12 +85,9 @@ void interval_set_mixed_equal_4_ordered_types()
 
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_assign_4_ordered_types()
-{         
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
+{
     T v0 = boost::icl::identity_element<T>::value();
     T v1 = unit_element<T>::value();
 
@@ -123,9 +114,9 @@ void interval_set_mixed_assign_4_ordered_types()
     BOOST_CHECK_EQUAL( join_self, join_self );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_ctor_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -156,9 +147,9 @@ void interval_set_mixed_ctor_4_bicremental_types()
     BOOST_CHECK_EQUAL( join_set2.iterative_size(), 1 );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_assign_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -194,9 +185,9 @@ void interval_set_mixed_assign_4_bicremental_types()
 }
 
 
-template <class T> 
+template <class T>
 void interval_set_mixed_equal_4_bicremental_types()
-{             
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -212,20 +203,20 @@ void interval_set_mixed_equal_4_bicremental_types()
 
     interval_set<T> join_set;
     join_set.add(I1_3D).add(I2_4D).add(I4_5D);
-    interval_set<T> join_set2 = join_set;    
+    interval_set<T> join_set2 = join_set;
     BOOST_CHECK_EQUAL( join_set, join_set2 );
     BOOST_CHECK_EQUAL( is_element_equal(join_set, join_set2), true );
 
     separate_interval_set<T> sep_set;
     sep_set.add(I1_3D).add(I2_4D).add(I4_5D);
 
-    separate_interval_set<T> sep_set2 = sep_set;    
+    separate_interval_set<T> sep_set2 = sep_set;
     BOOST_CHECK_EQUAL( sep_set, sep_set2 );
     BOOST_CHECK_EQUAL( is_element_equal(sep_set2, sep_set), true );
 
-    split_interval_set<T> split_set;    
+    split_interval_set<T> split_set;
     split_set.add(I1_3D).add(I2_4D).add(I4_5D);
-    split_interval_set<T> split_set2 = split_set;    
+    split_interval_set<T> split_set2 = split_set;
     BOOST_CHECK_EQUAL( split_set, split_set2 );
     BOOST_CHECK_EQUAL( is_element_equal(split_set2, split_set), true );
 
@@ -237,12 +228,9 @@ void interval_set_mixed_equal_4_bicremental_types()
     BOOST_CHECK_EQUAL( is_element_equal(sep_set,   split_set), true );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_contains_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     split_interval_set<T> split_set;
     split_set.add(I_D(0,4)).add(I_D(4,8));
     BOOST_CHECK_EQUAL( icl::contains(split_set, MK_v(4)), true );
@@ -254,12 +242,12 @@ void interval_set_mixed_contains_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( icl::contains(split_set, split_set), true );
     BOOST_CHECK_EQUAL( icl::contains(split_set, join_set_gap4), true );
-    
+
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_add_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -307,9 +295,9 @@ void interval_set_mixed_add_4_bicremental_types()
     BOOST_CHECK_EQUAL( join_set3.iterative_size(), 3 );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_subtract_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -418,9 +406,9 @@ void interval_set_mixed_subtract_4_bicremental_types()
 }
 
 
-template <class T> 
+template <class T>
 void interval_set_mixed_erase_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -528,9 +516,9 @@ void interval_set_mixed_erase_4_bicremental_types()
     BOOST_CHECK_EQUAL( is_element_equal(join_diff,  join_diff),   true );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_basic_intersect_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -558,7 +546,7 @@ void interval_set_mixed_basic_intersect_4_bicremental_types()
     //split_A      [0       3)       [6    9)
     //         &=      [1                8)
     //split_AB ->      [1   3)       [6  8)
-    //         &=        [2             7)     
+    //         &=        [2             7)
     //         ->        [2 3)       [6 7)
     split_interval_set<T>    split_A, split_B, split_AB, split_ab, split_ab2;
 
@@ -580,7 +568,7 @@ void interval_set_mixed_basic_intersect_4_bicremental_types()
     //split_A      [0       3)       [6    9)
     //         &=       1
     //split_AB ->      [1]
-    //         +=         (1             7)     
+    //         +=         (1             7)
     //         ->      [1](1             7)
     split_A.add(I0_3D).add(I6_9D);
     split_AB = split_A;
@@ -598,9 +586,9 @@ void interval_set_mixed_basic_intersect_4_bicremental_types()
     BOOST_CHECK_EQUAL( is_element_equal(split_AB, split_ab2), true );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_intersect_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
@@ -611,7 +599,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
     T v4 = make<T>(4);
     T v5 = make<T>(5);
     T v6 = make<T>(6);
-    
+
     T v8 = make<T>(8);
     T v9 = make<T>(9);
 
@@ -651,7 +639,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
     split_AB &= sep_B;
     BOOST_CHECK_EQUAL( split_AB.iterative_size(), 3 );
     BOOST_CHECK_EQUAL( split_AB, split_ab );
-    
+
     //split_A      [0          3)       [6   9)
     //join_B   &=      [1         4) [5    8)
     //split_AB ->      [1      3)       [6 8)
@@ -661,7 +649,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( split_AB.iterative_size(), 2 );
     BOOST_CHECK_EQUAL( split_AB, split_ab_jn );
-    
+
     //--------------------------------------------------------------------------
     // separate_interval_set
     //--------------------------------------------------------------------------
@@ -677,7 +665,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( sep_AB.iterative_size(), 3 );
     BOOST_CHECK_EQUAL( sep_AB, sep_ab );
-    
+
     //sep_A       [0          3)       [6   9)
     //split_B &=      [1 2)[2    4) [5    8)
     //sep_AB  ->      [1 2)[2 3)       [6 8)
@@ -686,7 +674,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( sep_AB.iterative_size(), 3 );
     BOOST_CHECK_EQUAL( sep_AB, sep_ab );
-    
+
     //sep_A       [0         3)        [6   9)
     //join_B &=      [1          4) [5    8)
     //sep_AB ->      [1      3)        [6 8)
@@ -713,7 +701,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( join_AB.iterative_size(), 2 );
     BOOST_CHECK_EQUAL( join_AB, join_ab );
-    
+
     //join_A      [0          3)       [6   9)
     //split_B  &=     [1 2)[2    4) [5    8)
     //join_AB  ->     [1      3)       [6 8)
@@ -722,7 +710,7 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( join_AB.iterative_size(), 2 );
     BOOST_CHECK_EQUAL( join_AB, join_ab );
-    
+
     //join_A      [0          3)       [6   9)
     //sep_B    &=     [1 2)[2    4) [5    8)
     //join_AB  ->     [1      3)       [6 8)
@@ -731,22 +719,22 @@ void interval_set_mixed_intersect_4_bicremental_types()
 
     BOOST_CHECK_EQUAL( join_AB.iterative_size(), 2 );
     BOOST_CHECK_EQUAL( join_AB, join_ab );
-    
+
 }
 
 
-template <class T> 
+template <class T>
 void interval_set_mixed_disjoint_4_bicremental_types()
-{         
+{
     typedef interval_set<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
 
-    T v0 = make<T>(0);    
+    T v0 = make<T>(0);
     T v2 = make<T>(2);
     T v3 = make<T>(3);
-    T v4 = make<T>(4);    
+    T v4 = make<T>(4);
     T v6 = make<T>(6);
-   
+
     IntervalT I0_2D = IntervalT::right_open(v0,v2);
     IntervalT I2_3D = IntervalT::right_open(v2,v3);
     IntervalT I3_4D = IntervalT::right_open(v3,v4);
@@ -778,12 +766,9 @@ void interval_set_mixed_disjoint_4_bicremental_types()
     BOOST_CHECK_EQUAL( disjoint(join_A,  join_B),  true );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_infix_plus_overload_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     interval_set<T>          join_a;
     separate_interval_set<T> sep_a;
     split_interval_set<T>    split_a;
@@ -799,9 +784,6 @@ void interval_set_mixed_infix_plus_overload_4_bicremental_types()
 
 template <class T> void interval_set_mixed_infix_pipe_overload_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     interval_set<T>          join_a;
     separate_interval_set<T> sep_a;
     split_interval_set<T>    split_a;
@@ -815,12 +797,9 @@ template <class T> void interval_set_mixed_infix_pipe_overload_4_bicremental_typ
     BOOST_CHECK_EQUAL(sep_a   | join_a, join_a | sep_a  );
 }
 
-template <class T> 
+template <class T>
 void interval_set_mixed_infix_minus_overload_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     interval_set<T>          join_a,  join_b;
     separate_interval_set<T> sep_a,   sep_b;
     split_interval_set<T>    split_a, split_b;
@@ -840,9 +819,6 @@ void interval_set_mixed_infix_minus_overload_4_bicremental_types()
 
 template <class T> void interval_set_mixed_infix_et_overload_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     interval_set<T>          join_a;
     separate_interval_set<T> sep_a;
     split_interval_set<T>    split_a;
@@ -858,9 +834,6 @@ template <class T> void interval_set_mixed_infix_et_overload_4_bicremental_types
 
 template <class T> void interval_set_mixed_infix_caret_overload_4_bicremental_types()
 {
-    typedef interval_set<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
-
     interval_set<T>          join_a;
     separate_interval_set<T> sep_a;
     split_interval_set<T>    split_a;

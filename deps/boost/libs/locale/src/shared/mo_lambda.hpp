@@ -8,7 +8,7 @@
 #ifndef BOOST_SRC_LOCALE_MO_LAMBDA_HPP_INCLUDED
 #define BOOST_SRC_LOCALE_MO_LAMBDA_HPP_INCLUDED
 
-#include <memory>
+#include <boost/shared_ptr.hpp>
 
 namespace boost {
     namespace locale {
@@ -24,7 +24,7 @@ namespace boost {
                     }
                 };
 
-                typedef std::auto_ptr<plural> plural_ptr;
+                typedef boost::shared_ptr<plural> plural_ptr;
 
                 plural_ptr compile(char const *c_expression);
 

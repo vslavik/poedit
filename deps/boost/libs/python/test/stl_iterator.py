@@ -6,7 +6,7 @@
 >>> x = list_int()
 >>> x.assign(iter([1,2,3,4,5]))
 >>> for y in x:
-...     print y
+...     print(y)
 1
 2
 3
@@ -15,12 +15,12 @@
 >>> def generator():
 ...   yield 1
 ...   yield 2
-...   raise RuntimeError, "oops"
+...   raise RuntimeError("oops")
 >>> try:
 ...   x.assign(iter(generator()))
-...   print "NOT OK"
+...   print("NOT OK")
 ... except RuntimeError:
-...   print "OK"
+...   print("OK")
 OK
 '''
 def run(args = None):
@@ -32,8 +32,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

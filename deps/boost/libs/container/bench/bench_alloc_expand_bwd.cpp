@@ -19,6 +19,7 @@
 #include <boost/container/vector.hpp>
 #include <memory>    //std::allocator
 #include <iostream>  //std::cout, std::endl
+#include <cassert>   //assert
 
 #include <boost/timer/timer.hpp>
 using boost::timer::cpu_timer;
@@ -170,21 +171,25 @@ void vector_test_template(unsigned int num_iterations, unsigned int num_elements
 
 int main(int argc, const char *argv[])
 {
-   #define SINGLE_TEST
-   #ifndef SINGLE_TEST
+   //#define SINGLE_TEST
+   #define SIMPLE_IT
+   #ifdef SINGLE_TEST
+      #ifdef NDEBUG
+      unsigned int numit [] = { 10 };
+      #else
+      unsigned int numit [] = { 10 };
+      #endif
+      unsigned int numele [] = { 10000 };
+   #elif defined(SIMPLE_IT)
+      unsigned int numit [] = { 3 };
+      unsigned int numele[] = { 10000 };
+   #else
       #ifdef NDEBUG
       unsigned int numit [] = { 2000, 20000, 200000, 2000000 };
       #else
       unsigned int numit [] = { 100, 1000, 10000, 100000 };
       #endif
       unsigned int numele [] = { 10000, 1000,   100,     10       };
-   #else
-      #ifdef NDEBUG
-      unsigned int numit [] = { 2000 };
-      #else
-      unsigned int numit [] = { 100 };
-      #endif
-      unsigned int numele [] = { 10000 };
    #endif
 
    bool csv_output = argc == 2 && (strcmp(argv[1], "--csv-output") == 0);

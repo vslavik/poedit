@@ -413,6 +413,11 @@ int main()
                 en_us_8bit = get_std_name("en_US.ISO8859-1");
                 he_il_8bit = get_std_name("he_IL.ISO8859-8");
                 ja_jp_shiftjis = get_std_name("ja_JP.SJIS");
+                if(!ja_jp_shiftjis.empty() && !test_std_supports_SJIS_codecvt(ja_jp_shiftjis))
+                {
+                    std::cout << "Warning: detected unproper support of " << ja_jp_shiftjis << " locale, disableling it" << std::endl;
+                    ja_jp_shiftjis = "";
+                }
             }
             else {
                 en_us_8bit = "en_US.ISO8859-1";

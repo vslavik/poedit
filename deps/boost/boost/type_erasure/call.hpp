@@ -42,11 +42,15 @@
 namespace boost {
 namespace type_erasure {
 
+#ifndef BOOST_TYPE_ERASURE_DOXYGEN
+
 template<class Concept, class Placeholder>
 class any;
 
 template<class Concept>
 class binding;
+
+#endif
 
 namespace detail {
 
@@ -293,6 +297,8 @@ namespace detail {
 template<class... T>
 void ignore(const T&...) {}
 
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
+
 template<class R, class... T, class... U>
 const ::boost::type_erasure::binding<
     typename ::boost::type_erasure::detail::extract_concept<void(T...), U...>::type>*
@@ -311,6 +317,29 @@ extract_table(R(*)(T...), const U&... arg)
     BOOST_ASSERT(result != 0);
     return result;
 }
+
+#else
+
+template<class R, class... T, class... U>
+const ::boost::type_erasure::binding<
+    ::boost::type_erasure::detail::extract_concept_t< ::boost::mp11::mp_list<T...>, ::boost::mp11::mp_list<U...> > >*
+extract_table(R(*)(T...), const U&... arg)
+{
+    const ::boost::type_erasure::binding<
+        ::boost::type_erasure::detail::extract_concept_t<
+            ::boost::mp11::mp_list<T...>, ::boost::mp11::mp_list<U...> > >* result = 0;
+
+    // the order that we run maybe_get_table in doesn't matter
+    ignore(::boost::type_erasure::detail::maybe_get_table(
+        arg,
+        result,
+        ::boost::type_erasure::detail::is_placeholder_arg<T>())...);
+
+    BOOST_ASSERT(result != 0);
+    return result;
+}
+
+#endif
 
 template<class Sig, class Args, class Concept, bool ReturnsAny>
 struct call_impl_dispatch;
@@ -354,6 +383,8 @@ struct call_impl<R(T...), void(U...), Concept, true> :
 {
 };
 
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
+
 template<class R, class... T, class... U>
 struct call_impl<R(T...), void(U...), void, true> :
     ::boost::type_erasure::detail::call_impl_dispatch<
@@ -367,6 +398,24 @@ struct call_impl<R(T...), void(U...), void, true> :
     >
 {
 };
+
+#else
+
+template<class R, class... T, class... U>
+struct call_impl<R(T...), void(U...), void, true> :
+    ::boost::type_erasure::detail::call_impl_dispatch<
+        R(T...),
+        void(U...),
+        ::boost::type_erasure::detail::extract_concept_t<
+            ::boost::mp11::mp_list<T...>,
+            ::boost::mp11::mp_list< ::boost::remove_reference_t<U>...>
+        >,
+        ::boost::type_erasure::detail::is_placeholder_arg<R>::value
+    >
+{
+};
+
+#endif
 
 }
 

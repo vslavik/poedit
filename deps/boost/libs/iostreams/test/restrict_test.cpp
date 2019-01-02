@@ -6,17 +6,17 @@
 // See http://www.boost.org/libs/iostreams for documentation.
 
 // Allow this file to be used by slice_test.hpp. It is important not to 
-// replace BOOST_RESTRICT with BOOST_IOSTREAMS_RESTRICT here, since that
+// replace BOOST_IOSTREAMS_RESTRICT with BOOST_IOSTREAMS_RESTRICT here, since that
 // would interfere with the oepration of the header 
 // <boost/iostreams/restrict.hpp>
 #include <iostream>
 
-#if defined(BOOST_RESTRICT_USE_SLICE)
+#if defined(BOOST_IOSTREAMS_RESTRICT_USE_SLICE)
 #  include <boost/iostreams/slice.hpp>
-#  define BOOST_RESTRICT slice
+#  define BOOST_IOSTREAMS_RESTRICT slice
 #else
 #  include <boost/iostreams/restrict.hpp>
-#  define BOOST_RESTRICT restrict
+#  define BOOST_IOSTREAMS_RESTRICT restrict
 #endif
 
 #include <algorithm>         // equal.
@@ -138,7 +138,7 @@ void read_device()
         stream_offset          off = small_padding,
                                len = data_reps * data_length();
         filtering_istream      first( 
-            BOOST_RESTRICT(file_source(src1.name(), in_mode), off, len));
+            BOOST_IOSTREAMS_RESTRICT(file_source(src1.name(), in_mode), off, len));
         ifstream               second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
             compare_streams_in_chunks(first, second),
@@ -152,7 +152,7 @@ void read_device()
         stream_offset          off = large_padding,
                                len = data_reps * data_length();
         filtering_istream      first(
-            BOOST_RESTRICT(file_source(src1.name(), in_mode), off, len));
+            BOOST_IOSTREAMS_RESTRICT(file_source(src1.name(), in_mode), off, len));
         ifstream               second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
             compare_streams_in_chunks(first, second),
@@ -165,7 +165,7 @@ void read_device()
         test_file              src2;
         stream_offset          off = small_padding;
         filtering_istream      first(
-            BOOST_RESTRICT(file_source(src1.name(), in_mode), off));
+            BOOST_IOSTREAMS_RESTRICT(file_source(src1.name(), in_mode), off));
         ifstream               second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
             compare_streams_in_chunks(first, second),
@@ -179,7 +179,7 @@ void read_device()
         test_file              src2;
         stream_offset          off = large_padding;
         filtering_istream      first(
-            BOOST_RESTRICT(file_source(src1.name(), in_mode), off));
+            BOOST_IOSTREAMS_RESTRICT(file_source(src1.name(), in_mode), off));
         ifstream               second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
             compare_streams_in_chunks(first, second),
@@ -197,7 +197,7 @@ void read_direct_device()
         array_source              array_src(&src[0], &src[0] + src.size());
         stream_offset             off = small_padding,
                                   len = data_reps * data_length();
-        filtering_istream         second(BOOST_RESTRICT(array_src, off, len));
+        filtering_istream         second(BOOST_IOSTREAMS_RESTRICT(array_src, off, len));
         BOOST_CHECK_MESSAGE(
             compare_container_and_stream(first, second),
             "failed reading from restriction<Direct>"
@@ -209,7 +209,7 @@ void read_direct_device()
         restricted_test_sequence  src(small_padding, true);
         array_source              array_src(&src[0], &src[0] + src.size());
         stream_offset             off = small_padding;
-        filtering_istream         second(BOOST_RESTRICT(array_src, off));
+        filtering_istream         second(BOOST_IOSTREAMS_RESTRICT(array_src, off));
         BOOST_CHECK_MESSAGE(
             compare_container_and_stream(first, second),
             "failed reading from half-open restriction<Direct>"
@@ -225,7 +225,7 @@ void read_filter()
         stream_offset          off = small_padding,
                                len = data_reps * data_length();
         filtering_istream      first;
-        first.push(BOOST_RESTRICT(toupper_filter(), off, len));
+        first.push(BOOST_IOSTREAMS_RESTRICT(toupper_filter(), off, len));
         first.push(file_source(src1.name(), in_mode));
         ifstream           second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
@@ -240,7 +240,7 @@ void read_filter()
         stream_offset          off = large_padding,
                                len = data_reps * data_length();
         filtering_istream      first;
-        first.push(BOOST_RESTRICT(toupper_filter(), off, len));
+        first.push(BOOST_IOSTREAMS_RESTRICT(toupper_filter(), off, len));
         first.push(file_source(src1.name(), in_mode));
         ifstream           second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
@@ -254,7 +254,7 @@ void read_filter()
         uppercase_file         src2;
         stream_offset          off = small_padding;
         filtering_istream      first;
-        first.push(BOOST_RESTRICT(toupper_filter(), off));
+        first.push(BOOST_IOSTREAMS_RESTRICT(toupper_filter(), off));
         first.push(file_source(src1.name(), in_mode));
         ifstream           second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
@@ -269,7 +269,7 @@ void read_filter()
         uppercase_file         src2;
         stream_offset          off = large_padding;
         filtering_istream      first;
-        first.push(BOOST_RESTRICT(toupper_filter(), off));
+        first.push(BOOST_IOSTREAMS_RESTRICT(toupper_filter(), off));
         first.push(file_source(src1.name(), in_mode));
         ifstream           second(src2.name().c_str(), in_mode);
         BOOST_CHECK_MESSAGE(
@@ -288,7 +288,7 @@ void write_device()
         stream_offset              off = small_padding,
                                    len = data_reps * data_length();
         filtering_ostream          out(
-            BOOST_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off, len));
+            BOOST_IOSTREAMS_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off, len));
         write_data_in_chunks(out);
         out.reset();
         ifstream                   first(dest1.name().c_str(), in_mode);
@@ -305,7 +305,7 @@ void write_device()
         stream_offset              off = large_padding,
                                    len = data_reps * data_length();
         filtering_ostream          out
-            (BOOST_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off, len));
+            (BOOST_IOSTREAMS_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off, len));
         write_data_in_chunks(out);
         out.reset();
         ifstream                   first(dest1.name().c_str(), in_mode);
@@ -321,7 +321,7 @@ void write_device()
         restricted_test_file       dest2(small_padding, true);
         stream_offset              off = small_padding;
         filtering_ostream          out
-            (BOOST_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off));
+            (BOOST_IOSTREAMS_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off));
         write_data_in_chunks(out);
         out.reset();
         ifstream                   first(dest1.name().c_str(), in_mode);
@@ -338,7 +338,7 @@ void write_device()
         restricted_test_file       dest2(large_padding, true);
         stream_offset              off = large_padding;
         filtering_ostream          out
-            (BOOST_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off));
+            (BOOST_IOSTREAMS_RESTRICT(file(dest1.name(), BOOST_IOS::binary), off));
         write_data_in_chunks(out);
         out.reset();
         ifstream                   first(dest1.name().c_str(), in_mode);
@@ -361,7 +361,7 @@ void write_direct_device()
         stream_offset             off = small_padding,
                                   len = data_reps * data_length();
         array_sink                array(&dest1[0], &dest1[0] + dest1.size());
-        filtering_ostream         out(BOOST_RESTRICT(array, off, len));
+        filtering_ostream         out(BOOST_IOSTREAMS_RESTRICT(array, off, len));
         write_data_in_chunks(out);
         out.reset();
         BOOST_CHECK_MESSAGE(
@@ -376,7 +376,7 @@ void write_direct_device()
         restricted_test_sequence  dest2(small_padding, true);
         stream_offset             off = small_padding;
         array_sink                array(&dest1[0], &dest1[0] + dest1.size());
-        filtering_ostream         out(BOOST_RESTRICT(array, off));
+        filtering_ostream         out(BOOST_IOSTREAMS_RESTRICT(array, off));
         write_data_in_chunks(out);
         out.reset();
         BOOST_CHECK_MESSAGE(
@@ -394,7 +394,7 @@ void write_filter()
         stream_offset              off = small_padding,
                                    len = data_reps * data_length();
         filtering_ostream          out;
-        out.push(BOOST_RESTRICT(tolower_seekable_filter(), off, len));
+        out.push(BOOST_IOSTREAMS_RESTRICT(tolower_seekable_filter(), off, len));
         out.push(file(dest1.name(), BOOST_IOS::binary));
         write_data_in_chunks(out);
         out.reset();
@@ -412,7 +412,7 @@ void write_filter()
         stream_offset              off = large_padding,
                                    len = data_reps * data_length();
         filtering_ostream          out;
-        out.push(BOOST_RESTRICT(tolower_seekable_filter(), off, len));
+        out.push(BOOST_IOSTREAMS_RESTRICT(tolower_seekable_filter(), off, len));
         out.push(file(dest1.name(), BOOST_IOS::binary));
         write_data_in_chunks(out);
         out.reset();
@@ -429,7 +429,7 @@ void write_filter()
         restricted_lowercase_file  dest2(small_padding, true);
         stream_offset              off = small_padding;
         filtering_ostream          out;
-        out.push(BOOST_RESTRICT(tolower_seekable_filter(), off));
+        out.push(BOOST_IOSTREAMS_RESTRICT(tolower_seekable_filter(), off));
         out.push(file(dest1.name(), BOOST_IOS::binary));
         write_data_in_chunks(out);
         out.reset();
@@ -446,7 +446,7 @@ void write_filter()
         restricted_lowercase_file  dest2(large_padding, true);
         stream_offset              off = large_padding;
         filtering_ostream          out;
-        out.push(BOOST_RESTRICT(tolower_seekable_filter(), off));
+        out.push(BOOST_IOSTREAMS_RESTRICT(tolower_seekable_filter(), off));
         out.push(file(dest1.name(), BOOST_IOS::binary));
         write_data_in_chunks(out);
         out.reset();
@@ -466,7 +466,7 @@ void seek_device()
         stream_offset              off = large_padding,
                                    len = data_reps * data_length();
         filtering_stream<seekable> io(
-            BOOST_RESTRICT(file(src.name(), BOOST_IOS::binary), off, len));
+            BOOST_IOSTREAMS_RESTRICT(file(src.name(), BOOST_IOS::binary), off, len));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chunks(io),
             "failed seeking within restriction<Device>"
@@ -477,7 +477,7 @@ void seek_device()
         restricted_test_file       src(large_padding, true);
         stream_offset              off = large_padding;
         filtering_stream<seekable> io(
-            BOOST_RESTRICT(file(src.name(), BOOST_IOS::binary), off));
+            BOOST_IOSTREAMS_RESTRICT(file(src.name(), BOOST_IOS::binary), off));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chunks(io),
             "failed seeking within half-open restriction<Device>"
@@ -493,7 +493,7 @@ void seek_direct_device()
         stream_offset              off = small_padding,
                                    len = data_reps * data_length();
         io::array                  ar(&src[0], &src[0] + src.size());
-        filtering_stream<seekable> io(BOOST_RESTRICT(ar, off, len));
+        filtering_stream<seekable> io(BOOST_IOSTREAMS_RESTRICT(ar, off, len));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chars(io),
             "failed seeking within restriction<Direct> with small padding"
@@ -505,7 +505,7 @@ void seek_direct_device()
             data_reps * data_length() + small_padding, '\n');
         stream_offset              off = small_padding;
         io::array                  ar(&src[0], &src[0] + src.size());
-        filtering_stream<seekable> io(BOOST_RESTRICT(ar, off));
+        filtering_stream<seekable> io(BOOST_IOSTREAMS_RESTRICT(ar, off));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chars(io),
             "failed seeking within half-open restriction<Direct> "
@@ -521,7 +521,7 @@ void seek_filter()
         stream_offset              off = large_padding,
                                    len = data_reps * data_length();
         filtering_stream<seekable> io;
-        io.push(BOOST_RESTRICT(identity_seekable_filter(), off, len));
+        io.push(BOOST_IOSTREAMS_RESTRICT(identity_seekable_filter(), off, len));
         io.push(file(src.name(), BOOST_IOS::binary));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chars(io),
@@ -533,7 +533,7 @@ void seek_filter()
         restricted_test_file       src(small_padding, true);
         stream_offset              off = large_padding;
         filtering_stream<seekable> io;
-        io.push(BOOST_RESTRICT(identity_seekable_filter(), off));
+        io.push(BOOST_IOSTREAMS_RESTRICT(identity_seekable_filter(), off));
         io.push(file(src.name(), BOOST_IOS::binary));
         BOOST_CHECK_MESSAGE(
             test_seekable_in_chars(io),
@@ -549,7 +549,7 @@ void close_device()
         operation_sequence  seq;
         chain<input>        ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_device<input>(seq.new_operation(1)), 
                 0
             )
@@ -563,7 +563,7 @@ void close_device()
         operation_sequence  seq;
         chain<seekable>     ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_device<seekable>(seq.new_operation(1)), 
                 0
             )
@@ -577,7 +577,7 @@ void close_device()
         operation_sequence  seq;
         chain<input>        ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_device<direct_input>(seq.new_operation(1)), 
                 0
             )
@@ -591,7 +591,7 @@ void close_device()
         operation_sequence  seq;
         chain<seekable>     ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_device<direct_seekable>(seq.new_operation(1)), 
                 0
             )
@@ -608,7 +608,7 @@ void close_filter()
         operation_sequence  seq;
         chain<input>        ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_filter<input>(seq.new_operation(2)), 
                 0
             )
@@ -623,7 +623,7 @@ void close_filter()
         operation_sequence  seq;
         chain<seekable>     ch;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_filter<seekable>(seq.new_operation(1)), 
                 0
             )
@@ -639,7 +639,7 @@ void close_filter()
         chain<input>        ch;
         operation           dummy;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_filter<dual_use>(
                     seq.new_operation(2),
                     dummy
@@ -658,7 +658,7 @@ void close_filter()
         chain<output>       ch;
         operation           dummy;
         ch.push(
-            io::BOOST_RESTRICT(
+            io::BOOST_IOSTREAMS_RESTRICT(
                 closable_filter<dual_use>(
                     dummy,
                     seq.new_operation(1)
@@ -675,7 +675,7 @@ void close_filter()
 test_suite* init_unit_test_suite(int, char* []) 
 {
     test_suite* test = 
-        BOOST_TEST_SUITE(BOOST_STRINGIZE(BOOST_RESTRICT) " test");
+        BOOST_TEST_SUITE(BOOST_STRINGIZE(BOOST_IOSTREAMS_RESTRICT) " test");
     test->add(BOOST_TEST_CASE(&read_device));
     test->add(BOOST_TEST_CASE(&read_direct_device));
     test->add(BOOST_TEST_CASE(&read_filter));

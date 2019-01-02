@@ -38,6 +38,24 @@ namespace boost
             int operator()(int x) const { return x / 2; }
         };
 
+        struct lambda_init
+        {
+        };
+
+        struct lambda
+        {
+            typedef int result_type;
+
+            lambda(const lambda_init& init) {}
+            lambda(const lambda& rhs) {}
+
+            int operator()(int x) const { return x + 1; }
+
+        private:
+            lambda() {}
+            lambda& operator=(const lambda& rhs) { return *this; }
+        };
+
         template< class Container, class TransformFn >
         void transformed_test_impl_core( Container& c, TransformFn fn )
         {
@@ -59,13 +77,29 @@ namespace boost
                                            test_result2.begin(), test_result2.end() );
         }
 
+        template< class Rng >
+        void check_copy_assign(Rng r)
+        {
+            Rng r2 = r;
+            r2 = r;
+        }
+
         template< class Container, class TransformFn >
+        void transformed_range_copy_assign(Container& c, TransformFn fn)
+        {
+            using namespace boost::adaptors;
+            check_copy_assign(c | transformed(fn));
+            check_copy_assign(adaptors::transform(c, fn));
+        }
+
+        template< class Container, class TransformFn, class TransformFnInit >
         void transformed_test_fn_impl()
         {
             using namespace boost::assign;
 
             Container c;
-            TransformFn fn;
+            TransformFnInit init;
+            TransformFn fn( init );
 
             // Test empty
             transformed_test_impl_core(c, fn);
@@ -77,13 +111,17 @@ namespace boost
             // Test many elements
             c += 1,1,1,2,2,2,2,2,3,4,5,6,7,8,9;
             transformed_test_impl_core(c, fn);
+
+            // test the range and iterator are copy assignable
+            transformed_range_copy_assign(c, fn);
         }
 
         template< class Container >
         void transformed_test_impl()
         {
-            transformed_test_fn_impl< Container, double_x >();
-            transformed_test_fn_impl< Container, halve_x >();
+            transformed_test_fn_impl< Container, double_x, double_x >();
+            transformed_test_fn_impl< Container, halve_x, halve_x >();
+            transformed_test_fn_impl< Container, lambda, lambda_init >();
         }
 
         void transformed_test()

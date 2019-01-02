@@ -30,6 +30,7 @@ BOOST_AUTO_TEST_CASE(shuffle_int_vector)
     vector.push_back(9, queue);
     vector.push_back(19, queue);
     vector.push_back(29, queue);
+    queue.finish();
 
     std::set<int> original_values;
     for(size_t i = 0; i < vector.size(); i++){

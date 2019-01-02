@@ -107,7 +107,7 @@ void path_get_temp_path_( string * buffer )
  *   NOTE: on VMS it's possible to have both a file and a dir of the same name
  *   appear in the same directory. In such case _directory_ intent is assumed.
  *
- *   It's preferrable to avoid such naming ambiguity in this context, so
+ *   It's preferable to avoid such naming ambiguity in this context, so
  *   append an empty .type to specify a no-type file (eg. "filename.")
  *
  */

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Why my application crashes on process termination when file sinks are used?</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../rationale.html" title="Rationale and FAQ">
 <link rel="prev" href="init_term_support.html" title="Does Boost.Log support logging at process initialization and termination?">
@@ -66,6 +66,13 @@
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
+<p>
+        Lastly, you can disable the final log file rotation in every file sink you
+        register in the logging core. For sinks added programmatically this can be
+        done by calling <code class="computeroutput"><span class="identifier">enable_final_rotation</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></code>
+        on the sink backend. If the sink is created from <a class="link" href="../detailed/utilities.html#log.detailed.utilities.setup.settings" title="Library initialization from a settings container">settings</a>,
+        you can do this by setting EnableFinalRotation parameter to "false".
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

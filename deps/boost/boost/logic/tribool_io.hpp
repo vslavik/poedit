@@ -45,7 +45,7 @@ template<>
 inline std::basic_string<char> default_false_name<char>()
 { return "false"; }
 
-#  ifndef BOOST_NO_WCHAR_T
+#  if !defined(BOOST_NO_CWCHAR)
 /**
  * \brief Returns the wide character string L"false".
  *
@@ -76,7 +76,7 @@ template<>
 inline std::basic_string<char> default_true_name<char>()
 { return "true"; }
 
-#  ifndef BOOST_NO_WCHAR_T
+#  if !defined(BOOST_NO_CWCHAR)
 /**
  * \brief Returns the wide character string L"true".
  *
@@ -104,7 +104,7 @@ template<>
 inline std::basic_string<char> get_default_indeterminate_name<char>()
 { return "indeterminate"; }
 
-#ifndef BOOST_NO_WCHAR_T
+#if !defined(BOOST_NO_CWCHAR)
 /// Returns the wide character string L"indeterminate".
 template<>
 inline std::basic_string<wchar_t> get_default_indeterminate_name<wchar_t>()

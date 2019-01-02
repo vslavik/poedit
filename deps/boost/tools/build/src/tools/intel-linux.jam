@@ -45,7 +45,7 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
                        
 # Initializes the intel-linux toolset
 #   version in mandatory
-#   name (default icpc) is used to invoke the specified intel-linux complier
+#   name (default icpc) is used to invoke the specified intel-linux compiler
 #   compile and link options allow you to specify addition command line options for each version
 rule init ( version ? :  command * : options * )
 {
@@ -96,8 +96,6 @@ rule init ( version ? :  command * : options * )
         : $(command) : $(default_path) ] ;
                 
     common.handle-options intel-linux : $(condition) : $(command) : $(options) ;
-
-    gcc.init-link-flags intel-linux gnu $(condition) ;
     
     local root = [ feature.get-values <root> : $(options) ] ;
     local bin ;
@@ -147,7 +145,7 @@ rule init ( version ? :  command * : options * )
             local lib_path = $(root)/lib $(root:P)/lib/$(bin:B) ;
             if $(.debug-configuration)
             {
-                ECHO notice: using intel libraries :: $(condition) :: $(lib_path) ;
+                ECHO notice\: using intel libraries "::" $(condition) "::" $(lib_path) ;
             }
             flags intel-linux.link RUN_PATH $(condition) : $(lib_path) ;
         }   
@@ -162,9 +160,6 @@ flags intel-linux.compile OPTIONS <warnings>all : -w2 ;
 
 rule compile.c++ ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;
     DEPENDS $(<) : [ on $(<) return $(PCH_FILE) ] ;
 }
 
@@ -175,9 +170,6 @@ actions compile.c++ bind PCH_FILE
 
 rule compile.c ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
     DEPENDS $(<) : [ on $(<) return $(PCH_FILE) ] ;
 }
 
@@ -188,9 +180,6 @@ actions compile.c bind PCH_FILE
 
 rule compile.c++.pch ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
 }
 #
 # Compiling a pch first deletes any existing *.pchi file, as Intel's compiler
@@ -209,9 +198,6 @@ actions compile.fortran
 
 rule compile.c.pch ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
 }
 
 actions compile.c.pch
@@ -221,8 +207,6 @@ actions compile.c.pch
 
 rule link ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
     SPACE on $(targets) = " " ;
     JAM_SEMAPHORE on $(targets) = <s>intel-linux-link-semaphore ;
 }
@@ -234,8 +218,6 @@ actions link bind LIBRARIES
 
 rule link.dll ( targets * : sources * : properties * )
 {
-    gcc.setup-threading $(targets) : $(sources) : $(properties) ;
-    gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
     SPACE on $(targets) = " " ;
     JAM_SEMAPHORE on $(targets) = <s>intel-linux-link-semaphore ;
 }

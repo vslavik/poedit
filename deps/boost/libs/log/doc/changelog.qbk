@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2016.
+              Copyright Andrey Semashev 2007 - 2018.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,71 @@
 /]
 
 [section:changelog Changelog]
+
+[heading 2.15, Boost 1.69]
+
+[*General changes:]
+
+* Updated syslog sink backend to avoid using deprecated __boost_asio__ interfaces. ([github_issue 59])
+
+[*Bug fixes:]
+
+* Fixed a problem that could cause incorrect estimate of the total size of rotated files in the target storage if the [link log.detailed.sink_backends.text_file text file sink backend] was writing directly into the target storage directory and the log file name matched one of the old files in the storage, and that file was picked as the old log file by `file_collector::scan_for_files`. Note that this configuration is still not fully supported and may result in premature file deletion if multiple sinks write files directly into the common target storage directory. It is recommended to configure sinks to write log files into directories different from the target storage directory.
+
+[heading 2.14, Boost 1.68]
+
+[*General changes:]
+
+* Improved support for VxWorks. ([pull_request 39])
+
+[heading 2.13, Boost 1.67]
+
+[*General changes:]
+
+* Updated library to use `std::allocator_traits` where possible to work with allocators. This should improve compatibility with C++ post C++17.
+* Added documentation for the "Append" [link log.detailed.utilities.setup.settings config file] parameter for "TextFile" sinks. The parameter was supported previously, only the documentation was missing.
+
+[heading 2.12, Boost 1.66]
+
+[*Bug fixes:]
+
+* Fixed a bug in `file_collector::scan_for_files` that caused zero file counter to be returned if the target directory contained a file with the maximum counter value in the name. This used to cause incorrectly named log files in the target directory after the user's application restart.
+
+[heading 2.11, Boost 1.65]
+
+[*General changes:]
+
+* Updated library build scripts to unify system macros configuration for different platforms. In particular, this should improve compatibility with Solaris.
+
+[heading 2.10, Boost 1.63]
+
+[*General changes:]
+
+* Removed the previously deprecated `type_info_wrapper`. As previously suggested, __boost_type_index__ is recommended as a replacement.
+
+[*New features:]
+
+* Added a way to access the current file name from the [link log.detailed.sink_backends.text_file text file sink backend]. The file name can be obtained with the `get_current_file_name` method.
+* Added a way to disable log file rotation on [link log.detailed.sink_backends.text_file text file sink backend] destruction, which typically happens on program termination. This can be done via `enable_final_rotation` backend constructor parameter or similarly named method, or with the `EnableFinalRotation` parameter in the settings.
+
+[*Bug fixes:]
+
+* Fixed compilation errors for Android API prior to version 21.
+* Streaming operators now take scalar types and enums by value. This allows to output static constants and bitfields directly into formatting stream and record stream. ([ticket 11998])
+* Fixed auto-detection of native syslog API. ([ticket 12600])
+* In UDP socket based syslog backend implementation, changed the syslog message format for better compliance with RFC3164.
+* File close handler installed in [link log.detailed.sink_backends.text_file text file sink backend] is no longer called if the file is not open yet.
+
+[heading 2.9, Boost 1.62]
+
+[*New features:]
+
+* Added new tools for inter-process logging on a local machine. The implementation includes a [link log.detailed.utilities.ipc.object_name resource name wrapper], an [link log.detailed.utilities.ipc.reliable_message_queue inter-process message queue] and a [link log.detailed.sink_backends.text_ipc_message_queue sink backend]. The new functionality is optional and can be disabled by defining [link log.installation.config `BOOST_LOG_WITHOUT_IPC`] macro at library build time. Thanks to Lingxi Li for the initial patch.
+* Added a new character decorator called [link log.detailed.expressions.formatters.decorators.max_size `max_size_decor`]. The new decorator allows to limit the output of its adopted formatter up to the specified length. This can be useful with the new inter-process sink backend.
+
+[*Bug fixes:]
+
+* Fixed that logging streams could retain formatting settings across different log records. ([ticket 12178])
 
 [heading 2.8, Boost 1.61]
 
@@ -76,8 +141,8 @@
 
 [*Bug fixes:]
 
-* [link log.detailed.expressions.formatters.decorators XML character decorator] now escapes quote (\") characters.
-* The exceptions thrown by asynchronous sinks created as a result of [link log.detailed.utilities.setup.settings initialization from settings] are now silently suppressed instead of terminating the application. If special error handling is needed, it is recommended to [link log.extension.settings.adding_support_for_user_defined_sinks register a user-defined sink factory]. ([ticket 10638])
+* [link log.detailed.expressions.formatters.decorators.xml XML character decorator] now escapes quote (\") characters.
+* The exceptions thrown by asynchronous sinks created as a result of [link log.detailed.utilities.setup.settings initialization from settings] are now silently suppressed instead of terminating the application. If special error handling is needed, it is recommended to [link log.extension.settings.sinks register a user-defined sink factory]. ([ticket 10638])
 * Corrected syslog message composition on MSVC, if message length exceeds 1025 bytes. ([ticket 10700])
 
 [heading 2.3, Boost 1.56]

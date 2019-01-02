@@ -17,7 +17,7 @@
 # PTW32_INCLUDE and PTW32_LIB respectively. You can specify these
 # paths in site-config.jam, user-config.jam or in the environment.
 # A new feature is provided to request a specific API:
-# <threadapi>win32 and <threadapi)pthread.
+# <threadapi>win32 and <threadapi>pthread.
 #
 # The naming of the resulting libraries is mostly the same for the
 # variant native to the build platform, i.e.
@@ -33,10 +33,12 @@
 #########################################################################
 
 import os ;
-import feature ;
 import indirect ;
 import path ;
 import configure ; 
+import threadapi-feature ;
+
+exe has_atomic_flag_lockfree : ../build/has_atomic_flag_lockfree_test.cpp ;
 
 project boost/thread
     : source-location ../src
@@ -126,6 +128,8 @@ project boost/thread
         <toolset>msvc:<cxxflags>/wd4512
         <toolset>msvc:<cxxflags>/wd6246
 
+        <target-os>windows:<define>WIN32_LEAN_AND_MEAN
+        <target-os>windows:<define>BOOST_USE_WINDOWS_H
 
     # : default-build <threading>multi
     : usage-requirements  # pass these requirement to dependents (i.e. users)
@@ -139,18 +143,6 @@ project boost/thread
       <library>/boost/system//boost_system
     ;
 
-local rule default_threadapi ( )
-{
-    local api = pthread ;
-    if [ os.name ] = "NT" { api = win32 ; }
-    return $(api) ;
-}
-
-feature.feature threadapi : pthread win32 : propagated ;
-feature.set-default threadapi : [ default_threadapi ] ;
-
-exe has_atomic_flag_lockfree : ../build/has_atomic_flag_lockfree_test.cpp ; 
-
 rule tag ( name : type ? : property-set )
 {
     local result = $(name) ;
@@ -160,7 +152,7 @@ rule tag ( name : type ? : property-set )
         local api = [ $(property-set).get <threadapi> ] ;
 
         # non native api gets additional tag
-        if $(api) != [ default_threadapi ] {
+        if $(api) != [ threadapi-feature.get-default $(property-set) ] {
             result = $(result)_$(api) ;
         }
     }
@@ -246,6 +238,10 @@ rule usage-requirements ( properties * )
             # in that case?
         }
     }
+    if <threadapi>win32 in $(properties)
+    {
+        result += <define>BOOST_THREAD_WIN32 ;
+    }
 
     #if ! <toolset>vacpp in $(properties) || <toolset-vacpp:version>11.1 in $(properties) || <toolset-vacpp:version>12.1.0.1 in $(properties)  || <toolset-vacpp:version>12.1 in $(properties)
     #{
@@ -280,6 +276,10 @@ rule requirements ( properties * )
            result += <library>/boost/atomic//boost_atomic ; 
         } 
     } else {
+        if <threadapi>win32 in $(properties)
+        {
+            result += <define>BOOST_THREAD_WIN32 ;
+        }
         result += <define>BOOST_THREAD_USES_CHRONO ;
         result += <library>/boost/chrono//boost_chrono ;
     }
@@ -292,6 +292,7 @@ alias thread_sources
       win32/thread.cpp
       win32/tss_dll.cpp
       win32/tss_pe.cpp
+      win32/thread_primitives.cpp
       future.cpp
     : ## requirements ##
       <threadapi>win32
@@ -316,3 +317,5 @@ lib boost_thread
       <link>static:<define>BOOST_THREAD_USE_LIB=1
       <conditional>@usage-requirements
     ;
+
+boost-install boost_thread ;

@@ -18,10 +18,13 @@
 
 #include <boost/compute/algorithm/copy.hpp>
 #include <boost/compute/container/vector.hpp>
+#include <boost/compute/iterator/buffer_iterator.hpp>
 #include <boost/compute/iterator/strided_iterator.hpp>
 
 #include "check_macros.hpp"
 #include "context_setup.hpp"
+
+namespace bc = boost::compute;
 
 BOOST_AUTO_TEST_CASE(value_type)
 {
@@ -155,6 +158,37 @@ BOOST_AUTO_TEST_CASE(make_strided_iterator_end)
         queue
     );
     CHECK_RANGE_EQUAL(boost::compute::int_, 4, result, (2, 4, 6, 8));
+}
+
+BOOST_AUTO_TEST_CASE(iterator_tag)
+{
+    typedef bc::buffer_iterator<bc::float_> i_type;
+
+    BOOST_STATIC_ASSERT((
+        boost::is_same<
+            std::iterator_traits<
+                i_type
+            >::iterator_category,
+            std::iterator_traits<
+                bc::strided_iterator<i_type>
+            >::iterator_category
+        >::value
+    ));
+}
+
+BOOST_AUTO_TEST_CASE(std_distance)
+{
+    bc::vector<bc::float_> vec(
+        size_t(300),
+        bc::float_(1.1f),
+        queue
+    );
+
+    bc::strided_iterator<bc::buffer_iterator<bc::float_> > begin(vec.begin(), 1);
+    bc::strided_iterator<bc::buffer_iterator<bc::float_> > end(vec.end(), 1);
+
+    BOOST_CHECK_EQUAL(std::distance(begin, end),  300);
+    BOOST_CHECK_EQUAL(std::distance(end, begin), -300);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

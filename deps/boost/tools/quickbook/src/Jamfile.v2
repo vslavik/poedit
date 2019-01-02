@@ -8,15 +8,6 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-project quickbook
-    : requirements
-        <toolset>gcc:<c++-template-depth>300
-        <toolset>darwin:<c++-template-depth>300
-        <toolset>gcc:<cflags>-g0
-        <toolset>darwin:<cflags>-g0
-        <toolset>msvc:<cflags>/wd4709
-    ;
-
 lib shell32 ;
 
 exe quickbook
@@ -29,13 +20,20 @@ exe quickbook
     utils.cpp
     files.cpp
     native_text.cpp
+    stream.cpp
     glob.cpp
+    path.cpp
     include_paths.cpp
     values.cpp
     document_state.cpp
     id_generation.cpp
     id_xml.cpp
     post_process.cpp
+    bb2html.cpp
+    boostbook_chunker.cpp
+    xml_parse.cpp
+    html_printer.cpp
+    tree.cpp
     collector.cpp
     template_stack.cpp
     code_snippet.cpp

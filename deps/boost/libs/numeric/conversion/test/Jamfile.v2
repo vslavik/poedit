@@ -11,22 +11,32 @@
 project numeric_conversion_unit_tests
     :
     requirements
-       <include>.
-       <toolset>gcc:<cxxflags>"-ftemplate-depth-300 -g0"
-       <toolset>darwin:<cxxflags>"-ftemplate-depth-300 -g0"       
+        <include>.
+        <toolset>gcc:<cxxflags>"-ftemplate-depth-300 -g0"
+        <toolset>darwin:<cxxflags>"-ftemplate-depth-300 -g0"
     ;
 
-  test-suite numeric/conversion :
-     [ run bounds_test.cpp ]
-     [ run traits_test.cpp ]
-     [ run converter_test.cpp ]
-     [ run udt_support_test.cpp ]
-     [ run numeric_cast_test.cpp ]
-     [ run udt_example_0.cpp ]
-     [ run numeric_cast_traits_test.cpp ]
-  ;
+test-suite minimal 
+    :
+        [ run bounds_test.cpp ]
+        [ run traits_test.cpp ]
+        [ run converter_test.cpp ]
+        [ run udt_support_test.cpp ]
+        [ run numeric_cast_test.cpp ]
+        [ run udt_example_0.cpp ]
+        [ run numeric_cast_traits_test.cpp ]
+    ;
 
-  test-suite "compile_fail_test" :
-     [ compile-fail compile_fail/built_in_numeric_cast_traits.cpp ]
-  ;
+test-suite full 
+    :
+        minimal
+        [ compile-fail compile_fail/built_in_numeric_cast_traits.cpp ] 
+    ;
 
+test-suite extra ;
+
+explicit minimal ;
+explicit extra ;
+
+# support the old test target
+test-suite numeric/conversion : full ;

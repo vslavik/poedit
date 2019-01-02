@@ -16,6 +16,7 @@
 #include "parser/tree/node.hpp"
 #include "parser/parser.hpp"
 #include "containers/ptr_list.hpp"
+#include <boost/move/unique_ptr.hpp>
 #include "rules.hpp"
 #include "state_machine.hpp"
 
@@ -116,10 +117,10 @@ public:
 protected:
     typedef detail::basic_charset<CharT> charset;
     typedef detail::ptr_list<charset> charset_list;
-    typedef std::auto_ptr<charset> charset_ptr;
+    typedef boost::movelib::unique_ptr<charset> charset_ptr;
     typedef detail::equivset equivset;
     typedef detail::ptr_list<equivset> equivset_list;
-    typedef std::auto_ptr<equivset> equivset_ptr;
+    typedef boost::movelib::unique_ptr<equivset> equivset_ptr;
     typedef typename charset::index_set index_set;
     typedef std::vector<index_set> index_set_vector;
     typedef detail::basic_parser<CharT> parser;
@@ -377,8 +378,8 @@ protected:
         if (followpos_->empty ()) return npos;
 
         std::size_t index_ = 0;
-        std::auto_ptr<node_set> set_ptr_ (new node_set);
-        std::auto_ptr<node_vector> vector_ptr_ (new node_vector);
+        boost::movelib::unique_ptr<node_set> set_ptr_ (new node_set);
+        boost::movelib::unique_ptr<node_vector> vector_ptr_ (new node_vector);
 
         for (typename detail::node::node_vector::const_iterator iter_ =
             followpos_->begin (), end_ = followpos_->end ();
@@ -494,21 +495,13 @@ protected:
                         delete *l_iter_;
                         *l_iter_ = overlap_.release ();
 
-                        // VC++ 6 Hack:
-                        charset_ptr temp_overlap_ (new charset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.reset (new charset);
                         ++iter_;
                     }
                     else if (r_->empty ())
                     {
-                        delete r_.release ();
-                        r_ = overlap_;
-
-                        // VC++ 6 Hack:
-                        charset_ptr temp_overlap_ (new charset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.swap (r_);
+                        overlap_.reset (new charset);
                         break;
                     }
                     else
@@ -517,10 +510,7 @@ protected:
                             static_cast<charset *>(0));
                         *iter_ = overlap_.release ();
 
-                        // VC++ 6 Hack:
-                        charset_ptr temp_overlap_ (new charset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.reset(new charset);
                         ++iter_;
                         end_ = lhs_->end ();
                     }
@@ -642,21 +632,13 @@ protected:
                         delete *l_iter_;
                         *l_iter_ = overlap_.release ();
 
-                        // VC++ 6 Hack:
-                        equivset_ptr temp_overlap_ (new equivset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.reset (new equivset);
                         ++iter_;
                     }
                     else if (r_->empty ())
                     {
-                        delete r_.release ();
-                        r_ = overlap_;
-
-                        // VC++ 6 Hack:
-                        equivset_ptr temp_overlap_ (new equivset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.swap (r_);
+                        overlap_.reset (new equivset);
                         break;
                     }
                     else
@@ -665,10 +647,7 @@ protected:
                             static_cast<equivset *>(0));
                         *iter_ = overlap_.release ();
 
-                        // VC++ 6 Hack:
-                        equivset_ptr temp_overlap_ (new equivset);
-
-                        overlap_ = temp_overlap_;
+                        overlap_.reset (new equivset);
                         ++iter_;
                         end_ = lhs_->end ();
                     }

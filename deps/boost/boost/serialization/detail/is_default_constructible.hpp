@@ -18,31 +18,37 @@
 
 #include <boost/config.hpp>
 
-#if defined(_LIBCPP_VERSION) && (_LIBCPP_VERSION >= 1101) \
-|| ! defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
+#if ! defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
     #include <type_traits>
     namespace boost{
     namespace serialization {
     namespace detail {
 
     template<typename T>
-    struct is_default_constructible : std::is_default_constructible<T> {};
+    struct is_default_constructible : public std::is_default_constructible<T> {};
 
     } // detail
     } // serializaition
     } // boost
 #else
+    // we don't have standard library support for is_default_constructible
+    // so we fake it by using boost::has_trivial_construtor.  But this is not
+    // actually correct because it's possible that a default constructor
+    // to be non trivial. So when using this, make sure you're not using your
+    // own definition of of T() but are using the actual default one!
     #include <boost/type_traits/has_trivial_constructor.hpp>
     namespace boost{
     namespace serialization {
     namespace detail {
 
     template<typename T>
-    struct is_default_constructible : boost::has_trivial_constructor<T> {};
+    struct is_default_constructible : public boost::has_trivial_constructor<T> {};
 
     } // detail
     } // serializaition
     } // boost
+
 #endif
+
 
 #endif //  BOOST_SERIALIZATION_DETAIL_IS_DEFAULT_CONSTRUCTIBLE_HPP

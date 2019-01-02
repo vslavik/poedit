@@ -27,8 +27,13 @@ extern "C" {
 #endif
 
 #if !defined (SIGSTKSZ)
-# define SIGSTKSZ (8 * 1024)
+# define SIGSTKSZ (32768) // 32kb minimum allowable stack
 # define UDEF_SIGSTKSZ
+#endif
+
+#if !defined (MINSIGSTKSZ)
+# define MINSIGSTKSZ (131072) // 128kb recommended stack size
+# define UDEF_MINSIGSTKSZ
 #endif
 
 #ifdef BOOST_HAS_ABI_HEADERS
@@ -88,20 +93,12 @@ stack_traits::page_size() BOOST_NOEXCEPT_OR_NOTHROW {
 
 std::size_t
 stack_traits::default_size() BOOST_NOEXCEPT_OR_NOTHROW {
-    std::size_t size = 8 * minimum_size();
-    if ( is_unbounded() ) {
-        return size;
-    }
-
-    BOOST_ASSERT( maximum_size() >= minimum_size() );
-    return maximum_size() == size
-        ? size
-        : (std::min)( size, maximum_size() );
+    return 128 * 1024;
 }
 
 std::size_t
 stack_traits::minimum_size() BOOST_NOEXCEPT_OR_NOTHROW {
-    return SIGSTKSZ;
+    return MINSIGSTKSZ;
 }
 
 std::size_t
@@ -117,5 +114,9 @@ stack_traits::maximum_size() BOOST_NOEXCEPT_OR_NOTHROW {
 #endif
 
 #ifdef UDEF_SIGSTKSZ
-# undef SIGSTKSZ
+# undef SIGSTKSZ;
+#endif
+
+#ifdef UDEF_MINSIGSTKSZ
+# undef MINSIGSTKSZ
 #endif

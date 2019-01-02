@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_key</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../metafunctions.html" title="Metafunctions">
 <link rel="prev" href="value_at_c.html" title="value_at_c">
@@ -28,14 +28,14 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.has_key.h0"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.has_key.description"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.description">Description</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.has_key.description"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.description">Description</a>
           </h6>
 <p>
             Returns the result type of <a class="link" href="../functions/has_key.html" title="has_key"><code class="computeroutput"><span class="identifier">has_key</span></code></a>.
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.has_key.h1"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.has_key.synopsis"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.has_key.synopsis"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Seq</span><span class="special">,</span>
@@ -111,7 +111,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.sequence.intrinsic.metafunctions.has_key.h2"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.has_key.expression_semantics"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.has_key.expression_semantics"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">has_key</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">,</span> <span class="identifier">Key</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -128,14 +128,14 @@
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.has_key.h3"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.has_key.header"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.header">Header</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.has_key.header"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">intrinsic</span><span class="special">/</span><span class="identifier">has_key</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">has_key</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.has_key.h4"></a>
-            <span><a name="fusion.sequence.intrinsic.metafunctions.has_key.example"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.example">Example</a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.has_key.example"></a></span><a class="link" href="has_key.html#fusion.sequence.intrinsic.metafunctions.has_key.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../../../container/map.html" title="map"><code class="computeroutput"><span class="identifier">map</span></code></a><span class="special">&lt;</span><a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">pair</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;,</span> <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">pair</span></code></a><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;,</span> <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">pair</span></code></a><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">mymap</span><span class="special">;</span>
 <span class="identifier">BOOST_MPL_ASSERT</span><span class="special">((</span><a class="link" href="has_key.html" title="has_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">has_key</span></code></a><span class="special">&lt;</span><span class="identifier">mymap</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;));</span>

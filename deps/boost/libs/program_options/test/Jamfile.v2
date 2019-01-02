@@ -1,3 +1,4 @@
+import testing ;
 
 project
     : requirements 
@@ -33,8 +34,11 @@ test-suite program_options :
     [ po-test unrecognized_test.cpp ]
     [ po-test required_test.cpp : required_test.cfg ]
     [ po-test exception_txt_test.cpp ]
+    [ po-test optional_test.cpp ]
     [ run options_description_test.cpp : : : <rtti>off <define>BOOST_NO_RTTI <define>BOOST_NO_TYPEID : options_description_no_rtti_test ]
     ;
         
 exe test_convert : test_convert.cpp ;   
 
+# `quick` target (for CI)
+run quick.cpp : --path=initial ;

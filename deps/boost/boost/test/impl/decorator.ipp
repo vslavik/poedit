@@ -35,11 +35,15 @@ namespace unit_test {
 namespace decorator {
 
 // ************************************************************************** //
-// **************             decorator::collector             ************** //
+// **************             decorator::collector_t           ************** //
 // ************************************************************************** //
 
-collector&
-collector::operator*( base const& d )
+// singleton pattern
+BOOST_TEST_SINGLETON_CONS_IMPL(collector_t)
+
+
+collector_t&
+collector_t::operator*( base const& d )
 {
     m_tu_decorators.push_back( d.clone() );
 
@@ -49,7 +53,7 @@ collector::operator*( base const& d )
 //____________________________________________________________________________//
 
 void
-collector::store_in( test_unit& tu )
+collector_t::store_in( test_unit& tu )
 {
     tu.p_decorators.value.insert( tu.p_decorators.value.end(), m_tu_decorators.begin(), m_tu_decorators.end() );
 }
@@ -57,9 +61,17 @@ collector::store_in( test_unit& tu )
 //____________________________________________________________________________//
 
 void
-collector::reset()
+collector_t::reset()
 {
     m_tu_decorators.clear();
+}
+
+//____________________________________________________________________________//
+
+std::vector<base_ptr>
+collector_t::get_lazy_decorators() const
+{
+    return m_tu_decorators;
 }
 
 //____________________________________________________________________________//
@@ -68,10 +80,10 @@ collector::reset()
 // **************               decorator::base                ************** //
 // ************************************************************************** //
 
-collector&
+collector_t&
 base::operator*() const
 {
-    return collector::instance() * *this;
+    return collector_t::instance() * *this;
 }
 
 // ************************************************************************** //

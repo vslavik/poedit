@@ -30,7 +30,7 @@ static const std::string& path_delim()
 // Path to appdata folder.
 inline const std::string& appdata_path()
 {
-    #ifdef WIN32
+    #ifdef _WIN32
     static const std::string appdata = detail::getenv("APPDATA")
         + path_delim() + "boost_compute";
     #else

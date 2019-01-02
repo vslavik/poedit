@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class segmented_stack</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="up" href="../stack.html" title="Stack allocation">
 <link rel="prev" href="fixedsize.html" title="Class fixedsize_stack">
@@ -24,7 +24,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="coroutine2.stack.segmented"></a><a class="link" href="segmented.html" title="Class segmented_stack">Class <span class="emphasis"><em>segmented_stack</em></span></a>
+<a name="coroutine2.stack.segmented"></a><a name="segmented"></a><a class="link" href="segmented.html" title="Class segmented_stack">Class
+      <span class="emphasis"><em>segmented_stack</em></span></a>
 </h3></div></div></div>
 <p>
         <span class="bold"><strong>Boost.Coroutine2</strong></span> supports usage of a <span class="emphasis"><em>segmented_stack</em></span>,
@@ -41,12 +42,14 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           Segmented stacks are currently only supported by <span class="bold"><strong>gcc</strong></span>
-          from version <span class="bold"><strong>4.7</strong></span> and <span class="bold"><strong>clang</strong></span>
+          from version <span class="bold"><strong>4.7</strong></span> <span class="bold"><strong>clang</strong></span>
           from version <span class="bold"><strong>3.4</strong></span> onwards. In order to
-          use a <span class="emphasis"><em>segmented-stack</em></span> <span class="bold"><strong>Boost.Coroutine2</strong></span>
+          use a <span class="emphasis"><em>segmented-stack</em></span> <span class="bold"><strong>Boost.Context</strong></span>
           must be built with property <code class="computeroutput"><span class="identifier">segmented</span><span class="special">-</span><span class="identifier">stacks</span></code>,
-          e.g. <span class="bold"><strong>toolset=gcc segmented-stacks=on</strong></span> at
-          b2/bjam command line.
+          e.g. <span class="bold"><strong>toolset=gcc segmented-stacks=on</strong></span> and
+          applying <code class="computeroutput"><span class="identifier">BOOST_USE_SEGMENTED_STACKS</span></code>
+          and <code class="computeroutput"><span class="identifier">BOOST_USE_UCONTEXT</span></code>
+          at b2/bjam command line.
         </p></td></tr>
 </table></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">coroutine2</span><span class="special">/</span><span class="identifier">segmented_stack</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -61,11 +64,11 @@
 </pre>
 <h5>
 <a name="coroutine2.stack.segmented.h0"></a>
-        <span><a name="coroutine2.stack.segmented._code__phrase_role__identifier__stack_context__phrase___phrase_role__identifier__allocate__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="segmented.html#coroutine2.stack.segmented._code__phrase_role__identifier__stack_context__phrase___phrase_role__identifier__allocate__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="identifier">stack_context</span> <span class="identifier">allocate</span><span class="special">()</span></code></a>
+        <span class="phrase"><a name="coroutine2.stack.segmented._code__phrase_role__identifier__stack_context__phrase___phrase_role__identifier__allocate__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="segmented.html#coroutine2.stack.segmented._code__phrase_role__identifier__stack_context__phrase___phrase_role__identifier__allocate__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="identifier">stack_context</span> <span class="identifier">allocate</span><span class="special">()</span></code></a>
       </h5>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
               <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span>
@@ -84,12 +87,12 @@
 </div>
 <h5>
 <a name="coroutine2.stack.segmented.h1"></a>
-        <span><a name="coroutine2.stack.segmented._code__phrase_role__keyword__void__phrase___phrase_role__identifier__deallocate__phrase__phrase_role__special_____phrase___phrase_role__identifier__stack_context__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__sctx__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="segmented.html#coroutine2.stack.segmented._code__phrase_role__keyword__void__phrase___phrase_role__identifier__deallocate__phrase__phrase_role__special_____phrase___phrase_role__identifier__stack_context__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__sctx__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">deallocate</span><span class="special">(</span> <span class="identifier">stack_context</span>
+        <span class="phrase"><a name="coroutine2.stack.segmented._code__phrase_role__keyword__void__phrase___phrase_role__identifier__deallocate__phrase__phrase_role__special_____phrase___phrase_role__identifier__stack_context__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__sctx__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="segmented.html#coroutine2.stack.segmented._code__phrase_role__keyword__void__phrase___phrase_role__identifier__deallocate__phrase__phrase_role__special_____phrase___phrase_role__identifier__stack_context__phrase___phrase_role__special___amp___phrase___phrase_role__identifier__sctx__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">deallocate</span><span class="special">(</span> <span class="identifier">stack_context</span>
         <span class="special">&amp;</span> <span class="identifier">sctx</span><span class="special">)</span></code></a>
       </h5>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
               <code class="computeroutput"><span class="identifier">sctx</span><span class="special">.</span><span class="identifier">sp</span></code> is valid, <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span> <span class="special">&lt;=</span> <span class="identifier">sctx</span><span class="special">.</span><span class="identifier">size</span></code> and <code class="computeroutput"><span class="special">!</span>

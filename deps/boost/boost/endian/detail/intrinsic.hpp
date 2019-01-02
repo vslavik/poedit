@@ -46,7 +46,7 @@
 # define BOOST_ENDIAN_INTRINSIC_BYTE_SWAP_4(x) __builtin_bswap32(x)
 # define BOOST_ENDIAN_INTRINSIC_BYTE_SWAP_8(x) __builtin_bswap64(x)
 
-//  Linux systems provide the byteswap.h header, with 
+//  Linux systems provide the byteswap.h header, with
 #elif defined(__linux__)
 //  don't check for obsolete forms defined(linux) and defined(__linux) on the theory that
 //  compilers that predefine only these are so old that byteswap.h probably isn't present.

@@ -48,6 +48,7 @@ int max_digits10()
 
 BOOST_AUTO_TEST_CASE(test_numeric_limits_snips)
 {
+#if !(defined(CI_SUPPRESS_KNOWN_ISSUES) && defined(BOOST_MSVC) && (BOOST_MSVC == 1600))
   try
   {
 
@@ -318,6 +319,7 @@ with Boost.Test's macro `BOOST_CHECK_CLOSE_FRACTION`
 //] [/tolerance_1]
   }
 
+#if !(defined(CI_SUPPRESS_KNOWN_ISSUES) && defined(__GNUC__) && defined(_WIN32))
   {
 //[tolerance_2
 
@@ -351,6 +353,20 @@ so the default expression template parameter has been replaced by `et_off`.]
   BOOST_CHECK_CLOSE_FRACTION(expected, calculated, tolerance);
 
 //] [/tolerance_3]
+  }
+
+  {
+//[tolerance_4
+
+  using boost::multiprecision::cpp_bin_float_oct;
+
+  cpp_bin_float_oct tolerance =  3 * std::numeric_limits<cpp_bin_float_oct>::epsilon();
+  cpp_bin_float_oct expected = boost::math::constants::two_pi<cpp_bin_float_oct>();
+  cpp_bin_float_oct calculated = 2 * boost::math::constants::pi<cpp_bin_float_oct>();
+
+  BOOST_CHECK_CLOSE_FRACTION(expected, calculated, tolerance);
+
+//] [/tolerance_4]
   }
 
   {
@@ -445,6 +461,7 @@ Similarly we can do the same with NaN (except that we cannot use `assert`)
 //] [/facet_1]
   }
 
-
+#endif
+#endif
 } // BOOST_AUTO_TEST_CASE(test_numeric_limits_snips)
 

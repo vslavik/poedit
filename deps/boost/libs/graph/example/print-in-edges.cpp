@@ -102,7 +102,6 @@ main()
 
   graph_traits < graph_type >::vertex_iterator i, end;
   boost::tie(i, end) = vertices(g);
-  typedef property_map < graph_type, vertex_name_t >::type name_map_t;
   i = std::find_if(i, end, name_equals("libzigzag.a", get(vertex_name, g)));
   output_in_edges(std::cout, g, *i, get(vertex_name, g));
   assert(num_vertices(g) == 15);

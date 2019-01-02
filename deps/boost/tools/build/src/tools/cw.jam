@@ -3,6 +3,62 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.cw]]
+= Code Warrior
+
+The `cw` module support CodeWarrior compiler, originally produced by
+Metrowerks and presently developed by Freescale. Boost.Build supports
+only the versions of the compiler that target x86 processors. All such
+versions were released by Metrowerks before acquisition and are not sold
+any longer. The last version known to work is 9.4.
+
+The module is initialized using the following syntax:
+
+----
+using cw : [version] : [c++-compile-command] : [compiler options] ;
+----
+
+This statement may be repeated several times, if you want to configure
+several versions of the compiler.
+
+If the command is not specified, Boost.Build will search for a binary
+named `mwcc` in default installation paths and in PATH.
+
+The following options can be provided, using
+_`<option-name>option-value syntax`_:
+
+`cflags`::
+Specifies additional compiler flags that will be used when compiling C
+sources.
+
+`cxxflags`::
+Specifies additional compiler flags that will be used when compiling C++
+sources.
+
+`compileflags`::
+Specifies additional compiler flags that will be used when compiling both C
+and C++ sources.
+
+`linkflags`::
+Specifies additional command line options that will be passed to the linker.
+
+`setup`::
+  The command that sets up environment variables prior to invoking the
+  compiler. If not specified, `cwenv.bat` alongside the compiler binary
+  will be used.
+`compiler`::
+  The command that compiles C and C++ sources. If not specified, `mwcc`
+  will be used. The command will be invoked after the setup script was
+  executed and adjusted the PATH variable.
+`linker`::
+  The command that links executables and dynamic libraries. If not
+  specified, `mwld` will be used. The command will be invoked after the
+  setup script was executed and adjusted the PATH variable.
+
+|# # end::doc[]
+
 # based on the msvc.jam toolset
 
 import property ;
@@ -86,7 +142,7 @@ rule init ( version ? : command * : options * )
    flags cw.link .LD $(condition) : $(prefix)$(linker) ;
    flags cw.archive .LD $(condition) : $(prefix)$(linker) ;
 
-    if [ MATCH ^([89]\\.) : $(version) ]   
+    if [ MATCH "^([89]\\.)" : $(version) ]   
     {
         if [ os.name ] = NT
         {

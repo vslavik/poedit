@@ -91,6 +91,13 @@ void expected_results()
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
+      ".*Solaris.*",                 // platform
+      largest_type,                  // test type(s)
+      ".*",                          // test data group
+      ".*", 500, 200);               // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       ".*",                          // test data group

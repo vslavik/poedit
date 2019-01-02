@@ -207,7 +207,7 @@ struct tuple_element
     typedef nil_t& rtype;
     typedef nil_t const& crtype;
 
-    static nil_t    get(TupleT const& t)    { return nil_t(); }
+    static nil_t    get(TupleT const&)      { return nil_t(); }
 };
 
 //////////////////////////////////

@@ -18,8 +18,13 @@
 #include <iomanip>
 
 #if defined(_MSC_VER) && !defined(_DLL)
-#error "Mixing ICU with a static runtime doesn't work"
+//#error "Mixing ICU with a static runtime doesn't work"
 #endif
+
+void print_error(UErrorCode err, const char* func)
+{
+   std::cerr << "Error from function " << func << " with error: " << ::u_errorName(err) << std::endl;
+}
 
 int main()
 {
@@ -31,8 +36,17 @@ int main()
    UErrorCode err = U_ZERO_ERROR;
    UChar32 c = ::u_charFromName(U_UNICODE_CHAR_NAME, "GREEK SMALL LETTER ALPHA", &err);
    std::cout << (int)c << std::endl;
-   if(err > 0) return err;
+   if(err > 0)
+   {
+      print_error(err, "u_charFromName");
+      return err;
+   }
    U_NAMESPACE_QUALIFIER Locale l;
    boost::scoped_ptr<U_NAMESPACE_QUALIFIER Collator> p_col(U_NAMESPACE_QUALIFIER Collator::createInstance(l, err));
+   if(err > 0)
+   {
+      print_error(err, "Collator::createInstance");
+      return err;
+   }
    return err > 0 ? err : 0;
 }

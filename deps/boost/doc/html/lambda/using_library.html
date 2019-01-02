@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Using the library</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../lambda.html" title="Chapter&#160;17.&#160;Boost.Lambda">
+<link rel="up" href="../lambda.html" title="Chapter&#160;20.&#160;Boost.Lambda">
 <link rel="prev" href="s03.html" title="Introduction">
 <link rel="next" href="le_in_details.html" title="Lambda expressions in details">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="lambda.using_library"></a>Using the library</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="using_library.html#lambda.introductory_examples">Introductory Examples</a></span></dt>
 <dt><span class="section"><a href="using_library.html#lambda.parameter_and_return_types">Parameter and return types of lambda functors</a></span></dt>
 <dt><span class="section"><a href="using_library.html#lambda.actual_arguments_to_lambda_functors">About actual arguments to lambda functors</a></span></dt>
@@ -53,7 +53,7 @@ list&lt;int&gt; v(10);
 for_each(v.begin(), v.end(), _1 = 1);</pre>
 <p>
 
-	The expression <code class="literal">_1 = 1</code> creates a lambda functor which assigns the value <code class="literal">1</code> to every element in <code class="literal">v</code>.<sup>[<a name="idp247261088" href="#ftn.idp247261088" class="footnote">3</a>]</sup>
+	The expression <code class="literal">_1 = 1</code> creates a lambda functor which assigns the value <code class="literal">1</code> to every element in <code class="literal">v</code>.<a href="#ftn.id-1.3.21.6.3.2.7" class="footnote" name="id-1.3.21.6.3.2.7"><sup class="footnote">[7]</sup></a>
       </p>
 <p>
 	Next, we create a container of pointers and make them point to the elements in the first container <code class="literal">v</code>:
@@ -222,7 +222,7 @@ As said, this is the default behavior for which there are exceptions.
 The exact rules are as follows:
 
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p>
 
@@ -289,7 +289,7 @@ as non-const references.
 The exact rules are:
 
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem"><p>The left argument of compound assignment operators (<code class="literal">+=</code>, <code class="literal">*=</code>, etc.) are stored as references to non-const.</p></li>
 <li class="listitem"><p>If the left argument of <code class="literal">&lt;&lt;</code> or <code class="literal">&gt;&gt;</code>  operator is derived from an instantiation of <code class="literal">basic_ostream</code> or respectively from <code class="literal">basic_istream</code>, the argument is stored as a reference to non-const. 
 For all other types, the argument is stored as a copy.
@@ -309,8 +309,8 @@ This is to prevent pointer arithmetic making non-const arrays const.
 </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.idp247261088" href="#idp247261088" class="para">3</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.id-1.3.21.6.3.2.7" class="footnote"><p><a href="#id-1.3.21.6.3.2.7" class="para"><sup class="para">[7] </sup></a>
 Strictly taken, the C++ standard defines <code class="literal">for_each</code> as a <span class="emphasis"><em>non-modifying sequence operation</em></span>, and the function object passed to <code class="literal">for_each</code> should not modify its argument. 
 The requirements for the arguments of <code class="literal">for_each</code> are unnecessary strict, since as long as the iterators are <span class="emphasis"><em>mutable</em></span>, <code class="literal">for_each</code> accepts a function object that can have side-effects on their argument.
 Nevertheless, it is straightforward to provide another function template with the functionality of<code class="literal">std::for_each</code> but more fine-grained requirements for its arguments.

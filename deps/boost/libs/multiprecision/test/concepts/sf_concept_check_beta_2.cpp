@@ -16,6 +16,7 @@
 #  pragma warning(disable:4503) // decorated name length exceeded, name was truncated
 #endif
 
+#include <boost/container_hash/hash.hpp>
 #include <libs/math/test/compile_test/poison.hpp>
 
 #if !defined(TEST_MPF_50) && !defined(TEST_BACKEND) && !defined(TEST_MPZ) \
@@ -73,10 +74,6 @@ void test_extra(T)
    int i;
    boost::math::ibeta_inv(v1, v2, v3);
    boost::math::ibetac_inv(v1, v2, v3);
-   boost::math::ibeta_inva(v1, v2, v3);
-   boost::math::ibetac_inva(v1, v2, v3);
-   boost::math::ibeta_invb(v1, v2, v3);
-   boost::math::ibetac_invb(v1, v2, v3);
 }
 
 void foo()

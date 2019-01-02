@@ -16,6 +16,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/detail/sp_typeinfo.hpp>
+#include <boost/config.hpp>
 #include <atomic>
 #include <cstdint>
 
@@ -57,15 +58,15 @@ inline std::int_least32_t atomic_conditional_increment( std::atomic_int_least32_
     }    
 }
 
-class sp_counted_base
+class BOOST_SYMBOL_VISIBLE sp_counted_base
 {
 private:
 
     sp_counted_base( sp_counted_base const & );
     sp_counted_base & operator= ( sp_counted_base const & );
 
-    std::atomic_int_least32_t use_count_;	// #shared
-    std::atomic_int_least32_t weak_count_;	// #weak + (#shared != 0)
+    std::atomic_int_least32_t use_count_;   // #shared
+    std::atomic_int_least32_t weak_count_;  // #weak + (#shared != 0)
 
 public:
 
@@ -90,6 +91,7 @@ public:
     }
 
     virtual void * get_deleter( sp_typeinfo const & ti ) = 0;
+    virtual void * get_local_deleter( sp_typeinfo const & ti ) = 0;
     virtual void * get_untyped_deleter() = 0;
 
     void add_ref_copy()

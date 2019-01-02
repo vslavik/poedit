@@ -2,13 +2,13 @@
 // echo_server.cpp
 // ~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/spawn.hpp>
 #include <boost/asio/steady_timer.hpp>
@@ -23,8 +23,8 @@ class session : public std::enable_shared_from_this<session>
 public:
   explicit session(tcp::socket socket)
     : socket_(std::move(socket)),
-      timer_(socket_.get_io_service()),
-      strand_(socket_.get_io_service())
+      timer_(socket_.get_io_context()),
+      strand_(socket_.get_io_context())
   {
   }
 
@@ -67,7 +67,7 @@ public:
 private:
   tcp::socket socket_;
   boost::asio::steady_timer timer_;
-  boost::asio::io_service::strand strand_;
+  boost::asio::io_context::strand strand_;
 };
 
 int main(int argc, char* argv[])
@@ -80,24 +80,24 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    boost::asio::spawn(io_service,
+    boost::asio::spawn(io_context,
         [&](boost::asio::yield_context yield)
         {
-          tcp::acceptor acceptor(io_service,
+          tcp::acceptor acceptor(io_context,
             tcp::endpoint(tcp::v4(), std::atoi(argv[1])));
 
           for (;;)
           {
             boost::system::error_code ec;
-            tcp::socket socket(io_service);
+            tcp::socket socket(io_context);
             acceptor.async_accept(socket, yield[ec]);
             if (!ec) std::make_shared<session>(std::move(socket))->go();
           }
         });
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

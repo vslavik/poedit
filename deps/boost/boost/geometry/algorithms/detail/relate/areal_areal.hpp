@@ -2,8 +2,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013, 2014, 2015.
-// Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014, 2015, 2017.
+// Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -40,12 +40,21 @@ namespace detail { namespace relate {
 // Use the rtree in this case!
 
 // may be used to set EI and EB for an Areal geometry for which no turns were generated
-template <typename OtherAreal, typename Result, bool TransposeResult>
+template
+<
+    typename OtherAreal,
+    typename Result,
+    typename PointInArealStrategy,
+    bool TransposeResult
+>
 class no_turns_aa_pred
 {
 public:
-    no_turns_aa_pred(OtherAreal const& other_areal, Result & res)
+    no_turns_aa_pred(OtherAreal const& other_areal,
+                     Result & res,
+                     PointInArealStrategy const& point_in_areal_strategy)
         : m_result(res)
+        , m_point_in_areal_strategy(point_in_areal_strategy)
         , m_other_areal(other_areal)
         , m_flags(0)
     {
@@ -68,6 +77,8 @@ public:
     template <typename Areal>
     bool operator()(Areal const& areal)
     {
+        using detail::within::point_in_geometry;
+
         // if those flags are set nothing will change
         if ( m_flags == 3 )
         {
@@ -87,7 +98,9 @@ public:
         // check if the areal is inside the other_areal
         // TODO: This is O(N)
         // Run in a loop O(NM) - optimize!
-        int const pig = detail::within::point_in_geometry(pt, m_other_areal);
+        int const pig = point_in_geometry(pt,
+                                          m_other_areal,
+                                          m_point_in_areal_strategy);
         //BOOST_GEOMETRY_ASSERT( pig != 0 );
         
         // inside
@@ -119,7 +132,9 @@ public:
 
                 // TODO: O(N)
                 // Optimize!
-                int const hpig = detail::within::point_in_geometry(range::front(range_ref), m_other_areal);
+                int const hpig = point_in_geometry(range::front(range_ref),
+                                                   m_other_areal,
+                                                   m_point_in_areal_strategy);
 
                 // hole outside
                 if ( hpig < 0 )
@@ -155,7 +170,9 @@ public:
 
                 // TODO: O(N)
                 // Optimize!
-                int const hpig = detail::within::point_in_geometry(range::front(range_ref), m_other_areal);
+                int const hpig = point_in_geometry(range::front(range_ref),
+                                                   m_other_areal,
+                                                   m_point_in_areal_strategy);
 
                 // hole inside
                 if ( hpig > 0 )
@@ -174,6 +191,7 @@ public:
 
 private:
     Result & m_result;
+    PointInArealStrategy const& m_point_in_areal_strategy;
     OtherAreal const& m_other_areal;
     int m_flags;
 };
@@ -191,8 +209,10 @@ struct areal_areal
     typedef typename geometry::point_type<Geometry1>::type point1_type;
     typedef typename geometry::point_type<Geometry2>::type point2_type;
     
-    template <typename Result>
-    static inline void apply(Geometry1 const& geometry1, Geometry2 const& geometry2, Result & result)
+    template <typename Result, typename IntersectionStrategy>
+    static inline void apply(Geometry1 const& geometry1, Geometry2 const& geometry2,
+                             Result & result,
+                             IntersectionStrategy const& intersection_strategy)
     {
 // TODO: If Areal geometry may have infinite size, change the following line:
 
@@ -208,16 +228,31 @@ struct areal_areal
 
         interrupt_policy_areal_areal<Result> interrupt_policy(geometry1, geometry2, result);
 
-        turns::get_turns<Geometry1, Geometry2>::apply(turns, geometry1, geometry2, interrupt_policy);
+        turns::get_turns<Geometry1, Geometry2>::apply(turns, geometry1, geometry2, interrupt_policy, intersection_strategy);
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
 
-        no_turns_aa_pred<Geometry2, Result, false> pred1(geometry2, result);
+        typedef typename IntersectionStrategy::template point_in_geometry_strategy
+            <
+                Geometry1, Geometry2
+            >::type point_in_areal_strategy12_type;
+        point_in_areal_strategy12_type point_in_areal_strategy12
+            = intersection_strategy.template get_point_in_geometry_strategy<Geometry1, Geometry2>();
+        typedef typename IntersectionStrategy::template point_in_geometry_strategy
+            <
+                Geometry2, Geometry1
+            >::type point_in_areal_strategy21_type;
+        point_in_areal_strategy21_type point_in_areal_strategy21
+            = intersection_strategy.template get_point_in_geometry_strategy<Geometry2, Geometry1>();
+
+        no_turns_aa_pred<Geometry2, Result, point_in_areal_strategy12_type, false>
+            pred1(geometry2, result, point_in_areal_strategy12);
         for_each_disjoint_geometry_if<0, Geometry1>::apply(turns.begin(), turns.end(), geometry1, pred1);
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
 
-        no_turns_aa_pred<Geometry1, Result, true> pred2(geometry1, result);
+        no_turns_aa_pred<Geometry1, Result, point_in_areal_strategy21_type, true>
+            pred2(geometry1, result, point_in_areal_strategy21);
         for_each_disjoint_geometry_if<1, Geometry2>::apply(turns.begin(), turns.end(), geometry2, pred2);
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
@@ -256,7 +291,8 @@ struct areal_areal
             {
                 // analyse rings for which turns were not generated
                 // or only i/i or u/u was generated
-                uncertain_rings_analyser<0, Result, Geometry1, Geometry2> rings_analyser(result, geometry1, geometry2);
+                uncertain_rings_analyser<0, Result, Geometry1, Geometry2, point_in_areal_strategy12_type>
+                    rings_analyser(result, geometry1, geometry2, point_in_areal_strategy12);
                 analyse_uncertain_rings<0>::apply(rings_analyser, turns.begin(), turns.end());
 
                 if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
@@ -295,7 +331,8 @@ struct areal_areal
             {
                 // analyse rings for which turns were not generated
                 // or only i/i or u/u was generated
-                uncertain_rings_analyser<1, Result, Geometry2, Geometry1> rings_analyser(result, geometry2, geometry1);
+                uncertain_rings_analyser<1, Result, Geometry2, Geometry1, point_in_areal_strategy21_type>
+                    rings_analyser(result, geometry2, geometry1, point_in_areal_strategy21);
                 analyse_uncertain_rings<1>::apply(rings_analyser, turns.begin(), turns.end());
 
                 //if ( result.interrupt )
@@ -565,7 +602,14 @@ struct areal_areal
         analyser.apply(res);
     }
 
-    template <std::size_t OpId, typename Result, typename Geometry, typename OtherGeometry>
+    template
+    <
+        std::size_t OpId,
+        typename Result,
+        typename Geometry,
+        typename OtherGeometry,
+        typename PointInArealStrategy
+    >
     class uncertain_rings_analyser
     {
         static const bool transpose_result = OpId != 0;
@@ -574,10 +618,13 @@ struct areal_areal
     public:
         inline uncertain_rings_analyser(Result & result,
                                         Geometry const& geom,
-                                        OtherGeometry const& other_geom)
-            : geometry(geom), other_geometry(other_geom)
+                                        OtherGeometry const& other_geom,
+                                        PointInArealStrategy const& point_in_areal_strategy)
+            : geometry(geom)
+            , other_geometry(other_geom)
             , interrupt(result.interrupt) // just in case, could be false as well
             , m_result(result)
+            , m_point_in_areal_strategy(point_in_areal_strategy)
             , m_flags(0)
         {
             // check which relations must be analysed
@@ -624,7 +671,10 @@ struct areal_areal
 
             // TODO: optimize! e.g. use spatial index
             // O(N) - running it in a loop gives O(NM)
-            int const pig = detail::within::point_in_geometry(range::front(range_ref), other_geometry);
+            using detail::within::point_in_geometry;
+            int const pig = point_in_geometry(range::front(range_ref),
+                                              other_geometry,
+                                              m_point_in_areal_strategy);
 
             //BOOST_GEOMETRY_ASSERT(pig != 0);
             if ( pig > 0 )
@@ -713,6 +763,7 @@ struct areal_areal
 
     private:
         Result & m_result;
+        PointInArealStrategy const& m_point_in_areal_strategy;
         int m_flags;
     };
 

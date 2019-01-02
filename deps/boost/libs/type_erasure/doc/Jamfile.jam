@@ -32,12 +32,16 @@ doxygen reference
     <doxygen:param>"ALIASES= \\
         CopyConstructible=\"<a href=\\\"$(BOOST_ROOT)/doc/html/CopyConstructible.html\\\">CopyConstructible</a>\" \\
         Concept=\"@xmlonly<link linkend=\\\"boost_typeerasure.conceptdef\\\">Concept</link>@endxmlonly\" \\
+        BOOST_TYPE_ERASURE_MEMBER=\"@xmlonly<macroname alt=\\\"BOOST_TYPE_ERASURE_MEMBER\\\">BOOST_TYPE_ERASURE_MEMBER</macroname>@endxmlonly\" \\
+        BOOST_TYPE_ERASURE_FREE=\"@xmlonly<macroname alt=\\\"BOOST_TYPE_ERASURE_FREE\\\">BOOST_TYPE_ERASURE_FREE</macroname>@endxmlonly\" \\
         call=\"@xmlonly<functionname alt=\\\"boost::type_erasure::call\\\">call</functionname>@endxmlonly\" \\
         any_cast=\"@xmlonly<functionname alt=\\\"boost::type_erasure::any_cast\\\">any_cast</functionname>@endxmlonly\" \\
         typeid_of=\"@xmlonly<functionname alt=\\\"boost::type_erasure::typeid_of\\\">typeid_of</functionname>@endxmlonly\" \\
         binding_of=\"@xmlonly<functionname alt=\\\"boost::type_erasure::binding_of\\\">binding_of</functionname>@endxmlonly\" \\
         is_empty=\"@xmlonly<functionname alt=\\\"boost::type_erasure::is_empty\\\">is_empty</functionname>@endxmlonly\" \\
-        require_match=\"@xmlonly<functionname alt=\\\"boost::type_erasure::require_match\\\">require_match</functionname>@endxmlonly\" "
+        require_match=\"@xmlonly<functionname alt=\\\"boost::type_erasure::require_match\\\">require_match</functionname>@endxmlonly\" \\
+        register_binding=\"@xmlonly<functionname alt=\\\"boost::type_erasure::register_binding\\\">register_binding</functionname>@endxmlonly\" \\
+        dynamic_any_cast=\"@xmlonly<functionname alt=\\\"boost::type_erasure::dynamic_any_cast\\\">dynamic_any_cast</functionname>@endxmlonly\" "
     <doxygen:param>"PREDEFINED= \\
         \"BOOST_TYPE_ERASURE_DOXYGEN=1\" \\
         \"BOOST_TYPE_ERASURE_UNARY_INPLACE_OPERATOR(name, op)=template<class T = _self> struct name { static void apply(T&); };\" \\
@@ -63,3 +67,13 @@ boostbook standalone
     <dependency>reference
     <xsl:param>boost.root=../../../..
 ;
+
+###############################################################################
+alias boostdoc
+    : type_erasure
+    :
+    : <dependency>reference
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

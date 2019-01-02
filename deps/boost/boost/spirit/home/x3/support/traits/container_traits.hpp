@@ -14,7 +14,6 @@
 #include <boost/detail/iterator.hpp>
 #include <boost/fusion/include/deque.hpp>
 #include <boost/tti/has_type.hpp>
-#include <boost/tti/has_member_function.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <vector>
@@ -35,7 +34,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         BOOST_TTI_HAS_TYPE(size_type)
         BOOST_TTI_HAS_TYPE(reference)
         BOOST_TTI_HAS_TYPE(key_type)
-        BOOST_TTI_HAS_MEMBER_FUNCTION(reserve)
     }
 
     template <typename T>
@@ -49,9 +47,12 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     using is_associative = mpl::bool_<
         detail::has_type_key_type<T>::value>;
 
-    template <typename T>
-    using is_reservable = mpl::bool_<
-        detail::has_member_function_reserve<T, void, mpl::vector<size_t>>::value>;
+    template<typename T, typename Enable = void>
+    struct is_reservable : mpl::false_ {};
+
+    template<typename T>
+    struct is_reservable<T, decltype(std::declval<T&>().reserve(0))>
+      : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -159,7 +160,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
     private:
         template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, mpl::false_)
+        static void reserve(Container& /* c */, Iterator /* first */, Iterator /* last */, mpl::false_)
         {
             // Not all containers have "reserve"
         }
@@ -199,7 +200,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename Iterator>
-    inline bool append(unused_type, Iterator first, Iterator last)
+    inline bool append(unused_type, Iterator /* first */, Iterator /* last */)
     {
         return true;
     }

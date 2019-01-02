@@ -86,7 +86,7 @@ void test_all()
 
     test_wrong_wkt<bg::model::multi_linestring<bg::model::linestring<P> > >(
         "MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10)), (0 0, 1 1)",
-        "too much tokens at ','");
+        "too many tokens at ','");
 
     test_wrong_wkt<bg::model::multi_point<P> >(
         "MULTIPOINT((8 9), 10 11)",
@@ -99,7 +99,7 @@ void test_all()
         "expected ')' in 'multipoint((16 17), (18 19)'");
     test_wrong_wkt<bg::model::multi_point<P> >(
         "MULTIPOINT(16 17), (18 19)",
-        "too much tokens at ',' in 'multipoint(16 17), (18 19)'");
+        "too many tokens at ',' in 'multipoint(16 17), (18 19)'");
 
     test_order_closure<T>();
 }

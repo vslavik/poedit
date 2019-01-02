@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -36,8 +36,8 @@ namespace dispatch
 template <typename Point>
 struct is_valid<Point, point_tag>
 {
-    template <typename VisitPolicy>
-    static inline bool apply(Point const& point, VisitPolicy& visitor)
+    template <typename VisitPolicy, typename Strategy>
+    static inline bool apply(Point const& point, VisitPolicy& visitor, Strategy const&)
     {
         boost::ignore_unused(visitor);
         return ! detail::is_valid::has_invalid_coordinate
@@ -56,9 +56,10 @@ struct is_valid<Point, point_tag>
 template <typename MultiPoint, bool AllowEmptyMultiGeometries>
 struct is_valid<MultiPoint, multi_point_tag, AllowEmptyMultiGeometries>
 {
-    template <typename VisitPolicy>
+    template <typename VisitPolicy, typename Strategy>
     static inline bool apply(MultiPoint const& multipoint,
-                             VisitPolicy& visitor)
+                             VisitPolicy& visitor,
+                             Strategy const&)
     {
         boost::ignore_unused(multipoint, visitor);
 

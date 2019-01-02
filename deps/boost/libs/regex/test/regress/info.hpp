@@ -26,6 +26,48 @@
 #include <boost/thread/once.hpp>
 #include <boost/thread.hpp>
 #endif
+
+#ifdef GENERATE_CORPUS
+#include <boost/lexical_cast.hpp>
+#include <fstream>
+//
+// class de_fuzz_output
+// Generates de-fuzzing corpus files
+//
+template <class charT>
+class de_fuzz_output
+{
+public:
+   de_fuzz_output() {}
+   template <class U>
+   void add(const U&, const U&) {}
+};
+template<>
+class de_fuzz_output<char>
+{
+   std::set<std::pair<std::string, std::string> > data;
+public:
+   de_fuzz_output() {}
+   void add(const std::string& re, const std::string& text)
+   {
+      data.insert(std::make_pair(re, text));
+   }
+   ~de_fuzz_output() 
+   {
+      unsigned j = 0;
+      for(typename std::set<std::pair<std::string, std::string> >::const_iterator i = data.begin(); i != data.end(); ++i)
+      {
+         std::string filename = "corpus_" + boost::lexical_cast<std::string>(j);
+         std::fstream ofs(filename.c_str(), std::ios_base::out | std::ios_base::binary);
+         ofs.put(static_cast<char>(i->first.size() >> 8));
+         ofs.put(static_cast<char>(i->first.size() & 0xff));
+         ofs.write(i->first.c_str(), i->first.size());
+         ofs.write(i->second.c_str(), i->second.size());
+         ++j;
+      }
+   }
+};
+#endif
 //
 // class test info, 
 // store information about the test we are about to conduct:
@@ -98,6 +140,10 @@ public:
       dat.format_string = format_string;
       dat.result_string = result_string;
       dat.need_to_print = true;
+#ifdef GENERATE_CORPUS
+      static de_fuzz_output<charT> corpus;
+      corpus.add(ex, search_text);
+#endif
    }
    static void set_typename(const std::string& n)
    {

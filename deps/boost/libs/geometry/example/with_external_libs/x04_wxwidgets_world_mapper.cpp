@@ -72,9 +72,13 @@ namespace std
 
 template <>
 class back_insert_iterator<wxPointPointerPair>
-    : public std::iterator<std::output_iterator_tag, void, void, void, void>
 {
 public:
+    typedef std::output_iterator_tag iterator_category;
+    typedef void value_type;
+    typedef void difference_type;
+    typedef void pointer;
+    typedef void reference;
 
     typedef wxPointPointerPair container_type;
 

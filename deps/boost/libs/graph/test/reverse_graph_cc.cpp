@@ -25,6 +25,7 @@ int main(int,char*[])
     > AdjList;
     typedef reverse_graph<AdjList> Graph;
     BOOST_CONCEPT_ASSERT(( VertexListGraphConcept<Graph> ));
+    BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<Graph> ));
     typedef graph_traits<Graph>::vertex_descriptor Vertex;
     typedef graph_traits<Graph>::edge_descriptor Edge;
     BOOST_CONCEPT_ASSERT(( ReadablePropertyGraphConcept<Graph, Vertex, vertex_color_t> ));
@@ -43,6 +44,7 @@ int main(int,char*[])
     > AdjList;
     typedef reverse_graph<AdjList,AdjList&> Graph;
     BOOST_CONCEPT_ASSERT(( VertexListGraphConcept<Graph> ));
+    BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<Graph> ));
     typedef graph_traits<Graph>::vertex_descriptor Vertex;
     typedef graph_traits<Graph>::edge_descriptor Edge;
     BOOST_CONCEPT_ASSERT(( PropertyGraphConcept<Graph, Vertex, vertex_color_t> ));

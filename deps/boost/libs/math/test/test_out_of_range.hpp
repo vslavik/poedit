@@ -35,49 +35,54 @@ because these are specific to each distribution.
 #pragma warning(disable:4127)
 #endif
 
+//! \tparam Distro distribution class name, for example: @c students_t_distribution<RealType>.
+//! \tparam Infinite only true if support includes infinity (default false means do not allow infinity).
 template <class Distro>
-void check_support(const Distro& d)
-{ // Checks that
+void check_support(const Distro& d, bool Infinite = false)
+{ // Checks that support and function calls are within expected limits.
    typedef typename Distro::value_type value_type;
-   if((boost::math::isfinite)(range(d).first) && (range(d).first != -boost::math::tools::max_value<value_type>()))
-   { // If possible, check that a random variable value just less than the bottom of the supported range throws domain errors.
-      value_type m = (range(d).first == 0) ? -boost::math::tools::min_value<value_type>() : boost::math::float_prior(range(d).first);
-      BOOST_ASSERT(m != range(d).first);
-      BOOST_ASSERT(m < range(d).first);
-      BOOST_MATH_CHECK_THROW(pdf(d, m), std::domain_error);
-      BOOST_MATH_CHECK_THROW(cdf(d, m), std::domain_error);
-      BOOST_MATH_CHECK_THROW(cdf(complement(d, m)), std::domain_error);
-   }
-   if((boost::math::isfinite)(range(d).second) && (range(d).second != boost::math::tools::max_value<value_type>()))
-   { // If possible, check that a random variable value just more than the top of the supported range throws domain errors.
-      value_type m = (range(d).second == 0) ? boost::math::tools::min_value<value_type>() : boost::math::float_next(range(d).second);
-      BOOST_ASSERT(m != range(d).first);
-      BOOST_ASSERT(m > range(d).first);
-      BOOST_MATH_CHECK_THROW(pdf(d, m), std::domain_error);
-      BOOST_MATH_CHECK_THROW(cdf(d, m), std::domain_error);
-      BOOST_MATH_CHECK_THROW(cdf(complement(d, m)), std::domain_error);
-   }
-   if(std::numeric_limits<value_type>::has_infinity)
-   { // Infinity is available,
-      if((boost::math::isfinite)(range(d).second))
-      {  // and top of range doesn't include infinity,
-         // check that using infinity throws domain errors.
+   if (Infinite == false)
+   {
+     if ((boost::math::isfinite)(range(d).first) && (range(d).first != -boost::math::tools::max_value<value_type>()))
+     { // If possible, check that a random variable value just less than the bottom of the supported range throws domain errors.
+       value_type m = (range(d).first == 0) ? -boost::math::tools::min_value<value_type>() : boost::math::float_prior(range(d).first);
+       BOOST_ASSERT(m != range(d).first);
+       BOOST_ASSERT(m < range(d).first);
+       BOOST_MATH_CHECK_THROW(pdf(d, m), std::domain_error);
+       BOOST_MATH_CHECK_THROW(cdf(d, m), std::domain_error);
+       BOOST_MATH_CHECK_THROW(cdf(complement(d, m)), std::domain_error);
+     }
+     if ((boost::math::isfinite)(range(d).second) && (range(d).second != boost::math::tools::max_value<value_type>()))
+     { // If possible, check that a random variable value just more than the top of the supported range throws domain errors.
+       value_type m = (range(d).second == 0) ? boost::math::tools::min_value<value_type>() : boost::math::float_next(range(d).second);
+       BOOST_ASSERT(m != range(d).first);
+       BOOST_ASSERT(m > range(d).first);
+       BOOST_MATH_CHECK_THROW(pdf(d, m), std::domain_error);
+       BOOST_MATH_CHECK_THROW(cdf(d, m), std::domain_error);
+       BOOST_MATH_CHECK_THROW(cdf(complement(d, m)), std::domain_error);
+     }
+     if (std::numeric_limits<value_type>::has_infinity)
+     { // Infinity is available,
+       if ((boost::math::isfinite)(range(d).second))
+       {  // and top of range doesn't include infinity,
+          // check that using infinity throws domain errors.
          BOOST_MATH_CHECK_THROW(pdf(d, std::numeric_limits<value_type>::infinity()), std::domain_error);
          BOOST_MATH_CHECK_THROW(cdf(d, std::numeric_limits<value_type>::infinity()), std::domain_error);
          BOOST_MATH_CHECK_THROW(cdf(complement(d, std::numeric_limits<value_type>::infinity())), std::domain_error);
-      }
-      if((boost::math::isfinite)(range(d).first))
-      {  // and bottom of range doesn't include infinity,
-         // check that using infinity throws domain_error exception.
+       }
+       if ((boost::math::isfinite)(range(d).first))
+       {  // and bottom of range doesn't include infinity,
+          // check that using infinity throws domain_error exception.
          BOOST_MATH_CHECK_THROW(pdf(d, -std::numeric_limits<value_type>::infinity()), std::domain_error);
          BOOST_MATH_CHECK_THROW(cdf(d, -std::numeric_limits<value_type>::infinity()), std::domain_error);
          BOOST_MATH_CHECK_THROW(cdf(complement(d, -std::numeric_limits<value_type>::infinity())), std::domain_error);
-      }
-      // Check that using infinity with quantiles always throws domain_error exception.
-      BOOST_MATH_CHECK_THROW(quantile(d, std::numeric_limits<value_type>::infinity()), std::domain_error);
-      BOOST_MATH_CHECK_THROW(quantile(d, -std::numeric_limits<value_type>::infinity()), std::domain_error);
-      BOOST_MATH_CHECK_THROW(quantile(complement(d, std::numeric_limits<value_type>::infinity())), std::domain_error);
-      BOOST_MATH_CHECK_THROW(quantile(complement(d, -std::numeric_limits<value_type>::infinity())), std::domain_error);
+       }
+       // Check that using infinity with quantiles always throws domain_error exception.
+       BOOST_MATH_CHECK_THROW(quantile(d, std::numeric_limits<value_type>::infinity()), std::domain_error);
+       BOOST_MATH_CHECK_THROW(quantile(d, -std::numeric_limits<value_type>::infinity()), std::domain_error);
+       BOOST_MATH_CHECK_THROW(quantile(complement(d, std::numeric_limits<value_type>::infinity())), std::domain_error);
+       BOOST_MATH_CHECK_THROW(quantile(complement(d, -std::numeric_limits<value_type>::infinity())), std::domain_error);
+     }
    }
    if(std::numeric_limits<value_type>::has_quiet_NaN)
    { // NaN is available.

@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -71,8 +71,8 @@ struct has_valid_corners<Box, 0>
 template <typename Box>
 struct is_valid_box
 {
-    template <typename VisitPolicy>
-    static inline bool apply(Box const& box, VisitPolicy& visitor)
+    template <typename VisitPolicy, typename Strategy>
+    static inline bool apply(Box const& box, VisitPolicy& visitor, Strategy const&)
     {
         return
             ! has_invalid_coordinate<Box>::apply(box, visitor)

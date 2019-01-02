@@ -32,7 +32,7 @@ struct EvDoIt : sc::event< EvDoIt > {};
 struct A;
 struct TriggringEventTest : sc::state_machine<
   TriggringEventTest, A,
-  std::allocator< void >, sc::exception_translator<> >
+  std::allocator< sc::none >, sc::exception_translator<> >
 {
   void Transit(const EvGoToB &)
   {

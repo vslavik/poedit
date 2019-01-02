@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class rotation_at_time_point</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../../sinks.html#header.boost.log.sinks.text_file_backend_hpp" title="Header &lt;boost/log/sinks/text_file_backend.hpp&gt;">
 <link rel="prev" href="collector.html" title="Struct collector">
@@ -31,19 +31,19 @@
   <span class="keyword">typedef</span> <span class="keyword">bool</span> <a name="boost.log.sinks.file.rotation_at_time_point.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="rotation_at_time_point.html#boost.log.sinks.file.rotation_at_time_pointconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp22759072-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp22763792-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">weekdays</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
+  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp52053584-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp52058304-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">weekdays</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                   <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp22770512-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="identifier">gregorian</span><span class="special">::</span><span class="identifier">greg_day</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
+  <span class="keyword">explicit</span> <a class="link" href="rotation_at_time_point.html#idp52065024-bb"><span class="identifier">rotation_at_time_point</span></a><span class="special">(</span><span class="identifier">gregorian</span><span class="special">::</span><span class="identifier">greg_day</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                   <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="rotation_at_time_point.html#idp22756800-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="rotation_at_time_point.html#idp22757360-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="rotation_at_time_point.html#idp52051312-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a class="link" href="rotation_at_time_point.html#idp52051872-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp99779904"></a><h2>Description</h2>
+<a name="idp117324992"></a><h2>Description</h2>
 <p>The class represents the time point of log file rotation. One can specify one of three types of time point based rotation:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>rotation takes place every day, at the specified time </p></li>
 <li class="listitem"><p>rotation takes place on the specified day of every week, at the specified time </p></li>
 <li class="listitem"><p>rotation takes place on the specified day of every month, at the specified time</p></li>
@@ -51,23 +51,29 @@
 <p>
 The time points are considered to be local time. </p>
 <div class="refsect2">
-<a name="idp99783088"></a><h3>
+<a name="idp117328080"></a><h3>
 <a name="boost.log.sinks.file.rotation_at_time_pointconstruct-copy-destruct"></a><code class="computeroutput">rotation_at_time_point</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp22759072-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">char</span> hour<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> minute<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp52053584-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">char</span> hour<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> minute<span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> second<span class="special">)</span><span class="special">;</span></pre>
 <p>Creates a rotation time point of every day at the specified time</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">hour</code></span></p></td>
@@ -87,19 +93,25 @@ The time points are considered to be local time. </p>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp22763792-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">weekdays</span> wday<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp52058304-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">weekdays</span> wday<span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> hour <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> minute <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> second <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates a rotation time point of each specified weekday at the specified time</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">hour</code></span></p></td>
@@ -123,19 +135,25 @@ The time points are considered to be local time. </p>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp22770512-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="identifier">gregorian</span><span class="special">::</span><span class="identifier">greg_day</span> mday<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp52065024-bb"></a><span class="identifier">rotation_at_time_point</span><span class="special">(</span><span class="identifier">gregorian</span><span class="special">::</span><span class="identifier">greg_day</span> mday<span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> hour <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> minute <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                                 <span class="keyword">unsigned</span> <span class="keyword">char</span> second <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates a rotation time point of each specified day of month at the specified time</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">hour</code></span></p></td>
@@ -161,10 +179,10 @@ The time points are considered to be local time. </p>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp99847808"></a><h3>
-<a name="idp22756800-bb"></a><code class="computeroutput">rotation_at_time_point</code> public member functions</h3>
+<a name="idp117392784"></a><h3>
+<a name="idp52051312-bb"></a><code class="computeroutput">rotation_at_time_point</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp22757360-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp52051872-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Checks if it's time to rotate the file </p>
 </li></ol></div>
 </div>

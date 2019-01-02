@@ -26,8 +26,8 @@ typedef scaled_base_unit<boost::units::information::bit_base_unit, scale<1, stat
 
 template<>
 struct base_unit_info<information::shannon_base_unit> {
-    static const char* name()   { return("shannon"); }
-    static const char* symbol() { return("Sh"); }
+    static BOOST_CONSTEXPR const char* name()   { return("shannon"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("Sh"); }
 };
 
 } // namespace units

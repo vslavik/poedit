@@ -148,5 +148,11 @@ int test_main(int , char* [])
     std::string sort_result( print_range(vec.begin(), vec.end()) );
     BOOST_CHECK( sort_result == "3 5 goodbye hello " );
 
+    // https://svn.boost.org/trac/boost/ticket/11751
+    int a = 0, b = 0;
+
+    boost::variant< int& > v (a), u (b);
+    BOOST_CHECK(v == u);
+
     return boost::exit_success;
 }

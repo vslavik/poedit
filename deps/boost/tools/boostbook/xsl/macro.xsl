@@ -111,11 +111,18 @@
   </xsl:template>
 
   <xsl:template match="macro" mode="generate.id">
-    <xsl:value-of select="@name"/>
-    <xsl:if test="count(key('named-entities',
-        translate(@name, $uppercase-letters, $lowercase-letters)))!=1">
-      <xsl:text>_</xsl:text>
-      <xsl:value-of select="generate-id(.)"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="string-length(@name) &gt; $boost.max.id.part.length or
+          count(key('named-entities',
+            translate(@name, $uppercase-letters, $lowercase-letters)))!=1">
+        <xsl:variable name="raw.id"><xsl:call-template name="postfix.id"/></xsl:variable>
+        <xsl:value-of select="substring(@name, 1, $boost.max.id.part.length - string-length($raw.id) - 1)"/>
+        <xsl:text>_</xsl:text>
+        <xsl:value-of select="$raw.id"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="@name"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>

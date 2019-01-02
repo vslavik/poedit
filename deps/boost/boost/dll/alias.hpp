@@ -32,11 +32,11 @@ namespace boost { namespace dll {
 #define BOOST_DLL_FORCE_ALIAS_INSTANTIATION
 
 /// Define this macro to disable exporting weak symbols and start using the \forcedmacrolink{BOOST_DLL_FORCE_ALIAS_INSTANTIATION}.
-/// This may be usefull for working around linker problems or to test your program for compatability with linkers that do not support export of weak symbols.
+/// This may be useful for working around linker problems or to test your program for compatibility with linkers that do not support export of weak symbols.
 #define BOOST_DLL_FORCE_NO_WEAK_EXPORTS
 #endif
 
-#if BOOST_COMP_MSVC
+#if BOOST_COMP_MSVC || (BOOST_COMP_INTEL && BOOST_OS_WINDOWS)
 
 #define BOOST_DLL_SELECTANY __declspec(selectany)
 
@@ -124,7 +124,7 @@ namespace boost { namespace dll {
 /*!
 * \brief Makes an alias name for exported function or variable.
 *
-* This macro is useful in cases of long mangled C++ names. For example some `void boost::foo(std::sting)`
+* This macro is useful in cases of long mangled C++ names. For example some `void boost::foo(std::string)`
 * function name will change to something like `N5boostN3foosE` after mangling.
 * Importing function by `N5boostN3foosE` name does not looks user friendly, especially assuming the fact
 * that different compilers have different mangling schemes. AliasName is the name that won't be mangled
@@ -213,7 +213,7 @@ namespace boost { namespace dll {
 /*!
 * \brief Exports variable or function with unmangled alias name.
 *
-* This macro is useful in cases of long mangled C++ names. For example some `void boost::foo(std::sting)`
+* This macro is useful in cases of long mangled C++ names. For example some `void boost::foo(std::string)`
 * function name will change to something like `N5boostN3foosE` after mangling.
 * Importing function by `N5boostN3foosE` name does not looks user friendly, especially assuming the fact
 * that different compilers have different mangling schemes.*

@@ -4,6 +4,7 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -36,6 +37,14 @@ void test_2d(bool is_integer = false)
 #ifdef REPORT_RESULTS
     std::cout << std::endl << "type: " << typeid(ct).name() << " size: " << sizeof(ct) << std::endl;
 #endif
+
+    test_centroid<bg::model::multi_point<P> >(
+            "MULTIPOINT((1 1),(3 3))",
+            2.0, 2.0);
+
+    test_centroid<bg::model::multi_point<P> >(
+            "MULTIPOINT((-1 -1),(-3 -3))",
+            -2.0, -2.0);
 
     if (! is_integer)
     {

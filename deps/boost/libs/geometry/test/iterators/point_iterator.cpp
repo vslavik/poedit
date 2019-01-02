@@ -1,7 +1,9 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014-2016, Oracle and/or its affiliates.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -22,7 +24,6 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include <boost/assign/list_of.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/core/ignore_unused.hpp>
 #include <boost/iterator/iterator_concepts.hpp>
@@ -52,8 +53,14 @@
 #include <boost/geometry/iterators/point_iterator.hpp>
 #include <boost/geometry/iterators/point_reverse_iterator.hpp>
 
+#include <boost/geometry/strategies/strategies.hpp>
+
 #include <test_common/with_pointer.hpp>
 #include <test_geometries/copy_on_dereference_geometries.hpp>
+
+// At the end because of conflicts with Boost.QVM
+#include <boost/assign/list_of.hpp>
+
 
 namespace bg = ::boost::geometry;
 namespace ba = ::boost::assign;
@@ -339,6 +346,8 @@ struct test_point_iterator_of_geometry
         static inline void apply(Iterator first, Iterator last,
                                  G const& geometry)
         {
+            boost::ignore_unused(geometry);
+
             std::reverse(first, last);
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
             print_point_range(std::cout, first, last, "reversed:\n")

@@ -8,6 +8,7 @@
 #define BOOST_LOCALE_SOURCE
 #include <boost/locale/boundary.hpp>
 #include <boost/locale/generator.hpp>
+#include <boost/locale/hold_ptr.hpp>
 #include <unicode/uversion.h>
 #if U_ICU_VERSION_MAJOR_NUM*100 + U_ICU_VERSION_MINOR_NUM >= 306
 #include <unicode/utext.h>
@@ -103,10 +104,10 @@ index_type map_direct(boundary_type t,icu::BreakIterator *it,int reserve)
     return indx;
 }
 
-std::auto_ptr<icu::BreakIterator> get_iterator(boundary_type t,icu::Locale const &loc)
+icu::BreakIterator *get_iterator(boundary_type t,icu::Locale const &loc)
 {
     UErrorCode err=U_ZERO_ERROR;
-    std::auto_ptr<icu::BreakIterator> bi;
+    hold_ptr<icu::BreakIterator> bi;
     switch(t) {
     case character:
         bi.reset(icu::BreakIterator::createCharacterInstance(loc,err));
@@ -126,7 +127,7 @@ std::auto_ptr<icu::BreakIterator> get_iterator(boundary_type t,icu::Locale const
     check_and_throw_icu_error(err);
     if(!bi.get())
         throw std::runtime_error("Failed to create break iterator");
-    return bi;
+    return bi.release();
 }
 
 
@@ -134,7 +135,7 @@ template<typename CharType>
 index_type do_map(boundary_type t,CharType const *begin,CharType const *end,icu::Locale const &loc,std::string const &encoding)
 {
     index_type indx;
-    std::auto_ptr<icu::BreakIterator> bi(get_iterator(t,loc));
+    hold_ptr<icu::BreakIterator> bi(get_iterator(t,loc));
    
 #if U_ICU_VERSION_MAJOR_NUM*100 + U_ICU_VERSION_MINOR_NUM >= 306
     UErrorCode err=U_ZERO_ERROR;

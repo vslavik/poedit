@@ -4,13 +4,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.tt.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_type.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/add_cv.hpp>
 #endif
+#include "test.hpp"
+#include "check_type.hpp"
 
 BOOST_DECL_TRANSFORM_TEST(add_cv_test_1, ::tt::add_cv, const, const volatile)
 BOOST_DECL_TRANSFORM_TEST(add_cv_test_2, ::tt::add_cv, volatile, volatile const)

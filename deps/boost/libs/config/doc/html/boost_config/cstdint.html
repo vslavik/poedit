@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Standard Integer Types</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Config">
 <link rel="up" href="../index.html" title="Boost.Config">
 <link rel="prev" href="build_config.html" title="Build Time Configuration">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_config.cstdint"></a><a class="link" href="cstdint.html" title="Standard Integer Types">Standard Integer Types</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="cstdint.html#boost_config.cstdint.overview">Overview</a></span></dt>
 <dt><span class="section"><a href="cstdint.html#boost_config.cstdint.rationale">Rationale</a></span></dt>
 <dt><span class="section"><a href="cstdint.html#boost_config.cstdint.ce"><span class="emphasis"><em>Caveat emptor</em></span></a></span></dt>
@@ -40,6 +40,7 @@
       integer types</a></span></dt>
 <dt><span class="section"><a href="cstdint.html#boost_config.cstdint.integer_constant_macros">Integer
       Constant Macros</a></span></dt>
+<dt><span class="section"><a href="cstdint.html#boost_config.cstdint.intptr">Integers for Storing Pointers</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -137,7 +138,7 @@
 <p>
         The following minimum-width integer types are provided for all platforms:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="literal">int_least8_t</code>
           </li>
@@ -161,7 +162,7 @@
         The following types are available only if, after including &lt;boost/cstdint.hpp&gt;,
         the macro BOOST_NO_INT64_T is not defined:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="literal">int_least64_t</code>
           </li>
@@ -191,7 +192,7 @@
 <p>
         The following fastest minimum-width integer types are provided for all platforms:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="literal">int_fast8_t</code>
           </li>
@@ -215,7 +216,7 @@
         The following types are available only if, after including &lt;boost/cstdint.hpp&gt;,
         the macro BOOST_NO_INT64_T is not defined:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="literal">int_fast64_t</code>
           </li>
@@ -270,6 +271,17 @@
 <span class="comment">// Here the constant 0x1FFFFFFFF has the correct suffix applied:</span>
 <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">INT64_C</span><span class="special">(</span><span class="number">0</span><span class="identifier">x1FFFFFFFF</span><span class="special">);</span>
 </pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_config.cstdint.intptr"></a><a class="link" href="cstdint.html#boost_config.cstdint.intptr" title="Integers for Storing Pointers">Integers for Storing Pointers</a>
+</h3></div></div></div>
+<p>
+        The typedefs <code class="literal">intptr_t</code> and <code class="literal">uintptr_t</code>
+        defined signed and unsigned integers respectively each capable of storing
+        a pointer. The macro <code class="literal">BOOST_HAS_INTPTR_T</code> is set when these
+        types are available.
+      </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

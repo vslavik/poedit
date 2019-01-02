@@ -135,7 +135,7 @@ struct power_typeof_helper
     /// specifies the result type
     typedef detail::unspecified type;
     /// Carries out the runtime calculation.
-    static type value(const BaseType& base);
+    static BOOST_CONSTEXPR type value(const BaseType& base);
 };
 
 /// A helper used by @c root to take a root
@@ -152,7 +152,7 @@ struct root_typeof_helper
     /// specifies the result type
     typedef detail::unspecified type;
     /// Carries out the runtime calculation.
-    static type value(const Radicand& base);
+    static BOOST_CONSTEXPR type value(const Radicand& base);
 };
 
 #endif

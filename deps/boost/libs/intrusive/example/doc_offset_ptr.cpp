@@ -100,7 +100,7 @@ int main()
       int checker = 0;
       for( intrusive_list_t::const_iterator it = plist->begin(), itend(plist->end())
          ; it != itend; ++it, ++checker){
-         if(it->get() != checker)   return false;
+         if(it->get() != checker)   return 1;
       }
 
       //Now delete the list and after that, the nodes

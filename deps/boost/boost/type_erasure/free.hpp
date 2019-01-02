@@ -19,6 +19,9 @@
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/control/if.hpp>
+#include <boost/preprocessor/punctuation/is_begin_parens.hpp>
+#include <boost/vmd/is_empty.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -148,6 +151,64 @@ struct first_placeholder_index :
     }                                                                   \
     }
 
+/** INTERNAL ONLY */
+#define BOOST_TYPE_ERASURE_FREE_I(namespace_name, concept_name, function_name, N)\
+    BOOST_TYPE_ERASURE_FREE_II(namespace_name, concept_name, function_name, N)
+
+#ifdef BOOST_TYPE_ERASURE_DOXYGEN
+
+/**
+ * \brief Defines a primitive concept for a free function.
+ *
+ * \param concept_name is the name of the concept to declare.
+ *        If it is omitted it defaults to <code>has_ ## function_name</code>
+ * \param function_name is the name of the function.
+ *
+ * The declaration of the concept is
+ * \code
+ * template<class Sig>
+ * struct concept_name;
+ * \endcode
+ * where Sig is a function type giving the
+ * signature of the function.
+ *
+ * This macro can only be used at namespace scope.
+ *
+ * Example:
+ *
+ * \code
+ * BOOST_TYPE_ERASURE_FREE(to_string)
+ * typedef has_to_string<std::string(_self const&)> to_string_concept;
+ * \endcode
+ *
+ * In C++03, the macro can only be used in the global namespace and
+ * is defined as:
+ *
+ * \code
+ * #define BOOST_TYPE_ERASURE_FREE(qualified_name, function_name, N)
+ * \endcode
+ *
+ * Example:
+ *
+ * \code
+ * BOOST_TYPE_ERASURE_FREE((boost)(has_to_string), to_string, 1)
+ * \endcode
+ *
+ * For backwards compatibility, this form is always accepted.
+ */
+#define BOOST_TYPE_ERASURE_FREE(concept_name, function_name)
+
+#else
+
+#define BOOST_TYPE_ERASURE_FREE(qualified_name, function_name, N)                           \
+    BOOST_TYPE_ERASURE_FREE_I(                                                              \
+        qualified_name,                                                                     \
+        BOOST_PP_SEQ_ELEM(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(qualified_name)), qualified_name), \
+        function_name,                                                                      \
+        N)
+
+#endif
+
 #else
 
 namespace boost {
@@ -208,12 +269,143 @@ struct make_index_list<0> {
     typedef index_list<> type;
 };
 
-}
-}
-}
+#if !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES) && \
+    !defined(BOOST_NO_CXX11_DECLTYPE)
+
+template<int N>
+using make_index_list_t = typename ::boost::type_erasure::detail::make_index_list<N>::type;
+
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1900)
+
+template<class... T>
+struct first_placeholder_index_ :
+    ::boost::type_erasure::detail::first_placeholder_index<
+        ::boost::remove_cv_t< ::boost::remove_reference_t<T> >...
+    >
+{};
+template<class... T>
+using first_placeholder_index_t =
+    typename ::boost::type_erasure::detail::first_placeholder_index_<T...>::type;
+
+#else
+
+template<class... T>
+using first_placeholder_index_t =
+    typename ::boost::type_erasure::detail::first_placeholder_index<
+        ::boost::remove_cv_t< ::boost::remove_reference_t<T> >...
+    >::type;
+
+#endif
+
+template<class Base, class Tn, int I, class... T>
+using free_param_t =
+    typename ::boost::mpl::eval_if_c<(::boost::type_erasure::detail::first_placeholder_index_t<T...>::value == I),
+            ::boost::type_erasure::detail::maybe_const_this_param<Tn, Base>, \
+            ::boost::type_erasure::as_param<Base, Tn>
+    >::type;
+
+template<class Sig, class ID>
+struct free_interface_chooser
+{
+    template<class Base, template<class> class C, template<class...> class F>
+    using apply = Base;
+};
+
+template<class R, class... A>
+struct free_interface_chooser<
+    R(A...),
+    typename ::boost::type_erasure::detail::first_placeholder<
+        ::boost::remove_cv_t< ::boost::remove_reference_t<A> >...>::type>
+{
+    template<class Base, template<class> class C, template<class...> class F>
+    using apply = F<R(A...), Base,
+        ::boost::type_erasure::detail::make_index_list_t<sizeof...(A)> >;
+};
+
+template<class Sig, template<class> class C, template<class...> class F>
+struct free_choose_interface {
+    template<class Concept, class Base, class ID>
+    using apply = typename free_interface_chooser<Sig, ID>::template apply<Base, C, F>;
+};
 
 /** INTERNAL ONLY */
-#define BOOST_TYPE_ERASURE_FREE_II(qual_name, concept_name, function_name, N)  \
+#define BOOST_TYPE_ERASURE_FREE_I(concept_name, function_name)              \
+template<class Sig>                                                         \
+struct concept_name;                                                        \
+                                                                            \
+namespace boost_type_erasure_impl {                                         \
+                                                                            \
+template<class Sig, class Base, class Idx>                                  \
+struct concept_name ## _free_interface;                                     \
+template<class R, class... T, class Base, int... I>                         \
+struct concept_name ## _free_interface<R(T...), Base, ::boost::type_erasure::index_list<I...> > : Base {\
+    friend ::boost::type_erasure::rebind_any_t<Base, R>                     \
+    function_name(                                                          \
+        ::boost::type_erasure::detail::free_param_t<Base, T, I, T...>... t) \
+    {                                                                       \
+        return ::boost::type_erasure::call(                                 \
+            concept_name<R(T...)>(),                                        \
+            std::forward< ::boost::type_erasure::detail::free_param_t<Base, T, I, T...> >(t)...);\
+    }                                                                       \
+};                                                                          \
+                                                                            \
+template<class Sig>                                                         \
+struct concept_name ## free;                                                \
+                                                                            \
+template<class R, class... T>                                               \
+struct concept_name ## free<R(T...)> {                                      \
+    static R apply(T... t)                                                  \
+    { return function_name(std::forward<T>(t)...); }                        \
+};                                                                          \
+                                                                            \
+template<class... T>                                                        \
+struct concept_name ## free<void(T...)> {                                   \
+    static void apply(T... t)                                               \
+    { function_name(std::forward<T>(t)...); }                               \
+};                                                                          \
+                                                                            \
+}                                                                           \
+                                                                            \
+template<class Sig>                                                         \
+struct concept_name :                                                       \
+    boost_type_erasure_impl::concept_name##free<Sig>                        \
+{};                                                                         \
+                                                                            \
+template<class Sig>                                                         \
+::boost::type_erasure::detail::free_choose_interface<Sig, concept_name,     \
+    boost_type_erasure_impl::concept_name ## _free_interface>               \
+boost_type_erasure_find_interface(concept_name<Sig>);
+
+#define BOOST_TYPE_ERASURE_FREE_SIMPLE(name, ...) \
+    BOOST_TYPE_ERASURE_FREE_I(has_ ## name, name)
+
+#define BOOST_TYPE_ERASURE_FREE_NS_I(concept_name, name)  \
+    BOOST_TYPE_ERASURE_FREE_I(concept_name, name)
+
+#define BOOST_TYPE_ERASURE_FREE_NS(concept_name, name)      \
+    BOOST_TYPE_ERASURE_OPEN_NAMESPACE(concept_name)         \
+    BOOST_TYPE_ERASURE_FREE_NS_I(BOOST_PP_SEQ_ELEM(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(concept_name)), concept_name), name) \
+    BOOST_TYPE_ERASURE_CLOSE_NAMESPACE(concept_name)
+
+#define BOOST_TYPE_ERASURE_FREE_NAMED(concept_name, name, ...)  \
+    BOOST_PP_IF(BOOST_PP_IS_BEGIN_PARENS(concept_name),         \
+        BOOST_TYPE_ERASURE_FREE_NS,                             \
+        BOOST_TYPE_ERASURE_FREE_I)                              \
+    (concept_name, name)
+
+#define BOOST_TYPE_ERASURE_FREE_CAT(x, y) x y
+
+#define BOOST_TYPE_ERASURE_FREE(name, ...)              \
+    BOOST_TYPE_ERASURE_FREE_CAT(                        \
+        BOOST_PP_IF(BOOST_VMD_IS_EMPTY(__VA_ARGS__),    \
+            BOOST_TYPE_ERASURE_FREE_SIMPLE,             \
+            BOOST_TYPE_ERASURE_FREE_NAMED),             \
+        (name, __VA_ARGS__))
+
+#else
+
+/** INTERNAL ONLY */
+#define BOOST_TYPE_ERASURE_FREE_II(qual_name, concept_name, function_name)  \
     BOOST_TYPE_ERASURE_OPEN_NAMESPACE(qual_name)                        \
                                                                         \
     template<class Sig>                                                 \
@@ -273,41 +465,23 @@ struct make_index_list<0> {
     }                                                                   \
     }
 
-#endif
     
 /** INTERNAL ONLY */
-#define BOOST_TYPE_ERASURE_FREE_I(namespace_name, concept_name, function_name, N)\
-    BOOST_TYPE_ERASURE_FREE_II(namespace_name, concept_name, function_name, N)
+#define BOOST_TYPE_ERASURE_FREE_I(namespace_name, concept_name, function_name)              \
+    BOOST_TYPE_ERASURE_FREE_II(namespace_name, concept_name, function_name)
 
-/**
- * \brief Defines a primitive concept for a free function.
- *
- * \param qualified_name should be a preprocessor sequence
- * of the form (namespace1)(namespace2)...(concept_name).
- * \param function_name is the name of the function.
- * \param N is the number of arguments of the function.
- *
- * The declaration of the concept is
- * \code
- * template<class Sig>
- * struct ::namespace1::namespace2::...::concept_name;
- * \endcode
- * where Sig is a function type giving the
- * signature of the function.
- *
- * This macro can only be used in the global namespace.
- *
- * Example:
- *
- * \code
- * BOOST_TYPE_ERASURE_FREE((boost)(has_to_string), to_string, 1)
- * \endcode
- */
-#define BOOST_TYPE_ERASURE_FREE(qualified_name, function_name, N)                           \
+#define BOOST_TYPE_ERASURE_FREE(qualified_name, function_name, ...)                         \
     BOOST_TYPE_ERASURE_FREE_I(                                                              \
         qualified_name,                                                                     \
         BOOST_PP_SEQ_ELEM(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(qualified_name)), qualified_name), \
-        function_name,                                                                             \
-        N)
+        function_name)
+
+#endif
+
+}
+}
+}
+
+#endif
 
 #endif

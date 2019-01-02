@@ -24,7 +24,6 @@
 
 #include <boost/serialization/collections_save_imp.hpp>
 #include <boost/serialization/collections_load_imp.hpp>
-#include <boost/serialization/detail/stack_constructor.hpp>
 #include <boost/serialization/split_free.hpp>
 
 namespace boost { 

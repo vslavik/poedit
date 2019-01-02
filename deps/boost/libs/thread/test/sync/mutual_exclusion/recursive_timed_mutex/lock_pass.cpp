@@ -21,32 +21,33 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
-
-
+#include <iostream>
+#include "../../../timming.hpp"
 
 boost::recursive_timed_mutex m;
 
 #if defined BOOST_THREAD_USES_CHRONO
-typedef boost::chrono::system_clock Clock;
+typedef boost::chrono::high_resolution_clock Clock;
 typedef Clock::time_point time_point;
 typedef Clock::duration duration;
 typedef boost::chrono::milliseconds ms;
 typedef boost::chrono::nanoseconds ns;
+time_point t0;
+time_point t1;
 #else
 #endif
+
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
 void f()
 {
 #if defined BOOST_THREAD_USES_CHRONO
-  time_point t0 = Clock::now();
+  t0 = Clock::now();
   m.lock();
-  time_point t1 = Clock::now();
+  t1 = Clock::now();
   m.lock();
   m.unlock();
   m.unlock();
-  ns d = t1 - t0 - ms(250);
-  // This test is spurious as it depends on the time the thread system switches the threads
-  BOOST_TEST(d < ns(2500000)+ms(1000)); // within 2.5ms
 #else
   //time_point t0 = Clock::now();
   m.lock();
@@ -55,8 +56,7 @@ void f()
   m.unlock();
   m.unlock();
   //ns d = t1 - t0 - ms(250);
-  // This test is spurious as it depends on the time the thread system switches the threads
-  //BOOST_TEST(d < ns(2500000)+ms(1000)); // within 2.5ms
+  //BOOST_TEST(d < max_diff);
 #endif
 }
 
@@ -65,11 +65,22 @@ int main()
   m.lock();
   boost::thread t(f);
 #if defined BOOST_THREAD_USES_CHRONO
+  time_point t2 = Clock::now();
   boost::this_thread::sleep_for(ms(250));
+  time_point t3 = Clock::now();
 #else
 #endif
   m.unlock();
   t.join();
+
+#if defined BOOST_THREAD_USES_CHRONO
+  ns sleep_time = t3 - t2;
+  ns d_ns = t1 - t0 - sleep_time;
+  ms d_ms = boost::chrono::duration_cast<boost::chrono::milliseconds>(d_ns);
+  // BOOST_TEST_GE(d_ms.count(), 0);
+  BOOST_THREAD_TEST_IT(d_ms, max_diff);
+  BOOST_THREAD_TEST_IT(d_ns, ns(max_diff));
+#endif
 
   return boost::report_errors();
 }

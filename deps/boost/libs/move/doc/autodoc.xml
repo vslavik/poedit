@@ -9,6 +9,10 @@
 
 
 
+
+
+
+
 <function name="adl_move_swap"><type>void</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="x"><paramtype>T &amp;</paramtype></parameter><parameter name="y"><paramtype>T &amp;</paramtype></parameter><description><para>Exchanges the values of a and b, using Argument Dependent Lookup (ADL) to select a specialized swap function if available. If no specialized swap function is available, std::swap is used.</para><para><emphasis role="bold">Exception</emphasis>: If T uses Boost.Move's move emulation and the compiler has no rvalue references then:</para><para><itemizedlist>
@@ -24,10 +28,10 @@
           <template-type-parameter name="BidirIt1"/>
           <template-type-parameter name="BidirIt2"/>
         </template><parameter name="first1"><paramtype>BidirIt1</paramtype></parameter><parameter name="last1"><paramtype>BidirIt1</paramtype></parameter><parameter name="last2"><paramtype>BidirIt2</paramtype></parameter></function>
-
-
-
-
+<function name="adl_move_iter_swap"><type>void</type><template>
+          <template-type-parameter name="ForwardIt1"/>
+          <template-type-parameter name="ForwardIt2"/>
+        </template><parameter name="a"><paramtype>ForwardIt1</paramtype></parameter><parameter name="b"><paramtype>ForwardIt2</paramtype></parameter></function>
 
 
 
@@ -36,6 +40,8 @@
 <header name="boost/move/algo/adaptive_merge.hpp">
 <namespace name="boost">
 <namespace name="movelib">
+
+
 
 
 
@@ -95,6 +101,7 @@
 
 
 
+
 </namespace>
 </header>
 <header name="boost/move/algo/adaptive_sort.hpp">
@@ -131,16 +138,178 @@
 
 
 
+
 <function name="adaptive_sort"><type>void</type><template>
           <template-type-parameter name="RandIt"/>
+          <template-type-parameter name="RandRawIt"/>
           <template-type-parameter name="Compare"/>
-        </template><parameter name="first"><paramtype>RandIt</paramtype></parameter><parameter name="last"><paramtype>RandIt</paramtype></parameter><parameter name="comp"><paramtype>Compare</paramtype></parameter><parameter name="uninitialized"><paramtype>typename iterator_traits&lt; RandIt &gt;::value_type *</paramtype><default>0</default></parameter><parameter name="uninitialized_len"><paramtype>std::size_t</paramtype><default>0</default></parameter><description><para><emphasis role="bold">Effects</emphasis>: Sorts the elements in the range [first, last) in ascending order according to comparison functor "comp". The sort is stable (order of equal elements is guaranteed to be preserved). Performance is improved if additional raw storage is provided.</para><para><emphasis role="bold">Requires</emphasis>:<itemizedlist>
+        </template><parameter name="first"><paramtype>RandIt</paramtype></parameter><parameter name="last"><paramtype>RandIt</paramtype></parameter><parameter name="comp"><paramtype>Compare</paramtype></parameter><parameter name="uninitialized"><paramtype>RandRawIt</paramtype></parameter><parameter name="uninitialized_len"><paramtype>std::size_t</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Sorts the elements in the range [first, last) in ascending order according to comparison functor "comp". The sort is stable (order of equal elements is guaranteed to be preserved). Performance is improved if additional raw storage is provided.</para><para><emphasis role="bold">Requires</emphasis>:<itemizedlist>
 <listitem><para>RandIt must meet the requirements of ValueSwappable and RandomAccessIterator.</para></listitem><listitem><para>The type of dereferenced RandIt must meet the requirements of MoveAssignable and MoveConstructible.</para></listitem></itemizedlist>
 </para><para><emphasis role="bold">Parameters</emphasis>:<itemizedlist>
 <listitem><para>first, last: the range of elements to sort</para></listitem><listitem><para>comp: comparison function object which returns true if the first argument is is ordered before the second.</para></listitem><listitem><para>uninitialized, uninitialized_len: raw storage starting on "uninitialized", able to hold "uninitialized_len" elements of type iterator_traits&lt;RandIt&gt;::value_type. Maximum performance is achieved when uninitialized_len is ceil(std::distance(first, last)/2).</para></listitem></itemizedlist>
 </para><para><emphasis role="bold">Throws</emphasis>: If comp throws or the move constructor, move assignment or swap of the type of dereferenced RandIt throws.</para><para><emphasis role="bold">Complexity</emphasis>: Always K x O(Nxlog(N)) comparisons and move assignments/constructors/swaps. Comparisons are close to minimum even with no additional memory. Constant factor for data movement is minimized when uninitialized_len is ceil(std::distance(first, last)/2). Pretty good enough performance is achieved when ceil(sqrt(std::distance(first, last)))*2.</para><para><emphasis role="bold">Caution</emphasis>: Experimental implementation, not production-ready. </para></description></function>
+<function name="adaptive_sort"><type>void</type><template>
+          <template-type-parameter name="RandIt"/>
+          <template-type-parameter name="Compare"/>
+        </template><parameter name="first"><paramtype>RandIt</paramtype></parameter><parameter name="last"><paramtype>RandIt</paramtype></parameter><parameter name="comp"><paramtype>Compare</paramtype></parameter></function>
 
 </namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</header>
+<header name="boost/move/algo/predicate.hpp">
+<namespace name="boost">
+<namespace name="movelib">
+<struct name="antistable"><template>
+      <template-type-parameter name="Comp"/>
+    </template><method-group name="public member functions">
+<method name="operator()"><type>bool</type><template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name="V"/>
+        </template><parameter name="u"><paramtype>const U &amp;</paramtype></parameter><parameter name="v"><paramtype>const V &amp;</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="comp"><paramtype>Comp &amp;</paramtype></parameter></constructor>
+<method-group name="private member functions">
+</method-group>
+<copy-assignment><type>antistable &amp;</type><parameter name=""><paramtype>const antistable &amp;</paramtype></parameter></copy-assignment>
+</struct><class name="negate"><template>
+      <template-type-parameter name="Comp"/>
+    </template><method-group name="public member functions">
+<method name="operator()"><type>bool</type><template>
+          <template-type-parameter name="T1"/>
+          <template-type-parameter name="T2"/>
+        </template><parameter name="l"><paramtype>const T1 &amp;</paramtype></parameter><parameter name="r"><paramtype>const T2 &amp;</paramtype></parameter></method>
+</method-group>
+<constructor/>
+<constructor specifiers="explicit"><parameter name="comp"><paramtype>Comp</paramtype></parameter></constructor>
+</class><class name="inverse"><template>
+      <template-type-parameter name="Comp"/>
+    </template><method-group name="public member functions">
+<method name="operator()"><type>bool</type><template>
+          <template-type-parameter name="T1"/>
+          <template-type-parameter name="T2"/>
+        </template><parameter name="l"><paramtype>const T1 &amp;</paramtype></parameter><parameter name="r"><paramtype>const T2 &amp;</paramtype></parameter></method>
+</method-group>
+<constructor/>
+<constructor specifiers="explicit"><parameter name="comp"><paramtype>Comp</paramtype></parameter></constructor>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</header>
+<header name="boost/move/algo/unique.hpp">
+<namespace name="boost">
+<namespace name="movelib">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="unique"><type>ForwardIterator</type><template>
+          <template-type-parameter name="ForwardIterator"/>
+          <template-type-parameter name="BinaryPredicate"/>
+        </template><parameter name="first"><paramtype>ForwardIterator</paramtype></parameter><parameter name="last"><paramtype>ForwardIterator</paramtype></parameter><parameter name="pred"><paramtype>BinaryPredicate</paramtype></parameter><description><para><emphasis role="bold">Requires</emphasis>: The comparison function shall be an equivalence relation. The type of *first shall satisfy the MoveAssignable requirements</para><para><emphasis role="bold">Effects</emphasis>: For a nonempty range, eliminates all but the first element from every consecutive group of equivalent elements referred to by the iterator i in the range [first + 1, last) for which the following conditions hold: pred(*(i - 1), *i) != false.</para><para><emphasis role="bold">Returns</emphasis>: The end of the resulting range.</para><para><emphasis role="bold">Complexity</emphasis>: For nonempty ranges, exactly (last - first) - 1 applications of the corresponding predicate. </para></description></function>
+
+
+
+</namespace>
+
 
 
 
@@ -171,9 +340,6 @@
 
 
 
-
-
-
 <function name="uninitialized_copy_or_move"><type>F</type><template>
           <template-type-parameter name="I"/>
           <template-type-parameter name="F"/>
@@ -185,16 +351,20 @@
 <function name="uninitialized_copy_or_move"><type>F</type><template>
           <template-type-parameter name="I"/>
           <template-type-parameter name="F"/>
-        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">   for (; first != last; ++result, ++first)
-      new (static_cast&lt;void*&gt;(&amp;*result))
-         typename iterator_traits&lt;ForwardIterator&gt;::value_type(*first);
+        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">for (; first != last; ++result, ++first)
+   new (static_cast&lt;void*&gt;(&amp;*result))
+      typename iterator_traits&lt;ForwardIterator&gt;::value_type(*first);
 </programlisting></para><para><emphasis role="bold">Returns</emphasis>: result</para><para><emphasis role="bold">Note</emphasis>: This function is provided because <emphasis>std::uninitialized_copy</emphasis> from some STL implementations is not compatible with <emphasis><classname alt="boost::move_iterator">move_iterator</classname></emphasis> </para></description></function>
 <function name="copy_or_move"><type>F</type><template>
           <template-type-parameter name="I"/>
           <template-type-parameter name="F"/>
-        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">   for (; first != last; ++result, ++first)
-      *result = *first;
+        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">for (; first != last; ++result, ++first)
+   *result = *first;
 </programlisting></para><para><emphasis role="bold">Returns</emphasis>: result</para><para><emphasis role="bold">Note</emphasis>: This function is provided because <emphasis>std::uninitialized_copy</emphasis> from some STL implementations is not compatible with <emphasis><classname alt="boost::move_iterator">move_iterator</classname></emphasis> </para></description></function>
+
+
+
+
 
 
 
@@ -226,8 +396,8 @@
 
 
 
+
 </namespace>
-<macro name="BOOST_MOVE_IMPL_NO_COPY_CTOR_OR_ASSIGN" kind="functionlike"><macro-parameter name="TYPE"/></macro>
 <macro name="BOOST_MOVABLE_BUT_NOT_COPYABLE" kind="functionlike"><macro-parameter name="TYPE"/><description><para>This macro marks a type as movable but not copyable, disabling copy construction and assignment. The user will need to write a move constructor/assignment as explained in the documentation to fully write a movable but not copyable class. </para></description></macro>
 <macro name="BOOST_COPYABLE_AND_MOVABLE" kind="functionlike"><macro-parameter name="TYPE"/><description><para>This macro marks a type as copyable and movable. The user will need to write a move constructor/assignment and a copy assignment as explained in the documentation to fully write a copyable and movable class. </para></description></macro>
 <macro name="BOOST_RV_REF" kind="functionlike"><macro-parameter name="TYPE"/><description><para>This macro is used to achieve portable syntax in move constructors and assignments for classes marked as BOOST_COPYABLE_AND_MOVABLE or BOOST_MOVABLE_BUT_NOT_COPYABLE </para></description></macro>
@@ -240,7 +410,7 @@
 <macro name="BOOST_MOVE_RET" kind="functionlike"><macro-parameter name="RET_TYPE"/><macro-parameter name="REF"/><description><para>This macro is used to achieve portable move return semantics. The C++11 Standard allows implicit move returns when the object to be returned is designated by a lvalue and:<itemizedlist>
 <listitem><para>The criteria for elision of a copy operation are met OR</para></listitem><listitem><para>The criteria would be met save for the fact that the source object is a function parameter</para></listitem></itemizedlist>
 </para><para>For C++11 conforming compilers this macros only yields to REF: <computeroutput>return BOOST_MOVE_RET(RET_TYPE, REF);</computeroutput> -&gt; <computeroutput>return REF;</computeroutput></para><para>For compilers without rvalue references this macro does an explicit move if the move emulation is activated and the return type (RET_TYPE) is not a reference.</para><para>For non-conforming compilers with rvalue references like Visual 2010 &amp; 2012, an explicit move is performed if RET_TYPE is not a reference.</para><para><emphasis role="bold">Caution</emphasis>: When using this macro in non-conforming or C++03 compilers, a move will be performed even if the C++11 standard does not allow it (e.g. returning a static variable). The user is responsible for using this macro only to return local objects that met C++11 criteria. </para></description></macro>
-<macro name="BOOST_MOVE_BASE" kind="functionlike"><macro-parameter name="BASE_TYPE"/><macro-parameter name="ARG"/><purpose>defined(BOOST_MOVE_MSVC_AUTO_MOVE_RETURN_BUG) || defined(BOOST_MOVE_DOXYGEN_INVOKED) </purpose><description><para>This macro is used to achieve portable optimal move constructors.</para><para>When implementing the move constructor, in C++03 compilers the moved-from argument must be cast to the base type before calling `boost::move()` due to rvalue reference limitations.</para><para>In C++11 compilers the cast from a rvalue reference of a derived type to a rvalue reference of a base type is implicit. </para></description></macro>
+<macro name="BOOST_MOVE_BASE" kind="functionlike"><macro-parameter name="BASE_TYPE"/><macro-parameter name="ARG"/><purpose>defined(BOOST_MOVE_MSVC_AUTO_MOVE_RETURN_BUG) || defined(BOOST_MOVE_DOXYGEN_INVOKED) </purpose><description><para>This macro is used to achieve portable optimal move constructors.</para><para>When implementing the move constructor, in C++03 compilers the moved-from argument must be cast to the base type before calling <computeroutput>boost::move()</computeroutput> due to rvalue reference limitations.</para><para>In C++11 compilers the cast from a rvalue reference of a derived type to a rvalue reference of a base type is implicit. </para></description></macro>
 </header>
 <header name="boost/move/default_delete.hpp">
 <para>Describes the default deleter (destruction policy) of <computeroutput>unique_ptr</computeroutput>: <computeroutput>default_delete</computeroutput>. </para><namespace name="boost">
@@ -254,11 +424,11 @@
         </template><parameter name="ptr"><paramtype>U *</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: if T is not an array type, calls <computeroutput>delete</computeroutput> on static_cast&lt;T*&gt;(ptr), otherwise calls <computeroutput>delete[]</computeroutput> on static_cast&lt;remove_extent&lt;T&gt;::type*&gt;(ptr).</para><para><emphasis role="bold">Remarks</emphasis>: If U is an incomplete type, the program is ill-formed. This operator shall not participate in overload resolution unless:<itemizedlist>
 <listitem><para>T is not an array type and U* is convertible to T*, OR</para></listitem><listitem><para>T is an array type, and remove_cv&lt;U&gt;::type is the same type as remove_cv&lt;remove_extent&lt;T&gt;::type&gt;::type and U* is convertible to remove_extent&lt;T&gt;::type*. </para></listitem></itemizedlist>
 </para></description></method>
-<method name="operator()" cv="const noexcept"><type>void</type><parameter name=""><paramtype>std::nullptr_t</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Same as <computeroutput>(*this)(static_cast&lt;element_type*&gt;(nullptr))</computeroutput>. </para></description></method>
+<method name="operator()" cv="const noexcept"><type>void</type><parameter name=""><paramtype>std::nullptr_t</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Same as <computeroutput>(<emphasis>this)(static_cast&lt;element_type</emphasis>&gt;(nullptr))</computeroutput>. </para></description></method>
 </method-group>
-<constructor cv="noexcept"><description><para>Default constructor. </para></description></constructor>
-<constructor cv="noexcept"><parameter name=""><paramtype>const <classname>default_delete</classname> &amp;</paramtype></parameter><description><para>Trivial copy constructor </para></description></constructor>
-<copy-assignment cv="noexcept"><type><classname>default_delete</classname> &amp;</type><parameter name=""><paramtype>const <classname>default_delete</classname> &amp;</paramtype></parameter><description><para>Trivial assignment </para></description></copy-assignment>
+<constructor><description><para>Default constructor. </para></description></constructor>
+<constructor><parameter name=""><paramtype>const <classname>default_delete</classname> &amp;</paramtype></parameter><description><para>Trivial copy constructor </para></description></constructor>
+<copy-assignment><type><classname>default_delete</classname> &amp;</type><parameter name=""><paramtype>const <classname>default_delete</classname> &amp;</paramtype></parameter><description><para>Trivial assignment </para></description></copy-assignment>
 <constructor cv="noexcept"><template>
           <template-type-parameter name="U"/>
         </template><parameter name=""><paramtype>const <classname>default_delete</classname>&lt; U &gt; &amp;</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Constructs a <classname alt="boost::movelib::default_delete">default_delete</classname> object from another <computeroutput>default_delete&lt;U&gt;</computeroutput> object.</para><para><emphasis role="bold">Remarks</emphasis>: This constructor shall not participate in overload resolution unless:<itemizedlist>
@@ -302,7 +472,10 @@
 
 
 
+
+
 </namespace>
+
 
 
 
@@ -400,6 +573,9 @@
 <copy-assignment><type>move_insert_iterator &amp;</type><parameter name="x"><paramtype>reference</paramtype></parameter></copy-assignment>
 <copy-assignment><type>move_insert_iterator &amp;</type><parameter name="x"><paramtype>value_type &amp;&amp;</paramtype></parameter></copy-assignment>
 </class>
+
+
+
 <function name="make_move_iterator"><type><classname>move_iterator</classname>&lt; It &gt;</type><template>
           <template-type-parameter name="It"/>
         </template><parameter name="it"><paramtype>const It &amp;</paramtype></parameter><description><para><emphasis role="bold">Returns</emphasis>: move_iterator&lt;It&gt;(i). </para></description></function>
@@ -412,8 +588,6 @@
 <function name="move_inserter"><type>move_insert_iterator&lt; C &gt;</type><template>
           <template-type-parameter name="C"/>
         </template><parameter name="x"><paramtype>C &amp;</paramtype></parameter><parameter name="it"><paramtype>typename C::iterator</paramtype></parameter><description><para><emphasis role="bold">Returns</emphasis>: move_insert_iterator&lt;C&gt;(x, it). </para></description></function>
-
-
 
 
 
@@ -493,7 +667,10 @@
         </template><parameter name="..."><paramtype>Args &amp;&amp;</paramtype></parameter><description><para><emphasis role="bold">Remarks</emphasis>: This function shall not participate in overload resolution unless T is an array of known bound. </para></description></function>
 
 
+
+
 </namespace>
+
 
 
 
@@ -533,6 +710,7 @@
 
 
 
+
 <function name="move"><type>O</type><template>
           <template-type-parameter name="I"/>
           <template-type-parameter name="O"/>
@@ -544,9 +722,9 @@
 <function name="uninitialized_move"><type>F</type><template>
           <template-type-parameter name="I"/>
           <template-type-parameter name="F"/>
-        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><purpose>defined(BOOST_MOVE_USE_STANDARD_LIBRARY_MOVE) </purpose><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">   for (; first != last; ++result, ++first)
-      new (static_cast&lt;void*&gt;(&amp;*result))
-         typename iterator_traits&lt;ForwardIterator&gt;::value_type(boost::move(*first));
+        </template><parameter name="f"><paramtype>I</paramtype></parameter><parameter name="l"><paramtype>I</paramtype></parameter><parameter name="r"><paramtype>F</paramtype></parameter><purpose>defined(BOOST_MOVE_USE_STANDARD_LIBRARY_MOVE) </purpose><description><para><emphasis role="bold">Effects</emphasis>: <programlisting language="c++">for (; first != last; ++result, ++first)
+   new (static_cast&lt;void*&gt;(&amp;*result))
+      typename iterator_traits&lt;ForwardIterator&gt;::value_type(boost::move(*first));
 </programlisting></para><para><emphasis role="bold">Returns</emphasis>: result </para></description></function>
 </namespace>
 </header>
@@ -558,6 +736,7 @@
       <template-type-parameter name="T"/>
     </template><description><programlisting>boost::is_nothrow_move_constructible&lt;T&gt;::value &amp;&amp; boost::is_nothrow_move_assignable&lt;T&gt;::value </programlisting></description><data-member name="value" specifiers="static"><type>const bool</type></data-member>
 </struct>
+
 
 
 
@@ -589,7 +768,7 @@
 </para></purpose></template-type-parameter>
     </template><description><para>A unique pointer is an object that owns another object and manages that other object through a pointer.</para><para>More precisely, a unique pointer is an object u that stores a pointer to a second object p and will dispose of p when u is itself destroyed (e.g., when leaving block scope). In this context, u is said to own p.</para><para>The mechanism by which u disposes of p is known as p's associated deleter, a function object whose correct invocation results in p's appropriate disposition (typically its deletion).</para><para>Let the notation u.p denote the pointer stored by u, and let u.d denote the associated deleter. Upon request, u can reset (replace) u.p and u.d with another pointer and deleter, but must properly dispose of its owned object via the associated deleter before such replacement is considered completed.</para><para>Additionally, u can, upon request, transfer ownership to another unique pointer u2. Upon completion of such a transfer, the following postconditions hold:<itemizedlist>
 <listitem><para>u2.p is equal to the pre-transfer u.p,</para></listitem><listitem><para>u.p is equal to nullptr, and</para></listitem><listitem><para>if the pre-transfer u.d maintained state, such state has been transferred to u2.d.</para></listitem></itemizedlist>
-</para><para>As in the case of a reset, u2 must properly dispose of its pre-transfer owned object via the pre-transfer associated deleter before the ownership transfer is considered complete.</para><para>Each object of a type U instantiated from the <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> template specified in this subclause has the strict ownership semantics, specified above, of a unique pointer. In partial satisfaction of these semantics, each such U is MoveConstructible and MoveAssignable, but is not CopyConstructible nor CopyAssignable. The template parameter T of <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> may be an incomplete type.</para><para>The uses of <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> include providing exception safety for dynamically allocated memory, passing ownership of dynamically allocated memory to a function, and returning dynamically allocated memory from a function.</para><para>If T is an array type (e.g. <classname alt="boost::movelib::unique_ptr">unique_ptr</classname>&lt;MyType[]&gt;) the interface is slightly altered:<itemizedlist>
+</para><para>As in the case of a reset, u2 must properly dispose of its pre-transfer owned object via the pre-transfer associated deleter before the ownership transfer is considered complete.</para><para>Each object of a type U instantiated from the <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> template specified in this subclause has the strict ownership semantics, specified above, of a unique pointer. In partial satisfaction of these semantics, each such U is MoveConstructible and MoveAssignable, but is not CopyConstructible nor CopyAssignable. The template parameter T of <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> may be an incomplete type.</para><para>The uses of <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> include providing exception safety for dynamically allocated memory, passing ownership of dynamically allocated memory to a function, and returning dynamically allocated memory from a function.</para><para>If T is an array type (e.g. unique_ptr&lt;MyType[]&gt;) the interface is slightly altered:<itemizedlist>
 <listitem><para>Pointers to types derived from T are rejected by the constructors, and by reset.</para></listitem><listitem><para>The observers <computeroutput>operator*</computeroutput> and <computeroutput>operator-&gt;</computeroutput> are not provided.</para></listitem><listitem><para>The indexing observer <computeroutput>operator[]</computeroutput> is provided.</para></listitem></itemizedlist>
 </para><para>
 </para></description><typedef name="pointer"><description><para>If the type <computeroutput>remove_reference&lt;D&gt;::type::pointer</computeroutput> exists, then it shall be a synonym for <computeroutput>remove_reference&lt;D&gt;::type::pointer</computeroutput>. Otherwise it shall be a synonym for T*. </para></description><type>see_documentation</type></typedef>
@@ -613,8 +792,8 @@
 <method name="reset" cv="noexcept"><type>void</type><parameter name=""><paramtype>std::nullptr_t</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Same as <computeroutput>reset()</computeroutput> </para></description></method>
 <method name="swap" cv="noexcept"><type>void</type><parameter name="u"><paramtype><classname>unique_ptr</classname> &amp;</paramtype></parameter><description><para><emphasis role="bold">Requires</emphasis>: <computeroutput>get_deleter()</computeroutput> shall be swappable and shall not throw an exception under swap.</para><para><emphasis role="bold">Effects</emphasis>: Invokes swap on the stored pointers and on the stored deleters of *this and u. </para></description></method>
 </method-group>
-<constructor><parameter name=""><paramtype>const <classname>unique_ptr</classname> &amp;</paramtype></parameter></constructor>
-<copy-assignment><type><classname>unique_ptr</classname> &amp;</type><parameter name=""><paramtype>const <classname>unique_ptr</classname> &amp;</paramtype></parameter></copy-assignment>
+<constructor cv="= delete"><parameter name=""><paramtype>const <classname>unique_ptr</classname> &amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= delete"><type><classname>unique_ptr</classname> &amp;</type><parameter name=""><paramtype>const <classname>unique_ptr</classname> &amp;</paramtype></parameter></copy-assignment>
 <constructor cv="noexcept"><description><para><emphasis role="bold">Requires</emphasis>: D shall satisfy the requirements of DefaultConstructible, and that construction shall not throw an exception.</para><para><emphasis role="bold">Effects</emphasis>: Constructs a <classname alt="boost::movelib::unique_ptr">unique_ptr</classname> object that owns nothing, value-initializing the stored pointer and the stored deleter.</para><para><emphasis role="bold">Postconditions</emphasis>: <computeroutput>get() == nullptr</computeroutput>. <computeroutput>get_deleter()</computeroutput> returns a reference to the stored deleter.</para><para><emphasis role="bold">Remarks</emphasis>: If this constructor is instantiated with a pointer type or reference type for the template argument D, the program is ill-formed. </para></description></constructor>
 <constructor cv="noexcept"><parameter name=""><paramtype>std::nullptr_t</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Same as <computeroutput>unique_ptr()</computeroutput> (default constructor). </para></description></constructor>
 <constructor specifiers="explicit" cv="noexcept"><template>
@@ -760,7 +939,10 @@
 
 
 
+
+
 </namespace>
+
 
 
 
@@ -783,11 +965,12 @@
 </header>
 <header name="boost/move/utility.hpp">
 <para>This header includes core utilities from <computeroutput>&lt;boost/move/utility_core.hpp&gt;</computeroutput> and defines some more advanced utilities such as: </para><namespace name="boost">
+
+
+
 <function name="move_if_noexcept"><type>rvalue_reference_or_const_lvalue_reference</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para>This function provides a way to convert a reference into a rvalue reference in compilers with rvalue references. For other compilers converts T &amp; into <emphasis>::boost::rv&lt;T&gt; &amp;</emphasis> so that move emulation is activated. Reference would be converted to rvalue reference only if input type is nothrow move constructible or if it has no copy constructor. In all other cases const reference would be returned </para></description></function>
-
-
 
 
 
@@ -809,21 +992,24 @@
 <para>This header defines core utilities to ease the development of move-aware functions. This header minimizes dependencies from other libraries. </para><namespace name="boost">
 <struct name="enable_move_utility_emulation"><template>
       <template-type-parameter name="T"/>
-    </template><description><para>This trait's internal boolean `value` is false in compilers with rvalue references and true in compilers without rvalue references.</para><para>A user can specialize this trait for a type T to false to SFINAE out `move` and `forward` so that the user can define a different move emulation for that type in namespace boost (e.g. another Boost library for its types) and avoid any overload ambiguity. </para></description><data-member name="value" specifiers="static"><type>const bool</type></data-member>
-</struct>
-
-
-
-
-<function name="move"><type>rvalue_reference</type><template>
+    </template><description><para>This trait's internal boolean <computeroutput>value</computeroutput> is false in compilers with rvalue references and true in compilers without rvalue references.</para><para>A user can specialize this trait for a type T to false to SFINAE out <computeroutput>move</computeroutput> and <computeroutput>forward</computeroutput> so that the user can define a different move emulation for that type in namespace boost (e.g. another Boost library for its types) and avoid any overload ambiguity. </para></description><data-member name="value" specifiers="static"><type>const bool</type></data-member>
+</struct><function name="move"><type>rvalue_reference</type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para>This function provides a way to convert a reference into a rvalue reference in compilers with rvalue references. For other compilers if `T` is Boost.Move enabled type then it converts `T&amp;` into <computeroutput>::boost::rv&lt;T&gt; &amp;</computeroutput> so that move emulation is activated, else it returns `T &amp;`. </para></description></function>
+        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para>This function provides a way to convert a reference into a rvalue reference in compilers with rvalue references. For other compilers if <computeroutput>T</computeroutput> is Boost.Move enabled type then it converts <computeroutput>T&amp;</computeroutput> into <computeroutput>::boost::rv&lt;T&gt; &amp;</computeroutput> so that move emulation is activated, else it returns <computeroutput>T &amp;</computeroutput>. </para></description></function>
 <function name="forward"><type>output_reference</type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para>This function provides limited form of forwarding that is usually enough for in-place construction and avoids the exponential overloading for achieve the limited forwarding in C++03.</para><para>For compilers with rvalue references this function provides perfect forwarding.</para><para>Otherwise: If input_reference binds to const ::boost::rv&lt;T&gt; &amp; then it output_reference is ::boost::rv&lt;T&gt; &amp;</para><para>Else, output_reference is equal to input_reference. </para></description></function>
+        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para>This function provides limited form of forwarding that is usually enough for in-place construction and avoids the exponential overloading for achieve the limited forwarding in C++03.</para><para>For compilers with rvalue references this function provides perfect forwarding.</para><para>Otherwise:<itemizedlist>
+<listitem><para>If input_reference binds to const ::boost::rv&lt;T&gt; &amp; then it output_reference is ::boost::rv&lt;T&gt; &amp;</para></listitem><listitem><para>Else, output_reference is equal to input_reference. </para></listitem></itemizedlist>
+</para></description></function>
 <function name="move_if_not_lvalue_reference"><type>output_reference</type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Calls `boostmove` if `input_reference` is not a lvalue reference. Otherwise returns the reference </para></description></function>
+        </template><parameter name=""><paramtype>input_reference</paramtype></parameter><description><para><emphasis role="bold">Effects</emphasis>: Calls <computeroutput>boost::move</computeroutput> if <computeroutput>input_reference</computeroutput> is not a lvalue reference. Otherwise returns the reference </para></description></function>
+
+
+
+
+
+
 
 
 

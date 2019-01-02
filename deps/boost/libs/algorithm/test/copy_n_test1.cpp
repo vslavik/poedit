@@ -9,6 +9,10 @@
 
 #include <boost/config.hpp>
 #include <boost/algorithm/cxx11/copy_n.hpp>
+#include <boost/algorithm/cxx14/equal.hpp>
+#include <boost/algorithm/cxx11/all_of.hpp>
+
+#include "iterator_test.hpp"
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
@@ -20,6 +24,8 @@
 
 namespace ba = boost::algorithm;
 // namespace ba = boost;
+
+BOOST_CXX14_CONSTEXPR bool is_zero( int v ) { return v == 0; }
 
 template <typename Container>
 void test_sequence ( Container const &c ) {
@@ -67,11 +73,37 @@ void test_sequence ( Container const &c ) {
     }
 
 
+BOOST_CXX14_CONSTEXPR inline bool test_constexpr() {
+    const size_t sz = 64;
+    int in_data[sz] = {0};
+    bool res = true;
+    
+    const int* from = in_data;
+    const int* to = in_data + sz;
+    
+    int out_data[sz] = {0};
+    int* out = out_data;
+    
+    out = ba::copy_n ( from, 0, out ); // Copy none
+    res = (res && out == out_data && ba::all_of(out, out + sz, is_zero));
+
+    out = ba::copy_n ( from, sz, out ); // Copy all
+    res = (res && out == out_data + sz
+           && ba::equal( input_iterator<const int *>(out_data),  input_iterator<const int *>(out_data + sz), 
+                         input_iterator<const int *>(from), input_iterator<const int *>(to)));
+    
+    return res;
+    }
+    
+    
 void test_sequence1 () {
     std::vector<int> v;
     for ( int i = 5; i < 15; ++i )
         v.push_back ( i );
     test_sequence  ( v );
+    
+    BOOST_CXX14_CONSTEXPR bool constexpr_res = test_constexpr();
+    BOOST_CHECK(constexpr_res);
     
     std::list<int> l;
     for ( int i = 25; i > 15; --i )

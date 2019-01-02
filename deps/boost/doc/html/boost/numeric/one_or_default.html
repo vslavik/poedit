@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template one_or_default</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp" title="Header &lt;boost/accumulators/numeric/functional.hpp&gt;">
 <link rel="prev" href="zero.html" title="Struct template zero">
@@ -33,7 +33,9 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp" title="Header &lt;boost/accumulators/numeric/functional.hpp&gt;">boost/accumulators/numeric/functional.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-<span class="keyword">struct</span> <a class="link" href="one_or_default.html" title="Struct template one_or_default">one_or_default</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="one_or_default.html" title="Struct template one_or_default">one_or_default</a> <span class="special">:</span>
+  <span class="keyword">public</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_</span><span class="special">::</span><span class="identifier">type</span><span class="special">&lt;</span> <span class="identifier">is_empty</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">default_</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">one</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

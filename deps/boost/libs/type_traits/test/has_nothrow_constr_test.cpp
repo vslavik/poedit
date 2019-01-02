@@ -4,13 +4,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/has_nothrow_constructor.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 class bug11324_base
 {
@@ -210,7 +210,9 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<bug11324_derived>::v
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<deleted_default_construct>::value, false);
 #endif
+#if !defined(BOOST_GCC) || (BOOST_GCC >= 40800)
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<private_default_construct>::value, false);
+#endif
 #ifndef BOOST_NO_CXX11_NOEXCEPT
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<noexcept_default_construct>::value, true);
 #endif

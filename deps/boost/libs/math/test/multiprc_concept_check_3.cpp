@@ -28,10 +28,14 @@ using namespace boost::multiprecision;
 
 typedef number<cpp_dec_float<50>, et_on> test_type;
 
+#if !(defined(CI_SUPPRESS_KNOWN_ISSUES) && defined(BOOST_GCC))
+
 void foo()
 {
    instantiate(test_type());
 }
+
+#endif
 
 int main()
 {

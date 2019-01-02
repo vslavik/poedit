@@ -67,7 +67,15 @@
     <li>x86-like hardware is supported by the library with GCC, Visual C++
     &ge; 7.1, Intel compiler (&ge; 8 on Windows), CodeWarrior (&ge; 9), as
     long as the traditional x87 floating-point unit is used for
-    floating-point computations (no <code>-mfpmath=sse2</code> support).</li>
+    floating-point computations (no <code>-mfpmath=sse2</code> support).
+      <ul>
+        <li>clang (though v6) does not have proper
+          <a href="http://lists.llvm.org/pipermail/llvm-dev/2018-May/123529.html">rounding support</a>.</li>
+        <li>gcc requires <tt>-frounding-math</tt> to be specified.</li>
+        <li>msvc requires <tt>/fp:strict</tt> to be specified, which means
+            MSVC 10.0 and earlier will not work properly.</li>
+      </ul>
+    </li>
 
     <li>Sparc hardware is supported with GCC and Sun compiler.</li>
 
@@ -77,6 +85,7 @@
     <li>Alpha hardware is supported with GCC, except maybe for the square
     root. The options <code>-mfp-rounding-mode=d -mieee</code> have to be
     used.</li>
+
   </ul>
 
   <p>The previous list is not exhaustive. And even if a system does not

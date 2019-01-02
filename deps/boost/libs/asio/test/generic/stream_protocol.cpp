@@ -2,7 +2,7 @@
 // generic/stream_protocol.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@
 #include <boost/asio/generic/stream_protocol.hpp>
 
 #include <cstring>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include "../unit_test.hpp"
 
@@ -67,7 +67,7 @@ void test()
 
   try
   {
-    io_service ios;
+    io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
     socket_base::message_flags in_flags = 0;
@@ -77,35 +77,43 @@ void test()
 
     // basic_stream_socket constructors.
 
-    sp::socket socket1(ios);
-    sp::socket socket2(ios, sp(af_inet, ipproto_tcp));
-    sp::socket socket3(ios, sp::endpoint());
+    sp::socket socket1(ioc);
+    sp::socket socket2(ioc, sp(af_inet, ipproto_tcp));
+    sp::socket socket3(ioc, sp::endpoint());
 #if defined(BOOST_ASIO_WINDOWS_RUNTIME)
     Windows::Networking::Sockets::StreamSocket^ native_socket1 = nullptr;
 #else // defined(BOOST_ASIO_WINDOWS_RUNTIME)
     sp::socket::native_handle_type native_socket1
       = ::socket(af_inet, sock_stream, 0);
 #endif // defined(BOOST_ASIO_WINDOWS_RUNTIME)
-    sp::socket socket4(ios, sp(af_inet, ipproto_tcp), native_socket1);
+    sp::socket socket4(ioc, sp(af_inet, ipproto_tcp), native_socket1);
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     sp::socket socket5(std::move(socket4));
-    boost::asio::ip::tcp::socket tcp_socket(ios);
+    boost::asio::ip::tcp::socket tcp_socket(ioc);
     sp::socket socket6(std::move(tcp_socket));
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_stream_socket operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
-    socket1 = sp::socket(ios);
+    socket1 = sp::socket(ioc);
     socket1 = std::move(socket2);
-    socket1 = boost::asio::ip::tcp::socket(ios);
+    socket1 = boost::asio::ip::tcp::socket(ioc);
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
-    io_service& ios_ref = socket1.get_io_service();
-    (void)ios_ref;
+    sp::socket::executor_type ex = socket1.get_executor();
+    (void)ex;
+
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+    io_context& ioc_ref = socket1.get_io_context();
+    (void)ioc_ref;
+
+    io_context& ioc_ref2 = socket1.get_io_service();
+    (void)ioc_ref2;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // basic_socket functions.
 
@@ -136,7 +144,7 @@ void test()
     socket1.close();
     socket1.close(ec);
 
-    sp::socket::native_type native_socket4 = socket1.native();
+    sp::socket::native_handle_type native_socket4 = socket1.native_handle();
     (void)native_socket4;
 
     socket1.cancel();

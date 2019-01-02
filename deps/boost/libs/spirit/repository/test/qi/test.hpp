@@ -10,7 +10,6 @@
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_what.hpp>
 #include <boost/variant/apply_visitor.hpp>
-#include <boost/foreach.hpp>
 #include <iostream>
 
 namespace spirit_test

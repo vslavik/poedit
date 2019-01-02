@@ -153,6 +153,7 @@ inline InputIterator find_if_with_atomics_multiple_vpt(InputIterator first,
     return first + static_cast<difference_type>(index.read(queue));
 }
 
+// Space complexity: O(1)
 template<class InputIterator, class UnaryPredicate>
 inline InputIterator find_if_with_atomics(InputIterator first,
                                           InputIterator last,

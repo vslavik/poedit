@@ -13,7 +13,7 @@ t = BoostBuild.Tester(["-ffile.jam"], pass_toolset=0)
 t.write("file.jam", """\
 name = n1 n2 ;
 contents = M1 M2 ;
-EXIT file: "@(o$(name) .txt:E= test -D$(contents))" : 0 ;
+EXIT "file:" "@(o$(name) .txt:E= test -D$(contents))" : 0 ;
 """)
 
 t.run_build_system()

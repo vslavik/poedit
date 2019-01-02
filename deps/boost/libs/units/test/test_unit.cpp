@@ -29,11 +29,11 @@ namespace bu = boost::units;
 
 int test_main(int,char *[])
 {
-    const bu::dimensionless D;
+    BOOST_CONSTEXPR_OR_CONST bu::dimensionless D;
     
-    const bu::length        L;
-    const bu::mass          M;
-    const bu::time          T;
+    BOOST_CONSTEXPR_OR_CONST bu::length        L;
+    BOOST_CONSTEXPR_OR_CONST bu::mass          M;
+    BOOST_CONSTEXPR_OR_CONST bu::time          T;
     
     BOOST_CHECK(+L == L);
     BOOST_CHECK(-L == L);
@@ -45,9 +45,9 @@ int test_main(int,char *[])
     BOOST_CHECK(M+M == M);
     BOOST_CHECK(M-M == M);
     
-    const bu::area          A;
-    const bu::energy        E;
-    const bu::velocity      V;
+    BOOST_CONSTEXPR_OR_CONST bu::area          A;
+    BOOST_CONSTEXPR_OR_CONST bu::energy        E;
+    BOOST_CONSTEXPR_OR_CONST bu::velocity      V;
     
     BOOST_CHECK(L*L == A);
     BOOST_CHECK(A == L*L);

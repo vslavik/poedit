@@ -18,11 +18,12 @@
 
 void test()
 {
-    typedef boost::chrono::duration<int, 
+    typedef boost::chrono::duration<int,
         boost::ratio_add<
             boost::ratio<1,2>,
-            boost::ratio<1,3> 
+            boost::ratio<1,3>
         >
     > D;
     D d;
+    (void)d;
 }

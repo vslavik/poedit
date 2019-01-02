@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,10 +17,9 @@ boost_asio.reference.ReadHandler read handler] requirements.
 [table Buffer-oriented asynchronous random-access read device requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
-    [`a.get_io_service();`]
-    [`io_service&`]
-    [Returns the `io_service` object through which the `async_read_some_at`
-    handler `h` will be invoked.]
+    [`a.get_executor()`]
+    [A type satisfying the [link boost_asio.reference.Executor1 Executor requirements].]
+    [Returns the associated I/O executor.]
   ]
   [
     [`a.async_read_some_at(o, mb, h);`]

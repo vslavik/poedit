@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Data Structures</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../heap.html" title="Chapter&#160;14.&#160;Boost.Heap">
+<link rel="up" href="../heap.html" title="Chapter&#160;17.&#160;Boost.Heap">
 <link rel="prev" href="concepts.html" title="Concepts &amp; Interface">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -27,14 +27,14 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="heap.data_structures"></a><a class="link" href="data_structures.html" title="Data Structures">Data Structures</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="data_structures.html#heap.data_structures.data_structure_configuration">Data
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="data_structures.html#heap.data_structures.data_structure_configuration">Data
       Structure Configuration</a></span></dt></dl></div>
 <p>
       <code class="literal">boost.heap</code> provides the following data structures:
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><a class="link" href="../boost/heap/priority_queue.html" title="Class template priority_queue">boost::heap::priority_queue</a></code></span></dt>
 <dd><p>
             The <code class="computeroutput"><a class="link" href="../boost/heap/priority_queue.html" title="Class template priority_queue">priority_queue</a></code>
@@ -95,7 +95,7 @@
 </dl>
 </div>
 <div class="table">
-<a name="heap.data_structures.t0"></a><p class="title"><b>Table&#160;14.1.&#160;Comparison of amortized complexity</b></p>
+<a name="heap.data_structures.t0"></a><p class="title"><b>Table&#160;17.1.&#160;Comparison of amortized complexity</b></p>
 <div class="table-contents"><table class="table" summary="Comparison of amortized complexity">
 <colgroup>
 <col>
@@ -317,7 +317,7 @@
             </td>
 <td>
               <p>
-                O(log(N)) <sup>[<a name="heap.data_structures.f0" href="#ftn.heap.data_structures.f0" class="footnote">a</a>]</sup>
+                O(log(N)) <a href="#ftn.heap.data_structures.f0" class="footnote" name="heap.data_structures.f0"><sup class="footnote">[a]</sup></a>
               </p>
             </td>
 <td>
@@ -436,7 +436,7 @@
             </td>
 </tr>
 </tbody>
-<tbody class="footnotes"><tr><td colspan="9"><div class="footnote"><p><sup>[<a id="ftn.heap.data_structures.f0" href="#heap.data_structures.f0" class="para">a</a>] </sup>
+<tbody class="footnotes"><tr><td colspan="9"><div id="ftn.heap.data_structures.f0" class="footnote"><p><a href="#heap.data_structures.f0" class="para"><sup class="para">[a] </sup></a>
                   The fibonacci a <code class="literal">update_lazy()</code> method, which
                   has O(log(N)) amortized complexity as well, but does not try to
                   consolidate the internal forest
@@ -454,7 +454,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><a class="link" href="../boost/heap/compare.html" title="Struct template compare">boost::heap::compare</a></code></span></dt>
 <dd><p>
               Predicate for defining the heap order, optional (defaults to <code class="literal">boost::heap::compare&lt;std::less&lt;T&gt;

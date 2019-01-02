@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>History &amp; Compatibility Notes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../function.html" title="Chapter&#160;12.&#160;Boost.Function">
-<link rel="prev" href="../function.html" title="Chapter&#160;12.&#160;Boost.Function">
+<link rel="up" href="../function.html" title="Chapter&#160;16.&#160;Boost.Function">
+<link rel="prev" href="../function.html" title="Chapter&#160;16.&#160;Boost.Function">
 <link rel="next" href="tutorial.html" title="Tutorial">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,23 +26,23 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="function.history"></a>History &amp; Compatibility Notes</h2></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc" compact>
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; ">
 <li class="listitem">
 <p><span class="bold"><strong>Version 1.52.0</strong></span>: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact><li class="listitem"><p>Move constructors and move assignment 
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; "><li class="listitem"><p>Move constructors and move assignment 
       operators added (only for compilers with C++11 rvalue 
       references support). Original patch
       contributed by Antony Polukhin.</p></li></ul></div>
 </li>
 <li class="listitem">
 <p><span class="bold"><strong>Version 1.37.0</strong></span>: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact>
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; ">
 <li class="listitem"><p>Improved the performance of Boost.Function's
       swap() operation for large function objects. Original patch
       contributed by Niels Dekker.</p></li>
 <li class="listitem"><p>Added a new header &lt;boost/function/function_typeof.hpp&gt; that provides support for using the Boost.Typeof library on Boost.Function objects.</p></li>
 <li class="listitem"><p>Added a new header &lt;boost/function/function_fwd.hpp&gt; that provides support for using the Boost.Typeof library on Boost.Function objects.</p></li>
-<li class="listitem"><p>The <code class="computeroutput"><a class="link" href="../boost/function.html#idp39795648-bb">target</a></code>()
+<li class="listitem"><p>The <code class="computeroutput"><a class="link" href="../boost/function.html#id-1_3_17_6_2_1_4_29_1-bb">target</a></code>()
       function now respects the cv-qualifiers of function objects
       stored by reference
       (using <code class="computeroutput">boost::reference_wrapper</code>), such
@@ -53,7 +53,7 @@
 </li>
 <li class="listitem">
 <p><span class="bold"><strong>Version 1.36.0</strong></span>: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact><li class="listitem"><p>Boost.Function now implements allocator support
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; "><li class="listitem"><p>Boost.Function now implements allocator support
       in the same way that is is provided in C++0x, based on C++
       committee
       proposal <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2308.html" target="_top">N2308</a>. This
@@ -67,19 +67,19 @@
 </li>
 <li class="listitem">
 <p><span class="bold"><strong>Version 1.34.0</strong></span>: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact><li class="listitem"><p>Boost.Function now implements a small buffer optimization, which can drastically improve the performance when copying or construction Boost.Function objects storing small function objects. For instance, <code class="computeroutput">bind(&amp;X:foo, &amp;x, _1, _2)</code> requires no heap allocation when placed into a Boost.Function object. Note that some exception-safety guarantees have changed: assignment provides the basic exception guarantee and <code class="computeroutput">swap()</code> may throw.</p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; "><li class="listitem"><p>Boost.Function now implements a small buffer optimization, which can drastically improve the performance when copying or construction Boost.Function objects storing small function objects. For instance, <code class="computeroutput">bind(&amp;X:foo, &amp;x, _1, _2)</code> requires no heap allocation when placed into a Boost.Function object. Note that some exception-safety guarantees have changed: assignment provides the basic exception guarantee and <code class="computeroutput">swap()</code> may throw.</p></li></ul></div>
 </li>
 <li class="listitem">
 <p><span class="bold"><strong>Version 1.30.0</strong></span>: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact>
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; ">
 <li class="listitem"><p>All features deprecated in version 1.29.0 have
       been removed from Boost.Function.</p></li>
 <li class="listitem"><p><code class="computeroutput"><a class="link" href="../boost/function.html" title="Class template function">boost::function</a></code>
       and <code class="computeroutput"><a class="link" href="../boost/functionN.html" title="Class template functionN">boost::functionN</a></code> objects
       can be assigned to 0 (semantically equivalent to calling
-      <code class="computeroutput"><a class="link" href="../boost/function.html#idp11006640-bb">clear</a>()</code>) and
+      <code class="computeroutput"><a class="link" href="../boost/function.html#id-1_3_17_6_2_1_4_27_2-bb">clear</a>()</code>) and
       compared against 0 (semantically equivalent to calling
-      <code class="computeroutput"><a class="link" href="../boost/function.html#idp6968032-bb">empty</a>()</code>).</p></li>
+      <code class="computeroutput"><a class="link" href="../boost/function.html#id-1_3_17_6_2_1_4_28_1-bb">empty</a>()</code>).</p></li>
 <li class="listitem"><p>The Boost.Function code is now generated
       entirely by the Preprocessor library,
       so it is now possible to generate
@@ -101,7 +101,7 @@
   adjust your code:
 
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="circle" compact>
+<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: circle; ">
 <li class="listitem">
 <p>The <code class="computeroutput">boost::function</code> class template syntax has
   changed. The old syntax, e.g., <code class="computeroutput">boost::function&lt;int, float,

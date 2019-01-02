@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Fixture models</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../fixtures.html" title="Fixtures">
 <link rel="prev" href="../fixtures.html" title="Fixtures">
@@ -33,7 +33,7 @@
         </p>
 <h4>
 <a name="boost_test.tests_organization.fixtures.models.h0"></a>
-          <span><a name="boost_test.tests_organization.fixtures.models.fixture_class_model"></a></span><a class="link" href="models.html#boost_test.tests_organization.fixtures.models.fixture_class_model">Fixture
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.models.fixture_class_model"></a></span><a class="link" href="models.html#boost_test.tests_organization.fixtures.models.fixture_class_model">Fixture
           class model</a>
         </h4>
 <p>
@@ -49,31 +49,60 @@
           In other words a fixture is expected to be implemented as a class where
           the class constructor serves as a <code class="computeroutput"><span class="identifier">setup</span></code>
           method and class destructor serves as <code class="computeroutput"><span class="identifier">teardown</span></code>
-          method. The <span class="emphasis"><em>Unit Test Framework</em></span> opted to avoid explicit
-          names in fixture interface for <code class="computeroutput"><span class="identifier">setup</span></code>
-          and <code class="computeroutput"><span class="identifier">teardown</span></code> methods, since
-          it is considered most natural in C++ for tasks similar to RAII and coincides
-          with the pure C++ solution discussed above.
+          method.
         </p>
+<p>
+          The class model above has some limitations though:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              it is not possible to have exceptions in the teardown function, especially
+              any test assertions that aborts the current test case is not possible
+              (as those use exceptions)
+            </li>
+<li class="listitem">
+              it is sometimes more natural to use the constructor/destructor to perform
+              the necessary resource allocation/release of the fixture, and that
+              will be consumed in the test cases, and check for the proper state
+              of the fixture in separate functions. Those checks are the pre-conditions
+              for the test case to run, and the post-conditions that should be met
+              after the test case has been running.
+            </li>
+</ul></div>
+<p>
+          This is why the <span class="emphasis"><em>Unit Test Framework</em></span> also supports
+          (Boost 1.65 on) optional <code class="computeroutput"><span class="identifier">setup</span></code>
+          and/or <code class="computeroutput"><span class="identifier">teardown</span></code> functions
+          as follow:
+        </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="special">&lt;</span><span class="identifier">fixture</span><span class="special">-</span><span class="identifier">name</span><span class="special">&gt;{</span>
+  <span class="special">&lt;</span><span class="identifier">fixture</span><span class="special">-</span><span class="identifier">name</span><span class="special">&gt;();</span>      <span class="comment">// ctor</span>
+  <span class="special">~&lt;</span><span class="identifier">fixture</span><span class="special">-</span><span class="identifier">name</span><span class="special">&gt;();</span>     <span class="comment">// dtor</span>
+  <span class="keyword">void</span> <span class="identifier">setup</span><span class="special">();</span>          <span class="comment">// setup, optional</span>
+  <span class="keyword">void</span> <span class="identifier">teardown</span><span class="special">();</span>       <span class="comment">// teardown, optional</span>
+<span class="special">};</span>
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            As mentioned, the declaration/implementation of the <code class="computeroutput"><span class="identifier">setup</span></code>
+            and <code class="computeroutput"><span class="identifier">teardown</span></code> are optional:
+            the <span class="emphasis"><em>Unit Test Framework</em></span> will check the existence
+            of those and will call them adequately. However in C++98, it is not possible
+            to detect those declaration in case those are inherited (it works fine
+            for compiler supporting <code class="computeroutput"><span class="keyword">auto</span></code>
+            and <code class="computeroutput"><span class="keyword">decltype</span></code>).
+          </p></td></tr>
+</table></div>
 <p>
           This model is expected from fixtures used with <a class="link" href="../../utf_reference/test_org_reference/test_org_boost_test_case_fixture.html" title="BOOST_FIXTURE_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_CASE</span></code></a> and <a class="link" href="../../utf_reference/test_org_reference/test_org_boost_test_suite_fixture.html" title="BOOST_FIXTURE_TEST_SUITE"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_SUITE</span></code></a>.
         </p>
-<div class="caution"><table border="0" summary="Caution">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../../doc/src/images/caution.png"></td>
-<th align="left">Caution</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-            The above interface prevents you from reporting errors in the <code class="computeroutput"><span class="identifier">teardown</span></code> procedure using an exception.
-            It does make sense though: if somehow more than one fixture is assigned
-            to a test unit (e.g. using <a class="link" href="../../utf_reference/test_org_reference/decorator_fixture.html" title="fixture (decorator)"><code class="computeroutput"><span class="identifier">fixture</span></code></a> decorator), you want
-            all <code class="computeroutput"><span class="identifier">teardown</span></code> procedures
-            to run, even if some may experience problems.
-          </p></td></tr>
-</table></div>
 <h4>
 <a name="boost_test.tests_organization.fixtures.models.h1"></a>
-          <span><a name="boost_test.tests_organization.fixtures.models.flexible_models"></a></span><a class="link" href="models.html#boost_test.tests_organization.fixtures.models.flexible_models">Flexible
+          <span class="phrase"><a name="boost_test.tests_organization.fixtures.models.flexible_models"></a></span><a class="link" href="models.html#boost_test.tests_organization.fixtures.models.flexible_models">Flexible
           models</a>
         </h4>
 <p>
@@ -83,7 +112,7 @@
           additional models for declaring the <code class="computeroutput"><span class="identifier">setup</span></code>
           and <code class="computeroutput"><span class="identifier">teardown</span></code>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               a fixture defined according to the fixture class model above
             </li>
@@ -95,9 +124,14 @@
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Fx</span>
 <span class="special">{</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
-  <span class="identifier">Fx</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span>
-        <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"set up "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
-  <span class="special">~</span><span class="identifier">Fx</span><span class="special">()</span> <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"tear down "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
+  <span class="identifier">Fx</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s_</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">s_</span><span class="special">)</span>
+      <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"ctor "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
+  <span class="keyword">void</span> <span class="identifier">setup</span><span class="special">()</span>
+      <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"optional setup "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
+  <span class="keyword">void</span> <span class="identifier">teardown</span><span class="special">()</span>
+      <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"optional teardown "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
+  <span class="special">~</span><span class="identifier">Fx</span><span class="special">()</span>
+      <span class="special">{</span> <span class="identifier">BOOST_TEST_MESSAGE</span><span class="special">(</span><span class="string">"dtor "</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">);</span> <span class="special">}</span>
 <span class="special">};</span>
 </pre>
 </li>
@@ -118,7 +152,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

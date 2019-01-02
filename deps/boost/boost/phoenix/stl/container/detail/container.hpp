@@ -12,6 +12,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 
 namespace boost { namespace phoenix { namespace stl
 {
@@ -110,8 +111,8 @@ namespace boost { namespace phoenix { namespace stl
 //
 //  has_mapped_type<C>
 //
-//      Given a container C, determine if it is a map or multimap
-//      by checking if it has a member type named "mapped_type".
+//      Given a container C, determine if it is a map, multimap, unordered_map,
+//      or unordered_multimap by checking if it has a member type named "mapped_type".
 //
 ///////////////////////////////////////////////////////////////////////////////
     namespace stl_impl
@@ -124,26 +125,6 @@ namespace boost { namespace phoenix { namespace stl
 
         template <typename C>
         two has_mapped_type(...);
-
-        template<typename T>
-        struct enable_if_is_void
-        {};
-
-        template<>
-        struct enable_if_is_void<void>
-        {
-            typedef void type;
-        };
-
-        template<typename T>
-        struct disable_if_is_void
-        {
-            typedef T type;
-        };
-
-        template<>
-        struct disable_if_is_void<void>
-        {};
     }
 
     template <typename C>
@@ -151,6 +132,43 @@ namespace boost { namespace phoenix { namespace stl
         : boost::mpl::bool_<
             sizeof(stl_impl::has_mapped_type<C>(0)) == sizeof(stl_impl::one)
         >
+    {};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  has_key_type<C>
+//
+//      Given a container C, determine if it is a Associative Container
+//      by checking if it has a member type named "key_type".
+//
+///////////////////////////////////////////////////////////////////////////////
+    namespace stl_impl
+    {
+        template <typename C>
+        one has_key_type(typename C::key_type(*)());
+
+        template <typename C>
+        two has_key_type(...);
+    }
+
+    template <typename C>
+    struct has_key_type
+        : boost::mpl::bool_<
+            sizeof(stl_impl::has_key_type<C>(0)) == sizeof(stl_impl::one)
+        >
+    {};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  is_key_type_of<C, Arg>
+//
+//      Lazy evaluation friendly predicate.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+    template <typename C, typename Arg>
+    struct is_key_type_of
+        : boost::is_convertible<Arg, typename key_type_of<C>::type>
     {};
 
 ///////////////////////////////////////////////////////////////////////////////

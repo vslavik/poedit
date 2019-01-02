@@ -1,5 +1,5 @@
 //
-// Copyright (c) Antony Polukhin, 2012-2015.
+// Copyright (c) Antony Polukhin, 2012-2018.
 //
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -31,7 +31,7 @@ TEST_LIB_DECL boost::typeindex::type_index get_user_defined_class();
 TEST_LIB_DECL boost::typeindex::type_index get_const_integer();
 TEST_LIB_DECL boost::typeindex::type_index get_const_user_defined_class();
 
-#ifndef BOOST_HAS_PRAGMA_DETECT_MISMATCH
+#if !defined(BOOST_HAS_PRAGMA_DETECT_MISMATCH) || !defined(_CPPRTTI)
 // This is required for checking RTTI on/off linkage
 TEST_LIB_DECL void accept_typeindex(const boost::typeindex::type_index&);
 #endif

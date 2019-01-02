@@ -162,27 +162,6 @@ void file_query_( file_info_t * const info )
 }
 
 
-/*
- * file_supported_fmt_resolution() - file modification timestamp resolution
- *
- * Returns the minimum file modification timestamp resolution supported by this
- * Boost Jam implementation. File modification timestamp changes of less than
- * the returned value might not be recognized.
- *
- * Does not take into consideration any OS or file system related restrictions.
- *
- * Return value 0 indicates that any value supported by the OS is also supported
- * here.
- */
-
-void file_supported_fmt_resolution( timestamp * const t )
-{
-    /* The current implementation does not support file modification timestamp
-     * resolution of less than one second.
-     */
-    timestamp_init( t, 1, 0 );
-}
-
 /*------------------------------------------------------------------------------
 * VMS-specific processing:
 *

@@ -193,6 +193,7 @@ struct distance
         >
 {};
 
+
 template <typename MultiPoint, typename Linear, typename Strategy>
 struct distance
     <

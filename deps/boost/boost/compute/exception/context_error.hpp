@@ -70,7 +70,7 @@ public:
     }
 
     /// Returns the size of the private info memory block.
-    const size_t get_private_info_size() const throw()
+    size_t get_private_info_size() const throw()
     {
         return m_private_info_size;
     }

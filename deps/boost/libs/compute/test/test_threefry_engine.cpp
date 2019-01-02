@@ -14,29 +14,22 @@
 #include <boost/compute/random/threefry_engine.hpp>
 #include <boost/compute/container/vector.hpp>
 
+#include <boost/compute/random/uniform_real_distribution.hpp>
+
 #include "check_macros.hpp"
 #include "context_setup.hpp"
 
 BOOST_AUTO_TEST_CASE(generate_uint)
 {
-
     using boost::compute::uint_;
 
-    boost::compute::threefry_engine<> rng(queue);
+    boost::compute::threefry_engine<> random_engine(queue);
+    boost::compute::vector<uint_> random_values(19, context);
 
-    boost::compute::vector<uint_> vector_ctr(20, context);
-
-    uint32_t ctr[20];
-    for(int i = 0; i < 10; i++) {
-        ctr[i*2] = i;
-        ctr[i*2+1] = 0;
-    }
-
-    boost::compute::copy(ctr, ctr+20, vector_ctr.begin(), queue);
-
-    rng.generate(vector_ctr.begin(), vector_ctr.end(), queue);
+    random_engine.generate(random_values.begin(), random_values.end(), queue);
+    queue.finish();
     CHECK_RANGE_EQUAL(
-        uint_, 20, vector_ctr,
+        uint_, 19, random_values,
         (uint_(0x6b200159),
          uint_(0x99ba4efe),
          uint_(0x508efb2c),
@@ -55,9 +48,40 @@ BOOST_AUTO_TEST_CASE(generate_uint)
          uint_(0x76cf5efc),
          uint_(0x2d08247f),
          uint_(0x815480f1),
-         uint_(0x2d1fa53a),
-         uint_(0xdfe8514c))
+         uint_(0x2d1fa53a))
     );
+}
+
+BOOST_AUTO_TEST_CASE(generate_float)
+{
+    using boost::compute::float_;
+
+    boost::compute::threefry_engine<> random_engine(queue);
+    boost::compute::uniform_real_distribution<float_> random_distribution(0.f, 4.f);
+
+    boost::compute::vector<float_> random_values(1024, context);
+    random_distribution.generate(
+        random_values.begin(), random_values.end(), random_engine, queue
+    );
+
+    std::vector<float_> random_values_host(1024);
+    boost::compute::copy(
+        random_values.begin(), random_values.end(),
+        random_values_host.begin(),
+        queue
+    );
+    queue.finish();
+
+    double sum = 0.0;
+    for(size_t i = 0; i < random_values_host.size(); i++)
+    {
+        BOOST_CHECK_LT(random_values_host[i], 4.0f);
+        BOOST_CHECK_GE(random_values_host[i], 0.0f);
+        sum += random_values_host[i];
+    }
+    double mean = sum / random_values_host.size();
+    // For 1024 it can be 10% off
+    BOOST_CHECK_CLOSE(mean, 2.0f, 10.0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

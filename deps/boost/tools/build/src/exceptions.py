@@ -2,43 +2,54 @@
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# TODO: add more exception types?
 
-class BaseException (Exception):
-    def __init__ (self, message = ''): Exception.__init__ (self, message)
+class BaseBoostBuildException(Exception):
+    """A base Exception class for all other Boost.Build exceptions to inherit from."""
 
-class UserError (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class FeatureConflict (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class UserError(BaseBoostBuildException):
+    pass
 
-class InvalidSource (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class InvalidFeature (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class FeatureConflict(BaseBoostBuildException):
+    pass
 
-class InvalidProperty (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class InvalidValue (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class InvalidSource(BaseBoostBuildException):
+    pass
 
-class InvalidAttribute (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class AlreadyDefined (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class InvalidFeature(BaseBoostBuildException):
+    pass
 
-class IllegalOperation (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class Recursion (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class InvalidProperty(BaseBoostBuildException):
+    pass
 
-class NoBestMatchingAlternative (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
 
-class NoAction (BaseException):
-    def __init__ (self, message = ''): BaseException.__init__ (self, message)
+class InvalidValue(BaseBoostBuildException):
+    pass
+
+
+class InvalidAttribute(BaseBoostBuildException):
+    pass
+
+
+class AlreadyDefined(BaseBoostBuildException):
+    pass
+
+
+class IllegalOperation(BaseBoostBuildException):
+    pass
+
+
+class Recursion(BaseBoostBuildException):
+    pass
+
+
+class NoBestMatchingAlternative(BaseBoostBuildException):
+    pass
+
+
+class NoAction(BaseBoostBuildException):
+    pass

@@ -1,3 +1,5 @@
+#include <boost/config.hpp>
+
 //
 //  auto_ptr_rv_test.cpp
 //
@@ -7,6 +9,14 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+
+#if defined( BOOST_NO_AUTO_PTR )
+
+int main()
+{
+}
+
+#else
 
 #include <boost/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
@@ -109,3 +119,5 @@ int main()
 
     return boost::report_errors();
 }
+
+#endif // #if defined( BOOST_NO_AUTO_PTR )

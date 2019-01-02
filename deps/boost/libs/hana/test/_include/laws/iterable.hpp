@@ -1,26 +1,45 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_ITERABLE_HPP
 #define BOOST_HANA_TEST_LAWS_ITERABLE_HPP
 
+#include <boost/hana/any_of.hpp>
 #include <boost/hana/assert.hpp>
+#include <boost/hana/at.hpp>
+#include <boost/hana/back.hpp>
 #include <boost/hana/bool.hpp>
 #include <boost/hana/concept/comparable.hpp>
 #include <boost/hana/concept/foldable.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/make.hpp>
+#include <boost/hana/core/to.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/drop_front.hpp>
+#include <boost/hana/drop_front_exactly.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/eval_if.hpp>
+#include <boost/hana/find_if.hpp>
+#include <boost/hana/for_each.hpp>
+#include <boost/hana/front.hpp>
+#include <boost/hana/functional/always.hpp>
 #include <boost/hana/functional/capture.hpp>
 #include <boost/hana/integral_constant.hpp>
+#include <boost/hana/is_empty.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/length.hpp>
 #include <boost/hana/minus.hpp>
+#include <boost/hana/not.hpp>
+#include <boost/hana/optional.hpp>
 #include <boost/hana/range.hpp>
+#include <boost/hana/tuple.hpp>
 
 #include <laws/base.hpp>
 
 
 namespace boost { namespace hana { namespace test {
-    template <typename It, typename = when<true>>
+    template <typename It, typename = hana::when<true>>
     struct TestIterable : TestIterable<It, laws> {
         using TestIterable<It, laws>::TestIterable;
     };
@@ -30,7 +49,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs>
         TestIterable(Xs xs) {
             hana::for_each(xs, [](auto xs) {
-                static_assert(Iterable<decltype(xs)>::value, "");
+                static_assert(Iterable<decltype(xs)>{}, "");
 
                 BOOST_HANA_CONSTANT_CHECK(
                     hana::is_empty(xs) ^iff^ hana::is_empty(hana::to<tuple_tag>(xs))

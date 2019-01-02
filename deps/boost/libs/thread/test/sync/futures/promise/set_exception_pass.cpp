@@ -75,7 +75,36 @@ int main()
       BOOST_TEST(false);
     }
   }
-
+  {
+    typedef int T;
+    boost::promise<T> p;
+    boost::future<T> f = p.get_future();
+    p.set_exception_deferred(boost::make_exception_ptr(3));
+    BOOST_TEST(!f.is_ready());
+    p.notify_deferred();
+    try
+    {
+      f.get();
+      BOOST_TEST(false);
+    }
+    catch (boost::wrap<int> i)
+    {
+      BOOST_TEST(i.value == 3);
+    }
+    try
+    {
+      p.set_exception(boost::make_exception_ptr(3));
+      BOOST_TEST(false);
+    }
+    catch (const boost::future_error& e)
+    {
+      BOOST_TEST(e.code() == boost::system::make_error_code(boost::future_errc::promise_already_satisfied));
+    }
+    catch (...)
+    {
+      BOOST_TEST(false);
+    }
+  }
   return boost::report_errors();
 }
 

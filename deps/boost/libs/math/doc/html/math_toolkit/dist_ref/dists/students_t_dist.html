@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Students t Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="skew_normal_dist.html" title="Skew Normal Distribution">
 <link rel="next" href="triangular_dist.html" title="Triangular Distribution">
@@ -31,18 +31,18 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">students_t_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">students_t_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">students_t</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">students_t_distribution</span>
 <span class="special">{</span>
    <span class="keyword">typedef</span> <span class="identifier">RealType</span> <span class="identifier">value_type</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="identifier">Policy</span>   <span class="identifier">policy_type</span><span class="special">;</span>
 
-   <span class="comment">// Construct:</span>
+   <span class="comment">// Constructor:</span>
    <span class="identifier">students_t_distribution</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">RealType</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">);</span>
 
    <span class="comment">// Accessor:</span>
@@ -60,20 +60,24 @@
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
 <p>
-          A statistical distribution published by William Gosset in 1908. His employer,
-          Guinness Breweries, required him to publish under a pseudonym (possibly
-          to hide that they were using statistics), so he chose "Student".
+          Student's t-distribution is a statistical distribution published by William
+          Gosset in 1908. His employer, Guinness Breweries, required him to publish
+          under a pseudonym (possibly to hide that they were using statistics to
+          improve beer quality), so he chose "Student".
+        </p>
+<p>
           Given N independent measurements, let
         </p>
 <p>
           <span class="inlinemediaobject"><img src="../../../../equations/students_t_dist.svg"></span>
         </p>
 <p>
-          where <span class="emphasis"><em>M</em></span> is the population mean,<span class="emphasis"><em>&#956;</em></span>
+          where <span class="emphasis"><em>M</em></span> is the population mean, <span class="emphasis"><em>&#956;</em></span>
           is the sample mean, and <span class="emphasis"><em>s</em></span> is the sample variance.
         </p>
 <p>
-          Student's t-distribution is defined as the distribution of the random variable
+          <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution" target="_top">Student's
+          t-distribution</a> is defined as the distribution of the random variable
           t which is - very loosely - the "best" that we can do not knowing
           the true standard deviation of the sample. It has the PDF:
         </p>
@@ -93,7 +97,7 @@
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.students_t_dist.h0"></a>
-          <span><a name="math_toolkit.dist_ref.dists.students_t_dist.member_functions"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.member_functions">Member
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.member_functions"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.member_functions">Member
           Functions</a>
         </h5>
 <pre class="programlisting"><span class="identifier">students_t_distribution</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">RealType</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">);</span>
@@ -103,14 +107,15 @@
           of freedom.
         </p>
 <p>
-          Requires <span class="emphasis"><em>v</em></span> &gt; 0, otherwise calls <a class="link" href="../../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
+          Requires <span class="emphasis"><em>v</em></span> &gt; 0, including infinity (if RealType
+          permits), otherwise calls <a class="link" href="../../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
           Note that non-integral degrees of freedom are supported, and are meaningful
           under certain circumstances.
         </p>
 <pre class="programlisting"><span class="identifier">RealType</span> <span class="identifier">degrees_of_freedom</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
 </pre>
 <p>
-          Returns the number of degrees of freedom of this distribution.
+          returns the number of degrees of freedom of this distribution.
         </p>
 <pre class="programlisting"><span class="keyword">static</span> <span class="identifier">RealType</span> <span class="identifier">find_degrees_of_freedom</span><span class="special">(</span>
    <span class="identifier">RealType</span> <span class="identifier">difference_from_mean</span><span class="special">,</span>
@@ -120,13 +125,13 @@
    <span class="identifier">RealType</span> <span class="identifier">hint</span> <span class="special">=</span> <span class="number">100</span><span class="special">);</span>
 </pre>
 <p>
-          Returns the number of degrees of freedom required to observe a significant
+          returns the number of degrees of freedom required to observe a significant
           result in the Student's t test when the mean differs from the "true"
           mean by <span class="emphasis"><em>difference_from_mean</em></span>.
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">difference_from_mean</span></dt>
 <dd><p>
                 The difference between the true mean and the sample mean that we
@@ -170,7 +175,7 @@
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.students_t_dist.h1"></a>
-          <span><a name="math_toolkit.dist_ref.dists.students_t_dist.non_member_accessors"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.non_member_accessors">Non-member
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.non_member_accessors"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.non_member_accessors">Non-member
           Accessors</a>
         </h5>
 <p>
@@ -190,7 +195,7 @@
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.students_t_dist.h2"></a>
-          <span><a name="math_toolkit.dist_ref.dists.students_t_dist.examples"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.examples">Examples</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.examples"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.examples">Examples</a>
         </h5>
 <p>
           Various <a class="link" href="../../stat_tut/weg/st_eg.html" title="Student's t Distribution Examples">worked examples</a>
@@ -198,7 +203,7 @@
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.students_t_dist.h3"></a>
-          <span><a name="math_toolkit.dist_ref.dists.students_t_dist.accuracy"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.accuracy">Accuracy</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.accuracy"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.accuracy">Accuracy</a>
         </h5>
 <p>
           The normal distribution is implemented in terms of the <a class="link" href="../../sf_beta/ibeta_function.html" title="Incomplete Beta Functions">incomplete
@@ -207,7 +212,7 @@
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.students_t_dist.h4"></a>
-          <span><a name="math_toolkit.dist_ref.dists.students_t_dist.implementation"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.implementation">Implementation</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.implementation0"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.implementation0">Implementation</a>
         </h5>
 <p>
           In the following table <span class="emphasis"><em>v</em></span> is the degrees of freedom
@@ -405,18 +410,24 @@
           then the moment is undefined. Evaluating the moment will throw a <a class="link" href="../../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>
           unless ignored by a policy, when it will return <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;&gt;::</span><span class="identifier">quiet_NaN</span><span class="special">();</span></code>
         </p>
+<h6>
+<a name="math_toolkit.dist_ref.dists.students_t_dist.h5"></a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.students_t_dist.implementation"></a></span><a class="link" href="students_t_dist.html#math_toolkit.dist_ref.dists.students_t_dist.implementation">Implementation</a>
+        </h6>
 <p>
-          (For simplicity, we have not implemented the return of infinity in some
-          cases as suggested by <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution" target="_top">Wikipedia
-          Student's t</a>. See also <a href="https://svn.boost.org/trac/boost/ticket/7177" target="_top">https://svn.boost.org/trac/boost/ticket/7177</a>.)
+          (By popular demand, we now support infinite argument and random deviate.
+          But we have not implemented the return of infinity as suggested by <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution" target="_top">Wikipedia
+          Student's t</a>, instead throwing a domain error or return NaN. See
+          also <a href="https://svn.boost.org/trac/boost/ticket/7177" target="_top">https://svn.boost.org/trac/boost/ticket/7177</a>.)
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

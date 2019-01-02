@@ -61,6 +61,11 @@ public:
         }
     }
 
+    inline void reset()
+    {
+        *this = visit_info();
+    }
+
     inline void finalize()
     {
         if (visited() || started() || finished() )

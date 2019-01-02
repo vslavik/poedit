@@ -5,6 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+#include <string>
+
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/fusion/sequence/intrinsic/at.hpp>
 #include <boost/fusion/mpl.hpp>
@@ -14,6 +16,8 @@
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/static_assert.hpp>
+
+#include "fixture.hpp"
 
 #if !defined(FUSION_AT)
 #define FUSION_AT at_c
@@ -36,12 +40,6 @@ namespace test_detail
     struct DD { operator CC() const { return CC(); }; };
 }
 
-boost::fusion::FUSION_SEQUENCE<double, double, double, double>
-foo(int i)
-{
-   return boost::fusion::FUSION_MAKE(i, i+1, i+2, i+3);
-}
-
 void test_mpl()
 {
     using namespace boost::fusion;
@@ -60,6 +58,7 @@ void test_mpl()
     BOOST_STATIC_ASSERT(equal::value);
 }
 
+template <template <typename> class Scenario>
 void
 test()
 {
@@ -77,6 +76,9 @@ test()
     BOOST_TEST((double)FUSION_AT<0>(t1) == FUSION_AT<0>(t3));
     BOOST_TEST(FUSION_AT<1>(t1) == FUSION_AT<1>(t3)[0]);
 
+    BOOST_TEST(FUSION_AT<0>(t1) == 4);
+    BOOST_TEST(FUSION_AT<1>(t1) == 'a');
+
     // testing copy and assignment with implicit conversions
     // between elements testing tie
 
@@ -91,8 +93,62 @@ test()
     BOOST_TEST(c=='a');
     BOOST_TEST(d>5.4 && d<5.6);
 
-    // returning a tuple with conversion
-    foo(2);
-
     test_mpl();
+
+
+    BOOST_TEST((run< Scenario< FUSION_SEQUENCE<> > >(FUSION_SEQUENCE<>())));
+
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<int> > >(FUSION_SEQUENCE<int>(500))
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<convertible> > >(
+            FUSION_SEQUENCE<int>(500)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<int> > >(
+            FUSION_SEQUENCE<int, int>(500, 100)
+          , FUSION_SEQUENCE<int>(500)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<convertible> > >(
+            FUSION_SEQUENCE<int, int>(500, 100)
+          , FUSION_SEQUENCE<convertible>(500)
+        )
+    ));
+
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<int, int> > >(
+            FUSION_SEQUENCE<int, int>(500, 600)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<convertible, int> > >(
+            FUSION_SEQUENCE<convertible, int>(100, 500)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<int, convertible> > >(
+            FUSION_SEQUENCE<int, convertible>(500, 600)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<convertible, convertible> > >(
+            FUSION_SEQUENCE<int, int>(400, 500)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<int, int> > >(
+            FUSION_SEQUENCE<int, int, int>(500, 100, 323)
+          , FUSION_SEQUENCE<int, int>(500, 100)
+        )
+    ));
+    BOOST_TEST((
+        run< Scenario< FUSION_SEQUENCE<convertible, convertible> > >(
+            FUSION_SEQUENCE<int, int, int>(500, 600, 100)
+          , FUSION_SEQUENCE<convertible, convertible>(500, 600)
+        )
+    ));
 }

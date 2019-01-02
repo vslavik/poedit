@@ -63,6 +63,28 @@ int main()
     BOOST_TEST( X::instances == 0 );
 
     {
+        boost::shared_ptr< X > px = boost::allocate_shared_noinit< X >( std::allocator<void>() );
+        BOOST_TEST( X::instances == 1 );
+
+        try
+        {
+            boost::shared_ptr< X > qx = px->shared_from_this();
+
+            BOOST_TEST( px == qx );
+            BOOST_TEST( !( px < qx ) && !( qx < px ) );
+
+            px.reset();
+            BOOST_TEST( X::instances == 1 );
+        }
+        catch( boost::bad_weak_ptr const& )
+        {
+            BOOST_ERROR( "px->shared_from_this() failed" );
+        }
+    }
+
+    BOOST_TEST( X::instances == 0 );
+
+    {
         boost::shared_ptr< X > px = boost::allocate_shared< X >( std::allocator<void>(), 1 );
         BOOST_TEST( X::instances == 1 );
 

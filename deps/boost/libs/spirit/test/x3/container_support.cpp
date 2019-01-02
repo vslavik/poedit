@@ -48,6 +48,11 @@ void test_map_support(Container&& container)
     auto const seq_rule = pair_rule >> ',' >> pair_rule >> ',' >> pair_rule;
     container.clear();
     BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = pair_rule >> +(',' >> pair_rule);
+    container.clear();
+    BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", cic_rule, container));
 }
 
 template <typename Container>
@@ -66,6 +71,11 @@ void test_multimap_support(Container&& container)
     auto const seq_rule = pair_rule >> ',' >> pair_rule >> ',' >> pair_rule;
     container.clear();
     BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = pair_rule >> +(',' >> pair_rule);
+    container.clear();
+    BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", cic_rule, container));
 }
 
 template <typename Container>
@@ -84,6 +94,11 @@ void test_sequence_support(Container&& container)
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
     BOOST_TEST(test_attr("e1,e2,e2", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = string_rule >> +(',' >> string_rule);
+    container.clear();
+    BOOST_TEST(test_attr("e1,e2,e2", cic_rule, container));
 }
 
 template <typename Container>
@@ -102,6 +117,11 @@ void test_set_support(Container&& container)
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
     BOOST_TEST(test_attr("e1,e2,e2", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = string_rule >> +(',' >> string_rule);
+    container.clear();
+    BOOST_TEST(test_attr("e1,e2,e2", cic_rule, container));
 }
 
 template <typename Container>
@@ -120,6 +140,11 @@ void test_multiset_support(Container&& container)
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
     BOOST_TEST(test_attr("e1,e2,e2", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = string_rule >> +(',' >> string_rule);
+    container.clear();
+    BOOST_TEST(test_attr("e1,e2,e2", cic_rule, container));
 }
 
 template <typename Container>
@@ -138,6 +163,11 @@ void test_string_support(Container&& container)
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
     BOOST_TEST(test_attr("e1,e2,e2", seq_rule, container));
+
+    // test parsing container into container
+    auto const cic_rule = string_rule >> +(',' >> string_rule);
+    container.clear();
+    BOOST_TEST(test_attr("e1,e2,e2", cic_rule, container));
 }
 
 int

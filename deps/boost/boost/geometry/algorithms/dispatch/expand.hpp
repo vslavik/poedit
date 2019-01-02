@@ -5,10 +5,11 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2017.
+// Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -39,8 +40,6 @@ namespace dispatch
 template
 <
     typename GeometryOut, typename Geometry,
-    typename StrategyLess = strategy::compare::default_strategy,
-    typename StrategyGreater = strategy::compare::default_strategy,
     typename TagOut = typename tag<GeometryOut>::type,
     typename Tag = typename tag<Geometry>::type,
     typename CSTagOut = typename cs_tag<GeometryOut>::type,

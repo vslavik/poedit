@@ -2,13 +2,13 @@
 // tcp_server.cpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/read.hpp>
 #include <boost/asio/write.hpp>
@@ -20,14 +20,14 @@
 
 using boost::asio::ip::tcp;
 
-#include "yield.hpp"
+#include <boost/asio/yield.hpp>
 
-class tcp_server : coroutine
+class tcp_server : boost::asio::coroutine
 {
 public:
   tcp_server(tcp::acceptor& acceptor, std::size_t buf_size) :
     acceptor_(acceptor),
-    socket_(acceptor_.get_io_service()),
+    socket_(acceptor_.get_executor().context()),
     buffer_(buf_size)
   {
   }
@@ -79,7 +79,7 @@ private:
   tcp::endpoint sender_;
 };
 
-#include "unyield.hpp"
+#include <boost/asio/unyield.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -96,8 +96,8 @@ int main(int argc, char* argv[])
   std::size_t buf_size = std::atoi(argv[3]);
   bool spin = (std::strcmp(argv[4], "spin") == 0);
 
-  boost::asio::io_service io_service(1);
-  tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port));
+  boost::asio::io_context io_context(1);
+  tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), port));
   std::vector<boost::shared_ptr<tcp_server> > servers;
 
   for (int i = 0; i < max_connections; ++i)
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
   }
 
   if (spin)
-    for (;;) io_service.poll();
+    for (;;) io_context.poll();
   else
-    io_service.run();
+    io_context.run();
 }

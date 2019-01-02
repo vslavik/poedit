@@ -2,7 +2,8 @@
 @file
 Defines `boost::hana::find_if`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
+@copyright Jason Rice 2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -17,19 +18,12 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/bool.hpp>
 #include <boost/hana/concept/iterable.hpp>
 #include <boost/hana/concept/searchable.hpp>
-#include <boost/hana/concept/sequence.hpp>
 #include <boost/hana/concept/struct.hpp>
 #include <boost/hana/config.hpp>
 #include <boost/hana/core/dispatch.hpp>
-#include <boost/hana/detail/decay.hpp>
-#include <boost/hana/drop_while.hpp>
 #include <boost/hana/first.hpp>
-#include <boost/hana/front.hpp>
 #include <boost/hana/functional/compose.hpp>
-#include <boost/hana/is_empty.hpp>
-#include <boost/hana/length.hpp>
-#include <boost/hana/not.hpp>
-#include <boost/hana/optional.hpp>
+#include <boost/hana/index_if.hpp>
 #include <boost/hana/second.hpp>
 #include <boost/hana/transform.hpp>
 
@@ -62,68 +56,26 @@ BOOST_HANA_NAMESPACE_BEGIN
     };
 
     namespace detail {
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N, bool Done>
-        struct advance_until;
+        template <typename Xs>
+        struct partial_at {
+            Xs const& xs;
 
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N>
-        struct advance_until<Xs, Pred, i, N, false>
-            : advance_until<Xs, Pred, i + 1, N, static_cast<bool>(detail::decay<decltype(
-                std::declval<Pred>()(hana::at_c<i>(std::declval<Xs>()))
-            )>::type::value)>
-        { };
-
-        template <typename Xs, typename Pred, std::size_t N>
-        struct advance_until<Xs, Pred, N, N, false> {
-            template <typename Ys>
-            static constexpr auto apply(Ys&&) {
-                return hana::nothing;
-            }
-        };
-
-        template <typename Xs, typename Pred, std::size_t i, std::size_t N>
-        struct advance_until<Xs, Pred, i, N, true> {
-            template <typename Ys>
-            static constexpr auto apply(Ys&& ys) {
-                return hana::just(hana::at_c<i - 1>(static_cast<Ys&&>(ys)));
+            template <typename I>
+            constexpr decltype(auto) operator()(I i) const {
+                return hana::at(xs, i);
             }
         };
     }
 
-    template <typename S>
-    struct find_if_impl<S, when<Sequence<S>::value>> {
-        template <typename Xs, typename Pred>
-        static constexpr auto apply(Xs&& xs, Pred&&) {
-            constexpr std::size_t N = decltype(hana::length(xs))::value;
-            return detail::advance_until<Xs&&, Pred&&, 0, N, false>::apply(
-                static_cast<Xs&&>(xs)
-            );
-        }
-    };
-
-    template <typename It>
-    struct find_if_impl<It, when<hana::Iterable<It>::value && !Sequence<It>::value>> {
-        template <typename Xs, typename Pred>
-        static constexpr auto find_if_helper(Xs&& xs, Pred&& pred, hana::true_) {
-            return hana::just(hana::front(
-                hana::drop_while(static_cast<Xs&&>(xs),
-                    hana::compose(hana::not_, static_cast<Pred&&>(pred)))
-            ));
-        }
-
-        template <typename Xs, typename Pred>
-        static constexpr auto find_if_helper(Xs&&, Pred&&, hana::false_) {
-            return hana::nothing;
-        }
-
+    template <typename Tag>
+    struct find_if_impl<Tag, when<Iterable<Tag>::value>> {
         template <typename Xs, typename Pred>
         static constexpr auto apply(Xs&& xs, Pred&& pred) {
-            constexpr bool found = !decltype(
-                hana::is_empty(hana::drop_while(static_cast<Xs&&>(xs),
-                    hana::compose(hana::not_, static_cast<Pred&&>(pred))))
-            )::value;
-            return find_if_impl::find_if_helper(static_cast<Xs&&>(xs),
-                                                static_cast<Pred&&>(pred),
-                                                hana::bool_<found>{});
+            using Result = decltype(hana::index_if(
+                static_cast<Xs&&>(xs), static_cast<Pred&&>(pred)));
+
+            return hana::transform(Result{},
+                detail::partial_at<std::decay_t<Xs>>{static_cast<Xs&&>(xs)});
         }
     };
 

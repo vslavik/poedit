@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Document Structure</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../quickbook.html" title="Chapter&#160;44.&#160;Quickbook 1.6">
+<link rel="up" href="../../quickbook.html" title="Chapter&#160;50.&#160;Quickbook 1.7">
 <link rel="prev" href="../syntax.html" title="Syntax Summary">
 <link rel="next" href="phrase.html" title="Phrase Level Elements">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="quickbook.syntax.structure"></a>Document Structure</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo">Document
       Info</a></span></dt>
 <dt><span class="section"><a href="structure.html#quickbook.syntax.structure.section">Sections</a></span></dt>
@@ -36,7 +36,7 @@
 <a name="quickbook.syntax.structure.docinfo"></a><a name="quickbook.ref.docinfo"></a><a class="link" href="structure.html#quickbook.syntax.structure.docinfo" title="Document Info">Document
       Info</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo.attributes">Document
         Info Attributes</a></span></dt>
 <dt><span class="section"><a href="structure.html#quickbook.syntax.structure.docinfo.nesting">Nesting
@@ -47,7 +47,7 @@
         like this:
       </p>
 <pre class="programlisting">[article The Document Title
-    [quickbook 1.5]
+    [quickbook 1.7]
     [version 1.0]
     [id the_document_name]
     [copyright 2000 2002 2003 Joe Blow, Jane Doe]
@@ -62,7 +62,7 @@
         described in <a href="http://www.docbook.org/tdg/" target="_top">DocBook: The Definitive
         Guide</a>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="http://www.docbook.org/tdg/en/html/book.html" target="_top">book</a>
           </li>
@@ -102,7 +102,7 @@
         So the documentation for the 'foo' library might start:
       </p>
 <pre class="programlisting">[library Foo
-    [quickbook 1.5]
+    [quickbook 1.7]
     [id foo]
     [version 1.0]
 ]
@@ -118,15 +118,15 @@
         </p>
 <h5>
 <a name="quickbook.syntax.structure.docinfo.attributes.h0"></a>
-          <span><a name="quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data">Quickbook
+          <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.quickbook_specific_meta_data">Quickbook
           specific meta data</a>
         </h5>
-<pre class="programlisting">[quickbook 1.6]
+<pre class="programlisting">[quickbook 1.7]
 </pre>
 <p>
           The <code class="computeroutput">quickbook</code> attribute declares the version of quickbook
           the document is written for. In its absence, version 1.1 is assumed. It's
-          recommended that you use <code class="computeroutput">[quickbook 1.6]</code> which is the version
+          recommended that you use <code class="computeroutput">[quickbook 1.7]</code> which is the version
           described here.
         </p>
 <div class="note"><table border="0" summary="Note">
@@ -144,7 +144,7 @@
           </p>
 <pre class="programlisting">[article Article that was original
          written in quickbook 1.3
-[quickbook 1.6]
+[quickbook 1.7]
 [compatibility-mode 1.3]
 ]
 </pre>
@@ -168,7 +168,7 @@
         </p>
 <h5>
 <a name="quickbook.syntax.structure.docinfo.attributes.h1"></a>
-          <span><a name="quickbook.syntax.structure.docinfo.attributes.boostbook_docbook_root_element_a"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.boostbook_docbook_root_element_a">Boostbook/Docbook
+          <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.boostbook_docbook_root_element_a"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.boostbook_docbook_root_element_a">Boostbook/Docbook
           root element attributes</a>
         </h5>
 <pre class="programlisting">[id foo]
@@ -200,7 +200,7 @@
         </p>
 <h5>
 <a name="quickbook.syntax.structure.docinfo.attributes.h2"></a>
-          <span><a name="quickbook.syntax.structure.docinfo.attributes.docbook_metadata"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.docbook_metadata">Docbook
+          <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.docbook_metadata"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.docbook_metadata">Docbook
           Metadata</a>
         </h5>
 <p>
@@ -210,7 +210,7 @@
         </p>
 <h5>
 <a name="quickbook.syntax.structure.docinfo.attributes.h3"></a>
-          <span><a name="quickbook.syntax.structure.docinfo.attributes.boostbook_metadata"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.boostbook_metadata">Boostbook
+          <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.boostbook_metadata"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.boostbook_metadata">Boostbook
           Metadata</a>
         </h5>
 <p>
@@ -219,6 +219,30 @@
           If you use them for other document types, quickbook will warn about them,
           but still use them, generating invalid markup, that's just ignored by the
           style sheets.
+        </p>
+<h5>
+<a name="quickbook.syntax.structure.docinfo.attributes.h4"></a>
+          <span class="phrase"><a name="quickbook.syntax.structure.docinfo.attributes.escaped-docbook"></a></span><a class="link" href="structure.html#quickbook.syntax.structure.docinfo.attributes.escaped-docbook">Escaped
+          Docbook</a>
+        </h5>
+<p>
+          From quickbook 1.7 onwards, <a class="link" href="phrase.html#quickbook.ref.escape">escaped
+          boostbook or docbook</a> can be included in a docinfo block:
+        </p>
+<pre class="programlisting">[article Some article
+[quickbook 1.7]
+'''&lt;author&gt;
+    &lt;firstname&gt;John&lt;/firstname&gt;
+    &lt;surname&gt;Doe&lt;/surname&gt;
+    &lt;email&gt;john.doe@example.com&lt;/email&gt;
+&lt;/author&gt;'''
+]
+</pre>
+<p>
+          The escaped docbook is always placed at the end of the docinfo block, so
+          it shouldn't be assumed that it will interleave with markup generated from
+          quickbook. A mixture of quickbook and docbook attributes for the same information
+          will not work well.
         </p>
 </div>
 <div class="section">
@@ -234,7 +258,7 @@
           and a chapter, you first create a file for the book:
         </p>
 <pre class="programlisting">[book Simple example
-[quickbook 1.6]
+[quickbook 1.7]
 ]
 
 [include introduction.qbk]
@@ -247,7 +271,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             Structuring a document like this was introduced in quickbook 1.6, so
-            the <code class="computeroutput">[quickbook 1.6]</code> docinfo field is required.
+            a <code class="computeroutput">[quickbook 1.6]</code> or later docinfo field is required.
           </p></td></tr>
 </table></div>
 <p>
@@ -255,7 +279,7 @@
           so the contents of <code class="computeroutput">introduction.qbk</code> should be something like:
         </p>
 <pre class="programlisting">[preface Introduction
-[quickbook 1.6]
+[quickbook 1.7]
 ]
 
 Write the introduction to the book here....
@@ -264,7 +288,7 @@ Write the introduction to the book here....
           And <code class="computeroutput">chapter.qbk</code>:
         </p>
 <pre class="programlisting">[chapter A chapter
-[quickbook 1.6]
+[quickbook 1.7]
 ]
 
 Chapter contents....
@@ -319,6 +343,27 @@ Chapter contents....
         Thus: "The Section Title" will be normalized to "the_section_title".
       </p>
 <p>
+        The end of the section can also have an optional id, this is just used to
+        check that it matches the opening of the section.
+      </p>
+<pre class="programlisting">[section:matching Section with an id]
+
+[/...]
+
+[endsect:matching]
+</pre>
+<p>
+        It won't match a generated id, only one that's explicitly specified, so this
+        will be an error, even if quickbook generates the id <code class="computeroutput">generated</code>
+        for the section:
+      </p>
+<pre class="programlisting">[section Generated]
+
+[/...]
+
+[endsect:generated]
+</pre>
+<p>
         Sections can nest, and that results in a hierarchy in the table of contents.
       </p>
 </div>
@@ -326,7 +371,7 @@ Chapter contents....
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2002, 2004, 2006 Joel de Guzman,
-      Eric Niebler<br>Copyright &#169; 2010, 2011 Daniel James<p>
+      Eric Niebler<br>Copyright &#169; 2010-2017 Daniel James<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

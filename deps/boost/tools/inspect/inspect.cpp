@@ -9,7 +9,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  This program recurses through sub-directories looking for various problems.
-//  It contains some Boost specific features, like ignoring "CVS" and "bin",
+//  It contains some Boost specific features, like ignoring "bin",
 //  and the code that identifies library names assumes the Boost directory
 //  structure.
 
@@ -58,8 +58,6 @@ const char* boost_no_inspect = "boost-" "no-inspect";
 #include "deprecated_macro_check.hpp"
 #include "minmax_check.hpp"
 #include "unnamed_namespace_check.hpp"
-
-//#include "cvs_iterator.hpp"
 
 #if !defined(INSPECT_USE_BOOST_TEST)
 #define INSPECT_USE_BOOST_TEST 0
@@ -132,91 +130,6 @@ namespace
   typedef std::vector< lib_error_count > lib_error_count_vector;
   lib_error_count_vector libs;
 
-//  run subversion to get revisions info  ------------------------------------//
-//
-// implemented as function object that can be passed to boost::execution_monitor
-// in order to swallow any errors from 'svn info'.
-
-  struct svn_check
-  {
-    explicit svn_check(const fs::path & inspect_root) :
-      inspect_root(inspect_root), fp(0) {}
-
-    int operator()() {
-      string rev("unknown");
-      string repos("unknown");
-      string command("cd ");
-      command += inspect_root.string() + " && svn info";
-
-      fp = (POPEN(command.c_str(), "r"));
-      if (fp)
-      {
-        static const int line_max = 128;
-        char line[line_max];
-        while (fgets(line, line_max, fp) != NULL)
-        {
-          string ln(line);
-          string::size_type pos;
-          if ((pos = ln.find("Revision: ")) != string::npos)
-            rev = ln.substr(pos + 10);
-          else if ((pos = ln.find("URL: ")) != string::npos)
-            repos = ln.substr(pos + 5);
-        }
-      }
-
-      result = repos + " at revision " + rev;
-      return 0;
-    }
-
-    ~svn_check() { if (fp) PCLOSE(fp); }
-
-    const fs::path & inspect_root;
-    std::string result;
-    FILE* fp;
-  private:
-    svn_check(svn_check const&);
-    svn_check const& operator=(svn_check const&);
-  };
-
-  // Small helper class because svn_check can't be passed by copy.
-  template <typename F, typename R>
-  struct nullary_function_ref
-  {
-    explicit nullary_function_ref(F& f) : f(f) {}
-    R operator()() const { return f(); }
-    F& f;
-  };
-
-//  get info (as a string) if inspect_root is svn working copy  --------------//
-
-  string info( const fs::path & inspect_root )
-  {
-    svn_check check(inspect_root);
-
-#if !INSPECT_USE_BOOST_TEST
-    check();
-#else
-
-    try {
-      boost::execution_monitor e;
-      e.execute(nullary_function_ref<svn_check, int>(check));
-    }
-    catch(boost::execution_exception const& e) {
-      if (e.code() == boost::execution_exception::system_error) {
-        // There was an error running 'svn info' - it probably
-        // wasn't run in a subversion repo.
-        return string("unknown");
-      }
-      else {
-        throw;
-      }
-    }
-
-#endif
-
-    return check.result;
-  }
-
 //  visit_predicate (determines which directories are visited)  --------------//
 
   typedef bool(*pred_type)(const path&);
@@ -229,10 +142,8 @@ namespace
       return false;      //  .htaccess, .git, .svn, .bzr, .DS_Store, etc.
      
     return
-      // so we can inspect a CVS checkout
-      leaf != "CVS"
       // don't look at binaries
-      && leaf != "bin"
+      leaf != "bin"
       && leaf != "bin.v2"
       // no point in checking doxygen xml output
       && local.find("doc/xml") != 0
@@ -635,6 +546,12 @@ namespace
   const char * options()
   {
     return
+         " Output Options:\n\n"
+         "  -brief\n"
+         "  -text\n"
+         "  -version-string <version message>\n"
+         "\n"
+         " Checks:\n\n"
          "  -license\n"
          "  -copyright\n"
          "  -crlf\n"
@@ -648,6 +565,7 @@ namespace
          "  -deprecated_macro\n"
          "  -minmax\n"
          "  -unnamed\n"
+         "  -version-string <version message>\n"
          " default is all checks on; otherwise options specify desired checks"
          "\n";
   }
@@ -812,28 +730,27 @@ int cpp_main( int argc_param, char * argv_param[] )
   if ( argc > 1 && (std::strcmp( argv[1], "-help" ) == 0
     || std::strcmp( argv[1], "--help" ) == 0 ) )
   {
-    //std::clog << "Usage: inspect [search-root] [-cvs] [-text] [-brief] [options...]\n\n"
-    std::clog << "Usage: inspect [search-root] [-text] [-brief] [options...]\n\n"
+    std::clog << "Usage: inspect [search-root] [options...]\n\n"
       " search-root default is the current directory (i.e. '.')\n\n"
-      " Options:\n"
       << options() << '\n';
     return 0;
   }
 
-  bool license_ck = true;
-  bool copyright_ck = true;
-  bool crlf_ck = true;
-  bool end_ck = true;
-  bool link_ck = true;
-  bool path_name_ck = true;
-  bool tab_ck = true;
-  bool ascii_ck = true;
-  bool apple_ck = true;
-  bool assert_ck = true;
-  bool deprecated_ck = true;
-  bool minmax_ck = true;
-  bool unnamed_ck = true;
-  //bool cvs = false;
+  bool options_not_set = true;
+  bool license_ck = false;
+  bool copyright_ck = false;
+  bool crlf_ck = false;
+  bool end_ck = false;
+  bool link_ck = false;
+  bool path_name_ck = false;
+  bool tab_ck = false;
+  bool ascii_ck = false;
+  bool apple_ck = false;
+  bool assert_ck = false;
+  bool deprecated_ck = false;
+  bool minmax_ck = false;
+  bool unnamed_ck = false;
+  const char* version_string = 0;
 
   if ( argc > 1 && *argv[1] != '-' )
   {
@@ -841,70 +758,79 @@ int cpp_main( int argc_param, char * argv_param[] )
     --argc; ++argv;
   }
 
-  //if ( argc > 1 && std::strcmp( argv[1], "-cvs" ) == 0 )
-  //{
-  //  cvs = true;
-  //  --argc; ++argv;
-  //}
-
-  if ( argc > 1 && std::strcmp( argv[1], "-text" ) == 0 )
-  {
-    display_format = display_text;
-    --argc; ++argv;
-  }
-
-  if ( argc > 1 && std::strcmp( argv[1], "-brief" ) == 0 )
-  {
-    display_mode = display_brief;
-    --argc; ++argv;
-  }
-
-  if ( argc > 1 && *argv[1] == '-' )
-  {
-    license_ck = false;
-    copyright_ck = false;
-    crlf_ck = false;
-    end_ck = false;
-    link_ck = false;
-    path_name_ck = false;
-    tab_ck = false;
-    ascii_ck = false;
-    apple_ck = false;
-    assert_ck = false;
-    deprecated_ck = false;
-    minmax_ck = false;
-    unnamed_ck = false;
-  }
-
   bool invalid_options = false;
   for(; argc > 1; --argc, ++argv )
   {
-    if ( std::strcmp( argv[1], "-license" ) == 0 )
+    if ( std::strcmp( argv[1], "-license" ) == 0 ) {
+      options_not_set = false;
       license_ck = true;
-    else if ( std::strcmp( argv[1], "-copyright" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-copyright" ) == 0 ) {
+      options_not_set = false;
       copyright_ck = true;
-    else if ( std::strcmp( argv[1], "-crlf" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-crlf" ) == 0 ) {
+        options_not_set = false;
         crlf_ck = true;
-    else if ( std::strcmp( argv[1], "-end" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-end" ) == 0 ) {
+        options_not_set = false;
         end_ck = true;
-    else if ( std::strcmp( argv[1], "-link" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-link" ) == 0 ) {
+      options_not_set = false;
       link_ck = true;
-    else if ( std::strcmp( argv[1], "-path_name" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-path_name" ) == 0 ) {
+      options_not_set = false;
       path_name_ck = true;
-    else if ( std::strcmp( argv[1], "-tab" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-tab" ) == 0 ) {
+      options_not_set = false;
       tab_ck = true;
-    else if ( std::strcmp( argv[1], "-ascii" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-ascii" ) == 0 ) {
+      options_not_set = false;
       ascii_ck = true;
-    else if ( std::strcmp( argv[1], "-apple_macro" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-apple_macro" ) == 0 ) {
+      options_not_set = false;
       apple_ck = true;
-    else if ( std::strcmp( argv[1], "-assert_macro" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-assert_macro" ) == 0 ) {
+      options_not_set = false;
       assert_ck = true;
-    else if ( std::strcmp( argv[1], "-deprecated_macro" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-deprecated_macro" ) == 0 ) {
+      options_not_set = false;
       deprecated_ck = true;
-    else if ( std::strcmp( argv[1], "-minmax" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-minmax" ) == 0 ) {
+        options_not_set = false;
         minmax_ck = true;
-    else if ( std::strcmp( argv[1], "-unnamed" ) == 0 )
+    }
+    else if ( std::strcmp( argv[1], "-unnamed" ) == 0 ) {
+        options_not_set = false;
         unnamed_ck = true;
+    }
+    else if ( argc > 1 && std::strcmp( argv[1], "-text" ) == 0 )
+    {
+      display_format = display_text;
+    }
+    else if ( argc > 1 && std::strcmp( argv[1], "-brief" ) == 0 )
+    {
+      display_mode = display_brief;
+    }
+    else if ( std::strcmp( argv[1], "-version-string" ) == 0 ) {
+      if (argc == 2 || argv[2][0] == '-') {
+        std::cerr << "Missing value for -version-string.\n";
+        invalid_options = true;
+      }
+      else {
+        --argc, ++argv;
+        version_string = argv[1];
+      }
+    }
     else
     {
       std::cerr << "unknown option: " << argv[1] << '\n';
@@ -915,6 +841,22 @@ int cpp_main( int argc_param, char * argv_param[] )
       std::cerr << "\nvalid options are:\n"
                 << options();
       return 1;
+  }
+
+  if (options_not_set) {
+    license_ck = true;
+    copyright_ck = true;
+    crlf_ck = true;
+    end_ck = true;
+    link_ck = true;
+    path_name_ck = true;
+    tab_ck = true;
+    ascii_ck = true;
+    apple_ck = true;
+    assert_ck = true;
+    deprecated_ck = true;
+    minmax_ck = true;
+    unnamed_ck = true;
   }
 
   string inspector_keys;
@@ -953,11 +895,6 @@ int cpp_main( int argc_param, char * argv_param[] )
   if ( unnamed_ck )
       inspectors.push_back( inspector_element( new boost::inspect::unnamed_namespace_check ) );
 
-  //// perform the actual inspection, using the requested type of iteration
-  //if ( cvs )
-  //  visit_all<hack::cvs_iterator>( search_root.leaf().string(),
-  //    search_root, inspectors );
-  //else
     visit_all<fs::directory_iterator>( search_root.leaf().string(),
       search_root, inspectors );
 
@@ -979,6 +916,13 @@ int cpp_main( int argc_param, char * argv_param[] )
         "Run Date: " << run_date  << "\n"
         "\n"
       ;
+
+    if (version_string) {
+      std::cout
+        << "The files checked were from "
+        << version_string
+        << ".\n\n";
+    }
 
     std::cout
       << "Totals:\n"
@@ -1017,10 +961,12 @@ int cpp_main( int argc_param, char * argv_param[] )
       "<p>This report is generated by an <a href=\"http://www.boost.org/tools/inspect/index.html\">inspection\n"
       "program</a> that checks files for the problems noted below.</p>\n"
       ;
-    std::cout
-      << "<p>The files checked were from "
-      << info( search_root_path() )
-      << ".</p>\n";
+    if (version_string) {
+      std::cout
+        << "<p>The files checked were from "
+        << html_encode(version_string)
+        << ".</p>\n";
+    }
 
 
     std::cout

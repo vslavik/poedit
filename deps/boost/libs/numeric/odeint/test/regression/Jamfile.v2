@@ -24,7 +24,8 @@ project
 test-suite "odeint"
      :
      [ run regression_147.cpp ]
-     [ compile regression_149.cpp : <cxxflags>-std=c++0x ]
+     [ compile regression_149.cpp ]
      [ run regression_168.cpp ]
+     [ run regression_189.cpp ]
      : <testing.launcher>valgrind
      ;

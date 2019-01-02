@@ -98,6 +98,13 @@ void expected_results()
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
+      ".*Solaris.*",                 // platform
+      largest_type,                  // test type(s)
+      ".*",                          // test data group
+      ".*", 900, 300);               // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       ".*",                          // test data group
@@ -116,6 +123,13 @@ void expected_results()
       "real_concept",                // test type(s)
       ".*I'v.*Mathworld.*",          // test data group
       ".*", 4000, 2000);             // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*Solaris.*",                          // platform
+      "real_concept",                // test type(s)
+      ".*",                          // test data group
+      ".*", 800, 400);               // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib

@@ -7,61 +7,59 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#define BOOST_TEST_MODULE POLYGON_POINT_TEST
-#include <boost/mpl/list.hpp>
-#include <boost/test/test_case_template.hpp>
+#include <boost/core/lightweight_test.hpp>
+#include <boost/polygon/point_concept.hpp>
+#include <boost/polygon/point_data.hpp>
+#include <boost/polygon/point_traits.hpp>
 
-#include "boost/polygon/point_concept.hpp"
-#include "boost/polygon/point_data.hpp"
-#include "boost/polygon/point_traits.hpp"
 using namespace boost::polygon;
 
-typedef boost::mpl::list<int> test_types;
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_data_test, T, test_types) {
-  typedef point_data<T> point_type;
+void point_data_test()
+{
+  typedef point_data<int> point_type;
 
   point_type point1(1, 2);
   point_type point2;
   point2 = point1;
-  BOOST_CHECK_EQUAL(point1.x(), 1);
-  BOOST_CHECK_EQUAL(point1.y(), 2);
-  BOOST_CHECK_EQUAL(point2.x(), 1);
-  BOOST_CHECK_EQUAL(point2.y(), 2);
-  BOOST_CHECK(point1 == point2);
-  BOOST_CHECK(!(point1 != point2));
-  BOOST_CHECK(!(point1 < point2));
-  BOOST_CHECK(!(point1 > point2));
-  BOOST_CHECK(point1 <= point2);
-  BOOST_CHECK(point1 >= point2);
+  BOOST_TEST_EQ(point1.x(), 1);
+  BOOST_TEST_EQ(point1.y(), 2);
+  BOOST_TEST_EQ(point2.x(), 1);
+  BOOST_TEST_EQ(point2.y(), 2);
+  BOOST_TEST(point1 == point2);
+  BOOST_TEST(!(point1 != point2));
+  BOOST_TEST(!(point1 < point2));
+  BOOST_TEST(!(point1 > point2));
+  BOOST_TEST(point1 <= point2);
+  BOOST_TEST(point1 >= point2);
 
   point2.x(2);
   point2.y(1);
-  BOOST_CHECK_EQUAL(point2.x(), 2);
-  BOOST_CHECK_EQUAL(point2.y(), 1);
-  BOOST_CHECK(!(point1 == point2));
-  BOOST_CHECK(point1 != point2);
-  BOOST_CHECK(point1 < point2);
-  BOOST_CHECK(!(point1 > point2));
-  BOOST_CHECK(point1 <= point2);
-  BOOST_CHECK(!(point1 >= point2));
+  BOOST_TEST_EQ(point2.x(), 2);
+  BOOST_TEST_EQ(point2.y(), 1);
+  BOOST_TEST(!(point1 == point2));
+  BOOST_TEST(point1 != point2);
+  BOOST_TEST(point1 < point2);
+  BOOST_TEST(!(point1 > point2));
+  BOOST_TEST(point1 <= point2);
+  BOOST_TEST(!(point1 >= point2));
 
   point2.set(HORIZONTAL, 1);
   point2.set(VERTICAL, 2);
-  BOOST_CHECK(point1 == point2);
+  BOOST_TEST(point1 == point2);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_traits_test, T, test_types) {
-  typedef point_data<T> point_type;
+void point_traits_test()
+{
+  typedef point_data<int> point_type;
 
   point_type point = point_mutable_traits<point_type>::construct(1, 2);
-  BOOST_CHECK_EQUAL(point_traits<point_type>::get(point, HORIZONTAL), 1);
-  BOOST_CHECK_EQUAL(point_traits<point_type>::get(point, VERTICAL), 2);
+  BOOST_TEST_EQ(point_traits<point_type>::get(point, HORIZONTAL), 1);
+  BOOST_TEST_EQ(point_traits<point_type>::get(point, VERTICAL), 2);
 
   point_mutable_traits<point_type>::set(point, HORIZONTAL, 3);
   point_mutable_traits<point_type>::set(point, VERTICAL, 4);
-  BOOST_CHECK_EQUAL(point_traits<point_type>::get(point, HORIZONTAL), 3);
-  BOOST_CHECK_EQUAL(point_traits<point_type>::get(point, VERTICAL), 4);
+  BOOST_TEST_EQ(point_traits<point_type>::get(point, HORIZONTAL), 3);
+  BOOST_TEST_EQ(point_traits<point_type>::get(point, VERTICAL), 4);
 }
 
 template <typename T>
@@ -104,64 +102,67 @@ namespace polygon {
 }  // polygon
 }  // boost
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_concept_test1, T, test_types) {
-  typedef Point<T> point_type;
+void point_concept_test1()
+{
+  typedef Point<int> point_type;
 
   point_type point1 = construct<point_type>(1, 2);
-  BOOST_CHECK_EQUAL(point1.x, 1);
-  BOOST_CHECK_EQUAL(point1.y, 2);
+  BOOST_TEST_EQ(point1.x, 1);
+  BOOST_TEST_EQ(point1.y, 2);
 
   set(point1, HORIZONTAL, 3);
   set(point1, VERTICAL, 4);
-  BOOST_CHECK_EQUAL(get(point1, HORIZONTAL), 3);
-  BOOST_CHECK_EQUAL(get(point1, VERTICAL), 4);
+  BOOST_TEST_EQ(get(point1, HORIZONTAL), 3);
+  BOOST_TEST_EQ(get(point1, VERTICAL), 4);
 
   point_type point2;
   assign(point2, point1);
-  BOOST_CHECK(equivalence(point1, point2));
+  BOOST_TEST(equivalence(point1, point2));
 
   x(point2, 1);
   y(point2, 2);
-  BOOST_CHECK_EQUAL(x(point2), 1);
-  BOOST_CHECK_EQUAL(y(point2), 2);
+  BOOST_TEST_EQ(x(point2), 1);
+  BOOST_TEST_EQ(y(point2), 2);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_concept_test2, T, test_types) {
-  typedef Point<T> point_type;
+void point_concept_test2()
+{
+  typedef Point<int> point_type;
 
   point_type point1 = construct<point_type>(1, 2);
   point_type point2 = construct<point_type>(5, 5);
-  BOOST_CHECK_EQUAL(euclidean_distance(point1, point2, HORIZONTAL), 4);
-  BOOST_CHECK_EQUAL(euclidean_distance(point1, point2, VERTICAL), 3);
-  BOOST_CHECK_EQUAL(manhattan_distance(point1, point2), 7);
-  BOOST_CHECK_EQUAL(euclidean_distance(point1, point2), 5.0);
+  BOOST_TEST_EQ(euclidean_distance(point1, point2, HORIZONTAL), 4);
+  BOOST_TEST_EQ(euclidean_distance(point1, point2, VERTICAL), 3);
+  BOOST_TEST_EQ(manhattan_distance(point1, point2), 7);
+  BOOST_TEST_EQ(euclidean_distance(point1, point2), 5.0);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_concept_test3, T, test_types) {
-  typedef Point<T> point_type;
+void point_concept_test3()
+{
+  typedef Point<int> point_type;
 
   point_type point = construct<point_type>(1, 2);
   point_type shift = construct<point_type>(4, 3);
   convolve(point, shift);
-  BOOST_CHECK_EQUAL(x(point), 5);
-  BOOST_CHECK_EQUAL(y(point), 5);
+  BOOST_TEST_EQ(x(point), 5);
+  BOOST_TEST_EQ(y(point), 5);
 
   deconvolve(point, shift);
-  BOOST_CHECK_EQUAL(x(point), 1);
-  BOOST_CHECK_EQUAL(y(point), 2);
+  BOOST_TEST_EQ(x(point), 1);
+  BOOST_TEST_EQ(y(point), 2);
 
   scale_up(point, 5);
-  BOOST_CHECK_EQUAL(x(point), 5);
-  BOOST_CHECK_EQUAL(y(point), 10);
+  BOOST_TEST_EQ(x(point), 5);
+  BOOST_TEST_EQ(y(point), 10);
 
   scale_down(point, 5);
-  BOOST_CHECK_EQUAL(x(point), 1);
-  BOOST_CHECK_EQUAL(y(point), 2);
+  BOOST_TEST_EQ(x(point), 1);
+  BOOST_TEST_EQ(y(point), 2);
 
   move(point, HORIZONTAL, 2);
   move(point, VERTICAL, 3);
-  BOOST_CHECK_EQUAL(x(point), 3);
-  BOOST_CHECK_EQUAL(y(point), 5);
+  BOOST_TEST_EQ(x(point), 3);
+  BOOST_TEST_EQ(y(point), 5);
 }
 
 template<typename T>
@@ -178,15 +179,27 @@ struct Transformer {
   }
 };
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(point_concept_test4, T, test_types) {
-  typedef Point<T> point_type;
+void point_concept_test4()
+{
+  typedef Point<int> point_type;
 
   point_type point = construct<point_type>(1, 2);
-  scale(point, Transformer<T>());
-  BOOST_CHECK_EQUAL(x(point), 2);
-  BOOST_CHECK_EQUAL(y(point), 4);
+  scale(point, Transformer<int>());
+  BOOST_TEST_EQ(x(point), 2);
+  BOOST_TEST_EQ(y(point), 4);
 
-  transform(point, Transformer<T>());
-  BOOST_CHECK_EQUAL(x(point), 4);
-  BOOST_CHECK_EQUAL(y(point), 2);
+  transform(point, Transformer<int>());
+  BOOST_TEST_EQ(x(point), 4);
+  BOOST_TEST_EQ(y(point), 2);
+}
+
+int main()
+{
+    point_data_test();
+    point_traits_test();
+    point_concept_test1();
+    point_concept_test2();
+    point_concept_test3();
+    point_concept_test4();
+    return boost::report_errors();
 }

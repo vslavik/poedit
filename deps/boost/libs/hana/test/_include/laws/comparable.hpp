@@ -1,21 +1,34 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_COMPARABLE_HPP
 #define BOOST_HANA_TEST_LAWS_COMPARABLE_HPP
 
+#include <boost/hana/and.hpp>
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
+#include <boost/hana/comparing.hpp>
 #include <boost/hana/concept/comparable.hpp>
+#include <boost/hana/concept/constant.hpp>
+#include <boost/hana/concept/product.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/make.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/first.hpp>
+#include <boost/hana/for_each.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/not_equal.hpp>
+#include <boost/hana/second.hpp>
+#include <boost/hana/value.hpp>
+
 
 #include <laws/base.hpp>
 
 
 namespace boost { namespace hana { namespace test {
-    template <typename T, typename = when<true>>
+    template <typename T, typename = hana::when<true>>
     struct TestComparable : TestComparable<T, laws> {
         using TestComparable<T, laws>::TestComparable;
     };
@@ -25,7 +38,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs>
         TestComparable(Xs xs) {
             hana::for_each(xs, [](auto x) {
-                static_assert(Comparable<decltype(x)>::value, "");
+                static_assert(hana::Comparable<decltype(x)>{}, "");
             });
 
             foreach2(xs, [](auto a, auto b) {
@@ -47,11 +60,11 @@ namespace boost { namespace hana { namespace test {
 
                 // equal.to and not_equal.to
                 BOOST_HANA_CHECK(
-                    equal.to(a)(b) ^iff^ hana::equal(a, b)
+                    hana::equal.to(a)(b) ^iff^ hana::equal(a, b)
                 );
 
                 BOOST_HANA_CHECK(
-                    not_equal.to(a)(b) ^iff^ hana::not_equal(a, b)
+                    hana::not_equal.to(a)(b) ^iff^ hana::not_equal(a, b)
                 );
 
                 // comparing

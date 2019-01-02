@@ -16,6 +16,7 @@ using namespace boost;
 
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 #if defined(__sun)
@@ -70,20 +71,18 @@ pair<string, string> additional_parser(const std::string&)
     return pair<string, string>();
 }
 
-void test_command_line()
-{
-    // The following commented out blocks used to test parsing
-    // command line without syntax specification behaviour.
-    // It is disabled now and probably will never be enabled again:
-    // it is not possible to figure out what command line means without
-    // user's help.
-    #if 0
+namespace command_line {
+
+#if 0
+// The following commented out blocks used to test parsing
+// command line without syntax specification behaviour.
+// It is disabled now and probably will never be enabled again:
+// it is not possible to figure out what command line means without
+// user's help.
+void test_parsing_without_specifying_options() {
     char* cmdline1[] = { "--a", "--b=12", "-f", "-g4", "-", "file" };
-
-    options_and_arguments a1 =
-        parse_command_line(cmdline1,
-                           cmdline1 + sizeof(cmdline1)/sizeof(cmdline1[0]));
-
+    options_and_arguments a1 = parse_command_line(cmdline1,
+            cmdline1 + sizeof(cmdline1) / sizeof(cmdline1[0]));
     BOOST_REQUIRE(a1.options().size() == 4);
     BOOST_CHECK(a1.options()[0] == msp("a", ""));
     BOOST_CHECK(a1.options()[1] == msp("b", "12"));
@@ -92,71 +91,80 @@ void test_command_line()
     BOOST_REQUIRE(a1.arguments().size() == 2);
     BOOST_CHECK(a1.arguments()[0] == "-");
     BOOST_CHECK(a1.arguments()[1] == "file");
-
     char* cmdline2[] = { "--a", "--", "file" };
-
-    options_and_arguments a2 =
-        parse_command_line(cmdline2,
-                           cmdline2 + sizeof(cmdline2)/sizeof(cmdline2[0]));
-
+    options_and_arguments a2 = parse_command_line(cmdline2,
+            cmdline2 + sizeof(cmdline2) / sizeof(cmdline2[0]));
     BOOST_REQUIRE(a2.options().size() == 1);
     BOOST_CHECK(a2.options()[0] == msp("a", ""));
     BOOST_CHECK(a2.arguments().size() == 1);
     BOOST_CHECK(a2.arguments()[0] == "file");
-    #endif
-    
+}
+#endif
+
+void test_many_different_options() {
     options_description desc;
     desc.add_options()
         ("foo,f", new untyped_value(), "")
-        // Explicit qualification is a workaround for vc6
-        ("bar,b", po::value<std::string>(), "")
+        ( // Explicit qualification is a workaround for vc6
+            "bar,b", po::value<std::string>(), "")
+        ("car,voiture", new untyped_value())
+        ("dog,dawg", new untyped_value())
         ("baz", new untyped_value())
-        ("plug*", new untyped_value())
-        ;
+        ("plug*", new untyped_value());
     const char* cmdline3_[] = { "--foo=12", "-f4", "--bar=11", "-b4",
-                          "--plug3=10"};
+            "--voiture=15", "--dawg=16", "--dog=17", "--plug3=10" };
     vector<string> cmdline3 = sv(cmdline3_,
-                                 sizeof(cmdline3_)/sizeof(const char*));
-    vector<option> a3 = 
-        command_line_parser(cmdline3).options(desc).run().options;
-                       
-    BOOST_CHECK_EQUAL(a3.size(), 5u);
-
+            sizeof(cmdline3_) / sizeof(const char*));
+    vector<option> a3 =
+            command_line_parser(cmdline3).options(desc).run().options;
+    BOOST_CHECK_EQUAL(a3.size(), 8u);
     check_value(a3[0], "foo", "12");
     check_value(a3[1], "foo", "4");
     check_value(a3[2], "bar", "11");
     check_value(a3[3], "bar", "4");
-    check_value(a3[4], "plug3", "10");
+    check_value(a3[4], "car", "15");
+    check_value(a3[5], "dog", "16");
+    check_value(a3[6], "dog", "17");
+    check_value(a3[7], "plug3", "10");
 
     // Regression test: check that '0' as style is interpreted as 
     // 'default_style'
-    vector<option> a4 = 
-        parse_command_line(sizeof(cmdline3_)/sizeof(const char*), cmdline3_, 
-                                                               desc, 0, additional_parser).options;
-
-    BOOST_CHECK_EQUAL(a4.size(), 4u);
+    vector<option> a4 = parse_command_line(
+            sizeof(cmdline3_) / sizeof(const char*), cmdline3_, desc, 0,
+            additional_parser).options;
+    // The default style is unix-style, where the first argument on the command-line
+    // is the name of a binary, not an option value, so that should be ignored
+    BOOST_CHECK_EQUAL(a4.size(), 7u);
     check_value(a4[0], "foo", "4");
     check_value(a4[1], "bar", "11");
+    check_value(a4[2], "bar", "4");
+    check_value(a4[3], "car", "15");
+    check_value(a4[4], "dog", "16");
+    check_value(a4[5], "dog", "17");
+    check_value(a4[6], "plug3", "10");
+}
 
+void test_not_crashing_with_empty_string_values() {
     // Check that we don't crash on empty values of type 'string'
-    const char* cmdline4[] = {"", "--open", ""};
+    const char* cmdline4[] = { "", "--open", "" };
     options_description desc2;
-    desc2.add_options()
-        ("open", po::value<string>())
-        ;
+    desc2.add_options()("open", po::value<string>());
     variables_map vm;
-    po::store(po::parse_command_line(sizeof(cmdline4)/sizeof(const char*), const_cast<char**>(cmdline4), desc2), vm);
+    po::store(
+            po::parse_command_line(sizeof(cmdline4) / sizeof(const char*),
+                    const_cast<char**>(cmdline4), desc2), vm);
+}
 
-    const char* cmdline5[] = {"", "-p7", "-o", "1", "2", "3", "-x8"};
+void test_multitoken() {
+    const char* cmdline5[] = { "", "-p7", "-o", "1", "2", "3", "-x8" };
     options_description desc3;
     desc3.add_options()
         (",p", po::value<string>())
         (",o", po::value<string>()->multitoken())
-        (",x", po::value<string>())
-        ;
-    vector<option> a5 = 
-        parse_command_line(sizeof(cmdline5)/sizeof(const char*), const_cast<char**>(cmdline5), 
-                                                                     desc3, 0, additional_parser).options;
+        (",x", po::value<string>());
+    vector<option> a5 = parse_command_line(
+            sizeof(cmdline5) / sizeof(const char*),
+            const_cast<char**>(cmdline5), desc3, 0, additional_parser).options;
     BOOST_CHECK_EQUAL(a5.size(), 3u);
     check_value(a5[0], "-p", "7");
     BOOST_REQUIRE(a5[1].value.size() == 3);
@@ -164,28 +172,60 @@ void test_command_line()
     BOOST_CHECK_EQUAL(a5[1].value[0], "1");
     BOOST_CHECK_EQUAL(a5[1].value[1], "2");
     BOOST_CHECK_EQUAL(a5[1].value[2], "3");
-    check_value(a5[2], "-x", "8");   
+    check_value(a5[2], "-x", "8");
+}
+
+void test_multitoken_and_multiname() {
+    const char* cmdline[] = { "program", "-fone", "-b", "two", "--foo", "three", "four", "-zfive", "--fee", "six" };
+    options_description desc;
+    desc.add_options()
+        ("bar,b", po::value<string>())
+        ("foo,fee,f", po::value<string>()->multitoken())
+        ("fizbaz,baz,z", po::value<string>());
+
+    vector<option> parsed_options = parse_command_line(
+            sizeof(cmdline) / sizeof(const char*),
+            const_cast<char**>(cmdline), desc, 0, additional_parser).options;
+
+    BOOST_CHECK_EQUAL(parsed_options.size(), 5u);
+    check_value(parsed_options[0], "foo", "one");
+    check_value(parsed_options[1], "bar", "two");
+    BOOST_CHECK_EQUAL(parsed_options[2].string_key, "foo");
+    BOOST_REQUIRE(parsed_options[2].value.size() == 2);
+    BOOST_CHECK_EQUAL(parsed_options[2].value[0], "three");
+    BOOST_CHECK_EQUAL(parsed_options[2].value[1], "four");
+    check_value(parsed_options[3], "fizbaz", "five");
+    check_value(parsed_options[4], "foo", "six");
+
+    const char* cmdline_2[] = { "program", "-fone", "-b", "two", "--fee", "three", "four", "-zfive", "--foo", "six" };
+
+    parsed_options = parse_command_line(
+            sizeof(cmdline_2) / sizeof(const char*),
+            const_cast<char**>(cmdline_2), desc, 0, additional_parser).options;
+
+    BOOST_CHECK_EQUAL(parsed_options.size(), 5u);
+    check_value(parsed_options[0], "foo", "one");
+    check_value(parsed_options[1], "bar", "two");
+    BOOST_CHECK_EQUAL(parsed_options[2].string_key, "foo");
+    BOOST_REQUIRE(parsed_options[2].value.size() == 2);
+    BOOST_CHECK_EQUAL(parsed_options[2].value[0], "three");
+    BOOST_CHECK_EQUAL(parsed_options[2].value[1], "four");
+    check_value(parsed_options[3], "fizbaz", "five");
+    check_value(parsed_options[4], "foo", "six");
+}
 
 
-    po::options_description desc4( "" );
+void test_multitoken_vector_option() {
+    po::options_description desc4("");
     desc4.add_options()
-        ( "multitoken,m",
-          po::value< std::vector< std::string > >()->multitoken(),
-          "values"
-            )
-        ( "file",
-          po::value< std::string >(),
-          "the file to process"
-            )
-        ;
-
+        ("multitoken,multi-token,m", po::value<std::vector<std::string> >()->multitoken(), "values")
+        ("file", po::value<std::string>(), "the file to process");
     po::positional_options_description p;
-    p.add( "file", 1 );
-
-    const char* cmdline6[] = {"", "-m", "token1", "token2", "--", "some_file"};
-    vector<option> a6 = 
-        command_line_parser(sizeof(cmdline6)/sizeof(const char*), const_cast<char**>(cmdline6)).options(desc4).positional(p)
-        .run().options;
+    p.add("file", 1);
+    const char* cmdline6[] = { "", "-m", "token1", "token2", "--", "some_file" };
+    vector<option> a6 =
+            command_line_parser(sizeof(cmdline6) / sizeof(const char*),
+                    const_cast<char**>(cmdline6)).options(desc4).positional(p).run().options;
     BOOST_CHECK_EQUAL(a6.size(), 2u);
     BOOST_REQUIRE(a6[0].value.size() == 2);
     BOOST_CHECK_EQUAL(a6[0].string_key, "multitoken");
@@ -194,6 +234,21 @@ void test_command_line()
     BOOST_CHECK_EQUAL(a6[1].string_key, "file");
     BOOST_REQUIRE(a6[1].value.size() == 1);
     BOOST_CHECK_EQUAL(a6[1].value[0], "some_file");
+}
+
+} // namespace command_line
+
+void test_command_line()
+{
+    #if 0
+    command_line::test_parsing_without_specifying_options();
+    #endif
+    command_line::test_many_different_options();
+    // Check that we don't crash on empty values of type 'string'
+    command_line::test_not_crashing_with_empty_string_values();
+    command_line::test_multitoken();
+    command_line::test_multitoken_vector_option();
+    command_line::test_multitoken_and_multiname();
 }
 
 void test_config_file(const char* config_file)
@@ -206,6 +261,7 @@ void test_config_file(const char* config_file)
         ("plug*", new untyped_value)
         ("m1.v1", new untyped_value)
         ("m1.v2", new untyped_value)
+        ("m1.v3,alias3", new untyped_value)
         ("b", bool_switch())
     ;
 
@@ -218,27 +274,30 @@ void test_config_file(const char* config_file)
     "v1 = 1\n"
     "\n"
     "v2 = 2\n"    
+    "v3 = 3\n"
     ;
 
     stringstream ss(content1);
     vector<option> a1 = parse_config_file(ss, desc).options;
-    BOOST_REQUIRE(a1.size() == 6);
+    BOOST_REQUIRE(a1.size() == 7);
     check_value(a1[0], "gv1", "0");
     check_value(a1[1], "empty_value", "");
     check_value(a1[2], "plug3", "7");
     check_value(a1[3], "b", "true");
     check_value(a1[4], "m1.v1", "1");
     check_value(a1[5], "m1.v2", "2");
+    check_value(a1[6], "m1.v3", "3");
     
     // same test, but now options come from file 
     vector<option> a2 = parse_config_file<char>(config_file, desc).options;
-    BOOST_REQUIRE(a2.size() == 6);
+    BOOST_REQUIRE(a2.size() == 7);
     check_value(a2[0], "gv1", "0");
     check_value(a2[1], "empty_value", "");
     check_value(a2[2], "plug3", "7");
     check_value(a2[3], "b", "true");
     check_value(a2[4], "m1.v1", "1");
     check_value(a2[5], "m1.v2", "2");
+    check_value(a2[6], "m1.v3", "3");
 }
 
 void test_environment()
@@ -249,7 +308,7 @@ void test_environment()
         ("bar", new untyped_value, "")
         ;
 
-#if defined(_WIN32) && ! defined(__BORLANDC__)
+#if (defined(_WIN32) && ! defined(__BORLANDC__)) || (defined(__CYGWIN__))
     _putenv("PO_TEST_FOO=1");
 #else
     putenv(const_cast<char*>("PO_TEST_FOO=1"));
@@ -257,9 +316,9 @@ void test_environment()
     parsed_options p = parse_environment(desc, "PO_TEST_");
 
     BOOST_REQUIRE(p.options.size() == 1);
-    BOOST_CHECK(p.options[0].string_key == "foo");
+    BOOST_CHECK  (p.options[0].string_key == "foo");
     BOOST_REQUIRE(p.options[0].value.size() == 1);
-    BOOST_CHECK(p.options[0].value[0] == "1");
+    BOOST_CHECK  (p.options[0].value[0] == "1");
 
     //TODO: since 'bar' does not allow a value, it cannot appear in environemt,
     // which already has a value.
@@ -315,6 +374,8 @@ void test_unregistered()
     check_value(a3[0], "gv1", "0");
     check_value(a3[1], "m1.v1", "1");
 }
+
+
 
 int main(int, char* av[])
 {

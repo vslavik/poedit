@@ -27,6 +27,6 @@ t.write("sub/a.cpp", "int main() {}\n")
 t.write("sub/jamfile.jam", "exe a : a.cpp ;")
 
 t.run_build_system(subdir="sub")
-t.expect_addition("sub/bin/$toolset/debug/a.exe")
+t.expect_addition("sub/bin/$toolset/debug*/a.exe")
 
 t.cleanup()

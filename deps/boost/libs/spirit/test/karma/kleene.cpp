@@ -20,7 +20,6 @@
 #include <boost/fusion/include/vector.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/assign/std/vector.hpp>

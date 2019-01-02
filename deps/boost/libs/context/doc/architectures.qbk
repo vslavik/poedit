@@ -7,7 +7,8 @@
 
 [section:architectures Architectures]
 
-__boost_context__ supports following architectures:
+__boost_context__, using [link implementation ['fcontext_t]], supports following
+architectures:
 
 [table Supported architectures (<ABI|binary format>)
     [[Architecture]  [LINUX (UNIX)]   [Windows]  [MacOS X]     [iOS]]
@@ -20,6 +21,10 @@ __boost_context__ supports following architectures:
     [[sparc]         [-]              [-]        [-]           [-]]
     [[x86_64]        [SYSV,X32|ELF]   [MS|PE]    [SYSV|MACH-O] [-]]
 ]
+
+[note If the architecture is not supported but the platform provides
+[link implementation __ucontext__], __boost_context__ should be
+compiled with `BOOST_USE_UCONTEXT` and b2 property `context-impl=ucontext`.]
 
 [section:crosscompiling Cross compiling]
 

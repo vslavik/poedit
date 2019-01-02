@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sharing memory between processes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="some_basic_explanations.html" title="Some basic explanations">
 <link rel="next" href="offset_ptr.html" title="Mapping Address Independent Pointer: offset_ptr">
 </head>
@@ -28,7 +28,7 @@
 <a name="interprocess.sharedmemorybetweenprocesses"></a><a class="link" href="sharedmemorybetweenprocesses.html" title="Sharing memory between processes">Sharing memory
     between processes</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.sharedmemory">Shared
       memory</a></span></dt>
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_file">Memory
@@ -43,7 +43,7 @@
 <a name="interprocess.sharedmemorybetweenprocesses.sharedmemory"></a><a class="link" href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.sharedmemory" title="Shared memory">Shared
       memory</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.sharedmemory.shared_memory_what_is">What
         is shared memory?</a></span></dt>
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.sharedmemory.shared_memory_steps">Creating
@@ -82,7 +82,7 @@
           Consider what happens when a server process wants to send an HTML file
           to a client process that resides in the same machine using network mechanisms:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The server must read the file to memory and pass it to the network
               functions, that copy that memory to the OS's internal memory.
@@ -98,7 +98,7 @@
           operating system calls that normally are expensive. Shared memory avoids
           this overhead, but we need to synchronize both processes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The server maps a shared memory in its address space and also gets
               access to a synchronization mechanism. The server obtains exclusive
@@ -123,7 +123,7 @@
 <p>
           To use shared memory, we have to perform 2 basic steps:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Request to the operating system a memory segment that can be shared
               between processes. The user can create/destroy/open this memory using
@@ -167,7 +167,7 @@
           by several processes. We can specify the access mode of that shared memory
           object (read only or read-write), just as if it was a file:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               Create a shared memory segment. Throws if already created:
             </li></ul></div>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">;</span>
@@ -177,7 +177,7 @@
    <span class="special">,</span><span class="identifier">read_write</span>                   <span class="comment">//read-write mode</span>
    <span class="special">);</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               To open or create a shared memory segment:
             </li></ul></div>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">;</span>
@@ -187,7 +187,7 @@
    <span class="special">,</span><span class="identifier">read_only</span>                    <span class="comment">//read-only mode</span>
    <span class="special">);</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               To only open a shared memory segment. Throws if does not exist:
             </li></ul></div>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">;</span>
@@ -342,7 +342,7 @@
           memory in terms of POSIX semantics. Some operating systems don't support
           shared memory as defined by POSIX:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Windows operating systems provide shared memory using memory backed
               by the paging file but the lifetime semantics are different from the
@@ -385,7 +385,7 @@
           function is similar to the standard C <code class="computeroutput"><span class="keyword">int</span>
           <span class="identifier">remove</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="identifier">path</span><span class="special">)</span></code> function. In UNIX systems, <code class="computeroutput"><span class="identifier">shared_memory_object</span><span class="special">::</span><span class="identifier">remove</span></code> calls <code class="computeroutput"><span class="identifier">shm_unlink</span></code>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The function will remove the name of the shared memory object named
               by the string pointed to by name.
@@ -698,7 +698,7 @@
 <a name="interprocess.sharedmemorybetweenprocesses.mapped_file"></a><a class="link" href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_file" title="Memory Mapped Files">Memory
       Mapped Files</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_file.mapped_file_what_is">What
         is a memory mapped file?</a></span></dt>
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_file.mapped_file_steps">Using
@@ -729,7 +729,7 @@
           pointers, just like with dynamic memory. File mapping has the following
           advantages:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Uniform resource use. Files and memory can be treated using the same
               functions.
@@ -777,7 +777,7 @@
 <p>
           To use memory-mapped files, we have to perform 2 basic steps:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Create a mappable object that represent an already created file of
               the filesystem. This object will be used to create multiple mapped
@@ -876,7 +876,7 @@
           to disk is several times slower than writing to memory). If the user wants
           to make sure that file's contents have been updated, it can flush a range
           from the view to disk. When the function returns, the flushing process
-          has startd but there is not guarantee that all data has been written to
+          has started but there is no guarantee that all data has been written to
           disk:
         </p>
 <pre class="programlisting"><span class="comment">//Flush the whole region</span>
@@ -1014,7 +1014,7 @@
 <a name="interprocess.sharedmemorybetweenprocesses.mapped_region"></a><a class="link" href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region" title="More About Mapped Regions">More
       About Mapped Regions</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region.mapped_region_one_class">One
         Class To Rule Them All</a></span></dt>
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region.mapped_region_address_mapping">Mapping
@@ -1223,7 +1223,7 @@
 <a name="interprocess.sharedmemorybetweenprocesses.mapped_region_object_limitations"></a><a class="link" href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region_object_limitations" title="Limitations When Constructing Objects In Mapped Regions">Limitations
       When Constructing Objects In Mapped Regions</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region_object_limitations.offset_pointer">Offset
         pointers instead of raw pointers</a></span></dt>
 <dt><span class="section"><a href="sharedmemorybetweenprocesses.html#interprocess.sharedmemorybetweenprocesses.mapped_region_object_limitations.references_forbidden">References

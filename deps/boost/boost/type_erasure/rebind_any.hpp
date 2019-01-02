@@ -20,8 +20,10 @@
 namespace boost {
 namespace type_erasure {
 
+#ifndef BOOST_TYPE_ERASURE_DOXYGEN
 template<class Concept, class T>
 class any;
+#endif
 
 /**
  * A metafunction that changes the @ref placeholder of
@@ -36,6 +38,7 @@ class any;
  * \code
  * rebind_any<any<Concept>, _a>::type -> any<Concept, _a>
  * rebind_any<any<Concept>, _b&>::type -> any<Concept, _b&>
+ * rebind_any<any<Concept>, _c&&>::type -> any<Concept, _c&&>
  * rebind_any<any<Concept>, int>::type -> int
  * \endcode
  *
@@ -61,6 +64,13 @@ struct rebind_any
     >::type type;
 #endif
 };
+
+#ifndef BOOST_NO_CXX11_TEMPLATE_ALIASES
+
+template<class Any, class T>
+using rebind_any_t = typename ::boost::type_erasure::rebind_any<Any, T>::type;
+
+#endif
 
 }
 }

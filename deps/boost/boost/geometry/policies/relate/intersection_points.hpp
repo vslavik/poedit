@@ -2,6 +2,10 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2016.
+// Modifications copyright (c) 2016 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -13,17 +17,10 @@
 #include <algorithm>
 #include <string>
 
-#include <boost/concept_check.hpp>
-#include <boost/numeric/conversion/cast.hpp>
-
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/strategies/side_info.hpp>
-#include <boost/geometry/util/promote_integral.hpp>
-#include <boost/geometry/util/select_calculation_type.hpp>
-#include <boost/geometry/util/select_most_precise.hpp>
-#include <boost/geometry/util/math.hpp>
 
 namespace boost { namespace geometry
 {
@@ -45,45 +42,6 @@ struct segments_intersection_points
 
     template
     <
-        typename Point,
-        typename Segment,
-        typename SegmentRatio,
-        typename T
-    >
-    static inline void assign(Point& point,
-                Segment const& segment,
-                SegmentRatio const& ratio,
-                T const& dx, T const& dy)
-    {
-        typedef typename geometry::coordinate_type<Point>::type coordinate_type;
-
-        // Calculate the intersection point based on segment_ratio
-        // Up to now, division was postponed. Here we divide using numerator/
-        // denominator. In case of integer this results in an integer
-        // division.
-        BOOST_GEOMETRY_ASSERT(ratio.denominator() != 0);
-
-        typedef typename promote_integral<coordinate_type>::type promoted_type;
-
-        promoted_type const numerator
-            = boost::numeric_cast<promoted_type>(ratio.numerator());
-        promoted_type const denominator
-            = boost::numeric_cast<promoted_type>(ratio.denominator());
-        promoted_type const dx_promoted = boost::numeric_cast<promoted_type>(dx);
-        promoted_type const dy_promoted = boost::numeric_cast<promoted_type>(dy);
-
-        set<0>(point, get<0, 0>(segment) + boost::numeric_cast
-            <
-                coordinate_type
-            >(numerator * dx_promoted / denominator));
-        set<1>(point, get<0, 1>(segment) + boost::numeric_cast
-            <
-                coordinate_type
-            >(numerator * dy_promoted / denominator));
-    }
-
-    template
-    <
         typename Segment1,
         typename Segment2,
         typename SegmentIntersectionInfo
@@ -94,44 +52,9 @@ struct segments_intersection_points
     {
         return_type result;
         result.count = 1;
+        sinfo.calculate(result.intersections[0], s1, s2);
 
-        bool use_a = true;
-
-        // Prefer one segment if one is on or near an endpoint
-        bool const a_near_end = sinfo.robust_ra.near_end();
-        bool const b_near_end = sinfo.robust_rb.near_end();
-        if (a_near_end && ! b_near_end)
-        {
-            use_a = true;
-        }
-        else if (b_near_end && ! a_near_end)
-        {
-            use_a = false;
-        }
-        else
-        {
-            // Prefer shorter segment
-            typedef typename SegmentIntersectionInfo::promoted_type ptype;
-            ptype const len_a = sinfo.dx_a * sinfo.dx_a + sinfo.dy_a * sinfo.dy_a;
-            ptype const len_b = sinfo.dx_b * sinfo.dx_b + sinfo.dy_b * sinfo.dy_b;
-            if (len_b < len_a)
-            {
-                use_a = false;
-            }
-            // else use_a is true but was already assigned like that
-        }
-
-        if (use_a)
-        {
-            assign(result.intersections[0], s1, sinfo.robust_ra,
-                sinfo.dx_a, sinfo.dy_a);
-        }
-        else
-        {
-            assign(result.intersections[0], s2, sinfo.robust_rb,
-                sinfo.dx_b, sinfo.dy_b);
-        }
-
+        // Temporary - this should go later
         result.fractions[0].assign(sinfo);
 
         return result;

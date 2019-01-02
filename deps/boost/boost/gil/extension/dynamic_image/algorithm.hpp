@@ -1,19 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ALGORITHM_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ALGORITHM_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/extension/dynamic_image/any_image.hpp>
 
-#ifndef GIL_DYNAMICIMAGE_ALGORITHM_HPP
-#define GIL_DYNAMICIMAGE_ALGORITHM_HPP
+#include <boost/gil/algorithm.hpp>
 
-#include "../../algorithm.hpp"
-#include "any_image.hpp"
 #include <boost/bind.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +28,7 @@ namespace boost { namespace gil {
 namespace detail {
     struct equal_pixels_fn : public binary_operation_obj<equal_pixels_fn,bool> {
         template <typename V1, typename V2>
-        GIL_FORCEINLINE bool apply_compatible(const V1& v1, const V2& v2) const {
+        BOOST_FORCEINLINE bool apply_compatible(const V1& v1, const V2& v2) const {
             return equal_pixels(v1,v2);
         }
     };
@@ -60,7 +58,7 @@ bool equal_pixels(const any_image_view<Types1>& src, const any_image_view<Types2
 namespace detail {
     struct copy_pixels_fn : public binary_operation_obj<copy_pixels_fn> {
         template <typename View1, typename View2>
-        GIL_FORCEINLINE void apply_compatible(const View1& src, const View2& dst) const {
+        BOOST_FORCEINLINE void apply_compatible(const View1& src, const View2& dst) const {
             copy_pixels(src,dst);
         }
     };
@@ -144,7 +142,7 @@ template <bool COMPATIBLE> struct fill_pixels_fn1 {
 
 // copy_pixels invoked on incompatible images
 template <> struct fill_pixels_fn1<false> {
-    template <typename V, typename Value> static void apply(const V& src, const Value& val) { throw std::bad_cast();}
+    template <typename V, typename Value> static void apply(const V&, const Value&) { throw std::bad_cast();}
 };
 
 template <typename Value>
@@ -168,6 +166,6 @@ void fill_pixels(const any_image_view<Types>& img_view, const Value& val) {
 }
 
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

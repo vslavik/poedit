@@ -26,8 +26,8 @@ typedef scaled_base_unit<boost::units::si::meter_base_unit, scale<1852, static_r
 
 template<>
 struct base_unit_info<metric::nautical_mile_base_unit> {
-    static const char* name()   { return("nautical mile"); }
-    static const char* symbol() { return("nmi"); }
+    static BOOST_CONSTEXPR const char* name()   { return("nautical mile"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("nmi"); }
 };
 
 }

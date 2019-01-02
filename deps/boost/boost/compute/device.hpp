@@ -21,6 +21,7 @@
 #include <boost/compute/config.hpp>
 #include <boost/compute/exception.hpp>
 #include <boost/compute/types/fundamental.hpp>
+#include <boost/compute/detail/duration.hpp>
 #include <boost/compute/detail/get_object_info.hpp>
 #include <boost/compute/detail/assert_cl_success.hpp>
 
@@ -62,7 +63,7 @@ public:
     explicit device(cl_device_id id, bool retain = true)
         : m_id(id)
     {
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(m_id && retain && is_subdevice()){
             clRetainDevice(m_id);
         }
@@ -75,7 +76,7 @@ public:
     device(const device &other)
         : m_id(other.m_id)
     {
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(m_id && is_subdevice()){
             clRetainDevice(m_id);
         }
@@ -86,7 +87,7 @@ public:
     device& operator=(const device &other)
     {
         if(this != &other){
-            #ifdef CL_VERSION_1_2
+            #ifdef BOOST_COMPUTE_CL_VERSION_1_2
             if(m_id && is_subdevice()){
                 clReleaseDevice(m_id);
             }
@@ -94,7 +95,7 @@ public:
 
             m_id = other.m_id;
 
-            #ifdef CL_VERSION_1_2
+            #ifdef BOOST_COMPUTE_CL_VERSION_1_2
             if(m_id && is_subdevice()){
                 clRetainDevice(m_id);
             }
@@ -115,7 +116,7 @@ public:
     /// Move-assigns the device from \p other to \c *this.
     device& operator=(device&& other) BOOST_NOEXCEPT
     {
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(m_id && is_subdevice()){
             clReleaseDevice(m_id);
         }
@@ -131,7 +132,7 @@ public:
     /// Destroys the device object.
     ~device()
     {
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         if(m_id && is_subdevice()){
             BOOST_COMPUTE_ASSERT_CL_SUCCESS(
                 clReleaseDevice(m_id)
@@ -282,7 +283,7 @@ public:
     /// Returns \c true if the device is a sub-device.
     bool is_subdevice() const
     {
-    #if defined(CL_VERSION_1_2)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2)
         try {
             return get_info<cl_device_id>(CL_DEVICE_PARENT_DEVICE) != 0;
         }
@@ -321,7 +322,7 @@ public:
     typename detail::get_object_info_type<device, Enum>::type
     get_info() const;
 
-    #if defined(CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_2) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Partitions the device into multiple sub-devices according to
     /// \p properties.
     ///
@@ -393,7 +394,86 @@ public:
 
         return partition(properties);
     }
-    #endif // CL_VERSION_1_2
+    #endif // BOOST_COMPUTE_CL_VERSION_1_2
+
+    #if defined(BOOST_COMPUTE_CL_VERSION_2_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    /// Returns the current value of the host clock as seen by device
+    /// in nanoseconds.
+    ///
+    /// \see_opencl21_ref{clGetHostTimer}
+    ///
+    /// \opencl_version_warning{2,1}
+    ulong_ get_host_timer() const
+    {
+        ulong_ host_timestamp = 0;
+        cl_int ret = clGetHostTimer(m_id, &host_timestamp);
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+        return host_timestamp;
+    }
+
+    /// Returns a reasonably synchronized pair of timestamps from the device timer
+    /// and the host timer as seen by device in nanoseconds. The first of returned
+    /// std::pair is a device timer timestamp, the second is a host timer timestamp.
+    ///
+    /// \see_opencl21_ref{clGetDeviceAndHostTimer}
+    ///
+    /// \opencl_version_warning{2,1}
+    std::pair<ulong_, ulong_> get_device_and_host_timer() const
+    {
+        ulong_ host_timestamp;
+        ulong_ device_timestamp;
+        cl_int ret = clGetDeviceAndHostTimer(
+            m_id, &device_timestamp, &host_timestamp
+        );
+        if(ret != CL_SUCCESS){
+            BOOST_THROW_EXCEPTION(opencl_error(ret));
+        }
+        return std::make_pair(
+            device_timestamp, host_timestamp
+        );
+    }
+
+    #if !defined(BOOST_COMPUTE_NO_HDR_CHRONO) || !defined(BOOST_COMPUTE_NO_BOOST_CHRONO)
+    /// Returns the current value of the host clock as seen by device
+    /// as duration.
+    ///
+    /// For example, to print the current value of the host clock as seen by device
+    /// in milliseconds:
+    /// \code
+    /// std::cout << device.get_host_timer<std::chrono::milliseconds>().count() << " ms";
+    /// \endcode
+    ///
+    /// \see_opencl21_ref{clGetHostTimer}
+    ///
+    /// \opencl_version_warning{2,1}
+    template<class Duration>
+    Duration get_host_timer() const
+    {
+        const ulong_ nanoseconds = this->get_host_timer();
+        return detail::make_duration_from_nanoseconds(Duration(), nanoseconds);
+    }
+
+    /// Returns a reasonably synchronized pair of timestamps from the device timer
+    /// and the host timer as seen by device as a std::pair<Duration, Duration> value.
+    /// The first of returned std::pair is a device timer timestamp, the second is
+    /// a host timer timestamp.
+    ///
+    /// \see_opencl21_ref{clGetDeviceAndHostTimer}
+    ///
+    /// \opencl_version_warning{2,1}
+    template<class Duration>
+    std::pair<Duration, Duration> get_device_and_host_timer() const
+    {
+        const std::pair<ulong_, ulong_> timestamps = this->get_device_and_host_timer();
+        return std::make_pair(
+            detail::make_duration_from_nanoseconds(Duration(), timestamps.first),
+            detail::make_duration_from_nanoseconds(Duration(), timestamps.second)
+        );
+    }
+    #endif // !defined(BOOST_COMPUTE_NO_HDR_CHRONO) || !defined(BOOST_COMPUTE_NO_BOOST_CHRONO)
+    #endif // BOOST_COMPUTE_CL_VERSION_2_1
 
     /// Returns \c true if the device is the same at \p other.
     bool operator==(const device &other) const
@@ -407,7 +487,8 @@ public:
         return m_id != other.m_id;
     }
 
-    /// \internal_
+    /// Returns \c true if the device OpenCL version is major.minor
+    /// or newer; otherwise returns \c false.
     bool check_version(int major, int minor) const
     {
         std::stringstream stream;
@@ -528,7 +609,7 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
 )
 #endif
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((bool, CL_DEVICE_HOST_UNIFIED_MEMORY))
     ((cl_uint, CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR))
@@ -539,9 +620,9 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((cl_uint, CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE))
     ((std::string, CL_DEVICE_OPENCL_C_VERSION))
 )
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
-#ifdef CL_VERSION_1_2
+#ifdef BOOST_COMPUTE_CL_VERSION_1_2
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((std::string, CL_DEVICE_BUILT_IN_KERNELS))
     ((bool, CL_DEVICE_LINKER_AVAILABLE))
@@ -554,9 +635,9 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((bool, CL_DEVICE_PREFERRED_INTEROP_USER_SYNC))
     ((cl_uint, CL_DEVICE_REFERENCE_COUNT))
 )
-#endif // CL_VERSION_1_2
+#endif // BOOST_COMPUTE_CL_VERSION_1_2
 
-#ifdef CL_VERSION_2_0
+#ifdef BOOST_COMPUTE_CL_VERSION_2_0
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((size_t, CL_DEVICE_GLOBAL_VARIABLE_PREFERRED_TOTAL_SIZE))
     ((size_t, CL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE))
@@ -576,7 +657,15 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((cl_uint, CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT))
     ((cl_uint, CL_DEVICE_IMAGE_PITCH_ALIGNMENT))
 )
-#endif // CL_VERSION_2_0
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
+
+#ifdef BOOST_COMPUTE_CL_VERSION_2_1
+BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
+    ((std::string, CL_DEVICE_IL_VERSION))
+    ((cl_uint, CL_DEVICE_MAX_NUM_SUB_GROUPS))
+    ((bool, CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS))
+)
+#endif // BOOST_COMPUTE_CL_VERSION_2_1
 
 } // end compute namespace
 } // end boost namespace

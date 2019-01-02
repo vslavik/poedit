@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template basic_severity_logger</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../logging_sources.html#header.boost.log.sources.severity_feature_hpp" title="Header &lt;boost/log/sources/severity_feature.hpp&gt;">
 <link rel="prev" href="../../../BOOST_LOG_CHANNEL_SEV.html" title="Macro BOOST_LOG_CHANNEL_SEV">
@@ -25,7 +25,7 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../logging_sources.html#header.boost.log.sources.severity_feature_hpp" title="Header &lt;boost/log/sources/severity_feature.hpp&gt;">boost/log/sources/severity_feature.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BaseT<span class="special">,</span> <span class="keyword">typename</span> LevelT <span class="special">=</span> <span class="keyword">int</span><span class="special">&gt;</span> 
-<span class="keyword">class</span> <a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">BaseT</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">base_type</span><span class="special">::</span><span class="identifier">char_type</span>                                                                     <a name="boost.log.sources.basic_severity_logger.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>           <span class="comment">// Character type. </span>
@@ -37,55 +37,61 @@
   <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span>                                                                              <a name="boost.log.sources.basic_severity_logger.swap_lock"></a><span class="identifier">swap_lock</span><span class="special">;</span>           <span class="comment">// Lock requirement for the <code class="computeroutput">swap_unlocked</code> method. </span>
 
   <span class="comment">// <a class="link" href="basic_severity_logger.html#boost.log.sources.basic_severity_loggerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_severity_logger.html#idp21613840-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_severity_logger.html#idp21614656-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_severity_logger.html#idp21616336-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="basic_severity_logger.html#idp21618016-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_severity_logger.html#idp50873728-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_severity_logger.html#idp50874544-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_severity_logger.html#idp50876224-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="basic_severity_logger.html#idp50877904-bb"><span class="identifier">basic_severity_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_severity_logger.html#idp21611568-bb">public member functions</a></span>
-  <span class="identifier">severity_level</span> <a class="link" href="basic_severity_logger.html#idp21612128-bb"><span class="identifier">default_severity</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_severity_logger.html#idp50871456-bb">public member functions</a></span>
+  <span class="identifier">severity_level</span> <a class="link" href="basic_severity_logger.html#idp50872016-bb"><span class="identifier">default_severity</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_severity_logger.html#idp21622672-bb">protected member functions</a></span>
-  <span class="identifier">severity_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_severity_logger.html#idp21623248-bb"><span class="identifier">get_severity_attribute</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a class="link" href="basic_severity_logger.html#idp21624816-bb"><span class="identifier">open_record_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_severity_logger.html#idp21628064-bb"><span class="identifier">swap_unlocked</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_severity_logger.html#idp50882560-bb">protected member functions</a></span>
+  <span class="identifier">severity_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_severity_logger.html#idp50883136-bb"><span class="identifier">get_severity_attribute</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a class="link" href="basic_severity_logger.html#idp50884704-bb"><span class="identifier">open_record_unlocked</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_severity_logger.html#idp50887952-bb"><span class="identifier">swap_unlocked</span></a><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp95097552"></a><h2>Description</h2>
+<a name="idp112424576"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp95097968"></a><h3>
+<a name="idp112424992"></a><h3>
 <a name="boost.log.sources.basic_severity_loggerconstruct-copy-destruct"></a><code class="computeroutput">basic_severity_logger</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp21613840-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp50873728-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. The constructed logger will have a severity attribute registered. The default level for log records will be 0. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp21614656-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp50874544-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp21616336-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp50876224-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Move constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp21618016-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp50877904-bb"></a><span class="identifier">basic_severity_logger</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor with named arguments. Allows to setup the default level for log records.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">args</code></span></p></td>
 <td>
 <p>A set of named arguments. The following arguments are supported: </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><code class="computeroutput">severity</code> - default severity value </p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="computeroutput">severity</code> - default severity value </p></li></ul></div>
 <p>
 </p>
 </td>
@@ -97,27 +103,27 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp95129696"></a><h3>
-<a name="idp21611568-bb"></a><code class="computeroutput">basic_severity_logger</code> public member functions</h3>
+<a name="idp112456784"></a><h3>
+<a name="idp50871456-bb"></a><code class="computeroutput">basic_severity_logger</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">severity_level</span> <a name="idp21612128-bb"></a><span class="identifier">default_severity</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">severity_level</span> <a name="idp50872016-bb"></a><span class="identifier">default_severity</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Default severity value getter </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp95137168"></a><h3>
-<a name="idp21622672-bb"></a><code class="computeroutput">basic_severity_logger</code> protected member functions</h3>
+<a name="idp112464256"></a><h3>
+<a name="idp50882560-bb"></a><code class="computeroutput">basic_severity_logger</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">severity_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp21623248-bb"></a><span class="identifier">get_severity_attribute</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">severity_attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp50883136-bb"></a><span class="identifier">get_severity_attribute</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Severity attribute accessor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a name="idp21624816-bb"></a><span class="identifier">open_record_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="identifier">record</span> <a name="idp50884704-bb"></a><span class="identifier">open_record_unlocked</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocked <code class="computeroutput">open_record</code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp21628064-bb"></a><span class="identifier">swap_unlocked</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>Unlocked <code class="computeroutput">swap</code>. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp50887952-bb"></a><span class="identifier">swap_unlocked</span><span class="special">(</span><a class="link" href="basic_severity_logger.html" title="Class template basic_severity_logger">basic_severity_logger</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>Unlocked <code class="computeroutput">swap</code>. </li>
 </ol></div>
 </div>
 </div>

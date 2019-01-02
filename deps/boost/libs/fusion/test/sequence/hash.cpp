@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/sequence/hash.hpp>
 
@@ -55,4 +55,5 @@ int main()
     BOOST_TEST(hash_value(c) != hash_value(d));
     BOOST_TEST(hash_value(c) != hash_value(e));
     BOOST_TEST(hash_value(d) != hash_value(e));
+    return boost::report_errors();
 }

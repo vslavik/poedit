@@ -29,6 +29,8 @@ BOOST_FUSION_DEFINE_ASSOC_STRUCT(
     (int, y, ns::y_member)
 )
 
+BOOST_FUSION_DEFINE_ASSOC_STRUCT(BOOST_PP_EMPTY(), empty_struct, )
+
 int
 main()
 {
@@ -40,6 +42,7 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point>));
+        BOOST_STATIC_ASSERT(!traits::is_view<ns::point>::value);
         ns::point p(123, 456);
 
         std::cout << at_c<0>(p) << std::endl;

@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for modifier memfuns.
  *
- * Copyright 2003-2014 Joaquin M Lopez Munoz.
+ * Copyright 2003-2017 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -135,6 +135,26 @@ struct tempvalue_iterator:
   
   int n;
 };
+
+struct change_int
+{
+  change_int(int n):n(n){}
+
+  void operator()(int& x)const{x=n;}
+
+  int n;
+};
+
+#if !(defined BOOST_NO_EXCEPTIONS)
+struct change_int_and_throw
+{
+  change_int_and_throw(int n):n(n){}
+
+  void operator()(int& x)const{x=n;throw 0;}
+
+  int n;
+};
+#endif
 
 void test_modifiers()
 {
@@ -480,17 +500,81 @@ void test_modifiers()
    * https://svn.boost.org/trac/boost/ticket/9665
    */
 
-  multi_index_container<
-    int,
-    indexed_by<hashed_unique<identity<int> > >
-  > hc;
-  hc.insert(tempvalue_iterator(0),tempvalue_iterator(10));
-  BOOST_TEST(hc.size()==10);
+  {
+    multi_index_container<
+      int,
+      indexed_by<hashed_unique<identity<int> > >
+    > hc;
+    hc.insert(tempvalue_iterator(0),tempvalue_iterator(10));
+    BOOST_TEST(hc.size()==10);
 
-  multi_index_container<
-    int,
-    indexed_by<ordered_unique<identity<int> > >
-  > oc;
-  oc.insert(tempvalue_iterator(0),tempvalue_iterator(10));
-  BOOST_TEST(oc.size()==10);
+    multi_index_container<
+      int,
+      indexed_by<ordered_unique<identity<int> > >
+    > oc;
+    oc.insert(tempvalue_iterator(0),tempvalue_iterator(10));
+    BOOST_TEST(oc.size()==10);
+  }
+
+  /* testcases for https://svn.boost.org/trac10/ticket/12542 */
+
+  {
+    multi_index_container<
+      int,
+      indexed_by<
+        ordered_unique<identity<int> >,
+        hashed_unique<identity<int> >
+     >
+    > ohc;
+
+#if !(defined BOOST_NO_EXCEPTIONS)
+    ohc.insert(0);
+    ohc.insert(1);
+
+    try{
+      ohc.modify_key(ohc.begin(),change_int_and_throw(1));
+    }
+    catch(int){}
+    BOOST_TEST(ohc.size()==1);
+    ohc.clear();
+
+    ohc.insert(0);
+    ohc.insert(1);
+
+    try{
+      ohc.modify_key(ohc.begin(),change_int_and_throw(1),change_int(0));
+    }
+    catch(int){}
+    BOOST_TEST(ohc.size()==1);
+    ohc.clear();
+
+    ohc.insert(0);
+    ohc.insert(1);
+
+    try{
+      ohc.modify_key(
+        ohc.begin(),change_int_and_throw(1),change_int_and_throw(0));
+    }
+    catch(int){}
+    BOOST_TEST(ohc.size()==1);
+    ohc.clear();
+
+    ohc.insert(0);
+    ohc.insert(1);
+
+    try{
+      ohc.modify_key(ohc.begin(),change_int(1),change_int_and_throw(0));
+    }
+    catch(int){}
+    BOOST_TEST(ohc.size()==1);
+    ohc.clear();
+#endif
+
+    ohc.insert(0);
+    ohc.insert(1);
+
+    ohc.modify_key(ohc.begin(),change_int(1),change_int(1));
+    BOOST_TEST(ohc.size()==1);
+    ohc.clear();
+  }
 }

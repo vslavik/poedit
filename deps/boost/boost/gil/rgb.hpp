@@ -1,32 +1,20 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_RGB_HPP
+#define BOOST_GIL_RGB_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/planar_pixel_iterator.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_RGB_H
-#define GIL_RGB_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Support for RGB color space and variants
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on October 10, 2007
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cstddef>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include "gil_config.hpp"
-#include "metafunctions.hpp"
-#include "planar_pixel_iterator.hpp"
+
+#include <cstddef>
 
 namespace boost { namespace gil {
 
@@ -65,6 +53,6 @@ planar_rgb_view(std::size_t width, std::size_t height,
                                          rowsize_in_bytes));
 }
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

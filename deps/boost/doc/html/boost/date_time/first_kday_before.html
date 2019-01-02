@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template first_kday_before</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp" title="Header &lt;boost/date_time/date_generators.hpp&gt;">
 <link rel="prev" href="first_kday_after.html" title="Class template first_kday_after">
@@ -41,34 +41,34 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span>        <a name="boost.date_time.first_kday_before.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="first_kday_before.html#boost.date_time.first_kday_beforeconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="first_kday_before.html#idp5139888-bb"><span class="identifier">first_kday_before</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="first_kday_before.html#id-1_3_14_15_3_19_2_1_7_8-bb"><span class="identifier">first_kday_before</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="first_kday_before.html#idp73165680-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="first_kday_before.html#idp73166240-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_before.html#idp83824688-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="first_kday_before.html#id-1_3_14_15_3_19_2_1_7_7-bb">public member functions</a></span>
+  <span class="identifier">date_type</span> <a class="link" href="first_kday_before.html#id-1_3_14_15_3_19_2_1_7_7_1-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_before.html#id-1_3_14_15_3_19_2_1_7_7_2-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp111780832"></a><h2>Description</h2>
+<a name="id-1.3.14.15.3.19.10.4"></a><h2>Description</h2>
 <p>Date generator that takes a date and finds kday after </p>
-<pre class="programlisting">     <span class="keyword">typedef</span> <a class="link" href="first_kday_before.html" title="Class template first_kday_before">boost::date_time::first_kday_before&lt;date&gt;</a> <span class="identifier">firstkdaybefore</span><span class="special">;</span>
-     <span class="identifier">firstkdaybefore</span> <span class="identifier">fkbf</span><span class="special">(</span><span class="identifier">Monday</span><span class="special">)</span><span class="special">;</span>
-     <span class="identifier">fkbf</span><span class="special">.</span><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date</span><span class="special">(</span><span class="number">2002</span><span class="special">,</span><span class="identifier">Feb</span><span class="special">,</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="first_kday_before.html" title="Class template first_kday_before">boost::date_time::first_kday_before&lt;date&gt;</a> <span class="identifier">firstkdaybefore</span><span class="special">;</span>
+<span class="identifier">firstkdaybefore</span> <span class="identifier">fkbf</span><span class="special">(</span><span class="identifier">Monday</span><span class="special">)</span><span class="special">;</span>
+<span class="identifier">fkbf</span><span class="special">.</span><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date</span><span class="special">(</span><span class="number">2002</span><span class="special">,</span><span class="identifier">Feb</span><span class="special">,</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 <div class="refsect2">
-<a name="idp111796240"></a><h3>
+<a name="id-1.3.14.15.3.19.10.4.3"></a><h3>
 <a name="boost.date_time.first_kday_beforeconstruct-copy-destruct"></a><code class="computeroutput">first_kday_before</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp5139888-bb"></a><span class="identifier">first_kday_before</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="id-1_3_14_15_3_19_2_1_7_8-bb"></a><span class="identifier">first_kday_before</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp111802864"></a><h3>
-<a name="idp73165680-bb"></a><code class="computeroutput">first_kday_before</code> public member functions</h3>
+<a name="id-1.3.14.15.3.19.10.4.4"></a><h3>
+<a name="id-1_3_14_15_3_19_2_1_7_7-bb"></a><code class="computeroutput">first_kday_before</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_type</span> <a name="idp73166240-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp83824688-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="identifier">date_type</span> <a name="id-1_3_14_15_3_19_2_1_7_7_1-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="id-1_3_14_15_3_19_2_1_7_7_2-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

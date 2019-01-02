@@ -9,18 +9,18 @@
 #if !defined(QUICKBOOK_DEPENDENCY_TRACKER_HPP)
 #define QUICKBOOK_DEPENDENCY_TRACKER_HPP
 
+#include <iosfwd>
 #include <map>
 #include <set>
-#include <iosfwd>
 #include <boost/filesystem/path.hpp>
 
 namespace quickbook
 {
     namespace fs = boost::filesystem;
 
-    struct dependency_tracker {
-    private:
-
+    struct dependency_tracker
+    {
+      private:
         typedef std::map<fs::path, bool> dependency_list;
         typedef std::map<fs::path, std::set<fs::path> > glob_list;
 
@@ -28,9 +28,9 @@ namespace quickbook
         glob_list glob_dependencies;
         glob_list::iterator last_glob;
 
-    public:
-
-        enum flags {
+      public:
+        enum flags
+        {
             default_ = 0,
             checked = 1,
             escaped = 2

@@ -43,8 +43,8 @@ namespace boost {
 namespace serialization {
 
 template<class Archive>
-struct variant_save_visitor : 
-    boost::static_visitor<> 
+struct variant_save_visitor :
+    boost::static_visitor<>
 {
     variant_save_visitor(Archive& ar) :
         m_ar(ar)
@@ -100,7 +100,8 @@ struct variant_impl {
                 head_type value;
                 ar >> BOOST_SERIALIZATION_NVP(value);
                 v = value;
-                ar.reset_object_address(& boost::get<head_type>(v), & value);
+                head_type * new_address = & boost::get<head_type>(v);
+                ar.reset_object_address(new_address, & value);
                 return;
             }
             typedef typename mpl::pop_front<S>::type type;
@@ -151,6 +152,25 @@ inline void serialize(
 ){
     split_free(ar,v,file_version);
 }
+
+} // namespace serialization
+} // namespace boost
+
+//template<typename T0_, BOOST_VARIANT_ENUM_SHIFTED_PARAMS(typename T)>
+
+#include <boost/serialization/tracking.hpp>
+
+namespace boost {
+    namespace serialization {
+        
+template<BOOST_VARIANT_ENUM_PARAMS(/* typename */ class T)>
+struct tracking_level<
+    variant<BOOST_VARIANT_ENUM_PARAMS(T)>
+>{
+    typedef mpl::integral_c_tag tag;
+    typedef mpl::int_< ::boost::serialization::track_always> type;
+    BOOST_STATIC_CONSTANT(int, value = type::value);
+};
 
 } // namespace serialization
 } // namespace boost

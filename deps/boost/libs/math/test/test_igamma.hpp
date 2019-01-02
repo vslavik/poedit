@@ -193,7 +193,11 @@ void test_spots(T)
 
    BOOST_CHECK_CLOSE(::boost::math::tgamma(static_cast<T>(30), ldexp(T(1), -30)), static_cast<T>(8.841761993739701954543616000000e30L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma_lower(static_cast<T>(30), ldexp(T(1), -30)), static_cast<T>(3.943507283668378474979245322638092813837393749566146974e-273L), tolerance);
+#ifdef __SUNPRO_CC
+   BOOST_CHECK_CLOSE(::boost::math::gamma_p(static_cast<T>(30), ldexp(T(1), -30)), static_cast<T>(4.460092102072560946444018923090222645613009128135650652e-304L), tolerance * 8);
+#else
    BOOST_CHECK_CLOSE(::boost::math::gamma_p(static_cast<T>(30), ldexp(T(1), -30)), static_cast<T>(4.460092102072560946444018923090222645613009128135650652e-304L), tolerance);
+#endif
    BOOST_CHECK_CLOSE(::boost::math::gamma_p_derivative(static_cast<T>(2), ldexp(T(1), -575)), static_cast<T>(8.08634922390438981326119906687585206568664784377654648227177e-174L), tolerance);
 
    //typedef boost::math::policies::policy<boost::math::policies::overflow_error<boost::math::policies::throw_on_error> > throw_policy;

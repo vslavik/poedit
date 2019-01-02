@@ -2,7 +2,7 @@
 // chat_server.cpp
 // ~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -169,10 +169,9 @@ private:
 class chat_server
 {
 public:
-  chat_server(boost::asio::io_service& io_service,
+  chat_server(boost::asio::io_context& io_context,
       const tcp::endpoint& endpoint)
-    : acceptor_(io_service, endpoint),
-      socket_(io_service)
+    : acceptor_(io_context, endpoint)
   {
     do_accept();
   }
@@ -180,12 +179,12 @@ public:
 private:
   void do_accept()
   {
-    acceptor_.async_accept(socket_,
-        [this](boost::system::error_code ec)
+    acceptor_.async_accept(
+        [this](boost::system::error_code ec, tcp::socket socket)
         {
           if (!ec)
           {
-            std::make_shared<chat_session>(std::move(socket_), room_)->start();
+            std::make_shared<chat_session>(std::move(socket), room_)->start();
           }
 
           do_accept();
@@ -193,7 +192,6 @@ private:
   }
 
   tcp::acceptor acceptor_;
-  tcp::socket socket_;
   chat_room room_;
 };
 
@@ -209,16 +207,16 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     std::list<chat_server> servers;
     for (int i = 1; i < argc; ++i)
     {
       tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[i]));
-      servers.emplace_back(io_service, endpoint);
+      servers.emplace_back(io_context, endpoint);
     }
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

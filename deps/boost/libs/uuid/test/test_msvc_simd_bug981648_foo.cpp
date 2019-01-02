@@ -25,7 +25,8 @@ my_obj *p = dynamic_cast<my_obj*>(header_prop);
 * This != statement crashes with a GP.
 * */
 if (p != NULL && (current_marker.get_id() != p->get_marker_id())) {
-std::printf("works okay, if it reaches this printf: %p\n",p);
+std::printf("works okay, if it reaches this printf: %p\n", reinterpret_cast<void *>(p));
 old_header_prop = header_prop;
+if (old_header_prop == 0) { fprintf(stderr, "ouch"); }
 }
 }

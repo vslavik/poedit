@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Time Requirements</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
 <link rel="prev" href="parallel.html" title="Parallel - Fork-Join -- EXPERIMENTAL">
 <link rel="next" href="emulations.html" title="Emulations">
 </head>
@@ -27,13 +27,13 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.time"></a><a class="link" href="time.html" title="Time Requirements">Time Requirements</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="time.html#thread.time.deprecated">Deprecated</a></span></dt></dl></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="time.html#thread.time.deprecated">Deprecated</a></span></dt></dl></div>
 <p>
       As of Boost 1.50.0, the <span class="bold"><strong>Boost.Thread</strong></span> library
       uses Boost.Chrono library for all operations that require a time out as defined
       in the standard c++11. These include (but are not limited to):
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a></code>
         </li>
@@ -69,16 +69,16 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.time.deprecated"></a><a class="link" href="time.html#thread.time.deprecated" title="Deprecated">Deprecated</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="time.html#thread.time.deprecated.system_time">Typedef <code class="computeroutput"><span class="identifier">system_time</span></code></a></span></dt>
 <dt><span class="section"><a href="time.html#thread.time.deprecated.get_system_time">Non-member
         function <code class="computeroutput"><span class="identifier">get_system_time</span><span class="special">()</span></code></a></span></dt>
 </dl></div>
 <p>
-        The time related functions introduced in Boost 1.35.0, using the <a class="link" href="../date_time.html" title="Chapter&#160;9.&#160;Boost.Date_Time">Boost.Date_Time</a>
+        The time related functions introduced in Boost 1.35.0, using the <a class="link" href="../date_time.html" title="Chapter&#160;13.&#160;Boost.Date_Time">Boost.Date_Time</a>
         library are deprecated. These include (but are not limited to):
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep" title="Non-member function sleep() DEPRECATED"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">sleep</span><span class="special">()</span></code></a>
           </li>
@@ -150,7 +150,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 The current time.
@@ -166,7 +166,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -17 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

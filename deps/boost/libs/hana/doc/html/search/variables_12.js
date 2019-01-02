@@ -15,5 +15,5 @@ var searchData=
   ['string_5fc',['string_c',['../structboost_1_1hana_1_1string.html#a810915f5e494decfe47b047a3500c577',1,'boost::hana::string']]],
   ['suffix',['suffix',['../group__group-MonadPlus.html#ga61dab15f6ecf379121d4096fe0c8ab13',1,'boost::hana']]],
   ['sum',['sum',['../group__group-Foldable.html#ga650def4b2e98f4273d8b9b7aa5a2fc28',1,'boost::hana']]],
-  ['symmetric_5fdifference',['symmetric_difference',['../structboost_1_1hana_1_1set.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::set']]]
+  ['symmetric_5fdifference',['symmetric_difference',['../structboost_1_1hana_1_1map.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::map::symmetric_difference()'],['../structboost_1_1hana_1_1set.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::set::symmetric_difference()']]]
 ];

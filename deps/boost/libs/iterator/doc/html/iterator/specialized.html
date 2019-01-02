@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Specialized Adaptors</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
-<link rel="prev" href="generic/adaptor/adaptor_tutorial.html" title="Tutorial">
+<link rel="prev" href="generic/adaptor.html" title="Iterator Adaptor">
 <link rel="next" href="specialized/filter.html" title="Filter Iterator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,13 +20,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="generic/adaptor/adaptor_tutorial.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="specialized/filter.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="generic/adaptor.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="specialized/filter.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="iterator.specialized"></a><a class="link" href="specialized.html" title="Specialized Adaptors">Specialized Adaptors</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="specialized.html#iterator.specialized.counting">Counting Iterator</a></span></dt>
 <dt><span class="section"><a href="specialized/filter.html">Filter Iterator</a></span></dt>
 <dt><span class="section"><a href="specialized/function_output.html">Function Output
@@ -39,16 +39,16 @@
 <dd><dl>
 <dt><span class="section"><a href="specialized/shared_container.html#iterator.specialized.shared_container.shared_container_type">The
         Shared Container Iterator Type</a></span></dt>
-<dt><span class="section"><a href="specialized/shared_container/shared_container_object_generator.html">The
+<dt><span class="section"><a href="specialized/shared_container.html#iterator.specialized.shared_container.shared_container_object_generator">The
         Shared Container Iterator Object Generator</a></span></dt>
-<dt><span class="section"><a href="specialized/shared_container/shared_container_generator.html">The
+<dt><span class="section"><a href="specialized/shared_container.html#iterator.specialized.shared_container.shared_container_generator">The
         Shared Container Iterator Range Generator</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="specialized/transform.html">Transform Iterator</a></span></dt>
 <dt><span class="section"><a href="specialized/zip.html">Zip Iterator</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="specialized/zip.html#iterator.specialized.zip.zip_example">Example</a></span></dt>
-<dt><span class="section"><a href="specialized/zip/zip_reference.html">Reference</a></span></dt>
+<dt><span class="section"><a href="specialized/zip.html#iterator.specialized.zip.zip_reference">Reference</a></span></dt>
 </dl></dd>
 </dl></div>
 <div class="section">
@@ -62,7 +62,7 @@
       </p>
 <h3>
 <a name="iterator.specialized.counting.h0"></a>
-        <span><a name="iterator.specialized.counting.example"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.example">Example</a>
+        <span class="phrase"><a name="iterator.specialized.counting.example"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.example">Example</a>
       </h3>
 <p>
         This example fills an array with numbers and a second array with pointers
@@ -101,11 +101,11 @@
       </p>
 <h3>
 <a name="iterator.specialized.counting.h1"></a>
-        <span><a name="iterator.specialized.counting.reference"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.reference">Reference</a>
+        <span class="phrase"><a name="iterator.specialized.counting.reference"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.reference">Reference</a>
       </h3>
 <h4>
 <a name="iterator.specialized.counting.h2"></a>
-        <span><a name="iterator.specialized.counting.synopsis"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.synopsis">Synopsis</a>
+        <span class="phrase"><a name="iterator.specialized.counting.synopsis"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.synopsis">Synopsis</a>
       </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">class</span> <span class="identifier">Incrementable</span>
@@ -152,8 +152,8 @@
          <span class="identifier">iterator_traversal</span><span class="special">&lt;</span><span class="identifier">Incrementable</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">,</span>
          <span class="identifier">Incrementable</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Incrementable</span><span class="special">&amp;)</span>
 </pre>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
         <span class="bold"><strong>Note:</strong></span> implementers are encouraged to provide
         an implementation of <code class="computeroutput"><span class="keyword">operator</span><span class="special">-</span></code> and a <code class="computeroutput"><span class="identifier">difference_type</span></code>
@@ -163,7 +163,7 @@
 </div>
 <h4>
 <a name="iterator.specialized.counting.h3"></a>
-        <span><a name="iterator.specialized.counting.requirements"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.requirements">Requirements</a>
+        <span class="phrase"><a name="iterator.specialized.counting.requirements"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.requirements">Requirements</a>
       </h4>
 <p>
         The <code class="computeroutput"><span class="identifier">Incrementable</span></code> argument
@@ -200,7 +200,7 @@
 </pre>
 <h4>
 <a name="iterator.specialized.counting.h4"></a>
-        <span><a name="iterator.specialized.counting.concepts"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.concepts">Concepts</a>
+        <span class="phrase"><a name="iterator.specialized.counting.concepts"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.concepts">Concepts</a>
       </h4>
 <p>
         Specializations of <code class="computeroutput"><span class="identifier">counting_iterator</span></code>
@@ -222,7 +222,7 @@
       </p>
 <h4>
 <a name="iterator.specialized.counting.h5"></a>
-        <span><a name="iterator.specialized.counting.operations"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.operations">Operations</a>
+        <span class="phrase"><a name="iterator.specialized.counting.operations"></a></span><a class="link" href="specialized.html#iterator.specialized.counting.operations">Operations</a>
       </h4>
 <p>
         In addition to the operations required by the concepts modeled by <code class="computeroutput"><span class="identifier">counting_iterator</span></code>, <code class="computeroutput"><span class="identifier">counting_iterator</span></code>
@@ -281,7 +281,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="generic/adaptor/adaptor_tutorial.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="specialized/filter.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="generic/adaptor.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="specialized/filter.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -43,7 +43,7 @@ rule check ( expressions + : language ? : true-properties * : false-properties *
         else
         {
             # Create the check run if we don't have one yet.
-            local key = [ MD5 $(language)::$(expression) ] ;
+            local key = [ MD5 "$(language)::$(expression)" ] ;
             if ! ( $(key) in $(_checks_) )
             {
                 _checks_ += $(key) ;
@@ -102,7 +102,7 @@ local rule change_term_to_def ( term )
     if $(parts[3])
     {
         local version_number = [ regex.split $(parts[3]) "[.]" ] ;
-        if ! $(version_number[3]) { version_number += "0" ; }
+        if ! $(version_number[2]) { version_number += "0" ; }
         if ! $(version_number[3]) { version_number += "0" ; }
         parts = $(parts[1-2]) BOOST_VERSION_NUMBER($(version_number:J=",")) ;
     }

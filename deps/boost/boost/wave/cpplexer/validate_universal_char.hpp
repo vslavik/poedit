@@ -219,7 +219,7 @@ classify_universal_char (unsigned long ch)
 ///////////////////////////////////////////////////////////////////////////////
 template <typename StringT>
 inline void
-validate_identifier_name (StringT const &name, std::size_t line, 
+validate_identifier_name (StringT const &name, std::size_t line,
     std::size_t column, StringT const &file_name)
 {
     using namespace std;    // some systems have strtoul in namespace std::

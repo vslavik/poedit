@@ -19,6 +19,8 @@
 //#pragma warning( disable : 4244 )
 #endif // defined(_MSC_VER)
 
+#include <iostream>
+
 //[quickstart_include
 
 #include <boost/geometry.hpp>

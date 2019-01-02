@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::set`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -56,7 +56,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     //////////////////////////////////////////////////////////////////////////
     //! @cond
     template <typename ...Xs>
-    struct set
+    struct set final
         : detail::operators::adl<set<Xs...>>
         , detail::searchable_operators<set<Xs...>>
     {
@@ -72,6 +72,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             : storage(static_cast<tuple<Xs...>&&>(xs))
         { }
 
+        constexpr set() = default;
         constexpr set(set const& other) = default;
         constexpr set(set&& other) = default;
     };

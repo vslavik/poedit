@@ -10,6 +10,7 @@
 #ifndef VORONOI_TEST_HELPER
 #define VORONOI_TEST_HELPER
 
+#include <boost/polygon/polygon.hpp>
 #include <algorithm>
 #include <iostream>
 #include <iterator>
@@ -18,7 +19,6 @@
 #include <vector>
 #include <utility>
 
-#include <boost/polygon/polygon.hpp>
 using namespace boost::polygon;
 
 namespace voronoi_test_helper {

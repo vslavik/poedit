@@ -40,8 +40,8 @@ exe test1 : test1.cpp ;
 
 tester.run_build_system()
 
-tester.expect_addition("bin/$toolset/debug/test.obj")
-tester.expect_addition("a/bin/$toolset/debug/test1.exe")
+tester.expect_addition("bin/$toolset/debug*/test.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test1.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -55,8 +55,8 @@ tester.rm("a/bin")
 
 tester.run_build_system(subdir="a")
 
-tester.expect_addition("bin/$toolset/debug/test.obj")
-tester.expect_addition("a/bin/$toolset/debug/test1.exe")
+tester.expect_addition("bin/$toolset/debug*/test.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test1.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -76,8 +76,8 @@ build-project a ;
 
 tester.run_build_system()
 
-tester.expect_addition("bin/$toolset/debug/test.obj")
-tester.expect_addition("a/bin/$toolset/debug/test1.exe")
+tester.expect_addition("bin/$toolset/debug*/test.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test1.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -97,8 +97,8 @@ build-project a ;
 
 tester.run_build_system()
 
-tester.expect_addition("bin/$toolset/debug/test.obj")
-tester.expect_addition("a/bin/$toolset/debug/test1.exe")
+tester.expect_addition("bin/$toolset/debug*/test.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test1.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -118,8 +118,8 @@ build-project a ;
 
 tester.run_build_system()
 
-tester.expect_addition("bin/$toolset/debug/test.obj")
-tester.expect_addition("a/bin/$toolset/debug/test1.exe")
+tester.expect_addition("bin/$toolset/debug*/test.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test1.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -141,7 +141,7 @@ exe test : test.cpp ;
 """)
 
 tester.run_build_system()
-tester.expect_addition("bin/$toolset/debug/test.exe")
+tester.expect_addition("bin/$toolset/debug*/test.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -162,7 +162,7 @@ exe test : test.cpp ;
 """)
 
 tester.run_build_system()
-tester.expect_addition("bin/$toolset/debug/test.exe")
+tester.expect_addition("bin/$toolset/debug*/test.exe")
 
 tester.rm("bin")
 tester.rm("a/bin")
@@ -200,8 +200,8 @@ int main() { bar(); }
 """)
 
 tester.run_build_system()
-tester.expect_addition("b/bin/$toolset/debug/test3.obj")
-tester.expect_addition("a/bin/$toolset/debug/test.exe")
+tester.expect_addition("b/bin/$toolset/debug*/test3.obj")
+tester.expect_addition("a/bin/$toolset/debug*/test.exe")
 
 tester.rm("bin")
 tester.rm("a")
@@ -232,6 +232,6 @@ tester.write("a_src/test1.cpp", """
 """)
 
 tester.run_build_system(subdir="build/a")
-tester.expect_addition("build/a/bin/$toolset/debug/test.exe")
+tester.expect_addition("build/a/bin/$toolset/debug*/test.exe")
 
 tester.cleanup()

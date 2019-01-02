@@ -1,10 +1,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Expectation Parser (a &gt; b)</title>
+<title>Expectation Operator (a &gt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../operator.html" title="Parser Operators">
 <link rel="prev" href="difference.html" title="Difference Parser (a - b)">
 <link rel="next" href="kleene.html" title="Kleene Parser (*a)">
@@ -24,13 +24,13 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.expect"></a><a class="link" href="expect.html" title="Expectation Parser (a &gt; b)">Expectation
-          Parser (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+<a name="spirit.qi.reference.operator.expect"></a><a class="link" href="expect.html" title="Expectation Operator (a &gt; b)">Expectation
+          Operator (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h0"></a>
-            <span><a name="spirit.qi.reference.operator.expect.description"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.description"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
 <p>
             There are occasions in which it is expected that the input must match
@@ -69,7 +69,7 @@
           </p>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h1"></a>
-            <span><a name="spirit.qi.reference.operator.expect.header"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.header"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/expect.hpp&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_expect</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -79,7 +79,7 @@
           </p>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h2"></a>
-            <span><a name="spirit.qi.reference.operator.expect.model_of"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.model_of">Model
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.model_of"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -87,20 +87,20 @@
             </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
                   A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iter</span></code></span></dt>
 <dd><p>
-                  A <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type
+                  A <a href="http://en.cppreference.com/w/cpp/named_req/ForwardIterator" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type
                 </p></dd>
 </dl>
 </div>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h3"></a>
-            <span><a name="spirit.qi.reference.operator.expect.expectation_failure"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.expectation_failure"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
             Failure</a>
           </h6>
 <p>
@@ -116,7 +116,7 @@
 </pre>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h4"></a>
-            <span><a name="spirit.qi.reference.operator.expect.expression_semantics"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.expression_semantics"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
@@ -155,9 +155,20 @@
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              If you need an exception to be thrown if <code class="computeroutput"><span class="identifier">a</span></code>
+              fails, use the <a class="link" href="../directive/expect.html" title="Expectation Directive (expect[])"><code class="computeroutput"><span class="identifier">expect</span></code></a> directive instead of
+              the expectation operator.
+            </p></td></tr>
+</table></div>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h5"></a>
-            <span><a name="spirit.qi.reference.operator.expect.attributes"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.attributes"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
           </h6>
 <p>
             See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
@@ -206,7 +217,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h6"></a>
-            <span><a name="spirit.qi.reference.operator.expect.complexity"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.complexity"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               The overall complexity of the expectation parser is defined by the
@@ -215,7 +226,7 @@
             </p></blockquote></div>
 <h6>
 <a name="spirit.qi.reference.operator.expect.h7"></a>
-            <span><a name="spirit.qi.reference.operator.expect.example"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
+            <span class="phrase"><a name="spirit.qi.reference.operator.expect.example"></a></span><a class="link" href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
 <tr>

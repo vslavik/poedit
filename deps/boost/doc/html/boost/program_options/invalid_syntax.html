@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class invalid_syntax</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../program_options/reference.html#header.boost.program_options.errors_hpp" title="Header &lt;boost/program_options/errors.hpp&gt;">
 <link rel="prev" href="ambiguous_option.html" title="Class ambiguous_option">
@@ -36,51 +36,51 @@
 <span class="keyword">class</span> <a class="link" href="invalid_syntax.html" title="Class invalid_syntax">invalid_syntax</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">program_options</span><span class="special">::</span><span class="identifier">error_with_option_name</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 
-  <span class="keyword">enum</span> <a name="boost.program_options.invalid_syntax.kind_t"></a>kind_t <span class="special">{</span> long_not_allowed =  30, long_adjacent_not_allowed, 
+  <span class="keyword">enum</span> <a name="boost.program_options.invalid_syntax.kind_t"></a>kind_t <span class="special">{</span> long_not_allowed = = 30, long_adjacent_not_allowed, 
                 short_adjacent_not_allowed, empty_adjacent_parameter, 
                 missing_parameter, extra_parameter, unrecognized_line <span class="special">}</span><span class="special">;</span>
   <span class="comment">// <a class="link" href="invalid_syntax.html#boost.program_options.invalid_syntaxconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="invalid_syntax.html#idp82430160-bb"><span class="identifier">invalid_syntax</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
+  <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_5-bb"><span class="identifier">invalid_syntax</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
                  <span class="keyword">int</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="invalid_syntax.html#idp134712448-bb"><span class="special">~</span><span class="identifier">invalid_syntax</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_6-bb"><span class="special">~</span><span class="identifier">invalid_syntax</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="invalid_syntax.html#idp67279824-bb">public member functions</a></span>
-  <span class="identifier">kind_t</span> <a class="link" href="invalid_syntax.html#idp67280384-bb"><span class="identifier">kind</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="invalid_syntax.html#idp189384032-bb"><span class="identifier">tokens</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_4-bb">public member functions</a></span>
+  <span class="identifier">kind_t</span> <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_4_1-bb"><span class="identifier">kind</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_4_2-bb"><span class="identifier">tokens</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="invalid_syntax.html#idp134712736-bb">protected member functions</a></span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="invalid_syntax.html#idp83056160-bb"><span class="identifier">get_template</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_7-bb">protected member functions</a></span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="invalid_syntax.html#id-1_3_32_9_5_1_1_12_7_1-bb"><span class="identifier">get_template</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp310131024"></a><h2>Description</h2>
+<a name="id-1.3.32.9.6.14.4"></a><h2>Description</h2>
 <p>Class thrown when there's syntax error either for command line or config file options. See derived children for concrete classes. </p>
 <div class="refsect2">
-<a name="idp310131840"></a><h3>
+<a name="id-1.3.32.9.6.14.4.3"></a><h3>
 <a name="boost.program_options.invalid_syntaxconstruct-copy-destruct"></a><code class="computeroutput">invalid_syntax</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp82430160-bb"></a><span class="identifier">invalid_syntax</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> option_name <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="id-1_3_32_9_5_1_1_12_5-bb"></a><span class="identifier">invalid_syntax</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> option_name <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
                <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> original_token <span class="special">=</span> <span class="string">""</span><span class="special">,</span> <span class="keyword">int</span> option_style <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp134712448-bb"></a><span class="special">~</span><span class="identifier">invalid_syntax</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="id-1_3_32_9_5_1_1_12_6-bb"></a><span class="special">~</span><span class="identifier">invalid_syntax</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp310155152"></a><h3>
-<a name="idp67279824-bb"></a><code class="computeroutput">invalid_syntax</code> public member functions</h3>
+<a name="id-1.3.32.9.6.14.4.4"></a><h3>
+<a name="id-1_3_32_9_5_1_1_12_4-bb"></a><code class="computeroutput">invalid_syntax</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">kind_t</span> <a name="idp67280384-bb"></a><span class="identifier">kind</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">kind_t</span> <a name="id-1_3_32_9_5_1_1_12_4_1-bb"></a><span class="identifier">kind</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp189384032-bb"></a><span class="identifier">tokens</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="id-1_3_32_9_5_1_1_12_4_2-bb"></a><span class="identifier">tokens</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Convenience functions for backwards compatibility </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp310169456"></a><h3>
-<a name="idp134712736-bb"></a><code class="computeroutput">invalid_syntax</code> protected member functions</h3>
+<a name="id-1.3.32.9.6.14.4.5"></a><h3>
+<a name="id-1_3_32_9_5_1_1_12_7-bb"></a><code class="computeroutput">invalid_syntax</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp83056160-bb"></a><span class="identifier">get_template</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="id-1_3_32_9_5_1_1_12_7_1-bb"></a><span class="identifier">get_template</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">)</span><span class="special">;</span></pre>
 <p>Used to convert kind_t to a related error text </p>
 </li></ol></div>
 </div>

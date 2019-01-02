@@ -4,8 +4,8 @@
 //  @date   Aug 14, 2011
 //  @author Andrew Hundt <ATHundt@gmail.com>
 //
-//  (C) 2011-2013 Andrew Hundt <ATHundt@gmail.com>
-//  (C) 2013-2013 Ion Gaztanaga
+//  (C) Copyright 2011-2013 Andrew Hundt <ATHundt@gmail.com>
+//  (C) Copyright 2013-2013 Ion Gaztanaga
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
@@ -137,7 +137,7 @@ int main()
 
       std::cout << "varray/std::vector total time comparison:";
       compare_times(time_varray,time_standard_vector);
-   }catch(std::exception e){
+   }catch(std::exception &e){
       std::cout << e.what();
    }
    return 0;

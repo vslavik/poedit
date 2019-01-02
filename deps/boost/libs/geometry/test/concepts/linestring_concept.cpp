@@ -31,8 +31,8 @@
 template <typename Geometry>
 void test_linestring()
 {
-    BOOST_CONCEPT_ASSERT( (bg::concept::Linestring<Geometry>) );
-    BOOST_CONCEPT_ASSERT( (bg::concept::ConstLinestring<Geometry>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::Linestring<Geometry>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::ConstLinestring<Geometry>) );
 
     Geometry geometry;
     typedef typename bg::point_type<Geometry>::type P;

@@ -35,10 +35,31 @@
 #include <boost/wave/cpplexer/cpp_lex_token.hpp>      // token type
 #include <boost/wave/cpplexer/cpp_lex_iterator.hpp>   // lexer type
 
+///////////////////////////////////////////////////////////////////////////////
+//  Include lexer specifics, import lexer names
+#if BOOST_WAVE_SEPARATE_LEXER_INSTANTIATION == 0
+#include <boost/wave/cpplexer/re2clex/cpp_re2c_lexer.hpp>
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+//  Include the grammar definitions, if these shouldn't be compiled separately
+//  (ATTENTION: _very_ large compilation times!)
+#if BOOST_WAVE_SEPARATE_GRAMMAR_INSTANTIATION == 0
+#include <boost/wave/grammars/cpp_intlit_grammar.hpp>
+#include <boost/wave/grammars/cpp_chlit_grammar.hpp>
+#include <boost/wave/grammars/cpp_grammar.hpp>
+#include <boost/wave/grammars/cpp_expression_grammar.hpp>
+#include <boost/wave/grammars/cpp_predef_macros_grammar.hpp>
+#include <boost/wave/grammars/cpp_defined_grammar.hpp>
+#endif
+
 //  test application related headers
 #include "cmd_line_utils.hpp"
 #include "testwave_app.hpp"
 #include "collect_hooks_information.hpp"
+
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/detail/utf8_codecvt_facet.hpp>
 
 # ifdef BOOST_NO_STDC_NAMESPACE
 namespace std
@@ -58,6 +79,31 @@ namespace fs = boost::filesystem;
 #define TESTWAVE_VERSION_SUBMINOR        0
 
 namespace {
+    struct fs_path_imbue_utf8
+    {
+        explicit fs_path_imbue_utf8(bool enable)
+            : m_enabled(enable), m_prevLocale()
+        {
+            if (!m_enabled) return;
+            static std::locale global_loc = std::locale();
+            static std::locale utf_8_loc(global_loc, new boost::filesystem::detail::utf8_codecvt_facet);
+            
+            m_prevLocale = boost::filesystem::path::imbue(utf_8_loc);
+            
+        }
+        ~fs_path_imbue_utf8()
+        {
+            if (!m_enabled) return;
+            boost::filesystem::path::imbue(m_prevLocale);
+        }
+    private:
+        fs_path_imbue_utf8();
+        fs_path_imbue_utf8(fs_path_imbue_utf8 const&);
+        fs_path_imbue_utf8& operator=(fs_path_imbue_utf8 const&);
+
+        bool m_enabled;
+        std::locale m_prevLocale;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
@@ -167,7 +213,7 @@ testwave_app::got_expected_result(std::string const& filename,
                         std::string source = expected.substr(pos1+3, p-pos1-3);
                         std::string result, error, hooks;
                         bool pp_result = preprocess_file(filename, source,
-                            result, error, hooks, true);
+                            result, error, hooks, "", true);
                         if (!pp_result) {
                             std::cerr
                                 << "testwave: preprocessing error in $E directive: "
@@ -373,6 +419,8 @@ testwave_app::testwave_app(po::variables_map const& vm)
 #if BOOST_WAVE_SUPPORT_CPP0X != 0
         ("c++11", "enable C++11 mode (implies --variadics and --long_long)")
 #endif
+        ("warning,W", po::value<std::vector<std::string> >()->composing(),
+            "Warning settings.")
     ;
 }
 
@@ -392,9 +440,16 @@ testwave_app::test_a_file(std::string filename)
     if (!read_file(filename, instr))
         return false;     // error was reported already
 
+    std::string use_utf8;
+    extract_special_information(filename, instr, 'U', use_utf8);
+    fs_path_imbue_utf8 to_utf8(use_utf8.substr(0,3) == "yes");
+
     bool test_hooks = true;
     if (global_vm.count("hooks"))
         test_hooks = variables_map_as(global_vm["hooks"], (bool *)NULL);
+
+    std::string expected_cfg_macro;
+    extract_special_information(filename, instr, 'D', expected_cfg_macro);
 
 // extract expected output, preprocess the data and compare results
     std::string expected, expected_hooks;
@@ -402,7 +457,8 @@ testwave_app::test_a_file(std::string filename)
         bool retval = true;   // assume success
         bool printed_result = false;
         std::string result, error, hooks;
-        bool pp_result = preprocess_file(filename, instr, result, error, hooks);
+        bool pp_result = preprocess_file(filename, instr, result, error, hooks,
+            expected_cfg_macro);
         if (pp_result || !result.empty()) {
         // did we expect an error?
             std::string expected_error;
@@ -712,7 +768,7 @@ testwave_app::extract_special_information(std::string const& filename,
                         std::string source = value.substr(4, p-4);
                         std::string result, error, hooks;
                         bool pp_result = preprocess_file(filename, source,
-                            result, error, hooks, true);
+                            result, error, hooks, "", true);
                         if (!pp_result) {
                             std::cerr
                                 << "testwave: preprocessing error in '" << flag
@@ -758,7 +814,7 @@ testwave_app::extract_special_information(std::string const& filename,
                         std::string source = value.substr(4, p-4);
                         std::string result, error, hooks;
                         bool pp_result = preprocess_file(filename, source,
-                            result, error, hooks, true);
+                            result, error, hooks, "", true);
                         if (!pp_result) {
                             std::cerr
                                 << "testwave: preprocessing error in '" << flag
@@ -985,11 +1041,14 @@ testwave_app::initialise_options(Context& ctx, po::variables_map const& vm,
         for (std::vector<std::string>::const_iterator cit = syspaths.begin();
               cit != end; ++cit)
         {
+            std::string full(*cit);
+            got_expected_result(ctx.get_current_filename(),"",full);
+            
             if (9 == debuglevel) {
                 std::cerr << "initialise_options: option: -S" << *cit
                           << std::endl;
             }
-            ctx.add_sysinclude_path((*cit).c_str());
+            ctx.add_sysinclude_path(full.c_str());
         }
     }
 
@@ -1002,11 +1061,14 @@ testwave_app::initialise_options(Context& ctx, po::variables_map const& vm,
         for (std::vector<std::string>::const_iterator cit = ip.paths.begin();
               cit != end; ++cit)
         {
+            std::string full(*cit);
+            got_expected_result(ctx.get_current_filename(),"",full);
+
             if (9 == debuglevel) {
                 std::cerr << "initialise_options: option: -I" << *cit
                           << std::endl;
             }
-            ctx.add_include_path((*cit).c_str());
+            ctx.add_include_path(full.c_str());
         }
 
     // if on the command line was given -I- , this has to be propagated
@@ -1307,7 +1369,7 @@ testwave_app::add_predefined_macros(Context& ctx)
 bool
 testwave_app::preprocess_file(std::string filename, std::string const& instr,
     std::string& result, std::string& error, std::string& hooks,
-    bool single_line)
+    std::string const& expected_cfg_macro, bool single_line)
 {
 //  create the wave::context object and initialize it from the file to
 //  preprocess (may contain options inside of special comments)
@@ -1341,6 +1403,13 @@ testwave_app::preprocess_file(std::string filename, std::string const& instr,
     //  add special predefined macros
         if (!add_predefined_macros(ctx))
             return false;
+
+        if (!expected_cfg_macro.empty() &&
+            !ctx.is_defined_macro(expected_cfg_macro))
+        {
+            // skip this test as it is for a disabled configuration
+            return false;
+        }
 
     //  preprocess the input, loop over all generated tokens collecting the
     //  generated text

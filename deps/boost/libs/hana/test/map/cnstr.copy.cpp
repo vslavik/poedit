@@ -1,15 +1,50 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #include <boost/hana/assert.hpp>
+#include <boost/hana/bool.hpp>
 #include <boost/hana/equal.hpp>
+#include <boost/hana/fwd/hash.hpp>
 #include <boost/hana/integral_constant.hpp>
 #include <boost/hana/map.hpp>
 #include <boost/hana/type.hpp>
 
 #include <string>
+#include <type_traits>
 namespace hana = boost::hana;
+
+
+struct NoCopy {
+    NoCopy() = default;
+    NoCopy(NoCopy const&) = delete;
+    friend auto operator==(NoCopy const&, NoCopy const&) { return hana::true_c; }
+    friend auto operator!=(NoCopy const&, NoCopy const&) { return hana::false_c; }
+};
+
+// Note: It is also useful to check with a non-empty class, because that
+//       triggers different instantiations due to EBO.
+struct NoCopy_nonempty {
+    NoCopy_nonempty() = default;
+    NoCopy_nonempty(NoCopy_nonempty const&) = delete;
+    int i;
+    friend auto operator==(NoCopy_nonempty const&, NoCopy_nonempty const&) { return hana::true_c; }
+    friend auto operator!=(NoCopy_nonempty const&, NoCopy_nonempty const&) { return hana::false_c; }
+};
+
+namespace boost { namespace hana {
+    template <>
+    struct hash_impl<NoCopy> {
+        static constexpr auto apply(NoCopy const&)
+        { return hana::type_c<NoCopy>; };
+    };
+
+    template <>
+    struct hash_impl<NoCopy_nonempty> {
+        static constexpr auto apply(NoCopy_nonempty const&)
+        { return hana::type_c<NoCopy_nonempty>; };
+    };
+}}
 
 
 int main() {
@@ -65,5 +100,15 @@ int main() {
         BOOST_HANA_RUNTIME_CHECK(
             copy == hana::make_map(hana::make_pair(hana::int_c<2>, std::string{"abcdef"}))
         );
+    }
+
+    {
+        using Map1 = hana::map<hana::pair<NoCopy, NoCopy>>;
+        Map1 map1;
+        static_assert(!std::is_copy_constructible<Map1>::value, "");
+
+        using Map2 = hana::map<hana::pair<NoCopy_nonempty, NoCopy_nonempty>>;
+        Map2 map2;
+        static_assert(!std::is_copy_constructible<Map2>::value, "");
     }
 }

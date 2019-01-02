@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Reference</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="prev" href="spatial_indexes/rtree_examples/index_stored_in_mapped_file_using_boost_interprocess.html" title="Index stored in mapped file using Boost.Interprocess">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="geometry.reference"></a><a class="link" href="reference.html" title="Reference">Reference</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference/access.html">Access Functions</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="reference/access/get.html">get</a></span></dt>
@@ -37,6 +37,7 @@
 <dt><span class="section"><a href="reference/adapted.html">Adapted models</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="reference/adapted/c_array.html">C array</a></span></dt>
+<dt><span class="section"><a href="reference/adapted/std_array.html">C++11 Array Container</a></span></dt>
 <dt><span class="section"><a href="reference/adapted/boost_array.html">Boost.Array</a></span></dt>
 <dt><span class="section"><a href="reference/adapted/boost_fusion.html">Boost.Fusion</a></span></dt>
 <dt><span class="section"><a href="reference/adapted/boost_tuple.html">Boost.Tuple</a></span></dt>
@@ -57,7 +58,10 @@
 <dt><span class="section"><a href="reference/algorithms/correct.html">correct</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/covered_by.html">covered_by</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/crosses.html">crosses</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/densify.html">densify</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/difference.html">difference</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/discrete_frechet_distance.html">discrete_frechet_distance</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/discrete_hausdorff_distance.html">discrete_hausdorff_distance</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/disjoint.html">disjoint</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/distance.html">distance</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/envelope.html">envelope</a></span></dt>
@@ -94,6 +98,8 @@
 <dt><span class="section"><a href="reference/arithmetic/add_value.html">add_value</a></span></dt>
 <dt><span class="section"><a href="reference/arithmetic/assign_point.html">assign_point</a></span></dt>
 <dt><span class="section"><a href="reference/arithmetic/assign_value.html">assign_value</a></span></dt>
+<dt><span class="section"><a href="reference/arithmetic/cross_product_2.html">cross_product</a></span></dt>
+<dt><span class="section"><a href="reference/arithmetic/cross_product_2_0.html">cross_product</a></span></dt>
 <dt><span class="section"><a href="reference/arithmetic/divide_point.html">divide_point</a></span></dt>
 <dt><span class="section"><a href="reference/arithmetic/divide_value.html">divide_value</a></span></dt>
 <dt><span class="section"><a href="reference/arithmetic/dot_product.html">dot_product</a></span></dt>
@@ -172,6 +178,8 @@
 </dl></dd>
 <dt><span class="section"><a href="reference/io.html">IO (input/output)</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="reference/io/dsv.html">DSV (Delimiter-Separated
+        Values)</a></span></dt>
 <dt><span class="section"><a href="reference/io/wkt.html">WKT (Well-Known Text)</a></span></dt>
 <dt><span class="section"><a href="reference/io/svg.html">SVG (Scalable Vector Graphics)</a></span></dt>
 </dl></dd>
@@ -210,17 +218,13 @@
 <dt><span class="section"><a href="reference/spatial_indexes/group__predicates.html">Predicates
         (boost::geometry::index::)</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="reference/srs.html">SRS</a></span></dt>
+<dd><dl><dt><span class="section"><a href="reference/srs/srs_spheroid.html">srs::spheroid</a></span></dt></dl></dd>
 <dt><span class="section"><a href="reference/strategies.html">Strategies</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras.html">strategy::distance::pythagoras</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_box_box.html">strategy::distance::pythagoras_box_box</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_point_box.html">strategy::distance::pythagoras_point_box</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_haversine.html">strategy::distance::haversine</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_projected_point.html">strategy::distance::projected_point</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_cross_track.html">strategy::distance::cross_track</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_distance_cross_track_point_box.html">strategy::distance::cross_track_point_box</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_area_surveyor.html">strategy::area::surveyor</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_area_huiller.html">strategy::area::huiller</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_area_cartesian.html">strategy::area::cartesian</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_area_spherical.html">strategy::area::spherical</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_area_geographic.html">strategy::area::geographic</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_buffer_join_round.html">strategy::buffer::join_round</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_buffer_join_miter.html">strategy::buffer::join_miter</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_buffer_end_round.html">strategy::buffer::end_round</a></span></dt>
@@ -233,16 +237,27 @@
 <dt><span class="section"><a href="reference/strategies/strategy_centroid_average.html">strategy::centroid::average</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_centroid_bashein_detmer.html">strategy::centroid::bashein_detmer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_convex_hull_graham_andrew.html">strategy::convex_hull::graham_andrew</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_densify_cartesian.html">strategy::densify::cartesian</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_densify_geographic.html">strategy::densify::geographic</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_densify_spherical.html">strategy::densify::spherical</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras.html">strategy::distance::pythagoras</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_box_box.html">strategy::distance::pythagoras_box_box</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_point_box.html">strategy::distance::pythagoras_point_box</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_haversine.html">strategy::distance::haversine</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_projected_point.html">strategy::distance::projected_point</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_cross_track.html">strategy::distance::cross_track</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_cross_track_point_box.html">strategy::distance::cross_track_point_box</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_side_side_by_triangle.html">strategy::side::side_by_triangle</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_side_side_by_cross_track.html">strategy::side::side_by_cross_track</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_side_spherical_side_formula.html">strategy::side::spherical_side_formula</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_side_geographic.html">strategy::side::geographic</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_simplify_douglas_peucker.html">strategy::simplify::douglas_peucker</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_transform_inverse_transformer.html">strategy::transform::inverse_transformer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_transform_map_transformer.html">strategy::transform::map_transformer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_transform_rotate_transformer.html">strategy::transform::rotate_transformer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_transform_scale_transformer.html">strategy::transform::scale_transformer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_transform_translate_transformer.html">strategy::transform::translate_transformer</a></span></dt>
-<dt><span class="section"><a href="reference/strategies/strategy_transform_ublas_transformer.html">strategy::transform::ublas_transformer</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_transform_matrix_transformer.html">strategy::transform::matrix_transformer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_within_winding.html">strategy::within::winding</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_within_franklin.html">strategy::within::franklin</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_within_crossings_multiply.html">strategy::within::crossings_multiply</a></span></dt>
@@ -259,8 +274,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

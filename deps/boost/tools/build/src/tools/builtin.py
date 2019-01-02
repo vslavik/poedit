@@ -82,7 +82,7 @@ def variant (name, parents_or_properties, explicit_properties = []):
     feature.compose ("<variant>" + name, explicit_properties.all())
 
 __os_names = """
-    amiga aix bsd cygwin darwin dos emx freebsd hpux iphone linux netbsd
+    amiga aix appletv bsd cygwin darwin dos emx freebsd hpux iphone linux netbsd
     openbsd osf qnx qnxnto sgi solaris sun sunos svr4 sysv ultrix unix unixware
     vms windows
 """.split()
@@ -147,7 +147,7 @@ def register_globals ():
     feature.feature ('exception-handling', ['on', 'off'], ['propagated'])
 
     # Whether there is support for asynchronous EH (e.g. catching SEGVs).
-    feature.feature ('asynch-exceptions', ['on', 'off'], ['propagated'])
+    feature.feature ('asynch-exceptions', ['off', 'on'], ['propagated'])
 
     # Whether all extern "C" functions are considered nothrow by default.
     feature.feature ('extern-c-nothrow', ['off', 'on'], ['propagated'])
@@ -367,11 +367,21 @@ class CScanner (scanner.Scanner):
         return r'#[ \t]*include[ ]*(<(.*)>|"(.*)")'
 
     def process (self, target, matches, binding):
+        # since it's possible for this function to be called
+        # thousands to millions of times (depending on how many
+        # header files there are), as such, there are some
+        # optimizations that have been used here. Anything that
+        # is slightly out of the ordinary for Python code
+        # has been commented.
+        angle = []
+        quoted = []
+        for match in matches:
+            if '<' in match:
+                angle.append(match.strip('<>'))
+            elif '"' in match:
+                quoted.append(match.strip('"'))
 
-        angle = regex.transform (matches, "<(.*)>")
-        quoted = regex.transform (matches, '"(.*)"')
-
-        g = str(id(self))
+        g = id(self)
         b = os.path.normpath(os.path.dirname(binding[0]))
 
         # Attach binding of including file to included targets.
@@ -382,27 +392,38 @@ class CScanner (scanner.Scanner):
         # We don't need this extra information for angle includes,
         # since they should not depend on including file (we can't
         # get literal "." in include path).
-        g2 = g + "#" + b
+        # Note: string interpolation is slightly faster
+        # than .format()
+        g2 = '<%s#%s>' % (g, b)
+        g = "<%s>" % g
 
-        g = "<" + g + ">"
-        g2 = "<" + g2 + ">"
         angle = [g + x for x in angle]
         quoted = [g2 + x for x in quoted]
 
         all = angle + quoted
         bjam.call("mark-included", target, all)
 
+        # each include in self.includes_ looks something like this:
+        #     <include>path/to/somewhere
+        # calling get_value(include) is super slow,
+        # calling .replace('<include>', '') is much faster
+        # however, i[9:] is the fastest way of stripping off the "<include>"
+        # substring.
+        include_paths = [i[9:] for i in self.includes_]
+
         engine = get_manager().engine()
-        engine.set_target_variable(angle, "SEARCH", get_value(self.includes_))
-        engine.set_target_variable(quoted, "SEARCH", [b] + get_value(self.includes_))
+        engine.set_target_variable(angle, "SEARCH", include_paths)
+        engine.set_target_variable(quoted, "SEARCH", [b] + include_paths)
 
         # Just propagate current scanner to includes, in a hope
         # that includes do not change scanners.
-        get_manager().scanners().propagate(self, angle + quoted)
+        get_manager().scanners().propagate(self, all)
 
 scanner.register (CScanner, 'include')
 type.set_scanner ('CPP', CScanner)
 type.set_scanner ('C', CScanner)
+type.set_scanner('H', CScanner)
+type.set_scanner('HPP', CScanner)
 
 # Ported to trunk@47077
 class LibGenerator (generators.Generator):
@@ -572,7 +593,7 @@ class CCompilingGenerator (generators.Generator):
         The only thing it does is changing the type used to represent
         'action' in the constructed dependency graph to 'CompileAction'.
         That class in turn adds additional include paths to handle a case
-        when a source file includes headers which are generated themselfs.
+        when a source file includes headers which are generated themselves.
     """
     def __init__ (self, id, composing, source_types, target_types_and_names, requirements):
         # TODO: (PF) What to do with optional_properties? It seemed that, in the bjam version, the arguments are wrong.
@@ -598,6 +619,8 @@ class LinkingGenerator (generators.Generator):
         assert isinstance(prop_set, property_set.PropertySet)
         assert is_iterable_typed(sources, virtual_target.VirtualTarget)
 
+        # create a copy since sources is being modified
+        sources = list(sources)
         sources.extend(prop_set.get('<library>'))
 
         # Add <library-path> properties for all searched libraries
@@ -672,7 +695,7 @@ class LinkingGenerator (generators.Generator):
 
         # Just pass all features in property_set, it's theorically possible
         # that we'll propagate <xdll-path> features explicitly specified by
-        # the user, but then the user's to blaim for using internal feature.
+        # the user, but then the user's to blame for using internal feature.
         values = prop_set.get('<xdll-path>')
         extra += replace_grist(values, '<xdll-path>')
 
@@ -729,11 +752,27 @@ class ArchiveGenerator (generators.Generator):
         generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
 
     def run (self, project, name, prop_set, sources):
-        sources += prop_set.get ('<library>')
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring) or name is None
+        assert isinstance(prop_set, property_set.PropertySet)
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
+
+        # create a copy since this modifies the sources list
+        sources = list(sources)
+        sources.extend(prop_set.get('<library>'))
 
         result = generators.Generator.run (self, project, name, prop_set, sources)
 
-        return result
+        usage_requirements = []
+        link = prop_set.get('<link>')
+        if 'static' in link:
+            for t in sources:
+                if type.is_derived(t.type(), 'LIB'):
+                    usage_requirements.append(property.Property('<library>', t))
+
+        usage_requirements = property_set.create(usage_requirements)
+
+        return usage_requirements, result
 
 
 def register_archiver(id, source_types, target_types, requirements):

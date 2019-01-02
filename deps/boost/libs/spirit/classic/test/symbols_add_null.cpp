@@ -51,7 +51,6 @@ iterator end2 = data2_ + sizeof(data2_)/sizeof(char_type) - 1;
 
 int main()
 {
-    typedef BOOST_SPIRIT_CLASSIC_NS::scanner<> scanner;
     typedef BOOST_SPIRIT_CLASSIC_NS::impl::tst<void *, char_type> symbols;
 
     symbols symbols_;

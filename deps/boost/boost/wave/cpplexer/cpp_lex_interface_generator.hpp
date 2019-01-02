@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
 
     Definition of the abstract lexer interface
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -17,7 +17,7 @@
 #include <boost/wave/util/file_position.hpp>
 #include <boost/wave/language_support.hpp>
 #include <boost/wave/cpplexer/cpp_lex_interface.hpp>
-#include <boost/wave/cpplexer/cpp_lex_token.hpp>      // lex_token 
+#include <boost/wave/cpplexer/cpp_lex_token.hpp>      // lex_token
 
 // this must occur after all of the includes and before any code appears
 #ifdef BOOST_HAS_ABI_HEADERS
@@ -39,25 +39,25 @@ namespace cpplexer {
 #define BOOST_WAVE_NEW_LEXER_DECL BOOST_WAVE_DECL
 #else
 #define BOOST_WAVE_NEW_LEXER_DECL
-#endif 
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  new_lexer_gen: generates a new instance of the required C++ lexer
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <
-    typename IteratorT, 
+    typename IteratorT,
     typename PositionT = boost::wave::util::file_position_type,
-    typename TokenT = lex_token<PositionT> 
+    typename TokenT = lex_token<PositionT>
 >
 struct BOOST_WAVE_NEW_LEXER_DECL new_lexer_gen
 {
 //  The NewLexer function allows the opaque generation of a new lexer object.
-//  It is coupled to the token type to allow to decouple the lexer/token 
+//  It is coupled to the token type to allow to decouple the lexer/token
 //  configurations at compile time.
     static lex_input_interface<TokenT> *
-    new_lexer(IteratorT const &first, IteratorT const &last, 
+    new_lexer(IteratorT const &first, IteratorT const &last,
         PositionT const &pos, boost::wave::language_support language);
 };
 
@@ -81,22 +81,22 @@ struct lex_input_interface_generator
     ~lex_input_interface_generator() {}
 
 //  The new_lexer function allows the opaque generation of a new lexer object.
-//  It is coupled to the token type to allow to distinguish different 
+//  It is coupled to the token type to allow to distinguish different
 //  lexer/token configurations at compile time.
     template <typename IteratorT>
     static lex_input_interface<TokenT> *
-    new_lexer(IteratorT const &first, IteratorT const &last, 
+    new_lexer(IteratorT const &first, IteratorT const &last,
         position_type const &pos, boost::wave::language_support language)
-    { 
+    {
         return new_lexer_gen<IteratorT, position_type, TokenT>::new_lexer (
-            first, last, pos, language); 
+            first, last, pos, language);
     }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace cpplexer
 }   // namespace wave
-}   // namespace boost 
+}   // namespace boost
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)

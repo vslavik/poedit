@@ -11,7 +11,7 @@ t = BoostBuild.Tester()
 
 t.set_tree("test2")
 
-file_list = 'bin/$toolset/debug/' * \
+file_list = 'bin/$toolset/debug*/' * \
     BoostBuild.List("foo foo.o")
 
 t.run_build_system("-sBOOST_BUILD_PATH=" + t.original_workdir + "/..")

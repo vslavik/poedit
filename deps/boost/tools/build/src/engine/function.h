@@ -35,6 +35,8 @@ void function_run_actions( FUNCTION * function, FRAME * frame, STACK * s, string
 FUNCTION * function_bind_variables( FUNCTION * f, module_t * module, int * counter );
 FUNCTION * function_unbind_variables( FUNCTION * f );
 
+LIST * function_get_variables( FUNCTION * f );
+
 void function_done( void );
 
 #ifdef HAVE_PYTHON

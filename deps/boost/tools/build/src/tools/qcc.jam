@@ -21,7 +21,6 @@ import unix ;
 feature.extend toolset : qcc ;
 
 toolset.inherit-generators qcc : unix : unix.link unix.link.dll ;
-generators.override builtin.lib-generator : qcc.prebuilt ;
 toolset.inherit-flags qcc : unix ;
 toolset.inherit-rules qcc : unix ;
 
@@ -66,6 +65,11 @@ toolset.flags qcc.compile OPTIONS <warnings-as-errors>on : -Wc,-Werror ;
 
 toolset.flags qcc.compile OPTIONS <profiling>on : -p ;
 
+toolset.flags qcc.compile OPTIONS <local-visibility>hidden : -fvisibility=hidden ;
+toolset.flags qcc.compile.c++ OPTIONS <local-visibility>hidden : -fvisibility-inlines-hidden ;
+toolset.flags qcc.compile OPTIONS <local-visibility>protected : -fvisibility=protected ;
+toolset.flags qcc.compile OPTIONS <local-visibility>global : -fvisibility=default ;
+
 toolset.flags qcc.compile OPTIONS <cflags> ;
 toolset.flags qcc.compile.c++ OPTIONS <cxxflags> ;
 toolset.flags qcc.compile DEFINES <define> ;
@@ -101,7 +105,7 @@ actions compile.c++
 
 actions compile.c
 {
-    "$(CONFIG_COMMAND)" $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
+    "$(CONFIG_COMMAND)" -lang-c $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
 }
 
 actions compile.asm
@@ -234,5 +238,5 @@ rule link.dll ( targets * : sources * : properties * )
 #
 actions link.dll bind LIBRARIES
 {
-    "$(CONFIG_COMMAND)" -L"$(LINKPATH)" -Wl,-R$(SPACE)-Wl,"$(RPATH)" -o "$(<)" $(HAVE_SONAME)-Wl,-h$(SPACE)-Wl,$(<[1]:D=) -shared "$(>)"  "$(LIBRARIES)" -l$(FINDLIBS-ST) -l$(FINDLIBS-SA) $(OPTIONS)
+    "$(CONFIG_COMMAND)" -L"$(LINKPATH)" -Wl,-R$(SPACE)-Wl,"$(RPATH)" -o "$(<)" -Wl,-h$(SPACE)-Wl,$(<[1]:D=) -shared "$(>)"  "$(LIBRARIES)" -l$(FINDLIBS-ST) -l$(FINDLIBS-SA) $(OPTIONS)
 }

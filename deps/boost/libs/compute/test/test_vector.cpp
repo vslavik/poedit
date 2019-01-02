@@ -10,8 +10,9 @@
 
 #define BOOST_TEST_MODULE TestVector
 #include <boost/test/unit_test.hpp>
-
 #include <boost/concept_check.hpp>
+
+#include <iostream>
 
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -22,6 +23,7 @@
 #include <boost/compute/allocator/pinned_allocator.hpp>
 #include <boost/compute/container/vector.hpp>
 
+#include "quirks.hpp"
 #include "check_macros.hpp"
 #include "context_setup.hpp"
 
@@ -60,13 +62,30 @@ BOOST_AUTO_TEST_CASE(resize)
     BOOST_CHECK_EQUAL(int_vector.size(), size_t(5));
 }
 
+BOOST_AUTO_TEST_CASE(reserve)
+{
+    const float growth_factor = 1.5f;
+
+    bc::vector<int> int_vector(10, context);
+    BOOST_CHECK_EQUAL(int_vector.size(), size_t(10));
+    BOOST_CHECK_EQUAL(int_vector.capacity(), size_t(10));
+
+    int_vector.reserve(20, queue);
+    BOOST_CHECK_EQUAL(int_vector.size(), size_t(10));
+    BOOST_CHECK_EQUAL(int_vector.capacity(), size_t(20 * growth_factor));
+
+    int_vector.reserve(5, queue);
+    BOOST_CHECK_EQUAL(int_vector.size(), size_t(10));
+    BOOST_CHECK_EQUAL(int_vector.capacity(), size_t(20 * growth_factor));
+}
+
 BOOST_AUTO_TEST_CASE(array_operator)
 {
-    bc::vector<int> vector(10);
-    bc::fill(vector.begin(), vector.end(), 0);
+    bc::vector<int> vector(10, context);
+    bc::fill(vector.begin(), vector.end(), 0, queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 
-    bc::fill(vector.begin(), vector.end(), 42);
+    bc::fill(vector.begin(), vector.end(), 42, queue);
     CHECK_RANGE_EQUAL(int, 10, vector, (42, 42, 42, 42, 42, 42, 42, 42, 42, 42));
 
     vector[0] = 9;
@@ -139,6 +158,7 @@ BOOST_AUTO_TEST_CASE(push_back)
     for(int i = 0; i < 100; i++){
         vector.push_back(i, queue);
     }
+    queue.finish();
     BOOST_CHECK_EQUAL(vector.size(), size_t(103));
     BOOST_CHECK_EQUAL(vector[0], 12);
     BOOST_CHECK_EQUAL(vector[1], 24);
@@ -152,6 +172,7 @@ BOOST_AUTO_TEST_CASE(at)
     vector.push_back(1, queue);
     vector.push_back(2, queue);
     vector.push_back(3, queue);
+    queue.finish();
     BOOST_CHECK_EQUAL(vector.at(0), 1);
     BOOST_CHECK_EQUAL(vector.at(1), 2);
     BOOST_CHECK_EQUAL(vector.at(2), 3);
@@ -212,12 +233,19 @@ BOOST_AUTO_TEST_CASE(move_ctor_custom_alloc)
 #endif // BOOST_COMPUTE_NO_RVALUE_REFERENCES
 
 #ifdef BOOST_COMPUTE_USE_CPP11
+#ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 BOOST_AUTO_TEST_CASE(initializer_list_ctor)
 {
-    bc::vector<int> vector = { 2, 4, 6, 8 };
+    // ctor with std::initializer_list<T> always uses
+    // default_queue in this case
+    bc::vector<int> vector = { 2, -4, 6, 8 };
     BOOST_CHECK_EQUAL(vector.size(), size_t(4));
-    CHECK_RANGE_EQUAL(int, 4, vector, (2, 4, 6, 8));
+    BOOST_CHECK_EQUAL(vector[0], 2);
+    BOOST_CHECK_EQUAL(vector[1], -4);
+    BOOST_CHECK_EQUAL(vector[2], 6);
+    BOOST_CHECK_EQUAL(vector[3], 8);
 }
+#endif // BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 #endif // BOOST_COMPUTE_USE_CPP11
 
 BOOST_AUTO_TEST_CASE(vector_double)
@@ -247,6 +275,7 @@ BOOST_AUTO_TEST_CASE(vector_iterator)
     vector.push_back(4, queue);
     vector.push_back(6, queue);
     vector.push_back(8, queue);
+    queue.finish();
     BOOST_CHECK_EQUAL(vector.size(), size_t(4));
     BOOST_CHECK_EQUAL(vector[0], 2);
     BOOST_CHECK_EQUAL(*vector.begin(), 2);
@@ -332,6 +361,13 @@ BOOST_AUTO_TEST_CASE(assign_constant_value)
 
 BOOST_AUTO_TEST_CASE(resize_throw_exception)
 {
+    if(bug_in_clcreatebuffer(device)) {
+        std::cerr
+            << "skipping resize_throw_exception test on Apple platform"
+            << std::endl;
+        return;
+    }
+
     // create vector with eight items
     int data[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
     compute::vector<int> vec(data, data + 8, queue);
@@ -392,7 +428,8 @@ BOOST_AUTO_TEST_CASE(assignment_operator)
     BOOST_CHECK_EQUAL(b.size(), size_t(4));
     CHECK_RANGE_EQUAL(int, 4, b, (11, 12, 13, 14));
 
-    bc::vector<int, bc::pinned_allocator<int> > c = b;
+    bc::vector<int, bc::pinned_allocator<int> > c(context);
+    c = b;
     BOOST_CHECK_EQUAL(c.size(), size_t(4));
     CHECK_RANGE_EQUAL(int, 4, c, (11, 12, 13, 14));
 
@@ -433,6 +470,33 @@ BOOST_AUTO_TEST_CASE(swap_ctor_custom_alloc)
     CHECK_RANGE_EQUAL(int, 3, a, (21, 22, 23));
     BOOST_CHECK_EQUAL(b.size(), size_t(4));
     CHECK_RANGE_EQUAL(int, 4, b, (11, 12, 13, 14));
+}
+
+BOOST_AUTO_TEST_CASE(shrink_to_fit)
+{
+    bc::vector<bc::int_> int_vector(5, context);
+    BOOST_CHECK_EQUAL(int_vector.size(), 5);
+    BOOST_CHECK(int_vector.capacity() >= 5);
+
+    int_vector.reserve(15);
+    BOOST_CHECK_EQUAL(int_vector.size(), 5);
+    BOOST_CHECK(int_vector.capacity() >= 15);
+
+    int_vector.shrink_to_fit();
+    BOOST_CHECK_EQUAL(int_vector.size(), 5);
+    BOOST_CHECK_EQUAL(int_vector.capacity(), 5);
+
+    int_vector.clear();
+    BOOST_CHECK_EQUAL(int_vector.size(), 0);
+    BOOST_CHECK_EQUAL(int_vector.capacity(), 5);
+
+    int_vector.shrink_to_fit();
+    BOOST_CHECK_EQUAL(int_vector.size(), 0);
+    BOOST_CHECK_EQUAL(int_vector.capacity(), 0);
+
+    int_vector.reserve(15);
+    BOOST_CHECK_EQUAL(int_vector.size(), 0);
+    BOOST_CHECK(int_vector.capacity() >= 15);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

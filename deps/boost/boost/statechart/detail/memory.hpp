@@ -14,17 +14,30 @@
 #include <boost/detail/allocator_utilities.hpp>
 
 #include <cstddef> // std::size_t
-
+#include <memory>  // std::allocator_traits
 
 
 namespace boost
 {
 namespace statechart
 {
+
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+typedef void none;
+#else
+// The specialization std::allocator<void> doesn't satisfy C++17's
+// allocator completeness requirements. Therefore it is deprecated
+// and should no longer be used. Supply a replacement type for all
+// the allocator default template arguments in the library.
+struct none {};
+#endif
+
 namespace detail
 {
 
 
+
+// defect: 'allocate' and 'deallocate' cannot handle stateful allocators!
 
 template< class MostDerived, class Allocator >
 void * allocate( std::size_t size )
@@ -48,17 +61,31 @@ void * allocate( std::size_t size )
   // // Above the most-derived type being constructed is B, but A was passed
   // // as the most-derived type to event<>.
   BOOST_ASSERT( size == sizeof( MostDerived ) );
-  return typename boost::detail::allocator::rebind_to<
+  typedef typename boost::detail::allocator::rebind_to<
     Allocator, MostDerived
-  >::type().allocate( 1, static_cast< MostDerived * >( 0 ) );
+  >::type md_allocator;
+  md_allocator alloc;
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+  return alloc.allocate( 1, static_cast< MostDerived * >( 0 ) );
+#else
+  typedef std::allocator_traits<md_allocator> md_traits;
+  return md_traits::allocate( alloc, 1, static_cast< MostDerived * >( 0 ) );
+#endif
 }
 
 template< class MostDerived, class Allocator >
 void deallocate( void * pObject )
 {
-  return typename boost::detail::allocator::rebind_to<
+  typedef typename boost::detail::allocator::rebind_to<
     Allocator, MostDerived
-  >::type().deallocate( static_cast< MostDerived * >( pObject ), 1 );
+  >::type md_allocator;
+  md_allocator alloc;
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+  alloc.deallocate( static_cast< MostDerived * >( pObject ), 1 );
+#else
+  typedef std::allocator_traits<md_allocator> md_traits;
+  md_traits::deallocate( alloc, static_cast< MostDerived * >( pObject ), 1 );
+#endif
 }
 
 

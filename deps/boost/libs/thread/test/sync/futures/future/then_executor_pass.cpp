@@ -24,6 +24,9 @@
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
 
 int p1()
 {

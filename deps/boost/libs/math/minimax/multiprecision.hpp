@@ -64,6 +64,57 @@ namespace boost {
    }
 }
 
+#elif defined(USE_CPP_BIN_FLOAT_100)
+
+#include <boost/multiprecision/cpp_bin_float.hpp>
+
+typedef boost::multiprecision::cpp_bin_float_100 mp_type;
+
+inline void set_working_precision(int n)
+{
+}
+
+inline void set_output_precision(int n)
+{
+   std::cout << std::setprecision(n);
+   std::cerr << std::setprecision(n);
+}
+
+inline mp_type round_to_precision(mp_type m, int bits)
+{
+   int i;
+   mp_type f = frexp(m, &i);
+   f = ldexp(f, bits);
+   i -= bits;
+   f = floor(f);
+   return ldexp(f, i);
+}
+
+inline int get_working_precision()
+{
+   return std::numeric_limits<mp_type>::digits;
+}
+
+namespace boost {
+   namespace math {
+      namespace tools {
+
+         template <>
+         inline boost::multiprecision::cpp_bin_float_double_extended real_cast<boost::multiprecision::cpp_bin_float_double_extended, mp_type>(mp_type val)
+         {
+            return boost::multiprecision::cpp_bin_float_double_extended(val);
+         }
+         template <>
+         inline boost::multiprecision::cpp_bin_float_quad real_cast<boost::multiprecision::cpp_bin_float_quad, mp_type>(mp_type val)
+         {
+            return boost::multiprecision::cpp_bin_float_quad(val);
+         }
+
+      }
+   }
+}
+
+
 #elif defined(USE_MPFR_100)
 
 #include <boost/multiprecision/mpfr.hpp>

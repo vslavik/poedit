@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function set_debugger</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../../header/boost/test/debug_hpp.html" title="Header &lt;boost/test/debug.hpp&gt;">
 <link rel="prev" href="under_debugger.html" title="Function under_debugger">
@@ -35,22 +35,28 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">set_debugger</span><span class="special">(</span><span class="identifier">unit_test</span><span class="special">::</span><span class="identifier">const_string</span> dbg_id<span class="special">,</span> 
                          <span class="identifier">dbg_starter</span> s <span class="special">=</span> <span class="identifier">dbg_starter</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp28637488"></a><h2>Description</h2>
+<a name="idp98604720"></a><h2>Description</h2>
 <p>There are many different debuggers available for different platforms. Some of them also can be used in a different setups/configuratins. For example, gdb can be used in plain text mode, inside ddd, inside (x)emacs or in a separate xterm window. Boost.Test identifies each configuration with unique string. Also different debuggers configurations require different routines which is specifically tailored to start that debugger configuration. Boost.Test comes with set of predefined configuration names and corresponding routines for these configurations:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>TODO</p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>TODO</p></li></ul></div>
 <p>
 </p>
 <p>You can use this routine to select which one of the predefined debugger configurations to use in which case you do not need to provide starter routine (the one provided by Boost.Test will be used). You can also use this routine to select your own debugger by providing unique configuration id and starter routine for this configuration.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dbg_id</code></span></p></td>
@@ -73,7 +79,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

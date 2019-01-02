@@ -25,6 +25,7 @@ xml qbk : overloaded_function.qbk : <dependency>reference ;
 boostbook doc : qbk
     :   <xsl:param>boost.root=../../../../..
         <xsl:param>boost.defaults=Boost
+        <xsl:param>generate.consistent.ids=1
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/functional/overloaded_function/doc/html
     ;
 

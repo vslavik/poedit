@@ -23,19 +23,6 @@ various data structures, non-intrusively, as full fledged Fusion sequences.
     #include <boost/fusion/adapted.hpp>
     #include <boost/fusion/include/adapted.hpp>
 
-Fusion sequences may also be adapted as fully conforming __mpl__ sequences (see
-__intrinsics__). That way, we can have 2-way adaptation to and from __mpl__ and
-Fusion. To make Fusion sequences fully conforming __mpl__ sequences, include:
-
-    #include <boost/fusion/mpl.hpp>
-
-If you want bi-directional adaptation to and from __mpl__ and Fusion, simply
-include:
-
-    #include <boost/fusion/include/mpl.hpp>
-
-The header includes all the necessary headers.
-
 [section:array Array]
 
 This module provides adapters for arrays. Including the module
@@ -144,6 +131,21 @@ header makes all __mpl__ sequences fully conforming fusion sequences.
     v = mpl::vector_c<int, 456, 789>();
     std::cout << __at_c__<0>(v) << std::endl;
     std::cout << __at_c__<1>(v) << std::endl;
+
+[heading Bi-directional adaptation]
+
+Fusion sequences may also be adapted as fully conforming __mpl__ sequences (see
+__intrinsics__). That way, we can have 2-way adaptation to and from __mpl__ and
+Fusion. To make Fusion sequences fully conforming __mpl__ sequences, include:
+
+    #include <boost/fusion/mpl.hpp>
+
+If you want bi-directional adaptation to and from __mpl__ and Fusion, simply
+include:
+
+    #include <boost/fusion/include/mpl.hpp>
+
+The header includes all the necessary headers.
 
 [heading See also]
 

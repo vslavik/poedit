@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(scatter_int)
     bc::vector<int> map(map_data, map_data + 5, queue);
 
     bc::vector<int> output(5, context);
-    bc::scatter(input.begin(), input.end(), map.begin(), output.begin());
+    bc::scatter(input.begin(), input.end(), map.begin(), output.begin(), queue);
     CHECK_RANGE_EQUAL(int, 5, output, (1, 3, 5, 4, 2));
 }
 

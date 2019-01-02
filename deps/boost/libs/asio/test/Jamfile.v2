@@ -1,35 +1,18 @@
 #
-# Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+# Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-import os ;
 import feature ;
 
-if [ os.name ] = SOLARIS
-{
-  lib socket ;
-  lib nsl ;
-}
-else if [ os.name ] = NT
-{
-  lib ws2_32 ;
-  lib mswsock ;
-}
-else if [ os.name ] = HPUX
-{
-  lib ipv6 ;
-}
-else if [ os.name ] = QNXNTO
-{
-  lib socket ;
-}
-else if [ os.name ] = HAIKU
-{
-  lib network ;
-}
+lib socket ; # SOLARIS, QNXNTO
+lib nsl ; # SOLARIS
+lib ws2_32 ; # NT
+lib mswsock ; # NT
+lib ipv6 ; # HPUX
+lib network ; # HAIKU
 
 local USE_SELECT =
   <define>BOOST_ASIO_DISABLE_DEV_POLL
@@ -42,25 +25,26 @@ project
   : requirements
     <library>/boost/date_time//boost_date_time
     <library>/boost/system//boost_system
+    <library>/boost/chrono//boost_chrono
     <library>/boost/regex//boost_regex
     <define>BOOST_ALL_NO_LIB=1
     <threading>multi
-    <os>LINUX:<define>_XOPEN_SOURCE=600
-    <os>LINUX:<define>_GNU_SOURCE=1
-    <os>SOLARIS:<define>_XOPEN_SOURCE=500
-    <os>SOLARIS:<define>__EXTENSIONS__
-    <os>SOLARIS:<library>socket
-    <os>SOLARIS:<library>nsl
-    <os>NT:<define>_WIN32_WINNT=0x0501
-    <os>NT,<toolset>cw:<library>ws2_32
-    <os>NT,<toolset>cw:<library>mswsock
-    <os>NT,<toolset>gcc:<library>ws2_32
-    <os>NT,<toolset>gcc:<library>mswsock
-    <os>NT,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
-    <os>HPUX,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
-    <os>HPUX:<library>ipv6
-    <os>QNXNTO:<library>socket
-    <os>HAIKU:<library>network
+    <target-os>linux:<define>_XOPEN_SOURCE=600
+    <target-os>linux:<define>_GNU_SOURCE=1
+    <target-os>solaris:<define>_XOPEN_SOURCE=500
+    <target-os>solaris:<define>__EXTENSIONS__
+    <target-os>solaris:<library>socket
+    <target-os>solaris:<library>nsl
+    <target-os>windows:<define>_WIN32_WINNT=0x0501
+    <target-os>windows,<toolset>cw:<library>ws2_32
+    <target-os>windows,<toolset>cw:<library>mswsock
+    <target-os>windows,<toolset>gcc:<library>ws2_32
+    <target-os>windows,<toolset>gcc:<library>mswsock
+    <target-os>windows,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
+    <target-os>hpux,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
+    <target-os>hpux:<library>ipv6
+    <target-os>qnxnto:<library>socket
+    <target-os>haiku:<library>network
   ;
 
 test-suite "asio" :
@@ -118,8 +102,8 @@ test-suite "asio" :
   [ link generic/stream_protocol.cpp : $(USE_SELECT) : generic_stream_protocol_select ]
   [ link high_resolution_timer.cpp ]
   [ link high_resolution_timer.cpp : $(USE_SELECT) : high_resolution_timer_select ]
-  [ run io_service.cpp ]
-  [ run io_service.cpp : : : $(USE_SELECT) : io_service_select ]
+  [ run io_context.cpp ]
+  [ run io_context.cpp : : : $(USE_SELECT) : io_context_select ]
   [ link ip/address.cpp : : ip_address ]
   [ link ip/address.cpp : $(USE_SELECT) : ip_address_select ]
   [ link ip/address_v4.cpp : : ip_address_v4 ]
@@ -206,8 +190,28 @@ test-suite "asio" :
   [ run streambuf.cpp : : : $(USE_SELECT) : streambuf_select ]
   [ link system_timer.cpp ]
   [ link system_timer.cpp : $(USE_SELECT) : system_timer_select ]
+  [ link system_context.cpp ]
+  [ link system_context.cpp : $(USE_SELECT) : system_context_select ]
+  [ link system_executor.cpp ]
+  [ link system_executor.cpp : $(USE_SELECT) : system_executor_select ]
   [ link time_traits.cpp ]
   [ link time_traits.cpp : $(USE_SELECT) : time_traits_select ]
+  [ link ts/buffer.cpp : : ts_buffer ]
+  [ link ts/buffer.cpp : $(USE_SELECT) : ts_buffer_select ]
+  [ link ts/executor.cpp : : ts_executor ]
+  [ link ts/executor.cpp : $(USE_SELECT) : ts_executor_select ]
+  [ link ts/internet.cpp : : ts_internet ]
+  [ link ts/internet.cpp : $(USE_SELECT) : ts_internet_select ]
+  [ link ts/io_context.cpp : : ts_io_context ]
+  [ link ts/io_context.cpp : $(USE_SELECT) : ts_io_context_select ]
+  [ link ts/net.cpp : : ts_net ]
+  [ link ts/net.cpp : $(USE_SELECT) : ts_net_select ]
+  [ link ts/netfwd.cpp : : ts_netfwd ]
+  [ link ts/netfwd.cpp : $(USE_SELECT) : ts_netfwd_select ]
+  [ link ts/socket.cpp : : ts_socket ]
+  [ link ts/socket.cpp : $(USE_SELECT) : ts_socket_select ]
+  [ link ts/timer.cpp : : ts_timer ]
+  [ link ts/timer.cpp : $(USE_SELECT) : ts_timer_select ]
   [ link wait_traits.cpp ]
   [ link wait_traits.cpp : $(USE_SELECT) : wait_traits_select ]
   [ link waitable_timer_service.cpp ]

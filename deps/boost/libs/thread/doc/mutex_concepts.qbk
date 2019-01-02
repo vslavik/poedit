@@ -542,7 +542,7 @@ requirements and the following expressions are well-formed and have the specifie
 * `m.__unlock_upgrade_and_lock_shared();`
 
 
-If `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION is defined the following expressions are also required:
+If `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS is defined the following expressions are also required:
 
 * `m.__try_unlock_shared_and_lock();`
 * `m.__try_unlock_shared_and_lock_for(rel_time);`
@@ -678,7 +678,7 @@ If the conversion is not successful, the shared ownership of m is retained.]]
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 [endsect]
@@ -704,7 +704,7 @@ If the conversion is not successful, the shared ownership of the mutex is retain
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 [endsect]
@@ -730,7 +730,7 @@ If the conversion is not successful, the shared ownership of the mutex is retain
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 [endsect]
@@ -770,7 +770,7 @@ If the conversion is not successful, the shared ownership of the mutex is retain
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 [endsect]
@@ -797,7 +797,7 @@ If the conversion is not successful, the shared ownership of m is retained.]]
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 
 ]
@@ -823,7 +823,7 @@ If the conversion is not successful, the shared ownership of the mutex is retain
 
 [[Throws:] [Nothing]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 [endsect]
@@ -1268,7 +1268,7 @@ The following classes are models of `StrictLock`:
         unique_lock(Lockable& m_,defer_lock_t) noexcept;
         unique_lock(Lockable& m_,try_to_lock_t);
 
-    #ifdef BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION
+    #ifdef BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS
         unique_lock(shared_lock<mutex_type>&& sl, try_to_lock_t); // C++14 
         template <class Clock, class Duration>
         unique_lock(shared_lock<mutex_type>&& sl,
@@ -1426,7 +1426,7 @@ Else `sl.__owns_lock()` returns `true`, and in this case if `sl.mutex()->try_unl
 
 [[Throws:] [Nothing.]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 
@@ -1451,7 +1451,7 @@ Else `sl.__owns_lock_shared_ref__()` returns `true`, and in this case if `sl.mut
 
 [[Throws:] [Nothing.]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 
@@ -1478,7 +1478,7 @@ Else `sl.owns_lock()` returns `true`, and in this case if `sl.mutex()-> __try_un
 
 [[Throws:] [Nothing.]]
 
-[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
+[[Notes:] [Available only if `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` and `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN` is defined on Windows platform]]
 
 ]
 
@@ -1899,7 +1899,7 @@ __owns_lock_shared_ref__ returns `false`.]]
         bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
         void unlock();
 
-    #ifdef BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION
+    #ifdef BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS
        // Conversion from shared locking
         upgrade_lock(shared_lock<mutex_type>&& sl, try_to_lock_t);
         template <class Clock, class Duration>
@@ -3034,8 +3034,8 @@ An instance of __reverse_lock doesn't ['own] the lock never.
 [[Effects:] [Locks the __lockable_concept_type__ objects supplied as
 arguments in an unspecified and indeterminate order in a way that
 avoids deadlock. It is safe to call this function concurrently from
-multiple threads with the same mutexes (or other lockable objects) in
-different orders without risk of deadlock. If any of the __lock_ref__
+multiple threads for any set of mutexes (or other lockable objects) in
+any order without risk of deadlock. If any of the __lock_ref__
 or __try_lock_ref__ operations on the supplied
 __lockable_concept_type__ objects throws an exception any locks
 acquired by the function will be released before the function exits.]]
@@ -3062,8 +3062,8 @@ are locked by the calling thread.]]
 [[Effects:] [Locks all the __lockable_concept_type__ objects in the
 supplied range in an unspecified and indeterminate order in a way that
 avoids deadlock. It is safe to call this function concurrently from
-multiple threads with the same mutexes (or other lockable objects) in
-different orders without risk of deadlock. If any of the __lock_ref__
+multiple threads for any set of mutexes (or other lockable objects) in
+any order without risk of deadlock. If any of the __lock_ref__
 or __try_lock_ref__ operations on the __lockable_concept_type__
 objects in the supplied range throws an exception any locks acquired
 by the function will be released before the function exits.]]

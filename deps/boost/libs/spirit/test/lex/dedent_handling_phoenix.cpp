@@ -9,7 +9,9 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
 
 namespace lex = boost::spirit::lex;
 namespace phoenix = boost::phoenix;
@@ -83,7 +85,6 @@ int main()
     typedef lex::lexertl::token<std::string::iterator> token_type;
     typedef lex::lexertl::actor_lexer<token_type> base_lexer_type;
     typedef multi_tokens<base_lexer_type> lexer_type;
-    typedef lexer_type::iterator_type iterator;
 
     std::string in("AAABBC");
     std::string::iterator first(in.begin());

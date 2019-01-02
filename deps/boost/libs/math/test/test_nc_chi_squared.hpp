@@ -8,7 +8,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-#include <boost/math/distributions/non_central_chi_squared.hpp> 
+#include <boost/math/distributions/non_central_chi_squared.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/array.hpp>
 #include "functor.hpp"
@@ -48,7 +48,7 @@
 template <class RealType>
 RealType naive_pdf(RealType v, RealType lam, RealType x)
 {
-   // Formula direct from 
+   // Formula direct from
    // http://mathworld.wolfram.com/NoncentralChi-SquaredDistribution.html
    // with no simplification:
    RealType sum, term, prefix(1);
@@ -90,7 +90,7 @@ void test_spot(
    {
       //
       // We can only check this if P is not too close to 1,
-      // so that we can guarentee Q is reasonably free of error:
+      // so that we can guarantee Q is reasonably free of error:
       //
       BOOST_CHECK_CLOSE(
          cdf(complement(dist, cs)), Q, tol);
@@ -117,7 +117,7 @@ void test_spots(RealType)
       boost::math::tools::epsilon<RealType>(),
       (RealType)boost::math::tools::epsilon<double>() * 5) * 150;
    //
-   // At float precision we need to up the tolerance, since 
+   // At float precision we need to up the tolerance, since
    // the input values are rounded off to inexact quantities
    // the results get thrown off by a noticeable amount.
    //
@@ -135,10 +135,10 @@ void test_spots(RealType)
    //
    // Test against the data from Table 6 of:
    //
-   // "Self-Validating Computations of Probabilities for Selected 
+   // "Self-Validating Computations of Probabilities for Selected
    // Central and Noncentral Univariate Probability Functions."
    // Morgan C. Wang; William J. Kennedy
-   // Journal of the American Statistical Association, 
+   // Journal of the American Statistical Association,
    // Vol. 89, No. 427. (Sep., 1994), pp. 878-887.
    //
    test_spot(
@@ -289,7 +289,6 @@ T nccs_ccdf(T df, T nc, T x)
 template <typename Real, typename T>
 void do_test_nc_chi_squared(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
@@ -330,7 +329,6 @@ template <typename Real, typename T>
 void quantile_sanity_check(T& data, const char* type_name, const char* test)
 {
 #ifndef ERROR_REPORTING_MODE
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    //
@@ -397,7 +395,7 @@ void quantile_sanity_check(T& data, const char* type_name, const char* test)
          //
          // Sanity check degrees-of-freedom finder, don't bother at float
          // precision though as there's not enough data in the probability
-         // values to get back to the correct degrees of freedom or 
+         // values to get back to the correct degrees of freedom or
          // non-cenrality parameter:
          //
 #ifndef BOOST_NO_EXCEPTIONS
@@ -444,4 +442,3 @@ void test_accuracy(T, const char* type_name)
    do_test_nc_chi_squared<T>(nccs_big, type_name, "Non Central Chi Squared, large parameters");
    quantile_sanity_check<T>(nccs_big, type_name, "Non Central Chi Squared, large parameters");
 }
-

@@ -29,7 +29,7 @@
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/random/taus88.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/log/core/core.hpp>
 #include <boost/log/core/record.hpp>
 #include <boost/log/core/record_view.hpp>
@@ -57,7 +57,7 @@ namespace aux {
 
 BOOST_LOG_ANONYMOUS_NAMESPACE {
 
-//! Sequence shuffling algorithm. Very similar to std::random_shuffle, used for forward portability with compilers that removed it from STL.
+//! Sequence shuffling algorithm. Very similar to std::random_shuffle, used for forward portability with compilers that removed it from the standard library (C++17).
 template< typename Iterator, typename RandomNumberGenerator >
 void random_shuffle(Iterator begin, Iterator end, RandomNumberGenerator& rng)
 {
@@ -97,7 +97,7 @@ private:
 
 private:
     //! Initializing constructor
-    private_data(BOOST_RV_REF(attribute_value_set) values, uint32_t capacity) :
+    private_data(BOOST_RV_REF(attribute_value_set) values, uint32_t capacity) BOOST_NOEXCEPT :
         public_data(boost::move(values)),
         m_accepting_sink_count(0),
         m_accepting_sink_capacity(capacity),
@@ -122,10 +122,10 @@ public:
     //! Destroys the object and frees the underlying storage
     void destroy() BOOST_NOEXCEPT
     {
-        sink_list s = get_accepting_sinks();
-        for (sink_list::iterator it = s.begin(), end = s.end(); it != end; ++it)
+        sink_ptr* psink = begin();
+        for (uint32_t i = 0u, n = m_accepting_sink_count; i < n; ++i)
         {
-            it->~sink_ptr();
+            psink[i].~sink_ptr();
         }
 
         const uint32_t capacity = m_accepting_sink_capacity;
@@ -299,41 +299,13 @@ public:
     {
     }
 
-    //! Invokes sink-specific filter and adds the sink to the record if the filter passes the log record
-    void apply_sink_filter(shared_ptr< sinks::sink > const& sink, record& rec, attribute_value_set*& attr_values, uint32_t remaining_capacity)
-    {
-        try
-        {
-            if (sink->will_consume(*attr_values))
-            {
-                // If at least one sink accepts the record, it's time to create it
-                if (!rec.m_impl)
-                {
-                    rec.m_impl = record_view::private_data::create(boost::move(*attr_values), remaining_capacity);
-                    attr_values = &rec.m_impl->m_attribute_values;
-                }
-
-                static_cast< record_view::private_data* >(rec.m_impl)->push_back_accepting_sink(sink);
-            }
-        }
-#if !defined(BOOST_LOG_NO_THREADS)
-        catch (thread_interrupted&)
-        {
-            throw;
-        }
-#endif // !defined(BOOST_LOG_NO_THREADS)
-        catch (...)
-        {
-            if (m_exception_handler.empty())
-                throw;
-            m_exception_handler();
-        }
-    }
-
     //! Opens a record
     template< typename SourceAttributesT >
     BOOST_FORCEINLINE record open_record(BOOST_FWD_REF(SourceAttributesT) source_attributes)
     {
+        record_view::private_data* rec_impl = NULL;
+        bool invoke_exception_handler = true;
+
         // Try a quick win first
         if (m_enabled) try
         {
@@ -349,8 +321,10 @@ public:
                 if (m_filter(attr_values))
                 {
                     // The global filter passed, trying the sinks
-                    record rec;
                     attribute_value_set* values = &attr_values;
+
+                    // apply_sink_filter will invoke the exception handler if it has to
+                    invoke_exception_handler = false;
 
                     if (!m_sinks.empty())
                     {
@@ -358,46 +332,61 @@ public:
                         sink_list::iterator it = m_sinks.begin(), end = m_sinks.end();
                         for (; it != end; ++it, --remaining_capacity)
                         {
-                            apply_sink_filter(*it, rec, values, remaining_capacity);
+                            apply_sink_filter(*it, rec_impl, values, remaining_capacity);
                         }
                     }
                     else
                     {
                         // Use the default sink
-                        apply_sink_filter(m_default_sink, rec, values, 1);
+                        apply_sink_filter(m_default_sink, rec_impl, values, 1);
                     }
 
-                    record_view::private_data* rec_impl = static_cast< record_view::private_data* >(rec.m_impl);
+                    invoke_exception_handler = true;
+
                     if (rec_impl && rec_impl->accepting_sink_count() == 0)
                     {
                         // No sinks accepted the record
-                        return record();
+                        rec_impl->destroy();
+                        rec_impl = NULL;
+                        goto done;
                     }
 
                     // Some sinks have accepted the record
                     values->freeze();
-
-                    return boost::move(rec);
                 }
             }
         }
-    #if !defined(BOOST_LOG_NO_THREADS)
+#if !defined(BOOST_LOG_NO_THREADS)
         catch (thread_interrupted&)
         {
+            if (rec_impl)
+                rec_impl->destroy();
             throw;
         }
-    #endif // !defined(BOOST_LOG_NO_THREADS)
+#endif // !defined(BOOST_LOG_NO_THREADS)
         catch (...)
         {
-            // Lock the core to be safe against any attribute or sink set modifications
-            BOOST_LOG_EXPR_IF_MT(scoped_read_lock lock(m_mutex);)
-            if (m_exception_handler.empty())
-                throw;
+            if (rec_impl)
+            {
+                rec_impl->destroy();
+                rec_impl = NULL;
+            }
 
-            m_exception_handler();
+            if (invoke_exception_handler)
+            {
+                // Lock the core to be safe against any attribute or sink set modifications
+                BOOST_LOG_EXPR_IF_MT(scoped_read_lock lock(m_mutex);)
+                if (m_exception_handler.empty())
+                    throw;
+
+                m_exception_handler();
+            }
+            else
+                throw;
         }
 
-        return record();
+    done:
+        return record(rec_impl);
     }
 
     //! The method returns the current thread-specific data
@@ -440,6 +429,38 @@ private:
 #else
             p.release();
 #endif
+        }
+    }
+
+    //! Invokes sink-specific filter and adds the sink to the record if the filter passes the log record
+    void apply_sink_filter(shared_ptr< sinks::sink > const& sink, record_view::private_data*& rec_impl, attribute_value_set*& attr_values, uint32_t remaining_capacity)
+    {
+        try
+        {
+            if (sink->will_consume(*attr_values))
+            {
+                // If at least one sink accepts the record, it's time to create it
+                record_view::private_data* impl = rec_impl;
+                if (!impl)
+                {
+                    rec_impl = impl = record_view::private_data::create(boost::move(*attr_values), remaining_capacity);
+                    attr_values = &impl->m_attribute_values;
+                }
+
+                impl->push_back_accepting_sink(sink);
+            }
+        }
+#if !defined(BOOST_LOG_NO_THREADS)
+        catch (thread_interrupted&)
+        {
+            throw;
+        }
+#endif // !defined(BOOST_LOG_NO_THREADS)
+        catch (...)
+        {
+            if (m_exception_handler.empty())
+                throw;
+            m_exception_handler();
         }
     }
 };

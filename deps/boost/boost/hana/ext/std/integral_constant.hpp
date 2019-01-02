@@ -2,7 +2,7 @@
 @file
 Adapts `std::integral_constant` for use with Hana.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -85,7 +85,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     template <typename T, typename C>
     struct to_impl<ext::std::integral_constant_tag<T>, C, when<
         hana::IntegralConstant<C>::value
-    >> : embedding<is_embedded<typename C::value_type, T>{}> {
+    >> : embedding<is_embedded<typename C::value_type, T>::value> {
         template <typename N>
         static constexpr auto apply(N const&) {
             return std::integral_constant<T, N::value>{};

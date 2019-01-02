@@ -32,7 +32,7 @@ foo
 ...         s += repr(x)
 ...         s += ' ' 
 ...     s += ']'
-...     print s
+...     print(s)
 
 #####################################################################
 # Replace all the contents using slice syntax
@@ -339,7 +339,7 @@ e
 #####################################################################
 >>> sv = StringVec()
 >>> sv.append('a')
->>> print sv[0]
+>>> print(sv[0])
 a
 
 #####################################################################
@@ -358,10 +358,10 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
 
 if __name__ == '__main__':
-    print 'running...'
+    print('running...')
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)
 
 

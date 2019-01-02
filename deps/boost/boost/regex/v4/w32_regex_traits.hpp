@@ -51,7 +51,9 @@
 #ifdef BOOST_MSVC
 #pragma warning(push)
 #pragma warning(disable:4786)
+#if BOOST_MSVC < 1910
 #pragma warning(disable:4800)
+#endif
 #endif
 
 namespace boost{ 
@@ -640,13 +642,13 @@ public:
          return true;
       return false;
    }
-   int toi(const charT*& p1, const charT* p2, int radix)const
+   boost::intmax_t toi(const charT*& p1, const charT* p2, int radix)const
    {
       return ::boost::BOOST_REGEX_DETAIL_NS::global_toi(p1, p2, radix, *this);
    }
    int value(charT c, int radix)const
    {
-      int result = ::boost::BOOST_REGEX_DETAIL_NS::global_value(c);
+      int result = (int)::boost::BOOST_REGEX_DETAIL_NS::global_value(c);
       return result < radix ? result : -1;
    }
    locale_type imbue(locale_type l)

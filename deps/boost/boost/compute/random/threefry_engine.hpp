@@ -34,20 +34,25 @@ template<class T = uint_>
 class threefry_engine
 {
 public:
-    static const size_t threads = 1024;
     typedef T result_type;
+    static const ulong_ default_seed = 0UL;
 
     /// Creates a new threefry_engine and seeds it with \p value.
-    explicit threefry_engine(command_queue &queue)
-        : m_context(queue.get_context())
+    explicit threefry_engine(command_queue &queue,
+                             ulong_ value = default_seed)
+        : m_key(value),
+          m_counter(0),
+          m_context(queue.get_context())
     {
-        // setup program
+        // Load program
         load_program();
     }
 
     /// Creates a new threefry_engine object as a copy of \p other.
     threefry_engine(const threefry_engine<T> &other)
-        : m_context(other.m_context),
+        : m_key(other.m_key),
+          m_counter(other.m_counter),
+          m_context(other.m_context),
           m_program(other.m_program)
     {
     }
@@ -56,6 +61,8 @@ public:
     threefry_engine<T>& operator=(const threefry_engine<T> &other)
     {
         if(this != &other){
+            m_key = other.m_key;
+            m_counter = other.m_counter;
             m_context = other.m_context;
             m_program = other.m_program;
         }
@@ -68,14 +75,74 @@ public:
     {
     }
 
-private:
+    /// Seeds the random number generator with \p value.
+    ///
+    /// \param value seed value for the random-number generator
+    /// \param queue command queue to perform the operation
+    ///
+    /// If no seed value is provided, \c default_seed is used.
+    void seed(ulong_ value, command_queue &queue)
+    {
+        (void) queue;
+        m_key = value;
+        // Reset counter
+        m_counter = 0;
+    }
+
+    /// \overload
+    void seed(command_queue &queue)
+    {
+        seed(default_seed, queue);
+    }
+
+    /// Generates random numbers and stores them to the range [\p first, \p last).
+    template<class OutputIterator>
+    void generate(OutputIterator first, OutputIterator last, command_queue &queue)
+    {
+        const size_t size = detail::iterator_range_size(first, last);
+
+        kernel fill_kernel(m_program, "fill");
+        fill_kernel.set_arg(0, first.get_buffer());
+        fill_kernel.set_arg(1, static_cast<const uint_>(size));
+        fill_kernel.set_arg(2, m_key);
+        fill_kernel.set_arg(3, m_counter);
+
+        queue.enqueue_1d_range_kernel(fill_kernel, 0, (size + 1)/2, 0);
+
+        discard(size, queue);
+    }
+
     /// \internal_
+    void generate(discard_iterator first, discard_iterator last, command_queue &queue)
+    {
+        (void) queue;
+        ulong_ offset = std::distance(first, last);
+        m_counter += offset;
+    }
+
+    /// Generates random numbers, transforms them with \p op, and then stores
+    /// them to the range [\p first, \p last).
+    template<class OutputIterator, class Function>
+    void generate(OutputIterator first, OutputIterator last, Function op, command_queue &queue)
+    {
+        vector<T> tmp(std::distance(first, last), queue.get_context());
+        generate(tmp.begin(), tmp.end(), queue);
+        ::boost::compute::transform(tmp.begin(), tmp.end(), first, op, queue);
+    }
+
+    /// Generates \p z random numbers and discards them.
+    void discard(size_t z, command_queue &queue)
+    {
+        generate(discard_iterator(0), discard_iterator(z), queue);
+    }
+
+private:
     void load_program()
     {
         boost::shared_ptr<program_cache> cache =
             program_cache::get_global_cache(m_context);
         std::string cache_key =
-            std::string("threefry_engine_32x2");
+            std::string("__boost_threefry_engine_32x2");
 
         // Copyright 2010-2012, D. E. Shaw Research.
         // All rights reserved.
@@ -125,7 +192,7 @@ private:
             "{\n"
             "    return (x << (N & 31)) | (x >> ((32-N) & 31));\n"
             "}\n"
-                
+
             "struct r123array2x32 {\n"
             "    uint v[2];\n"
             "};\n"
@@ -210,97 +277,37 @@ private:
             "    }\n"
             "    return X;\n"
             "}\n"
-
-            "__kernel void generate_rng(__global uint *ctr, __global uint *key, const uint offset) {\n"
-            "    threefry2x32_ctr_t in;\n"
-            "    threefry2x32_key_t k;\n"
-            "    const uint i = get_global_id(0);\n"
-            "    in.v[0] = ctr[2 * (offset + i)];\n"
-            "    in.v[1] = ctr[2 * (offset + i) + 1];\n"
-            "    k.v[0] = key[2 * (offset + i)];\n"
-            "    k.v[1] = key[2 * (offset + i) + 1];\n"
-            "    in = threefry2x32_R(20, in, k);\n"
-            "    ctr[2 * (offset + i)] = in.v[0];\n"
-            "    ctr[2 * (offset + i) + 1] = in.v[1];\n"
+            "__kernel void fill(__global uint * output,\n"
+            "                   const uint output_size,\n"
+            "                   const uint2 key,\n"
+            "                   const uint2 counter)\n"
+            "{\n"
+            "    uint gid = get_global_id(0);\n"
+            "    threefry2x32_ctr_t c;\n"
+            "    c.v[0] = counter.x + gid;\n"
+            "    c.v[1] = counter.y + (c.v[0] < counter.x ? 1 : 0);\n"
+            "\n"
+            "    threefry2x32_key_t k = { {key.x, key.y} };\n"
+            "\n"
+            "    threefry2x32_ctr_t result;\n"
+            "    result = threefry2x32_R(THREEFRY2x32_DEFAULT_ROUNDS, c, k);\n"
+            "\n"
+            "    if(gid < output_size/2)\n"
+            "    {\n"
+            "       output[2 * gid] = result.v[0];\n"
+            "       output[2 * gid + 1] = result.v[1];\n"
+            "    }\n"
+            "    else if(gid < (output_size+1)/2)\n"
+            "       output[2 * gid] = result.v[0];\n"
             "}\n";
 
         m_program = cache->get_or_build(cache_key, std::string(), source, m_context);
     }
 
-public:
-
-
-    /// Generates Threefry random numbers using both the counter and key values, and then stores
-    /// them to the range [\p first_ctr, \p last_ctr).
-    template<class OutputIterator>
-    void generate(OutputIterator first_ctr, OutputIterator last_ctr, OutputIterator first_key, OutputIterator last_key, command_queue &queue) {
-        const size_t size_ctr = detail::iterator_range_size(first_ctr, last_ctr);
-        const size_t size_key = detail::iterator_range_size(first_key, last_key);
-        if(!size_ctr || !size_key || (size_ctr != size_key)) {
-            return;
-        }
-        kernel rng_kernel = m_program.create_kernel("generate_rng");
-       
-        rng_kernel.set_arg(0, first_ctr.get_buffer());
-        rng_kernel.set_arg(1, first_key.get_buffer());
-        size_t offset = 0;
-
-        for(;;){
-            size_t count = 0;
-            size_t size = size_ctr/2;
-            if(size > threads){
-                count = (std::min)(static_cast<size_t>(threads), size - offset);
-            }
-            else {
-                count = size;
-            }
-            rng_kernel.set_arg(2, static_cast<const uint_>(offset));
-            queue.enqueue_1d_range_kernel(rng_kernel, 0, count, 0);
-
-            offset += count;
-
-            if(offset >= size){
-                break;
-            }
-
-        }
-    }
-
-    template<class OutputIterator>
-    void generate(OutputIterator first_ctr, OutputIterator last_ctr, command_queue &queue) {
-        const size_t size_ctr = detail::iterator_range_size(first_ctr, last_ctr);
-        if(!size_ctr) {
-            return;
-        }
-        boost::compute::vector<uint_> vector_key(size_ctr, m_context);
-        vector_key.assign(size_ctr, 0, queue);
-        kernel rng_kernel = m_program.create_kernel("generate_rng");
-
-        rng_kernel.set_arg(0, first_ctr.get_buffer());
-        rng_kernel.set_arg(1, vector_key);
-        size_t offset = 0;
-
-        for(;;){
-            size_t count = 0;
-            size_t size = size_ctr/2;
-            if(size > threads){
-                count = (std::min)(static_cast<size_t>(threads), size - offset);
-            }
-            else {
-                count = size;
-            }
-            rng_kernel.set_arg(2, static_cast<const uint_>(offset));
-            queue.enqueue_1d_range_kernel(rng_kernel, 0, count, 0);
-
-            offset += count;
-
-            if(offset >= size){
-                break;
-            }
-
-        }
-    }
-private:
+    // Engine state
+    ulong_ m_key; // 2 x 32bit
+    ulong_ m_counter;
+    // OpenCL
     context m_context;
     program m_program;
 };

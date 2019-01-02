@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template partial_sum</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.partial_sum_hpp" title="Header &lt;boost/compute/algorithm/partial_sum.hpp&gt;">
 <link rel="prev" href="nth_element.html" title="Function nth_element">
@@ -37,8 +37,11 @@
   <span class="identifier">partial_sum</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">,</span> 
               <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp67289776"></a><h2>Description</h2>
-<p>Calculates the cumulative sum of the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) and writes the resulting values to the range beginning at <code class="computeroutput">result</code>. </p>
+<a name="idp81694768"></a><h2>Description</h2>
+<p>Calculates the cumulative sum of the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) and writes the resulting values to the range beginning at <code class="computeroutput">result</code>.</p>
+<p>Space complexity on GPUs: (n)<br>
+ Space complexity on GPUs when <code class="computeroutput">first</code> == <code class="computeroutput">result:</code> (2n)<br>
+ Space complexity on CPUs: (1) </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -25,4 +25,8 @@ test-suite atomic
       [ run atomicity.cpp ]
       [ run ordering.cpp ]
       [ run lockfree.cpp ]
+      [ compile-fail cf_arith_void_ptr.cpp ]
+      [ compile-fail cf_arith_func_ptr.cpp ]
+      [ compile-fail cf_arith_mem_ptr.cpp ]
+      [ compile c_implicit_ctor.cpp ]
     ;

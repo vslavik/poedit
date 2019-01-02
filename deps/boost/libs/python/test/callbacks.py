@@ -19,11 +19,11 @@ succeed<wink>:
 
 >>> try: apply_to_string_literal(identity)
 ... except ReferenceError: pass # expected
-... else: print 'expected an exception!'
+... else: print('expected an exception!')
 
 >>> try: apply_X_ref_handle(lambda ignored:X(42), None)
 ... except ReferenceError: pass # expected
-... else: print 'expected an exception!'
+... else: print('expected an exception!')
 
 >>> x = X(42)
 >>> x.y = X(7)
@@ -104,15 +104,15 @@ succeed<wink>:
 ...
 >>> try: apply_X_ref_handle(new_x, 1)
 ... except ReferenceError: pass
-... else: print 'no error'
+... else: print('no error')
 
 >>> try: apply_X_ptr_handle_cref(new_x, 1)
 ... except ReferenceError: pass
-... else: print 'no error'
+... else: print('no error')
 
 >>> try: apply_cstring_cstring(identity, 'hello')
 ... except ReferenceError: pass
-... else: print 'no error'
+... else: print('no error')
 
 >>> apply_char_char(identity, 'x')
 'x'
@@ -140,8 +140,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

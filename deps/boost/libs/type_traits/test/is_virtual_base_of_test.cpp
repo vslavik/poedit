@@ -5,9 +5,9 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
+#include <boost/type_traits/is_virtual_base_of.hpp>
 #include "test.hpp"
 #include "check_integral_constant.hpp"
-#include <boost/type_traits/is_virtual_base_of.hpp>
 
 // for bug report 3317: https://svn.boost.org/trac/boost/ticket/3317
 class B
@@ -44,6 +44,51 @@ public:
 struct bug11309_A { int a; };
 struct bug11309_B : public virtual bug11309_A {};
 struct bug11309_C : public bug11309_A { virtual ~bug11309_C() {} };
+
+struct bug11323_A { virtual void foo() {} };
+struct bug11323_B : public virtual bug11323_A { virtual void foo() {} };
+struct bug11323_C : public bug11323_B {};
+
+#ifndef BOOST_NO_CXX11_FINAL
+
+struct bug11323_2A { virtual void foo() = 0; };
+struct bug11323_2B : public virtual bug11323_2A { void foo() override {} };
+struct bug11323_2C : public bug11323_2B {};
+
+
+class final_non_virtual_derived final : public non_virtual_base
+{
+public:
+   final_non_virtual_derived();
+   virtual int Y();
+   virtual int X();
+};
+
+class final_virtual_derived final : public virtual non_virtual_base
+{
+public:
+   final_virtual_derived();
+   virtual int Y();
+   virtual int X();
+};
+
+#endif
+
+class protected_virtual_derived : protected virtual non_virtual_base
+{
+public:
+   protected_virtual_derived();
+   virtual int Y();
+   virtual int X();
+};
+
+class private_virtual_derived : private virtual non_virtual_base
+{
+public:
+   private_virtual_derived();
+   virtual int Y();
+   virtual int X();
+};
 
 TT_TEST_BEGIN(is_virtual_base_of)
 
@@ -87,15 +132,16 @@ BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base,non_vir
 //
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11309_A, bug11309_C>::value), false);
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11309_A, bug11309_B>::value), true);
-
+#if !defined(BOOST_NO_SFINAE_EXPR) && !defined(BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS) && !defined(BOOST_NO_CXX11_NULLPTR) && !BOOST_WORKAROUND(BOOST_GCC, < 40800)
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11323_B, bug11323_C>::value), false);
+#ifndef BOOST_NO_CXX11_FINAL
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11323_2B, bug11323_2C>::value), false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base, final_non_virtual_derived>::value), false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base, final_virtual_derived>::value), true);
+#endif
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base, protected_virtual_derived>::value), true);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base, private_virtual_derived>::value), true);
+#endif
 
 TT_TEST_END
-
-
-
-
-
-
-
-
 

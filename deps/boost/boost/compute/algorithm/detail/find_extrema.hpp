@@ -12,6 +12,7 @@
 #define BOOST_COMPUTE_ALGORITHM_DETAIL_FIND_EXTREMA_HPP
 
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/algorithm/detail/find_extrema_on_cpu.hpp>
 #include <boost/compute/algorithm/detail/find_extrema_with_reduce.hpp>
 #include <boost/compute/algorithm/detail/find_extrema_with_atomics.hpp>
 #include <boost/compute/algorithm/detail/serial_find_extrema.hpp>
@@ -36,12 +37,17 @@ inline InputIterator find_extrema(InputIterator first,
 
     const device &device = queue.get_device();
 
-    // use serial method for small inputs
-    // and when device is a CPU
-    if(count < 512 || (device.type() & device::cpu)){
-        return serial_find_extrema(first, last, compare, find_minimum, queue);
+    // CPU
+    if(device.type() & device::cpu) {
+        return find_extrema_on_cpu(first, last, compare, find_minimum, queue);
     }
 
+    // GPU
+    // use serial method for small inputs
+    if(count < 512)
+    {
+        return serial_find_extrema(first, last, compare, find_minimum, queue);
+    }
     // find_extrema_with_reduce() is used only if requirements are met
     if(find_extrema_with_reduce_requirements_met(first, last, queue))
     {
@@ -50,7 +56,7 @@ inline InputIterator find_extrema(InputIterator first,
 
     // use serial method for OpenCL version 1.0 due to
     // problems with atomic_cmpxchg()
-    #ifndef CL_VERSION_1_1
+    #ifndef BOOST_COMPUTE_CL_VERSION_1_1
         return serial_find_extrema(first, last, compare, find_minimum, queue);
     #endif
 

@@ -45,7 +45,7 @@ rule backtrace ( skip-frames prefix messages * : * )
         while $(bt)
         {
             local m = [ MATCH ^(.+)\\.$ : $(bt[3]) ] ;
-            ECHO $(bt[1]):$(bt[2]): "in" $(bt[4]) "from module" $(m) ;
+            ECHO "$(bt[1]):$(bt[2]):" "in" $(bt[4]) "from module" $(m) ;
 
             # The first time through, print each argument on a separate line.
             for local n in $(args)
@@ -120,7 +120,7 @@ rule error-skip-frames ( skip-frames messages * : * )
 {
     if ! $(.disabled)
     {
-        backtrace $(skip-frames) error: $(messages) : $(2) : $(3) : $(4) : $(5)
+        backtrace $(skip-frames) "error:" $(messages) : $(2) : $(3) : $(4) : $(5)
             : $(6) : $(7) : $(8) : $(9) : $(10) : $(11) : $(12) : $(13) : $(14)
             : $(15) : $(16) : $(17) : $(18) : $(19) ;
         EXIT ;
@@ -156,7 +156,7 @@ rule error ( messages * : * )
             {
                 if ! $(first-printed)
                 {
-                    ECHO error: $($(n)) ;
+                    ECHO "error:" $($(n)) ;
                     first-printed = true ;
                 }
                 else
@@ -191,7 +191,7 @@ rule user-error ( messages * : * )
 #
 rule warning
 {
-    backtrace 2 warning: $(1) : $(2) : $(3) : $(4) : $(5) : $(6) : $(7) : $(8) :
+    backtrace 2 "warning:" $(1) : $(2) : $(3) : $(4) : $(5) : $(6) : $(7) : $(8) :
         $(9) : $(10) : $(11) : $(12) : $(13) : $(14) : $(15) : $(16) : $(17) :
         $(18) : $(19) ;
 }
@@ -232,11 +232,11 @@ rule nearest-user-location ( )
     while $(bt) && ! $(result)
     {
         local m = [ MATCH ^(.+)\\.$ : $(bt[3]) ] ;
-        local user-modules = ([Jj]amroot(.jam|.v2|)|([Jj]amfile(.jam|.v2|)|user-config.jam|site-config.jam|project-config.jam|project-root.jam) ;
+        local user-modules = "([Jj]amroot(.jam|.v2|)|([Jj]amfile(.jam|.v2|)|user-config.jam|site-config.jam|project-config.jam|project-root.jam)" ;
 
         if [ MATCH $(user-modules) : $(bt[1]:D=) ]
         {
-            result = $(bt[1]):$(bt[2]) ;
+            result = "$(bt[1]):$(bt[2])" ;
         }
         bt = $(bt[5-]) ;
     }
@@ -250,7 +250,7 @@ if NEAREST_USER_LOCATION in [ RULENAMES ]
     rule nearest-user-location ( )
     {
         local r = [ NEAREST_USER_LOCATION ] ;
-        return $(r[1]):$(r[2]) ;
+        return "$(r[1]):$(r[2])" ;
     }
 }
 

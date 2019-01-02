@@ -17,12 +17,12 @@
   *                converts a C++ file to syntax highlighted HTML.
   */
 
+#include <boost/regex.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <iterator>
-#include <boost/regex.hpp>
 #include <fstream>
 #include <iostream>
 

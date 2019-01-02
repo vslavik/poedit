@@ -12,7 +12,7 @@
 
 #include <boost/property_map/function_property_map.hpp>
 #include <boost/property_map/transform_value_property_map.hpp>
-#include <boost/concept_check.hpp>
+#include <boost/concept/assert.hpp>
 #include <boost/property_map/property_map.hpp>
 #include <boost/test/minimal.hpp>
 #include <boost/static_assert.hpp>
@@ -38,14 +38,14 @@ int test_main(int, char**) {
   using namespace boost;
   typedef function_property_map<times2, int> PM;
   PM orig_pm(times2(0));
-  function_requires<ReadablePropertyMapConcept<transform_value_property_map<add1<int>, PM>, int> >();
-  function_requires<ReadablePropertyMapConcept<transform_value_property_map<add1<int>, PM, double>, int> >();
-  function_requires<ReadablePropertyMapConcept<transform_value_property_map<add1_val<int>, PM>, int> >();
-  function_requires<ReadablePropertyMapConcept<transform_value_property_map<add1_val<int>, PM, double>, int> >();
-  function_requires<ReadablePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int> >();
-  function_requires<WritablePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int> >();
-  function_requires<ReadWritePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int> >();
-  function_requires<LvaluePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int> >();
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<transform_value_property_map<add1<int>, PM>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<transform_value_property_map<add1<int>, PM, double>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<transform_value_property_map<add1_val<int>, PM>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<transform_value_property_map<add1_val<int>, PM, double>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int>));
+  BOOST_CONCEPT_ASSERT((WritablePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int>));
+  BOOST_CONCEPT_ASSERT((ReadWritePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int>));
+  BOOST_CONCEPT_ASSERT((LvaluePropertyMapConcept<transform_value_property_map<return_fixed_ref<int>, PM>, int>));
 
   BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<transform_value_property_map<add1<int>, PM> >::category, boost::readable_property_map_tag>::value));
   BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<transform_value_property_map<add1_val<int>, PM> >::category, boost::readable_property_map_tag>::value));

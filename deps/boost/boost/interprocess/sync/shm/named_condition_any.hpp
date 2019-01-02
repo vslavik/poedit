@@ -112,25 +112,25 @@ class shm_named_condition_any
    //!If there is a thread waiting on *this, change that
    //!thread's state to ready. Otherwise there is no effect.*/
    void notify_one()
-   {  m_cond.notify_one(); }
+   {  this->internal_cond().notify_one(); }
 
    //!Change the state of all threads waiting on *this to ready.
    //!If there are no waiting threads, notify_all() has no effect.
    void notify_all()
-   {  m_cond.notify_all(); }
+   {  this->internal_cond().notify_all(); }
 
    //!Releases the lock on the named_mutex object associated with lock, blocks
    //!the current thread of execution until readied by a call to
    //!this->notify_one() or this->notify_all(), and then reacquires the lock.
    template <typename L>
    void wait(L& lock)
-   {  m_cond.wait(lock); }
+   {  this->internal_cond().wait(lock); }
 
    //!The same as:
    //!while (!pred()) wait(lock)
    template <typename L, typename Pr>
    void wait(L& lock, Pr pred)
-   {  m_cond.wait(lock, pred); }
+   {  this->internal_cond().wait(lock, pred); }
 
    //!Releases the lock on the named_mutex object associated with lock, blocks
    //!the current thread of execution until readied by a call to
@@ -139,14 +139,14 @@ class shm_named_condition_any
    //!Returns: false if time abs_time is reached, otherwise true.
    template <typename L>
    bool timed_wait(L& lock, const boost::posix_time::ptime &abs_time)
-   {  return m_cond.timed_wait(lock, abs_time); }
+   {  return this->internal_cond().timed_wait(lock, abs_time); }
 
    //!The same as:   while (!pred()) {
    //!                  if (!timed_wait(lock, abs_time)) return pred();
    //!               } return true;
    template <typename L, typename Pr>
    bool timed_wait(L& lock, const boost::posix_time::ptime &abs_time, Pr pred)
-   {  return m_cond.timed_wait(lock, abs_time, pred); }
+   {  return this->internal_cond().timed_wait(lock, abs_time, pred); }
 
    //!Erases a named condition from the system.
    //!Returns false on error. Never throws.
@@ -172,7 +172,8 @@ class shm_named_condition_any
 
    typedef ipcdetail::condition_any_wrapper<internal_condition_members> internal_condition;
 
-   internal_condition m_cond;
+   internal_condition &internal_cond()
+   {  return *static_cast<internal_condition*>(m_shmem.get_user_address()); }
 
    friend class boost::interprocess::ipcdetail::interprocess_tester;
    void dont_close_on_destruction()

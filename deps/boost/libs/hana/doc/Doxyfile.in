@@ -1,4 +1,4 @@
-# Copyright Louis Dionne 2013-2016
+# Copyright Louis Dionne 2013-2017
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -15,7 +15,7 @@ ENABLED_SECTIONS        =
 QUIET                   = YES
 
 # Resources
-OUTPUT_DIRECTORY        =
+OUTPUT_DIRECTORY        = @CMAKE_CURRENT_BINARY_DIR@
 INPUT                   = @Boost.Hana_SOURCE_DIR@/include \
                           @Boost.Hana_SOURCE_DIR@/doc/tutorial.hpp
 FILE_PATTERNS           = *.hpp
@@ -45,6 +45,8 @@ INLINE_SIMPLE_STRUCTS   = NO
 # Generated formats
 GENERATE_HTML           = YES
 GENERATE_LATEX          = NO
+GENERATE_DOCSET         = @HANA_GENERATE_DOCSET@
+DOCSET_BUNDLE_ID        = boost.hana
 
 
 GENERATE_TODOLIST       = YES
@@ -103,7 +105,7 @@ VERBATIM_HEADERS        = NO
 # CLANG_OPTIONS           =
 
 # HTML output
-HTML_OUTPUT             = @CMAKE_CURRENT_BINARY_DIR@/html
+HTML_OUTPUT             = @HANA_HTML_OUTPUT@
 HTML_FILE_EXTENSION     = .html
 HTML_HEADER             = @Boost.Hana_SOURCE_DIR@/doc/header.html
 HTML_FOOTER             = @Boost.Hana_SOURCE_DIR@/doc/footer.html
@@ -121,12 +123,12 @@ HTML_TIMESTAMP          = NO
 HTML_DYNAMIC_SECTIONS   = YES
 HTML_INDEX_NUM_ENTRIES  = 0 # Fully expand trees in the Indexes by default
 DISABLE_INDEX           = YES
-GENERATE_TREEVIEW       = YES
+GENERATE_TREEVIEW       = @HANA_GENERATE_TREEVIEW@
 TREEVIEW_WIDTH          = 270
 EXT_LINKS_IN_WINDOW     = NO
 FORMULA_FONTSIZE        = 10
 FORMULA_TRANSPARENT     = YES
-SEARCHENGINE            = YES
+SEARCHENGINE            = @HANA_SEARCHENGINE@
 
 # Mathjax (HTML only)
 USE_MATHJAX             = YES

@@ -5,7 +5,7 @@
 >>> from shared_ptr_ext import *
 
    Test that shared_ptr<Derived> can be converted to shared_ptr<Base>
- 
+
 >>> Y.store(YYY(42))
 
 >>> x = X(17)
@@ -27,7 +27,7 @@
 ...     def v(self):
 ...         return -Z.v(self);
 ...     def __del__(self):
-...         print 'bye'
+...         print('bye')
 ...
 >>> p = P(12)
 >>> p.value()
@@ -38,7 +38,7 @@
 12
 >>> try: modify(p)
 ... except TypeError: pass
-... else: 'print expected a TypeError'
+... else: 'print(expected a TypeError)'
 >>> look(None)
 -1
 >>> store(p)
@@ -61,7 +61,7 @@ bye
 13
 >>> try: modify(z)
 ... except TypeError: pass
-... else: 'print expected a TypeError'
+... else: 'print(expected a TypeError)'
 
 >>> Z.get() # should be None
 >>> store(z)
@@ -84,7 +84,7 @@ bye
 17
 >>> try: modify(x)
 ... except TypeError: pass
-... else: 'print expected a TypeError'
+... else: 'print(expected a TypeError)'
 >>> look(None)
 -1
 >>> store(x)
@@ -121,10 +121,10 @@ def run(args = None):
     if args is not None:
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
-    
+
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

@@ -123,7 +123,7 @@ public:
         case CL_INVALID_BUFFER_SIZE: return "Invalid Buffer Size";
         case CL_INVALID_MIP_LEVEL: return "Invalid MIP Level";
         case CL_INVALID_GLOBAL_WORK_SIZE: return "Invalid Global Work Size";
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         case CL_COMPILE_PROGRAM_FAILURE: return "Compile Program Failure";
         case CL_LINKER_NOT_AVAILABLE: return "Linker Not Available";
         case CL_LINK_PROGRAM_FAILURE: return "Link Program Failure";
@@ -134,8 +134,8 @@ public:
         case CL_INVALID_COMPILER_OPTIONS: return "Invalid Compiler Options";
         case CL_INVALID_LINKER_OPTIONS: return "Invalid Linker Options";
         case CL_INVALID_DEVICE_PARTITION_COUNT: return "Invalid Device Partition Count";
-        #endif // CL_VERSION_1_2
-        #ifdef CL_VERSION_2_0
+        #endif // BOOST_COMPUTE_CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_2_0
         case CL_INVALID_PIPE_SIZE: return "Invalid Pipe Size";
         case CL_INVALID_DEVICE_QUEUE: return "Invalid Device Queue";
         #endif

@@ -95,14 +95,12 @@ namespace boost { namespace spirit { namespace karma
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace traits { namespace detail
 {
     template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed, Transformed, karma::domain>
+    struct transform_attribute_base<Exposed, Transformed, karma::domain>
       : karma::transform_attribute<Exposed, Transformed>
     {};
-}}}
+}}}}
 
 #endif
-
-

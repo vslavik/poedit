@@ -30,9 +30,12 @@ def create_more_container_files(sourceDir, suffix, maxElements, containers, cont
             shutil.copyfile( os.path.join( sourceDir, container, container + "20" + suffix ), newFile ) 
             # Adjust copy of "template"-file accordingly.
             for line in fileinput.input( newFile, inplace=1, mode="rU" ):
-                line = re.sub(r'20', re.escape(str(i+10)), line.rstrip())
-                line = re.sub(r'11', re.escape(str(i + 1)), line.rstrip())
-                line = re.sub(r'10(?![0-9])', re.escape(str(i)), line.rstrip())
+                line = re.sub(r'20', '%TWENTY%', line.rstrip())
+                line = re.sub(r'11', '%ELEVEN%', line.rstrip())
+                line = re.sub(r'10(?![0-9])', '%TEN%', line.rstrip())
+                line = re.sub(r'%TWENTY%', re.escape(str(i+10)), line.rstrip())
+                line = re.sub(r'%ELEVEN%', re.escape(str(i + 1)), line.rstrip())
+                line = re.sub(r'%TEN%', re.escape(str(i)), line.rstrip())
                 print(line)
     for container in containers2:
         for i in range(20, maxElements, 10):
@@ -41,9 +44,12 @@ def create_more_container_files(sourceDir, suffix, maxElements, containers, cont
             shutil.copyfile( os.path.join( sourceDir, container, container + "20_c" + suffix ), newFile ) 
             # Adjust copy of "template"-file accordingly.
             for line in fileinput.input( newFile, inplace=1, mode="rU" ):
-                line = re.sub(r'20', re.escape(str(i+10)), line.rstrip())
-                line = re.sub(r'11', re.escape(str(i + 1)), line.rstrip())
-                line = re.sub(r'10(?![0-9])', re.escape(str(i)), line.rstrip())
+                line = re.sub(r'20', '%TWENTY%', line.rstrip())
+                line = re.sub(r'11', '%ELEVEN%', line.rstrip())
+                line = re.sub(r'10(?![0-9])', '%TEN%', line.rstrip())
+                line = re.sub(r'%TWENTY%', re.escape(str(i+10)), line.rstrip())
+                line = re.sub(r'%ELEVEN%', re.escape(str(i + 1)), line.rstrip())
+                line = re.sub(r'%TEN%', re.escape(str(i)), line.rstrip())
                 print(line)
 
 

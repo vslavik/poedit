@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -35,7 +35,7 @@ static_assert(hana::detail::any_of<is_even, hana::int_<1>, hana::int_<8>, hana::
 // Make sure we short-circuit properly
 template <typename ...Dummy>
 struct fail {
-    static_assert(hana::detail::wrong<Dummy...>{},
+    static_assert(hana::detail::wrong<Dummy...>::value,
         "this must never be instantiated");
 };
 static_assert(hana::detail::any_of<is_even, hana::int_<1>, hana::int_<2>, fail<>>::value, "");

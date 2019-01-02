@@ -22,6 +22,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/fusion/include/adapt_adt.hpp>
+#include <boost/spirit/include/support_adapt_adt_attributes.hpp>
 
 #include <iostream>
 #include <string>

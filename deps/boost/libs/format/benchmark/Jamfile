@@ -1,9 +1,15 @@
-#  Boost.Bind Library test Jamfile
+#  Boost.Format Library benchmark Jamfile
 #
 #  Copyright (c) 2003 Samuel Krempp
 #
 #  Distributed under the Boost Software License, Version 1.0.
 #  See www.boost.org/LICENSE_1_0.txt
+#
+
+project libs/format/benchmark 
+    : requirements
+	  <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
+	;
 
 exe bench_format_no_locale
     : bench_format.cpp

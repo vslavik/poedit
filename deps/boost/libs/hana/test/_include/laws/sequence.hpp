@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -26,24 +26,6 @@
 #include <type_traits>
 #include <vector>
 
-
-#if defined(BOOST_HANA_TEST_SEQUENCE_KNOWN_PARTS) && \
-    BOOST_HANA_TEST_SEQUENCE_KNOWN_PARTS != 3
-#   error The Sequence laws are currently split into 3 different parts. \
-          Your unit test must have gone out of sync.
-#endif
-
-#if defined(BOOST_HANA_TEST_SEQUENCE_PART) && \
-    !defined(BOOST_HANA_TEST_SEQUENCE_KNOWN_PARTS)
-#   error When splitting the Sequence test into subparts, you must define \
-          the BOOST_HANA_TEST_SEQUENCE_KNOWN_PARTS macro to the number of \
-          parts in the Sequence test to make sure your tests stay in sync.
-#endif
-
-#if defined(BOOST_HANA_TEST_SEQUENCE_PART) && BOOST_HANA_TEST_SEQUENCE_PART > 3
-#   error BOOST_HANA_TEST_SEQUENCE_PART must not be defined or              \
-          it must be a number in {1, 2, 3}
-#endif
 
 namespace boost { namespace hana { namespace test {
     template <typename S, typename = when<true>>
@@ -77,14 +59,13 @@ namespace boost { namespace hana { namespace test {
             constexpr auto list = make<S>; (void)list;
             constexpr auto foldable = ::seq; (void)foldable;
 
-#if !defined(BOOST_HANA_TEST_SEQUENCE_PART) || BOOST_HANA_TEST_SEQUENCE_PART == 1
             //////////////////////////////////////////////////////////////////
             // Check for Sequence<...>
             //////////////////////////////////////////////////////////////////
-            static_assert(Sequence<decltype(list())>::value, "");
-            static_assert(Sequence<decltype(list(1))>::value, "");
-            static_assert(Sequence<decltype(list(1, '2'))>::value, "");
-            static_assert(Sequence<decltype(list(1, '2', 3.4))>::value, "");
+            static_assert(Sequence<decltype(list())>{}, "");
+            static_assert(Sequence<decltype(list(1))>{}, "");
+            static_assert(Sequence<decltype(list(1, '2'))>{}, "");
+            static_assert(Sequence<decltype(list(1, '2', 3.4))>{}, "");
 
             //////////////////////////////////////////////////////////////////
             // Check for basic tag consistency
@@ -145,7 +126,6 @@ namespace boost { namespace hana { namespace test {
                 make<S>(eq<0>{}, eq<1>{}, eq<2>{}, eq<3>{}),
                 list(eq<0>{}, eq<1>{}, eq<2>{}, eq<3>{})
             ));
-#endif
         }
     };
 }}} // end namespace boost::hana::test

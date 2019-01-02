@@ -101,11 +101,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Char>
         inline static bool is_valid(Char ch)
         {
-            if (Radix <= 10)
-                return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
-            return (ch >= '0' && ch <= '9')
-                || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
-                || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+            return (ch >= '0' && ch <= (Radix > 10 ? '9' : static_cast<Char>('0' + Radix -1)))
+                || (Radix > 10 && ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
+                || (Radix > 10 && ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
         }
 
         template <typename Char>
@@ -278,14 +276,20 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 #define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
         if (!check_max_digits<MaxDigits>::call(count + leading_zeros)         \
             || it == last)                                                    \
+        {                                                                     \
             break;                                                            \
+        }                                                                     \
         ch = *it;                                                             \
         if (!radix_check::is_valid(ch))                                       \
+        {                                                                     \
             break;                                                            \
+        }                                                                     \
         if (!extractor::call(ch, count, val))                                 \
         {                                                                     \
             if (IgnoreOverflowDigits)                                         \
+            {                                                                 \
                 first = it;                                                   \
+            }                                                                 \
             traits::assign_to(val, attr);                                     \
             return IgnoreOverflowDigits;                                      \
         }                                                                     \
@@ -386,10 +390,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     ///////////////////////////////////////////////////////////////////////////
 #define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
         if (it == last)                                                       \
+        {                                                                     \
             break;                                                            \
+        }                                                                     \
         ch = *it;                                                             \
         if (!radix_check::is_valid(ch))                                       \
+        {                                                                     \
             break;                                                            \
+        }                                                                     \
         if (!extractor::call(ch, count, val))                                 \
         {                                                                     \
             traits::assign_to(val, attr);                                     \
@@ -496,35 +504,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 
 #undef SPIRIT_NUMERIC_INNER_LOOP
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Cast an signed integer to an unsigned integer
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T,
-        bool force_unsigned
-            = mpl::and_<is_integral<T>, is_signed<T> >::value>
-    struct cast_unsigned;
-
-    template <typename T>
-    struct cast_unsigned<T, true>
-    {
-        typedef typename make_unsigned<T>::type unsigned_type;
-        typedef typename make_unsigned<T>::type& unsigned_type_ref;
-
-        inline static unsigned_type_ref call(T& n)
-        {
-            return unsigned_type_ref(n);
-        }
-    };
-
-    template <typename T>
-    struct cast_unsigned<T, false>
-    {
-        inline static T& call(T& n)
-        {
-            return n;
-        }
-    };
 }}}}
 
 #if defined(BOOST_MSVC)

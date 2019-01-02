@@ -71,7 +71,10 @@ namespace boost { namespace spirit { namespace qi
             // advance the iterator if everything is ok
             if (in) {
                 if (!in.eof()) {
-                    std::streamsize pos = in.tellg();
+                    typedef typename
+                        boost::iterator_difference<Iterator>::type diff_type;
+
+                    diff_type pos = static_cast<diff_type>(in.tellg());
                     std::advance(first, pos);
                 } else {
                     first = last;

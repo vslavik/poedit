@@ -1,4 +1,4 @@
-/* Copyright 2003-2015 Joaquin M Lopez Munoz.
+/* Copyright 2003-2017 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -165,7 +165,7 @@ private:
 
     if(!z)return std::pair<std::size_t,std::size_t>(0,0);
 
-    std::size_t s=z->size;
+    std::size_t s=z->impl()->size;
 
     do{
       if(!lower(this->key(z->value()))){
@@ -178,7 +178,7 @@ private:
       }
       else{
         return std::pair<std::size_t,std::size_t>(
-          s-z->size+
+          s-z->impl()->size+
             lower_range_rank(node_type::from_impl(z->left()),z,lower),
           s-ranked_node_size(z->right())+
             upper_range_rank(node_type::from_impl(z->right()),y,upper));
@@ -219,7 +219,7 @@ private:
   {
     if(!top)return 0;
 
-    std::size_t s=top->size;
+    std::size_t s=top->impl()->size;
 
     do{
       if(lower(this->key(top->value()))){
@@ -239,7 +239,7 @@ private:
   {
     if(!top)return 0;
 
-    std::size_t s=top->size;
+    std::size_t s=top->impl()->size;
 
     do{
       if(!upper(this->key(top->value()))){

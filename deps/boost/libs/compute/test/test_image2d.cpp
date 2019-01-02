@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(clone_image)
     BOOST_CHECK_EQUAL(cloned_data[3], data[3]);
 }
 
-#ifdef CL_VERSION_1_2
+#ifdef BOOST_COMPUTE_CL_VERSION_1_2
 BOOST_AUTO_TEST_CASE(fill_image)
 {
     REQUIRES_OPENCL_VERSION(1, 2); // device OpenCL version check

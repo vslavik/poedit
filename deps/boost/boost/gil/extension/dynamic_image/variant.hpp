@@ -1,45 +1,37 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_VARIANT_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_VARIANT_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+// TODO: Replace with C++17 std::variant?
 
-/*************************************************************************************************/
+#include <boost/gil/utilities.hpp>
 
-#ifndef GIL_DYNAMICIMAGE_VARIANT_HPP
-#define GIL_DYNAMICIMAGE_VARIANT_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Support for run-time instantiated types
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 18, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include "../../gil_config.hpp"
-#include "../../utilities.hpp"
-#include <cstddef>
-#include <cassert>
-#include <algorithm>
-#include <typeinfo>
 #include <boost/bind.hpp>
-
-#include <boost/mpl/transform.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/max.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/sizeof.hpp>
-#include <boost/mpl/max.hpp>
-#include <boost/mpl/at.hpp>
-#include <boost/mpl/fold.hpp>
+#include <boost/mpl/transform.hpp>
+#include <boost/utility/enable_if.hpp>
+
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <typeinfo>
 
 namespace boost { namespace gil {
 
-namespace detail { 
+// Support for run-time instantiated types
+
+namespace detail {
     template <typename Types, typename T> struct type_to_index;
     template <typename Op, typename T> struct reduce;
     struct destructor_op {
@@ -48,6 +40,7 @@ namespace detail {
     };
     template <typename T, typename Bits> void copy_construct_in_place(const T& t, Bits& bits);
     template <typename Bits> struct copy_construct_in_place_fn;
+    template <typename Types> struct type_to_index_fn;
 }
 /**
 \brief Represents a concrete instance of a run-time specified type from a set of types
@@ -64,21 +57,21 @@ It would be difficult to write a function that reads an image from file preservi
 type of the return value is only available at run time. It would be difficult to store images of different color
 spaces in the same container or apply operations on them uniformly.
 
-The variant class addresses this deficiency. It allows for run-time instantiation of a class from a given set of allowed classes 
-specified at compile time. For example, the set of allowed classes may include 8-bit and 16-bit RGB and CMYK images. Such a variant 
+The variant class addresses this deficiency. It allows for run-time instantiation of a class from a given set of allowed classes
+specified at compile time. For example, the set of allowed classes may include 8-bit and 16-bit RGB and CMYK images. Such a variant
 can be constructed with rgb8_image_t and then assigned a cmyk16_image_t.
 
-The variant has a templated constructor, which allows us to construct it with any concrete type instantiation. It can also perform a generic 
+The variant has a templated constructor, which allows us to construct it with any concrete type instantiation. It can also perform a generic
 operation on the concrete type via a call to apply_operation. The operation must be provided as a function object whose application
 operator has a single parameter which can be instantiated with any of the allowed types of the variant.
 
-variant breaks down the instantiated type into a non-templated underlying base type and a unique instantiation 
+variant breaks down the instantiated type into a non-templated underlying base type and a unique instantiation
 type identifier. In the most common implementation the concrete instantiation in stored 'in-place' - in 'bits_t'.
 bits_t contains sufficient space to fit the largest of the instantiated objects.
 
 GIL's variant is similar to boost::variant in spirit (hence we borrow the name from there) but it differs in several ways from the current boost
 implementation. Most notably, it does not take a variable number of template parameters but a single parameter defining the type enumeration. As
-such it can be used more effectively in generic code. 
+such it can be used more effectively in generic code.
 
 The Types parameter specifies the set of allowable types. It models MPL Random Access Container
 */
@@ -99,6 +92,11 @@ public:
 
     // Throws std::bad_cast if T is not in Types
     template <typename T> explicit variant(const T& obj){ _index=type_id<T>(); if (_index==NUM_TYPES) throw std::bad_cast(); detail::copy_construct_in_place(obj, _bits); }
+
+    template <typename Types2> explicit variant(const variant<Types2>& obj) : _index(apply_operation(obj,detail::type_to_index_fn<Types>())) {
+        if (_index==NUM_TYPES) throw std::bad_cast();
+        apply_operation(obj, detail::copy_construct_in_place_fn<base_t>(_bits));
+    }
 
     // When doSwap is true, swaps obj with the contents of the variant. obj will contain default-constructed instance after the call
     template <typename T> explicit variant(T& obj, bool do_swap);
@@ -155,30 +153,37 @@ namespace detail {
     struct equal_to_fn {
         const Bits& _dst;
         equal_to_fn(const Bits& dst) : _dst(dst) {}
-        
+
         typedef bool result_type;
         template <typename T> result_type operator()(const T& x) const {
             return x==*gil_reinterpret_cast_c<const T*>(&_dst);
         }
     };
+
+    template <typename Types>
+    struct type_to_index_fn {
+        typedef std::size_t result_type;
+
+        template <typename T> result_type operator()(const T&) const { return detail::type_to_index<Types,T>::value; }
+    };
 }
 
 // When doSwap is true, swaps obj with the contents of the variant. obj will contain default-constructed instance after the call
-template <typename Types> 
+template <typename Types>
 template <typename T> variant<Types>::variant(T& obj, bool do_swap) {
-    _index=type_id<T>(); 
-    if (_index==NUM_TYPES) throw std::bad_cast(); 
+    _index=type_id<T>();
+    if (_index==NUM_TYPES) throw std::bad_cast();
 
     if (do_swap) {
         new(&_bits) T();    // default construct
         swap(obj, *gil_reinterpret_cast<T*>(&_bits));
-    } else 
+    } else
         detail::copy_construct_in_place(const_cast<const T&>(obj), _bits);
 }
 
-template <typename Types> 
+template <typename Types>
 void swap(variant<Types>& x, variant<Types>& y) {
-    std::swap(x._bits,y._bits); 
+    std::swap(x._bits,y._bits);
     std::swap(x._index, y._index);
 }
 

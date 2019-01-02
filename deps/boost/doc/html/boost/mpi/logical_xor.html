@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template logical_xor</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../mpi/reference.html#header.boost.mpi.operations_hpp" title="Header &lt;boost/mpi/operations.hpp&gt;">
+<link rel="up" href="../../mpi/tutorial.html#header.boost.mpi.operations_hpp" title="Header &lt;boost/mpi/operations.hpp&gt;">
 <link rel="prev" href="bitwise_or.html" title="Struct template bitwise_or">
 <link rel="next" href="bitwise_xor.html" title="Struct template bitwise_xor">
 </head>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="bitwise_or.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.operations_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="bitwise_xor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="bitwise_or.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/tutorial.html#header.boost.mpi.operations_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="bitwise_xor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.mpi.logical_xor"></a><div class="titlepage"></div>
@@ -30,26 +30,33 @@
 <p>boost::mpi::logical_xor &#8212; Compute the logical exclusive OR of two integral values. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/reference.html#header.boost.mpi.operations_hpp" title="Header &lt;boost/mpi/operations.hpp&gt;">boost/mpi/operations.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/tutorial.html#header.boost.mpi.operations_hpp" title="Header &lt;boost/mpi/operations.hpp&gt;">boost/mpi/operations.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="logical_xor.html" title="Struct template logical_xor">logical_xor</a> <span class="special">{</span>
+  <span class="comment">// types</span>
+  <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.mpi.logical_xor.first_argument_type"></a><span class="identifier">first_argument_type</span><span class="special">;</span> 
+  <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.mpi.logical_xor.second_argument_type"></a><span class="identifier">second_argument_type</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.mpi.logical_xor.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>         
 
-  <span class="comment">// <a class="link" href="logical_xor.html#idp200093824-bb">public member functions</a></span>
-  <span class="identifier">T</span> <a class="link" href="logical_xor.html#idp200094384-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="logical_xor.html#id-1_3_27_5_14_17_2_1_7_7-bb">public member functions</a></span>
+  <span class="identifier">T</span> <a class="link" href="logical_xor.html#id-1_3_27_5_14_17_2_1_7_7_1-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp307072256"></a><h2>Description</h2>
+<a name="id-1.3.27.5.14.18.10.4"></a><h2>Description</h2>
 <p>This binary function object computes the logical exclusive of the two values it is given. When used with MPI and a type <code class="computeroutput">T</code> that has an associated, built-in MPI data type, translates to <code class="computeroutput">MPI_LXOR</code>. </p>
 <div class="refsect2">
-<a name="idp307074496"></a><h3>
-<a name="idp200093824-bb"></a><code class="computeroutput">logical_xor</code> public member functions</h3>
+<a name="id-1.3.27.5.14.18.10.4.3"></a><h3>
+<a name="id-1_3_27_5_14_17_2_1_7_7-bb"></a><code class="computeroutput">logical_xor</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">T</span> <a name="idp200094384-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">T</span> <a name="id-1_3_27_5_14_17_2_1_7_7_1-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>the logical exclusive OR of x and y. </p></td>
@@ -71,7 +78,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="bitwise_or.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.operations_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="bitwise_xor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="bitwise_or.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/tutorial.html#header.boost.mpi.operations_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="bitwise_xor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

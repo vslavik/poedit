@@ -18,6 +18,7 @@
 #include <future>
 #endif // BOOST_COMPUTE_USE_CPP11
 
+#include <boost/compute/async/future.hpp>
 #include <boost/compute/event.hpp>
 
 #include "context_setup.hpp"
@@ -28,7 +29,7 @@ BOOST_AUTO_TEST_CASE(null_event)
     BOOST_CHECK(null.get() == cl_event());
 }
 
-#if defined(CL_VERSION_1_1) && defined(BOOST_COMPUTE_USE_CPP11)
+#if defined(BOOST_COMPUTE_CL_VERSION_1_1) && defined(BOOST_COMPUTE_USE_CPP11)
 std::mutex callback_mutex;
 std::condition_variable callback_condition_variable;
 static bool callback_invoked = false;
@@ -85,6 +86,28 @@ BOOST_AUTO_TEST_CASE(lambda_callback)
     BOOST_CHECK_EQUAL(lambda_invoked, true);
 }
 
+BOOST_AUTO_TEST_CASE(future_then_callback)
+{
+    REQUIRES_OPENCL_VERSION(1,2);
+
+    bool callback_invoked = false;
+
+    boost::compute::future<void> future(queue.enqueue_marker());
+    future.then([&](){
+        std::lock_guard<std::mutex> lock(callback_mutex);
+        callback_invoked = true;
+        callback_condition_variable.notify_one();
+    });
+    future.wait();
+
+    // wait up to one second for the callback to be executed
+    std::unique_lock<std::mutex> lock(callback_mutex);
+    callback_condition_variable.wait_for(
+        lock, std::chrono::seconds(1), [&](){ return callback_invoked; }
+    );
+    BOOST_CHECK_EQUAL(callback_invoked, true);
+}
+
 void BOOST_COMPUTE_CL_CALLBACK
 event_promise_fulfiller_callback(cl_event event, cl_int status, void *user_data)
 {
@@ -115,6 +138,6 @@ BOOST_AUTO_TEST_CASE(event_to_std_future)
     // wait for future to become ready
     future.wait();
 }
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 BOOST_AUTO_TEST_SUITE_END()

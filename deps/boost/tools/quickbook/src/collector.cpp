@@ -13,48 +13,40 @@ namespace quickbook
 {
     string_stream::string_stream()
         : buffer_ptr(new std::string())
-        , stream_ptr(new ostream(boost::iostreams::back_inserter(*buffer_ptr.get())))
-    {}
+        , stream_ptr(
+              new ostream(boost::iostreams::back_inserter(*buffer_ptr.get())))
+    {
+    }
 
     string_stream::string_stream(string_stream const& other)
-        : buffer_ptr(other.buffer_ptr)
-        , stream_ptr(other.stream_ptr)
-    {}
-    
-    string_stream&
-    string_stream::operator=(string_stream const& other)
+        : buffer_ptr(other.buffer_ptr), stream_ptr(other.stream_ptr)
+    {
+    }
+
+    string_stream& string_stream::operator=(string_stream const& other)
     {
         buffer_ptr = other.buffer_ptr;
         stream_ptr = other.stream_ptr;
         return *this;
     }
-        
-    collector::collector()
-        : main(default_)
-        , top(default_)
-    {
-    }
 
-    collector::collector(string_stream& out)
-        : main(out) 
-        , top(out) 
-    {
-    }
-    
+    collector::collector() : main(default_), top(default_) {}
+
+    collector::collector(string_stream& out) : main(out), top(out) {}
+
     collector::~collector()
     {
-        BOOST_ASSERT(streams.empty()); // assert there are no more pushes than pops!!!
+        BOOST_ASSERT(
+            streams.empty()); // assert there are no more pushes than pops!!!
     }
-    
-    void 
-    collector::push()
+
+    void collector::push()
     {
         streams.push(string_stream());
         top = boost::ref(streams.top());
     }
-    
-    void 
-    collector::pop()
+
+    void collector::pop()
     {
         BOOST_ASSERT(!streams.empty());
         streams.pop();

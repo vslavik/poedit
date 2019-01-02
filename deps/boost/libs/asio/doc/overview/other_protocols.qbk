@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@ These classes implement the [link boost_asio.reference.Protocol protocol type
 requirements], but allow the user to specify the address family (e.g. `AF_INET`)
 and protocol type (e.g. `IPPROTO_TCP`) at runtime. For example:
 
-  boost::asio::generic::stream_protocol::socket my_socket(my_io_service);
+  boost::asio::generic::stream_protocol::socket my_socket(my_io_context);
   my_socket.open(boost::asio::generic::stream_protocol(AF_INET, IPPROTO_TCP));
   ...
 
@@ -38,7 +38,7 @@ endpoint] type requirements:
 
 The conversion is implicit, so as to support the following use cases:
 
-  boost::asio::generic::stream_protocol::socket my_socket(my_io_service);
+  boost::asio::generic::stream_protocol::socket my_socket(my_io_context);
   boost::asio::ip::tcp::endpoint my_endpoint = ...;
   my_socket.connect(my_endpoint);
 
@@ -53,14 +53,14 @@ type. If the protocol conversion is valid:
 
 then the corresponding socket conversion is allowed:
 
-  Protocol1::socket my_socket1(my_io_service);
+  Protocol1::socket my_socket1(my_io_context);
   ...
   Protocol2::socket my_socket2(std::move(my_socket1));
 
 For example, one possible conversion is from a TCP socket to a generic
 stream-oriented socket:
 
-  boost::asio::ip::tcp::socket my_socket1(my_io_service);
+  boost::asio::ip::tcp::socket my_socket1(my_io_context);
   ...
   boost::asio::generic::stream_protocol::socket my_socket2(std::move(my_socket1));
 
@@ -78,9 +78,9 @@ corresponding protocol conversion is valid. For example, the following is
 supported because the protocol `boost::asio::ip::tcp` is convertible to
 `boost::asio::generic::stream_protocol`:
 
-  boost::asio::ip::tcp::acceptor my_acceptor(my_io_service);
+  boost::asio::ip::tcp::acceptor my_acceptor(my_io_context);
   ...
-  boost::asio::generic::stream_protocol::socket my_socket(my_io_service);
+  boost::asio::generic::stream_protocol::socket my_socket(my_io_context);
   my_acceptor.accept(my_socket);
 
 [heading See Also]

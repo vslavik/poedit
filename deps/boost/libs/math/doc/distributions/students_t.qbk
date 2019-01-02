@@ -16,7 +16,7 @@
       typedef RealType value_type;
       typedef Policy   policy_type;
 
-      // Construct:
+      // Constructor:
       students_t_distribution(const RealType& v);
 
       // Accessor:
@@ -33,24 +33,27 @@
 
    }} // namespaces
 
-A statistical distribution published by William Gosset in 1908.
+Student's t-distribution is a statistical distribution published by William Gosset in 1908.
 His employer, Guinness Breweries, required him to publish under a
-pseudonym (possibly to hide that they were using statistics),
-so he chose "Student". Given N independent measurements, let
+pseudonym (possibly to hide that they were using statistics to improve beer quality),
+so he chose "Student".
+
+Given N independent measurements, let
 
 [equation students_t_dist]
 
-where /M/ is the population mean,[' ''' &#x3BC; '''] is the sample mean, and /s/ is the
+where /M/ is the population mean, [' ''' &#x3BC; '''] is the sample mean, and /s/ is the
 sample variance.
 
-Student's t-distribution is defined as the distribution of the random
+[@https://en.wikipedia.org/wiki/Student%27s_t-distribution Student's t-distribution]
+is defined as the distribution of the random
 variable t which is  - very loosely - the "best" that we can do not
 knowing the true standard deviation of the sample.  It has the PDF:
 
 [equation students_t_ref1]
 
 The Student's t-distribution takes a single parameter: the number of
-degrees of freedom of the sample.  When the degrees of freedom is
+degrees of freedom of the sample. When the degrees of freedom is
 /one/ then this distribution is the same as the Cauchy-distribution.
 As the number of degrees of freedom tends towards infinity, then this
 distribution approaches the normal-distribution.  The following graph
@@ -64,13 +67,14 @@ illustrates how the PDF varies with the degrees of freedom [nu]:
 
 Constructs a Student's t-distribution with /v/ degrees of freedom.
 
-Requires /v/ > 0, otherwise calls __domain_error.  Note that
+Requires /v/ > 0, including infinity (if RealType permits),
+otherwise calls __domain_error.  Note that
 non-integral degrees of freedom are supported,
 and are meaningful under certain circumstances.
 
    RealType degrees_of_freedom()const;
 
-Returns the number of degrees of freedom of this distribution.
+returns the number of degrees of freedom of this distribution.
 
    static RealType find_degrees_of_freedom(
       RealType difference_from_mean,
@@ -79,7 +83,7 @@ Returns the number of degrees of freedom of this distribution.
       RealType sd,
       RealType hint = 100);
 
-Returns the number of degrees of freedom required to observe a significant
+returns the number of degrees of freedom required to observe a significant
 result in the Student's t test when the mean differs from the "true"
 mean by /difference_from_mean/.
 
@@ -165,14 +169,18 @@ If the moment index /k/ is less than /v/, then the moment is undefined.
 Evaluating the moment will throw a __domain_error unless ignored by a policy,
 when it will return `std::numeric_limits<>::quiet_NaN();`
 
-(For simplicity, we have not implemented the return of infinity in some cases
-as suggested by [@http://en.wikipedia.org/wiki/Student%27s_t-distribution Wikipedia Student's t].
+[h5:implementation Implementation]
+
+(By popular demand, we now support infinite argument and random deviate.
+But we have not implemented the return of infinity
+as suggested by [@http://en.wikipedia.org/wiki/Student%27s_t-distribution Wikipedia Student's t],
+instead throwing a domain error or return NaN.
 See also [@https://svn.boost.org/trac/boost/ticket/7177].)
 
 [endsect] [/section:students_t_dist Students t]
 
 [/ students_t.qbk
-  Copyright 2006, 2012 John Maddock and Paul A. Bristow.
+  Copyright 2006, 2012, 2017 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).

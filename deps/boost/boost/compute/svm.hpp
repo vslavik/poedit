@@ -15,8 +15,8 @@
 #include <boost/compute/context.hpp>
 #include <boost/compute/memory/svm_ptr.hpp>
 
-// svm functions require opencl 2.0
-#if defined(CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+// svm functions require OpenCL 2.0
+#if defined(BOOST_COMPUTE_CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
 
 namespace boost {
 namespace compute {
@@ -34,7 +34,10 @@ inline svm_ptr<T> svm_alloc(const context &context,
                             cl_svm_mem_flags flags = CL_MEM_READ_WRITE,
                             unsigned int alignment = 0)
 {
-    svm_ptr<T> ptr(clSVMAlloc(context.get(), flags, size * sizeof(T), alignment));
+    svm_ptr<T> ptr(
+        clSVMAlloc(context.get(), flags, size * sizeof(T), alignment),
+        context
+    );
     if(!ptr.get()){
         BOOST_THROW_EXCEPTION(opencl_error(CL_MEM_OBJECT_ALLOCATION_FAILURE));
     }
@@ -49,6 +52,13 @@ inline svm_ptr<T> svm_alloc(const context &context,
 ///
 /// \see svm_alloc(), command_queue::enqueue_svm_free()
 template<class T>
+inline void svm_free(svm_ptr<T> ptr)
+{
+    clSVMFree(ptr.get_context(), ptr.get());
+}
+
+/// \overload
+template<class T>
 inline void svm_free(const context &context, svm_ptr<T> ptr)
 {
     clSVMFree(context.get(), ptr.get());
@@ -57,6 +67,6 @@ inline void svm_free(const context &context, svm_ptr<T> ptr)
 } // end compute namespace
 } // end boost namespace
 
-#endif // CL_VERSION_2_0
+#endif // BOOST_COMPUTE_CL_VERSION_2_0
 
 #endif // BOOST_COMPUTE_PIPE_HPP

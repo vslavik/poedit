@@ -15,7 +15,7 @@ t.set_tree("../example/customization")
 
 t.run_build_system()
 
-t.expect_addition(["bin/$toolset/debug/codegen.exe",
-                   "bin/$toolset/debug/usage.cpp"])
+t.expect_addition(["bin/$toolset/debug*/codegen.exe",
+                   "bin/$toolset/debug*/usage.cpp"])
 
 t.cleanup()

@@ -13,19 +13,21 @@
 
 #include <iterator>
 
+#include <boost/static_assert.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/detail/merge_sort_on_cpu.hpp>
+#include <boost/compute/algorithm/detail/merge_sort_on_gpu.hpp>
 #include <boost/compute/algorithm/detail/insertion_sort.hpp>
 #include <boost/compute/algorithm/detail/radix_sort.hpp>
 #include <boost/compute/algorithm/reverse.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
-
 namespace detail {
 
 template<class KeyIterator, class ValueIterator>
@@ -76,14 +78,10 @@ dispatch_gpu_sort_by_key(KeyIterator keys_first,
         );
     }
     else {
-        // radix sorts in ascending order
+        // radix sorts in descending order
         detail::radix_sort_by_key(
-            keys_first, keys_last, values_first, queue
+            keys_first, keys_last, values_first, false, queue
         );
-
-        // Reverse keys, values for descending order
-        ::boost::compute::reverse(keys_first, keys_last, queue);
-        ::boost::compute::reverse(values_first, values_first + count, queue);
     }
 }
 
@@ -94,9 +92,17 @@ inline void dispatch_gpu_sort_by_key(KeyIterator keys_first,
                                      Compare compare,
                                      command_queue &queue)
 {
-    detail::serial_insertion_sort_by_key(
-        keys_first, keys_last, values_first, compare, queue
-    );
+    size_t count = detail::iterator_range_size(keys_first, keys_last);
+
+    if(count < 32){
+        detail::serial_insertion_sort_by_key(
+            keys_first, keys_last, values_first, compare, queue
+        );
+    } else {
+        detail::merge_sort_by_key_on_gpu(
+            keys_first, keys_last, values_first, compare, queue
+        );
+    }
 }
 
 template<class KeyIterator, class ValueIterator, class Compare>
@@ -123,6 +129,8 @@ inline void dispatch_sort_by_key(KeyIterator keys_first,
 ///
 /// If no compare function is specified, \c less is used.
 ///
+/// Space complexity: \Omega(2n)
+///
 /// \see sort()
 template<class KeyIterator, class ValueIterator, class Compare>
 inline void sort_by_key(KeyIterator keys_first,
@@ -131,6 +139,8 @@ inline void sort_by_key(KeyIterator keys_first,
                         Compare compare,
                         command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<KeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<ValueIterator>::value);
     ::boost::compute::detail::dispatch_sort_by_key(
         keys_first, keys_last, values_first, compare, queue
     );
@@ -143,6 +153,8 @@ inline void sort_by_key(KeyIterator keys_first,
                         ValueIterator values_first,
                         command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<KeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<ValueIterator>::value);
     typedef typename std::iterator_traits<KeyIterator>::value_type key_type;
 
     ::boost::compute::sort_by_key(

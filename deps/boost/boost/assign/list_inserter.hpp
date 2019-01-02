@@ -22,13 +22,18 @@
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/config.hpp>
+#include <boost/move/utility.hpp>
 #include <cstddef>
+
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
 #include <boost/preprocessor/arithmetic/inc.hpp>
+
+#endif
 
 namespace boost
 {
@@ -53,7 +58,18 @@ namespace assign_detail
         fun_repeater( std::size_t sz_, Fun r ) : sz( sz_ ), val( r )
         { }
     };
-    
+
+
+    template< class T >
+    struct is_repeater : boost::false_type {};
+
+    template< class T >
+    struct is_repeater< boost::assign_detail::repeater<T> > : boost::true_type{};
+
+    template< class Fun >
+    struct is_repeater< boost::assign_detail::fun_repeater<Fun> > : boost::true_type{};
+
+
     template< class C >
     class call_push_back
     {
@@ -62,11 +78,19 @@ namespace assign_detail
         call_push_back( C& c ) : c_( c )
         { }
         
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         void operator()( T r ) 
         {
             c_.push_back( r );
         }
+#else
+        template< class T >
+        void operator()(T&& r)
+        {
+            c_.push_back(boost::forward<T>(r));
+        }
+#endif
     };
     
     template< class C >
@@ -76,12 +100,20 @@ namespace assign_detail
     public:
         call_push_front( C& c ) : c_( c )
         { }
-        
+
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         void operator()( T r ) 
         {
             c_.push_front( r );
         }
+#else
+        template< class T >
+        void operator()(T&& r)
+        {
+            c_.push_front(boost::forward<T>(r));
+        }
+#endif
     };
     
     template< class C >
@@ -92,11 +124,19 @@ namespace assign_detail
         call_push( C& c ) : c_( c )
         { }
     
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         void operator()( T r ) 
         {
             c_.push( r );
         }
+#else
+        template< class T >
+        void operator()(T&& r)
+        {
+            c_.push(boost::forward<T>(r));
+        }
+#endif
     };
     
     template< class C >
@@ -106,12 +146,20 @@ namespace assign_detail
     public:
         call_insert( C& c ) : c_( c )
         { }
-    
+
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         void operator()( T r ) 
         {
             c_.insert( r );
         }
+#else
+        template< class T >
+        void operator()(T&& r)
+        {
+            c_.insert(boost::forward<T>(r));
+        }
+#endif
     };
 
     template< class C >
@@ -161,8 +209,9 @@ namespace assign
     template< class Function, class Argument = assign_detail::forward_n_arguments > 
     class list_inserter
     {
-        struct single_arg_type {};
-        struct n_arg_type      {};
+        struct single_arg_type   {};
+        struct n_arg_type        {};
+        struct repeater_arg_type {};
 
         typedef BOOST_DEDUCED_TYPENAME mpl::if_c< is_same<Argument,assign_detail::forward_n_arguments>::value,
                                                   n_arg_type,
@@ -186,14 +235,15 @@ namespace assign
             insert_( Argument() );
             return *this;
         }
-        
+
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         list_inserter& operator=( const T& r )
         {
             insert_( r );
             return *this;
         }
-        
+
         template< class T >
         list_inserter& operator=( assign_detail::repeater<T> r )
         {
@@ -232,6 +282,38 @@ namespace assign
         {
             return repeat_fun( r.sz, r.val ); 
         }
+#else
+        // BOOST_NO_CXX11_RVALUE_REFERENCES
+        template< class T >
+        list_inserter& operator=(T&& r)
+        {
+            return operator,(boost::forward<T>(r));
+        }
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+        template< class T >
+        list_inserter& operator,(T&& r)
+        {
+            typedef BOOST_DEDUCED_TYPENAME mpl::if_c< assign_detail::is_repeater< T >::value,
+                repeater_arg_type,
+                arg_type >::type tag;
+
+            insert(boost::forward<T>(r), tag());
+            return *this;
+        }
+#else
+        // we add the tag as the first argument when using variadic templates
+        template< class T >
+        list_inserter& operator,(T&& r)
+        {
+            typedef BOOST_DEDUCED_TYPENAME mpl::if_c< assign_detail::is_repeater< T >::value,
+                repeater_arg_type,
+                arg_type >::type tag;
+
+            insert(tag(), boost::forward<T>(r));
+            return *this;
+        }
+#endif
+#endif
 
         template< class T >
         list_inserter& repeat( std::size_t sz, T r )
@@ -266,6 +348,7 @@ namespace assign
             return range( boost::begin(r), boost::end(r) );
         }
         
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template< class T >
         list_inserter& operator()( const T& t )
         {
@@ -316,7 +399,72 @@ namespace assign
         
 #include BOOST_PP_LOCAL_ITERATE()
 
-        
+#else
+        template< class... Ts >
+        list_inserter& operator()(Ts&&... ts)
+        {
+            insert(arg_type(), boost::forward<Ts>(ts)...);
+            return *this;
+        }
+
+        template< class T >
+        void insert(single_arg_type, T&& t)
+        {
+            // Special implementation for single argument overload to prevent accidental casts (type-cast using functional notation)
+            insert_(boost::forward<T>(t));
+        }
+
+        template< class T1, class T2, class... Ts >
+        void insert(single_arg_type, T1&& t1, T2&& t2, Ts&&... ts)
+        {
+            insert_(Argument(boost::forward<T1>(t1), boost::forward<T2>(t2), boost::forward<Ts>(ts)...));
+        }
+
+        template< class... Ts >
+        void insert(n_arg_type, Ts&&... ts)
+        {
+            insert_(boost::forward<Ts>(ts)...);
+        }
+
+#endif
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+        template< class T >
+        void insert( T&& r, arg_type)
+        {
+            insert_( boost::forward<T>(r) );
+        }
+
+        template< class T >
+        void insert(assign_detail::repeater<T> r, repeater_arg_type)
+        {
+            repeat(r.sz, r.val);
+        }
+
+        template< class Nullary_function >
+        void insert(const assign_detail::fun_repeater<Nullary_function>& r, repeater_arg_type)
+        {
+            repeat_fun(r.sz, r.val);
+        }
+#else
+        template< class T >
+        void insert(repeater_arg_type, assign_detail::repeater<T> r)
+        {
+            repeat(r.sz, r.val);
+        }
+
+        template< class Nullary_function >
+        void insert(repeater_arg_type, const assign_detail::fun_repeater<Nullary_function>& r)
+        {
+            repeat_fun(r.sz, r.val);
+        }
+#endif
+#endif
+
+
         Function fun_private() const
         {
             return insert_;
@@ -392,9 +540,13 @@ namespace assign
 } // namespace 'assign'
 } // namespace 'boost'
 
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+
 #undef BOOST_ASSIGN_PARAMS1
 #undef BOOST_ASSIGN_PARAMS2
 #undef BOOST_ASSIGN_PARAMS3
 #undef BOOST_ASSIGN_MAX_PARAMETERS
+
+#endif
 
 #endif

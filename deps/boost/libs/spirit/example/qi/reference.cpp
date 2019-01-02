@@ -17,6 +17,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/assert.hpp>
+#include <boost/predef/other/endian.h>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -123,10 +124,19 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     //  2 decimal places Max
     template <typename Iterator, typename Attribute>
     static bool
-    parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr,
+                 int& frac_digits)
     {
-        return boost::spirit::qi::
+        Iterator savef = first;
+        bool r = boost::spirit::qi::
             extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
+        if (r) {
+            // Optimization note: don't compute frac_digits if T is
+            // an unused_type. This should be optimized away by the compiler.
+            if (!boost::is_same<T, boost::spirit::unused_type>::value)
+                frac_digits = static_cast<int>(std::distance(savef, first));
+        }
+        return r;
     }
 
     //  No exponent
@@ -146,9 +156,9 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     }
 
     //  Thousands separated numbers
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Accumulator>
     static bool
-    parse_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_n(Iterator& first, Iterator const& last, Accumulator& result)
     {
         using boost::spirit::qi::uint_parser;
         namespace qi = boost::spirit::qi;
@@ -156,24 +166,18 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         uint_parser<unsigned, 10, 1, 3> uint3;
         uint_parser<unsigned, 10, 3, 3> uint3_3;
 
-        T result = 0;
         if (parse(first, last, uint3, result))
         {
-            bool hit = false;
-            T n;
-            Iterator save = first;
+            Accumulator n;
+            Iterator iter = first;
 
-            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
+            while (qi::parse(iter, last, ',') && qi::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
-                hit = true;
+                first = iter;
             }
 
-            first = save;
-            if (hit)
-                attr = result;
-            return hit;
+            return true;
         }
         return false;
     }
@@ -761,7 +765,7 @@ main()
         test_parser("Hello", lazy(val(string("Hello"))));
 
         //` The above is equivalent to:
-        test_parser("Hello", val(string("Hello")));
+        test_parser("Hello", string("Hello"));
         //]
     }
 
@@ -1028,6 +1032,38 @@ main()
         //]
     }
 
+    // expectd
+    {
+        //[reference_using_declarations_expectd
+        using boost::spirit::ascii::char_;
+        using boost::spirit::qi::expect;
+        using boost::spirit::qi::expectation_failure;
+        //]
+
+        //[reference_expectd
+        /*`The code below uses an expectation operator to throw an __qi_expectation_failure__
+            with a deliberate parsing error when `"o"` is expected and `"x"` is what is
+            found in the input. The `catch` block prints the information related to the
+            error. Note: This is low level code that demonstrates the /bare-metal/. Typically,
+            you use an __qi_error_handler__ to deal with the error.
+         */
+        try
+        {
+            test_parser("xi", expect[char_('o')]); // should throw an exception
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: "; print_info(x.what_);
+            std::cout << "got: \"" << std::string(x.first, x.last) << '"' << std::endl;
+        }
+        /*`The code above will print:[teletype]
+
+                expected: tag: literal-char, value: o
+                got: "x"``[c++]``
+         */
+        //]
+    }
+	
     // and-predicate
     {
         //[reference_and_predicate
@@ -1235,7 +1271,7 @@ main()
 //<-
 #endif
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
 //->
         //`Basic usage of the native binary parsers for little endian platforms:
         test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);

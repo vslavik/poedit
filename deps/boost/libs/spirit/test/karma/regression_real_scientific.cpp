@@ -37,4 +37,4 @@ int main()
     BOOST_TEST(karma::generate(sink, scientific, 0.1) && output == "1.0e-01");
 
     return boost::report_errors();
-};
+}

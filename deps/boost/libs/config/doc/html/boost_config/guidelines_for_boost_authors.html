@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Guidelines for Boost Authors</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Config">
 <link rel="up" href="../index.html" title="Boost.Config">
 <link rel="prev" href="cstdint.html" title="Standard Integer Types">
@@ -27,7 +27,7 @@
 <a name="boost_config.guidelines_for_boost_authors"></a><a class="link" href="guidelines_for_boost_authors.html" title="Guidelines for Boost Authors">Guidelines for
     Boost Authors</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="guidelines_for_boost_authors.html#boost_config.guidelines_for_boost_authors.warnings">Disabling
       Compiler Warnings</a></span></dt>
 <dt><span class="section"><a href="guidelines_for_boost_authors.html#boost_config.guidelines_for_boost_authors.adding_new_defect_macros">Adding
@@ -61,7 +61,7 @@
 <p>
       Note that:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Boost library implementers are not required to "<code class="computeroutput"><span class="preprocessor">#include</span>
           <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>", and are not required in any
@@ -116,7 +116,7 @@
 <p>
         Note that:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             This header <span class="bold"><strong><span class="emphasis"><em>should never be included
             by another Boost header</em></span></strong></span>, it should only ever be
@@ -233,7 +233,7 @@
         Once the test code is in place in libs/config/test, updating the configuration
         test system proceeds as:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             cd into <code class="computeroutput"><span class="identifier">libs</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span><span class="identifier">tools</span></code> and run <code class="computeroutput"><span class="identifier">bjam</span></code>.
             This generates the <code class="computeroutput"><span class="special">.</span><span class="identifier">cpp</span></code>
@@ -266,7 +266,7 @@
 <p>
         Then you should:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Define the defect macro in those config headers that require it.
           </li>
@@ -302,7 +302,7 @@
         one specific API (for example <code class="computeroutput"><span class="identifier">BOOST_HAS_NL_TYPES_H</span></code>
         rather than <code class="computeroutput"><span class="identifier">BOOST_HAS_CATOPEN</span></code>).
         If the macro describes a POSIX feature group, then add boilerplate code to
-        <a href="../../../../../boost/config/user.hpp" target="_top">&lt;boost/config/suffix.hpp&gt;</a>
+        <a href="../../../../../boost/config/detail/suffix.hpp" target="_top">&lt;boost/config/detail/suffix.hpp&gt;</a>
         to auto-detect the feature where possible (if you are wondering why we can't
         use POSIX feature test macro directly, remember that many of these features
         can be added by third party libraries, and are not therefore identified inside
@@ -333,15 +333,15 @@
         as well.
       </p>
 <p>
-        <a href="../../../../../boost/config/user.hpp" target="_top">&lt;boost/config/suffix.hpp&gt;</a>
+        <a href="../../../../../boost/config/detail/suffix.hpp" target="_top">&lt;boost/config/detail/suffix.hpp&gt;</a>
         is always included so be careful about modifying this file as it breaks dependencies
         for everyone. This file should include only "boilerplate" configuration
         code, and generally should change only when new macros are added.
       </p>
 <p>
-        <a href="../../../../../boost/config/select_compiler_config.hpp" target="_top">&lt;boost/config/select_compiler_config.hpp&gt;</a>,
-        <a href="../../../../../boost/config/select_platform_config.hpp" target="_top">&lt;boost/config/select_platform_config.hpp&gt;</a>
-        and <a href="../../../../../boost/config/select_stdlib_config.hpp" target="_top">&lt;boost/config/select_stdlib_config.hpp&gt;</a>
+        <a href="../../../../../boost/config/detail/select_compiler_config.hpp" target="_top">&lt;boost/config/detail/select_compiler_config.hpp&gt;</a>,
+        <a href="../../../../../boost/config/detail/select_platform_config.hpp" target="_top">&lt;boost/config/detail/select_platform_config.hpp&gt;</a>
+        and <a href="../../../../../boost/config/detail/select_stdlib_config.hpp" target="_top">&lt;boost/config/detail/select_stdlib_config.hpp&gt;</a>
         are included by default and should change only if support for a new compiler/standard
         library/platform is added.
       </p>

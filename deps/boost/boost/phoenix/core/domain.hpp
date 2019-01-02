@@ -33,6 +33,24 @@ namespace boost { namespace phoenix
         {};
     };
 
+    // proto's assignment operator takes rhs by reference
+    template<>
+    struct phoenix_generator::case_<proto::tag::assign>
+      : proto::otherwise<proto::call<proto::compose_generators<
+            proto::by_value_generator
+          , proto::pod_generator<actor>
+        >(proto::_)> >
+    {};
+
+    // proto's subscript operator takes rhs by reference
+    template<>
+    struct phoenix_generator::case_<proto::tag::subscript>
+      : proto::otherwise<proto::call<proto::compose_generators<
+            proto::by_value_generator
+          , proto::pod_generator<actor>
+        >(proto::_)> >
+    {};
+
     struct phoenix_default_domain
         : proto::domain<
            proto::basic_default_generator

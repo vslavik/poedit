@@ -1,9 +1,10 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #include <boost/hana/core/default.hpp>
 #include <boost/hana/core/tag_of.hpp>
+#include <boost/hana/integral_constant.hpp>
 
 #include <string>
 #include <type_traits>
@@ -21,10 +22,11 @@ struct print_impl : special_base_class {
 };
 
 template <typename T>
-struct Printable {
-  using Tag = hana::tag_of_t<T>;
-  static constexpr bool value = !std::is_base_of<special_base_class, print_impl<Tag>>::value;
-};
+struct Printable
+    : hana::integral_constant<bool,
+        !std::is_base_of<special_base_class, print_impl<hana::tag_of_t<T>>>::value
+    >
+{ };
 //! [special_base_class]
 
 //! [special_base_class_customize]
@@ -49,10 +51,11 @@ struct print_impl : hana::default_ {
 };
 
 template <typename T>
-struct Printable {
-  using Tag = hana::tag_of_t<T>;
-  static constexpr bool value = !hana::is_default<print_impl<Tag>>::value;
-};
+struct Printable
+    : hana::integral_constant<bool,
+        !hana::is_default<print_impl<hana::tag_of_t<T>>>::value
+    >
+{ };
 //! [actual]
 
 static_assert(!Printable<void>::value, "");

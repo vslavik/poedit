@@ -85,11 +85,11 @@ class propagation_test_allocator
 
    public:
    typedef T value_type;
-   typedef boost::container::container_detail::bool_<PropagateOnContCopyAssign>
+   typedef boost::container::dtl::bool_<PropagateOnContCopyAssign>
       propagate_on_container_copy_assignment;
-   typedef boost::container::container_detail::bool_<PropagateOnContMoveAssign>
+   typedef boost::container::dtl::bool_<PropagateOnContMoveAssign>
       propagate_on_container_move_assignment;
-   typedef boost::container::container_detail::bool_<PropagateOnContSwap>
+   typedef boost::container::dtl::bool_<PropagateOnContSwap>
       propagate_on_container_swap;
 
    template<class T2>

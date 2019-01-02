@@ -15,23 +15,31 @@
 // Classes and functions for dealing with the values from include, import and
 // xinclude elements.
 
-#include "fwd.hpp"
-#include "values.hpp"
 #include <set>
 #include <string>
 #include <boost/filesystem/path.hpp>
+#include "fwd.hpp"
+#include "values.hpp"
 
 namespace quickbook
 {
-    struct path_parameter {
+    struct path_parameter
+    {
         // Will possibly add 'url' to this list later:
-        enum path_type { invalid, path, glob };
+        enum path_type
+        {
+            invalid,
+            path,
+            glob
+        };
 
         std::string value;
         path_type type;
 
-        path_parameter(std::string const& value, path_type type) :
-            value(value), type(type) {}
+        path_parameter(std::string const& value_, path_type type_)
+            : value(value_), type(type_)
+        {
+        }
     };
 
     path_parameter check_path(value const& path, quickbook::state& state);
@@ -40,15 +48,17 @@ namespace quickbook
     struct quickbook_path
     {
         quickbook_path(fs::path const& x, unsigned offset, fs::path const& y)
-            : file_path(x), include_path_offset(offset), abstract_file_path(y) {}
+            : file_path(x), include_path_offset(offset), abstract_file_path(y)
+        {
+        }
 
         friend void swap(quickbook_path&, quickbook_path&);
 
         quickbook_path parent_path() const;
 
         bool operator<(quickbook_path const& other) const;
-        quickbook_path operator/(boost::string_ref) const;
-        quickbook_path& operator/=(boost::string_ref);
+        quickbook_path operator/(quickbook::string_view) const;
+        quickbook_path& operator/=(quickbook::string_view);
 
         // The actual location of the file.
         fs::path file_path;
@@ -62,12 +72,11 @@ namespace quickbook
         fs::path abstract_file_path;
     };
 
-    std::set<quickbook_path> include_search(path_parameter const&,
-            quickbook::state& state, string_iterator pos);
+    std::set<quickbook_path> include_search(
+        path_parameter const&, quickbook::state& state, string_iterator pos);
 
-    quickbook_path resolve_xinclude_path(std::string const&, quickbook::state&);
-    std::string file_path_to_url(fs::path const&);
-    std::string dir_path_to_url(fs::path const&);
+    quickbook_path resolve_xinclude_path(
+        std::string const&, quickbook::state&, bool is_file = false);
 }
 
 #endif

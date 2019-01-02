@@ -9,11 +9,11 @@
  *
  */
 
+#include <boost/regex.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
-#include <boost/regex.hpp>
 
 #ifdef BOOST_MSVC
 #pragma warning(disable:4512 4244)

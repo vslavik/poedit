@@ -28,37 +28,67 @@ namespace compute = boost::compute;
 
 BOOST_AUTO_TEST_CASE(adjacent_difference_int)
 {
-    compute::vector<int> a(5, context);
-    compute::iota(a.begin(), a.end(), 0, queue);
-    CHECK_RANGE_EQUAL(int, 5, a, (0, 1, 2, 3, 4));
+    using compute::int_;
 
-    compute::vector<int> b(5, context);
-    compute::vector<int>::iterator iter =
+    compute::vector<int_> a(5, context);
+    compute::iota(a.begin(), a.end(), 0, queue);
+    CHECK_RANGE_EQUAL(int_, 5, a, (0, 1, 2, 3, 4));
+
+    compute::vector<int_> b(5, context);
+    compute::vector<int_>::iterator iter =
         compute::adjacent_difference(a.begin(), a.end(), b.begin(), queue);
     BOOST_CHECK(iter == b.end());
-    CHECK_RANGE_EQUAL(int, 5, b, (0, 1, 1, 1, 1));
+    CHECK_RANGE_EQUAL(int_, 5, b, (0, 1, 1, 1, 1));
 
-    int data[] = { 1, 9, 36, 48, 81 };
+    int_ data[] = { 1, 9, 36, 48, 81 };
     compute::copy(data, data + 5, a.begin(), queue);
-    CHECK_RANGE_EQUAL(int, 5, a, (1, 9, 36, 48, 81));
+    CHECK_RANGE_EQUAL(int_, 5, a, (1, 9, 36, 48, 81));
 
     iter = compute::adjacent_difference(a.begin(), a.end(), b.begin(), queue);
     BOOST_CHECK(iter == b.end());
-    CHECK_RANGE_EQUAL(int, 5, b, (1, 8, 27, 12, 33));
+    CHECK_RANGE_EQUAL(int_, 5, b, (1, 8, 27, 12, 33));
+}
+
+BOOST_AUTO_TEST_CASE(adjacent_difference_first_eq_last)
+{
+    using compute::int_;
+
+    compute::vector<int_> a(size_t(5), int_(1), queue);
+    compute::vector<int_> b(size_t(5), int_(0), queue);
+    compute::vector<int_>::iterator iter =
+        compute::adjacent_difference(a.begin(), a.begin(), b.begin(), queue);
+    BOOST_CHECK(iter == b.begin());
+    CHECK_RANGE_EQUAL(int_, 5, b, (0, 0, 0, 0, 0));
+}
+
+BOOST_AUTO_TEST_CASE(adjacent_difference_first_eq_result)
+{
+    using compute::int_;
+
+    compute::vector<int_> a(5, context);
+    compute::iota(a.begin(), a.end(), 0, queue);
+    CHECK_RANGE_EQUAL(int_, 5, a, (0, 1, 2, 3, 4));
+
+    compute::vector<int_>::iterator iter =
+        compute::adjacent_difference(a.begin(), a.end(), a.begin(), queue);
+    BOOST_CHECK(iter == a.end());
+    CHECK_RANGE_EQUAL(int_, 5, a, (0, 1, 1, 1, 1));
 }
 
 BOOST_AUTO_TEST_CASE(all_same)
 {
-    compute::vector<int> input(1000, context);
+    using compute::int_;
+
+    compute::vector<int_> input(1000, context);
     compute::fill(input.begin(), input.end(), 42, queue);
 
-    compute::vector<int> output(input.size(), context);
+    compute::vector<int_> output(input.size(), context);
 
     compute::adjacent_difference(
         input.begin(), input.end(), output.begin(), queue
     );
 
-    int first;
+    int_ first;
     compute::copy_n(output.begin(), 1, &first, queue);
     BOOST_CHECK_EQUAL(first, 42);
 

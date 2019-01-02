@@ -195,8 +195,11 @@ namespace boost { namespace numeric
         // element-wise min of std::vector
         template<typename Left, typename Right>
         struct min_assign<Left, Right, std_vector_tag, std_vector_tag>
-          : std::binary_function<Left, Right, void>
         {
+            typedef Left first_argument_type;
+            typedef Right second_argument_type;
+            typedef void result_type;
+
             void operator ()(Left &left, Right &right) const
             {
                 BOOST_ASSERT(left.size() == right.size());
@@ -214,8 +217,11 @@ namespace boost { namespace numeric
         // element-wise max of std::vector
         template<typename Left, typename Right>
         struct max_assign<Left, Right, std_vector_tag, std_vector_tag>
-          : std::binary_function<Left, Right, void>
         {
+            typedef Left first_argument_type;
+            typedef Right second_argument_type;
+            typedef void result_type;
+
             void operator ()(Left &left, Right &right) const
             {
                 BOOST_ASSERT(left.size() == right.size());
@@ -242,8 +248,10 @@ namespace boost { namespace numeric
         // promote
         template<typename To, typename From>
         struct promote<To, From, std_vector_tag, std_vector_tag>
-          : std::unary_function<From, To>
         {
+            typedef From argument_type;
+            typedef To result_type;
+
             To operator ()(From &arr) const
             {
                 typename remove_const<To>::type res(arr.size());
@@ -257,8 +265,10 @@ namespace boost { namespace numeric
 
         template<typename ToFrom>
         struct promote<ToFrom, ToFrom, std_vector_tag, std_vector_tag>
-          : std::unary_function<ToFrom, ToFrom>
         {
+            typedef ToFrom argument_type;
+            typedef ToFrom result_type;
+
             ToFrom &operator ()(ToFrom &tofrom) const
             {
                 return tofrom;
@@ -269,8 +279,10 @@ namespace boost { namespace numeric
         // functional::as_min
         template<typename T>
         struct as_min<T, std_vector_tag>
-          : std::unary_function<T, typename remove_const<T>::type>
         {
+            typedef T argument_type;
+            typedef typename remove_const<T>::type result_type;
+
             typename remove_const<T>::type operator ()(T &arr) const
             {
                 return 0 == arr.size()
@@ -283,8 +295,10 @@ namespace boost { namespace numeric
         // functional::as_max
         template<typename T>
         struct as_max<T, std_vector_tag>
-          : std::unary_function<T, typename remove_const<T>::type>
         {
+            typedef T argument_type;
+            typedef typename remove_const<T>::type result_type;
+
             typename remove_const<T>::type operator ()(T &arr) const
             {
                 return 0 == arr.size()
@@ -297,8 +311,10 @@ namespace boost { namespace numeric
         // functional::as_zero
         template<typename T>
         struct as_zero<T, std_vector_tag>
-          : std::unary_function<T, typename remove_const<T>::type>
         {
+            typedef T argument_type;
+            typedef typename remove_const<T>::type result_type;
+
             typename remove_const<T>::type operator ()(T &arr) const
             {
                 return 0 == arr.size()
@@ -311,8 +327,10 @@ namespace boost { namespace numeric
         // functional::as_one
         template<typename T>
         struct as_one<T, std_vector_tag>
-          : std::unary_function<T, typename remove_const<T>::type>
         {
+            typedef T argument_type;
+            typedef typename remove_const<T>::type result_type;
+
             typename remove_const<T>::type operator ()(T &arr) const
             {
                 return 0 == arr.size()

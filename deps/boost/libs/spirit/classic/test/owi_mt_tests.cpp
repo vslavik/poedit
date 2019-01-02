@@ -89,7 +89,7 @@ struct test_task
 
         boost::xtime now;
         boost::xtime_get(&now, boost::TIME_UTC_);
-        unsigned long seconds = now.sec - start_time.sec;
+        boost::xtime::xtime_sec_t seconds = now.sec - start_time.sec;
         if (seconds < 4)
         {
             test_size *= 2;

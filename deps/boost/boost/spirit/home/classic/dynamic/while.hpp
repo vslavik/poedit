@@ -71,7 +71,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
             iterator_t save(scan.first);
             std::size_t length = 0;
-            int eval_length = 0;
+            std::ptrdiff_t eval_length = 0;
 
             bool dont_check_condition = is_do_parser;
 

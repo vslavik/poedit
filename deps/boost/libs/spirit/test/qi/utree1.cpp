@@ -163,6 +163,11 @@ int main()
         BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
         ut.clear();
 
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
+#endif
+
         BOOST_TEST(test_attr("a25.5b", r1 > r2 >> r3, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( \"a\" ( 25.5 ) ( \"b\" ) )"));
@@ -181,6 +186,10 @@ int main()
         BOOST_TEST(test_attr("a25.5b", r3 >> r2 > char_, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#endif
     }
 
     return boost::report_errors();

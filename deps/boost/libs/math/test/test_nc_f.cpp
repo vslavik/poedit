@@ -69,28 +69,10 @@ using std::numeric_limits;
 void expected_results()
 {
    //
-   // Define the max and mean errors expected for
-   // various compilers and platforms.
-   //
-   const char* largest_type;
-#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   if(boost::math::policies::digits<double, boost::math::policies::policy<> >() == boost::math::policies::digits<long double, boost::math::policies::policy<> >())
-   {
-      largest_type = "(long\\s+)?double|real_concept";
-   }
-   else
-   {
-      largest_type = "long double|real_concept";
-   }
-#else
-   largest_type = "(long\\s+)?double|real_concept";
-#endif
-
-   //
-   // Finish off by printing out the compiler/stdlib/platform names,
+   // Printing out the compiler/stdlib/platform names,
    // we do this to make it easier to mark up expected error rates.
    //
-   std::cout << "Tests run with " << BOOST_COMPILER << ", " 
+   std::cout << "Tests run with " << BOOST_COMPILER << ", "
       << BOOST_STDLIB << ", " << BOOST_PLATFORM << std::endl;
 }
 
@@ -143,7 +125,7 @@ void test_spot(
    {
       //
       // We can only check this if P is not too close to 1,
-      // so that we can guarentee Q is reasonably free of error:
+      // so that we can guarantee Q is reasonably free of error:
       //
       BOOST_CHECK_CLOSE(
          cdf(complement(dist, x)), Q, tol);
@@ -255,7 +237,7 @@ void test_spots(RealType)
    //
    RealType tol2 = (std::max)(boost::math::tools::epsilon<RealType>() * 500, RealType(1e-25));
    RealType x = 2;
-   
+
    boost::math::non_central_f_distribution<RealType> dist(20, 15, 30);
    // mean:
    BOOST_CHECK_CLOSE(
@@ -282,7 +264,7 @@ void test_spots(RealType)
       coefficient_of_variation(dist)
       , standard_deviation(dist) / mean(dist), tol2);
    BOOST_CHECK_CLOSE(
-      median(dist), 
+      median(dist),
       quantile(
       dist,
       static_cast<RealType>(0.5)), static_cast<RealType>(tol2));
@@ -328,6 +310,5 @@ BOOST_AUTO_TEST_CASE( test_main )
 #endif
 #endif
 
-   
-} // BOOST_AUTO_TEST_CASE( test_main )
 
+} // BOOST_AUTO_TEST_CASE( test_main )

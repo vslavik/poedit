@@ -22,6 +22,8 @@ int main()
 
     BOOST_MPL_ASSERT((traits::is_sequence<array_type>));
     BOOST_MPL_ASSERT_NOT((traits::is_view<array_type>));
+    BOOST_STATIC_ASSERT(traits::is_sequence<array_type>::value);
+    BOOST_STATIC_ASSERT(!traits::is_view<array_type>::value);
 
     array_type arr = {1,2,3};
 

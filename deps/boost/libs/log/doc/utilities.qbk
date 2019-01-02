@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2015.
+              Copyright Andrey Semashev 2007 - 2016.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -18,31 +18,6 @@ String literals are used in several places throughout the library. However, this
 The functionality is implemented in the [class_log_basic_string_literal] class template, which is parametrized with the character and character traits, similar to `std::basic_string`. There are also two convenience typedefs provided: `string_literal` and `wstring_literal`, for narrow and wide character types, respectively. In order to ease string literal construction in generic code there is also a `str_literal` function template that accepts a string literal and returns a [class_log_basic_string_literal] instance for the appropriate character type.
 
 String literals support interface similar to STL strings, except for string modification functions. However, it is possible to assign to or clear string literals, as long as only string literals involved. Relational and stream output operators are also supported.
-
-[endsect]
-
-[section:type_info_wrapper Type information wrapper]
-
-[note This component is deprecated and will be removed in future releases. __boost_type_index__ is recommended as a replacement.]
-
-    #include <``[boost_log_utility_type_info_wrapper_hpp]``>
-
-The language support for run time type information is essential for the library. But partially because of limitations that the C++ Standard imposes on this feature, partially because of differences of implementation of different compilers, there was a need for a lightweight wrapper around the `std::type_info` class to fill the gaps. The table below briefly shows the differences between the `std::type_info` and [class_log_type_info_wrapper] classes.
-
-[table Type information classes comparison
-    [[Feature]                                  [`std::type_info`]              [`type_info_wrapper`]]
-    [[Is default-constructable]                 [No]                            [Yes. The default-constructed wrapper is in an empty state.]]
-    [[Is copy-constructable]                    [No]                            [Yes]]
-    [[Is assignable]                            [No]                            [Yes]]
-    [[Is swappable]                             [No]                            [Yes]]
-    [[Life time duration]                       [Static, until the application terminates] [Dynamic]]
-    [[Has an empty state]                       [No]                            [Yes. In empty state the type info wrapper is never equal to other non-empty type info wrappers. It is equal to other empty type info wrappers and can be ordered with them.]]
-    [[Supports equality comparison]             [Yes]                           [Yes]]
-    [[Supports ordering]                        [Yes, partial ordering with the `before` method.] [Yes, partial ordering with the complete set of comparison operators. The semantics of ordering is similar to the `std::type_info::before` method.]]
-    [[Supports printable representation of type] [Yes, with the `name` function.] [Yes, with `pretty_name` function. The function does its best to print the type name in a human-readable form. On some platforms it does better than `std::type_info::name`.]]
-]
-
-Given the distinctions above, using type information objects becomes much easier. For example, the ability to copy and order with regular operators allows using [class_log_type_info_wrapper] with containers. The ability to default-construct and assign allows using type information as a regular object and not to resort to pointers which may be unsafe.
 
 [endsect]
 
@@ -277,6 +252,77 @@ There is another manipulator called [funcref boost::log::dump_elements `dump_ele
 
 [endsect]
 
+[section:ipc Interprocess communication tools]
+
+[section:object_name Resource name wrapper]
+
+    #include <``[boost_log_utility_ipc_object_name_hpp]``>
+
+In modern operating systems process-shared system resources are typically identified with names. Unfortunately, different systems have different requirements on the name syntax and allowed character set. Additionally, some systems offer support for namespaces in order to avoid name clashes. The [class_ipc_object_name] class is intended to hide these differences.
+
+An object name can be constructed from a UTF-8 string identifier and a scope. A portable identifier can contain the following characters:
+
+[teletype]
+
+    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+    a b c d e f g h i j k l m n o p q r s t u v w x y z
+    0 1 2 3 4 5 6 7 8 9 . _ -
+
+[c++]
+
+[note The character set corresponds to [@http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278 POSIX Portable Filename Character Set].]
+
+Use of other characters may result in non-portable system-specific behavior.
+
+The scope is identified with the `object_name::scope` enumeration:
+
+* `global` - The name has global scope; any process in the system has the potential to open the resource identified by the name. On some systems this scope may not be available or require elevated privileges.
+* `user` - The name is limited to processes running under the current user.
+* `session` - The name is limited to processes running in the current login session.
+* `process_group` - The name is limited to processes running in the current process group. Currently, on Windows all processes running in the current session are considered members of the same process group. This may change in future.
+
+The scopes are not overlapping. For instance, if an object is created in the global scope, the object cannot be opened with the same name but in user's scope. Some of the scopes may require elevated privileges to create or open objects in.
+
+[warning Object name scoping should not be considered a security measure. Objects may still be accessible by processes outside of their name scopes. The main purpose of the scopes is to avoid name clashes between different processes using [class_ipc_object_name]. Use access permissions for security control.]
+
+[endsect]
+
+[section:reliable_message_queue Reliable message queue]
+
+    #include <``[boost_log_utility_ipc_reliable_message_queue_hpp]``>
+
+The [class_ipc_reliable_message_queue] class implements a reliable one-way channel of passing messages from one or multiple writers to a single reader. The format of the messages is user-defined and must be consistent across all writers and the reader. The queue does not enforce any specific format of the messages, other than they should be supplied as a contiguous array of bytes. The queue internally uses a process-shared storage identified by an [link log.detailed.utilities.ipc.object_name object name] (the queue name).
+
+The queue storage is organized as a fixed number of blocks of a fixed size. The block size must be an integer power of 2 and is expressed in bytes. Each written message, together with some metadata added by the queue, consumes an integer number of blocks. Each read message received by the reader releases the blocks allocated for that message. As such the maximum size of a message is slightly less than block size times capacity of the queue. For efficiency, it is recommended to choose block size large enough to accommodate most of the messages to be passed through the queue. The queue is considered empty when no messages are enqueued (all blocks are free). The queue is considered full at the point of enqueueing a message when there is not enough free blocks to accommodate the message.
+
+The queue is reliable in that it will not drop successfully sent messages that are not received by the reader, other than the case when a non-empty queue is destroyed by the last user. If a message cannot be enqueued by the writer because the queue is full, the queue will act depending on the overflow policy specified at the queue creation:
+
+* `block_on_overflow` - Block the thread until there is enough space to enqueue the message or the operation is aborted by calling `stop_local`.
+* `fail_on_overflow` - Return an error code from the send operation. The error code is `operation_result::no_space`.
+* `throw_on_overflow` - Throw an exception from the send operation. The exception is [class_log_capacity_limit_reached].
+
+The policy is object local, i.e. different writers and the reader can have different overflow policies. Here is an example of writing to the message queue:
+
+[example_util_ipc_reliable_mq_writer]
+
+[@boost:/libs/log/example/doc/util_ipc_reliable_mq_writer.cpp See the complete code].
+
+Typically, the queue would be used for sending log records to a different process. As such, instead of using the queue for writing directly, one would use a special sink backend for that. See [link log.detailed.sink_backends.text_ipc_message_queue `text_ipc_message_queue_backend`] documentation.
+
+Receiving messages from the queue is similar. Here is an example of a log viewer that receives messages from the queue and displays them on the console.
+
+[example_sinks_ipc_receiver]
+
+[@boost:/libs/log/example/doc/sinks_ipc_receiver.cpp See the complete code].
+
+[note The queue does not guarantee any particular order of received messages from different writer threads. Messages sent by a particular writer thread will be received in the order of sending.]
+
+A blocked reader or writer can be unblocked by calling `stop_local`. After this method is called, all threads blocked on this particular object are released and return `operation_result::aborted`. The other instances of the queue (in the current or other processes) are unaffected. In order to restore the normal functioning of the queue instance after the `stop_local` call the user has to invoke `reset_local`.
+
+[endsect]
+
+[endsect]
+
 [section:setup Simplified library initialization tools]
 
 This part of the library is provided in order to simplify logging initialization and provide basic tools to develop user-specific initialization mechanisms. It is known that setup capabilities and preferences may vary widely from application to application, therefore the library does not attempt to provide a universal solution for this task. The provided tools are mostly intended to serve as a quick drop-in support for logging setup and a set of instruments to implement something more elaborate and more fitting users' needs.
@@ -486,7 +532,7 @@ Sink settings are divided into separate subsections within the common top-level 
 [table Sections under the "Sinks" section. Common sink settings.
 [[Parameter]             [Format]                                                               [Description]]
 [[Destination]           [Sink target, see description]
-    [Sink backend type. Mandatory parameter. May have one of these values: [link log.detailed.sink_backends.text_ostream Console], [link log.detailed.sink_backends.text_file TextFile], [link log.detailed.sink_backends.syslog Syslog]. On Windows the following values are additionally supported: [link log.detailed.sink_backends.event_log SimpleEventLog], [link log.detailed.sink_backends.debugger Debugger]. Also, user-defined sink names may also be supported if registered by calling `register_sink_factory`.]
+    [Sink backend type. Mandatory parameter. May have one of these values: [link log.detailed.sink_backends.text_ostream Console], [link log.detailed.sink_backends.text_file TextFile], [link log.detailed.sink_backends.syslog Syslog]. On Windows the following values are additionally supported: [link log.detailed.sink_backends.event_log SimpleEventLog], [link log.detailed.sink_backends.debugger Debugger]. Also, user-defined sink names may also be supported if registered by calling [funcref boost::log::register_sink_factory `register_sink_factory`]. See [link log.extension.settings.sinks this] section on how to add support for new sinks.]
 ]
 [[Filter]                [Filter string as described [link log.detailed.utilities.setup.filter_formatter here]]
     [Sink-specific filter. If not specified, the filter is not set.]
@@ -519,6 +565,9 @@ Besides the common settings that all sinks support, some sink backends also acce
 [[AutoFlush]             ["true" or "false"]
     [Enables or disables the auto-flush feature of the backend. If not specified, the default value `false` is assumed.]
 ]
+[[Append]                ["true" or "false"]
+    [Enables or disables appending to the existing file instead of overwriting it. If not specified, the default value `false` is assumed.]
+]
 [[RotationSize]          [Unsigned integer]
     [File size, in bytes, upon which file rotation will be performed. If not specified, no size-based rotation will be made.]
 ]
@@ -527,6 +576,9 @@ Besides the common settings that all sinks support, some sink backends also acce
 ]
 [[RotationTimePoint]     [Time point format string, see below]
     [Time point or a predicate that detects at what moment of time to perform log file rotation. See also the RotationInterval parameter and the note below.]
+]
+[[EnableFinalRotation]   ["true" or "false"]
+    [Enables or disables final file rotation on sink destruction, which typically happens on program termination. If not specified, the default value `true` is assumed.]
 ]
 [[Target]                [File system path to a directory]
     [Target directory name, in which the rotated files will be stored. If this parameter is specified, rotated file collection is enabled. Otherwise the feature is not enabled, and all corresponding parameters are ignored.]

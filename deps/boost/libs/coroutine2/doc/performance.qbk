@@ -7,41 +7,19 @@
 
 [section:performance Performance]
 
-Performance of __boost_coroutine__ was measured on the platforms shown in the
-following table. Performance measurements were taken using `rdtsc` and
-`boost::chrono::high_resolution_clock`, with overhead corrections, on x86
-platforms. In each case, cache warm-up was accounted for, and the one
-running thread was pinned to a single CPU.
+Performance measurements were taken using `std::chrono::highresolution_clock`,
+with overhead corrections.
+The code was compiled with gcc-6.3.1, using build options:
+variant = release, optimization = speed.
+Tests were executed on dual Intel XEON E5 2620v4 2.2GHz, 16C/32T, 64GB RAM,
+running Linux (x86_64).
 
-[table Performance of asymmetric coroutines (using captured_context)
+[table Performance of context switch
+    [[using __fcontext__] [using [@boost:/libs/context/doc/html/context/cc.html#implementation ucontext_t]]]
     [
-        [Platform]
-        [switch]
-        [construction (protected stack-allocator)]
-        [construction (standard stack-allocator)]
+        [26 ns / 56 CPU cycles]
+        [542 ns / 1146 CPU cycles]
     ]
-    [
-        [x86_64 (Intel Core2 Q6700, Linux 64bit)]
-        [7 ns / 20 cycles]
-        [19 \u00b5s / cw6306445402 cycles]
-        [10 \u00b5s / 29896 cycles]
-    ]
-]
-[/
-[table Performance of asymmetric coroutines (using execution_context)
-    [
-        [Platform]
-        [switch]
-        [construction (protected stack-allocator)]
-        [construction (standard stack-allocator)]
-    ]
-    [
-        [x86_64 (Intel Core2 Q6700, Linux 64bit)]
-        [140 ns / 424 cycles]
-        [14 \u00b5s / 32750 cycles]
-        [8 \u00b5s / 15313 cycles]
-    ]
-]
 ]
 
 [endsect]

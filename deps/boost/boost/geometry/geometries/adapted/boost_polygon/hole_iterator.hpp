@@ -15,7 +15,6 @@
 
 #include <boost/polygon/polygon.hpp>
 
-#include <boost/iterator.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
 

@@ -29,7 +29,7 @@
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/is_sequence.hpp>
-#include <boost/utility/addressof.hpp>
+#include <boost/core/addressof.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/utility/once_block.hpp>
 #include <boost/log/utility/type_dispatch/type_dispatcher.hpp>

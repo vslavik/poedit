@@ -21,6 +21,8 @@ namespace compute {
 /// Performs left rotation such that element at \p n_first comes to the
 /// beginning.
 ///
+/// Space complexity: \Omega(distance(\p first, \p last))
+///
 /// \see rotate_copy()
 template<class InputIterator>
 inline void rotate(InputIterator first,

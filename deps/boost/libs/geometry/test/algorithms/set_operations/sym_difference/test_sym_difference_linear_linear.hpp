@@ -1,11 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
 
-// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 #ifndef BOOST_GEOMETRY_TEST_SYM_DIFFERENCE_LINEAR_LINEAR_HPP
 #define BOOST_GEOMETRY_TEST_SYM_DIFFERENCE_LINEAR_LINEAR_HPP
@@ -23,6 +24,22 @@
 // symmetric difference of (linear) geometries
 //==================================================================
 //==================================================================
+
+template <typename Geometry1, typename Geometry2, typename MultiLineString>
+inline void check_result(Geometry1 const& geometry1,
+                         Geometry2 const& geometry2,
+                         MultiLineString const& mls_output,
+                         MultiLineString const& mls_sym_diff,
+                         std::string const& case_id,
+                         double tolerance)
+{
+    BOOST_CHECK_MESSAGE( equals::apply(mls_sym_diff, mls_output, tolerance),
+                         "case id: " << case_id
+                         << ", sym diff L/L: " << bg::wkt(geometry1)
+                         << " " << bg::wkt(geometry2)
+                         << " -> Expected: " << bg::wkt(mls_sym_diff)
+                         << " computed: " << bg::wkt(mls_output) );
+}
 
 template
 <
@@ -50,15 +67,20 @@ private:
         linestring_vector ls_vector_output;
         linestring_deque ls_deque_output;
 
+        // Check strategy passed explicitly
+        typedef typename bg::strategy::relate::services::default_strategy
+            <
+                Geometry1, Geometry2
+            >::type strategy_type;
+        bg::sym_difference(geometry1, geometry2, mls_output, strategy_type());
+
+        check_result(geometry1, geometry2, mls_output, mls_sym_diff, case_id, tolerance);
+
+        // Check normal behaviour
+        bg::clear(mls_output);
         bg::sym_difference(geometry1, geometry2, mls_output);
 
-        BOOST_CHECK_MESSAGE( equals::apply(mls_sym_diff, mls_output, tolerance),
-                             "case id: " << case_id
-                             << ", sym diff L/L: " << bg::wkt(geometry1)
-                             << " " << bg::wkt(geometry2)
-                             << " -> Expected: " << bg::wkt(mls_sym_diff)
-                             << " computed: " << bg::wkt(mls_output) );
-
+        check_result(geometry1, geometry2, mls_output, mls_sym_diff, case_id, tolerance);
 
         set_operation_output("sym_difference", case_id,
                              geometry1, geometry2, mls_output);

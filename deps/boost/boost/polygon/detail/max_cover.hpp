@@ -36,8 +36,11 @@ namespace boost { namespace polygon{
 
     typedef std::pair<std::pair<Unit, Interval>, Node* > EdgeAssociation;
 
-    class lessEdgeAssociation : public std::binary_function<const EdgeAssociation&, const EdgeAssociation&, bool> {
+    class lessEdgeAssociation {
     public:
+      typedef const EdgeAssociation& first_argument_type;
+      typedef const EdgeAssociation& second_argument_type;
+      typedef bool result_type;
       inline lessEdgeAssociation() {}
       inline bool operator () (const EdgeAssociation& elem1, const EdgeAssociation& elem2) const {
         if(elem1.first.first < elem2.first.first) return true;

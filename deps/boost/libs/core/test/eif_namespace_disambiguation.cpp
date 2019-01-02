@@ -10,15 +10,18 @@
 //             Jeremiah Willcock (jewillco at osl.iu.edu)
 //             Andrew Lumsdaine (lums at osl.iu.edu)
 
-#include <boost/mpl/not.hpp>
-
+#include <boost/config.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 using boost::enable_if;
-using boost::mpl::not_;
 using boost::is_arithmetic;
+
+template<class T> struct not_
+{
+  BOOST_STATIC_CONSTANT( bool, value = !T::value );
+};
 
 namespace A {
   template<class T>

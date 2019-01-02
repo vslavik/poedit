@@ -1,17 +1,24 @@
 #  Boost.Core Library test Jamfile
 #
-#  Copyright (c) 2014 Peter Dimov
+#  Copyright (c) 2014, 2017 Peter Dimov
 #
 #  Distributed under the Boost Software License, Version 1.0.
 #  See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt
 
+import modules ;
 import testing ;
 
+# quick test (for CI)
+run quick.cpp ;
+
+# full test suite
 run addressof_test.cpp ;
 run addressof_test2.cpp ;
 run addressof_np_test.cpp ;
 run addressof_fn_test.cpp ;
+compile addressof_constexpr_test.cpp ;
+compile-fail addressof_fail_rvalue.cpp ;
 
 run checked_delete_test.cpp ;
 compile-fail checked_delete_fail.cpp ;
@@ -28,6 +35,7 @@ compile-fail ref_rv_fail4.cpp ;
 compile-fail ref_rv_fail5.cpp ;
 compile-fail ref_implicit_fail.cpp ;
 compile-fail ref_implicit_fail2.cpp ;
+run ref_cv_test.cpp ;
 
 run eif_constructors.cpp ;
 run eif_dummy_arg_disambiguation.cpp ;
@@ -60,8 +68,14 @@ run get_pointer_test.cpp ;
 
 run lightweight_test_test.cpp ;
 run lightweight_test_test.cpp : : : <exception-handling>off : lightweight_test_test_no_except ;
-
 run lightweight_test_test2.cpp ;
+run lightweight_test_all_eq_test.cpp ;
+run lightweight_test_all_with_test.cpp ;
+run lightweight_test_all_with_fail.cpp ;
+run lightweight_test_lt_le_test.cpp ;
+run lightweight_test_gt_ge_test.cpp ;
+run lightweight_test_eq_nullptr.cpp ;
+run lightweight_test_test3.cpp ;
 
 run-fail lightweight_test_fail.cpp ;
 run-fail lightweight_test_fail2.cpp ;
@@ -73,6 +87,13 @@ run-fail lightweight_test_fail7.cpp ;
 run-fail lightweight_test_fail7.cpp : : : <rtti>off : lightweight_test_fail7_no_rtti ;
 run-fail lightweight_test_fail8.cpp ;
 run-fail lightweight_test_fail8.cpp : : : <rtti>off : lightweight_test_fail8_no_rtti ;
+run-fail lightweight_test_fail9.cpp ;
+run-fail lightweight_test_fail10.cpp ;
+run-fail lightweight_test_fail11.cpp ;
+run-fail lightweight_test_lt_fail.cpp ;
+run-fail lightweight_test_le_fail.cpp ;
+run-fail lightweight_test_gt_fail.cpp ;
+run-fail lightweight_test_ge_fail.cpp ;
 
 run is_same_test.cpp ;
 
@@ -92,3 +113,30 @@ compile-fail scoped_enum_compile_fail_conv_from_int.cpp ;
 compile-fail scoped_enum_compile_fail_conv_to_int.cpp ;
 
 run underlying_type.cpp ;
+
+run pointer_traits_pointer_test.cpp ;
+run pointer_traits_element_type_test.cpp ;
+run pointer_traits_difference_type_test.cpp ;
+run pointer_traits_rebind_test.cpp ;
+run pointer_traits_pointer_to_test.cpp ;
+run to_address_test.cpp ;
+
+run exchange_test.cpp ;
+run exchange_move_test.cpp ;
+
+run empty_value_test.cpp ;
+run empty_value_size_test.cpp ;
+
+run quick_exit_test.cpp ;
+run-fail quick_exit_fail.cpp ;
+
+lib lib_typeid : lib_typeid.cpp : <link>shared:<define>LIB_TYPEID_DYN_LINK=1 ;
+
+run test_lib_typeid.cpp lib_typeid : : : <link>shared : test_lib_typeid_shared ;
+run test_lib_typeid.cpp lib_typeid : : : <link>static : test_lib_typeid_static ;
+
+run test_lib_typeid.cpp lib_typeid : : : <link>shared <rtti>off : test_lib_typeid_shared_no_rtti ;
+run test_lib_typeid.cpp lib_typeid : : : <link>static <rtti>off  : test_lib_typeid_static_no_rtti ;
+
+use-project /boost/core/swap : ./swap ;
+build-project ./swap ;

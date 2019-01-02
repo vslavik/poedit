@@ -11,8 +11,8 @@
 #  include <boost/type.hpp>
 
 #  include <boost/python/detail/preprocessor.hpp>
+#  include <boost/python/detail/type_traits.hpp>
 
-#  include <boost/type_traits/object_traits.hpp>
 #  include <boost/mpl/if.hpp>
 
 #  include <boost/preprocessor/comma_if.hpp>

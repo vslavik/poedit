@@ -31,6 +31,8 @@
 #include <boost/math/tools/big_constant.hpp>
 #include <boost/math/tools/precision.hpp>
 #include <boost/math/policies/policy.hpp>
+#include <boost/math/special_functions/asinh.hpp>
+#include <boost/math/special_functions/atanh.hpp>
 #if defined(__SGI_STL_PORT)
 #  include <boost/math/tools/real_cast.hpp>
 #endif
@@ -254,6 +256,24 @@ inline real_concept sqrt(real_concept a)
 { return std::sqrt(a.value()); }
 inline real_concept tanh(real_concept a)
 { return std::tanh(a.value()); }
+
+//
+// C++11 ism's
+// Note that these must not actually call the std:: versions as that precludes using this
+// header to test in C++03 mode, call the Boost versions instead:
+//
+inline boost::math::concepts::real_concept asinh(boost::math::concepts::real_concept a)
+{
+   return boost::math::asinh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>()));
+}
+inline boost::math::concepts::real_concept acosh(boost::math::concepts::real_concept a)
+{
+   return boost::math::acosh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>()));
+}
+inline boost::math::concepts::real_concept atanh(boost::math::concepts::real_concept a)
+{
+   return boost::math::atanh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>()));
+}
 
 //
 // Conversion and truncation routines:

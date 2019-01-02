@@ -11,7 +11,7 @@
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND( __BORLANDC__, BOOST_TESTED_AT(0x564) )
-#  pragma warn -8091 // supress warning in Boost.Test
+#  pragma warn -8091 // suppress warning in Boost.Test
 #  pragma warn -8057 // unused argument argc/argv in Boost.Test
 #endif
 
@@ -22,18 +22,40 @@
 #include <algorithm>
 #include <iterator>
 
+#ifndef BOOST_NO_CXX11_HDR_ARRAY
+#include <array>
 
+void check_std_array()
+{
+    using namespace boost::assign;
+
+    typedef std::array<float,6> Array;
+
+    Array a = list_of(1)(2)(3)(4)(5)(6);
+
+    BOOST_CHECK_EQUAL( a[0], 1 );
+    BOOST_CHECK_EQUAL( a[5], 6 );
+    // last element is implicitly 0
+    Array a2 = list_of(1)(2)(3)(4)(5);
+    BOOST_CHECK_EQUAL( a2[5], 0 );
+    // two last elements are implicitly
+    a2 = list_of(1)(2)(3)(4);
+    BOOST_CHECK_EQUAL( a2[4], 0 );
+    BOOST_CHECK_EQUAL( a2[5], 0 );
+    // too many arguments
+    BOOST_CHECK_THROW( a2 = list_of(1)(2)(3)(4)(5)(6)(7), assignment_exception );
+}
+
+#endif
 
 void check_array()
 {
-    using namespace std;
-    using namespace boost;
     using namespace boost::assign;
 
-    typedef array<float,6> Array;
+    typedef boost::array<float,6> Array;
 
 
-#if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))   
+#if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
     Array a = list_of(1)(2)(3)(4)(5)(6).to_array(a);
 #else
     Array a = list_of(1)(2)(3)(4)(5)(6);
@@ -46,14 +68,14 @@ void check_array()
     Array a2 = list_of(1)(2)(3)(4)(5).to_array(a2);
 #else
     Array a2 = list_of(1)(2)(3)(4)(5);
-#endif 
+#endif
     BOOST_CHECK_EQUAL( a2[5], 0 );
     // two last elements are implicitly
-#if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))   
+#if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
     a2 = list_of(1))(2)(3)(4).to_array(a2);
-#else    
+#else
     a2 = list_of(1)(2)(3)(4);
-#endif    
+#endif
     BOOST_CHECK_EQUAL( a2[4], 0 );
     BOOST_CHECK_EQUAL( a2[5], 0 );
     // too many arguments
@@ -64,8 +86,6 @@ void check_array()
 #else
     BOOST_CHECK_THROW( a2 = list_of(1)(2)(3)(4)(5)(6)(7), assignment_exception );
 #endif
-    
-        
 }
 
 
@@ -78,6 +98,9 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
     test_suite* test = BOOST_TEST_SUITE( "List Test Suite" );
 
     test->add( BOOST_TEST_CASE( &check_array ) );
+#ifndef BOOST_NO_CXX11_HDR_ARRAY
+    test->add( BOOST_TEST_CASE( &check_std_array ) );
+#endif
 
     return test;
 }

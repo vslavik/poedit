@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::monadic_fold_right`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -17,6 +17,7 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/concept/monad.hpp>
 #include <boost/hana/config.hpp>
 #include <boost/hana/core/dispatch.hpp>
+#include <boost/hana/detail/decay.hpp>
 #include <boost/hana/fold_left.hpp>
 #include <boost/hana/functional/curry.hpp>
 #include <boost/hana/functional/partial.hpp>
@@ -26,45 +27,49 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 BOOST_HANA_NAMESPACE_BEGIN
+    //! @cond
     template <typename M>
-    struct monadic_fold_right_t {
+    template <typename Xs, typename State, typename F>
+    constexpr decltype(auto) monadic_fold_right_t<M>::operator()(Xs&& xs, State&& state, F&& f) const {
+        using S = typename hana::tag_of<Xs>::type;
+        using MonadicFoldRight = BOOST_HANA_DISPATCH_IF(monadic_fold_right_impl<S>,
+            hana::Foldable<S>::value
+        );
+
     #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
         static_assert(hana::Monad<M>::value,
         "hana::monadic_fold_right<M> requires 'M' to be a Monad");
+
+        static_assert(hana::Foldable<S>::value,
+        "hana::monadic_fold_right<M>(xs, state, f) requires 'xs' to be Foldable");
     #endif
 
-        template <typename Xs, typename State, typename F>
-        constexpr decltype(auto) operator()(Xs&& xs, State&& state, F&& f) const {
-            using S = typename hana::tag_of<Xs>::type;
-            using MonadicFoldRight = BOOST_HANA_DISPATCH_IF(monadic_fold_right_impl<S>,
-                hana::Foldable<S>::value
-            );
+        return MonadicFoldRight::template apply<M>(static_cast<Xs&&>(xs),
+                                                   static_cast<State&&>(state),
+                                                   static_cast<F&&>(f));
+    }
+    //! @endcond
 
-        #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
-            static_assert(hana::Foldable<S>::value,
-            "hana::monadic_fold_right<M>(xs, state, f) requires 'xs' to be Foldable");
-        #endif
+    //! @cond
+    template <typename M>
+    template <typename Xs, typename F>
+    constexpr decltype(auto) monadic_fold_right_t<M>::operator()(Xs&& xs, F&& f) const {
+        using S = typename hana::tag_of<Xs>::type;
+        using MonadicFoldRight = BOOST_HANA_DISPATCH_IF(monadic_fold_right_impl<S>,
+            hana::Foldable<S>::value
+        );
 
-            return MonadicFoldRight::template apply<M>(static_cast<Xs&&>(xs),
-                                                       static_cast<State&&>(state),
-                                                       static_cast<F&&>(f));
-        }
+    #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
+        static_assert(hana::Monad<M>::value,
+        "hana::monadic_fold_right<M> requires 'M' to be a Monad");
 
-        template <typename Xs, typename F>
-        constexpr decltype(auto) operator()(Xs&& xs, F&& f) const {
-            using S = typename hana::tag_of<Xs>::type;
-            using MonadicFoldRight = BOOST_HANA_DISPATCH_IF(monadic_fold_right_impl<S>,
-                hana::Foldable<S>::value
-            );
-
-        #ifndef BOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS
-            static_assert(hana::Foldable<S>::value,
-            "hana::monadic_fold_right<M>(xs, f) requires 'xs' to be Foldable");
-        #endif
-            return MonadicFoldRight::template apply<M>(static_cast<Xs&&>(xs),
-                                                       static_cast<F&&>(f));
-        }
-    };
+        static_assert(hana::Foldable<S>::value,
+        "hana::monadic_fold_right<M>(xs, f) requires 'xs' to be Foldable");
+    #endif
+        return MonadicFoldRight::template apply<M>(static_cast<Xs&&>(xs),
+                                                   static_cast<F&&>(f));
+    }
+    //! @endcond
 
     namespace detail {
         struct foldrM_helper {
@@ -110,7 +115,7 @@ BOOST_HANA_NAMESPACE_BEGIN
         template <typename M, typename Xs, typename F>
         static constexpr decltype(auto) apply(Xs&& xs, F&& f) {
             struct end { };
-            using G = detail::monadic_foldr1_helper<end, M, typename std::decay<F>::type>;
+            using G = detail::monadic_foldr1_helper<end, M, typename detail::decay<F>::type>;
             decltype(auto) result = hana::monadic_fold_right<M>(
                 static_cast<Xs&&>(xs),
                 end{},

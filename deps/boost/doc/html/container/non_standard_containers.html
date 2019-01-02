@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Non-standard containers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
 <link rel="prev" href="exception_handling.html" title="Boost.Container and C++ exceptions">
-<link rel="next" href="extended_functionality.html" title="Extended functionality">
+<link rel="next" href="extended_functionality.html" title="Extended functionality: Basic extensions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="container.non_standard_containers"></a><a class="link" href="non_standard_containers.html" title="Non-standard containers">Non-standard containers</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="non_standard_containers.html#container.non_standard_containers.stable_vector"><span class="emphasis"><em>stable_vector</em></span></a></span></dt>
 <dt><span class="section"><a href="non_standard_containers.html#container.non_standard_containers.flat_xxx"><span class="emphasis"><em>flat_(multi)map/set</em></span>
       associative containers</a></span></dt>
@@ -71,7 +71,7 @@
         data structure upon which to base the design of a stable vector:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../libs/container/doc/html/images/stable_vector.png" align="middle" width="50%" alt="stable_vector"></span>
+        <span class="inlinemediaobject"><img src="../../../libs/container/doc/images/stable_vector.png" align="middle" width="50%" alt="stable_vector"></span>
       </p>
 <p>
         Each element is stored in its own separate node. All the nodes are referenced
@@ -122,7 +122,7 @@
         exception safety guarantees than in vector:
       </p>
 <div class="table">
-<a name="container.non_standard_containers.stable_vector.stable_vector_req"></a><p class="title"><b>Table&#160;8.1.&#160;Exception safety</b></p>
+<a name="container.non_standard_containers.stable_vector.stable_vector_req"></a><p class="title"><b>Table&#160;9.1.&#160;Exception safety</b></p>
 <div class="table-contents"><table class="table" summary="Exception safety">
 <colgroup>
 <col>
@@ -186,9 +186,9 @@
 </div>
 <br class="table-break"><p>
         <span class="bold"><strong>Memory overhead</strong></span>. The C++ standard does not
-        specifiy requirements on memory consumption, but virtually any implementation
+        specify requirements on memory consumption, but virtually any implementation
         of <code class="computeroutput"><span class="identifier">vector</span></code> has the same behavior
-        wih respect to memory usage: the memory allocated by a <code class="computeroutput"><span class="identifier">vector</span></code>
+        with respect to memory usage: the memory allocated by a <code class="computeroutput"><span class="identifier">vector</span></code>
         v with n elements of type T is
       </p>
 <p>
@@ -307,14 +307,14 @@
         and erase (linear as opposed to constant). </em></span></span>&#8221;</span>
       </p>
 <p>
-        <span class="bold"><strong>Boost.Container</strong></span> <code class="computeroutput"><span class="identifier">flat_</span><span class="special">[</span><span class="identifier">multi</span><span class="special">]</span><span class="identifier">map</span><span class="special">/</span><span class="identifier">set</span></code> containers are ordered-vector based
-        associative containers based on Austern's and Alexandrescu's guidelines.
-        These ordered vector containers have also benefited recently with the addition
-        of <code class="computeroutput"><span class="identifier">move</span> <span class="identifier">semantics</span></code>
-        to C++, speeding up insertion and erasure times considerably. Flat associative
+        <span class="bold"><strong>Boost.Container</strong></span> <code class="computeroutput"><span class="identifier">flat_</span><span class="special">[</span><span class="identifier">multi</span><span class="special">]</span><span class="identifier">map</span><span class="special">/</span><span class="identifier">set</span></code> containers are ordered, vector-like
+        container based, associative containers following Austern's and Alexandrescu's
+        guidelines. These ordered vector containers have also benefited with the
+        addition of <code class="computeroutput"><span class="identifier">move</span> <span class="identifier">semantics</span></code>
+        to C++11, speeding up insertion and erasure times considerably. Flat associative
         containers have the following attributes:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Faster lookup than standard associative containers
           </li>
@@ -447,7 +447,7 @@
         lifetime requirements that would otherwise not be trivially possible. Some
         other properties:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Random access to elements
           </li>
@@ -494,7 +494,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

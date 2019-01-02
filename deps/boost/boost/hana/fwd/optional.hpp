@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::optional`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -37,6 +37,11 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! at compile-time for the return type of that function to be computable
     //! by the compiler. This makes `hana::optional` well suited for static
     //! metaprogramming tasks, but very poor for anything dynamic.
+    //!
+    //! @note
+    //! When you use a container, remember not to make assumptions about its
+    //! representation, unless the documentation gives you those guarantees.
+    //! More details [in the tutorial](@ref tutorial-containers-types).
     //!
     //!
     //! Interoperation with `type`s

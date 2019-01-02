@@ -270,7 +270,10 @@ void test_manip(std::string e_charset="UTF-8")
     TEST_FP3(as::number,std::left,std::setw(3),15,"15 ",int,15);
     TEST_FP3(as::number,std::right,std::setw(3),15," 15",int,15);
     TEST_FP3(as::number,std::setprecision(3),std::fixed,13.1,"13.100",double,13.1);
+    #if BOOST_ICU_VER < 5601 
+    // bug #13276
     TEST_FP3(as::number,std::setprecision(3),std::scientific,13.1,"1.310E1",double,13.1);
+    #endif
 
     TEST_NOPAR(as::number,"",int);
     TEST_NOPAR(as::number,"--3",int);
@@ -314,6 +317,12 @@ void test_manip(std::string e_charset="UTF-8")
     TEST_FP3(as::date,as::date_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970",time_t,a_date);
     
     TEST_NOPAR(as::date>>as::date_short,"aa/bb/cc",double);
+
+#if BOOST_ICU_VER >= 5901
+#define GMT_FULL "Greenwich Mean Time"
+#else
+#define GMT_FULL "GMT"
+#endif
     
     TEST_FP2(as::time,                as::gmt,a_datetime,"3:33:13 PM",time_t,a_time+a_timesec);
     TEST_FP3(as::time,as::time_short ,as::gmt,a_datetime,"3:33 PM",time_t,a_time);
@@ -322,7 +331,7 @@ void test_manip(std::string e_charset="UTF-8")
     TEST_FP3(as::time,as::time_long  ,as::gmt,a_datetime,"3:33:13 PM GMT",time_t,a_time+a_timesec);
         #if BOOST_ICU_EXACT_VER != 40800
             // know bug #8675
-            TEST_FP3(as::time,as::time_full  ,as::gmt,a_datetime,"3:33:13 PM GMT",time_t,a_time+a_timesec);
+            TEST_FP3(as::time,as::time_full  ,as::gmt,a_datetime,"3:33:13 PM " GMT_FULL,time_t,a_time+a_timesec);
         #endif
     #else
     TEST_FP3(as::time,as::time_long  ,as::gmt,a_datetime,"3:33:13 PM GMT+00:00",time_t,a_time+a_timesec);
@@ -340,6 +349,7 @@ void test_manip(std::string e_charset="UTF-8")
 #else
 #define GMT_P100 "GMT+01:00"
 #endif
+
 
 #if U_ICU_VERSION_MAJOR_NUM >= 50
 #define PERIOD "," 
@@ -363,7 +373,7 @@ void test_manip(std::string e_charset="UTF-8")
     TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970" ICUAT " 3:33:13 PM GMT",time_t,a_datetime);
         #if BOOST_ICU_EXACT_VER != 40800
             // know bug #8675
-            TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970" ICUAT " 3:33:13 PM GMT",time_t,a_datetime);
+            TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970" ICUAT " 3:33:13 PM " GMT_FULL,time_t,a_datetime);
         #endif
     #else
     TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970" PERIOD " 3:33:13 PM GMT+00:00",time_t,a_datetime);
@@ -391,7 +401,7 @@ void test_manip(std::string e_charset="UTF-8")
     std::string result[]= { 
         "Thu","Thursday","Feb","February",  // aAbB
         #if BOOST_ICU_VER >= 408
-        "Thursday, February 5, 1970" ICUAT  " 3:33:13 PM GMT", // c
+        "Thursday, February 5, 1970" ICUAT  " 3:33:13 PM " GMT_FULL, // c
         #else
         "Thursday, February 5, 1970 3:33:13 PM GMT+00:00", // c
         #endif
@@ -401,7 +411,7 @@ void test_manip(std::string e_charset="UTF-8")
         "15:33","13","\t","15:33:13", // RStT
         "Feb 5, 1970","3:33:13 PM","70","1970", // xXyY
         #if BOOST_ICU_VER >= 408
-        "GMT" // Z
+        GMT_FULL // Z
         #else
         "GMT+00:00" // Z
         #endif
@@ -445,8 +455,11 @@ void test_format(std::string charset="UTF-8")
     FORMAT("{1}",1200.1,"1200.1");
     FORMAT("Test {1,num}",1200.1,"Test 1,200.1");
     FORMAT("{{}} {1,number}",1200.1,"{} 1,200.1");
+    #if BOOST_ICU_VER < 5601 
+    // bug #13276
     FORMAT("{1,num=sci,p=3}",13.1,"1.310E1");
     FORMAT("{1,num=scientific,p=3}",13.1,"1.310E1");
+    #endif
     FORMAT("{1,num=fix,p=3}",13.1,"13.100");
     FORMAT("{1,num=fixed,p=3}",13.1,"13.100");
     FORMAT("{1,<,w=3,num}",-1,"-1 ");
@@ -512,6 +525,13 @@ void test_format(std::string charset="UTF-8")
     FORMAT("{1,gmt,ftime='%H'''}",a_datetime,"15'");
     FORMAT("{1,gmt,ftime='''%H'}",a_datetime,"'15");
     FORMAT("{1,gmt,ftime='%H o''clock'}",a_datetime,"15 o'clock");
+
+    // Test not a year of the week
+    a_datetime=1388491200; // 2013-12-31 12:00 - check we don't use week of year
+
+    FORMAT("{1,gmt,ftime='%Y'}",a_datetime,"2013");
+    FORMAT("{1,gmt,ftime='%y'}",a_datetime,"13");
+    FORMAT("{1,gmt,ftime='%D'}",a_datetime,"12/31/13");
 }
 
 

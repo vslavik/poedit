@@ -52,8 +52,8 @@ public:
     typedef Scalar scalar_type;
 
     vector_type()
+        : m_value()
     {
-
     }
 
     explicit vector_type(const Scalar scalar)

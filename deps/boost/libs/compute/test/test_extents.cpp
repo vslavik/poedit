@@ -21,6 +21,7 @@
 
 namespace compute = boost::compute;
 
+#ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 BOOST_AUTO_TEST_CASE(initialize)
 {
     compute::extents<1> one(1);
@@ -31,6 +32,7 @@ BOOST_AUTO_TEST_CASE(initialize)
     BOOST_CHECK_EQUAL(xyz[1], size_t(2));
     BOOST_CHECK_EQUAL(xyz[2], size_t(3));
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(size)
 {
@@ -54,6 +56,7 @@ BOOST_AUTO_TEST_CASE(subscript_operator)
     BOOST_CHECK_EQUAL(xyz[2], size_t(30));
 }
 
+#ifndef BOOST_COMPUTE_NO_HDR_INITIALIZER_LIST
 BOOST_AUTO_TEST_CASE(data)
 {
     compute::extents<3> xyz = compute::dim(5, 6, 7);
@@ -92,5 +95,6 @@ BOOST_AUTO_TEST_CASE(copy_to_vector)
     BOOST_CHECK_EQUAL(vec[1], size_t(5));
     BOOST_CHECK_EQUAL(vec[2], size_t(6));
 }
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -84,12 +84,12 @@ namespace boost { namespace dll { namespace detail {
         const struct soinfo* si = reinterpret_cast<const struct soinfo*>(
             static_cast<const char*>(handle) + work_around_b_24465209__offset
         );
-        boost::filesystem::path ret = boost::dll::detail::symbol_location_impl(si->base, ec);
+        boost::filesystem::path ret = boost::dll::symbol_location_ptr(si->base, ec);
 
         if (ec) {
             ec.clear();
             si = static_cast<const struct soinfo*>(handle);
-            return boost::dll::detail::symbol_location_impl(si->base, ec);
+            return boost::dll::symbol_location_ptr(si->base, ec);
         }
 
         return ret;

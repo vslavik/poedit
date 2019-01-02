@@ -5,6 +5,10 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -51,7 +55,7 @@ void test_geometry_dsv(std::string const& wkt, std::string const& expected)
 
 
 template <typename P>
-void test_all()
+void test_ring_polygon()
 {
     // Define clockwise and counter clockwise polygon
     std::string cw_ring       = "POLYGON((0 0,0 1,1 1,1 0,0 0))";
@@ -127,8 +131,14 @@ void test_all()
     test_geometry<bg::model::polygon<P, false> >(
             ccw_holey_polygon, ccw_holey_polygon);
 
-    // Boxes
-    std::string proper_box = "POLYGON((0 0,0 2,2 2,2 0,0 0))";
+}
+
+template <typename P>
+void test_box()
+{
+    // Boxes. Reference is an open box (because in this test WKT is not
+    // explicitly closed)
+    std::string proper_box = "POLYGON((0 0,0 2,2 2,2 0))";
     test_geometry<bg::model::box<P> >(proper_box, proper_box);
     test_geometry<bg::model::box<P> >("BOX(0 0,2 2)", proper_box);
     test_geometry<bg::model::box<P> >("BOX(2 2,0 0)", proper_box);
@@ -144,6 +154,13 @@ void test_all()
     test_geometry_dsv<box3d>("BOX(0 0 2,2 2 0)", proper_3d_dsv_box);
 }
 
+template <typename P>
+void test_all()
+{
+    test_ring_polygon<P>();
+    test_box<P>();
+}
+
 
 int test_main(int, char* [])
 {
@@ -154,6 +171,9 @@ int test_main(int, char* [])
     test_all<bg::model::d2::point_xy<int> >();
     test_all<bg::model::d2::point_xy<float> >();
     test_all<bg::model::d2::point_xy<double> >();
+
+    test_ring_polygon<bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> > >();
+    test_ring_polygon<bg::model::point<double, 2, bg::cs::geographic<bg::degree> > >();
 
 #if defined(HAVE_TTMATH)
     test_all<bg::model::d2::point_xy<ttmath_big> >();

@@ -8,7 +8,7 @@
 ]
 
 [chapter Block Level Elements
-    [quickbook 1.6]
+    [quickbook 1.7]
     [compatibility-mode 1.5]
     [id quickbook.syntax.block]
     [source-mode teletype]
@@ -33,7 +33,7 @@ to specify where =xinclude= files should be found. For example, if you wish
 them to be relative to the current quickbook file:
 
     [article Article with xincludes
-    [quickbook 1.6]
+    [quickbook 1.7]
     [xmlbase .]
     ]
 
@@ -58,7 +58,7 @@ Because =xml:base= is set to =..=, the xml processor will know to look in
 the parent directory to find =file.xml=, which it comes across the
 =xi:include= tag.
 
-[endsect] [/xinclude]
+[endsect:xinclude]
 
 [#quickbook.ref.paragraphs]
 [section:paragraphs Paragraphs]
@@ -70,7 +70,7 @@ the context. Block markups \[section, endsect, h1, h2, h3, h4, h5, h6, blurb,
  [/ <-- There's a space here. Don't remove. this is intentianal, for testing]
 This is a new paragraph...
 
-[endsect] [/paragraphs]
+[endsect:paragraphs]
 
 [#quickbook.ref.lists]
 [section:lists Lists]
@@ -89,7 +89,7 @@ will generate:
 # Two
 # Three
 
-[endsect] [/ordered_lists]
+[endsect:ordered_lists]
 [#quickbook.ref.list_hierarchies]
 [section:list_hierarchies List Hierarchies]
 
@@ -123,7 +123,7 @@ will generate:
         # Four.a.ii
 # Five
 
-[endsect] [/list_hierarchies]
+[endsect:list_hierarchies]
 [#quickbook.ref.long_list_lines]
 [section:long_list_lines Long List Lines]
 
@@ -147,7 +147,7 @@ Long lines will be wrapped appropriately. Example:
   A very long item. A very long item. A very long item.
 # A short item.
 
-[endsect] [/long_list_lines]
+[endsect:long_list_lines]
 [#quickbook.ref.unordered_lists]
 [section:unordered_lists Unordered lists]
 
@@ -163,7 +163,7 @@ will generate:
 * Second
 * Third
 
-[endsect] [/unordered_lists]
+[endsect:unordered_lists]
 [#quickbook.ref.mixed_lists]
 [section:mixed_lists Mixed lists]
 
@@ -221,7 +221,35 @@ will generate:
             * 2.b.2.a
             * 2.b.2.b
 
-[endsect] [/mixed_lists]
+[endsect:mixed_lists]
+
+[#quickbook.ref.list_paragraphs]
+[section:list_paragraphs Paragraphs in lists]
+
+In quickbook 1.7 onwards, you can nest paragraphs in lists
+by separating them with blank lines:
+
+```
+* List item 1, paragraph 1
+
+  List item 1, paragraph 2
+
+* List item 2, paragraph 1
+
+  List item 2, paragraph 2
+```
+
+will generate:
+
+* List item 1, paragraph 1
+
+  List item 1, paragraph 2
+
+* List item 2, paragraph 1
+
+  List item 2, paragraph 2
+
+[endsect:list_paragraphs]
 
 [#quickbook.ref.list_tags]
 [section:list_tags Explicit list tags]
@@ -246,8 +274,8 @@ is equivalent to:
     * item1
     * item2
 
-[endsect] [/list_tags]
-[endsect] [/lists]
+[endsect:list_tags]
+[endsect:lists]
 
 [#quickbook.ref.code]
 [section:code Code]
@@ -293,7 +321,28 @@ Generates:
 
     using __boost__::__array__;
 
-[endsect] [/code]
+In quickbook 1.7 and later, you can include [link quickbook.ref.callouts callouts]
+in code blocks, like so:
+
+[!teletype]
+
+    [!c++]
+        std::string foo_bar() /*< The /Mythical/ FooBar.
+                              See [@http://en.wikipedia.org/wiki/Foobar Foobar for details] >*/
+        {
+            return "foo-bar"; /*< return 'em, foo-bar man! >*/
+        }
+
+Which will generate:
+
+[!c++]
+    std::string foo_bar() /*< The /Mythical/ FooBar.
+                            See [@http://en.wikipedia.org/wiki/Foobar Foobar for details] >*/
+    {
+        return "foo-bar"; /*< return 'em, foo-bar man! >*/
+    }
+
+[endsect:code]
 
 [#quickbook.ref.escape_back]
 [section:escape_back Escaping Back To QuickBook]
@@ -319,7 +368,7 @@ Will generate:
 When escaping from code to QuickBook, only phrase level markups are
 allowed. Block level markups like lists, tables etc. are not allowed.
 
-[endsect] [/escaping_back_to_quickbook]
+[endsect:escape_back]
 
 [#quickbook.ref.preformatted]
 [section:preformatted Preformatted]
@@ -356,7 +405,7 @@ Some *preformatted* text                    Some *preformatted* text
 Notice that unlike Code, phrase markup such as font style is still permitted
 inside =pre= blocks.
 
-[endsect] [/preformatted]
+[endsect:preformatted]
 
 [#quickbook.ref.blockquote]
 [section:blockquote Blockquote]
@@ -367,7 +416,7 @@ inside =pre= blocks.
 
 [:Indents the paragraph. This applies to one paragraph only.]
 
-[endsect] [/blockquote]
+[endsect:blockquote]
 
 [#quickbook.ref.admonitions]
 [section:admonitions Admonitions]
@@ -392,7 +441,7 @@ These are the only admonitions supported by __docbook__. So,
 for example [^\[information This is some information\]] is unlikely
 to produce the desired effect.
 
-[endsect] [/admonitions]
+[endsect:admonitions]
 
 [#quickbook.ref.headings]
 [section:headings Headings]
@@ -445,7 +494,7 @@ to link to them. See __anchor_links__ and __section__ for more info.
 [note Specifying heading ids is a quickbook 1.6 feature, earlier
       versions don't support them.]
 
-[endsect] [/headings]
+[endsect:headings]
 
 [#quickbook.ref.generic_heading]
 [section:generic_heading Generic Heading]
@@ -492,7 +541,7 @@ at will without any extra work to ensure correct heading levels. In fact,
 with /section/ and /heading/, you have all you need. /h1/../h6/ becomes
 redundant. /h1/../h6/ might be deprecated in the future.
 
-[endsect] [/generic_heading]
+[endsect:generic_heading]
 
 [#quickbook.ref.macros]
 [section:macros Macros]
@@ -546,7 +595,7 @@ will generate this:
 
 Hi __spirit__ :-)
 
-[endsect] [/macros]
+[endsect:macros]
 
 [#quickbook.ref.predefined_macros]
 [section:predefined_macros Predefined Macros]
@@ -560,7 +609,7 @@ Quickbook has some predefined macros that you can already use.
     [[[^\__FILENAME__]][Quickbook source filename]     [__FILENAME__]]
 ]
 
-[endsect] [/predefined_macros]
+[endsect:predefined_macros]
 
 [#quickbook.ref.templates]
 [section:templates Templates]
@@ -842,7 +891,7 @@ We will have:
 <hey>baz</hey>
 ]
 
-[endsect] [/templates]
+[endsect:templates]
 
 [#quickbook.ref.blurbs]
 [section:blurbs Blurbs]
@@ -870,7 +919,7 @@ will generate this:
 [note Prefer [link quickbook.ref.admonitions admonitions] wherever
 appropriate.]
 
-[endsect] [/blurbs]
+[endsect:blurbs]
 
 [#quickbook.ref.tables]
 [section:tables Tables]
@@ -995,7 +1044,7 @@ Here's how to have preformatted blocks of code in a table cell:
     ]
 ]
 
-[endsect] [/tables]
+[endsect:tables]
 
 [#quickbook.ref.variable_lists]
 [section:variable_lists Variable Lists]
@@ -1029,7 +1078,7 @@ only 2 "columns" are allowed. The first column contains the terms, and
 the second column contains the definitions. Those familiar with HTML
 will recognize this as a "definition list".
 
-[endsect] [/variable_lists]
+[endsect:variable_lists]
 
 [#quickbook.ref.include]
 [section:include Include]
@@ -1116,7 +1165,7 @@ It will generate:
             std::cout << "Hello, trivial example" << std::endl;
         }
 
-[endsect] [/include]
+[endsect:include]
 
 [#quickbook.ref.import]
 [section:import Import]
@@ -1192,6 +1241,7 @@ not be visible in quickbook. The entire code-snippet in between `//[id` and
 `//]` will be inserted as a template in quickbook with name ['/id/]. The comment
 `//]` ends a code-snippet This too will not be visible in quickbook.
 
+[#quickbook.ref.callouts]
 [heading Special Comments]
 
 Special comments of the form:
@@ -1278,7 +1328,7 @@ Example:
 See the actual code here:
 [@boost:/tools/quickbook/test/stub.cpp tools/quickbook/test/stub.cpp]
 
-[endsect] [/import]
+[endsect:import]
 
 [#quickbook.ref.block]
 [section:block Plain blocks]
@@ -1307,4 +1357,4 @@ would be wrapped in paragraph tags.
 [note In this example, the template body has to start with a newline so that
 the template will be interpreted in block mode.]
 
-[endsect] [/block]
+[endsect:block]

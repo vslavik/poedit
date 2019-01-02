@@ -15,11 +15,13 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <boost/thread/detail/log.hpp>
 
 #include <boost/test/unit_test.hpp>
 
-#define LOG \
-  if (false) {} else std::cout << std::endl << __FILE__ << "[" << __LINE__ << "]"
+#ifdef BOOST_MSVC
+# pragma warning(disable: 4267) // conversion from ... to ..., possible loss of data
+#endif
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     template<typename T>
@@ -96,26 +98,26 @@ void set_promise_exception_thread(boost::promise<int>* p)
 
 BOOST_AUTO_TEST_CASE(test_store_value_from_thread)
 {
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     try {
     boost::promise<int> pi2;
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::unique_future<int> fi2(BOOST_THREAD_MAKE_RV_REF(pi2.get_future()));
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::thread(set_promise_thread,&pi2);
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     int j=fi2.get();
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     BOOST_CHECK(j==42);
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     BOOST_CHECK(fi2.is_ready());
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     BOOST_CHECK(fi2.has_value());
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     BOOST_CHECK(!fi2.has_exception());
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     BOOST_CHECK(fi2.get_state()==boost::future_state::ready);
-    LOG;
+    BOOST_DETAIL_THREAD_LOG;
     }
     catch (...)
     {
@@ -125,7 +127,7 @@ BOOST_AUTO_TEST_CASE(test_store_value_from_thread)
 
 BOOST_AUTO_TEST_CASE(test_store_exception)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi3;
     boost::unique_future<int> fi3(BOOST_THREAD_MAKE_RV_REF(pi3.get_future()));
     boost::thread(set_promise_exception_thread,&pi3);
@@ -147,7 +149,7 @@ BOOST_AUTO_TEST_CASE(test_store_exception)
 
 BOOST_AUTO_TEST_CASE(test_initial_state)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::unique_future<int> fi;
     BOOST_CHECK(!fi.is_ready());
     BOOST_CHECK(!fi.has_value());
@@ -168,7 +170,7 @@ BOOST_AUTO_TEST_CASE(test_initial_state)
 
 BOOST_AUTO_TEST_CASE(test_waiting_future)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi;
     boost::unique_future<int> fi;
     fi=BOOST_THREAD_MAKE_RV_REF(pi.get_future());
@@ -183,7 +185,7 @@ BOOST_AUTO_TEST_CASE(test_waiting_future)
 
 BOOST_AUTO_TEST_CASE(test_cannot_get_future_twice)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi;
     BOOST_THREAD_MAKE_RV_REF(pi.get_future());
 
@@ -200,7 +202,7 @@ BOOST_AUTO_TEST_CASE(test_cannot_get_future_twice)
 
 BOOST_AUTO_TEST_CASE(test_set_value_updates_future_state)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi;
     boost::unique_future<int> fi;
     fi=BOOST_THREAD_MAKE_RV_REF(pi.get_future());
@@ -215,7 +217,7 @@ BOOST_AUTO_TEST_CASE(test_set_value_updates_future_state)
 
 BOOST_AUTO_TEST_CASE(test_set_value_can_be_retrieved)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi;
     boost::unique_future<int> fi;
     fi=BOOST_THREAD_MAKE_RV_REF(pi.get_future());
@@ -233,7 +235,7 @@ BOOST_AUTO_TEST_CASE(test_set_value_can_be_retrieved)
 
 BOOST_AUTO_TEST_CASE(test_set_value_can_be_moved)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
 //     boost::promise<int> pi;
 //     boost::unique_future<int> fi;
 //     fi=BOOST_THREAD_MAKE_RV_REF(pi.get_future());
@@ -251,7 +253,7 @@ BOOST_AUTO_TEST_CASE(test_set_value_can_be_moved)
 
 BOOST_AUTO_TEST_CASE(test_future_from_packaged_task_is_waiting)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     int i=0;
@@ -264,7 +266,7 @@ BOOST_AUTO_TEST_CASE(test_future_from_packaged_task_is_waiting)
 
 BOOST_AUTO_TEST_CASE(test_invoking_a_packaged_task_populates_future)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -281,7 +283,7 @@ BOOST_AUTO_TEST_CASE(test_invoking_a_packaged_task_populates_future)
 
 BOOST_AUTO_TEST_CASE(test_invoking_a_packaged_task_twice_throws)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
 
     pt();
@@ -299,7 +301,7 @@ BOOST_AUTO_TEST_CASE(test_invoking_a_packaged_task_twice_throws)
 
 BOOST_AUTO_TEST_CASE(test_cannot_get_future_twice_from_task)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     pt.get_future();
     try
@@ -315,7 +317,7 @@ BOOST_AUTO_TEST_CASE(test_cannot_get_future_twice_from_task)
 
 BOOST_AUTO_TEST_CASE(test_task_stores_exception_if_function_throws)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(throw_runtime_error);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -343,7 +345,7 @@ BOOST_AUTO_TEST_CASE(test_task_stores_exception_if_function_throws)
 
 BOOST_AUTO_TEST_CASE(test_void_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<void> p;
     boost::unique_future<void> f(BOOST_THREAD_MAKE_RV_REF(p.get_future()));
     p.set_value();
@@ -356,7 +358,7 @@ BOOST_AUTO_TEST_CASE(test_void_promise)
 
 BOOST_AUTO_TEST_CASE(test_reference_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int&> p;
     boost::unique_future<int&> f(BOOST_THREAD_MAKE_RV_REF(p.get_future()));
     int i=42;
@@ -373,7 +375,7 @@ void do_nothing()
 
 BOOST_AUTO_TEST_CASE(test_task_returning_void)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<void> pt(do_nothing);
     boost::unique_future<void> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -394,7 +396,7 @@ int& return_ref()
 
 BOOST_AUTO_TEST_CASE(test_task_returning_reference)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int&> pt(return_ref);
     boost::unique_future<int&> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -410,7 +412,7 @@ BOOST_AUTO_TEST_CASE(test_task_returning_reference)
 
 BOOST_AUTO_TEST_CASE(test_shared_future)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi=pt.get_future();
 
@@ -430,7 +432,7 @@ BOOST_AUTO_TEST_CASE(test_shared_future)
 
 BOOST_AUTO_TEST_CASE(test_copies_of_shared_future_become_ready_together)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -469,7 +471,7 @@ BOOST_AUTO_TEST_CASE(test_copies_of_shared_future_become_ready_together)
 
 BOOST_AUTO_TEST_CASE(test_shared_future_can_be_move_assigned_from_unique_future)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -485,7 +487,7 @@ BOOST_AUTO_TEST_CASE(test_shared_future_can_be_move_assigned_from_unique_future)
 
 BOOST_AUTO_TEST_CASE(test_shared_future_void)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<void> pt(do_nothing);
     boost::unique_future<void> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -503,7 +505,7 @@ BOOST_AUTO_TEST_CASE(test_shared_future_void)
 
 BOOST_AUTO_TEST_CASE(test_shared_future_ref)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int&> p;
     boost::shared_future<int&> f(BOOST_THREAD_MAKE_RV_REF(p.get_future()));
     int i=42;
@@ -517,7 +519,7 @@ BOOST_AUTO_TEST_CASE(test_shared_future_ref)
 
 BOOST_AUTO_TEST_CASE(test_can_get_a_second_future_from_a_moved_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<int> pi;
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pi.get_future()));
 
@@ -535,7 +537,7 @@ BOOST_AUTO_TEST_CASE(test_can_get_a_second_future_from_a_moved_promise)
 
 BOOST_AUTO_TEST_CASE(test_can_get_a_second_future_from_a_moved_void_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<void> pi;
     boost::unique_future<void> fi(BOOST_THREAD_MAKE_RV_REF(pi.get_future()));
 
@@ -551,7 +553,7 @@ BOOST_AUTO_TEST_CASE(test_can_get_a_second_future_from_a_moved_void_promise)
 
 BOOST_AUTO_TEST_CASE(test_unique_future_for_move_only_udt)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<X> pt;
     boost::unique_future<X> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -562,7 +564,7 @@ BOOST_AUTO_TEST_CASE(test_unique_future_for_move_only_udt)
 
 BOOST_AUTO_TEST_CASE(test_unique_future_for_string)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::promise<std::string> pt;
     boost::unique_future<std::string> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
 
@@ -613,7 +615,7 @@ void do_nothing_callback(boost::promise<int>& /*pi*/)
 
 BOOST_AUTO_TEST_CASE(test_wait_callback)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     callback_called=0;
     boost::promise<int> pi;
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pi.get_future()));
@@ -628,7 +630,7 @@ BOOST_AUTO_TEST_CASE(test_wait_callback)
 
 BOOST_AUTO_TEST_CASE(test_wait_callback_with_timed_wait)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     callback_called=0;
     boost::promise<int> pi;
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pi.get_future()));
@@ -652,7 +654,7 @@ BOOST_AUTO_TEST_CASE(test_wait_callback_with_timed_wait)
 
 void wait_callback_for_task(boost::packaged_task<int>& pt)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::lock_guard<boost::mutex> lk(callback_mutex);
     ++callback_called;
     try
@@ -667,7 +669,7 @@ void wait_callback_for_task(boost::packaged_task<int>& pt)
 
 BOOST_AUTO_TEST_CASE(test_wait_callback_for_packaged_task)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     callback_called=0;
     boost::packaged_task<int> pt(make_int);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
@@ -682,7 +684,7 @@ BOOST_AUTO_TEST_CASE(test_wait_callback_for_packaged_task)
 
 BOOST_AUTO_TEST_CASE(test_packaged_task_can_be_moved)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int);
 
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
@@ -710,7 +712,7 @@ BOOST_AUTO_TEST_CASE(test_packaged_task_can_be_moved)
 
 BOOST_AUTO_TEST_CASE(test_destroying_a_promise_stores_broken_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::unique_future<int> f;
 
     {
@@ -730,7 +732,7 @@ BOOST_AUTO_TEST_CASE(test_destroying_a_promise_stores_broken_promise)
 
 BOOST_AUTO_TEST_CASE(test_destroying_a_packaged_task_stores_broken_promise)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::unique_future<int> f;
 
     {
@@ -756,7 +758,7 @@ int make_int_slowly()
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_two_futures_1)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -774,7 +776,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_two_futures_1)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_two_futures_2)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -792,7 +794,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_two_futures_2)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_1)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -813,7 +815,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_1)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_2)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -834,7 +836,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_2)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_3)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -855,7 +857,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_three_futures_3)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_1)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -879,7 +881,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_1)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_2)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -903,7 +905,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_2)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_3)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -927,7 +929,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_3)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_4)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -951,7 +953,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_four_futures_4)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_1)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -978,7 +980,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_1)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_2)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
    boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -1004,7 +1006,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_2)
 }
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_3)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -1030,7 +1032,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_3)
 }
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_4)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -1056,7 +1058,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_4)
 }
 BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_5)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> f1(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
     boost::packaged_task<int> pt2(make_int_slowly);
@@ -1083,7 +1085,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_of_five_futures_5)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_either_invokes_callbacks)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     callback_called=0;
     boost::packaged_task<int> pt(make_int_slowly);
     boost::unique_future<int> fi(BOOST_THREAD_MAKE_RV_REF(pt.get_future()));
@@ -1100,7 +1102,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_either_invokes_callbacks)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_any_from_range)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=10;
     for(unsigned i=0;i<count;++i)
     {
@@ -1135,7 +1137,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_any_from_range)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_all_from_range)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=10;
     boost::unique_future<int> futures[count];
     for(unsigned j=0;j<count;++j)
@@ -1155,7 +1157,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_all_from_range)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_all_two_futures)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=2;
     boost::unique_future<int> futures[count];
     for(unsigned j=0;j<count;++j)
@@ -1175,7 +1177,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_all_two_futures)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_all_three_futures)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=3;
     boost::unique_future<int> futures[count];
     for(unsigned j=0;j<count;++j)
@@ -1195,7 +1197,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_all_three_futures)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_all_four_futures)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=4;
     boost::unique_future<int> futures[count];
     for(unsigned j=0;j<count;++j)
@@ -1215,7 +1217,7 @@ BOOST_AUTO_TEST_CASE(test_wait_for_all_four_futures)
 
 BOOST_AUTO_TEST_CASE(test_wait_for_all_five_futures)
 {
-  LOG;
+    BOOST_DETAIL_THREAD_LOG;
     unsigned const count=5;
     boost::unique_future<int> futures[count];
     for(unsigned j=0;j<count;++j)

@@ -13,7 +13,7 @@ containers in the draft standard, so the interface was fixed. But there are
 still some implementation decisions to make. The priorities are
 conformance to the standard and portability.
 
-The [@http://en.wikipedia.org/wiki/Hash_table wikipedia article on hash tables]
+The [@http://en.wikipedia.org/wiki/Hash_table Wikipedia article on hash tables]
 has a good summary of the implementation issues for hash tables in general.
 
 [h2 Data Structure]
@@ -23,7 +23,7 @@ standard pretty much requires that the hash table uses chained addressing.
 
 It would be conceivable to write a hash table that uses another method.  For
 example, it could use open addressing, and use the lookup chain to act as a
-bucket but there are a some serious problems with this: 
+bucket but there are some serious problems with this:
 
 * The draft standard requires that pointers to elements aren't invalidated, so
   the elements can't be stored in one array, but will need a layer of
@@ -89,7 +89,7 @@ is that the required modulus operation is fairly expensive. This is what the
 containers do in most cases.
 
 Using a power of 2 allows for much quicker selection of the bucket
-to use, but at the expense of loosing the upper bits of the hash value.
+to use, but at the expense of losing the upper bits of the hash value.
 For some specially designed hash functions it is possible to do this and
 still get a good result but as the containers can take arbitrary hash
 functions this can't be relied on.
@@ -100,7 +100,7 @@ knowledge of the number of bits in the hash value, so it isn't portable enough
 to use as a default. It can applicable in certain cases so the containers
 have a policy based implementation that can use this alternative technique.
 
-Currently this is only done on 64 bit architecures, where prime number
+Currently this is only done on 64 bit architectures, where prime number
 modulus can be expensive. Although this varies depending on the architecture,
 so I probably should revisit it.
 

@@ -162,6 +162,22 @@ bool str_base::endswith(object_cref suffix) const
     return result;
 }
 
+bool str_base::endswith(object_cref suffix, object_cref start) const
+{
+    bool result = _BOOST_PYTHON_ASLONG(this->attr("endswith")(suffix,start).ptr());
+    if (PyErr_Occurred())
+        throw_error_already_set();
+    return result;
+}
+
+bool str_base::endswith(object_cref suffix, object_cref start, object_cref end) const
+{
+    bool result = _BOOST_PYTHON_ASLONG(this->attr("endswith")(suffix,start,end).ptr());
+    if (PyErr_Occurred())
+        throw_error_already_set();
+    return result;
+}
+
 BOOST_PYTHON_DEFINE_STR_METHOD(expandtabs, 0)
 BOOST_PYTHON_DEFINE_STR_METHOD(expandtabs, 1)
 

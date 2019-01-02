@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_DLL_AUTO_ALIAS</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="boost_dll/reference.html#header.boost.dll.alias_hpp" title="Header &lt;boost/dll/alias.hpp&gt;">
 <link rel="prev" href="BOOST_DLL_ALIAS_SECTIONED.html" title="Macro BOOST_DLL_ALIAS_SECTIONED">
@@ -34,25 +34,31 @@
 
 </span>BOOST_DLL_AUTO_ALIAS(FunctionOrVar)</pre></div>
 <div class="refsect1">
-<a name="idp131962048"></a><h2>Description</h2>
-<p>This macro is useful in cases of long mangled C++ names. For example some `void boost::foo(std::sting)` function name will change to something like `N5boostN3foosE` after mangling. Importing function by `N5boostN3foosE` name does not looks user friendly, especially assuming the fact that different compilers have different mangling schemes.*</p>
-<p>Must be used in scope where FunctionOrVar declared. FunctionOrVar must be a valid C name, which means that it must not contain `::`.</p>
+<a name="id-1.3.15.8.2.2.10.4"></a><h2>Description</h2>
+<p>This macro is useful in cases of long mangled C++ names. For example some <code class="computeroutput">void boost::foo(std::string)</code> function name will change to something like <code class="computeroutput">N5boostN3foosE</code> after mangling. Importing function by <code class="computeroutput">N5boostN3foosE</code> name does not looks user friendly, especially assuming the fact that different compilers have different mangling schemes.*</p>
+<p>Must be used in scope where FunctionOrVar declared. FunctionOrVar must be a valid C name, which means that it must not contain <code class="computeroutput">::</code>.</p>
 <p>Functions or variables in global namespace must not have names same as FunctionOrVar.</p>
 <p>Puts all the aliases into the <span class="bold"><strong>"boostdll"</strong></span> read only section of the binary. Almost same as  <a class="link" href="BOOST_DLL_ALIAS.html" title="Macro BOOST_DLL_ALIAS">BOOST_DLL_ALIAS</a>(FunctionOrVar, FunctionOrVar).</p>
 <p>
 <span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"> <span class="keyword">namespace</span> <span class="identifier">foo</span> <span class="special">{</span>
-   <span class="keyword">void</span> <span class="identifier">bar</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-   <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">bar</span><span class="special">)</span>
- <span class="special">}</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">foo</span> <span class="special">{</span>
+  <span class="keyword">void</span> <span class="identifier">bar</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">BOOST_DLL_AUTO_ALIAS</span><span class="special">(</span><span class="identifier">bar</span><span class="special">)</span>
+<span class="special">}</span>
 </pre>
-<p><span class="bold"><strong>See:</strong></span>  <a class="link" href="BOOST_DLL_ALIAS.html" title="Macro BOOST_DLL_ALIAS">BOOST_DLL_ALIAS</a> for making an alias with different names. </p>
-<div class="variablelist"><table border="0">
+<p><span class="bold"><strong>See: <a class="link" href="BOOST_DLL_ALIAS.html" title="Macro BOOST_DLL_ALIAS">BOOST_DLL_ALIAS</a></strong></span> for making an alias with different names. </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">FunctionOrVar</code></span></p></td>
 <td><p>Function or variable for which an unmangled alias must be made.</p></td>
@@ -64,7 +70,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015, 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>

@@ -31,6 +31,18 @@ inline bool is_amd_device(const device &device)
     return device.platform().vendor() == "Advanced Micro Devices, Inc.";
 }
 
+// returns true if the platform is Apple OpenCL platform
+inline bool is_apple_platform(const platform &platform)
+{
+    return platform.name() == "Apple";
+}
+
+// returns true if the device is from Apple OpenCL Platform
+inline bool is_apple_platform_device(const device &device)
+{
+    return is_apple_platform(device.platform());
+}
+
 } // end detail namespace
 } // end compute namespace
 } // end boost namespace

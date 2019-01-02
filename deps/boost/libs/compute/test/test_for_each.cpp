@@ -24,21 +24,23 @@ namespace bc = boost::compute;
 BOOST_AUTO_TEST_CASE(for_each_nop)
 {
     bc::vector<int> vector(4, context);
-    bc::iota(vector.begin(), vector.end(), 0);
+    bc::iota(vector.begin(), vector.end(), 0, queue);
 
     BOOST_COMPUTE_FUNCTION(void, nop, (int ignored), {});
 
     bc::for_each(vector.begin(), vector.end(), nop, queue);
+    queue.finish();
 }
 
 BOOST_AUTO_TEST_CASE(for_each_n_nop)
 {
     bc::vector<int> vector(4, context);
-    bc::iota(vector.begin(), vector.end(), 0);
+    bc::iota(vector.begin(), vector.end(), 0, queue);
 
     BOOST_COMPUTE_FUNCTION(void, nop, (int ignored), {});
 
     bc::for_each_n(vector.begin(), vector.size(), nop, queue);
+    queue.finish();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

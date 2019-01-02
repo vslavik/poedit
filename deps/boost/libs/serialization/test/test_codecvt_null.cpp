@@ -40,29 +40,29 @@ struct test_data
 
 template<>
 wchar_t test_data<2>::wchar_encoding[] = {
-    0x0001,
-    0x007f,
-    0x0080,
-    0x07ff,
-    0x0800,
-    0x7fff
+    (wchar_t) 0x0001,
+    (wchar_t) 0x007f,
+    (wchar_t) 0x0080,
+    (wchar_t) 0x07ff,
+    (wchar_t) 0x0800,
+    (wchar_t) 0x7fff
 };
 
 template<>
 wchar_t test_data<4>::wchar_encoding[] = {
-    0x00000001,
-    0x0000007f,
-    0x00000080,
-    0x000007ff,
-    0x00000800,
-    0x0000ffff,
-    0x00010000,
-    0x0010ffff,
-    0x001fffff,
-    0x00200000,
-    0x03ffffff,
-    0x04000000,
-    0x7fffffff
+    (wchar_t) 0x00000001,
+    (wchar_t) 0x0000007f,
+    (wchar_t) 0x00000080,
+    (wchar_t) 0x000007ff,
+    (wchar_t) 0x00000800,
+    (wchar_t) 0x0000ffff,
+    (wchar_t) 0x00010000,
+    (wchar_t) 0x0010ffff,
+    (wchar_t) 0x001fffff,
+    (wchar_t) 0x00200000,
+    (wchar_t) 0x03ffffff,
+    (wchar_t) 0x04000000,
+    (wchar_t) 0x7fffffff
 };
 
 #include <iostream>

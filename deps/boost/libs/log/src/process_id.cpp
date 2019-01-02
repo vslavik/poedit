@@ -17,11 +17,11 @@
 #include <iostream>
 #include <boost/log/detail/process_id.hpp>
 #include "id_formatting.hpp"
-#include <boost/log/detail/header.hpp>
 
 #if defined(BOOST_WINDOWS)
 
 #include <windows.h>
+#include <boost/log/detail/header.hpp>
 
 namespace boost {
 
@@ -50,6 +50,7 @@ BOOST_LOG_CLOSE_NAMESPACE // namespace log
 #else // defined(BOOST_WINDOWS)
 
 #include <unistd.h>
+#include <boost/log/detail/header.hpp>
 
 namespace boost {
 

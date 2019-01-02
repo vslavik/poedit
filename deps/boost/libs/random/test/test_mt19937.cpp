@@ -53,12 +53,12 @@ BOOST_AUTO_TEST_CASE(test_special_seed) {
     
     std::vector<boost::uint32_t>::iterator it = vec.begin();
     boost::mt19937 gen1(it, vec.end());
-    BOOST_CHECK_EQUAL(gen1(), 0);
-    BOOST_CHECK_EQUAL(gen1(), 0);
+    BOOST_CHECK_EQUAL(gen1(), 0u);
+    BOOST_CHECK_EQUAL(gen1(), 0u);
     
     boost::mt19937 gen2(seed);
-    BOOST_CHECK_EQUAL(gen2(), 0);
-    BOOST_CHECK_EQUAL(gen2(), 0);
+    BOOST_CHECK_EQUAL(gen2(), 0u);
+    BOOST_CHECK_EQUAL(gen2(), 0u);
 
     BOOST_CHECK_EQUAL(gen1, gen2);
     }
@@ -70,11 +70,11 @@ BOOST_AUTO_TEST_CASE(test_special_seed) {
     std::vector<boost::uint32_t>::iterator it = vec.begin();
     boost::mt19937 gen1(it, vec.end());
     BOOST_CHECK_EQUAL(gen1(), 1141379330u);
-    BOOST_CHECK_EQUAL(gen1(), 0);
+    BOOST_CHECK_EQUAL(gen1(), 0u);
     
     boost::mt19937 gen2(seed);
     BOOST_CHECK_EQUAL(gen2(), 1141379330u);
-    BOOST_CHECK_EQUAL(gen2(), 0);
+    BOOST_CHECK_EQUAL(gen2(), 0u);
 
     BOOST_CHECK_EQUAL(gen1, gen2);
     }

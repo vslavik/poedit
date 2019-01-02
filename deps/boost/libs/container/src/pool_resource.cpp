@@ -66,9 +66,9 @@ class pool_data_t
    void replenish(memory_resource &mr, std::size_t pool_block, std::size_t max_blocks_per_chunk)
    {
       //Limit max value
-      std::size_t blocks_per_chunk = boost::container::container_detail::min_value(max_blocks_per_chunk, next_blocks_per_chunk);
+      std::size_t blocks_per_chunk = boost::container::dtl::min_value(max_blocks_per_chunk, next_blocks_per_chunk);
       //Avoid overflow
-      blocks_per_chunk = boost::container::container_detail::min_value(blocks_per_chunk, std::size_t(-1)/pool_block);
+      blocks_per_chunk = boost::container::dtl::min_value(blocks_per_chunk, std::size_t(-1)/pool_block);
       
       //Minimum block size is at least max_align, so all pools allocate sizes that are multiple of max_align,
       //meaning that all blocks are max_align-aligned.
@@ -108,7 +108,7 @@ void pool_resource::priv_limit_option(std::size_t &val, std::size_t min, std::si
       val = max;
    }
    else{
-      val = val < min ? min : boost::container::container_detail::min_value(val, max);
+      val = val < min ? min : boost::container::dtl::min_value(val, max);
    }
 }
 
@@ -116,7 +116,7 @@ std::size_t pool_resource::priv_pool_index(std::size_t block_size) //static
 {
    //For allocations equal or less than pool_options_minimum_largest_required_pool_block
    //the smallest pool is used
-   block_size = boost::container::container_detail::max_value(block_size, pool_options_minimum_largest_required_pool_block);
+   block_size = boost::container::dtl::max_value(block_size, pool_options_minimum_largest_required_pool_block);
    return bi::detail::ceil_log2(block_size)
       - bi::detail::ceil_log2(pool_options_minimum_largest_required_pool_block);
 }

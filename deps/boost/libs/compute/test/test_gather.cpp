@@ -34,6 +34,11 @@ BOOST_AUTO_TEST_CASE(gather_int)
         indices.begin(), indices.end(), input.begin(), output.begin(), queue
     );
     CHECK_RANGE_EQUAL(int, 5, output, (1, 5, 2, 4, 3));
+
+    compute::gather(
+        indices.begin() + 1, indices.end(), input.begin(), output.begin(), queue
+    );
+    CHECK_RANGE_EQUAL(int, 5, output, (5, 2, 4, 3, 3));
 }
 
 BOOST_AUTO_TEST_CASE(copy_index_then_gather)

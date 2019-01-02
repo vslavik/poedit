@@ -34,6 +34,7 @@
 #include <boost/compute/image/image2d.hpp>
 #include <boost/compute/image/image_sampler.hpp>
 #include <boost/compute/memory_object.hpp>
+#include <boost/compute/memory/svm_ptr.hpp>
 #include <boost/compute/detail/device_ptr.hpp>
 #include <boost/compute/detail/sha1.hpp>
 #include <boost/compute/utility/program_cache.hpp>
@@ -203,6 +204,28 @@ struct meta_kernel_buffer_info
     size_t index;
 };
 
+struct meta_kernel_svm_info
+{
+    template <class T>
+    meta_kernel_svm_info(const svm_ptr<T> ptr,
+                         const std::string &id,
+                         memory_object::address_space addr_space,
+                         size_t i)
+      : ptr(ptr.get()),
+        identifier(id),
+        address_space(addr_space),
+        index(i)
+    {
+
+    }
+
+    void* ptr;
+    std::string identifier;
+    memory_object::address_space address_space;
+    size_t index;
+};
+
+
 class meta_kernel;
 
 template<class Type>
@@ -280,12 +303,14 @@ public:
     meta_kernel(const meta_kernel &other)
     {
         m_source.str(other.m_source.str());
+        m_options = other.m_options;
     }
 
     meta_kernel& operator=(const meta_kernel &other)
     {
         if(this != &other){
             m_source.str(other.m_source.str());
+            m_options = other.m_options;
         }
 
         return *this;
@@ -342,9 +367,11 @@ public:
         boost::shared_ptr<program_cache> cache =
             program_cache::get_global_cache(context);
 
+        std::string compile_options = m_options + options;
+
         // load (or build) program from cache
         ::boost::compute::program program =
-            cache->get_or_build(cache_key, options, source, context);
+            cache->get_or_build(cache_key, compile_options, source, context);
 
         // create kernel
         ::boost::compute::kernel kernel = program.create_kernel(name());
@@ -363,6 +390,13 @@ public:
             const detail::meta_kernel_buffer_info &bi = m_stored_buffers[i];
 
             kernel.set_arg(bi.index, bi.m_mem);
+        }
+
+        // bind svm args
+        for(size_t i = 0; i < m_stored_svm_ptrs.size(); i++){
+            const detail::meta_kernel_svm_info &spi = m_stored_svm_ptrs[i];
+
+            kernel.set_arg_svm_ptr(spi.index, spi.ptr);
         }
 
         return kernel;
@@ -689,6 +723,45 @@ public:
         return identifier;
     }
 
+    template<class T>
+    std::string get_svm_identifier(const svm_ptr<T> &svm_ptr,
+                                   const memory_object::address_space address_space =
+                                       memory_object::global_memory)
+    {
+        BOOST_ASSERT(
+            (address_space == memory_object::global_memory)
+                || (address_space == memory_object::constant_memory)
+        );
+
+        // check if we've already seen this pointer
+        for(size_t i = 0; i < m_stored_svm_ptrs.size(); i++){
+            const detail::meta_kernel_svm_info &spi = m_stored_svm_ptrs[i];
+
+            if(spi.ptr == svm_ptr.get() &&
+               spi.address_space == address_space){
+                return spi.identifier;
+            }
+        }
+
+        // create a new binding
+        std::string identifier =
+            "_svm_ptr" + lexical_cast<std::string>(m_stored_svm_ptrs.size());
+        size_t index = add_arg<T *>(address_space, identifier);
+
+        if(m_stored_svm_ptrs.empty()) {
+            m_options += std::string(" -cl-std=CL2.0");
+        }
+
+        // store new svm pointer info
+        m_stored_svm_ptrs.push_back(
+            detail::meta_kernel_svm_info(
+                svm_ptr, identifier, address_space, index
+            )
+        );
+
+        return identifier;
+    }
+
     std::string get_image_identifier(const char *qualifiers, const image2d &image)
     {
         size_t index = add_arg_with_qualifiers<image2d>(qualifiers, "image");
@@ -880,8 +953,10 @@ private:
     std::set<std::string> m_external_function_names;
     std::vector<std::string> m_args;
     std::string m_pragmas;
+    std::string m_options;
     std::vector<detail::meta_kernel_stored_arg> m_stored_args;
     std::vector<detail::meta_kernel_buffer_info> m_stored_buffers;
+    std::vector<detail::meta_kernel_svm_info> m_stored_svm_ptrs;
 };
 
 template<class ResultType, class ArgTuple>
@@ -960,6 +1035,18 @@ inline meta_kernel& operator<<(meta_kernel &kernel,
     }
 }
 
+// SVM requires OpenCL 2.0
+#if defined(BOOST_COMPUTE_CL_VERSION_2_0) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+template<class T, class IndexExpr>
+inline meta_kernel& operator<<(meta_kernel &kernel,
+                               const svm_ptr_index_expr<T, IndexExpr> &expr)
+{
+    return kernel <<
+        kernel.get_svm_identifier<T>(expr.m_svm_ptr) <<
+        '[' << expr.m_expr << ']';
+}
+#endif
+
 template<class Predicate, class Arg>
 inline meta_kernel& operator<<(meta_kernel &kernel,
                                const invoked_unary_negate_function<Predicate,
@@ -985,7 +1072,7 @@ inline meta_kernel& operator<<(meta_kernel &kernel,
     BOOST_STATIC_ASSERT(N < 16);
 
     if(N < 10){
-        return kernel << expr.m_arg << ".s" << uint_(N);
+        return kernel << expr.m_arg << ".s" << int_(N);
     }
     else if(N < 16){
 #ifdef _MSC_VER

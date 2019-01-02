@@ -8,7 +8,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-#include <boost/math/distributions/non_central_t.hpp> 
+#include <boost/math/distributions/non_central_t.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/array.hpp>
 #include "functor.hpp"
@@ -187,7 +187,7 @@ void test_spots(RealType)
       boost::math::tools::epsilon<RealType>(),
       (RealType)5e-12f) * 100;
    //
-   // At float precision we need to up the tolerance, since 
+   // At float precision we need to up the tolerance, since
    // the input values are rounded off to inexact quantities
    // the results get thrown off by a noticeable amount.
    //
@@ -319,7 +319,6 @@ T nct_ccdf(T df, T nc, T x)
 template <typename Real, typename T>
 void do_test_nc_t(T& data, const char* type_name, const char* test)
 {
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
@@ -361,7 +360,6 @@ template <typename Real, typename T>
 void quantile_sanity_check(T& data, const char* type_name, const char* test)
 {
 #ifndef ERROR_REPORTING_MODE
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    //
@@ -430,7 +428,7 @@ void quantile_sanity_check(T& data, const char* type_name, const char* test)
          //
          // Sanity check degrees-of-freedom finder, don't bother at float
          // precision though as there's not enough data in the probability
-         // values to get back to the correct degrees of freedom or 
+         // values to get back to the correct degrees of freedom or
          // non-centrality parameter:
          //
          try{
@@ -494,7 +492,7 @@ void test_big_df(RealType)
    { // Ordinary floats only.
       // Could also test if (std::numeric_limits<RealType>::is_specialized);
 
-      RealType tolerance = 10 * boost::math::tools::epsilon<RealType>(); // static_cast<RealType>(1e-14); // 
+      RealType tolerance = 10 * boost::math::tools::epsilon<RealType>(); // static_cast<RealType>(1e-14); //
       std::cout.precision(17); // Note: need to reset after calling BOOST_CHECK_s
       // due to buglet in Boost.test that fails to restore precision corrrectly.
 
@@ -549,11 +547,11 @@ void test_big_df(RealType)
       BOOST_CHECK_EQUAL(mean(infdf10), 10);
       BOOST_CHECK_CLOSE_FRACTION(mean(maxdf10), static_cast<RealType>(10), tolerance);
 
-      BOOST_CHECK_CLOSE_FRACTION(pdf(infdf10, 11), pdf(maxdf10, 11), tolerance); // 
+      BOOST_CHECK_CLOSE_FRACTION(pdf(infdf10, 11), pdf(maxdf10, 11), tolerance); //
 
-      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(infdf10, 11)), 1 - cdf(infdf10, 11), tolerance); // 
-      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(maxdf10, 11)), 1 - cdf(maxdf10, 11), tolerance); // 
-      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(infdf10, 11)), 1 - cdf(maxdf10, 11), tolerance); // 
+      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(infdf10, 11)), 1 - cdf(infdf10, 11), tolerance); //
+      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(maxdf10, 11)), 1 - cdf(maxdf10, 11), tolerance); //
+      BOOST_CHECK_CLOSE_FRACTION(cdf(complement(infdf10, 11)), 1 - cdf(maxdf10, 11), tolerance); //
       std::cout.precision(17);
       //std::cout  << "cdf(maxdf10, 11)  = " << cdf(maxdf10, 11) << ' ' << cdf(complement(maxdf10, 11)) << endl;
       //std::cout  << "cdf(infdf10, 11)  = " << cdf(infdf10, 11) << ' ' << cdf(complement(infdf10, 11)) << endl;
@@ -608,18 +606,18 @@ void test_big_df(RealType)
     //RealType cmaxc = quantile(complement(maxdf10, 0.75));
     //std::cout << cmaxc << ' ' << cdf(maxdf10, cmaxc) << std::endl; // 9.32551 0.25
 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.5), quantile(maxdf10, 0.5), tolerance); // 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.2), quantile(maxdf10, 0.2), tolerance); // 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.8), quantile(maxdf10, 0.8), tolerance); // 
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.5), quantile(maxdf10, 0.5), tolerance); //
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.2), quantile(maxdf10, 0.2), tolerance); //
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.8), quantile(maxdf10, 0.8), tolerance); //
 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.25), quantile(complement(infdf10, 0.75)), tolerance); // 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(complement(infdf10, 0.5)), quantile(complement(maxdf10, 0.5)), tolerance); // 
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.25), quantile(complement(infdf10, 0.75)), tolerance); //
+    BOOST_CHECK_CLOSE_FRACTION(quantile(complement(infdf10, 0.5)), quantile(complement(maxdf10, 0.5)), tolerance); //
 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(maxdf10, 0.25), quantile(complement(maxdf10, 0.75)), tolerance); // 
+    BOOST_CHECK_CLOSE_FRACTION(quantile(maxdf10, 0.25), quantile(complement(maxdf10, 0.75)), tolerance); //
 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.99), quantile(complement(infdf10, 0.01)), tolerance); // 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.4), quantile(complement(infdf10, 0.6)), tolerance); // 
-    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.01), quantile(complement(infdf10, 1 - 0.01)), tolerance); // 
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.99), quantile(complement(infdf10, 0.01)), tolerance); //
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.4), quantile(complement(infdf10, 0.6)), tolerance); //
+    BOOST_CHECK_CLOSE_FRACTION(quantile(infdf10, 0.01), quantile(complement(infdf10, 1 - 0.01)), tolerance); //
    }
 } // void test_big_df(RealType)
 
@@ -699,7 +697,7 @@ void test_ignore_policy(RealType)
          BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_non_central_t(2, 0))));
          BOOST_CHECK((boost::math::isnan)(skewness(ignore_error_non_central_t(3, 0))));
 
-         // Kurtosis 
+         // Kurtosis
          BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_non_central_t(std::numeric_limits<RealType>::quiet_NaN(), 0))));
          BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_non_central_t(-1, 0))));
          BOOST_CHECK((boost::math::isnan)(kurtosis(ignore_error_non_central_t(0, 0))));
@@ -731,4 +729,3 @@ void test_ignore_policy(RealType)
       check_support<non_central_t_distribution<RealType> >(non_central_t_distribution<RealType>(1, 0));
    } // ordinary floats.
 } // template <class RealType> void test_ignore_policy(RealType)
-

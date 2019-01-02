@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>cpp_int</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="number.html" title="number">
@@ -65,7 +65,7 @@
 <span class="comment">// Over again, but with checking enabled this time:</span>
 <span class="keyword">typedef</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;</span><span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">signed_magnitude</span><span class="special">,</span> <span class="identifier">checked</span><span class="special">&gt;</span> <span class="special">&gt;</span>                 <span class="identifier">checked_cpp_int</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">rational_adaptor</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;</span><span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">signed_magnitude</span><span class="special">,</span> <span class="identifier">checked</span><span class="special">&gt;</span> <span class="special">&gt;</span>       <span class="identifier">checked_cpp_rational_backend</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">cpp_rational_backend</span><span class="special">&gt;</span>                                              <span class="identifier">checked_cpp_rational</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">checked_cpp_rational_backend</span><span class="special">&gt;</span>                                      <span class="identifier">checked_cpp_rational</span><span class="special">;</span>
 
 <span class="comment">// Checked fixed precision unsigned types:</span>
 <span class="keyword">typedef</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;</span><span class="number">128</span><span class="special">,</span> <span class="number">128</span><span class="special">,</span> <span class="identifier">unsigned_magnitude</span><span class="special">,</span> <span class="identifier">checked</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&gt;</span>     <span class="identifier">checked_uint128_t</span><span class="special">;</span>
@@ -92,7 +92,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">MinBits</span></dt>
 <dd><p>
               Determines the number of Bits to store directly within the object before

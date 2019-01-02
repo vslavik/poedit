@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Synchronization mechanisms</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="offset_ptr.html" title="Mapping Address Independent Pointer: offset_ptr">
 <link rel="next" href="managed_memory_segments.html" title="Managed Memory Segments">
 </head>
@@ -28,7 +28,7 @@
 <a name="interprocess.synchronization_mechanisms"></a><a class="link" href="synchronization_mechanisms.html" title="Synchronization mechanisms">Synchronization
     mechanisms</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.synchronization_mechanisms_overview">Synchronization
       mechanisms overview</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.mutexes">Mutexes</a></span></dt>
@@ -48,7 +48,7 @@
 <a name="interprocess.synchronization_mechanisms.synchronization_mechanisms_overview"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.synchronization_mechanisms_overview" title="Synchronization mechanisms overview">Synchronization
       mechanisms overview</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.synchronization_mechanisms_overview.synchronization_mechanisms_named_vs_anonymous">Named
         And Anonymous Synchronization Mechanisms</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.synchronization_mechanisms_overview.synchronization_mechanisms_types">Types
@@ -74,7 +74,7 @@
           <span class="bold"><strong>Boost.Interprocess</strong></span> presents two types
           of synchronization objects:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Named utilities</strong></span>: When two processes
               want to create an object of such type, both processes must <span class="emphasis"><em>create</em></span>
@@ -102,7 +102,7 @@
 <p>
           Each type has it's own advantages and disadvantages:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Named utilities are easier to handle for simple synchronization tasks,
               since both process don't have to create a shared memory region and
@@ -158,7 +158,7 @@
           Apart from its named/anonymous nature, <span class="bold"><strong>Boost.Interprocess</strong></span>
           presents the following synchronization utilities:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Mutexes (named and anonymous)
             </li>
@@ -181,7 +181,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="interprocess.synchronization_mechanisms.mutexes"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.mutexes" title="Mutexes">Mutexes</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.mutexes.mutexes_whats_a_mutex">What's
         A Mutex?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.mutexes.mutexes_mutex_operations">Mutex
@@ -221,7 +221,7 @@
 <p>
           A mutex can also be <span class="bold"><strong>recursive</strong></span> or <span class="bold"><strong>non-recursive</strong></span>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Recursive mutexes can be locked several times by the same thread. To
               fully unlock the mutex, the thread has to unlock the mutex the same
@@ -243,8 +243,8 @@
           All the mutex types from <span class="bold"><strong>Boost.Interprocess</strong></span>
           implement the following operations:
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void lock()</strong></span></em></span>
         </p>
@@ -261,8 +261,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool try_lock()</strong></span></em></span>
         </p>
@@ -282,8 +282,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool timed_lock(const boost::posix_time::ptime
           &amp;abs_time)</strong></span></em></span>
@@ -303,8 +303,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void unlock()</strong></span></em></span>
         </p>
@@ -343,27 +343,27 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_mutex.html" title="Class interprocess_mutex">interprocess_mutex</a></code>:
               A non-recursive, anonymous mutex that can be placed in shared memory
               or memory mapped files.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_recursive_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp24316352.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>:
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp68435104.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>:
               A recursive, anonymous mutex that can be placed in shared memory or
               memory mapped files.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_mutex.html" title="Class named_mutex">named_mutex</a></code>:
               A non-recursive, named mutex.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_recursive_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_recursive_mutex.html" title="Class named_recursive_mutex">named_recursive_mutex</a></code>:
               A recursive, named mutex.
             </li></ul></div>
@@ -699,7 +699,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="interprocess.synchronization_mechanisms.conditions"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.conditions" title="Conditions">Conditions</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.conditions.conditions_whats_a_condition">What's
         A Condition Variable?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.conditions.conditions_interprocess_conditions">Boost.Interprocess
@@ -717,7 +717,7 @@
           we can't use it to <span class="emphasis"><em>wait</em></span> efficiently until the condition
           to continue is met. A condition variable can do two things:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>wait</strong></span>: The thread is blocked until
               some other thread notifies that it can continue because the condition
@@ -749,27 +749,27 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_condition</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_condition.html" title="Class interprocess_condition">interprocess_condition</a></code>:
               An anonymous condition variable that can be placed in shared memory
               or memory mapped files to be used with <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_mutex.html" title="Class interprocess_mutex">boost::interprocess::interprocess_mutex</a></code>.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_condition_any</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_condition_any.html" title="Class interprocess_condition_any">interprocess_condition_any</a></code>:
               An anonymous condition variable that can be placed in shared memory
               or memory mapped files to be used with any lock type.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_condition</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_condition.html" title="Class named_condition">named_condition</a></code>:
               A named condition variable to be used with <code class="computeroutput"><a class="link" href="../boost/interprocess/named_mutex.html" title="Class named_mutex">named_mutex</a></code>.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_condition_any</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_condition.html" title="Class named_condition">named_condition</a></code>:
               A named condition variable to be used with any lock type.
             </li></ul></div>
@@ -778,7 +778,7 @@
           in combination with named mutexes. Several times, we don't want to store
           synchronization objects with the synchronized data:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               We want to change the synchronization method (from interprocess to
               intra-process, or without any synchronization) using the same data.
@@ -994,7 +994,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="interprocess.synchronization_mechanisms.semaphores"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.semaphores" title="Semaphores">Semaphores</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.semaphores.semaphores_whats_a_semaphores">What's
         A Semaphore?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.semaphores.semaphores_interprocess_semaphores">Boost.Interprocess
@@ -1011,7 +1011,7 @@
           A semaphore is a synchronization mechanism between processes based in an
           internal count that offers two basic operations:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Wait</strong></span>: Tests the value of the semaphore
               count, and waits if the value is less than or equal than 0. Otherwise,
@@ -1044,14 +1044,14 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_semaphore</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_semaphore.html" title="Class interprocess_semaphore">interprocess_semaphore</a></code>:
               An anonymous semaphore that can be placed in shared memory or memory
               mapped files.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_semaphore</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_semaphore.html" title="Class named_semaphore">named_semaphore</a></code>:
               A named semaphore.
             </li></ul></div>
@@ -1226,7 +1226,7 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes" title="Sharable and Upgradable Mutexes">Sharable
       and Upgradable Mutexes</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_whats_a_mutex">What's
         a Sharable and an Upgradable Mutex?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_transitions">Lock
@@ -1259,7 +1259,7 @@
           and the synchronized data reading code needs some time to execute. With
           a sharable mutex we can acquire 2 lock types:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Exclusive lock</strong></span>: Similar to a plain
               mutex. If a thread acquires an exclusive lock, no other thread can
@@ -1280,7 +1280,7 @@
           With an upgradable mutex we can acquire previous locks plus a new upgradable
           lock:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Upgradable lock</strong></span>: Acquiring an upgradable
               lock is similar to acquiring a <span class="bold"><strong>privileged sharable
               lock</strong></span>. If a thread acquires an upgradable lock, other threads
@@ -1304,7 +1304,7 @@
           To sum up:
         </p>
 <div class="table">
-<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_whats_a_mutex.locking_possibilities_for_a_sharable_mutex"></a><p class="title"><b>Table&#160;15.5.&#160;Locking Possibilities for a Sharable Mutex</b></p>
+<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_whats_a_mutex.locking_possibilities_for_a_sharable_mutex"></a><p class="title"><b>Table&#160;18.5.&#160;Locking Possibilities for a Sharable Mutex</b></p>
 <div class="table-contents"><table class="table" summary="Locking Possibilities for a Sharable Mutex">
 <colgroup>
 <col>
@@ -1351,7 +1351,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_whats_a_mutex.locking_possibilities_for_an_upgradable_mutex"></a><p class="title"><b>Table&#160;15.6.&#160;Locking Possibilities for an Upgradable Mutex</b></p>
+<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_whats_a_mutex.locking_possibilities_for_an_upgradable_mutex"></a><p class="title"><b>Table&#160;18.6.&#160;Locking Possibilities for an Upgradable Mutex</b></p>
 <div class="table-contents"><table class="table" summary="Locking Possibilities for an Upgradable Mutex">
 <colgroup>
 <col>
@@ -1430,7 +1430,7 @@
           <span class="bold"><strong>so data is guaranteed to remain unchanged</strong></span>:
         </p>
 <div class="table">
-<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_transitions.transition_possibilities_for_an_upgradable_mutex"></a><p class="title"><b>Table&#160;15.7.&#160;Transition Possibilities for an Upgradable Mutex</b></p>
+<a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.upgradable_transitions.transition_possibilities_for_an_upgradable_mutex"></a><p class="title"><b>Table&#160;18.7.&#160;Transition Possibilities for an Upgradable Mutex</b></p>
 <div class="table-contents"><table class="table" summary="Transition Possibilities for an Upgradable Mutex">
 <colgroup>
 <col>
@@ -1540,7 +1540,7 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations" title="Upgradable Mutex Operations">Upgradable
         Mutex Operations</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_exclusive">Exclusive
           Locking (Sharable &amp; Upgradable Mutexes)</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_sharable">Sharable
@@ -1561,8 +1561,8 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_exclusive"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_exclusive" title="Exclusive Locking (Sharable &amp; Upgradable Mutexes)">Exclusive
           Locking (Sharable &amp; Upgradable Mutexes)</a>
 </h5></div></div></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void lock()</strong></span></em></span>
           </p>
@@ -1577,8 +1577,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_lock()</strong></span></em></span>
           </p>
@@ -1596,8 +1596,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool timed_lock(const boost::posix_time::ptime
             &amp;abs_time)</strong></span></em></span>
@@ -1617,8 +1617,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock()</strong></span></em></span>
           </p>
@@ -1640,8 +1640,8 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_sharable"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.sharable_upgradable_mutexes_operations_sharable" title="Sharable Locking (Sharable &amp; Upgradable Mutexes)">Sharable
           Locking (Sharable &amp; Upgradable Mutexes)</a>
 </h5></div></div></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void lock_sharable()</strong></span></em></span>
           </p>
@@ -1655,8 +1655,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_lock_sharable()</strong></span></em></span>
           </p>
@@ -1674,8 +1674,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool timed_lock_sharable(const boost::posix_time::ptime
             &amp;abs_time)</strong></span></em></span>
@@ -1694,8 +1694,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_sharable()</strong></span></em></span>
           </p>
@@ -1717,8 +1717,8 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_upgradable"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_upgradable" title="Upgradable Locking (Upgradable Mutex only)">Upgradable
           Locking (Upgradable Mutex only)</a>
 </h5></div></div></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void lock_upgradable()</strong></span></em></span>
           </p>
@@ -1732,8 +1732,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_lock_upgradable()</strong></span></em></span>
           </p>
@@ -1751,8 +1751,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool timed_lock_upgradable(const boost::posix_time::ptime
             &amp;abs_time)</strong></span></em></span>
@@ -1771,8 +1771,8 @@
             <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
             on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_upgradable()</strong></span></em></span>
           </p>
@@ -1794,8 +1794,8 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_demotions"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_demotions" title="Demotions (Upgradable Mutex only)">Demotions
           (Upgradable Mutex only)</a>
 </h5></div></div></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_and_lock_upgradable()</strong></span></em></span>
           </p>
@@ -1812,8 +1812,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_and_lock_sharable()</strong></span></em></span>
           </p>
@@ -1830,8 +1830,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_upgradable_and_lock_sharable()</strong></span></em></span>
           </p>
@@ -1854,8 +1854,8 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_promotions"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_mutexes_operations.upgradable_mutexes_operations_promotions" title="Promotions (Upgradable Mutex only)">Promotions
           (Upgradable Mutex only)</a>
 </h5></div></div></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>void unlock_upgradable_and_lock()</strong></span></em></span>
           </p>
@@ -1872,8 +1872,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_unlock_upgradable_and_lock()</strong></span></em></span>
           </p>
@@ -1895,8 +1895,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool timed_unlock_upgradable_and_lock(const
             boost::posix_time::ptime &amp;abs_time)</strong></span></em></span>
@@ -1920,8 +1920,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_unlock_sharable_and_lock()</strong></span></em></span>
           </p>
@@ -1943,8 +1943,8 @@
 <p>
             <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
           </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
             <span class="emphasis"><em><span class="bold"><strong>bool try_unlock_sharable_and_lock_upgradable()</strong></span></em></span>
           </p>
@@ -1989,14 +1989,14 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_sharable_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_s_idp24361744.html" title="Class interprocess_sharable_mutex">interprocess_sharable_mutex</a></code>:
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_s_idp68480496.html" title="Class interprocess_sharable_mutex">interprocess_sharable_mutex</a></code>:
               A non-recursive, anonymous sharable mutex that can be placed in shared
               memory or memory mapped files.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_sharable_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_sharable_mutex.html" title="Class named_sharable_mutex">named_sharable_mutex</a></code>:
               A non-recursive, named sharable mutex.
             </li></ul></div>
@@ -2005,14 +2005,14 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">interprocess_upgradable_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_u_idp24392560.html" title="Class interprocess_upgradable_mutex">interprocess_upgradable_mutex</a></code>:
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_u_idp68511312.html" title="Class interprocess_upgradable_mutex">interprocess_upgradable_mutex</a></code>:
               A non-recursive, anonymous upgradable mutex that can be placed in shared
               memory or memory mapped files.
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">sync</span><span class="special">/</span><span class="identifier">named_upgradable_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><a class="link" href="../boost/interprocess/named_upgradable_mutex.html" title="Class named_upgradable_mutex">named_upgradable_mutex</a></code>:
               A non-recursive, named upgradable mutex.
             </li></ul></div>
@@ -2022,7 +2022,7 @@
 <a name="interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_locks"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_locks" title="Sharable Lock And Upgradable Lock">Sharable
         Lock And Upgradable Lock</a>
 </h4></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_locks.upgradable_mutexes_lock_types">Sharable
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.sharable_upgradable_mutexes.sharable_upgradable_locks.upgradable_mutexes_lock_types">Sharable
           Lock And Upgradable Lock Headers</a></span></dt></dl></div>
 <p>
           As with plain mutexes, it's important to release the acquired lock even
@@ -2180,7 +2180,7 @@
 <a name="interprocess.synchronization_mechanisms.lock_conversions"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions" title="Lock Transfers Through Move Semantics">Lock
       Transfers Through Move Semantics</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_simple_transfer">Simple
         Lock Transfer</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_summary">Lock
@@ -2190,8 +2190,8 @@
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_failure">Transfer
         Failures</a></span></dt>
 </dl></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
         <span class="bold"><strong>Interprocess uses its own move semantics emulation
         code for compilers that don't support rvalues references. This is a temporary
@@ -2286,7 +2286,7 @@
 <a name="interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_summary"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_summary" title="Lock Transfer Summary">Lock
         Transfer Summary</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_summary.lock_transfer_summary_scoped">Transfers
           To Scoped Lock</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.lock_conversions.lock_transfer_summary.lock_transfer_summary_upgradable">Transfers
@@ -2298,7 +2298,7 @@
           There are many lock transfer operations that we can classify according
           to the operations presented in the upgradable mutex operations:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Guaranteed to succeed and non-blocking:</strong></span>
               Any transition from a more restrictive lock to a less restrictive one.
@@ -2474,7 +2474,7 @@
 <p>
           If the source mutex was not locked:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The target lock does not execute the atomic <code class="computeroutput"><span class="identifier">unlock_xxx_and_lock_xxx</span></code>
               operation.
@@ -2506,7 +2506,7 @@
 <p>
           When executing a lock transfer, the operation can fail:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The executed atomic mutex unlock plus lock function might throw.
             </li>
@@ -2559,7 +2559,7 @@
 <a name="interprocess.synchronization_mechanisms.file_lock"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock" title="File Locks">File
       Locks</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock.file_lock_whats_a_file_lock">What's
         A File Lock?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock.file_lock_operations">File
@@ -2587,7 +2587,7 @@
 <p>
           Generally speaking, we can have two file locking capabilities:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Advisory locking:</strong></span> The operating system
               kernel maintains a list of files that have been locked. But does not
@@ -2657,8 +2657,8 @@
           upgradable locking or promotion or demotion (lock transfers), so it's more
           limited than an upgradable lock. These are the operations:
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void lock()</strong></span></em></span>
         </p>
@@ -2672,8 +2672,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool try_lock()</strong></span></em></span>
         </p>
@@ -2691,8 +2691,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool timed_lock(const boost::posix_time::ptime
           &amp;abs_time)</strong></span></em></span>
@@ -2712,8 +2712,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void unlock()</strong></span></em></span>
         </p>
@@ -2729,8 +2729,8 @@
 <p>
           <span class="bold"><strong>Throws:</strong></span> An exception derived from <span class="bold"><strong>interprocess_exception</strong></span> on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void lock_sharable()</strong></span></em></span>
         </p>
@@ -2744,8 +2744,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool try_lock_sharable()</strong></span></em></span>
         </p>
@@ -2763,8 +2763,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>bool timed_lock_sharable(const boost::posix_time::ptime
           &amp;abs_time)</strong></span></em></span>
@@ -2783,8 +2783,8 @@
           <span class="bold"><strong>Throws:</strong></span> <span class="bold"><strong>interprocess_exception</strong></span>
           on error.
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="emphasis"><em><span class="bold"><strong>void unlock_sharable()</strong></span></em></span>
         </p>
@@ -2838,7 +2838,7 @@
 <span class="identifier">file_lock</span> <span class="identifier">f_lock</span><span class="special">(</span><span class="string">"my_file"</span><span class="special">);</span>
 
 <span class="special">{</span>
-   <span class="comment">//Construct a sharable lock with the filel lock.</span>
+   <span class="comment">//Construct a sharable lock with the file lock.</span>
    <span class="comment">//This will call "f_lock.sharable_lock()".</span>
    <span class="identifier">sharable_lock</span><span class="special">&lt;</span><span class="identifier">file_lock</span><span class="special">&gt;</span> <span class="identifier">sh_lock</span><span class="special">(</span><span class="identifier">f_lock</span><span class="special">);</span>
 
@@ -2860,7 +2860,7 @@
 <span class="identifier">file_lock</span> <span class="identifier">f_lock</span><span class="special">(</span><span class="string">"my_file"</span><span class="special">);</span>
 
 <span class="special">{</span>
-   <span class="comment">//Construct a sharable lock with the filel lock.</span>
+   <span class="comment">//Construct an exclusive lock with the file lock.</span>
    <span class="comment">//This will call "f_lock.lock()".</span>
    <span class="identifier">scoped_lock</span><span class="special">&lt;</span><span class="identifier">file_lock</span><span class="special">&gt;</span> <span class="identifier">e_lock</span><span class="special">(</span><span class="identifier">f_lock</span><span class="special">);</span>
 
@@ -2897,7 +2897,7 @@
           implementations (POSIX, Windows) offer different guarantees. Interprocess
           file locks have the following limitations:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               It's unspecified if a <code class="computeroutput"><span class="identifier">file_lock</span></code>
               synchronizes <span class="bold"><strong>two threads from the same process</strong></span>.
@@ -2927,7 +2927,7 @@
           To sum up, if you plan to use portable file locking in your processes,
           use the following restrictions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>For each file, use a single <code class="computeroutput"><span class="identifier">file_lock</span></code>
               object per process.</strong></span>
@@ -2954,7 +2954,7 @@
           kind of buffering, so if you want to make sure that other processes can
           see the data you've written, you have the following alternatives:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Use native file functions (read()/write() in Unix systems and ReadFile/WriteFile
               in Windows systems) instead of iostream.
@@ -2990,7 +2990,7 @@
 <a name="interprocess.synchronization_mechanisms.message_queue"></a><a class="link" href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.message_queue" title="Message Queue">Message
       Queue</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.message_queue.message_queue_whats_a_mq">What's
         A Message Queue?</a></span></dt>
 <dt><span class="section"><a href="synchronization_mechanisms.html#interprocess.synchronization_mechanisms.message_queue.message_queue_example">Using
@@ -3008,7 +3008,7 @@
           priority messages are read before lower priority messages. Each message
           has some attributes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               A priority.
             </li>
@@ -3023,7 +3023,7 @@
           A thread can send a message to or receive a message from the message queue
           using 3 methods:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Blocking</strong></span>: If the message queue is
               full when sending or the message queue is empty when receiving, the

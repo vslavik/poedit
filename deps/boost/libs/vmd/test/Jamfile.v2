@@ -17,7 +17,7 @@ project variadic_macro_data_tests : requirements <warnings>on
                                                  <toolset>msvc:<cxxflags>-wd4003
                                                  <toolset>intel-linux:<cxxflags>-std=c++11
                                                  <toolset>clang-linux:<cxxflags>-std=c++11
-                                                 <toolset>clang-linux:<cxxflags>-pedantic-errors
+                                                 <toolset>clang:<cxxflags>-pedantic-errors
                                                  <toolset>gcc:<warnings>all
                                                  <toolset>gcc:<cxxflags>-pedantic-errors
                                                  [ predef-check "BOOST_COMP_GNUC >= 4.7.4" : : <cxxflags>-ftrack-macro-expansion=0 ]
@@ -30,7 +30,7 @@ project variadic_macro_data_tests : requirements <warnings>on
                                                  
 local l_gcc_c11 = [ predef-check "BOOST_COMP_GNUC >= 4.3" "BOOST_OS_QNX == 0" : : <cxxflags>-std=c++0x ] ;
 
-test-suite variadic_macro_data
+alias variadic_macro_data
     : 
        [ run test_after_array_elem.cpp : : : $(l_gcc_c11) ]
        [ run test_after_identifier_elem.cpp : : : $(l_gcc_c11) ]
@@ -138,7 +138,7 @@ test-suite variadic_macro_data
        [ run test_doc_modifiers_filter.cpp : : : $(l_gcc_c11) ]
        [ run test_doc_modifiers_identifier.cpp : : : $(l_gcc_c11) ]
        [ run test_doc_modifiers_index.cpp : : : $(l_gcc_c11) ]
-       [ run test_doc_modifiers_return_type.cpp : : : $(l_gcc_c11) ]
+       [ run test_doc_modifiers_return_type.cpp : : : $(l_gcc_c11) <toolset>clang:<build>no ]
        [ run test_doc_modifiers_splitting.cpp : : : $(l_gcc_c11) ]
        [ run test_doc_number.cpp : : : $(l_gcc_c11) ]
        [ run test_doc_type.cpp : : : $(l_gcc_c11) ]

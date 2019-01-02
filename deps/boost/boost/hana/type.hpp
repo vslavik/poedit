@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::type` and related utilities.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -14,6 +14,7 @@ Distributed under the Boost Software License, Version 1.0.
 
 #include <boost/hana/bool.hpp>
 #include <boost/hana/config.hpp>
+#include <boost/hana/core/when.hpp>
 #include <boost/hana/detail/operators/adl.hpp>
 #include <boost/hana/detail/operators/comparable.hpp>
 #include <boost/hana/fwd/concept/metafunction.hpp>
@@ -70,13 +71,35 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! @endcond
 
     //////////////////////////////////////////////////////////////////////////
+    // typeid_
+    //////////////////////////////////////////////////////////////////////////
+    namespace detail {
+        template <typename T, typename = type_tag>
+        struct typeid_t {
+            using type = typename std::remove_cv<
+                typename std::remove_reference<T>::type
+            >::type;
+        };
+
+        template <typename T>
+        struct typeid_t<T, typename hana::tag_of<T>::type> {
+            using type = typename std::remove_reference<T>::type::type;
+        };
+    }
+    //! @cond
+    template <typename T>
+    constexpr auto typeid_t::operator()(T&&) const
+    { return hana::type_c<typename detail::typeid_t<T>::type>; }
+    //! @endcond
+
+    //////////////////////////////////////////////////////////////////////////
     // make<type_tag>
     //////////////////////////////////////////////////////////////////////////
     template <>
     struct make_impl<type_tag> {
         template <typename T>
         static constexpr auto apply(T&& t)
-        { return hana::decltype_(static_cast<T&&>(t)); }
+        { return hana::typeid_(static_cast<T&&>(t)); }
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -130,6 +153,24 @@ BOOST_HANA_NAMESPACE_BEGIN
     //////////////////////////////////////////////////////////////////////////
     // template_
     //////////////////////////////////////////////////////////////////////////
+    // Note: We have to use the very complicated trick below instead of just
+    // mentionning `F<T...>` in a SFINAE-able context because of CWG 1430
+    // (http://www.open-std.org/Jtc1/sc22/wg21/docs/cwg_active.html#1430).
+    namespace template_detail {
+        template <typename ...T> struct args;
+        template <typename ...> using always_void = void;
+
+        template <template <typename ...> class F, typename Args, typename = void>
+        struct specialization_is_valid
+            : std::false_type
+        { };
+
+        template <template <typename ...> class F, typename ...T>
+        struct specialization_is_valid<F, args<T...>, always_void<F<T...>>>
+            : std::true_type
+        { };
+    } // end namespace detail
+
     template <template <typename ...> class F>
     struct template_t {
         template <typename ...T>
@@ -137,7 +178,9 @@ BOOST_HANA_NAMESPACE_BEGIN
             using type = F<T...>;
         };
 
-        template <typename ...T>
+        template <typename ...T, typename = std::enable_if_t<
+            template_detail::specialization_is_valid<F, template_detail::args<typename T::type...>>::value
+        >>
         constexpr auto operator()(T const& ...) const
         { return hana::type<F<typename T::type...>>{}; }
     };
@@ -152,6 +195,23 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...T>
         constexpr hana::type<typename F<typename T::type...>::type>
+        operator()(T const& ...) const { return {}; }
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // metafunction_class
+    //////////////////////////////////////////////////////////////////////////
+    namespace detail {
+        template <typename F, typename ...T>
+        struct always_first { using type = F; };
+    }
+    template <typename F>
+    struct metafunction_class_t {
+        template <typename ...T>
+        using apply = typename detail::always_first<F, T...>::type::template apply<T...>;
+
+        template <typename ...T>
+        constexpr hana::type<typename detail::always_first<F, T...>::type::template apply<typename T::type...>::type>
         operator()(T const& ...) const { return {}; }
     };
 
@@ -178,9 +238,10 @@ BOOST_HANA_NAMESPACE_BEGIN
     //////////////////////////////////////////////////////////////////////////
     template <typename F>
     struct integral_t {
-        template <typename ...T>
-        constexpr auto operator()(T const& ...) const {
-            using Result = typename F::template apply<typename T::type...>::type;
+        template <typename ...T, typename Result =
+            typename detail::always_first<F, T...>::type::template apply<typename T::type...>::type
+        >
+        constexpr Result operator()(T const& ...) const {
             return Result{};
         }
     };

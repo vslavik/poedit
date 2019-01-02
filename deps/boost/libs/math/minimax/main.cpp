@@ -593,6 +593,14 @@ BOOST_AUTO_TEST_CASE( test_main )
       ||
             str_p("y-offset") && real_p[assign_a(y_offset)][assign_a(auto_offset_y, false)]
       ||
+            str_p("test") && str_p("float80") && uint_p[&test_float80_n]
+      ||
+            str_p("test") && str_p("float80")[&test_float80]
+      ||
+            str_p("test") && str_p("float128") && uint_p[&test_float128_n]
+      ||
+            str_p("test") && str_p("float128")[&test_float128]
+      ||
             str_p("test") && str_p("float") && uint_p[&test_float_n]
       ||
             str_p("test") && str_p("float")[&test_float]
@@ -604,14 +612,6 @@ BOOST_AUTO_TEST_CASE( test_main )
             str_p("test") && str_p("long") && uint_p[&test_long_n]
       ||
             str_p("test") && str_p("long")[&test_long]
-      ||
-            str_p("test") && str_p("float80") && uint_p[&test_float80_n]
-      ||
-            str_p("test") && str_p("float80")[&test_float80]
-      ||
-            str_p("test") && str_p("float128") && uint_p[&test_float128_n]
-      ||
-            str_p("test") && str_p("float128")[&test_float128]
       ||
             str_p("test") && str_p("all")[&test_all]
       ||

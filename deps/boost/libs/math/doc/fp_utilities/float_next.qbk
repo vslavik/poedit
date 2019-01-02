@@ -20,6 +20,26 @@ __multiprecision __cpp_dec_float and__cpp_bin_float  are fixed at runtime,
 but [*not] a type that extends the representation to provide an exact representation
 for any number, for example [@http://keithbriggs.info/xrc.html XRC eXact Real in C].
 
+The accuracy of mathematical functions can be assessed and displayed in terms of __ULP,
+often as a ulps plot or by binning the differences as a histogram.
+Samples are evaluated using the implementation under test and compared with 'known good'
+representation obtained using a more accurate method.  Other implementations, often using
+arbitrary precision arithmetic, for example __WolframAlpha are one source of references
+values.  The other method, used widely in Boost.Math special functions, it to carry out
+the same algorithm, but using a higher precision type, typically using Boost.Multiprecision
+types like `cpp_bin_float_quad` for 128-bit (about 35 decimal digit precision), or
+`cpp_bin_float_50` (for 50 decimal digit precision).
+
+When converted to a particular machine representation, say `double`, say using a `static_cast`,
+the value is the nearest representation possible for the `double` type.  This value
+cannot be 'wrong' by more than half a __ulp, and can be obtained using the Boost.Math function `ulp`.
+(Unless the algorithm is fundamentally flawed, something that should be revealed by 'sanity'
+checks using some independent sources).
+
+See some discussion and example plots by Cleve Moler of Mathworks
+[@https://blogs.mathworks.com/cleve/2017/01/23/ulps-plots-reveal-math-function-accurary/
+ulps plots reveal math-function accuracy].
+
 [section:nextafter Finding the Next Representable Value in a Specific Direction (nextafter)]
 
 [h4 Synopsis]
@@ -220,13 +240,13 @@ Function `ulp` gives the size of a unit-in-the-last-place for a specified floati
 
 Returns one [@http://en.wikipedia.org/wiki/Unit_in_the_last_place unit in the last place] of ['x].
 
-Corner cases are handled as followes:
+Corner cases are handled as follows:
 
 * If the argument is a NaN, then raises a __domain_error.
 * If the argument is an infinity, then raises an __overflow_error.
 * If the argument is zero then returns the smallest representable value: for example for type
 `double` this would be either `std::numeric_limits<double>::min()` or `std::numeric_limits<double>::denorm_min()`
-depending whether denormals are supported (which have the values 2.`2250738585072014e-308` and `4.9406564584124654e-324` respectively).
+depending whether denormals are supported (which have the values `2.2250738585072014e-308` and `4.9406564584124654e-324` respectively).
 * If the result is too small to represent, then returns the smallest representable value.
 * Always returns a positive value such that `ulp(x) == ulp(-x)`.
 

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_SKIP_JANUARY_26_2008_0422PM)
-#define SPIRIT_SKIP_JANUARY_26_2008_0422PM
+#if !defined(BOOST_SPIRIT_X3_SKIP_JANUARY_26_2008_0422PM)
+#define BOOST_SPIRIT_X3_SKIP_JANUARY_26_2008_0422PM
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>

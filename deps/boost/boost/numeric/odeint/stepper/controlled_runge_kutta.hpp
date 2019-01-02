@@ -143,7 +143,7 @@ public:
             error = max BOOST_PREVENT_MACRO_SUBSTITUTION (
                     static_cast<value_type>( pow( static_cast<value_type>(5.0) , -static_cast<value_type>(stepper_order) ) ) ,
                     error);
-            time_type dt_old = dt;
+            // time_type dt_old = dt;   unused variable warning 
             //error too small - increase dt and keep the evolution and limit scaling factor to 5.0
             dt *= static_cast<value_type>(9)/static_cast<value_type>(10) *
                   pow(error, static_cast<value_type>(-1) / stepper_order);

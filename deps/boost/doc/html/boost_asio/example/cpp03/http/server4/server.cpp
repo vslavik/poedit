@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,14 +15,15 @@
 namespace http {
 namespace server4 {
 
-server::server(boost::asio::io_service& io_service,
+server::server(boost::asio::io_context& io_context,
     const std::string& address, const std::string& port,
     boost::function<void(const request&, reply&)> request_handler)
   : request_handler_(request_handler)
 {
-  tcp::resolver resolver(io_service);
-  tcp::resolver::query query(address, port);
-  acceptor_.reset(new tcp::acceptor(io_service, *resolver.resolve(query)));
+  tcp::resolver resolver(io_context);
+  boost::asio::ip::tcp::endpoint endpoint =
+    *resolver.resolve(address, port).begin();
+  acceptor_.reset(new tcp::acceptor(io_context, endpoint));
 }
 
 // Enable the pseudo-keywords reenter, yield and fork.
@@ -44,12 +45,12 @@ void server::operator()(boost::system::error_code ec, std::size_t length)
       do
       {
         // Create a new socket for the next incoming connection.
-        socket_.reset(new tcp::socket(acceptor_->get_io_service()));
+        socket_.reset(new tcp::socket(acceptor_->get_executor().context()));
 
         // Accept a new connection. The "yield" pseudo-keyword saves the current
         // line number and exits the coroutine's "reenter" block. We use the
         // server coroutine as the completion handler for the async_accept
-        // operation. When the asynchronous operation completes, the io_service
+        // operation. When the asynchronous operation completes, the io_context
         // invokes the function call operator, we "reenter" the coroutine, and
         // then control resumes at the following line.
         yield acceptor_->async_accept(*socket_, *this);

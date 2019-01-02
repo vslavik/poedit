@@ -32,7 +32,7 @@ int main ()
          //Create a file mapping
          windows_shared_memory mapping
             (create_only, names[i_name], read_write, FileSize);
-         if(mapping.get_size() < FileSize)
+         if(static_cast<std::size_t>(mapping.get_size()) < FileSize)
             return 1;
          {
 

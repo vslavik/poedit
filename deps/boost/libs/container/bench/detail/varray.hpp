@@ -50,7 +50,7 @@
  * @defgroup varray_non_member varray non-member functions
  */
 
-namespace boost { namespace container { namespace container_detail {
+namespace boost { namespace container { namespace dtl {
 
 // Forward declaration
 template <typename Value, std::size_t Capacity, typename Strategy>
@@ -220,14 +220,14 @@ struct varray_traits
 template <typename Value, std::size_t Capacity, typename Strategy = strategy::def<Value> >
 class varray
 {
-    typedef container_detail::varray_traits<
+    typedef dtl::varray_traits<
         Value, Capacity, Strategy
     > vt;
 
     typedef typename vt::error_handler errh;
     typedef typename aligned_storage<
         sizeof(Value[Capacity]),
-        boost::container::container_detail::alignment_of<Value[Capacity]>::value
+        boost::container::dtl::alignment_of<Value[Capacity]>::value
     >::type aligned_storage_type;
 
     template <typename V, std::size_t C, typename S>
@@ -1902,7 +1902,7 @@ public:
     // strong
     varray(varray const& other)
     {
-        //errh::check_capacity(*this, count);
+        errh::check_capacity(*this, other.size());
     }
 
     // strong
@@ -1922,7 +1922,7 @@ public:
     // basic
     varray & operator=(varray const& other)
     {
-        //errh::check_capacity(*this, other.size());
+        errh::check_capacity(*this, other.size());
         return *this;
     }
 
@@ -2235,7 +2235,7 @@ inline void swap(varray<V, C1, S1> & x, varray<V, C2, S2> & y)
     x.swap(y);
 }
 
-}}} // namespace boost::container::container_detail
+}}} // namespace boost::container::dtl
 
 #include <boost/container/detail/config_end.hpp>
 

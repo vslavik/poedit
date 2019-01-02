@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -7,11 +7,20 @@
 
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
+#include <boost/hana/chain.hpp>
 #include <boost/hana/concept/comparable.hpp>
+#include <boost/hana/concept/monad.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/make.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/flatten.hpp>
+#include <boost/hana/for_each.hpp>
 #include <boost/hana/functional/compose.hpp>
 #include <boost/hana/functional/id.hpp>
-#include <boost/hana/concept/monad.hpp>
+#include <boost/hana/lift.hpp>
+#include <boost/hana/monadic_compose.hpp>
+#include <boost/hana/transform.hpp>
 
 #include <laws/base.hpp>
 
@@ -29,7 +38,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs, typename XXs>
         TestMonad(Xs xs, XXs xxs) {
             hana::for_each(xs, [](auto m) {
-                static_assert(Monad<decltype(m)>::value, "");
+                static_assert(Monad<decltype(m)>{}, "");
 
                 auto f = hana::compose(lift<M>, test::_injection<0>{});
                 auto g = hana::compose(lift<M>, test::_injection<1>{});
@@ -155,7 +164,7 @@ namespace boost { namespace hana { namespace test {
             ));
 
             // just make sure we don't double move; this happened in hana::tuple
-            flatten(list(list(Tracked{1}, Tracked{2})));
+            hana::flatten(list(list(Tracked{1}, Tracked{2})));
 
             //////////////////////////////////////////////////////////////////
             // chain

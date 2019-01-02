@@ -34,7 +34,7 @@ def included_resource_newer_than_rc_script():
     #   affected by any local (mis)configuration..
     t = BoostBuild.Tester(["-d4", "--debug-configuration",
         "--ignore-site-config", "--user-config=", "toolset=%s" % toolsetName],
-        pass_d0=False, pass_toolset=False, use_test_config=False,
+        pass_toolset=False, use_test_config=False,
         translate_suffixes=False)
 
     # Prepare a dummy toolset so we do not get errors in case the default one
@@ -73,9 +73,47 @@ set-generated-obj-suffix windows ;
 set-generated-obj-suffix cygwin ;
 """ % toolsetName)
 
+    t.write(
+        toolsetName + '.py',
+"""
+from b2.build import feature, type as type_
+from b2.manager import get_manager
+from b2.tools import rc, common
+
+MANAGER = get_manager()
+ENGINE = MANAGER.engine()
+
+toolset_name = "{0}"
+
+feature.extend('toolset', [toolset_name])
+
+def init(*args):
+    pass
+
+rc.configure(['dummy-rc-command'], ['<toolset>' + toolset_name], ['<rc-type>dummy'])
+
+ENGINE.register_action(
+    'rc.compile.resource.dummy',
+    '''
+    %s "$(<)"
+    ''' % common.file_creation_command()
+)
+
+def set_generated_obj_suffix(target_os=''):
+    requirements = ['<toolset>' + toolset_name]
+    if target_os:
+        requirements.append('<target-os>' + target_os)
+    type_.set_generated_target_suffix('OBJ', requirements, 'obj')
+
+set_generated_obj_suffix()
+set_generated_obj_suffix('windows')
+set_generated_obj_suffix('cygwin')
+""".format(toolsetName)
+    )
+
     # Prepare project source files.
     t.write("jamroot.jam", """\
-ECHO {{{ [ modules.peek : XXX ] [ modules.peek : NOEXEC ] }}} ;
+ECHO "{{{" [ modules.peek : XXX ] [ modules.peek : NOEXEC ] "}}}" ;
 obj xxx : xxx.rc ;
 """)
     t.write("xxx.rc", '1 MESSAGETABLE "xxx.bin"\n')

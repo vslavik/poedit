@@ -28,8 +28,8 @@ typedef scaled_base_unit<boost::units::si::second_base_unit, scale<31557600, sta
 
 template<>
 struct base_unit_info<metric::year_base_unit> {
-    static const char* name()   { return("Julian year"); }
-    static const char* symbol() { return("yr"); }
+    static BOOST_CONSTEXPR const char* name()   { return("Julian year"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("yr"); }
 };
 
 }

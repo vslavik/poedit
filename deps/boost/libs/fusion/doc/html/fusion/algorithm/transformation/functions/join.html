@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>join</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="insert_range.html" title="insert_range">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.transformation.functions.join.h0"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.description"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.description">Description</a>
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.description"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.description">Description</a>
           </h6>
 <p>
             Takes 2 sequences and returns a sequence containing the elements of the
@@ -36,7 +36,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.join.h1"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.synopsis"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.synopsis"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">LhSequence</span><span class="special">,</span>
@@ -110,7 +110,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.transformation.functions.join.h2"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.expression_semantics"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.expression_semantics"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="join.html" title="join"><code class="computeroutput"><span class="identifier">join</span></code></a><span class="special">(</span><span class="identifier">lhs</span><span class="special">,</span> <span class="identifier">rhs</span><span class="special">);</span>
@@ -118,7 +118,7 @@
 <p>
             <span class="bold"><strong>Return type</strong></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 A model of <a class="link" href="../../../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
                 Sequence</a>.
@@ -139,21 +139,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.join.h3"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.complexity"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.complexity">Complexity</a>
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.complexity"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.complexity">Complexity</a>
           </h6>
 <p>
             Constant. Returns a view which is lazily evaluated.
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.join.h4"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.header"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.header">Header</a>
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.header"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">transformation</span><span class="special">/</span><span class="identifier">join</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">join</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.transformation.functions.join.h5"></a>
-            <span><a name="fusion.algorithm.transformation.functions.join.example"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.example">Example</a>
+            <span class="phrase"><a name="fusion.algorithm.transformation.functions.join.example"></a></span><a class="link" href="join.html#fusion.algorithm.transformation.functions.join.example">Example</a>
           </h6>
 <pre class="programlisting"><a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="identifier">v1</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'a'</span><span class="special">);</span>
 <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="identifier">v2</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="char">'b'</span><span class="special">);</span>

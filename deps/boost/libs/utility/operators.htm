@@ -1586,7 +1586,7 @@ T operator+( T lhs, const T&amp; rhs )
     <h3><a name="a_demo">Arithmetic Operators Demonstration</a> and Test
     Program</h3>
 
-    <p>The <cite><a href="operators_test.cpp">operators_test.cpp</a></cite>
+    <p>The <cite><a href="test/operators_test.cpp">operators_test.cpp</a></cite>
     program demonstrates the use of the arithmetic operator templates, and
     can also be used to verify correct operation. Check the compiler status
     report for the test results with selected platforms.</p>
@@ -1667,8 +1667,8 @@ T operator+( T lhs, const T&amp; rhs )
 
         <td><code>P operator-&gt;() const</code></td>
 
-        <td><code>(&amp;*i)</code>. Return convertible to
-        <code>P</code>.</td>
+        <td><code>*i</code>. Address of the returned value convertible
+        to <code>P</code>.</td>
       </tr>
 
       <tr>
@@ -1998,7 +1998,7 @@ struct function_output_iterator
 
     <h3><a name="i_demo">Iterator Demonstration</a> and Test Program</h3>
 
-    <p>The <cite><a href="iterators_test.cpp">iterators_test.cpp</a></cite>
+    <p>The <cite><a href="test/iterators_test.cpp">iterators_test.cpp</a></cite>
     program demonstrates the use of the iterator templates, and can also be
     used to verify correct operation. The following is the custom iterator
     defined in the test program. It demonstrates a correct (though trivial)
@@ -2064,7 +2064,7 @@ public:
       <dt><a href="http://www.boost.org/people/beman_dawes.html">Beman Dawes</a></dt>
 
       <dd>Contributed <cite><a href=
-      "operators_test.cpp">operators_test.cpp</a></cite>.</dd>
+      "test/operators_test.cpp">operators_test.cpp</a></cite>.</dd>
 
       <dt><a href="http://www.boost.org/people/daryle_walker.html">Daryle Walker</a></dt>
 

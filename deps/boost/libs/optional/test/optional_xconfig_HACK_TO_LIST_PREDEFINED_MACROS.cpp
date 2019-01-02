@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Andrzej Krzemienski.
+// Copyright (C) 2015 - 2018 Andrzej Krzemienski.
 //
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,6 +11,7 @@
 
 #include "boost/core/lightweight_test.hpp"
 #include "boost/optional/detail/optional_config.hpp"
+#include "boost/predef.h"
 #include <string>
 
 int main()
@@ -37,5 +38,13 @@ int main()
   BOOST_TEST_EQ(empty, __GNUC_PATCHLEVEL__);
   BOOST_TEST_EQ(empty, __cplusplus);
 #endif
+
+  BOOST_TEST_EQ(empty, BOOST_COMP_GNUC);
+  BOOST_TEST_EQ(empty, BOOST_COMP_CLANG);
+  BOOST_TEST_EQ(empty, BOOST_LANG_STDCPP);
+  BOOST_TEST_EQ(empty, BOOST_LIB_C_GNU);
+  BOOST_TEST_EQ(empty, BOOST_LIB_STD_GNU);
+  BOOST_TEST_EQ(empty, BOOST_LIB_STD_CXX);
+
   return boost::report_errors();
 }

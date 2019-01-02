@@ -12,8 +12,6 @@
  * \brief  This header contains tests for stream operations of \c basic_string_ref.
  */
 
-#define BOOST_TEST_MODULE string_ref_test_io
-
 #include <boost/utility/string_view.hpp>
 
 #include <iomanip>
@@ -23,23 +21,10 @@
 #include <string>
 
 #include <boost/config.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/test/unit_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
-typedef boost::mpl::vector<
-    char
-#if !defined(BOOST_NO_STD_WSTRING) && !defined(BOOST_NO_STD_WSTREAMBUF) && !defined(BOOST_NO_INTRINSIC_WCHAR_T)
-    , wchar_t
-#endif
 /* Current implementations seem to be missing codecvt facets to convert chars to char16_t and char32_t even though the types are available.
-#if !defined(BOOST_NO_CXX11_CHAR16_T)
-    , char16_t
-#endif
-#if !defined(BOOST_NO_CXX11_CHAR32_T)
-    , char32_t
-#endif
 */
->::type char_types;
 
 static const char* test_strings[] =
 {
@@ -72,7 +57,8 @@ struct context
 };
 
 // Test regular output
-BOOST_AUTO_TEST_CASE_TEMPLATE(string_view_output, CharT, char_types)
+template<class CharT>
+void test_string_view_output()
 {
     typedef CharT char_type;
     typedef std::basic_ostringstream< char_type > ostream_type;
@@ -82,11 +68,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(string_view_output, CharT, char_types)
 
     ostream_type strm;
     strm << string_view_type(ctx.abcd);
-    BOOST_CHECK(strm.str() == ctx.abcd);
+    BOOST_TEST(strm.str() == ctx.abcd);
 }
 
 // Test support for padding
-BOOST_AUTO_TEST_CASE_TEMPLATE(padding, CharT, char_types)
+template<class CharT>
+void test_padding()
 {
     typedef CharT char_type;
     typedef std::basic_ostringstream< char_type > ostream_type;
@@ -102,7 +89,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(padding, CharT, char_types)
         ostream_type strm_correct;
         strm_correct << ctx.begin << std::setw(8) << ctx.abcd << ctx.end;
 
-        BOOST_CHECK(strm_ref.str() == strm_correct.str());
+        BOOST_TEST(strm_ref.str() == strm_correct.str());
     }
 
     // Test for long padding
@@ -113,7 +100,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(padding, CharT, char_types)
         ostream_type strm_correct;
         strm_correct << ctx.begin << std::setw(100) << ctx.abcd << ctx.end;
 
-        BOOST_CHECK(strm_ref.str() == strm_correct.str());
+        BOOST_TEST(strm_ref.str() == strm_correct.str());
     }
 
     // Test that short width does not truncate the string
@@ -124,12 +111,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(padding, CharT, char_types)
         ostream_type strm_correct;
         strm_correct << ctx.begin << std::setw(1) << ctx.abcd << ctx.end;
 
-        BOOST_CHECK(strm_ref.str() == strm_correct.str());
+        BOOST_TEST(strm_ref.str() == strm_correct.str());
     }
 }
 
 // Test support for padding fill
-BOOST_AUTO_TEST_CASE_TEMPLATE(padding_fill, CharT, char_types)
+template<class CharT>
+void test_padding_fill()
 {
     typedef CharT char_type;
     typedef std::basic_ostringstream< char_type > ostream_type;
@@ -143,11 +131,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(padding_fill, CharT, char_types)
     ostream_type strm_correct;
     strm_correct << ctx.begin << std::setfill(static_cast< char_type >('x')) << std::setw(8) << ctx.abcd << ctx.end;
 
-    BOOST_CHECK(strm_ref.str() == strm_correct.str());
+    BOOST_TEST(strm_ref.str() == strm_correct.str());
 }
 
 // Test support for alignment
-BOOST_AUTO_TEST_CASE_TEMPLATE(alignment, CharT, char_types)
+template<class CharT>
+void test_alignment()
 {
     typedef CharT char_type;
     typedef std::basic_ostringstream< char_type > ostream_type;
@@ -163,7 +152,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(alignment, CharT, char_types)
         ostream_type strm_correct;
         strm_correct << ctx.begin << std::left << std::setw(8) << ctx.abcd << ctx.end;
 
-        BOOST_CHECK(strm_ref.str() == strm_correct.str());
+        BOOST_TEST(strm_ref.str() == strm_correct.str());
     }
 
     // Right alignment
@@ -174,6 +163,22 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(alignment, CharT, char_types)
         ostream_type strm_correct;
         strm_correct << ctx.begin << std::right << std::setw(8) << ctx.abcd << ctx.end;
 
-        BOOST_CHECK(strm_ref.str() == strm_correct.str());
+        BOOST_TEST(strm_ref.str() == strm_correct.str());
     }
+}
+
+template<class CharT>
+void test()
+{
+    test_string_view_output<CharT>();
+    test_padding<CharT>();
+    test_padding_fill<CharT>();
+    test_alignment<CharT>();
+}
+
+int main()
+{
+    test<char>();
+    test<wchar_t>();
+    return boost::report_errors();
 }

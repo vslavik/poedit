@@ -15,6 +15,7 @@
 #include <boost/range/size_type.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/range/concepts.hpp>
+#include <boost/next_prior.hpp>
 
 namespace boost
 {

@@ -15,9 +15,10 @@ from b2.manager import get_manager
 
 class MessageTargetClass(targets.BasicTarget):
 
-    def __init__(self, name, project, *args):
-
-        targets.BasicTarget.__init__(self, name, project, [])
+    def __init__(self, name, project, sources, requirements, default_build,
+                 usage_requirements, *args):
+        targets.BasicTarget.__init__(
+            self, name, project, sources, requirements, default_build, usage_requirements)
         self.args = args
         self.built = False
 
@@ -38,9 +39,16 @@ def message(name, *args):
         name = name[0]
 
     t = get_manager().targets()
-
     project = get_manager().projects().current()
 
-    return t.main_target_alternative(MessageTargetClass(*((name, project) + args)))
+    return t.main_target_alternative(
+        MessageTargetClass(
+            name, project,
+            t.main_target_sources([], name),
+            t.main_target_requirements([], project),
+            t.main_target_default_build([], project),
+            t.main_target_usage_requirements([], project),
+            *args
+        ))
 
 get_manager().projects().add_rule("message", message)

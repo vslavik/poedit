@@ -32,8 +32,8 @@ bool test_nth_index_of(Container &c)
    //index 0
    it = c.nth(0);
    sz = c.index_of(it);
-   cit = as_const(c).nth(0);
-   csz = as_const(c).index_of(cit);
+   cit = (as_const)(c).nth(0);
+   csz = (as_const)(c).index_of(cit);
 
    if(it != c.begin())
       return false;
@@ -48,8 +48,8 @@ bool test_nth_index_of(Container &c)
    const typename Container::size_type sz_div_2 = c.size()/2;
    it = c.nth(sz_div_2);
    sz = c.index_of(it);
-   cit = as_const(c).nth(sz_div_2);
-   csz = as_const(c).index_of(cit);
+   cit = (as_const)(c).nth(sz_div_2);
+   csz = (as_const)(c).index_of(cit);
 
    if(it != (c.begin()+sz_div_2))
       return false;
@@ -63,8 +63,8 @@ bool test_nth_index_of(Container &c)
    //index size()
    it = c.nth(c.size());
    sz = c.index_of(it);
-   cit = as_const(c).nth(c.size());
-   csz = as_const(c).index_of(cit);
+   cit = (as_const)(c).nth(c.size());
+   csz = (as_const)(c).index_of(cit);
 
    if(it != c.end())
       return false;

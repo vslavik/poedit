@@ -27,7 +27,7 @@ def set_asm_type(type_, sources, name=''):
 
     name = name if name else _project_types[project.name() + type_]
     type_ += '.asm'
-    cast(name, type_.upper(), sources, [], [], [])
+    return cast(name, type_.upper(), sources, [], [], [])
 
 
 PROJECT_REGISTRY.add_rule("set-asm-type", set_asm_type)

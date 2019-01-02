@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Global c_ascii_decor</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../expressions.html#header.boost.log.expressions.formatters.c_decorator_hpp" title="Header &lt;boost/log/expressions/formatters/c_decorator.hpp&gt;">
 <link rel="prev" href="wc_decor.html" title="Global wc_decor">
@@ -26,7 +26,7 @@
 
 </span><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> c_ascii_decor<span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp85514064"></a><h2>Description</h2>
+<a name="idp102001728"></a><h2>Description</h2>
 <p>C-style decorator generator object. Acts similarly to <code class="computeroutput">c_decor</code>, except that <code class="computeroutput">c_ascii_decor</code> also converts all non-ASCII and non-printable ASCII characters, except for space character, into C-style hexadecimal escape sequences. The generator provides <code class="computeroutput">operator[]</code> that can be used to construct the actual decorator. For example:</p>
 <p><code class="computeroutput"> c_ascii_decor[ stream &lt;&lt; attr&lt; std::string &gt;("MyAttr") ] </code></p>
 <p>For wide-character formatting there is the similar <code class="computeroutput">wc_ascii_decor</code> decorator generator object. </p>

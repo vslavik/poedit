@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Queries</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../spatial_indexes.html" title="Spatial Indexes">
 <link rel="prev" href="creation_and_modification.html" title="Creation and Modification">
@@ -30,7 +30,7 @@
         Queries returns <code class="computeroutput">Value</code>s which meets some predicates. Currently
         supported are three types of predicates:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             spatial predicates - spatial conditions that must be met by stored Value
             and some Geometry,
@@ -47,7 +47,7 @@
 <p>
         For example queries may be used to retrieve Values:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             intersecting some area but not within other area,
           </li>
@@ -60,7 +60,7 @@
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.queries.h0"></a>
-        <span><a name="geometry.spatial_indexes.queries.performing_a_query"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.performing_a_query">Performing
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.performing_a_query"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.performing_a_query">Performing
         a query</a>
       </h5>
 <p>
@@ -105,8 +105,8 @@ Box <span class="identifier">box_region</span><span class="special">(...);</span
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.queries.h1"></a>
-        <span><a name="geometry.spatial_indexes.queries.spatial_predicates"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.spatial_predicates">Spatial
-        predicates</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.spatial_queries"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.spatial_queries">Spatial
+        queries</a>
       </h5>
 <p>
         Queries using spatial predicates returns <code class="computeroutput">Value</code>s which are related
@@ -189,88 +189,36 @@ Box <span class="identifier">box_region</span><span class="special">(...);</span
 <thead><tr>
 <th>
                 <p>
-                  intersects(Ring)
-                </p>
-              </th>
-<th>
-                <p>
-                  intersects(Polygon)
-                </p>
-              </th>
-<th>
-                <p>
-                  intersects(MultiPolygon)
-                </p>
-              </th>
-<th>
-                <p>
                   intersects(Segment)
                 </p>
               </th>
 <th>
                 <p>
-                  intersects(Linestring)
+                  intersects(Box)
+                </p>
+              </th>
+<th>
+                <p>
+                  disjoint(Box)
+                </p>
+              </th>
+<th>
+                <p>
+                  intersects(Box)
+                </p>
+              </th>
+<th>
+                <p>
+                  disjoint(Box)
                 </p>
               </th>
 </tr></thead>
 <tbody><tr>
-<td>
-                <p>
-                  <span class="inlinemediaobject"><img src="../../img/index/rtree/intersects_ring.png" alt="intersects_ring"></span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="inlinemediaobject"><img src="../../img/index/rtree/intersects_poly.png" alt="intersects_poly"></span>
-                </p>
-              </td>
-<td>
-                <p>
-                  <span class="inlinemediaobject"><img src="../../img/index/rtree/intersects_mpoly.png" alt="intersects_mpoly"></span>
-                </p>
-              </td>
 <td>
                 <p>
                   <span class="inlinemediaobject"><img src="../../img/index/rtree/intersects_segment.png" alt="intersects_segment"></span>
                 </p>
               </td>
-<td>
-                <p>
-                  <span class="inlinemediaobject"><img src="../../img/index/rtree/intersects_linestring.png" alt="intersects_linestring"></span>
-                </p>
-              </td>
-</tr></tbody>
-</table></div>
-<div class="informaltable"><table class="table">
-<colgroup>
-<col>
-<col>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                <p>
-                  intersects(Box)
-                </p>
-              </th>
-<th>
-                <p>
-                  disjoint(Box)
-                </p>
-              </th>
-<th>
-                <p>
-                  intersects(Box)
-                </p>
-              </th>
-<th>
-                <p>
-                  disjoint(Box)
-                </p>
-              </th>
-</tr></thead>
-<tbody><tr>
 <td>
                 <p>
                   <span class="inlinemediaobject"><img src="../../img/index/rtree/rtree_pt_intersects_box.png" alt="rtree_pt_intersects_box"></span>
@@ -314,7 +262,7 @@ Box <span class="identifier">box_region</span><span class="special">(...);</span
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.queries.h2"></a>
-        <span><a name="geometry.spatial_indexes.queries.nearest_neighbours_queries"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.nearest_neighbours_queries">Nearest
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.nearest_neighbours_queries"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.nearest_neighbours_queries">Nearest
         neighbours queries</a>
       </h5>
 <p>
@@ -459,9 +407,22 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 <span class="identifier">Segment</span> <span class="identifier">seg</span><span class="special">(/*...*/);</span>
 <span class="identifier">rt</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">seg</span><span class="special">,</span> <span class="identifier">k</span><span class="special">),</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_inserter</span><span class="special">(</span><span class="identifier">returned_values</span><span class="special">));</span>
 </pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          In case of k-NN queries performed with <code class="computeroutput"><span class="identifier">query</span><span class="special">()</span></code> function it's not guaranteed that the
+          returned values will be sorted according to the distance. It's different
+          in case of k-NN queries performed with query iterator returned by <code class="computeroutput"><span class="identifier">qbegin</span><span class="special">()</span></code>
+          function which guarantees the iteration over the closest <code class="computeroutput">Value</code>s
+          first.
+        </p></td></tr>
+</table></div>
 <h5>
 <a name="geometry.spatial_indexes.queries.h3"></a>
-        <span><a name="geometry.spatial_indexes.queries.user_defined_unary_predicate"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.user_defined_unary_predicate">User-defined
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.user_defined_unary_predicate"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.user_defined_unary_predicate">User-defined
         unary predicate</a>
       </h5>
 <p>
@@ -516,8 +477,8 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.queries.h4"></a>
-        <span><a name="geometry.spatial_indexes.queries.passing_a_set_of_predicates"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.passing_a_set_of_predicates">Passing
-        a set of predicates</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.passing_set_of_predicates"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.passing_set_of_predicates">Passing
+        set of predicates</a>
       </h5>
 <p>
         It's possible to use some number of predicates in one query by connecting
@@ -542,7 +503,7 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
          <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_inserter</span><span class="special">(</span><span class="identifier">result</span><span class="special">));</span>
 </pre>
 <p>
-        Of course it's possible to connect different types of predicates together.
+        It's possible to connect different types of predicates together.
       </p>
 <pre class="programlisting"><span class="identifier">index</span><span class="special">::</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">rt</span><span class="special">,</span> <span class="identifier">index</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="identifier">k</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">index</span><span class="special">::</span><span class="identifier">within</span><span class="special">(</span><span class="identifier">b</span><span class="special">),</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_inserter</span><span class="special">(</span><span class="identifier">returned_values</span><span class="special">));</span>
 
@@ -551,7 +512,7 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.queries.h5"></a>
-        <span><a name="geometry.spatial_indexes.queries.iterative_queries"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.iterative_queries">Iterative
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.iterative_queries"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.iterative_queries">Iterative
         queries</a>
       </h5>
 <p>
@@ -569,16 +530,6 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
         <span class="keyword">break</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          In the case of iterative k-NN queries it's guaranteed to iterate over the
-          closest <code class="computeroutput">Value</code>s first.
-        </p></td></tr>
-</table></div>
 <div class="warning"><table border="0" summary="Warning">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../doc/src/images/warning.png"></td>
@@ -591,11 +542,11 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 </table></div>
 <h5>
 <a name="geometry.spatial_indexes.queries.h6"></a>
-        <span><a name="geometry.spatial_indexes.queries.inserting_query_results_into_the_other_r_tree"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.inserting_query_results_into_the_other_r_tree">Inserting
-        query results into the other R-tree</a>
+        <span class="phrase"><a name="geometry.spatial_indexes.queries.inserting_query_results_into_another_r_tree"></a></span><a class="link" href="queries.html#geometry.spatial_indexes.queries.inserting_query_results_into_another_r_tree">Inserting
+        query results into another R-tree</a>
       </h5>
 <p>
-        There are several ways of inserting Values returned by a query to the other
+        There are several ways of inserting Values returned by a query into another
         R-tree container. The most basic way is creating a temporary container for
         Values and insert them later.
       </p>
@@ -611,7 +562,7 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 <span class="identifier">RTree</span> <span class="identifier">rt2</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">result</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
 </pre>
 <p>
-        However there are better ways. One of these methods is mentioned in the "Creation
+        However there are other ways. One of these methods is mentioned in the "Creation
         and modification" section. The insert iterator may be passed directly
         into the query.
       </p>
@@ -619,16 +570,16 @@ Point <span class="identifier">pt</span><span class="special">(/*...*/);</span>
 <span class="identifier">rt1</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">Box</span><span class="special">(/*...*/))),</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">inserter</span><span class="special">(</span><span class="identifier">rt3</span><span class="special">));</span>
 </pre>
 <p>
-        If you're a user of Boost.Range you'll appreciate the third option. You may
-        pass the result Range directly into the constructor or <code class="computeroutput"><span class="identifier">insert</span><span class="special">()</span></code> member function.
+        You may also pass the resulting Range directly into the constructor or <code class="computeroutput"><span class="identifier">insert</span><span class="special">()</span></code>
+        member function using Boost.Range adaptor syntax.
       </p>
 <pre class="programlisting"><span class="identifier">RTree</span> <span class="identifier">rt4</span><span class="special">(</span><span class="identifier">rt1</span> <span class="special">|</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">adaptors</span><span class="special">::</span><span class="identifier">queried</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">Box</span><span class="special">(/*...*/)))));</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

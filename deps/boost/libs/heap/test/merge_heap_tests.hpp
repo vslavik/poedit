@@ -11,7 +11,7 @@
 
 #define GENERATE_TEST_DATA(INDEX)                           \
     test_data data = make_test_data(test_size, 0, 1);       \
-    std::random_shuffle(data.begin(), data.end());          \
+    random_shuffle(data.begin(), data.end());               \
                                                             \
     test_data data_q (data.begin(), data.begin() + INDEX);  \
     test_data data_r (data.begin() + INDEX, data.end());    \
@@ -66,7 +66,7 @@ struct pri_queue_test_heap_merge
 template <typename pri_queue>
 void run_merge_tests(void)
 {
-    boost::mpl::if_c<pri_queue::is_mergable,
+    boost::conditional<pri_queue::is_mergable,
                      pri_queue_test_merge<pri_queue>,
                      dummy_run
                     >::type::run();

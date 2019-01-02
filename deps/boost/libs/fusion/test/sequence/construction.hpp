@@ -54,11 +54,14 @@ test()
     using namespace test_detail;
 
     nil empty;
+    (void)empty;
 
     FUSION_SEQUENCE<> empty0;
+    (void)empty0;
 
 #ifndef NO_CONSTRUCT_FROM_NIL
     FUSION_SEQUENCE<> empty1(empty);
+    (void)empty1;
 #endif
 
     FUSION_SEQUENCE<int> t1;

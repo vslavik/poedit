@@ -162,4 +162,45 @@ BOOST_AUTO_TEST_CASE(stable_sort_char_by_int)
     );
 }
 
+BOOST_AUTO_TEST_CASE(stable_sort_mid_uint_by_uint)
+{
+    using boost::compute::int_;
+
+    const int_ size = 128;
+    std::vector<int_> keys_data(size);
+    std::vector<int_> values_data(size);
+    for(int_ i = 0; i < size; i++){
+        keys_data[i] = -i;
+        values_data[i] = -i;
+    }
+
+    keys_data[size/2] = -256;
+    keys_data[size - 2] = -256;
+    keys_data[size - 1] = -256;
+    values_data[size/2] = 3;
+    values_data[size - 2] = 1;
+    values_data[size - 1] = 2;
+
+    compute::vector<int_> keys(keys_data.begin(), keys_data.end(), queue);
+    compute::vector<int_> values(values_data.begin(), values_data.end(), queue);
+
+    // less function for float
+    BOOST_COMPUTE_FUNCTION(bool, comp, (int_ a, int_ b),
+    {
+        return a < b;
+    });
+
+    BOOST_CHECK(!compute::is_sorted(keys.begin(), keys.end(), comp, queue));
+    compute::stable_sort_by_key(keys.begin(), keys.end(), values.begin(), comp, queue);
+    BOOST_CHECK(compute::is_sorted(keys.begin(), keys.end(), comp, queue));
+
+    BOOST_CHECK(keys.begin().read(queue) == -256);
+    BOOST_CHECK((keys.begin() + 1).read(queue) == -256);
+    BOOST_CHECK((keys.begin() + 2).read(queue) == -256);
+
+    BOOST_CHECK(values.begin().read(queue) == 3);
+    BOOST_CHECK((values.begin() + 1).read(queue) == 1);
+    BOOST_CHECK((values.begin() + 2).read(queue) == 2);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

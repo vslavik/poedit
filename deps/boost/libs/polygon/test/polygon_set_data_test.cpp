@@ -7,23 +7,18 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#define BOOST_TEST_MODULE POLYGON_SET_DATA_TEST
+#include <boost/core/lightweight_test.hpp>
+#include <boost/polygon/polygon.hpp>
 #include <vector>
 
-#include <boost/mpl/list.hpp>
-#include <boost/test/test_case_template.hpp>
-
-#include "boost/polygon/polygon.hpp"
 using namespace boost::polygon;
 using namespace boost::polygon::operators;
 
-typedef boost::mpl::list<int> test_types;
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test1, T, test_types) {
-    typedef point_data<T> point_type;
-    typedef polygon_data<T> polygon_type;
-    typedef polygon_with_holes_data<T> polygon_with_holes_type;
-    typedef polygon_set_data<T> polygon_set_type;
+void polygon_set_data_test1()
+{
+    typedef point_data<int> point_type;
+    typedef polygon_with_holes_data<int> polygon_with_holes_type;
+    typedef polygon_set_data<int> polygon_set_type;
 
     polygon_set_type pset;
     std::vector<point_type> outbox;
@@ -39,25 +34,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test1, T, test_types) {
     inbox.push_back(point_type(20, 80));
     pset.insert_vertex_sequence(inbox.begin(), inbox.end(), COUNTERCLOCKWISE, true);
 
-    BOOST_CHECK(!pset.empty());
-    BOOST_CHECK(!pset.sorted());
-    BOOST_CHECK(pset.dirty());
-    BOOST_CHECK_EQUAL(8, pset.size());
+    BOOST_TEST(!pset.empty());
+    BOOST_TEST(!pset.sorted());
+    BOOST_TEST(pset.dirty());
+    BOOST_TEST_EQ(8, pset.size());
 
     std::vector<polygon_with_holes_type> vpoly;
     pset.get(vpoly);
-    BOOST_CHECK_EQUAL(1, vpoly.size());
+    BOOST_TEST_EQ(1, vpoly.size());
 
     polygon_with_holes_type poly = vpoly[0];
-    BOOST_CHECK_EQUAL(5, poly.size());
-    BOOST_CHECK_EQUAL(1, poly.size_holes());
+    BOOST_TEST_EQ(5, poly.size());
+    BOOST_TEST_EQ(1, poly.size_holes());
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test2, T, test_types) {
-    typedef point_data<T> point_type;
-    typedef polygon_data<T> polygon_type;
-    typedef polygon_with_holes_data<T> polygon_with_holes_type;
-    typedef polygon_set_data<T> polygon_set_type;
+void polygon_set_data_test2()
+{
+    typedef point_data<int> point_type;
+    typedef polygon_data<int> polygon_type;
+    typedef polygon_set_data<int> polygon_set_type;
 
     std::vector<point_type> data;
     data.push_back(point_type(2,0));
@@ -83,14 +78,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test2, T, test_types) {
     std::vector<polygon_type> traps;
     get_trapezoids(traps, pset, HORIZONTAL);
 
-    BOOST_CHECK_EQUAL(4, traps.size());
+    BOOST_TEST_EQ(4, traps.size());
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test3, T, test_types) {
-    typedef point_data<T> point_type;
-    typedef polygon_data<T> polygon_type;
-    typedef polygon_with_holes_data<T> polygon_with_holes_type;
-    typedef polygon_set_data<T> polygon_set_type;
+void polygon_set_data_test3()
+{
+    typedef point_data<int> point_type;
+    typedef polygon_data<int> polygon_type;
+    typedef polygon_set_data<int> polygon_set_type;
 
     std::vector<point_type> data;
     data.push_back(point_type(0,0));
@@ -106,6 +101,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_set_data_test3, T, test_types) {
     polygon_set_type pset;
     pset += polygon;
 
-    BOOST_CHECK_EQUAL(32.0, area(polygon));
-    BOOST_CHECK_EQUAL(32.0, area(polygon));
+    BOOST_TEST_EQ(32.0, area(polygon));
+    BOOST_TEST_EQ(32.0, area(polygon));
+}
+
+int main()
+{
+    polygon_set_data_test1();
+    polygon_set_data_test2();
+    polygon_set_data_test3();
+    return boost::report_errors();
 }

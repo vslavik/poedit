@@ -28,176 +28,187 @@ using namespace boost;
 // Test class 1: a class hierarchy
 //////////////////////////////////////////////////////////////////////////////
 
-class Base
+namespace test
 {
-    Base( const Base& r ) : data1(r.data1), data2(r.data2), 
-        data3(r.data3), data(r.data) 
-    { 
-#ifdef PTR_CONTAINER_DEBUG
-        objects++;
-        std::cout <<"+ " << objects << "\n"; 
-#endif
-    }
-    
-    Base& operator=( const Base& );
-
-public: // for test reasons only
-    int data1, data2, data3;
-    string data;
-    
-public:
-    
-    Base() : data1(1), data2(2), data3(rand()%256), 
-             data(lexical_cast<string>(rand())) 
+    class Base
     {
-#ifdef PTR_CONTAINER_DEBUG
-        objects++;
-        std::cout <<"+ " << objects << "\n"; 
-#endif
-    }
-    
-    virtual ~Base()                       
-    {
-#ifdef PTR_CONTAINER_DEBUG
-        objects--;
-        std::cout <<"- " << objects << "\n"; 
-        if( objects < 0 )
-            terminate();
-#endif
-    }
-    
-    void     print( ostream& out ) const  { do_print( out); }
-    Base*    clone() const                { return do_clone(); }
-    void     foo()                        { do_foo(); }
-    
-    virtual bool less_than( const Base& b ) const
-    {
-        return data3 < b.data3;
-    }
-    
-    virtual bool equal( const Base& b ) const
-    {
-        return data1 == b.data1 && 
-               data2 == b.data2 &&
-               data3 == b.data3 &&
-               data  == b.data;
-    }
-
-#ifdef PTR_CONTAINER_DEBUG
-    static int objects;
-#endif    
-    
-private:
-    virtual void  do_print( ostream& /*out*/ ) const   { };
-    virtual Base* do_clone() const                     { return new Base( *this ); }; 
-    virtual void  do_foo()                             { };
-};
-
-#ifdef PTR_CONTAINER_DEBUG
-int Base::objects = 0;
-#endif
-
-
-
-ostream& operator<<( ostream& out, const Base& b )
-{
-    b.print( out );
-    return out;
-}
-
-
-//
-//  We rely on argument dependent lookup
-//  for this to be found
-//
-inline Base* new_clone( const Base& b )
-{
-    return b.clone();
-}
-
-
-
-inline bool operator<( const Base& l, const Base& r )
-{
-    return l.less_than( r );
-}
-
-
-
-inline bool operator>( const Base& l, const Base& r )
-{
-    return r < l;
-}
-
-
-
-inline bool operator==( const Base& l, const Base& r )
-{
-    return l.equal( r );
-}
-
-
-
-inline bool operator!=( const Base& l, const Base& r )
-{
-    return !l.equal( r );
-}
-
-
-
-inline std::size_t hash_value( const Base& b )
-{
-    std::size_t seed = 0;
-    boost::hash_combine( seed, b.data );
-    boost::hash_combine( seed, b.data1 );
-    boost::hash_combine( seed, b.data2 );
-    boost::hash_combine( seed, b.data3 );
-    return seed;
-}
-
-
-class Derived_class : public Base
-{   
-public: // for test reasons only
-    int i_;
-
-private:
+    protected:
+        Base( const Base& r ) : data1(r.data1), data2(r.data2), 
+            data3(r.data3), data(r.data) 
+        { 
+    #ifdef PTR_CONTAINER_DEBUG
+            objects++;
+            std::cout <<"+ " << objects << "\n"; 
+    #endif
+        }
         
-    virtual void  do_print( ostream& out ) const
+        Base& operator=( const Base& );
+    
+    public: // for test reasons only
+        int data1, data2, data3;
+        string data;
+        
+    public:
+        
+        Base() : data1(1), data2(2), data3(rand()%256), 
+                 data(lexical_cast<string>(rand())) 
+        {
+    #ifdef PTR_CONTAINER_DEBUG
+            objects++;
+            std::cout <<"+ " << objects << "\n"; 
+    #endif
+        }
+        
+        virtual ~Base()                       
+        {
+    #ifdef PTR_CONTAINER_DEBUG
+            objects--;
+            std::cout <<"- " << objects << "\n"; 
+            if( objects < 0 )
+                terminate();
+    #endif
+        }
+        
+        void     print( ostream& out ) const  { do_print( out); }
+        Base*    clone() const                { return do_clone(); }
+        void     foo()                        { do_foo(); }
+        
+        virtual bool less_than( const Base& b ) const
+        {
+            return data3 < b.data3;
+        }
+        
+        virtual bool equal( const Base& b ) const
+        {
+            return data1 == b.data1 && 
+                   data2 == b.data2 &&
+                   data3 == b.data3 &&
+                   data  == b.data;
+        }
+    
+    #ifdef PTR_CONTAINER_DEBUG
+        static int objects;
+    #endif    
+        
+    private:
+        virtual void  do_print( ostream& /*out*/ ) const   { };
+        virtual Base* do_clone() const                     { return new Base( *this ); }; 
+        virtual void  do_foo()                             { };
+    };
+    
+    #ifdef PTR_CONTAINER_DEBUG
+    int Base::objects = 0;
+    #endif
+    
+    
+    
+    ostream& operator<<( ostream& out, const Base& b )
     {
-        out << i_;
+        b.print( out );
+        return out;
     }
     
     
-    virtual Base* do_clone() const
+    //
+    //  We rely on argument dependent lookup
+    //  for this to be found
+    //
+    inline Base* new_clone( const Base& b )
     {
-        return new Derived_class;
+        return b.clone();
     }
     
-    virtual void do_foo() 
+    
+    
+    inline bool operator<( const Base& l, const Base& r )
     {
-        ++i_;
+        return l.less_than( r );
     }
     
-public:
-    Derived_class() : i_( rand() )
-    { }
-
-    virtual bool less_than( const Base& b ) const
+    
+    
+    inline bool operator>( const Base& l, const Base& r )
     {
-        const Derived_class& d = dynamic_cast<const Derived_class&>( b );
-        return i_ < d.i_;
+        return r < l;
     }
-};
-
-
-
-inline std::size_t hash_value( const Derived_class& b )
-{
-    std::size_t seed = hash_value( static_cast<const Base&>( b ) );
-    boost::hash_combine( seed, b.i_ );
-    return seed;
+    
+    
+    
+    inline bool operator==( const Base& l, const Base& r )
+    {
+        return l.equal( r );
+    }
+    
+    
+    
+    inline bool operator!=( const Base& l, const Base& r )
+    {
+        return !l.equal( r );
+    }
+    
+    
+    
+    inline std::size_t hash_value( const Base& b )
+    {
+        std::size_t seed = 0;
+        boost::hash_combine( seed, b.data );
+        boost::hash_combine( seed, b.data1 );
+        boost::hash_combine( seed, b.data2 );
+        boost::hash_combine( seed, b.data3 );
+        return seed;
+    }
+    
+    
+    class Derived_class : public Base
+    {   
+    protected:
+        Derived_class( const Derived_class& r ) : Base( r ), i_(r.i_)
+        { } 
+        
+    public: // for test reasons only
+        int i_;
+    
+    private:
+            
+        virtual void  do_print( ostream& out ) const
+        {
+            out << i_;
+        }
+        
+        
+        virtual Base* do_clone() const
+        {
+            return new Derived_class( *this );
+        }
+        
+        virtual void do_foo() 
+        {
+            ++i_;
+        }
+        
+    public:
+        Derived_class() : i_( rand() )
+        { }
+    
+        virtual bool less_than( const Base& b ) const
+        {
+            const Derived_class& d = dynamic_cast<const Derived_class&>( b );
+            return i_ < d.i_;
+        }
+    };
+    
+    
+    
+    inline std::size_t hash_value( const Derived_class& b )
+    {
+        std::size_t seed = hash_value( static_cast<const Base&>( b ) );
+        boost::hash_combine( seed, b.i_ );
+        return seed;
+    }
 }
+
+using test::Base;
+using test::Derived_class;
 
 //////////////////////////////////////////////////////////////////////////////
 // Test class 2: a value class 

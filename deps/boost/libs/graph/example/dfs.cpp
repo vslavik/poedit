@@ -107,7 +107,6 @@ main(int , char* [])
   add_edge(4, 0, G);
   add_edge(4, 1, G);
 
-  typedef graph_traits<Graph>::vertex_descriptor Vertex;
   typedef graph_traits<Graph>::vertices_size_type size_type;
 
   std::vector<size_type> d(num_vertices(G));  

@@ -21,6 +21,11 @@ int main()
     qi::rule<iterator_type, std::string(), qi::blank_type> top =
         qi::lexeme[+char_enc::alpha];
 
-    return 0;
+    // I do not know what the hell is going under the hood of MSVC 9,
+    // but the next line fixes compilation error.
+    // error C3767: '!=': candidate function(s) not accessible
+    iterator_type first, last;
+
+    return first == last; // just to silence unused variable warnings
 }
 

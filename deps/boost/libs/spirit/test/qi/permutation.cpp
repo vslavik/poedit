@@ -16,7 +16,6 @@
 #include <boost/fusion/include/at.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/optional.hpp>
 
 #include <string>
@@ -52,6 +51,12 @@ main()
         BOOST_TEST((test("cba", char_('a') ^ char_('b') ^ char_('c'))));
 
         BOOST_TEST((!test("cca", char_('a') ^ char_('b') ^ char_('c'))));
+    }
+
+    {   // test optional must stay uninitialized
+        optional<int> i;
+        BOOST_TEST((test_attr("", -int_ ^ int_, i)));
+        BOOST_TEST(!i);
     }
 
     {

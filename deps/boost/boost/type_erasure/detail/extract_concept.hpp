@@ -42,6 +42,33 @@ struct combine_concepts<void, T> { typedef T type; };
 template<>
 struct combine_concepts<void, void> { typedef void type; };
 
+#ifdef BOOST_TYPE_ERASURE_USE_MP11
+
+template<class T, class U>
+using combine_concepts_t = typename ::boost::type_erasure::detail::combine_concepts<T, U>::type;
+
+template<class T, class U>
+using extract_concept_or_void =
+    ::boost::mp11::mp_eval_if_c<
+        !::boost::type_erasure::is_placeholder<
+            ::boost::remove_cv_t<
+                ::boost::remove_reference_t<T>
+            >
+        >::value,
+        void,
+        ::boost::type_erasure::concept_of_t, U
+    >;
+
+template<class L1, class L2>
+using extract_concept_t =
+    ::boost::mp11::mp_fold<
+        ::boost::mp11::mp_transform< ::boost::type_erasure::detail::extract_concept_or_void, L1, L2>,
+        void,
+        ::boost::type_erasure::detail::combine_concepts_t
+    >;
+
+#else
+
 template<class T, class U>
 struct maybe_extract_concept
 {
@@ -56,7 +83,7 @@ struct maybe_extract_concept
     >::type type;
 };
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 template<class Args, class... U>
 struct extract_concept;
@@ -82,11 +109,12 @@ struct extract_concept<void()>
 };
 
 #else
-//#endif
 
 #define BOOST_PP_FILENAME_1 <boost/type_erasure/detail/extract_concept.hpp>
 #define BOOST_PP_ITERATION_LIMITS (1, BOOST_TYPE_ERASURE_MAX_ARITY)
 #include BOOST_PP_ITERATE()
+
+#endif
 
 #endif
 

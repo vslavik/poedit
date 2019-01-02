@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -6,16 +6,42 @@
 #define BOOST_HANA_TEST_LAWS_FOLDABLE_HPP
 
 #include <boost/hana/assert.hpp>
+#include <boost/hana/chain.hpp>
 #include <boost/hana/concept/comparable.hpp>
-#include <boost/hana/config.hpp>
-#include <boost/hana/core/when.hpp>
 #include <boost/hana/concept/foldable.hpp>
+#include <boost/hana/concept/product.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/config.hpp>
+#include <boost/hana/core/make.hpp>
+#include <boost/hana/core/when.hpp>
+#include <boost/hana/count.hpp>
+#include <boost/hana/count_if.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/first.hpp>
+#include <boost/hana/fold.hpp>
+#include <boost/hana/fold_left.hpp>
+#include <boost/hana/fold_right.hpp>
+#include <boost/hana/for_each.hpp>
 #include <boost/hana/functional/capture.hpp>
 #include <boost/hana/functional/curry.hpp>
 #include <boost/hana/functional/demux.hpp>
 #include <boost/hana/functional/flip.hpp>
 #include <boost/hana/integral_constant.hpp>
 #include <boost/hana/lazy.hpp>
+#include <boost/hana/length.hpp>
+#include <boost/hana/lift.hpp>
+#include <boost/hana/maximum.hpp>
+#include <boost/hana/minimum.hpp>
+#include <boost/hana/monadic_fold_left.hpp>
+#include <boost/hana/monadic_fold_right.hpp>
+#include <boost/hana/not_equal.hpp>
+#include <boost/hana/product.hpp>
+#include <boost/hana/reverse_fold.hpp>
+#include <boost/hana/second.hpp>
+#include <boost/hana/size.hpp>
+#include <boost/hana/sum.hpp>
+#include <boost/hana/unpack.hpp>
+#include <boost/hana/value.hpp>
 
 #include <laws/base.hpp>
 #include <support/identity.hpp>
@@ -34,7 +60,7 @@ namespace boost { namespace hana { namespace test {
         template <typename Foldables>
         TestFoldable(Foldables foldables) {
             hana::for_each(foldables, [](auto xs) {
-                static_assert(Foldable<decltype(xs)>::value, "");
+                static_assert(Foldable<decltype(xs)>{}, "");
 
                 _injection<0> f{};
                 ct_eq<999> s{};
@@ -57,7 +83,7 @@ namespace boost { namespace hana { namespace test {
                     hana::fold_right(xs, s, hana::flip(f))
                 ));
 
-                only_when_(hana::not_equal(hana::length(xs), size_c<0>),
+                only_when_(hana::not_equal(hana::length(xs), hana::size_c<0>),
                 hana::make_lazy([](auto f, auto xs) {
                     BOOST_HANA_CHECK(hana::equal(
                         hana::fold(xs, f),

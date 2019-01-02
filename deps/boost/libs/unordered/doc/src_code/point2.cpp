@@ -5,7 +5,7 @@
 
 #include <boost/unordered_set.hpp>
 #include <boost/functional/hash.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 //[point_example2
     struct point {

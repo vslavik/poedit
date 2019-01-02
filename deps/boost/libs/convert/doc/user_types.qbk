@@ -1,5 +1,5 @@
 [/
-  Copyright (c) Vladimir Batov 2009-2014
+  Copyright (c) Vladimir Batov 2009-2016
   Distributed under the Boost Software License, Version 1.0.
   See copy at http://www.boost.org/LICENSE_1_0.txt.
 ]
@@ -15,7 +15,7 @@ Probably the most obvious way to support a new type is to write a converter (pot
 
 Within the ['Boost.Convert] framework the integration and support of user-defined types is every converter's private business. Every converter is free to implement its own (or re-use an existing) user-type-integration mechanism. 
 
-[heading ['boost::cnv::stream at al.]]
+[heading ['boost::cnv::stream et al.]]
 
 Unsurprisingly, the converters based on the ['`std::iostream`] library use the mechanism introduced and supported by that library. That is,
 
@@ -36,7 +36,7 @@ That allows handling conversions of user-defined types with ['`std::iostream`]-b
 
 [stream_example6]
 
-[heading ['boost::cnv::strtol at al.]]
+[heading ['boost::cnv::strtol et al.]]
 
 Other converters (based on `boost::cnv::cnvbase`) implement support for user types similarly but without the ['`std::iostream`]-related overhead (see [link boost_convert.performance.converters_compared Converters Compared]). Namely, new types are supported by the converters after the following is defined:
 

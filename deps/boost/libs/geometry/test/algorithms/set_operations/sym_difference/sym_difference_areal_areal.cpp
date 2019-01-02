@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( test_sym_difference_polygon_multipolygon )
          from_wkt<MPG>("MULTIPOLYGON(((0 0,0 10,10 10,10 0,0 0)),\
                        ((20 0,20 10,30 10,30 0,20 0)))"),
          1,
-         9,
+         6,
          300);
 }
 

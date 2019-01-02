@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function polymorphic_relaxed_get</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../variant/reference.html#header.boost.variant.polymorphic_get_hpp" title="Header &lt;boost/variant/polymorphic_get.hpp&gt;">
 <link rel="prev" href="bad_polymorphic_get.html" title="Class bad_polymorphic_get">
@@ -44,7 +44,7 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">,</span> <span class="keyword">typename</span> T1<span class="special">,</span> <span class="keyword">typename</span> T2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">typename</span> TN<span class="special">&gt;</span> 
   <span class="keyword">const</span> <span class="identifier">U</span> <span class="special">&amp;</span> <span class="identifier">polymorphic_relaxed_get</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="variant.html" title="Class template variant">variant</a><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span> <span class="identifier">T2</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="identifier">TN</span><span class="special">&gt;</span> <span class="special">&amp;</span> operand<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp496407664"></a><h2>Description</h2>
+<a name="id-1.3.46.5.11.4.4"></a><h2>Description</h2>
 <p>The <code class="computeroutput">polymorphic_get</code> function allows run-time checked,
           type-safe retrieval of the content of the given
           <code class="computeroutput"><a class="link" href="variant.html" title="Class template variant">variant</a></code>. The function succeeds
@@ -55,7 +55,7 @@
           <code class="computeroutput"><a class="link" href="polymorphic_get.html" title="Function polymorphic_get">polymorphic_get</a></code> or <code class="computeroutput"><a class="link" href="polymorphic_strict_get.html" title="Function polymorphic_strict_get">polymorphic_strict_get</a></code>
           in new code.
           <code class="computeroutput"><a class="link" href="polymorphic_strict_get.html" title="Function polymorphic_strict_get">polymorphic_strict_get</a></code>
-          provides more compile time checks and it's behavior is closer to <code class="computeroutput">std::get</code>
+          provides more compile time checks and its behavior is closer to <code class="computeroutput">std::get</code>
           from C++ Standard Library.</p>
 <p><span class="bold"><strong>Warning</strong></span>: After either
           <code class="computeroutput">operand</code> or its content is destroyed (e.g., when the
@@ -63,8 +63,11 @@
           value of different type), the returned reference is invalidated.
           Thus, significant care and caution must be extended when handling
           the returned reference.</p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Notes:</span></p></td>

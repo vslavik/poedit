@@ -66,6 +66,20 @@ $(document).ready(function(){initNavTree('changelog.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><ul>
+<li>1.67.0
+    <ul>
+        <li>Added support of unique_ptr interface in addition to C++2003 auto_ptr - in order to support C++2017, now you can use BOOST_LOCALE_HIDE_AUTO_PTR definiton to remove auto_ptr from the interfaces and prevent deprecated watnings</li>
+        <li>Fixed test problem with ICU &gt;60.1</li>
+        <li>Fix of solaris build</li>
+        <li>Fixed wired FreeBSD/clang issue on optimized build. Probably compiler workaround</li>
+        <li>Added workaround for failing MSVC tests due to 932 codepage codecvt issue</li>
+        <li>Fixed bugs 6851, 12572, 12453</li>
+        <li>Fixed missing throw in case of failure in icu/date_time</li>
+        <li>Fixed build agains Boost.Thread v4</li>
+        <li>Fixed Year of week instead of year ICU backend formatting</li>
+        <li>Fixed formatting test for ICU 56.1 and above</li>
+    </ul>
+</li>
 <li>1.60.0<ul>
 <li>Implemented generic codecvt facet and add general purpose utf8_codecvt facet</li>
 <li>Added posix locale support for FreeBSD 10.0 and above</li>

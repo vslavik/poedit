@@ -14,6 +14,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/multiprecision/debug_adaptor.hpp>
@@ -83,7 +84,6 @@ typedef boost::mpl::list <
    //boost::random::uniform_01<big_float>,  // doesn't respect the concept!  But gets used internally anyway.
    boost::random::uniform_real_distribution<big_float>,
    boost::random::uniform_on_sphere<big_float>,
-   boost::random::uniform_real_distribution<big_float>,
    boost::random::weibull_distribution<big_float>
 > distributions;
 
@@ -95,6 +95,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(distributions_test, dist_type, distributions)
    result_type a = (d.min)();
    result_type b = (d.max)();
    typename dist_type::param_type p = d.param();
+   boost::ignore_unused(p);
    d.reset();
    
    std::stringstream ss;

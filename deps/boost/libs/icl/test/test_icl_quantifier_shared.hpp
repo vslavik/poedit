@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2010: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -10,9 +10,9 @@ Copyright (c) 2008-2010: Joachim Faulhaber
 
 #include "portability.hpp"
 
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -20,15 +20,14 @@ template
 #endif
 >
 void make_3_icl_maps_and_derivatives_1
-                   (icl::map<T,U,Trt>& map_a, 
-                    icl::map<T,U,Trt>& map_b, 
-                    icl::map<T,U,Trt>& map_c, 
+                   (icl::map<T,U,Trt>& map_a,
+                    icl::map<T,U,Trt>& map_b,
+                    icl::map<T,U,Trt>& map_c,
                     std::pair<T,U>& map_pair_a,
                     std::pair<T,U>& map_pair_b,
                     ICL_PORT_msvc_7_1_IntervalMap(T,U,Trt)*)
 {
     typedef IntervalMap<T,U,Trt> IntervalMapT;
-    typedef    icl::map<T,U,Trt>         MapT;
 
     map_pair_a = sK_v(5,1);
     map_pair_b = sK_v(9,1);
@@ -52,7 +51,7 @@ void make_3_icl_maps_and_derivatives_1
     add(map_c, sK_v(6,2));
     add(map_c, sK_v(7,2));
     add(map_c, sK_v(8,2));
-               
+
     add(map_c, sK_v(3,1));
     add(map_c, sK_v(4,1));
     add(map_c, sK_v(5,1));
@@ -66,9 +65,9 @@ void make_3_icl_maps_and_derivatives_1
 //------------------------------------------------------------------------------
 // Monoid EAN
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -89,9 +88,9 @@ void icl_quantifier_check_monoid_plus_4_bicremental_types()
 }
 
 
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -115,9 +114,9 @@ void icl_quantifier_check_monoid_et_4_bicremental_types()
 // Abelian monoid EANC
 //------------------------------------------------------------------------------
 
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -138,9 +137,9 @@ void icl_quantifier_check_abelian_monoid_plus_4_bicremental_types()
 }
 
 
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -162,11 +161,11 @@ void icl_quantifier_check_abelian_monoid_et_4_bicremental_types()
 
 
 //------------------------------------------------------------------------------
-// Abelian partial invertive monoid 
+// Abelian partial invertive monoid
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -189,9 +188,9 @@ void icl_quantifier_check_partial_invertive_monoid_plus_4_bicremental_types()
 //------------------------------------------------------------------------------
 // Abelian partial invertive monoid with distinct equality for inversion
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -220,9 +219,9 @@ void icl_quantifier_check_partial_invertive_monoid_plus_prot_inv_4_bicremental_t
 //------------------------------------------------------------------------------
 // Abelian group EANIC
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -243,11 +242,11 @@ void icl_quantifier_check_abelian_group_plus_4_bicremental_types()
 }
 
 //------------------------------------------------------------------------------
-// (0 - x) + x =d= 0 
+// (0 - x) + x =d= 0
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -278,9 +277,9 @@ void icl_quantifier_check_abelian_group_plus_prot_inv_4_bicremental_types()
 //------------------------------------------------------------------------------
 // Containedness
 //------------------------------------------------------------------------------
-template 
+template
 <
-    class T, class U, class Trt, 
+    class T, class U, class Trt,
 #if (defined(__GNUC__) && (__GNUC__ < 4)) //MEMO Can be simplified, if gcc-3.4 is obsolete
     ICL_IntervalMap_TEMPLATE(T,U,Traits,Trt) IntervalMap
 #else
@@ -307,4 +306,3 @@ void icl_quantifier_check_containedness_4_bicremental_types()
 
 
 #endif // LIBS_ICL_TEST_TEST_ICL_QUANTIFIER_SHARED_HPP_JOFA_100819
-

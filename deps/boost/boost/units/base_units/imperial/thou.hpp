@@ -28,8 +28,8 @@ typedef scaled_base_unit<yard_base_unit, scale<36000, static_rational<-1> > > th
 
 template<>
 struct base_unit_info<imperial::thou_base_unit> {
-    static const char* name()   { return("thou"); }
-    static const char* symbol() { return("thou"); }
+    static BOOST_CONSTEXPR const char* name()   { return("thou"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("thou"); }
 };
 
 } // namespace units

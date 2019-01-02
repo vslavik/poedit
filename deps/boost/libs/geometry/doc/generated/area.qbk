@@ -27,7 +27,7 @@ The area calculation can be done in all three common coordinate systems, Cartesi
 
 [heading Synopsis]
 ``template<typename Geometry>
-default_area_result<Geometry>::type area(Geometry const & geometry)``
+area_result<Geometry>::type area(Geometry const & geometry)``
 
 [heading Parameters]
 
@@ -38,7 +38,7 @@ default_area_result<Geometry>::type area(Geometry const & geometry)``
 
 
 [heading Returns]
-The calculated \1
+The calculated area
 
 [heading Header]
 Either
@@ -67,7 +67,7 @@ The free function area calculates the area of a geometry using the specified str
 
 [heading Synopsis]
 ``template<typename Geometry, typename Strategy>
-Strategy::return_type area(Geometry const & geometry, Strategy const & strategy)``
+area_result<Geometry, Strategy>::type area(Geometry const & geometry, Strategy const & strategy)``
 
 [heading Parameters]
 
@@ -79,7 +79,7 @@ Strategy::return_type area(Geometry const & geometry, Strategy const & strategy)
 
 
 [heading Returns]
-The calculated \1
+The calculated area
 
 [heading Header]
 Either
@@ -93,13 +93,14 @@ Or
 
 [include reference/algorithms/area.qbk]
 
+[heading Available Strategies]
+* [link geometry.reference.strategies.strategy_area_cartesian Cartesian]
+* [link geometry.reference.strategies.strategy_area_spherical Spherical]
+* [link geometry.reference.strategies.strategy_area_geographic Geographic]
+
 [heading Example]
 [area_with_strategy]
 [area_with_strategy_output]
-
-[heading Available Strategies]
-* [link geometry.reference.strategies.strategy_area_surveyor Surveyor (cartesian)]
-* [link geometry.reference.strategies.strategy_area_huiller Huiller (spherical)]
 
 
 [endsect]

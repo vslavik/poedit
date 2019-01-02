@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Annex: Implementation</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="prev" href="no_variadic_macros.html" title="Annex: No Variadic Macros">
@@ -44,7 +44,7 @@
 </table></div>
 <h4>
 <a name="boost_localfunction.implementation.h0"></a>
-      <span><a name="boost_localfunction.implementation.local_classes_as_template_parameters"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.local_classes_as_template_parameters">Local
+      <span class="phrase"><a name="boost_localfunction.implementation.local_classes_as_template_parameters"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.local_classes_as_template_parameters">Local
       Classes as Template Parameters</a>
     </h4>
 <p>
@@ -163,7 +163,7 @@
     </p>
 <h4>
 <a name="boost_localfunction.implementation.h1"></a>
-      <span><a name="boost_localfunction.implementation.parsing_macros"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.parsing_macros">Parsing
+      <span class="phrase"><a name="boost_localfunction.implementation.parsing_macros"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.parsing_macros">Parsing
       Macros</a>
     </h4>
 <p>
@@ -174,7 +174,7 @@
       special code to bind by constant), etc. The parameter tokens are inspected
       using preprocessor meta-programming and specifically using the macros defined
       by the files in the <code class="literal">boost/local_function/detail/preprocessor/keyword/</code>
-      directory. <sup>[<a name="boost_localfunction.implementation.f0" href="#ftn.boost_localfunction.implementation.f0" class="footnote">31</a>]</sup>
+      directory. <a href="#ftn.boost_localfunction.implementation.f0" class="footnote" name="boost_localfunction.implementation.f0"><sup class="footnote">[31]</sup></a>
     </p>
 <p>
       For example, the following code defines a macro that allows the preprocessor
@@ -205,8 +205,8 @@
 <p>
     </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.implementation.f0" href="#boost_localfunction.implementation.f0" class="para">31</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_localfunction.implementation.f0" class="footnote"><p><a href="#boost_localfunction.implementation.f0" class="para"><sup class="para">[31] </sup></a>
         This technique is at the core of even more complex preprocessor parsing macros
         like the ones that parse the <a href="http://sourceforge.net/projects/contractpp" target="_top">Contract++</a>
         syntax.

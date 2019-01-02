@@ -28,7 +28,7 @@ endif()
 if(PERF_BOOST_COMPONENTS)
   list(REMOVE_DUPLICATES PERF_BOOST_COMPONENTS)
 endif()
-find_package(Boost 1.48 REQUIRED COMPONENTS ${PERF_BOOST_COMPONENTS})
+find_package(Boost 1.54 REQUIRED COMPONENTS ${PERF_BOOST_COMPONENTS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 set(BENCHMARKS
@@ -36,6 +36,7 @@ set(BENCHMARKS
   bernoulli_distribution
   binary_find
   cart_to_polar
+  comparison_sort
   copy_if
   copy_to_device
   count

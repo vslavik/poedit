@@ -28,7 +28,7 @@ namespace html
         struct confix_spec 
           : spirit::result_of::terminal<repo::tag::confix(Prefix, Suffix)>
         {};
-    };
+    }
 
     template <typename Prefix, typename Suffix>
     inline typename traits::confix_spec<Prefix, Suffix>::type

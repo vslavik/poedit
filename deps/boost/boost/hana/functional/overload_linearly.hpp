@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::overload_linearly`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -11,8 +11,8 @@ Distributed under the Boost Software License, Version 1.0.
 #define BOOST_HANA_FUNCTIONAL_OVERLOAD_LINEARLY_HPP
 
 #include <boost/hana/config.hpp>
+#include <boost/hana/detail/decay.hpp>
 
-#include <type_traits>
 #include <utility>
 
 
@@ -85,8 +85,8 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct make_overload_linearly_t {
         template <typename F, typename G>
         constexpr overload_linearly_t<
-            typename std::decay<F>::type,
-            typename std::decay<G>::type
+            typename detail::decay<F>::type,
+            typename detail::decay<G>::type
         > operator()(F&& f, G&& g) const {
             return {static_cast<F&&>(f), static_cast<G&&>(g)};
         }
@@ -95,6 +95,11 @@ BOOST_HANA_NAMESPACE_BEGIN
         constexpr decltype(auto) operator()(F&& f, G&& g, H&& ...h) const {
             return (*this)(static_cast<F&&>(f),
                     (*this)(static_cast<G&&>(g), static_cast<H&&>(h)...));
+        }
+
+        template <typename F>
+        constexpr typename detail::decay<F>::type operator()(F&& f) const {
+            return static_cast<F&&>(f);
         }
     };
 

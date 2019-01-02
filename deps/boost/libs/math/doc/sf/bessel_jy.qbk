@@ -99,6 +99,15 @@ by way of double-checking these results, the worst performing __cephes and GSL c
 were recomputed using [@http://functions.wolfram.com functions.wolfram.com],
 and the result checked against our test data: no errors in the test data were found.
 
+The following error plot are based on an exhaustive search of the functions domain for J0 and Y0, 
+MSVC-15.5 at `double` precision, other compilers and precisions are very similar - the plots simply 
+illustrate the relatively large errors as you approach a zero, and the very low errors elsewhere.
+
+[graph j0__double]
+
+[graph y0__double]
+
+
 [h4 Implementation]
 
 The implementation is mostly about filtering off various special cases:

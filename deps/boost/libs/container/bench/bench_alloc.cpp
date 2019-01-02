@@ -18,6 +18,7 @@
 
 #include <iostream>  //std::cout, std::endl
 #include <typeinfo>  //typeid
+#include <cassert>   //assert
 
 #include <boost/timer/timer.hpp>
 using boost::timer::cpu_timer;
@@ -145,21 +146,25 @@ int allocation_loop()
                << "-------------------------------------------\n"
                << std::endl;
 
-   #define SINGLE_TEST
-   #ifndef SINGLE_TEST
-      #ifdef NDEBUG
-      unsigned int numrep [] = { /*10000, */10000, 100000, 1000000 };
-      #else
-      unsigned int numrep [] = { /*10000, */1000, 10000, 100000 };
-      #endif
-      unsigned int numele [] = { /*10000,  */1000,    100,      10 };
-   #else
+   //#define SINGLE_TEST
+   #define SIMPLE_IT
+   #ifdef SINGLE_TEST
       #ifdef NDEBUG
       unsigned int numrep [] = { 50000 };
       #else
       unsigned int numrep [] = { 5000 };
       #endif
       unsigned int numele [] = { 100 };
+   #elif defined(SIMPLE_IT)
+      unsigned int numrep [] = { 3 };
+      unsigned int numele [] = { 100 };
+   #else
+      #ifdef NDEBUG
+      unsigned int numrep [] = { /*10000, */10000, 100000, 1000000 };
+      #else
+      unsigned int numrep [] = { /*10000, */1000, 10000, 100000 };
+      #endif
+      unsigned int numele [] = { /*10000,  */1000,    100,      10 };
    #endif
 
    for(unsigned int i = 0; i < sizeof(numele)/sizeof(numele[0]); ++i){

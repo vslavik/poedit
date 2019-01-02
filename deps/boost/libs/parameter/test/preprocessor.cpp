@@ -477,6 +477,6 @@ int main()
       , test::index = 2
     );
 
-    return 0;
+    return boost::report_errors();
 }
 

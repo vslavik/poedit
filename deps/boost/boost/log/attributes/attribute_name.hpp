@@ -19,8 +19,8 @@
 #include <string>
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -53,21 +53,21 @@ public:
     typedef uint32_t id_type;
 
 private:
-    enum { uninitialized = 0xFFFFFFFFu };
-
     class repository;
     friend class repository;
 
 private:
     //! Associated identifier
     id_type m_id;
+    //! A special identifier value indicating unassigned attribute name
+    static BOOST_CONSTEXPR_OR_CONST id_type uninitialized = ~static_cast< id_type >(0u);
 #endif
 
 public:
     /*!
      * Default constructor. Creates an object that does not refer to any attribute name.
      */
-    BOOST_CONSTEXPR attribute_name() BOOST_NOEXCEPT : m_id(static_cast< id_type >(uninitialized))
+    BOOST_CONSTEXPR attribute_name() BOOST_NOEXCEPT : m_id(uninitialized)
     {
     }
     /*!
@@ -111,7 +111,7 @@ public:
      * \return \c true if <tt>*this</tt> and \c that refer to the same attribute name,
      *         and \c false otherwise.
      */
-    bool operator== (const char* that) const { return (m_id != static_cast< id_type >(uninitialized)) && (this->string() == that); }
+    bool operator== (const char* that) const { return (m_id != uninitialized) && (this->string() == that); }
     /*!
      * Compares the attribute names
      *
@@ -126,7 +126,7 @@ public:
      * \return \c true if <tt>*this</tt> and \c that refer to the same attribute name,
      *         and \c false otherwise.
      */
-    bool operator== (string_type const& that) const { return (m_id != static_cast< id_type >(uninitialized)) && (this->string() == that); }
+    bool operator== (string_type const& that) const { return (m_id != uninitialized) && (this->string() == that); }
     /*!
      * Compares the attribute names
      *
@@ -147,7 +147,7 @@ public:
      * \return \c true if <tt>*this</tt> was default-constructed and does not refer to any attribute name,
      *         \c false otherwise
      */
-    bool operator! () const BOOST_NOEXCEPT { return (m_id == static_cast< id_type >(uninitialized)); }
+    bool operator! () const BOOST_NOEXCEPT { return (m_id == uninitialized); }
 
     /*!
      * \return The associated id value
@@ -155,7 +155,7 @@ public:
      */
     id_type id() const BOOST_NOEXCEPT
     {
-        BOOST_ASSERT(m_id != static_cast< id_type >(uninitialized));
+        BOOST_ASSERT(m_id != uninitialized);
         return m_id;
     }
     /*!

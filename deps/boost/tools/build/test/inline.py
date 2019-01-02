@@ -21,11 +21,11 @@ int main() {}
 t.write("helper.cpp", "void helper() {}\n")
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/link-static/a__helper.lib")
-t.rm("bin/$toolset/debug/link-static/a__helper.lib")
+t.expect_addition("bin/$toolset/debug*/a__helper.lib")
+t.rm("bin/$toolset/debug*/a__helper.lib")
 
 t.run_build_system(["a__helper"])
-t.expect_addition("bin/$toolset/debug/link-static/a__helper.lib")
+t.expect_addition("bin/$toolset/debug*/a__helper.lib")
 
 t.rm("bin")
 
@@ -39,9 +39,9 @@ exe a2 : a.cpp [ lib helper : helper.cpp ] ;
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/link-static/a.exe")
-t.expect_addition("bin/$toolset/debug/link-static/a__helper.lib")
-t.expect_addition("bin/$toolset/debug/link-static/a2__helper.lib")
+t.expect_addition("bin/$toolset/debug/link-static*/a.exe")
+t.expect_addition("bin/$toolset/debug*/a__helper.lib")
+t.expect_addition("bin/$toolset/debug*/a2__helper.lib")
 
 
 # Check that the 'alias' target does not change the name of inline targets, and
@@ -57,6 +57,6 @@ t.run_build_system()
 t.expect_nothing_more()
 
 t.run_build_system(["a"])
-t.expect_addition("bin/$toolset/debug/link-static/helper.lib")
+t.expect_addition("bin/$toolset/debug*/helper.lib")
 
 t.cleanup()

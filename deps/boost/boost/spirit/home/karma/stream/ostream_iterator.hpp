@@ -25,9 +25,13 @@ namespace boost { namespace spirit { namespace karma
         typename T, typename Elem = char
       , typename Traits = std::char_traits<Elem> >
     class ostream_iterator 
-      : public std::iterator<std::output_iterator_tag, void, void, void, void>
     {
     public:
+        typedef std::output_iterator_tag iterator_category;
+        typedef void value_type;
+        typedef void difference_type;
+        typedef void pointer;
+        typedef void reference;
         typedef Elem char_type;
         typedef Traits traits_type;
         typedef std::basic_ostream<Elem, Traits> ostream_type;

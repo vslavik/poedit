@@ -26,6 +26,9 @@ class MyClass : public list_base_hook<>   //This is a derivation hook
    MyClass(int i)
       :  int_(i)
    {}
+   //<-
+   int get_int() const { return int_; }
+   //->
 };
 
 //Define a list that will store MyClass using the public base hook

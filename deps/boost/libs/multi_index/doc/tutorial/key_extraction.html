@@ -50,6 +50,7 @@ Container creation
       <li><a href="#composite_keys_hash">Composite keys and hashed indices</a></li>
     </ul>
   </li>
+  <li><a href="#key">C++17 terse key specification syntax</a></li>
   <li><a href="#advanced_key_extractors">Advanced features of Boost.MultiIndex key
     extractors</a></li>
 </ul>
@@ -387,7 +388,7 @@ The analogous concept in Boost.MultiIndex is modeled by means of
 <span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
   <span class=identifier>phonebook_entry</span><span class=special>,</span>
   <span class=identifier>indexed_by</span><span class=special>&lt;</span>
-    <span class=comment>//non-unique as some subscribers might have more than one number</span>
+    <span class=comment>// non-unique as some subscribers might have more than one number</span>
     <span class=identifier>ordered_non_unique</span><span class=special>&lt;</span> 
       <span class=identifier>composite_key</span><span class=special>&lt;</span>
         <span class=identifier>phonebook_entry</span><span class=special>,</span>
@@ -595,6 +596,84 @@ The reason for this limitation is quite logical: as the hash value of a composit
 key depends on all of its elements, it is impossible to calculate it from
 partial information.
 </p>
+
+<h2><a name="key">C++17 terse key specification syntax</a></h2>
+
+<p>
+C++17 introduces the declaration of <code>auto</code> template parameters, which can be
+taken advantage of to eliminate some redundancy in the specification of Boost.MultiIndex
+predefined key extractors. For instance, instead of the classical:
+</p>
+
+<blockquote><pre>
+<span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
+  <span class=identifier>employee</span><span class=special>,</span>
+  <span class=identifier>indexed_by</span><span class=special>&lt;</span>
+    <span class=identifier>ordered_unique</span><span class=special>&lt;</span><span class=identifier>identity</span><span class=special>&lt;</span><span class=identifier>employee</span><span class=special>&gt;</span> <span class=special>&gt;,</span>
+    <span class=identifier>ordered_non_unique</span><span class=special>&lt;</span><span class=identifier>member</span><span class=special>&lt;</span><span class=identifier>employee</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>,&amp;</span><span class=identifier>employee</span><span class=special>::</span><span class=identifier>name</span><span class=special>&gt;</span> <span class=special>&gt;,</span>
+    <span class=identifier>ordered_non_unique</span><span class=special>&lt;</span>
+      <span class=identifier>const_mem_fun</span><span class=special>&lt;</span><span class=identifier>employee</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span><span class=special>,&amp;</span><span class=identifier>employee</span><span class=special>::</span><span class=identifier>name_length</span><span class=special>&gt;</span>
+    <span class=special>&gt;</span>
+  <span class=special>&gt;</span>
+<span class=special>&gt;</span> <span class=identifier>employee_set</span><span class=special>;</span>
+</pre></blockquote>
+
+one can now write:
+
+<blockquote><pre>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>multi_index</span><span class=special>/</span><span class=identifier>key</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
+<span class=special>...</span>
+<span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
+  <span class=identifier>employee</span><span class=special>,</span>
+  <span class=identifier>indexed_by</span><span class=special>&lt;</span>
+    <span class=identifier>ordered_unique</span><span class=special>&lt;</span><span class=identifier>identity</span><span class=special>&lt;</span><span class=identifier>employee</span><span class=special>&gt;&gt;,</span>
+    <span class=identifier>ordered_non_unique</span><span class=special>&lt;</span><span class=identifier><b>key</b></span><span class=special><b>&lt;&amp;</b></span><span class=identifier><b>employee</b></span><span class=special><b>::</b></span><span class=identifier><b>name</b></span><span class=special><b>&gt;</b>&gt;,</span>
+    <span class=identifier>ordered_non_unique</span><span class=special>&lt;</span><span class=identifier><b>key</b></span><span class=special><b>&lt;&amp;</b></span><span class=identifier><b>employee</b></span><span class=special><b>::</b></span><span class=identifier><b>name_length</b></span><span class=special><b>&gt;</b>&gt;</span>
+  <span class=special>&gt;</span>
+<span class=special>&gt;</span> <span class=identifier>employee_set</span><span class=special>;</span>
+</pre></blockquote>
+
+<p>
+which results in the exact same defined type, as
+<a href="../reference/key_extraction.html#key"><code>key</code></a> constructs are mere
+aliases for the old syntax. <code>key</code> can be used to shorten the specification of
+<a href="../reference/key_extraction.html#member"><code>member</code></a>,
+<a href="../reference/key_extraction.html#const_mem_fun"><code>const_mem_fun</code></a>,
+<a href="../reference/key_extraction.html#mem_fun"><code>mem_fun</code></a>,
+<a href="../reference/key_extraction.html#global_fun"><code>global_fun</code></a>
+and, with additional terseness benefits,
+<a href="../reference/key_extraction.html#composite_key"><code>composite_key</code></a>:
+</p>
+
+<blockquote><pre>
+<span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
+  <span class=identifier>phonebook_entry</span><span class=special>,</span>
+  <span class=identifier>indexed_by</span><span class=special>&lt;</span>
+    <span class=comment>// composite key on family name and given name</span>
+    <span class=identifier>ordered_non_unique</span><span class=special>&lt;
+      </span><span class=identifier><b>key</b></span><span class=special><b>&lt;&amp;</b></span><span class=identifier><b>phonebook_entry</b></span><span class=special><b>::</b></span><span class=identifier><b>family_name</b></span><span class=special><b>,&amp;</b></span><span class=identifier><b>phonebook_entry</b></span><span class=special><b>::</b></span><span class=identifier><b>given_name</b></span><span class=special><b>&gt;</b></span>
+    <span class=special>&gt;,</span>
+    <span class=comment>// unique index on phone number</span>
+    <span class=identifier>ordered_unique</span><span class=special>&lt;</span><span class=identifier>key</span><span class=special>&lt;&amp;</span><span class=identifier>phonebook_entry</span><span class=special>::</span><span class=identifier>phone_number</span><span class=special>&gt;&gt;</span>
+  <span class=special>&gt;</span>
+<span class=special>&gt;</span> <span class=identifier>phonebook</span><span class=special>;</span>
+</pre></blockquote>
+
+In this example, the first usage of <code>key</code> substitutes for the
+decidedly more cumbersome:
+
+<blockquote><pre>
+<span class=identifier>composite_key</span><span class=special>&lt;</span>
+  <span class=identifier>phonebook_entry</span><span class=special>,</span>
+  <span class=identifier>member</span><span class=special>&lt;</span><span class=identifier>phonebook_entry</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>,&amp;</span><span class=identifier>phonebook_entry</span><span class=special>::</span><span class=identifier>family_name</span><span class=special>&gt;,</span>
+  <span class=identifier>member</span><span class=special>&lt;</span><span class=identifier>phonebook_entry</span><span class=special>,</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>,&amp;</span><span class=identifier>phonebook_entry</span><span class=special>::</span><span class=identifier>given_name</span><span class=special>&gt;</span>
+<span class=special>&gt;</span>
+</pre></blockquote>
+
+Note that we did not even have to specify the first <code>phonebook_entry</code>
+argument: the internal machinery of <code>key</code> automatically deduces it for
+us. Check the <a href="../reference/key_extraction.html#key_synopsis">reference</a>
+for technical details.
 
 <h2><a name="advanced_key_extractors">Advanced features of Boost.MultiIndex key
 extractors</a></h2>
@@ -955,9 +1034,9 @@ Container creation
 
 <br>
 
-<p>Revised March 25th 2015</p>
+<p>Revised August 18th 2018</p>
 
-<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2018 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

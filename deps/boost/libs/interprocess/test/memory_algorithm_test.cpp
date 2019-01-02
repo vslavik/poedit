@@ -69,7 +69,7 @@ int test_rbtree_best_fit()
 
 int main ()
 {
-   const std::size_t void_ptr_align = ::boost::container::container_detail::alignment_of<offset_ptr<void> >::value;
+   const std::size_t void_ptr_align = ::boost::container::dtl::alignment_of<offset_ptr<void> >::value;
 
    if(test_simple_seq_fit()){
       return 1;

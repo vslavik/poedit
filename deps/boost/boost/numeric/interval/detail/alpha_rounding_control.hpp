@@ -1,6 +1,6 @@
 /* Boost interval/detail/alpha_rounding_control.hpp file
  *
- * Copyright 2005 Felix Höfling, Guillaume Melquiond
+ * Copyright 2005 Felix HÃ¶fling, Guillaume Melquiond
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or

@@ -30,6 +30,10 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <stdexcept>
 
+#ifdef BOOST_MSVC
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 int p1()
 {
   boost::this_thread::sleep_for(boost::chrono::milliseconds(100));

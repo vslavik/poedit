@@ -39,6 +39,7 @@
 #include <boost/regex/v4/error_type.hpp>
 #endif
 #include <boost/type_traits/make_unsigned.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std{
@@ -240,7 +241,7 @@ inline std::ptrdiff_t global_length<char>(const char* p)
 template<>
 inline std::ptrdiff_t global_length<wchar_t>(const wchar_t* p)
 {
-   return (std::wcslen)(p);
+   return (std::ptrdiff_t)(std::wcslen)(p);
 }
 #endif
 template <class charT>
@@ -304,13 +305,14 @@ int global_value(charT c)
    return -1;
 }
 template <class charT, class traits>
-int global_toi(const charT*& p1, const charT* p2, int radix, const traits& t)
+boost::intmax_t global_toi(const charT*& p1, const charT* p2, int radix, const traits& t)
 {
    (void)t; // warning suppression
-   int next_value = t.value(*p1, radix);
+   boost::intmax_t limit = (std::numeric_limits<boost::intmax_t>::max)() / radix;
+   boost::intmax_t next_value = t.value(*p1, radix);
    if((p1 == p2) || (next_value < 0) || (next_value >= radix))
       return -1;
-   int result = 0;
+   boost::intmax_t result = 0;
    while(p1 != p2)
    {
       next_value = t.value(*p1, radix);
@@ -319,22 +321,24 @@ int global_toi(const charT*& p1, const charT* p2, int radix, const traits& t)
       result *= radix;
       result += next_value;
       ++p1;
+      if (result > limit)
+         return -1;
    }
    return result;
 }
 
 template <class charT>
-inline const charT* get_escape_R_string()
+inline typename boost::enable_if_c<(sizeof(charT) > 1), const charT*>::type get_escape_R_string()
 {
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable:4309 4245)
 #endif
-   static const charT e1[] = { '(', '?', '>', '\x0D', '\x0A', '?',
-      '|', '[', '\x0A', '\x0B', '\x0C', static_cast<unsigned char>('\x85'), '\\', 'x', '{', '2', '0', '2', '8', '}',
-                '\\', 'x', '{', '2', '0', '2', '9', '}', ']', ')', '\0' };
-   static const charT e2[] = { '(', '?', '>', '\x0D', '\x0A', '?',
-      '|', '[', '\x0A', '\x0B', '\x0C', static_cast<unsigned char>('\x85'), ']', ')', '\0' };
+   static const charT e1[] = { '(', '?', '-', 'x', ':', '(', '?', '>', '\x0D', '\x0A', '?',
+      '|', '[', '\x0A', '\x0B', '\x0C', static_cast<charT>(0x85), static_cast<charT>(0x2028),
+      static_cast<charT>(0x2029), ']', ')', ')', '\0' };
+   static const charT e2[] = { '(', '?', '-', 'x', ':', '(', '?', '>', '\x0D', '\x0A', '?',
+      '|', '[', '\x0A', '\x0B', '\x0C', static_cast<charT>(0x85), ']', ')', ')', '\0' };
 
    charT c = static_cast<charT>(0x2029u);
    bool b = (static_cast<unsigned>(c) == 0x2029u);
@@ -345,15 +349,15 @@ inline const charT* get_escape_R_string()
 #endif
 }
 
-template <>
-inline const char* get_escape_R_string<char>()
+template <class charT>
+inline typename boost::disable_if_c<(sizeof(charT) > 1), const charT*>::type get_escape_R_string()
 {
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable:4309)
 #endif
-   static const char e2[] = { '(', '?', '>', '\x0D', '\x0A', '?',
-      '|', '[', '\x0A', '\x0B', '\x0C', '\x85', ']', ')', '\0' };
+   static const charT e2[] = { '(', '?', '-', 'x', ':', '(', '?', '>', '\x0D', '\x0A', '?',
+      '|', '[', '\x0A', '\x0B', '\x0C', '\x85', ']', ')', ')', '\0' };
    return e2;
 #ifdef BOOST_MSVC
 #  pragma warning(pop)

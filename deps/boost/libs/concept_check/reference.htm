@@ -106,11 +106,11 @@ struct <a href=
 
 template &lt;class T&gt;
 struct SGI<a href=
-"http://www.sgi.com/tech/stl/Assignable.html">Assignable</a>;
+"http://www.boost.org/sgi/stl/Assignable.html">Assignable</a>;
 
 template &lt;class T&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/DefaultConstructible.html">DefaultConstructible</a>;
+"http://www.boost.org/sgi/stl/DefaultConstructible.html">DefaultConstructible</a>;
 
 template &lt;class T&gt; 
 struct <a href=
@@ -118,7 +118,7 @@ struct <a href=
 
 template &lt;class T&gt; 
 struct <a href=
-"http://www.sgi.com/tech/stl/EqualityComparable.html">EqualityComparable</a>; // Standard ref 20.1.1
+"http://www.boost.org/sgi/stl/EqualityComparable.html">EqualityComparable</a>; // Standard ref 20.1.1
 
 template &lt;class T&gt;
 struct <a href=
@@ -126,7 +126,7 @@ struct <a href=
 
 template &lt;class T&gt;
 struct Comparable; // The SGI STL <a href=
-"http://www.sgi.com/tech/stl/LessThanComparable.html">LessThanComparable</a> concept
+"http://www.boost.org/sgi/stl/LessThanComparable.html">LessThanComparable</a> concept
 </pre>
 
   <h3><a name="iterator-concepts" id="iterator-concepts">Iterator Concept
@@ -134,29 +134,29 @@ struct Comparable; // The SGI STL <a href=
   <pre>
 template &lt;class Iter&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/InputIterator.html">InputIterator</a>; // Standard ref 24.1.1 Table 72
+"http://www.boost.org/sgi/stl/InputIterator.html">InputIterator</a>; // Standard ref 24.1.1 Table 72
 
 template &lt;class Iter, class T&gt; 
 struct <a href=
-"http://www.sgi.com/tech/stl/OutputIterator.html">OutputIterator</a>; // Standard ref 24.1.2 Table 73
+"http://www.boost.org/sgi/stl/OutputIterator.html">OutputIterator</a>; // Standard ref 24.1.2 Table 73
 
 template &lt;class Iter&gt; 
 struct <a href=
-"http://www.sgi.com/tech/stl/ForwardIterator.html">ForwardIterator</a>; // Standard ref 24.1.3 Table 74
+"http://www.boost.org/sgi/stl/ForwardIterator.html">ForwardIterator</a>; // Standard ref 24.1.3 Table 74
 
 template &lt;class Iter&gt; 
 struct Mutable_ForwardIterator;
 
 template &lt;class Iter&gt; 
 struct <a href=
-"http://www.sgi.com/tech/stl/BidirectionalIterator.html">BidirectionalIterator</a>; // Standard ref 24.1.4 Table 75
+"http://www.boost.org/sgi/stl/BidirectionalIterator.html">BidirectionalIterator</a>; // Standard ref 24.1.4 Table 75
 
 template &lt;class Iter&gt; 
 struct Mutable_BidirectionalIterator;
 
 template &lt;class Iter&gt; 
 struct <a href=
-"http://www.sgi.com/tech/stl/RandomAccessIterator.html">RandomAccessIterator</a>; // Standard ref 24.1.5 Table 76
+"http://www.boost.org/sgi/stl/RandomAccessIterator.html">RandomAccessIterator</a>; // Standard ref 24.1.5 Table 76
 
 template &lt;class Iter&gt; 
 struct Mutable_RandomAccessIterator;
@@ -169,46 +169,46 @@ struct Mutable_RandomAccessIterator;
 #include "boost/concept_check.hpp"
 
 template &lt;class Func, class Return&gt;
-struct <a href="http://www.sgi.com/tech/stl/Generator.html">Generator</a>;
+struct <a href="http://www.boost.org/sgi/stl/Generator.html">Generator</a>;
 
 template &lt;class Func, class Return, class Arg&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/UnaryFunction.html">UnaryFunction</a>;
+"http://www.boost.org/sgi/stl/UnaryFunction.html">UnaryFunction</a>;
 
 template &lt;class Func, class Return, class First, class Second&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/BinaryFunction.html">BinaryFunction</a>;
+"http://www.boost.org/sgi/stl/BinaryFunction.html">BinaryFunction</a>;
 
 template &lt;class Func, class Arg&gt;
 struct Unary<a href=
-"http://www.sgi.com/tech/stl/Predicate.html">Predicate</a>;
+"http://www.boost.org/sgi/stl/Predicate.html">Predicate</a>;
 
 template &lt;class Func, class First, class Second&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/BinaryPredicate.html">BinaryPredicate</a>;
+"http://www.boost.org/sgi/stl/BinaryPredicate.html">BinaryPredicate</a>;
 
 template &lt;class Func, class First, class Second&gt;
 struct Const_BinaryPredicate;
 
 template &lt;class Func, class Return&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AdaptableGenerator.html">AdaptableGenerator</a>;
+"http://www.boost.org/sgi/stl/AdaptableGenerator.html">AdaptableGenerator</a>;
 
 template &lt;class Func, class Return, class Arg&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AdaptableUnaryFunction.html">AdaptableUnaryFunction</a>;
+"http://www.boost.org/sgi/stl/AdaptableUnaryFunction.html">AdaptableUnaryFunction</a>;
 
 template &lt;class Func, class First, class Second&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AdaptableBinaryFunction.html">AdaptableBinaryFunction</a>;
+"http://www.boost.org/sgi/stl/AdaptableBinaryFunction.html">AdaptableBinaryFunction</a>;
 
 template &lt;class Func, class Arg&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AdaptablePredicate.html">AdaptablePredicate</a>;
+"http://www.boost.org/sgi/stl/AdaptablePredicate.html">AdaptablePredicate</a>;
 
 template &lt;class Func, class First, class Second&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AdaptableBinaryPredicate.html">AdaptableBinaryPredicate</a>;
+"http://www.boost.org/sgi/stl/AdaptableBinaryPredicate.html">AdaptableBinaryPredicate</a>;
 </pre>
 
   <h3><a name="container-concepts" id="container-concepts">Container Concept
@@ -218,67 +218,67 @@ struct <a href=
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/Container.html">Container</a>; // Standard ref 23.1 Table 65
+"http://www.boost.org/sgi/stl/Container.html">Container</a>; // Standard ref 23.1 Table 65
 
 template &lt;class C&gt;
 struct Mutable_Container;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/ForwardContainer.html">ForwardContainer</a>;
+"http://www.boost.org/sgi/stl/ForwardContainer.html">ForwardContainer</a>;
 
 template &lt;class C&gt;
 struct Mutable_ForwardContainer;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/ReversibleContainer.html">ReversibleContainer</a>; // Standard ref 23.1 Table 66
+"http://www.boost.org/sgi/stl/ReversibleContainer.html">ReversibleContainer</a>; // Standard ref 23.1 Table 66
 
 template &lt;class C&gt;
 struct Mutable_ReversibleContainer;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/RandomAccessContainer.html">RandomAccessContainer</a>;
+"http://www.boost.org/sgi/stl/RandomAccessContainer.html">RandomAccessContainer</a>;
 
 template &lt;class C&gt;
 struct Mutable_RandomAccessContainer;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/Sequence.html">Sequence</a>; // Standard ref 23.1.1
+"http://www.boost.org/sgi/stl/Sequence.html">Sequence</a>; // Standard ref 23.1.1
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/FrontInsertionSequence.html">FrontInsertionSequence</a>;
+"http://www.boost.org/sgi/stl/FrontInsertionSequence.html">FrontInsertionSequence</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/BackInsertionSequence.html">BackInsertionSequence</a>;
+"http://www.boost.org/sgi/stl/BackInsertionSequence.html">BackInsertionSequence</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/AssociativeContainer.html">AssociativeContainer</a>; // Standard ref 23.1.2 Table 69
+"http://www.boost.org/sgi/stl/AssociativeContainer.html">AssociativeContainer</a>; // Standard ref 23.1.2 Table 69
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/UniqueAssociativeContainer.html">UniqueAssociativeContainer</a>;
+"http://www.boost.org/sgi/stl/UniqueAssociativeContainer.html">UniqueAssociativeContainer</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/MultipleAssociativeContainer.html">MultipleAssociativeContainer</a>;
+"http://www.boost.org/sgi/stl/MultipleAssociativeContainer.html">MultipleAssociativeContainer</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/SimpleAssociativeContainer.html">SimpleAssociativeContainer</a>;
+"http://www.boost.org/sgi/stl/SimpleAssociativeContainer.html">SimpleAssociativeContainer</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/PairAssociativeContainer.html">PairAssociativeContainer</a>;
+"http://www.boost.org/sgi/stl/PairAssociativeContainer.html">PairAssociativeContainer</a>;
 
 template &lt;class C&gt;
 struct <a href=
-"http://www.sgi.com/tech/stl/SortedAssociativeContainer.html">SortedAssociativeContainer</a>;
+"http://www.boost.org/sgi/stl/SortedAssociativeContainer.html">SortedAssociativeContainer</a>;
 
 template &lt;class C&gt;
 struct <a href=

@@ -6,7 +6,7 @@ In the current version of Boost.Fusion, `boost::fusion::tuple` is basically
 an alias to `boost::fusion::vector`, so both data types share the same
 implementation in Hana.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */

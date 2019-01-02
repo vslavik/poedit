@@ -24,31 +24,12 @@
 #include "expand_bwd_test_template.hpp"
 #include "propagate_allocator_test.hpp"
 #include "default_init_test.hpp"
+#include "comparison_test.hpp"
 #include "../../intrusive/test/iterator_test.hpp"
+#include <boost/utility/string_view.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::container;
-
-typedef test::simple_allocator<char>           SimpleCharAllocator;
-typedef basic_string<char, std::char_traits<char>, SimpleCharAllocator> SimpleString;
-typedef test::simple_allocator<SimpleString>    SimpleStringAllocator;
-typedef test::simple_allocator<wchar_t>              SimpleWCharAllocator;
-typedef basic_string<wchar_t, std::char_traits<wchar_t>, SimpleWCharAllocator> SimpleWString;
-typedef test::simple_allocator<SimpleWString>         SimpleWStringAllocator;
-
-namespace boost {
-namespace container {
-
-//Explicit instantiations of container::basic_string
-template class basic_string<char,    std::char_traits<char>, SimpleCharAllocator>;
-template class basic_string<wchar_t, std::char_traits<wchar_t>, SimpleWCharAllocator>;
-template class basic_string<char,    std::char_traits<char>, std::allocator<char> >;
-template class basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >;
-
-//Explicit instantiation of container::vectors of container::strings
-template class vector<SimpleString, SimpleStringAllocator>;
-template class vector<SimpleWString, SimpleWStringAllocator>;
-
-}}
 
 struct StringEqual
 {
@@ -181,6 +162,10 @@ int string_test()
          boostStringVect->push_back(auxBoostString);
          stdStringVect->push_back(auxStdString);
       }
+
+      if(auxBoostString.data() != const_cast<const BoostString&>(auxBoostString).data() &&
+         auxBoostString.data() != &auxBoostString[0])
+         return 1;
 
       if(!CheckEqualStringVector(boostStringVect, stdStringVect)){
          return 1;
@@ -347,9 +332,9 @@ int string_test()
 
       if(!CheckEqualStringVector(boostStringVect, stdStringVect)) return 1;
 
-      boostStringVect->erase((unique)(boostStringVect->begin(), boostStringVect->end()),
+      boostStringVect->erase(::unique(boostStringVect->begin(), boostStringVect->end()),
                            boostStringVect->end());
-      stdStringVect->erase((unique)(stdStringVect->begin(), stdStringVect->end()),
+      stdStringVect->erase(::unique(stdStringVect->begin(), stdStringVect->end()),
                            stdStringVect->end());
       if(!CheckEqualStringVector(boostStringVect, stdStringVect)) return 1;
 
@@ -471,6 +456,18 @@ int string_test()
             return 1;
       }
 
+#ifndef BOOST_CONTAINER_NO_CXX17_CTAD
+      //Chect Constructor Template Auto Deduction
+      {
+         auto gold = StdString(string_literals<CharType>::String());
+         auto test = basic_string(gold.begin(), gold.end());
+         if(!StringEqual()(gold, test)) {
+            return 1;
+         }
+      }
+#endif
+
+
       //When done, delete vector
       delete boostStringVect;
       delete stdStringVect;
@@ -502,7 +499,9 @@ struct alloc_propagate_base<boost_container_string>
    };
 };
 
+
 }}}   //namespace boost::container::test
+
 
 int main()
 {
@@ -546,20 +545,24 @@ int main()
       typedef boost::container::basic_string<char> cont_int;
       cont_int a; a.push_back(char(1)); a.push_back(char(2)); a.push_back(char(3));
       boost::intrusive::test::test_iterator_random< cont_int >(a);
-      if(boost::report_errors() != 0) {
-         return 1;
-      }
    }
    {
       typedef boost::container::basic_string<wchar_t> cont_int;
       cont_int a; a.push_back(wchar_t(1)); a.push_back(wchar_t(2)); a.push_back(wchar_t(3));
       boost::intrusive::test::test_iterator_random< cont_int >(a);
-      if(boost::report_errors() != 0) {
-         return 1;
-      }
    }
 
-   return 0;
+   ////////////////////////////////////
+   //    Comparison testing
+   ////////////////////////////////////
+   {
+      if(!boost::container::test::test_container_comparisons<string>())
+         return 1;
+      if(!boost::container::test::test_container_comparisons<wstring>())
+         return 1;
+   }
+
+   return boost::report_errors();
 }
 
 #include <boost/container/detail/config_end.hpp>

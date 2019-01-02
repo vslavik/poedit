@@ -65,7 +65,7 @@ public:
 
   // constructors and destructors
 
-  multi_array();
+  multi_array(const Allocator& alloc = Allocator());
 
   template <typename ExtentList>
   explicit multi_array(const ExtentList& sizes,
@@ -75,13 +75,19 @@ public:
                        const storage_order_type& store = c_storage_order(),
 	               const Allocator& alloc = Allocator());
   multi_array(const multi_array& x);
-  multi_array(const const_multi_array_ref<ValueType,NumDims>& x);
-  multi_array(const const_subarray<NumDims>::type& x);
-  multi_array(const const_array_view<NumDims>::type& x);
+  multi_array(const const_multi_array_ref<ValueType,NumDims>& x,
+              const Allocator& alloc = Allocator());
+  multi_array(const const_subarray<NumDims>::type& x,
+              const Allocator& alloc = Allocator());
+  multi_array(const const_array_view<NumDims>::type& x,
+              const Allocator& alloc = Allocator());
 
-  multi_array(const multi_array_ref<ValueType,NumDims>& x);
-  multi_array(const subarray<NumDims>::type& x);
-  multi_array(const array_view<NumDims>::type& x);
+  multi_array(const multi_array_ref<ValueType,NumDims>& x,
+              const Allocator& alloc = Allocator());
+  multi_array(const subarray<NumDims>::type& x,
+              const Allocator& alloc = Allocator());
+  multi_array(const array_view<NumDims>::type& x,
+              const Allocator& alloc = Allocator());
 
   ~multi_array();
 
@@ -207,12 +213,18 @@ elements.
 <varlistentry>
 <term><programlisting>
 <![CDATA[multi_array(const multi_array& x);
-multi_array(const const_multi_array_ref<ValueType,NumDims>& x);
-multi_array(const const_subarray<NumDims>::type& x);
-multi_array(const const_array_view<NumDims>::type& x);
-multi_array(const multi_array_ref<ValueType,NumDims>& x);
-multi_array(const subarray<NumDims>::type& x);
-multi_array(const array_view<NumDims>::type& x);]]>
+multi_array(const const_multi_array_ref<ValueType,NumDims>& x,
+    const Allocator& alloc = Allocator());
+multi_array(const const_subarray<NumDims>::type& x,
+    const Allocator& alloc = Allocator());
+multi_array(const const_array_view<NumDims>::type& x,
+    const Allocator& alloc = Allocator());
+multi_array(const multi_array_ref<ValueType,NumDims>& x,
+    const Allocator& alloc = Allocator());
+multi_array(const subarray<NumDims>::type& x,
+    const Allocator& alloc = Allocator());
+multi_array(const array_view<NumDims>::type& x,
+    const Allocator& alloc = Allocator());]]>
 </programlisting></term>
 <listitem>
 <para>These constructors all constructs a <literal>multi_array</literal> and 

@@ -4,6 +4,55 @@
 # Distributed under the Boost Software License, Version 1.0. 
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.borland]]
+= Borland C++ Compiler
+
+The `borland` module supports the command line C++ compiler included in
+http://www.borland.com/us/products/cbuilder/index.html[C++ Builder 2006]
+product and earlier version of it, running on Microsoft Windows.
+
+The supported products are listed below. The version reported by the
+command lines tools is also listed for reference.:
+
+* C++ Builder 2006 -- 5.8.2
+* CBuilderX -- 5.6.5, 5.6.4 (depending on release)
+* CBuilder6 -- 5.6.4
+* Free command line tools -- 5.5.1
+
+The module is initialized using the following syntax:
+
+----
+using borland : [version] : [c++-compile-command] : [compiler options] ;
+----
+
+This statement may be repeated several times, if you want to configure
+several versions of the compiler.
+
+If the command is not specified, Boost.Build will search for a binary
+named `bcc32` in PATH.
+
+The following options can be provided, using
+_`<option-name>option-value syntax`_:
+
+`cflags`::
+Specifies additional compiler flags that will be used when compiling C
+sources.
+
+`cxxflags`::
+Specifies additional compiler flags that will be used when compiling C++
+sources.
+
+`compileflags`::
+Specifies additional compiler flags that will be used when compiling both C
+and C++ sources.
+
+`linkflags`::
+Specifies additional command line options that will be passed to the linker.
+
+|# # end::doc[]
+
 #  Support for the Borland's command line compiler
 
 import property ;
@@ -108,7 +157,7 @@ flags borland NEED_IMPLIB <main-target-type>LIB/<link>shared : "" ;
 # -g255  allow an unlimited number of warnings
 # -q     no banner
 # -c     compile to object
-# -P     C++ code regardless of file extention
+# -P     C++ code regardless of file extension
 # -a8    8 byte alignment, this option is on in the IDE by default 
 #        and effects binary compatibility.
 #

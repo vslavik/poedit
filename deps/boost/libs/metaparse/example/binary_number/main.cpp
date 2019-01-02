@@ -56,7 +56,7 @@ struct binary : binary_parser::apply<S>::type {};
 #endif
 #define _STR BOOST_METAPARSE_STRING
 
-#ifdef BOOST_NO_CXX11_CONSTEXPR
+#if BOOST_METAPARSE_STD < 2011
 
 int main()
 {

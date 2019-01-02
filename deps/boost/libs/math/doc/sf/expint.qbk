@@ -144,6 +144,17 @@ GSL has the greatest difficulty near the positive root of En, while
 Cody's SPECFUN along with this implementation increase their
 error rates very slightly over the range \[4,6\].
 
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph exponential_integral_ei__double]
+
+[graph exponential_integral_ei__80_bit_long_double]
+
+[graph exponential_integral_ei____float128]
+
+
+
 [h4 Testing]
 
 The tests for these functions come in two parts:

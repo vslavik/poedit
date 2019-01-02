@@ -17,7 +17,7 @@
 				Function templates <a href="../core/doc/html/core/checked_delete.html">checked_delete() and 
 					checked_array_delete()</a> (moved to the Boost.Core library)</li>
 			<li>
-				Function templates <a href="#functions_next_prior">next() and prior()</a></li>
+				Function templates <a href="../iterator/doc/html/iterator/algorithms/next_prior.html">next() and prior()</a> (moved to the Boost.Iterator library)</li>
 			<li>
 				Class <a href="../core/doc/html/core/noncopyable.html">noncopyable</a> (moved to the Boost.Core library)</li>
 			<li>
@@ -28,45 +28,6 @@
                         <li><a href="index.html">Other utilities not part of <code>utility.hpp</code></a></li>
 		</ul>
 		<h2>
-			<a name="functions_next_prior">Function</a> templates next() and prior()</h2>
-		<p>Certain data types, such as the C++ Standard Library's forward and bidirectional 
-			iterators, do not provide addition and subtraction via operator+() or 
-			operator-().&nbsp; This means that non-modifying computation of the next or 
-			prior value requires a temporary, even though operator++() or operator--() is 
-			provided.&nbsp; It also means that writing code like <code>itr+1</code> inside 
-			a template restricts the iterator category to random access iterators.</p>
-		<p>The next() and prior() functions provide a simple way around these problems:</p>
-		<blockquote>
-			<pre>template &lt;class T&gt;
-T next(T x) { return ++x; }
-
-template &lt;class T, class Distance&gt;
-T next(T x, Distance n)
-{
-    std::advance(x, n);
-    return x;
-}
-
-template &lt;class T&gt;
-T prior(T x) { return --x; }
-
-template &lt;class T, class Distance&gt;
-T prior(T x, Distance n)
-{
-    std::advance(x, -n);
-    return x;
-}</pre>
-		</blockquote>
-		<p>Usage is simple:</p>
-		<blockquote>
-			<pre>const std::list&lt;T&gt;::iterator p = get_some_iterator();
-const std::list&lt;T&gt;::iterator prev = boost::prior(p);
-const std::list&lt;T&gt;::iterator next = boost::next(prev, 2);</pre>
-		</blockquote>
-                <p>The distance from the given iterator should be supplied as an absolute value. For
-			example, the iterator four iterators prior to the given iterator <code>p</code>
-			may be obtained by <code>prior(p, 4)</code>.</p>
-		<p>Contributed by <a href="http://www.boost.org/people/dave_abrahams.htm">Dave Abrahams</a>.  Two-argument versions by Daniel Walker.</p>
 
                 <h2><a name="result_of">Class template
                 result_of</a></h2> <p>The class template

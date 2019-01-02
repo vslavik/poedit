@@ -6,20 +6,14 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 //[example_code
+#define BOOST_TEST_MODULE example49
 #include <boost/test/included/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
 using namespace boost::unit_test;
 
-void free_test_function()
+BOOST_DATA_TEST_CASE( free_test_function, boost::unit_test::data::xrange(1000) )
 {
+  // sleep(1);
   BOOST_TEST( true /* test assertion */ );
-}
-
-test_suite* init_unit_test_suite( int /*argc*/, char* /*argv*/[] ) 
-{
-  for( int i=0; i < 10000; i++ )
-    framework::master_test_suite().
-      add( BOOST_TEST_CASE( &free_test_function ) );
-
-  return 0;
 }
 //]

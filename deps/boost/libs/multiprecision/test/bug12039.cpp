@@ -22,8 +22,8 @@ int main()
    std::cout << std::setprecision(18) << d2 << std::endl;
 
    x = 1e7 + 0.5;
-   x1 = x + ldexp(255, -38); // + 2^-30 - eps
-   x2 = x + ldexp(257, -38); // + 2^-30 + eps
+   x1 = x + ldexp(255.0, -38); // + 2^-30 - eps
+   x2 = x + ldexp(257.0, -38); // + 2^-30 + eps
    float f1 = x1.convert_to<float>();
    float f2 = x2.convert_to<float>();
 

@@ -37,27 +37,32 @@ BOOST_AUTO_TEST_CASE(insert)
     bc::flat_set<int> set(context);
     typedef bc::flat_set<int>::iterator iterator;
     std::pair<iterator, bool> location = set.insert(12, queue);
+    queue.finish();
     BOOST_CHECK(location.first == set.begin());
     BOOST_CHECK(location.second == true);
     BOOST_CHECK_EQUAL(*location.first, 12);
     BOOST_CHECK_EQUAL(set.size(), size_t(1));
 
     location = set.insert(12, queue);
+    queue.finish();
     BOOST_CHECK(location.first == set.begin());
     BOOST_CHECK(location.second == false);
     BOOST_CHECK_EQUAL(set.size(), size_t(1));
 
     location = set.insert(4, queue);
+    queue.finish();
     BOOST_CHECK(location.first == set.begin());
     BOOST_CHECK(location.second == true);
     BOOST_CHECK_EQUAL(set.size(), size_t(2));
 
     location = set.insert(12, queue);
+    queue.finish();
     BOOST_CHECK(location.first == set.begin() + 1);
     BOOST_CHECK(location.second == false);
     BOOST_CHECK_EQUAL(set.size(), size_t(2));
 
     location = set.insert(9, queue);
+    queue.finish();
     BOOST_CHECK(location.first == set.begin() + 1);
     BOOST_CHECK(location.second == true);
     BOOST_CHECK_EQUAL(set.size(), size_t(3));
@@ -72,6 +77,7 @@ BOOST_AUTO_TEST_CASE(erase)
     set.insert(3, queue);
     set.insert(4, queue);
     set.insert(5, queue);
+    queue.finish();
     BOOST_CHECK_EQUAL(set.size(), size_t(5));
 
     iterator i = set.erase(set.begin(), queue);

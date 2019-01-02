@@ -239,7 +239,7 @@ Having defined these two classes, the attribute can be used with the library as 
 
 If you write your own logging sinks or use your own types in attributes, you may want to add support for these components to the settings parser provided by the library. Without doing this, the library will not be aware of your types and thus will not be able to use them when parsing settings.
 
-[heading Adding support for user-defined types to the formatter parser]
+[section:formatter Adding support for user-defined types to the formatter parser]
 
     #include <``[boost_log_utility_setup_formatter_parser_hpp]``>
 
@@ -277,7 +277,9 @@ Lastly, the call to [funcref boost::log::register_formatter_factory `register_fo
 
 You can find the complete code of this example [@boost:/libs/log/example/doc/extension_formatter_parser.cpp here].
 
-[heading Adding support for user-defined types to the filter parser]
+[endsect]
+
+[section:filter Adding support for user-defined types to the filter parser]
 
     #include <``[boost_log_utility_setup_filter_parser_hpp]``>
 
@@ -326,7 +328,9 @@ As it was said, the rectangle is described by two points - the top left and the 
 
 The `on_custom_relation` method is called with the relation name (the "is\_in\_rectangle" string in our case) and the right-hand argument for the relation (the rectangle description). All we have to do is to construct the filter, which is implemented by our `is_in_rectangle` function. We use `bind` from __boost_phoenix__ to compose the filter from the function and the [link log.detailed.expressions.attr attribute placeholder]. You can find the complete code of this example [@boost:/libs/log/example/doc/extension_filter_parser_custom_rel.cpp here].
 
-[heading Adding support for user-defined sinks]
+[endsect]
+
+[section:sinks Adding support for user-defined sinks]
 
     #include <``[boost_log_utility_setup_from_settings_hpp]``>
     #include <``[boost_log_utility_setup_from_stream_hpp]``>
@@ -358,6 +362,8 @@ WriteInterval\=30
 ]
 
 The complete code of the example in this section can be found [@boost:/libs/log/example/doc/extension_stat_collector_settings.cpp here].
+
+[endsect]
 
 [endsect]
 

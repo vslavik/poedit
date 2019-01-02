@@ -191,6 +191,7 @@ class project-target : abstract-target
     import property-set ;
     import set ;
     import sequence ;
+    import toolset ;
     import "class" : new ;
 
     rule __init__ ( name : project-module parent-project ?
@@ -584,6 +585,8 @@ class project-target : abstract-target
         IMPORT $(parent-module) : $(user-rules) : $(this-module) : $(user-rules)
             ;
         EXPORT $(this-module) : $(user-rules) ;
+
+        toolset.inherit-flags $(this-module) : $(parent-module) ;
     }
 }
 
@@ -621,10 +624,11 @@ class main-target : abstract-target
 {
     import assert ;
     import feature ;
-    import print ;
     import property-set ;
     import sequence ;
+    import set ;
     import targets : start-building end-building ;
+    import utility ;
 
     rule __init__ ( name : project )
     {
@@ -654,13 +658,13 @@ class main-target : abstract-target
     # Returns the best viable alternative for this property-set. See the
     # documentation for selection rules.
     #
-    local rule select-alternatives ( property-set debug ? )
+    rule select-alternatives ( property-set debug ? )
     {
         # When selecting alternatives we have to consider defaults, for example:
         #    lib l : l.cpp : <variant>debug ;
         #    lib l : l_opt.cpp : <variant>release ;
         # will not work unless we add default value <variant>debug.
-        property-set = [ $(p).add-defaults ] ;
+        property-set = [ $(property-set).add-defaults ] ;
 
         # The algorithm: we keep the current best viable alternative. When we
         # encounter a new best viable alternative, we compare it with the
@@ -719,6 +723,43 @@ class main-target : abstract-target
         }
     }
 
+    # Features are relevant here if they could affect alternative
+    # selection.  That is, base, non-conditional properties that
+    # are not identical in all target alternatives.
+    rule relevant-features ( )
+    {
+        if $(self.alternatives[2-])
+        {
+            if $(self.relevant-features)
+            {
+                return $(self.relevant-features) ;
+            }
+            local all-properties ;
+            for t in $(self.alternatives)
+            {
+                local ps = [ $(t).requirements ] ;
+                ps = [ property-set.create [ $(ps).non-conditional ] ] ;
+                all-properties += [ $(ps).base ] ;
+            }
+            all-properties = [ sequence.unique $(all-properties) ] ;
+            local result ;
+            for t in $(self.alternatives)
+            {
+                local ps = [ $(t).requirements ] ;
+                ps = [ property-set.create [ $(ps).non-conditional ] ] ;
+                local properties = [ set.difference $(all-properties) : [ $(ps).base ] ] ;
+                result += $(properties:G) ;
+            }
+            result = [ sequence.transform utility.ungrist : [ sequence.unique $(result) ] ] ;
+            self.relevant-features = [ property-set.create <relevant>$(result) ] ;
+            return $(self.relevant-features) ;
+        }
+        else
+        {
+            return [ property-set.empty ] ;
+        }
+    }
+
     rule apply-default-build ( property-set )
     {
         return [ targets.apply-default-build $(property-set) :
@@ -734,16 +775,13 @@ class main-target : abstract-target
     {
         start-building $(__name__) ;
 
-        # We want composite properties in the build request to act as if all the
-        # properties they expand to have been explicitly specified.
-        property-set = [ $(property-set).expand ] ;
-
         local all-property-sets = [ apply-default-build $(property-set) ] ;
+        local relevant = [ relevant-features ] ;
         local usage-requirements = [ property-set.empty ] ;
         local result ;
         for local p in $(all-property-sets)
         {
-            local r = [ generate-really $(p) ] ;
+            local r = [ generate-really [ $(p).add $(relevant) ] ] ;
             if $(r)
             {
                 usage-requirements = [ $(usage-requirements).add $(r[1]) ] ;
@@ -901,8 +939,10 @@ rule apply-default-build ( property-set : default-build )
     # 1. First, see what properties from default-build are already present in
     # property-set.
 
+    local expanded = [ $(property-set).expand ] ;
     local raw = [ $(property-set).raw ] ;
-    local specified-features = $(raw:G) ;
+    local specified-features = [ $(expanded).raw ] ;
+    specified-features = $(specified-features:G) ;
 
     local defaults-to-apply ;
     for local d in [ $(default-build).raw ]
@@ -936,7 +976,7 @@ rule apply-default-build ( property-set : default-build )
             for local p in $(properties)
             {
                 result += [ property-set.create
-                    [ feature.expand [ feature.split $(p) ] ] ] ;
+                    [ feature.split $(p) ] ] ;
             }
         }
         else
@@ -993,7 +1033,7 @@ rule common-properties ( build-request requirements )
 # If 'what' is 'refined' returns context refined with new requirements. If
 # 'what' is 'added' returns just the requirements to be applied.
 #
-rule evaluate-requirements ( requirements : context : what )
+rule evaluate-requirements ( requirements : context )
 {
     # Apply non-conditional requirements. It is possible that further
     # conditional requirement change a value set by non-conditional
@@ -1017,45 +1057,38 @@ rule evaluate-requirements ( requirements : context : what )
     # properties. We now try to figure out what other properties should be added
     # in order to satisfy rules (4)-(6) from the docs.
 
+    local defaults = [ toolset.defaults ] ;
+    defaults = [ $(defaults).raw ] ;
+
     local conditionals = [ $(requirements).conditional ] ;
     # The 'count' variable has one element for each conditional feature and for
-    # each occurrence of '<indirect-conditional>' feature. It is used as a loop
+    # each occurrence of '<conditional>' feature. It is used as a loop
     # counter: for each iteration of the loop before we remove one element and
     # the property set should stabilize before we are done. It is assumed that
     # #conditionals iterations should be enough for properties to propagate
     # along conditions in any direction.
-    local count = $(conditionals) [ $(requirements).get <conditional> ]
+    local count = $(conditionals) $(defaults)
         and-once-more ;
 
     local added-requirements ;
+    local added-defaults ;
 
     local current = $(raw) ;
-
-    # It is assumed that ordinary conditional requirements can not add
-    # <conditional> properties (a.k.a. indirect conditional properties), and
-    # that rules referred to by <conditional> properties can not add new
-    # <conditional> properties. So the list of indirect conditionals does not
-    # change.
-    local indirect = [ $(requirements).get <conditional> ] ;
-    indirect = [ MATCH ^@(.*) : $(indirect) ] ;
 
     local ok ;
     while $(count)
     {
+        # We need to expand composites here so that the requirements can
+        # safely override composite features.
+        current = [ feature.expand-composites $(current) ] ;
+        current = [ feature.add-defaults $(current) ] ;
         # Evaluate conditionals in context of current properties.
         local e = [ property.evaluate-conditionals-in-context $(conditionals) :
             $(current) ] ;
+        local d = [ property.evaluate-conditionals-in-context $(defaults) :
+            $(current) ] ;
 
-        # Evaluate indirect conditionals.
-        for local i in $(indirect)
-        {
-            local t = [ current ] ;
-            local p = [ $(t).project ] ;
-            local new = [ indirect.call $(i) $(current) ] ;
-            e += [ property.translate-paths $(new) : [ $(p).location ] ] ;
-        }
-
-        if $(e) = $(added-requirements)
+        if $(e) = $(added-requirements) && $(d) = $(added-defaults)
         {
             # If we got the same result, we have found the final properties.
             count = ;
@@ -1068,6 +1101,8 @@ rule evaluate-requirements ( requirements : context : what )
             # using initial properties and conditional requirements.
             added-requirements = $(e) ;
             current = [ property.refine $(raw) : [ feature.expand $(e) ] ] ;
+            added-defaults = $(d) ;
+            current = [ property.refine $(d) : $(current) ] ;
         }
         count = $(count[2-]) ;
     }
@@ -1077,39 +1112,13 @@ rule evaluate-requirements ( requirements : context : what )
         errors.error Can not evaluate conditional properties $(conditionals) ;
     }
 
-    if $(what) = added
-    {
-        return [ property-set.create $(unconditional) $(added-requirements) ] ;
-    }
-    else if $(what) = refined
-    {
-        return [ property-set.create $(current) ] ;
-    }
-    else
-    {
-        import errors ;
-        errors.error "Invalid value of the 'what' parameter." ;
-    }
+    return [ property-set.create $(current) ] ;
 }
 
 
 rule common-properties2 ( build-request requirements )
 {
-    # This guarantees that default properties are present in the result, unless
-    # they are overriden by some requirement. FIXME: There is a possibility that
-    # we have added <foo>bar, which is composite and expands to <foo2>bar2, but
-    # default value of <foo2> is not bar2, in which case it is not clear what to
-    # do.
-    #
-    build-request = [ $(build-request).add-defaults ] ;
-    # Features added by 'add-defaults' can be composite and expand to features
-    # without default values -- which therefore have not been added yet. It
-    # could be clearer/faster to expand only newly added properties but that is
-    # not critical.
-    build-request = [ $(build-request).expand ] ;
-
-    return [ evaluate-requirements $(requirements) : $(build-request) :
-        refined ] ;
+    return [ evaluate-requirements $(requirements) : $(build-request) ] ;
 }
 
 
@@ -1214,9 +1223,9 @@ class basic-target : abstract-target
     #
     rule match ( property-set debug ? )
     {
-        # The condition is composed of all base non-conditional properties. It
-        # is not clear if we should expand 'self.requirements' or not. For one
-        # thing, it would be nice to be able to put
+        # The condition is composed of all base non-conditional properties. We
+        # only expand subfeatures in the condition.  We do not expand
+        # composites.  We want to be able to put
         #    <toolset>msvc-6.0
         # in requirements. On the other hand, if we have <variant>release as a
         # condition it does not make sense to require <optimization>full to be
@@ -1224,6 +1233,7 @@ class basic-target : abstract-target
         local bcondition = [ $(self.requirements).base ] ;
         local ccondition = [ $(self.requirements).conditional ] ;
         local condition = [ set.difference $(bcondition) : $(ccondition) ] ;
+        condition = [ feature.expand-subfeatures $(condition) : unchecked ] ;
         if $(debug)
         {
             ECHO "    next alternative: required properties:"
@@ -1281,11 +1291,11 @@ class basic-target : abstract-target
             local fn = [ full-name ] ;
             ECHO [ targets.indent ] "Building target '$(fn)'" ;
             targets.increase-indent ;
-            ECHO [ targets.indent ] Build request: $(property-set)
+            ECHO [ targets.indent ] Build "request:" $(property-set)
                 [ $(property-set).raw ] ;
             local cf = [ build-system.command-line-free-features ] ;
-            ECHO [ targets.indent ] Command line free features: [ $(cf).raw ] ;
-            ECHO [ targets.indent ] Target requirements:
+            ECHO [ targets.indent ] Command line free "features:" [ $(cf).raw ] ;
+            ECHO [ targets.indent ] Target "requirements:"
                 [ $(self.requirements).raw ] ;
         }
         targets.push-target $(__name__) ;
@@ -1294,7 +1304,7 @@ class basic-target : abstract-target
         #   define=FOO
         # he most likely wants this define to be set for all compiles.
         # Make it before check for already built.
-        property-set = [ $(property-set).refine
+        property-set = [ $(property-set).add
             [ build-system.command-line-free-features ] ] ;
 
         if ! $(self.generated.$(property-set))
@@ -1356,6 +1366,15 @@ class basic-target : abstract-target
                 {
                     local gur = $(result[1]) ;
                     result = $(result[2-]) ;
+
+                    # Relevant is automatically applied to usage requirements
+                    # and only applies for propagated features
+                    local relevant = [ propagated-relevant
+                        [ $(gur).get <relevant> ]
+                        [ $(rproperties).get <relevant> ] ] ;
+                    gur = [ property-set.create
+                        [ property.change [ $(gur).raw ] : <relevant> ]
+                        <relevant>$(relevant) ] ;
 
                     if $(self.always)
                     {
@@ -1445,8 +1464,37 @@ class basic-target : abstract-target
     rule compute-usage-requirements ( subvariant )
     {
         local rproperties = [ $(subvariant).build-properties ] ;
-        xusage-requirements = [ targets.evaluate-requirements
-            $(self.usage-requirements) : $(rproperties) : added ] ;
+        xusage-requirements =
+            [ $(self.usage-requirements).evaluate-conditionals
+              $(rproperties) ] ;
+
+        # Filter out non-propagated <relevant> properties
+        local relevant ;
+        for local r in [ $(xusage-requirements).get <relevant> ]
+        {
+            local check = [ MATCH "(.*):<relevant>(.*)" : $(r) ] ;
+            if $(check) { check = $(check[2]) ; }
+            else { check = $(r) ; }
+            if propagated in [ feature.attributes <$(check)> ]
+            {
+                relevant += $(r) ;
+            }
+        }
+        local raw = [ $(xusage-requirements).raw ] ;
+        local free = [ property.take free : $(raw) ] ;
+        if $(free) != $(raw)
+        {
+            if ! $(self.warned-usage-requirements)
+            {
+                self.warned-usage-requirements = true ;
+                ECHO "warning:" non-free usage requirements
+                    [ set.difference $(raw) : $(free) ] ignored ;
+                ECHO "warning:" in main-target [ name ] at [ location ] ;
+            }
+        }
+        xusage-requirements = [ property-set.create
+            [ property.change $(free) : <relevant> ]
+            <relevant>$(relevant) ] ;
 
         # We generate all dependency properties and add them, as well as their
         # usage requirements, to the result.
@@ -1487,6 +1535,19 @@ class basic-target : abstract-target
         return [ $(result).add [ property-set.create $(raw) ] ] ;
     }
 
+    local rule propagated-relevant ( values * )
+    {
+        local result ;
+        for local v in [ feature.expand-relevant $(values) ]
+        {
+            if propagated in [ feature.attributes <$(v)> ]
+            {
+                result += $(v) ;
+            }
+        }
+        return $(result) ;
+    }
+
     # Creates new subvariant instances for 'targets'.
     # 'root-targets'  - virtual targets to be returned to dependants
     # 'all-targets'   - virtual targets created while building this main target
@@ -1516,7 +1577,7 @@ class basic-target : abstract-target
 
     # Constructs virtual targets for this abstract target and the dependency
     # graph. Returns a usage-requirements property-set and a list of virtual
-    # targets. Should be overriden in derived classes.
+    # targets. Should be overridden in derived classes.
     #
     rule construct ( name : source-targets * : properties * )
     {
@@ -1553,7 +1614,18 @@ class typed-target : basic-target
             : $(source-targets) : true ] ;
         if ! $(r)
         {
-            ECHO "warn: Unable to construct" [ full-name ] ;
+            local viable-generators = [ generators.find-viable-generators
+                $(self.type) : $(property-set) ] ;
+            ECHO "WARNING: Unable to construct" [ full-name ]
+                "of type" $(self.type)
+                "with these properties:" [ $(property-set).raw ] ;
+            ECHO "WARNING: Considered these as possible generators:" ;
+            for local gen in $(viable-generators)
+            {
+                ECHO "WARNING:" [ $(gen).id ]
+                    "with source types {" [ $(gen).source-types ] "}"
+                    "and requirements {" [ $(gen).requirements ] "}" ;
+            }
 
             # Are there any top-level generators for this type/property set.
             if ! [ generators.find-viable-generators $(self.type) :
@@ -1622,7 +1694,8 @@ rule main-target-requirements (
         import errors ;
         errors.error "Conflicting requirements for target:" $(requirements) ;
     }
-    return [ $(requirements).add [ toolset.requirements ] ] ;
+    local result = [ $(requirements).add [ toolset.requirements ] ] ;
+    return [ $(result).add-raw [ property.evaluate-conditional-relevance [ $(result).raw ] ] ] ;
 }
 
 
@@ -1645,7 +1718,10 @@ rule main-target-usage-requirements (
         $(specification)
         : [ $(project).project-module ] [ $(project).get location ] ] ;
 
-    return [ $(project-usage-requirements).add $(usage-requirements) ] ;
+    local result = [ $(project-usage-requirements).add $(usage-requirements) ] ;
+    local relevant =
+      [ property.evaluate-conditional-relevance [ $(result).raw ] ] ;
+    return [ $(result).add-raw $(relevant) ] ;
 }
 
 

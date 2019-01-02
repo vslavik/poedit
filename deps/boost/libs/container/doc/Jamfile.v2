@@ -36,9 +36,12 @@ doxygen autodoc
                                    \"BOOST_RV_REF(T)=T&&\" \\
                                    \"BOOST_RV_REF_BEG=\" \\
                                    \"BOOST_RV_REF_END=&&\" \\
+                                   \"BOOST_RV_REF_BEG_IF_CXX11=\" \\
+                                   \"BOOST_RV_REF_END_IF_CXX11=&&\" \\
                                    \"BOOST_COPY_ASSIGN_REF(T)=const T &\" \\
                                    \"BOOST_FWD_REF(a)=a &&\" \\
-                                   \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME) = template<TYPE VALUE> struct OPTION_NAME{};\" \\
+                                   \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME)   = template<TYPE VALUE> struct OPTION_NAME{};\" \\
+                                   \"BOOST_INTRUSIVE_OPTION_TYPE(OPTION_NAME, TYPE, TYPEDEF_EXPR, TYPEDEF_NAME) = template<class TYPE> struct OPTION_NAME{};\" \\
                                    \"BOOST_CONTAINER_DOC1ST(T1, T2)=T1\" \\
                                    \"BOOST_CONTAINER_DOCIGN(T) \"\\
                                    \"BOOST_CONTAINER_DOCONLY(T)=T\"\\
@@ -104,4 +107,12 @@ boostbook standalone
 install pdfinstall : standalone/<format>pdf : <install-type>PDF <location>. <name>container.pdf ;
 explicit pdfinstall ;
 
-
+###############################################################################
+alias boostdoc
+    : standalone/<format>docbook
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

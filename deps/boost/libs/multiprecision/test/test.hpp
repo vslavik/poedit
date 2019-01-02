@@ -46,7 +46,7 @@ template <class T>
 typename boost::disable_if_c<(boost::multiprecision::number_category<T>::value == boost::multiprecision::number_kind_integer) || boost::multiprecision::is_interval_number<T>::value, T>::type relative_error(T a, T b)
 {
    using std::abs;
-   using detail::abs;
+   using ::detail::abs;
 
    T min_val = (std::numeric_limits<T>::min)();
    T max_val = (std::numeric_limits<T>::max)();

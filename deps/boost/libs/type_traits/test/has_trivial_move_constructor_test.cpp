@@ -5,13 +5,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/has_trivial_move_constructor.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 
@@ -220,6 +220,39 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<int[3][2]>::val
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<int[2][4][5][6][3]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<void>::value, false);
+
+#ifdef BOOST_HAS_TRIVIAL_MOVE_CONSTRUCTOR
+
+// cases we would like to succeed but can't implement in the language:
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<empty_POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<POD_union_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<empty_POD_union_UDT>::value, true);
+
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_copy>::value, false);
+// Why does this fail on multiple compilers??
+//BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_destroy>::value, true);
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1800)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_construct>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_assign>::value, true);
+#endif
+/*
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_copy> >::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_destroy> >::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_construct> >::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_assign> >::value, true);
+*/
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<test_abc1>::value, false);
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1900)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<non_copyable_movable>::value, true);
+#endif
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<copyable_non_moveable>::value, false);
+#endif
+
+#else
+
 // cases we would like to succeed but can't implement in the language:
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<empty_POD_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<POD_UDT>::value, true, false);
@@ -230,16 +263,19 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_destroy>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_construct>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<trivial_except_assign>::value, true, false);
+/*
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_copy> >::value, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_destroy> >::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_construct> >::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<wrap<trivial_except_assign> >::value, true, false);
-
+*/
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<test_abc1>::value, false);
 
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<non_copyable_movable>::value, true, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_constructor<copyable_non_moveable>::value, false);
+#endif
+
 #endif
 
 TT_TEST_END

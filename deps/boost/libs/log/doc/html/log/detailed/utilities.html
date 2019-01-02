@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Utilities</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="attributes.html" title="Attributes">
@@ -19,10 +19,8 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.utilities"></a><a class="link" href="utilities.html" title="Utilities">Utilities</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.string_literal">String literals</a></span></dt>
-<dt><span class="section"><a href="utilities.html#log.detailed.utilities.type_info_wrapper">Type information
-        wrapper</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.type_dispatch">Type dispatchers</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.predef_types">Predefined type
         sequences</a></span></dt>
@@ -32,6 +30,8 @@
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.exception_handlers">Exception
         handlers</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.manipulators">Output manipulators</a></span></dt>
+<dt><span class="section"><a href="utilities.html#log.detailed.utilities.ipc">Interprocess communication
+        tools</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.setup">Simplified library initialization
         tools</a></span></dt>
 </dl></div>
@@ -70,234 +70,6 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="log.detailed.utilities.type_info_wrapper"></a><a class="link" href="utilities.html#log.detailed.utilities.type_info_wrapper" title="Type information wrapper">Type information
-        wrapper</a>
-</h4></div></div></div>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-            This component is deprecated and will be removed in future releases.
-            <a href="http://www.boost.org/doc/libs/release/doc/html/boost_typeindex.html" target="_top">Boost.TypeIndex</a>
-            is recommended as a replacement.
-          </p></td></tr>
-</table></div>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_info_wrapper_hpp" title="Header &lt;boost/log/utility/type_info_wrapper.hpp&gt;">boost/log/utility/type_info_wrapper.hpp</a></code><span class="special">&gt;</span>
-</pre>
-<p>
-          The language support for run time type information is essential for the
-          library. But partially because of limitations that the C++ Standard imposes
-          on this feature, partially because of differences of implementation of
-          different compilers, there was a need for a lightweight wrapper around
-          the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span></code> class to fill the gaps. The
-          table below briefly shows the differences between the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span></code>
-          and <code class="computeroutput"><a class="link" href="../../boost/log/type_info_wrapper.html" title="Class type_info_wrapper">type_info_wrapper</a></code>
-          classes.
-        </p>
-<div class="table">
-<a name="log.detailed.utilities.type_info_wrapper.type_information_classes_comparison"></a><p class="title"><b>Table&#160;1.6.&#160;Type information classes comparison</b></p>
-<div class="table-contents"><table class="table" summary="Type information classes comparison">
-<colgroup>
-<col>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                  <p>
-                    Feature
-                  </p>
-                </th>
-<th>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span></code>
-                  </p>
-                </th>
-<th>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code>
-                  </p>
-                </th>
-</tr></thead>
-<tbody>
-<tr>
-<td>
-                  <p>
-                    Is default-constructable
-                  </p>
-                </td>
-<td>
-                  <p>
-                    No
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes. The default-constructed wrapper is in an empty state.
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Is copy-constructable
-                  </p>
-                </td>
-<td>
-                  <p>
-                    No
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Is assignable
-                  </p>
-                </td>
-<td>
-                  <p>
-                    No
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Is swappable
-                  </p>
-                </td>
-<td>
-                  <p>
-                    No
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Life time duration
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Static, until the application terminates
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Dynamic
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Has an empty state
-                  </p>
-                </td>
-<td>
-                  <p>
-                    No
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes. In empty state the type info wrapper is never equal to other
-                    non-empty type info wrappers. It is equal to other empty type
-                    info wrappers and can be ordered with them.
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Supports equality comparison
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Supports ordering
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes, partial ordering with the <code class="computeroutput"><span class="identifier">before</span></code>
-                    method.
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes, partial ordering with the complete set of comparison operators.
-                    The semantics of ordering is similar to the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span><span class="special">::</span><span class="identifier">before</span></code>
-                    method.
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    Supports printable representation of type
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes, with the <code class="computeroutput"><span class="identifier">name</span></code>
-                    function.
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Yes, with <code class="computeroutput"><span class="identifier">pretty_name</span></code>
-                    function. The function does its best to print the type name in
-                    a human-readable form. On some platforms it does better than
-                    <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span><span class="special">::</span><span class="identifier">name</span></code>.
-                  </p>
-                </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<br class="table-break"><p>
-          Given the distinctions above, using type information objects becomes much
-          easier. For example, the ability to copy and order with regular operators
-          allows using <code class="computeroutput"><a class="link" href="../../boost/log/type_info_wrapper.html" title="Class type_info_wrapper">type_info_wrapper</a></code>
-          with containers. The ability to default-construct and assign allows using
-          type information as a regular object and not to resort to pointers which
-          may be unsafe.
-        </p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.utilities.type_dispatch"></a><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch" title="Type dispatchers">Type dispatchers</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_dispatch.type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/type_dispatcher.hpp&gt;">boost/log/utility/type_dispatch/type_dispatcher.hpp</a></code><span class="special">&gt;</span>
@@ -332,7 +104,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.type_dispatch.h0"></a>
-          <span><a name="log.detailed.utilities.type_dispatch.static_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.static_type_dispatcher">Static
+          <span class="phrase"><a name="log.detailed.utilities.type_dispatch.static_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.static_type_dispatcher">Static
           type dispatcher</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_dispatch.static_type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/static_type_dispatcher.hpp&gt;">boost/log/utility/type_dispatch/static_type_dispatcher.hpp</a></code><span class="special">&gt;</span>
@@ -419,7 +191,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.type_dispatch.h1"></a>
-          <span><a name="log.detailed.utilities.type_dispatch.dynamic_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.dynamic_type_dispatcher">Dynamic
+          <span class="phrase"><a name="log.detailed.utilities.type_dispatch.dynamic_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.dynamic_type_dispatcher">Dynamic
           type dispatcher</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_dispatch.dynamic_type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/dynamic_type_dispatcher.hpp&gt;">boost/log/utility/type_dispatch/dynamic_type_dispatcher.hpp</a></code><span class="special">&gt;</span>
@@ -495,7 +267,7 @@
           such sets.
         </p>
 <div class="table">
-<a name="log.detailed.utilities.predef_types.standard_types__standard_types_hpp_"></a><p class="title"><b>Table&#160;1.7.&#160;Standard types (standard_types.hpp)</b></p>
+<a name="log.detailed.utilities.predef_types.standard_types__standard_types_hpp_"></a><p class="title"><b>Table&#160;1.6.&#160;Standard types (standard_types.hpp)</b></p>
 <div class="table-contents"><table class="table" summary="Standard types (standard_types.hpp)">
 <colgroup>
 <col>
@@ -573,7 +345,7 @@
           There are also a number of time-related type sequences available:
         </p>
 <div class="table">
-<a name="log.detailed.utilities.predef_types.time_related_types__date_time_types_hpp_"></a><p class="title"><b>Table&#160;1.8.&#160;Time-related types (date_time_types.hpp)</b></p>
+<a name="log.detailed.utilities.predef_types.time_related_types__date_time_types_hpp_"></a><p class="title"><b>Table&#160;1.7.&#160;Time-related types (date_time_types.hpp)</b></p>
 <div class="table-contents"><table class="table" summary="Time-related types (date_time_types.hpp)">
 <colgroup>
 <col>
@@ -844,7 +616,7 @@
           also supports applying a visitor function object to the referred object.
           This can be done by calling one of the following methods:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">apply_visitor</span></code>. This
               method should only be used on a valid (non-empty) reference. The method
@@ -939,7 +711,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.record_ordering.h0"></a>
-          <span><a name="log.detailed.utilities.record_ordering.abstract_record_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.abstract_record_ordering">Abstract
+          <span class="phrase"><a name="log.detailed.utilities.record_ordering.abstract_record_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.abstract_record_ordering">Abstract
           record ordering</a>
         </h6>
 <p>
@@ -963,7 +735,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.record_ordering.h1"></a>
-          <span><a name="log.detailed.utilities.record_ordering.attribute_value_based_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.attribute_value_based_ordering">Attribute
+          <span class="phrase"><a name="log.detailed.utilities.record_ordering.attribute_value_based_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.attribute_value_based_ordering">Attribute
           value based ordering</a>
         </h6>
 <p>
@@ -993,7 +765,7 @@
           equivalent is used.
         </p>
 <p>
-          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp24615264.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
+          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp54514224.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
           function to automatically generate the <code class="computeroutput"><a class="link" href="../../boost/log/attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a></code>
           instance based on the attribute value name and the ordering function. This
           might be useful if the ordering function has a non-trivial type, like the
@@ -1021,7 +793,7 @@
           by the library, therefore in order to reacquire the exception object it
           has to rethrow it. The header defines an <code class="computeroutput"><a class="link" href="../../boost/log/exception_handler.html" title="Class template exception_handler">exception_handler</a></code>
           template functor that does just that and then forwards the exception object
-          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp19056208.html" title="Function template make_exception_handler">make_exception_handler</a></code>
+          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp51281616.html" title="Function template make_exception_handler">make_exception_handler</a></code>
           function can be used to simplify the handler construction. All expected
           exception types should be specified explicitly in the call, in the order
           they would appear in the <code class="computeroutput"><span class="keyword">catch</span></code>
@@ -1121,7 +893,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.utilities.manipulators"></a><a class="link" href="utilities.html#log.detailed.utilities.manipulators" title="Output manipulators">Output manipulators</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.manipulators.to_log">Customized
           logging manipulator</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.manipulators.add_value">Attribute
@@ -1141,7 +913,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.to_log_hpp" title="Header &lt;boost/log/utility/manipulators/to_log.hpp&gt;">boost/log/utility/manipulators/to_log.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp24551712.html" title="Function template to_log">to_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp54398240.html" title="Function template to_log">to_log</a></code>
             function creates a stream manipulator that simply outputs the adopted
             value to the stream. By default its behavior is equivalent to simply
             putting the value to the stream. However, the user is able to overload
@@ -1182,7 +954,7 @@
             value contexts as well. The library uses this feature to allow different
             formatting ruled for different attribute values, even if the stored value
             type is the same. To do so one has to specify an explicit template argument
-            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp24551712.html" title="Function template to_log">to_log</a></code>,
+            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp54398240.html" title="Function template to_log">to_log</a></code>,
             a tag type, which will be embedded into the manipulator type and thus
             will allow to define different insertion operators:
           </p>
@@ -1270,7 +1042,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.dump_hpp" title="Header &lt;boost/log/utility/manipulators/dump.hpp&gt;">boost/log/utility/manipulators/dump.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp54355760.html" title="Function template dump">dump</a></code>
             function creates a manipulator that outputs binary contents of a contiguous
             memory region. This can be useful for logging some low level binary data,
             such as encoded network packets or entries of a binary file. The use
@@ -1294,12 +1066,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp24515312.html" title="Function template dump_elements">dump_elements</a></code> for printing
+            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp54361072.html" title="Function template dump_elements">dump_elements</a></code> for printing
             binary representation of non-byte array elements. The special manipulator
             for this case is necessary because the units of the size argument of
-            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
-            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
-            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp24515312.html" title="Function template dump_elements">dump_elements</a></code> accepts
+            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp54355760.html" title="Function template dump">dump</a></code>
+            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp54355760.html" title="Function template dump">dump</a></code>
+            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp54361072.html" title="Function template dump_elements">dump_elements</a></code> accepts
             the same arguments, and its size-related arguments always designate the
             number of elements to process.
           </p>
@@ -1323,10 +1095,313 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="log.detailed.utilities.ipc"></a><a class="link" href="utilities.html#log.detailed.utilities.ipc" title="Interprocess communication tools">Interprocess communication
+        tools</a>
+</h4></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="utilities.html#log.detailed.utilities.ipc.object_name">Resource
+          name wrapper</a></span></dt>
+<dt><span class="section"><a href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue">Reliable
+          message queue</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="log.detailed.utilities.ipc.object_name"></a><a class="link" href="utilities.html#log.detailed.utilities.ipc.object_name" title="Resource name wrapper">Resource
+          name wrapper</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.ipc.object_name_hpp" title="Header &lt;boost/log/utility/ipc/object_name.hpp&gt;">boost/log/utility/ipc/object_name.hpp</a></code><span class="special">&gt;</span>
+</pre>
+<p>
+            In modern operating systems process-shared system resources are typically
+            identified with names. Unfortunately, different systems have different
+            requirements on the name syntax and allowed character set. Additionally,
+            some systems offer support for namespaces in order to avoid name clashes.
+            The <code class="computeroutput"><a class="link" href="../../boost/log/ipc/object_name.html" title="Class object_name">object_name</a></code>
+            class is intended to hide these differences.
+          </p>
+<p>
+            An object name can be constructed from a UTF-8 string identifier and
+            a scope. A portable identifier can contain the following characters:
+          </p>
+<pre class="programlisting">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+0 1 2 3 4 5 6 7 8 9 . _ -
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The character set corresponds to <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278" target="_top">POSIX
+              Portable Filename Character Set</a>.
+            </p></td></tr>
+</table></div>
+<p>
+            Use of other characters may result in non-portable system-specific behavior.
+          </p>
+<p>
+            The scope is identified with the <code class="computeroutput"><span class="identifier">object_name</span><span class="special">::</span><span class="identifier">scope</span></code>
+            enumeration:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">global</span></code> - The name
+                has global scope; any process in the system has the potential to
+                open the resource identified by the name. On some systems this scope
+                may not be available or require elevated privileges.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">user</span></code> - The name is
+                limited to processes running under the current user.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">session</span></code> - The name
+                is limited to processes running in the current login session.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">process_group</span></code> - The
+                name is limited to processes running in the current process group.
+                Currently, on Windows all processes running in the current session
+                are considered members of the same process group. This may change
+                in future.
+              </li>
+</ul></div>
+<p>
+            The scopes are not overlapping. For instance, if an object is created
+            in the global scope, the object cannot be opened with the same name but
+            in user's scope. Some of the scopes may require elevated privileges to
+            create or open objects in.
+          </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              Object name scoping should not be considered a security measure. Objects
+              may still be accessible by processes outside of their name scopes.
+              The main purpose of the scopes is to avoid name clashes between different
+              processes using <code class="computeroutput"><a class="link" href="../../boost/log/ipc/object_name.html" title="Class object_name">object_name</a></code>.
+              Use access permissions for security control.
+            </p></td></tr>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="log.detailed.utilities.ipc.reliable_message_queue"></a><a class="link" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue" title="Reliable message queue">Reliable
+          message queue</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.ipc.reliable_message_queue_hpp" title="Header &lt;boost/log/utility/ipc/reliable_message_queue.hpp&gt;">boost/log/utility/ipc/reliable_message_queue.hpp</a></code><span class="special">&gt;</span>
+</pre>
+<p>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/ipc/reliable_message_queue.html" title="Class reliable_message_queue">reliable_message_queue</a></code>
+            class implements a reliable one-way channel of passing messages from
+            one or multiple writers to a single reader. The format of the messages
+            is user-defined and must be consistent across all writers and the reader.
+            The queue does not enforce any specific format of the messages, other
+            than they should be supplied as a contiguous array of bytes. The queue
+            internally uses a process-shared storage identified by an <a class="link" href="utilities.html#log.detailed.utilities.ipc.object_name" title="Resource name wrapper">object
+            name</a> (the queue name).
+          </p>
+<p>
+            The queue storage is organized as a fixed number of blocks of a fixed
+            size. The block size must be an integer power of 2 and is expressed in
+            bytes. Each written message, together with some metadata added by the
+            queue, consumes an integer number of blocks. Each read message received
+            by the reader releases the blocks allocated for that message. As such
+            the maximum size of a message is slightly less than block size times
+            capacity of the queue. For efficiency, it is recommended to choose block
+            size large enough to accommodate most of the messages to be passed through
+            the queue. The queue is considered empty when no messages are enqueued
+            (all blocks are free). The queue is considered full at the point of enqueueing
+            a message when there is not enough free blocks to accommodate the message.
+          </p>
+<p>
+            The queue is reliable in that it will not drop successfully sent messages
+            that are not received by the reader, other than the case when a non-empty
+            queue is destroyed by the last user. If a message cannot be enqueued
+            by the writer because the queue is full, the queue will act depending
+            on the overflow policy specified at the queue creation:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">block_on_overflow</span></code>
+                - Block the thread until there is enough space to enqueue the message
+                or the operation is aborted by calling <code class="computeroutput"><span class="identifier">stop_local</span></code>.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">fail_on_overflow</span></code>
+                - Return an error code from the send operation. The error code is
+                <code class="computeroutput"><span class="identifier">operation_result</span><span class="special">::</span><span class="identifier">no_space</span></code>.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">throw_on_overflow</span></code>
+                - Throw an exception from the send operation. The exception is <code class="computeroutput"><a class="link" href="../../boost/log/capacity_limit_reached.html" title="Class capacity_limit_reached">capacity_limit_reached</a></code>.
+              </li>
+</ul></div>
+<p>
+            The policy is object local, i.e. different writers and the reader can
+            have different overflow policies. Here is an example of writing to the
+            message queue:
+          </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">reliable_message_queue</span> <span class="identifier">queue_t</span><span class="special">;</span>
+
+    <span class="comment">// Create a message_queue_type object that is associated with the interprocess</span>
+    <span class="comment">// message queue named "ipc_message_queue".</span>
+    <span class="identifier">queue_t</span> <span class="identifier">queue</span>
+    <span class="special">(</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">name</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">::</span><span class="identifier">user</span><span class="special">,</span> <span class="string">"ipc_message_queue"</span><span class="special">),</span>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">open_mode</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">open_mode</span><span class="special">::</span><span class="identifier">open_or_create</span><span class="special">,</span>  <a class="co" name="log.detailed.utilities.ipc.reliable_message_queue.c0" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue.c1"><img src="../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">capacity</span> <span class="special">=</span> <span class="number">256</span><span class="special">,</span>                                  <a class="co" name="log.detailed.utilities.ipc.reliable_message_queue.c2" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue.c3"><img src="../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">block_size</span> <span class="special">=</span> <span class="number">1024</span><span class="special">,</span>                               <a class="co" name="log.detailed.utilities.ipc.reliable_message_queue.c4" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue.c5"><img src="../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">overflow_policy</span> <span class="special">=</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">fail_on_overflow</span>      <a class="co" name="log.detailed.utilities.ipc.reliable_message_queue.c6" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue.c7"><img src="../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
+    <span class="special">);</span>
+
+    <span class="comment">// Send a message through the queue</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">message</span> <span class="special">=</span> <span class="string">"Hello, Viewer!"</span><span class="special">;</span>
+    <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">operation_result</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">queue</span><span class="special">.</span><span class="identifier">send</span><span class="special">(</span><span class="identifier">message</span><span class="special">.</span><span class="identifier">data</span><span class="special">(),</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">size_type</span> <span class="special">&gt;(</span><span class="identifier">message</span><span class="special">.</span><span class="identifier">size</span><span class="special">()));</span>
+
+    <span class="comment">// See if the message was sent</span>
+    <span class="keyword">switch</span> <span class="special">(</span><span class="identifier">result</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="keyword">case</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">operation_result</span><span class="special">::</span><span class="identifier">succeeded</span><span class="special">:</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Message sent successfully"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="keyword">break</span><span class="special">;</span>
+
+    <span class="keyword">case</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">operation_result</span><span class="special">::</span><span class="identifier">no_space</span><span class="special">:</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Message could not be sent because the queue is full"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="keyword">break</span><span class="special">;</span>
+
+    <span class="keyword">case</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">operation_result</span><span class="special">::</span><span class="identifier">aborted</span><span class="special">:</span>
+        <span class="comment">// This can happen is overflow_policy is block_on_overflow</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Message sending operation has been interrupted"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+        <span class="keyword">break</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          </p>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="log.detailed.utilities.ipc.reliable_message_queue.c1"></a><a href="#log.detailed.utilities.ipc.reliable_message_queue.c0"><img src="../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+                create the queue, if not yet created
+              </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="log.detailed.utilities.ipc.reliable_message_queue.c3"></a><a href="#log.detailed.utilities.ipc.reliable_message_queue.c2"><img src="../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+                if the queue has to be created, allocate 256 blocks...
+              </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="log.detailed.utilities.ipc.reliable_message_queue.c5"></a><a href="#log.detailed.utilities.ipc.reliable_message_queue.c4"><img src="../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+                ... of 1 KiB each for messages
+              </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="log.detailed.utilities.ipc.reliable_message_queue.c7"></a><a href="#log.detailed.utilities.ipc.reliable_message_queue.c6"><img src="../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+                if the queue is full, return error to the writer
+              </p></td>
+</tr>
+</table></div>
+<p>
+            <a href="../../../../../../libs/log/example/doc/util_ipc_reliable_mq_writer.cpp" target="_top">See
+            the complete code</a>.
+          </p>
+<p>
+            Typically, the queue would be used for sending log records to a different
+            process. As such, instead of using the queue for writing directly, one
+            would use a special sink backend for that. See <a class="link" href="sink_backends.html#log.detailed.sink_backends.text_ipc_message_queue" title="Text IPC message queue backend"><code class="computeroutput"><span class="identifier">text_ipc_message_queue_backend</span></code></a>
+            documentation.
+          </p>
+<p>
+            Receiving messages from the queue is similar. Here is an example of a
+            log viewer that receives messages from the queue and displays them on
+            the console.
+          </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">try</span>
+    <span class="special">{</span>
+        <span class="keyword">typedef</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">reliable_message_queue</span> <span class="identifier">queue_t</span><span class="special">;</span>
+
+        <span class="comment">// Create a message_queue_type object that is associated with the interprocess</span>
+        <span class="comment">// message queue named "ipc_message_queue".</span>
+        <span class="identifier">queue_t</span> <span class="identifier">queue</span>
+        <span class="special">(</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">name</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">::</span><span class="identifier">user</span><span class="special">,</span> <span class="string">"ipc_message_queue"</span><span class="special">),</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">open_mode</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">open_mode</span><span class="special">::</span><span class="identifier">open_or_create</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">capacity</span> <span class="special">=</span> <span class="number">256</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">block_size</span> <span class="special">=</span> <span class="number">1024</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">overflow_policy</span> <span class="special">=</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">block_on_overflow</span>
+        <span class="special">);</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Viewer process running..."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+        <span class="comment">// Keep reading log messages from the associated message queue and print them on the console.</span>
+        <span class="comment">// queue.receive() will block if the queue is empty.</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">message</span><span class="special">;</span>
+        <span class="keyword">while</span> <span class="special">(</span><span class="identifier">queue</span><span class="special">.</span><span class="identifier">receive</span><span class="special">(</span><span class="identifier">message</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">succeeded</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">message</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+            <span class="comment">// Clear the buffer for the next message</span>
+            <span class="identifier">message</span><span class="special">.</span><span class="identifier">clear</span><span class="special">();</span>
+        <span class="special">}</span>
+    <span class="special">}</span>
+    <span class="keyword">catch</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Failure: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          </p>
+<p>
+            <a href="../../../../../../libs/log/example/doc/sinks_ipc_receiver.cpp" target="_top">See the
+            complete code</a>.
+          </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The queue does not guarantee any particular order of received messages
+              from different writer threads. Messages sent by a particular writer
+              thread will be received in the order of sending.
+            </p></td></tr>
+</table></div>
+<p>
+            A blocked reader or writer can be unblocked by calling <code class="computeroutput"><span class="identifier">stop_local</span></code>. After this method is called,
+            all threads blocked on this particular object are released and return
+            <code class="computeroutput"><span class="identifier">operation_result</span><span class="special">::</span><span class="identifier">aborted</span></code>. The other instances of the
+            queue (in the current or other processes) are unaffected. In order to
+            restore the normal functioning of the queue instance after the <code class="computeroutput"><span class="identifier">stop_local</span></code> call the user has to invoke
+            <code class="computeroutput"><span class="identifier">reset_local</span></code>.
+          </p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.utilities.setup"></a><a class="link" href="utilities.html#log.detailed.utilities.setup" title="Simplified library initialization tools">Simplified library initialization
         tools</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.setup.convenience">Convenience
           functions</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.setup.filter_formatter">Filter
@@ -1385,7 +1460,7 @@
 <p>
             Pretty easy, isn't it? There is also the <code class="computeroutput"><span class="identifier">wadd_console_log</span></code>
             function for wide-character console. If you want to put logs to some
-            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp24638480.html" title="Function template add_console_log">add_console_log</a></code> function
+            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp54537424.html" title="Function template add_console_log">add_console_log</a></code> function
             as an argument. E.g. enabling logging to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>
             instead of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span></code> would look like this:
           </p>
@@ -1431,7 +1506,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp24638480.html" title="Function template add_console_log">add_console_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp54537424.html" title="Function template add_console_log">add_console_log</a></code>
             and <code class="computeroutput"><a class="link" href="../../boost/log/add_file_log.html" title="Function template add_file_log">add_file_log</a></code>
             functions do not conflict and may be combined freely, so it is possible
             to set up logging to the console and a couple of files, including filtering
@@ -1537,7 +1612,7 @@ relation:
             Below are some examples of filters:
           </p>
 <div class="table">
-<a name="log.detailed.utilities.setup.filter_formatter.examples_of_filters"></a><p class="title"><b>Table&#160;1.9.&#160;Examples of filters</b></p>
+<a name="log.detailed.utilities.setup.filter_formatter.examples_of_filters"></a><p class="title"><b>Table&#160;1.8.&#160;Examples of filters</b></p>
 <div class="table-contents"><table class="table" summary="Examples of filters">
 <colgroup>
 <col>
@@ -1701,7 +1776,7 @@ relation:
             divided into sections. The container is implemented with the <code class="computeroutput"><a class="link" href="../../boost/log/basic_settings.html" title="Class template basic_settings">basic_settings</a></code> class template.
             There are several constraints on how parameters are stored in the container:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 Every parameter must reside in a section. There can be no parameters
                 that do not belong to a section.
@@ -1737,7 +1812,7 @@ relation:
             </p></td></tr>
 </table></div>
 <div class="table">
-<a name="log.detailed.utilities.setup.settings.section__core___logging_core_settings_"></a><p class="title"><b>Table&#160;1.10.&#160;Section "Core". Logging core settings.</b></p>
+<a name="log.detailed.utilities.setup.settings.section__core___logging_core_settings_"></a><p class="title"><b>Table&#160;1.9.&#160;Section "Core". Logging core settings.</b></p>
 <div class="table-contents"><table class="table" summary='Section "Core". Logging core settings.'>
 <colgroup>
 <col>
@@ -1823,7 +1898,7 @@ relation:
             </p></td></tr>
 </table></div>
 <div class="table">
-<a name="log.detailed.utilities.setup.settings.sections_under_the__sinks__section__common_sink_settings_"></a><p class="title"><b>Table&#160;1.11.&#160;Sections under the "Sinks" section. Common sink settings.</b></p>
+<a name="log.detailed.utilities.setup.settings.sections_under_the__sinks__section__common_sink_settings_"></a><p class="title"><b>Table&#160;1.10.&#160;Sections under the "Sinks" section. Common sink settings.</b></p>
 <div class="table-contents"><table class="table" summary='Sections under the "Sinks" section. Common sink settings.'>
 <colgroup>
 <col>
@@ -1869,7 +1944,9 @@ relation:
                       <a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log" title="Windows event log backends">SimpleEventLog</a>,
                       <a class="link" href="sink_backends.html#log.detailed.sink_backends.debugger" title="Windows debugger output backend">Debugger</a>.
                       Also, user-defined sink names may also be supported if registered
-                      by calling <code class="computeroutput"><span class="identifier">register_sink_factory</span></code>.
+                      by calling <code class="computeroutput"><a class="link" href="../../boost/log/register_sink__idp54795552.html" title="Function template register_sink_factory">register_sink_factory</a></code>.
+                      See <a class="link" href="../extension/settings.html#log.extension.settings.sinks" title="Adding support for user-defined sinks">this</a>
+                      section on how to add support for new sinks.
                     </p>
                   </td>
 </tr>
@@ -1921,7 +1998,7 @@ relation:
             be specified in the same section.
           </p>
 <div class="table">
-<a name="log.detailed.utilities.setup.settings._console__sink_settings"></a><p class="title"><b>Table&#160;1.12.&#160;"Console" sink settings</b></p>
+<a name="log.detailed.utilities.setup.settings._console__sink_settings"></a><p class="title"><b>Table&#160;1.11.&#160;"Console" sink settings</b></p>
 <div class="table-contents"><table class="table" summary='"Console" sink settings'>
 <colgroup>
 <col>
@@ -1987,7 +2064,7 @@ relation:
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="log.detailed.utilities.setup.settings._textfile__sink_settings"></a><p class="title"><b>Table&#160;1.13.&#160;"TextFile" sink settings</b></p>
+<a name="log.detailed.utilities.setup.settings._textfile__sink_settings"></a><p class="title"><b>Table&#160;1.12.&#160;"TextFile" sink settings</b></p>
 <div class="table-contents"><table class="table" summary='"TextFile" sink settings'>
 <colgroup>
 <col>
@@ -2070,6 +2147,24 @@ relation:
 <tr>
 <td>
                     <p>
+                      Append
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      "true" or "false"
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Enables or disables appending to the existing file instead
+                      of overwriting it. If not specified, the default value <code class="computeroutput"><span class="keyword">false</span></code> is assumed.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
                       RotationSize
                     </p>
                   </td>
@@ -2120,6 +2215,26 @@ relation:
                       Time point or a predicate that detects at what moment of time
                       to perform log file rotation. See also the RotationInterval
                       parameter and the note below.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      EnableFinalRotation
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      "true" or "false"
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Enables or disables final file rotation on sink destruction,
+                      which typically happens on program termination. If not specified,
+                      the default value <code class="computeroutput"><span class="keyword">true</span></code>
+                      is assumed.
                     </p>
                   </td>
 </tr>
@@ -2243,7 +2358,7 @@ relation:
             according to the <a href="http://www.boost.org/doc/libs/release/doc/html/date_time/date_time_io.html#date_time.format_flags" target="_top">Boost.DateTime</a>
             format notation:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 "%H:%M:%S". In this case, file rotation will be performed
                 on a daily basis, at the specified time. For example, "12:00:00".
@@ -2260,7 +2375,7 @@ relation:
               </li>
 </ul></div>
 <div class="table">
-<a name="log.detailed.utilities.setup.settings._syslog__sink_settings"></a><p class="title"><b>Table&#160;1.14.&#160;"Syslog" sink settings</b></p>
+<a name="log.detailed.utilities.setup.settings._syslog__sink_settings"></a><p class="title"><b>Table&#160;1.13.&#160;"Syslog" sink settings</b></p>
 <div class="table-contents"><table class="table" summary='"Syslog" sink settings'>
 <colgroup>
 <col>
@@ -2343,7 +2458,7 @@ relation:
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="log.detailed.utilities.setup.settings._simpleeventlog__sink_settings"></a><p class="title"><b>Table&#160;1.15.&#160;"SimpleEventLog" sink settings</b></p>
+<a name="log.detailed.utilities.setup.settings._simpleeventlog__sink_settings"></a><p class="title"><b>Table&#160;1.14.&#160;"SimpleEventLog" sink settings</b></p>
 <div class="table-contents"><table class="table" summary='"SimpleEventLog" sink settings'>
 <colgroup>
 <col>

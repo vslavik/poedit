@@ -30,6 +30,38 @@
         ); \
     }
 
+template <typename Left, typename Right, typename ToleranceBaseType>
+inline void
+equal_close_impl(Left left_begin,
+                 Left left_end,
+                 Right right_begin,
+                 Right right_end,
+                 ToleranceBaseType tolerance)
+{
+    for(; left_begin != (left_end); ++left_begin, ++right_begin) {
+        BOOST_CHECK_CLOSE(*left_begin, *right_begin, tolerance); \
+    }
+}
+
+#define BOOST_COMPUTE_TEST_CHECK_CLOSE_COLLECTIONS(L_begin, L_end, R_begin, R_end, tolerance) \
+    { \
+        equal_close_impl(L_begin, L_end, R_begin, R_end, tolerance); \
+    }
+
+#define CHECK_RANGE_CLOSE(type, size, actual, expected, tolerance) \
+    { \
+        type _actual[size]; \
+        boost::compute::copy( \
+            actual.begin(), actual.begin()+size, _actual, queue \
+        ); \
+        const type _expected[size] = { \
+            BOOST_PP_REPEAT(size, LIST_ARRAY_VALUES, (size, expected)) \
+        }; \
+        BOOST_COMPUTE_TEST_CHECK_CLOSE_COLLECTIONS( \
+            _actual, _actual + size, _expected, _expected + size, tolerance \
+        ); \
+    }
+
 #define CHECK_HOST_RANGE_EQUAL(type, size, actual, expected) \
     { \
         const type _expected[size] = { \

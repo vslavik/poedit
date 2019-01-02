@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Data-driven test cases</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_cases.html" title="Test cases">
 <link rel="prev" href="test_organization_nullary.html" title="Test cases without parameters">
@@ -27,7 +27,7 @@
 <a name="boost_test.tests_organization.test_cases.test_case_generation"></a><a class="link" href="test_case_generation.html" title="Data-driven test cases">Data-driven
         test cases</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="test_case_generation/datasets.html">Datasets</a></span></dt>
 <dt><span class="section"><a href="test_case_generation/datasets_auto_registration.html">Declaring
           and registering test cases with datasets</a></span></dt>
@@ -44,7 +44,7 @@
 </dl></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.h0"></a>
-          <span><a name="boost_test.tests_organization.test_cases.test_case_generation.why_data_driven_test_cases"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.why_data_driven_test_cases">Why
+          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.why_data_driven_test_cases"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.why_data_driven_test_cases">Why
           data-driven test cases?</a>
         </h5>
 <p>
@@ -67,7 +67,7 @@
 <p>
           The approach above has several drawbacks:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               the logic for running the tests is inside a test itself: <code class="computeroutput"><span class="identifier">single_test</span></code> in the above example
               is run from the test case <code class="computeroutput"><span class="identifier">combined_test</span></code>
@@ -88,7 +88,7 @@
 </ul></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.h1"></a>
-          <span><a name="boost_test.tests_organization.test_cases.test_case_generation.parameter_generation_scalability"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.parameter_generation_scalability">Parameter
+          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.parameter_generation_scalability"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.parameter_generation_scalability">Parameter
           generation, scalability and composition</a>
         </h5>
 <p>
@@ -98,7 +98,7 @@
           can be described in another function that generates these values. However,
           this solution has also limitations
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Generating functions</strong></span>: suppose we have
               a function <code class="computeroutput"><span class="identifier">func</span><span class="special">(</span><span class="keyword">float</span> <span class="identifier">f</span><span class="special">)</span></code>, where <code class="computeroutput"><span class="identifier">f</span></code>
@@ -167,7 +167,7 @@
               In this example,
             </p>
 <p class="simpara">
-              <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                     <code class="computeroutput"><span class="identifier">func3</span></code> inherits
                     from the preconditions of <code class="computeroutput"><span class="identifier">fast_log</span></code>
@@ -205,14 +205,14 @@
 </ul></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.h2"></a>
-          <span><a name="boost_test.tests_organization.test_cases.test_case_generation.data_driven_tests_in_the_boost_t"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.data_driven_tests_in_the_boost_t">Data
+          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.data_driven_tests_in_the_boost_t"></a></span><a class="link" href="test_case_generation.html#boost_test.tests_organization.test_cases.test_case_generation.data_driven_tests_in_the_boost_t">Data
           driven tests in the Boost.Test framework</a>
         </h5>
 <p>
           The facilities provided by the <span class="emphasis"><em>Unit Test Framework</em></span>
           addressed the issues described above:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               the notion of <span class="bold"><strong>datasets</strong></span> eases the description
               of the class of inputs for test cases. The datasets also implement
@@ -263,7 +263,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -6,13 +6,12 @@
 #if !defined(BOOST_UNORDERED_TEST_OBJECTS_FWD_HEADER)
 #define BOOST_UNORDERED_TEST_OBJECTS_FWD_HEADER
 
-namespace test
-{
-    class object;
-    class hash;
-    class less;
-    class equal_to;
-    template <class T> class allocator;
+namespace test {
+  class object;
+  class hash;
+  class less;
+  class equal_to;
+  template <class T> class allocator;
 }
 
 #endif

@@ -54,6 +54,7 @@ namespace
 
     void random_shuffle_test()
     {
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
         using boost::phoenix::random_shuffle;
         using boost::phoenix::arg_names::arg1;
         int array[] = {1,2,3};
@@ -67,6 +68,7 @@ namespace
         BOOST_TEST(third == 1 || third == 2 || third == 3);
         BOOST_TEST(first != third && second != third);
         return;
+#endif
     }
     
     void partition_test()

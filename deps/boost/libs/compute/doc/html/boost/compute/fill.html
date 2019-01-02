@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template fill</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.fill_hpp" title="Header &lt;boost/compute/algorithm/fill.hpp&gt;">
 <link rel="prev" href="exclusive_scan.html" title="Function exclusive_scan">
@@ -36,26 +36,33 @@
   <span class="keyword">void</span> <span class="identifier">fill</span><span class="special">(</span><span class="identifier">BufferIterator</span> first<span class="special">,</span> <span class="identifier">BufferIterator</span> last<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">,</span> 
             <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp65358608"></a><h2>Description</h2>
+<a name="idp79735584"></a><h2>Description</h2>
 <p>Fills the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>) with <code class="computeroutput">value</code>.</p>
 <p>
 For example, to fill a vector on the device with sevens: </p>
-<pre class="programlisting"> <span class="comment">// vector on the device</span>
- <a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;int&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="number">10</span><span class="special">,</span> <span class="identifier">context</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="comment">// vector on the device</span>
+<a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;int&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="number">10</span><span class="special">,</span> <span class="identifier">context</span><span class="special">)</span><span class="special">;</span>
 
- <span class="comment">// fill vector with sevens</span>
- <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">fill</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">7</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<span class="comment">// fill vector with sevens</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">fill</span><span class="special">(</span><span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">end</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="number">7</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 </pre>
+<p>Space complexity: (1)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>boost::compute::fill_n() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

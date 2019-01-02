@@ -24,10 +24,32 @@ project boost/coroutine2/test
       <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
       <link>static
       <threading>multi
+      <optimization>speed
+      <variant>release
     ;
 
-run test_coroutine.cpp : 
+rule native-impl ( properties * )
+{
+    local result  ;
+    if ( <target-os>darwin in $(properties) || <target-os>android in $(properties) )
+    {
+        result = <build>no ;
+    }
+    else if ( ! ( <target-os>windows in $(properties) ) )
+    {
+        result = <context-impl>ucontext ;
+    }
+    else
+    {
+        result = <context-impl>winfib ;
+    }
+    return $(result) ;
+}
+
+test-suite minimal :
+[ run test_coroutine.cpp : 
     : :
+    <context-impl>fcontext
     [ requires cxx11_auto_declarations
                cxx11_constexpr
                cxx11_defaulted_functions
@@ -38,4 +60,29 @@ run test_coroutine.cpp :
                cxx11_nullptr
                cxx11_rvalue_references
                cxx11_template_aliases
-               cxx11_variadic_templates ] ;
+               cxx11_variadic_templates ]
+    : test_coroutine_asm ]
+
+[ run test_coroutine.cpp : 
+    : :
+    <conditional>@native-impl
+    [ requires cxx11_auto_declarations
+               cxx11_constexpr
+               cxx11_defaulted_functions
+               cxx11_final
+               cxx11_hdr_tuple
+               cxx11_lambdas
+               cxx11_noexcept
+               cxx11_nullptr
+               cxx11_rvalue_references
+               cxx11_template_aliases
+               cxx11_variadic_templates ]
+    : test_coroutine_native ] ;
+
+test-suite full :
+    minimal ;
+
+test-suite extra ;
+
+explicit minimal ;
+explicit extra ;

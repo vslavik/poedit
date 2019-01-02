@@ -11,16 +11,27 @@
 #define BOOST_TEST_MODULE TestInplaceReduce
 #include <boost/test/unit_test.hpp>
 
+#include <iostream>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/algorithm/iota.hpp>
 #include <boost/compute/algorithm/detail/inplace_reduce.hpp>
 #include <boost/compute/container/vector.hpp>
 
+#include "quirks.hpp"
 #include "context_setup.hpp"
 
 BOOST_AUTO_TEST_CASE(sum_int)
 {
+    if(is_apple_cpu_device(device)) {
+        std::cerr
+            << "skipping all inplace_reduce tests due to Apple platform"
+            << " behavior when local memory is used on a CPU device"
+            << std::endl;
+        return;
+    }
+
     int data[] = { 1, 5, 3, 4, 9, 3, 5, 3 };
     boost::compute::vector<int> vector(data, data + 8, queue);
 
@@ -43,6 +54,10 @@ BOOST_AUTO_TEST_CASE(sum_int)
 
 BOOST_AUTO_TEST_CASE(multiply_int)
 {
+    if(is_apple_cpu_device(device)) {
+        return;
+    }
+
     int data[] = { 1, 5, 3, 4, 9, 3, 5, 3 };
     boost::compute::vector<int> vector(data, data + 8, queue);
 
@@ -65,6 +80,10 @@ BOOST_AUTO_TEST_CASE(multiply_int)
 
 BOOST_AUTO_TEST_CASE(reduce_iota)
 {
+    if(is_apple_cpu_device(device)) {
+        return;
+    }
+
     // 1 value
     boost::compute::vector<int> vector(1, context);
     boost::compute::iota(vector.begin(), vector.end(), int(0), queue);

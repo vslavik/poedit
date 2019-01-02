@@ -30,7 +30,7 @@ void centroid(Geometry const & geometry, Point & c, Strategy const & strategy)``
 [table
 [[Type] [Concept] [Name] [Description] ]
 [[Geometry const &] [Any type fulfilling a Geometry Concept ] [geometry] [A model of the specified concept ]]
-[[Point &] [Any type fulfilling a Point Concept ] [c] [A model of the specified Point Concept which is set to the \1 ]]
+[[Point &] [Any type fulfilling a Point Concept ] [c] [A model of the specified Point Concept which is set to the centroid ]]
 [[Strategy const &] [Any type fulfilling a Centroid Strategy Concept ] [strategy] [The strategy which will be used for centroid calculations]]
 ]
 
@@ -112,7 +112,7 @@ Point return_centroid(Geometry const & geometry)``
 
 
 [heading Returns]
-The calculated \1
+The calculated centroid
 
 [heading Header]
 Either
@@ -152,7 +152,7 @@ Point return_centroid(Geometry const & geometry, Strategy const & strategy)``
 
 
 [heading Returns]
-The calculated \1
+The calculated centroid
 
 [heading Header]
 Either

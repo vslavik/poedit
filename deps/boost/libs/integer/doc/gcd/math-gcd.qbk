@@ -1,5 +1,5 @@
 
-[mathpart gcd_lcm Integer Utilities (Greatest Common Divisor and Least Common Multiple)]
+[section:gcd_lcm Greatest Common Divisor and Least Common Multiple]
 
 [section Introduction]
 
@@ -24,9 +24,20 @@ programming problems.
       class lcm_evaluator;
 
    template < typename IntegerType >
-      IntegerType  gcd( IntegerType const &a, IntegerType const &b );
+      constexpr IntegerType  gcd( IntegerType const &a, IntegerType const &b );
    template < typename IntegerType >
-      IntegerType  lcm( IntegerType const &a, IntegerType const &b );
+      constexpr IntegerType  lcm( IntegerType const &a, IntegerType const &b );
+   template < typename IntegerType, typename... Args >
+      constexpr IntegerType  gcd( IntegerType const &a, IntegerType const &b, Args const&... );
+   template < typename IntegerType, typename... Args >
+      constexpr IntegerType  lcm( IntegerType const &a, IntegerType const &b, Args const&... );
+
+   template <typename I>
+   std::pair<typename std::iterator_traits<I>::value_type, I>
+      gcd_range(I first, I last);
+   template <typename I>
+   std::pair<typename std::iterator_traits<I>::value_type, I>
+      lcm_range(I first, I last);
 
    typedef ``['see-below]`` static_gcd_type;
 
@@ -54,8 +65,9 @@ programming problems.
       typedef IntegerType  second_argument_type;
 
       // Function object interface
-      result_type  operator ()( first_argument_type const &a,
-      second_argument_type const &b ) const;
+      constexpr result_type  operator ()( 
+	     first_argument_type const &a,
+         second_argument_type const &b ) const;
    };
 
 The boost::math::gcd_evaluator class template defines a function object
@@ -69,6 +81,9 @@ This function object class template is used in the corresponding version of
 the GCD function template. If a numeric type wants to customize evaluations
 of its greatest common divisors, then the type should specialize on the
 gcd_evaluator class template.
+
+Note that these function objects are `constexpr` in C++14 and later only.  
+They are also declared `noexcept` when appropriate.
 
 [endsect]
 
@@ -86,8 +101,9 @@ gcd_evaluator class template.
       typedef IntegerType  second_argument_type;
 
       // Function object interface
-      result_type  operator ()( first_argument_type const &a,
-      second_argument_type const &b ) const;
+      constexpr result_type  operator ()( 
+		first_argument_type const &a,
+		second_argument_type const &b ) const;
    };
 
 The boost::math::lcm_evaluator class template defines a function object
@@ -103,6 +119,9 @@ of the LCM function template. If a numeric type wants to customize
 evaluations of its least common multiples, then the type should
 specialize on the lcm_evaluator class template.
 
+Note that these function objects are constexpr in C++14 and later only.
+They are also declared `noexcept` when appropriate.
+
 [endsect]
 
 [section:run_time Run-time GCD & LCM Determination]
@@ -110,23 +129,47 @@ specialize on the lcm_evaluator class template.
 [*Header: ] [@../../../../boost/math/common_factor_rt.hpp <boost/math/common_factor_rt.hpp>]
 
    template < typename IntegerType >
-   IntegerType  boost::math::gcd( IntegerType const &a, IntegerType const &b );
+   constexpr IntegerType  boost::math::gcd( IntegerType const &a, IntegerType const &b );
 
    template < typename IntegerType >
-   IntegerType  boost::math::lcm( IntegerType const &a, IntegerType const &b );
+   constexpr IntegerType  boost::math::lcm( IntegerType const &a, IntegerType const &b );
+
+   template < typename IntegerType, typename... Args >
+      constexpr IntegerType  gcd( IntegerType const &a, IntegerType const &b, Args const&... );
+
+   template < typename IntegerType, typename... Args >
+      constexpr IntegerType  lcm( IntegerType const &a, IntegerType const &b, Args const&... );
+
+   template <typename I>
+   std::pair<typename std::iterator_traits<I>::value_type, I>
+      gcd_range(I first, I last);
+
+   template <typename I>
+   std::pair<typename std::iterator_traits<I>::value_type, I>
+      lcm_range(I first, I last);
 
 The boost::math::gcd function template returns the greatest common
 (nonnegative) divisor of the two integers passed to it.
+`boost::math::gcd_range` is the iteration of the above gcd algorithm over a 
+range, returning the greatest common divisor of all the elements. The algorithm 
+terminates when the gcd reaches unity or the end of the range. Thus it also 
+returns the iterator after the last element inspected because this may not be 
+equal to the end of the range.  The variadic version of `gcd` behaves similarly
+but does not indicate which input value caused the gcd to reach unity.
+
 The boost::math::lcm function template returns the least common
 (nonnegative) multiple of the two integers passed to it.
-The function templates are parameterized on the function arguments'
-IntegerType, which is also the return type. Internally, these function
-templates use an object of the corresponding version of the
-gcd_evaluator and lcm_evaluator class templates, respectively.
+As with gcd, there are range and variadic versions of the function for 
+more than 2 arguments.
+
+Note that these functions are constexpr in C++14 and later only.
+They are also declared `noexcept` when appropriate.
 
 [endsect]
 
 [section:compile_time Compile time GCD and LCM determination]
+
+[note These functions are deprecated in favor of constexpr `gcd` and `lcm` on C++14 capable compilers.]
 
 [*Header: ] [@../../../../boost/math/common_factor_ct.hpp <boost/math/common_factor_ct.hpp>]
 
@@ -219,6 +262,8 @@ code factoring and eases maintainence.
 
 [section:gcd_history History]
 
+* 24th April 2017 Moved to Jeremy Murphy's improved algorithms, added constexpr and noexcept support, 
+added compiler intrinsic support, added variadic and range based versions of the algorithms.
 * 13 May 2013 Moved into main Boost.Math Quickbook documentation.
 * 17 Dec 2005: Converted documentation to Quickbook Format.
 * 2 Jul 2002: Compile-time and run-time items separated to new headers.
@@ -235,7 +280,7 @@ pool library. The code had updates by Helmut Zeisel.
 
 [endsect]
 
-[endmathpart]
+[endsect]
 
 [/
 Copyright 2005, 2013 Daryle Walker.

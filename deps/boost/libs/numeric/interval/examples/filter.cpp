@@ -2,7 +2,7 @@
  * two examples of filters for computing the sign of a determinant
  * the second filter is based on an idea presented in
  * "Interval arithmetic yields efficient dynamic filters for computational
- * geometry" by Brönnimann, Burnikel and Pion, 2001
+ * geometry" by BrÃ¶nnimann, Burnikel and Pion, 2001
  *
  * Copyright 2003 Guillaume Melquiond
  *
@@ -12,6 +12,7 @@
  */
 
 #include <boost/numeric/interval.hpp>
+#include <cstring>
 #include <iostream>
 
 namespace dummy {

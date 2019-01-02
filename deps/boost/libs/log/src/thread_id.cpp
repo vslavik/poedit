@@ -32,8 +32,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/log/detail/thread_specific.hpp>
 #else
-#include <boost/system/error_code.hpp>
-#include <boost/system/system_error.hpp>
+#include <boost/log/exceptions.hpp>
 #include <boost/log/utility/once_block.hpp>
 #endif
 #if !defined(BOOST_LOG_USE_COMPILER_TLS)
@@ -212,7 +211,7 @@ BOOST_LOG_API thread::id const& get_id()
     {
         if (int err = pthread_key_create(&g_key, &deleter))
         {
-            BOOST_THROW_EXCEPTION(system::system_error(err, system::system_category(), "Failed to create a thread-specific storage for thread id"));
+            BOOST_LOG_THROW_DESCR_PARAMS(system_error, "Failed to create a thread-specific storage for thread id", (err));
         }
     }
 

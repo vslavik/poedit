@@ -1,11 +1,166 @@
 [/
- / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 [section:history Revision History]
+
+[heading Asio 1.12.2 / Boost 1.69]
+
+* Fixed a problem with the detection of `std::future` availability with
+  libstdc++.
+* Fixed compile error in regex overload of `read_until`.
+* Fixed a timer heap corruption issue that can occur when moving a cancelled
+  timer.
+* Fixed detection of `std::experimental::string_view` and `std::string_view`
+  with newer clang/libc++.
+* Fixed MSVC version detection for availability of `std::invoke_result`.
+* Fixed the buffer sequence traits to test the new requirements, if `decltype`
+  is available.
+* Fixed an MSVC issue when building with exceptions disabled.
+* Added SSL context options for TLS v1.3.
+* Added a compile-time test for TLS v1 support.
+* Fixed the macro used to test for TLS v1.2 support.
+* Prevented global objects from being created once per thread on Windows.
+* Fixed a crash when using `size()`, `max_size()` or `empty()` on
+  default-constructed resolver results.
+* Changed to move the return value in basic_resolver_results::begin() to avoid
+  copying.
+* Enabled move support for the Intel Compiler.
+* Fixed `std::string_view` detection issue when using clang-cl.
+* Fixed the handler tracking operation name for
+  `io_context::executor_type::dispatch`.
+* Fixed a buffer overflow that could occur when parsing an address string with
+  a 64-bit scope id.
+* Added examples showing how to write composed operations.
+* Added C++11 versions of the Timeouts, Timers, SOCKS4 and SSL examples.
+* Fixed minor issues in documentation and examples.
+
+[heading Asio 1.12.1 / Boost 1.67]
+
+* Added missing const qualifier to `basic_socket_acceptor::get_option`.
+* Worked around a parsing error that occurs with some versions of gcc.
+* Fixed broken code samples in tutorial.
+* Added new experimental features. (Note that "experimental" features may be
+  changed without notice in subsequent releases.)
+  * Added `experimental::detached` completion token.
+  * Added `experimental::redirect_error` completion token.
+  * Added `experimental::co_spawn` facility for integration with the coroutines
+    technical specification.
+* Updated timeout examples to use latest features.
+  * Used `asio::steady_timer` rather than `asio::deadline_timer`.
+  * Used `asio::dynamic_buffer` rather than `asio::streambuf`.
+  * Used timed `asio::io_context::run_for()` function for blocking clients.
+  * Added example showing a custom completion token for blocking with timeouts.
+* Fixed unit tests to compile when `BOOST_ASIO_NO_DEPRECATED` is defined.
+* Changed socket iostreams to use chrono by default, to fix compatibility with
+	the Networking TS. Define `BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM`
+	to enable the old Boost.Date_Time interface in `basic_socket_streambuf` and
+	`basic_socket_iostream`.
+* Updated examples to use chrono rather than Boost.Date_Time.
+* Fixed an incorrect member function detector in the `is_dynamic_buffer` trait.
+* Fixed an `async_result` incompatibility with deprecated `handler_type`.
+* Added a missing move optimisation in the SSL stream implementation.
+* Fixed incorrect `basic_resolver_results::value_type` typedef.
+* Fixed a compile error with some OpenSSL versions when `SSL_OP_NO_COMPRESSION`
+  is defined.
+* Changed `add_certificate_authority` to process multiple certificates in a bundle.
+* Eliminated deprecation warning with MSVC by using `std::invoke_result` rather
+  than `std::result_of`.
+* Changed to use `std::string_view` for C++17 or later, and
+	`std::experimental::string_view` for C++14. Define the preprocessor macro
+	`BOOST_ASIO_DISABLE_STD_STRING_VIEW` to force the use of
+	std::experimental::string_view (assuming it is available) when compiling in
+	C++17 mode.
+* Ensured `DynamicBuffer` template arguments are decayed before using in
+  `enable_if` tests.
+* Changed documentation to distinguish legacy completion handlers (which are
+  still required to be CopyConstructible) from new MoveConstructible handlers.
+* Suppressed a discarded return value warning in the buffer debugging support.
+* Fixed `basic_yield_context` to work with completion signatures containing
+  reference parameters.
+* Ensured that stackful coroutines launched using `spawn()` correctly store
+  decayed copies of their function and handler arguments.
+* Fixed some compatibility issues with Android.
+* Added cross-compilation support to Jamfiles.
+* Fixed some minor portability issues in examples.
+
+[heading Asio 1.12.0 / Boost 1.66]
+
+* Implemented interface changes to reflect the Networking TS
+	([@www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/n4656.pdf N4656]).
+	* See the [link boost_asio.net_ts list] of new interfaces and, where
+    applicable, the corresponding old interfaces that have been superseded.
+	* The service template parameters, and the corresponding classes, are disabled
+		by default. For example, instead of `basic_socket<Protocol, SocketService>` we
+		now have simply `basic_socket<Protocol>`. The old interface can be enabled by
+		defining the `BOOST_ASIO_ENABLE_OLD_SERVICES` macro.
+* Removed previously deprecated functions.
+* Added support for customised handler tracking.
+* Added reactor-related (i.e. descriptor readiness) events to handler tracking.
+* Added special [link boost_asio.overview.core.concurrency_hint concurrency
+  hint] values that may be used to disable locking on a per `io_context` basis.
+* Enabled perfect forwarding for the first `ssl::stream<>` constructor argument.
+* Added ability to release ownership of the underlying native socket. (Requires
+	Windows 8.1 or later when using the I/O completion port backend.)
+
+[heading Asio 1.10.10 / Boost 1.65]
+
+* Changed to require [^g++] versions >= 4.7 to use standard atomics, to fix
+  a linker error when using [^g++] 4.6 ([ticket 13121]).
+* Enabled use of `constexpr` and variadic templates with recent MSVC versions.
+* Fixed a race condition in the Linux epoll backend, which may occur when a
+  socket or descriptor is closed while another thread is blocked on epoll.
+* Eliminated use of deprecated `auto_ptr`.
+* Fixed misplaced use of `asio_handler_is_continuation` result in reactive
+  `async_accept` implementation.
+* Changed to use `poll.h` rather than `sys/poll.h` on some modern POSIX
+  platforms ([ticket 12419]).
+* Fixed MSVC intellisense detection.
+* Disabled use of the `__thread` keyword extension for android/clang/x86
+  targets.
+
+[heading Asio 1.10.9 / Boost 1.64]
+
+* Added limited support for using regular file descriptors (where I/O
+  operations should never fail with `EAGAIN` or `EWOULDBLOCK`) with
+  `posix::stream_descriptor`, when using the Linux epoll backend.
+* Changed to use `allocator_traits` to rebind allocators in C++11 or later.
+* Eliminated a double "construction" issue in the converting move constructors.
+* Added new `ssl::context_base` enumerations to enable support for any TLS
+  version, and improved consistency of SSL/TLS version handling across OpenSSL
+  releases.
+* Applied more changes to address OpenSSL 1.1 compatibility.
+* Fixed a compile error when OpenSSL compression is disabled at compile time.
+* Suppressed some spurious unused variable warnings issued by [^gcc] ([ticket
+  12302]).
+* Worked around a new clang warning issued for usage of the comma operator.
+* Fixed various header ordering problems.
+* Changed to refer `std::atomic_thread_fence`, when available, to eliminate a
+  deprecated function warning on newest macOS SDK ([ticket 12482]).
+* Added a workaround for broken `getaddrinfo` in Apple's NAT64 environment.
+* Fixed an exception safety issue in the internal hash map implementation.
+
+[heading Asio 1.10.8 / Boost 1.62]
+
+* Added compatibility with OpenSSL 1.1.0 ([ticket 12238]).
+* Fixed out-of-bounds iterator use in `asio::connect()` when the
+  `connect_condition` returns an end iterator ([ticket 12354]).
+* Added a workaround for a move detection problem on MSVC 2015 Update 2
+  ([ticket 12115]).
+* Changed a workaround that was previously added for broken Windows firewalls
+  to only bind to 127.0.0.1 if `getsockname` reports 0.0.0.0 ([ticket
+  12406]).
+* Added call to `SSL_COMP_free_compression_methods` to fix two memory leaks
+  reported at shutdown, for OpenSSL versions >= 1.0.2 and < 1.1.0 ([ticket
+  10795]).
+* Fixed `use_future` compile error encountered on some standard library
+  implementations, by changing `std::allocator<void>` use to a non-void
+  template parameter.
+* Enabled use of native `getaddrinfo` by default on Apple OSes, rather than
+  emulation in terms of `getipnodebyname`.
 
 [heading Asio 1.10.7 / Boost 1.60]
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template dynamic_interval_traits</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Icl">
 <link rel="up" href="../../header/boost/icl/dynamic_interval_traits_hpp.html" title="Header &lt;boost/icl/dynamic_interval_traits.hpp&gt;">
 <link rel="prev" href="../../header/boost/icl/dynamic_interval_traits_hpp.html" title="Header &lt;boost/icl/dynamic_interval_traits.hpp&gt;">
@@ -37,21 +37,21 @@
   <span class="keyword">typedef</span> <span class="identifier">Type</span><span class="special">::</span><span class="identifier">domain_type</span>    <a name="boost.icl.dynamic_interval_traits.domain_type"></a><span class="identifier">domain_type</span><span class="special">;</span>   
   <span class="keyword">typedef</span> <span class="identifier">Type</span><span class="special">::</span><span class="identifier">domain_compare</span> <a name="boost.icl.dynamic_interval_traits.domain_compare"></a><span class="identifier">domain_compare</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="dynamic_interval_traits.html#idp25909200-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">Type</span> <a class="link" href="dynamic_interval_traits.html#idp25909760-bb"><span class="identifier">construct</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="dynamic_interval_traits.html#idp70659344-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">Type</span> <a class="link" href="dynamic_interval_traits.html#idp70659904-bb"><span class="identifier">construct</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <a class="link" href="interval_bounds.html" title="Class interval_bounds">interval_bounds</a><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">Type</span> <a class="link" href="dynamic_interval_traits.html#idp25913072-bb"><span class="identifier">construct_bounded</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">static</span> <span class="identifier">Type</span> <a class="link" href="dynamic_interval_traits.html#idp70663216-bb"><span class="identifier">construct_bounded</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
                                 <span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp25873248"></a><h2>Description</h2>
+<a name="idp114135488"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp25873664"></a><h3>
-<a name="idp25909200-bb"></a><code class="computeroutput">dynamic_interval_traits</code> public static functions</h3>
+<a name="idp114135904"></a><h3>
+<a name="idp70659344-bb"></a><code class="computeroutput">dynamic_interval_traits</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Type</span> <a name="idp25909760-bb"></a><span class="identifier">construct</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span> lo<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span> up<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Type</span> <a name="idp70659904-bb"></a><span class="identifier">construct</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span> lo<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">domain_type</span> <span class="special">&amp;</span> up<span class="special">,</span> 
                       <a class="link" href="interval_bounds.html" title="Class interval_bounds">interval_bounds</a> bounds<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Type</span> <a name="idp25913072-bb"></a><span class="identifier">construct_bounded</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span> lo<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">Type</span> <a name="idp70663216-bb"></a><span class="identifier">construct_bounded</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span> lo<span class="special">,</span> 
                               <span class="keyword">const</span> <a class="link" href="bounded_value.html" title="Class template bounded_value">bounded_value</a><span class="special">&lt;</span> <span class="identifier">domain_type</span> <span class="special">&gt;</span> <span class="special">&amp;</span> up<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>

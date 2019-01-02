@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="next" href="primitiveparser.html" title="PrimitiveParser">
@@ -28,12 +28,12 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.parser.h0"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.parser.description"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.parser.description"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
           </h6>
 <p>
             The <span class="emphasis"><em>Parser</em></span> is the most fundamental concept. A Parser
             has a member function, <code class="computeroutput"><span class="identifier">parse</span></code>,
-            that accepts a first-last <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pair and returns
+            that accepts a first-last <a href="http://en.cppreference.com/w/cpp/named_req/ForwardIterator" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pair and returns
             bool as its result. The iterators delimit the data being parsed. The
             Parser's <code class="computeroutput"><span class="identifier">parse</span></code> member
             function returns <code class="computeroutput"><span class="keyword">true</span></code> if
@@ -43,7 +43,7 @@
           </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">p</span></code></span></dt>
 <dd><p>
                   A <code class="computeroutput"><span class="identifier">Parser</span></code>.
@@ -54,11 +54,11 @@
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iter</span></code></span></dt>
 <dd><p>
-                  a <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type.
+                  a <a href="http://en.cppreference.com/w/cpp/named_req/ForwardIterator" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type.
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">f</span></code>, <code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
-                  <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a>. first/last
+                  <a href="http://en.cppreference.com/w/cpp/named_req/ForwardIterator" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a>. first/last
                   iterator pair.
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
@@ -81,7 +81,7 @@
 </div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.parser.h1"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
@@ -160,7 +160,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.parser.h2"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -213,13 +213,13 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.parser.h3"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
           </h6>
 <p>
             Upon return from <code class="computeroutput"><span class="identifier">p</span><span class="special">.</span><span class="identifier">parse</span></code> the following post conditions
             should hold:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 On a successful match, <code class="computeroutput"><span class="identifier">f</span></code>
                 is positioned one past the last matching character/token.
@@ -247,7 +247,7 @@
 </ul></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.parser.h4"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.parser.models"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.parser.models"></a></span><a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
           </h6>
 <p>
             All parsers in Spirit.Qi are models of the <span class="emphasis"><em>Parser</em></span>

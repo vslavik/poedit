@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Emulation limitations</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;21.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;25.&#160;Boost.Move">
 <link rel="prev" href="move_algorithms.html" title="Move algorithms">
 <link rel="next" href="how_the_library_works.html" title="How the library works">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="move.emulation_limitations"></a><a class="link" href="emulation_limitations.html" title="Emulation limitations">Emulation limitations</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="emulation_limitations.html#move.emulation_limitations.emulation_limitations_base">Initializing
       base classes</a></span></dt>
 <dt><span class="section"><a href="emulation_limitations.html#move.emulation_limitations.template_parameters">Template
@@ -36,6 +36,8 @@
       of rvalue references to lvalues</a></span></dt>
 <dt><span class="section"><a href="emulation_limitations.html#move.emulation_limitations.assignment_operator">Assignment
       operator in classes derived from or holding copyable and movable types</a></span></dt>
+<dt><span class="section"><a href="emulation_limitations.html#move.emulation_limitations.templated_assignment_operator">Templated
+      assignment operator in copyable and movable types</a></span></dt>
 </dl></div>
 <p>
       Like any emulation effort, the library has some limitations users should take
@@ -187,6 +189,65 @@
         strings, etc.) that reuse resources (like previously allocated memory) when
         x is assigned from a lvalue.
       </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="move.emulation_limitations.templated_assignment_operator"></a><a class="link" href="emulation_limitations.html#move.emulation_limitations.templated_assignment_operator" title="Templated assignment operator in copyable and movable types">Templated
+      assignment operator in copyable and movable types</a>
+</h3></div></div></div>
+<p>
+        Given a movable and copyable class, if a templated assignment operator (*)
+        is added:
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">Foo</span>
+<span class="special">{</span>
+   <span class="identifier">BOOST_COPYABLE_AND_MOVABLE</span><span class="special">(</span><span class="identifier">Foo</span><span class="special">)</span>
+
+   <span class="keyword">public</span><span class="special">:</span>
+   <span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="keyword">explicit</span> <span class="identifier">Foo</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">val</span><span class="special">)</span>      <span class="special">:</span> <span class="identifier">i</span><span class="special">(</span><span class="identifier">val</span><span class="special">)</span>   <span class="special">{}</span>
+
+   <span class="identifier">Foo</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Foo</span><span class="special">)</span> <span class="identifier">obj</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">i</span><span class="special">(</span><span class="identifier">obj</span><span class="special">.</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{}</span>
+
+   <span class="identifier">Foo</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Foo</span><span class="special">)</span> <span class="identifier">rhs</span><span class="special">)</span>
+   <span class="special">{</span>  <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">rhs</span><span class="special">.</span><span class="identifier">i</span><span class="special">;</span> <span class="identifier">rhs</span><span class="special">.</span><span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span> <span class="special">}</span>
+
+   <span class="identifier">Foo</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_COPY_ASSIGN_REF</span><span class="special">(</span><span class="identifier">Foo</span><span class="special">)</span> <span class="identifier">rhs</span><span class="special">)</span>
+   <span class="special">{</span>  <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">rhs</span><span class="special">.</span><span class="identifier">i</span><span class="special">;</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>   <span class="special">}</span> <span class="comment">//(1)</span>
+
+   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span> <span class="comment">//(*) TEMPLATED ASSIGNMENT, potential problem</span>
+   <span class="identifier">Foo</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span>
+   <span class="special">{</span>  <span class="identifier">i</span> <span class="special">=</span> <span class="special">-</span><span class="identifier">rhs</span><span class="special">.</span><span class="identifier">i</span><span class="special">;</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>  <span class="special">}</span> <span class="comment">//(2)</span>
+<span class="special">};</span>
+</pre>
+<p>
+      </p>
+<p>
+        C++98 and C++11 compilers will behave different when assigning from a <code class="computeroutput"><span class="special">[</span><span class="keyword">const</span><span class="special">]</span>
+        <span class="identifier">Foo</span></code> lvalue:
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">Foo</span> <span class="identifier">foo1</span><span class="special">(</span><span class="number">1</span><span class="special">);</span>
+<span class="identifier">Foo</span> <span class="identifier">foo2</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
+<span class="identifier">foo2</span> <span class="special">=</span> <span class="identifier">foo1</span><span class="special">;</span> <span class="comment">// Calls (1) in C++11 but (2) in C++98</span>
+<span class="keyword">const</span> <span class="identifier">Foo</span> <span class="identifier">foo5</span><span class="special">(</span><span class="number">5</span><span class="special">);</span>
+<span class="identifier">foo2</span> <span class="special">=</span> <span class="identifier">foo5</span><span class="special">;</span> <span class="comment">// Calls (1) in C++11 but (2) in C++98</span>
+</pre>
+<p>
+      </p>
+<p>
+        This different behaviour is a side-effect of the move emulation that can't
+        be easily avoided by <span class="bold"><strong>Boost.Move</strong></span>. One workaround
+        is to SFINAE-out the templated assignment operator with <code class="computeroutput"><span class="identifier">disable_if</span></code>:
+      </p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span> <span class="comment">// Modified templated assignment</span>
+<span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">U</span><span class="special">,</span> <span class="identifier">Foo</span><span class="special">&gt;,</span> <span class="identifier">Foo</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span>
+   <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span>
+<span class="special">{</span>  <span class="identifier">i</span> <span class="special">=</span> <span class="special">-</span><span class="identifier">rhs</span><span class="special">.</span><span class="identifier">i</span><span class="special">;</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>  <span class="special">}</span> <span class="comment">//(2)</span>
+</pre>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

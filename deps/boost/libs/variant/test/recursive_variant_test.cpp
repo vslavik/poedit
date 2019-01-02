@@ -237,7 +237,7 @@ void test_recursive_variant()
           int,
           std::tuple<int, boost::recursive_variant_>
         >::type var7_t;
-    var7_t var7 = 0;
+    var7_t var7 = 0;    // !!! Do not replace with `var7_t var7{0}` or `var7_t var7(0)` !!!
     var7 = std::tuple<int, var7_t>(1, var7);
     var7 = std::tuple<int, var7_t>(2, var7);
 

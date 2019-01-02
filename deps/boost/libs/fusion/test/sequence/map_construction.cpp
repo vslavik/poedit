@@ -55,11 +55,14 @@ test()
     using namespace test_detail;
 
     nil empty;
+    (void)empty;
 
     map<> empty0;
+    (void)empty0;
 
 #ifndef NO_CONSTRUCT_FROM_NIL
     map<> empty1(empty);
+    (void)empty1;
 #endif
 
     map<pair<key1, int> > t1;

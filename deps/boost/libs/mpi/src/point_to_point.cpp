@@ -20,6 +20,7 @@
 #include <boost/mpi/detail/point_to_point.hpp>
 #include <boost/mpi/datatype.hpp>
 #include <boost/mpi/exception.hpp>
+#include <boost/mpi/detail/antiques.hpp>
 #include <cassert>
 
 namespace boost { namespace mpi { namespace detail {
@@ -28,13 +29,13 @@ void
 packed_archive_send(MPI_Comm comm, int dest, int tag,
                     const packed_oarchive& ar)
 {
-  std::size_t size = ar.size();
+  std::size_t const& size = ar.size();
   BOOST_MPI_CHECK_RESULT(MPI_Send,
-                         (static_cast<void*>(&size), 1, 
-                          get_mpi_datatype<std::size_t>(ar.size()), 
+                         (detail::unconst(&size), 1, 
+                          get_mpi_datatype(size), 
                           dest, tag, comm));
   BOOST_MPI_CHECK_RESULT(MPI_Send,
-                         (const_cast<void*>(ar.address()), ar.size(),
+                         (detail::unconst(ar.address()), size,
                           MPI_PACKED,
                           dest, tag, comm));
 }
@@ -45,13 +46,13 @@ packed_archive_isend(MPI_Comm comm, int dest, int tag,
                      MPI_Request* out_requests, int num_out_requests)
 {
   assert(num_out_requests >= 2);
-  const void* size = &ar.size();
+  std::size_t const& size = ar.size();
   BOOST_MPI_CHECK_RESULT(MPI_Isend,
-                         (const_cast<void*>(size), 1, 
-                          get_mpi_datatype<std::size_t>(ar.size()), 
+                         (detail::unconst(&size), 1, 
+                          get_mpi_datatype(size),
                           dest, tag, comm, out_requests));
   BOOST_MPI_CHECK_RESULT(MPI_Isend,
-                         (const_cast<void*>(ar.address()), ar.size(),
+                         (detail::unconst(ar.address()), size,
                           MPI_PACKED,
                           dest, tag, comm, out_requests + 1));
 
@@ -65,13 +66,13 @@ packed_archive_isend(MPI_Comm comm, int dest, int tag,
 {
   assert(num_out_requests >= 2);
 
-  const void* size = &ar.size();
+  std::size_t const& size = ar.size();
   BOOST_MPI_CHECK_RESULT(MPI_Isend,
-                         (const_cast<void*>(size), 1, 
-                          get_mpi_datatype<std::size_t>(ar.size()), 
+                         (detail::unconst(&size), 1, 
+                          get_mpi_datatype(size), 
                           dest, tag, comm, out_requests));
   BOOST_MPI_CHECK_RESULT(MPI_Isend,
-                         (const_cast<void*>(ar.address()), ar.size(),
+                         (detail::unconst(ar.address()), size,
                           MPI_PACKED,
                           dest, tag, comm, out_requests + 1));
 
@@ -84,13 +85,13 @@ packed_archive_recv(MPI_Comm comm, int source, int tag, packed_iarchive& ar,
 {
   std::size_t count;
   BOOST_MPI_CHECK_RESULT(MPI_Recv,
-                         (&count, 1, get_mpi_datatype<std::size_t>(count),
+                         (&count, 1, get_mpi_datatype(count),
                           source, tag, comm, &status));
 
   // Prepare input buffer and receive the message
   ar.resize(count);
   BOOST_MPI_CHECK_RESULT(MPI_Recv,
-                         (ar.address(), ar.size(), MPI_PACKED,
+                         (ar.address(), count, MPI_PACKED,
                           status.MPI_SOURCE, status.MPI_TAG,
                           comm, &status));
 }

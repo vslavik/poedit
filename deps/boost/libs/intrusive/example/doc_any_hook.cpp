@@ -26,6 +26,9 @@ class MyClass : public any_base_hook<> //Base hook
 
    MyClass(int i = 0) : int_(i)
    {}
+   //<-
+   int get_int() const { return int_; }
+   //->
 };
 
 int main()

@@ -52,6 +52,6 @@ int main()
      , index = boost::ref(x), name = "foo"
    );
 
-   return 0;
+   return boost::report_errors();
 }
 

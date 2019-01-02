@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost Macro Reference</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Config">
 <link rel="up" href="../index.html" title="Boost.Config">
 <link rel="prev" href="../index.html" title="Boost.Config">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_config.boost_macro_reference"></a><a class="link" href="boost_macro_reference.html" title="Boost Macro Reference">Boost Macro Reference</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__03_defects">Macros
       that describe C++03 defects</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_optional_features">Macros
@@ -41,6 +41,10 @@
       that describe C++14 features not supported</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_allow_use_of_c__14_features_with_c__11_or_earlier_compilers">Macros
       that allow use of C++14 features with C++11 or earlier compilers</a></span></dt>
+<dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__17_features_not_supported">Macros
+      that describe C++17 features not supported</a></span></dt>
+<dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_features_that_have_been_removed_from_the_standard_">Macros
+      that describe features that have been removed from the standard.</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.boost_helper_macros">Boost
       Helper Macros</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.boost_informational_macros">Boost
@@ -515,7 +519,7 @@
                   is covered by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#337" target="_top">Core
                   Language DR337</a>, but is not part of the current standard.
                   Fortunately most compilers that support SFINAE also support this
-                  DR.
+                  DR. See also BOOST_NO_SFINAE and BOOST_NO_SFINAE_EXPR
                 </p>
               </td>
 </tr>
@@ -815,6 +819,24 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_RESTRICT_REFERENCES</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Compiler
+                </p>
+              </td>
+<td>
+                <p>
+                  Compiler-specific <code class="computeroutput"><span class="identifier">restrict</span></code>
+                  keyword can not be applied to references.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_NO_RTTI</span></code>
                 </p>
               </td>
@@ -844,7 +866,8 @@
 <td>
                 <p>
                   The compiler does not support the "Substitution Failure Is
-                  Not An Error" meta-programming idiom.
+                  Not An Error" meta-programming idiom. This is the lightweight
+                  pre-C++11 version of SFINAE.
                 </p>
               </td>
 </tr>
@@ -862,6 +885,8 @@
 <td>
                 <p>
                   The compiler does not support usage of SFINAE with arbitrary expressions.
+                  This is the post-C++11 SFINAE, but excludes a few specific corner
+                  cases, see also BOOST_NO_CXX11_SFINAE_EXPR.
                 </p>
               </td>
 </tr>
@@ -914,7 +939,8 @@
 <td>
                 <p>
                   The C++ implementation fails to provide the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator</span></code>
-                  class.
+                  class. Note that post C++17, this macro is re-purposed to indicate
+                  that std::iterator has been removed or deprecated.
                 </p>
               </td>
 </tr>
@@ -2595,6 +2621,19 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_DEFAULTED_MOVES</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support defaulted move constructor or assignment.
+                  Other defaulted functions may still be supported.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS</span></code>
                 </p>
               </td>
@@ -2994,6 +3033,18 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_POINTER_TRAITS</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library does not provide a C++11 version of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pointer_traits</span></code> in &lt;memory&gt;.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_RANGE_BASED_FOR</span></code>
                 </p>
               </td>
@@ -3049,6 +3100,22 @@
 <td>
                 <p>
                   The compiler does not support scoped enumerations (<code class="computeroutput"><span class="keyword">enum</span> <span class="keyword">class</span></code>).
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_SFINAE_EXPR</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support usage of C++11 SFINAE with arbitrary
+                  expressions. Use this macro only if you are using all of the features
+                  of SFINAE including substitution-failure-on-private-member-access.
+                  Otherwise use BOOST_NO_SFINAE_EXPR or BOOST_NO_SFINAE which get
+                  defined for fewer compilers.
                 </p>
               </td>
 </tr>
@@ -3111,6 +3178,19 @@
 <td>
                 <p>
                   The compiler does not support template aliases.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_THREAD_LOCAL</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support the <code class="computeroutput"><span class="keyword">thread_local</span></code>
+                  storage specifier.
                 </p>
               </td>
 </tr>
@@ -3589,6 +3669,18 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX14_STD_EXCHANGE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">exchange</span><span class="special">()</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_NO_CXX14_GENERIC_LAMBDAS</span></code>
                 </p>
               </td>
@@ -3702,6 +3794,194 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="boost_config.boost_macro_reference.macros_that_describe_c__17_features_not_supported"></a><a class="link" href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__17_features_not_supported" title="Macros that describe C++17 features not supported">Macros
+      that describe C++17 features not supported</a>
+</h3></div></div></div>
+<p>
+        The following macros describe features in the 2017 ISO C++ standard, formerly
+        known as C++1z, that are not yet supported by a particular compiler or library.
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Macro
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_HDR_OPTIONAL</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support the header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&gt;</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_HDR_STRING_VIEW</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support the header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">string_view</span><span class="special">&gt;</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_STD_APPLY</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">apply</span><span class="special">()</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_STD_INVOKE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">invoke</span><span class="special">()</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_ITERATOR_TRAITS</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support SFINAE-friendly <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX17_IF_CONSTEXPR</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler does not support <code class="computeroutput"><span class="keyword">if</span>
+                  <span class="keyword">constexpr</span></code>.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="boost_config.boost_macro_reference.macros_that_describe_features_that_have_been_removed_from_the_standard_"></a><a class="link" href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_features_that_have_been_removed_from_the_standard_" title="Macros that describe features that have been removed from the standard.">Macros
+      that describe features that have been removed from the standard.</a>
+</h3></div></div></div>
+<p>
+        The following macros describe features which were required by one version
+        of the standard, but have been removed by later versions.
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Macro
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX98_RANDOM_SHUFFLE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library no longer supports <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">random_shuffle</span><span class="special">()</span></code>. It was deprecated in C++11 and
+                  is removed from C++14.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_AUTO_PTR</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library no longer supports <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">auto_ptr</span></code>.
+                  It was deprecated in C++11 and is removed from C++14.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX98_FUNCTION_BASE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library no longer supports <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">unary_function</span></code>
+                  and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">binary_function</span></code>. They were deprecated
+                  in C++11 and is removed from C++14.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX98_BINDERS</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library no longer supports <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">bind1st</span></code>,
+                  <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">bind2nd</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ptr_fun</span></code>
+                  and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">mem_fun</span></code>. They were deprecated
+                  in C++11 and is removed from C++14.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="boost_config.boost_macro_reference.boost_helper_macros"></a><a name="config_helpers"></a><a class="link" href="boost_macro_reference.html#boost_config.boost_macro_reference.boost_helper_macros" title="Boost Helper Macros">Boost
       Helper Macros</a>
 </h3></div></div></div>
@@ -3739,7 +4019,7 @@
                   that is not otherwise described by one of the other Boost.Config
                   macros. To use the macro you must first
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">workaround</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span><span class="identifier">workaround</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
                   usage is then:
@@ -3770,7 +4050,7 @@
                 </p>
                 <p>
                   <span class="bold"><strong>Note</strong></span>: the ultimate source of documentation
-                  for this macro is in <a href="../../../../../boost/detail/workaround.hpp" target="_top">boost/detail/workaround.hpp</a>.
+                  for this macro is in <a href="../../../../../boost/config/workaround.hpp" target="_top">boost/config/workaround.hpp</a>.
                 </p>
               </td>
 </tr>
@@ -3966,7 +4246,16 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_EXPLICIT_TEMPLATE_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> <code class="computeroutput"><span class="identifier">BOOST_EXPLICIT_TEMPLATE_NON_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">,</span><span class="identifier">v</span><span class="special">)</span></code> <code class="computeroutput"><span class="identifier">BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> <code class="computeroutput"><span class="identifier">BOOST_APPEND_EXPLICIT_TEMPLATE_NON_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">,</span><span class="identifier">v</span><span class="special">)</span></code>
+                  <code class="computeroutput"><span class="identifier">BOOST_EXPLICIT_TEMPLATE_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code>
+                </p>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_EXPLICIT_TEMPLATE_NON_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">,</span><span class="identifier">v</span><span class="special">)</span></code>
+                </p>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code>
+                </p>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_APPEND_EXPLICIT_TEMPLATE_NON_TYPE</span><span class="special">(</span><span class="identifier">t</span><span class="special">,</span><span class="identifier">v</span><span class="special">)</span></code>
                 </p>
               </td>
 <td>
@@ -4110,6 +4399,35 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_RESTRICT</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  This macro can be used in place of the compiler specific variant
+                  of the C99 <code class="computeroutput"><span class="identifier">restrict</span></code>
+                  keyword to notify the compiler that, for the lifetime of the qualified
+                  pointer variable, only it and its derivative value will be used
+                  to gain access to the object it references. This limits the effect
+                  of pointer aliasing and helps the optimizers in generating better
+                  code. However, i this condition is violated, undefined behavior
+                  may occurs.
+                </p>
+                <p>
+                  Usage example:
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">perform_computation</span><span class="special">(</span> <span class="keyword">float</span><span class="special">*</span> <span class="identifier">BOOST_RESTRICT</span> <span class="identifier">in</span><span class="special">,</span> <span class="keyword">float</span><span class="special">*</span> <span class="identifier">BOOST_RESTRICT</span> <span class="identifier">out</span> <span class="special">)</span>
+<span class="special">{</span>
+  <span class="special">*</span><span class="identifier">out</span> <span class="special">=</span> <span class="special">*</span><span class="identifier">in</span> <span class="special">*</span> <span class="number">0.5f</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_FORCEINLINE</span></code>
                 </p>
               </td>
@@ -4206,6 +4524,8 @@
 <td>
                 <p>
                   <code class="computeroutput"><span class="identifier">BOOST_LIKELY</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span></code>
+                </p>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_UNLIKELY</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span></code>
                 </p>
               </td>
@@ -4243,6 +4563,82 @@
                   Expands to <code class="computeroutput"><span class="identifier">__attribute__</span><span class="special">((</span><span class="identifier">unused</span><span class="special">))</span></code> when this is available - can
                   be used to disable compiler warnings relating to unused types or
                   variables.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_MAY_ALIAS</span></code>,
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_MAY_ALIAS</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_MAY_ALIAS</span></code>
+                  expands to a type attribute that can be used to mark types that
+                  may alias other types. Pointers or references to such marked types
+                  can be used to access objects of other types. If the compiler supports
+                  this feature <code class="computeroutput"><span class="identifier">BOOST_NO_MAY_ALIAS</span></code>
+                  is not defined. Otherwise <code class="computeroutput"><span class="identifier">BOOST_MAY_ALIAS</span></code>
+                  expands to nothing and <code class="computeroutput"><span class="identifier">BOOST_NO_MAY_ALIAS</span></code>
+                  is defined.
+                </p>
+                <p>
+                  Usage example:
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">struct</span> <span class="identifier">BOOST_MAY_ALIAS</span> <span class="identifier">aliasing_struct</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="identifier">BOOST_MAY_ALIAS</span> <span class="identifier">aliasing_uint</span><span class="special">;</span>
+</pre>
+<p>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_PRAGMA_MESSAGE</span><span class="special">(</span><span class="identifier">M</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Defined in header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span><span class="identifier">pragma_message</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>,
+                  this macro expands to the equivalent of <code class="computeroutput"><span class="preprocessor">#pragma</span>
+                  <span class="identifier">message</span><span class="special">(</span><span class="identifier">M</span><span class="special">)</span></code>.
+                  <code class="computeroutput"><span class="identifier">M</span></code> must be a string
+                  literal.
+                </p>
+                <p>
+                  Example: <code class="computeroutput"><span class="identifier">BOOST_PRAGMA_MESSAGE</span><span class="special">(</span><span class="string">"This header
+                  is deprecated."</span><span class="special">)</span></code>
+                </p>
+                <p>
+                  The messages issued by <code class="computeroutput"><span class="identifier">BOOST_PRAGMA_MESSAGE</span></code>
+                  can be suppressed by defining the macro <code class="computeroutput"><span class="identifier">BOOST_DISABLE_PRAGMA_MESSAGE</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_HEADER_DEPRECATED</span><span class="special">(</span><span class="identifier">A</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Defined in header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span><span class="identifier">header_deprecated</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>,
+                  this macro issues the message "This header is deprecated.
+                  Use <code class="computeroutput"><span class="identifier">A</span></code> instead."
+                  via <code class="computeroutput"><span class="identifier">BOOST_PRAGMA_MESSAGE</span></code>.
+                  <code class="computeroutput"><span class="identifier">A</span></code> must be a string
+                  literal.
+                </p>
+                <p>
+                  Example: <code class="computeroutput"><span class="identifier">BOOST_HEADER_DEPRECATED</span><span class="special">(</span><span class="string">"&lt;boost/config/workaround.hpp&gt;"</span><span class="special">)</span></code>
+                </p>
+                <p>
+                  The messages issued by <code class="computeroutput"><span class="identifier">BOOST_HEADER_DEPRECATED</span></code>
+                  can be suppressed by defining the macro <code class="computeroutput"><span class="identifier">BOOST_ALLOW_DEPRECATED_HEADERS</span></code>.
                 </p>
               </td>
 </tr>
@@ -5610,7 +6006,7 @@
 <a name="boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code"></a><a class="link" href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code" title="Macros for libraries with separate source code">Macros
       for libraries with separate source code</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code.macros_controlling_shared_library_symbol_visibility">Macros
         controlling shared library symbol visibility</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code.abi_fixing">ABI
@@ -5622,7 +6018,7 @@
         The following macros and helper headers are of use to authors whose libraries
         include separate source code, and are intended to address several issues:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Controlling shared library symbol visibility
           </li>
@@ -5635,7 +6031,7 @@
           </li>
 </ul></div>
 <p>
-        See <a href="http://svn.boost.org/trac/boost/wiki/Guidelines/Separate" target="_top">Guidelines
+        See <a href="http://www.boost.org/development/separate_compilation.html" target="_top">Guidelines
         for Authors of Boost Libraries Containing Separate Source</a>
       </p>
 <div class="section">
@@ -5878,7 +6274,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">BOOST_LIB_NAME</span></code></span></dt>
 <dd><p>
                 Required: An identifier containing the basename of the library, for
@@ -5892,6 +6288,24 @@
 <dd><p>
                 Optional: when set the header will print out the name of the library
                 selected (useful for debugging).
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">BOOST_AUTO_LINK_NOMANGLE</span></code></span></dt>
+<dd><p>
+                Optional: whan set specifies that we should link to BOOST_LIB_NAME.lib,
+                rather than a mangled-name version.
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">BOOST_AUTO_LINK_TAGGED</span></code></span></dt>
+<dd><p>
+                Optional: Specifies that we link to libraries built with the --layout=tagged
+                option. This is essentially the same as the default name-mangled
+                version, but without the compiler name and version, or the Boost
+                version. Just the build options.
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">BOOST_AUTO_LINK_SYSTEM</span></code></span></dt>
+<dd><p>
+                Optional: Specifies that we link to libraries built with the --layout=system
+                option. This is essentially the same as the non-name-mangled version,
+                but with the prefix to differentiate static and dll builds
               </p></dd>
 </dl>
 </div>

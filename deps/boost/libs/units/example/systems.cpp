@@ -28,7 +28,7 @@ namespace units {                                                               
 namespace namespace_ {                                                                       \
 typedef make_system<unit_name_ ## _base_unit>::type    unit_name_ ## system_;                \
 typedef unit<dimension_ ## _dimension,unit_name_ ## system_> unit_name_ ## _ ## dimension_;  \
-static const unit_name_ ## _ ## dimension_    unit_name_ ## s;                               \
+static constexpr unit_name_ ## _ ## dimension_    unit_name_ ## s;                           \
 }                                                                                            \
 }                                                                                            \
 }                                                                                            \

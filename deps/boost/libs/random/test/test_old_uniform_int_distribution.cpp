@@ -48,6 +48,7 @@
 // Author: Jos Hickson
 BOOST_AUTO_TEST_CASE(test_random_shuffle)
 {
+#ifndef BOOST_NO_CXX98_RANDOM_SHUFFLE
     typedef boost::uniform_int<> distribution_type;
     typedef boost::variate_generator<boost::mt19937 &, distribution_type> generator_type;
 
@@ -73,4 +74,5 @@ BOOST_AUTO_TEST_CASE(test_random_shuffle)
     BOOST_CHECK_EQUAL_COLLECTIONS(
         testVec.begin(), testVec.end(),
         referenceVec.begin(), referenceVec.end());
+#endif
 }

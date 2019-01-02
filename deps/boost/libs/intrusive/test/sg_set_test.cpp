@@ -22,6 +22,7 @@ template < class ValueTraits, bool FloatingPoint, bool DefaultHolder, bool Map >
 struct rebinder
 {
    typedef tree_rebinder_common<ValueTraits, DefaultHolder, Map> common_t;
+   typedef typename ValueContainer< typename ValueTraits::value_type >::type value_cont_type;
 
    template < class Option1 =void
             , class Option2 =void
@@ -61,8 +62,7 @@ class test_main_template<VoidPointer, FloatingPoint, DefaultHolder, Map, Base>
       //base
       typedef typename testval_traits_t::base_value_traits  base_hook_t;
       test::test_generic_set
-         < base_hook_t
-         , rebinder<base_hook_t, FloatingPoint, DefaultHolder, Map>
+         < rebinder<base_hook_t, FloatingPoint, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -77,8 +77,7 @@ class test_main_template<VoidPointer, FloatingPoint, DefaultHolder, Map, Member>
       //member
       typedef typename testval_traits_t::member_value_traits member_hook_t;
       test::test_generic_set
-         < member_hook_t
-         , rebinder<member_hook_t, FloatingPoint, DefaultHolder, Map>
+         < rebinder<member_hook_t, FloatingPoint, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -92,8 +91,7 @@ class test_main_template<VoidPointer, FloatingPoint, DefaultHolder, Map, NonMemb
       typedef testvalue_traits< bs_hooks<VoidPointer> > testval_traits_t;
       //nonmember
       test::test_generic_set
-         < typename testval_traits_t::nonhook_value_traits
-         , rebinder<typename testval_traits_t::nonhook_value_traits, FloatingPoint, DefaultHolder, Map>
+         < rebinder<typename testval_traits_t::nonhook_value_traits, FloatingPoint, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -108,8 +106,7 @@ struct test_main_template_bptr
 
       bounded_allocator_scope<allocator_type> bounded_scope; (void)bounded_scope;
       test::test_generic_set
-         < value_traits
-         , rebinder< value_traits, FloatingPoint, true, Map>
+         < rebinder< value_traits, FloatingPoint, true, Map>
          >::test_all();
    }
 };

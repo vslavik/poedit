@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::equal`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -29,7 +29,6 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/hana/core/tag_of.hpp>
 #include <boost/hana/core/when.hpp>
 #include <boost/hana/detail/concepts.hpp>
-#include <boost/hana/detail/dependent_on.hpp>
 #include <boost/hana/detail/has_common_embedding.hpp>
 #include <boost/hana/detail/nested_to.hpp> // required by fwd decl
 #include <boost/hana/first.hpp>
@@ -56,14 +55,19 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct equal_impl<T, U, when<condition>> : default_ {
         template <typename X, typename Y>
         static constexpr auto apply(X const&, Y const&) {
-            using T_ = detail::dependent_on_t<sizeof(X) == 1, T>;
+            // Delay the static_assert by ensuring T_ is dependent.
+            using T_ = typename hana::tag_of<X>::type;
             static_assert(!hana::is_convertible<T_, U>::value &&
                           !hana::is_convertible<U, T_>::value,
             "No default implementation of hana::equal is provided for related "
             "types that can't be safely embedded into a common type, because "
             "those are most likely programming errors. If this is really what "
             "you want, you can manually convert both objects to a common "
-            "Comparable type before performing the comparison.");
+            "Comparable type before performing the comparison. If you think "
+            "you have made your types Comparable but you see this, perhaps you "
+            "forgot to define some of the necessary methods for an automatic "
+            "model of Comparable to kick in. A possible culprit is defining "
+            "'operator==' but not 'operator!='.");
 
             return hana::false_c;
         }
@@ -105,7 +109,7 @@ BOOST_HANA_NAMESPACE_BEGIN
         static constexpr auto apply(X const&, Y const&) {
             constexpr auto eq = hana::equal(hana::value<X>(), hana::value<Y>());
             constexpr bool truth_value = hana::if_(eq, true, false);
-            return hana::bool_c<truth_value>;
+            return hana::bool_<truth_value>{};
         }
     };
 
@@ -135,7 +139,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             template <std::size_t i>
             constexpr auto apply(hana::false_, hana::true_) const {
                 return compare_finite_sequences::apply<i+1>(
-                    hana::bool_c<i+1 == Length>,
+                    hana::bool_<i+1 == Length>{},
                     hana::if_(hana::equal(hana::at_c<i>(xs), hana::at_c<i>(ys)),
                               hana::true_c, hana::false_c)
                 );
@@ -152,7 +156,7 @@ BOOST_HANA_NAMESPACE_BEGIN
             template <std::size_t i>
             constexpr bool apply(hana::false_, bool b) const {
                 return b && compare_finite_sequences::apply<i+1>(
-                    hana::bool_c<i+1 == Length>,
+                    hana::bool_<i+1 == Length>{},
                     hana::if_(hana::equal(hana::at_c<i>(xs), hana::at_c<i>(ys)),
                               hana::true_c, hana::false_c)
                 );
@@ -167,8 +171,8 @@ BOOST_HANA_NAMESPACE_BEGIN
             constexpr std::size_t xs_size = decltype(hana::length(xs))::value;
             constexpr std::size_t ys_size = decltype(hana::length(ys))::value;
             detail::compare_finite_sequences<Xs, Ys, xs_size> comp{xs, ys};
-            return comp.template apply<0>(hana::bool_c<xs_size == 0>,
-                                          hana::bool_c<xs_size == ys_size>);
+            return comp.template apply<0>(hana::bool_<xs_size == 0>{},
+                                          hana::bool_<xs_size == ys_size>{});
         }
     };
 

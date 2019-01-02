@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
 <title>The Boost Parameter Library</title>
 <link rel="stylesheet" href="rst.css" type="text/css" />
 </head>
@@ -96,45 +96,45 @@ or copy at <a class="reference external" href="http://www.boost.org/LICENSE_1_0.
 <div class="contents topic" id="table-of-contents">
 <p class="topic-title first"><strong>Table of Contents</strong></p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#motivation" id="id22">1&nbsp;&nbsp;&nbsp;Motivation</a><ul class="auto-toc">
-<li><a class="reference internal" href="#named-function-parameters" id="id23">1.1&nbsp;&nbsp;&nbsp;Named Function Parameters</a></li>
-<li><a class="reference internal" href="#deduced-function-parameters" id="id24">1.2&nbsp;&nbsp;&nbsp;Deduced Function Parameters</a></li>
-<li><a class="reference internal" href="#class-template-parameter-support" id="id25">1.3&nbsp;&nbsp;&nbsp;Class Template Parameter Support</a></li>
+<li><a class="reference internal" href="#motivation" id="id24">1&nbsp;&nbsp;&nbsp;Motivation</a><ul class="auto-toc">
+<li><a class="reference internal" href="#named-function-parameters" id="id25">1.1&nbsp;&nbsp;&nbsp;Named Function Parameters</a></li>
+<li><a class="reference internal" href="#deduced-function-parameters" id="id26">1.2&nbsp;&nbsp;&nbsp;Deduced Function Parameters</a></li>
+<li><a class="reference internal" href="#class-template-parameter-support" id="id27">1.3&nbsp;&nbsp;&nbsp;Class Template Parameter Support</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#tutorial" id="id26">2&nbsp;&nbsp;&nbsp;Tutorial</a><ul class="auto-toc">
-<li><a class="reference internal" href="#parameter-enabled-functions" id="id27">2.1&nbsp;&nbsp;&nbsp;Parameter-Enabled Functions</a></li>
-<li><a class="reference internal" href="#parameter-enabled-member-functions" id="id28">2.2&nbsp;&nbsp;&nbsp;Parameter-Enabled Member Functions</a></li>
-<li><a class="reference internal" href="#parameter-enabled-constructors" id="id29">2.3&nbsp;&nbsp;&nbsp;Parameter-Enabled Constructors</a></li>
-<li><a class="reference internal" href="#parameter-enabled-class-templates" id="id30">2.4&nbsp;&nbsp;&nbsp;Parameter-Enabled Class Templates</a></li>
+<li><a class="reference internal" href="#tutorial" id="id28">2&nbsp;&nbsp;&nbsp;Tutorial</a><ul class="auto-toc">
+<li><a class="reference internal" href="#parameter-enabled-functions" id="id29">2.1&nbsp;&nbsp;&nbsp;Parameter-Enabled Functions</a></li>
+<li><a class="reference internal" href="#parameter-enabled-member-functions" id="id30">2.2&nbsp;&nbsp;&nbsp;Parameter-Enabled Member Functions</a></li>
+<li><a class="reference internal" href="#parameter-enabled-constructors" id="id31">2.3&nbsp;&nbsp;&nbsp;Parameter-Enabled Constructors</a></li>
+<li><a class="reference internal" href="#parameter-enabled-class-templates" id="id32">2.4&nbsp;&nbsp;&nbsp;Parameter-Enabled Class Templates</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#advanced-topics" id="id31">3&nbsp;&nbsp;&nbsp;Advanced Topics</a><ul class="auto-toc">
-<li><a class="reference internal" href="#fine-grained-name-control" id="id32">3.1&nbsp;&nbsp;&nbsp;Fine-Grained Name Control</a></li>
-<li><a class="reference internal" href="#more-argumentpacks" id="id33">3.2&nbsp;&nbsp;&nbsp;More <span class="concept">ArgumentPack</span>s</a></li>
+<li><a class="reference internal" href="#advanced-topics" id="id33">3&nbsp;&nbsp;&nbsp;Advanced Topics</a><ul class="auto-toc">
+<li><a class="reference internal" href="#fine-grained-name-control" id="id34">3.1&nbsp;&nbsp;&nbsp;Fine-Grained Name Control</a></li>
+<li><a class="reference internal" href="#more-argumentpacks" id="id35">3.2&nbsp;&nbsp;&nbsp;More <span class="concept">ArgumentPack</span>s</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#best-practices" id="id34">4&nbsp;&nbsp;&nbsp;Best Practices</a><ul class="auto-toc">
-<li><a class="reference internal" href="#keyword-naming" id="id35">4.1&nbsp;&nbsp;&nbsp;Keyword Naming</a></li>
-<li><a class="reference internal" href="#namespaces" id="id36">4.2&nbsp;&nbsp;&nbsp;Namespaces</a></li>
-<li><a class="reference internal" href="#documentation" id="id37">4.3&nbsp;&nbsp;&nbsp;Documentation</a></li>
+<li><a class="reference internal" href="#best-practices" id="id36">4&nbsp;&nbsp;&nbsp;Best Practices</a><ul class="auto-toc">
+<li><a class="reference internal" href="#keyword-naming" id="id37">4.1&nbsp;&nbsp;&nbsp;Keyword Naming</a></li>
+<li><a class="reference internal" href="#namespaces" id="id38">4.2&nbsp;&nbsp;&nbsp;Namespaces</a></li>
+<li><a class="reference internal" href="#documentation" id="id39">4.3&nbsp;&nbsp;&nbsp;Documentation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#portability-considerations" id="id38">5&nbsp;&nbsp;&nbsp;Portability Considerations</a><ul class="auto-toc">
-<li><a class="reference internal" href="#no-sfinae-support" id="id39">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></li>
-<li><a class="reference internal" href="#no-support-for-result-of" id="id40">5.2&nbsp;&nbsp;&nbsp;No Support for <tt class="docutils literal">result_of</tt></a></li>
-<li><a class="reference internal" href="#compiler-can-t-see-references-in-unnamed-namespace" id="id41">5.3&nbsp;&nbsp;&nbsp;Compiler Can't See References In Unnamed Namespace</a></li>
+<li><a class="reference internal" href="#portability-considerations" id="id40">5&nbsp;&nbsp;&nbsp;Portability Considerations</a><ul class="auto-toc">
+<li><a class="reference internal" href="#no-sfinae-support" id="id41">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></li>
+<li><a class="reference internal" href="#no-support-for-result-of" id="id42">5.2&nbsp;&nbsp;&nbsp;No Support for <tt class="docutils literal">result_of</tt></a></li>
+<li><a class="reference internal" href="#compiler-can-t-see-references-in-unnamed-namespace" id="id43">5.3&nbsp;&nbsp;&nbsp;Compiler Can't See References In Unnamed Namespace</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#python-binding" id="id42">6&nbsp;&nbsp;&nbsp;Python Binding</a></li>
-<li><a class="reference internal" href="#reference" id="id43">7&nbsp;&nbsp;&nbsp;Reference</a></li>
-<li><a class="reference internal" href="#glossary" id="id44">8&nbsp;&nbsp;&nbsp;Glossary</a></li>
-<li><a class="reference internal" href="#acknowledgements" id="id45">9&nbsp;&nbsp;&nbsp;Acknowledgements</a></li>
+<li><a class="reference internal" href="#python-binding" id="id44">6&nbsp;&nbsp;&nbsp;Python Binding</a></li>
+<li><a class="reference internal" href="#reference" id="id45">7&nbsp;&nbsp;&nbsp;Reference</a></li>
+<li><a class="reference internal" href="#glossary" id="id46">8&nbsp;&nbsp;&nbsp;Glossary</a></li>
+<li><a class="reference internal" href="#acknowledgements" id="id47">9&nbsp;&nbsp;&nbsp;Acknowledgements</a></li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="motivation">
-<h1><a class="toc-backref" href="#id22">1&nbsp;&nbsp;&nbsp;Motivation</a></h1>
+<h1><a class="toc-backref" href="#id24">1&nbsp;&nbsp;&nbsp;Motivation</a></h1>
 <p>In C++, <a class="reference internal" href="#arguments">arguments</a> are normally given meaning by their positions
 with respect to a <a class="reference internal" href="#parameter">parameter</a> list: the first argument passed maps
 onto the first parameter in a function's definition, and so on.
@@ -184,7 +184,7 @@ arguments either, leading to hard-to-find bugs.</p>
 </ul>
 <!-- @ignore(3) -->
 <div class="section" id="named-function-parameters">
-<h2><a class="toc-backref" href="#id23">1.1&nbsp;&nbsp;&nbsp;Named Function Parameters</a></h2>
+<h2><a class="toc-backref" href="#id25">1.1&nbsp;&nbsp;&nbsp;Named Function Parameters</a></h2>
 <div class="compound">
 <p class="compound-first">This library addresses the problems outlined above by associating
 each parameter name with a keyword object.  Now users can identify
@@ -196,7 +196,7 @@ window* w = new_window(&quot;alert box&quot;, <strong>movable_=</strong>false); 
 <!-- @ignore() -->
 </div>
 <div class="section" id="deduced-function-parameters">
-<h2><a class="toc-backref" href="#id24">1.2&nbsp;&nbsp;&nbsp;Deduced Function Parameters</a></h2>
+<h2><a class="toc-backref" href="#id26">1.2&nbsp;&nbsp;&nbsp;Deduced Function Parameters</a></h2>
 <div class="compound">
 <p class="compound-first">A <strong>deduced parameter</strong> can be passed in any position <em>without</em>
 supplying an explicit parameter name.  It's not uncommon for a
@@ -217,7 +217,7 @@ names.</p>
 <!-- @ignore() -->
 </div>
 <div class="section" id="class-template-parameter-support">
-<h2><a class="toc-backref" href="#id25">1.3&nbsp;&nbsp;&nbsp;Class Template Parameter Support</a></h2>
+<h2><a class="toc-backref" href="#id27">1.3&nbsp;&nbsp;&nbsp;Class Template Parameter Support</a></h2>
 <div class="compound">
 <p class="compound-first">The reasoning we've given for named and deduced parameter
 interfaces applies equally well to class templates as it does to
@@ -243,12 +243,12 @@ smart_ptr&lt;<strong>Client</strong>, <strong>shared</strong>&gt; q;
 </div>
 </div>
 <div class="section" id="tutorial">
-<h1><a class="toc-backref" href="#id26">2&nbsp;&nbsp;&nbsp;Tutorial</a></h1>
+<h1><a class="toc-backref" href="#id28">2&nbsp;&nbsp;&nbsp;Tutorial</a></h1>
 <p>This tutorial shows all the basics—how to build both named- and deduced-parameter
 interfaces to function templates and class templates—and several
 more advanced idioms as well.</p>
 <div class="section" id="parameter-enabled-functions">
-<h2><a class="toc-backref" href="#id27">2.1&nbsp;&nbsp;&nbsp;Parameter-Enabled Functions</a></h2>
+<h2><a class="toc-backref" href="#id29">2.1&nbsp;&nbsp;&nbsp;Parameter-Enabled Functions</a></h2>
 <p>In this section we'll show how the Parameter library can be used to
 build an expressive interface to the <a class="reference external" href="../../../graph/index.html">Boost Graph library</a>'s
 <a class="reference external" href="../../../graph/doc/depth_first_search.html"><tt class="docutils literal">depth_first_search</tt></a> algorithm.<a class="footnote-reference" href="#old-interface" id="id3"><sup>1</sup></a></p>
@@ -307,8 +307,8 @@ void depth_first_search(
 <!-- @ignore() -->
 <p>However, most of the parameters have a useful default value, as
 shown in the table below.</p>
-<table border="1" class="docutils" id="default-expressions">
-<span id="parameter-table"></span><caption><tt class="docutils literal">depth_first_search</tt> Parameters</caption>
+<span id="parameter-table"></span><table border="1" class="docutils" id="default-expressions">
+<caption><tt class="docutils literal">depth_first_search</tt> Parameters</caption>
 <colgroup>
 <col width="17%" />
 <col width="11%" />
@@ -775,7 +775,7 @@ of the signature with the required type, in parentheses:</p>
 the <tt class="docutils literal">root_vertex</tt> argument can be converted to the graph's vertex
 descriptor type, and our example that <em>was</em> ambiguous will smoothly
 call the new overload.</p>
-<div class="note">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <em>type</em> of the <tt class="docutils literal">graph</tt> argument is available in the
 signature—and in the function body—as <tt class="docutils literal">graph_type</tt>.  In
@@ -1016,7 +1016,7 @@ void f()
 {}
 
 ''') -->
-<div class="admonition-syntax-note admonition">
+<div class="admonition admonition-syntax-note">
 <p class="first admonition-title">Syntax Note</p>
 <p class="last">A <tt class="docutils literal">(deduced …)</tt> clause always contains a <tt class="docutils literal">(required …)</tt>
 and/or an <tt class="docutils literal">(optional …)</tt> subclause, and must follow any
@@ -1045,7 +1045,7 @@ def(
 </div>
 </div>
 <div class="section" id="parameter-enabled-member-functions">
-<h2><a class="toc-backref" href="#id28">2.2&nbsp;&nbsp;&nbsp;Parameter-Enabled Member Functions</a></h2>
+<h2><a class="toc-backref" href="#id30">2.2&nbsp;&nbsp;&nbsp;Parameter-Enabled Member Functions</a></h2>
 <p>The <tt class="docutils literal">BOOST_PARAMETER_MEMBER_FUNCTION</tt> and
 <tt class="docutils literal">BOOST_PARAMETER_CONST_MEMBER_FUNCTION</tt> macros accept exactly the
 same arguments as <tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt>, but are designed to
@@ -1117,7 +1117,7 @@ using namespace boost::parameter;
 </div>
 </div>
 <div class="section" id="parameter-enabled-constructors">
-<h2><a class="toc-backref" href="#id29">2.3&nbsp;&nbsp;&nbsp;Parameter-Enabled Constructors</a></h2>
+<h2><a class="toc-backref" href="#id31">2.3&nbsp;&nbsp;&nbsp;Parameter-Enabled Constructors</a></h2>
 <p>The lack of a “delegating constructor”
 feature in C++
 (<a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1986.pdf">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1986.pdf</a>)
@@ -1178,7 +1178,7 @@ myclass z(&quot;june&quot;);                       // positional/defaulted
 section.</p>
 </div>
 <div class="section" id="parameter-enabled-class-templates">
-<h2><a class="toc-backref" href="#id30">2.4&nbsp;&nbsp;&nbsp;Parameter-Enabled Class Templates</a></h2>
+<h2><a class="toc-backref" href="#id32">2.4&nbsp;&nbsp;&nbsp;Parameter-Enabled Class Templates</a></h2>
 <p>In this section we'll use Boost.Parameter to build <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a>'s <a class="reference external" href="http://www.boost.org/libs/python/doc/v2/class.html#class_-spec">class_</a> template, whose “signature” is:</p>
 <pre class="literal-block">
 template class&lt;
@@ -1525,11 +1525,11 @@ BOOST_MPL_ASSERT((boost::is_same<c2::copyable, void>));''') -->
 </div>
 </div>
 <div class="section" id="advanced-topics">
-<h1><a class="toc-backref" href="#id31">3&nbsp;&nbsp;&nbsp;Advanced Topics</a></h1>
+<h1><a class="toc-backref" href="#id33">3&nbsp;&nbsp;&nbsp;Advanced Topics</a></h1>
 <p>At this point, you should have a good grasp of the basics.  In this
 section we'll cover some more esoteric uses of the library.</p>
 <div class="section" id="fine-grained-name-control">
-<h2><a class="toc-backref" href="#id32">3.1&nbsp;&nbsp;&nbsp;Fine-Grained Name Control</a></h2>
+<h2><a class="toc-backref" href="#id34">3.1&nbsp;&nbsp;&nbsp;Fine-Grained Name Control</a></h2>
 <p>If you don't like the leading-underscore naming convention used
 to refer to keyword objects, or you need the name <tt class="docutils literal">tag</tt> for
 something other than the keyword type namespace, there's another
@@ -1560,7 +1560,7 @@ int main()
 section on <a class="reference internal" href="#keyword-naming">best practices for keyword object naming</a>.</p>
 </div>
 <div class="section" id="more-argumentpacks">
-<h2><a class="toc-backref" href="#id33">3.2&nbsp;&nbsp;&nbsp;More <span class="concept">ArgumentPack</span>s</a></h2>
+<h2><a class="toc-backref" href="#id35">3.2&nbsp;&nbsp;&nbsp;More <span class="concept">ArgumentPack</span>s</a></h2>
 <p>We've already seen <span class="concept">ArgumentPack</span>s when we looked at
 <a class="reference internal" href="#parameter-enabled-constructors">parameter-enabled constructors</a> and <a class="reference internal" href="#binding-intro">class templates</a>.  As you
 might have guessed, <span class="concept">ArgumentPack</span>s actually lie at the heart of
@@ -1804,12 +1804,12 @@ the caller.</p>
 </div>
 </div>
 <div class="section" id="best-practices">
-<h1><a class="toc-backref" href="#id34">4&nbsp;&nbsp;&nbsp;Best Practices</a></h1>
+<h1><a class="toc-backref" href="#id36">4&nbsp;&nbsp;&nbsp;Best Practices</a></h1>
 <p>By now you should have a fairly good idea of how to use the
 Parameter library.  This section points out a few more-marginal
 issues that will help you use the library more effectively.</p>
 <div class="section" id="keyword-naming">
-<h2><a class="toc-backref" href="#id35">4.1&nbsp;&nbsp;&nbsp;Keyword Naming</a></h2>
+<h2><a class="toc-backref" href="#id37">4.1&nbsp;&nbsp;&nbsp;Keyword Naming</a></h2>
 <p><tt class="docutils literal">BOOST_PARAMETER_NAME</tt> prepends a leading underscore to the names
 of all our keyword objects in order to avoid the following
 usually-silent bug:</p>
@@ -1834,14 +1834,17 @@ namespace people
 
   void f(int age)
   {
-  <span class="vellipsis">     .
+  :vellipsis:<a href="#id18"><span class="problematic" id="id19">`</span></a>     .
      .
      .
-   </span>
+   `
      g(<strong>age</strong> = 3); // whoops!
   }
 }
 </pre>
+<div class="system-message" id="id18">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/boost/libs/parameter/doc/index.rst</tt>, line 2009); <em><a href="#id19">backlink</a></em></p>
+Inline interpreted text or phrase reference start-string without end-string.</div>
 <!-- @ignore() -->
 <p>Although in the case above, the user was trying to pass the value
 <tt class="docutils literal">3</tt> as the <tt class="docutils literal">age</tt> parameter to <tt class="docutils literal">g</tt>, what happened instead
@@ -1862,7 +1865,7 @@ compiler—might become irretrievably ambiguous with those in our
 unnamed namespace.</p>
 </div>
 <div class="section" id="namespaces">
-<h2><a class="toc-backref" href="#id36">4.2&nbsp;&nbsp;&nbsp;Namespaces</a></h2>
+<h2><a class="toc-backref" href="#id38">4.2&nbsp;&nbsp;&nbsp;Namespaces</a></h2>
 <p>In our examples we've always declared keyword objects in (an
 unnamed namespace within) the same namespace as the
 Boost.Parameter-enabled functions using those keywords:</p>
@@ -1966,11 +1969,11 @@ int y = lib::f(_name = &quot;bob&quot;, _index = 2);
 <!-- @test('run', howmany='all') -->
 </div>
 <div class="section" id="documentation">
-<h2><a class="toc-backref" href="#id37">4.3&nbsp;&nbsp;&nbsp;Documentation</a></h2>
+<h2><a class="toc-backref" href="#id39">4.3&nbsp;&nbsp;&nbsp;Documentation</a></h2>
 <p>The interface idioms enabled by Boost.Parameter are completely new
 (to C++), and as such are not served by pre-existing documentation
 conventions.</p>
-<div class="note">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This space is empty because we haven't settled on any
 best practices yet.  We'd be very pleased to link to your
@@ -1980,13 +1983,13 @@ sharing.</p>
 </div>
 </div>
 <div class="section" id="portability-considerations">
-<h1><a class="toc-backref" href="#id38">5&nbsp;&nbsp;&nbsp;Portability Considerations</a></h1>
+<h1><a class="toc-backref" href="#id40">5&nbsp;&nbsp;&nbsp;Portability Considerations</a></h1>
 <p>Use the <a class="reference external" href="http://www.boost.org/regression/release/user/parameter.html">regression test results</a> for the latest Boost release of
 the Parameter library to see how it fares on your favorite
 compiler.  Additionally, you may need to be aware of the following
 issues and workarounds for particular compilers.</p>
 <div class="section" id="no-sfinae-support">
-<h2><a class="toc-backref" href="#id39">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></h2>
+<h2><a class="toc-backref" href="#id41">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></h2>
 <p>Some older compilers don't support SFINAE.  If your compiler meets
 that criterion, then Boost headers will <tt class="docutils literal">#define</tt> the preprocessor
 symbol <tt class="docutils literal">BOOST_NO_SFINAE</tt>, and parameter-enabled functions won't be
@@ -2034,7 +2037,7 @@ are unspecified, the workaround is to use
 .. |BOOST_PARAMETER_MATCH| replace:: ``BOOST_PARAMETER_MATCH`` -->
 </div>
 <div class="section" id="compiler-can-t-see-references-in-unnamed-namespace">
-<h2><a class="toc-backref" href="#id41">5.3&nbsp;&nbsp;&nbsp;Compiler Can't See References In Unnamed Namespace</a></h2>
+<h2><a class="toc-backref" href="#id43">5.3&nbsp;&nbsp;&nbsp;Compiler Can't See References In Unnamed Namespace</a></h2>
 <p>If you use Microsoft Visual C++ 6.x, you may find that the compiler
 has trouble finding your keyword objects.  This problem has been
 observed, but only on this one compiler, and it disappeared as the
@@ -2055,23 +2058,23 @@ namespace graphs
 </div>
 </div>
 <div class="section" id="python-binding">
-<h1><a class="toc-backref" href="#id42">6&nbsp;&nbsp;&nbsp;Python Binding</a></h1>
-<p>Follow <a class="reference external" href="python.html">this link</a> for documentation on how to expose
+<h1><a class="toc-backref" href="#id44">6&nbsp;&nbsp;&nbsp;Python Binding</a></h1>
+<p>Follow <a class="reference external" href="../../../parameter_python/doc/html/index.html">this link</a> for documentation on how to expose
 Boost.Parameter-enabled functions to Python with <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a>.</p>
 </div>
 <div class="section" id="reference">
-<h1><a class="toc-backref" href="#id43">7&nbsp;&nbsp;&nbsp;Reference</a></h1>
+<h1><a class="toc-backref" href="#id45">7&nbsp;&nbsp;&nbsp;Reference</a></h1>
 <p>Follow <a class="reference external" href="reference.html">this link</a> to the Boost.Parameter reference
 documentation.</p>
 </div>
 <div class="section" id="glossary">
-<h1><a class="toc-backref" href="#id44">8&nbsp;&nbsp;&nbsp;Glossary</a></h1>
+<h1><a class="toc-backref" href="#id46">8&nbsp;&nbsp;&nbsp;Glossary</a></h1>
 <table class="docutils field-list" frame="void" id="arguments" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name" colspan="2">Argument (or “actual argument”):</th></tr>
-<tr><td>&nbsp;</td><td class="field-body">the value actually passed to a
+<tr class="field"><td>&nbsp;</td><td class="field-body">the value actually passed to a
 function or class template</td>
 </tr>
 </tbody>
@@ -2081,7 +2084,7 @@ function or class template</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name" colspan="2">Parameter (or “formal parameter”):</th></tr>
-<tr><td>&nbsp;</td><td class="field-body"><p class="first">the name used to refer to an
+<tr class="field"><td>&nbsp;</td><td class="field-body"><p class="first">the name used to refer to an
 argument within a function or class template.  For example, the
 value of <tt class="docutils literal">f</tt>'s <em>parameter</em> <tt class="docutils literal">x</tt> is given by the <em>argument</em>
 <tt class="docutils literal">3</tt>:</p>
@@ -2095,7 +2098,7 @@ int y = f(3);
 </table>
 </div>
 <div class="section" id="acknowledgements">
-<h1><a class="toc-backref" href="#id45">9&nbsp;&nbsp;&nbsp;Acknowledgements</a></h1>
+<h1><a class="toc-backref" href="#id47">9&nbsp;&nbsp;&nbsp;Acknowledgements</a></h1>
 <p>The authors would like to thank all the Boosters who participated
 in the review of this library and its documentation, most
 especially our review manager, Doug Gregor.</p>
@@ -2192,7 +2195,7 @@ information on SFINAE.</td></tr>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: 2011-11-08 21:40 UTC.
+Generated on: 2018-12-05 20:03 UTC.
 Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
 
 </div>

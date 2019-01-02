@@ -797,6 +797,24 @@ void test()
    BOOST_CHECK_EQUAL(pow(T(1), 0), 1);
    BOOST_CHECK_EQUAL(pow(T(1), T(2)), 1);
    BOOST_CHECK_EQUAL(pow(T(1), 2), 1);
+
+   if (!boost::multiprecision::is_interval_number<T>::value)
+   {
+      T bug_case = -1.05 * log((std::numeric_limits<T>::max)()) / log(T(1.01));
+
+      for (unsigned i = 0; i < 100; ++i, bug_case *= 1.05)
+      {
+         if (std::numeric_limits<T>::has_infinity)
+         {
+            BOOST_CHECK_EQUAL(pow(T(1.01), bug_case), 0);
+         }
+         else
+         {
+            BOOST_CHECK_LE(pow(T(1.01), bug_case), std::numeric_limits<T>::min());
+         }
+      }
+   }
+
 }
 
 
@@ -828,8 +846,8 @@ int main()
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<62> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<61, long long> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<60, long long> > >();
-   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<void> > > >();
-   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<void> > > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<char> > > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<char> > > >();
    // Check low multiprecision digit counts.
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<9> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<18> > >();
@@ -840,6 +858,7 @@ int main()
 #endif
 #ifdef TEST_CPP_BIN_FLOAT
    test<boost::multiprecision::cpp_bin_float_50>();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<35, boost::multiprecision::digit_base_10, std::allocator<char>, boost::long_long_type> > >();
 #endif
    return boost::report_errors();
 }

@@ -28,8 +28,8 @@ typedef scaled_base_unit<pound_base_unit, scale<28, static_rational<1> > > quart
 
 template<>
 struct base_unit_info<imperial::quarter_base_unit> {
-    static const char* name()   { return("quarter"); }
-    static const char* symbol() { return("quarter"); }
+    static BOOST_CONSTEXPR const char* name()   { return("quarter"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("quarter"); }
 };
 
 } // namespace units

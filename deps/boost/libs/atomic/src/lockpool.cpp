@@ -30,15 +30,27 @@
 #include <boost/atomic/detail/lockpool.hpp>
 #include <boost/atomic/detail/pause.hpp>
 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+// 'struct_name' : structure was padded due to __declspec(align())
+#pragma warning(disable: 4324)
+#endif
+
 namespace boost {
 namespace atomics {
 namespace detail {
 
 namespace {
 
-// This seems to be the maximum across all modern CPUs
+// Cache line size, in bytes
 // NOTE: This constant is made as a macro because some compilers (gcc 4.4 for one) don't allow enums or namespace scope constants in alignment attributes
+#if defined(__s390__) || defined(__s390x__)
+#define BOOST_ATOMIC_CACHE_LINE_SIZE 256
+#elif defined(powerpc) || defined(__powerpc__) || defined(__ppc__)
+#define BOOST_ATOMIC_CACHE_LINE_SIZE 128
+#else
 #define BOOST_ATOMIC_CACHE_LINE_SIZE 64
+#endif
 
 #if defined(BOOST_ATOMIC_USE_PTHREAD)
 typedef pthread_mutex_t lock_type;
@@ -149,3 +161,7 @@ BOOST_ATOMIC_DECL void lockpool::signal_fence() BOOST_NOEXCEPT
 } // namespace detail
 } // namespace atomics
 } // namespace boost
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif

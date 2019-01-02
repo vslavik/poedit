@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::to` and related utilities.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -39,27 +39,29 @@ BOOST_HANA_NAMESPACE_BEGIN
     namespace convert_detail {
         struct no_conversion { };
 
-        template <typename ...>
-        struct is_valid { static constexpr bool value = true; };
-    }
+        template <typename To, typename From, typename = void>
+        struct maybe_static_cast : no_conversion {
+            template <typename X>
+            static constexpr auto apply(X const&) {
+                static_assert(detail::wrong<to_impl<To, From>, X>{},
+                "no conversion is available between the provided types");
+            }
+        };
+
+        template <typename To, typename From>
+        struct maybe_static_cast<To, From, decltype((void)
+            static_cast<To>(std::declval<From>())
+        )> {
+            template <typename X>
+            static constexpr To apply(X&& x)
+            { return static_cast<To>(static_cast<X&&>(x)); }
+        };
+    } // end namespace convert_detail
 
     template <typename To, typename From, bool condition>
-    struct to_impl<To, From, when<condition>> : convert_detail::no_conversion {
-        template <typename X>
-        static constexpr auto apply(X const&) {
-            static_assert(detail::wrong<to_impl<To, From>, X>{},
-            "no conversion is available between the provided types");
-        }
-    };
-
-    template <typename To, typename From>
-    struct to_impl<To, From, when<convert_detail::is_valid<
-        decltype(static_cast<To>(std::declval<From>()))
-    >::value>> {
-        template <typename X>
-        static constexpr To apply(X&& x)
-        { return static_cast<To>(static_cast<X&&>(x)); }
-    };
+    struct to_impl<To, From, when<condition>>
+        : convert_detail::maybe_static_cast<To, From>
+    { };
 
     template <typename To>
     struct to_impl<To, To> : embedding<> {

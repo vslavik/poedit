@@ -17,7 +17,6 @@
 
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
 
 #include "test.hpp"
 
@@ -117,7 +116,7 @@ int main()
 
         bool b = false;
         BOOST_TEST(test("false", bool_, phoenix::ref(b)));
-        BOOST_TEST(test("true", bool_, ++phoenix::ref(b)));
+        BOOST_TEST(test("true", bool_, !phoenix::ref(b)));
     }
 #endif
 

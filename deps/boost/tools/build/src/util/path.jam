@@ -549,7 +549,7 @@ rule native-CYGWIN ( path )
 #
 rule split-path-VMS ( native )
 {
-    local matches = [ MATCH ([a-zA-Z0-9_-]+:)?(\\[[^\]]*\\])?(.*)?$ : $(native)
+    local matches = [ MATCH "([a-zA-Z0-9_-]+:)?(\\[[^\]]*\\])?(.*)?$" : $(native)
         ] ;
     local device = $(matches[1]) ;
     local dir = $(matches[2]) ;

@@ -645,7 +645,7 @@ hidden in an implementation detail file.</para>
       for its <code>Mutex</code> types, you could write:
     </para>
 <programlisting>namespace bs2 = boost::signals2;
-using bs2::keywords;
+using namespace bs2::keywords;
 bs2::signal_type&lt;void (int), mutex_type&lt;bs2::dummy_mutex&gt; &gt;::type sig;
 </programlisting>
 

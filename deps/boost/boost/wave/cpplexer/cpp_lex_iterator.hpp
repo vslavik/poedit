@@ -1,8 +1,8 @@
 /*=============================================================================
     Boost.Wave: A Standard compliant C++ preprocessor library
 
-    Definition of the lexer iterator 
-    
+    Definition of the lexer iterator
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -35,7 +35,7 @@
 #if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
 #define BOOST_WAVE_EOF_PREFIX static
 #else
-#define BOOST_WAVE_EOF_PREFIX 
+#define BOOST_WAVE_EOF_PREFIX
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,18 +45,18 @@ namespace cpplexer {
 namespace impl {
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  lex_iterator_functor_shim
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename TokenT> 
-class lex_iterator_functor_shim 
+template <typename TokenT>
+class lex_iterator_functor_shim
 {
     typedef typename TokenT::position_type  position_type;
 
 public:
-    lex_iterator_functor_shim() 
+    lex_iterator_functor_shim()
 #if /*0 != __DECCXX_VER || */defined(__PGI)
       : eof()
 #endif
@@ -76,16 +76,16 @@ public:
 
     template <typename MultiPass>
     static result_type& get_next(MultiPass& mp, result_type& result)
-    { 
-        return mp.shared()->ftor->get(result); 
+    {
+        return mp.shared()->ftor->get(result);
     }
 
     // this will be called whenever the last reference to a multi_pass will
     // be released
     template <typename MultiPass>
     static void destroy(MultiPass& mp)
-    { 
-        delete mp.shared()->ftor; 
+    {
+        delete mp.shared()->ftor;
     }
 
     template <typename MultiPass>
@@ -95,7 +95,7 @@ public:
     }
 #if BOOST_WAVE_SUPPORT_PRAGMA_ONCE != 0
     template <typename MultiPass>
-    static bool has_include_guards(MultiPass& mp, std::string& guard_name) 
+    static bool has_include_guards(MultiPass& mp, std::string& guard_name)
     {
         return mp.shared()->ftor->has_include_guards(guard_name);
     }
@@ -114,12 +114,12 @@ typename lex_iterator_functor_shim<TokenT>::result_type const
 }   // namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  lex_iterator
 //
 //      A generic C++ lexer interface class, which allows to plug in different
-//      lexer implementations. The interface between the lexer type used and 
-//      the preprocessor component depends on the token type only (template 
+//      lexer implementations. The interface between the lexer type used and
+//      the preprocessor component depends on the token type only (template
 //      parameter TokenT).
 //      Additionally, the following requirements apply:
 //
@@ -130,7 +130,7 @@ typename lex_iterator_functor_shim<TokenT>::result_type const
 //            eof token equivalent
 //          - the lexer should implement a constructor taking two iterators
 //            pointing to the beginning and the end of the input stream,
-//            a third parameter containing the name of the parsed input file 
+//            a third parameter containing the name of the parsed input file
 //            and a 4th parameter of the type boost::wave::language_support
 //            which specifies, which language subset should be supported (C++,
 //            C99, C++11 etc.).
@@ -138,13 +138,13 @@ typename lex_iterator_functor_shim<TokenT>::result_type const
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Divide the given functor type into its components (unique and shared) 
+//  Divide the given functor type into its components (unique and shared)
 //  and build a std::pair from these parts
 template <typename FunctorData>
 struct make_multi_pass
 {
-    typedef  
-        std::pair<typename FunctorData::unique, typename FunctorData::shared> 
+    typedef
+        std::pair<typename FunctorData::unique, typename FunctorData::shared>
     functor_data_type;
     typedef typename FunctorData::result_type result_type;
 
@@ -165,13 +165,13 @@ struct make_multi_pass
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TokenT>
-class lex_iterator 
+class lex_iterator
 :   public make_multi_pass<impl::lex_iterator_functor_shim<TokenT> >::type
 {
     typedef impl::lex_iterator_functor_shim<TokenT> input_policy_type;
 
     typedef typename make_multi_pass<input_policy_type>::type base_type;
-    typedef typename make_multi_pass<input_policy_type>::functor_data_type 
+    typedef typename make_multi_pass<input_policy_type>::functor_data_type
         functor_data_type;
 
     typedef typename input_policy_type::unique unique_functor_type;
@@ -184,8 +184,8 @@ public:
     {}
 
     template <typename IteratorT>
-    lex_iterator(IteratorT const &first, IteratorT const &last, 
-            typename TokenT::position_type const &pos, 
+    lex_iterator(IteratorT const &first, IteratorT const &last,
+            typename TokenT::position_type const &pos,
             boost::wave::language_support language)
     :   base_type(
             functor_data_type(
@@ -209,7 +209,7 @@ public:
         const_cast<token_type&>(currtoken).set_position(currpos);
 
     // set the new position for future tokens as well
-        if (token_type::string_type::npos != 
+        if (token_type::string_type::npos !=
             currtoken.get_value().find_first_of('\n'))
         {
             currpos.set_line(pos.get_line() + 1);
@@ -219,7 +219,7 @@ public:
 
 #if BOOST_WAVE_SUPPORT_PRAGMA_ONCE != 0
     // return, whether the current file has include guards
-    // this function returns meaningful results only if the file was scanned 
+    // this function returns meaningful results only if the file was scanned
     // completely
     bool has_include_guards(std::string& guard_name) const
     {

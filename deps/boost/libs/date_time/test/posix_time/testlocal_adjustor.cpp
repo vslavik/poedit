@@ -121,12 +121,13 @@ main()
 
   typedef boost::date_time::local_adjustor<ptime, -5, us_dst> us_eastern2;
 
-  ptime t7a(date(2002,May,31), hours(17)); 
-  ptime t7b = us_eastern2::local_to_utc(t7a);
-  ptime t7c = us_eastern2::utc_to_local(t7b);
-  //converted to local then back ot utc
-  check("check us_local_adjustor", t7c == t7a);
-
+  {
+    ptime t7a(date(2002,May,31), hours(17)); 
+    ptime t7b = us_eastern2::local_to_utc(t7a);
+    ptime t7c = us_eastern2::utc_to_local(t7b);
+    //converted to local then back ot utc
+    check("check us_local_adjustor", t7c == t7a);
+  }
 
   typedef boost::date_time::us_dst_trait<date> us_dst_traits;
   typedef boost::date_time::dst_calc_engine<date, time_duration, us_dst_traits>

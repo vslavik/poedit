@@ -8,6 +8,7 @@
 # Copyright 2003, 2005 Vladimir Prus
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
+import os
 
 import bjam
 
@@ -17,3 +18,7 @@ __OS = bjam.call("peek", [], "OS")[0]
 # when faced with Python naming
 def name():
     return __OS
+
+
+def environ(keys):
+    return [os.environ[key] for key in keys if key in os.environ]

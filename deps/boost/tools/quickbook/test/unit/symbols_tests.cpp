@@ -12,7 +12,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_symbols.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/swap.hpp>
 #include "symbols.hpp"
 
@@ -22,12 +21,9 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename IteratorT>
-bool
-equal(IteratorT p, IteratorT q)
+template <typename IteratorT> bool equal(IteratorT p, IteratorT q)
 {
-    while (*p && *p == *q)
-    {
+    while (*p && *p == *q) {
         ++p;
         ++q;
     }
@@ -35,85 +31,71 @@ equal(IteratorT p, IteratorT q)
 }
 
 template <class SymbolsT, typename CharT>
-void
-docheck
-(
-    SymbolsT const &sym,
-    CharT    const *candidate,
-    bool           hit,
-    CharT    const *result,
-    int            length
-)
+void docheck(
+    SymbolsT const& sym,
+    CharT const* candidate,
+    bool hit,
+    CharT const* result,
+    int length)
 {
     parse_info<CharT const*> info = parse(candidate, sym);
 
 #define correctly_matched hit == info.hit
 #define correct_match_length unsigned(length) == info.length
-#define correct_tail equal(candidate + (hit?1:0)*length, result)
+#define correct_tail equal(candidate + (hit ? 1 : 0) * length, result)
 
     BOOST_TEST(correctly_matched);
 
-    if (hit)
-    {
+    if (hit) {
         BOOST_TEST(correct_match_length);
         BOOST_TEST(correct_tail);
     }
-    else
-    {
+    else {
         BOOST_TEST(correct_tail);
     }
 }
 
-template <typename T>
-struct store_action
+template <typename T> struct store_action
 {
-    store_action(T const &v) : value(v) {}
-    void operator()(T &v) const { v = value; }
-private:
+    store_action(T const& v) : value(v) {}
+    void operator()(T& v) const { v = value; }
+
+  private:
     T const value;
 };
 
-template <typename T>
-store_action<T>
-store(T const &v)
-{
-    return v;
-}
+template <typename T> store_action<T> store(T const& v) { return v; }
 
-template <typename T>
-struct check_action
+template <typename T> struct check_action
 {
-    check_action(T const &v) : value(v) {}
+    check_action(T const& v) : value(v) {}
 
-#define correct_value_stored (v==value)
-    void operator()(T const &v) const { BOOST_TEST(correct_value_stored); }
-private:
+#define correct_value_stored (v == value)
+    void operator()(T const& v) const { BOOST_TEST(correct_value_stored); }
+
+  private:
     T const value;
 };
 
-template <typename T>
-check_action<T>
-docheck(T const &v)
-{
-    return v;
-}
+template <typename T> check_action<T> docheck(T const& v) { return v; }
 
-static void
-default_constructible()
-{   // this actually a compile time test
+static void default_constructible()
+{ // this actually a compile time test
     symbols<int, char, quickbook::tst<int, char> > ns1;
     symbols<int, wchar_t, quickbook::tst<int, wchar_t> > ws1;
     symbols<std::string, char, quickbook::tst<std::string, char> > ns2;
     symbols<std::string, wchar_t, quickbook::tst<std::string, wchar_t> > ws2;
 
-    (void)ns1; (void)ws1; (void)ns2; (void)ws2;
+    (void)ns1;
+    (void)ws1;
+    (void)ns2;
+    (void)ws2;
 }
 
 typedef symbols<int, char, quickbook::tst<int, char> > nsymbols;
 typedef symbols<int, wchar_t, quickbook::tst<int, wchar_t> > wsymbols;
 
-static void
-narrow_match_tests()
+static void narrow_match_tests()
 {
     nsymbols sym;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
@@ -142,8 +124,7 @@ narrow_match_tests()
     docheck(sym, "applepix", true, "pix", 5);
 }
 
-static void
-narrow_copy_ctor_tests()
+static void narrow_copy_ctor_tests()
 {
     nsymbols sym;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
@@ -154,8 +135,7 @@ narrow_copy_ctor_tests()
     docheck(sym2, "bananarama", true, "rama", 6);
 }
 
-static void
-narrow_assigment_operator_tests()
+static void narrow_assigment_operator_tests()
 {
     nsymbols sym;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
@@ -168,8 +148,7 @@ narrow_assigment_operator_tests()
     docheck(sym2, "bananarama", true, "rama", 6);
 }
 
-static void
-narrow_swap_tests()
+static void narrow_swap_tests()
 {
     nsymbols sym, sym2;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
@@ -184,13 +163,12 @@ narrow_swap_tests()
     docheck(sym, "cauliflour", false, "cauliflour", -1);
 }
 
-static void
-narrow_value_tests()
-{   // also tests the add member functions
+static void narrow_value_tests()
+{ // also tests the add member functions
     nsymbols sym;
 
     sym = "orange", "banana";
-    sym.add("pineapple",1234);
+    sym.add("pineapple", 1234);
     sym.add("lemon");
 
     parse("orange", sym[store(12345)]);
@@ -200,19 +178,18 @@ narrow_value_tests()
     parse("lemon", sym[docheck(int())]);
 }
 
-static void
-narrow_free_functions_tests()
+static void narrow_free_functions_tests()
 {
     nsymbols sym;
 
-#define add_returned_non_null_value (res!=0)
-#define add_returned_null (res==0)
-#define find_returned_non_null_value (res!=0)
-#define find_returned_null (res==0)
+#define add_returned_non_null_value (res != 0)
+#define add_returned_null (res == 0)
+#define find_returned_non_null_value (res != 0)
+#define find_returned_null (res == 0)
 
-    int *res = add(sym,"pineapple");
+    int* res = add(sym, "pineapple");
     BOOST_TEST(add_returned_non_null_value);
-    res = add(sym,"pineapple");
+    res = add(sym, "pineapple");
     BOOST_TEST(add_returned_null);
 
     res = find(sym, "pineapple");
@@ -221,8 +198,7 @@ narrow_free_functions_tests()
     BOOST_TEST(find_returned_null);
 }
 
-static void
-wide_match_tests()
+static void wide_match_tests()
 {
     wsymbols sym;
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
@@ -251,8 +227,7 @@ wide_match_tests()
     docheck(sym, L"applepix", true, L"pix", 5);
 }
 
-static void
-wide_copy_ctor_tests()
+static void wide_copy_ctor_tests()
 {
     wsymbols sym;
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
@@ -263,8 +238,7 @@ wide_copy_ctor_tests()
     docheck(sym2, L"bananarama", true, L"rama", 6);
 }
 
-static void
-wide_assigment_operator_tests()
+static void wide_assigment_operator_tests()
 {
     wsymbols sym;
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
@@ -277,8 +251,7 @@ wide_assigment_operator_tests()
     docheck(sym2, L"bananarama", true, L"rama", 6);
 }
 
-static void
-wide_swap_tests()
+static void wide_swap_tests()
 {
     wsymbols sym, sym2;
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
@@ -293,13 +266,12 @@ wide_swap_tests()
     docheck(sym, L"cauliflour", false, L"cauliflour", -1);
 }
 
-static void
-wide_value_tests()
-{   // also tests the add member functions
+static void wide_value_tests()
+{ // also tests the add member functions
     wsymbols sym;
 
     sym = L"orange", L"banana";
-    sym.add(L"pineapple",1234);
+    sym.add(L"pineapple", 1234);
     sym.add(L"lemon");
 
     parse(L"orange", sym[store(12345)]);
@@ -309,14 +281,13 @@ wide_value_tests()
     parse(L"lemon", sym[docheck(int())]);
 }
 
-static void
-wide_free_functions_tests()
+static void wide_free_functions_tests()
 {
     wsymbols sym;
 
-    int *res = add(sym,L"pineapple");
+    int* res = add(sym, L"pineapple");
     BOOST_TEST(add_returned_non_null_value);
-    res = add(sym,L"pineapple");
+    res = add(sym, L"pineapple");
     BOOST_TEST(add_returned_null);
 
     res = find(sym, L"pineapple");
@@ -325,8 +296,7 @@ wide_free_functions_tests()
     BOOST_TEST(find_returned_null);
 }
 
-static 
-void free_add_find_functions_tests()
+static void free_add_find_functions_tests()
 {
     nsymbols sym;
     BOOST_TEST(*add(sym, "a", 0) == 0);
@@ -343,18 +313,17 @@ void free_add_find_functions_tests()
 
 struct check_parse_value
 {
-    explicit check_parse_value(int value) : value_(value){}
-    
+    explicit check_parse_value(int value) : value_(value) {}
+
     void operator()(int value) const { BOOST_TEST(value == value_); }
-    
+
     int value_;
 };
 
 // My version is different to the original, if there's an existing value
 // it replaces it with the new one.
 
-static
-void duplicate_add_tests()
+static void duplicate_add_tests()
 {
     char const* foo1 = "foo";
     char const* foo2 = foo1 + 3;
@@ -364,7 +333,7 @@ void duplicate_add_tests()
     nsymbols sym2 = sym;
     sym.add(foo1, foo2, 2);
     sym2.add(foo1, foo2, 3);
-    
+
     BOOST_TEST(find(sym, "foo") && *find(sym, "foo") == 2);
     BOOST_TEST(find(sym2, "foo") && *find(sym2, "foo") == 3);
 
@@ -383,8 +352,7 @@ void duplicate_add_tests()
     BOOST_TEST(info.hit && info.length == 3);
 }
 
-int
-main()
+int main()
 {
     default_constructible();
     narrow_match_tests();

@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 {
   typedef adjacency_list <vecS, vecS, undirectedS> Graph;
   typedef graph_traits<Graph>::vertex_descriptor Vertex;
-  typedef graph_traits<Graph>::edge_descriptor Edge;
+  //typedef graph_traits<Graph>::edge_descriptor Edge;
   typedef graph_traits<Graph>::vertices_size_type VertexIndex;
  
   // Create a graph

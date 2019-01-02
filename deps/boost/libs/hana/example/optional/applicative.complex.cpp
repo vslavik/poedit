@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -39,6 +39,7 @@ BOOST_HANA_CONSTEXPR_LAMBDA auto evaluate = hana::ap(function<op>, digit<x>, dig
 
 int main() {
     BOOST_HANA_CONSTEXPR_CHECK(evaluate<'1', '+', '2'> == hana::just(1 + 2));
+    BOOST_HANA_CONSTEXPR_CHECK(evaluate<'4', '-', '2'> == hana::just(4 - 2));
 
     BOOST_HANA_CONSTANT_CHECK(evaluate<'?', '+', '2'> == hana::nothing);
     BOOST_HANA_CONSTANT_CHECK(evaluate<'1', '?', '2'> == hana::nothing);

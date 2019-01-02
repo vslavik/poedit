@@ -111,7 +111,8 @@ int file_collect_dir_content_( file_info_t * const d )
 {
     LIST * files = L0;
     PATHNAME f;
-    DIR * dd;
+    int n;
+    STRUCT_DIRENT ** namelist;
     STRUCT_DIRENT * dirent;
     string path[ 1 ];
     char const * dirstr;
@@ -128,13 +129,14 @@ int file_collect_dir_content_( file_info_t * const d )
 
     if ( !*dirstr ) dirstr = ".";
 
-    if ( !( dd = opendir( dirstr ) ) )
+    if ( -1 == ( n = scandir( dirstr, &namelist, NULL, alphasort ) ) )
         return -1;
 
     string_new( path );
-    while ( ( dirent = readdir( dd ) ) )
+    while ( n-- )
     {
         OBJECT * name;
+        dirent = namelist[ n ];
         f.f_base.ptr = dirent->d_name
         #ifdef old_sinix
             - 2  /* Broken structure definition on sinix. */
@@ -150,10 +152,11 @@ int file_collect_dir_content_( file_info_t * const d )
             files = list_push_back( files, name );
         else
             object_free( name );
+        free( dirent );
     }
     string_free( path );
 
-    closedir( dd );
+    free( namelist );
 
     d->files = files;
     return 0;
@@ -198,27 +201,7 @@ void file_query_( file_info_t * const info )
 }
 
 
-/*
- * file_supported_fmt_resolution() - file modification timestamp resolution
- *
- * Returns the minimum file modification timestamp resolution supported by this
- * Boost Jam implementation. File modification timestamp changes of less than
- * the returned value might not be recognized.
- *
- * Does not take into consideration any OS or file system related restrictions.
- *
- * Return value 0 indicates that any value supported by the OS is also supported
- * here.
- */
-
-void file_supported_fmt_resolution( timestamp * const t )
-{
-    /* The current implementation does not support file modification timestamp
-     * resolution of less than one second.
-     */
-    timestamp_init( t, 1, 0 );
-}
-
+int file_collect_archive_content_( file_archive_info_t * const archive );
 
 /*
  * file_archscan() - scan an archive for files

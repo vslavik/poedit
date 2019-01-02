@@ -38,20 +38,20 @@ exe hello : hello.cpp src ;
 
     # Check that targets to which "bin1" refers are updated, and only those.
     t.run_build_system(["bin1"])
-    t.expect_addition(BoostBuild.List("bin/$toolset/debug/") * "a.exe a.obj")
+    t.expect_addition(BoostBuild.List("bin/$toolset/debug*/") * "a.exe a.obj")
     t.expect_nothing_more()
 
     # Try again with "bin2"
     t.run_build_system(["bin2"])
-    t.expect_addition(BoostBuild.List("bin/$toolset/debug/") * "b.exe b.obj")
+    t.expect_addition(BoostBuild.List("bin/$toolset/debug*/") * "b.exe b.obj")
     t.expect_nothing_more()
 
     # Try building everything, making sure 'hello' target is created.
     t.run_build_system()
-    t.expect_addition(BoostBuild.List("bin/$toolset/debug/") * \
+    t.expect_addition(BoostBuild.List("bin/$toolset/debug*/") * \
         "hello.exe hello.obj")
-    t.expect_addition("bin/$toolset/debug/s.obj")
-    t.expect_addition(BoostBuild.List("bin/$toolset/debug/") * "c.exe c.obj")
+    t.expect_addition("bin/$toolset/debug*/s.obj")
+    t.expect_addition(BoostBuild.List("bin/$toolset/debug*/") * "c.exe c.obj")
     t.expect_nothing_more()
 
 
@@ -99,9 +99,7 @@ int main() {}
 #
 ###############################################################################
 
-# We do not pass the '-d0' option to Boost Build here to get more detailed
-# information in case of failure.
-t = BoostBuild.Tester(pass_d0=False, use_test_config=False)
+t = BoostBuild.Tester(use_test_config=False)
 
 test_alias_rule(t)
 test_alias_source_usage_requirements(t)

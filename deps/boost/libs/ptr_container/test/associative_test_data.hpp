@@ -11,7 +11,13 @@
 
 #include "test_data.hpp"
 #include <boost/ptr_container/exception.hpp>
+#include <boost/ptr_container/detail/ptr_container_disable_deprecated.hpp>
 #include <boost/range/sub_range.hpp>
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 template< typename C, typename B, typename T, bool Ordered >
 void ptr_set_test();
@@ -33,9 +39,12 @@ struct test_algorithms
         delete t;
 
         BOOST_DEDUCED_TYPENAME Cont::reverse_iterator ri         = c.rbegin();
+        hide_warning(ri);
         BOOST_DEDUCED_TYPENAME Cont::const_reverse_iterator cri  = c2.rbegin();
         BOOST_DEDUCED_TYPENAME Cont::reverse_iterator rv2        = c.rend();
+        hide_warning(rv2);
         BOOST_DEDUCED_TYPENAME Cont::const_reverse_iterator cvr2 = c2.rend();
+        hide_warning(cvr2);
         cri = c.crbegin();
         cri = c.crend();
     }
@@ -77,19 +86,21 @@ void ptr_set_test()
     a_copy = c;
     a_copy = a_copy;
     BOOST_CHECK( a_copy.empty() );
-    
+
     BOOST_TEST_MESSAGE( "finished copying test" ); 
-                 
+
     BOOST_DEDUCED_TYPENAME C::allocator_type alloc        = c.get_allocator();
     BOOST_DEDUCED_TYPENAME C::iterator i                  = c.begin();
     BOOST_DEDUCED_TYPENAME C::const_iterator ci           = c2.begin();
     ci = c.cbegin();
     ci = c.cend();
     BOOST_DEDUCED_TYPENAME C::iterator i2                 = c.end();
+    hide_warning(i2);
     BOOST_DEDUCED_TYPENAME C::const_iterator ci2          = c2.begin();
-                             
+    hide_warning(ci2);
+
     BOOST_TEST_MESSAGE( "finished iterator test" ); 
-   
+
     BOOST_DEDUCED_TYPENAME C::size_type s                 = c.size();
     BOOST_DEDUCED_TYPENAME C::size_type s2                = c.max_size();
     hide_warning(s2);
@@ -100,10 +111,17 @@ void ptr_set_test()
     
     T* t = new T;
     c.insert( c.end(), t );    
-    c.insert( c.end(), std::auto_ptr<T>( new T ) );
     c.insert( new T ); 
+#ifndef BOOST_NO_AUTO_PTR
+    c.insert( c.end(), std::auto_ptr<T>( new T ) );
     std::auto_ptr<T> ap( new T );
     c.insert( ap );
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+    c.insert( c.end(), std::unique_ptr<T>( new T ) );
+    std::unique_ptr<T> up( new T );
+    c.insert( std::move( up ) );
+#endif
     c3.insert( c.begin(), c.end() ); 
     c.erase( c.begin() );
     c3.erase( c3.begin(), c3.end() );
@@ -130,7 +148,11 @@ void ptr_set_test()
              
     c.insert( c.end(), new T );
     typename C::auto_type ptr2  = c.release( c.begin() );
-    std::auto_ptr<C> ap2         = c.release();
+#ifndef BOOST_NO_AUTO_PTR
+    std::auto_ptr<C> ap2        = c.release();
+#else
+    std::unique_ptr<C> up2      = c.release();
+#endif
     c                           = c2.clone();
     BOOST_TEST_MESSAGE( "finished release/clone test" ); 
 
@@ -189,3 +211,6 @@ void ptr_set_test()
     
 }
 
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic pop
+#endif

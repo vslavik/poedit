@@ -5,10 +5,10 @@
 >>> from exception_translator_ext import *
 >>> try:
 ...     throw_error();
-... except RuntimeError, x:
-...     print x
+... except RuntimeError as x:
+...     print(x)
 ... else:
-...     print 'Expected a RuntimeError!'
+...     print('Expected a RuntimeError!')
 !!!error!!!
 '''
 def run(args = None):
@@ -20,8 +20,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

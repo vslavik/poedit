@@ -14,12 +14,13 @@
 import project ;
 import ac ;
 import errors ;
+import feature ;
 import "class" : new ;
 import targets ; 
 import path ;
 import modules ;
-import errors ;
 import indirect ;
+import os ;
 import property ;
 import property-set ;
 
@@ -94,7 +95,10 @@ rule init (
 
     : is-default ?
     # Default configurations are only used when zlib
-    # has not yet been configured.
+    # has not yet been configured.  This option is
+    # deprecated.  A configuration will be treated
+    # as a default when none of <include>, <search>,
+    # <name>, and <source> are present.
     )
 {
     local caller = [ project.current ] ;
@@ -108,23 +112,21 @@ rule init (
         project zlib ;
     }
 
-    local library-path = [ property.select <search> : $(options) ] ;
-    library-path = $(library-path:G=) ;
-    local include-path = [ property.select <include> : $(options) ] ;
-    include-path = $(include-path:G=) ;
-    local source-path = [ property.select <source> : $(options) ] ;
-    source-path = $(source-path:G=) ;
-    local library-name = [ property.select <name> : $(options) ] ;
-    library-name = $(library-name:G=) ;
-    local tag = [ property.select <tag> : $(options) ] ;
-    tag = $(tag:G=) ;
-    local build-name = [ property.select <build-name> : $(options) ] ;
-    build-name = $(build-name:G=) ;
+    local library-path = [ feature.get-values <search> : $(options) ] ;
+    local include-path = [ feature.get-values <include> : $(options) ] ;
+    local source-path = [ feature.get-values <source> : $(options) ] ;
+    local library-name = [ feature.get-values <name> : $(options) ] ;
+    local tag = [ feature.get-values <tag> : $(options) ] ;
+    local build-name = [ feature.get-values <build-name> : $(options) ] ;
+
+    if ! $(library-path) && ! $(include-path) && ! $(source-path) && ! $(library-name)
+    {
+        is-default = true ;
+    }
 
     condition = [ property-set.create $(requirements) ] ;
     condition = [ property-set.create [ $(condition).base ] ] ;
 
-    local no-build-from-source ;
     # Ignore environmental ZLIB_SOURCE if this initialization
     # requested to search for a specific pre-built library.
     if $(library-path) || $(include-path) || $(library-name)
@@ -135,13 +137,16 @@ rule init (
                 [ property.select <search> <include> <name> : $(options) ] "and"
                 [ property.select <source> <tag> <build-name> : $(options) ] ;
         }
-        else
+    }
+    else
+    {
+        source-path ?= [ os.environ ZLIB_SOURCE ] ;
+        if $(source-path)
         {
-            no-build-from-source = true ;
+            source-path = [ path.root [ path.make $(source-path) ]
+                                      [ path.pwd ] ] ;
         }
     }
-
-    source-path ?= [ modules.peek : ZLIB_SOURCE ] ;
 
     if $(.configured.$(condition))
     {
@@ -158,12 +163,12 @@ rule init (
         }
         return ;
     }
-    else if $(source-path) && ! $(no-build-from-source)
+    else if $(source-path)
     {
         build-name ?= z ;
         library-id = [ CALC $(library-id) + 1 ] ;
         tag = [ MATCH ^@?(.*)$ : $(tag) ] ;
-        if $(tag) && ! [ MATCH ^([^%]*)%([^%]+)$ : $(tag) ]
+        if $(tag)
         {
             tag = [ indirect.make $(tag) : [ $(caller).project-module ] ] ;
         }
@@ -185,7 +190,8 @@ rule init (
             }
         }
         local target ;
-        if $(sources) {
+        if $(sources)
+        {
             target = [ targets.create-typed-target LIB : $(.project)
               : $(build-name).$(library-id)
               : $(sources)
@@ -207,7 +213,9 @@ rule init (
             $(mt).set-target $(target) ;
         }
         targets.main-target-alternative $(mt) ;
-    } else {
+    }
+    else
+    {
         if $(.debug)
         {
             ECHO "notice: [zlib] Using pre-installed library" ;
@@ -218,7 +226,7 @@ rule init (
         }
 
         local mt = [ new ac-library zlib : $(.project) : $(condition) :
-            $(include-path) : $(library-path) : $(library-name) : $(root) ] ;
+            $(include-path) : $(library-path) : $(library-name) ] ;
         $(mt).set-header $(header) ;
         $(mt).set-default-names $(names) ;
         targets.main-target-alternative $(mt) ;

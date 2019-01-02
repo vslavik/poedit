@@ -89,7 +89,7 @@ local rule debug-message ( message * )
 {
     if $(.debug-configuration) = TRUE
     {
-        ECHO notice: [qt5-cfg] $(message) ;
+        ECHO notice\: "[qt5-cfg]" $(message) ;
     }
 }
 
@@ -134,7 +134,7 @@ local rule check-version ( bin_prefix )
 #
 local rule split-version ( version )
 {
-    local major-minor = [ MATCH ^([0-9]+)\.([0-9]+)(.*)$ : $(version) : 1 2 3 ] ;
+    local major-minor = [ MATCH "^([0-9]+)\.([0-9]+)(.*)$" : $(version) : 1 2 3 ] ;
     if ! $(major-minor[2]) || $(major-minor[3])
     {
         ECHO "Warning: 'using qt' expects a two part (major, minor) version number; got" $(version) instead ;
@@ -165,7 +165,7 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
     {
         if $($(v))
         {
-            debug-message "  user-specified "$(v): '$($(v))' ;
+            debug-message "  user-specified $(v):" '$($(v))' ;
         }
     }
 
@@ -230,7 +230,7 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
         # dependency scanner for wrapped files.
         type.set-scanner QRC : qrc-5-scanner ;
 
-        # Save value of first occuring prefix
+        # Save value of first occurring prefix
         .PREFIX = $(prefix) ;
     }
 
@@ -679,7 +679,7 @@ rule add-static-library ( lib-name : depends-on * : usage-defines * : requiremen
 # - version  Qt major number used as shared library suffix (QtCore5.so)
 # - depends-on other Qt libraries
 # - usage-defines those are set by qmake, so set them when using this library
-# - requirements addional requirements
+# - requirements additional requirements
 # - include non-canonical include path. The canonical path is $(.incprefix)/$(lib-name).
 rule add-library ( lib-name : version ? : depends-on * : usage-defines * : requirements * : include ? )
 {

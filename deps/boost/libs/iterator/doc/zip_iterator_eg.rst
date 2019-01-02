@@ -45,8 +45,7 @@ A non-generic implementation of ``zip_func`` could look as follows:
 ::
 
 
-      struct zip_func : 
-        public std::unary_function<const boost::tuple<const double&, const int&>&, void>
+      struct zip_func
       {
         void operator()(const boost::tuple<const double&, const int&>& t) const
         {

@@ -88,8 +88,8 @@ containers without cloning the objects again (see `Example 7 <examples.html>`_).
 A container can be cheaply returned from functions either by making a clone or by giving up ownership of the container
 ----------------------------------------------------------------------------------------------------------------------
 
-Two special member functions, ``clone()`` and ``release()``, both return an 
-``auto_ptr<SmartContainer>`` which can be assigned to another pointer container.  This 
+Two special member functions, ``clone()`` and ``release()``, both return a 
+``compatible-smart-ptr<SmartContainer>`` which can be assigned to another pointer container.  This 
 effectively reduces the cost of returning a container to one 
 heap-allocation plus a call to ``swap()`` (see `Example 3 <examples.html>`_).
 

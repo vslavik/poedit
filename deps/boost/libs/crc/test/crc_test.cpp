@@ -20,7 +20,7 @@
 #include <boost/cstdlib.hpp>                     // for boost::exit_success
 #include <boost/integer.hpp>                     // for boost::uint_t
 #include <boost/random/linear_congruential.hpp>  // for boost::minstd_rand
-#include <boost/test/minimal.hpp>                // for main, etc.
+#include <boost/core/lightweight_test.hpp>
 #include <boost/timer.hpp>                       // for boost::timer
 
 #include <algorithm>  // for std::for_each, std::generate_n, std::count
@@ -120,9 +120,9 @@ PRIVATE_TESTER_NAME::compute_test
 
     fast_crc.process_bytes( std_data, std_data_len );
     slow_crc.process_bytes( std_data, std_data_len );
-    BOOST_CHECK( fast_crc.checksum() == expected );
-    BOOST_CHECK( slow_crc.checksum() == expected );
-    BOOST_CHECK( func_result == expected );
+    BOOST_TEST_EQ( fast_crc.checksum(), expected );
+    BOOST_TEST_EQ( slow_crc.checksum(), expected );
+    BOOST_TEST_EQ( func_result, expected );
 }
 
 // Run a test in two runs, and check all the inspectors
@@ -142,7 +142,7 @@ PRIVATE_TESTER_NAME::interrupt_test
      fast_crc1.get_initial_remainder(), fast_crc1.get_final_xor_value(),
      fast_crc1.get_reflect_input(), fast_crc1.get_reflect_remainder() );
 
-    BOOST_CHECK( fast_crc1.get_interim_remainder() ==
+    BOOST_TEST_EQ( fast_crc1.get_interim_remainder(),
      slow_crc1.get_initial_remainder() );
 
     std::size_t const            mid_way = std_data_len / 2;
@@ -150,7 +150,7 @@ PRIVATE_TESTER_NAME::interrupt_test
 
     fast_crc1.process_bytes( std_data, mid_way );
     slow_crc1.process_bytes( std_data, mid_way );
-    BOOST_CHECK( fast_crc1.checksum() == slow_crc1.checksum() );
+    BOOST_TEST_EQ( fast_crc1.checksum(), slow_crc1.checksum() );
 
     // Process the second half of the data (also test accessors)
     boost::crc_optimal<optimal_crc_type::bit_count,
@@ -165,9 +165,9 @@ PRIVATE_TESTER_NAME::interrupt_test
 
     fast_crc2.process_block( std_data + mid_way, std_data_end );
     slow_crc2.process_block( std_data + mid_way, std_data_end );
-    BOOST_CHECK( fast_crc2.checksum() == slow_crc2.checksum() );
-    BOOST_CHECK( fast_crc2.checksum() == expected );
-    BOOST_CHECK( slow_crc2.checksum() == expected );
+    BOOST_TEST_EQ( fast_crc2.checksum(), slow_crc2.checksum() );
+    BOOST_TEST_EQ( fast_crc2.checksum(), expected );
+    BOOST_TEST_EQ( slow_crc2.checksum(), expected );
 }
 
 // Run a test to see if a single-bit error is detected
@@ -185,9 +185,9 @@ PRIVATE_TESTER_NAME::error_test
     // to give the truncated polynominal, and it is always set.  This
     // means that the truncated polynominal needs at least one of its
     // bits set, which implies that it cannot be zero.
-    if ( !(TrPo & boost::detail::mask_uint_t<Bits>::sig_bits_fast) )
+    if ( !(TrPo & boost::detail::low_bits_mask_c<Bits>::value) )
     {
-        BOOST_FAIL( "truncated CRC polymonial is zero" );
+        BOOST_ERROR( "truncated CRC polymonial is zero" );
     }
 
     std::cout << "\tDoing error tests." << std::endl;
@@ -208,16 +208,16 @@ PRIVATE_TESTER_NAME::error_test
     uint32_t const  fast_checksum = fast_tester.checksum();
     uint32_t const  slow_checksum = slow_tester.checksum();
 
-    BOOST_CHECK( fast_checksum == slow_checksum );
+    BOOST_TEST_EQ( fast_checksum, slow_checksum );
 
     // Do the checksum again (and test resetting ability)
     fast_tester.reset();
     slow_tester.reset( InRe );
     fast_tester.process_bytes( ran_data, sizeof(ran_data) );
     slow_tester.process_bytes( ran_data, sizeof(ran_data) );
-    BOOST_CHECK( fast_tester.checksum() == slow_tester.checksum() );
-    BOOST_CHECK( fast_tester.checksum() == fast_checksum );
-    BOOST_CHECK( slow_tester.checksum() == slow_checksum );
+    BOOST_TEST_EQ( fast_tester.checksum(), slow_tester.checksum() );
+    BOOST_TEST_EQ( fast_tester.checksum(), fast_checksum );
+    BOOST_TEST_EQ( slow_tester.checksum(), slow_checksum );
 
     // Produce a single-bit error
     ran_data[ ran_data[0] % ran_length ] ^= ( 1 << (ran_data[1] % 32) );
@@ -228,9 +228,9 @@ PRIVATE_TESTER_NAME::error_test
     slow_tester.reset();
     fast_tester.process_bytes( ran_data, sizeof(ran_data) );
     slow_tester.process_bytes( ran_data, sizeof(ran_data) );
-    BOOST_CHECK( fast_tester.checksum() == slow_tester.checksum() );
-    BOOST_CHECK( fast_tester.checksum() != fast_checksum );
-    BOOST_CHECK( slow_tester.checksum() != slow_checksum );
+    BOOST_TEST_EQ( fast_tester.checksum(), slow_tester.checksum() );
+    BOOST_TEST_NE( fast_tester.checksum(), fast_checksum );
+    BOOST_TEST_NE( slow_tester.checksum(), slow_checksum );
 }
 
 // Run the other CRC object tests
@@ -443,9 +443,9 @@ timing_test
     uint32_t const  optimal_result = optimal_crc32( ran_data, sizeof(ran_data) );
     uint32_t const  quick_result = quick_crc32( ran_data, sizeof(ran_data) );
 
-    BOOST_CHECK( basic_result == optimal_result );
-    BOOST_CHECK( optimal_result == quick_result );
-    BOOST_CHECK( quick_result == basic_result );
+    BOOST_TEST_EQ( basic_result, optimal_result );
+    BOOST_TEST_EQ( optimal_result, quick_result );
+    BOOST_TEST_EQ( quick_result, basic_result );
 
     // Run trials
     double const  basic_rate = time_trial( "Boost-Basic", basic_crc32,
@@ -456,12 +456,12 @@ timing_test
      quick_result, ran_data, sizeof(ran_data) );
 
     // Report results
-    cout << "\tThe optimal Boost version is " << (quick_rate - optimal_rate)
-     / quick_rate * 100.0 << "% slower than the reference version.\n";
-    cout << "\tThe basic Boost version is " << (quick_rate - basic_rate)
-     / quick_rate * 100.0 << "% slower than the reference version.\n";
-    cout << "\tThe basic Boost version is " << (optimal_rate - basic_rate)
-     / optimal_rate * 100.0 << "% slower than the optimal Boost version."
+    cout << "\tThe optimal Boost version has " << optimal_rate / quick_rate *
+     100.0 << "% the speed of the reference version.\n";
+    cout << "\tThe basic Boost version has " << basic_rate / quick_rate * 100.0
+     << "% the speed of the reference version.\n";
+    cout << "\tThe basic Boost version has " << basic_rate / optimal_rate *
+     100.0 << "% the speed of the optimal Boost version."
      << endl;
 }
 
@@ -541,7 +541,7 @@ augmented_tests
 
     uint32_t  ran_crc_check = PRIVATE_ACRC_FUNC( ran_data, sizeof(ran_data) );
 
-    BOOST_CHECK( 0 == ran_crc_check );
+    BOOST_TEST_EQ( 0, ran_crc_check );
 
     // Compare that result with other CRC computing functions
     // and classes, which don't accept augmented messages.
@@ -556,16 +556,16 @@ augmented_tests
 
     fast_tester.process_bytes( ran_data, data_size );
     slow_tester.process_bytes( ran_data, data_size );
-    BOOST_CHECK( fast_tester.checksum() == slow_tester.checksum() );
+    BOOST_TEST_EQ( fast_tester.checksum(), slow_tester.checksum() );
     ran_crc = big_to_native( ran_crc );
-    BOOST_CHECK( fast_tester.checksum() == ran_crc );
-    BOOST_CHECK( func_tester == ran_crc );
+    BOOST_TEST_EQ( fast_tester.checksum(), ran_crc );
+    BOOST_TEST_EQ( func_tester, ran_crc );
 
     // Do a single-bit error test
     ran_crc = native_to_big( ran_crc );
     ran_data[ ran_data[0] % ran_length ] ^= ( 1 << (ran_data[1] % 32) );
     ran_crc_check = PRIVATE_ACRC_FUNC( ran_data, sizeof(ran_data) );
-    BOOST_CHECK( 0 != ran_crc_check );
+    BOOST_TEST_NE( 0, ran_crc_check );
 
     // Run a version of these tests with a nonzero initial remainder.
     uint32_t const  init_rem = ran_data[ ran_data[2] % ran_length ];
@@ -581,7 +581,7 @@ augmented_tests
      * sizeof(ran_data[0]), init_rem );
     ran_crc_check = PRIVATE_ACRC_FUNC( &ran_data[mid_index], sizeof(ran_data)
      - mid_index * sizeof(ran_data[0]), ran_crc_check );
-    BOOST_CHECK( 0 == ran_crc_check );
+    BOOST_TEST_EQ( 0, ran_crc_check );
 
     // This substep translates an augmented-CRC initial
     // remainder to an unaugmented-CRC initial remainder.
@@ -592,12 +592,12 @@ augmented_tests
 
     slow_tester2.process_bytes( ran_data, data_size );
     ran_crc = big_to_native( ran_crc );
-    BOOST_CHECK( slow_tester2.checksum() == ran_crc );
+    BOOST_TEST_EQ( slow_tester2.checksum(), ran_crc );
 
     // Redo single-bit error test
     ran_data[ ran_data[3] % ran_length ] ^= ( 1 << (ran_data[4] % 32) );
     ran_crc_check = PRIVATE_ACRC_FUNC( ran_data, sizeof(ran_data), init_rem );
-    BOOST_CHECK( 0 != ran_crc_check );
+    BOOST_TEST_NE( 0, ran_crc_check );
 
     #undef PRIVATE_ACRC_FUNC
 }
@@ -628,28 +628,28 @@ small_crc_test1
     boost::crc_basic<3>  tester1( 0x03 );
 
     tester1.process_bytes( samples[0], 4 );
-    BOOST_CHECK( tester1.checksum() == 0 );
+    BOOST_TEST_EQ( tester1.checksum(), 0 );
 
     tester1.reset();
     tester1.process_bytes( samples[1], 4 );
-    BOOST_CHECK( tester1.checksum() == 0 );
+    BOOST_TEST_EQ( tester1.checksum(), 0 );
 
     tester1.reset();
     tester1.process_bytes( samples[2], 4 );
-    BOOST_CHECK( tester1.checksum() == 0 );
+    BOOST_TEST_EQ( tester1.checksum(), 0 );
 
     tester1.reset();
     tester1.process_bytes( samples[3], 4 );
-    BOOST_CHECK( tester1.checksum() == 0 );
+    BOOST_TEST_EQ( tester1.checksum(), 0 );
 
     // Optimal computer
     #define PRIVATE_CRC_FUNC   boost::crc<3, 0x03, 0, 0, false, false>
     #define PRIVATE_ACRC_FUNC  boost::augmented_crc<3, 0x03>
 
-    BOOST_CHECK( 0 == PRIVATE_CRC_FUNC(samples[0], 4) );
-    BOOST_CHECK( 0 == PRIVATE_CRC_FUNC(samples[1], 4) );
-    BOOST_CHECK( 0 == PRIVATE_CRC_FUNC(samples[2], 4) );
-    BOOST_CHECK( 0 == PRIVATE_CRC_FUNC(samples[3], 4) );
+    BOOST_TEST_EQ( 0, PRIVATE_CRC_FUNC(samples[0], 4) );
+    BOOST_TEST_EQ( 0, PRIVATE_CRC_FUNC(samples[1], 4) );
+    BOOST_TEST_EQ( 0, PRIVATE_CRC_FUNC(samples[2], 4) );
+    BOOST_TEST_EQ( 0, PRIVATE_CRC_FUNC(samples[3], 4) );
 
     // maybe the fix to CRC functions needs to be applied to augmented CRCs?
 
@@ -685,18 +685,18 @@ small_crc_test2
     boost::crc_basic<7>  tester1( 0x09 );
 
     tester1.process_bytes( samples[0], 16 );
-    BOOST_CHECK( tester1.checksum() == results[0] );
+    BOOST_TEST_EQ( tester1.checksum(), results[0] );
 
     tester1.reset();
     tester1.process_bytes( samples[1], 16 );
-    BOOST_CHECK( tester1.checksum() == results[1] );
+    BOOST_TEST_EQ( tester1.checksum(), results[1] );
 
     // Optimal computer
     #define PRIVATE_CRC_FUNC   boost::crc<7, 0x09, 0, 0, false, false>
     #define PRIVATE_ACRC_FUNC  boost::augmented_crc<7, 0x09>
 
-    BOOST_CHECK( results[0] == PRIVATE_CRC_FUNC(samples[0], 16) );
-    BOOST_CHECK( results[1] == PRIVATE_CRC_FUNC(samples[1], 16) );
+    BOOST_TEST_EQ( results[0], PRIVATE_CRC_FUNC(samples[0], 16) );
+    BOOST_TEST_EQ( results[1], PRIVATE_CRC_FUNC(samples[1], 16) );
 
     // maybe the fix to CRC functions needs to be applied to augmented CRCs?
 
@@ -714,12 +714,7 @@ template class crc_tester<32, 0x04C11DB7, 0xFFFFFFFF, 0xFFFFFFFF, true, true>;
 #endif
 
 // Main testing function
-int
-test_main
-(
-    int         ,   // "argc" is unused
-    char *      []  // "argv" is unused
-)
+int main()
 {
     using std::cout;
     using std::endl;
@@ -749,13 +744,13 @@ test_main
     cout << "Doing one-bit polynominal CRC test." << endl;
     boost::crc_basic<1>  crc_1( 1 );
     crc_1.process_bytes( std_data, std_data_len );
-    BOOST_CHECK( crc_1.checksum() == 1 );
+    BOOST_TEST_EQ( crc_1.checksum(), 1 );
 
     // Test the function object interface
     cout << "Doing functional object interface test." << endl;
     boost::crc_optimal<16, 0x8005, 0, 0, true, true>  crc_16;
     crc_16 = std::for_each( std_data, std_data + std_data_len, crc_16 );
-    BOOST_CHECK( crc_16() == std_crc_16_result );
+    BOOST_TEST_EQ( crc_16(), std_crc_16_result );
 
-    return boost::exit_success;
+    return boost::report_errors();
 }

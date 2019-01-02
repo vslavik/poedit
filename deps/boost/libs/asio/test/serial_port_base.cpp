@@ -2,7 +2,7 @@
 // serial_port_base.cpp
 // ~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 // Copyright (c) 2008 Rep Invariant Systems, Inc. (info@repinvariant.com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -17,7 +17,7 @@
 // Test that header file is self-contained.
 #include <boost/asio/serial_port_base.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/serial_port.hpp>
 #include "unit_test.hpp"
 
@@ -37,8 +37,8 @@ void test()
 
   try
   {
-    io_service ios;
-    serial_port port(ios);
+    io_context ioc;
+    serial_port port(ioc);
 
     // baud_rate class.
 

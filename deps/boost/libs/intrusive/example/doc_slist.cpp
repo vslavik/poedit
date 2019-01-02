@@ -27,6 +27,9 @@ class MyClass : public slist_base_hook<>
    MyClass(int i)
       :  int_(i)
    {}
+   //<-
+   int get_int() const { return int_; }
+   //->
 };
 
 //Define an slist that will store MyClass using the public base hook

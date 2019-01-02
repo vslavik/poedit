@@ -24,7 +24,7 @@
 #include <boost/geometry/io/wkt/read.hpp>
 
 #if defined(HAVE_SVG)
-#  include <boost/geometry/io/svg/write_svg.hpp>
+#  include <boost/geometry/io/svg/write.hpp>
 #endif
 
 #include <boost/random.hpp>
@@ -144,9 +144,7 @@ int main()
 
         // Compose matrix for the two transformation
         // Create transformer attached to the transformation matrix
-        ublas_transformer<double, 2, 2>
-                combined(boost::numeric::ublas::prod(rotate.matrix(), translate.matrix()));
-                //combined(rotate.matrix());
+        matrix_transformer<double, 2, 2> combined(rotate.matrix() * translate.matrix());
 
         // Apply transformation to subject geometry point-by-point
         model::polygon<point_2d> g4;

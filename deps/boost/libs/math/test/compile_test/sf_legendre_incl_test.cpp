@@ -20,6 +20,11 @@ void compile_and_link_test()
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
    check_result<long double>(boost::math::legendre_p<long double>(i, l));
 #endif
+   check_result<float>(boost::math::legendre_p_prime<float>(i, f));
+   check_result<double>(boost::math::legendre_p_prime<double>(i, d));
+#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
+   check_result<long double>(boost::math::legendre_p_prime<long double>(i, l));
+#endif
 
    check_result<float>(boost::math::legendre_p<float>(i, i, f));
    check_result<double>(boost::math::legendre_p<double>(i, i, d));

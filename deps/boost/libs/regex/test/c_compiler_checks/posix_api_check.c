@@ -39,7 +39,7 @@ int main()
    {
       char buf[256];
       regerrorA(result, &re, buf, sizeof(buf));
-      printf(buf);
+      puts(buf);
       return result;
    }
    assert(re.re_nsub == 0);
@@ -50,7 +50,7 @@ int main()
    {
       char buf[256];
       regerrorA(result, &re, buf, sizeof(buf));
-      printf(buf);
+      puts(buf);
       regfreeA(&re);
       return result;
    }

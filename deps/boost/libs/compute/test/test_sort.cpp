@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(sort_char_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(char_, 8, vector, ('\0', '$', '0', '7', 'B', 'F', 'a', 'c'));
 }
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE(sort_uchar_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(uchar_, 8, vector, (0x00, 0x12, 0x32, 0x64, 0x80, 0xA2, 0xB4, 0xFF));
 }
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE(sort_short_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(short_, 8, vector, (-2113, -456, -94, -4, 0, 152, 963, 31002));
 }
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE(sort_ushort_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(ushort_, 8, vector, (0, 4, 94, 152, 963, 2113, 34560, 63202));
 }
@@ -139,7 +139,7 @@ BOOST_AUTO_TEST_CASE(sort_int_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(int, 8, vector, (-5000, -456, -4, 0, 152, 963, 1112, 75321));
 }
@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE(sort_uint_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(uint_, 8, vector, (0, 500, 562, 1988, 9852, 102030, 123456, 4000000));
 }
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE(sort_long_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(long_, 8, vector, (0, 500, 562, 1988, 9852, 102030, 123456, 4000000));
 }
@@ -181,8 +181,8 @@ BOOST_AUTO_TEST_CASE(sort_ulong_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(8));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
-    BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end()) == true);
+    boost::compute::sort(vector.begin(), vector.end(), queue);
+    BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(ulong_, 8, vector, (0, 500, 562, 1988, 9852, 102030, 123456, 4000000));
 }
 
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE(sort_float_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(10));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(
         float, 10, vector,
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE(sort_double_vector)
     BOOST_CHECK_EQUAL(vector.size(), size_t(10));
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == false);
 
-    boost::compute::sort(vector.begin(), vector.end());
+    boost::compute::sort(vector.begin(), vector.end(), queue);
     BOOST_CHECK(boost::compute::is_sorted(vector.begin(), vector.end(), queue) == true);
     CHECK_RANGE_EQUAL(
         double, 10, vector,

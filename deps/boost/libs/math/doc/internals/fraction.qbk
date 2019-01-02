@@ -69,7 +69,7 @@ operations:
 [table
 [[Expression] [Description]]
 [[Gen::result_type] [The type that is the result of invoking operator().
-  This can be either an arithmetic type, or a std::pair<> of arithmetic types.]]
+  This can be either an arithmetic or complex type, or a std::pair<> of arithmetic or complex types.]]
 [[g()] [Returns an object of type Gen::result_type.
 
 Each time this operator is called then the next pair of /a/ and /b/
@@ -100,6 +100,10 @@ Lentz, W.J. 1976, Applied Optics, vol. 15, pp. 668-671.
 
 [h4 Examples]
 
+[import ../../example/continued_fractions.cpp]
+
+All of these examples are in [@../../example/continued_fractions.cpp continued_fractions.cpp].
+
 The [@http://en.wikipedia.org/wiki/Golden_ratio golden ratio phi = 1.618033989...]
 can be computed from the simplest continued fraction of all:
 
@@ -107,22 +111,11 @@ can be computed from the simplest continued fraction of all:
 
 We begin by defining a generator function:
 
-   template <class T>
-   struct golden_ratio_fraction
-   {
-      typedef T result_type;
-      
-      result_type operator()
-      {
-         return 1;
-      }
-   };
+[golden_ratio_1]
 
 The golden ratio can then be computed to double precision using:
 
-   continued_fraction_a(
-      golden_ratio_fraction<double>(),
-      std::numeric_limits<double>::epsilon());
+[cf_gr]
 
 It's more usual though to have to define both the /a/'s and the /b/'s
 when evaluating special functions by continued fractions, for example
@@ -132,39 +125,46 @@ the tan function is defined by:
 
 So its generator object would look like:
 
-   template <class T>
-   struct tan_fraction
-   {
-   private:
-      T a, b;
-   public:
-      tan_fraction(T v)
-         : a(-v*v), b(-1)
-      {}
-
-      typedef std::pair<T,T> result_type;
-
-      std::pair<T,T> operator()()
-      {
-         b += 2;
-         return std::make_pair(a, b);
-      }
-   };
+[cf_tan_fraction]
 
 Notice that if the continuant is subtracted from the /b/ terms,
 as is the case here, then all the /a/ terms returned by the generator
 will be negative.  The tangent function can now be evaluated using:
 
-   template <class T>
-   T tan(T a)
-   {
-      tan_fraction<T> fract(a);
-      return a / continued_fraction_b(fract, std::numeric_limits<T>::epsilon());
-   }
+[cf_tan]
 
 Notice that this time we're using the "_b" suffixed version to evaluate
 the fraction: we're removing the leading /a/ term during fraction evaluation
 as it's different from all the others.
+
+Now we'll look at a couple of complex number examples, starting with the exponential
+integral which can be calculated via:
+
+[equation expint_n_3]
+
+So our functor looks like this:
+
+[cf_expint_fraction]
+
+We can finish the example by wrapping everything up in a function:
+
+[cf_expint]
+
+Notice how the termination condition is still expressed as a complex number, albeit one with zero imaginary part.
+
+Our final example will use [^continued_fraction_a], in fact there is only one special function in our code
+which uses that variant, and it's the upper incomplete gamma function (Q), which can be calculated via:
+
+[equation igamma9]
+
+In this case the first couple of terms are different from the rest, so our fraction will start with the first
+"regular" a term:
+
+[cf_upper_gamma_fraction]
+
+So now we can implement Q, this time using [^continued_fraction_a]:
+
+[cf_gamma_Q]
 
 [endsect][/section:cf Continued Fraction Evaluation]
 

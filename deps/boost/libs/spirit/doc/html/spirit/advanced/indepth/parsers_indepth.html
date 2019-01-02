@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parsers in Depth</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../indepth.html" title="In Depth">
 <link rel="prev" href="../indepth.html" title="In Depth">
 <link rel="next" href="../customize.html" title="Customization of Spirit's Attribute Handling">
@@ -94,7 +94,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b>bool parse(f, l, context, skip, attr)</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">f</span></code>, <code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
                 first/last iterator pair
@@ -125,7 +125,7 @@
 <p>
           Here are the basic rules for parsing:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The parser returns <code class="computeroutput"><span class="keyword">true</span></code>
               if successful, <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
@@ -146,7 +146,7 @@
 </ul></div>
 <div class="variablelist">
 <p class="title"><b>void what(context)</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">context</span></code></span></dt>
 <dd><p>
                 enclosing rule context (can be <code class="computeroutput"><span class="identifier">unused_type</span></code>)
@@ -160,7 +160,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b>P::template attribute&lt;context&gt;::type</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">P</span></code></span></dt>
 <dd><p>
                 a parser type
@@ -180,7 +180,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b>Parsers</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a></code></span></dt>
 <dd><p>
                 A parser for primitive data (e.g. integer parsing).
@@ -193,7 +193,7 @@
 </div>
 <h6>
 <a name="spirit.advanced.indepth.parsers_indepth.h0"></a>
-          <span><a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a></span><a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
+          <span class="phrase"><a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a></span><a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
 <p>
@@ -210,7 +210,7 @@
           which in turn derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>. Therefore, it supports the following
           requirements:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The <code class="computeroutput"><span class="identifier">parse</span></code> member function
             </li>
@@ -373,7 +373,7 @@
         </p>
 <h6>
 <a name="spirit.advanced.indepth.parsers_indepth.h1"></a>
-          <span><a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a></span><a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
+          <span class="phrase"><a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a></span><a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
 <p>
@@ -446,7 +446,7 @@
           Looks similar in form to its primitive cousin, the <code class="computeroutput"><span class="identifier">int_parser</span></code>.
           And, again, it has the same basic ingredients required by <code class="computeroutput"><span class="identifier">Derived</span></code>.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The nested attribute metafunction
             </li>
@@ -466,7 +466,7 @@
 <p>
           unary_parser&lt;Derived&gt;, has these expression requirements on Derived:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               p.subject -&gt; subject parser ( <span class="emphasis"><em>p</em></span> is a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> parser.)
             </li>

@@ -5,9 +5,11 @@
 //  1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/test/minimal.hpp>
 #include <boost/function.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/ref.hpp>
+
+#define BOOST_CHECK BOOST_TEST
 
 static int forty_two() { return 42; }
 
@@ -225,11 +227,11 @@ static void ref_equal_test()
 #endif
 }
 
-int test_main(int, char*[])
+int main()
 {
   target_test();
   equal_test();
   ref_equal_test();
 
-  return 0;
+  return boost::report_errors();
 }

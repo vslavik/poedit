@@ -48,6 +48,7 @@ struct numeric_limits<boost::math::concepts::std_real_concept>
    static boost::math::concepts::std_real_concept max NULL_MACRO() throw();
    static const int digits = 24;
    static const int digits10 = 6;
+   static const int max_digits10 = 9;
    static const bool is_signed = true;
    static const bool is_integer = false;
    static const bool is_exact = false;
@@ -86,6 +87,7 @@ struct numeric_limits<boost::math::concepts::std_real_concept>
    static boost::math::concepts::std_real_concept max NULL_MACRO() throw();
    static const int digits = 53;
    static const int digits10 = 15;
+   static const int max_digits10 = 17;
    static const bool is_signed = true;
    static const bool is_integer = false;
    static const bool is_exact = false;
@@ -124,6 +126,7 @@ struct numeric_limits<boost::math::concepts::std_real_concept>
    static boost::math::concepts::std_real_concept max NULL_MACRO() throw();
    static const int digits = 64;
    static const int digits10 = 18;
+   static const int max_digits10 = 22;
    static const bool is_signed = true;
    static const bool is_integer = false;
    static const bool is_exact = false;
@@ -162,6 +165,7 @@ struct numeric_limits<boost::math::concepts::std_real_concept>
    static boost::math::concepts::std_real_concept max NULL_MACRO() throw();
    static const int digits = 113;
    static const int digits10 = 33;
+   static const int max_digits10 = 37;
    static const bool is_signed = true;
    static const bool is_integer = false;
    static const bool is_exact = false;

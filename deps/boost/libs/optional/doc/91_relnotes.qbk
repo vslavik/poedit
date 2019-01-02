@@ -1,7 +1,7 @@
 [/
     Boost.Optional
 
-    Copyright (c) 2015, 2016 Andrzej Krzemienski
+    Copyright (c) 2015 - 2018 Andrzej Krzemienski
 
     Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,6 +10,41 @@
 
 
 [section:relnotes Release Notes]
+
+[heading Boost Release 1.69]
+
+* Remove deprecation mark from `reset()` method (without arguments).
+* Fixed [@https://github.com/boostorg/optional/issues/59 issue #59].
+* Fixed bug with initialization of certain wrapper types in clang with -std=c++03. See [@https://github.com/boostorg/optional/pull/64 pr #64]. 
+
+[heading Boost Release 1.68]
+
+* Added member function `has_value()` for compatibility with `std::optional` ([@https://github.com/boostorg/optional/issues/52 issue #52]).
+* Added member function `map()` for transforming `optional<T>` into `optional<U>` using a function of type `T -> U`.
+* Added member function `flat_map()` for transforming `optional<T>` into `optional<U>` using a function of type `T -> optonal<U>`.
+
+
+[heading Boost Release 1.67]
+
+* Fixed [@https://github.com/boostorg/optional/issues/46 issue #46].
+* Fixed `-Wzero-as-null-pointer-constant` warnings.
+
+
+[heading Boost Release 1.66]
+
+* On newer compilers `optional` is now trivially-copyable for scalar `T`s. This uses a different storage (just `T` rather than `aligned_storage`). We require the compiler to support defaulted functions.
+* Changed the implementation of `operator==` to get rid of the `-Wmaybe-uninitialized` false-positive warning from GCC.
+
+[heading Boost Release 1.63]
+* Added two new in-place constructors. They work similarly to `emplace()` functions: they initialize the contained value by perfect-forwarding the obtained arguments. One constructor always initializes the contained value, the other based on a boolean condition.
+* Syntax `o = {}` now correctly un-initializes optional, just like in `std::optional`.
+* Fixed [@https://svn.boost.org/trac/boost/ticket/12203 Trac #12203].
+* Fixed [@https://svn.boost.org/trac/boost/ticket/12563 Trac #12563].
+
+
+[heading Boost Release 1.62]
+
+* Fixed [@https://svn.boost.org/trac/boost/ticket/12179 Trac #12179].
 
 
 [heading Boost Release 1.61]
@@ -42,7 +77,7 @@
 * IOStream operators are now mentioned in documentation.
 * Added a way to manually disable move semantics: just define macro `BOOST_OPTIONAL_CONFIG_NO_RVALUE_REFERENCES`. This can be used to work around [@https://svn.boost.org/trac/boost/ticket/10399 Trac #10399].
 * It is no longer possible to assign `optional<U>` to `optional<T>` when `U` is not assignable or convertible to `T` ([@https://svn.boost.org/trac/boost/ticket/11087 Trac #11087]).
-* Value accessors now work correctly on rvalues of `optional<T&>` ([@https://svn.boost.org/trac/boost/ticket/10839 Trac #10839]).  
+* Value accessors now work correctly on rvalues of `optional<T&>` ([@https://svn.boost.org/trac/boost/ticket/10839 Trac #10839]).
 
 
 [heading Boost Release 1.57]

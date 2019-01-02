@@ -29,7 +29,7 @@ namespace std{
 
 struct test_dummy_out {
     template<class Archive>
-    void save(Archive & ar, const unsigned int /*version*/) const {
+    void save(Archive &, const unsigned int /*version*/) const {
         throw boost::archive::archive_exception(
             boost::archive::archive_exception::other_exception
         );
@@ -56,7 +56,7 @@ int test_out(){
                 BOOST_TRY {
                     oa << BOOST_SERIALIZATION_NVP(t);
                 }
-                BOOST_CATCH (boost::archive::archive_exception ae){
+                BOOST_CATCH (boost::archive::archive_exception const& ae){
                     BOOST_CHECK(
                         boost::archive::archive_exception::other_exception
                         == ae.code
@@ -66,7 +66,7 @@ int test_out(){
                 BOOST_CATCH_END
                 BOOST_CHECK(exception_invoked);
             }
-            BOOST_CATCH (boost::archive::archive_exception ae){}
+            BOOST_CATCH (boost::archive::archive_exception const& ae){}
             BOOST_CATCH_END
         }
         os.close();
@@ -77,10 +77,10 @@ int test_out(){
 
 struct test_dummy_in {
     template<class Archive>
-    void save(Archive & ar, const unsigned int /*version*/) const {
+    void save(Archive & /* ar */, const unsigned int /*version*/) const {
     }
     template<class Archive>
-    void load(Archive & ar, const unsigned int /*version*/){
+    void load(Archive & /* ar */, const unsigned int /*version*/){
         throw boost::archive::archive_exception(
             boost::archive::archive_exception::other_exception
         );
@@ -113,7 +113,7 @@ int test_in(){
                 BOOST_TRY {
                     ia >> BOOST_SERIALIZATION_NVP(t1);
                 }
-                BOOST_CATCH (boost::archive::archive_exception ae){
+                BOOST_CATCH (boost::archive::archive_exception const& ae){
                     BOOST_CHECK(
                         boost::archive::archive_exception::other_exception
                         == ae.code
@@ -123,7 +123,7 @@ int test_in(){
                 BOOST_CATCH_END
                 BOOST_CHECK(exception_invoked);
             }
-            BOOST_CATCH (boost::archive::archive_exception ae){}
+            BOOST_CATCH (boost::archive::archive_exception const& ae){}
             BOOST_CATCH_END
         }
         is.close();

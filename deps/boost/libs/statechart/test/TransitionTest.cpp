@@ -145,7 +145,7 @@ template< class M > struct S0;
 template< class Translator >
 struct TransitionTest : sc::state_machine<
   TransitionTest< Translator >, S0< TransitionTest< Translator > >,
-  std::allocator< void >, Translator >
+  std::allocator< sc::none >, Translator >
 {
   public:
     //////////////////////////////////////////////////////////////////////////

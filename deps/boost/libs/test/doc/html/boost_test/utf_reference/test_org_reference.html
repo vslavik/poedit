@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tests declaration and organization</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../utf_reference.html" title="Unit Test Framework API reference">
 <link rel="prev" href="../utf_reference.html" title="Unit Test Framework API reference">
-<link rel="next" href="test_org_reference/test_org_boost_test_case.html" title="BOOST_TEST_CASE">
+<link rel="next" href="test_org_reference/test_org_boost_test_case.html" title="BOOST_TEST_CASE and BOOST_TEST_CASE_NAME">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -27,8 +27,8 @@
 <a name="boost_test.utf_reference.test_org_reference"></a><a class="link" href="test_org_reference.html" title="Tests declaration and organization">Tests declaration
       and organization</a>
 </h3></div></div></div>
-<div class="toc"><dl>
-<dt><span class="section"><a href="test_org_reference/test_org_boost_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code></a></span></dt>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="test_org_reference/test_org_boost_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE</span></code> and <code class="computeroutput"><span class="identifier">BOOST_TEST_CASE_NAME</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_auto_test_case.html"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_test_case_auto_template.html"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE_TEMPLATE</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_test_case_template.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE_TEMPLATE</span></code></a></span></dt>
@@ -42,6 +42,7 @@
 <dt><span class="section"><a href="test_org_reference/test_org_boost_test_case_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_CASE</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_test_suite_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_FIXTURE_TEST_SUITE</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_global_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_GLOBAL_FIXTURE</span></code></a></span></dt>
+<dt><span class="section"><a href="test_org_reference/test_org_boost_test_global_fixture.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_GLOBAL_FIXTURE</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/test_org_boost_test_decorator.html"><code class="computeroutput"><span class="identifier">BOOST_TEST_DECORATOR</span></code></a></span></dt>
 <dt><span class="section"><a href="test_org_reference/decorator_depends_on.html">depends_on
         (decorator)</a></span></dt>
@@ -61,7 +62,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

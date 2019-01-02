@@ -150,6 +150,12 @@
     <span class=identifier>barn_type</span>                        <span class=identifier>barn</span><span class=special>;</span>
 
     <span class=comment>//
+    // A convenience typedef for the compiler-appropriate
+    // smart pointer used to manage barns
+    //</span>    
+    <span class=keyword>typedef</span> <span class=identifier><a href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a></span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>raii_ptr</span><span class=special>;</span>
+
+    <span class=comment>//
     // An error type
     //</span>
     <span class=keyword>struct</span> <span class=identifier>farm_trouble</span> <span class=special>:</span> <span class=keyword>public</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>exception</span>           <span class=special>{</span> <span class=special>};</span>
@@ -251,8 +257,9 @@
 
     <span class=comment>//
     // If things are bad, we might choose to sell all animals :-(
-    //</span>
-    <span class=identifier>std</span><span class=special>::</span><span class=identifier>auto_ptr</span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>sell_farm</span><span class=special>()</span>
+      //</span>
+
+    <span class=identifier>raii_ptr</span> <span class=identifier>sell_farm</span><span class=special>()</span>
     <span class=special>{</span>
         <span class=keyword>return</span> <span class=identifier>barn</span><span class=special>.</span><span class=identifier>release</span><span class=special>();</span>
     <span class=special>}</span>
@@ -262,7 +269,7 @@
     // else's farm :-)
     //</span>
 
-    <span class=keyword>void</span> <span class=identifier>buy_farm</span><span class=special>(</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>auto_ptr</span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>other</span> <span class=special>)</span>
+    <span class=keyword>void</span> <span class=identifier>buy_farm</span><span class=special>(</span> <span class=identifier>raii_ptr</span> <span class=identifier>other</span> <span class=special>)</span>
     <span class=special>{</span>
         <span class=comment>//
         // This line inserts all the animals from 'other'

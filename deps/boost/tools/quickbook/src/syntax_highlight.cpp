@@ -7,22 +7,22 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_confix.hpp>
-#include <boost/spirit/include/classic_chset.hpp>
-#include <boost/spirit/include/classic_symbols.hpp>
-#include <boost/spirit/include/classic_loops.hpp>
-#include "grammar.hpp"
-#include "state.hpp"
-#include "actions.hpp"
 #include "syntax_highlight.hpp"
-#include "utils.hpp"
+#include <boost/spirit/include/classic_chset.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_loops.hpp>
+#include <boost/spirit/include/classic_symbols.hpp>
+#include "actions.hpp"
 #include "files.hpp"
-#include "native_text.hpp"
+#include "grammar.hpp"
 #include "phrase_tags.hpp"
+#include "state.hpp"
+#include "stream.hpp"
+#include "utils.hpp"
 
 namespace quickbook
-{    
+{
     namespace cl = boost::spirit::classic;
 
     // Syntax Highlight Actions
@@ -34,15 +34,17 @@ namespace quickbook
 
         // State
         bool support_callouts;
-        boost::string_ref marked_text;
+        quickbook::string_view marked_text;
 
-        syntax_highlight_actions(quickbook::state& state, bool is_block) :
-            state(state),
-            do_macro_impl(state),
-            support_callouts(is_block && (qbk_version_n >= 107u ||
-                state.current_file->is_code_snippets)),
-            marked_text()
-        {}
+        syntax_highlight_actions(quickbook::state& state_, bool is_block_)
+            : state(state_)
+            , do_macro_impl(state_)
+            , support_callouts(
+                  is_block_ && (qbk_version_n >= 107u ||
+                                state.current_file->is_code_snippets))
+            , marked_text()
+        {
+        }
 
         void span(parse_iterator, parse_iterator, char const*);
         void span_start(parse_iterator, parse_iterator, char const*);
@@ -57,8 +59,8 @@ namespace quickbook
         void callout(parse_iterator, parse_iterator);
     };
 
-    void syntax_highlight_actions::span(parse_iterator first,
-            parse_iterator last, char const* name)
+    void syntax_highlight_actions::span(
+        parse_iterator first, parse_iterator last, char const* name)
     {
         state.phrase << "<phrase role=\"" << name << "\">";
         while (first != last)
@@ -66,31 +68,30 @@ namespace quickbook
         state.phrase << "</phrase>";
     }
 
-    void syntax_highlight_actions::span_start(parse_iterator first,
-            parse_iterator last, char const* name)
+    void syntax_highlight_actions::span_start(
+        parse_iterator first, parse_iterator last, char const* name)
     {
         state.phrase << "<phrase role=\"" << name << "\">";
         while (first != last)
             detail::print_char(*first++, state.phrase.get());
     }
 
-    void syntax_highlight_actions::span_end(parse_iterator first,
-            parse_iterator last)
+    void syntax_highlight_actions::span_end(
+        parse_iterator first, parse_iterator last)
     {
         while (first != last)
             detail::print_char(*first++, state.phrase.get());
         state.phrase << "</phrase>";
     }
 
-    void syntax_highlight_actions::unexpected_char(parse_iterator first,
-            parse_iterator last)
+    void syntax_highlight_actions::unexpected_char(
+        parse_iterator first, parse_iterator last)
     {
         file_position const pos = state.current_file->position_of(first.base());
 
         detail::outwarn(state.current_file->path, pos.line)
-            << "in column:" << pos.column
-            << ", unexpected character: " << std::string(first.base(), last.base())
-            << "\n";
+            << "in column:" << pos.column << ", unexpected character: "
+            << std::string(first.base(), last.base()) << "\n";
 
         // print out an unexpected character
         state.phrase << "<phrase role=\"error\">";
@@ -99,21 +100,21 @@ namespace quickbook
         state.phrase << "</phrase>";
     }
 
-    void syntax_highlight_actions::plain_char(parse_iterator first,
-            parse_iterator last)
+    void syntax_highlight_actions::plain_char(
+        parse_iterator first, parse_iterator last)
     {
         while (first != last)
             detail::print_char(*first++, state.phrase.get());
     }
 
-    void syntax_highlight_actions::pre_escape_back(parse_iterator,
-            parse_iterator)
+    void syntax_highlight_actions::pre_escape_back(
+        parse_iterator, parse_iterator)
     {
         state.push_output(); // save the stream
     }
 
-    void syntax_highlight_actions::post_escape_back(parse_iterator,
-            parse_iterator)
+    void syntax_highlight_actions::post_escape_back(
+        parse_iterator, parse_iterator)
     {
         std::string tmp;
         state.phrase.swap(tmp);
@@ -126,16 +127,17 @@ namespace quickbook
         do_macro_impl(v);
     }
 
-    void syntax_highlight_actions::mark_text(parse_iterator first,
-            parse_iterator last)
+    void syntax_highlight_actions::mark_text(
+        parse_iterator first, parse_iterator last)
     {
-        marked_text = boost::string_ref(first.base(), last.base() - first.base());
+        marked_text =
+            quickbook::string_view(first.base(), last.base() - first.base());
     }
 
     void syntax_highlight_actions::callout(parse_iterator, parse_iterator)
     {
-        state.phrase << state.add_callout(qbk_value(state.current_file,
-            marked_text.begin(), marked_text.end()));
+        state.phrase << state.add_callout(qbk_value(
+            state.current_file, marked_text.begin(), marked_text.end()));
         marked_text.clear();
     }
 
@@ -147,6 +149,8 @@ namespace quickbook
 
         keywords_holder()
         {
+            // clang-format off
+
             cpp
                     =   "alignas", "alignof", "and_eq", "and", "asm", "auto",
                         "bitand", "bitor", "bool", "break", "case", "catch",
@@ -182,25 +186,31 @@ namespace quickbook
 
                     "as", "None"
                     ;
+
+            // clang-format on
         }
     };
 
-    namespace {
+    namespace
+    {
         keywords_holder keywords;
     }
 
     // Grammar for C++ highlighting
     struct cpp_highlight : public cl::grammar<cpp_highlight>
     {
-        cpp_highlight(syntax_highlight_actions& actions)
-            : actions(actions) {}
+        explicit cpp_highlight(syntax_highlight_actions& actions_)
+            : actions(actions_)
+        {
+        }
 
-        template <typename Scanner>
-        struct definition
+        template <typename Scanner> struct definition
         {
             definition(cpp_highlight const& self)
                 : g(self.actions.state.grammar())
             {
+                // clang-format off
+
                 member_action1<syntax_highlight_actions, char const*>
                     span(self.actions, &syntax_highlight_actions::span),
                     span_start(self.actions, &syntax_highlight_actions::span_start);
@@ -339,19 +349,18 @@ namespace quickbook
                 identifier
                     =   (cl::alpha_p | '_') >> *(cl::alnum_p | '_')
                     ;
+
+                // clang-format on
             }
 
-            cl::rule<Scanner>
-                            program, line_start, rest_of_line, macro, preprocessor,
-                            inline_callout, line_callout, comment,
-                            special, string_, 
-                            char_, number, identifier, keyword, escape,
-                            string_char;
+            cl::rule<Scanner> program, line_start, rest_of_line, macro,
+                preprocessor, inline_callout, line_callout, comment, special,
+                string_, char_, number, identifier, keyword, escape,
+                string_char;
 
             quickbook_grammar& g;
 
-            cl::rule<Scanner> const&
-            start() const { return program; }
+            cl::rule<Scanner> const& start() const { return program; }
         };
 
         syntax_highlight_actions& actions;
@@ -362,15 +371,18 @@ namespace quickbook
     // http://docs.python.org/ref/ref.html
     struct python_highlight : public cl::grammar<python_highlight>
     {
-        python_highlight(syntax_highlight_actions& actions)
-            : actions(actions) {}
+        explicit python_highlight(syntax_highlight_actions& actions_)
+            : actions(actions_)
+        {
+        }
 
-        template <typename Scanner>
-        struct definition
+        template <typename Scanner> struct definition
         {
             definition(python_highlight const& self)
                 : g(self.actions.state.grammar())
             {
+                // clang-format off
+
                 member_action1<syntax_highlight_actions, char const*>
                     span(self.actions, &syntax_highlight_actions::span),
                     span_start(self.actions, &syntax_highlight_actions::span_start);
@@ -390,7 +402,11 @@ namespace quickbook
                     =
                     *(  (+cl::space_p)                  [plain_char]
                     |   macro
-                    |   escape          
+                    |   escape
+                    |   cl::eps_p(ph::var(self.actions.support_callouts))
+                    >>  (   line_callout                [callout]
+                        |   inline_callout              [callout]
+                        )
                     |   comment
                     |   keyword                         [span("keyword")]
                     |   identifier                      [span("identifier")]
@@ -426,6 +442,19 @@ namespace quickbook
                             >> *cl::anychar_p
                         )
                     )                                   [post_escape_back]
+                    ;
+
+                inline_callout
+                    =   "#<" >> *cl::space_p >>
+                        (*(cl::anychar_p - cl::eol_p))  [mark_text]
+                    ;
+
+                line_callout
+                    =   cl::confix_p(
+                            "#<<" >> *cl::space_p,
+                            (*cl::anychar_p)            [mark_text],
+                            (cl::eol_p | cl::end_p)
+                        )
                     ;
 
                 comment
@@ -479,17 +508,17 @@ namespace quickbook
                 identifier
                     =   (cl::alpha_p | '_') >> *(cl::alnum_p | '_')
                     ;
+
+                // clang-format on
             }
 
-            cl::rule<Scanner>
-                            program, macro, comment, special, string_, string_prefix, 
-                            short_string, long_string, number, identifier, keyword, 
-                            escape, string_char;
+            cl::rule<Scanner> program, macro, inline_callout, line_callout,
+                comment, special, string_, string_prefix, short_string,
+                long_string, number, identifier, keyword, escape, string_char;
 
             quickbook_grammar& g;
 
-            cl::rule<Scanner> const&
-            start() const { return program; }
+            cl::rule<Scanner> const& start() const { return program; }
         };
 
         syntax_highlight_actions& actions;
@@ -498,22 +527,30 @@ namespace quickbook
     // Grammar for plain text (no actual highlighting)
     struct teletype_highlight : public cl::grammar<teletype_highlight>
     {
-        teletype_highlight(syntax_highlight_actions& actions)
-            : actions(actions) {}
+        teletype_highlight(syntax_highlight_actions& actions_)
+            : actions(actions_)
+        {
+        }
 
-        template <typename Scanner>
-        struct definition
+        template <typename Scanner> struct definition
         {
             definition(teletype_highlight const& self)
                 : g(self.actions.state.grammar())
             {
-                member_action<syntax_highlight_actions>
-                    plain_char(self.actions, &syntax_highlight_actions::plain_char),
-                    pre_escape_back(self.actions, &syntax_highlight_actions::pre_escape_back),
-                    post_escape_back(self.actions, &syntax_highlight_actions::post_escape_back);
-                member_action_value<syntax_highlight_actions, std::string const&>
+                member_action<syntax_highlight_actions> plain_char(
+                    self.actions, &syntax_highlight_actions::plain_char),
+                    pre_escape_back(
+                        self.actions,
+                        &syntax_highlight_actions::pre_escape_back),
+                    post_escape_back(
+                        self.actions,
+                        &syntax_highlight_actions::post_escape_back);
+                member_action_value<
+                    syntax_highlight_actions, std::string const&>
                     do_macro(self.actions, &syntax_highlight_actions::do_macro);
                 error_action error(self.actions.state);
+
+                // clang-format off
 
                 program
                     =
@@ -549,14 +586,15 @@ namespace quickbook
                         )
                     )                                   [post_escape_back]
                     ;
+
+                // clang-format on
             }
 
             cl::rule<Scanner> program, macro, escape;
 
             quickbook_grammar& g;
 
-            cl::rule<Scanner> const&
-            start() const { return program; }
+            cl::rule<Scanner> const& start() const { return program; }
         };
 
         syntax_highlight_actions& actions;
@@ -572,25 +610,24 @@ namespace quickbook
         syntax_highlight_actions syn_actions(state, is_block);
 
         // print the code with syntax coloring
-        switch(source_mode)
-        {
-            case source_mode_tags::cpp: {
-                cpp_highlight cpp_p(syn_actions);
-                boost::spirit::classic::parse(first, last, cpp_p);
-                break;
-            }
-            case source_mode_tags::python: {
-                python_highlight python_p(syn_actions);
-                boost::spirit::classic::parse(first, last, python_p);
-                break;
-            }
-            case source_mode_tags::teletype: {
-                teletype_highlight teletype_p(syn_actions);
-                boost::spirit::classic::parse(first, last, teletype_p);
-                break;
-            }
-            default:
-                BOOST_ASSERT(0);
+        switch (source_mode) {
+        case source_mode_tags::cpp: {
+            cpp_highlight cpp_p(syn_actions);
+            boost::spirit::classic::parse(first, last, cpp_p);
+            break;
+        }
+        case source_mode_tags::python: {
+            python_highlight python_p(syn_actions);
+            boost::spirit::classic::parse(first, last, python_p);
+            break;
+        }
+        case source_mode_tags::teletype: {
+            teletype_highlight teletype_p(syn_actions);
+            boost::spirit::classic::parse(first, last, teletype_p);
+            break;
+        }
+        default:
+            BOOST_ASSERT(0);
         }
     }
 }

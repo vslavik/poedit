@@ -11,6 +11,10 @@
 #ifndef BOOST_TYPE_ERASURE_MEMBER_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_MEMBER_HPP_INCLUDED
 
+#include <boost/type_erasure/detail/member11.hpp>
+
+#ifndef BOOST_TYPE_ERASURE_MEMBER
+
 #include <boost/detail/workaround.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/dec.hpp>
@@ -74,25 +78,54 @@
 /** INTERNAL ONLY */
 #define BOOST_TYPE_ERASURE_MEMBER_ENUM_ARGS(N) BOOST_PP_ENUM(N, BOOST_TYPE_ERASURE_MEMBER_ARG, ~)
 
+#ifdef BOOST_TYPE_ERASURE_DOXYGEN
+
 /**
  * \brief Defines a primitive concept for a member function.
  *
- * \param qualified_name should be a preprocessor sequence
- * of the form (namespace1)(namespace2)...(concept_name).
+ * \param concept_name is the name of the concept to declare.
+ *        If it is omitted it defaults to <code>has_ ## member</code>
  * \param member is the name of the member function.
- * \param N is the number of arguments of the function.
  *
  * The declaration of the concept is
  * \code
  * template<class Sig, class T = _self>
- * struct ::namespace1::namespace2::...::concept_name;
+ * struct concept_name;
  * \endcode
- * where Sig is a function type giving the
- * signature of the member function, and T is the
- * object type.  T may be const-qualified for
- * const member functions.
+ * where @c Sig is a function type giving the
+ * signature of the member function, and @c T is the
+ * object type.  @c T may be const-qualified for
+ * const member functions.  @c concept_name<R(A...) const, T>
+ * is an alias for @c concept_name<R(A...), const T>.
  *
- * This macro can only be used in the global namespace.
+ * This macro can only be used at namespace scope.
+ *
+ * Example:
+ *
+ * \code
+ * namespace boost {
+ * BOOST_TYPE_ERASURE_MEMBER(push_back)
+ * }
+ * typedef boost::has_push_back<void(int)> push_back_concept;
+ * \endcode
+ *
+ * The concept defined by this function may be specialized to
+ * provide a concept_map.  The class object will be passed by
+ * reference as the first parameter.
+ *
+ * \code
+ * template<>
+ * struct has_push_back<void(int), std::list<int> > {
+ *   static void apply(std::list<int>& l, int i) { l.push_back(i); }
+ * };
+ * \endcode
+ *
+ * In C++03, the macro can only be used in the global namespace and
+ * is defined as:
+ *
+ * \code
+ * #define BOOST_TYPE_ERASURE_MEMBER(qualified_name, member, N)
+ * \endcode
  *
  * Example:
  *
@@ -101,15 +134,20 @@
  * typedef boost::has_push_back<void(int), _self> push_back_concept;
  * \endcode
  *
- * \note In C++11 the argument N is ignored and may be omitted.
- * BOOST_TYPE_ERASURE_MEMBER will always define a variadic concept.
+ * For backwards compatibility, this form is always accepted.
  */
+#define BOOST_TYPE_ERASURE_MEMBER(concept_name, member) /**/
+
+#else
+
 #define BOOST_TYPE_ERASURE_MEMBER(qualified_name, member, N)                                \
     BOOST_TYPE_ERASURE_MEMBER_I(                                                            \
         qualified_name,                                                                     \
         BOOST_PP_SEQ_ELEM(BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(qualified_name)), qualified_name), \
         member,                                                                             \
         N)
+
+#endif
 
 #else
 
@@ -119,9 +157,14 @@
 
 #define BOOST_TYPE_ERASURE_MEMBER_TPL_ARG_LIST(N, X) , class... A
 #define BOOST_TYPE_ERASURE_MEMBER_ENUM_PARAMS(N, X) X...
-#define BOOST_TYPE_ERASURE_MEMBER_FORWARD_PARAMS(N, X, x) ::std::forward<X>(x)...
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#   define BOOST_TYPE_ERASURE_MEMBER_FORWARD_PARAMS(N, X, x) ::std::forward<X>(x)...
+#   define BOOST_TYPE_ERASURE_MEMBER_FORWARD_REBIND(N) , ::std::forward<typename ::boost::type_erasure::as_param<Base, A>::type>(a)...
+#else
+#   define BOOST_TYPE_ERASURE_MEMBER_FORWARD_PARAMS(N, X, x) x...
+#   define BOOST_TYPE_ERASURE_MEMBER_FORWARD_REBIND(N) , a...
+#endif
 #define BOOST_TYPE_ERASURE_MEMBER_ENUM_TRAILING_PARAMS(N, X) , X...
-#define BOOST_TYPE_ERASURE_MEMBER_FORWARD_REBIND(N) , ::std::forward<typename ::boost::type_erasure::as_param<Base, A>::type>(a)...
 #define BOOST_TYPE_ERASURE_MEMBER_ENUM_TRAILING_BINARY_PARAMS(N, X, x) , X... x
 #define BOOST_TYPE_ERASURE_MEMBER_ENUM_ARGS(N) typename ::boost::type_erasure::as_param<Base, A>::type... a
 
@@ -240,5 +283,7 @@
 /** INTERNAL ONLY */
 #define BOOST_TYPE_ERASURE_MEMBER_I(namespace_name, concept_name, member, N)\
     BOOST_TYPE_ERASURE_MEMBER_II(namespace_name, concept_name, member, N)
+
+#endif
 
 #endif
