@@ -34,10 +34,10 @@
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT"
+#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x86\Microsoft.VC141.CRT"
 #endif
 #ifndef UCRT_REDIST
-#define UCRT_REDIST       GetEnv("PROGRAMFILES") + "\Windows Kits\10\Redist\ucrt\DLLs\x86"
+#define UCRT_REDIST       GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x86"
 #endif
 
 [Setup]
