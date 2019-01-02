@@ -66,6 +66,9 @@ rules. Import definitions look like the following:
 The start symbol of the grammar is specified by the template argument of the
 `grammar` template. This is optional, the default value is `S`.
 
+Note that the current implementation "inlines" the referenced symbols while
+parsing the grammar and recursion is not supported because of this.
+
 [h1 Header]
 
   #include <boost/metaparse/grammar.hpp>

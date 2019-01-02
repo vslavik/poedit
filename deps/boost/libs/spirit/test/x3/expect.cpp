@@ -70,6 +70,10 @@ main()
         }
     }
 
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
+#endif
     { // Test that attributes with > (sequences) work just like >> (sequences)
 
         using boost::fusion::vector;
@@ -101,7 +105,17 @@ main()
             BOOST_TEST((at_c<1>(attr) == 'b'));
             BOOST_TEST((at_c<2>(attr) == 'c'));
         }
+
+        {
+            std::string attr;
+            BOOST_TEST((test_attr("'azaaz'",
+                "'" > *(char_("a") | char_("z")) > "'", attr, space)));
+            BOOST_TEST(attr == "azaaz");
+        }
     }
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#endif
 
     {
         try

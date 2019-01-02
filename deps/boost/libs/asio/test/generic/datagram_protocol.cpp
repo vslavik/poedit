@@ -2,7 +2,7 @@
 // generic/datagram_protocol.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@
 #include <boost/asio/generic/datagram_protocol.hpp>
 
 #include <cstring>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include "../unit_test.hpp"
 
@@ -59,7 +59,7 @@ void test()
 
   try
   {
-    io_service ios;
+    io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
     socket_base::message_flags in_flags = 0;
@@ -69,33 +69,41 @@ void test()
 
     // basic_datagram_socket constructors.
 
-    dp::socket socket1(ios);
-    dp::socket socket2(ios, dp(af_inet, ipproto_udp));
-    dp::socket socket3(ios, dp::endpoint());
+    dp::socket socket1(ioc);
+    dp::socket socket2(ioc, dp(af_inet, ipproto_udp));
+    dp::socket socket3(ioc, dp::endpoint());
 #if !defined(BOOST_ASIO_WINDOWS_RUNTIME)
     dp::socket::native_handle_type native_socket1
       = ::socket(af_inet, sock_dgram, 0);
-    dp::socket socket4(ios, dp(af_inet, ipproto_udp), native_socket1);
+    dp::socket socket4(ioc, dp(af_inet, ipproto_udp), native_socket1);
 #endif // !defined(BOOST_ASIO_WINDOWS_RUNTIME)
 
 #if defined(BOOST_ASIO_HAS_MOVE)
     dp::socket socket5(std::move(socket4));
-    boost::asio::ip::udp::socket udp_socket(ios);
+    boost::asio::ip::udp::socket udp_socket(ioc);
     dp::socket socket6(std::move(udp_socket));
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_datagram_socket operators.
 
 #if defined(BOOST_ASIO_HAS_MOVE)
-    socket1 = dp::socket(ios);
+    socket1 = dp::socket(ioc);
     socket1 = std::move(socket2);
-    socket1 = boost::asio::ip::udp::socket(ios);
+    socket1 = boost::asio::ip::udp::socket(ioc);
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
     // basic_io_object functions.
 
-    io_service& ios_ref = socket1.get_io_service();
-    (void)ios_ref;
+    dp::socket::executor_type ex = socket1.get_executor();
+    (void)ex;
+
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+    io_context& ioc_ref = socket1.get_io_context();
+    (void)ioc_ref;
+
+    io_context& ioc_ref2 = socket1.get_io_service();
+    (void)ioc_ref2;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
     // basic_socket functions.
 
@@ -120,7 +128,7 @@ void test()
     socket1.close();
     socket1.close(ec);
 
-    dp::socket::native_type native_socket4 = socket1.native();
+    dp::socket::native_handle_type native_socket4 = socket1.native_handle();
     (void)native_socket4;
 
     socket1.cancel();

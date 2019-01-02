@@ -1,7 +1,8 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
+#include <boost/hana/assert.hpp>
 #include <boost/hana/equal.hpp>
 #include <boost/hana/monadic_fold_left.hpp>
 #include <boost/hana/optional.hpp>
@@ -13,9 +14,9 @@
 namespace hana = boost::hana;
 
 
-auto builtin_common_t = hana::sfinae([](auto&& t, auto&& u) -> decltype(hana::type_c<
+auto builtin_common_t = hana::sfinae([](auto&& t, auto&& u) -> hana::type<
     std::decay_t<decltype(true ? hana::traits::declval(t) : hana::traits::declval(u))>
->) { return {}; });
+> { return {}; });
 
 template <typename ...T>
 struct common_type { };
@@ -40,6 +41,12 @@ struct common_type<T1, Tn...>
 
 template <typename ...Ts>
 using common_type_t = typename common_type<Ts...>::type;
+
+BOOST_HANA_CONSTANT_CHECK(
+  builtin_common_t(hana::type_c<int>, hana::type_c<float>)
+    ==
+  hana::just(hana::type_c<float>)
+);
 
 static_assert(std::is_same<
     common_type_t<char, short, char, short>,

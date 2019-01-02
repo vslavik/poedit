@@ -74,6 +74,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 INPUT                  = ./../../../boost/asio.hpp \
                          ./../../../boost/asio \
+                         ./../../../boost/asio/experimental \
                          ./../../../boost/asio/generic \
                          ./../../../boost/asio/impl \
                          ./../../../boost/asio/ip \
@@ -195,10 +196,26 @@ PREDEFINED             = GENERATING_DOCUMENTATION \
                          BOOST_ASIO_NETDB_ERROR(e)=implementation_defined \
                          BOOST_ASIO_EOF_ERROR(e)=implementation_defined \
                          BOOST_ASIO_OS_ERROR(e1,e2)=implementation_defined \
-                         BOOST_ASIO_MOVE_ARG(a)=a \
+                         BOOST_ASIO_MOVE_ARG(a)=a&& \
                          BOOST_ASIO_DECL= \
                          BOOST_ASIO_CONSTEXPR=constexpr \
-                         BOOST_ASIO_INITFN_RESULT_TYPE(t,a)=void_or_deduced
+                         BOOST_ASIO_NOEXCEPT=noexcept \
+                         BOOST_ASIO_INITFN_RESULT_TYPE(t,a)=void_or_deduced \
+                         BOOST_ASIO_SVC_TPARAM= \
+                         BOOST_ASIO_SVC_TPARAM_DEF1()= \
+                         BOOST_ASIO_SVC_TPARAM_DEF2()= \
+                         BOOST_ASIO_SVC_TARG= \
+                         BOOST_ASIO_SVC_TPARAM1= \
+                         BOOST_ASIO_SVC_TPARAM1_DEF1()= \
+                         BOOST_ASIO_SVC_TPARAM1_DEF2()= \
+                         BOOST_ASIO_SVC_TARG1= \
+                         BOOST_ASIO_SVC_T=asio::detail::service \
+                         BOOST_ASIO_SVC_T1=asio::detail::service \
+                         BOOST_ASIO_CONST_BUFFER=const_buffer \
+                         BOOST_ASIO_MUTABLE_BUFFER=mutable_buffer \
+                         BOOST_ASIO_SYNC_OP_VOID=void \
+                         BOOST_ASIO_STRING_VIEW_PARAM=string_view \
+                         BOOST_ASIO_UNUSED_VARIABLE=
 EXPAND_AS_DEFINED      = 
 SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------

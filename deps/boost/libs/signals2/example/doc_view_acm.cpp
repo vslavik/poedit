@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <boost/bind.hpp>
+#include <boost/io/ios_state.hpp>
 #include <boost/signals2/signal.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -93,6 +94,7 @@ public:
 
   void refresh() const
   {
+    boost::io::ios_flags_saver ifs(std::cout);
     const std::string&  s = m_document.getText();
 
     std::cout << "HexView:";

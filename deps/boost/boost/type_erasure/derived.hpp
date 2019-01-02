@@ -31,6 +31,13 @@ struct derived
 #endif
 };
 
+#ifndef BOOST_NO_CXX11_TEMPLATE_ALIASES
+
+template<class T>
+using derived_t = typename T::_boost_type_erasure_derived_type;
+
+#endif
+
 }
 }
 

@@ -69,7 +69,7 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
 # parameter must be a valid boost version number, e.g. 1.35, if specifying a
 # pre-built version with versioned layout. It may be a symbolic name, e.g.
 # 'trunk' if specifying a source tree. The options are specified as named
-# parameters (like properties). The following paramters are available:
+# parameters (like properties). The following parameters are available:
 #
 # <root>/path-to-boost-root            : Specify a source tree.
 # <include>/path-to-include            : The include directory to search.
@@ -94,9 +94,9 @@ rule init
         {
             if ! $(.boost_default)
             {
-                echo notice: configuring default boost library $(version) ;
+                echo notice\: configuring default boost library $(version) ;
             }
-            echo notice: configuring boost library $(version) ;
+            echo notice\: configuring boost library $(version) ;
         }
         .boost_default ?= $(version) ; # the first configured is default
         .boost.$(version) = [ property-set.create $(options) ] ;
@@ -139,7 +139,7 @@ rule use-project
 
             if $(.debug-configuration)
             {
-                echo notice: using boost library $(version) [ $(opt).raw ] ;
+                echo notice\: using boost library $(version) [ $(opt).raw ] ;
             }
 
             .layout = [ $(opt).get <layout> ] ;
@@ -172,7 +172,7 @@ rule use-project
             else
             {
                 project.initialize $(__name__) ;
-                # It is possible to overide the setup of the searched libraries
+                # It is possible to override the setup of the searched libraries
                 # per version. The (unlikely) 0.0.1 tag is meant as an example
                 # template only.
                 switch $(version)
@@ -262,7 +262,7 @@ rule tag_std ( name : type ? : property-set )
     local result ;
     if $(.layout) = system
     {
-        local version = [ MATCH ^([0-9]+)_([0-9]+) : $(.version_tag) ] ;
+        local version = [ MATCH "^([0-9]+)_([0-9]+)" : $(.version_tag) ] ;
         if $(version[1]) = "1" && [ numbers.less $(version[2]) 39 ]
         {
             result = [ tag_tagged $(name) : $(type) : $(property-set) ] ;

@@ -189,6 +189,13 @@ char string_back( string * self )
     return self->value[ self->size - 1 ];
 }
 
+void string_rtrim( string * self )
+{
+    char *p;
+    assert_invariants( self );
+    p = self->value + self->size - 1;
+    for ( ; p >= self->value && ( *p == '\0' || isspace( *p ) ); *p-- = 0 );
+}
 
 #ifndef NDEBUG
 void string_unit_test()
@@ -218,6 +225,27 @@ void string_unit_test()
         assert( !strcmp( copy->value, original ) );
         assert( copy->size == strlen( original ) );
         string_free( copy );
+    }
+
+    {
+        char * const foo = "Foo    ";
+        string foo_copy[ 1 ];
+        string_copy( foo_copy, foo );
+        string_rtrim( foo_copy );
+        assert( !strcmp( foo_copy->value, "Foo" ) );
+
+        string_rtrim( foo_copy );
+        assert( !strcmp( foo_copy->value, "Foo" ) );
+    }
+    {
+        char * const bar = "Bar\0\0\0";
+        string bar_copy[ 1 ];
+        string_copy( bar_copy, bar );
+        string_rtrim( bar_copy );
+        assert( !strcmp( bar_copy->value, "Bar" ) );
+
+        string_rtrim( bar_copy );
+        assert( !strcmp( bar_copy->value, "Bar" ) );
     }
 }
 #endif

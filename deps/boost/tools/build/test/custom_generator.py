@@ -61,6 +61,6 @@ t.write("r.rcc", """
 """)
 
 t.run_build_system()
-t.expect_content("bin/$toolset/debug/r.obj", "rc-object")
+t.expect_content("bin/r.obj", "rc-object")
 
 t.cleanup()

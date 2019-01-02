@@ -86,11 +86,18 @@ namespace executors
         for(;;)
         {
           work task;
-          queue_op_status st = work_queue.wait_pull(task);
-          if (st == queue_op_status::closed) {
+          try
+          {
+            queue_op_status st = work_queue.wait_pull(task);
+            if (st == queue_op_status::closed) {
+              return;
+            }
+            task();
+          }
+          catch (boost::thread_interrupted&)
+          {
             return;
           }
-          task();
         }
       }
       catch (...)
@@ -224,7 +231,7 @@ namespace executors
       // signal to all the worker threads that there will be no more submissions.
       close();
       // joins all the threads before destroying the thread pool resources (e.g. the queue).
-      join();
+      interrupt_and_join();
     }
 
     /**
@@ -234,6 +241,30 @@ namespace executors
     {
       for (unsigned i = 0; i < threads.size(); ++i)
       {
+        //threads[i].interrupt();
+        threads[i].join();
+      }
+    }
+
+    /**
+     * \b Effects: interrupt all the threads.
+     */
+    void interrupt()
+    {
+      for (unsigned i = 0; i < threads.size(); ++i)
+      {
+        threads[i].interrupt();
+      }
+    }
+
+    /**
+     * \b Effects: interrupt and join all the threads.
+     */
+    void interrupt_and_join()
+    {
+      for (unsigned i = 0; i < threads.size(); ++i)
+      {
+        threads[i].interrupt();
         threads[i].join();
       }
     }

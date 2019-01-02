@@ -26,59 +26,45 @@ namespace std{
 }
 #endif
 
-#include <boost/archive/archive_exception.hpp>
-
 #include <boost/serialization/type_info_implementation.hpp>
-#include <boost/serialization/extended_type_info_no_rtti.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/nvp.hpp>
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/archive/polymorphic_iarchive.hpp>
+
+#define POLYMORPHIC_BASE_IMPORT
 #include "polymorphic_base.hpp"
+
 #include "polymorphic_derived1.hpp"
+
+#define POLYMORPHIC_DERIVED2_IMPORT
 #include "polymorphic_derived2.hpp"
-
-template<class Archive>
-void polymorphic_derived2::serialize(
-    Archive &ar, 
-    const unsigned int /* file_version */
-){
-    ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(polymorphic_base);
-}
-
-template void polymorphic_derived2::serialize(
-    test_oarchive & ar,
-    const unsigned int version
-);
-template void polymorphic_derived2::serialize(
-    test_iarchive & ar,
-    const unsigned int version
-);
 
 // save derived polymorphic class
 void save_derived(const char *testfile)
 {
     test_ostream os(testfile, TEST_STREAM_FLAGS);
-    test_oarchive oa(os);
+    test_oarchive oa_implementation(os, TEST_ARCHIVE_FLAGS);
+    boost::archive::polymorphic_oarchive & oa_interface = oa_implementation;
 
     polymorphic_derived1 *rd1 = new polymorphic_derived1;
     polymorphic_derived2 *rd2 = new polymorphic_derived2;
 
     std::cout << "saving polymorphic_derived1 (no_rtti)\n";
-    oa << BOOST_SERIALIZATION_NVP(rd1);
+    oa_interface << BOOST_SERIALIZATION_NVP(rd1);
 
     std::cout << "saving polymorphic_derived2\n";
-    oa << BOOST_SERIALIZATION_NVP(rd2);
+    oa_interface << BOOST_SERIALIZATION_NVP(rd2);
 
     const polymorphic_base *rb1 =  rd1;
-    polymorphic_base *rb2 =  rd2;
-    std::cout << "saving polymorphic_derived1 (no_rtti) through base (no_rtti)\n";
-    oa << BOOST_SERIALIZATION_NVP(rb1);
+    polymorphic_base *rb2 = rd2;
+    std::cout << "saving polymorphic_derived1 (no_rtti) through base (rtti)\n";
+    oa_interface << BOOST_SERIALIZATION_NVP(rb1);
     std::cout << "saving polymorphic_derived2 through base\n";
-    oa << BOOST_SERIALIZATION_NVP(rb2);
+    oa_interface << BOOST_SERIALIZATION_NVP(rb2);
 
     delete rd1;
     delete rd2;
@@ -87,13 +73,14 @@ void save_derived(const char *testfile)
 void load_derived(const char *testfile)
 {
     test_istream is(testfile, TEST_STREAM_FLAGS);
-    test_iarchive ia(is);
+    test_iarchive  ia_implementation(is, TEST_ARCHIVE_FLAGS);
+    boost::archive::polymorphic_iarchive & ia_interface = ia_implementation;
 
     polymorphic_derived1 *rd1 = NULL;
     polymorphic_derived2 *rd2 = NULL;
 
     std::cout << "loading polymorphic_derived1 (no_rtti)\n";
-    ia >> BOOST_SERIALIZATION_NVP(rd1);
+    ia_interface >> BOOST_SERIALIZATION_NVP(rd1);
     BOOST_CHECK_MESSAGE(
         boost::serialization::type_info_implementation<
             polymorphic_derived1
@@ -107,7 +94,7 @@ void load_derived(const char *testfile)
     );
 
     std::cout << "loading polymorphic_derived2\n";
-    ia >> BOOST_SERIALIZATION_NVP(rd2);
+    ia_interface >> BOOST_SERIALIZATION_NVP(rd2);
     BOOST_CHECK_MESSAGE(
         boost::serialization::type_info_implementation<
             polymorphic_derived2
@@ -126,7 +113,7 @@ void load_derived(const char *testfile)
     // effect.  Hence, instances can now be correctly serialized through
     // a base class pointer.
     std::cout << "loading polymorphic_derived1 (no_rtti) through base (no_rtti)\n";
-    ia >> BOOST_SERIALIZATION_NVP(rb1);
+    ia_interface >> BOOST_SERIALIZATION_NVP(rb1);
 
     BOOST_CHECK_MESSAGE(
         rb1 == dynamic_cast<polymorphic_base *>(rd1),
@@ -145,7 +132,7 @@ void load_derived(const char *testfile)
         "restored pointer b1 not of correct type"
     );
     std::cout << "loading polymorphic_derived2 through base (no_rtti)\n";
-    ia >> BOOST_SERIALIZATION_NVP(rb2);
+    ia_interface >> BOOST_SERIALIZATION_NVP(rb2);
 
     BOOST_CHECK_MESSAGE(
         rb2 ==  dynamic_cast<polymorphic_base *>(rd2),
@@ -170,12 +157,10 @@ int
 test_main( int /* argc */, char* /* argv */[] )
 {
     const char * testfile = boost::archive::tmpnam(NULL);
-    
     BOOST_REQUIRE(NULL != testfile);
 
     save_derived(testfile);
     load_derived(testfile);
-
     std::remove(testfile);
     return EXIT_SUCCESS;
 }

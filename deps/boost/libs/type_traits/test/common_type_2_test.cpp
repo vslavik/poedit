@@ -7,13 +7,13 @@
 
 #define BOOST_COMMON_TYPE_DONT_USE_TYPEOF 1
 
-#include "test.hpp"
-#include "check_type.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/common_type.hpp>
 #endif
+#include "test.hpp"
+#include "check_type.hpp"
 #include <iostream>
 
 #ifdef BOOST_INTEL
@@ -90,18 +90,18 @@ TT_TEST_BEGIN(common_type)
 #ifndef __SUNPRO_CC
     assignation_2<C1C2, C1>();
     typedef tt::common_type<C1C2&, C1&>::type T1;
-	BOOST_CHECK_TYPE(T1, C1C2);
+    BOOST_CHECK_TYPE(T1, C1C2);
     typedef tt::common_type<C3*, C2*>::type T2;
-	BOOST_CHECK_TYPE(T2, C2*);
+    BOOST_CHECK_TYPE(T2, C2*);
     typedef tt::common_type<int*, int const*>::type T3;
-	BOOST_CHECK_TYPE(T3, int const*);
+    BOOST_CHECK_TYPE(T3, int const*);
 #if defined(BOOST_NO_CXX11_DECLTYPE) && !defined(BOOST_COMMON_TYPE_DONT_USE_TYPEOF)
     // fails if BOOST_COMMON_TYPE_DONT_USE_TYPEOF:
     typedef tt::common_type<int volatile*, int const*>::type T4;
-	BOOST_CHECK_TYPE(T4, int const volatile*);
+    BOOST_CHECK_TYPE(T4, int const volatile*);
 #endif
     typedef tt::common_type<int*, int volatile*>::type T5;
-	BOOST_CHECK_TYPE(T5, int volatile*);
+    BOOST_CHECK_TYPE(T5, int volatile*);
 
     assignation_2<C1, C1C2>();
     assignation_2<C1C2, C2>();

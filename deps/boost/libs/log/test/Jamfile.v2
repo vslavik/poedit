@@ -29,6 +29,7 @@ project
         <toolset>msvc:<cxxflags>/wd4456 # declaration of 'A' hides previous local declaration
         <toolset>msvc:<cxxflags>/wd4459 # declaration of 'A' hides global declaration
         <toolset>msvc:<cxxflags>/wd4003 # not enough actual parameters for macro 'X' - caused by BOOST_PP_IS_EMPTY and BOOST_PP_IS_BEGIN_PARENS which are used by Fusion
+        <toolset>msvc:<cxxflags>/wd4355 # 'this' : used in base member initializer list
 
         # Disable Intel warnings:
         # warning #177: function "X" was declared but never referenced
@@ -71,36 +72,36 @@ project
 # the run rules, which we can pass on to the test_suite rule:
 rule test_all
 {
-   local all_rules = ;
-   local file ;
-   local headers_path = [ path.make $(BOOST_ROOT)/libs/log/include/boost/log ] ;
-   for file in [ path.glob-tree $(headers_path) : *.hpp : detail ]
-   {
-      local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
-      # Note: The test name starts with '~' in order to group these tests in the test report table, preferably at the end.
-      #       All '/' are replaced with '-' because apparently test scripts have a problem with test names containing slashes.
-      local test_name = [ regex.replace ~hdr/$(rel_file) "/" "-" ] ;
-      #ECHO $(rel_file) ;
-      all_rules += [ compile compile/self_contained_header.cpp : <define>"BOOST_LOG_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(test_name) ] ;
-   }
-   for file in [ glob compile/*.cpp ]
-   {
-      if [ path.basename $(file) ] != "self_contained_header.cpp"
-      {
-          all_rules += [ compile $(file) ] ;
-      }
-   }
-   for file in [ glob compile_fail/*.cpp ]
-   {
-      all_rules += [ compile-fail $(file) ] ;
-   }
-   for file in [ glob run/*.cpp ]
-   {
-      all_rules += [ run $(file) ] ;
-   }
+    local all_rules ;
+    local file ;
+    local headers_path = [ path.make $(BOOST_ROOT)/libs/log/include/boost/log ] ;
+    for file in [ path.glob-tree $(headers_path) : *.hpp : detail ]
+    {
+        local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
+        # Note: The test name starts with '~' in order to group these tests in the test report table, preferably at the end.
+        #       All '/' are replaced with '-' because apparently test scripts have a problem with test names containing slashes.
+        local test_name = [ regex.replace ~hdr/$(rel_file) "/" "-" ] ;
+        #ECHO $(rel_file) ;
+        all_rules += [ compile compile/self_contained_header.cpp : <define>"BOOST_LOG_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(test_name) ] ;
+    }
+    for file in [ glob compile/*.cpp ]
+    {
+        if [ path.basename $(file) ] != "self_contained_header.cpp"
+        {
+            all_rules += [ compile $(file) ] ;
+        }
+    }
+    for file in [ glob compile_fail/*.cpp ]
+    {
+        all_rules += [ compile-fail $(file) ] ;
+    }
+    for file in [ glob run/*.cpp ]
+    {
+        all_rules += [ run $(file) ] ;
+    }
 
-   #ECHO All rules: $(all_rules) ;
-   return $(all_rules) ;
+    #ECHO All rules: $(all_rules) ;
+    return $(all_rules) ;
 }
 
-test-suite log : [ test_all r ] [ build-project ../example ] ;
+test-suite log : [ test_all ] [ build-project ../example ] ;

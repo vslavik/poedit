@@ -11,7 +11,6 @@
 #ifndef BOOST_UNITS_POW_HPP 
 #define BOOST_UNITS_POW_HPP
 
-#include <boost/math_fwd.hpp>
 #include <boost/type_traits/is_integral.hpp>
 
 #include <boost/units/operators.hpp>
@@ -27,6 +26,7 @@ namespace units {
 
 /// raise a value to a @c static_rational power.
 template<class Rat,class Y>
+BOOST_CONSTEXPR
 inline typename power_typeof_helper<Y,Rat>::type
 pow(const Y& x)
 {
@@ -35,6 +35,7 @@ pow(const Y& x)
 
 /// raise a value to an integer power.
 template<long N,class Y>
+BOOST_CONSTEXPR
 inline typename power_typeof_helper<Y,static_rational<N> >::type
 pow(const Y& x)
 {
@@ -51,7 +52,7 @@ struct power_typeof_helper<T, static_rational<N,D> >
     typedef detail::static_rational_power_impl<static_rational<N, D>, internal_type> impl;
     typedef typename impl::type type; 
     
-    static type value(const T& x)  
+    static BOOST_CONSTEXPR type value(const T& x)  
     {
         return impl::call(x);
     }
@@ -64,7 +65,7 @@ struct power_typeof_helper<float, static_rational<N,D> >
     // N.B.  pathscale doesn't accept inheritance for some reason.
     typedef power_typeof_helper<double, static_rational<N,D> > base;
     typedef typename base::type type;
-    static type value(const double& x)
+    static BOOST_CONSTEXPR type value(const double& x)
     {
         return base::value(x);
     }
@@ -74,6 +75,7 @@ struct power_typeof_helper<float, static_rational<N,D> >
 
 /// take the @c static_rational root of a value.
 template<class Rat,class Y>
+BOOST_CONSTEXPR
 typename root_typeof_helper<Y,Rat>::type
 root(const Y& x)
 {
@@ -82,6 +84,7 @@ root(const Y& x)
 
 /// take the integer root of a value.
 template<long N,class Y>
+BOOST_CONSTEXPR
 typename root_typeof_helper<Y,static_rational<N> >::type
 root(const Y& x)
 {
@@ -97,7 +100,7 @@ struct root_typeof_helper<T,static_rational<N,D> >
     // N.B.  pathscale doesn't accept inheritance for some reason.
     typedef power_typeof_helper<T, static_rational<D,N> > base;
     typedef typename base::type type;
-    static type value(const T& x)
+    static BOOST_CONSTEXPR type value(const T& x)
     {
         return(base::value(x));
     }

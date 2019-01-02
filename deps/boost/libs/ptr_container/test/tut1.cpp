@@ -141,6 +141,12 @@ class farm
     typedef boost::ptr_deque<animal> barn_type;
     barn_type                        barn;
 
+#if !defined(BOOST_NO_CXX11_SMART_PTR) && !(defined(BOOST_MSVC) && BOOST_MSVC == 1600) && !BOOST_WORKAROUND(BOOST_GCC, < 40600)
+    typedef std::unique_ptr<barn_type> raii_ptr;
+#else
+    typedef std::auto_ptr<barn_type> raii_ptr;
+#endif
+
     //
     // An error type
     //
@@ -244,7 +250,7 @@ public:
     //
     // If things are bad, we might choose to sell all animals :-(
     //
-    std::auto_ptr<barn_type> sell_farm()
+    raii_ptr sell_farm()
     {
         return barn.release();
     }
@@ -254,7 +260,7 @@ public:
     // else's farm :-)
     //
 
-    void buy_farm( std::auto_ptr<barn_type> other )
+    void buy_farm( raii_ptr other )
     {
         //
         // This line inserts all the animals from 'other'

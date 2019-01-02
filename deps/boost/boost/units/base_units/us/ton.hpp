@@ -28,8 +28,8 @@ typedef scaled_base_unit<pound_base_unit, scale<2000, static_rational<1> > > ton
 
 template<>
 struct base_unit_info<us::ton_base_unit> {
-    static const char* name()   { return("short ton"); }
-    static const char* symbol() { return("t"); }
+    static BOOST_CONSTEXPR const char* name()   { return("short ton"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("t"); }
 };
 
 } // namespace units

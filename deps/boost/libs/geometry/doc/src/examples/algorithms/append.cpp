@@ -12,11 +12,11 @@
 
 #include <iostream>
 
-#include <boost/assign.hpp>
-
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 #include <boost/geometry/geometries/adapted/boost_tuple.hpp>
+
+#include <boost/assign.hpp> /*< At the end to avoid conflicts with Boost.QVM >*/
 
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 

@@ -25,21 +25,36 @@ multiplication.
 
 Let's start with defining our default action:
 
+[def __proto_nary_expr__    [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/nary_expr.html `proto::nary_expr`]]
+[def __proto_vararg__       [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/vararg.html `proto::vararg`]]
+[def __proto_when__         [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/when.html `proto::when`]]
+[def __proto_underscore__   [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html `proto::_`]]
+[def __proto_make_expr__    [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/functional/make_expr.html `proto::functional::make_expr`]]
+
     struct invert_actions
     {
         template <typename Rule>
         struct when
-            : proto::_ // the default is proto::_
+            : __proto_nary_expr__
+                  __proto_underscore__
+                , __proto_vararg__
+                      __proto_when__<__proto_underscore__, phoenix::evaluator(__proto_underscore__, phoenix::_context)
+                  >
+              >
         {};
     };
 
-By default, we don't want to do anything, well, not exactly nothing, but just
-return the expression. This is done by
-[@http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html proto::_]
-which, used as a transform, just passes the current expression along. Making this
-action an identity transform.
+Wow, this looks complicated! Granted you need to know a little bit about __proto__
+(For a good introduction read through the
+ [@http://cpp-next.com/archive/2010/08/expressive-c-introduction/ Expressive C++] series).
 
-[def __proto_make_expr__     [@http://www.boost.org/doc/libs/release/doc/html/boost/proto/functional/make_expr.html `proto::functional::make_expr`]]
+By default, we don't want to do anything, well, not exactly nothing, but just
+continue transformation into its arguments.
+
+So, it is done by the following:
+
+* For each arguments are passed to evaluator (with the current context, that contains our invert_actions)
+* Create new expression using current expression tag, what is done by __proto_underscore__, with the result of evaluated arguments
 
 So, after the basics are set up, we can start by writing the transformations we
 want to have on our tree:
@@ -55,15 +70,11 @@ want to have on our tree:
         >
     {};
 
-Wow, this looks complicated! Granted you need to know a little bit about __proto__
-(For a good introduction read through the 
- [@http://cpp-next.com/archive/2010/08/expressive-c-introduction/ Expressive C++] series).
-
 What is done is the following:
 
 * The left expression is passed to evaluator (with the current context, that contains our invert_actions)
 * The right expression is passed to evaluator (with the current context, that contains our invert_actions)
-* The result of these two __proto_transforms__ is passed to __proto_make_expr__ which returns the freshly created expression
+* The result of these two __proto_transforms__ are passed to __proto_make_expr__ which returns the freshly created expression
 
 After you know what is going on, maybe the rest doesn't look so scary anymore:
 

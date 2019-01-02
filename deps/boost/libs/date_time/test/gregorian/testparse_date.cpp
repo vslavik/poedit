@@ -82,25 +82,25 @@ main()
     date d8 = from_uk_string("29-Feb-2000");
     check("date from day-month-year string", d8 == d);
     {
-      std::string s("20050229"); // no Feb-29 in 2005
-      date d(not_a_date_time);
+      std::string sn("20050229"); // no Feb-29 in 2005
+      date dn(not_a_date_time);
       try {
-        d = date_from_iso_string(s);
+        dn = date_from_iso_string(sn);
         check("Expected exception not thrown: from ISO string (bad_day_of_month)", false);
-        std::cout << date_from_iso_string(s) << std::endl;
+        std::cout << date_from_iso_string(sn) << std::endl;
       }
-      catch(bad_day_of_month& e) {
+      catch(bad_day_of_month&) {
         check("Caught expected exception: bad_day_of_month ", true);
       }
       catch(...) {
         check("Caught unexpected exception", false);
       }
 /* not currently passing due to a bug in boost::offset_separator (reported 2005-Aug-02)
-      s = "2005022"; // missing a digit
+      sn = "2005022"; // missing a digit
       try {
-        d = date_from_iso_string(s);
+        d = date_from_iso_string(sn);
         check("Expected exception not thrown: from ISO string (missing digit)", false);
-        std::cout << date_from_iso_string(s) << std::endl;
+        std::cout << date_from_iso_string(sn) << std::endl;
       }
       catch(bad_day_of_month& e) {
         check("Caught expected exception: bad_day_of_month ", true);
@@ -109,9 +109,9 @@ main()
         check("Caught unexpected exception", false);
       }
   */      
-      s = "20050228"; // now it's correct
-      d = date_from_iso_string(s);
-      check("from ISO string", date(2005,Feb,28) == d);
+      sn = "20050228"; // now it's correct
+      dn = date_from_iso_string(sn);
+      check("from ISO string", date(2005,Feb,28) == dn);
     }
     
     date d9 = from_us_string(__DATE__);
@@ -345,6 +345,7 @@ main()
     std::string ud(""); //empty string error sf bug# 1155556
     date d1(from_simple_string(ud));
     check("empty string",  false); //should never reach this piont
+    (void)d1;
   }
   catch(std::exception& e) {
     check(std::string("empty string parse (exception expected): ") + e.what(),  true);

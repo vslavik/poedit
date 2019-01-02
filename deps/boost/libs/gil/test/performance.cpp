@@ -1,49 +1,36 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#include <boost/gil.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief GIL performance test suite
-/// \date 2007 \n Last updated on February 12, 2007
-///
-/// Available tests:
-///    fill_pixels() on rgb8_image_t with rgb8_pixel_t
-///    fill_pixels() on rgb8_planar_image_t with rgb8_pixel_t
-///    fill_pixels() on rgb8_image_t with bgr8_pixel_t
-///    fill_pixels() on rgb8_planar_image_t with bgr8_pixel_t
-///    for_each_pixel() on rgb8_image_t
-///    for_each_pixel() on rgb8_planar_t
-///    copy_pixels() between rgb8_image_t and rgb8_image_t
-///    copy_pixels() between rgb8_image_t and bgr8_image_t
-///    copy_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
-///    copy_pixels() between rgb8_image_t and rgb8_planar_image_t
-///    copy_pixels() between rgb8_planar_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
-///    transform_pixels() between rgb8_planar_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_image_t and rgb8_planar_image_t
+#include <boost/test/unit_test.hpp>
 
 #include <cstddef>
 #include <ctime>
 #include <iostream>
-#include <boost/gil/pixel.hpp>
-#include <boost/gil/planar_pixel_iterator.hpp>
-#include <boost/gil/planar_pixel_reference.hpp>
-#include <boost/gil/iterator_from_2d.hpp>
-#include <boost/gil/step_iterator.hpp>
-#include <boost/gil/rgb.hpp>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/image.hpp>
-#include <boost/gil/typedefs.hpp>
-#include <boost/gil/algorithm.hpp>
+
+// GIL performance test suite
+//
+// Available tests:
+//    fill_pixels() on rgb8_image_t with rgb8_pixel_t
+//    fill_pixels() on rgb8_planar_image_t with rgb8_pixel_t
+//    fill_pixels() on rgb8_image_t with bgr8_pixel_t
+//    fill_pixels() on rgb8_planar_image_t with bgr8_pixel_t
+//    for_each_pixel() on rgb8_image_t
+//    for_each_pixel() on rgb8_planar_t
+//    copy_pixels() between rgb8_image_t and rgb8_image_t
+//    copy_pixels() between rgb8_image_t and bgr8_image_t
+//    copy_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
+//    copy_pixels() between rgb8_image_t and rgb8_planar_image_t
+//    copy_pixels() between rgb8_planar_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
+//    transform_pixels() between rgb8_planar_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_image_t and rgb8_planar_image_t
 
 using namespace boost::gil;
 
@@ -432,11 +419,14 @@ template <typename View1, typename View2, typename F>
 void test_transform(std::size_t trials) {
     image<typename View1::value_type, is_planar<View1>::value> im1(width,height);
     image<typename View2::value_type, is_planar<View2>::value> im2(width,height);
-    std::cout << "GIL: "    <<measure_time(transform_gil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
-    std::cout << "Non-GIL: "<<measure_time(transform_nongil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
+    //std::cout << "GIL: "    <<measure_time(transform_gil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
+    //std::cout << "Non-GIL: "<<measure_time(transform_nongil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
 }
 
-int main() {
+BOOST_AUTO_TEST_SUITE(GIL_Tests)
+
+BOOST_AUTO_TEST_CASE(performance_test)
+{
 #ifdef NDEBUG
     std::size_t num_trials=1000;
 #else
@@ -462,11 +452,11 @@ int main() {
 
     // for_each()
     std::cout<<"test for_each_pixel() on rgb8_image_t"<<std::endl;
-    test_for_each<rgb8_view_t,rgb_fr_t<bits8> >(num_trials);
+    test_for_each<rgb8_view_t,rgb_fr_t<uint8_t> >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test for_each_pixel() on rgb8_planar_image_t"<<std::endl;
-    test_for_each<rgb8_planar_view_t,rgb_fr_t<bits8> >(num_trials);
+    test_for_each<rgb8_planar_view_t,rgb_fr_t<uint8_t> >(num_trials);
     std::cout<<std::endl;
 
     // copy()
@@ -492,20 +482,20 @@ int main() {
 
     // transform()
     std::cout<<"test transform_pixels() between rgb8_image_t and rgb8_image_t"<<std::endl;
-    test_transform<rgb8_view_t,rgb8_view_t,bgr_to_rgb_t<bits8,pixel<bits8,rgb_layout_t> > >(num_trials);
+    test_transform<rgb8_view_t,rgb8_view_t,bgr_to_rgb_t<uint8_t,pixel<uint8_t,rgb_layout_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t"<<std::endl;
-    test_transform<rgb8_planar_view_t,rgb8_planar_view_t,bgr_to_rgb_t<bits8,planar_pixel_reference<bits8,rgb_t> > >(num_trials);
+    test_transform<rgb8_planar_view_t,rgb8_planar_view_t,bgr_to_rgb_t<uint8_t,planar_pixel_reference<uint8_t,rgb_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_image_t and rgb8_planar_image_t"<<std::endl;
-    test_transform<rgb8_view_t,rgb8_planar_view_t,bgr_to_rgb_t<bits8,pixel<bits8,rgb_layout_t> > >(num_trials);
+    test_transform<rgb8_view_t,rgb8_planar_view_t,bgr_to_rgb_t<uint8_t,pixel<uint8_t,rgb_layout_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_planar_image_t and rgb8_image_t"<<std::endl;
-    test_transform<rgb8_planar_view_t,rgb8_view_t,bgr_to_rgb_t<bits8,planar_pixel_reference<bits8,rgb_t> > >(num_trials);
+    test_transform<rgb8_planar_view_t,rgb8_view_t,bgr_to_rgb_t<uint8_t,planar_pixel_reference<uint8_t,rgb_t> > >(num_trials);
     std::cout<<std::endl;
-
-    return 0;
 }
+
+BOOST_AUTO_TEST_SUITE_END()

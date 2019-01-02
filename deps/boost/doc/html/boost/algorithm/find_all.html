@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template find_all</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../string_algo/reference.html#header.boost.algorithm.string.split_hpp" title="Header &lt;boost/algorithm/string/split.hpp&gt;">
 <link rel="prev" href="has_const_time_erase.html" title="Class template has_const_time_erase">
@@ -38,7 +38,7 @@
   <span class="identifier">find_all</span><span class="special">(</span><span class="identifier">SequenceSequenceT</span> <span class="special">&amp;</span> Result<span class="special">,</span> <span class="identifier">Range1T</span> <span class="special">&amp;</span> Input<span class="special">,</span> 
            <span class="keyword">const</span> <span class="identifier">Range2T</span> <span class="special">&amp;</span> Search<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp406737856"></a><h2>Description</h2>
+<a name="id-1.3.3.9.21.5.4"></a><h2>Description</h2>
 <p>This algorithm finds all occurrences of the search string in the input.</p>
 <p>Each part is copied and added as a new element to the output container. Thus the result container must be able to hold copies of the matches (in a compatible structure like std::string) or a reference to it (e.g. using the iterator range class). Examples of such a container are <code class="computeroutput">std::vector&lt;std::string&gt;</code> or <code class="computeroutput">std::list&lt;boost::iterator_range&lt;std::string::iterator&gt;&gt;</code> </p>
 <p>
@@ -56,13 +56,19 @@
 </table></div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">Input</code></span></p></td>

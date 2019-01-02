@@ -86,6 +86,16 @@ void expected_results()
       "[^|]*",               // test data group
       "tgamma_ratio[^|]*", 300, 100);                 // test function
    //
+   // Solaris:
+   //
+   add_expected_result(
+      "[^|]*",                          // compiler
+      "[^|]*",                          // stdlib
+      ".*Solaris.*",                    // platform
+      largest_type,                     // test type(s)
+      "[^|]*",               // test data group
+      "tgamma_ratio[^|]*", 200, 100);                 // test function
+   //
    // Catch all cases come last:
    //
    add_expected_result(

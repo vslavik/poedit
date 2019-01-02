@@ -224,6 +224,53 @@ assert( *y == 123 ) ;
 
 __SPACE__
 
+[#reference_optional_in_place_init]
+
+[: `template<class... Args> explicit optional<T>::optional( in_place_init_t, Args&&... ars );`]
+
+* [*Requires:] `is_constructible_v<T, Args&&...>` is `true`.
+* [*Effect:] Initializes the contained value as if direct-non-list-initializing an object of type `T` with the
+arguments `std::forward<Args>(args)...`.
+* [*Postconditions:] `*this` is initialized.
+* [*Throws:] Any exception thrown by the selected constructor of `T`.
+* [*Notes: ] `T` need not be __MOVE_CONSTRUCTIBLE__. On compilers that do not suppor variadic templates or rvalue references, this constuctor is available in limited functionality. For details [link optional_emplace_workaround see here].
+
+* [*Example:]
+``
+// creates an std::mutex using its default constructor
+optional<std::mutex> om {in_place_init};
+assert (om);
+
+// creates a unique_lock by calling unique_lock(*om, std::defer_lock)
+optional<std::unique_lock<std::mutex>> ol {in_place_init, *om, std::defer_lock};
+assert (ol);
+assert (!ol->owns_lock());
+``
+
+__SPACE__
+
+[#reference_optional_in_place_init_if]
+
+[: `template<class... Args> explicit optional<T>::optional( in_place_init_if_t, bool condition, Args&&... ars );`]
+
+* [*Requires:] `is_constructible_v<T, Args&&...>` is `true`.
+* [*Effect:] If `condition` is `true`, initializes the contained value as if direct-non-list-initializing an object of type `T` with the arguments `std::forward<Args>(args)...`.
+* [*Postconditions:] `bool(*this) == condition`.
+* [*Throws:] Any exception thrown by the selected constructor of `T`.
+* [*Notes: ] `T` need not be __MOVE_CONSTRUCTIBLE__. On compilers that do not suppor variadic templates or rvalue references, this constuctor is available in limited functionality. For details [link optional_emplace_workaround see here].
+
+* [*Example:]
+``
+optional<std::vector<std::string>> ov1 {in_place_init_if, false, 3, "A"};
+assert (!ov1);
+
+optional<std::vector<std::string>> ov2 {in_place_init_if, true, 3, "A"};
+assert (ov2);
+assert (ov2->size() == 3);
+``
+
+__SPACE__
+
 [#reference_optional_constructor_factory]
 
 [: `template<InPlaceFactory> explicit optional<T>::optional( InPlaceFactory const& f );`]
@@ -329,13 +376,13 @@ __SPACE__
 * [*Requires:] `T` is __COPY_CONSTRUCTIBLE__ and `CopyAssignable`.
 * [*Effects:]
 [table
-  [] 
+  []
   [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
   [[[*`rhs` contains a value]][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
   [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`;
-* [*Postconditions:] `bool(rhs) == bool(*this)`. 
+* [*Postconditions:] `bool(rhs) == bool(*this)`.
 * [*Exception Safety:] If any exception is thrown, the initialization state of `*this` and `rhs` remains unchanged.
 If an exception is thrown during the call to `T`'s copy constructor, no effect.
 If an exception is thrown during the call to `T`'s copy assignment, the state of its contained value is as defined by the exception safety guarantee of `T`'s copy assignment.
@@ -359,14 +406,14 @@ __SPACE__
 
 * [*Requires:] `T` is __MOVE_CONSTRUCTIBLE__ and `MoveAssignable`.
 * [*Effects:]
-[table 
+[table
   []
   [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
   [[[*`rhs` contains a value]][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
   [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`;
-* [*Postconditions:] `bool(rhs) == bool(*this)`. 
+* [*Postconditions:] `bool(rhs) == bool(*this)`.
 * [*Remarks:] The expression inside `noexcept` is equivalent to `is_nothrow_move_constructible<T>::value && is_nothrow_move_assignable<T>::value`.
 * [*Exception Safety:] If any exception is thrown, the initialization state of `*this` and `rhs` remains unchanged. If an exception is
 thrown during the call to `T`'s move constructor, the state of `*rhs` is determined by the exception safety guarantee
@@ -390,15 +437,15 @@ __SPACE__
 
 [: `template<U> optional& optional<T>::operator= ( optional<U> const& rhs ) ;`]
 
-* [*Effect:] 
-[table 
+* [*Effect:]
+[table
   []
   [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
   [[[*`rhs` contains a value]][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
   [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`.
-* [*Postconditions:] `bool(rhs) == bool(*this)`. 
+* [*Postconditions:] `bool(rhs) == bool(*this)`.
 * [*Exception Safety:] If any exception is thrown, the result of the expression `bool(*this)` remains unchanged.
 If an exception is thrown during the call to `T`'s constructor, no effect.
 If an exception is thrown during the call to `T`'s assignment, the state of its contained value is as defined by the exception safety guarantee of `T`'s copy assignment.
@@ -420,13 +467,13 @@ __SPACE__
 
 * [*Effect:]
 [table
-  [] 
+  []
   [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
   [[[*`rhs` contains a value]][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
   [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`.
-* [*Postconditions:] `bool(rhs) == bool(*this)`. 
+* [*Postconditions:] `bool(rhs) == bool(*this)`.
 * [*Exception Safety:] If any exception is thrown, the result of the expression `bool(*this)` remains unchanged.
 If an exception is thrown during the call to `T`'s constructor, no effect.
 If an exception is thrown during the call to `T`'s assignment, the state of its contained value is as defined by the exception safety guarantee of `T`'s copy assignment.
@@ -438,7 +485,7 @@ optional<U> opt1;
 
 opt1 = std::move(opt0) ;
 assert ( opt0 );
-assert ( opt1 ) 
+assert ( opt1 )
 assert ( *opt1 == static_cast<U>(v) ) ;
 ``
 
@@ -446,18 +493,16 @@ __SPACE__
 
 [#reference_optional_emplace]
 
-[: `template<class... Args> void optional<T>::emplace( Args...&& args );`]
+[: `template<class... Args> void optional<T>::emplace( Args&&... args );`]
 
 * [*Requires:] The compiler supports rvalue references and variadic templates.
 * [*Effect:] If `*this` is initialized calls `*this = none`.
  Then initializes in-place the contained value as if direct-initializing an object
- of type `T` with `std::forward<Args>(args)...`. 
+ of type `T` with `std::forward<Args>(args)...`.
 * [*Postconditions: ] `*this` is [_initialized].
 * [*Throws:] Whatever the selected `T`'s  constructor throws.
 * [*Exception Safety:] If an exception is thrown during the initialization of `T`, `*this` is ['uninitialized].
-* [*Notes:] `T` need not be __MOVE_CONSTRUCTIBLE__ or `MoveAssignable`. 
- On compilers that do not support variadic templates, the signature falls back to two overloads:`template<class Arg> void emplace(Arg&& arg)` and `void emplace()`. 
- On compilers that do not support rvalue references, the signature falls back to three overloads: taking `const` and non-`const` lvalue reference, and third with empty function argument list. 
+* [*Notes:] `T` need not be __MOVE_CONSTRUCTIBLE__ or `MoveAssignable`. On compilers that do not suppor variadic templates or rvalue references, this function is available in limited functionality. For details [link optional_emplace_workaround see here].
 * [*Example:]
 ``
 T v;
@@ -496,7 +541,7 @@ __SPACE__
 [#reference_optional_reset]
 
 [: `void optional<T>::reset() noexcept ;`]
-* [*Deprecated:] Same as `operator=( none_t );`
+* [*Effects:] Same as `operator=( none_t );`
 
 __SPACE__
 
@@ -640,6 +685,65 @@ __SPACE__
 
 __SPACE__
 
+[#reference_optional_map]
+
+[: `template<class F> auto optional<T>::map(F f) const& -> `['see below]` ;`]
+[: `template<class F> auto optional<T>::map(F f) & -> `['see below]` ;`]
+
+* [*Effects:] `if (*this) return f(**this); else return none;`
+* [*Notes:] The return type of these overloads is `optional<decltype(f(**this))>`. On compilers that do not support ref-qualifiers on member functions, these two (as well as the next one) overloads are replaced with good old const and non-const overloads.
+* [*Example:]
+``
+auto length = [](const string& s){ return s.size(); };
+optional<string> o1 {}, o2 {"cat"};
+optional<size_t> os1 = o1.map(length), os2 = o2.map(length);
+assert ( !os1 ) ;
+assert ( os2 ) ;
+assert ( *os2 == 3 ) ;
+``
+
+__SPACE__
+
+[#reference_optional_map_move]
+
+[: `template<class F> auto optional<T>::map(F f) && -> `['see below]` ;`]
+
+* [*Effects:] `if (*this) return f(std::move(**this)); else return none;`
+* [*Notes:] The return type of this overload is `optional<decltype(f(istd::move(**this)))>`.
+
+__SPACE__
+
+[#reference_optional_flat_map]
+
+[: `template<class F> auto optional<T>::flat_map(F f) const& -> `['see below]` ;`]
+[: `template<class F> auto optional<T>::flat_map(F f) & -> `['see below]` ;`]
+
+* [*Requires:] The return type of expression `f(**this)` is `optional<U>` for some object or reference type `U`.
+* [*Effects:] `if (*this) return f(**this); else return none;`
+* [*Notes:] The return type of these overloads is `optional<U>`. On compilers that do not support ref-qualifiers on member functions, these two (as well as the next one) overloads are replaced with good old const and non-const overloads.
+* [*Example:]
+``
+optional<char> first_char(const string& s) {
+  return s.empty() ? none : optional<char>(s[0]);
+};
+optional<string> o1 {}, o2 {"cat"};
+optional<char> os1 = o1.flat_map(first_char), os2 = o2.flat_map(first_char);
+assert ( !os1 ) ;
+assert ( os2 ) ;
+assert ( *os2 == 'c' ) ;
+``
+__SPACE__
+
+[#reference_optional_flat_map_move]
+
+[: `template<class F> auto optional<T>::flat_map(F f) && -> `['see below]` ;`]
+
+* [*Requires:] The return type of expression `f(std::move(**this))` is `optional<U>` for some object or reference type `U`.
+* [*Effects:] `if (*this) return f(std::move(**this)); else return none;`
+* [*Notes:] The return type of this overload is `optional<U>`.
+
+__SPACE__
+
 [#reference_optional_get_value_or_value]
 
 [: `T const& optional<T>::get_value_or( T const& default) const ;`]
@@ -709,6 +813,7 @@ __SPACE__
 [#reference_optional_operator_bool]
 
 [: `explicit optional<T>::operator bool() const noexcept ;`]
+[: `bool optional<T>::has_value() const noexcept ;`]
 
 * [*Returns:] `get_ptr() != 0`.
 * [*Notes:] On compilers that do not support explicit conversion operators this falls back to safe-bool idiom.
@@ -770,6 +875,7 @@ __SPACE__
 [: `template<class R> optional<T&>::optional(R&& r) noexcept;`]
 * [*Postconditions:] `bool(*this) == true`; `addressof(**this) == addressof(r)`.
 * [*Remarks:] Unless `R` is an lvalue reference, the program is ill-formed. This constructor does not participate in overload resolution if `decay<R>` is an instance of `boost::optional`.
+* [*Notes:] This constructor is declared `explicit` on compilers that do not correctly suport binding to const lvalues of integral types. For more details [link optional_reference_binding see here].
 * [*Example:]
 ``
 T v;
@@ -796,7 +902,7 @@ __SPACE__
 [: `optional<T&>::optional ( optional const& rhs ) noexcept ;`]
 
 * [*Effects: ] Initializes `ref` with expression `rhs.ref`.
- 
+
 * [*Postconditions:] `bool(*this) == bool(rhs)`.
 
 * [*Example:]
@@ -829,7 +935,7 @@ __SPACE__
 * [*Requires:] `is_convertible<U&, T&>::value` is `true`.
 
 * [*Effects: ] Initializes `ref` with expression `rhs.ref`.
- 
+
 * [*Postconditions:] `bool(*this) == bool(rhs)`.
 
 
@@ -845,7 +951,7 @@ __SPACE__
 
 * [*Postconditions:] `bool(*this) == false`.
 
- 
+
 
 [#reference_optional_ref_copy_assign]
 
@@ -893,7 +999,7 @@ assert ( *ora == 4 ) ;
 * [*returns:] `*this`.
 
 * [*Postconditions:] `bool(*this) == bool(rhs)`.
-   
+
 
 __SPACE__
 
@@ -904,7 +1010,7 @@ __SPACE__
 * [*Effects: ] Assigns `ref` with expression `r`.
 
 * [*returns:] `*this`.
- 
+
 * [*Postconditions:] `bool(*this) == true`.
 
 * [*Remarks:] Unless `R` is an lvalue reference, the program is ill-formed. This function does not participate in overload resolution if `decay<R>` is an instance of `boost::optional`.
@@ -969,13 +1075,13 @@ __SPACE__
 
 [#reference_optional_ref_value]
 [: `T& optional<T&>::value() const ;`]
-* [*Effects:] Equivalent to `return bool(*this) ? *val : throw bad_optional_access();`. 
+* [*Effects:] Equivalent to `return bool(*this) ? *val : throw bad_optional_access();`.
 
 __SPACE__
 
 [#reference_optional_ref_value_or]
 [: `template<class R> T& optional<T&>::value_or( R&& r ) const noexcept;`]
-* [*Effects:] Equivalent to `if (*this) return **this; else return r;`. 
+* [*Effects:] Equivalent to `if (*this) return **this; else return r;`.
 * [*Remarks:] Unless `R` is an lvalue reference, the program is ill-formed.
 
 __SPACE__
@@ -987,6 +1093,21 @@ __SPACE__
 
 __SPACE__
 
+[#reference_optional_ref_map]
+[: `template<class F> auto optional<T&>::map( F f ) const -> `['see below]`;`]
+* [*Effects:] Equivalent to `if (*this) return f(**this); else return none;`.
+* [*Remarks:] The return type of this function is `optional<decltype(f(**this))>`.
+
+__SPACE__
+
+[#reference_optional_ref_flat_map]
+[: `template<class F> auto optional<T&>::flat_map( F f ) const -> `['see below]`;`]
+* [*Requires:] The return type of expression `f(**this)` is `optional<U>` for some object or reference type `U`.
+* [*Effects:] Equivalent to `if (*this) return f(**this); else return none;`.
+* [*Remarks:] The return type of this function is `optional<U>`.
+
+__SPACE__
+
 [#reference_optional_ref_get_ptr]
 [: `T* optional<T&>::get_ptr () const noexcept;`]
 * [*Returns:] `ref`.
@@ -994,6 +1115,7 @@ __SPACE__
 __SPACE__
 
 [#reference_optional_ref_operator_bool]
+[: `bool has_value() const noexcept;`]
 [: `optional<T&>::operator bool () const noexcept;`]
 * [*Returns:] `bool(ref)`.
 
@@ -1007,8 +1129,7 @@ __SPACE__
 
 [#reference_optional_ref_reset]
 [: `void optional<T&>::reset() noexcept;`]
-* [*Effects:] Use `*this = none` instead.
-* [*Remarks:] This function is depprecated.
+* [*Effects:] Same as `*this = none`.
 
 __SPACE__
 
@@ -1028,9 +1149,9 @@ __SPACE__
 
 [#reference_optional_ref_get_value_or_value]
 [: `template<class R> T& optional<T&>::get_value_or( R&& r ) const noexcept;`]
-* [*Effects:] Equivalent to `return value_or(std::forward<R>(r);`. 
+* [*Effects:] Equivalent to `return value_or(std::forward<R>(r);`.
 * [*Remarks:] This function is depprecated.
-  
+
 [endsect]
 
 
@@ -1053,6 +1174,15 @@ foo ( make_optional(1+1) ) ; // Creates an optional<int>
 
 __SPACE__
 
+[#reference_make_optional_rvalue]
+
+[: `optional<std::decay_t<T>> make_optional( T && v )`]
+
+* [*Returns: ] `optional<std::decay_t<T>>(std::move(v))` for the ['deduced] type `T` of `v`.
+
+
+__SPACE__
+
 [#reference_make_optional_bool_value]
 
 [: `optional<T> make_optional( bool condition, T const& v )`]
@@ -1070,6 +1200,15 @@ optional<double> v = calculate_foo();
 if ( !v )
   error("foo wasn't computed");
 ``
+
+__SPACE__
+
+[#reference_make_optional_bool_rvalue]
+
+[: `optional<std::decay_t<T>> make_optional( bool condition, T && v )`]
+
+* [*Returns: ] `optional<std::decay_t<T>>(condition, std::move(v))` for the ['deduced] type `T` of `v`.
+
 
 __SPACE__
 
@@ -1181,7 +1320,7 @@ __SPACE__
 [: `bool operator != ( optional<T> const& x, none_t ) noexcept;`]
 [: `bool operator != ( none_t, optional<T> const& x ) noexcept;`]
 
-* [*Returns: ] `!( x == y );`
+* [*Returns: ] `bool(x);`
 
 
 __SPACE__
@@ -1211,7 +1350,7 @@ __SPACE__
 
 * [*Requires:] Lvalues of type `T` shall be swappable and `T` shall be __MOVE_CONSTRUCTIBLE__.
 * [*Effects:]
-[table 
+[table
   []
   [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
   [[[*`rhs` contains a value]][calls `swap(*(*this), *rhs)`][initializes the contained value of `*this` as if direct-initializing an object of type `T` with the expression `std::move(*rhs)`, followed by `rhs.val->T::~T()`, `*this` contains a value and `rhs` does not contain a value]]

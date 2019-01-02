@@ -1,6 +1,6 @@
 /// @file
 // Boost.Convert
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 //
 // Many thanks to Julian Gonggrijp, Rob Stewart, Andrzej Krzemienski, Matus Chochlik, Jeroen Habraken,
 // Hartmut Kaiser, Joel De Guzman, Thijs (M.A.) van den Berg, Roland Bock, Gavin Lambert, Paul Bristow,
@@ -18,7 +18,7 @@
 //    as they should;
 // 5. Paul Bristow for helping great deal with the documentation;
 // 6. Kevlin Henney and Dave Abrahams for their lexical_cast-related insights and explanations.
-// 
+//
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -32,9 +32,8 @@ namespace boost
 {
     namespace detail { enum throw_on_failure {}; }
 
-    /// @details The boost::throw_on_failure is the name of an object of the
-    /// boost::detail::throw_on_failure type that is used to indicate
-    /// desired exception-throwing behavior.
+    /// @details boost::throw_on_failure is the 'tag' object
+    /// to request the exception-throwing behavior.
     detail::throw_on_failure const throw_on_failure = detail::throw_on_failure(0);
 
     namespace cnv
@@ -44,7 +43,7 @@ namespace boost
     }
 
     /// @brief Boost.Convert main deployment interface
-    /// @param[in] value_in   Value of the TypeIn type to be converted to the TyeOut type
+    /// @param[in] value_in   Value of the TypeIn type to be converted to the TypeOut type
     /// @param[in] converter  Converter to be used for conversion
     /// @return boost::optional<TypeOut> result of conversion together with the indication of
     ///         success or failure of the conversion request.
@@ -79,7 +78,7 @@ namespace boost
     /// @brief Boost.Convert deployment interface with the default converter
     /// @details For example,
     /// @code
-    ///    struct boost::cnv::by_default : public boost::cnv::cstream {};
+    ///    struct boost::cnv::by_default : boost::cnv::cstream {};
     ///
     ///    // boost::cnv::cstream (through boost::cnv::by_default) is deployed
     ///    // as the default converter when no converter is provided explicitly.

@@ -74,7 +74,7 @@ void basic2() {
     member, defined by several STL containers.
 */
 
-BOOST_TYPE_ERASURE_MEMBER((has_push_back), push_back, 1)
+BOOST_TYPE_ERASURE_MEMBER(push_back)
 
 void append_many(any<has_push_back<void(int)>, _self&> container) {
     for(int i = 0; i < 10; ++i)
@@ -84,10 +84,7 @@ void append_many(any<has_push_back<void(int)>, _self&> container) {
 /*`
     We use the macro __BOOST_TYPE_ERASURE_MEMBER 
     to define a concept called `has_push_back`.
-    The second parameter is the name of the member
-    function and the last macro parameter indicates
-    the number of arguments which is `1` since `push_back`
-    is unary.  When we use `has_push_back`, we have to
+    When we use `has_push_back`, we have to
     tell it the signature of the function, `void(int)`.
     This means that the type we store in the any
     has to have a member that looks like:
@@ -110,13 +107,10 @@ void append_many(any<has_push_back<void(int)>, _self&> container) {
 */
 
 /*`
-    There's actually another __placeholder here.  The second
-    parameter of `has_push_back` defaults to `_self`.  If
-    we wanted to define a const member function, we would
-    have to change it to `const _self`, as shown below.
+    Member functions can be const.
  */
-BOOST_TYPE_ERASURE_MEMBER((has_empty), empty, 0)
-bool is_empty(any<has_empty<bool(), const _self>, const _self&> x) {
+BOOST_TYPE_ERASURE_MEMBER(empty)
+bool is_empty(any<has_empty<bool() const>, const _self&> x) {
     return x.empty();
 }
 
@@ -124,7 +118,7 @@ bool is_empty(any<has_empty<bool(), const _self>, const _self&> x) {
     For free functions, we can use the macro __BOOST_TYPE_ERASURE_FREE.
 */
 
-BOOST_TYPE_ERASURE_FREE((has_getline), getline, 2)
+BOOST_TYPE_ERASURE_FREE(getline)
 std::vector<std::string> read_lines(any<has_getline<bool(_self&, std::string&)>, _self&> stream)
 {
     std::vector<std::string> result;

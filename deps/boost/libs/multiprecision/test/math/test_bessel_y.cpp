@@ -38,6 +38,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*mpfr_float_backend<0>.*",   // test type(s)
+      ".*(Y[nv]|y).*Random.*",       // test data group
+      ".*", 150000, 15000);             // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       ".*(Y[nv]|y).*Random.*",       // test data group
       ".*", 70000, 4000);             // test function

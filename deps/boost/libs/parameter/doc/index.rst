@@ -2285,7 +2285,7 @@ enclosing namespace without qualification::
 Follow `this link`__ for documentation on how to expose
 Boost.Parameter-enabled functions to Python with `Boost.Python`_.
 
-__ python.html
+__ ../../../parameter_python/doc/html/index.html
 
 ===========
  Reference

@@ -73,20 +73,33 @@ public:
     array(const array<T, N> &other)
         : m_buffer(other.m_buffer.get_context(), sizeof(T) * N)
     {
-        boost::compute::copy(other.begin(), other.end(), begin());
+        command_queue queue = default_queue();
+        boost::compute::copy(other.begin(), other.end(), begin(), queue);
+        queue.finish();
     }
 
     array(const boost::array<T, N> &array,
           const context &context = system::default_context())
         : m_buffer(context, sizeof(T) * N)
     {
-        boost::compute::copy(array.begin(), array.end(), begin());
+        command_queue queue = default_queue();
+        boost::compute::copy(array.begin(), array.end(), begin(), queue);
+        queue.finish();
+    }
+
+    array(const array<T, N> &other,
+          const command_queue &queue)
+        : m_buffer(other.m_buffer.get_context(), sizeof(T) * N)
+    {
+        boost::compute::copy(other.begin(), other.end(), begin(), queue);
     }
 
     array<T, N>& operator=(const array<T, N> &other)
     {
         if(this != &other){
-            boost::compute::copy(other.begin(), other.end(), begin());
+            command_queue queue = default_queue();
+            boost::compute::copy(other.begin(), other.end(), begin(), queue);
+            queue.finish();
         }
 
         return *this;
@@ -94,7 +107,9 @@ public:
 
     array<T, N>& operator=(const boost::array<T, N> &array)
     {
-        boost::compute::copy(array.begin(), array.end(), begin());
+        command_queue queue = default_queue();
+        boost::compute::copy(array.begin(), array.end(), begin(), queue);
+        queue.finish();
 
         return *this;
     }
@@ -226,14 +241,28 @@ public:
         return *(end() - static_cast<difference_type>(1));
     }
 
+    void fill(const value_type &value, const command_queue &queue)
+    {
+        ::boost::compute::fill(begin(), end(), value, queue);
+    }
+
+    void swap(array<T, N> &other, const command_queue &queue)
+    {
+        ::boost::compute::swap_ranges(begin(), end(), other.begin(), queue);
+    }
+
     void fill(const value_type &value)
     {
-        ::boost::compute::fill(begin(), end(), value);
+        command_queue queue = default_queue();
+        ::boost::compute::fill(begin(), end(), value, queue);
+        queue.finish();
     }
 
     void swap(array<T, N> &other)
     {
-        ::boost::compute::swap_ranges(begin(), end(), other.begin());
+        command_queue queue = default_queue();
+        ::boost::compute::swap_ranges(begin(), end(), other.begin(), queue);
+        queue.finish();
     }
 
     const buffer& get_buffer() const
@@ -243,6 +272,13 @@ public:
 
 private:
     buffer m_buffer;
+
+    command_queue default_queue() const
+    {
+        const context &context = m_buffer.get_context();
+        command_queue queue(context, context.get_device());
+        return queue;
+    }
 };
 
 namespace detail {

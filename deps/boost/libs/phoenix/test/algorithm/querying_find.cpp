@@ -13,26 +13,15 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/assign/list_of.hpp>
 
-#include <boost/phoenix/config.hpp>
+#include <boost/config.hpp>
 
-#if (defined (BOOST_NO_CXX11_HDR_UNORDERED_MAP) || \
-     defined (BOOST_NO_CXX11_HDR_UNORDERED_SET) )
-#ifdef BOOST_HAS_HASH
-#define _GLIBCXX_PERMIT_BACKWARD_HASH
-#include BOOST_HASH_SET_HEADER
-#include BOOST_HASH_MAP_HEADER
-#define BOOST_PHOENIX_HAS_HASH
-#define BOOST_PHOENIX_HASH_NAMESPACE BOOST_STD_EXTENSION_NAMESPACE
-#elif defined(BOOST_DINKUMWARE_STDLIB) && (BOOST_DINKUMWARE_STDLIB < 610)
-#include <hash_set>
-#include <hash_map>
-#define BOOST_PHOENIX_HAS_HASH
-#define BOOST_PHOENIX_HASH_NAMESPACE stdext
+#ifdef BOOST_PHOENIX_HAS_HASH
+#include BOOST_PHOENIX_HASH_SET_HEADER
+#include BOOST_PHOENIX_HASH_MAP_HEADER
 #endif
-#else
-#define BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
-#include <unordered_set>
-#include <unordered_map>
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#include BOOST_PHOENIX_UNORDERED_SET_HEADER
+#include BOOST_PHOENIX_UNORDERED_MAP_HEADER
 #endif
 
 #include <set>
@@ -75,15 +64,6 @@ namespace
         BOOST_TEST(boost::phoenix::find(arg1, 2)(m) == m.find(2));
         //#endif
 
-#ifdef BOOST_PHOENIX_HAS_UNDORDERED_SET_AND_MAP
-        std::unordered_set<int> hs(array, array + 3);
-        BOOST_TEST(boost::phoenix::find(arg1, 2)(hs) == hs.find(2));
-
-        //std::unordered_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
-        // convert_to_container<std::unordered_map<int, int> >();
-        // BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
-
-#else
 #ifdef BOOST_PHOENIX_HAS_HASH
 
         BOOST_PHOENIX_HASH_NAMESPACE::hash_set<int> hs(array, array + 3);
@@ -94,6 +74,15 @@ namespace
         BOOST_TEST(boost::phoenix::find(arg1, 2)(hm) == hm.find(2));
 
 #endif
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+
+        std::unordered_set<int> us(array, array + 3);
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(us) == us.find(2));
+
+        std::unordered_map<int, int> um = boost::assign::map_list_of(0, 1)(2, 3)(4, 5).
+        convert_to_container<std::unordered_map<int, int> >();
+        BOOST_TEST(boost::phoenix::find(arg1, 2)(um) == um.find(2));
+
 #endif
         return;
     }

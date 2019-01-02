@@ -5,6 +5,10 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -59,8 +63,16 @@ struct test_get_turns
             G1 const& g1, G2 const& g2, double /*precision*/)
     {
         typedef typename bg::point_type<G2>::type point_type;
+        
+        typedef typename bg::strategy::intersection::services::default_strategy
+            <
+                typename bg::cs_tag<G1>::type
+            >::type strategy_type;
+        
         typedef typename bg::rescale_policy_type<point_type>::type
             rescale_policy_type;
+
+        strategy_type strategy;
 
         rescale_policy_type rescale_policy
                 = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
@@ -74,7 +86,10 @@ struct test_get_turns
 
 
         bg::detail::get_turns::no_interrupt_policy policy;
-        bg::get_turns<false, false, bg::detail::overlay::assign_null_policy>(g1, g2, rescale_policy, turns, policy);
+        bg::get_turns
+            <
+                false, false, bg::detail::overlay::assign_null_policy
+            >(g1, g2, strategy, rescale_policy, turns, policy);
 
         BOOST_CHECK_MESSAGE(
             expected_count == boost::size(turns),

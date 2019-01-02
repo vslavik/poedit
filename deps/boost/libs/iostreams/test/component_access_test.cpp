@@ -6,10 +6,10 @@
 // See http://www.boost.org/libs/iostreams for documentation.
 
 #include <stdexcept>  // out_of_range.
-#include <typeinfo>
 #include <utility>    // pair.
 #include <boost/config.hpp>              // BOOST_MSVC.
 #include <boost/detail/workaround.hpp>
+#include <boost/core/typeinfo.hpp>
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -81,11 +81,11 @@ void component_type_test()
     // Check index 0.
     BOOST_CHECK(COMPARE_TYPE_ID(
         out.component_type(0),
-        typeid(tolower_filter)
+        BOOST_CORE_TYPEID(tolower_filter)
     ));
     BOOST_CHECK(COMPARE_TYPE_ID(
         BOOST_IOSTREAMS_COMPONENT_TYPE(out, 0), 
-        typeid(tolower_filter)
+        BOOST_CORE_TYPEID(tolower_filter)
     ));
     BOOST_CHECK_NO_THROW((
         BOOST_IOSTREAMS_COMPONENT(out, 0, tolower_filter)
@@ -102,11 +102,11 @@ void component_type_test()
     // Check index 1.
     BOOST_CHECK(COMPARE_TYPE_ID(
         out.component_type(1),
-        typeid(tolower_multichar_filter)
+        BOOST_CORE_TYPEID(tolower_multichar_filter)
     ));
     BOOST_CHECK(COMPARE_TYPE_ID(
         BOOST_IOSTREAMS_COMPONENT_TYPE(out, 1), 
-        typeid(tolower_multichar_filter)
+        BOOST_CORE_TYPEID(tolower_multichar_filter)
     ));
     BOOST_CHECK_NO_THROW((
         BOOST_IOSTREAMS_COMPONENT(out, 1, tolower_multichar_filter)
@@ -123,11 +123,11 @@ void component_type_test()
     // Check index 2.
     BOOST_CHECK(COMPARE_TYPE_ID(
         out.component_type(2),
-        typeid(file_sink)
+        BOOST_CORE_TYPEID(file_sink)
     ));
     BOOST_CHECK(COMPARE_TYPE_ID(
         BOOST_IOSTREAMS_COMPONENT_TYPE(out, 2), 
-        typeid(file_sink)
+        BOOST_CORE_TYPEID(file_sink)
     ));
     BOOST_CHECK_NO_THROW((
         BOOST_IOSTREAMS_COMPONENT(out, 2, file_sink)

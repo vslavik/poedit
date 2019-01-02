@@ -435,6 +435,58 @@ vector&lt;string&gt; to_pass_further = collect_unrecognized(parsed.options, incl
 
     </section>
 
+    <section>
+      <title>Testing Option Presence</title>
+
+      <para>Until now we have tested whether an option has been set using the
+      <methodname alt="boost::program_options::variables_map::count">count</methodname> method on the &variables_map;
+      class; as you are repeating the (string literal) name of the option this is prone to typos and/or errors
+      resulting from renaming the option in one place but not the other:
+        <programlisting><![CDATA[
+po::options_description desc("Allowed options");
+desc.add_options()
+    ("compression", po::value<int>(), "set compression level")
+;
+
+po::variables_map vm;
+po::store(po::parse_command_line(ac, av, desc), vm);
+po::notify(vm);
+
+if (vm.count("compression")) {
+    cout << "Compression level was set to "
+ << vm["compression"].as<int>() << ".\n";
+} else {
+    cout << "Compression level was not set.\n";
+}
+]]>
+        </programlisting>
+      </para>
+
+      <para>Instead, you can use a variable of type <classname alt="boost::optional">boost::optional</classname>;
+      <libraryname>Program_options</libraryname> provides special support for <libraryname>Boost.Optional</libraryname>
+      such that if the user specifies the option the <classname alt="boost::optional">boost::optional</classname>
+      variable will be initialized to the appropriate value:
+        <programlisting><![CDATA[
+po::options_description desc("Allowed options");
+boost::optional<int> compression;
+desc.add_options()
+    ("compression", po::value(&compression), "set compression level")
+;
+
+po::variables_map vm;
+po::store(po::parse_command_line(ac, av, desc), vm);
+po::notify(vm);
+
+if (compression) {
+    cout << "Compression level was set to " << *compression << ".\n";
+} else {
+    cout << "Compression level was not set.\n";
+}
+]]>
+        </programlisting>
+      </para>
+    </section>
+
 </section>
 
 <!--

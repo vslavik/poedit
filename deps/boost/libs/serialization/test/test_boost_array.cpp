@@ -23,7 +23,7 @@ namespace std{
 #include "test_tools.hpp"
 #include <boost/core/no_exceptions_support.hpp>
 #include <boost/archive/archive_exception.hpp>
-#include <boost/array.hpp>
+#include <boost/serialization/boost_array.hpp>
 
 #include "A.hpp"
 #include "A.ipp"
@@ -59,7 +59,7 @@ int test_boost_array(){
             BOOST_TRY {
                 ia >> boost::serialization::make_nvp("a_array", a_array1);
             }
-            BOOST_CATCH (boost::archive::archive_exception ae){
+            BOOST_CATCH (boost::archive::archive_exception const& ae){
                 BOOST_CHECK(
                     boost::archive::archive_exception::array_size_too_short
                     == ae.code

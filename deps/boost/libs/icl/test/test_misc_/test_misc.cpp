@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2009: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -38,7 +38,6 @@ BOOST_AUTO_TEST_CASE(test_law_complementarity)
 {
     //LAW Inner complementarity: x + between(x) == hull(x)
     //LAW: length(x) + length(between(x)) = length(hull(x))
-    typedef interval_map<rational<int>, int> RatioMapT;
     typedef interval_set<rational<int> > RatioSetT;
     typedef RatioSetT::interval_type     IntervalT;
     typedef RatioSetT::element_type      RatT;
@@ -51,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_law_complementarity)
              -= IntervalT(RatT(5,9), RatT(6,9));
 
     RatioSetT between_a  = RatioSetT(hull(set_a)) - set_a;
-    RatioSetT between_a2; 
+    RatioSetT between_a2;
     between(between_a2, set_a);
     BOOST_CHECK_EQUAL( between_a, between_a2 );
 
@@ -79,7 +78,6 @@ BOOST_AUTO_TEST_CASE(test_between)
     //LAW: between(a,b) == between(b,a);
     typedef int T;
     typedef interval<T>::type IntervalT;
-    typedef interval_set<T>   IntervalSetT;
 
     IntervalT itv_a = I_D(1,3);
     IntervalT itv_b = I_D(5,7);
@@ -106,8 +104,8 @@ BOOST_AUTO_TEST_CASE(element_iteration)
 
     std::pair<const int, int> search_pair(2,1);
 
-    //interval_map<int,int>::element_const_iterator found 
-    interval_map<int,int>::element_iterator found 
+    //interval_map<int,int>::element_const_iterator found
+    interval_map<int,int>::element_iterator found
         = std::find(elements_begin(map_a), elements_end(map_a), search_pair);
     // cout << "(" << found->first << "," << found->second << ")\n";
     BOOST_CHECK_EQUAL( found->first,  2 );
@@ -266,5 +264,3 @@ BOOST_AUTO_TEST_CASE(test_chrono_identity_elements)
     BOOST_CHECK(( boost::is_same<              boost::chrono::duration<int>
                                 , size_type_of<boost::chrono::duration<int> >::type >::value ));
 }
-
-

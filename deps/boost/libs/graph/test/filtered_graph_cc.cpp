@@ -38,5 +38,13 @@ int main(int,char*[])
     typedef filtered_graph<Graph, is_residual_edge<ResCapMap> > ResGraph;
     BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<ResGraph> ));
   }
+  // Check filtered_graph with undirected adjacency_list
+  {
+    typedef adjacency_list<vecS, vecS, undirectedS, 
+      no_property, property<edge_residual_capacity_t, long> > Graph;
+    typedef property_map<Graph, edge_residual_capacity_t>::type ResCapMap;
+    typedef filtered_graph<Graph, is_residual_edge<ResCapMap> > ResGraph;
+    BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<ResGraph> ));
+  }
   return 0;
 }

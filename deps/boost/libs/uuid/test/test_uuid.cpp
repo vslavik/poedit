@@ -100,7 +100,7 @@ int main(int, char*[])
             , { 0xf0, boost::uuids::uuid::variant_future }
             };
         for (size_t i=0; i<sizeof(tests)/sizeof(Test); i++) {
-            uuid u = {};
+            uuid u = { {} };
             u.data[8] = tests[i].octet7; // note that octet7 is array index 8
 
             BOOST_TEST_EQ(u.variant(), tests[i].variant);
@@ -232,9 +232,9 @@ int main(int, char*[])
 
         boost::hash<uuid> uuid_hasher;
 
-        BOOST_TEST_EQ(uuid_hasher(u1), boost::hash_range(u1.begin(), u1.end()));
-        BOOST_TEST_EQ(uuid_hasher(u2), boost::hash_range(u2.begin(), u2.end()));
-        BOOST_TEST_EQ(uuid_hasher(u3), boost::hash_range(u3.begin(), u3.end()));
+        BOOST_TEST_NE(uuid_hasher(u1), uuid_hasher(u2));
+        BOOST_TEST_NE(uuid_hasher(u1), uuid_hasher(u3));
+        BOOST_TEST_NE(uuid_hasher(u2), uuid_hasher(u3));
     }
 
     { // test is_pod

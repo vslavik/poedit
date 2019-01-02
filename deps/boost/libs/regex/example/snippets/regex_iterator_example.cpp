@@ -17,11 +17,11 @@
   *                using global data.
   */
 
+#include <boost/regex.hpp>
 #include <string>
 #include <map>
 #include <fstream>
 #include <iostream>
-#include <boost/regex.hpp>
 
 using namespace std;
 

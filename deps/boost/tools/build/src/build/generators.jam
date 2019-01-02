@@ -167,8 +167,10 @@ class generator
     import utility ;
     import path ;
     import property ;
+    import property-set ;
     import sequence ;
     import set ;
+    import toolset ;
     import type ;
     import virtual-target ;
 
@@ -215,7 +217,7 @@ class generator
             # name. We use parallel lists for prefix and postfix (as opposed to
             # mapping), because given target type might occur several times, for
             # example "H H(%_symbols)".
-            local m = [ MATCH ([^\\(]*)(\\((.*)%(.*)\\))? : $(e) ] ;
+            local m = [ MATCH "([^\\(]*)(\\((.*)%(.*)\\))?" : $(e) ] ;
             self.target-types += $(m[1]) ;
             self.name-prefix += $(m[3]:E="") ;
             self.name-postfix += $(m[4]:E="") ;
@@ -236,6 +238,10 @@ class generator
         # Note that 'transform' here, is the same as 'for_each'.
         sequence.transform type.validate : $(self.source-types) ;
         sequence.transform type.validate : $(self.target-types) ;
+
+        local relevant-for-generator =
+            [ sequence.transform utility.ungrist : $(requirements:G) ] ;
+        self.relevant-features = [ property-set.create <relevant>$(relevant-for-generator) ] ;
     }
 
     ################# End of constructor #################
@@ -327,7 +333,7 @@ class generator
         local target-types ;
         for local t in $(self.target-types-and-names)
         {
-            local m = [ MATCH ([^\\(]*)(\\(.*\\))? : $(t) ] ;
+            local m = [ MATCH "([^\\(]*)(\\(.*\\))?" : $(t) ] ;
             if $(m) = $(base)
             {
                 target-types += $(type)$(m[2]:E="") ;
@@ -406,10 +412,10 @@ class generator
         }
 
         local result ;
-        if $(consumed)
+        if $(consumed[2])
         {
-            result = [ construct-result $(consumed) : $(project) $(name) :
-                $(property-set) ] ;
+            result = [ construct-result $(consumed[2-]) : $(project) $(name) :
+                [ $(property-set).add $(consumed[1]) ] ] ;
         }
 
         if $(result)
@@ -421,7 +427,11 @@ class generator
             generators.dout [ indent ] "  FAILURE" ;
         }
         generators.dout ;
-        return $(result) ;
+        if $(result)
+        {
+            # Make sure that we propagate usage-requirements up the stack.
+            return [ $(result[1]).add $(consumed[1]) ] $(result[2-]) ;
+        }
     }
 
     # Constructs the dependency graph to be returned by this generator.
@@ -443,6 +453,11 @@ class generator
     )
     {
         local result ;
+
+        local relevant = [ toolset.relevant $(self.rule-name) ] ;
+        relevant = [ $(relevant).add $(self.relevant-features) ] ;
+        property-set = [ $(property-set).add $(relevant) ] ;
+
         # If this is a 1->1 transformation, apply it to all consumed targets in
         # order.
         if ! $(self.source-types[2]) && ! $(self.composing)
@@ -458,7 +473,10 @@ class generator
             result += [ generated-targets $(consumed) : $(property-set) :
                 $(project) $(name) ] ;
         }
-        return $(result) ;
+        if $(result)
+        {
+            return $(relevant) $(result) ;
+        }
     }
 
     # Determine target name from fullname (maybe including path components)
@@ -576,6 +594,7 @@ class generator
     {
         local _consumed ;
         local missing-types ;
+        local usage-requirements ;
 
         if $(sources[2])
         {
@@ -588,6 +607,7 @@ class generator
             local temp = [ consume-directly $(sources) ] ;
             if $(temp[1])
             {
+                usage-requirements = [ property-set.empty ] ;
                 _consumed = $(temp[1]) ;
             }
             missing-types = $(temp[2-]) ;
@@ -613,7 +633,7 @@ class generator
             # everything to the required type. There is no need to rerun it on
             # targets of different types.
 
-            # NOTE: ignoring usage requirements.
+            usage-requirements = $(transformed[1]) ;
             for local t in $(transformed[2-])
             {
                 if [ $(t).type ] in $(missing-types)
@@ -623,7 +643,7 @@ class generator
             }
         }
 
-        return [ sequence.unique $(_consumed) ] ;
+        return $(usage-requirements) [ sequence.unique $(_consumed) ] ;
     }
 
     # Converts several files to consumable types. Called for composing
@@ -637,11 +657,12 @@ class generator
         # type.
         if ! $(self.source-types)
         {
-            # Anything is acceptible
-            return $(sources) ;
+            # Anything is acceptable
+            return [ property-set.empty ] $(sources) ;
         }
         else
         {
+            local usage-requirements = [ property-set.empty ] ;
             local acceptible-types = [ sequence.unique
                 [ sequence.transform type.all-derived : $(self.source-types) ] ] ;
             for local source in $(sources)
@@ -661,13 +682,17 @@ class generator
                     {
                         generators.dout [ indent ] " failed to convert " $(source) ;
                     }
+                    else
+                    {
+                        usage-requirements = [ $(usage-requirements).add $(transformed[1]) ] ;
+                    }
                 }
                 else
                 {
                     result += $(source) ;
                 }
             }
-            return [ sequence.unique $(result) : stable ] ;
+            return $(usage-requirements) [ sequence.unique $(result) : stable ] ;
         }
     }
 
@@ -1239,7 +1264,7 @@ rule find-viable-generators ( target-type : property-set )
 
     # Generators which override 'all'.
     local all-overrides ;
-    # Generators which are overriden.
+    # Generators which are overridden.
     local overriden-ids ;
     for local g in $(viable-generators)
     {
@@ -1347,14 +1372,16 @@ local rule construct-really ( project name ? : target-type : property-set :
 #
 rule construct ( project name ? : target-type : property-set * : sources * : top-level ? )
 {
-    local saved-stack ;
+    local saved-active ;
     if $(top-level)
     {
         saved-active = $(.active-generators) ;
         .active-generators = ;
     }
 
-    if (.construct-stack)
+    # FIXME This is probably not intended be be run unconditionally,
+    # but changing it causes no_type to fail.
+    if "(.construct-stack)"
     {
         ensure-type $(sources) ;
     }

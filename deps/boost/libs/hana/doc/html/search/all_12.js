@@ -18,7 +18,7 @@ var searchData=
   ['second_2ehpp',['second.hpp',['../second_8hpp.html',1,'']]],
   ['sequence_2ehpp',['sequence.hpp',['../concept_2sequence_8hpp.html',1,'']]],
   ['sequence_2ehpp',['sequence.hpp',['../fwd_2concept_2sequence_8hpp.html',1,'']]],
-  ['set',['set',['../structboost_1_1hana_1_1set.html#a937a7d47238690b571e7dd524278f6d5',1,'boost::hana::set::set(set const &amp;other)=default'],['../structboost_1_1hana_1_1set.html#ac5b7025edfb0c6c28f31d84598e130f0',1,'boost::hana::set::set(set &amp;&amp;other)=default']]],
+  ['set',['set',['../structboost_1_1hana_1_1set.html#a51bdb213a03abc126668c4c3b14fc50b',1,'boost::hana::set::set()=default'],['../structboost_1_1hana_1_1set.html#a937a7d47238690b571e7dd524278f6d5',1,'boost::hana::set::set(set const &amp;other)=default'],['../structboost_1_1hana_1_1set.html#ac5b7025edfb0c6c28f31d84598e130f0',1,'boost::hana::set::set(set &amp;&amp;other)=default']]],
   ['set',['set',['../structboost_1_1hana_1_1set.html',1,'boost::hana']]],
   ['set_2ehpp',['set.hpp',['../fwd_2set_8hpp.html',1,'']]],
   ['set_2ehpp',['set.hpp',['../set_8hpp.html',1,'']]],
@@ -61,7 +61,7 @@ var searchData=
   ['sum',['sum',['../group__group-Foldable.html#ga650def4b2e98f4273d8b9b7aa5a2fc28',1,'boost::hana']]],
   ['sum_2ehpp',['sum.hpp',['../sum_8hpp.html',1,'']]],
   ['sum_2ehpp',['sum.hpp',['../fwd_2sum_8hpp.html',1,'']]],
-  ['symmetric_5fdifference',['symmetric_difference',['../structboost_1_1hana_1_1set.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::set']]],
+  ['symmetric_5fdifference',['symmetric_difference',['../structboost_1_1hana_1_1map.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::map::symmetric_difference()'],['../structboost_1_1hana_1_1set.html#a8bcb2455eb9f7074185d8fb61a99801e',1,'boost::hana::set::symmetric_difference()']]],
   ['symmetric_5fdifference_2ehpp',['symmetric_difference.hpp',['../fwd_2symmetric__difference_8hpp.html',1,'']]],
   ['symmetric_5fdifference_2ehpp',['symmetric_difference.hpp',['../symmetric__difference_8hpp.html',1,'']]]
 ];

@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::Comparable`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -49,14 +49,13 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! Laws
     //! ----
     //! `equal` must define an [equivalence relation][1], and `not_equal` must
-    //! be its complement. In other words, for all objects `a`, `b`, `c` of a
-    //! `Comparable` tag, the following must be true (where `x == y` and
-    //! `x != y` denote `equal(x, y)` and `not_equal(x, y)`, respectively):
+    //! be its complement. In other words, for all objects `a`, `b`, `c` with
+    //! a `Comparable` tag, the following must hold:
     //! @code
-    //!     a == a                          // Reflexivity
-    //!     if a == b then b == a           // Symmetry
-    //!     if a == b && b == c then a == c // Transitivity
-    //!     a != b is equivalent to !(a == b)
+    //!     equal(a, a)                                         // Reflexivity
+    //!     if equal(a, b) then equal(b, a)                     // Symmetry
+    //!     if equal(a, b) && equal(b, c) then equal(a, c)      // Transitivity
+    //!     not_equal(a, b) is equivalent to not_(equal(a, b))
     //! @endcode
     //!
     //!

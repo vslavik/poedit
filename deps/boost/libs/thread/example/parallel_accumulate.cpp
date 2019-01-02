@@ -37,7 +37,7 @@ struct accumulate_block
 template<typename Iterator,typename T>
 T parallel_accumulate(Iterator first,Iterator last,T init)
 {
-    unsigned long const length=std::distance(first,last);
+    unsigned long const length=static_cast<unsigned long>(std::distance(first,last));
 
     if(!length)
         return init;

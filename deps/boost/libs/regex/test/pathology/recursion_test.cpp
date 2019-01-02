@@ -16,10 +16,10 @@
   *   DESCRIPTION: Test for indefinite recursion and/or stack overrun.
   */
 
-#include <string>
 #include <boost/regex.hpp>
 #include <boost/detail/lightweight_main.hpp>
 #include "../test_macros.hpp"
+#include <string>
 
 #ifdef BOOST_INTEL
 #pragma warning(disable:1418 981 983 383)

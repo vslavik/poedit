@@ -196,11 +196,12 @@ void test_loop(Sequence& x, Compare cmp, unsigned long test_count)
         std::size_t index = 0;
         std::size_t count = 0;
         unsigned last_value = 0;
+        (void)last_value;
         for (const_iterator p = start; p != finish; ++p)
         {
             if (p == l)
                 found_l = true;
-            
+
             if (p == u)
             {
                 assert(found_l);
@@ -210,7 +211,7 @@ void test_loop(Sequence& x, Compare cmp, unsigned long test_count)
             unsigned value = to_int(*p);
             assert(value >= last_value);
             last_value = value;
-            
+
             if (!found_l)
             {
                 ++index;
@@ -233,6 +234,7 @@ void test_loop(Sequence& x, Compare cmp, unsigned long test_count)
         assert(range.second == u);
 
         bool found = searches<Compare>::binary_search(start, finish, key, cmp);
+        (void)found;
         assert(found == (u != l));
         std::cout << "found " << count << " copies of " << key << " at index " << index << "\n";
     }
@@ -247,7 +249,7 @@ int main()
     test_loop(x, no_compare(), 25);
     std::cout << "=== testing random-access iterators with compare: ===\n";
     test_loop(x, cmp(), 25);
-    
+
     std::list<mystring> y;
     std::cout << "=== testing bidirectional iterators with <: ===\n";
     test_loop(y, no_compare(), 25);

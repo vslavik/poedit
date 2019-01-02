@@ -26,6 +26,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
 #include <boost/type_erasure/config.hpp>
+#include <boost/type_erasure/detail/meta.hpp>
 #include <boost/type_erasure/is_placeholder.hpp>
 
 namespace boost {
@@ -48,6 +49,132 @@ struct identity
     typedef T type;
 };
 
+template<class PrimitiveConcept, class Sig>
+struct vtable_adapter;
+
+#ifdef BOOST_TYPE_ERASURE_USE_MP11
+
+template<class T, class Bindings>
+using rebind_placeholders_t = typename rebind_placeholders<T, Bindings>::type;
+
+template<class T, class Bindings>
+using rebind_one_placeholder = ::boost::mp11::mp_second< ::boost::mp11::mp_map_find<Bindings, T> >;
+
+template<class T>
+struct rebind_placeholders_in_argument_impl
+{
+    template<class Bindings>
+    using apply = ::boost::type_erasure::detail::eval_if<
+        ::boost::mp11::mp_map_contains<Bindings, T>::value,
+        ::boost::type_erasure::detail::rebind_one_placeholder,
+        ::boost::type_erasure::detail::first,
+        T,
+        Bindings
+    >;
+};
+
+template<class T, class Bindings>
+using rebind_placeholders_in_argument_t = typename ::boost::type_erasure::detail::rebind_placeholders_in_argument_impl<T>::template apply<Bindings>;
+
+template<class T, class Bindings>
+using rebind_placeholders_in_argument = ::boost::mpl::identity< ::boost::type_erasure::detail::rebind_placeholders_in_argument_t<T, Bindings> >;
+
+template<class T>
+struct rebind_placeholders_in_argument_impl<T&>
+{
+    template<class Bindings>
+    using apply = rebind_placeholders_in_argument_t<T, Bindings>&;
+};
+
+template<class T>
+struct rebind_placeholders_in_argument_impl<T&&>
+{
+    template<class Bindings>
+    using apply = rebind_placeholders_in_argument_t<T, Bindings>&&;
+};
+
+template<class T>
+struct rebind_placeholders_in_argument_impl<const T>
+{
+    template<class Bindings>
+    using apply = rebind_placeholders_in_argument_t<T, Bindings> const;
+};
+
+template<class F, class Bindings>
+using rebind_placeholders_in_deduced =
+    typename ::boost::type_erasure::deduced<
+        ::boost::type_erasure::detail::rebind_placeholders_t<F, Bindings>
+    >::type;
+
+template<class F, class Bindings>
+using rebind_deduced_placeholder =
+    ::boost::mp11::mp_second<
+        ::boost::mp11::mp_map_find<Bindings, ::boost::type_erasure::deduced<F> >
+    >;
+
+template<class F>
+struct rebind_placeholders_in_argument_impl<
+    ::boost::type_erasure::deduced<F>
+> 
+{
+    template<class Bindings>
+    using apply = ::boost::type_erasure::detail::eval_if<
+        ::boost::mp11::mp_map_contains<Bindings, ::boost::type_erasure::deduced<F> >::value,
+        ::boost::type_erasure::detail::rebind_deduced_placeholder,
+        ::boost::type_erasure::detail::rebind_placeholders_in_deduced,
+        F,
+        Bindings
+    >;
+};
+
+template<class R, class... T>
+struct rebind_placeholders_in_argument_impl<R(T...)>
+{
+    template<class Bindings>
+    using apply =
+        rebind_placeholders_in_argument_t<R, Bindings>
+            (rebind_placeholders_in_argument_t<T, Bindings>...);
+};
+
+template<class R, class C, class... T>
+struct rebind_placeholders_in_argument_impl<R (C::*)(T...)>
+{
+    template<class Bindings>
+    using apply =
+        rebind_placeholders_in_argument_t<R, Bindings>
+            (rebind_placeholders_in_argument_t<C, Bindings>::*)
+            (rebind_placeholders_in_argument_t<T, Bindings>...);
+};
+
+template<class R, class C, class... T>
+struct rebind_placeholders_in_argument_impl<R (C::*)(T...) const>
+{
+    template<class Bindings>
+    using apply =
+        rebind_placeholders_in_argument_t<R, Bindings>
+            (rebind_placeholders_in_argument_t<C, Bindings>::*)
+            (rebind_placeholders_in_argument_t<T, Bindings>...) const;
+};
+
+template<template<class...> class T, class... U, class Bindings>
+struct rebind_placeholders<T<U...>, Bindings>
+{
+    typedef ::boost::type_erasure::detail::make_mp_list<Bindings> xBindings;
+    typedef T<rebind_placeholders_in_argument_t<U, xBindings>...> type;
+};
+
+template<class PrimitiveConcept, class Sig, class Bindings>
+struct rebind_placeholders<vtable_adapter<PrimitiveConcept, Sig>, Bindings>
+{
+    typedef ::boost::type_erasure::detail::make_mp_list<Bindings> xBindings;
+    typedef vtable_adapter<
+        rebind_placeholders_t<PrimitiveConcept, xBindings>,
+        rebind_placeholders_in_argument_t<Sig, xBindings>
+    > type;
+};
+
+#else
+
 template<class T, class Bindings>
 struct rebind_placeholders_in_argument
 {
@@ -60,6 +187,15 @@ struct rebind_placeholders_in_argument
         ::boost::mpl::at<Bindings, T>,
         ::boost::type_erasure::detail::identity<T>
     >::type type;
+};
+
+template<class PrimitiveConcept, class Sig, class Bindings>
+struct rebind_placeholders<vtable_adapter<PrimitiveConcept, Sig>, Bindings>
+{
+    typedef vtable_adapter<
+        typename rebind_placeholders<PrimitiveConcept, Bindings>::type,
+        typename rebind_placeholders_in_argument<Sig, Bindings>::type
+    > type;
 };
 
 template<class T, class Bindings>
@@ -134,11 +270,33 @@ struct rebind_placeholders_in_argument<R(T...), Bindings>
     >::type type(typename rebind_placeholders_in_argument<T, Bindings>::type...);
 };
 
+template<class R, class C, class... T, class Bindings>
+struct rebind_placeholders_in_argument<R (C::*)(T...), Bindings>
+{
+    typedef typename ::boost::type_erasure::detail::rebind_placeholders_in_argument<
+        R,
+        Bindings
+    >::type (rebind_placeholders_in_argument<C, Bindings>::type::*type)
+        (typename rebind_placeholders_in_argument<T, Bindings>::type...);
+};
+
+template<class R, class C, class... T, class Bindings>
+struct rebind_placeholders_in_argument<R (C::*)(T...) const, Bindings>
+{
+    typedef typename ::boost::type_erasure::detail::rebind_placeholders_in_argument<
+        R,
+        Bindings
+    >::type (rebind_placeholders_in_argument<C, Bindings>::type::*type)
+        (typename rebind_placeholders_in_argument<T, Bindings>::type...) const;
+};
+
 #else
 
 #define BOOST_PP_FILENAME_1 <boost/type_erasure/detail/rebind_placeholders.hpp>
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_TYPE_ERASURE_MAX_ARITY)
 #include BOOST_PP_ITERATE()
+
+#endif
 
 #endif
 

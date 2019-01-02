@@ -32,6 +32,8 @@
 #include <boost/atomic/atomic.hpp>
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared_object.hpp>
+#include <boost/preprocessor/control/if.hpp>
+#include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread.hpp>
@@ -54,7 +56,31 @@ namespace sinks {
 
 #ifndef BOOST_LOG_DOXYGEN_PASS
 
-#define BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL(z, n, types)\
+#define BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_1(n, data)\
+    template< typename T0 >\
+    explicit asynchronous_sink(T0 const& arg0, typename boost::log::aux::enable_if_named_parameters< T0, boost::log::aux::sfinae_dummy >::type = boost::log::aux::sfinae_dummy()) :\
+        base_type(true),\
+        queue_base_type(arg0),\
+        m_pBackend(boost::make_shared< sink_backend_type >(arg0)),\
+        m_StopRequested(false),\
+        m_FlushRequested(false)\
+    {\
+        if (arg0[keywords::start_thread | true])\
+            start_feeding_thread();\
+    }\
+    template< typename T0 >\
+    explicit asynchronous_sink(shared_ptr< sink_backend_type > const& backend, T0 const& arg0) :\
+        base_type(true),\
+        queue_base_type(arg0),\
+        m_pBackend(backend),\
+        m_StopRequested(false),\
+        m_FlushRequested(false)\
+    {\
+        if (arg0[keywords::start_thread | true])\
+            start_feeding_thread();\
+    }
+
+#define BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_N(n, data)\
     template< BOOST_PP_ENUM_PARAMS(n, typename T) >\
     explicit asynchronous_sink(BOOST_PP_ENUM_BINARY_PARAMS(n, T, const& arg)) :\
         base_type(true),\
@@ -77,6 +103,9 @@ namespace sinks {
         if ((BOOST_PP_ENUM_PARAMS(n, arg))[keywords::start_thread | true])\
             start_feeding_thread();\
     }
+
+#define BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL(z, n, data)\
+    BOOST_PP_IF(BOOST_PP_EQUAL(n, 1), BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_1, BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_N)(n, data)
 
 #endif // BOOST_LOG_DOXYGEN_PASS
 
@@ -254,8 +283,23 @@ public:
             start_feeding_thread();
     }
 
-    // Constructors that pass arbitrary parameters to the backend constructor
+    /*!
+     * Constructor that passes arbitrary named parameters to the interprocess sink backend constructor.
+     * Refer to the backend documentation for the list of supported parameters.
+     *
+     * The frontend uses the following named parameters:
+     *
+     *   \li start_thread - If \c true, the frontend creates a thread to feed
+     *                      log records to the backend. Otherwise no thread is
+     *                      started and it is assumed that the user will call
+     *                      either \c run or \c feed_records himself.
+     */
+#ifndef BOOST_LOG_DOXYGEN_PASS
     BOOST_LOG_PARAMETRIZED_CONSTRUCTORS_GEN(BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL, ~)
+#else
+    template< typename... Args >
+    explicit asynchronous_sink(Args&&... args);
+#endif
 
     /*!
      * Destructor. Implicitly stops the dedicated feeding thread, if one is running.
@@ -455,6 +499,8 @@ private:
 #endif // BOOST_LOG_DOXYGEN_PASS
 };
 
+#undef BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_1
+#undef BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL_N
 #undef BOOST_LOG_SINK_CTOR_FORWARD_INTERNAL
 
 } // namespace sinks

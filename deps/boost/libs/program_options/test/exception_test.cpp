@@ -45,6 +45,56 @@ void test_ambiguous()
 }
 
 
+void test_ambiguous_long()
+{
+    options_description desc;
+    desc.add_options()
+        ("cfgfile,c", value<string>()->multitoken(), "the config file")
+        ("output,c", value<string>(), "the output file")
+        ("output,o", value<string>(), "the output file")
+    ;
+
+    const char* cmdline[] = {"program", "--cfgfile", "file", "--output", "anotherfile"};
+
+    variables_map vm;
+    try {
+       store(parse_command_line(sizeof(cmdline)/sizeof(const char*),
+                                    const_cast<char**>(cmdline), desc), vm);
+    }
+    catch (ambiguous_option& e)
+    {
+        BOOST_CHECK_EQUAL(e.alternatives().size(), 2);
+        BOOST_CHECK_EQUAL(e.get_option_name(), "--output");
+        BOOST_CHECK_EQUAL(e.alternatives()[0], "output");
+        BOOST_CHECK_EQUAL(e.alternatives()[1], "output");
+    }
+}
+
+void test_ambiguous_multiple_long_names()
+{
+    options_description desc;
+    desc.add_options()
+        ("cfgfile,foo,c", value<string>()->multitoken(), "the config file")
+        ("output,foo,o", value<string>(), "the output file")
+    ;
+
+    const char* cmdline[] = {"program", "--foo", "file"};
+
+    variables_map vm;
+    try {
+       store(parse_command_line(sizeof(cmdline)/sizeof(const char*),
+                                    const_cast<char**>(cmdline), desc), vm);
+    }
+    catch (ambiguous_option& e)
+    {
+        BOOST_CHECK_EQUAL(e.alternatives().size(), 2);
+        BOOST_CHECK_EQUAL(e.get_option_name(), "--foo");
+        BOOST_CHECK_EQUAL(e.alternatives()[0], "cfgfile");
+        BOOST_CHECK_EQUAL(e.alternatives()[1], "output");
+    }
+}
+
+
 
 void test_unknown_option() 
 {
@@ -100,7 +150,6 @@ void test_multiple_values()
 }
 
 
-
 void test_multiple_occurrences()
 {
    options_description desc;
@@ -109,20 +158,67 @@ void test_multiple_occurrences()
       ;
 
    const char* cmdline[] = {"program", "--cfgfile", "file", "-c", "anotherfile"};
-   
+
    variables_map vm;
    try {
-      store(parse_command_line(sizeof(cmdline)/sizeof(const char*), 
+      store(parse_command_line(sizeof(cmdline)/sizeof(const char*),
                                     const_cast<char**>(cmdline), desc), vm);
       notify(vm);
    }
    catch (multiple_occurrences& e)
    {
-      BOOST_CHECK_EQUAL(e.get_option_name(), "--cfgfile");      
+      BOOST_CHECK_EQUAL(e.get_option_name(), "--cfgfile");
       BOOST_CHECK_EQUAL(string(e.what()), "option '--cfgfile' cannot be specified more than once");
    }
 }
 
+void test_multiple_occurrences_with_different_names()
+{
+   options_description desc;
+   desc.add_options()
+        ("cfgfile,config-file,c", value<string>(), "the configfile")
+      ;
+
+   const char* cmdline[] = {"program", "--config-file", "file", "--cfgfile", "anotherfile"};
+
+   variables_map vm;
+   try {
+      store(parse_command_line(sizeof(cmdline)/sizeof(const char*),
+                                    const_cast<char**>(cmdline), desc), vm);
+      notify(vm);
+   }
+   catch (multiple_occurrences& e)
+   {
+      BOOST_CHECK( (e.get_option_name() == "--cfgfile") || (e.get_option_name() == "--config-file"));
+      BOOST_CHECK(
+         (string(e.what()) == "option '--cfgfile' cannot be specified more than once") ||
+         (string(e.what()) == "option '--config-file' cannot be specified more than once")
+      );
+   }
+}
+
+
+void test_multiple_occurrences_with_non_key_names()
+{
+   options_description desc;
+   desc.add_options()
+        ("cfgfile,config-file,c", value<string>(), "the configfile")
+      ;
+
+   const char* cmdline[] = {"program", "--config-file", "file", "-c", "anotherfile"};
+
+   variables_map vm;
+   try {
+      store(parse_command_line(sizeof(cmdline)/sizeof(const char*),
+                                    const_cast<char**>(cmdline), desc), vm);
+      notify(vm);
+   }
+   catch (multiple_occurrences& e)
+   {
+       BOOST_CHECK_EQUAL(e.get_option_name(), "--cfgfile");
+       BOOST_CHECK_EQUAL(string(e.what()), "option '--cfgfile' cannot be specified more than once");
+   }
+}
 
 
 void test_missing_value()
@@ -154,9 +250,13 @@ void test_missing_value()
 int main(int /*ac*/, char** /*av*/)
 {
    test_ambiguous();
+   test_ambiguous_long();
+   test_ambiguous_multiple_long_names();
    test_unknown_option();
    test_multiple_values();
    test_multiple_occurrences();
+   test_multiple_occurrences_with_different_names();
+   test_multiple_occurrences_with_non_key_names();
    test_missing_value();
 
    return 0;

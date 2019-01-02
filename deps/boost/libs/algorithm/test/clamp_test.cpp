@@ -14,8 +14,8 @@
 
 namespace ba = boost::algorithm;
 
-bool intGreater    ( int lhs, int rhs )       { return lhs > rhs; }
-bool doubleGreater ( double lhs, double rhs ) { return lhs > rhs; }
+BOOST_CONSTEXPR bool intGreater    ( int lhs, int rhs )       { return lhs > rhs; }
+BOOST_CONSTEXPR bool doubleGreater ( double lhs, double rhs ) { return lhs > rhs; }
 
 class custom {
 public:
@@ -45,6 +45,10 @@ void test_ints()
     BOOST_CHECK_EQUAL (  1, ba::clamp (  0, 1, 10 ));
     BOOST_CHECK_EQUAL ( 10, ba::clamp ( 10, 1, 10 ));
     BOOST_CHECK_EQUAL ( 10, ba::clamp ( 11, 1, 10 ));
+    BOOST_CXX14_CONSTEXPR bool constexpr_res = (
+        ba::clamp (  3, 1, 10 ) == 3
+    );
+    BOOST_CHECK( constexpr_res );
     
     BOOST_CHECK_EQUAL (  3, ba::clamp (  3, 10, 1, intGreater ));
     BOOST_CHECK_EQUAL (  1, ba::clamp (  1, 10, 1, intGreater ));
@@ -206,6 +210,110 @@ void test_int_range ()
     BOOST_CHECK ( std::equal ( b_e(junk), outputs ));
 }
 
+void test_constexpr()
+{
+
+//  Inside the range, equal to the endpoints, and outside the endpoints.
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (3  == ba::clamp (  3, 1, 10 ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (1  == ba::clamp (  1, 1, 10 ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (1  == ba::clamp (  0, 1, 10 ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10 == ba::clamp ( 10, 1, 10 ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10 == ba::clamp ( 11, 1, 10 ));
+        BOOST_CHECK(check_max_out);
+    }
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (3  == ba::clamp (  3, 10, 1, intGreater ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (1  == ba::clamp (  1, 10, 1, intGreater ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (1  == ba::clamp (  0, 10, 1, intGreater ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10 == ba::clamp ( 10, 10, 1, intGreater ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10 == ba::clamp ( 11, 10, 1, intGreater ));
+        BOOST_CHECK(check_max_out);
+    }
+
+//  Negative numbers
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (-3  == ba::clamp  (  -3, -10, -1 ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (-1  == ba::clamp  (  -1, -10, -1 ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (-1  == ba::clamp  (   0, -10, -1 ));
+        BOOST_CHECK(check_max_out);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (-10 == ba::clamp ( -10, -10, -1 ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (-10 == ba::clamp ( -11, -10, -1 ));
+        BOOST_CHECK(check_min_out);
+    }
+
+//  Mixed positive and negative numbers
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (5   == ba::clamp (   5, -10, 10 ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (-10 == ba::clamp ( -10, -10, 10 ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (-10 == ba::clamp ( -15, -10, 10 ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10  == ba::clamp (  10, -10, 10 ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10  == ba::clamp (  15, -10, 10 ));
+        BOOST_CHECK(check_max_out);
+    }
+//  Unsigned
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (5U  == ba::clamp (  5U, 1U, 10U ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (1U  == ba::clamp (  1U, 1U, 10U ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (1U  == ba::clamp (  0U, 1U, 10U ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10U == ba::clamp ( 10U, 1U, 10U ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10U == ba::clamp ( 15U, 1U, 10U ));
+        BOOST_CHECK(check_max_out);
+    }
+//  Mixed (1)
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (5U  == ba::clamp (  5U, 1,  10 ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (1U  == ba::clamp (  1U, 1,  10 ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (1U  == ba::clamp (  0U, 1,  10 ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10U == ba::clamp ( 10U, 1,  10 ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10U == ba::clamp ( 15U, 1,  10 ));
+        BOOST_CHECK(check_max_out);
+    }  
+//  Mixed (3)
+    {
+        BOOST_CXX14_CONSTEXPR bool check_inside  = (5U  == ba::clamp (  5U, 1,  10. ));
+        BOOST_CHECK(check_inside);
+        BOOST_CXX14_CONSTEXPR bool check_min     = (1U  == ba::clamp (  1U, 1,  10. ));
+        BOOST_CHECK(check_min);
+        BOOST_CXX14_CONSTEXPR bool check_min_out = (1U  == ba::clamp (  0U, 1,  10. ));
+        BOOST_CHECK(check_min_out);
+        BOOST_CXX14_CONSTEXPR bool check_max     = (10U == ba::clamp ( 10U, 1,  10. ));
+        BOOST_CHECK(check_max);
+        BOOST_CXX14_CONSTEXPR bool check_max_out = (10U == ba::clamp ( 15U, 1,  10. ));
+        BOOST_CHECK(check_max_out);
+    }
+    {
+        BOOST_CXX14_CONSTEXPR short foo = 50;
+        BOOST_CXX14_CONSTEXPR bool check_float   = ( 56    == ba::clamp ( foo, 56.9, 129 ));
+        BOOST_CHECK(check_float);
+        BOOST_CXX14_CONSTEXPR bool check_over    = ( 24910 == ba::clamp ( foo, 12345678, 123456999 ));
+        BOOST_CHECK(check_over);
+    }
+}
+
 BOOST_AUTO_TEST_CASE( test_main )
 {
     test_ints ();
@@ -213,6 +321,8 @@ BOOST_AUTO_TEST_CASE( test_main )
     test_custom ();
     
     test_int_range ();
+
+    test_constexpr ();
 //    test_float_range ();
 //    test_custom_range ();
 }

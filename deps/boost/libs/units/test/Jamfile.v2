@@ -18,7 +18,7 @@ project boost/units/test :
     requirements
         <implicit-dependency>/boost//headers
         <toolset>msvc:<asynch-exceptions>on
-        $(warning-compilers):$(warning-options)
+        $(warning-compilers)\:$(warning-options)
         # This warning comes from the test library.
         <toolset>msvc:<cxxflags>"/wd4701"
         # The comes from the exception library
@@ -50,6 +50,7 @@ run test_limits.cpp ;
 run test_custom_unit.cpp ;
 run test_scaled_conversion.cpp ;
 run test_lambda.cpp ;
+run test_sqrt_scaled_unit.cpp ;
 run test_scaled_unit.cpp test_framework ;
 run test_output.cpp test_framework /boost//regex/<warnings-as-errors>off : : : <test-info>always_show_run_output ;
 run test_trig.cpp test_framework ;

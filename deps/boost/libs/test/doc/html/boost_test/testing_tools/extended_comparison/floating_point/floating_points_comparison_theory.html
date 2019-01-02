@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Theory behind floating point comparisons</title>
 <link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Boost.Test">
 <link rel="up" href="../floating_point.html" title="Floating point comparison">
 <link rel="prev" href="floating_points_comparison_impl.html" title="Tolerance-based comparisons">
-<link rel="next" href="../strings.html" title="C-string comparison">
+<link rel="next" href="../strings.html" title="Strings and C-strings comparison">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -90,7 +90,7 @@
           </p>
 <h4>
 <a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.h0"></a>
-            <span><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.tolerance_selection_consideratio"></a></span><a class="link" href="floating_points_comparison_theory.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.tolerance_selection_consideratio">Tolerance
+            <span class="phrase"><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.tolerance_selection_consideratio"></a></span><a class="link" href="floating_points_comparison_theory.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.tolerance_selection_consideratio">Tolerance
             selection considerations</a>
           </h4>
 <p>
@@ -104,7 +104,7 @@
             The discrepancy between real and floating point value may be caused by
             several reasons:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 Type promotion
               </li>
@@ -126,7 +126,7 @@
 </pre>
 <p>
             for the appropriate floating point type <code class="computeroutput"><span class="identifier">FPT</span></code>
-            <sup>[<a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" href="#ftn.boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" class="footnote">9</a>]</sup>. Conversion to binary presentation, sadly, does not have
+            <a href="#ftn.boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" class="footnote" name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0"><sup class="footnote">[9]</sup></a>. Conversion to binary presentation, sadly, does not have
             such requirement. So we can't assume that <code class="computeroutput"><span class="keyword">float</span><span class="special">(</span><span class="number">1.1</span><span class="special">)</span></code>
             is close to the real number <code class="computeroutput"><span class="number">1.1</span></code>
             with tolerance <code class="computeroutput"><span class="identifier">half_epsilon</span></code>
@@ -180,12 +180,12 @@
           </p>
 <h5>
 <a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.h1"></a>
-            <span><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.bibliographic_references"></a></span><a class="link" href="floating_points_comparison_theory.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.bibliographic_references">Bibliographic
+            <span class="phrase"><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.bibliographic_references"></a></span><a class="link" href="floating_points_comparison_theory.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.bibliographic_references">Bibliographic
             references</a>
           </h5>
 <div class="variablelist">
 <p class="title"><b>Books</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a name="KnuthII"></a>The art of computer programming (vol II)</span></dt>
 <dd><p>
                   Donald. E. Knuth, 1998, Addison-Wesley Longman, Inc., ISBN 0-201-89684-2,
@@ -202,7 +202,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Periodicals</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a name="Squassabia"></a><a href="https://adtmag.com/articles/2000/03/16/comparing-floats-how-to-determine-if-floating-quantities-are-close-enough-once-a-tolerance-has-been.aspx" target="_top">Comparing
               Floats: How To Determine if Floating Quantities Are Close Enough Once
               a Tolerance Has Been Reached</a></span></dt>
@@ -218,7 +218,7 @@
 </div>
 <div class="variablelist">
 <p class="title"><b>Publications</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><a href="http://dl.acm.org/citation.cfm?id=103163" target="_top">What Every
               Computer Scientist Should Know About Floating-Point Arithmetic</a></span></dt>
 <dd><p>
@@ -238,8 +238,8 @@
 </dl>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" href="#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" class="para">9</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" class="footnote"><p><a href="#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_theory.f0" class="para"><sup class="para">[9] </sup></a>
               <span class="bold"><strong>machine epsilon value</strong></span> is represented
               by <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">FPT</span><span class="special">&gt;::</span><span class="identifier">epsilon</span><span class="special">()</span></code>
             </p></div>
@@ -247,7 +247,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

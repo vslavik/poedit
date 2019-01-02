@@ -59,6 +59,7 @@ int main()
       BOOST_TEST(!p0.valid());
       BOOST_TEST(!p.valid());
   }
+  return boost::report_errors();
 
 }
 

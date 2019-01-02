@@ -7,7 +7,7 @@
 
 [library Boost.Test
     [quickbook 1.7]
-    [copyright 2001 - 2016 Boost.Test contributors]
+    [copyright 2001 - 2018 Boost.Test contributors]
     [id boost_test]
     [purpose Testing library]
     [license
@@ -20,6 +20,8 @@
 ]
 
 [template ticket[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">'''#[number]'''</ulink>''']
+[template pull_request[number]'''<ulink url="https://github.com/boostorg/test/pull/'''[number]'''">'''#PR-[number]'''</ulink>''']
+[template github_issue[number]'''<ulink url="https://github.com/boostorg/test/issues/'''[number]'''">'''#GH-[number]'''</ulink>''']
 
 [def __UTF__ /Unit Test Framework/]
 [def __PEM__ /Program Execution Monitor]
@@ -44,6 +46,7 @@
 [def __BOOST_TEST_NO_LIB__                [link boost_test.utf_reference.link_references.link_boost_test_no_lib                 `BOOST_TEST_NO_LIB`]]
 [def __BOOST_TEST_NO_MAIN__               [link boost_test.utf_reference.link_references.link_boost_test_no_main                `BOOST_TEST_NO_MAIN`]]
 [def __BOOST_TEST_MODULE__                [link boost_test.utf_reference.link_references.link_boost_test_module_macro           `BOOST_TEST_MODULE`]]
+[def __BOOST_TEST_GLOBAL_CONFIGURATION__  [link boost_test.utf_reference.link_references.link_boost_test_global_configuration   `BOOST_TEST_GLOBAL_CONFIGURATION`]]
 
 [def __BOOST_TEST_CHECKPOINT__            [link boost_test.utf_reference.testout_reference.test_output_macro_checkpoint   `BOOST_TEST_CHECKPOINT`]]
 [def __BOOST_TEST_PASSPOINT__             [link boost_test.utf_reference.testout_reference.test_output_macro_passpoint    `BOOST_TEST_PASSPOINT`]]
@@ -97,6 +100,7 @@
 [/ Tests cases organization]
 [def __BOOST_AUTO_TEST_CASE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_auto_test_case `BOOST_AUTO_TEST_CASE`]]
 [def __BOOST_TEST_CASE__                        [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case `BOOST_TEST_CASE`]]
+[def __BOOST_TEST_CASE_NAME__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case `BOOST_TEST_CASE_NAME`]]
 [def __BOOST_AUTO_TEST_CASE_TEMPLATE__          [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_auto_template `BOOST_AUTO_TEST_CASE_TEMPLATE`]]
 [def __BOOST_TEST_CASE_TEMPLATE__               [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_template `BOOST_TEST_CASE_TEMPLATE`]]
 [def __BOOST_TEST_CASE_TEMPLATE_FUNCTION__      [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_template_function `BOOST_TEST_CASE_TEMPLATE_FUNCTION`]]
@@ -115,7 +119,8 @@
 [/ fixtures]
 [def __BOOST_FIXTURE_TEST_CASE__                [link boost_test.utf_reference.test_org_reference.test_org_boost_test_case_fixture     `BOOST_FIXTURE_TEST_CASE`]]
 [def __BOOST_FIXTURE_TEST_SUITE__               [link boost_test.utf_reference.test_org_reference.test_org_boost_test_suite_fixture    `BOOST_FIXTURE_TEST_SUITE`]]
-[def __BOOST_GLOBAL_FIXTURE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_global_fixture   `BOOST_GLOBAL_FIXTURE`]]
+[def __BOOST_GLOBAL_FIXTURE__                   [link boost_test.utf_reference.test_org_reference.test_org_boost_global_fixture        `BOOST_GLOBAL_FIXTURE`]]
+[def __BOOST_TEST_GLOBAL_FIXTURE__              [link boost_test.utf_reference.test_org_reference.test_org_boost_test_global_fixture   `BOOST_TEST_GLOBAL_FIXTURE`]]
 
 [/ log]
 [def __BOOST_TEST_LOG_LEVEL__                   [link boost_test.utf_reference.rt_param_reference.log_level `BOOST_TEST_LOG_LEVEL`]] [/ this is an environment variable]

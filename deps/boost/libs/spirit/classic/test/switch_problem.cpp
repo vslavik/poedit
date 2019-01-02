@@ -47,7 +47,7 @@ struct switch_grammar : public spirit::grammar<switch_grammar> {
 
 
 template <typename ScannerT>
-switch_grammar::definition<ScannerT>::definition(switch_grammar const & self)
+switch_grammar::definition<ScannerT>::definition(switch_grammar const & /*self*/)
 {
     using boost::cref;
 

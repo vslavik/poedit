@@ -28,7 +28,7 @@ template < typename Graph > void
 generic_bar(Graph & g)
 {
   // Declare some vertex and edge descriptor variables
-  typename graph_traits < Graph >::vertex_descriptor u, v;
+  typename graph_traits < Graph >::vertex_descriptor u = vertex(0,g), v = vertex(1,g);
   typename graph_traits < Graph >::edge_descriptor e1, e2;
   // Set u and e1 to valid descriptors...
   v = u;                        // Make v a handle to the same vertex as u.

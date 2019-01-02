@@ -32,7 +32,7 @@
 namespace boost { 
 namespace archive {
 
-class polymorphic_text_wiarchive : 
+class BOOST_SYMBOL_VISIBLE polymorphic_text_wiarchive : 
     public detail::polymorphic_iarchive_route<text_wiarchive>
 {
 public:

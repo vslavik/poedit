@@ -7,13 +7,9 @@
 
 #include <boost/type_index.hpp>
 
-#include <boost/functional/hash.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include <boost/core/lightweight_test.hpp>
-#define BOOST_TEST_LE(x, y) BOOST_TEST(x <= y)
-#define BOOST_TEST_GE(x, y) BOOST_TEST(x >= y)
-
 
 namespace my_namespace1 {
     class my_class{};
@@ -381,7 +377,6 @@ void comparators_type_id_vs_type_info()
 
 #endif // BOOST_NO_RTTI
 
-
 int main() {
     names_matches_type_id();
     default_construction();
@@ -399,6 +394,7 @@ int main() {
 #ifndef BOOST_NO_RTTI
     comparators_type_id_vs_type_info();
 #endif
+
     return boost::report_errors();
 }
 

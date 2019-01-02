@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="next" href="boost_localfunction/getting_started.html" title="Getting Started">
 </head>
@@ -36,7 +36,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#boost_localfunction.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="boost_localfunction/getting_started.html">Getting Started</a></span></dt>
 <dd><dl>
@@ -176,7 +176,7 @@
 <p>
       This library supports the following features for local functions:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Local functions can capture, or better <a href="http://en.wikipedia.org/wiki/Name_binding" target="_top"><span class="emphasis"><em>bind</em></span></a>,
           any of the variables from the enclosing scope (a function together with
@@ -189,12 +189,12 @@
         </li>
 <li class="listitem">
           Local functions can be passed as template parameters so they can be conveniently
-          used with STL algorithms and other templates. <sup>[<a name="boost_localfunction.introduction.f0" href="#ftn.boost_localfunction.introduction.f0" class="footnote">1</a>]</sup>
+          used with STL algorithms and other templates. <a href="#ftn.boost_localfunction.introduction.f0" class="footnote" name="boost_localfunction.introduction.f0"><sup class="footnote">[1]</sup></a>
         </li>
 <li class="listitem">
           However, local functions must be specified within a declarative context
           (e.g., at a point in the code where local variables can be declared) thus
-          they cannot be specified within expressions. <sup>[<a name="boost_localfunction.introduction.f1" href="#ftn.boost_localfunction.introduction.f1" class="footnote">2</a>]</sup>
+          they cannot be specified within expressions. <a href="#ftn.boost_localfunction.introduction.f1" class="footnote" name="boost_localfunction.introduction.f1"><sup class="footnote">[2]</sup></a>
         </li>
 </ul></div>
 <p>
@@ -205,15 +205,15 @@
     </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.introduction.f0" href="#boost_localfunction.introduction.f0" class="para">1</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_localfunction.introduction.f0" class="footnote"><p><a href="#boost_localfunction.introduction.f0" class="para"><sup class="para">[1] </sup></a>
             This is a strength with respect to <a href="http://www.open-std.org/JTC1/SC22/WG21/docs/standards" target="_top">C++03</a>
             functors implemented using local classes which cannot be passed as template
             parameters (see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2657.htm" target="_top">[N2657]</a>
             and the <a class="link" href="boost_localfunction/alternatives.html" title="Annex: Alternatives">Alternatives</a>
             section).
           </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.introduction.f1" href="#boost_localfunction.introduction.f1" class="para">2</a>] </sup>
+<div id="ftn.boost_localfunction.introduction.f1" class="footnote"><p><a href="#boost_localfunction.introduction.f1" class="para"><sup class="para">[2] </sup></a>
             This is a weakness with respect to <a href="http://en.wikipedia.org/wiki/C%2B%2B0x#Lambda_functions_and_expressions" target="_top">C++11
             lambda functions</a> which can instead be specified also within expressions
             (see the <a class="link" href="boost_localfunction/alternatives.html" title="Annex: Alternatives">Alternatives</a>
@@ -222,7 +222,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:23:05 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:04:30 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

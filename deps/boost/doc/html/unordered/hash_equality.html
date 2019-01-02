@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Equality Predicates and Hash Functions</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../unordered.html" title="Chapter&#160;40.&#160;Boost.Unordered">
+<link rel="up" href="../unordered.html" title="Chapter&#160;44.&#160;Boost.Unordered">
 <link rel="prev" href="buckets.html" title="The Data Structure">
 <link rel="next" href="comparison.html" title="Comparison with Associative Containers">
 </head>
@@ -45,13 +45,9 @@
       but not the equality predicate. For example, if you wanted to use the <a href="http://www.isthe.com/chongo/tech/comp/fnv/" target="_top">FNV-1 hash</a> you could
       write:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unordered_map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">hash</span><span class="special">::</span><span class="identifier">fnv_1</span><span class="special">&gt;</span>
     <span class="identifier">dictionary</span><span class="special">;</span>
 </pre>
-<p>
-    </p>
 <p>
       There is an <a href="../../../libs/unordered/examples/fnv1.hpp" target="_top">implementation
       of FNV-1</a> in the examples directory.
@@ -61,10 +57,7 @@
       a matching hash function. For example, to implement a case insensitive dictionary
       you need to define a case insensitive equality predicate and hash function:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">iequal_to</span>
-    <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">binary_function</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span><span class="special">)</span> <span class="keyword">const</span>
@@ -74,7 +67,6 @@
 <span class="special">};</span>
 
 <span class="keyword">struct</span> <span class="identifier">ihash</span>
-    <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">unary_function</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
@@ -92,17 +84,11 @@
 <span class="special">};</span>
 </pre>
 <p>
-    </p>
-<p>
       Which you can then use in a case insensitive dictionary:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unordered_map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">ihash</span><span class="special">,</span> <span class="identifier">iequal_to</span><span class="special">&gt;</span>
     <span class="identifier">idictionary</span><span class="special">;</span>
 </pre>
-<p>
-    </p>
 <p>
       This is a simplified version of the example at <a href="../../../libs/unordered/examples/case_insensitive.hpp" target="_top">/libs/unordered/examples/case_insensitive.hpp</a>
       which supports other locales and string types.
@@ -125,14 +111,12 @@
 </table></div>
 <h3>
 <a name="unordered.hash_equality.h0"></a>
-      <span><a name="unordered.hash_equality.custom_types"></a></span><a class="link" href="hash_equality.html#unordered.hash_equality.custom_types">Custom
+      <span class="phrase"><a name="unordered.hash_equality.custom_types"></a></span><a class="link" href="hash_equality.html#unordered.hash_equality.custom_types">Custom
       Types</a>
     </h3>
 <p>
       Similarly, a custom hash function can be used for custom types:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">point</span> <span class="special">{</span>
     <span class="keyword">int</span> <span class="identifier">x</span><span class="special">;</span>
     <span class="keyword">int</span> <span class="identifier">y</span><span class="special">;</span>
@@ -144,7 +128,6 @@
 <span class="special">}</span>
 
 <span class="keyword">struct</span> <span class="identifier">point_hash</span>
-    <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">unary_function</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">point</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
@@ -158,14 +141,10 @@
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unordered_multiset</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">,</span> <span class="identifier">point_hash</span><span class="special">&gt;</span> <span class="identifier">points</span><span class="special">;</span>
 </pre>
 <p>
-    </p>
-<p>
-      Since the default hash function is <a class="link" href="../hash.html" title="Chapter&#160;13.&#160;Boost.Functional/Hash">Boost.Hash</a>,
+      Since the default hash function is <a class="link" href="../hash.html" title="Chapter&#160;10.&#160;Boost.ContainerHash">Boost.Hash</a>,
       we can <a class="link" href="../hash/custom.html" title="Extending boost::hash for a custom data type">extend it to support the type</a> so
       that the hash function doesn't need to be explicitly given:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">point</span> <span class="special">{</span>
     <span class="keyword">int</span> <span class="identifier">x</span><span class="special">;</span>
     <span class="keyword">int</span> <span class="identifier">y</span><span class="special">;</span>
@@ -187,15 +166,13 @@
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">unordered_multiset</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;</span> <span class="identifier">points</span><span class="special">;</span>
 </pre>
 <p>
-    </p>
-<p>
       See the <a class="link" href="../hash/custom.html" title="Extending boost::hash for a custom data type">Boost.Hash documentation</a> for more
       detail on how to do this. Remember that it relies on extensions to the draft
       standard - so it won't work for other implementations of the unordered associative
       containers, you'll need to explicitly use Boost.Hash.
     </p>
 <div class="table">
-<a name="unordered.hash_equality.access_methods"></a><p class="title"><b>Table&#160;40.3.&#160;Methods for accessing the hash and equality functions.</b></p>
+<a name="unordered.hash_equality.access_methods"></a><p class="title"><b>Table&#160;44.3.&#160;Methods for accessing the hash and equality functions.</b></p>
 <div class="table-contents"><table class="table" summary="Methods for accessing the hash and equality functions.">
 <colgroup>
 <col>

@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::range`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -35,7 +35,8 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! The representation of `hana::range` is implementation defined. In
     //! particular, one should not take for granted the number and types
     //! of template parameters. The proper way to create a `hana::range`
-    //! is to use `hana::range_c` or `hana::make_range`.
+    //! is to use `hana::range_c` or `hana::make_range`. More details
+    //! [in the tutorial](@ref tutorial-containers-types).
     //!
     //!
     //! Modeled concepts

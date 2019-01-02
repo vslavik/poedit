@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Annex: No Variadic Macros</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="prev" href="alternatives.html" title="Annex: Alternatives">
@@ -32,12 +32,12 @@
     </p>
 <h4>
 <a name="scope_exit.no_variadic_macros.h0"></a>
-      <span><a name="scope_exit.no_variadic_macros.sequence_syntax"></a></span><a class="link" href="no_variadic_macros.html#scope_exit.no_variadic_macros.sequence_syntax">Sequence
+      <span class="phrase"><a name="scope_exit.no_variadic_macros.sequence_syntax"></a></span><a class="link" href="no_variadic_macros.html#scope_exit.no_variadic_macros.sequence_syntax">Sequence
       Syntax</a>
     </h4>
 <p>
       Most modern compilers support variadic macros (notably, these include GCC,
-      MSVC, and all C++11 compilers). <sup>[<a name="scope_exit.no_variadic_macros.f0" href="#ftn.scope_exit.no_variadic_macros.f0" class="footnote">10</a>]</sup> However, in the rare case that programmers need to use this library
+      MSVC, and all C++11 compilers). <a href="#ftn.scope_exit.no_variadic_macros.f0" class="footnote" name="scope_exit.no_variadic_macros.f0"><sup class="footnote">[10]</sup></a> However, in the rare case that programmers need to use this library
       on a complier without variaidc macros, this library also allows to specify
       the capture list using a <a href="http://www.boost.org/libs/preprocessor" target="_top">Boost.Preprocessor</a>
       sequence where tokens are separated by round parenthesis <code class="computeroutput"><span class="special">()</span></code>:
@@ -152,7 +152,7 @@
     </p>
 <h4>
 <a name="scope_exit.no_variadic_macros.h1"></a>
-      <span><a name="scope_exit.no_variadic_macros.examples"></a></span><a class="link" href="no_variadic_macros.html#scope_exit.no_variadic_macros.examples">Examples</a>
+      <span class="phrase"><a name="scope_exit.no_variadic_macros.examples"></a></span><a class="link" href="no_variadic_macros.html#scope_exit.no_variadic_macros.examples">Examples</a>
     </h4>
 <p>
       For reference, the following is a list of most of the examples presented in
@@ -205,8 +205,8 @@
 </tbody>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.no_variadic_macros.f0" href="#scope_exit.no_variadic_macros.f0" class="para">10</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.scope_exit.no_variadic_macros.f0" class="footnote"><p><a href="#scope_exit.no_variadic_macros.f0" class="para"><sup class="para">[10] </sup></a>
         A C++ compiler does not support variadic macros if the <a href="http://www.boost.org/libs/config" target="_top">Boost.Config</a>
         macro <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_VARIADIC_MACROS</span></code>
         is defined for that compiler.

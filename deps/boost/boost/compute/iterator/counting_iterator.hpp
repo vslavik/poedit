@@ -47,14 +47,14 @@ struct counting_iterator_index_expr
 {
     typedef T result_type;
 
-    counting_iterator_index_expr(const T &init, const IndexExpr &expr)
+    counting_iterator_index_expr(const T init, const IndexExpr &expr)
         : m_init(init),
           m_expr(expr)
     {
     }
 
-    const T &m_init;
-    IndexExpr m_expr;
+    const T m_init;
+    const IndexExpr m_expr;
 };
 
 template<class T, class IndexExpr>

@@ -12,7 +12,7 @@ import re
 
 
 def test_basic():
-    t = BoostBuild.Tester(pass_d0=False)
+    t = BoostBuild.Tester()
     __write_appender(t, "appender.jam")
     t.write("a.cpp", "")
     t.write("b.cxx", "")
@@ -110,7 +110,7 @@ type.register NM_EXE : : MY_EXE ;
 appender.register marked-to-target-cpp : CPP_MARKED : NM.TARGET.CPP ;
 appender.register cpp-to-marked-positions : CPP : CPP_MARKED POSITIONS ;
 
-class nm::target::cpp-obj-generator : generator
+class "nm::target::cpp-obj-generator" : generator
 {
     rule __init__ ( id )
     {
@@ -137,7 +137,7 @@ class nm::target::cpp-obj-generator : generator
         }
     }
 }
-generators.register [ new nm::target::cpp-obj-generator target-obj ] ;
+generators.register [ new "nm::target::cpp-obj-generator" target-obj ] ;
 generators.override target-obj : all ;
 
 
@@ -215,17 +215,17 @@ nm-exe e : e.cpp ;
 """)
 
     t.run_build_system()
-    t.expect_addition("bin/$toolset/debug/" * BoostBuild.List("a.my_exe "
+    t.expect_addition("bin/" * BoostBuild.List("a.my_exe "
         "a.my_obj b.my_obj c.tui_h c.cpp c.my_obj d_parser.whl d_lexer.dlp "
         "d_parser.cpp d_lexer.cpp d_lexer.my_obj d_parser.lr0 d_parser.h "
         "d_parser.my_obj d_parser_symbols.h x.c x.my_obj y.x1 y.x2 y.cpp "
         "y.my_obj e.marked_cpp e.positions e.target_cpp e.my_obj e.my_exe "
         "f.my_exe obj_1.my_obj obj_2.my_obj"))
-    t.expect_addition("lib/bin/$toolset/debug/" * BoostBuild.List("c.my_obj "
+    t.expect_addition("lib/bin/" * BoostBuild.List("c.my_obj "
         "auxilliary.my_lib"))
     t.expect_nothing_more()
 
-    folder = "bin/$toolset/debug"
+    folder = "bin"
     t.expect_content_lines("%s/obj_1.my_obj" % folder, "     Sources: 'z.cpp'")
     t.expect_content_lines("%s/obj_2.my_obj" % folder, "     Sources: 'z.cpp'")
     t.expect_content_lines("%s/a.my_obj" % folder, "     Sources: 'a.cpp'")
@@ -285,7 +285,7 @@ appender.register ccc-to-ddd composing : CCC         : DDD ;
 ddd _xxx : _xxx._a ;
 """
 
-    t = BoostBuild.Tester(pass_d0=False)
+    t = BoostBuild.Tester()
     __write_appender(t, "appender.jam")
     t.write("_xxx._a", "")
 
@@ -311,7 +311,7 @@ ddd _xxx : _xxx._a ;
             def suffix(rename):
                 if rename: return "_x"
                 return ""
-            name = "bin/$toolset/debug/_xxx"
+            name = "bin/_xxx"
             e = t.expect_addition
             e("%s%s._b1" % (name, suffix(rename1)))
             e("%s%s._b2" % (name, suffix(rename2)))
@@ -406,7 +406,7 @@ rule appender ( targets + : sources + : properties * )
         local appender-run = $(appender-runs) ;
         if $(targets[2])-defined
         {
-            appender-run += [$(target-index)/$(target-count)] ;
+            appender-run += "[$(target-index)/$(target-count)]" ;
         }
         append $(targets) : $(appender-run:J=" ") $(t) $(sources) ;
     }

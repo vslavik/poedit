@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using add_pointer_t = typename add_pointer<T>::type; // C++11 and above
+
 __type The same type as `remove_reference<T>::type*`.  
 
 The rationale for this template

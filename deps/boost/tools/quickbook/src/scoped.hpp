@@ -11,20 +11,20 @@
 
 #include <cassert>
 
-namespace quickbook {
+namespace quickbook
+{
 
     struct scoped_action_base
     {
         bool start() { return true; }
-        template <typename Iterator>
-        void success(Iterator, Iterator) {}
+        template <typename Iterator> void success(Iterator, Iterator) {}
         void failure() {}
         void cleanup() {}
-        
+
         template <typename ResultT, typename ScannerT>
-        bool result(ResultT result, ScannerT const&)
+        bool result(ResultT r, ScannerT const&)
         {
-            return result;
+            return r;
         }
     };
 }

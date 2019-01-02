@@ -52,7 +52,7 @@ struct is_relaxed_impl :
  * - A raw value can be assigned to an @ref any.  This will replace
  *   the value stored by the @ref any.  (But note that if @ref assignable
  *   is present, it takes priority.)
- * - copy assignment of @ref any uses the copy constructor if it can't
+ * - assignment of @ref any uses the constructor if it can't
  *   use @ref assignable (either because @ref assignable is missing,
  *   or because the stored types do not match).
  * - default construction of @ref any is allowed and creates a null any.

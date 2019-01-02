@@ -4,9 +4,7 @@
 <namespace name="numeric">
 <struct name="default_"><template>
       <template-type-parameter name="T"/>
-    </template><method-group name="public static functions">
-<typedef name="type"><type><classname>default_</classname></type></typedef>
-</method-group>
+    </template><typedef name="type"><type><classname>default_</classname></type></typedef>
 <typedef name="value_type"><type>T</type></typedef>
 <data-member name="value" specifiers="static"><type>T const</type></data-member>
 <method-group name="public member functions">
@@ -30,9 +28,9 @@
 </method-group>
 </struct><struct name="one_or_default"><template>
       <template-type-parameter name="T"/>
-    </template></struct><struct name="zero_or_default"><template>
+    </template><inherit access="public">mpl::if_::type&lt; is_empty&lt; T &gt;, default_&lt; T &gt;, one&lt; T &gt; &gt;</inherit></struct><struct name="zero_or_default"><template>
       <template-type-parameter name="T"/>
-    </template></struct><namespace name="functional">
+    </template><inherit access="public">mpl::if_::type&lt; is_empty&lt; T &gt;, default_&lt; T &gt;, zero&lt; T &gt; &gt;</inherit></struct><namespace name="functional">
 <struct name="left_ref"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
@@ -302,14 +300,20 @@
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct name="max_assign_base"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct name="fdiv_base"><template>
@@ -323,44 +327,58 @@
       <template-type-parameter name="To"/>
       <template-type-parameter name="From"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::unary_function&lt; From, To &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="argument_type"><type>From</type></typedef>
+<typedef name="result_type"><type>To</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>To</type><parameter name="from"><paramtype>From &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct-specialization name="promote_base"><template>
       <template-type-parameter name="ToFrom"/>
-    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>void</template-arg></specialization><inherit access="public">std::unary_function&lt; ToFrom, ToFrom &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>void</template-arg></specialization><typedef name="argument_type"><type>ToFrom</type></typedef>
+<typedef name="result_type"><type>ToFrom</type></typedef>
+<method-group name="public member functions">
 <method name="operator()"><type>ToFrom &amp;</type><parameter name="tofrom"><paramtype>ToFrom &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct name="as_min_base"><template>
       <template-type-parameter name="Arg"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::unary_function&lt; Arg, remove_const&lt; Arg &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="argument_type"><type>Arg</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; Arg &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="BOOST_STATIC_ASSERT"><type/><parameter name=""><paramtype>std::numeric_limits&lt; typename remove_const&lt; Arg &gt;::type &gt;::is_specialized</paramtype></parameter></method>
 <method name="operator()" cv="const"><type>remove_const&lt; Arg &gt;::type</type><parameter name=""><paramtype>Arg &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct-specialization name="as_min_base"><template>
       <template-type-parameter name="Arg"/>
-    </template><specialization><template-arg>Arg</template-arg><template-arg>typename enable_if&lt; is_floating_point&lt; Arg &gt; &gt;::type</template-arg></specialization><inherit access="public">std::unary_function&lt; Arg, remove_const&lt; Arg &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>Arg</template-arg><template-arg>typename enable_if&lt; is_floating_point&lt; Arg &gt; &gt;::type</template-arg></specialization><typedef name="argument_type"><type>Arg</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; Arg &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="BOOST_STATIC_ASSERT"><type/><parameter name=""><paramtype>std::numeric_limits&lt; typename remove_const&lt; Arg &gt;::type &gt;::is_specialized</paramtype></parameter></method>
 <method name="operator()" cv="const"><type>remove_const&lt; Arg &gt;::type</type><parameter name=""><paramtype>Arg &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct name="as_max_base"><template>
       <template-type-parameter name="Arg"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::unary_function&lt; Arg, remove_const&lt; Arg &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="argument_type"><type>Arg</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; Arg &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="BOOST_STATIC_ASSERT"><type/><parameter name=""><paramtype>std::numeric_limits&lt; typename remove_const&lt; Arg &gt;::type &gt;::is_specialized</paramtype></parameter></method>
 <method name="operator()" cv="const"><type>remove_const&lt; Arg &gt;::type</type><parameter name=""><paramtype>Arg &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct name="as_zero_base"><template>
       <template-type-parameter name="Arg"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::unary_function&lt; Arg, remove_const&lt; Arg &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="argument_type"><type>Arg</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; Arg &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; Arg &gt;::type</type><parameter name=""><paramtype>Arg &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct name="as_one_base"><template>
       <template-type-parameter name="Arg"/>
       <template-type-parameter name="EnableIf"/>
-    </template><inherit access="public">std::unary_function&lt; Arg, remove_const&lt; Arg &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><typedef name="argument_type"><type>Arg</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; Arg &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; Arg &gt;::type</type><parameter name=""><paramtype>Arg &amp;</paramtype></parameter></method>
 </method-group>
 </struct><struct name="promote"><template>
@@ -451,59 +469,88 @@
 </struct-specialization><struct-specialization name="min_assign"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="max_assign"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="fdiv"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
       <template-type-parameter name="RightTag"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>RightTag</template-arg></specialization></struct-specialization><struct-specialization name="promote"><template>
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>RightTag</template-arg></specialization><inherit access="public">mpl::if_::type&lt; are_integral&lt; Left::value_type, Right &gt;, divides&lt; Left, double const  &gt;, divides&lt; Left, Right &gt; &gt;</inherit></struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="To"/>
       <template-type-parameter name="From"/>
-    </template><specialization><template-arg>To</template-arg><template-arg>From</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; From, To &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>To</template-arg><template-arg>From</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>From</type></typedef>
+<typedef name="result_type"><type>To</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>To</type><parameter name="arr"><paramtype>From &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="ToFrom"/>
-    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; ToFrom, ToFrom &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>std_valarray_tag</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>ToFrom</type></typedef>
+<typedef name="result_type"><type>ToFrom</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>ToFrom &amp;</type><parameter name="tofrom"><paramtype>ToFrom &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="From"/>
-    </template><specialization><template-arg>bool</template-arg><template-arg>From</template-arg><template-arg>void</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; From, bool &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>bool</template-arg><template-arg>From</template-arg><template-arg>void</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>From</type></typedef>
+<typedef name="result_type"><type>bool</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>bool</type><parameter name="arr"><paramtype>From &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="From"/>
     </template><specialization><template-arg>bool const</template-arg><template-arg>From</template-arg><template-arg>void</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">boost::numeric::functional::promote&lt; bool, From, void, std_valarray_tag &gt;</inherit></struct-specialization><struct-specialization name="as_min"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_max"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_zero"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_one"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_valarray_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization></namespace>
 <namespace name="operators">
+
+
+
+
+
+
+
+
+
 <function name="operator/"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="Left"/>
           <template-type-parameter name="Right"/>
@@ -516,15 +563,6 @@
           <template-type-parameter name="Left"/>
           <template-type-parameter name="Right"/>
         </template><parameter name="left"><paramtype>std::valarray&lt; Left &gt; const &amp;</paramtype></parameter><parameter name="right"><paramtype>std::valarray&lt; Right &gt; const &amp;</paramtype></parameter></function>
-
-
-
-
-
-
-
-
-
 
 
 </namespace>
@@ -544,54 +582,69 @@
 </struct-specialization><struct-specialization name="min_assign"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="max_assign"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::binary_function&lt; Left, Right, void &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="first_argument_type"><type>Left</type></typedef>
+<typedef name="second_argument_type"><type>Right</type></typedef>
+<typedef name="result_type"><type>void</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>void</type><parameter name="left"><paramtype>Left &amp;</paramtype></parameter><parameter name="right"><paramtype>Right &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="fdiv"><template>
       <template-type-parameter name="Left"/>
       <template-type-parameter name="Right"/>
-    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>void</template-arg></specialization></struct-specialization><struct-specialization name="promote"><template>
+    </template><specialization><template-arg>Left</template-arg><template-arg>Right</template-arg><template-arg>std_vector_tag</template-arg><template-arg>void</template-arg></specialization><inherit access="public">mpl::if_::type&lt; are_integral&lt; Left::value_type, Right &gt;, divides&lt; Left, double const  &gt;, divides&lt; Left, Right &gt; &gt;</inherit></struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="To"/>
       <template-type-parameter name="From"/>
-    </template><specialization><template-arg>To</template-arg><template-arg>From</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; From, To &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>To</template-arg><template-arg>From</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>From</type></typedef>
+<typedef name="result_type"><type>To</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>To</type><parameter name="arr"><paramtype>From &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="promote"><template>
       <template-type-parameter name="ToFrom"/>
-    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; ToFrom, ToFrom &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>ToFrom</template-arg><template-arg>ToFrom</template-arg><template-arg>std_vector_tag</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>ToFrom</type></typedef>
+<typedef name="result_type"><type>ToFrom</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>ToFrom &amp;</type><parameter name="tofrom"><paramtype>ToFrom &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_min"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_max"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_zero"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization><struct-specialization name="as_one"><template>
       <template-type-parameter name="T"/>
-    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><inherit access="public">std::unary_function&lt; T, remove_const&lt; T &gt;::type &gt;</inherit><method-group name="public member functions">
+    </template><specialization><template-arg>T</template-arg><template-arg>std_vector_tag</template-arg></specialization><typedef name="argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>remove_const&lt; T &gt;::type</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>remove_const&lt; T &gt;::type</type><parameter name="arr"><paramtype>T &amp;</paramtype></parameter></method>
 </method-group>
 </struct-specialization></namespace>
 <namespace name="operators">
-
-
-
 <function name="operator/"><type><emphasis>unspecified</emphasis></type><template>
           <template-type-parameter name="Left"/>
           <template-type-parameter name="Right"/>
@@ -626,6 +679,9 @@
 <function name="operator-"><type>std::vector&lt; typename <classname>functional::unary_minus</classname>&lt; Arg &gt;::result_type &gt;</type><template>
           <template-type-parameter name="Arg"/>
         </template><parameter name="arg"><paramtype>std::vector&lt; Arg &gt; const &amp;</paramtype></parameter></function>
+
+
+
 
 
 </namespace>

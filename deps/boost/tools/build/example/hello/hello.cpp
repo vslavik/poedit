@@ -7,6 +7,7 @@
 //  http://www.boost.org
 // 
 
+// tag::source[]
 #include <iostream>
 
 int main()
@@ -14,3 +15,4 @@ int main()
     std::cout << "Hello!\n";
     return 1;
 }
+// end::source[]

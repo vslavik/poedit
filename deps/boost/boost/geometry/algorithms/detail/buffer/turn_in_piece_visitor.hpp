@@ -1,6 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2016.
 // Modifications copyright (c) 2016 Oracle and/or its affiliates.
@@ -35,6 +36,8 @@
 
 #if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
 #include <boost/geometry/strategies/cartesian/side_of_intersection.hpp>
+#else
+#include <boost/geometry/strategies/agnostic/point_in_poly_winding.hpp>
 #endif
 
 
@@ -310,7 +313,11 @@ class analyse_turn_wrt_piece
     template <typename Point, typename Turn>
     static inline analyse_result check_helper_segment(Point const& s1,
                 Point const& s2, Turn const& turn,
+#if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
+                bool , // is on original, to be reused
+#else
                 bool is_original,
+#endif
                 Point const& offsetted)
     {
         boost::ignore_unused(offsetted);
@@ -339,11 +346,9 @@ class analyse_turn_wrt_piece
 
             if (geometry::covered_by(turn.robust_point, box))
             {
-                // Points on helper-segments are considered as within
-                // Points on original boundary are processed differently
-                return is_original
-                    ? analyse_on_original_boundary
-                    : analyse_within;
+                // Points on helper-segments (and not on its corners)
+                // are considered as within
+                return analyse_within;
             }
 
             // It is collinear but not on the segment. Because these
@@ -423,6 +428,13 @@ class analyse_turn_wrt_piece
             {
                 points[i] = piece.robust_ring[piece.offsetted_count + i];
             }
+
+            //      3--offsetted outline--0
+            //      |                     |
+            // left |                     | right
+            //      |                     |
+            //      2===>==original===>===1
+
         }
         else if (helper_count == 3)
         {
@@ -446,9 +458,15 @@ class analyse_turn_wrt_piece
         {
             return analyse_on_offsetted;
         }
-        if (comparator(point, points[1]) || comparator(point, points[2]))
+        if (comparator(point, points[1]))
         {
-            return analyse_on_original_boundary;
+            // On original, right corner
+            return piece.is_flat_end ? analyse_continue : analyse_on_original_boundary;
+        }
+        if (comparator(point, points[2]))
+        {
+            // On original, left corner
+            return piece.is_flat_start ? analyse_continue : analyse_on_original_boundary;
         }
 
         // Right side of the piece
@@ -686,32 +704,32 @@ public:
     {}
 
     template <typename Turn, typename Piece>
-    inline void apply(Turn const& turn, Piece const& piece, bool first = true)
+    inline bool apply(Turn const& turn, Piece const& piece, bool first = true)
     {
-        boost::ignore_unused_variable_warning(first);
+        boost::ignore_unused(first);
 
         if (turn.count_within > 0)
         {
             // Already inside - no need to check again
-            return;
+            return true;
         }
 
         if (piece.type == strategy::buffer::buffered_flat_end
             || piece.type == strategy::buffer::buffered_concave)
         {
             // Turns cannot be located within flat-end or concave pieces
-            return;
+            return true;
         }
 
         if (! geometry::covered_by(turn.robust_point, piece.robust_envelope))
         {
             // Easy check: if the turn is not in the envelope, we can safely return
-            return;
+            return true;
         }
 
         if (skip(turn.operations[0], piece) || skip(turn.operations[1], piece))
         {
-            return;
+            return true;
         }
 
         // TODO: mutable_piece to make some on-demand preparations in analyse
@@ -733,11 +751,11 @@ public:
             if (cd < piece.robust_min_comparable_radius)
             {
                 mutable_turn.count_within++;
-                return;
+                return true;
             }
             if (cd > piece.robust_max_comparable_radius)
             {
-                return;
+                return true;
             }
         }
 
@@ -749,20 +767,20 @@ public:
         switch(analyse_code)
         {
             case analyse_disjoint :
-                return;
+                return true;
             case analyse_on_offsetted :
                 mutable_turn.count_on_offsetted++; // value is not used anymore
-                return;
+                return true;
             case analyse_on_original_boundary :
                 mutable_turn.count_on_original_boundary++;
-                return;
+                return true;
             case analyse_within :
                 mutable_turn.count_within++;
-                return;
+                return true;
 #if ! defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
             case analyse_near_offsetted :
                 mutable_turn.count_within_near_offsetted++;
-                return;
+                return true;
 #endif
             default :
                 break;
@@ -790,6 +808,8 @@ public:
         {
             mutable_turn.count_within++;
         }
+
+        return true;
     }
 };
 

@@ -19,6 +19,7 @@ import set ;
 import property-set ;
 import order ;
 import "class" : new ;
+import utility ;
 
 
 .flag-no = 1 ;
@@ -76,6 +77,36 @@ rule pop-checking-for-flags-module ( )
 }
 
 
+# Specifies features that are referenced by the action rule.
+# This is necessary in order to detect that these features
+# are relevant.
+#
+rule uses-features ( rule-or-module : features * : unchecked ? )
+{
+    local caller = [ CALLER_MODULE ] ;
+    if ! [ MATCH ".*([.]).*" : $(rule-or-module) ]
+       && [ MATCH "(Jamfile<.*)" : $(caller) ]
+    {
+        # Unqualified rule name, used inside Jamfile. Most likely used with
+        # 'make' or 'notfile' rules. This prevents setting flags on the entire
+        # Jamfile module (this will be considered as rule), but who cares?
+        # Probably, 'flags' rule should be split into 'flags' and
+        # 'flags-on-module'.
+        rule-or-module = $(caller).$(rule-or-module) ;
+    }
+    else
+    {
+        local module_ = [ MATCH "([^.]*).*" : $(rule-or-module) ] ;
+        if $(unchecked) != unchecked
+            && $(.flags-module-checking[1]) != unchecked
+            && $(module_) != $(caller)
+        {
+            errors.error "Module $(caller) attempted to set flags for module $(module_)" ;
+        }
+    }
+    .uses-features.$(rule-or-module) += $(features) ;
+}
+
 # Specifies the flags (variables) that must be set on targets under certain
 # conditions, described by arguments.
 #
@@ -98,7 +129,7 @@ rule flags (
                      # "<toolset>gcc-3.2" are allowed. If left empty, the flag
                      # will be used unconditionally.
                      #
-                     # Propery sets may use value-less properties ('<a>'  vs.
+                     # Property sets may use value-less properties ('<a>'  vs.
                      # '<a>value') to match absent properties. This allows to
                      # separately match:
                      #
@@ -336,7 +367,7 @@ rule set-target-variables-aux ( rule-or-module : property-set )
     }
 
     # Strip away last dot separated part and recurse.
-    local next = [ MATCH ^(.+)\\.([^\\.])* : $(rule-or-module) ] ;
+    local next = [ MATCH "^(.+)\\.([^\\.])*" : $(rule-or-module) ] ;
     if $(next)
     {
         result += [ set-target-variables-aux $(next[1]) : $(property-set) ] ;
@@ -380,7 +411,7 @@ rule relevant-features ( rule-or-module )
         }
 
         # Strip away last dot separated part and recurse.
-        local next = [ MATCH ^(.+)\\.([^\\.])* : $(rule-or-module) ] ;
+        local next = [ MATCH "^(.+)\\.([^\\.])*" : $(rule-or-module) ] ;
         if $(next)
         {
             result += [ relevant-features $(next[1]) ] ;
@@ -396,6 +427,34 @@ rule relevant-features ( rule-or-module )
     else
     {
         return $(.relevant-features.$(rule-or-module)) ;
+    }
+}
+
+# Returns a list of all the features which were
+# passed to uses-features.
+local rule used-features ( rule-or-module )
+{
+    if ! $(.used-features.$(rule-or-module))
+    {
+        local result = $(.uses-features.$(rule-or-module)) ;
+ 
+        # Strip away last dot separated part and recurse.
+        local next = [ MATCH "^(.+)\\.([^\\.])*" : $(rule-or-module) ] ;
+        if $(next)
+        {
+            result += [ used-features $(next[1]) ] ;
+        }
+        result = [ sequence.unique $(result) ] ;
+        if $(result[1]) = ""
+        {
+            result = $(result) ;
+        }
+        .used-features.$(rule-or-module) = $(result) ;
+        return $(result) ;
+    }
+    else
+    {
+        return $(.used-features.$(rule-or-module)) ;
     }
 }
 
@@ -451,6 +510,23 @@ rule set-target-variables ( rule-or-module targets + : property-set )
             }
         }
     }
+}
+
+
+# Returns a property-set indicating which features are relevant
+# for the given rule.
+#
+rule relevant ( rule-name )
+{
+    if ! $(.relevant-features-ps.$(rule-name))
+    {
+        local features = [ sequence.transform utility.ungrist :
+            [ relevant-features $(rule-name) ]
+            [ used-features $(rule-name) ] ] ;
+        .relevant-features-ps.$(rule-name) =
+            [ property-set.create <relevant>$(features) ] ;
+    }
+    return $(.relevant-features-ps.$(rule-name)) ;
 }
 
 
@@ -584,6 +660,30 @@ rule add-requirements ( requirements * )
         requirements = [ property.expand-subfeatures-in-conditions $(requirements) ] ;
         requirements = [ property.make $(requirements) ] ;
         .requirements = [ $(.requirements).add-raw $(requirements) ] ;
+    }
+}
+
+# Returns the global toolset defaults.
+#
+.defaults = [ property-set.empty ] ;
+
+rule defaults ( )
+{
+    return $(.defaults) ;
+}
+
+# Add elements to the list of global toolset defaults.  These properties
+# should be conditional and will override the default value of the feature.
+# Do not use this for non-conditionals.  Use feature.set-default instead.
+#
+rule add-defaults ( properties * )
+{
+    if ! $(.ignore-requirements)
+    {
+        properties = [ property.translate-indirect $(properties) : [ CALLER_MODULE ] ] ;
+        properties = [ property.expand-subfeatures-in-conditions $(properties) ] ;
+        properties = [ property.make $(properties) ] ;
+        .defaults = [ $(.defaults).add-raw $(properties) ] ;
     }
 }
 

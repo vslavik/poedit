@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template type_id</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeindex_header_reference.html#header.boost.type_index_hpp" title="Header &lt;boost/type_index.hpp&gt;">
 <link rel="prev" href="type_info.html" title="Type definition type_info">
@@ -35,23 +35,29 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">type_index</span> <span class="identifier">type_id</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp452891408"></a><h2>Description</h2>
+<a name="id-1.3.42.8.2.8.4"></a><h2>Description</h2>
 <p>Function to get boost::typeindex::type_index for a type T. Removes const, volatile &amp;&amp; and &amp; modifiers from T.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"> <span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&amp;</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
- <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'int'</span>
+<pre class="programlisting"><span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&amp;</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'int'</span>
 </pre>
 <p>
 
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Template Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">T</code></span></p></td>
 <td><p>Type for which type_index must be created. </p></td>
@@ -72,7 +78,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2012-2014 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012-2016 Antony Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

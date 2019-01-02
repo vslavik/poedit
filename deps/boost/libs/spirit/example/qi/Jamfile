@@ -6,8 +6,7 @@
 #==============================================================================
 project spirit-qi-example
     : requirements
-        <toolset>gcc:<c++-template-depth>300
-        <toolset>darwin:<cxxflags>-ftemplate-depth-300
+        <c++-template-depth>300
     :
     :
     ;
@@ -27,6 +26,7 @@ exe num_list3 : num_list3.cpp ;
 exe num_list4 : num_list4.cpp ;
 exe reorder_struct : reorder_struct.cpp ;
 exe parse_date : parse_date.cpp ;
+exe expect : expect.cpp ;
 
 exe key_value_sequence : key_value_sequence.cpp ;
 exe key_value_sequence_ordered : key_value_sequence_ordered.cpp ;

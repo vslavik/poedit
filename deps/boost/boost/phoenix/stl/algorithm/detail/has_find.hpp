@@ -22,6 +22,7 @@
 #include "./is_std_set.hpp"
 #include "./is_std_hash_map.hpp"
 #include "./is_std_hash_set.hpp"
+#include "./is_unordered_set_or_map.hpp"
 
 namespace boost
 {
@@ -41,12 +42,15 @@ namespace boost
               , is_std_hash_set<T>
               , is_std_hash_multiset<T>
           >
+          , boost::mpl::or_<
+                is_std_unordered_map<T>
+              , is_std_unordered_multimap<T>
+              , is_std_unordered_set<T>
+              , is_std_unordered_multiset<T>
+            >
         >
     {
     };
 }
-
-// Bring in unordered_set and unordered_map stuff.
-#include "./is_unordered_set_or_map.hpp"
 
 #endif

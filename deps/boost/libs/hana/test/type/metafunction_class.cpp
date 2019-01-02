@@ -1,10 +1,11 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #include <boost/hana/assert.hpp>
 #include <boost/hana/concept/metafunction.hpp>
 #include <boost/hana/equal.hpp>
+#include <boost/hana/not.hpp>
 #include <boost/hana/type.hpp>
 
 #include <type_traits>
@@ -52,6 +53,16 @@ static_assert(!valid_call(hana::metafunction_class<no_type>, hana::type_c<x1>), 
 // Make sure we model the Metafunction concept
 static_assert(hana::Metafunction<decltype(hana::metafunction_class<f>)>::value, "");
 static_assert(hana::Metafunction<decltype(hana::metafunction_class<f>)&>::value, "");
+
+// Make sure metafunction_class is SFINAE-friendly
+struct not_a_mfc1 { template <typename ...> struct apply { }; };
+struct not_a_mfc2 { };
+BOOST_HANA_CONSTANT_CHECK(hana::not_(
+    hana::is_valid(hana::metafunction_class<not_a_mfc1>)(hana::type_c<void>)
+));
+BOOST_HANA_CONSTANT_CHECK(hana::not_(
+    hana::is_valid(hana::metafunction_class<not_a_mfc2>)(hana::type_c<void>)
+));
 
 
 // Make sure we don't read from a non-constexpr variable

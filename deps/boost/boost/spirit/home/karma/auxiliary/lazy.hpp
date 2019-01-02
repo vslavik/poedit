@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace karma
           , typename Delimiter, typename Attribute>
         bool lazy_generate_impl(Generator const& g, OutputIterator& sink
           , Context& context, Delimiter const& delim
-          , Attribute const& attr, mpl::true_)
+          , Attribute const& /* attr */, mpl::true_)
         {
             // If DeducedAuto is false (semantic actions is present), the
             // component's attribute is unused.

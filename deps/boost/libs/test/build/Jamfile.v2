@@ -4,15 +4,22 @@
 #
 #  See http://www.boost.org/libs/test for the library home page.
 
+import os ;
+
+import ../../predef/check/predef
+    : check 
+    : predef-check ;
+
 project boost/test
     : source-location ../src
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>borland:<cxxflags>-w-8080
+                   <target-os>cygwin:<define>_POSIX_C_SOURCE=200112L
                    # Disable Warning about boost::noncopyable not being exported
                    <link>shared,<toolset>msvc:<cxxflags>-wd4275
                    <toolset>msvc:<cxxflags>-wd4671
                    <toolset>msvc:<cxxflags>-wd4673
-                   <toolset>gcc:<cxxflags>-Wno-variadic-macros
+                   [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-variadic-macros ]
                    <toolset>clang:<cxxflags>-Wno-c99-extensions
                    <toolset>clang:<cxxflags>-Wno-variadic-macros
                    <warnings>all
@@ -47,6 +54,7 @@ TEST_EXEC_MON_SOURCES =
   progress_monitor
   results_collector
   results_reporter
+  test_framework_init_observer
   test_main
   test_tools
   test_tree
@@ -54,6 +62,7 @@ TEST_EXEC_MON_SOURCES =
   unit_test_main
   unit_test_monitor
   unit_test_parameters
+  junit_log_formatter
   xml_log_formatter
   xml_report_formatter
   ;
@@ -68,12 +77,14 @@ UTF_SOURCES =
   progress_monitor
   results_collector
   results_reporter
+  test_framework_init_observer
   test_tools
   test_tree
   unit_test_log
   unit_test_main
   unit_test_monitor
   unit_test_parameters
+  junit_log_formatter
   xml_log_formatter
   xml_report_formatter
   ;

@@ -938,7 +938,7 @@ attach_debugger( bool break_or_continue )
     return true;
 
 #else // ****************************************************** default
-
+    (void) break_or_continue; // silence 'unused variable' warning
     return false;
 
 #endif

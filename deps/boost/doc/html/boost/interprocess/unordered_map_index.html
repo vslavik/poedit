@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template unordered_map_index</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../interprocess/indexes_reference.html#header.boost.interprocess.indexes.unordered_map_index_hpp" title="Header &lt;boost/interprocess/indexes/unordered_map_index.hpp&gt;">
 <link rel="prev" href="null_index.html" title="Class template null_index">
@@ -33,38 +33,40 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../interprocess/indexes_reference.html#header.boost.interprocess.indexes.unordered_map_index_hpp" title="Header &lt;boost/interprocess/indexes/unordered_map_index.hpp&gt;">boost/interprocess/indexes/unordered_map_index.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MapConfig<span class="special">&gt;</span> 
-<span class="keyword">class</span> <a class="link" href="unordered_map_index.html" title="Class template unordered_map_index">unordered_map_index</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="unordered_map_index.html" title="Class template unordered_map_index">unordered_map_index</a> <span class="special">:</span>
+  <span class="keyword">public</span> <span class="identifier">unordered_map_index_aux</span><span class="special">::</span><span class="identifier">index_t</span><span class="special">&lt;</span> <span class="identifier">MapConfig</span> <span class="special">&gt;</span>
+<span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="unordered_map_index.html#boost.interprocess.unordered_map_indexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="unordered_map_index.html#idp22775936-bb"><span class="identifier">unordered_map_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unordered_map_index.html#idp66876608-bb"><span class="identifier">unordered_map_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="unordered_map_index.html#idp22771872-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="unordered_map_index.html#idp22772432-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="unordered_map_index.html#idp22774480-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="unordered_map_index.html#idp66872544-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="unordered_map_index.html#idp66873104-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="unordered_map_index.html#idp66875152-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp167549760"></a><h2>Description</h2>
+<a name="id-1.3.19.17.3.32.4.4"></a><h2>Description</h2>
 <p>Index type based in unordered_map. Just derives from unordered_map and defines the interface needed by managed memory segments </p>
 <div class="refsect2">
-<a name="idp167550576"></a><h3>
+<a name="id-1.3.19.17.3.32.4.4.3"></a><h3>
 <a name="boost.interprocess.unordered_map_indexconstruct-copy-destruct"></a><code class="computeroutput">unordered_map_index</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp22775936-bb"></a><span class="identifier">unordered_map_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> segment_mngr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp66876608-bb"></a><span class="identifier">unordered_map_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> segment_mngr<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Takes a pointer to the segment manager. Can throw </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp167558368"></a><h3>
-<a name="idp22771872-bb"></a><code class="computeroutput">unordered_map_index</code> public member functions</h3>
+<a name="id-1.3.19.17.3.32.4.4.4"></a><h3>
+<a name="idp66872544-bb"></a><code class="computeroutput">unordered_map_index</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp22772432-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp66873104-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p>This reserves memory to optimize the insertion of n elements in the index </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp22774480-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp66875152-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>This tries to free previously allocate unused memory. </p>
 </li>
 </ol></div>

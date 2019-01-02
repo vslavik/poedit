@@ -106,7 +106,7 @@ An escape character followed by a digit /n/, where /n/ is in the range 1-9,
 matches the same string that was matched by sub-expression /n/.  For example 
 the expression:
 
-[pre ^\\(a\*\\).\*\\1$]
+[pre ^\\(a\*\\)\[\^a\]\*\\1$]
 
 Will match the string:
 

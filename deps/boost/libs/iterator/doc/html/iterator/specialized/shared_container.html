@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Shared Container Iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
 <link rel="up" href="../specialized.html" title="Specialized Adaptors">
 <link rel="prev" href="reverse.html" title="Reverse Iterator">
-<link rel="next" href="shared_container/shared_container_object_generator.html" title="The Shared Container Iterator Object Generator">
+<link rel="next" href="transform.html" title="Transform Iterator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,19 +20,19 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reverse.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../specialized.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="shared_container/shared_container_object_generator.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reverse.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../specialized.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="iterator.specialized.shared_container"></a><a class="link" href="shared_container.html" title="Shared Container Iterator">Shared Container
       Iterator</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="shared_container.html#iterator.specialized.shared_container.shared_container_type">The
         Shared Container Iterator Type</a></span></dt>
-<dt><span class="section"><a href="shared_container/shared_container_object_generator.html">The
+<dt><span class="section"><a href="shared_container.html#iterator.specialized.shared_container.shared_container_object_generator">The
         Shared Container Iterator Object Generator</a></span></dt>
-<dt><span class="section"><a href="shared_container/shared_container_generator.html">The
+<dt><span class="section"><a href="shared_container.html#iterator.specialized.shared_container.shared_container_generator">The
         Shared Container Iterator Range Generator</a></span></dt>
 </dl></div>
 <p>
@@ -58,7 +58,7 @@
       </p>
 <h3>
 <a name="iterator.specialized.shared_container.h0"></a>
-        <span><a name="iterator.specialized.shared_container.synopsis"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.synopsis">Synopsis</a>
+        <span class="phrase"><a name="iterator.specialized.shared_container.synopsis"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.synopsis">Synopsis</a>
       </h3>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">&gt;</span>
@@ -91,7 +91,7 @@
         </p>
 <h3>
 <a name="iterator.specialized.shared_container.shared_container_type.h0"></a>
-          <span><a name="iterator.specialized.shared_container.shared_container_type.example"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.example">Example</a>
+          <span class="phrase"><a name="iterator.specialized.shared_container.shared_container_type.example"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.example">Example</a>
         </h3>
 <p>
           The following example illustrates how to create an iterator that regulates
@@ -102,7 +102,7 @@
           the container's lifetime.
         </p>
 <p>
-          <a href="../../../../../libs/utility/shared_iterator_example1.cpp" target="_top"><code class="computeroutput"><span class="identifier">shared_iterator_example1</span><span class="special">.</span><span class="identifier">cpp</span></code></a>:
+          <a href="../../../../example/shared_iterator_example1.cpp" target="_top"><code class="computeroutput"><span class="identifier">shared_iterator_example1</span><span class="special">.</span><span class="identifier">cpp</span></code></a>:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="string">"shared_container_iterator.hpp"</span>
 <span class="preprocessor">#include</span> <span class="string">"boost/shared_ptr.hpp"</span>
@@ -182,7 +182,7 @@
 </div>
 <br class="table-break"><h3>
 <a name="iterator.specialized.shared_container.shared_container_type.h1"></a>
-          <span><a name="iterator.specialized.shared_container.shared_container_type.concepts"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.concepts">Concepts</a>
+          <span class="phrase"><a name="iterator.specialized.shared_container.shared_container_type.concepts"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.concepts">Concepts</a>
         </h3>
 <p>
           The <code class="computeroutput"><span class="identifier">shared_container_iterator</span></code>
@@ -190,7 +190,7 @@
         </p>
 <h3>
 <a name="iterator.specialized.shared_container.shared_container_type.h2"></a>
-          <span><a name="iterator.specialized.shared_container.shared_container_type.operations"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.operations">Operations</a>
+          <span class="phrase"><a name="iterator.specialized.shared_container.shared_container_type.operations"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_type.operations">Operations</a>
         </h3>
 <p>
           The <code class="computeroutput"><span class="identifier">shared_container_iterator</span></code>
@@ -201,6 +201,145 @@
 <pre class="programlisting"><span class="identifier">shared_container_iterator</span><span class="special">(</span><span class="identifier">Container</span><span class="special">::</span><span class="identifier">iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">it</span><span class="special">,</span>
                           <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">container</span><span class="special">)</span>
 </pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="iterator.specialized.shared_container.shared_container_object_generator"></a><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_object_generator" title="The Shared Container Iterator Object Generator">The
+        Shared Container Iterator Object Generator</a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">&gt;</span>
+<span class="identifier">shared_container_iterator</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;</span>
+<span class="identifier">make_shared_container_iterator</span><span class="special">(</span><span class="identifier">Container</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">base</span><span class="special">,</span>
+                               <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">container</span><span class="special">)</span>
+</pre>
+<p>
+          This function provides an alternative to directly constructing a <code class="computeroutput"><span class="identifier">shared_container_iterator</span></code>. Using the
+          object generator, a <code class="computeroutput"><span class="identifier">shared_container_iterator</span></code>
+          can be created and passed to a function without explicitly specifying its
+          type.
+        </p>
+<h3>
+<a name="iterator.specialized.shared_container.shared_container_object_generator.h0"></a>
+          <span class="phrase"><a name="iterator.specialized.shared_container.shared_container_object_generator.example"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_object_generator.example">Example</a>
+        </h3>
+<p>
+          This example, similar to the previous, uses <code class="computeroutput"><span class="identifier">make_shared_container_iterator</span><span class="special">()</span></code> to create the iterators.
+        </p>
+<p>
+          <a href="../../../../example/shared_iterator_example2.cpp" target="_top"><code class="computeroutput"><span class="identifier">shared_iterator_example2</span><span class="special">.</span><span class="identifier">cpp</span></code></a>:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="string">"shared_container_iterator.hpp"</span>
+<span class="preprocessor">#include</span> <span class="string">"boost/shared_ptr.hpp"</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
+
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">print_range_nl</span> <span class="special">(</span><span class="identifier">Iterator</span> <span class="identifier">begin</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">end</span><span class="special">)</span> <span class="special">{</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">value_type</span> <span class="identifier">val</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span><span class="identifier">begin</span><span class="special">,</span><span class="identifier">end</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream_iterator</span><span class="special">&lt;</span><span class="identifier">val</span><span class="special">&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="string">","</span><span class="special">));</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">put</span><span class="special">(</span><span class="char">'\n'</span><span class="special">);</span>
+<span class="special">}</span>
+
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+
+  <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">ints_t</span><span class="special">;</span>
+  <span class="special">{</span>
+    <span class="identifier">ints_t</span> <span class="identifier">ints</span><span class="special">(</span><span class="keyword">new</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;());</span>
+
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1</span><span class="special">);</span>
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3</span><span class="special">);</span>
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">4</span><span class="special">);</span>
+    <span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">5</span><span class="special">);</span>
+
+    <span class="identifier">print_range_nl</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared_container_iterator</span><span class="special">(</span><span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">begin</span><span class="special">(),</span><span class="identifier">ints</span><span class="special">),</span>
+                   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared_container_iterator</span><span class="special">(</span><span class="identifier">ints</span><span class="special">-&gt;</span><span class="identifier">end</span><span class="special">(),</span><span class="identifier">ints</span><span class="special">));</span>
+  <span class="special">}</span>
+
+
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          Observe that the <code class="computeroutput"><span class="identifier">shared_container_iterator</span></code>
+          type is never explicitly named. The output from this example is the same
+          as the previous.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="iterator.specialized.shared_container.shared_container_generator"></a><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_generator" title="The Shared Container Iterator Range Generator">The
+        Shared Container Iterator Range Generator</a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span>
+  <span class="identifier">shared_container_iterator</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;,</span>
+  <span class="identifier">shared_container_iterator</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;</span>
+<span class="special">&gt;</span>
+<span class="identifier">make_shared_container_range</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span><span class="identifier">Container</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">container</span><span class="special">);</span>
+<span class="identifier">Class</span> <span class="identifier">shared_container_iterator</span> <span class="identifier">is</span> <span class="identifier">meant</span> <span class="identifier">primarily</span> <span class="identifier">to</span> <span class="keyword">return</span><span class="special">,</span> <span class="keyword">using</span> <span class="identifier">iterators</span><span class="special">,</span> <span class="identifier">a</span> <span class="identifier">range</span> <span class="identifier">of</span> <span class="identifier">values</span> <span class="identifier">that</span> <span class="identifier">we</span> <span class="identifier">can</span> <span class="identifier">guarantee</span> <span class="identifier">will</span> <span class="identifier">be</span> <span class="identifier">alive</span> <span class="identifier">as</span> <span class="keyword">long</span> <span class="identifier">as</span> <span class="identifier">the</span> <span class="identifier">iterators</span> <span class="identifier">are</span><span class="special">.</span> <span class="identifier">This</span> <span class="identifier">is</span> <span class="identifier">a</span> <span class="identifier">convenience</span> <span class="identifier">function</span> <span class="identifier">to</span> <span class="keyword">do</span> <span class="identifier">just</span> <span class="identifier">that</span><span class="special">.</span> <span class="identifier">It</span> <span class="identifier">is</span> <span class="identifier">equivalent</span> <span class="identifier">to</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="identifier">make_shared_container_iterator</span><span class="special">(</span><span class="identifier">container</span><span class="special">-&gt;</span><span class="identifier">begin</span><span class="special">(),</span><span class="identifier">container</span><span class="special">),</span>
+               <span class="identifier">make_shared_container_iterator</span><span class="special">(</span><span class="identifier">container</span><span class="special">-&gt;</span><span class="identifier">end</span><span class="special">(),</span><span class="identifier">container</span><span class="special">));</span>
+</pre>
+<h3>
+<a name="iterator.specialized.shared_container.shared_container_generator.h0"></a>
+          <span class="phrase"><a name="iterator.specialized.shared_container.shared_container_generator.example"></a></span><a class="link" href="shared_container.html#iterator.specialized.shared_container.shared_container_generator.example">Example</a>
+        </h3>
+<p>
+          In the following example, a range of values is returned as a pair of shared_container_iterator
+          objects.
+        </p>
+<p>
+          <a href="../../../../example/shared_iterator_example3.cpp" target="_top"><code class="computeroutput"><span class="identifier">shared_iterator_example3</span><span class="special">.</span><span class="identifier">cpp</span></code></a>:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="string">"shared_container_iterator.hpp"</span>
+<span class="preprocessor">#include</span> <span class="string">"boost/shared_ptr.hpp"</span>
+<span class="preprocessor">#include</span> <span class="string">"boost/tuple/tuple.hpp"</span> <span class="comment">// for boost::tie</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span>              <span class="comment">// for std::copy</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
+
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_container_iterator</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">iterator</span><span class="special">;</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">,</span><span class="identifier">iterator</span><span class="special">&gt;</span>
+<span class="identifier">return_range</span><span class="special">()</span> <span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">range</span><span class="special">(</span><span class="keyword">new</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;());</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1</span><span class="special">);</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3</span><span class="special">);</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">4</span><span class="special">);</span>
+  <span class="identifier">range</span><span class="special">-&gt;</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">5</span><span class="special">);</span>
+  <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared_container_range</span><span class="special">(</span><span class="identifier">range</span><span class="special">);</span>
+<span class="special">}</span>
+
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span> <span class="special">{</span>
+
+
+  <span class="identifier">iterator</span> <span class="identifier">i</span><span class="special">,</span><span class="identifier">end</span><span class="special">;</span>
+
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tie</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">end</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">return_range</span><span class="special">();</span>
+
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">end</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream_iterator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="string">","</span><span class="special">));</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">put</span><span class="special">(</span><span class="char">'\n'</span><span class="special">);</span>
+
+  <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          Though the range object only lives for the duration of the <code class="computeroutput"><span class="identifier">return_range</span></code> call, the reference counted
+          <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code> will live until <code class="computeroutput"><span class="identifier">i</span></code> and <code class="computeroutput"><span class="identifier">end</span></code>
+          are both destroyed. The output from this example is the same as the previous
+          two.
+        </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -215,7 +354,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reverse.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../specialized.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="shared_container/shared_container_object_generator.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reverse.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../specialized.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -11,22 +11,17 @@
 #if !defined(BOOST_SPIRIT_QUICKBOOK_GRAMMARS_IMPL_HPP)
 #define BOOST_SPIRIT_QUICKBOOK_GRAMMARS_IMPL_HPP
 
-#include "grammar.hpp"
-#include "cleanup.hpp"
-#include "values.hpp"
 #include <boost/spirit/include/classic_symbols.hpp>
+#include "cleanup.hpp"
+#include "grammar.hpp"
+#include "values.hpp"
 
 namespace quickbook
 {
     namespace cl = boost::spirit::classic;
 
-    // Information about a square bracket element (e.g. [* word]).
-    //
-    // TODO: The naming is a bit confused as element is also sometimes used for
-    // syntactic/implicit elements (such as lists and horizontal rules). Maybe
-    // should use entity as a more general name instead of element. Or it might
-    // be better to use 'tag' for square bracket elements, although that is
-    // currently used for the type of entities.
+    // Information about a square bracket element (e.g. [* word]), and
+    // some other syntactic elements (such as lists and horizontal rules)..
     struct element_info
     {
         // Types of elements.
@@ -37,7 +32,8 @@ namespace quickbook
         //  - whether they end a paragraph
         //  - how following newlines are interpreted by the grammar.
         //  - and possibly other things.....
-        enum type_enum {
+        enum type_enum
+        {
             // Used when there's no element.
             nothing = 0,
 
@@ -45,12 +41,12 @@ namespace quickbook
             section_block = 1,
 
             // Block elements that can be used in conditional phrases and lists,
-            // but not nested. (TODO: not a good name).
+            // but not nested.
             conditional_or_block = 2,
 
-            // Block elements that can be nested in other elements.            
+            // Block elements that can be nested in other elements.
             nested_block = 4,
-            
+
             // Phrase elements.
             phrase = 8,
 
@@ -70,17 +66,18 @@ namespace quickbook
 
         // Masks to determine which context elements can be used in (in_*), and
         // whether they are consided to be a block element (is_*).
-        enum context {
+        enum context
+        {
             // At the top level we allow everything.
             in_top_level = phrase | maybe_block | nested_block |
-                conditional_or_block | section_block,
+                           conditional_or_block | section_block,
 
             // In conditional phrases and list blocks we everything but section
             // elements.
-            in_conditional = phrase | maybe_block | nested_block |
-                conditional_or_block,
-            in_list_block = phrase | maybe_block | nested_block |
-                conditional_or_block,
+            in_conditional =
+                phrase | maybe_block | nested_block | conditional_or_block,
+            in_list_block =
+                phrase | maybe_block | nested_block | conditional_or_block,
 
             // In nested blocks we allow a more limited range of elements.
             in_nested_block = phrase | maybe_block | nested_block,
@@ -91,21 +88,22 @@ namespace quickbook
 
             // At the start of a block these are all block elements.
             is_contextual_block = maybe_block | nested_block |
-                conditional_or_block | section_block,
+                                  conditional_or_block | section_block,
 
             // These are all block elements in all other contexts.
-            is_block = nested_block | conditional_or_block | section_block,
+            is_block = nested_block | conditional_or_block | section_block
         };
 
-        element_info()
-            : type(nothing), rule(), tag(0) {}
+        element_info() : type(nothing), rule(), tag(0) {}
 
         element_info(
-                type_enum t,
-                cl::rule<scanner>* r,
-                value::tag_type tag = value::default_tag,
-                unsigned int v = 0)
-            : type(t), rule(r), tag(tag), qbk_version(v) {}
+            type_enum t,
+            cl::rule<scanner>* r,
+            value::tag_type tag_ = value::default_tag,
+            unsigned int v = 0)
+            : type(t), rule(r), tag(tag_), qbk_version(v)
+        {
+        }
 
         type_enum type;
         cl::rule<scanner>* rule;
@@ -136,28 +134,30 @@ namespace quickbook
         cl::rule<scanner> skip_entity;
 
         // Miscellaneous stuff
-        cl::rule<scanner> hard_space;
-        cl::rule<scanner> space;
-        cl::rule<scanner> blank;
-        cl::rule<scanner> eol;
-        cl::rule<scanner> phrase_end;
+        cl::rule<scanner> hard_space; // Either non-empty space, or
+                                      // empty and not followed by
+                                      // alphanumeric/_. Use to match the
+                                      // the end of an itendifier.
+        cl::rule<scanner> space; // Space/tab/newline/comment (possibly empty)
+        cl::rule<scanner> blank; // Space/tab/comment (possibly empty)
+        cl::rule<scanner> eol;   // blank >> eol
+        cl::rule<scanner> phrase_end; // End of phrase text, context sensitive
         cl::rule<scanner> comment;
         cl::rule<scanner> line_comment;
         cl::rule<scanner> macro_identifier;
 
-        // Element Symbols       
+        // Element Symbols
         cl::symbols<element_info> elements;
 
         // Source mode
         cl::symbols<source_mode_type> source_modes;
-        
+
         // Doc Info
         cl::rule<scanner> doc_info_details;
-        
+
         impl(quickbook::state&);
 
-    private:
-
+      private:
         void init_main();
         void init_block_elements();
         void init_phrase_elements();

@@ -9,13 +9,13 @@
 project libs/serialization/test
     : id serialization_test
     : requirements <source>/boost/filesystem
+    : requirements <source>/boost/system
     ;
 
 # import rules for testing conditional on config file variables
 import ../../config/checks/config : requires ;
 
 # import rules from the boost serialization test
-# import ../util/test : test-bsl-run-no-lib ;
 import ../util/test :
     run-template
     run-invoke
@@ -24,38 +24,33 @@ import ../util/test :
     test-bsl-run
     test-bsl-run_archive
     test-bsl-run_files
-    test-bsl-run_polymorphic_archive
+    test-bsl-run_polymorphic_files
 ;
 
 BOOST_ARCHIVE_LIST = [ modules.peek : BOOST_ARCHIVE_LIST ] ;
-
-lib dll_a_lib 
+    
+lib dll_a
     : 
         dll_a.cpp
         ../build//boost_serialization
     : 
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
+    ;
+lib dll_polymorphic_base
+    :
+        polymorphic_base.cpp 
+        ../build//boost_serialization
+    : 
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
     ;
 
-lib dll_base_lib 
-    : 
-        dll_base.cpp
-        ../build//boost_serialization
-    : 
-    ;
-    
-lib dll_derived2_lib
+lib dll_polymorphic_derived2
     :
-        dll_derived2.cpp 
-        dll_base_lib
+        polymorphic_derived2.cpp
+        dll_polymorphic_base
         ../build//boost_serialization
     : 
-    ;
-
-lib dll_polymorphic_derived2_lib
-    :
-        polymorphic_derived2.cpp 
-        ../build//boost_serialization
-    : 
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
     ;
 
 test-suite "serialization" :
@@ -76,7 +71,6 @@ test-suite "serialization" :
      [ test-bsl-run_files test_derived_class_ptr : A ]
      [ test-bsl-run_files test_diamond ]
      [ test-bsl-run_files test_diamond_complex ]
-     [ test-bsl-run_files test_exported : polymorphic_base ]
      [ test-bsl-run_files test_forward_list : A  : :  [ requires cxx11_hdr_forward_list ] ] # BOOST_NO_CXX11_HDR_FORWARD_LIST
      [ test-bsl-run_files test_forward_list_ptrs : A  : :  [ requires cxx11_hdr_forward_list ] ] # BOOST_NO_CXX11_HDR_FORWARD_LIST
      [ test-bsl-run_files test_helper_support ]
@@ -84,12 +78,12 @@ test-suite "serialization" :
      [ test-bsl-run_files test_list : A ]
      [ test-bsl-run_files test_list_ptrs : A ]
      [ test-bsl-run_files test_map : A ]
+     [ test-bsl-run_files test_map_hashed : A : : [ requires hash ] ] # BOOST_HAS_HASH
      [ test-bsl-run_files test_map_unordered : A : :  [ requires cxx11_hdr_unordered_map ] ] # BOOST_NO_CXX11_HDR_UNORDERED_MAP
      [ test-bsl-run_files test_map_boost_unordered : A ]
      [ test-bsl-run_files test_mi ]
      [ test-bsl-run_files test_multiple_ptrs : A ]
      [ test-bsl-run_files test_multiple_inheritance ]
-     [ test-bsl-run_files test_no_rtti : polymorphic_base polymorphic_derived1 ]
      [ test-bsl-run_files test_non_intrusive ]
      [ test-bsl-run_files test_non_default_ctor ]
      [ test-bsl-run_files test_non_default_ctor2 ]
@@ -107,6 +101,8 @@ test-suite "serialization" :
      [ test-bsl-run_files test_set_boost_unordered : A ]
      [ test-bsl-run_files test_simple_class : A ]
      [ test-bsl-run_files test_simple_class_ptr : A ]
+     [ test-bsl-run_files test_slist : A : : [ requires slist ] ] # BOOST_HAS_SLIST ]
+     [ test-bsl-run_files test_slist_ptrs : A : : [ requires slist ] ] # BOOST_HAS_SLIST ] ]
      [ test-bsl-run_files test_split ]
      [ test-bsl-run_files test_stack : A ]
      [ test-bsl-run_files test_tracking ]
@@ -119,21 +115,32 @@ test-suite "serialization" :
      [ test-bsl-run_files test_optional ]
      [ test-bsl-run_files test_shared_ptr ]
      [ test-bsl-run_files test_shared_ptr_multi_base ]
-     [ test-bsl-run_files test_shared_ptr_132 ]
-     [ test-bsl-run_polymorphic_archive test_polymorphic : test_polymorphic_A A ]
-     [ test-bsl-run_polymorphic_archive test_polymorphic2 : test_polymorphic2imp ]
-     [ test-bsl-run_polymorphic_archive test_polymorphic_helper ]
+     [ test-bsl-run_files test_shared_ptr_132 : : : [ requires auto_ptr  ] ] # BOOST_NO_AUTO_PTR
+
+     [ test-bsl-run_polymorphic_files test_dll_exported : polymorphic_derived1 : dll_polymorphic_base dll_polymorphic_derived2 ]
+     [ test-bsl-run_polymorphic_files test_no_rtti : polymorphic_base polymorphic_derived1 polymorphic_derived2 ]
+     [ test-bsl-run_polymorphic_files test_exported : polymorphic_base polymorphic_derived1 polymorphic_derived2 ]
+     [ test-bsl-run_polymorphic_files test_polymorphic : test_polymorphic_A A ]
+     [ test-bsl-run_polymorphic_files test_polymorphic2 : test_polymorphic2imp ]
+     [ test-bsl-run_polymorphic_files test_polymorphic_helper ]
+
+     # should compile
+     [ compile test_strong_typedef.cpp ]
     ;
 
 if ! $(BOOST_ARCHIVE_LIST) {
     test-suite "serialization2" : 
-        [ test-bsl-run-no-lib test_inclusion ]
-        [ test-bsl-run test_dll_exported : : dll_polymorphic_derived2_lib ]
-        [ test-bsl-run test_dll_simple : : dll_a_lib ]
-        [ compile test_dll_plugin.cpp ]
-        # Running the following test requires that the test know the directory 
-        # in which the dll is stored. I don't know how to extract this from bjam
-        # [ test-bsl-run test_dll_plugin : : dll_polymorphic_derived2_lib ]
+        [ test-bsl-run test_inclusion ]
+        [ test-bsl-run test_inclusion2 ]
+        # boost build has the feature that the building if libraries vs dll is automatic
+        # in that dependent libraries are built the same way - shared/static - that
+        # the application is.  On some platforms (e.g windows) this is required to avoid
+        # problems of linking incompatible versions of the runtime library.  So
+        # we suppress tests of our dlls when using static libraries
+
+        [ test-bsl-run test_dll_simple   : : dll_a : ]
+        # [ test-bsl-run test_dll_plugin : : dll_derived2 : <link>static:<build>no <target-os>linux:<linkflags>-ldl ]
+
         [ test-bsl-run test_private_ctor ]
         [ test-bsl-run test_reset_object_address : A ]
         [ test-bsl-run test_void_cast ]
@@ -141,18 +148,12 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_iterators ]
         [ test-bsl-run test_iterators_base64 ]
         [ test-bsl-run test_smart_cast ]
-        [ test-bsl-run test_utf8_codecvt 
-            : 
-            :
-            : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
-        ]
-        [ test-bsl-run test_codecvt_null 
-            : ../src/codecvt_null
-            :
-            : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
-        ]
-        
-        #[ test-bsl-run test_z ]
+        [ test-bsl-run test_codecvt_null ]
+        [ test-bsl-run test_singleton ]
+        [ test-bsl-run test_singleton_inherited ]
+        [ test-bsl-run test_singleton_plain ]
+
+        # [ test-bsl-run test_z ]
 
         # should fail compilation
         [ compile-fail test_not_serializable.cpp ]
@@ -170,6 +171,7 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ compile test_const_save_warn1.cpp ]
         [ compile test_const_save_warn2.cpp ]
         [ compile test_const_save_warn3.cpp ]
+
         # note - library unable to detect these errors for now
         #[ compile test_const_save_warn1_nvp.cpp ]
         #[ compile test_const_save_warn2_nvp.cpp ]
@@ -180,3 +182,4 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ compile test_const_pass.cpp ]
     ;
 }
+

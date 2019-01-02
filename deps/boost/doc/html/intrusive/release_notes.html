@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Release Notes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="prev" href="performance.html" title="Performance">
-<link rel="next" href="tested_compilers.html" title="Tested compilers">
+<link rel="next" href="references.html" title="References">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,13 +21,23 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="performance.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tested_compilers.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="performance.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="references.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="intrusive.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_67_00">Boost
+      1.67 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_65_00">Boost
+      1.65 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_64_00">Boost
+      1.64 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_63_00">Boost
+      1.63 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_62_00">Boost
+      1.62 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_61_00">Boost
       1.61 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_60_00">Boost
@@ -69,12 +79,140 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_67_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_67_00" title="Boost 1.67 Release">Boost
+      1.67 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                  <a href="https://github.com/boostorg/intrusive/issues/29" target="_top">GitHub
+                  Issues #29: <span class="emphasis"><em>Uninitialized variable warning pointer_plus_bits.hpp</em></span></a>
+                </li></ul></div>
+          </li></ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_65_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_65_00" title="Boost 1.65 Release">Boost
+      1.65 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12894" target="_top">Boost
+                  Trac #12894: <span class="emphasis"><em>Allow non std::size_t size_type</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12698" target="_top">Boost
+                  Trac #12698: <span class="emphasis"><em>base64 iterators can't be used with iterator_advance</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/intrusive/pull/23" target="_top">GitHub
+                  Pull #23: <span class="emphasis"><em>Conditionally replace deprecated/removed C++98
+                  std::random_shuffle by...</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/intrusive/pull/24" target="_top">GitHub
+                  Pull #24: <span class="emphasis"><em>Adds support for MSVC ARM64 target</em></span></a>
+                </li>
+</ul></div>
+          </li></ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_64_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_64_00" title="Boost 1.64 Release">Boost
+      1.64 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12745" target="_top">Boost
+                  Trac #12745: <span class="emphasis"><em>key_nodeptr_comp broken if the key type
+                  is void*</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12761" target="_top">Boost
+                  Trac #12761: <span class="emphasis"><em>intrusive::set::swap doesn't swap the comparison
+                  function*</em></span></a>
+                </li>
+</ul></div>
+          </li></ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_63_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_63_00" title="Boost 1.63 Release">Boost
+      1.63 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12556" target="_top">Boost
+                  Trac #12556: <span class="emphasis"><em>member_value_traits.hpp has a missing #include</em></span></a>
+                </li></ul></div>
+          </li></ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_62_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_62_00" title="Boost 1.62 Release">Boost
+      1.62 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11476" target="_top">Boost
+                  Trac #11476: <span class="emphasis"><em>has_member_function_callable_with.hpp is
+                  massively broken with BOOST_NO_CXX11_DECLTYPE</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11994" target="_top">Boost
+                  Trac #11994: <span class="emphasis"><em>Support intrusive container key extractors
+                  that return the key by value</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12184" target="_top">Boost
+                  Trac #12184: <span class="emphasis"><em>clang -Wdocumentation warning</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12190" target="_top">Boost
+                  Trac #12190: <span class="emphasis"><em>Intrusive List + Flat Map combination crashes</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12229" target="_top">Boost
+                  Trac #12229: <span class="emphasis"><em>intrusive::unordered_set&lt;T&gt;::rehash()
+                  broken</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12245" target="_top">Boost
+                  Trac #12245: <span class="emphasis"><em>bstree uses a shared static size_traits
+                  for constant_time_size&lt;false&gt;</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12432" target="_top">Boost
+                  Trac #12432: <span class="emphasis"><em>Forced KeyOfValue creation when using custom
+                  compare on insert_check</em></span></a>
+                </li>
+</ul></div>
+          </li>
+<li class="listitem">
+            Implemented <code class="computeroutput"><span class="identifier">merge</span></code> functions
+            in ordered associative containers.
+          </li>
+<li class="listitem">
+            Officially documented <code class="computeroutput"><span class="identifier">root</span><span class="special">()</span></code> function for tree-based containers.
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.release_notes.release_notes_boost_1_61_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_61_00" title="Boost 1.61 Release">Boost
       1.61 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/11832" target="_top">Boost
                   Trac #11832: <span class="emphasis"><em>clang-cl + boost intrusive = miscompile</em></span></a>
@@ -101,7 +239,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_60_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_60_00" title="Boost 1.60 Release">Boost
       1.60 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a class="link" href="advanced_lookups_insertions.html" title="Advanced lookup and insertion functions for associative containers">Advanced lookup
             and insertions</a> in ordered associative containers now support comparison
@@ -111,7 +249,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/11701" target="_top">Boost
                   Trac #11701: <span class="emphasis"><em>Regression in boost::intrusive::set::equal_range</em></span></a>
@@ -129,7 +267,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_59_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_59_00" title="Boost 1.59 Release">Boost
       1.59 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Implemented <a class="link" href="map_multimap.html" title="Map and multimap-like interface for associative containers">map and multimap-like
             interfaces</a>.
@@ -139,7 +277,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/11222" target="_top">Boost
                   Trac #11222: <span class="emphasis"><em>intrusive/pointer_traits.hpp fails to compile
                   with C++98</em></span></a>
@@ -152,14 +290,14 @@
 <a name="intrusive.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
       1.58 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Reduced compile-time dependencies, headers, and the use of Boost.Preprocessor,
             specially for hooks and iterators.
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/6720" target="_top">Boost
                   Trac #6720: <span class="emphasis"><em>intrusive::unordered_set::clear_and_dispose
@@ -187,7 +325,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
       1.57 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Experimental version of node checkers, contributed by Matei David. Many
             thanks!
@@ -198,7 +336,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <a href="https://github.com/boostorg/intrusive/pull/12" target="_top">GitHub
                   Pull #12: <span class="emphasis"><em>Fix MSVC14 warning C4456: declaration of 'x_parent_right'
@@ -222,7 +360,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost
       1.56 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Improved Doxygen generated reference and updated and fixed forward-declaration
             header.
@@ -240,7 +378,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/8468" target="_top">#8468:
                   Compile error on visual studio 2010/2012 using vector with custom
@@ -295,7 +433,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_55_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_55_00" title="Boost 1.55 Release">Boost
       1.55 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>Source breaking</strong></span>: Deprecated <code class="computeroutput"><span class="identifier">xxx_dont_splay</span></code> functions from splay
             containers. Deprecated <code class="computeroutput"><span class="identifier">splay_set_base_hook</span></code>
@@ -319,7 +457,7 @@
             improvements.
           </li>
 <li class="listitem">
-            Implemented <a class="link" href="scary_iterators.html" title="Scary Iterators">SCARY iterators</a>.
+            Implemented <a class="link" href="../">SCARY iterators</a>.
           </li>
 </ul></div>
 </div>
@@ -328,7 +466,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_54_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_54_00" title="Boost 1.54 Release">Boost
       1.54 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Added <code class="computeroutput"><span class="identifier">BOOST_NO_EXCEPTIONS</span></code>
             support (bug <a href="https://svn.boost.org/trac/boost/ticket/7849" target="_top">#7849</a>).
           </li></ul></div>
@@ -338,7 +476,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_53_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_53_00" title="Boost 1.53 Release">Boost
       1.53 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/7174" target="_top">#7174</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/7529" target="_top">#7529</a>,
@@ -364,7 +502,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_51_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_51_00" title="Boost 1.51 Release">Boost
       1.51 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/6841" target="_top">#6841</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/6907" target="_top">#6907</a>,
@@ -382,7 +520,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_49_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_49_00" title="Boost 1.49 Release">Boost
       1.49 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/6347" target="_top">#6347</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/6223" target="_top">#6223</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/6153" target="_top">#6153</a>.
@@ -393,7 +531,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_48_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_48_00" title="Boost 1.48 Release">Boost
       1.48 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/4797" target="_top">#4797</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/5165" target="_top">#5165</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/5183" target="_top">#5183</a>,
@@ -405,7 +543,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_46_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_46_00" title="Boost 1.46 Release">Boost
       1.46 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Fixed bug <a href="https://svn.boost.org/trac/boost/ticket/4980" target="_top">#4980</a>,
           </li></ul></div>
 </div>
@@ -414,7 +552,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_45_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_45_00" title="Boost 1.45 Release">Boost
       1.45 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Added <code class="computeroutput"><span class="identifier">function_hook</span></code> option.
           </li>
@@ -445,7 +583,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_40_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_40_00" title="Boost 1.40 Release">Boost
       1.40 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Code cleanup in bstree_algorithms.hpp and avl_tree_algorithms.hpp
           </li>
@@ -459,7 +597,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_39_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_39_00" title="Boost 1.39 Release">Boost
       1.39 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Optimized <code class="computeroutput"><span class="identifier">list</span><span class="special">::</span><span class="identifier">merge</span></code> and <code class="computeroutput"><span class="identifier">slist</span><span class="special">::</span><span class="identifier">merge</span></code>
           </li>
@@ -482,7 +620,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_38_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_38_00" title="Boost 1.38 Release">Boost
       1.38 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             New treap-based containers: treap, treap_set, treap_multiset.
           </li>
@@ -503,7 +641,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_37_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_37_00" title="Boost 1.37 Release">Boost
       1.37 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Intrusive now takes advantage of compilers with variadic templates.
           </li>
@@ -530,7 +668,7 @@
 <a name="intrusive.release_notes.release_notes_boost_1_36_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_36_00" title="Boost 1.36 Release">Boost
       1.36 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Added <code class="computeroutput"><span class="identifier">linear</span><span class="special">&lt;&gt;</span></code>
             and <code class="computeroutput"><span class="identifier">cache_last</span><span class="special">&lt;&gt;</span></code>
@@ -565,7 +703,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="performance.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tested_compilers.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="performance.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="references.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

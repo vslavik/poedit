@@ -3,15 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.3.10: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
 <title>Boost Pointer Container Library</title>
 <style type="text/css">
 
 /*
-:Author: David Goodger
-:Contact: goodger@users.sourceforge.net
-:Date: $Date$
-:Revision: $Revision$
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
@@ -20,10 +18,17 @@ See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
 */
 
-/* "! important" is used here to override other ``margin-top`` and
-   ``margin-bottom`` styles that are later in the stylesheet or 
-   more specific.  See http://www.w3.org/TR/CSS1#the-cascade */
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
 .first {
+  /* Override more specific margin styles with "! important". */
   margin-top: 0 ! important }
 
 .last, .with-subtitle {
@@ -31,6 +36,14 @@ customize this style sheet.
 
 .hidden {
   display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
 
 a.toc-backref {
   text-decoration: none ;
@@ -41,6 +54,10 @@ blockquote.epigraph {
 
 dl.docutils dd {
   margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
 
 /* Uncomment (and remove this text!) to get bold-faced definition list terms
 dl.docutils dt {
@@ -68,7 +85,7 @@ div.tip p.admonition-title {
 
 div.attention p.admonition-title, div.caution p.admonition-title,
 div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
+div.warning p.admonition-title, .code .error {
   color: red ;
   font-weight: bold ;
   font-family: sans-serif }
@@ -92,7 +109,8 @@ div.dedication p.topic-title {
   font-style: normal }
 
 div.figure {
-  margin-left: 2em }
+  margin-left: 2em ;
+  margin-right: 2em }
 
 div.footer, div.header {
   clear: both;
@@ -109,7 +127,7 @@ div.line-block div.line-block {
   margin-left: 1.5em }
 
 div.sidebar {
-  margin-left: 1em ;
+  margin: 0 0 0.5em 1em ;
   border: medium outset ;
   padding: 1em ;
   background-color: #ffffee ;
@@ -151,14 +169,52 @@ h2.subtitle {
 hr.docutils {
   width: 75% }
 
-img.align-left {
-  clear: left }
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
 
-img.align-right {
-  clear: right }
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
 
-img.borderless {
-  border: 0 }
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
 
 ol.simple, ul.simple {
   margin-bottom: 1em }
@@ -213,17 +269,20 @@ p.topic-title {
 pre.address {
   margin-bottom: 0 ;
   margin-top: 0 ;
-  font-family: serif ;
-  font-size: 100% }
+  font: inherit }
 
-pre.line-block {
-  font-family: serif ;
-  font-size: 100% }
-
-pre.literal-block, pre.doctest-block {
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
-  margin-right: 2em ;
-  background-color: #eeeeee }
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
 
 span.classifier {
   font-family: sans-serif ;
@@ -250,7 +309,8 @@ span.section-subtitle {
   font-size: 80% }
 
 table.citation {
-  border-left: solid thin gray }
+  border-left: solid 1px gray;
+  margin-left: 1px }
 
 table.docinfo {
   margin: 2em 4em }
@@ -260,7 +320,8 @@ table.docutils {
   margin-bottom: 0.5em }
 
 table.footnote {
-  border-left: solid thin black }
+  border-left: solid 1px black;
+  margin-left: 1px }
 
 table.docutils td, table.docutils th,
 table.docinfo td, table.docinfo th {
@@ -274,12 +335,24 @@ table.docutils th.field-name, table.docinfo th.docinfo-name {
   white-space: nowrap ;
   padding-left: 0 }
 
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
 h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
 h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
   font-size: 100% }
-
-tt.docutils {
-  background-color: #eeeeee }
 
 ul.auto-toc {
   list-style-type: none }
@@ -290,34 +363,35 @@ ul.auto-toc {
 <div class="document" id="boost-pointer-container-library">
 <h1 class="title"><img alt="Boost" src="boost.png" /> Pointer Container Library</h1>
 <h2 class="subtitle" id="examples">Examples</h2>
+
 <p>Some examples are given here and in the accompanying test files:</p>
-<div class="contents local topic">
+<div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference" href="#null-pointers-cannot-be-stored-in-the-containers" id="id2" name="id2">1. Null pointers cannot be stored in the containers</a></li>
-<li><a class="reference" href="#iterators-and-other-operations-return-indirected-values" id="id3" name="id3">2. Iterators and other operations return indirected values</a></li>
-<li><a class="reference" href="#copy-semantics-of-pointer-containers" id="id4" name="id4">3. Copy-semantics of pointer containers</a></li>
-<li><a class="reference" href="#making-a-non-copyable-type-cloneable" id="id5" name="id5">4. Making a non-copyable type Cloneable</a></li>
-<li><a class="reference" href="#objects-are-cloned-before-insertion-inserted-pointers-are-owned-by-the-container" id="id6" name="id6">5. Objects are cloned before insertion, inserted pointers are owned by the container</a></li>
-<li><a class="reference" href="#transferring-ownership-of-a-single-element" id="id7" name="id7">6. Transferring ownership of a single element</a></li>
-<li><a class="reference" href="#transferring-ownership-of-pointers-between-different-pointer-containers" id="id8" name="id8">7. Transferring ownership of pointers between different pointer containers</a></li>
-<li><a class="reference" href="#selected-test-files" id="id9" name="id9">8. Selected test files</a></li>
-<li><a class="reference" href="#a-large-example" id="id10" name="id10">9. A large example</a></li>
+<li><a class="reference internal" href="#null-pointers-cannot-be-stored-in-the-containers" id="id2">1. Null pointers cannot be stored in the containers</a></li>
+<li><a class="reference internal" href="#iterators-and-other-operations-return-indirected-values" id="id3">2. Iterators and other operations return indirected values</a></li>
+<li><a class="reference internal" href="#copy-semantics-of-pointer-containers" id="id4">3. Copy-semantics of pointer containers</a></li>
+<li><a class="reference internal" href="#making-a-non-copyable-type-cloneable" id="id5">4. Making a non-copyable type Cloneable</a></li>
+<li><a class="reference internal" href="#objects-are-cloned-before-insertion-inserted-pointers-are-owned-by-the-container" id="id6">5. Objects are cloned before insertion, inserted pointers are owned by the container</a></li>
+<li><a class="reference internal" href="#transferring-ownership-of-a-single-element" id="id7">6. Transferring ownership of a single element</a></li>
+<li><a class="reference internal" href="#transferring-ownership-of-pointers-between-different-pointer-containers" id="id8">7. Transferring ownership of pointers between different pointer containers</a></li>
+<li><a class="reference internal" href="#selected-test-files" id="id9">8. Selected test files</a></li>
+<li><a class="reference internal" href="#a-large-example" id="id10">9. A large example</a></li>
 </ul>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id2" id="null-pointers-cannot-be-stored-in-the-containers" name="null-pointers-cannot-be-stored-in-the-containers"><span id="example-1"></span>1. Null pointers cannot be stored in the containers</a></h1>
+<div class="section" id="null-pointers-cannot-be-stored-in-the-containers">
+<span id="example-1"></span><h1><a class="toc-backref" href="#id2">1. Null pointers cannot be stored in the containers</a></h1>
 <pre class="literal-block">
-my_container.push_back( 0 );            // throws bad_ptr 
+my_container.push_back( 0 );            // throws bad_ptr
 my_container.replace( an_iterator, 0 ); // throws bad_ptr
-my_container.insert( an_iterator, 0 );  // throws bad_ptr       
+my_container.insert( an_iterator, 0 );  // throws bad_ptr
 std::auto_ptr&lt;T&gt; p( 0 );
-my_container.push_back( p );            // throws bad_ptr                                                          
+my_container.push_back( p );            // throws bad_ptr
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id3" id="iterators-and-other-operations-return-indirected-values" name="iterators-and-other-operations-return-indirected-values"><span id="example-2"></span>2. Iterators and other operations return indirected values</a></h1>
+<div class="section" id="iterators-and-other-operations-return-indirected-values">
+<span id="example-2"></span><h1><a class="toc-backref" href="#id3">2. Iterators and other operations return indirected values</a></h1>
 <pre class="literal-block">
-ptr_vector&lt;X&gt; pvec; 
+ptr_vector&lt;X&gt; pvec;
 std::vector&lt;X*&gt; vec;
 *vec.begin()  = new X;   // fine, memory leak
 *pvec.begin() = new X;   // compile time error
@@ -327,53 +401,53 @@ pvec.begin()-&gt;foo();     // no indirection needed
 pvec.front()  = X();     // no indirection needed
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id4" id="copy-semantics-of-pointer-containers" name="copy-semantics-of-pointer-containers"><span id="example-3"></span>3. Copy-semantics of pointer containers</a></h1>
+<div class="section" id="copy-semantics-of-pointer-containers">
+<span id="example-3"></span><h1><a class="toc-backref" href="#id4">3. Copy-semantics of pointer containers</a></h1>
 <pre class="literal-block">
-ptr_vector&lt;T&gt; vec1; 
+ptr_vector&lt;T&gt; vec1;
 ...
 ptr_vector&lt;T&gt; vec2( vec1.clone() ); // deep copy objects of 'vec1' and use them to construct 'vec2', could be very expensive
 vec2 = vec1.release();              // give up ownership of pointers in 'vec1' and pass the ownership to 'vec2', rather cheap
 vec2.release();                     // give up ownership; the objects will be deallocated if not assigned to another container
-vec1 = vec2;                        // deep copy objects of 'vec2' and assign them to 'vec1', could be very expensive 
+vec1 = vec2;                        // deep copy objects of 'vec2' and assign them to 'vec1', could be very expensive
 ptr_vector&lt;T&gt; vec3( vec1 );         // deep copy objects of 'vec1', could be very expensive
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id5" id="making-a-non-copyable-type-cloneable" name="making-a-non-copyable-type-cloneable"><span id="example-4"></span>4. Making a non-copyable type Cloneable</a></h1>
+<div class="section" id="making-a-non-copyable-type-cloneable">
+<span id="example-4"></span><h1><a class="toc-backref" href="#id5">4. Making a non-copyable type Cloneable</a></h1>
 <pre class="literal-block">
  // a class that has no normal copy semantics
 class X : boost::noncopyable { public: X* clone() const; ... };
-                                                                   
-// this will be found by the library by argument dependent lookup (ADL)                                                                  
-X* new_clone( const X&amp; x ) 
+
+// this will be found by the library by argument dependent lookup (ADL)
+X* new_clone( const X&amp; x )
 { return x.clone(); }
-                                                                   
+
 // we can now use the interface that requires cloneability
 ptr_vector&lt;X&gt; vec1, vec2;
 ...
-vec2 = vec1.clone();                                 // 'clone()' requires cloning &lt;g&gt; 
-vec2.insert( vec2.end(), vec1.begin(), vec1.end() ); // inserting always means inserting clones 
+vec2 = vec1.clone();                                 // 'clone()' requires cloning &lt;g&gt;
+vec2.insert( vec2.end(), vec1.begin(), vec1.end() ); // inserting always means inserting clones
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id6" id="objects-are-cloned-before-insertion-inserted-pointers-are-owned-by-the-container" name="objects-are-cloned-before-insertion-inserted-pointers-are-owned-by-the-container"><span id="example-5"></span>5. Objects are cloned before insertion, inserted pointers are owned by the container</a></h1>
+<div class="section" id="objects-are-cloned-before-insertion-inserted-pointers-are-owned-by-the-container">
+<span id="example-5"></span><h1><a class="toc-backref" href="#id6">5. Objects are cloned before insertion, inserted pointers are owned by the container</a></h1>
 <pre class="literal-block">
-class X { ... };                     // assume 'X' is Cloneable 
-X x;                                 // and 'X' can be stack-allocated 
-ptr_list&lt;X&gt; list; 
+class X { ... };                     // assume 'X' is Cloneable
+X x;                                 // and 'X' can be stack-allocated
+ptr_list&lt;X&gt; list;
 list.push_back( new_clone( x ) );    // insert a clone
 list.push_back( new X );             // always give the pointer directly to the container to avoid leaks
-list.push_back( &amp;x );                // don't do this!!! 
+list.push_back( &amp;x );                // don't do this!!!
 std::auto_ptr&lt;X&gt; p( new X );
 list.push_back( p );                 // give up ownership
 BOOST_ASSERT( p.get() == 0 );
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id7" id="transferring-ownership-of-a-single-element" name="transferring-ownership-of-a-single-element"><span id="example-6"></span>6. Transferring ownership of a single element</a></h1>
+<div class="section" id="transferring-ownership-of-a-single-element">
+<span id="example-6"></span><h1><a class="toc-backref" href="#id7">6. Transferring ownership of a single element</a></h1>
 <pre class="literal-block">
-ptr_deque&lt;T&gt;                    deq; 
+ptr_deque&lt;T&gt;                    deq;
 typedef ptr_deque&lt;T&gt;::auto_type auto_type;
 
 // ... fill the container somehow
@@ -381,51 +455,51 @@ typedef ptr_deque&lt;T&gt;::auto_type auto_type;
 auto_type ptr  = deq.pop_back();                 // remove back element from container and give up ownership
 auto_type ptr2 = deq.release( deq.begin() + 2 ); // use an iterator to determine the element to release
 ptr            = deq.pop_front();                // supported for 'ptr_list' and 'ptr_deque'
-                                
+
 deq.push_back( ptr.release() );                  // give ownership back to the container
 </pre>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id8" id="transferring-ownership-of-pointers-between-different-pointer-containers" name="transferring-ownership-of-pointers-between-different-pointer-containers"><span id="example-7"></span>7. Transferring ownership of pointers between different pointer containers</a></h1>
+<div class="section" id="transferring-ownership-of-pointers-between-different-pointer-containers">
+<span id="example-7"></span><h1><a class="toc-backref" href="#id8">7. Transferring ownership of pointers between different pointer containers</a></h1>
 <pre class="literal-block">
 ptr_list&lt;X&gt; list; ptr_vector&lt;X&gt; vec;
 ...
 //
-// note: no cloning happens in these examples                                
+// note: no cloning happens in these examples
 //
 list.transfer( list.begin(), vec.begin(), vec );           // make the first element of 'vec' the first element of 'list'
-vec.transfer( vec.end(), list.begin(), list.end(), list ); // put all the lists element into the vector                                 
+vec.transfer( vec.end(), list.begin(), list.end(), list ); // put all the lists element into the vector
 </pre>
-<p>We can also transfer objects from <tt class="docutils literal"><span class="pre">ptr_container&lt;Derived&gt;</span></tt> to <tt class="docutils literal"><span class="pre">ptr_container&lt;Base&gt;</span></tt> without any problems.</p>
+<p>We can also transfer objects from <tt class="docutils literal">ptr_container&lt;Derived&gt;</tt> to <tt class="docutils literal">ptr_container&lt;Base&gt;</tt> without any problems.</p>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id9" id="selected-test-files" name="selected-test-files"><span id="example-8"></span>8. Selected test files</a></h1>
+<div class="section" id="selected-test-files">
+<span id="example-8"></span><h1><a class="toc-backref" href="#id9">8. Selected test files</a></h1>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name" colspan="2"><a class="reference" href="../test/incomplete_type_test.cpp">incomplete_type_test.cpp</a>:</th></tr>
-<tr><td>&nbsp;</td><td class="field-body">Shows how to implement the Composite pattern.</td>
+<tr class="field"><th class="field-name" colspan="2"><a class="reference external" href="../test/incomplete_type_test.cpp">incomplete_type_test.cpp</a>:</th></tr>
+<tr class="field"><td>&nbsp;</td><td class="field-body">Shows how to implement the Composite pattern.</td>
 </tr>
-<tr class="field"><th class="field-name" colspan="2"><a class="reference" href="../test/simple_test.cpp">simple_test.cpp</a>:</th></tr>
-<tr><td>&nbsp;</td><td class="field-body">Shows how the usage of pointer container compares with a 
+<tr class="field"><th class="field-name" colspan="2"><a class="reference external" href="../test/simple_test.cpp">simple_test.cpp</a>:</th></tr>
+<tr class="field"><td>&nbsp;</td><td class="field-body">Shows how the usage of pointer container compares with a
 container of smart pointers</td>
 </tr>
-<tr class="field"><th class="field-name" colspan="2"><a class="reference" href="../test/view_example.cpp">view_example.cpp</a>:</th></tr>
-<tr><td>&nbsp;</td><td class="field-body">Shows how to use a pointer container as a view into other container</td>
+<tr class="field"><th class="field-name" colspan="2"><a class="reference external" href="../test/view_example.cpp">view_example.cpp</a>:</th></tr>
+<tr class="field"><td>&nbsp;</td><td class="field-body">Shows how to use a pointer container as a view into other container</td>
 </tr>
-<tr class="field"><th class="field-name"><a class="reference" href="../test/tree_test.cpp">tree_test.cpp</a>:</th><td class="field-body">Shows how to make a tree-structure</td>
+<tr class="field"><th class="field-name"><a class="reference external" href="../test/tree_test.cpp">tree_test.cpp</a>:</th><td class="field-body">Shows how to make a tree-structure</td>
 </tr>
-<tr class="field"><th class="field-name"><a class="reference" href="../test/ptr_array.cpp">array_test.cpp</a>:</th><td class="field-body">Shows how to make an n-ary tree</td>
+<tr class="field"><th class="field-name"><a class="reference external" href="../test/ptr_array.cpp">array_test.cpp</a>:</th><td class="field-body">Shows how to make an n-ary tree</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id10" id="a-large-example" name="a-large-example">9. A large example</a></h1>
+<div class="section" id="a-large-example">
+<h1><a class="toc-backref" href="#id10">9. A large example</a></h1>
 <p>This example shows many of the most common
 features at work. The example provide lots of comments.
-The source code can also be found <a class="reference" href="../test/tut1.cpp">here</a>.</p>
+The source code can also be found <a class="reference external" href="../test/tut1.cpp">here</a>.</p>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -578,6 +652,12 @@ The source code can also be found <a class="reference" href="../test/tut1.cpp">h
     <span class=identifier>barn_type</span>                        <span class=identifier>barn</span><span class=special>;</span>
 
     <span class=comment>//
+    // A convenience typedef for the compiler-appropriate
+    // smart pointer used to manage barns
+    //</span>    
+    <span class=keyword>typedef</span> <span class=identifier><a href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a></span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>raii_ptr</span><span class=special>;</span>
+
+    <span class=comment>//
     // An error type
     //</span>
     <span class=keyword>struct</span> <span class=identifier>farm_trouble</span> <span class=special>:</span> <span class=keyword>public</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>exception</span>           <span class=special>{</span> <span class=special>};</span>
@@ -679,8 +759,9 @@ The source code can also be found <a class="reference" href="../test/tut1.cpp">h
 
     <span class=comment>//
     // If things are bad, we might choose to sell all animals :-(
-    //</span>
-    <span class=identifier>std</span><span class=special>::</span><span class=identifier>auto_ptr</span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>sell_farm</span><span class=special>()</span>
+      //</span>
+
+    <span class=identifier>raii_ptr</span> <span class=identifier>sell_farm</span><span class=special>()</span>
     <span class=special>{</span>
         <span class=keyword>return</span> <span class=identifier>barn</span><span class=special>.</span><span class=identifier>release</span><span class=special>();</span>
     <span class=special>}</span>
@@ -690,7 +771,7 @@ The source code can also be found <a class="reference" href="../test/tut1.cpp">h
     // else's farm :-)
     //</span>
 
-    <span class=keyword>void</span> <span class=identifier>buy_farm</span><span class=special>(</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>auto_ptr</span><span class=special>&lt;</span><span class=identifier>barn_type</span><span class=special>&gt;</span> <span class=identifier>other</span> <span class=special>)</span>
+    <span class=keyword>void</span> <span class=identifier>buy_farm</span><span class=special>(</span> <span class=identifier>raii_ptr</span> <span class=identifier>other</span> <span class=special>)</span>
     <span class=special>{</span>
         <span class=comment>//
         // This line inserts all the animals from 'other'
@@ -794,7 +875,7 @@ The source code can also be found <a class="reference" href="../test/tut1.cpp">h
 <!-- 10. Changing the Clone Allocator
 ++++++++++++++++++++++++++++++++
 
-This example shows how we can change 
+This example shows how we can change
 the Clone Allocator to use the pointer containers
 as view into other containers:
 
@@ -802,14 +883,14 @@ as view into other containers:
         :file: tut2.html -->
 <hr><p><strong>Navigate:</strong></p>
 <ul class="simple">
-<li><a class="reference" href="ptr_container.html">home</a></li>
-<li><a class="reference" href="reference.html">reference</a></li>
+<li><a class="reference external" href="ptr_container.html">home</a></li>
+<li><a class="reference external" href="reference.html">reference</a></li>
 </ul>
 <hr><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
+<tr class="field"><th class="field-name">Copyright:</th><td class="field-body">Thorsten Ottosen 2004-2006. Use, modification and distribution is subject to the Boost Software License, Version 1.0 (see <a class="reference external" href="http://www.boost.org/LICENSE_1_0.txt">LICENSE_1_0.txt</a>).</td>
 </tr>
 </tbody>
 </table>

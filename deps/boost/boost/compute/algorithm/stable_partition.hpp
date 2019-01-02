@@ -11,12 +11,15 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_STABLE_PARTITION_HPP
 #define BOOST_COMPUTE_ALGORITHM_STABLE_PARTITION_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/context.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/copy_if.hpp>
 #include <boost/compute/container/vector.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -33,6 +36,8 @@ namespace compute {
 /// \param predicate Unary predicate to be applied on each element
 /// \param queue Queue on which to execute
 ///
+/// Space complexity: \Omega(3n)
+///
 /// \see is_partitioned() and partition()
 ///
 template<class Iterator, class UnaryPredicate>
@@ -41,6 +46,7 @@ inline Iterator stable_partition(Iterator first,
                                  UnaryPredicate predicate,
                                  command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
     typedef typename std::iterator_traits<Iterator>::value_type value_type;
 
     // make temporary copy of the input

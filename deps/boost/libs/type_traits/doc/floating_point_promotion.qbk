@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using floating_point_promotion_t = typename floating_point_promotion<T>::type; // C++11 and above
+
 __type If floating point promotion can be applied to an rvalue of type `T`,
 then applies floating point promotion to `T` and keeps cv-qualifiers of `T`,
 otherwise leaves `T` unchanged.

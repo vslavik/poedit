@@ -16,8 +16,8 @@
   *   DESCRIPTION: Credit card number formatting code.
   */
 
-#include <string>
 #include <boost/regex.hpp>
+#include <string>
 
 bool validate_card_format(const std::string& s)
 {

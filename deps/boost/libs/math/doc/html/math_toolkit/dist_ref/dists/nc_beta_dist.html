@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Noncentral Beta Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="negative_binomial_dist.html" title="Negative Binomial Distribution">
 <link rel="next" href="nc_chi_squared_dist.html" title="Noncentral Chi-Squared Distribution">
@@ -31,12 +31,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_beta_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">non_central_beta_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">non_central_beta</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_beta_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -91,7 +91,7 @@ is
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.nc_beta_dist.h0"></a>
-          <span><a name="math_toolkit.dist_ref.dists.nc_beta_dist.member_functions"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.member_functions">Member
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.nc_beta_dist.member_functions"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.member_functions">Member
           Functions</a>
         </h5>
 <pre class="programlisting"><span class="identifier">non_central_beta_distribution</span><span class="special">(</span><span class="identifier">RealType</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">RealType</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">RealType</span> <span class="identifier">lambda</span><span class="special">);</span>
@@ -123,7 +123,7 @@ is
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.nc_beta_dist.h1"></a>
-          <span><a name="math_toolkit.dist_ref.dists.nc_beta_dist.non_member_accessors"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.non_member_accessors">Non-member
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.nc_beta_dist.non_member_accessors"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.non_member_accessors">Non-member
           Accessors</a>
         </h5>
 <p>
@@ -153,7 +153,7 @@ is
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.nc_beta_dist.h2"></a>
-          <span><a name="math_toolkit.dist_ref.dists.nc_beta_dist.accuracy"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.accuracy">Accuracy</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.nc_beta_dist.accuracy"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.accuracy">Accuracy</a>
         </h5>
 <p>
           The following table shows the peak errors (in units of <a href="http://en.wikipedia.org/wiki/Machine_epsilon" target="_top">epsilon</a>)
@@ -179,22 +179,22 @@ is
                 </th>
 <th>
                   <p>
-                    Microsoft Visual C++ version 12.0<br> Win32<br> double
+                    GNU C++ version 7.1.0<br> linux<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    GNU C++ version 5.1.0<br> linux<br> double
+                    GNU C++ version 7.1.0<br> linux<br> long double
                   </p>
                 </th>
 <th>
                   <p>
-                    GNU C++ version 5.1.0<br> linux<br> long double
+                    Sun compiler version 0x5150<br> Sun Solaris<br> long double
                   </p>
                 </th>
 <th>
                   <p>
-                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                    Microsoft Visual C++ version 14.1<br> Win32<br> double
                   </p>
                 </th>
 </tr></thead>
@@ -207,25 +207,25 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 240&#949; (Mean = 31&#949;)</span>
-                  </p>
-                </td>
-<td>
-                  <p>
-                    <span class="blue">Max = 0.998&#949; (Mean = 0.0659&#949;)</span><br>
-                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
-                    = 1.46e+26&#949; (Mean = 3.5e+24&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_Rmath_3_0_2_Non_Central_Beta_medium_parameters">And
+                    <span class="blue">Max = 0.998&#949; (Mean = 0.0649&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span> <span class="red">Max
+                    = 1.46e+26&#949; (Mean = 3.5e+24&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_non_central_beta_CDF_Rmath_3_2_3_Non_Central_Beta_medium_parameters">And
                     other failures.</a>)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 825&#949; (Mean = 27.4&#949;)</span>
+                    <span class="blue">Max = 824&#949; (Mean = 27.4&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
                     <span class="blue">Max = 832&#949; (Mean = 38.1&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 242&#949; (Mean = 31&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -237,14 +237,9 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 3.41e+003&#949; (Mean = 475&#949;)</span>
-                  </p>
-                </td>
-<td>
-                  <p>
                     <span class="blue">Max = 1.18&#949; (Mean = 0.175&#949;)</span><br>
-                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
-                    = 1.01e+36&#949; (Mean = 1.19e+35&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_Rmath_3_0_2_Non_Central_Beta_large_parameters">And
+                    <br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span> <span class="red">Max
+                    = 1.01e+36&#949; (Mean = 1.19e+35&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_non_central_beta_CDF_Rmath_3_2_3_Non_Central_Beta_large_parameters">And
                     other failures.</a>)</span>
                   </p>
                 </td>
@@ -255,7 +250,12 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 2.57e+04&#949; (Mean = 4.43e+03&#949;)</span>
+                    <span class="blue">Max = 2.57e+04&#949; (Mean = 4.45e+03&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 3.66e+03&#949; (Mean = 500&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -277,22 +277,22 @@ is
                 </th>
 <th>
                   <p>
-                    Microsoft Visual C++ version 12.0<br> Win32<br> double
+                    GNU C++ version 7.1.0<br> linux<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    GNU C++ version 5.1.0<br> linux<br> double
+                    GNU C++ version 7.1.0<br> linux<br> long double
                   </p>
                 </th>
 <th>
                   <p>
-                    GNU C++ version 5.1.0<br> linux<br> long double
+                    Sun compiler version 0x5150<br> Sun Solaris<br> long double
                   </p>
                 </th>
 <th>
                   <p>
-                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                    Microsoft Visual C++ version 14.1<br> Win32<br> double
                   </p>
                 </th>
 </tr></thead>
@@ -305,14 +305,9 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 619&#949; (Mean = 62.7&#949;)</span>
-                  </p>
-                </td>
-<td>
-                  <p>
-                    <span class="blue">Max = 0.998&#949; (Mean = 0.0957&#949;)</span><br>
-                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
-                    = 7.5e+97&#949; (Mean = 1.37e+96&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_0_2_Non_Central_Beta_medium_parameters">And
+                    <span class="blue">Max = 0.998&#949; (Mean = 0.0936&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span> <span class="red">Max
+                    = 7.5e+97&#949; (Mean = 1.37e+96&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_2_3_Non_Central_Beta_medium_parameters">And
                     other failures.</a>)</span>
                   </p>
                 </td>
@@ -323,7 +318,12 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 554&#949; (Mean = 57.3&#949;)</span>
+                    <span class="blue">Max = 554&#949; (Mean = 57.2&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 624&#949; (Mean = 62.7&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -335,14 +335,9 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 8.67e+003&#949; (Mean = 1.04e+003&#949;)</span>
-                  </p>
-                </td>
-<td>
-                  <p>
                     <span class="blue">Max = 0.986&#949; (Mean = 0.188&#949;)</span><br>
-                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
-                    = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_0_2_Non_Central_Beta_large_parameters">And
+                    <br> (<span class="emphasis"><em>Rmath 3.2.3:</em></span> <span class="red">Max
+                    = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_7_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_2_3_Non_Central_Beta_large_parameters">And
                     other failures.</a>)</span>
                   </p>
                 </td>
@@ -353,7 +348,12 @@ is
                 </td>
 <td>
                   <p>
-                    <span class="blue">Max = 3.56e+03&#949; (Mean = 704&#949;)</span>
+                    <span class="blue">Max = 3.56e+03&#949; (Mean = 707&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 1.25e+04&#949; (Mean = 1.49e+03&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -366,7 +366,7 @@ is
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.nc_beta_dist.h3"></a>
-          <span><a name="math_toolkit.dist_ref.dists.nc_beta_dist.tests"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.tests">Tests</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.nc_beta_dist.tests"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.tests">Tests</a>
         </h5>
 <p>
           There are two sets of test data used to verify this implementation: firstly
@@ -377,7 +377,7 @@ is
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.nc_beta_dist.h4"></a>
-          <span><a name="math_toolkit.dist_ref.dists.nc_beta_dist.implementation"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.implementation">Implementation</a>
+          <span class="phrase"><a name="math_toolkit.dist_ref.dists.nc_beta_dist.implementation"></a></span><a class="link" href="nc_beta_dist.html#math_toolkit.dist_ref.dists.nc_beta_dist.implementation">Implementation</a>
         </h5>
 <p>
           The CDF and its complement are evaluated as follows:
@@ -457,7 +457,7 @@ is
           <span class="inlinemediaobject"><img src="../../../../equations/nc_beta_ref1.svg"></span>
         </p>
 <p>
-          Quantiles are computed using a specially modified version of <a class="link" href="../../roots/roots_noderiv/bracket_solve.html" title="Bracket and Solve Root">bracket
+          Quantiles are computed using a specially modified version of <a class="link" href="../../roots_noderiv/bracket_solve.html" title="Bracket and Solve Root">bracket
           and solve</a>, starting the search for the root at the mean of the distribution.
           (A Cornish-Fisher type expansion was also tried, but while this gets quite
           close to the root in many cases, when it is wrong it tends to introduce
@@ -467,10 +467,11 @@ is
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -37,7 +37,11 @@ struct deduced : ::boost::type_erasure::placeholder
         ::boost::mpl::empty<
             typename ::boost::type_erasure::detail::get_placeholders<
                 Metafunction,
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
                 ::boost::mpl::set0<>
+#else
+                ::boost::mp11::mp_list<>
+#endif
             >::type
         >,
         Metafunction,

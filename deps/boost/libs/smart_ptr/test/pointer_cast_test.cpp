@@ -104,33 +104,25 @@ bool check_const_pointer_cast(const BasePtr &ptr)
    const_cast<const base*>(const_cast<base*>(boost::get_pointer(ptr)));
 }
 
+template <class BasePtr>
+void check_all_casts(const BasePtr &ptr)
+{
+#if !defined( BOOST_NO_RTTI )
+    BOOST_TEST( check_dynamic_pointer_cast( ptr ) );
+#endif
+    BOOST_TEST( check_static_pointer_cast( ptr ) );
+    BOOST_TEST( check_const_pointer_cast( ptr ) );
+}
+
 }
 
 int main()
 {
-    {
-        // Try casts with shared_ptr
+    boost::shared_ptr<base> boost_shared(new derived);
+    base *plain = boost_shared.get();
 
-        boost::shared_ptr<base> ptr(new derived);
-
-#if !defined( BOOST_NO_RTTI )
-        BOOST_TEST( check_dynamic_pointer_cast( ptr ) );
-#endif
-        BOOST_TEST( check_static_pointer_cast( ptr ) );
-        BOOST_TEST( check_const_pointer_cast( ptr ) );
-    }
-   
-    {
-        // Try casts with raw pointer
-
-        boost::scoped_ptr<base> ptr(new derived);
-
-#if !defined( BOOST_NO_RTTI )
-        BOOST_TEST( check_dynamic_pointer_cast( ptr.get() ) );
-#endif
-        BOOST_TEST( check_static_pointer_cast( ptr.get() ) );
-        BOOST_TEST( check_const_pointer_cast( ptr.get() ) );
-    }
+    check_all_casts(boost_shared);
+    check_all_casts(plain);
     
     return boost::report_errors();
 }

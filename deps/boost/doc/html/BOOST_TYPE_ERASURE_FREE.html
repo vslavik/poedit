@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_TYPE_ERASURE_FREE</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="boost_typeerasure/reference.html#header.boost.type_erasure.free_hpp" title="Header &lt;boost/type_erasure/free.hpp&gt;">
 <link rel="prev" href="boost/type_erasure/bad_any_cast.html" title="Class bad_any_cast">
@@ -32,38 +32,47 @@
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="boost_typeerasure/reference.html#header.boost.type_erasure.free_hpp" title="Header &lt;boost/type_erasure/free.hpp&gt;">boost/type_erasure/free.hpp</a>&gt;
 
-</span>BOOST_TYPE_ERASURE_FREE(qualified_name, function_name, N)</pre></div>
+</span>BOOST_TYPE_ERASURE_FREE(concept_name, function_name)</pre></div>
 <div class="refsect1">
-<a name="idp449084528"></a><h2>Description</h2>
+<a name="id-1.3.41.13.19.3.4"></a><h2>Description</h2>
 <p>
 The declaration of the concept is </p>
-<pre class="programlisting"> <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Sig</span><span class="special">&gt;</span>
- <span class="keyword">struct</span> <span class="special">::</span><span class="identifier">namespace1</span><span class="special">::</span><span class="identifier">namespace2</span><span class="special">::</span><span class="special">...</span><span class="special">::</span><span class="identifier">concept_name</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Sig</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">concept_name</span><span class="special">;</span>
 </pre>
 <p> where Sig is a function type giving the signature of the function.</p>
-<p>This macro can only be used in the global namespace.</p>
+<p>This macro can only be used at namespace scope.</p>
 <p>Example:</p>
-<pre class="programlisting"> <span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">(</span><span class="special">(</span><span class="identifier">boost</span><span class="special">)</span><span class="special">(</span><span class="identifier">has_to_string</span><span class="special">)</span><span class="special">,</span> <span class="identifier">to_string</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">(</span><span class="identifier">to_string</span><span class="special">)</span>
+<span class="keyword">typedef</span> <span class="identifier">has_to_string</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="identifier">_self</span> <span class="keyword">const</span><span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span> <span class="identifier">to_string_concept</span><span class="special">;</span>
 </pre>
-<p> </p>
-<div class="variablelist"><table border="0">
+<p>In C++03, the macro can only be used in the global namespace and is defined as:</p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">(</span><span class="identifier">qualified_name</span><span class="special">,</span> <span class="identifier">function_name</span><span class="special">,</span> <span class="identifier">N</span><span class="special">)</span>
+</pre>
+<p>Example:</p>
+<pre class="programlisting"><span class="identifier">BOOST_TYPE_ERASURE_FREE</span><span class="special">(</span><span class="special">(</span><span class="identifier">boost</span><span class="special">)</span><span class="special">(</span><span class="identifier">has_to_string</span><span class="special">)</span><span class="special">,</span> <span class="identifier">to_string</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>
+</pre>
+<p>For backwards compatibility, this form is always accepted. </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><code class="computeroutput">N</code></span></p></td>
-<td><p>is the number of arguments of the function.</p></td>
+<td><p><span class="term"><code class="computeroutput">concept_name</code></span></p></td>
+<td><p>is the name of the concept to declare. If it is omitted it defaults to <code class="computeroutput">has_ ## function_name</code> </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">function_name</code></span></p></td>
-<td><p>is the name of the function. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">qualified_name</code></span></p></td>
-<td><p>should be a preprocessor sequence of the form (namespace1)(namespace2)...(concept_name). </p></td>
+<td><p>is the name of the function.</p></td>
 </tr>
 </tbody>
 </table></div></td>

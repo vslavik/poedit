@@ -15,7 +15,7 @@
 #ifndef BOOST_LOG_TESTS_MAKE_RECORD_HPP_INCLUDED_
 #define BOOST_LOG_TESTS_MAKE_RECORD_HPP_INCLUDED_
 
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/attributes/attribute_set.hpp>
 

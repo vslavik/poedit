@@ -28,7 +28,7 @@ namespace statechart
 //////////////////////////////////////////////////////////////////////////////
 template<
   class FifoWorker = fifo_worker<>,
-  class Allocator = std::allocator< void > >
+  class Allocator = std::allocator< none > >
 class fifo_scheduler : noncopyable
 {
   typedef processor_container<

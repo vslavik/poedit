@@ -34,7 +34,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
     //      to allow a single catch handler to catch all exceptions.
     //
     ///////////////////////////////////////////////////////////////////////////
-    class parser_error_base : public std::exception
+    class BOOST_SYMBOL_VISIBLE parser_error_base : public std::exception
     {
     protected:
 
@@ -140,7 +140,6 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         parse(ScannerT const& scan) const
         {
             typedef typename parser_result<ParserT, ScannerT>::type result_t;
-            typedef typename ScannerT::iterator_t iterator_t;
 
             result_t hit = this->subject().parse(scan);
             if (!hit)

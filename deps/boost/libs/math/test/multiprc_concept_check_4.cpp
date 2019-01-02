@@ -28,10 +28,17 @@ using namespace boost::multiprecision;
 
 typedef number<cpp_dec_float<50>, et_on> test_type;
 
+// We get sporadic internal compiler errors from gcc-7.x when CI testing
+// that don't appear to be reproducable locally.  gcc-6.x and gcc-8.x are fine
+// so for now it's a <shrug> and move on...
+#if ! (defined(BOOST_GCC) && (__GNUC__ == 7))
+
 void foo()
 {
    instantiate(test_type());
 }
+
+#endif
 
 int main()
 {

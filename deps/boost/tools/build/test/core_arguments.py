@@ -30,7 +30,7 @@ def test_varargs(t, *args, **kwargs):
     test(t, "varargs", *args, **kwargs)
 
 
-t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+t = BoostBuild.Tester(pass_toolset=0)
 
 t.write("echo_args.jam", """\
 NOCARE all ;

@@ -6,7 +6,6 @@
 =============================================================================*/
 #include "compiler.hpp"
 #include "vm.hpp"
-#include <boost/foreach.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
 #include <iostream>

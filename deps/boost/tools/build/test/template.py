@@ -27,7 +27,7 @@ int main() {}
 t.run_build_system()
 
 # First, create a list of three pathnames.
-file_list = BoostBuild.List("bin/$toolset/debug/") * \
+file_list = BoostBuild.List("bin/$toolset/debug*/") * \
     BoostBuild.List("hello.exe hello.obj")
 # Second, assert that those files were added as result of the last build system
 # invocation.

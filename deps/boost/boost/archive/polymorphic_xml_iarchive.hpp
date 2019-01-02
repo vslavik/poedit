@@ -28,7 +28,7 @@
 namespace boost { 
 namespace archive {
 
-class polymorphic_xml_iarchive : 
+class BOOST_SYMBOL_VISIBLE polymorphic_xml_iarchive : 
     public detail::polymorphic_iarchive_route<xml_iarchive>
 {
 public:

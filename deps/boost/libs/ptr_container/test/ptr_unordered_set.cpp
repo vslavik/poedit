@@ -12,6 +12,7 @@
 #include <boost/test/unit_test.hpp>
 #include "associative_test_data.hpp"
 #include <boost/ptr_container/ptr_unordered_set.hpp>
+#include <boost/ptr_container/detail/ptr_container_disable_deprecated.hpp>
 
 template< class SetDerived, class SetBase, class T >
 void test_transfer()
@@ -50,6 +51,7 @@ void test_unordered_interface()
     i = c.end( 0 );
     ci = c.cend( 0 );
     typename Cont::size_type s = c.bucket_count();
+    hide_warning(s);
     s = c.max_bucket_count();
     s = c.bucket_size( 0 );
     s = c.bucket( *t );
@@ -84,6 +86,10 @@ void test_erase()
 }
 
 
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 void test_set()
 {    
@@ -106,10 +112,21 @@ void test_set()
 
     BOOST_CHECK_THROW( set.insert( 0 ), bad_ptr_container_operation );
     set.insert( new int(0) );
+#ifndef BOOST_NO_AUTO_PTR
     std::auto_ptr<int> ap( new int(1) );
     set.insert( ap );
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+    std::unique_ptr<int> up( new int(2) );
+    set.insert( std::move( up ) );
+#endif
     BOOST_CHECK_THROW( (set.replace(set.begin(), 0 )), bad_ptr_container_operation );
+#ifndef BOOST_NO_AUTO_PTR
     BOOST_CHECK_THROW( (set.replace(set.begin(), std::auto_ptr<int>(0) )), bad_ptr_container_operation );
+#endif
+#if !defined(BOOST_NO_CXX11_SMART_PTR) && !defined(BOOST_NO_CXX11_NULLPTR)
+    BOOST_CHECK_THROW( (set.replace(set.begin(), std::unique_ptr<int>(nullptr) )), bad_ptr_container_operation );
+#endif
 
     test_unordered_interface< ptr_unordered_set<Base>, Derived_class >();
     test_unordered_interface< ptr_unordered_multiset<Base>, Derived_class >();
@@ -117,6 +134,10 @@ void test_set()
     test_erase< ptr_unordered_set<Base> >();
     test_erase< ptr_unordered_multiset<Base> >();
 }
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic pop
+#endif
 
 using boost::unit_test::test_suite;
 
@@ -128,9 +149,3 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
 
     return test;
 }
-
-
-
-
-
-

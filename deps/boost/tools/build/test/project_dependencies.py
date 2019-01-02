@@ -45,7 +45,7 @@ t.copy("src/a.cpp", "src/b.cpp")
 t.run_build_system()
 
 # Test that there is no "main-target-a" part.
-# t.expect_addition("src/bin/$toolset/debug/a.exe")
-# t.expect_addition("src/bin/$toolset/debug/b.exe")
+# t.expect_addition("src/bin/$toolset/debug*/a.exe")
+# t.expect_addition("src/bin/$toolset/debug*/b.exe")
 
 t.cleanup()

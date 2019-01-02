@@ -18,6 +18,6 @@ t.run_build_system()
 t.expect_nothing_more()
 
 t.run_build_system(["release"])
-t.expect_addition("bin/$toolset/release/hello.exe")
+t.expect_addition("bin/$toolset/release*/hello.exe")
 
 t.cleanup()

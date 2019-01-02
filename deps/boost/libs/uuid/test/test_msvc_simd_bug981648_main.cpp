@@ -18,7 +18,7 @@
 #include "test_msvc_simd_bug981648.hpp"
 extern void mp_grid_update_marker_parameters(headerProperty* header_prop, my_obj &current_marker);
 static my_obj g_my_obj;
-int main(int argc, char* argv[])
+int main(void)
 {
 my_obj *p = &g_my_obj;
 p->m_uuid = uuid();

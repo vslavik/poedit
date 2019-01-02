@@ -14,6 +14,9 @@
 #include <boost/iostreams/categories.hpp>
 #include <boost/iostreams/detail/ios.hpp>  // failure.
 
+// Must come last.
+#include <boost/iostreams/detail/config/disable_warnings.hpp>
+
 namespace boost { namespace iostreams { namespace example {
 
 //
@@ -135,7 +138,7 @@ public:
         }
 
         // Check for errors
-        if (next < 0 || next >= container_.size())
+        if (next < 0 || next > static_cast<stream_offset>(container_.size()))
             throw BOOST_IOSTREAMS_FAILURE("bad seek offset");
 
         pos_ = next;
@@ -151,5 +154,7 @@ private:
 };
 
 } } } // End namespaces example, iostreams, boost.
+
+#include <boost/iostreams/detail/config/enable_warnings.hpp>
 
 #endif // #ifndef BOOST_IOSTREAMS_EXAMPLE_CONTAINTER_DEVICE_HPP_INCLUDED

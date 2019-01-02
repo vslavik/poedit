@@ -15,9 +15,15 @@
 // move
 #include <boost/move/utility_core.hpp>
 #include <boost/move/adl_move_swap.hpp>
+//boost
+#include <boost/tuple/tuple.hpp>
 // std
 #include <memory>
 #include <cstddef>
+
+#if defined(BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE)
+#include <tuple>
+#endif
 
 //test
 #include <boost/core/lightweight_test.hpp>
@@ -92,81 +98,81 @@ int main()
                                    , InnerAlloc2 >          Rebound9Scoped2Inner;
 
    //outer_allocator_type
-   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( dtl::is_same< OuterAlloc
                        , Scoped0Inner::outer_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( dtl::is_same< OuterAlloc
                        , Scoped1Inner::outer_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( dtl::is_same< OuterAlloc
                        , Scoped2Inner::outer_allocator_type>::value ));
    //value_type
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped0Inner::value_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped1Inner::value_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped2Inner::value_type>::value ));
    //size_type
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped0Inner::size_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped1Inner::size_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped2Inner::size_type>::value ));
 
    //difference_type
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped0Inner::difference_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped1Inner::difference_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped2Inner::difference_type>::value ));
 
    //pointer
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped0Inner::pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped1Inner::pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped2Inner::pointer>::value ));
 
    //const_pointer
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped0Inner::const_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped1Inner::const_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped2Inner::const_pointer>::value ));
 
    //void_pointer
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped0Inner::void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped1Inner::void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped2Inner::void_pointer>::value ));
 
    //const_void_pointer
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped0Inner::const_void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped1Inner::const_void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( dtl::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped2Inner::const_void_pointer>::value ));
 
    //rebind
-   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped0Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( dtl::is_same<Scoped0Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped0Inner >::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped1Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( dtl::is_same<Scoped1Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped1Inner >::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped2Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( dtl::is_same<Scoped2Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped2Inner >::value ));
 
    //inner_allocator_type
-   BOOST_STATIC_ASSERT(( container_detail::is_same< Scoped0Inner
+   BOOST_STATIC_ASSERT(( dtl::is_same< Scoped0Inner
                        , Scoped0Inner::inner_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1>
+   BOOST_STATIC_ASSERT(( dtl::is_same< scoped_allocator_adaptor<InnerAlloc1>
                        , Scoped1Inner::inner_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1, InnerAlloc2>
+   BOOST_STATIC_ASSERT(( dtl::is_same< scoped_allocator_adaptor<InnerAlloc1, InnerAlloc2>
                        , Scoped2Inner::inner_allocator_type>::value ));
 
    {
@@ -679,15 +685,15 @@ int main()
          //Check outer_allocator_type is scoped
          BOOST_STATIC_ASSERT(( is_scoped_allocator
             <ScopedScoped0Inner::outer_allocator_type>::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < outermost_allocator<ScopedScoped0Inner>::type
             , Outer10IdAlloc
             >::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < ScopedScoped0Inner::outer_allocator_type
             , scoped_allocator_adaptor<Outer10IdAlloc>
             >::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < scoped_allocator_adaptor<Outer10IdAlloc>::outer_allocator_type
             , Outer10IdAlloc
             >::value ));
@@ -762,15 +768,15 @@ int main()
          //Check outer_allocator_type is scoped
          BOOST_STATIC_ASSERT(( is_scoped_allocator
             <ScopedScoped1Inner::outer_allocator_type>::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < outermost_allocator<ScopedScoped1Inner>::type
             , Outer10IdAlloc
             >::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < ScopedScoped1Inner::outer_allocator_type
             , scoped_allocator_adaptor<Outer10IdAlloc, Inner11IdAlloc1>
             >::value ));
-         BOOST_STATIC_ASSERT(( container_detail::is_same
+         BOOST_STATIC_ASSERT(( dtl::is_same
             < scoped_allocator_adaptor<Outer10IdAlloc, Inner11IdAlloc1>::outer_allocator_type
             , Outer10IdAlloc
             >::value ));
@@ -850,7 +856,7 @@ int main()
       //used to construct types.
       ////////////////////////////////////////////////////////////
       {
-         using container_detail::pair;
+         using dtl::pair;
          typedef propagation_test_allocator< pair< tagged_integer<0>
                                , tagged_integer<0> >, 0> OuterPairAlloc;
          //
@@ -894,7 +900,81 @@ int main()
             BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
-
+         #if defined(BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE)
+         //Check construction with 0 user arguments and Std tuple
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         #endif   //BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE
          //Check construction with 1 user arguments for each pair
          {
             typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
@@ -932,6 +1012,82 @@ int main()
             BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }
+         //Check construction with 1 user arguments for each pair and Boost tuple
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<int>(1), boost::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<int>(1), boost::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<int>(2), boost::tuple<int>(2));
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
+            dummy.~MarkTypePair();
+         }
+         #if defined(BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE)
+         //Check construction with 1 user arguments for each pair and Boost tuple
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<int>(1), std::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<int>(1), std::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<int>(2), std::tuple<int>(2));
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
+            dummy.~MarkTypePair();
+         }
+         #endif   //BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE
          //Check construction with pair copy construction
          {
             typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
@@ -1096,6 +1252,120 @@ int main()
             BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
             BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
             BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
+            dummy.~MarkTypePair();
+         }
+         //Check construction with 0/1 arguments for each pair and Boost tuple
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<>(), boost::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<int>(1), boost::tuple<>());
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, boost::tuple<>(), boost::tuple<int>(2));
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 2);
+            dummy.~MarkTypePair();
+         }
+         #if defined(BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE)
+         //Check construction with 0/1 arguments for each pair and Boost tuple
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<int>(1));
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<int>(1), std::tuple<>());
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, piecewise_construct, std::tuple<>(), std::tuple<int>(2));
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 2);
+            dummy.~MarkTypePair();
+         }
+         #endif   //BOOST_CONTAINER_PAIR_TEST_HAS_HEADER_TUPLE
+
+         //Check construction with try_emplace_t 0/1 arguments for each pair
+         {
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, try_emplace_t(), 5, 1);
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 5);
+            BOOST_TEST(dummy.second.value == 1);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, try_emplace_t(), 6);
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 6);
+            BOOST_TEST(dummy.second.value == 0);
+            dummy.~MarkTypePair();
+         }
+         {
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
+            typedef pair<MarkType, MarkType> MarkTypePair;
+            MarkTypePair dummy;
+            dummy.~MarkTypePair();
+            s0i.construct(&dummy, try_emplace_t(), 7, 2);
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 7);
             BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }

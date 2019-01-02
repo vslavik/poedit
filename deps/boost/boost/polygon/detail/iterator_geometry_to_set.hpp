@@ -100,7 +100,7 @@ public:
     itrb = begin_points(polygon);
     itre = end_points(polygon);
     use_wrap = false;
-    if(itrb == itre || dir == HIGH || size(polygon) < 4) {
+    if(itrb == itre || dir == HIGH || ::boost::polygon::size(polygon) < 4) {
       polygon_index = -1;
     } else {
       direction_1d wdir = w;

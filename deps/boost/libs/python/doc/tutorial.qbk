@@ -1,5 +1,5 @@
 [article Boost.Python Tutorial
-    [quickbook 1.7]
+    [quickbook 1.6]
     [authors [de Guzman, Joel], [Abrahams, David]]
     [copyright 2002 2003 2004 2005 Joel de Guzman, David Abrahams]
     [category inter-language support]
@@ -92,7 +92,7 @@ who had to use a different tool.
 
 We will skip over the details. Our objective will be to simply create
 the hello world module and run it in Python. For a complete reference to
-building Boost.Python, check out: [@../../../building.html
+building Boost.Python, check out: [@../building.html
 building.html]. After this brief ['bjam] tutorial, we should have built
 the DLLs and run a python program using the extension.
 
@@ -1417,6 +1417,8 @@ eval evaluates the given expression and returns the resulting value.
 exec executes the given code (typically a set of statements) returning the result,
 and exec_file executes the code contained in the given file.
 
+There are also overloads taking `char const*` instead of str as the first argument.
+
 The [^globals] and [^locals] parameters are Python dictionaries
 containing the globals and locals of the context in which to run the code.
 For most intents and purposes you can use the namespace dictionary of the
@@ -1758,13 +1760,13 @@ sounds/
     \_\_init\_\_.py
     core/
         \_\_init\_\_.py
-        _core.pyd
+        \_core.pyd
     filters/
         \_\_init\_\_.py
-        _filters.pyd
+        \_filters.pyd
     io/
         \_\_init\_\_.py
-        _io.pyd
+        \_io.pyd
 ]
 
 Note that we created a directory for each extension module, and added a
@@ -1868,36 +1870,6 @@ This technique has several advantages:
 * Reduce the memory footprint to virtually zero
 * Minimize the need to recompile
 * Rapid prototyping (you can move the code to C++ if required without changing the interface)
-
-You can even add a little syntactic sugar with the use of metaclasses. Let's
-create a special metaclass that "injects" methods in other classes.
-
-    # The one Boost.Python uses for all wrapped classes.
-    # You can use here any class exported by Boost instead of "point"
-    BoostPythonMetaclass = point.__class__
-
-    class injector(object):
-        class __metaclass__(BoostPythonMetaclass):
-            def __init__(self, name, bases, dict):
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k,v in dict.items():
-                            setattr(b,k,v)
-                return type.__init__(self, name, bases, dict)
-
-    # inject some methods in the point foo
-    class more_point(injector, point):
-        def __repr__(self):
-            return 'Point(x=%s, y=%s)' % (self.x, self.y)
-        def foo(self):
-            print 'foo!'
-
-Now let's see how it got:
-
-    >>> print point()
-    Point(x=10, y=10)
-    >>> point().foo()
-    foo!
 
 Another useful idea is to replace constructors with factory functions:
 

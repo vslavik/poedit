@@ -11,7 +11,7 @@
    struct is_assignable : public __tof {};
     
 __inherit If `std::declval<T>() = std::declval<U>()` then inherits from __true_type, 
-otherwise from  __flase_type.  Type `T` must be a complete type.
+otherwise from  __false_type.  Type `T` must be a complete type.
 
 Note that this trait is somewhat tricky to use correctly: for example:
 

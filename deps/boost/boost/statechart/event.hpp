@@ -26,7 +26,7 @@ namespace statechart
 
 
 //////////////////////////////////////////////////////////////////////////////
-template< class MostDerived, class Allocator = std::allocator< void > >
+template< class MostDerived, class Allocator = std::allocator< none > >
 class event : public detail::rtti_policy::rtti_derived_type<
   MostDerived, event_base >
 {

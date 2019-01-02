@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Semi-Intrusive unordered associative containers: unordered_set, unordered_multiset</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="prev" href="set_multiset.html" title="Intrusive associative containers: set, multiset, rbtree">
 <link rel="next" href="map_multimap.html" title="Map and multimap-like interface for associative containers">
 </head>
@@ -28,7 +28,7 @@
 <a name="intrusive.unordered_set_unordered_multiset"></a><a class="link" href="unordered_set_unordered_multiset.html" title="Semi-Intrusive unordered associative containers: unordered_set, unordered_multiset">Semi-Intrusive
     unordered associative containers: unordered_set, unordered_multiset</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="unordered_set_unordered_multiset.html#intrusive.unordered_set_unordered_multiset.unordered_set_unordered_multiset_performance">unordered_set
       and unordered_multiset performance notes</a></span></dt>
 <dt><span class="section"><a href="unordered_set_unordered_multiset.html#intrusive.unordered_set_unordered_multiset.unordered_set_unordered_multiset_hooks">unordered_set
@@ -114,7 +114,7 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...</span><span class="identifier">Options</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">unordered_set_base_hook</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set_base_hook.html" title="Class template unordered_set_base_hook">unordered_set_base_hook</a></code>:
             the user class derives publicly from <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set_base_hook.html" title="Class template unordered_set_base_hook">unordered_set_base_hook</a></code>
             to make it <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set.html" title="Class template unordered_set">unordered_set</a></code>/<code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_multiset.html" title="Class template unordered_multiset">unordered_multiset</a></code>-compatible.
@@ -122,7 +122,7 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...</span><span class="identifier">Options</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">unordered_set_member_hook</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a></code>:
             the user class contains a public <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a></code>
             to make it <code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_set.html" title="Class template unordered_set">unordered_set</a></code>/<code class="computeroutput"><a class="link" href="../boost/intrusive/unordered_multiset.html" title="Class template unordered_multiset">unordered_multiset</a></code>-compatible.
@@ -133,7 +133,7 @@
         receive the same options explained in the section <a class="link" href="usage.html" title="How to use Boost.Intrusive">How
         to use Boost.Intrusive</a>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">tag</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Tag</span><span class="special">&gt;</span></code></strong></span>
             (for base hooks only): This argument serves as a tag, so you can derive
@@ -153,7 +153,7 @@
 <p>
         Apart from them, these hooks offer additional options:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">store_hash</span><span class="special">&lt;</span><span class="keyword">bool</span> <span class="identifier">Enabled</span><span class="special">&gt;</span></code></strong></span>:
             This option reserves additional space in the hook to store the hash value
@@ -222,7 +222,7 @@
         receive the same options explained in the section <a class="link" href="usage.html" title="How to use Boost.Intrusive">How
         to use Boost.Intrusive</a>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">base_hook</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Hook</span><span class="special">&gt;</span></code></strong></span>
             / <span class="bold"><strong><code class="computeroutput"><span class="identifier">member_hook</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Hook</span><span class="special">,</span> <span class="identifier">Hook</span> <span class="identifier">T</span><span class="special">::*</span> <span class="identifier">PtrToMember</span><span class="special">&gt;</span></code></strong></span>
@@ -236,7 +236,8 @@
             To activate the constant-time <code class="computeroutput"><span class="identifier">size</span><span class="special">()</span></code> operation. Default: <code class="computeroutput"><span class="identifier">constant_time_size</span><span class="special">&lt;</span><span class="keyword">true</span><span class="special">&gt;</span></code>
           </li>
 <li class="listitem">
-            <span class="bold"><strong><code class="computeroutput"><span class="identifier">size_type</span><span class="special">&lt;</span><span class="keyword">bool</span> <span class="identifier">Enabled</span><span class="special">&gt;</span></code></strong></span>:
+            <span class="bold"><strong><code class="computeroutput"><span class="identifier">size_type</span><span class="special">&lt;</span><span class="keyword">typename</span>
+            <span class="identifier">SizeType</span><span class="special">&gt;</span></code></strong></span>:
             To specify the type that will be used to store the size of the container.
             Default: <code class="computeroutput"><span class="identifier">size_type</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span></code>
           </li>
@@ -244,7 +245,7 @@
 <p>
         And they also can receive additional options:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">equal</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Equal</span><span class="special">&gt;</span></code></strong></span>:
             Equality function for the objects to be inserted in containers. Default:

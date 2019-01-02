@@ -1204,11 +1204,11 @@ radians instead...)
 
 Consider the following code:
 
-    cout << sin(asin(180.0 * degrees));
+    cout << asin(sin(90.0 * degrees));
 
 What should this print?  If only heterogeneous
-systems are available it would print 3.14159+ rad
-Why?  Well, `asin` would return a `quantity<dimensionless>`
+systems are available it would print 1.5708 rad
+Why?  Well, `sin` would return a `quantity<dimensionless>`
 effectively losing the information that degrees
 are being used.  In order to propogate this extra information
 we need homogeneous systems.

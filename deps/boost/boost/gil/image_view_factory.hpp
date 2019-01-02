@@ -1,35 +1,24 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
+#define BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_IMAGE_VIEW_FACTORY_HPP
-#define GIL_IMAGE_VIEW_FACTORY_HPP
-
-/*!
-/// \file               
-/// \brief Methods for constructing image views from raw data or other image views
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on March 9, 2007
-/// Methods for creating shallow image views from raw pixel data or from other image views - 
-/// flipping horizontally or vertically, axis-aligned rotation, a subimage, subsampled 
-/// or n-th channel image view. Derived image views are shallow copies and are fast to construct.
-*/
+#include <boost/gil/color_convert.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/point.hpp>
 
 #include <cassert>
 #include <cstddef>
-#include "gil_config.hpp"
-#include "metafunctions.hpp"
-#include "gray.hpp"
-#include "color_convert.hpp"
+
+/// Methods for creating shallow image views from raw pixel data or from other image views -
+/// flipping horizontally or vertically, axis-aligned rotation, a subimage, subsampled
+/// or n-th channel image view. Derived image views are shallow copies and are fast to construct.
 
 /// \defgroup ImageViewConstructors Image View From Raw Data
 /// \ingroup ImageViewAlgorithm
@@ -48,12 +37,12 @@ template <typename T> struct transposed_type;
 
 /// \brief Returns the type of a view that has a dynamic step along both X and Y
 /// \ingroup ImageViewTransformations
-template <typename View> 
+template <typename View>
 struct dynamic_xy_step_type : public dynamic_y_step_type<typename dynamic_x_step_type<View>::type> {};
 
 /// \brief Returns the type of a transposed view that has a dynamic step along both X and Y
 /// \ingroup ImageViewTransformations
-template <typename View> 
+template <typename View>
 struct dynamic_xy_step_transposed_type : public dynamic_xy_step_type<typename transposed_type<View>::type> {};
 
 
@@ -70,10 +59,11 @@ interleaved_view(std::size_t width, std::size_t height,
 /// \ingroup ImageViewConstructors
 /// \brief Constructing image views from raw interleaved pixel data
 template <typename Iterator>
-typename type_from_x_iterator<Iterator>::view_t
-interleaved_view(point2<std::size_t> dim,
-                 Iterator pixels, std::ptrdiff_t rowsize_in_bytes) {
-    typedef typename type_from_x_iterator<Iterator>::view_t RView;
+auto interleaved_view(point<std::size_t> dim, Iterator pixels,
+                      std::ptrdiff_t rowsize_in_bytes)
+    -> typename type_from_x_iterator<Iterator>::view_t
+{
+    using RView = typename type_from_x_iterator<Iterator>::view_t;
     return RView(dim, typename RView::locator(pixels, rowsize_in_bytes));
 }
 
@@ -158,7 +148,7 @@ namespace detail {
 } // namespace detail
 
 
-/// \brief Returns the type of a view that does color conversion upon dereferencing its pixels 
+/// \brief Returns the type of a view that does color conversion upon dereferencing its pixels
 /// \ingroup ImageViewTransformationsColorConvert
 template <typename SrcView, typename DstP, typename CC=default_color_converter>
 struct color_converted_view_type : public detail::_color_converted_view_type<SrcView,
@@ -190,7 +180,7 @@ color_converted_view(const View& src) {
 
 /// \ingroup ImageViewTransformationsFlipUD
 template <typename View>
-inline typename dynamic_y_step_type<View>::type flipped_up_down_view(const View& src) { 
+inline typename dynamic_y_step_type<View>::type flipped_up_down_view(const View& src) {
     typedef typename dynamic_y_step_type<View>::type RView;
     return RView(src.dimensions(),typename RView::xy_locator(src.xy_at(0,src.height()-1),-1));
 }
@@ -200,7 +190,7 @@ inline typename dynamic_y_step_type<View>::type flipped_up_down_view(const View&
 /// \brief view of a view flipped left-to-right
 
 /// \ingroup ImageViewTransformationsFlipLR
-template <typename View> 
+template <typename View>
 inline typename dynamic_x_step_type<View>::type flipped_left_right_view(const View& src) {
     typedef typename dynamic_x_step_type<View>::type RView;
     return RView(src.dimensions(),typename RView::xy_locator(src.xy_at(src.width()-1,0),-1,1));
@@ -222,7 +212,7 @@ inline typename dynamic_xy_step_transposed_type<View>::type transposed_view(cons
 /// \brief view of a view rotated 90 degrees clockwise
 
 /// \ingroup ImageViewTransformations90CW
-template <typename View> 
+template <typename View>
 inline typename dynamic_xy_step_transposed_type<View>::type rotated90cw_view(const View& src) {
     typedef typename dynamic_xy_step_transposed_type<View>::type RView;
     return RView(src.height(),src.width(),typename RView::xy_locator(src.xy_at(0,src.height()-1),-1,1,true));
@@ -233,7 +223,7 @@ inline typename dynamic_xy_step_transposed_type<View>::type rotated90cw_view(con
 /// \brief view of a view rotated 90 degrees counter-clockwise
 
 /// \ingroup ImageViewTransformations90CCW
-template <typename View> 
+template <typename View>
 inline typename dynamic_xy_step_transposed_type<View>::type rotated90ccw_view(const View& src) {
     typedef typename dynamic_xy_step_transposed_type<View>::type RView;
     return RView(src.height(),src.width(),typename RView::xy_locator(src.xy_at(src.width()-1,0),1,-1,true));
@@ -244,7 +234,7 @@ inline typename dynamic_xy_step_transposed_type<View>::type rotated90ccw_view(co
 /// \brief view of a view rotated 180 degrees
 
 /// \ingroup ImageViewTransformations180
-template <typename View> 
+template <typename View>
 inline typename dynamic_xy_step_type<View>::type rotated180_view(const View& src) {
     typedef typename dynamic_xy_step_type<View>::type RView;
     return RView(src.dimensions(),typename RView::xy_locator(src.xy_at(src.width()-1,src.height()-1),-1,-1));
@@ -255,13 +245,13 @@ inline typename dynamic_xy_step_type<View>::type rotated180_view(const View& src
 /// \brief view of an axis-aligned rectangular area within an image_view
 
 /// \ingroup ImageViewTransformationsSubimage
-template <typename View> 
+template <typename View>
 inline View subimage_view(const View& src, const typename View::point_t& topleft, const typename View::point_t& dimensions) {
     return View(dimensions,src.xy_at(topleft));
 }
 
 /// \ingroup ImageViewTransformationsSubimage
-template <typename View> 
+template <typename View>
 inline View subimage_view(const View& src, int xMin, int yMin, int width, int height) {
     return View(width,height,src.xy_at(xMin,yMin));
 }
@@ -271,7 +261,7 @@ inline View subimage_view(const View& src, int xMin, int yMin, int width, int he
 /// \brief view of a subsampled version of an image_view, stepping over a number of channels in X and number of rows in Y
 
 /// \ingroup ImageViewTransformationsSubsampled
-template <typename View> 
+template <typename View>
 inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src, typename View::coord_t xStep, typename View::coord_t yStep) {
     assert(xStep>0 && yStep>0);
     typedef typename dynamic_xy_step_type<View>::type RView;
@@ -280,8 +270,8 @@ inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
-template <typename View> 
-inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src, const typename View::point_t& step) { 
+template <typename View>
+inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src, const typename View::point_t& step) {
     return subsampled_view(src,step.x,step.y);
 }
 
@@ -292,7 +282,7 @@ inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src
 namespace detail {
     template <typename View, bool AreChannelsTogether> struct __nth_channel_view_basic;
 
-    // nth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images 
+    // nth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images
     // or images with a step
     template <typename View>
     struct __nth_channel_view_basic<View,false> {
@@ -364,8 +354,8 @@ namespace detail {
 
         int _n;        // the channel to use
 
-        result_type operator()(argument_type srcP) const { 
-            return result_type(srcP[_n]); 
+        result_type operator()(argument_type srcP) const {
+            return result_type(srcP[_n]);
         }
     };
 
@@ -417,7 +407,7 @@ typename nth_channel_view_type<View>::type nth_channel_view(const View& src, int
 namespace detail {
     template <int K, typename View, bool AreChannelsTogether> struct __kth_channel_view_basic;
 
-    // kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images 
+    // kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images
     // or images with a step
     template <int K, typename View>
     struct __kth_channel_view_basic<K,View,false> {
@@ -493,7 +483,7 @@ namespace detail {
         kth_channel_deref_fn() {}
         template <typename P> kth_channel_deref_fn(const kth_channel_deref_fn<K,P>&) {}
 
-        result_type operator()(argument_type srcP) const { 
+        result_type operator()(argument_type srcP) const {
             return result_type(gil::at_c<K>(srcP));
         }
     };

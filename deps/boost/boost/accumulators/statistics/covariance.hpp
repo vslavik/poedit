@@ -50,17 +50,9 @@ namespace boost { namespace numeric
 
         template<typename Left, typename Right>
         struct outer_product<Left, Right, std_vector_tag, std_vector_tag>
-          : std::binary_function<
-                Left
-              , Right
-              , ublas::matrix<
-                    typename functional::multiplies<
-                        typename Left::value_type
-                      , typename Right::value_type
-                    >::result_type
-                >
-            >
         {
+            typedef Left first_argument_type;
+            typedef Right second_argument_type;
             typedef
                 ublas::matrix<
                     typename functional::multiplies<

@@ -26,6 +26,7 @@ This mask can be used to check spatial relations as defined in Dimensionally Ext
          char BB, char BE, char EI, char EB,
          char EE>
 class de9im::static_mask
+      : public detail::relate::static_mask< boost::mpl::vector_c< char, II, IB, IE, BI, BB, BE, EI, EB, EE >, 3, 3 >
 {
   // ...
 };

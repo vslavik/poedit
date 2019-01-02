@@ -21,7 +21,7 @@ namespace type_erasure {
  * \pre @c Map must be an MPL map whose keys are placeholders.
  */
 template<class Map>
-struct static_binding {};
+struct static_binding { typedef Map map_type; };
 
 /**
  * A convenience function to prevent constructor calls

@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_KLEENE_JANUARY_07_2007_0818AM)
-#define SPIRIT_KLEENE_JANUARY_07_2007_0818AM
+#if !defined(BOOST_SPIRIT_X3_KLEENE_JANUARY_07_2007_0818AM)
+#define BOOST_SPIRIT_X3_KLEENE_JANUARY_07_2007_0818AM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>

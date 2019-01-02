@@ -33,7 +33,7 @@
     #ifdef BOOST_THREAD_PROVIDES_ONCE_CXX11
     struct once_flag
     {
-      constexprr once_flag() noexcept;
+      constexpr once_flag() noexcept;
       once_flag(const once_flag&) = delete;
       once_flag& operator=(const once_flag&) = delete;
     };

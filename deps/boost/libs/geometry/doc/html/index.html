@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Geometry</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="next" href="geometry/introduction.html" title="Introduction">
 </head>
@@ -37,8 +37,11 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Menelaos</span> <span class="surname">Karavelas</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates</p></div>
+<div><div class="author"><h3 class="author">
+<span class="firstname">Vissarion</span> <span class="surname">Fisikopoulos</span>
+</h3></div></div>
+<div><p class="copyright">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates</p></div>
 <div><div class="legalnotice">
 <a name="geometry.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -48,7 +51,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="geometry/introduction.html">Introduction</a></span></dt>
 <dt><span class="section"><a href="geometry/compilation.html">Compilation</a></span></dt>
 <dt><span class="section"><a href="geometry/design.html">Design Rationale</a></span></dt>
@@ -79,6 +82,7 @@
 <dt><span class="section"><a href="geometry/reference/iterators.html">Iterators</a></span></dt>
 <dt><span class="section"><a href="geometry/reference/models.html">Models</a></span></dt>
 <dt><span class="section"><a href="geometry/reference/spatial_indexes.html">Spatial Indexes</a></span></dt>
+<dt><span class="section"><a href="geometry/reference/srs.html">SRS</a></span></dt>
 <dt><span class="section"><a href="geometry/reference/strategies.html">Strategies</a></span></dt>
 <dt><span class="section"><a href="geometry/reference/views.html">Views</a></span></dt>
 </dl></dd>
@@ -99,12 +103,12 @@
 </div>
 <h3>
 <a name="geometry.h0"></a>
-    <span><a name="geometry.contributions"></a></span><a class="link" href="index.html#geometry.contributions">Contributions</a>
+    <span class="phrase"><a name="geometry.contributions"></a></span><a class="link" href="index.html#geometry.contributions">Contributions</a>
   </h3>
 <p>
     Boost.Geometry contains contributions by:
   </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
         Akira Takahashi (adaption of Boost.Fusion)
       </li>
@@ -130,10 +134,16 @@
         Samuel Debionne (variant support for distance, assign, crosses, intersection,
         ...)
       </li>
+<li class="listitem">
+        Adeel Ahmad (Karney's solution of direct and inverse geodesic problems)
+      </li>
+<li class="listitem">
+        Yaghyavardhan Singh Khangarot (discrete Frechet and Hausdorff distance)
+      </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:37:08 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:07:16 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

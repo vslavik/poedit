@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template make_default</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Convert 2.0">
 <link rel="up" href="../header/boost/make_default_hpp.html" title="Header &lt;boost/make_default.hpp&gt;">
 <link rel="prev" href="../header/boost/make_default_hpp.html" title="Header &lt;boost/make_default.hpp&gt;">
@@ -34,30 +34,30 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <span class="identifier">make_default</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp13893040"></a><h2>Description</h2>
+<a name="idp98228240"></a><h2>Description</h2>
 <p>A considerable number of libraries require an instance of a class provided (storage created and initialized). For example, </p>
-<pre class="programlisting">    <span class="identifier">Type</span> <span class="identifier">result</span><span class="special">;</span>
-    <span class="special">...</span>
-    <span class="identifier">istream</span> <span class="special">&gt;&gt;</span> <span class="identifier">result</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">Type</span> <span class="identifier">result</span><span class="special">;</span>
+<span class="special">...</span>
+<span class="identifier">istream</span> <span class="special">&gt;&gt;</span> <span class="identifier">result</span><span class="special">;</span>
 </pre>
 <p> In generic code that results in the Default Constructibility requirement imposed on every type 'Type' to be used with the respective code. Inevitably, that requirement a) either excludes all the classes that for various reasons do not meet that requirement or b) imposes certain (not necessarily desirable) design/implementation onto respective classes.</p>
 <p>Deployment of boost::make_default() eliminates the Default Constructibility requirement with </p>
-<pre class="programlisting">    <span class="identifier">Type</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_default</span><span class="special">&lt;</span><span class="identifier">Type</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-    <span class="special">...</span>
-    <span class="identifier">istream</span> <span class="special">&gt;&gt;</span> <span class="identifier">result</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">Type</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_default</span><span class="special">&lt;</span><span class="identifier">Type</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="special">...</span>
+<span class="identifier">istream</span> <span class="special">&gt;&gt;</span> <span class="identifier">result</span><span class="special">;</span>
 </pre>
 <p> Classes with no default constructor can now be included via a boost::make_default() specialization: </p>
-<pre class="programlisting"> <span class="keyword">namespace</span> <span class="identifier">boost</span>
- <span class="special">{</span>
-     <span class="keyword">template</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="keyword">inline</span> <span class="identifier">Type</span> <span class="identifier">make_default</span><span class="special">&lt;</span><span class="identifier">Type</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">Type</span><span class="special">(</span><span class="identifier">parameters</span><span class="special">)</span><span class="special">;</span> <span class="special">}</span>
- <span class="special">}</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
+<span class="special">{</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="keyword">inline</span> <span class="identifier">Type</span> <span class="identifier">make_default</span><span class="special">&lt;</span><span class="identifier">Type</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">Type</span><span class="special">(</span><span class="identifier">parameters</span><span class="special">)</span><span class="special">;</span> <span class="special">}</span>
+<span class="special">}</span>
 </pre>
 <p> </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Vladimir Batov<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2016 Vladimir Batov<p>
         Distributed under the Boost Software License, Version 1.0. See copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>.
       </p>
 </div></td>

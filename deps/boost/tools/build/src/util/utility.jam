@@ -117,7 +117,7 @@ rule ungrist ( names * )
         {
             import errors ;
             local quoted-names = \"$(names)\" ;
-            errors.error "in" ungrist $(quoted-names:J=" "): \"$(name)\" is not
+            errors.error "in" ungrist "$(quoted-names:J= ):" \"$(name)\" is not
                 of the form <.*> ;
         }
         result += $(stripped) ;
@@ -195,41 +195,41 @@ rule __test__ ( )
     {
         ungrist "" ;
     }
-    catch "in" ungrist \"\": \"\" is not of the form <.*> ;
+    catch "in" ungrist "\"\":" \"\" is not of the form <.*> ;
 
     try ;
     {
         ungrist foo ;
     }
-    catch "in" ungrist \"foo\": \"foo\" is not of the form <.*> ;
+    catch "in" ungrist "\"foo\":" \"foo\" is not of the form <.*> ;
 
     try ;
     {
         ungrist <foo ;
     }
-    catch "in" ungrist \"<foo\": \"<foo\" is not of the form <.*> ;
+    catch "in" ungrist "\"<foo\":" \"<foo\" is not of the form <.*> ;
 
     try ;
     {
         ungrist foo> ;
     }
-    catch "in" ungrist \"foo>\": \"foo>\" is not of the form <.*> ;
+    catch "in" ungrist "\"foo>\":" \"foo>\" is not of the form <.*> ;
 
     try ;
     {
         ungrist foo bar ;
     }
-    catch "in" ungrist "\"foo\" \"bar\"": \"foo\" is not of the form <.*> ;
+    catch "in" ungrist "\"foo\" "\"bar\"":" \"foo\" is not of the form <.*> ;
 
     try ;
     {
         ungrist foo <bar> ;
     }
-    catch "in" ungrist "\"foo\" \"<bar>\"": \"foo\" is not of the form <.*> ;
+    catch "in" ungrist "\"foo\" "\"<bar>\"":" \"foo\" is not of the form <.*> ;
 
     try ;
     {
         ungrist <foo> bar ;
     }
-    catch "in" ungrist "\"<foo>\" \"bar\"": \"bar\" is not of the form <.*> ;
+    catch "in" ungrist "\"<foo>\" "\"bar\"":" \"bar\" is not of the form <.*> ;
 }

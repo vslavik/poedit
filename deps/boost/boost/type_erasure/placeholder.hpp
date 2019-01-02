@@ -45,7 +45,10 @@ namespace type_erasure {
  * explicitly, but the substitution still works the
  * same way.
  */
-struct placeholder {};
+struct placeholder {
+    /// INTERNAL ONLY
+    typedef void _boost_type_erasure_is_placeholder;
+};
 
 struct _a : placeholder {};
 struct _b : placeholder {};

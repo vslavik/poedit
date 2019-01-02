@@ -32,7 +32,7 @@ struct reduce_unit<absolute<unit<D, S> > >
 namespace detail {
 
 struct undefined_affine_conversion_base {
-    static const bool is_defined = false;
+    BOOST_STATIC_CONSTEXPR bool is_defined = false;
 };
 
 } // namespace detail
@@ -51,7 +51,7 @@ struct affine_conversion_impl<true, ReverseIsDefined>
 {
     template<class Unit1, class Unit2, class T0, class T1>
     struct apply {
-        static T1 value(const T0& t0)
+        static BOOST_CONSTEXPR T1 value(const T0& t0)
         {
             return(
                 t0 * 
@@ -67,7 +67,7 @@ struct affine_conversion_impl<false, true>
     template<class Unit1, class Unit2, class T0, class T1>
     struct apply
     {
-        static T1 value(const T0& t0)
+        static BOOST_CONSTEXPR T1 value(const T0& t0)
         {
             return(
                 (t0 - affine_conversion_helper<typename reduce_unit<Unit2>::type, typename reduce_unit<Unit1>::type>::value()) * 
@@ -84,7 +84,7 @@ struct conversion_helper<quantity<absolute<Unit1>, T1>, quantity<absolute<Unit2>
 {
     typedef quantity<absolute<Unit1>, T1> from_quantity_type;
     typedef quantity<absolute<Unit2>, T2> to_quantity_type;
-    static to_quantity_type convert(const from_quantity_type& source)
+    static BOOST_CONSTEXPR to_quantity_type convert(const from_quantity_type& source)
     {
         return(
             to_quantity_type::from_value(

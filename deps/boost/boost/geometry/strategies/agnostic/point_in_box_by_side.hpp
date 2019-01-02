@@ -15,6 +15,7 @@
 #define BOOST_GEOMETRY_STRATEGIES_AGNOSTIC_POINT_IN_BOX_BY_SIDE_HPP
 
 #include <boost/array.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
 #include <boost/geometry/algorithms/assign.hpp>
@@ -78,7 +79,7 @@ struct point_in_box_by_side
 
         bool result = true;
         side_strategy_type strategy;
-        boost::ignore_unused_variable_warning(strategy);
+        boost::ignore_unused(strategy);
 
         for (int i = 1; i < 5; i++)
         {

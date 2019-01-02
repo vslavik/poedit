@@ -12,9 +12,9 @@
 #ifndef BOOST_ALGORITHM_PARTITION_COPY_HPP
 #define BOOST_ALGORITHM_PARTITION_COPY_HPP
 
-#include <algorithm>    // for std::partition_copy, if available
-#include <utility>  // for make_pair
+#include <utility>  // for std::pair
 
+#include <boost/config.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -34,11 +34,9 @@ namespace boost { namespace algorithm {
 /// \param p         A predicate for dividing the elements of the input sequence.
 ///
 /// \note            This function is part of the C++2011 standard library.
-///  We will use the standard one if it is available, 
-///  otherwise we have our own implementation.
 template <typename InputIterator, 
         typename OutputIterator1, typename OutputIterator2, typename UnaryPredicate>
-std::pair<OutputIterator1, OutputIterator2>
+BOOST_CXX14_CONSTEXPR std::pair<OutputIterator1, OutputIterator2>
 partition_copy ( InputIterator first, InputIterator last,
         OutputIterator1 out_true, OutputIterator2 out_false, UnaryPredicate p )
 {
@@ -60,7 +58,7 @@ partition_copy ( InputIterator first, InputIterator last,
 ///
 template <typename Range, typename OutputIterator1, typename OutputIterator2, 
             typename UnaryPredicate>
-std::pair<OutputIterator1, OutputIterator2>
+BOOST_CXX14_CONSTEXPR std::pair<OutputIterator1, OutputIterator2>
 partition_copy ( const Range &r, OutputIterator1 out_true, OutputIterator2 out_false, 
                                 UnaryPredicate p )
 {

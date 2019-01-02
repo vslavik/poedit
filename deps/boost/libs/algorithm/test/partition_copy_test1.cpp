@@ -47,10 +47,10 @@ void test_sequence ( const Container &c, Predicate comp ) {
 template <typename T>
 struct less_than {
 public:
-    less_than ( T foo ) : val ( foo ) {}
-    less_than ( const less_than &rhs ) : val ( rhs.val ) {}
+    BOOST_CXX14_CONSTEXPR less_than ( T foo ) : val ( foo ) {}
+    BOOST_CXX14_CONSTEXPR less_than ( const less_than &rhs ) : val ( rhs.val ) {}
 
-    bool operator () ( const T &v ) const { return v < val; }
+    BOOST_CXX14_CONSTEXPR bool operator () ( const T &v ) const { return v < val; }
 private:
     less_than ();
     less_than operator = ( const less_than &rhs );
@@ -81,8 +81,30 @@ void test_sequence1 () {
 
     }
 
+    
+BOOST_CXX14_CONSTEXPR bool test_constexpr () {
+    int in[] = {1, 1, 2};
+    int out_true[3] = {0};
+    int out_false[3] = {0};
+    bool res = true;
+    ba::partition_copy( in, in + 3, out_true, out_false, less_than<int>(2) );
+    res = (res && ba::all_of(out_true, out_true + 2, less_than<int>(2)) );
+    res = (res && ba::none_of(out_false, out_false + 1, less_than<int>(2)) );
+    
+// clear elements
+    out_true [0] = 0;
+    out_true [1] = 0;
+    out_false[0] = 0;
+    
+    ba::partition_copy( in, out_true, out_false, less_than<int>(2));
+    res = ( res && ba::all_of(out_true, out_true + 2, less_than<int>(2)));
+    res = ( res && ba::none_of(out_false, out_false + 1, less_than<int>(2)));
+    return res;
+    }
 
 BOOST_AUTO_TEST_CASE( test_main )
 {
   test_sequence1 ();
+  BOOST_CXX14_CONSTEXPR bool constexpr_res = test_constexpr ();
+  BOOST_CHECK ( constexpr_res );
 }

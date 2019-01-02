@@ -5,11 +5,13 @@
 // (See the accompanying file LICENSE_1_0.txt
 // or a copy at <http://www.boost.org/LICENSE_1_0.txt>.)
 
+#undef BOOST_CB_ENABLE_DEBUG
+
 //[circular_buffer_iter_example_1
 /*`
 */
 
-#define BOOST_CB_DISABLE_DEBUG // The Debug Support has to be disabled, otherwise the code produces a runtime error.
+#define BOOST_CB_ENABLE_DEBUG 0 // The Debug Support has to be disabled, otherwise the code produces a runtime error.
 
 #include <boost/circular_buffer.hpp>
 #include <boost/assert.hpp>
@@ -34,5 +36,5 @@ int main(int /*argc*/, char* /*argv*/[])
 
   return 0;
 }
-   
- //] [/circular_buffer_iter_example_1]
+
+//] [/circular_buffer_iter_example_1]

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template is_fundamental</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.type_traits.is_fundamental_hpp" title="Header &lt;boost/compute/type_traits/is_fundamental.hpp&gt;">
 <link rel="prev" href="is_device_iterator.html" title="Struct template is_device_iterator">
@@ -32,14 +32,14 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_compute/reference.html#header.boost.compute.type_traits.is_fundamental_hpp" title="Header &lt;boost/compute/type_traits/is_fundamental.hpp&gt;">boost/compute/type_traits/is_fundamental.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-<span class="keyword">struct</span> <a class="link" href="is_fundamental.html" title="Struct template is_fundamental">is_fundamental</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="is_fundamental.html" title="Struct template is_fundamental">is_fundamental</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">false_type</span> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp82856384"></a><h2>Description</h2>
+<a name="idp97907360"></a><h2>Description</h2>
 <p>Meta-function returning <code class="computeroutput">true</code> if <code class="computeroutput">T</code> is a fundamental (i.e. built-in) type.</p>
 <p>For example, </p>
-<pre class="programlisting"> <span class="identifier">is_fundamental</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">true</span>
- <span class="identifier">is_fundamental</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">float</span><span class="special">&gt;&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">false</span>
+<pre class="programlisting"><span class="identifier">is_fundamental</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">true</span>
+<span class="identifier">is_fundamental</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">float</span><span class="special">&gt;&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">false</span>
 </pre>
 <p> </p>
 </div>

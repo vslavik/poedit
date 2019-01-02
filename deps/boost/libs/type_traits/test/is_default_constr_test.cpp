@@ -4,13 +4,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/is_default_constructible.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 class bug11324_base
 {
@@ -197,9 +197,11 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<test_abc1>::value, 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<bug11324_derived>::value, false);
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<deleted_default_construct>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_default_constructible<std::pair<deleted_default_construct, int> >::value), false);
 #endif
-#if !BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40700)
+#if !BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40800)
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<private_default_construct>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_default_constructible<std::pair<private_default_construct, int> >::value), false);
 #endif
 
 TT_TEST_END

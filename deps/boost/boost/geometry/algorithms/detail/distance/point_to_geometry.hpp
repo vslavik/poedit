@@ -391,7 +391,7 @@ struct distance
 template <typename Point, typename Polygon, typename Strategy>
 struct distance
     <
-        Point, Polygon, Strategy, point_tag, polygon_tag, 
+        Point, Polygon, Strategy, point_tag, polygon_tag,
         strategy_tag_distance_point_segment, false
     > : detail::distance::point_to_polygon
         <

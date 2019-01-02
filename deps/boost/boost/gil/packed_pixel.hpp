@@ -1,35 +1,26 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_PACKED_PIXEL_HPP
+#define BOOST_GIL_PACKED_PIXEL_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/pixel.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_PACKED_PIXEL_H
-#define GIL_PACKED_PIXEL_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief A model of a heterogeneous pixel whose channels are bit ranges. For example 16-bit RGB in '565' format
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2009 \n Last updated on February 20, 2009
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <functional>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
-#include "gil_config.hpp"
-#include "pixel.hpp"
+
+#include <functional>
 
 namespace boost { namespace gil {
+
+/// A model of a heterogeneous pixel whose channels are bit ranges.
+/// For example 16-bit RGB in '565' format.
 
 /// \defgroup ColorBaseModelPackedPixel packed_pixel 
 /// \ingroup ColorBaseModel
@@ -56,7 +47,7 @@ assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));
 /// \ingroup ColorBaseModelPackedPixel PixelModelPackedPixel PixelBasedModel
 /// \brief Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept
 /// Typical use for this is a model of a packed pixel (like 565 RGB)
-template <typename BitField,      // A type that holds the bits of the pixel. Typically an integral type, like boost::uint16_t
+template <typename BitField,      // A type that holds the bits of the pixel. Typically an integral type, like std::uint16_t
           typename ChannelRefVec, // An MPL vector whose elements are packed channels. They must be constructible from BitField. GIL uses packed_channel_reference
           typename Layout>        // Layout defining the color space and ordering of the channels. Example value: rgb_layout_t
 struct packed_pixel {
@@ -74,14 +65,19 @@ struct packed_pixel {
 
     // Construct from another compatible pixel type
     packed_pixel(const packed_pixel& p) : _bitfield(p._bitfield) {}
-    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=0)            { check_compatible<P>(); static_copy(p,*this); }   
-    packed_pixel(int chan0, int chan1) : _bitfield(0) { 
+    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=0) {
+        check_compatible<P>(); static_copy(p,*this);
+        boost::ignore_unused(d);
+    }
+    packed_pixel(int chan0, int chan1) : _bitfield(0) {
         BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==2)); 
-        at_c<0>(*this)=chan0; at_c<1>(*this)=chan1; 
+        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; 
     } 
     packed_pixel(int chan0, int chan1, int chan2) : _bitfield(0) { 
         BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==3)); 
-        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; gil::at_c<2>(*this)=chan2; 
+        gil::at_c<0>(*this) = chan0;
+        gil::at_c<1>(*this) = chan1;
+        gil::at_c<2>(*this) = chan2;
     } 
     packed_pixel(int chan0, int chan1, int chan2, int chan3) : _bitfield(0) { 
         BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==4)); 
@@ -106,11 +102,11 @@ private:
 
 // Support for assignment/equality comparison of a channel with a grayscale pixel
     static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
-    template <typename Channel> void assign(const Channel& chan, mpl::false_)       { check_gray(); at_c<0>(*this)=chan; }
-    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return at_c<0>(*this)==chan; }
+    template <typename Channel> void assign(const Channel& chan, mpl::false_)       { check_gray(); gil::at_c<0>(*this)=chan; }
+    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 public:
-    packed_pixel&  operator= (int chan)       { check_gray(); at_c<0>(*this)=chan; return *this; }
-    bool           operator==(int chan) const { check_gray(); return at_c<0>(*this)==chan; }
+    packed_pixel&  operator= (int chan)       { check_gray(); gil::at_c<0>(*this)=chan; return *this; }
+    bool           operator==(int chan) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 };
 
 /////////////////////////////

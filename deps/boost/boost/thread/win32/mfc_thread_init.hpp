@@ -27,12 +27,12 @@ inline BOOL WINAPI ExtRawDllMain(HINSTANCE, DWORD dwReason, LPVOID)
   return TRUE; // ok
 }
 
-extern "C" __declspec(selectany) BOOL (WINAPI * const _pRawDllMainOrig)(HANDLE, DWORD, LPVOID) = &ExtRawDllMain;
+extern "C" __declspec(selectany) BOOL (WINAPI * const _pRawDllMainOrig)(HINSTANCE, DWORD, LPVOID) = &ExtRawDllMain;
 
 # elif defined(_USRDLL)
 
-extern "C" BOOL WINAPI RawDllMain(HANDLE, DWORD dwReason, LPVOID);
-extern "C" __declspec(selectany) BOOL (WINAPI * const _pRawDllMainOrig)(HANDLE, DWORD, LPVOID) = &RawDllMain;
+extern "C" BOOL WINAPI RawDllMain(HINSTANCE, DWORD dwReason, LPVOID);
+extern "C" __declspec(selectany) BOOL (WINAPI * const _pRawDllMainOrig)(HINSTANCE, DWORD, LPVOID) = &RawDllMain;
 
 # endif
 #endif

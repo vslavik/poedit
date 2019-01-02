@@ -20,6 +20,7 @@
 #include <boost/geometry/core/interior_rings.hpp>
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/algorithms/convert.hpp>
+#include <boost/geometry/algorithms/detail/signed_size_type.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
 #include <boost/geometry/util/range.hpp>
 #include <boost/geometry/iterators/ever_circling_iterator.hpp>
@@ -284,7 +285,7 @@ inline bool copy_segment_point(Geometry const& geometry,
             SegmentIdentifier const& seg_id, int offset,
             PointOut& point_out)
 {
-    concept::check<Geometry const>();
+    concepts::check<Geometry const>();
 
     return dispatch::copy_segment_point
         <
@@ -313,8 +314,8 @@ inline bool copy_segment_point(Geometry1 const& geometry1, Geometry2 const& geom
             SegmentIdentifier const& seg_id, int offset,
             PointOut& point_out)
 {
-    concept::check<Geometry1 const>();
-    concept::check<Geometry2 const>();
+    concepts::check<Geometry1 const>();
+    concepts::check<Geometry2 const>();
 
     BOOST_GEOMETRY_ASSERT(seg_id.source_index == 0 || seg_id.source_index == 1);
 
@@ -361,8 +362,8 @@ inline bool copy_segment_points(Geometry1 const& geometry1, Geometry2 const& geo
             SegmentIdentifier const& seg_id,
             PointOut& point1, PointOut& point2)
 {
-    concept::check<Geometry1 const>();
-    concept::check<Geometry2 const>();
+    concepts::check<Geometry1 const>();
+    concepts::check<Geometry2 const>();
 
     return copy_segment_point<Reverse1, Reverse2>(geometry1, geometry2, seg_id, 0, point1)
         && copy_segment_point<Reverse1, Reverse2>(geometry1, geometry2, seg_id, 1, point2);
@@ -384,8 +385,8 @@ inline bool copy_segment_points(Geometry1 const& geometry1, Geometry2 const& geo
             SegmentIdentifier const& seg_id,
             PointOut& point1, PointOut& point2, PointOut& point3)
 {
-    concept::check<Geometry1 const>();
-    concept::check<Geometry2 const>();
+    concepts::check<Geometry1 const>();
+    concepts::check<Geometry2 const>();
 
     return copy_segment_point<Reverse1, Reverse2>(geometry1, geometry2, seg_id, 0, point1)
         && copy_segment_point<Reverse1, Reverse2>(geometry1, geometry2, seg_id, 1, point2)

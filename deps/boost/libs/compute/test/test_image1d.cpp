@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(image1d_get_supported_formats)
         compute::image1d::get_supported_formats(context);
 }
 
-#ifdef CL_VERSION_1_2
+#ifdef BOOST_COMPUTE_CL_VERSION_1_2
 BOOST_AUTO_TEST_CASE(fill_image1d)
 {
     REQUIRES_OPENCL_VERSION(1, 2); // device OpenCL version check
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(fill_image1d)
     queue.enqueue_read_image(img, compute::dim(0), compute::dim(1), &first_pixel);
     BOOST_CHECK_EQUAL(first_pixel, compute::uchar_(128));
 }
-#endif // CL_VERSION_1_2
+#endif // BOOST_COMPUTE_CL_VERSION_1_2
 
 // check type_name() for image1d
 BOOST_AUTO_TEST_CASE(image1d_type_name)

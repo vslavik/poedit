@@ -7,6 +7,11 @@
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -36,6 +41,7 @@ struct strategy_tag_distance_point_point {};
 struct strategy_tag_distance_point_segment {};
 struct strategy_tag_distance_point_box {};
 struct strategy_tag_distance_box_box {};
+struct strategy_tag_distance_segment_box {};
 
 
 }} // namespace boost::geometry

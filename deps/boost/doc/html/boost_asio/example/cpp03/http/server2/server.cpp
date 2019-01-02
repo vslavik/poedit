@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,10 +15,10 @@ namespace http {
 namespace server2 {
 
 server::server(const std::string& address, const std::string& port,
-    const std::string& doc_root, std::size_t io_service_pool_size)
-  : io_service_pool_(io_service_pool_size),
-    signals_(io_service_pool_.get_io_service()),
-    acceptor_(io_service_pool_.get_io_service()),
+    const std::string& doc_root, std::size_t io_context_pool_size)
+  : io_context_pool_(io_context_pool_size),
+    signals_(io_context_pool_.get_io_context()),
+    acceptor_(io_context_pool_.get_io_context()),
     new_connection_(),
     request_handler_(doc_root)
 {
@@ -33,9 +33,9 @@ server::server(const std::string& address, const std::string& port,
   signals_.async_wait(boost::bind(&server::handle_stop, this));
 
   // Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
-  boost::asio::ip::tcp::resolver resolver(acceptor_.get_io_service());
-  boost::asio::ip::tcp::resolver::query query(address, port);
-  boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
+  boost::asio::ip::tcp::resolver resolver(acceptor_.get_executor().context());
+  boost::asio::ip::tcp::endpoint endpoint =
+    *resolver.resolve(address, port).begin();
   acceptor_.open(endpoint.protocol());
   acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
   acceptor_.bind(endpoint);
@@ -46,13 +46,13 @@ server::server(const std::string& address, const std::string& port,
 
 void server::run()
 {
-  io_service_pool_.run();
+  io_context_pool_.run();
 }
 
 void server::start_accept()
 {
   new_connection_.reset(new connection(
-        io_service_pool_.get_io_service(), request_handler_));
+        io_context_pool_.get_io_context(), request_handler_));
   acceptor_.async_accept(new_connection_->socket(),
       boost::bind(&server::handle_accept, this,
         boost::asio::placeholders::error));
@@ -70,7 +70,7 @@ void server::handle_accept(const boost::system::error_code& e)
 
 void server::handle_stop()
 {
-  io_service_pool_.stop();
+  io_context_pool_.stop();
 }
 
 } // namespace server2

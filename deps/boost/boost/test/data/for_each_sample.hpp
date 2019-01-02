@@ -63,7 +63,9 @@ invoke_action( Action const& action, T&& args, std::true_type /* is_tuple */ )
 {
     invoke_action_impl( action,
                         std::forward<T>(args),
-                        typename make_index_sequence< 0, std::tuple_size<T>::value >::type{} );
+                        typename make_index_sequence< 0,
+                                                      std::tuple_size<typename std::decay<T>::type>::value
+                                                    >::type{} );
 
 }
 
@@ -75,7 +77,7 @@ invoke_action( Action const& action, T&& args, std::true_type /* is_tuple */ )
 
 template<typename DataSet, typename Action>
 inline typename std::enable_if<monomorphic::is_dataset<DataSet>::value,void>::type
-for_each_sample( DataSet &&         samples,
+for_each_sample( DataSet const &    samples,
                  Action const&      act,
                  data::size_t       number_of_samples = BOOST_TEST_DS_INFINITE_SIZE )
 {

@@ -54,9 +54,9 @@ namespace boost { namespace container {
  */
 template <typename Value, std::size_t Capacity>
 class varray
-    : public container_detail::varray<Value, Capacity>
+    : public dtl::varray<Value, Capacity>
 {
-    typedef container_detail::varray<Value, Capacity> base_t;
+    typedef dtl::varray<Value, Capacity> base_t;
 
     BOOST_COPYABLE_AND_MOVABLE(varray)
 
@@ -238,7 +238,7 @@ public:
     //!   Linear O(N).
     template <std::size_t C>
     varray(BOOST_RV_REF_2_TEMPL_ARGS(varray, value_type, C) other)
-        : base_t(boost::move(static_cast<container_detail::varray<value_type, C>&>(other)))
+        : base_t(boost::move(static_cast<dtl::varray<value_type, C>&>(other)))
     {}
 
     //! @brief Move assignment. Moves Values stored in the other varray to this one.
@@ -272,7 +272,7 @@ public:
     template <std::size_t C>
     varray & operator=(BOOST_RV_REF_2_TEMPL_ARGS(varray, value_type, C) other)
     {
-        base_t::operator=(boost::move(static_cast<container_detail::varray<value_type, C>&>(other)));
+        base_t::operator=(boost::move(static_cast<dtl::varray<value_type, C>&>(other)));
         return *this;
     }
 

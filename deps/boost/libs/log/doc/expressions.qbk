@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2015.
+              Copyright Andrey Semashev 2007 - 2016.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -480,7 +480,7 @@ There are times when one would like to additionally post-process the composed st
 
 [note Unlike most other formatters, decorators are dependent on the character type of the formatted output and this type cannot be deduced from the decorated formatter. By default, the character type is assumed to be `char`. If the formatter is used to compose a wide-character string, prepend the decorator name with the `w` letter (e.g. use `wxml_decor` instead of `xml_decor`). Also, for each decorator there is a generator function that accepts the character type as a template parameter; the function is named similarly to the decorator prepended with the `make_` prefix (e.g. `make_xml_decor`).]
 
-[heading XML character decorator]
+[section:xml XML character decorator]
 
     #include <``[boost_log_expressions_formatters_xml_decorator_hpp]``>
 
@@ -489,7 +489,7 @@ This decorator replaces XML special characters (&, <, >, \" and \') with the cor
     xml_sink->set_formatter
     (
         // Apply the decoration to the whole formatted record
-        expr::xml_decor
+        expr::stream << expr::xml_decor
         [
             expr::stream << expr::message
         ]
@@ -506,7 +506,9 @@ Since character decorators are yet another kind of formatters, it's fine to use 
 
 There is an example of the library set up for logging into an XML file, see [@boost:/libs/log/example/doc/sinks_xml_file.cpp here].
 
-[heading CSV character decorator]
+[endsect]
+
+[section:csv CSV character decorator]
 
     #include <``[boost_log_expressions_formatters_csv_decorator_hpp]``>
 
@@ -520,7 +522,9 @@ This decorator allows to ensure that the resulting string conforms to the [@http
             << expr::csv_decor[ expr::stream << expr::message ]
     );
 
-[heading C-style character decorators]
+[endsect]
+
+[section:c C-style character decorators]
 
     #include <``[boost_log_expressions_formatters_c_decorator_hpp]``>
 
@@ -534,7 +538,9 @@ The header defines two character decorators: `c_decor` and `c_ascii_decor`. The 
             << expr::c_ascii_decor[ expr::stream << expr::message ]
     );
 
-[heading General character decorator]
+[endsect]
+
+[section:char General character decorator]
 
     #include <``[boost_log_expressions_formatters_char_decorator_hpp]``>
 
@@ -549,7 +555,7 @@ This decorator allows the user to define his own character replacement mapping i
 
     sink->set_formatter
     (
-        expr::char_decor(shell_escapes)
+        expr::stream << expr::char_decor(shell_escapes)
         [
             expr::stream << expr::message
         ]
@@ -568,13 +574,84 @@ The second form is two same-sized sequences of strings; the first containing the
 
     sink->set_formatter
     (
-        expr::char_decor(shell_patterns, shell_replacements)
+        expr::stream << expr::char_decor(shell_patterns, shell_replacements)
         [
             expr::stream << expr::message
         ]
     );
 
 In both cases the patterns are not interpreted and are sought in the formatted characters in the original form.
+
+[endsect]
+
+[section:max_size String length limiting decorator]
+
+    #include <``[boost_log_expressions_formatters_max_size_decorator_hpp]``>
+
+Sometimes it can be useful to be able to limit the size of the output of a formatter or its part. For example, the limit might be imposed by the sink or the required output format. The `max_size_decor` decorator allows to enforce such limit. Let's see a simple example:
+
+    sink->set_formatter
+    (
+        expr::stream << expr::max_size_decor< char >(20)
+        [
+            expr::stream << expr::message
+        ]
+    );
+
+[note The explicit template parameter for `max_size_decor` specifies the character type that is used by formatter. In this example the string produced by the formatter contains characters of type `char`, hence the template parameter.]
+
+In this example the decorator limits the log message to no more than 20 [@https://en.wikipedia.org/wiki/Character_encoding#Terminology code units] of type `char` and removes the rest from the output. So if we had a log record like this:
+
+    BOOST_LOG(lg) << "The quick brown fox jumps over the lazy dog";
+
+the resulting output would look like this:
+
+[pre
+    The quick brown fox
+]
+
+However, looking at this output in a log file it is unclear whether the original output contained anything else. One might want to indicate the fact of message truncation, should one occur. For that purpose the decorator allows to specify an overflow marker that will be placed at the end of the truncated output, if the truncation took place. We can modify the above example like this:
+
+    sink->set_formatter
+    (
+        expr::stream << expr::max_size_decor(20, ">>>")
+        [
+            expr::stream << expr::message
+        ]
+    );
+
+[tip The formatter character type is deduced from the character type of the overflow marker, so it can be omitted.]
+
+Now our log record will look like this in the output:
+
+[pre
+    The quick brown f>>>
+]
+
+This output makes it more obvious that there was more to the original message. Note also that the length of the output is still 20 characters; the marker replaced the last characters of the truncated output.
+
+[tip For the character truncation and marker positioning to work correctly in multibyte encodings, it is important that the locale used by the formatter is set up properly. In particular, the `std::codecvt` facet in the locale must correctly recognize multibyte sequences corresponding to a single character in the output. One can use __boost_locale__ to generate the locale and then install it in the sink frontend by calling `imbue` (see [class_sinks_basic_formatting_sink_frontend] for reference). If the output character type is `wchar_t`, `char16_t` or `char32_t` the library assumes that the output is encoded in UTF-16 or UTF-32, depending on the size of the character type. Because the truncation might occur in the middle of a multi-unit character, truncated output produced by the decorator can be slightly shorter than the specified limit sometimes.]
+
+As with any other formatter, `max_size_decor` can participate in more complex formatting expressions and limit length of only part of the message.
+
+    sink->set_formatter
+    (
+        expr::stream
+            << expr::format_date_time("TimeStamp", "%Y-%m-%d %H:%M:%S.%f") << " ["
+            << expr::max_size_decor(20, ">>>")
+               [
+                   expr::stream << expr::message
+               ]
+            << "]"
+    );
+
+The above formatter can produce output like this:
+
+[pre
+    2016-08-10 00:36:44.028473 \[The quick brown f>>>\]
+]
+
+[endsect]
 
 [endsect]
 

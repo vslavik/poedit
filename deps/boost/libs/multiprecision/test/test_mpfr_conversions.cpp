@@ -112,7 +112,7 @@ int main()
    BOOST_TEST(f0b.precision() == 100);
    f0a = f100;
    BOOST_TEST(f0a == 3);
-   BOOST_TEST(f0a.precision() == 100);
+   BOOST_TEST(f0a.precision() == 100); // precision preserved on assignment
 
    f100 = f50;
    BOOST_TEST(f100 == 2);

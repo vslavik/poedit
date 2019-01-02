@@ -99,7 +99,7 @@ class VirtualTargetRegistry:
 
         self.recent_targets_ = []
 
-        # All targets ever registed
+        # All targets ever registered
         self.all_targets_ = []
 
         self.next_id_ = 0
@@ -107,7 +107,7 @@ class VirtualTargetRegistry:
     def register (self, target):
         """ Registers a new virtual target. Checks if there's already registered target, with the same
             name, type, project and subvariant properties, and also with the same sources
-            and equal action. If such target is found it is retured and 'target' is not registered.
+            and equal action. If such target is found it is returned and 'target' is not registered.
             Otherwise, 'target' is registered and returned.
         """
         assert isinstance(target, VirtualTarget)
@@ -117,7 +117,7 @@ class VirtualTargetRegistry:
             signature = "-" + target.name()
 
         result = None
-        if not self.cache_.has_key (signature):
+        if signature not in self.cache_:
             self.cache_ [signature] = []
 
         for t in self.cache_ [signature]:
@@ -166,7 +166,7 @@ class VirtualTargetRegistry:
         path = os.path.join(os.getcwd(), file_location, file)
         path = os.path.normpath(path)
 
-        if self.files_.has_key (path):
+        if path in self.files_:
             return self.files_ [path]
 
         file_type = b2.build.type.type (file)
@@ -200,7 +200,7 @@ class VirtualTargetRegistry:
     def register_actual_name (self, actual_name, virtual_target):
         assert isinstance(actual_name, basestring)
         assert isinstance(virtual_target, VirtualTarget)
-        if self.actual_.has_key (actual_name):
+        if actual_name in self.actual_:
             cs1 = self.actual_ [actual_name].creating_subvariant ()
             cs2 = virtual_target.creating_subvariant ()
             cmt1 = cs1.main_target ()
@@ -218,10 +218,12 @@ class VirtualTargetRegistry:
                 p2 = p2.raw ()
 
                 properties_removed = set.difference (p1, p2)
-                if not properties_removed: properties_removed = "none"
+                if not properties_removed:
+                    properties_removed = ["none"]
 
                 properties_added = set.difference (p2, p1)
-                if not properties_added: properties_added = "none"
+                if not properties_added:
+                    properties_added = ["none"]
 
             # FIXME: Revive printing of real location.
             get_manager().errors()(
@@ -230,13 +232,14 @@ class VirtualTargetRegistry:
                 "created from '%s'\n"
                 "another virtual target '%s'\n"
                 "created from '%s'\n"
-                "added properties: '%s'\n"
-                "removed properties: '%s'\n"
+                "added properties:\n%s\n"
+                "removed properties:\n%s\n"
                 % (actual_name,
-                   self.actual_ [actual_name], "loc", #cmt1.location (),
+                   self.actual_ [actual_name], cmt1.project().location(),
                    virtual_target,
-                   "loc", #cmt2.location (),
-                   properties_added, properties_removed))
+                   cmt2.project().location(),
+                   '\n'.join('\t' + p for p in properties_added),
+                   '\n'.join('\t' + p for p in properties_removed)))
 
         else:
             self.actual_ [actual_name] = virtual_target
@@ -334,7 +337,7 @@ class VirtualTarget:
 
             name = replace_grist (actual_name, '<' + g + '>')
 
-            if not self.made_.has_key (name):
+            if name not in self.made_:
                 self.made_ [name] = True
 
                 self.project_.manager ().engine ().add_dependency (name, actual_name)
@@ -442,7 +445,7 @@ class AbstractFileTarget (VirtualTarget):
 
     def creating_subvariant (self, s = None):
         """ Gets or sets the subvariant which created this target. Subvariant
-        is set when target is brought into existance, and is never changed
+        is set when target is brought into existence, and is never changed
         after that. In particual, if target is shared by subvariant, only
         the first is stored.
         s:  If specified, specified the value to set,
@@ -592,7 +595,7 @@ class AbstractFileTarget (VirtualTarget):
                 # are several virtual targets that refer to the same name.
                 # One case when this is unavoidable is when file name is
                 # main.cpp and two targets have types CPP (for compiling)
-                # and MOCCABLE_CPP (for convertion to H via Qt tools).
+                # and MOCCABLE_CPP (for conversion to H via Qt tools).
                 self.virtual_targets().register_actual_name(name, self)
 
             for i in self.dependencies_:
@@ -949,9 +952,9 @@ class NonScanningAction(Action):
         #be removed? -- Steven Watanabe
         Action.__init__(self, b2.manager.get_manager(), sources, action_name, property_set)
 
-    def actualize_source_type(self, sources, property_set):
+    def actualize_source_type(self, sources, ps=None):
         assert is_iterable_typed(sources, VirtualTarget)
-        assert isinstance(property_set, property_set.PropertySet)
+        assert isinstance(ps, property_set.PropertySet) or ps is None
         result = []
         for s in sources:
             result.append(s.actualize())
@@ -1099,8 +1102,8 @@ class Subvariant:
         or as dependency properties. Targets referred with
         dependency property are returned a properties, not targets."""
         if __debug__:
-            from .targets import GenerateResult
-            assert isinstance(result, GenerateResult)
+            from .property import Property
+            assert is_iterable_typed(result, (VirtualTarget, Property))
         # Find directly referenced targets.
         deps = self.build_properties().dependency()
         all_targets = self.sources_ + deps
@@ -1111,7 +1114,7 @@ class Subvariant:
             if not e in result:
                 result.add(e)
                 if isinstance(e, property.Property):
-                    t = e.value()
+                    t = e.value
                 else:
                     t = e
 

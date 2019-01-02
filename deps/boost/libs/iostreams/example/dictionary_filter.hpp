@@ -177,7 +177,7 @@ private:
             off_ = string::npos;
             return true;
         } else {
-            off_ += result;
+            off_ += static_cast<string::size_type>(result);
             return false;
         }
     }

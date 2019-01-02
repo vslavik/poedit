@@ -20,10 +20,12 @@ import package ;
 import path ;
 import project ;
 import regex ;
+import sequence ;
 import set ;
 import targets ;
 import feature ;
 import property ;
+import version : version-less ;
 
 ##############################################################################
 #
@@ -38,8 +40,8 @@ rule set-version ( version )
 {
     BOOST_VERSION = $(version) ;
 
-    local version-tag = [ MATCH ^([^.]+)[.]([^.]+)[.]([^.]+) : $(BOOST_VERSION)
-        ] ;
+    local version-tag =
+        [ MATCH "^([^.]+)[.]([^.]+)[.]([^.]+)" : $(BOOST_VERSION) ] ;
     if $(version-tag[3]) = 0
     {
         version-tag = $(version-tag[1-2]) ;
@@ -58,6 +60,23 @@ if ! ( $(build-type) in complete minimal )
 
 # What kind of layout are we doing?
 layout = [ option.get layout : "" ] ;
+
+layout = [ MATCH (versioned|tagged|system)(-(.+))? : $(layout) ] ;
+if $(layout[3])
+{
+    layout-version = $(layout[3]) ;
+    layout = $(layout[1]) ;
+    if [ version-less [ regex.split $(layout-version) "[.]" ] : 1 66 ]
+    {
+        layout-version = 1.40 ;
+    }
+    else if [ version-less [ regex.split $(layout-version) "[.]" ] : 1 69 ]
+    {
+        layout-version = 1.66 ;
+    }
+}
+layout-version ?= 1.69 ;
+
 # On Windows, we used versioned layout by default in order to be compatible with
 # autolink. On other systems, we use system layout which is what every other
 # program uses. Note that the Windows check is static, and will not be affected
@@ -77,12 +96,12 @@ layout-$(layout) = true ;
 
 if $(layout) = system && $(build-type) = complete
 {
-    ECHO error: Cannot use --layout=system with --build-type complete. ;
-    ECHO error: Please use either --layout=versioned or --layout=tagged ;
-    ECHO error: if you wish to build multiple variants. ;
+    ECHO error\: Cannot use --layout=system with --build-type complete. ;
+    ECHO error\: Please use either --layout=versioned or --layout=tagged ;
+    ECHO error\: if you wish to build multiple variants. ;
     if [ os.name ] != NT
     {
-        ECHO error: Note that --layout=system is used by default on Unix
+        ECHO error\: Note that --layout=system is used by default on Unix
             starting with Boost 1.40. ;
     }
     EXIT ;
@@ -104,7 +123,47 @@ if $(build-id)
 python-id = [ option.get "python-buildid" ] ;
 if $(python-id)
 {
-    PYTHON_ID = [ regex.replace $(python-id) [*\\/:.\"\'] _ ] ;
+    PYTHON_ID = [ regex.replace $(python-id) "[*\\/:.\"\']" _ ] ;
+}
+
+
+if $(layout) = versioned
+{
+    switch $(layout-version)
+    {
+    case 1.40 :
+        .format-name-args =
+            <base> <toolset> <threading> <runtime> ;
+    case 1.66 :
+        .format-name-args =
+            <base> <toolset> <threading> <runtime> <arch-and-model> ;
+    case 1.69 :
+        .format-name-args =
+            <base> <toolset> <threading> <runtime> <arch-and-model> ;
+    }
+}
+else if $(layout) = tagged
+{
+    switch $(layout-version)
+    {
+    case 1.40 :
+        .format-name-args =
+            <base> <threading> <runtime> ;
+    case 1.66 :
+        .format-name-args =
+            <base> <threading> <runtime> ;
+    case 1.69 :
+        .format-name-args =
+            <base> <threading> <runtime> <arch-and-model> ;
+    }
+}
+else if $(layout) = system
+{
+    .format-name-args = <base> ;
+}
+else
+{
+    .format-name-error = true ;
 }
 
 
@@ -119,31 +178,17 @@ rule tag ( name : type ? : property-set )
 {
     if $(type) in STATIC_LIB SHARED_LIB IMPORT_LIB
     {
-        local result ;
+        local args = $(.format-name-args) ;
         if $(layout) = versioned
         {
-            result = [ common.format-name
-                <base> <toolset> <threading> <runtime> -$(BOOST_VERSION_TAG)
-                -$(BUILD_ID)
-                : $(name) : $(type) : $(property-set) ] ;
+            args += -$(BOOST_VERSION_TAG) ;
         }
-        else if $(layout) = tagged
+        local result  = [ common.format-name
+            $(args) -$(BUILD_ID)
+            : $(name) : $(type) : $(property-set) ] ;
+        if $(.format-name-error)
         {
-            result = [ common.format-name
-                <base> <threading> <runtime>
-                -$(BUILD_ID)
-                : $(name) : $(type) : $(property-set) ] ;
-        }
-        else if $(layout) = system
-        {
-            result = [ common.format-name
-                <base>
-                -$(BUILD_ID)
-                : $(name) : $(type) : $(property-set) ] ;
-        }
-        else
-        {
-            EXIT error: invalid layout '$(layout:E=)' ;
+            EXIT error\: invalid layout '$(layout:E=)' ;
         }
 
         # Optionally add version suffix. On NT, library with version suffix will
@@ -163,6 +208,19 @@ rule tag ( name : type ? : property-set )
     }
 }
 
+# Specialized tag function to use for libraries linking to Python.
+# Appends value of --python-buildid if provided.
+rule python-tag ( name : type ? : property-set )
+{
+    local result = $(name) ;
+    if $(type) in STATIC_LIB SHARED_LIB IMPORT_LIB && $(PYTHON_ID)
+    {
+        result = $(result)-$(PYTHON_ID) ;
+    }
+
+    # forward to the boost tagging rule
+    return  [ tag $(result) : $(type) : $(property-set) ] ;
+}
 
 ################################################################################
 #
@@ -170,49 +228,12 @@ rule tag ( name : type ? : property-set )
 #
 #    - 'stage-proper' that puts all libraries in stage/lib
 #    - 'install-proper' that install libraries and headers to system location
-#    - 'stage-unversioned' that creates links to libraries without boost version
-#       in name
-#    - 'install-unversioned' which creates unversioned linked to installed
-#       libraries.
 #
 ################################################################################
 
-# Worker function suitable to the 'generate' metatarget. Creates a link to
-# 'source', striping any version number information from the name.
-rule make-unversioned-links ( project name ? : property-set : sources * )
-{
-    local filter ;
-    if [ modules.peek : NT ]
-    {
-        filter = (.*[.]lib) ;
-    }
-    else
-    {
-        filter =
-            (.*[.]so)[.0-9]*
-            (.*[.]dylib)
-            (.*[.]a) ;
-    }
-
-    local result ;
-    for local s in $(sources)
-    {
-        local m = [ MATCH ^(.*)-[0-9_]+$(filter)$ : [ $(s).name ] ] ;
-        if $(m)
-        {
-            local ea = [ $(s).action ] ;
-            local ep = [ $(ea).properties ] ;
-            local a = [ new non-scanning-action $(s) : symlink.ln : $(ep) ] ;
-            result += [ new file-target $(m:J=) exact : [ $(s).type ] :
-                $(project) : $(a) ] ;
-        }
-    }
-    return $(result) ;
-}
-
 rule filtered-target ( name : message + : sources + : requirements * )
 {
-    message $(name)-message : warning: $(message) ;
+    message $(name)-message : warning\: $(message) ;
     alias $(name) : $(sources) : $(requirements) ;
     alias $(name) : $(name)-message ;
 
@@ -221,7 +242,7 @@ rule filtered-target ( name : message + : sources + : requirements * )
     $(p).mark-target-as-explicit $(name)-message ;
 }
 
-rule declare_install_and_stage_proper_targets ( libraries * : headers * )
+rule declare_install_and_stage_proper_targets ( libraries * : headers * : modular-headers * )
 {
     local p = [ project.current ] ;
     for local l in $(libraries)
@@ -252,7 +273,7 @@ rule declare_install_and_stage_proper_targets ( libraries * : headers * )
     }
     local library-targets = $(libraries)-for-install ;
 
-    install-requirements = <install-source-root>$(BOOST_ROOT)/boost ;
+    local install-requirements ;
 
     if $(layout-versioned)
     {
@@ -275,9 +296,40 @@ rule declare_install_and_stage_proper_targets ( libraries * : headers * )
 
     p = [ project.current ] ;
 
+    # These headers will be installed from the modular
+    # layout, and should be ignored in the global boost/
+    local skip-headers ;
+    # Install modular headers.
+    for local lib in $(modular-headers)
+    {
+        local header-root = $(BOOST_ROOT)/libs/$(lib)/include/boost ;
+        local lib-headers =
+            [ path.glob-tree $(header-root) : *.hpp *.ipp *.h *.inc *.SUNWCCh : CVS .svn ]
+            [ path.glob-tree $(header-root)/compatibility/cpp_c_headers : c* : CVS .svn ]
+            [ path.glob $(header-root)/tr1/tr1 : * : bcc32 sun CVS .svn ]
+        ;
+        skip-headers += [ sequence.transform path.relative-to [ path.make $(header-root) ] : $(lib-headers) ] ;
+        package.install install-$(lib)-headers
+            : <install-source-root>$(header-root)
+              $(install-requirements)
+              <install-no-version-symlinks>on
+            : # binaries
+            : # libraries
+            : $(lib-headers)
+            ;
+        $(p).mark-target-as-explicit install-$(lib)-headers ;
+    }
+
+    # Filter out headers that were created by b2 headers
+    local header-root = [ path.make $(BOOST_ROOT)/boost ] ;
+    headers = [ set.difference $(headers) : $(header-root)/$(skip-headers) ] ;
+
     # Complete install.
     package.install install-proper
-        : $(install-requirements) <install-no-version-symlinks>on
+        :  <install-source-root>$(BOOST_ROOT)/boost
+           $(install-requirements)
+           <install-no-version-symlinks>on
+           
         :
         : $(libraries)-for-install
         : $(headers)
@@ -292,33 +344,6 @@ rule declare_install_and_stage_proper_targets ( libraries * : headers * )
           <install-no-version-symlinks>on
         ;
     $(p).mark-target-as-explicit stage-proper ;
-
-    # Commented out as it does not seem to work. Whoever wrote this originally,
-    # left some typos in the code, but when that got corrected and the code got
-    # enabled - it started reporting ambiguous/duplicate target Boost Build
-    # errors. Anyone requiring unversioned staged libraries needs to correct
-    # those errors before reenabling this code. For more detailed information
-    # see the related Boost library development mailing list thread at
-    # 'http://lists.boost.org/Archives/boost/2012/06/194312.php'.
-    #                                                (06.07.2012.) (Jurko)
-    #~ if $(layout-versioned) && ( [ modules.peek : NT ] || [ modules.peek : UNIX ] )
-    #~ {
-    #~     generate stage-unversioned : stage-proper :
-    #~         <generating-rule>@boostcpp.make-unversioned-links ;
-    #~     $(p).mark-target-as-explicit stage-unversioned ;
-    #~
-    #~     generate install-unversioned : install-proper :
-    #~         <generating-rule>@boostcpp.make-unversioned-links ;
-    #~     $(p).mark-target-as-explicit install-unversioned ;
-    #~ }
-    #~ else
-    {
-        # Create do-nothing aliases.
-        alias stage-unversioned ;
-        $(p).mark-target-as-explicit stage-unversioned ;
-        alias install-unversioned ;
-        $(p).mark-target-as-explicit install-unversioned ;
-    }
 }
 
 
@@ -346,57 +371,84 @@ class top-level-target : alias-target-class
         # incompatibility between debug and release variants. We build shared
         # and static libraries since that is what most packages seem to provide
         # (.so in libfoo and .a in libfoo-dev).
+
         self.minimal-properties = [ property-set.create <variant>release
             <threading>multi <link>shared <link>static <runtime-link>shared ] ;
+
         # On Windows, new IDE projects use:
         #
         #   runtime-link=dynamic, threading=multi, variant=(debug|release)
         #
         # and in addition, C++ Boost's autolink defaults to static linking.
+
         self.minimal-properties-win = [ property-set.create <variant>debug
             <variant>release <threading>multi <link>static <runtime-link>shared
-            ] ;
+            <address-model>32 <address-model>64 ] ;
 
         self.complete-properties = [ property-set.create
             <variant>debug <variant>release
-            <threading>single <threading>multi
+            <threading>multi
             <link>shared <link>static
             <runtime-link>shared <runtime-link>static ] ;
+
+        self.complete-properties-win = [ property-set.create
+            <variant>debug <variant>release
+            <threading>multi
+            <link>shared <link>static
+            <runtime-link>shared <runtime-link>static
+            <address-model>32 <address-model>64 ] ;
     }
 
     rule generate ( property-set )
     {
         modules.poke : top-level-targets : [ modules.peek : top-level-targets ]
             $(self.name) ;
+
+        local os = [ $(property-set).get <target-os> ] ;
+
+        # Because we completely override the parent's 'generate' we need to
+        # check for default feature values ourselves.
+
+        if ! $(os)
+        {
+            os = [ feature.defaults <target-os> ] ;
+            os = $(os:G=) ;
+        }
+
+        local build-type-set ;
+
         if $(self.build-type) = minimal
         {
-            local expanded ;
-
-            local os = [ $(property-set).get <target-os> ] ;
-            # Because we completely override the parent's 'generate' we need to
-            # check for default feature values ourselves.
-            if ! $(os)
-            {
-                os = [ feature.defaults <target-os> ] ;
-                os = $(os:G=) ;
-            }
-
             if $(os) = windows
             {
-                expanded = [ targets.apply-default-build $(property-set)
-                    : $(self.minimal-properties-win) ] ;
+                build-type-set = $(self.minimal-properties-win) ;
             }
             else
             {
-                expanded = [ targets.apply-default-build $(property-set)
-                    : $(self.minimal-properties) ] ;
+                build-type-set = $(self.minimal-properties) ;
             }
-            return [ build-multiple $(expanded) ] ;
         }
         else if $(self.build-type) = complete
         {
+            if $(os) = windows
+            {
+                build-type-set = $(self.complete-properties-win) ;
+            }
+            else
+            {
+                build-type-set = $(self.complete-properties) ;
+            }
+        }
+        else
+        {
+            import errors ;
+            errors.error "Unknown build type" ;
+        }
+
+        if $(build-type-set)
+        {
             local expanded = [ targets.apply-default-build $(property-set)
-                : $(self.complete-properties) ] ;
+                : $(build-type-set) ] ;
 
             # Filter inappopriate combinations.
             local filtered ;
@@ -414,12 +466,8 @@ class top-level-target : alias-target-class
                     filtered += $(p) ;
                 }
             }
+
             return [ build-multiple $(filtered) ] ;
-        }
-        else
-        {
-            import errors ;
-            errors.error "Unknown build type" ;
         }
     }
 
@@ -440,17 +488,17 @@ class top-level-target : alias-target-class
     }
 }
 
-rule declare_top_level_targets ( libraries * : headers * )
+rule declare_top_level_targets ( libraries * : headers * : modular-headers * )
 {
-    declare_install_and_stage_proper_targets $(libraries) : $(headers) ;
+    declare_install_and_stage_proper_targets $(libraries) : $(headers) : $(modular-headers) ;
 
     targets.create-metatarget top-level-target : [ project.current ]
         : install
-        : install-proper install-unversioned
+        : install-$(modular-headers)-headers install-proper
         ;
     targets.create-metatarget top-level-target : [ project.current ]
         : stage
-        : stage-proper stage-unversioned
+        : stage-proper headers
         ;
 
     p = [ project.current ] ;
@@ -549,19 +597,19 @@ rule libraries-to-install ( existing-libs * )
     # Do some checks.
     if $(with-parameter) && $(without-parameter)
     {
-        EXIT error: both --with-<library> and --without-<library> specified ;
+        EXIT error\: both --with-<library> and --without-<library> specified ;
     }
 
     local wrong = [ set.difference $(with-parameter) : $(existing-libs) ] ;
     if $(wrong)
     {
-        EXIT error: wrong library name '$(wrong[1])' in the --with-<library>
+        EXIT error\: wrong library name '$(wrong[1])' in the --with-<library>
             option. ;
     }
     local wrong = [ set.difference $(without-parameter) : $(existing-libs) ] ;
     if $(wrong)
     {
-        EXIT error: wrong library name '$(wrong[1])' in the --without-<library>
+        EXIT error\: wrong library name '$(wrong[1])' in the --without-<library>
             option. ;
     }
 
@@ -575,7 +623,7 @@ rule libraries-to-install ( existing-libs * )
     }
 }
 
-rule declare-targets ( all-libraries * : headers * )
+rule declare-targets ( all-libraries * : headers * : modular-headers * )
 {
     configure.register-components $(all-libraries) ;
 
@@ -585,7 +633,7 @@ rule declare-targets ( all-libraries * : headers * )
 
     if [ option.get "show-libraries" : : true ]
     {
-        ECHO The following libraries require building: ;
+        ECHO The following libraries require building\: ;
         for local l in $(libraries)
         {
             ECHO "    - $(l)" ;
@@ -593,7 +641,7 @@ rule declare-targets ( all-libraries * : headers * )
         EXIT ;
     }
 
-    declare_top_level_targets $(libraries) : $(headers) ;
+    declare_top_level_targets $(libraries) : $(headers) : $(modular-headers) ;
 }
 
 # Returns the properties identifying the toolset. We'll use them
@@ -616,15 +664,11 @@ rule deduce-address-model ( properties * )
 {
     local result ;
     local filtered = [ toolset-properties $(properties) ] ;
-
-    if [ configure.builds /boost/architecture//32 : $(filtered) : 32-bit ]
-    {
-        result = 32 ;
-    }
-    else if [ configure.builds /boost/architecture//64 : $(filtered) : 64-bit ]
-    {
-        result = 64 ;
-    }
+    local names = 32 64 ;
+    local idx = [ configure.find-builds "default address-model" : $(filtered)
+        : /boost/architecture//32 "32-bit"
+        : /boost/architecture//64 "64-bit" ] ;
+    result = $(names[$(idx)]) ;
 
     if $(result)
     {
@@ -653,30 +697,15 @@ rule deduce-architecture ( properties * )
 {
     local result ;
     local filtered = [ toolset-properties $(properties) ] ;
-    if [ configure.builds /boost/architecture//arm : $(filtered) : arm ]
-    {
-        result = arm ;
-    }
-    else if [ configure.builds /boost/architecture//mips1 : $(filtered) : mips1 ]
-    {
-        result = mips1 ;
-    }
-    else if [ configure.builds /boost/architecture//power : $(filtered) : power ]
-    {
-        result = power ;
-    }
-    else if [ configure.builds /boost/architecture//sparc : $(filtered) : sparc ]
-    {
-        result = sparc ;
-    }
-    else if [ configure.builds /boost/architecture//x86 : $(filtered) : x86 ]
-    {
-        result = x86 ;
-    }
-    else if [ configure.builds /boost/architecture//combined : $(filtered) : combined ]
-    {
-        result = combined ;
-    }
+    local names = arm mips1 power sparc x86 combined ;
+    local idx = [ configure.find-builds "default architecture" : $(filtered)
+        : /boost/architecture//arm
+        : /boost/architecture//mips1
+        : /boost/architecture//power
+        : /boost/architecture//sparc
+        : /boost/architecture//x86
+        : /boost/architecture//combined ] ;
+    result = $(names[$(idx)]) ;
 
     if $(result)
     {

@@ -3,7 +3,7 @@
 Includes all the library components except the adapters for external
 libraries.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -114,6 +114,7 @@ namespace boost {
 #include <boost/hana/greater.hpp>
 #include <boost/hana/greater_equal.hpp>
 #include <boost/hana/group.hpp>
+#include <boost/hana/index_if.hpp>
 #include <boost/hana/if.hpp>
 #include <boost/hana/insert.hpp>
 #include <boost/hana/insert_range.hpp>

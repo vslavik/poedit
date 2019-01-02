@@ -15,8 +15,11 @@
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/array.hpp>
 #include <boost/test/data/monomorphic/collection.hpp>
+#include <boost/test/data/monomorphic/fwd.hpp>
 #include <boost/test/data/for_each_sample.hpp>
 namespace data=boost::unit_test::data;
+
+#include <boost/test/data/test_case.hpp>
 
 #include "datasets-test.hpp"
 
@@ -141,5 +144,15 @@ BOOST_AUTO_TEST_CASE( test_mono_join )
 
 //____________________________________________________________________________//
 
+// ticket 13380
+// note that the test relies on the fact that the references to temporaries are properly
+// escalated as errors. Currently only on clang.
+BOOST_DATA_TEST_CASE(
+      sampleTest,
+      (data::make(1) ^ data::make(2)) + (data::make(3) ^ data::make(4)),
+      var1,
+      var2)
+{
+  std::cout << var1 << "," << var2 << std::endl;
+}
 // EOF
-

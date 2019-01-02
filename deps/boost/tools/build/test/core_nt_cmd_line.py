@@ -49,7 +49,7 @@ def test_raw_empty():
     # get an extra "\r" added in front of it on output.
     whitespace_out = whitespace_in.replace("\r\n", "\n").replace("\n", "\r\n")
 
-    t = BoostBuild.Tester(["-d2", "-d+4"], pass_d0=False, pass_toolset=0,
+    t = BoostBuild.Tester(["-d2", "-d+4"], pass_toolset=0,
         use_test_config=False)
     t.write("file.jam", """\
 actions do_empty {%s}
@@ -67,7 +67,7 @@ do_empty all ;
 
 
 def test_raw_nt(n=None, error=False):
-    t = BoostBuild.Tester(["-d1", "-d+4"], pass_d0=False, pass_toolset=0,
+    t = BoostBuild.Tester(["-d1", "-d+4"], pass_toolset=0,
         use_test_config=False)
 
     cmd_prefix = "%s -c \"print('XXX: " % executable
@@ -135,7 +135,7 @@ do_echo all ;
 
 
 def test_raw_to_shell_fallback_nt():
-    t = BoostBuild.Tester(["-d1", "-d+4"], pass_d0=False, pass_toolset=0,
+    t = BoostBuild.Tester(["-d1", "-d+4"], pass_toolset=0,
         use_test_config=False)
 
     cmd_prefix = '%s -c print(' % executable

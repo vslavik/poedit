@@ -22,7 +22,6 @@
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
 
-#include <functional>
 #include <boost/intrusive/detail/minimal_pair_header.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/interprocess/detail/utilities.hpp>
@@ -54,8 +53,10 @@ struct unordered_map_index_aux
                typename MapConfig::
                   segment_manager_base>      allocator_type;
     struct hasher
-      : std::unary_function<key_type, std::size_t>
     {
+        typedef key_type argument_type;
+        typedef std::size_t result_type;
+
         std::size_t operator()(const key_type &val) const
         {
             typedef typename key_type::char_type    char_type;

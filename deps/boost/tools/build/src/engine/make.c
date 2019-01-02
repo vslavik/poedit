@@ -44,6 +44,8 @@
 #include "search.h"
 #include "timestamp.h"
 #include "variable.h"
+#include "execcmd.h"
+#include "output.h"
 
 #include <assert.h>
 
@@ -82,7 +84,7 @@ static char const * target_bind[] =
     "exists",
 };
 
-#define spaces(x) ( "                    " + ( x > 20 ? 0 : 20-x ) )
+#define spaces(x) ( ((const char *)"                    ") + ( x > 20 ? 0 : 20-x ) )
 
 
 /*
@@ -99,6 +101,10 @@ int make( LIST * targets, int anyhow )
 #endif
 
     memset( (char *)counts, 0, sizeof( *counts ) );
+
+    /* Make sure that the tables are set up correctly.
+     */
+    exec_init();
 
     /* First bind all targets with LOCATE_TARGET setting. This is needed to
      * correctly handle dependencies to generated headers.
@@ -181,7 +187,7 @@ static void update_dependants( TARGET * t )
 
             if ( DEBUG_FATE )
             {
-                out_printf( "fate change  %s from %s to %s (as dependant of %s)\n",
+                out_printf( "fate change  %s from %s to %s (as dependent of %s)\n",
                         object_str( p->name ), target_fate[ (int) fate0 ], target_fate[ (int) p->fate ], object_str( t->name ) );
             }
 
@@ -720,7 +726,7 @@ void make0
      * Step 6: A little harmless tabulating for tracing purposes.
      */
 
-    /* Do not count or report interal includes nodes. */
+    /* Do not count or report internal includes nodes. */
     if ( t->flags & T_FLAG_INTERNAL )
         return;
 

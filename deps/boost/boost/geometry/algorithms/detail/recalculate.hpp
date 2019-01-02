@@ -219,8 +219,8 @@ struct recalculate<Polygon1, Polygon2, polygon_tag, polygon_tag>
 template <typename Geometry1, typename Geometry2, typename Strategy>
 inline void recalculate(Geometry1& geometry1, Geometry2 const& geometry2, Strategy const& strategy)
 {
-    concept::check<Geometry1>();
-    concept::check<Geometry2 const>();
+    concepts::check<Geometry1>();
+    concepts::check<Geometry2 const>();
 
     // static assert dimensions (/types) are the same
 

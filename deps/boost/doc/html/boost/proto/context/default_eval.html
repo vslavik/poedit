@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template default_eval</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../proto/reference.html#header.boost.proto.context.default_hpp" title="Header &lt;boost/proto/context/default.hpp&gt;">
 <link rel="prev" href="callable_context/eval.html" title="Struct template eval">
@@ -43,15 +43,15 @@
   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">::</span><span class="identifier">tag_type</span> <a name="boost.proto.context.default_eval.Tag"></a><span class="identifier">Tag</span><span class="special">;</span>          <span class="comment">// For exposition only</span>
   <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></em></span>               <a class="link" href="default_eval.html#boost.proto.context.default_eval.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="default_eval.html#idp310408544-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="default_eval.html#idp310409104-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="default_eval.html#id-1_3_34_5_55_1_1_1_1_8-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="default_eval.html#id-1_3_34_5_55_1_1_1_1_8_1-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="identifier">Expr</span> <span class="special">&amp;</span> <span class="identifier">s_expr</span><span class="special">;</span>  <span class="comment">// For exposition only</span>
   <span class="keyword">static</span> <span class="identifier">Context</span> <span class="special">&amp;</span> <span class="identifier">s_context</span><span class="special">;</span>  <span class="comment">// For exposition only</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp358788160"></a><h2>Description</h2>
+<a name="id-1.3.34.5.57.3.4"></a><h2>Description</h2>
 <p>
               Let <code class="computeroutput"><code class="computeroutput">OP</code></code> be the C++ operator
               corresponding to <code class="computeroutput">Expr::proto_tag</code>. (For example, if
@@ -65,21 +65,21 @@
               approximate the behavior.
             </p>
 <div class="refsect2">
-<a name="idp358796272"></a><h3>
+<a name="id-1.3.34.5.57.3.4.4"></a><h3>
 <a name="boost.proto.context.default_evaltypes"></a><code class="computeroutput">default_eval</code> 
         public
        types</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <p>
 <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></em></span> <a name="boost.proto.context.default_eval.result_type"></a><span class="identifier">result_type</span><span class="special">;</span></p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p>
                     If <code class="computeroutput">Tag</code> corresponds to a unary prefix operator,
                     then the result type is
                     </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <span class="identifier">OP</span> <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_idp308870400.html" title="Function child">proto::child</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
+  <span class="identifier">OP</span> <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child.html" title="Function child">proto::child</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
 <span class="special">)</span></pre>
 <p>
                   </p>
@@ -90,7 +90,7 @@
                     then the result type is
                     </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_idp308870400.html" title="Function child">proto::child</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="identifier">OP</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child.html" title="Function child">proto::child</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="identifier">OP</span>
 <span class="special">)</span></pre>
 <p>
                   </p>
@@ -101,8 +101,8 @@
                     then the result type is
                     </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../left_idp308930416.html" title="Function left">proto::left</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="identifier">OP</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../right_idp308944896.html" title="Function right">proto::right</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../left.html" title="Function left">proto::left</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="identifier">OP</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../right.html" title="Function right">proto::right</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
 <span class="special">)</span></pre>
 <p>
                   </p>
@@ -115,8 +115,8 @@
                   then the result type is
                   </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../left_idp308930416.html" title="Function left">proto::left</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">[</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../right_idp308944896.html" title="Function right">proto::right</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">]</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../left.html" title="Function left">proto::left</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">[</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../right.html" title="Function right">proto::right</a><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">]</span>
 <span class="special">)</span></pre>
 <p>
                 </p>
@@ -129,9 +129,9 @@
                     then the result type is
                     </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">?</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">:</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">?</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">:</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span>
 <span class="special">)</span></pre>
 <p>
                   </p>
@@ -144,10 +144,10 @@
                     then the result type is
                     </p>
 <pre class="programlisting"><span class="keyword">decltype</span><span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">(</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span><span class="special">,</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">(</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span><span class="special">,</span>
   <span class="special">...</span>
-  <a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">)</span>
+  <a class="link" href="../eval.html" title="Function eval">proto::eval</a><span class="special">(</span><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s_expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">s_context</span><span class="special">)</span> <span class="special">)</span>
 <span class="special">)</span></pre>
 <p>
                   </p>
@@ -156,17 +156,17 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp358913408"></a><h3>
-<a name="idp310408544-bb"></a><code class="computeroutput">default_eval</code> public member functions</h3>
+<a name="id-1.3.34.5.57.3.4.5"></a><h3>
+<a name="id-1_3_34_5_55_1_1_1_1_8-bb"></a><code class="computeroutput">default_eval</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp310409104-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span> expr<span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span> context<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="id-1_3_34_5_55_1_1_1_1_8_1-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="special">&amp;</span> expr<span class="special">,</span> <span class="identifier">Context</span> <span class="special">&amp;</span> context<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
 <p>
                     If <code class="computeroutput">Tag</code> corresponds to a unary prefix operator,
                     then return
                     </p>
-<pre class="programlisting">OP <code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_idp308870400.html" title="Function child">proto::child</a></code>(expr), context)</pre>
+<pre class="programlisting">OP <code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child.html" title="Function child">proto::child</a></code>(expr), context)</pre>
 <p>
                   </p>
 </li>
@@ -175,7 +175,7 @@
                     If <code class="computeroutput">Tag</code> corresponds to a unary postfix operator,
                     then return
                     </p>
-<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_idp308870400.html" title="Function child">proto::child</a></code>(expr), context) OP</pre>
+<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child.html" title="Function child">proto::child</a></code>(expr), context) OP</pre>
 <p>
                   </p>
 </li>
@@ -184,8 +184,8 @@
                     If <code class="computeroutput">Tag</code> corresponds to a binary infix operator,
                     then return
                     </p>
-<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../left_idp308930416.html" title="Function left">proto::left</a></code>(expr), context) OP
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../right_idp308944896.html" title="Function right">proto::right</a></code>(expr), context)</pre>
+<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../left.html" title="Function left">proto::left</a></code>(expr), context) OP
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../right.html" title="Function right">proto::right</a></code>(expr), context)</pre>
 <p>
                   </p>
 </li>
@@ -196,8 +196,8 @@
                   </code>,
                   then return
                   </p>
-<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../left_idp308930416.html" title="Function left">proto::left</a></code>(expr), context) [
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../right_idp308944896.html" title="Function right">proto::right</a></code>(expr), context) ]</pre>
+<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../left.html" title="Function left">proto::left</a></code>(expr), context) [
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../right.html" title="Function right">proto::right</a></code>(expr), context) ]</pre>
 <p>
                 </p>
 </li>
@@ -208,9 +208,9 @@
                     </code>,
                     then return
                     </p>
-<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;0&gt;(expr), context) ?
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;1&gt;(expr), context) :
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;2&gt;(expr), context)</pre>
+<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;0&gt;(expr), context) ?
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;1&gt;(expr), context) :
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;2&gt;(expr), context)</pre>
 <p>
                   </p>
 </li>
@@ -221,20 +221,26 @@
                     </code>,
                     then return
                     </p>
-<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;0&gt;(expr), context) (
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;1&gt;(expr), context),
+<pre class="programlisting"><code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;0&gt;(expr), context) (
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;1&gt;(expr), context),
 ...
-<code class="computeroutput"><a class="link" href="../eval_idp304913984.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c_idp308898896.html" title="Function child_c">proto::child_c</a></code>&lt;N&gt;(expr), context) )</pre>
+<code class="computeroutput"><a class="link" href="../eval.html" title="Function eval">proto::eval</a></code>(<code class="computeroutput"><a class="link" href="../child_c.html" title="Function child_c">proto::child_c</a></code>&lt;N&gt;(expr), context) )</pre>
 <p>
                   </p>
 </li>
 </ul></div>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">context</code></span></p></td>

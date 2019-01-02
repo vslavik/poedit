@@ -13,6 +13,8 @@
       typedef __below type;
    };
   
+   template <class T> using remove_pointer_t = typename remove_pointer<T>::type; // C++11 and above
+
 __type The same type as `T`, but with any pointer modifier removed.  Note that pointers to members are left unchanged: 
 removing the pointer decoration would result in an invalid type.
 

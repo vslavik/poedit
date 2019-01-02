@@ -71,7 +71,7 @@ struct format_grammar : public grammar<format_grammar>
     };
 };
  
-int main(int argc, char* argv[])
+int main()
 {
     format_grammar grammar;
     const char* format = "E2, EN15.7, E20.10E3, E, EN";

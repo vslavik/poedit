@@ -28,7 +28,7 @@ namespace coroutines2 {
 namespace detail {
 
 template< typename ControlBlock, typename StackAllocator, typename Fn >
-ControlBlock * create_control_block( StackAllocator salloc, Fn && fn) {
+ControlBlock * create_control_block( StackAllocator && salloc, Fn && fn) {
     auto sctx = salloc.allocate();
     // reserve space for control structure
 #if defined(BOOST_NO_CXX11_CONSTEXPR) || defined(BOOST_NO_CXX11_STD_ALIGN)
@@ -48,7 +48,7 @@ ControlBlock * create_control_block( StackAllocator salloc, Fn && fn) {
 #endif
     // placment new for control structure on coroutine stack
     return new ( sp) ControlBlock{ context::preallocated( sp, size, sctx),
-                                   salloc, std::forward< Fn >( fn) };
+                                   std::forward< StackAllocator >( salloc), std::forward< Fn >( fn) };
 }
 
 }}}

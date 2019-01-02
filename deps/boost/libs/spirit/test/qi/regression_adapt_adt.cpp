@@ -92,5 +92,12 @@ int main()
             data.str == "Hello" && !data.optstr);
     }
 
+    { // GH#396
+        qi::rule<char const*, unsigned()> uint_r = qi::uint_;
+        test1 data;
+        BOOST_TEST(test_attr("123@999", uint_r >> -('@' >> uint_r), data) &&
+            data.var == 123 && data.opt && data.opt.get() == 999);
+    }
+
     return boost::report_errors();
 }

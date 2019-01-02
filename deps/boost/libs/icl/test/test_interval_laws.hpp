@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2010-2010: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -7,7 +7,7 @@ Copyright (c) 2010-2010: Joachim Faulhaber
 +-----------------------------------------------------------------------------*/
 
 /*-----------------------------------------------------------------------------+
-Function templates to call functions in object oriented or namespace glabal 
+Function templates to call functions in object oriented or namespace glabal
 versions.
 +-----------------------------------------------------------------------------*/
 #ifndef BOOST_LIBS_ICL_TEST_INTERVAL_LAWS_HPP_JOFA_101011
@@ -31,7 +31,7 @@ check_border_containedness(const Type& itv)
     domain_type lo = icl::lower(itv);
     domain_type up = icl::upper(itv);
 
-    //LAW: The empty set is contained in every set 
+    //LAW: The empty set is contained in every set
     BOOST_CHECK_EQUAL(icl::contains(itv, icl::identity_element<Type>::value()), true);
     //LAW: Reflexivity: Every interval contains itself
     BOOST_CHECK_EQUAL(icl::contains(itv, itv), true);
@@ -82,4 +82,3 @@ check_border_containedness(const Type& itv)
 }} // namespace boost icl
 
 #endif // BOOST_ICL_TEST_INTERVAL_LAWS_HPP_JOFA_100908
-

@@ -30,19 +30,19 @@ inline void test_coordinate_system()
     typedef rw_lon_lat_point<int, CoordinateSystem> rw_int_point;
     typedef ro_lon_lat_point<int, CoordinateSystem> ro_int_point;
 
-    bg::concept::check<bg_int_point>();
-    bg::concept::check<bg_int_point const>();
+    bg::concepts::check<bg_int_point>();
+    bg::concepts::check<bg_int_point const>();
 
-    bg::concept::check<bg_double_point>();
-    bg::concept::check<bg_double_point const>();
+    bg::concepts::check<bg_double_point>();
+    bg::concepts::check<bg_double_point const>();
 
-    bg::concept::check<rw_int_point>();
-    bg::concept::check<rw_int_point const>();
-    bg::concept::check<ro_int_point const>();
+    bg::concepts::check<rw_int_point>();
+    bg::concepts::check<rw_int_point const>();
+    bg::concepts::check<ro_int_point const>();
 
-    bg::concept::check<rw_double_point>();
-    bg::concept::check<rw_double_point const>();
-    bg::concept::check<ro_double_point const>();
+    bg::concepts::check<rw_double_point>();
+    bg::concepts::check<rw_double_point const>();
+    bg::concepts::check<ro_double_point const>();
 }
 
 

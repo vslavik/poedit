@@ -115,6 +115,11 @@ obj obj_linpack_benchmark_cpp_float_quad : linpack-benchmark.cpp
           <define>TEST_CPP_BIN_FLOAT_QUAD
           ;
 
+obj obj_linpack_benchmark_cpp_float_oct : linpack-benchmark.cpp
+          : release
+          <define>TEST_CPP_BIN_FLOAT_OCT
+          ;
+
 lib f2c ;
 
 exe linpack_benchmark_mpfr : obj_linpack_benchmark_mpfr mpfr f2c gmp
@@ -147,6 +152,10 @@ exe linpack_benchmark_float128 : obj_linpack_benchmark_float128  f2c
           ;
 
 exe linpack_benchmark_cpp_quad_float : obj_linpack_benchmark_cpp_quad_float  f2c
+          : release
+          ;
+
+exe linpack_benchmark_cpp_oct_float : obj_linpack_benchmark_cpp_oct_float  f2c
           : release
           ;
 

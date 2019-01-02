@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template bind</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.functional.bind_hpp" title="Header &lt;boost/compute/functional/bind.hpp&gt;">
 <link rel="prev" href="is_placeholder.html" title="Struct template is_placeholder">
@@ -34,13 +34,13 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">bind</span><span class="special">(</span><span class="identifier">F</span> f<span class="special">,</span> <span class="identifier">Args</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp76398448"></a><h2>Description</h2>
+<a name="idp91111328"></a><h2>Description</h2>
 <p>Returns a function wrapper which invokes <code class="computeroutput">f</code> with <code class="computeroutput">args</code> when called.</p>
 <p>For example, to generate a unary function object which returns <code class="computeroutput">true</code> when its argument is less than <code class="computeroutput">7</code>: </p>
-<pre class="programlisting"> <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">less</span><span class="special">;</span>
- <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">placeholders</span><span class="special">::</span><span class="identifier">_1</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">less</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">placeholders</span><span class="special">::</span><span class="identifier">_1</span><span class="special">;</span>
 
- <span class="keyword">auto</span> <span class="identifier">less_than_seven</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span><span class="identifier">less</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="number">7</span><span class="special">)</span><span class="special">;</span>
+<span class="keyword">auto</span> <span class="identifier">less_than_seven</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span><span class="identifier">less</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">,</span> <span class="number">7</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 </div>

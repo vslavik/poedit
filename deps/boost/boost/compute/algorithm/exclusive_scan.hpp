@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_EXCLUSIVE_SCAN_HPP
 #define BOOST_COMPUTE_ALGORITHM_EXCLUSIVE_SCAN_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/functional.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/detail/scan.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -44,6 +47,10 @@ namespace compute {
 ///
 /// \snippet test/test_scan.cpp exclusive_scan_int_multiplies
 ///
+/// Space complexity on GPUs: \Omega(n)<br>
+/// Space complexity on GPUs when \p first == \p result: \Omega(2n)<br>
+/// Space complexity on CPUs: \Omega(1)
+///
 /// \see inclusive_scan()
 template<class InputIterator, class OutputIterator, class T, class BinaryOperator>
 inline OutputIterator
@@ -54,6 +61,8 @@ exclusive_scan(InputIterator first,
                BinaryOperator binary_op,
                command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
     return detail::scan(first, last, result, true, init, binary_op, queue);
 }
 
@@ -66,6 +75,8 @@ exclusive_scan(InputIterator first,
                T init,
                command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
     typedef typename
         std::iterator_traits<OutputIterator>::value_type output_type;
 
@@ -82,6 +93,8 @@ exclusive_scan(InputIterator first,
                OutputIterator result,
                command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
     typedef typename
         std::iterator_traits<OutputIterator>::value_type output_type;
 

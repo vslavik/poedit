@@ -1,12 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
-// Copyright (c) 2014-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2007-2017 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2017 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2017 Mateusz Loskot, London, UK.
+// Copyright (c) 2014-2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -111,7 +111,7 @@ template <typename Point, typename Policy>
 struct wkt_point
 {
     template <typename Char, typename Traits>
-    static inline void apply(std::basic_ostream<Char, Traits>& os, Point const& p)
+    static inline void apply(std::basic_ostream<Char, Traits>& os, Point const& p, bool)
     {
         os << Policy::apply() << "(";
         stream_coordinate<Point, 0, dimension<Point>::type::value>::apply(os, p);
@@ -123,12 +123,18 @@ struct wkt_point
 \brief Stream ranges as WKT
 \note policy is used to stream prefix/postfix, enabling derived classes to override this
 */
-template <typename Range, typename PrefixPolicy, typename SuffixPolicy>
+template
+<
+    typename Range,
+    bool ForceClosurePossible,
+    typename PrefixPolicy,
+    typename SuffixPolicy
+>
 struct wkt_range
 {
     template <typename Char, typename Traits>
     static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Range const& range, bool force_closed)
+                Range const& range, bool force_closure = ForceClosurePossible)
     {
         typedef typename boost::range_iterator<Range const>::type iterator_type;
 
@@ -153,7 +159,8 @@ struct wkt_range
         }
 
         // optionally, close range to ring by repeating the first point
-        if (force_closed 
+        if (ForceClosurePossible
+            && force_closure
             && boost::size(range) > 1
             && detail::disjoint::disjoint_point_point(*begin, *(end - 1)))
         {
@@ -164,12 +171,6 @@ struct wkt_range
         os << SuffixPolicy::apply();
     }
 
-    template <typename Char, typename Traits>
-    static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Range const& range)
-    {
-        apply(os, range, false);
-    }
 
 private:
     typedef typename boost::range_value<Range>::type point_type;
@@ -179,11 +180,12 @@ private:
 \brief Stream sequence of points as WKT-part, e.g. (1 2),(3 4)
 \note Used in polygon, all multi-geometries
 */
-template <typename Range>
+template <typename Range, bool ForceClosurePossible = true>
 struct wkt_sequence
     : wkt_range
         <
             Range,
+            ForceClosurePossible,
             opening_parenthesis,
             closing_parenthesis
         >
@@ -194,15 +196,14 @@ struct wkt_poly
 {
     template <typename Char, typename Traits>
     static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Polygon const& poly)
+                Polygon const& poly, bool force_closure)
     {
         typedef typename ring_type<Polygon const>::type ring;
-        bool const force_closed = true;
 
         os << PrefixPolicy::apply();
         // TODO: check EMPTY here
         os << "(";
-        wkt_sequence<ring>::apply(os, exterior_ring(poly), force_closed);
+        wkt_sequence<ring>::apply(os, exterior_ring(poly), force_closure);
 
         typename interior_return_type<Polygon const>::type
             rings = interior_rings(poly);
@@ -210,10 +211,11 @@ struct wkt_poly
                 it = boost::begin(rings); it != boost::end(rings); ++it)
         {
             os << ",";
-            wkt_sequence<ring>::apply(os, *it, force_closed);
+            wkt_sequence<ring>::apply(os, *it, force_closure);
         }
         os << ")";
     }
+
 };
 
 template <typename Multi, typename StreamPolicy, typename PrefixPolicy>
@@ -221,7 +223,7 @@ struct wkt_multi
 {
     template <typename Char, typename Traits>
     static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Multi const& geometry)
+                Multi const& geometry, bool force_closure)
     {
         os << PrefixPolicy::apply();
         // TODO: check EMPTY here
@@ -236,7 +238,7 @@ struct wkt_multi
             {
                 os << ",";
             }
-            StreamPolicy::apply(os, *it);
+            StreamPolicy::apply(os, *it, force_closure);
         }
 
         os << ")";
@@ -250,15 +252,19 @@ struct wkt_box
 
     template <typename Char, typename Traits>
     static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Box const& box)
+                Box const& box, bool force_closure)
     {
-        // Convert to ring, then stream
-        typedef model::ring<point_type> ring_type;
-        ring_type ring;
-        geometry::convert(box, ring);
-        os << "POLYGON(";
-        wkt_sequence<ring_type>::apply(os, ring);
-        os << ")";
+        // Convert to a clockwire ring, then stream.
+        // Never close it based on last point (box might be empty and
+        // that should result in POLYGON((0 0,0 0,0 0,0 0, ...)) )
+        if (force_closure)
+        {
+            do_apply<model::ring<point_type, true, true> >(os, box);
+        }
+        else
+        {
+            do_apply<model::ring<point_type, true, false> >(os, box);
+        }
     }
 
     private:
@@ -268,6 +274,18 @@ struct wkt_box
             // Only streaming of boxes with two dimensions is support, otherwise it is a polyhedron!
             //assert_dimension<B, 2>();
         }
+
+        template <typename RingType, typename Char, typename Traits>
+        static inline void do_apply(std::basic_ostream<Char, Traits>& os,
+                    Box const& box)
+        {
+            RingType ring;
+            geometry::convert(box, ring);
+            os << "POLYGON(";
+            wkt_sequence<RingType, false>::apply(os, ring);
+            os << ")";
+        }
+
 };
 
 
@@ -278,7 +296,7 @@ struct wkt_segment
 
     template <typename Char, typename Traits>
     static inline void apply(std::basic_ostream<Char, Traits>& os,
-                Segment const& segment)
+                Segment const& segment, bool)
     {
         // Convert to two points, then stream
         typedef boost::array<point_type, 2> sequence;
@@ -290,7 +308,7 @@ struct wkt_segment
         // In Boost.Geometry a segment is represented
         // in WKT-format like (for 2D): LINESTRING(x y,x y)
         os << "LINESTRING";
-        wkt_sequence<sequence>::apply(os, points);
+        wkt_sequence<sequence, false>::apply(os, points);
     }
 
     private:
@@ -324,6 +342,7 @@ struct wkt<Linestring, linestring_tag>
     : detail::wkt::wkt_range
         <
             Linestring,
+            false,
             detail::wkt::prefix_linestring_par,
             detail::wkt::closing_parenthesis
         >
@@ -355,6 +374,7 @@ struct wkt<Ring, ring_tag>
     : detail::wkt::wkt_range
         <
             Ring,
+            true,
             detail::wkt::prefix_ring_par_par,
             detail::wkt::double_closing_parenthesis
         >
@@ -393,7 +413,8 @@ struct wkt<Multi, multi_linestring_tag>
             Multi,
             detail::wkt::wkt_sequence
                 <
-                    typename boost::range_value<Multi>::type
+                    typename boost::range_value<Multi>::type,
+                    false
                 >,
             detail::wkt::prefix_multilinestring
         >
@@ -418,9 +439,10 @@ template <typename Geometry>
 struct devarianted_wkt
 {
     template <typename OutputStream>
-    static inline void apply(OutputStream& os, Geometry const& geometry)
+    static inline void apply(OutputStream& os, Geometry const& geometry,
+                             bool force_closure)
     {
-        wkt<Geometry>::apply(os, geometry);
+        wkt<Geometry>::apply(os, geometry, force_closure);
     }
 };
 
@@ -431,25 +453,27 @@ struct devarianted_wkt<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     struct visitor: static_visitor<void>
     {
         OutputStream& m_os;
+        bool m_force_closure;
 
-        visitor(OutputStream& os)
+        visitor(OutputStream& os, bool force_closure)
             : m_os(os)
+            , m_force_closure(force_closure)
         {}
 
         template <typename Geometry>
         inline void operator()(Geometry const& geometry) const
         {
-            devarianted_wkt<Geometry>::apply(m_os, geometry);
+            devarianted_wkt<Geometry>::apply(m_os, geometry, m_force_closure);
         }
     };
 
     template <typename OutputStream>
     static inline void apply(
         OutputStream& os,
-        variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& geometry
-    )
+        variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& geometry,
+        bool force_closure)
     {
-        boost::apply_visitor(visitor<OutputStream>(os), geometry);
+        boost::apply_visitor(visitor<OutputStream>(os, force_closure), geometry);
     }
 };
 
@@ -471,10 +495,16 @@ Small example showing how to use the wkt class
 template <typename Geometry>
 class wkt_manipulator
 {
+    static const bool is_ring = boost::is_same<typename tag<Geometry>::type, ring_tag>::value;
+
 public:
 
-    inline wkt_manipulator(Geometry const& g)
+    // Boost.Geometry, by default, closes polygons explictly, but not rings
+    // NOTE: this might change in the future!
+    inline wkt_manipulator(Geometry const& g,
+                           bool force_closure = ! is_ring)
         : m_geometry(g)
+        , m_force_closure(force_closure)
     {}
 
     template <typename Char, typename Traits>
@@ -482,13 +512,14 @@ public:
             std::basic_ostream<Char, Traits>& os,
             wkt_manipulator const& m)
     {
-        dispatch::devarianted_wkt<Geometry>::apply(os, m.m_geometry);
+        dispatch::devarianted_wkt<Geometry>::apply(os, m.m_geometry, m.m_force_closure);
         os.flush();
         return os;
     }
 
 private:
     Geometry const& m_geometry;
+    bool m_force_closure;
 };
 
 /*!
@@ -501,7 +532,7 @@ private:
 template <typename Geometry>
 inline wkt_manipulator<Geometry> wkt(Geometry const& geometry)
 {
-    concept::check<Geometry const>();
+    concepts::check<Geometry const>();
 
     return wkt_manipulator<Geometry>(geometry);
 }

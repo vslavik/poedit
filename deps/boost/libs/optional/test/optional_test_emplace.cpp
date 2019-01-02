@@ -23,6 +23,8 @@
 
 using boost::optional;
 using boost::none;
+using boost::in_place_init;
+using boost::in_place_init_if;
 
 #if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
@@ -87,6 +89,109 @@ void test_emplace()
     BOOST_TEST(7 == o->which_ctor);
 }
 
+void test_in_place_ctor()
+{
+    int i = 0;
+    double d = 0.0;
+    const std::string cs;
+    std::string ms;
+        
+  {
+    optional<Guard> o (in_place_init);
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, i, 2.0);
+    BOOST_TEST(o);
+    BOOST_TEST(1 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, 1, d);
+    BOOST_TEST(o);
+    BOOST_TEST(2 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, 1, 2.0);
+    BOOST_TEST(o);
+    BOOST_TEST(3 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, i, d);
+    BOOST_TEST(o);
+    BOOST_TEST(4 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, cs);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, ms);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init, std::string());
+    BOOST_TEST(o);
+    BOOST_TEST(7 == o->which_ctor);
+  }
+}
+
+void test_in_place_if_ctor()
+{
+    int i = 0;
+    double d = 0.0;
+    const std::string cs;
+    std::string ms;
+        
+  {
+    optional<Guard> o (in_place_init_if, true);
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, i, 2.0);
+    BOOST_TEST(o);
+    BOOST_TEST(1 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, 1, d);
+    BOOST_TEST(o);
+    BOOST_TEST(2 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, 1, 2.0);
+    BOOST_TEST(o);
+    BOOST_TEST(3 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, i, d);
+    BOOST_TEST(o);
+    BOOST_TEST(4 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, cs);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, ms);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
+  }
+  {  
+    optional<Guard> o (in_place_init_if, true, std::string());
+    BOOST_TEST(o);
+    BOOST_TEST(7 == o->which_ctor);
+  }
+  
+  {
+    optional<Guard> o (in_place_init_if, false, 1, 2.0);
+    BOOST_TEST(!o);
+  }
+}
+
 
 #endif
 
@@ -112,6 +217,24 @@ void test_no_moves_on_emplacement()
         BOOST_TEST(false);
     }
 }
+
+void test_no_moves_on_in_place_ctor()
+{
+    try {
+        optional<ThrowOnMove> o (in_place_init, 1);
+        BOOST_TEST(o);
+        
+        optional<ThrowOnMove> p (in_place_init_if, true, 1);
+        BOOST_TEST(p);
+        
+        optional<ThrowOnMove> q (in_place_init_if, false, 1);
+        BOOST_TEST(!q);
+    } 
+    catch (...) {
+        BOOST_TEST(false);
+    }
+}
+
 #endif
 
 struct Thrower
@@ -158,6 +281,7 @@ void test_no_assignment_on_emplacement()
 }
 
 namespace no_rvalue_refs {
+
 class Guard
 {
 public:
@@ -188,19 +312,78 @@ void test_emplace()
     BOOST_TEST(o);
     BOOST_TEST(6 == o->which_ctor);
 }
-} 
+
+void test_in_place_ctor()
+{
+  const std::string cs;
+  std::string ms;
+  
+  {
+    optional<Guard> o (in_place_init);
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
+  }
+  {
+    optional<Guard> o (in_place_init, cs);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
+  }
+  {
+    optional<Guard> o (in_place_init, ms);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
+  }
+}
+
+void test_in_place_if_ctor()
+{
+  const std::string cs;
+  std::string ms;
+  
+  {
+    optional<Guard> n (in_place_init_if, false);
+    BOOST_TEST(!n);
+    
+    optional<Guard> o (in_place_init_if, true);
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
+  }
+  {
+    optional<Guard> n (in_place_init_if, false, cs);
+    BOOST_TEST(!n);
+    
+    optional<Guard> o (in_place_init_if, true, cs);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
+  }
+  {
+    optional<Guard> n (in_place_init_if, false, ms);
+    BOOST_TEST(!n);
+    
+    optional<Guard> o (in_place_init_if, true, ms);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
+  }
+}
+
+} // namespace no_rvalue_ref
 
 int main()
 {
 #if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
     test_emplace();
+    test_in_place_ctor();
+    test_in_place_if_ctor();
 #endif
 #if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES)
     test_no_moves_on_emplacement();
+    test_no_moves_on_in_place_ctor();
 #endif
     test_clear_on_throw();
     test_no_assignment_on_emplacement();
     no_rvalue_refs::test_emplace();
+    no_rvalue_refs::test_in_place_ctor();
+    no_rvalue_refs::test_in_place_if_ctor();
   
     return boost::report_errors();
 }

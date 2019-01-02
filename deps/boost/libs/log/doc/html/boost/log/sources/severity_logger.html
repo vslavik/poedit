@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template severity_logger</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../logging_sources.html#header.boost.log.sources.severity_logger_hpp" title="Header &lt;boost/log/sources/severity_logger.hpp&gt;">
 <link rel="prev" href="../../../BOOST_LOG_SEV.html" title="Macro BOOST_LOG_SEV">
@@ -29,44 +29,50 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="severity_logger.html#boost.log.sources.severity_loggerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="severity_logger.html#idp21649728-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="severity_logger.html#idp21650432-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="severity_logger.html#idp21652112-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="severity_logger.html#idp21654928-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="identifier">LevelT</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="special">&amp;</span> <a class="link" href="severity_logger.html#idp21657376-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="severity_logger.html#idp50909616-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="severity_logger.html#idp50910320-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="severity_logger.html#idp50912000-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="severity_logger.html#idp50914816-bb"><span class="identifier">severity_logger</span></a><span class="special">(</span><span class="identifier">LevelT</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="special">&amp;</span> <a class="link" href="severity_logger.html#idp50917264-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp95294784"></a><h2>Description</h2>
+<a name="idp112622288"></a><h2>Description</h2>
 <p>See <code class="computeroutput">severity</code> class template for a more detailed description </p>
 <div class="refsect2">
-<a name="idp95296240"></a><h3>
+<a name="idp112623744"></a><h3>
 <a name="boost.log.sources.severity_loggerconstruct-copy-destruct"></a><code class="computeroutput">severity_logger</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp21649728-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp50909616-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp21650432-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp50910320-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy constructor </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp21652112-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp50912000-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor with named arguments </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp21654928-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="identifier">LevelT</span> level<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp50914816-bb"></a><span class="identifier">severity_logger</span><span class="special">(</span><span class="identifier">LevelT</span> level<span class="special">)</span><span class="special">;</span></pre>
 <p>The constructor creates the logger with the specified default severity level</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">level</code></span></p></td>
 <td><p>The default severity level </p></td>
@@ -76,7 +82,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="special">&amp;</span> <a name="idp21657376-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="special">&amp;</span> <a name="idp50917264-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="severity_logger.html" title="Class template severity_logger">severity_logger</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Assignment operator</p>
 <p>Swaps two loggers </p>
 </li>

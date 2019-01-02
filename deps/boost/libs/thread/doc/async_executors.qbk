@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2014-2015 Vicente J. Botet Escriba
+ / Copyright (c) 2014-2017 Vicente J. Botet Escriba
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -481,7 +481,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 [/////////////////////////]
 [section:work Class `work`]
 
-  #include <boost/thread/work.hpp>
+  #include <boost/thread/executors/work.hpp>
   namespace boost {
     typedef 'implementation_defined' work;
   }
@@ -499,7 +499,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 Executor abstract base class.
 
-  #include <boost/thread/executor.hpp>
+  #include <boost/thread/executors/executor.hpp>
   namespace boost {
     class executor
     {
@@ -564,7 +564,7 @@ Executor abstract base class.
 
 Polymorphic adaptor of a model of Executor to an executor.
 
-  #include <boost/thread/executor.hpp>
+  #include <boost/thread/executors/executor.hpp>
   namespace boost {
     template <typename Executor>
     class executor_adaptor : public executor
@@ -643,7 +643,7 @@ Polymorphic adaptor of a model of Executor to an executor.
 
 Executor abstract base class.
 
-  #include <boost/thread/generic_executor_ref.hpp>
+  #include <boost/thread/executors/generic_executor_ref.hpp>
   namespace boost {
     class generic_executor_ref
     {
@@ -1333,7 +1333,7 @@ Executor providing time related functions.
 
 A serial executor ensuring that there are no two work units that executes concurrently.
 
-  #include <boost/thread/serial_executor.hpp>
+  #include <boost/thread/executors/serial_executor.hpp>
   namespace boost {
     template <class Executor>
     class serial_executor
@@ -1408,90 +1408,13 @@ A serial executor ensuring that there are no two work units that executes concur
 
 [endsect]
 
-[//////////////////////////////////////////////////////////]
-[section:generic_serial_executor Class `generic_serial_executor`]
-
-A serial executor ensuring that there are no two work units that executes concurrently.
-
-  #include <boost/thread/generic_serial_executor.hpp>
-  namespace boost {
-    class generic_serial_executor
-    {
-    public:
-      generic_serial_executor(generic_serial_executor const&) = delete;
-      generic_serial_executor& operator=(generic_serial_executor const&) = delete;
-  
-      template <class Executor>
-      generic_serial_executor(Executor& ex);
- 
-      generic_executor_ref& underlying_executor() noexcept;
-
-      void close();
-      bool closed();
-  
-      template <typename Closure>
-      void submit(Closure&& closure);
-  
-      bool try_executing_one();
-      template <typename Pred>
-      bool reschedule_until(Pred const& pred);
-
-    };
-  }
-
-[/////////////////////////////////////]
-[section:constructor Constructor `generic_serial_executor(Executor&)`]
-
-      template <class Executor>
-      generic_serial_executor(Executor& ex);
-
-[variablelist
-
-[[Effects:] [Constructs a serial_executor. ]]
-
-[[Throws:] [Nothing. ]]
-
-]
-
-
-[endsect]
-[/////////////////////////////////////]
-[section:destructor Destructor `~serial_executor()`]
-
-      ~generic_serial_executor();
-
-[variablelist
-
-[[Effects:] [Destroys the serial_executor.]]
-
-[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
-
-]
-
-[endsect]
-[/////////////////////////////////////]
-[section:underlying_executor Function member `underlying_executor()`]
-
-      Executor& underlying_executor() noexcept;
-
-[variablelist
-
-[[Return:] [The underlying executor instance. ]]
-
-]
-
-
-[endsect]
-
-[endsect]
-
 
 [//////////////////////////////////////////////////////////]
 [section:inline_executor Class `inline_executor`]
 
 A serial executor ensuring that there are no two work units that executes concurrently.
 
-  #include <boost/thread/inline_executor.hpp>
+  #include <boost/thread/executors/inline_executor.hpp>
   namespace boost {
     class inline_executor
     {
@@ -1603,7 +1526,7 @@ A thread pool with up to a fixed number of threads.
 
 [variablelist
 
-[[Effects:] [Destroys the thread pool.]]
+[[Effects:] [Interrupts and joins all the threads and then destroys the threads.]]
 
 [[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
 
@@ -1675,7 +1598,7 @@ A thread_executor with a threads for each task.
 
 A user scheduled executor.
 
-  #include <boost/thread/loop_executor.hpp>
+  #include <boost/thread/executors/loop_executor.hpp>
   namespace boost {
     class loop_executor
     { 

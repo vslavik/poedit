@@ -16,7 +16,6 @@ main()
 {
   using namespace boost;
   typedef adjacency_list < vecS, vecS, undirectedS > Graph;
-  typedef graph_traits < Graph >::vertex_descriptor Vertex;
 
   const int N = 6;
   Graph G(N);

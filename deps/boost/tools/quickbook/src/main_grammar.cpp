@@ -8,38 +8,38 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include "grammar_impl.hpp"
-#include "state.hpp"
-#include "actions.hpp"
-#include "utils.hpp"
-#include "template_tags.hpp"
-#include "block_tags.hpp"
-#include "phrase_tags.hpp"
-#include "parsers.hpp"
-#include "scoped.hpp"
-#include "native_text.hpp"
-#include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_chset.hpp>
-#include <boost/spirit/include/classic_if.hpp>
-#include <boost/spirit/include/classic_loops.hpp>
 #include <boost/spirit/include/classic_attribute.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_if.hpp>
 #include <boost/spirit/include/classic_lazy.hpp>
+#include <boost/spirit/include/classic_loops.hpp>
 #include <boost/spirit/include/phoenix1_primitives.hpp>
-#include <boost/range/algorithm/find_first_of.hpp>
-#include <boost/range/as_literal.hpp>
+#include "actions.hpp"
+#include "block_tags.hpp"
+#include "grammar_impl.hpp"
+#include "parsers.hpp"
+#include "phrase_tags.hpp"
+#include "scoped.hpp"
+#include "state.hpp"
+#include "stream.hpp"
+#include "template_tags.hpp"
+#include "utils.hpp"
 
 namespace quickbook
 {
     namespace cl = boost::spirit::classic;
 
-    struct list_stack_item {
+    struct list_stack_item
+    {
         // Is this the root of the context
         // (e.g. top, template, table cell etc.)
-        enum list_item_type {
-            syntactic_list,   // In a list marked up '*' or '#'
-            top_level,        // At the top level of a parse
-                              // (might be a template body)
-            nested_block      // Nested in a block element.
+        enum list_item_type
+        {
+            syntactic_list, // In a list marked up '*' or '#'
+            top_level,      // At the top level of a parse
+                            // (might be a template body)
+            nested_block    // Nested in a block element.
         } type;
 
         unsigned int indent;  // Indent of list marker
@@ -51,20 +51,31 @@ namespace quickbook
         //
         //   |indent
         //   * List item
-        //     |indent2 
+        //     |indent2
 
-        list_stack_item(list_item_type r) :
-            type(r), indent(0), indent2(0), mark('\0') {}
+        explicit list_stack_item(list_item_type r)
+            : type(r), indent(0), indent2(0), mark('\0')
+        {
+        }
 
-        list_stack_item(char mark, unsigned int indent, unsigned int indent2) :
-            type(syntactic_list), indent(indent), indent2(indent2), mark(mark)
-        {}
-
+        explicit list_stack_item(
+            char mark_, unsigned int indent_, unsigned int indent2_)
+            : type(syntactic_list)
+            , indent(indent_)
+            , indent2(indent2_)
+            , mark(mark_)
+        {
+        }
     };
 
-    struct block_types {
-        enum values {
-            none, code, list, paragraph
+    struct block_types
+    {
+        enum values
+        {
+            none,
+            code,
+            list,
+            paragraph
         };
     };
 
@@ -74,39 +85,34 @@ namespace quickbook
         // Local actions
 
         void start_blocks_impl(parse_iterator first, parse_iterator last);
-        void start_nested_blocks_impl(parse_iterator first, parse_iterator last);
+        void start_nested_blocks_impl(
+            parse_iterator first, parse_iterator last);
         void end_blocks_impl(parse_iterator first, parse_iterator last);
         void check_indentation_impl(parse_iterator first, parse_iterator last);
         void check_code_block_impl(parse_iterator first, parse_iterator last);
         void plain_block(string_iterator first, string_iterator last);
-        void list_block(string_iterator first, string_iterator mark_pos,
-                string_iterator last);
+        void list_block(
+            string_iterator first,
+            string_iterator mark_pos,
+            string_iterator last);
         void clear_stack();
 
         ////////////////////////////////////////////////////////////////////////
         // Local members
 
-        cl::rule<scanner>
-                        template_phrase, top_level, indent_check,
-                        paragraph_separator, inside_paragraph,
-                        code, code_line, blank_line, hr,
-                        inline_code, skip_inline_code,
-                        template_, attribute_template, template_body,
-                        code_block, skip_code_block, macro,
-                        template_args,
-                        template_args_1_4, template_arg_1_4,
-                        template_inner_arg_1_4, brackets_1_4,
-                        template_args_1_5, template_arg_1_5, template_arg_1_5_content,
-                        template_inner_arg_1_5, brackets_1_5,
-                        template_args_1_6, template_arg_1_6, template_arg_1_6_content,
-                        break_,
-                        command_line_macro_identifier,
-                        dummy_block, line_dummy_block, square_brackets,
-                        skip_escape
-                        ;
+        cl::rule<scanner> template_phrase, top_level, indent_check,
+            paragraph_separator, inside_paragraph, code, code_line, blank_line,
+            hr, inline_code, skip_inline_code, template_, attribute_template,
+            template_body, code_block, skip_code_block, macro, template_args,
+            template_args_1_4, template_arg_1_4, template_inner_arg_1_4,
+            brackets_1_4, template_args_1_5, template_arg_1_5,
+            template_arg_1_5_content, template_inner_arg_1_5, brackets_1_5,
+            template_args_1_6, template_arg_1_6, template_arg_1_6_content,
+            break_, command_line_macro_identifier, dummy_block,
+            line_dummy_block, square_brackets, error_brackets, skip_escape;
 
-        struct block_context_closure : cl::closure<block_context_closure,
-            element_info::context>
+        struct block_context_closure
+            : cl::closure<block_context_closure, element_info::context>
         {
             // Mask used to determine whether or not an element is a block
             // element.
@@ -117,7 +123,8 @@ namespace quickbook
 
         cl::rule<scanner> paragraph;
         cl::rule<scanner> list;
-        cl::rule<scanner, block_context_closure::context_t> syntactic_block_item;
+        cl::rule<scanner, block_context_closure::context_t>
+            syntactic_block_item;
         cl::rule<scanner> common;
         cl::rule<scanner> element;
 
@@ -126,7 +133,7 @@ namespace quickbook
         unsigned int list_indent;
         bool no_eols;
         element_info::context context;
-        char mark; // Simple markup's deliminator
+        char mark;           // Simple markup's deliminator
         bool still_in_block; // Inside a syntatic block
 
         // transitory state
@@ -147,22 +154,24 @@ namespace quickbook
             , context(element_info::in_top_level)
             , mark('\0')
             , state_(state)
-            {}
+        {
+        }
     };
 
-    struct process_element_impl : scoped_action_base {
-        process_element_impl(main_grammar_local& l) :
-            l(l), pushed_source_mode_(false), element_context_error_(false) {}
+    struct process_element_impl : scoped_action_base
+    {
+        process_element_impl(main_grammar_local& l_)
+            : l(l_), pushed_source_mode_(false), element_context_error_(false)
+        {
+        }
 
         bool start()
         {
             // This element doesn't exist in the current language version.
-            if (qbk_version_n < l.info.qbk_version)
-                return false;
+            if (qbk_version_n < l.info.qbk_version) return false;
 
             // The element is not allowed in this context.
-            if (!(l.info.type & l.context))
-            {
+            if (!(l.info.type & l.context)) {
                 if (qbk_version_n < 107u) {
                     return false;
                 }
@@ -174,8 +183,7 @@ namespace quickbook
             info_ = l.info;
 
             if (info_.type != element_info::phrase &&
-                    info_.type != element_info::maybe_block)
-            {
+                info_.type != element_info::maybe_block) {
                 paragraph_action para(l.state_);
                 para();
             }
@@ -183,8 +191,7 @@ namespace quickbook
             assert(l.state_.values.builder.empty());
 
             if (l.state_.source_mode_next &&
-                info_.type != element_info::maybe_block)
-            {
+                info_.type != element_info::maybe_block) {
                 l.state_.push_tagged_source_mode(l.state_.source_mode_next);
                 pushed_source_mode_ = true;
                 l.state_.source_mode_next = 0;
@@ -194,19 +201,19 @@ namespace quickbook
         }
 
         template <typename ResultT, typename ScannerT>
-        bool result(ResultT result, ScannerT const& scan)
+        bool result(ResultT r, ScannerT const& scan)
         {
             if (element_context_error_) {
-                error_message_action error(l.state_,
-                        "Element not allowed in this context.");
+                error_message_action error(
+                    l.state_, "Element not allowed in this context.");
                 error(scan.first, scan.first);
                 return true;
             }
-            else if (result) {
+            else if (r) {
                 return true;
             }
-            else if (qbk_version_n < 107u &&
-                    info_.type & element_info::in_phrase) {
+            else if (
+                qbk_version_n < 107u && info_.type & element_info::in_phrase) {
                 // Old versions of quickbook had a soft fail
                 // for unparsed phrase elements.
                 return false;
@@ -219,12 +226,15 @@ namespace quickbook
             }
         }
 
-        void success(parse_iterator, parse_iterator) { l.element_type = info_.type; }
+        void success(parse_iterator, parse_iterator)
+        {
+            l.element_type = info_.type;
+        }
         void failure() { l.element_type = element_info::nothing; }
 
-        void cleanup() {
-            if (pushed_source_mode_)
-                l.state_.pop_tagged_source_mode();
+        void cleanup()
+        {
+            if (pushed_source_mode_) l.state_.pop_tagged_source_mode();
         }
 
         main_grammar_local& l;
@@ -235,17 +245,21 @@ namespace quickbook
 
     struct scoped_paragraph : scoped_action_base
     {
-        scoped_paragraph(quickbook::state& state) :
-            state(state), pushed(false) {}
+        scoped_paragraph(quickbook::state& state_)
+            : state(state_), pushed(false)
+        {
+        }
 
-        bool start() {
+        bool start()
+        {
             state.push_tagged_source_mode(state.source_mode_next);
             pushed = true;
             state.source_mode_next = 0;
             return true;
         }
 
-        void cleanup() {
+        void cleanup()
+        {
             if (pushed) state.pop_tagged_source_mode();
         }
 
@@ -253,15 +267,16 @@ namespace quickbook
         bool pushed;
     };
 
-    struct in_list_impl {
+    struct in_list_impl
+    {
         main_grammar_local& l;
 
-        in_list_impl(main_grammar_local& l) :
-            l(l) {}
+        explicit in_list_impl(main_grammar_local& l_) : l(l_) {}
 
-        bool operator()() const {
+        bool operator()() const
+        {
             return !l.list_stack.empty() &&
-                l.list_stack.top().type == list_stack_item::syntactic_list;
+                   l.list_stack.top().type == list_stack_item::syntactic_list;
         }
     };
 
@@ -270,19 +285,20 @@ namespace quickbook
     {
         typedef M T::*member_ptr;
 
-        set_scoped_value_impl(T& l, member_ptr ptr)
-            : l(l), ptr(ptr), saved_value() {}
+        explicit set_scoped_value_impl(T& l_, member_ptr ptr_)
+            : l(l_), ptr(ptr_), saved_value()
+        {
+        }
 
-        bool start(M const& value) {
+        bool start(M const& value)
+        {
             saved_value = l.*ptr;
             l.*ptr = value;
 
             return true;
         }
 
-        void cleanup() {
-            l.*ptr = saved_value;
-        }
+        void cleanup() { l.*ptr = saved_value; }
 
         T& l;
         member_ptr ptr;
@@ -294,8 +310,10 @@ namespace quickbook
     {
         typedef set_scoped_value_impl<T, M> impl;
 
-        set_scoped_value(T& l, typename impl::member_ptr ptr) :
-            scoped_parser<impl>(impl(l, ptr)) {}
+        set_scoped_value(T& l, typename impl::member_ptr ptr)
+            : scoped_parser<impl>(impl(l, ptr))
+        {
+        }
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -303,8 +321,7 @@ namespace quickbook
 
     void quickbook_grammar::impl::init_main()
     {
-        main_grammar_local& local = cleanup_.add(
-            new main_grammar_local(state));
+        main_grammar_local& local = cleanup_.add(new main_grammar_local(state));
 
         // Global Actions
         quickbook::element_action element_action(state);
@@ -326,27 +343,31 @@ namespace quickbook
         scoped_parser<to_value_scoped_action> to_value(state);
         scoped_parser<scoped_paragraph> scope_paragraph(state);
 
+        quickbook_strict strict_mode(state);
+
         // Local Actions
         scoped_parser<process_element_impl> process_element(local);
         in_list_impl in_list(local);
 
         set_scoped_value<main_grammar_local, bool> scoped_no_eols(
-                local, &main_grammar_local::no_eols);
-        set_scoped_value<main_grammar_local, element_info::context> scoped_context(
-                local, &main_grammar_local::context);
+            local, &main_grammar_local::no_eols);
+        set_scoped_value<main_grammar_local, element_info::context>
+            scoped_context(local, &main_grammar_local::context);
         set_scoped_value<main_grammar_local, bool> scoped_still_in_block(
-                local, &main_grammar_local::still_in_block);
+            local, &main_grammar_local::still_in_block);
 
-        member_action<main_grammar_local> check_indentation(local,
-            &main_grammar_local::check_indentation_impl);
-        member_action<main_grammar_local> check_code_block(local,
-            &main_grammar_local::check_code_block_impl);
-        member_action<main_grammar_local> start_blocks(local,
-            &main_grammar_local::start_blocks_impl);
-        member_action<main_grammar_local> start_nested_blocks(local,
-            &main_grammar_local::start_nested_blocks_impl);
-        member_action<main_grammar_local> end_blocks(local,
-            &main_grammar_local::end_blocks_impl);
+        member_action<main_grammar_local> check_indentation(
+            local, &main_grammar_local::check_indentation_impl);
+        member_action<main_grammar_local> check_code_block(
+            local, &main_grammar_local::check_code_block_impl);
+        member_action<main_grammar_local> start_blocks(
+            local, &main_grammar_local::start_blocks_impl);
+        member_action<main_grammar_local> start_nested_blocks(
+            local, &main_grammar_local::start_nested_blocks_impl);
+        member_action<main_grammar_local> end_blocks(
+            local, &main_grammar_local::end_blocks_impl);
+
+        // clang-format off
 
         // phrase/phrase_start is used for an entirely self-contained
         // phrase. For example, any remaining anchors are written out
@@ -515,8 +536,7 @@ namespace quickbook
                 // Note that we don't do this for lists in 1.6, as it causes
                 // the list block to end. The support for nested syntactic
                 // blocks in 1.7 will fix that. Although it does mean the
-                // following line will need to be indented. TODO: Flag that
-                // the indentation check shouldn't be made?
+                // following line will need to be indented.
             >>  !(  cl::eps_p(in_list) >> qbk_ver(106u, 107u)
                 |   cl::eps_p
                     (
@@ -609,7 +629,15 @@ namespace quickbook
             |   local.simple_markup
             |   escape
             |   comment
-            |   qbk_ver(106u) >> local.square_brackets
+            |   strict_mode
+            >>  (   local.error_brackets    [error("Invalid template/tag (strict mode)")]
+                |   cl::eps_p('[')          [error("Mismatched open bracket (strict mode)")]
+                >>  cl::anychar_p
+                |   cl::eps_p(']')          [error("Mismatched close bracket (strict mode)")]
+                >>  cl::anychar_p
+                )
+            |   qbk_ver(106u)
+            >>  local.square_brackets
             |   cl::space_p                 [raw_char]
             |   cl::anychar_p               [plain_char]
             ;
@@ -636,6 +664,14 @@ namespace quickbook
             |   cl::ch_p(']')           [plain_char]
             >>  cl::eps_p               [error("Mismatched close bracket")]
             )
+            ;
+
+        local.error_brackets =
+                cl::ch_p('[')           [plain_char]
+            >>  (   local.error_brackets
+                |   (cl::anychar_p - ']')
+                )
+            >>  cl::ch_p(']')
             ;
 
         local.macro =
@@ -675,8 +711,11 @@ namespace quickbook
                     >>  state.templates.scope
                             [state.values.entry(ph::arg1, ph::arg2, template_tags::escape)]
                             [state.values.entry(ph::arg1, ph::arg2, template_tags::identifier)]
-                    >>  !qbk_ver(106u)
+                    >>  !(  qbk_ver(106u)
                             [error("Templates with punctuation names can't be escaped in quickbook 1.6+")]
+                        |   strict_mode
+                            [error("Templates with punctuation names can't be escaped (strict mode)")]
+                        )
                     |   cl::str_p('`')
                     >>  state.templates.scope
                             [state.values.entry(ph::arg1, ph::arg2, template_tags::escape)]
@@ -788,7 +827,7 @@ namespace quickbook
         local.skip_code_block =
                 "```"
             >>  ~cl::eps_p("`")
-            >>  (   !(  *(*cl::blank_p >> cl::eol_p)
+            >>  (   (!( *(*cl::blank_p >> cl::eol_p)
                     >>  (   *(  "````" >> *cl::ch_p('`')
                             |   (   cl::anychar_p
                                 -   (*cl::space_p >> "```" >> ~cl::eps_p("`"))
@@ -797,7 +836,7 @@ namespace quickbook
                             >>  !(*cl::blank_p >> cl::eol_p)
                         )
                     >>  (*cl::space_p >> "```")
-                    )
+                    ))
                 |   *cl::anychar_p
                 )
             |   "``"
@@ -970,7 +1009,6 @@ namespace quickbook
         >>  space
             ;
 
-
         attribute_value_1_7 =
             state.values.save() [
                 +(  ~cl::eps_p(']' | cl::space_p | comment)
@@ -1068,17 +1106,17 @@ namespace quickbook
             |   qbk_ver(0, 106u)
             >>  +(cl::anychar_p - (cl::space_p | ']'))
             ;
+
+        // clang-format on
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Indentation Handling
 
-    template <typename Iterator>
-    int indent_length(Iterator first, Iterator end)
+    template <typename Iterator> int indent_length(Iterator first, Iterator end)
     {
         int length = 0;
-        for(; first != end; ++first)
-        {
+        for (; first != end; ++first) {
             if (*first == '\t') {
                 // hardcoded tab to 4 for now
                 length = length + 4 - (length % 4);
@@ -1096,14 +1134,11 @@ namespace quickbook
         list_stack.push(list_stack_item(list_stack_item::top_level));
     }
 
-    void main_grammar_local::start_nested_blocks_impl(parse_iterator, parse_iterator)
+    void main_grammar_local::start_nested_blocks_impl(
+        parse_iterator, parse_iterator)
     {
         // If this nested block is part of a list, then tell the
         // output state.
-        //
-        // TODO: This is a bit dodgy, it would be better if this
-        // was handled when the output state is pushed (currently
-        // in to_value_scoped_action).
         state_.in_list = state_.explicit_list;
         state_.explicit_list = false;
 
@@ -1116,31 +1151,33 @@ namespace quickbook
         list_stack.pop();
     }
 
-    void main_grammar_local::check_indentation_impl(parse_iterator first_, parse_iterator last_)
+    void main_grammar_local::check_indentation_impl(
+        parse_iterator first_, parse_iterator last_)
     {
         string_iterator first = first_.base();
         string_iterator last = last_.base();
-        string_iterator mark_pos = boost::find_first_of(
-            boost::make_iterator_range(first, last),
-            boost::as_literal("#*"));
+        auto mark_pos = string_view(first, last - first).find_first_of("*#");
 
-        if (mark_pos == last) {
+        if (mark_pos == string_view::npos) {
             plain_block(first, last);
         }
         else {
-            list_block(first, mark_pos, last);
+            list_block(first, first + mark_pos, last);
         }
     }
 
-    void main_grammar_local::check_code_block_impl(parse_iterator first, parse_iterator last)
+    void main_grammar_local::check_code_block_impl(
+        parse_iterator first, parse_iterator last)
     {
         unsigned int new_indent = indent_length(first.base(), last.base());
 
-        block_type = (new_indent > list_stack.top().indent2) ?
-             block_types::code : block_types::none;
+        block_type = (new_indent > list_stack.top().indent2)
+                         ? block_types::code
+                         : block_types::none;
     }
 
-    void main_grammar_local::plain_block(string_iterator first, string_iterator last)
+    void main_grammar_local::plain_block(
+        string_iterator first, string_iterator last)
     {
         if (qbk_version_n >= 106u) {
             unsigned int new_indent = indent_length(first, last);
@@ -1154,18 +1191,17 @@ namespace quickbook
                 }
             }
             else {
-                while (list_stack.top().type == list_stack_item::syntactic_list
-                        && new_indent < list_stack.top().indent)
-                {
+                while (list_stack.top().type ==
+                           list_stack_item::syntactic_list &&
+                       new_indent < list_stack.top().indent) {
                     state_.end_list_item();
                     state_.end_list(list_stack.top().mark);
                     list_stack.pop();
                     list_indent = list_stack.top().indent;
                 }
 
-                if (list_stack.top().type == list_stack_item::syntactic_list
-                        && new_indent == list_stack.top().indent)
-                {
+                if (list_stack.top().type == list_stack_item::syntactic_list &&
+                    new_indent == list_stack.top().indent) {
                     // If the paragraph is aligned with the list item's marker,
                     // then end the current list item if that's aligned (or to
                     // the left of) the parent's paragraph.
@@ -1183,13 +1219,14 @@ namespace quickbook
                     //   * Level 2
                     //
                     //   Back to Level 1
-                
+
                     list_stack_item save = list_stack.top();
                     list_stack.pop();
 
-                    assert(list_stack.top().type != list_stack_item::syntactic_list ?
-                        new_indent >= list_stack.top().indent :
-                        new_indent > list_stack.top().indent);
+                    assert(
+                        list_stack.top().type != list_stack_item::syntactic_list
+                            ? new_indent >= list_stack.top().indent
+                            : new_indent > list_stack.top().indent);
 
                     if (new_indent <= list_stack.top().indent2) {
                         state_.end_list_item();
@@ -1205,10 +1242,9 @@ namespace quickbook
             }
 
             if (qbk_version_n == 106u &&
-                    list_stack.top().type == list_stack_item::syntactic_list) {
+                list_stack.top().type == list_stack_item::syntactic_list) {
                 detail::outerr(state_.current_file, first)
-                    << "Nested blocks in lists won't be supported in "
-                    << "quickbook 1.6"
+                    << "Paragraphs in lists aren't supported in quickbook 1.6."
                     << std::endl;
                 ++state_.error_count;
             }
@@ -1217,30 +1253,31 @@ namespace quickbook
             clear_stack();
 
             if (list_stack.top().type != list_stack_item::nested_block &&
-                    last != first)
+                last != first)
                 block_type = block_types::code;
             else
                 block_type = block_types::paragraph;
         }
     }
 
-    void main_grammar_local::list_block(string_iterator first, string_iterator mark_pos,
-            string_iterator last)
+    void main_grammar_local::list_block(
+        string_iterator first, string_iterator mark_pos, string_iterator last)
     {
         unsigned int new_indent = indent_length(first, mark_pos);
         unsigned int new_indent2 = indent_length(first, last);
-        char mark = *mark_pos;
+        char list_mark = *mark_pos;
 
         if (list_stack.top().type == list_stack_item::top_level &&
-                new_indent > 0) {
+            new_indent > 0) {
             block_type = block_types::code;
             return;
         }
 
         if (list_stack.top().type != list_stack_item::syntactic_list ||
-                new_indent > list_indent) {
-            list_stack.push(list_stack_item(mark, new_indent, new_indent2));
-            state_.start_list(mark);
+            new_indent > list_indent) {
+            list_stack.push(
+                list_stack_item(list_mark, new_indent, new_indent2));
+            state_.start_list(list_mark);
         }
         else if (new_indent == list_indent) {
             state_.end_list_item();
@@ -1248,9 +1285,8 @@ namespace quickbook
         else {
             // This should never reach root, since the first list
             // has indentation 0.
-            while(list_stack.top().type == list_stack_item::syntactic_list &&
-                    new_indent < list_stack.top().indent)
-            {
+            while (list_stack.top().type == list_stack_item::syntactic_list &&
+                   new_indent < list_stack.top().indent) {
                 state_.end_list_item();
                 state_.end_list(list_stack.top().mark);
                 list_stack.pop();
@@ -1261,8 +1297,7 @@ namespace quickbook
 
         list_indent = new_indent;
 
-        if (mark != list_stack.top().mark)
-        {
+        if (list_mark != list_stack.top().mark) {
             detail::outerr(state_.current_file, first)
                 << "Illegal change of list style.\n";
             detail::outwarn(state_.current_file, first)

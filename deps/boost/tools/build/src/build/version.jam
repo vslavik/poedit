@@ -6,8 +6,8 @@
 import numbers ;
 
 
-.major = "2015" ;
-.minor = "07" ;
+.major = "2018" ;
+.minor = "02" ;
 
 
 rule boost-build ( )
@@ -108,7 +108,7 @@ rule check-jam-version ( version + )
     if ! $(version-tag)
     {
         import errors ;
-        errors.error Invalid version specifier: : $(version:E="(undefined)") ;
+        errors.error Invalid version "specifier:" : $(version:E="(undefined)") ;
     }
 
     if ! $(.jam-version-check.$(version-tag))-is-defined

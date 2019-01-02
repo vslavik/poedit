@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -8,6 +8,7 @@
 #include <boost/convert/parameters.hpp>
 #include <boost/convert/detail/is_string.hpp>
 #include <boost/make_default.hpp>
+#include <boost/noncopyable.hpp>
 #include <sstream>
 #include <iomanip>
 
@@ -24,8 +25,8 @@ namespace boost { namespace cnv
 {
     template<class Char> struct basic_stream;
 
-    typedef boost::cnv::basic_stream<char>    cstream;
-    typedef boost::cnv::basic_stream<wchar_t> wstream;
+    using cstream = boost::cnv::basic_stream<char>;
+    using wstream = boost::cnv::basic_stream<wchar_t>;
 }}
 
 template<class Char>
@@ -41,15 +42,15 @@ struct boost::cnv::basic_stream : boost::noncopyable
     //      to "bool" with std::boolalpha set. Seems that istream state gets unsynced compared
     //      to the actual underlying buffer.
 
-    typedef Char                                 char_type;
-    typedef boost::cnv::basic_stream<char_type>  this_type;
-    typedef std::basic_stringstream<char_type> stream_type;
-    typedef std::basic_istream<char_type>     istream_type;
-    typedef std::basic_streambuf<char_type>    buffer_type;
-    typedef std::basic_string<char_type>       stdstr_type;
-    typedef std::ios_base& (*manipulator_type)(std::ios_base&);
+    using        char_type = Char;
+    using        this_type = boost::cnv::basic_stream<char_type>;
+    using      stream_type = std::basic_stringstream<char_type>;
+    using     istream_type = std::basic_istream<char_type>;
+    using      buffer_type = std::basic_streambuf<char_type>;
+    using      stdstr_type = std::basic_string<char_type>;
+    using manipulator_type = std::ios_base& (*)(std::ios_base&);
 
-    struct ibuffer_type : public buffer_type
+    struct ibuffer_type : buffer_type
     {
         using buffer_type::eback;
         using buffer_type::gptr;
@@ -62,7 +63,7 @@ struct boost::cnv::basic_stream : boost::noncopyable
             buffer_type::setg(b, b, b + sz);
         }
     };
-    struct obuffer_type : public buffer_type
+    struct obuffer_type : buffer_type
     {
         using buffer_type::pbase;
         using buffer_type::pptr;
@@ -103,9 +104,9 @@ struct boost::cnv::basic_stream : boost::noncopyable
         skipws ? (void) stream_.setf(std::ios::skipws) : stream_.unsetf(std::ios::skipws);
         return *this;
     }
-    BOOST_CNV_PARAM(adjust, boost::cnv::adjust::type const)
+    BOOST_CNV_PARAM(adjust, boost::cnv::adjust const)
     {
-        cnv::adjust::type adjust = arg[cnv::parameter::adjust];
+        cnv::adjust adjust = arg[cnv::parameter::adjust];
 
         /**/ if (adjust == cnv::adjust:: left) stream_.setf(std::ios::adjustfield, std::ios:: left);
         else if (adjust == cnv::adjust::right) stream_.setf(std::ios::adjustfield, std::ios::right);
@@ -113,25 +114,25 @@ struct boost::cnv::basic_stream : boost::noncopyable
 
         return *this;
     }
-    BOOST_CNV_PARAM(base, boost::cnv::base::type const)
+    BOOST_CNV_PARAM(base, boost::cnv::base const)
     {
-        cnv::base::type base = arg[cnv::parameter::base];
-        
+        cnv::base base = arg[cnv::parameter::base];
+
         /**/ if (base == cnv::base::dec) std::dec(stream_);
         else if (base == cnv::base::hex) std::hex(stream_);
         else if (base == cnv::base::oct) std::oct(stream_);
         else BOOST_ASSERT(!"Not implemented");
-        
+
         return *this;
     }
-    BOOST_CNV_PARAM(notation, boost::cnv::notation::type const)
+    BOOST_CNV_PARAM(notation, boost::cnv::notation const)
     {
-        cnv::notation::type notation = arg[cnv::parameter::notation];
-        
+        cnv::notation notation = arg[cnv::parameter::notation];
+
         /**/ if (notation == cnv::notation::     fixed)      std::fixed(stream_);
         else if (notation == cnv::notation::scientific) std::scientific(stream_);
         else BOOST_ASSERT(!"Not implemented");
-        
+
         return *this;
     }
 

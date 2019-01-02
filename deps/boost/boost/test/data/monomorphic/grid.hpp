@@ -22,6 +22,9 @@
 #include <boost/test/data/monomorphic/fwd.hpp>
 #include <boost/test/data/monomorphic/sample_merge.hpp>
 
+#include <boost/core/enable_if.hpp>
+#include <boost/mpl/identity.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
@@ -102,7 +105,10 @@ public:
     {}
 
     // dataset interface
-    data::size_t    size() const    { return m_ds1.size() * m_ds2.size(); }
+    data::size_t    size() const    {
+      BOOST_TEST_DS_ASSERT( !m_ds1.size().is_inf() && !m_ds2.size().is_inf(), "Grid axes can't have infinite size" );
+      return m_ds1.size() * m_ds2.size();
+    }
     iterator        begin() const   { return iterator( m_ds1.begin(), m_ds2 ); }
 
 private:
@@ -138,8 +144,6 @@ inline typename boost::lazy_enable_if_c<is_dataset<DataSet1>::value && is_datase
 >::type
 operator*( DataSet1&& ds1, DataSet2&& ds2 )
 {
-    BOOST_TEST_DS_ASSERT( !ds1.size().is_inf() && !ds2.size().is_inf(), "Grid axes can't have infinite size" );
-
     return grid<DataSet1,DataSet2>( std::forward<DataSet1>( ds1 ),  std::forward<DataSet2>( ds2 ) );
 }
 

@@ -83,8 +83,8 @@ doxygen autodoc
      
       # The syntax hoops to jump through are 'interesting' for more than one PREDEFINED,
       # and to permit spaces within definitions (use double quotes).
-      # Don't forget that every double quote " needs a preceeding \trip character!
-      # and that each trailing continuation \ needs a preceeding \trip character too!
+      # Don't forget that every double quote " needs a preceding \trip character!
+      # and that each trailing continuation \ needs a preceding \trip character too!
       # And finally that if more than one item is included (as here) the whole is
       # enclosed in "PREDEFINED=... ", but without a leading \.  Go figure...
       
@@ -208,5 +208,12 @@ install png_install : [ glob $(here)/*.png ] : <location>$(here)/../../../doc/ht
 
 install pdfinstall : standalone : <install-type>PDF <location>. <name>circular_buffer.pdf ;
 
-
-
+###############################################################################
+alias boostdoc
+    : standalone/<format>docbook
+    :
+    :
+    : ;
+explicit boostdoc ;
+alias boostrelease ;
+explicit boostrelease ;

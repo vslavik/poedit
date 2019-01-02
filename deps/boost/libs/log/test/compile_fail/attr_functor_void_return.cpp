@@ -25,7 +25,7 @@ namespace attrs = logging::attributes;
 namespace {
 
     // A test function that returns an attribute value
-    void get_attr_value();
+    void get_attr_value() {}
 
 } // namespace
 

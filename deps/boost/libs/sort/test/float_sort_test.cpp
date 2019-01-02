@@ -83,13 +83,13 @@ void float_test()
 
   // Trying both positive and negative sorted and reverse sorted data.
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(-i);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(-i);
   test_vector(base_vec, rightshift());
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i - input_count);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(i - input_count);
   test_vector(base_vec, rightshift());
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(input_count - i);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(input_count - i);
   test_vector(base_vec, rightshift());
   base_vec.clear();
   for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);
@@ -116,13 +116,13 @@ void double_test() {
 
   // Trying both positive and negative sorted and reverse sorted data.
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(-i);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(-i);
   test_vector(base_vec, rightshift_64());
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i - input_count);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(i - input_count);
   test_vector(base_vec, rightshift_64());
   base_vec.clear();
-  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(input_count - i);
+  for (int i = 0; i < (int)input_count; ++i) base_vec.push_back(input_count - i);
   test_vector(base_vec, rightshift_64());
   base_vec.clear();
   for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);

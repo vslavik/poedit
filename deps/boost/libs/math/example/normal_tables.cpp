@@ -1,7 +1,7 @@
 
 // normal_misc_examples.cpp
 
-// Copyright Paul A. Bristow 2007, 2010, 2014.
+// Copyright Paul A. Bristow 2007, 2010, 2014, 2016.
 
 // Use, modification and distribution are subject to the
 // Boost Software License, Version 1.0.
@@ -19,25 +19,26 @@ First we need some includes to access the normal distribution
 */
 
 #include <boost/cstdfloat.hpp> // MUST be first include!!!
+// See Implementation of Float128 type, Overloading template functions with float128_t.
 
-#include <boost/math/distributions/normal.hpp> // for normal_distribution
+#include <boost/math/distributions/normal.hpp> // for normal_distribution.
   using boost::math::normal; // typedef provides default type of double.
 
 #include <iostream>
-  //using std::cout; using std::endl; 
+  //using std::cout; using std::endl;
   //using std::left; using std::showpoint; using std::noshowpoint;
 #include <iomanip>
   //using std::setw; using std::setprecision;
 #include <limits>
   //using std::numeric_limits;
-  
+
   /*!
 Function max_digits10
 Returns maximum number of possibly significant decimal digits for a floating-point type FPT,
 even for older compilers/standard libraries that
 lack support for std::std::numeric_limits<FPT>::max_digits10,
 when the Kahan formula 2 + binary_digits * 0.3010 is used instead.
-Also provides the correct result for Visual Studio 2010 where the value provided for float is wrong.
+Also provides the correct result for Visual Studio 2010 where the max_digits10 provided for float is wrong.
 */
 namespace boost
 {
@@ -47,7 +48,7 @@ template <typename FPT>
 int max_digits10()
 {
 // Since max_digits10 is not defined (or wrong) on older systems, define a local max_digits10.
-  
+
   // Usage:   int m = max_digits10<boost::float64_t>();
   const int m =
 #if (defined BOOST_NO_CXX11_NUMERIC_LIMITS) || (_MSC_VER == 1600) // is wrongly 8 not 9 for VS2010.
@@ -76,24 +77,25 @@ void normal_table()
   // is number of @b guaranteed digits, the other two digits being 'noisy'.
   // Here we use a custom version of max_digits10 which deals with those platforms
   // where @c std::numeric_limits is not specialized,
-  // or @c std::numeric_limits<>::max_digits10 not implemented, or wrong.  
+  // or @c std::numeric_limits<>::max_digits10 not implemented, or wrong.
   int precision = boost::math::max_digits10<FPT>();
 
-// std::cout << typeid(FPT).name() << std::endl; 
-// demo_normal.cpp:85: undefined reference to `typeinfo for __float128'  
+// std::cout << typeid(FPT).name() << std::endl;
+// demo_normal.cpp:85: undefined reference to `typeinfo for __float128'
 // [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622   GCC 43622]
-//  typeinfo for __float128 is still missing Mar 2014.
-  
-  // Construct a standard normal distribution s, with
-  normal s; // (default mean = zero, and standard deviation = unity)
-  std::cout << "\nStandard normal distribution, mean = "<< s.mean()
+//  typeinfo for __float128 was missing GCC 4.9 Mar 2014, but OK for GCC 6.1.1.
+
+   // Construct a standard normal distribution s, with
+   // (default mean = zero, and standard deviation = unity)
+   normal s;
+   std::cout << "\nStandard normal distribution, mean = "<< s.mean()
       << ", standard deviation = " << s.standard_deviation() << std::endl;
-  
-  std::cout << "maxdigits_10 is " << precision 
+
+  std::cout << "maxdigits_10 is " << precision
     << ", digits10 is " << std::numeric_limits<FPT>::digits10 << std::endl;
 
   std::cout << "Probability distribution function values" << std::endl;
-  
+
   std::cout << "  z " "   PDF " << std::endl;
   for (FPT z = -range; z < range + step; z += step)
   {
@@ -101,7 +103,7 @@ void normal_table()
       << std::setprecision(precision) << std::setw(12) << pdf(s, z) << std::endl;
   }
   std::cout.precision(6); // Restore to default precision.
-  
+
 /*`And the area under the normal curve from -[infin] up to z,
   the cumulative distribution function (CDF).
 */
@@ -127,16 +129,16 @@ int main()
   try
   {// Tip - always use try'n'catch blocks to ensure that messages from thrown exceptions are shown.
 
-//[normal_table_1      
+//[normal_table_1
 #ifdef BOOST_FLOAT32_C
-    normal_table<boost::float32_t>();
+    normal_table<boost::float32_t>(); // Usually type float
 #endif
-    normal_table<boost::float64_t>(); // Assume that float64_t is always available.
+    normal_table<boost::float64_t>(); // Uusually type double. Assume that float64_t is always available.
 #ifdef BOOST_FLOAT80_C
-    normal_table<boost::float80_t>();
+    normal_table<boost::float80_t>(); // Type long double on some X86 platforms.
 #endif
 #ifdef BOOST_FLOAT128_C
-    normal_table<boost::float128_t>(); 
+    normal_table<boost::float128_t>(); // Type _Quad on some Intel and __float128 on some GCC platforms.
 #endif
     normal_table<boost::floatmax_t>();
 //] [/normal_table_1 ]
@@ -145,7 +147,7 @@ int main()
   {
     std::cout << "exception thrown " << ex.what() << std::endl;
   }
-   
+
   return 0;
 }  // int main()
 
@@ -153,13 +155,13 @@ int main()
 /*
 
 GCC 4.8.1 with quadmath
- 
+
 Example: Normal distribution tables.
 
 Standard normal distribution, mean = 0, standard deviation = 1
 maxdigits_10 is 9, digits10 is 6
 Probability distribution function values
-  z    PDF 
+  z    PDF
 -10    7.69459863e-023
 -9     1.02797736e-018
 -8     5.05227108e-015
@@ -169,9 +171,9 @@ Probability distribution function values
 -4     0.000133830226
 -3     0.00443184841
 -2     0.0539909665
--1     0.241970725 
-0      0.39894228  
-1      0.241970725 
+-1     0.241970725
+0      0.39894228
+1      0.241970725
 2      0.0539909665
 3      0.00443184841
 4      0.000133830226
@@ -183,7 +185,7 @@ Probability distribution function values
 10     7.69459863e-023
 Standard normal mean = 0, standard deviation = 1
 Integral (area under the curve) from - infinity up to z.
-  z    CDF 
+  z    CDF
 -10    7.61985302e-024
 -9     1.12858841e-019
 -8     6.22096057e-016
@@ -193,23 +195,23 @@ Integral (area under the curve) from - infinity up to z.
 -4     3.16712418e-005
 -3     0.00134989803
 -2     0.0227501319
--1     0.158655254 
-0      0.5         
-1      0.841344746 
-2      0.977249868 
-3      0.998650102 
-4      0.999968329 
-5      0.999999713 
-6      0.999999999 
-7      1           
-8      1           
-9      1           
-10     1           
+-1     0.158655254
+0      0.5
+1      0.841344746
+2      0.977249868
+3      0.998650102
+4      0.999968329
+5      0.999999713
+6      0.999999999
+7      1
+8      1
+9      1
+10     1
 
 Standard normal distribution, mean = 0, standard deviation = 1
 maxdigits_10 is 17, digits10 is 15
 Probability distribution function values
-  z    PDF 
+  z    PDF
 -10    7.6945986267064199e-023
 -9     1.0279773571668917e-018
 -8     5.0522710835368927e-015
@@ -233,7 +235,7 @@ Probability distribution function values
 10     7.6945986267064199e-023
 Standard normal mean = 0, standard deviation = 1
 Integral (area under the curve) from - infinity up to z.
-  z    CDF 
+  z    CDF
 -10    7.6198530241605945e-024
 -9     1.1285884059538422e-019
 -8     6.2209605742718204e-016
@@ -244,7 +246,7 @@ Integral (area under the curve) from - infinity up to z.
 -3     0.0013498980316300957
 -2     0.022750131948179216
 -1     0.15865525393145705
-0      0.5         
+0      0.5
 1      0.84134474606854293
 2      0.97724986805182079
 3      0.9986501019683699
@@ -253,13 +255,13 @@ Integral (area under the curve) from - infinity up to z.
 6      0.9999999990134123
 7      0.99999999999872013
 8      0.99999999999999933
-9      1           
-10     1           
+9      1
+10     1
 
 Standard normal distribution, mean = 0, standard deviation = 1
 maxdigits_10 is 21, digits10 is 18
 Probability distribution function values
-  z    PDF 
+  z    PDF
 -10    7.69459862670641993759e-023
 -9     1.0279773571668916523e-018
 -8     5.05227108353689273243e-015
@@ -283,7 +285,7 @@ Probability distribution function values
 10     7.69459862670641993759e-023
 Standard normal mean = 0, standard deviation = 1
 Integral (area under the curve) from - infinity up to z.
-  z    CDF 
+  z    CDF
 -10    7.61985302416059451083e-024
 -9     1.12858840595384222719e-019
 -8     6.22096057427182035917e-016
@@ -294,7 +296,7 @@ Integral (area under the curve) from - infinity up to z.
 -3     0.00134989803163009566139
 -2     0.0227501319481792155242
 -1     0.158655253931457046468
-0      0.5         
+0      0.5
 1      0.841344746068542925777
 2      0.977249868051820791415
 3      0.998650101968369896532
@@ -303,13 +305,13 @@ Integral (area under the curve) from - infinity up to z.
 6      0.999999999013412299576
 7      0.999999999998720134897
 8      0.999999999999999333866
-9      1           
-10     1           
+9      1
+10     1
 
 Standard normal distribution, mean = 0, standard deviation = 1
 maxdigits_10 is 36, digits10 is 34
 Probability distribution function values
-  z    PDF 
+  z    PDF
 -10    7.69459862670641993759264402330435296e-023
 -9     1.02797735716689165230378750485667109e-018
 -8     5.0522710835368927324337437844893081e-015
@@ -333,7 +335,7 @@ Probability distribution function values
 10     7.69459862670641993759264402330435296e-023
 Standard normal mean = 0, standard deviation = 1
 Integral (area under the curve) from - infinity up to z.
-  z    CDF 
+  z    CDF
 -10    7.61985302416059451083278826816793623e-024
 -9     1.1285884059538422271881384555435713e-019
 -8     6.22096057427182035917417257601387863e-016
@@ -344,7 +346,7 @@ Integral (area under the curve) from - infinity up to z.
 -3     0.001349898031630095661392854111682027
 -2     0.0227501319481792155241528519127314212
 -1     0.158655253931457046467912164189328905
-0      0.5         
+0      0.5
 1      0.841344746068542925776512220181757584
 2      0.977249868051820791414741051994496956
 3      0.998650101968369896532351503992686048
@@ -353,13 +355,13 @@ Integral (area under the curve) from - infinity up to z.
 6      0.999999999013412299575520592043176293
 7      0.999999999998720134897212119540199637
 8      0.999999999999999333866185224906075746
-9      1           
-10     1           
+9      1
+10     1
 
 Standard normal distribution, mean = 0, standard deviation = 1
 maxdigits_10 is 36, digits10 is 34
 Probability distribution function values
-  z    PDF 
+  z    PDF
 -10    7.69459862670641993759264402330435296e-023
 -9     1.02797735716689165230378750485667109e-018
 -8     5.0522710835368927324337437844893081e-015
@@ -383,7 +385,7 @@ Probability distribution function values
 10     7.69459862670641993759264402330435296e-023
 Standard normal mean = 0, standard deviation = 1
 Integral (area under the curve) from - infinity up to z.
-  z    CDF 
+  z    CDF
 -10    7.61985302416059451083278826816793623e-024
 -9     1.1285884059538422271881384555435713e-019
 -8     6.22096057427182035917417257601387863e-016
@@ -394,7 +396,7 @@ Integral (area under the curve) from - infinity up to z.
 -3     0.001349898031630095661392854111682027
 -2     0.0227501319481792155241528519127314212
 -1     0.158655253931457046467912164189328905
-0      0.5         
+0      0.5
 1      0.841344746068542925776512220181757584
 2      0.977249868051820791414741051994496956
 3      0.998650101968369896532351503992686048
@@ -403,8 +405,8 @@ Integral (area under the curve) from - infinity up to z.
 6      0.999999999013412299575520592043176293
 7      0.999999999998720134897212119540199637
 8      0.999999999999999333866185224906075746
-9      1           
-10     1           
+9      1
+10     1
 
 MSVC 2013 64-bit
 1>

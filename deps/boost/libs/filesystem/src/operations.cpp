@@ -11,21 +11,45 @@
 //--------------------------------------------------------------------------------------// 
 
 //  define 64-bit offset macros BEFORE including boost/config.hpp (see ticket #5355) 
-#if !(defined(__HP_aCC) && defined(_ILP32) && !defined(_STATVFS_ACPP_PROBLEMS_FIXED))
-#define _FILE_OFFSET_BITS 64 // at worst, these defines may have no effect,
-#endif
-#if !defined(__PGI)
-#define __USE_FILE_OFFSET64 // but that is harmless on Windows and on POSIX
-      // 64-bit systems or on 32-bit systems which don't have files larger 
-      // than can be represented by a traditional POSIX/UNIX off_t type. 
-      // OTOH, defining them should kick in 64-bit off_t's (and thus 
-      // st_size)on 32-bit systems that provide the Large File
-      // Support (LFS)interface, such as Linux, Solaris, and IRIX.
-      // The defines are given before any headers are included to
-      // ensure that they are available to all included headers.
-      // That is required at least on Solaris, and possibly on other
-      // systems as well.
+#if defined(__ANDROID__) && defined(__ANDROID_API__) && __ANDROID_API__ < 24
+// Android fully supports 64-bit file offsets only for API 24 and above.
+//
+// Trying to define _FILE_OFFSET_BITS=64 for APIs below 24
+// leads to compilation failure for one or another reason,
+// depending on target Android API level, Android NDK version,
+// used STL, order of include paths and more.
+// For more information, please see:
+// - https://github.com/boostorg/filesystem/issues/65
+// - https://github.com/boostorg/filesystem/pull/69
+//
+// Android NDK developers consider it the expected behavior.
+// See their official position here:
+// - https://github.com/android-ndk/ndk/issues/501#issuecomment-326447479
+// - https://android.googlesource.com/platform/bionic/+/a34817457feee026e8702a1d2dffe9e92b51d7d1/docs/32-bit-abi.md#32_bit-abi-bugs
+//
+// Thus we do not define _FILE_OFFSET_BITS in such case.
 #else
+// Defining _FILE_OFFSET_BITS=64 should kick in 64-bit off_t's
+// (and thus st_size) on 32-bit systems that provide the Large File
+// Support (LFS) interface, such as Linux, Solaris, and IRIX.
+//
+// At the time of this comment writing (March 2018), on most systems
+// _FILE_OFFSET_BITS=64 definition is harmless:
+// either the definition is supported and enables 64-bit off_t,
+// or the definition is not supported and is ignored, in which case
+// off_t does not change its default size for the target system
+// (which may be 32-bit or 64-bit already).
+// Thus it makes sense to have _FILE_OFFSET_BITS=64 defined by default,
+// instead of listing every system that supports the definition.
+// Those few systems, on which _FILE_OFFSET_BITS=64 is harmful,
+// for example this definition causes compilation failure on those systems,
+// should be exempt from defining _FILE_OFFSET_BITS by adding
+// an appropriate #elif block above with the appropriate comment.
+//
+// _FILE_OFFSET_BITS must be defined before any headers are included
+// to ensure that the definition is available to all included headers.
+// That is required at least on Solaris, and possibly on other
+// systems as well.
 #define _FILE_OFFSET_BITS 64
 #endif
 
@@ -44,7 +68,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/detail/workaround.hpp>
-#include <vector> 
+#include <limits>
+#include <vector>
 #include <cstdlib>     // for malloc, free
 #include <cstring>
 #include <cstdio>      // for remove, rename
@@ -101,6 +126,7 @@ using std::wstring;
       // See MinGW's windef.h
 #     define WINVER 0x501
 #   endif
+#   include <cwchar>
 #   include <io.h>
 #   include <windows.h>
 #   include <winnt.h>
@@ -328,9 +354,10 @@ namespace
 
   //  general helpers  -----------------------------------------------------------------//
 
-  bool is_empty_directory(const path& p)
+  bool is_empty_directory(const path& p, error_code* ec)
   {
-    return fs::directory_iterator(p)== end_dir_itr;
+    return (ec != 0 ? fs::directory_iterator(p, *ec) : fs::directory_iterator(p))
+      == end_dir_itr;
   }
 
   bool not_found_error(int errval); // forward declaration
@@ -381,21 +408,41 @@ namespace
   boost::uintmax_t remove_all_aux(const path& p, fs::file_type type,
     error_code* ec)
   {
-    boost::uintmax_t count = 1;
+    boost::uintmax_t count = 0;
 
     if (type == fs::directory_file)  // but not a directory symlink
     {
-      for (fs::directory_iterator itr(p);
-            itr != end_dir_itr; ++itr)
+      fs::directory_iterator itr;
+      if (ec != 0)
+      {
+        itr = fs::directory_iterator(p, *ec);
+        if (*ec)
+          return count;
+      }
+      else
+        itr = fs::directory_iterator(p);
+
+      while(itr != end_dir_itr)
       {
         fs::file_type tmp_type = query_file_type(itr->path(), ec);
         if (ec != 0 && *ec)
           return count;
+
         count += remove_all_aux(itr->path(), tmp_type, ec);
+        if (ec != 0 && *ec)
+          return count;
+
+        fs::detail::directory_iterator_increment(itr, ec);
+        if (ec != 0 && *ec)
+          return count;
       }
     }
+
     remove_file_or_directory(p, type, ec);
-    return count;
+    if (ec != 0 && *ec)
+      return count;
+
+    return ++count;
   }
 
 #ifdef BOOST_POSIX_API
@@ -508,24 +555,27 @@ namespace
       || errval == ERROR_BAD_NETPATH;  // "//nosuch" on Win32
   }
 
-// some distributions of mingw as early as GLIBCXX__ 20110325 have _stricmp, but the
-// offical 4.6.2 release with __GLIBCXX__ 20111026  doesn't. Play it safe for now, and
-// only use _stricmp if _MSC_VER is defined
-#if defined(_MSC_VER) // || (defined(__GLIBCXX__) && __GLIBCXX__ >= 20110325)
-#  define BOOST_FILESYSTEM_STRICMP _stricmp
-#else
-#  define BOOST_FILESYSTEM_STRICMP strcmp
-#endif
+  static bool equal_extension( wchar_t const* p, wchar_t const (&x1)[ 5 ], wchar_t const (&x2)[ 5 ] )
+  {
+    return
+      (p[0] == x1[0] || p[0] == x2[0]) &&
+      (p[1] == x1[1] || p[1] == x2[1]) &&
+      (p[2] == x1[2] || p[2] == x2[2]) &&
+      (p[3] == x1[3] || p[3] == x2[3]) &&
+      p[4] == 0;
+  }
 
   perms make_permissions(const path& p, DWORD attr)
   {
     perms prms = fs::owner_read | fs::group_read | fs::others_read;
     if  ((attr & FILE_ATTRIBUTE_READONLY) == 0)
       prms |= fs::owner_write | fs::group_write | fs::others_write;
-    if (BOOST_FILESYSTEM_STRICMP(p.extension().string().c_str(), ".exe") == 0
-      || BOOST_FILESYSTEM_STRICMP(p.extension().string().c_str(), ".com") == 0
-      || BOOST_FILESYSTEM_STRICMP(p.extension().string().c_str(), ".bat") == 0
-      || BOOST_FILESYSTEM_STRICMP(p.extension().string().c_str(), ".cmd") == 0)
+    path ext = p.extension();
+    wchar_t const* q = ext.c_str();
+    if (equal_extension(q, L".exe", L".EXE")
+      || equal_extension(q, L".com", L".COM")
+      || equal_extension(q, L".bat", L".BAT")
+      || equal_extension(q, L".cmd", L".CMD"))
       prms |= fs::owner_exe | fs::group_exe | fs::others_exe;
     return prms;
   }
@@ -629,7 +679,7 @@ namespace
     {
       return fs::file_status(fs::file_not_found, fs::no_perms);
     }
-    else if ((errval == ERROR_SHARING_VIOLATION))
+    else if (errval == ERROR_SHARING_VIOLATION)
     {
       return fs::file_status(fs::type_unknown);
     }
@@ -687,7 +737,7 @@ namespace
 
   PtrCreateHardLinkW create_hard_link_api = PtrCreateHardLinkW(
     ::GetProcAddress(
-      ::GetModuleHandle(TEXT("kernel32.dll")), "CreateHardLinkW"));
+      ::GetModuleHandleW(L"kernel32.dll"), "CreateHardLinkW"));
 
   typedef BOOLEAN (WINAPI *PtrCreateSymbolicLinkW)(
     /*__in*/ LPCWSTR lpSymlinkFileName,
@@ -697,7 +747,7 @@ namespace
 
   PtrCreateSymbolicLinkW create_symbolic_link_api = PtrCreateSymbolicLinkW(
     ::GetProcAddress(
-      ::GetModuleHandle(TEXT("kernel32.dll")), "CreateSymbolicLinkW"));
+      ::GetModuleHandleW(L"kernel32.dll"), "CreateSymbolicLinkW"));
 
 #endif
 
@@ -876,20 +926,20 @@ namespace detail
   BOOST_FILESYSTEM_DECL
   void copy(const path& from, const path& to, system::error_code* ec)
   {
-    file_status s(symlink_status(from, *ec));
+    file_status s(detail::symlink_status(from, ec));
     if (ec != 0 && *ec) return;
 
     if(is_symlink(s))
     {
-      copy_symlink(from, to, *ec);
+      detail::copy_symlink(from, to, ec);
     }
     else if(is_directory(s))
     {
-      copy_directory(from, to, *ec);
+      detail::copy_directory(from, to, ec);
     }
     else if(is_regular_file(s))
     {
-      copy_file(from, to, fs::copy_option::fail_if_exists, *ec);
+      detail::copy_file(from, to, detail::fail_if_exists, ec);
     }
     else
     {
@@ -937,12 +987,20 @@ namespace detail
  BOOST_FILESYSTEM_DECL
   bool create_directories(const path& p, system::error_code* ec)
   {
-    path filename(p.filename());
-    if ((filename.native().size() == 1 && filename.native()[0] == dot)
-      || (filename.native().size() == 2
-        && filename.native()[0] == dot && filename.native()[1] == dot))
-      return create_directories(p.parent_path(), ec);
+   if (p.empty())
+   {
+     if (ec == 0)
+       BOOST_FILESYSTEM_THROW(filesystem_error(
+         "boost::filesystem::create_directories", p,
+         system::errc::make_error_code(system::errc::invalid_argument)));
+     else
+       ec->assign(system::errc::invalid_argument, system::generic_category());
+     return false;
+   }
 
+    if (p.filename_is_dot() || p.filename_is_dot_dot())
+      return create_directories(p.parent_path(), ec);
+    
     error_code local_ec;
     file_status p_status = status(p, local_ec);
 
@@ -993,7 +1051,8 @@ namespace detail
     //  attempt to create directory failed
     int errval(BOOST_ERRNO);  // save reason for failure
     error_code dummy;
-    if (errval == BOOST_ERROR_ALREADY_EXISTS && is_directory(p, dummy))
+
+    if (is_directory(p, dummy))
     {
       if (ec != 0)
         ec->clear();
@@ -1006,6 +1065,7 @@ namespace detail
         p, error_code(errval, system_category())));
     else
       ec->assign(errval, system_category());
+
     return false;
   }
 
@@ -1298,7 +1358,7 @@ namespace detail
         p, ec, "boost::filesystem::is_empty"))
       return false;        
     return S_ISDIR(path_stat.st_mode)
-      ? is_empty_directory(p)
+      ? is_empty_directory(p, ec)
       : path_stat.st_size == 0;
 #   else
 
@@ -1310,7 +1370,7 @@ namespace detail
     if (ec != 0) ec->clear();
     return 
       (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-        ? is_empty_directory(p)
+        ? is_empty_directory(p, ec)
         : (!fad.nFileSizeHigh && !fad.nFileSizeLow);
 #   endif
   }
@@ -1433,7 +1493,8 @@ namespace detail
       && !(defined(__MAC_OS_X_VERSION_MIN_REQUIRED) \
            && __MAC_OS_X_VERSION_MIN_REQUIRED < 101000) \
       && !(defined(__IPHONE_OS_VERSION_MIN_REQUIRED) \
-           && __IPHONE_OS_VERSION_MIN_REQUIRED < 80000)
+           && __IPHONE_OS_VERSION_MIN_REQUIRED < 80000) \
+      && !(defined(__QNX__) && (_NTO_VERSION <= 700))
       if (::fchmodat(AT_FDCWD, p.c_str(), mode_cast(prms),
            !(prms & symlink_perms) ? 0 : AT_SYMLINK_NOFOLLOW))
 #   else  // fallback if fchmodat() not supported
@@ -1591,6 +1652,12 @@ namespace detail
   BOOST_FILESYSTEM_DECL
   void resize_file(const path& p, uintmax_t size, system::error_code* ec)
   {
+#   if defined(BOOST_POSIX_API)
+    if (BOOST_UNLIKELY(size > static_cast< uintmax_t >((std::numeric_limits< off_t >::max)()))) {
+      error(system::errc::file_too_large, p, ec, "boost::filesystem::resize_file");
+      return;
+    }
+#   endif
     error(!BOOST_RESIZE_FILE(p.c_str(), size) ? BOOST_ERRNO : 0, p, ec,
       "boost::filesystem::resize_file");
   }
@@ -1601,7 +1668,7 @@ namespace detail
 #   ifdef BOOST_POSIX_API
     struct BOOST_STATVFS vfs;
     space_info info;
-    if (!error(::BOOST_STATVFS(p.c_str(), &vfs)!= 0,
+    if (!error(::BOOST_STATVFS(p.c_str(), &vfs) ? BOOST_ERRNO : 0,
       p, ec, "boost::filesystem::space"))
     {
       info.capacity 
@@ -2032,10 +2099,6 @@ namespace
     return ok;
   }
 
-#if defined(__PGI) && defined(__USE_FILE_OFFSET64)
-#define dirent dirent64
-#endif
-
   error_code dir_itr_first(void *& handle, void *& buffer,
     const char* dir, string& target,
     fs::file_status &, fs::file_status &)
@@ -2058,17 +2121,22 @@ namespace
   inline int readdir_r_simulator(DIR * dirp, struct dirent * entry,
     struct dirent ** result)// *result set to 0 on end of directory
   {
-    errno = 0;
-
 #   if !defined(__CYGWIN__)\
     && defined(_POSIX_THREAD_SAFE_FUNCTIONS)\
     && defined(_SC_THREAD_SAFE_FUNCTIONS)\
     && (_POSIX_THREAD_SAFE_FUNCTIONS+0 >= 0)\
+    && !(defined(linux) || defined(__linux) || defined(__linux__))\
+    && !defined(__ANDROID__)\
     && (!defined(__hpux) || defined(_REENTRANT)) \
     && (!defined(_AIX) || defined(__THREAD_SAFE))
+
+    errno = 0;
+
     if (::sysconf(_SC_THREAD_SAFE_FUNCTIONS)>= 0)
       { return ::readdir_r(dirp, entry, result); }
 #   endif
+
+    errno = 0;
 
     struct dirent * p;
     *result = 0;
@@ -2283,7 +2351,7 @@ namespace detail
         && (filename.size()== 1
           || (filename[1] == dot
             && filename.size()== 2)))
-        {  it.increment(*ec); }
+        { detail::directory_iterator_increment(it, ec); }
     }
   }
 

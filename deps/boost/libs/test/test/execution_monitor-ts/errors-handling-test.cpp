@@ -180,14 +180,14 @@ BOOST_AUTO_TEST_CASE( test_errors_handling )
                         << " error type: "     << error_type_name[error_type] << ";\n" << std::endl;
 
             unit_test_log.set_stream( test_output );
-            unit_test_log.set_formatter( new this_test_log_formatter );
             unit_test_log.set_threshold_level( level );
+            unit_test_log.set_formatter( new this_test_log_formatter );
             framework::run( test );
 
             unit_test_log.set_stream( std::cout );
-            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::LOG_FORMAT ) );
+            unit_test_log.set_format( runtime_config::get<output_format>( runtime_config::btrt_log_format ) );
 
-            log_level ll = runtime_config::get<log_level>( runtime_config::LOG_LEVEL );
+            log_level ll = runtime_config::get<log_level>( runtime_config::btrt_log_level );
             unit_test_log.set_threshold_level( ll != invalid_log_level? ll : log_all_errors );
 
             BOOST_CHECK( test_output.match_pattern() );

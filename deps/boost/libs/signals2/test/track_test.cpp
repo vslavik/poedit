@@ -136,6 +136,30 @@ int test_main(int, char*[])
     BOOST_CHECK(s1(5) == 5);
   }
   BOOST_CHECK(s1(5) == 0);
+  // make sure tracking foreign shared_ptr<const void> works
+  {
+    std::shared_ptr<const void> shorty(new int());
+    s1.connect(sig_type::slot_type(swallow(), shorty.get(), _1).track_foreign(shorty));
+    BOOST_CHECK(s1(5) == 5);
+  }
+  {
+    std::shared_ptr<int> shorty(new int());
+    s1.connect
+    (
+      sig_type::slot_type
+      (
+        swallow(),
+        shorty.get(),
+        _1
+      ).track_foreign
+      (
+        std::weak_ptr<const void>(shorty)
+      )
+    );
+    BOOST_CHECK(s1(5) == 5);
+  }
+  BOOST_CHECK(s1(5) == 0);
+  BOOST_CHECK(s1(5) == 0);
 #endif
 
   return 0;

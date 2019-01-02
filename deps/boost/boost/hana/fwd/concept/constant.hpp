@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::Constant`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -30,7 +30,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! Let `C(T)` and `D(U)` denote the tags of `Constant`s holding objects
     //! of type `T` and `U`, respectively. Then, an object with tag `D(U)`
     //! must be convertible to an object with tag `C(T)` whenever `U` is
-    //! convertible to `T`, has determined by `is_convertible`. The
+    //! convertible to `T`, as determined by `is_convertible`. The
     //! interpretation here is that a `Constant` is just a box holding
     //! an object of some type, and it should be possible to swap between
     //! boxes whenever the objects inside the boxes can be swapped.
@@ -59,7 +59,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! of the wrapped object is always a constant expression by requiring
     //! the following to be well-formed:
     //! @code
-    //!     constexpr auto x = hana::value<decltype(x)>();
+    //!     constexpr auto x = hana::value<decltype(c)>();
     //! @endcode
     //!
     //! This means that the `value` function must return an object that can
@@ -146,7 +146,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! conversion of underlying types is an embedding. This is to allow
     //! Constants to inter-operate with `constexpr` objects easily:
     //! @code
-    //!     plus(int_<1>, 1) == 2
+    //!     plus(int_c<1>, 1) == 2
     //! @endcode
     //!
     //! Strictly speaking, __this is sometimes a violation__ of what it means
@@ -160,25 +160,25 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! `constexpr` object of not. In other words, the `to` method has no way
     //! to differentiate between
     //! @code
-    //!     constexpr int i = hana::to<int>(int_<1>);
+    //!     constexpr int i = hana::to<int>(int_c<1>);
     //! @endcode
     //! which is an embedding, and
     //! @code
-    //!     int i = hana::to<int>(int_<1>);
+    //!     int i = hana::to<int>(int_c<1>);
     //! @endcode
     //!
     //! which isn't. To be on the safer side, we could mark the conversion
     //! as not-an-embedding. However, if e.g. the conversion from
     //! `integral_constant_tag<int>` to `int` was not marked as an embedding,
-    //! we would have to write `plus(to<int>(int_<1>), 1)` instead of just
-    //! `plus(int_<1>, 1)`, which is cumbersome. Hence, the conversion is
+    //! we would have to write `plus(to<int>(int_c<1>), 1)` instead of just
+    //! `plus(int_c<1>, 1)`, which is cumbersome. Hence, the conversion is
     //! marked as an embedding, but this also means that code like
     //! @code
     //!     int i = 1;
-    //!     plus(int_<1>, i);
+    //!     plus(int_c<1>, i);
     //! @endcode
     //! will be considered valid, which implicitly loses the fact that
-    //! `int_<1>` is a Constant, and hence does not follow the usual rules
+    //! `int_c<1>` is a Constant, and hence does not follow the usual rules
     //! for cross-type operations in Hana.
     //!
     //!

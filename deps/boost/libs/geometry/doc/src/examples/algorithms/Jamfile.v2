@@ -4,10 +4,11 @@
 # Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 # Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
-# This file was modified by Oracle on 2014, 2015.
-# Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
+# This file was modified by Oracle on 2014, 2015, 2018.
+# Modifications copyright (c) 2014-2018, Oracle and/or its affiliates.
 
 # Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+# Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 # Use, modification and distribution is subject to the Boost Software License,
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -40,6 +41,12 @@ exe convert : convert.cpp ;
 exe convex_hull : convex_hull.cpp ;
 exe correct : correct.cpp ;
 
+exe densify : densify.cpp ;
+exe densify_strategy : densify_strategy.cpp ;
+exe discrete_frechet_distance : discrete_frechet_distance.cpp ;
+exe discrete_frechet_distance_strategy : discrete_frechet_distance_strategy.cpp ;
+exe discrete_hausdorff_distance : discrete_hausdorff_distance.cpp ;
+exe discrete_hausdorff_distance_strategy : discrete_hausdorff_distance_strategy.cpp ;
 exe difference : difference.cpp ;
 exe distance : distance.cpp ;
 
@@ -81,6 +88,7 @@ exe relate : relate.cpp ;
 exe relation : relation.cpp ;
 
 exe reverse : reverse.cpp ;
+
 
 exe simplify : length.cpp ;
 exe sym_difference : sym_difference.cpp ;

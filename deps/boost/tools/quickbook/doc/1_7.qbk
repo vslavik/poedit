@@ -15,14 +15,14 @@ Previously if you used an element in the wrong context it would just be
 unprocessed, which was surprising. People often didn't realise that their
 element hadn't been processed. So now it's an error.
 
-[endsect]
+[endsect:context_error]
 
 [section:phrase_parse_error Error for invalid phrase elements]
 
 If the body of a phrase element didn't parse, it would be just used
 unprocessed. Now change it to be a hard error.
 
-[endsect]
+[endsect:phrase_parse_error]
 
 [section:source_mode Source mode for single entities]
 
@@ -56,7 +56,7 @@ whole paragraph only if there's a newline, eg.
 A declaration `void foo();` and a definition `void foo() {}`.
 ```
 
-[endsect]
+[endsect:source_mode]
 
 [section:callouts Callouts in code blocks]
 
@@ -65,7 +65,7 @@ support in normal code blocks. The same syntax is used as in
 code snippets, the callout descriptions appear immediately
 after the code block.
 
-[endsect]
+[endsect:callouts]
 
 [section:escaped_docinfo_attributes Escaped docbook in docinfo blocks]
 
@@ -90,7 +90,7 @@ quickbook. A mixture
 of quickbook and docbook attributes for the same information will not work
 well.
 
-[endsect] [/escaped_docinfo_attributes]
+[endsect:escaped_docinfo_attributes]
 
 [section:listparagraphs Pargraphs in lists]
 
@@ -120,7 +120,7 @@ generates:
         Code block
   Para 3
 
-[endsect]
+[endsect:listparagraphs]
 
 [section:templates_in_attributes Templates in some attributes]
 
@@ -130,7 +130,7 @@ spaces are currently allowed, so I might try using a slightly different
 grammar where required. I think I also need to add some validation, since
 the parser can allow more symbols than some of the old ones.
 
-[endsect] [/templates_in_attributes]
+[endsect:templates_in_attributes]
 
 [section:list_markup_in_tables List Markup in Nested Blocks]
 
@@ -141,7 +141,7 @@ indented code blocks in this context than to try to work out sensible actions
 for the edges cases. If you want to use code blocks in this context, you should
 still be able to use explicit markup.
 
-[endsect]
+[endsect:list_markup_in_tables]
 
 [section:phrase_block_templates Allow block elements in phrase templates]
 
@@ -166,7 +166,7 @@ as:
 If a phrase template has phrase content mixed with block elements, it'll generate
 output as if it was expanded inline.
 
-[endsect]
+[endsect:phrase_block_templates]
 
 [section:glob Including multiple files with Globs]
 
@@ -186,6 +186,6 @@ to the character.
 [note Because of the escaping in file references the "\\\\" glob escape is
 a double "\\"; i.e. and escaped back-slash.]
 
-[endsect]
+[endsect:glob]
 
-[endsect] [/ Quickbok 1.7]
+[endsect:1_7]

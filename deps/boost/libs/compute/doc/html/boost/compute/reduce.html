@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function reduce</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.reduce_hpp" title="Header &lt;boost/compute/algorithm/reduce.hpp&gt;">
 <link rel="prev" href="random_shuffle.html" title="Function template random_shuffle">
@@ -41,7 +41,7 @@
   <span class="keyword">void</span> <span class="identifier">reduce</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">,</span> 
               <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp67631248"></a><h2>Description</h2>
+<a name="idp82039280"></a><h2>Description</h2>
 <p>Returns the result of applying <code class="computeroutput">function</code> to the elements in the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>).</p>
 <p>If no function is specified, <code class="computeroutput">plus</code> will be used.</p>
 <p>
@@ -50,16 +50,24 @@ The <code class="computeroutput">reduce()</code> algorithm assumes that the bina
 <p>For example, to calculate the sum of the values in a device vector and copy the result to a value on the host:</p>
 <pre class="programlisting"></pre>
 <p> Note that while the the <code class="computeroutput">reduce()</code> algorithm is conceptually identical to the <code class="computeroutput">accumulate()</code> algorithm, its implementation is substantially more efficient on parallel hardware. For more information, see the documentation on the <code class="computeroutput">accumulate()</code> algorithm.</p>
+<p>Space complexity on GPUs: (n)<br>
+ Space complexity on CPUs: (1)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>accumulate() </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

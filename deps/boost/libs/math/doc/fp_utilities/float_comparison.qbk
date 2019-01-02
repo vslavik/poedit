@@ -42,19 +42,19 @@ like a Swiss army knife: both have important but different use cases.
 [h5:fp_relative Relative Comparison of Floating-point Values]
 
 
-`#include <boost/math/special_functions/relative_distance.hpp>`
+`#include <boost/math/special_functions/relative_difference.hpp>`
 
    template <class T, class U>
-   ``__sf_result`` relative_distance(T a, U b);
+   ``__sf_result`` relative_difference(T a, U b);
 
    template <class T, class U>
-   ``__sf_result`` epsilon_distance(T a, U b);
+   ``__sf_result`` epsilon_difference(T a, U b);
 
-The function `relative_distance` returns the relative distance/error ['E] between two values as defined by:
+The function `relative_difference` returns the relative distance/error ['E] between two values as defined by:
 
 [pre E = fabs((a - b) / min(a,b))]
 
-The function `epsilon_difference` is a convenience function that returns `relative_distance(a, b) / eps` where
+The function `epsilon_difference` is a convenience function that returns `relative_difference(a, b) / eps` where
 `eps` is the machine epsilon for the result type.
 
 The following special cases are handled as follows:

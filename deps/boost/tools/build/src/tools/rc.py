@@ -68,7 +68,7 @@ def configure (command = None, condition = None, options = None):
 
     if command and condition and rc_type:
         flags('rc.compile.resource', '.RC', condition, command)
-        flags('rc.compile.resource', '.RC_TYPE', condition, rc_type.lower())
+        flags('rc.compile.resource', '.RC_TYPE', condition, [rc_type.lower()])
         flags('rc.compile.resource', 'DEFINES', [], ['<define>'])
         flags('rc.compile.resource', 'INCLUDES', [], ['<include>'])
         if debug():
@@ -91,12 +91,13 @@ class RCAction:
 # FIXME: What is the proper way to dispatch actions?
 def rc_register_action(action_name, function = None):
     global engine
-    if engine.actions.has_key(action_name):
+    if action_name in engine.actions:
         raise AlreadyDefined("Bjam action %s is already defined" % action_name)
     engine.actions[action_name] = RCAction(action_name, function)
 
 def rc_compile_resource(targets, sources, properties):
     rc_type = bjam.call('get-target-variable', targets, '.RC_TYPE')
+    rc_type = rc_type[0] if rc_type else ''
     global engine
     engine.set_update_action('rc.compile.resource.' + rc_type, targets, sources, properties)
 

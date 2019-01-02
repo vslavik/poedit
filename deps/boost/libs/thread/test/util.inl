@@ -93,17 +93,28 @@ public:
     bool wait()
     {
         boost::xtime xt = delay(secs);
-        if (type != use_condition)
+        if (type == use_sleep_only) {
             boost::thread::sleep(xt);
-        if (type != use_sleep_only) {
+            return done;
+        }
+        if (type == use_condition) {
             boost::unique_lock<boost::mutex> lock(mutex);
-            while (type == use_condition && !done) {
+            while (!done) {
                 if (!cond.timed_wait(lock, xt))
                     break;
             }
             return done;
         }
-        return done;
+        for (int i = 0; ; ++i) {
+            {
+                boost::unique_lock<boost::mutex> lock(mutex);
+                if (done)
+                    return true;
+                else if (i > secs * 2)
+                    return done;
+            }
+            boost::thread::sleep(delay(0, 500));
+        }
     }
 
 private:

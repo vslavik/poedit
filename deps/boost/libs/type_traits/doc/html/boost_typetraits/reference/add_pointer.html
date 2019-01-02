@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>add_pointer</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="add_lvalue_reference.html" title="add_lvalue_reference">
@@ -31,6 +31,8 @@
 <span class="special">{</span>
    <span class="keyword">typedef</span> <em class="replaceable"><code>see-below</code></em> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">using</span> <span class="identifier">add_pointer_t</span> <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">add_pointer</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span> <span class="comment">// C++11 and above</span>
 </pre>
 <p>
         <span class="bold"><strong>type:</strong></span> The same type as <code class="computeroutput"><span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">*</span></code>.

@@ -1416,7 +1416,7 @@ void copy_swap_move(Rtree const& tree, Box const& qbox)
 
     //TODO - test SWAP
 
-    ::boost::ignore_unused_variable_warning(params);
+    ::boost::ignore_unused(params);
 }
 
 template <typename I, typename O>

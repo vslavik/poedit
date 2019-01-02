@@ -26,7 +26,7 @@
 namespace boost {
 namespace interprocess {
 
-using boost::container::container_detail::pair;
+using boost::container::dtl::pair;
 
 }  //namespace interprocess {
 }  //namespace boost {

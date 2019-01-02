@@ -7,8 +7,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <cassert>
 #include "template_stack.hpp"
+#include <cassert>
 #include "files.hpp"
 
 #ifdef BOOST_MSVC
@@ -18,42 +18,44 @@
 namespace quickbook
 {
     template_symbol::template_symbol(
-            std::string const& identifier,
-            std::vector<std::string> const& params,
-            value const& content,
-            template_scope const* lexical_parent)
-       : identifier(identifier)
-       , params(params)
-       , content(content)
-       , lexical_parent(lexical_parent)
+        std::string const& identifier_,
+        std::vector<std::string> const& params_,
+        value const& content_,
+        template_scope const* lexical_parent_)
+        : identifier(identifier_)
+        , params(params_)
+        , content(content_)
+        , lexical_parent(lexical_parent_)
     {
-        assert(content.get_tag() == template_tags::block ||
+        assert(
+            content.get_tag() == template_tags::block ||
             content.get_tag() == template_tags::phrase ||
             content.get_tag() == template_tags::snippet);
     }
 
     template_stack::template_stack()
-        : scope(template_stack::parser(*this))
-        , scopes()
-        , parent_1_4(0)
+        : scope(template_stack::parser(*this)), scopes(), parent_1_4(0)
     {
         scopes.push_front(template_scope());
         parent_1_4 = &scopes.front();
     }
-    
+
     template_symbol* template_stack::find(std::string const& symbol) const
     {
-        for (template_scope const* i = &*scopes.begin(); i; i = i->parent_scope)
-        {
-            if (template_symbol* ts = boost::spirit::classic::find(i->symbols, symbol.c_str()))
+        for (template_scope const* i = &*scopes.begin(); i;
+             i = i->parent_scope) {
+            if (template_symbol* ts =
+                    boost::spirit::classic::find(i->symbols, symbol.c_str()))
                 return ts;
         }
         return 0;
     }
 
-    template_symbol* template_stack::find_top_scope(std::string const& symbol) const
+    template_symbol* template_stack::find_top_scope(
+        std::string const& symbol) const
     {
-        return boost::spirit::classic::find(scopes.front().symbols, symbol.c_str());
+        return boost::spirit::classic::find(
+            scopes.front().symbols, symbol.c_str());
     }
 
     template_symbols const& template_stack::top() const
@@ -67,22 +69,22 @@ namespace quickbook
         BOOST_ASSERT(!scopes.empty());
         return scopes.front();
     }
-    
+
     bool template_stack::add(template_symbol const& ts)
     {
         BOOST_ASSERT(!scopes.empty());
         BOOST_ASSERT(ts.lexical_parent);
-        
+
         if (this->find_top_scope(ts.identifier)) {
             return false;
         }
-        
-        boost::spirit::classic::add(scopes.front().symbols,
-            ts.identifier.c_str(), ts);
+
+        boost::spirit::classic::add(
+            scopes.front().symbols, ts.identifier.c_str(), ts);
 
         return true;
     }
-    
+
     void template_stack::push()
     {
         template_scope const& old_front = scopes.front();
@@ -104,16 +106,12 @@ namespace quickbook
         //                 current scope (the dynamic scope).
         // Quickbook 1.5+: Use the scope the template was defined in
         //                 (the static scope).
-        if (symbol->content.get_file()->version() >= 105u)
-        {
+        if (symbol->content.get_file()->version() >= 105u) {
             parent_1_4 = scopes.front().parent_1_4;
             scopes.front().parent_scope = symbol->lexical_parent;
         }
-        else
-        {
+        else {
             scopes.front().parent_scope = scopes.front().parent_1_4;
         }
     }
 }
-
-

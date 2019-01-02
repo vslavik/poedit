@@ -1,37 +1,24 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_COLOR_BASE_HPP
+#define BOOST_GIL_COLOR_BASE_HPP
 
-    See http://stlab.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/utilities.hpp>
+#include <boost/gil/concepts.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_COLOR_BASE_HPP
-#define GIL_COLOR_BASE_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel class and related utilities
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 6, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cassert>
+#include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/utility/enable_if.hpp>
 
-#include "gil_config.hpp"
-#include "utilities.hpp"
-#include "gil_concept.hpp"
+#include <cassert>
 
 namespace boost { namespace gil {
 
@@ -67,6 +54,10 @@ struct mapping_transform
 /// \brief A homogeneous color base holding one color element. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// If the element type models Regular, this class models HomogeneousColorBaseValueConcept.
 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(push) 
+#pragma warning(disable:4512) //assignment operator could not be generated 
+#endif
 
 /// \brief A homogeneous color base holding one color element. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
@@ -85,7 +76,7 @@ public:
     // grayscale pixel values are convertible to channel type
     operator Element () const { return _v0; }
 
-    template <typename E2, typename L2> homogeneous_color_base(const homogeneous_color_base<E2,L2,1>& c) : _v0(at_c<0>(c)) {}
+    template <typename E2, typename L2> homogeneous_color_base(const homogeneous_color_base<E2,L2,1>& c) : _v0(gil::at_c<0>(c)) {}
 };
 
 
@@ -107,13 +98,13 @@ public:
     homogeneous_color_base(Element v0, Element v1) : _v0(v0), _v1(v1) {}
 
     template <typename E2, typename L2> homogeneous_color_base(const homogeneous_color_base<E2,L2,2>& c) : 
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)) {}
 
     // Support for l-value reference proxy copy construction
     template <typename E2, typename L2> homogeneous_color_base(      homogeneous_color_base<E2,L2,2>& c) : 
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)) {}
 
     // Support for planar_pixel_iterator construction and dereferencing
     template <typename P> homogeneous_color_base(P* p,bool) : 
@@ -212,17 +203,17 @@ public:
     homogeneous_color_base(Element v0, Element v1, Element v2, Element v3) : _v0(v0), _v1(v1), _v2(v2), _v3(v3) {}
 
     template <typename E2, typename L2> homogeneous_color_base(const homogeneous_color_base<E2,L2,4>& c) :
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)), 
-        _v2(at_c<mapping_transform<Layout,L2,2>::value>(c)),
-        _v3(at_c<mapping_transform<Layout,L2,3>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)), 
+        _v2(gil::at_c<mapping_transform<Layout,L2,2>::value>(c)),
+        _v3(gil::at_c<mapping_transform<Layout,L2,3>::value>(c)) {}
 
     // Support for l-value reference proxy copy construction
     template <typename E2, typename L2> homogeneous_color_base(      homogeneous_color_base<E2,L2,4>& c) : 
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)), 
-        _v2(at_c<mapping_transform<Layout,L2,2>::value>(c)),
-        _v3(at_c<mapping_transform<Layout,L2,3>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)), 
+        _v2(gil::at_c<mapping_transform<Layout,L2,2>::value>(c)),
+        _v3(gil::at_c<mapping_transform<Layout,L2,3>::value>(c)) {}
 
     // Support for planar_pixel_iterator construction and dereferencing
     template <typename P> homogeneous_color_base(P* p,bool) : 
@@ -278,19 +269,19 @@ public:
     homogeneous_color_base(Element v0, Element v1, Element v2, Element v3, Element v4) : _v0(v0), _v1(v1), _v2(v2), _v3(v3), _v4(v4) {}
 
     template <typename E2, typename L2> homogeneous_color_base(const homogeneous_color_base<E2,L2,5>& c) :
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)), 
-        _v2(at_c<mapping_transform<Layout,L2,2>::value>(c)),
-        _v3(at_c<mapping_transform<Layout,L2,3>::value>(c)),
-        _v4(at_c<mapping_transform<Layout,L2,4>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)), 
+        _v2(gil::at_c<mapping_transform<Layout,L2,2>::value>(c)),
+        _v3(gil::at_c<mapping_transform<Layout,L2,3>::value>(c)),
+        _v4(gil::at_c<mapping_transform<Layout,L2,4>::value>(c)) {}
 
     // Support for l-value reference proxy copy construction
     template <typename E2, typename L2> homogeneous_color_base(      homogeneous_color_base<E2,L2,5>& c) : 
-        _v0(at_c<mapping_transform<Layout,L2,0>::value>(c)), 
-        _v1(at_c<mapping_transform<Layout,L2,1>::value>(c)), 
-        _v2(at_c<mapping_transform<Layout,L2,2>::value>(c)),
-        _v3(at_c<mapping_transform<Layout,L2,3>::value>(c)),
-        _v4(at_c<mapping_transform<Layout,L2,4>::value>(c)) {}
+        _v0(gil::at_c<mapping_transform<Layout,L2,0>::value>(c)), 
+        _v1(gil::at_c<mapping_transform<Layout,L2,1>::value>(c)), 
+        _v2(gil::at_c<mapping_transform<Layout,L2,2>::value>(c)),
+        _v3(gil::at_c<mapping_transform<Layout,L2,3>::value>(c)),
+        _v4(gil::at_c<mapping_transform<Layout,L2,4>::value>(c)) {}
 
     // Support for planar_pixel_iterator construction and dereferencing
     template <typename P> homogeneous_color_base(P* p,bool) : 
@@ -326,6 +317,10 @@ public:
         return _v4;
     }
 };
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(pop) 
+#endif 
 
 // The following way of casting adjacent channels (the contents of color_base) into an array appears to be unsafe
 // -- there is no guarantee that the compiler won't add any padding between adjacent channels.

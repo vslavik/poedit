@@ -9,11 +9,14 @@
 
 import re
 import sys
+from functools import total_ordering
+
 from b2.util.utility import *
 from b2.build import feature
 from b2.util import sequence, qualify_jam_action, is_iterable_typed
 import b2.util.set
 from b2.manager import get_manager
+
 
 __re_two_ampersands = re.compile ('&&')
 __re_comma = re.compile (',')
@@ -23,50 +26,138 @@ __re_colon = re.compile (':')
 __re_has_condition = re.compile (r':<')
 __re_separate_condition_and_property = re.compile (r'(.*):(<.*)')
 
-__not_applicable_feature='not-applicable-in-this-context'
-feature.feature(__not_applicable_feature, [], ['free'])
+_not_applicable_feature='not-applicable-in-this-context'
+feature.feature(_not_applicable_feature, [], ['free'])
 
 __abbreviated_paths = False
 
+
+class PropertyMeta(type):
+    """
+    This class exists to implement the isinstance() and issubclass()
+    hooks for the Property class. Since we've introduce the concept of
+    a LazyProperty, isinstance(p, Property) will fail when p is a LazyProperty.
+    Implementing both __instancecheck__ and __subclasscheck__ will allow
+    LazyProperty instances to pass the isinstance() and issubclass check for
+    the Property class.
+
+    Additionally, the __call__ method intercepts the call to the Property
+    constructor to ensure that calling Property with the same arguments
+    will always return the same Property instance.
+    """
+    _registry = {}
+    current_id = 1
+
+    def __call__(mcs, f, value, condition=None):
+        """
+        This intercepts the call to the Property() constructor.
+
+        This exists so that the same arguments will always return the same Property
+        instance. This allows us to give each instance a unique ID.
+        """
+        from b2.build.feature import Feature
+        if not isinstance(f, Feature):
+            f = feature.get(f)
+        if condition is None:
+            condition = []
+        key = (f, value) + tuple(sorted(condition))
+        if key not in mcs._registry:
+            instance = super(PropertyMeta, mcs).__call__(f, value, condition)
+            mcs._registry[key] = instance
+        return mcs._registry[key]
+
+    @staticmethod
+    def check(obj):
+        return (hasattr(obj, 'feature') and
+                hasattr(obj, 'value') and
+                hasattr(obj, 'condition'))
+
+    def __instancecheck__(self, instance):
+        return self.check(instance)
+
+    def __subclasscheck__(self, subclass):
+        return self.check(subclass)
+
+
+@total_ordering
 class Property(object):
 
-    __slots__ = ('_feature', '_value', '_condition')
+    __slots__ = ('feature', 'value', 'condition', '_to_raw', '_hash', 'id')
+    __metaclass__ = PropertyMeta
 
-    def __init__(self, f, value, condition = []):
-        if type(f) == type(""):
-            f = feature.get(f)
-        # At present, single property has a single value.
-        assert type(value) != type([])
-        assert(f.free() or value.find(':') == -1)
-        self._feature = f
-        self._value = value
-        self._condition = condition
+    def __init__(self, f, value, condition=None):
+        assert(f.free or ':' not in value)
+        if condition is None:
+            condition = []
 
-    def feature(self):
-        return self._feature
+        self.feature = f
+        self.value = value
+        self.condition = condition
+        self._hash = hash((self.feature, self.value) + tuple(sorted(self.condition)))
+        self.id = PropertyMeta.current_id
+        # increment the id counter.
+        # this allows us to take a list of Property
+        # instances and use their unique integer ID
+        # to create a key for PropertySet caching. This is
+        # much faster than string comparison.
+        PropertyMeta.current_id += 1
 
-    def value(self):
-        return self._value
+        condition_str = ''
+        if condition:
+            condition_str = ",".join(str(p) for p in self.condition) + ':'
 
-    def condition(self):
-        return self._condition
+        self._to_raw = '{}<{}>{}'.format(condition_str, f.name, value)
 
     def to_raw(self):
-        result = "<" + self._feature.name() + ">" + str(self._value)
-        if self._condition:
-            result = ",".join(str(p) for p in self._condition) + ':' + result
-        return result
+        return self._to_raw
 
     def __str__(self):
-        return self.to_raw()
+
+        return self._to_raw
 
     def __hash__(self):
-        # FIXME: consider if this class should be value-is-identity one
-        return hash((self._feature, self._value, tuple(self._condition)))
+        return self._hash
 
-    def __cmp__(self, other):
-        return cmp((self._feature.name(), self._value, self._condition),
-                   (other._feature.name(), other._value, other._condition))
+    def __eq__(self, other):
+        return self._hash == other._hash
+
+    def __lt__(self, other):
+        return (self.feature.name, self.value) < (other.feature.name, other.value)
+
+
+@total_ordering
+class LazyProperty(object):
+    def __init__(self, feature_name, value, condition=None):
+        if condition is None:
+            condition = []
+
+        self.__property = Property(
+            feature.get(_not_applicable_feature), feature_name + value, condition=condition)
+        self.__name = feature_name
+        self.__value = value
+        self.__condition = condition
+        self.__feature = None
+
+    def __getattr__(self, item):
+        if self.__feature is None:
+            try:
+                self.__feature = feature.get(self.__name)
+                self.__property = Property(self.__feature, self.__value, self.__condition)
+            except KeyError:
+                pass
+        return getattr(self.__property, item)
+
+    def __hash__(self):
+        return hash(self.__property)
+
+    def __str__(self):
+        return self.__property._to_raw
+
+    def __eq__(self, other):
+        return self.__property == other
+
+    def __lt__(self, other):
+        return (self.feature.name, self.value) < (other.feature.name, other.value)
 
 
 def create_from_string(s, allow_condition=False,allow_missing_value=False):
@@ -89,17 +180,24 @@ def create_from_string(s, allow_condition=False,allow_missing_value=False):
     # FIXME: break dependency cycle
     from b2.manager import get_manager
 
+    if condition:
+        condition = [create_from_string(x) for x in condition.split(',')]
+
     feature_name = get_grist(s)
     if not feature_name:
         if feature.is_implicit_value(s):
             f = feature.implied_feature(s)
             value = s
+            p = Property(f, value, condition=condition)
         else:
             raise get_manager().errors()("Invalid property '%s' -- unknown feature" % s)
     else:
+        value = get_value(s)
+        if not value and not allow_missing_value:
+            get_manager().errors()("Invalid property '%s' -- no value specified" % s)
+
         if feature.valid(feature_name):
-            f = feature.get(feature_name)
-            value = get_value(s)
+            p = Property(feature.get(feature_name), value, condition=condition)
         else:
             # In case feature name is not known, it is wrong to do a hard error.
             # Feature sets change depending on the toolset. So e.g.
@@ -112,17 +210,9 @@ def create_from_string(s, allow_condition=False,allow_missing_value=False):
             # The underlying cause for this problem is that python port Property
             # is more strict than its Jam counterpart and must always reference
             # a valid feature.
-            f = feature.get(__not_applicable_feature)
-            value = s
+            p = LazyProperty(feature_name, value, condition=condition)
 
-        if not value and not allow_missing_value:
-            get_manager().errors()("Invalid property '%s' -- no value specified" % s)
-
-
-    if condition:
-        condition = [create_from_string(x) for x in condition.split(',')]
-
-    return Property(f, value, condition)
+    return p
 
 def create_from_strings(string_list, allow_condition=False):
     assert is_iterable_typed(string_list, basestring)
@@ -141,6 +231,9 @@ reset ()
 
 def set_abbreviated_paths(on=True):
     global __abbreviated_paths
+    if on == 'off':
+        on = False
+    on = bool(on)
     __abbreviated_paths = on
 
 
@@ -199,19 +292,19 @@ def refine (properties, requirements):
     # Record them so that we can handle 'properties'.
     for r in requirements:
         # Don't consider conditional requirements.
-        if not r.condition():
-            required[r.feature()] = r
+        if not r.condition:
+            required[r.feature] = r
 
     for p in properties:
         # Skip conditional properties
-        if p.condition():
+        if p.condition:
             result.add(p)
         # No processing for free properties
-        elif p.feature().free():
+        elif p.feature.free:
             result.add(p)
         else:
-            if required.has_key(p.feature()):
-                result.add(required[p.feature()])
+            if p.feature in required:
+                result.add(required[p.feature])
             else:
                 result.add(p)
 
@@ -222,17 +315,18 @@ def translate_paths (properties, path):
         The property values are assumed to be in system-specific form, and
         will be translated into normalized form.
         """
+    assert is_iterable_typed(properties, Property)
     result = []
 
     for p in properties:
 
-        if p.feature().path():
-            values = __re_two_ampersands.split(p.value())
+        if p.feature.path:
+            values = __re_two_ampersands.split(p.value)
 
-            new_value = "&&".join(os.path.join(path, v) for v in values)
+            new_value = "&&".join(os.path.normpath(os.path.join(path, v)) for v in values)
 
-            if new_value != p.value():
-                result.append(Property(p.feature(), new_value, p.condition()))
+            if new_value != p.value:
+                result.append(Property(p.feature, new_value, p.condition))
             else:
                 result.append(p)
 
@@ -250,10 +344,10 @@ def translate_indirect(properties, context_module):
     assert isinstance(context_module, basestring)
     result = []
     for p in properties:
-        if p.value()[0] == '@':
-            q = qualify_jam_action(p.value()[1:], context_module)
+        if p.value[0] == '@':
+            q = qualify_jam_action(p.value[1:], context_module)
             get_manager().engine().register_bjam_action(q)
-            result.append(Property(p.feature(), '@' + q, p.condition()))
+            result.append(Property(p.feature, '@' + q, p.condition))
         else:
             result.append(p)
 
@@ -274,22 +368,25 @@ def expand_subfeatures_in_conditions (properties):
     result = []
     for p in properties:
 
-        if not p.condition():
+        if not p.condition:
             result.append(p)
         else:
             expanded = []
-            for c in p.condition():
+            for c in p.condition:
+                # It common that condition includes a toolset which
+                # was never defined, or mentiones subfeatures which
+                # were never defined. In that case, validation will
+                # only produce an spirious error, so don't validate.
+                expanded.extend(feature.expand_subfeatures ([c], True))
 
-                if c.feature().name().startswith("toolset") or c.feature().name() == "os":
-                    # It common that condition includes a toolset which
-                    # was never defined, or mentiones subfeatures which
-                    # were never defined. In that case, validation will
-                    # only produce an spirious error, so don't validate.
-                    expanded.extend(feature.expand_subfeatures ([c], True))
-                else:
-                    expanded.extend(feature.expand_subfeatures([c]))
-
-            result.append(Property(p.feature(), p.value(), expanded))
+            # we need to keep LazyProperties lazy
+            if isinstance(p, LazyProperty):
+                value = p.value
+                feature_name = get_grist(value)
+                value = value.replace(feature_name, '')
+                result.append(LazyProperty(feature_name, value, condition=expanded))
+            else:
+                result.append(Property(p.feature, p.value, expanded))
 
     return result
 
@@ -330,7 +427,7 @@ def validate_property_sets (sets):
 
 def evaluate_conditionals_in_context (properties, context):
     """ Removes all conditional properties which conditions are not met
-        For those with met conditions, removes the condition. Properies
+        For those with met conditions, removes the condition. Properties
         in conditions are looked up in 'context'
     """
     if __debug__:
@@ -341,7 +438,7 @@ def evaluate_conditionals_in_context (properties, context):
     conditional = []
 
     for p in properties:
-        if p.condition():
+        if p.condition:
             conditional.append (p)
         else:
             base.append (p)
@@ -351,8 +448,8 @@ def evaluate_conditionals_in_context (properties, context):
 
         # Evaluate condition
         # FIXME: probably inefficient
-        if all(x in context for x in p.condition()):
-            result.append(Property(p.feature(), p.value()))
+        if all(x in context for x in p.condition):
+            result.append(Property(p.feature, p.value))
 
     return result
 
@@ -389,8 +486,8 @@ def __validate1 (property):
     assert isinstance(property, Property)
     msg = None
 
-    if not property.feature().free():
-        feature.validate_value_string (property.feature(), property.value())
+    if not property.feature.free:
+        feature.validate_value_string (property.feature, property.value)
 
 
 ###################################################################
@@ -460,10 +557,10 @@ def translate_dependencies(properties, project_id, location):
     result = []
     for p in properties:
 
-        if not p.feature().dependency():
+        if not p.feature.dependency:
             result.append(p)
         else:
-            v = p.value()
+            v = p.value
             m = re.match("(.*)//(.*)", v)
             if m:
                 rooted = m.group(1)
@@ -473,12 +570,12 @@ def translate_dependencies(properties, project_id, location):
                 else:
                     rooted = os.path.join(os.getcwd(), location, rooted)
 
-                result.append(Property(p.feature(), rooted + "//" + m.group(2), p.condition()))
+                result.append(Property(p.feature, rooted + "//" + m.group(2), p.condition))
 
             elif os.path.isabs(v):
                 result.append(p)
             else:
-                result.append(Property(p.feature(), project_id + "//" + v, p.condition()))
+                result.append(Property(p.feature, project_id + "//" + v, p.condition))
 
     return result
 

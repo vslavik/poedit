@@ -31,8 +31,8 @@ t.write("src/b.cpp", "int main() {}\n")
 
 t.run_build_system()
 
-t.expect_addition(["build/$toolset/debug/a.exe",
-                   "build/src/$toolset/debug/b.exe"])
+t.expect_addition(["build/$toolset/debug*/a.exe",
+                   "build/src/$toolset/debug*/b.exe"])
 
 # Test that building from child projects work.
 t.run_build_system(subdir='src')
@@ -52,8 +52,8 @@ exe b : b.cpp ;
 """)
 
 t.run_build_system()
-t.expect_addition(["bin/$toolset/debug/a.exe",
-                   "src/build/$toolset/debug/b.exe"])
+t.expect_addition(["bin/$toolset/debug*/a.exe",
+                   "src/build/$toolset/debug*/b.exe"])
 
 # Now test the '--build-dir' option.
 t.rm(".")
@@ -74,8 +74,8 @@ t.write("sub/jamfile.jam", "exe b : b.cpp ;\n")
 t.write("sub/b.cpp", "int main() {}\n")
 
 t.run_build_system(["--build-dir=build"])
-t.expect_addition(["build/foo/$toolset/debug/a.exe",
-                   "build/foo/sub/$toolset/debug/b.exe"])
+t.expect_addition(["build/foo/$toolset/debug*/a.exe",
+                   "build/foo/sub/$toolset/debug*/b.exe"])
 
 t.write("jamroot.jam", """\
 project foo : build-dir bin.v2 ;
@@ -84,15 +84,15 @@ build-project sub ;
 """)
 
 t.run_build_system(["--build-dir=build"])
-t.expect_addition(["build/foo/bin.v2/$toolset/debug/a.exe",
-                   "build/foo/bin.v2/sub/$toolset/debug/b.exe"])
+t.expect_addition(["build/foo/bin.v2/$toolset/debug*/a.exe",
+                   "build/foo/bin.v2/sub/$toolset/debug*/b.exe"])
 
 # Try building in subdir. We expect that the entire build tree with be in
 # 'sub/build'. Today, I am not sure if this is what the user expects, but let
 # it be.
 t.rm('build')
 t.run_build_system(["--build-dir=build"], subdir="sub")
-t.expect_addition(["sub/build/foo/bin.v2/sub/$toolset/debug/b.exe"])
+t.expect_addition(["sub/build/foo/bin.v2/sub/$toolset/debug*/b.exe"])
 
 t.write("jamroot.jam", """\
 project foo : build-dir %s ;

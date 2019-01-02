@@ -73,7 +73,7 @@ template <typename T>
 void test_coordinate_type()
 {
     // 1a: Check if Boost.Polygon's point fulfills Boost.Geometry's point concept
-    bg::concept::check<boost::polygon::point_data<T> >();
+    bg::concepts::check<boost::polygon::point_data<T> >();
 
     // 1b: use a Boost.Polygon point in Boost.Geometry, calc. distance with two point types
     boost::polygon::point_data<T> boost_polygon_point(1, 2);
@@ -84,7 +84,7 @@ void test_coordinate_type()
                     2 * std::sqrt(2.0));
 
     // 2a: Check if Boost.Polygon's box fulfills Boost.Geometry's box concept
-    bg::concept::check<boost::polygon::rectangle_data<T> >();
+    bg::concepts::check<boost::polygon::rectangle_data<T> >();
 
     // 2b: use a Boost.Polygon rectangle in Boost.Geometry, compare with boxes
     boost::polygon::rectangle_data<T> boost_polygon_box;
@@ -99,7 +99,7 @@ void test_coordinate_type()
     BOOST_CHECK_EQUAL(boost_polygon_area, boost_polygon_area_by_boost_polygon);
 
     // 3a: Check if Boost.Polygon's polygon fulfills Boost.Geometry's ring concept
-    bg::concept::check<boost::polygon::polygon_data<T> >();
+    bg::concepts::check<boost::polygon::polygon_data<T> >();
 
     // 3b: use a Boost.Polygon polygon (ring)
     boost::polygon::polygon_data<T> boost_polygon_ring;

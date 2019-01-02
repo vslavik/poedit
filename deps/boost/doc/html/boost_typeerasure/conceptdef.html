@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Concept Definitions</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;36.&#160;Boost.TypeErasure">
+<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;40.&#160;Boost.TypeErasure">
 <link rel="prev" href="examples.html" title="Examples">
 <link rel="next" href="predef.html" title="Predefined Concepts">
 </head>
@@ -55,7 +55,7 @@
       Each primitive concept defines a single function. A primitive concept must
       be a specialization of a class template, with a static member function called
       <code class="computeroutput"><span class="identifier">apply</span></code>, which will be executed
-      when the function is dispatched by <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp314423328.html" title="Function call">call</a></code>.
+      when the function is dispatched by <code class="computeroutput"><a class="link" href="../boost/type_erasure/call.html" title="Function call">call</a></code>.
       The template can only take template type parameters. non-type template parameters
       and template template parameters are not allowed.
     </p>
@@ -63,7 +63,7 @@
       The template parameters of the concept may involve placeholders. The following
       are considered.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Each template argument may be a cv and/or reference qualified placeholder
           type.
@@ -84,7 +84,7 @@
       in the template argument list with the type that it binds to, the following
       must hold.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           The number of arguments of apply in the bound concept must be the same
           as the number of arguments in the unbound concept.

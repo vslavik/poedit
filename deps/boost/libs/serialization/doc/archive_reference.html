@@ -267,7 +267,7 @@ EXCEPT for one special case.
 To make this work, the following should be included after the archive
 class definition.
 <pre><code>
-#define BOOST_SERIALIZATION_REGISTER_ARCHIVE(Archive)
+BOOST_SERIALIZATION_REGISTER_ARCHIVE(Archive)
 </code></pre>
 Failure to do this will not inhibit the program from compiling, linking
 and executing properly - except in one case.  If an instance of a derived

@@ -93,6 +93,7 @@ main()
 
     {
         BOOST_MPL_ASSERT((traits::is_view<adapted::point>));
+        BOOST_STATIC_ASSERT(traits::is_view<adapted::point>::value);
         ns::point basep(123, 456, 789);
         adapted::point p(basep);
 

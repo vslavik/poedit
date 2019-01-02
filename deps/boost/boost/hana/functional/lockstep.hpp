@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::lockstep`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -12,9 +12,9 @@ Distributed under the Boost Software License, Version 1.0.
 
 #include <boost/hana/basic_tuple.hpp>
 #include <boost/hana/config.hpp>
+#include <boost/hana/detail/decay.hpp>
 
 #include <cstddef>
-#include <type_traits>
 #include <utility>
 
 
@@ -51,7 +51,7 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct make_pre_lockstep_t {
         struct secret { };
         template <typename F>
-        constexpr pre_lockstep_t<typename std::decay<F>::type> operator()(F&& f) const {
+        constexpr pre_lockstep_t<typename detail::decay<F>::type> operator()(F&& f) const {
             return {static_cast<F&&>(f)};
         }
     };
@@ -67,22 +67,22 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) const& {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)(static_cast<X&&>(x))...
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)(static_cast<X&&>(x))...
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) & {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)(static_cast<X&&>(x))...
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)(static_cast<X&&>(x))...
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) && {
-            return static_cast<F&&>(hana::get_impl<0>(storage_))(
-                static_cast<G&&>(hana::get_impl<n+1>(storage_))(static_cast<X&&>(x))...
+            return static_cast<F&&>(hana::at_c<0>(storage_))(
+                static_cast<G&&>(hana::at_c<n+1>(storage_))(static_cast<X&&>(x))...
             );
         }
     };
@@ -93,14 +93,14 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...G>
         constexpr lockstep_t<std::make_index_sequence<sizeof...(G)>, F,
-                             typename std::decay<G>::type...>
+                             typename detail::decay<G>::type...>
         operator()(G&& ...g) const& {
             return {make_pre_lockstep_t::secret{}, this->f, static_cast<G&&>(g)...};
         }
 
         template <typename ...G>
         constexpr lockstep_t<std::make_index_sequence<sizeof...(G)>, F,
-                             typename std::decay<G>::type...>
+                             typename detail::decay<G>::type...>
         operator()(G&& ...g) && {
             return {make_pre_lockstep_t::secret{}, static_cast<F&&>(this->f),
                                                    static_cast<G&&>(g)...};

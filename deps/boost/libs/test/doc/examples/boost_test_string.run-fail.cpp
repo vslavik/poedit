@@ -24,5 +24,8 @@ BOOST_AUTO_TEST_CASE( test_strings )
   const char* c = "test1";
   BOOST_TEST(a == b);
   BOOST_TEST(a == c);
+  BOOST_TEST(std::string("test1") == b);
+  BOOST_TEST(std::string("test1") < a, boost::test_tools::per_element());
+  BOOST_TEST(b < a, boost::test_tools::lexicographic());
 }
 //]

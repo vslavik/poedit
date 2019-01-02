@@ -148,19 +148,19 @@ namespace boost { namespace spirit
             return policies_base_type::less_than(*this, y);
         }
 
-        bool operator!=(multi_pass const& y)
+        bool operator!=(multi_pass const& y) const
         {
             return !(*this == y);
         }
-        bool operator>(multi_pass const& y)
+        bool operator>(multi_pass const& y) const
         {
             return y < *this;
         }
-        bool operator>=(multi_pass const& y)
+        bool operator>=(multi_pass const& y) const
         {
             return !(*this < y);
         }
-        bool operator<=(multi_pass const& y)
+        bool operator<=(multi_pass const& y) const
         {
             return !(y < *this);
         }

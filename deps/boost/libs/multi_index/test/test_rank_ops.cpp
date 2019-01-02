@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for rank operations.
  *
- * Copyright 2003-2015 Joaquin M Lopez Munoz.
+ * Copyright 2003-2017 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -139,4 +139,16 @@ void test_rank_ops()
   > ranked_multiset;
   
   local_test_rank_ops<ranked_multiset>();
+
+  /* testcase for https://svn.boost.org/trac/boost/ticket/12955 */
+
+  typedef multi_index_container<
+    int,
+    indexed_by<
+      ranked_unique<identity<int> >,
+      ranked_non_unique<identity<int> >
+    >
+  > biranked_set;
+  
+  local_test_rank_ops<biranked_set>();
 }

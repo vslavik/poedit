@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_all_extents_t = typename remove_all_extents<T>::type; // C++11 and above
+
 __type If `T` is an array type, then removes all of the array bounds on `T`, otherwise
 leaves `T` unchanged.
 

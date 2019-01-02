@@ -12,7 +12,6 @@
 #ifndef BOOST_ALGORITHM_NONE_OF_HPP
 #define BOOST_ALGORITHM_NONE_OF_HPP
 
-#include <algorithm>    // for std::none_of, if available
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -27,11 +26,11 @@ namespace boost { namespace algorithm {
 /// \param p     A predicate for testing the elements of the sequence
 ///
 template<typename InputIterator, typename Predicate> 
-bool none_of ( InputIterator first, InputIterator last, Predicate p )
+BOOST_CXX14_CONSTEXPR bool none_of ( InputIterator first, InputIterator last, Predicate p )
 {
-for ( ; first != last; ++first )
-    if ( p(*first)) 
-        return false;
+    for ( ; first != last; ++first )
+        if ( p(*first)) 
+            return false;
     return true;
 } 
 
@@ -43,7 +42,7 @@ for ( ; first != last; ++first )
 /// \param p     A predicate for testing the elements of the range
 ///
 template<typename Range, typename Predicate> 
-bool none_of ( const Range &r, Predicate p )
+BOOST_CXX14_CONSTEXPR bool none_of ( const Range &r, Predicate p )
 {
     return boost::algorithm::none_of (boost::begin (r), boost::end (r), p );
 } 
@@ -57,7 +56,7 @@ bool none_of ( const Range &r, Predicate p )
 /// \param val   A value to compare against
 ///
 template<typename InputIterator, typename V> 
-bool none_of_equal ( InputIterator first, InputIterator last, const V &val ) 
+BOOST_CXX14_CONSTEXPR bool none_of_equal ( InputIterator first, InputIterator last, const V &val ) 
 {
     for ( ; first != last; ++first )
         if ( val == *first )
@@ -73,7 +72,7 @@ bool none_of_equal ( InputIterator first, InputIterator last, const V &val )
 /// \param val   A value to compare against
 ///
 template<typename Range, typename V> 
-bool none_of_equal ( const Range &r, const V & val ) 
+BOOST_CXX14_CONSTEXPR bool none_of_equal ( const Range &r, const V & val ) 
 {
     return boost::algorithm::none_of_equal (boost::begin (r), boost::end (r), val);
 } 

@@ -8,17 +8,17 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include "utils.hpp"
-#include "state.hpp"
-#include "actions.hpp"
-#include "grammar_impl.hpp"
-#include "block_tags.hpp"
-#include "template_tags.hpp"
 #include <boost/spirit/include/classic_assign_actor.hpp>
-#include <boost/spirit/include/classic_if.hpp>
 #include <boost/spirit/include/classic_clear_actor.hpp>
-#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include <boost/spirit/include/classic_if.hpp>
 #include <boost/spirit/include/phoenix1_casts.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include "actions.hpp"
+#include "block_tags.hpp"
+#include "grammar_impl.hpp"
+#include "state.hpp"
+#include "template_tags.hpp"
+#include "utils.hpp"
 
 namespace quickbook
 {
@@ -27,22 +27,18 @@ namespace quickbook
 
     struct block_element_grammar_local
     {
-        cl::rule<scanner>
-                        heading, inner_block, inner_phrase, def_macro,
-                        table, table_title, table_row, variablelist,
-                        varlistentry, varlistterm, list, cell,
-                        preformatted, begin_section, end_section,
-                        xinclude, include, include_filename,
-                        template_, template_id, template_formal_arg,
-                        template_body, identifier, import,
-                        element_id,
-                        same_line;
+        cl::rule<scanner> heading, inner_block, inner_phrase, def_macro, table,
+            table_title, table_row, variablelist, varlistentry, varlistterm,
+            list, cell, preformatted, begin_section, end_section, xinclude,
+            include, include_filename, template_, template_id,
+            template_formal_arg, template_body, identifier, import, element_id,
+            same_line;
     };
 
     void quickbook_grammar::impl::init_block_elements()
     {
-        block_element_grammar_local& local = cleanup_.add(
-            new block_element_grammar_local);
+        block_element_grammar_local& local =
+            cleanup_.add(new block_element_grammar_local);
 
         // Actions
         error_action error(state);
@@ -50,6 +46,8 @@ namespace quickbook
         raw_char_action raw_char(state);
         explicit_list_action explicit_list(state);
         scoped_parser<to_value_scoped_action> to_value(state);
+
+        // clang-format off
 
         local.element_id =
             !(  ':'
@@ -76,7 +74,8 @@ namespace quickbook
             ;
 
         local.end_section =
-                cl::eps_p
+                space
+            >>  local.element_id
             ;
 
         local.heading
@@ -330,5 +329,7 @@ namespace quickbook
                 paragraph_phrase
             ]
             ;
+
+        // clang-format on
     }
 }

@@ -111,7 +111,7 @@ void test_command_line()
         // Explicit qualification is a workaround for vc6
         ("bar,b", po::value<std::string>(), "")
         ("baz", new untyped_value())
-        ("plug*", new untyped_value())
+        ("qux,plug*", new untyped_value())
         ;
 
     const wchar_t* cmdline4_[] = { L"--foo=1\u0FF52", L"-f4", L"--bar=11",
@@ -126,6 +126,7 @@ void test_command_line()
     check_value(a4[0], "foo", L"1\u0FF52");
     check_value(a4[1], "foo", L"4");
     check_value(a4[2], "bar", L"11");
+    check_value(a4[4], "qux", L"10");
 }
 
 // Since we've already tested conversion between parser encoding and

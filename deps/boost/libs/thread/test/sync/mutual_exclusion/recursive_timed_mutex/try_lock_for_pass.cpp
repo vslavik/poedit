@@ -22,30 +22,30 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
 
-
 boost::recursive_timed_mutex m;
 
-typedef boost::chrono::steady_clock Clock;
+typedef boost::chrono::high_resolution_clock Clock;
 typedef Clock::time_point time_point;
 typedef Clock::duration duration;
 typedef boost::chrono::milliseconds ms;
 typedef boost::chrono::nanoseconds ns;
+time_point t0;
+time_point t1;
+
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
 
 void f1()
 {
-  time_point t0 = Clock::now();
-  // This test is spurious as it depends on the time the thread system switches the threads
-  BOOST_TEST(m.try_lock_for(ms(300)+ms(1000)) == true);
-  time_point t1 = Clock::now();
+  t0 = Clock::now();
+  BOOST_TEST(m.try_lock_for(ms(750)) == true);
+  t1 = Clock::now();
   BOOST_TEST(m.try_lock());
   m.unlock();
   m.unlock();
-  ns d = t1 - t0 - ms(250);
-  // This test is spurious as it depends on the time the thread system switches the threads
-  BOOST_TEST(d < ns(5000000)+ms(1000)); // within 5ms
 }
 
 void f2()
@@ -54,8 +54,7 @@ void f2()
   BOOST_TEST(m.try_lock_for(ms(250)) == false);
   time_point t1 = Clock::now();
   ns d = t1 - t0 - ms(250);
-  // This test is spurious as it depends on the time the thread system switches the threads
-  BOOST_TEST(d < ns(5000000)+ms(1000)); // within 5ms
+  BOOST_THREAD_TEST_IT(d, ns(max_diff));
 }
 
 int main()
@@ -63,14 +62,23 @@ int main()
   {
     m.lock();
     boost::thread t(f1);
+    time_point t2 = Clock::now();
     boost::this_thread::sleep_for(ms(250));
+    time_point t3 = Clock::now();
     m.unlock();
     t.join();
+
+    ns sleep_time = t3 - t2;
+    ns d_ns = t1 - t0 - sleep_time;
+    ms d_ms = boost::chrono::duration_cast<boost::chrono::milliseconds>(d_ns);
+    // BOOST_TEST_GE(d_ms.count(), 0);
+    BOOST_THREAD_TEST_IT(d_ms, max_diff);
+    BOOST_THREAD_TEST_IT(d_ns, ns(max_diff));
   }
   {
     m.lock();
     boost::thread t(f2);
-    boost::this_thread::sleep_for(ms(400));
+    boost::this_thread::sleep_for(ms(750));
     m.unlock();
     t.join();
   }

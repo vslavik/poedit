@@ -50,7 +50,7 @@ template<class R, class Y>
 struct static_rational_power_impl
 {
     typedef typename typeof_pow_adl_barrier::typeof_pow<Y>::type type;
-    static type call(const Y& y)
+    static BOOST_CONSTEXPR type call(const Y& y)
     {
         using std::pow;
         return(pow(y, static_cast<double>(R::Numerator) / static_cast<double>(R::Denominator)));
@@ -61,10 +61,9 @@ template<class R>
 struct static_rational_power_impl<R, one>
 {
     typedef one type;
-    static one call(const one&)
+    static BOOST_CONSTEXPR one call(const one&)
     {
-        one result;
-        return(result);
+        return(one());
     }
 };
 
@@ -72,10 +71,9 @@ template<long N>
 struct static_rational_power_impl<static_rational<N, 1>, one>
 {
     typedef one type;
-    static one call(const one&)
+    static BOOST_CONSTEXPR one call(const one&)
     {
-        one result;
-        return(result);
+        return(one());
     }
 };
 
@@ -91,10 +89,9 @@ struct static_int_power_impl<N, true>
         typedef typename multiply_typeof_helper<Y, Y>::type square_type;
         typedef typename static_int_power_impl<(N >> 1)>::template apply<square_type, R> next;
         typedef typename next::type type;
-        static type call(const Y& y, const R& r)
+        static BOOST_CONSTEXPR type call(const Y& y, const R& r)
         {
-            const square_type square = y * y;
-            return(next::call(square, r));
+            return(next::call(static_cast<square_type>(y * y), r));
         }
     };
 };
@@ -109,10 +106,9 @@ struct static_int_power_impl<N, false>
         typedef typename multiply_typeof_helper<Y, R>::type new_r;
         typedef typename static_int_power_impl<(N >> 1)>::template apply<square_type, new_r> next;
         typedef typename next::type type;
-        static type call(const Y& y, const R& r)
+        static BOOST_CONSTEXPR type call(const Y& y, const R& r)
         {
-            const Y square = y * y;
-            return(next::call(square, y * r));
+            return(next::call(static_cast<Y>(y * y), y * r));
         }
     };
 };
@@ -124,7 +120,7 @@ struct static_int_power_impl<1, false>
     struct apply
     {
         typedef typename multiply_typeof_helper<Y, R>::type type;
-        static type call(const Y& y, const R& r)
+        static BOOST_CONSTEXPR type call(const Y& y, const R& r)
         {
             return(y * r);
         }
@@ -138,7 +134,7 @@ struct static_int_power_impl<0, true>
     struct apply
     {
         typedef R type;
-        static R call(const Y&, const R& r)
+        static BOOST_CONSTEXPR R call(const Y&, const R& r)
         {
             return(r);
         }
@@ -156,10 +152,9 @@ struct static_int_power_sign_impl<N, false>
     {
         typedef typename static_int_power_impl<N>::template apply<Y, one> impl;
         typedef typename impl::type type;
-        static type call(const Y& y)
+        static BOOST_CONSTEXPR type call(const Y& y)
         {
-            one result;
-            return(impl::call(y, result));
+            return(impl::call(y, one()));
         }
     };
 };
@@ -172,10 +167,9 @@ struct static_int_power_sign_impl<N, true>
     {
         typedef typename static_int_power_impl<-N>::template apply<Y, one> impl;
         typedef typename divide_typeof_helper<one, typename impl::type>::type type;
-        static type call(const Y& y)
+        static BOOST_CONSTEXPR type call(const Y& y)
         {
-            one result;
-            return(result/impl::call(y, result));
+            return(one()/impl::call(y, one()));
         }
     };
 };
@@ -185,13 +179,14 @@ struct static_rational_power_impl<static_rational<N, 1>, Y>
 {
     typedef typename static_int_power_sign_impl<N>::template apply<Y> impl;
     typedef typename impl::type type;
-    static type call(const Y& y)
+    static BOOST_CONSTEXPR type call(const Y& y)
     {
         return(impl::call(y));
     }
 };
 
 template<class R, class Y>
+BOOST_CONSTEXPR
 typename detail::static_rational_power_impl<R, Y>::type static_rational_power(const Y& y)
 {
     return(detail::static_rational_power_impl<R, Y>::call(y));

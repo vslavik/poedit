@@ -1,25 +1,26 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-#include <boost/hana.hpp>
-
+#include <boost/hana/any_of.hpp>
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
-#include <boost/hana/concept/comparable.hpp>
 #include <boost/hana/concept/foldable.hpp>
+#include <boost/hana/concept/searchable.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/find_if.hpp>
 #include <boost/hana/functional/always.hpp>
 #include <boost/hana/functional/placeholder.hpp>
-#include <boost/hana/concept/logical.hpp>
+#include <boost/hana/not.hpp>
 #include <boost/hana/optional.hpp>
-#include <boost/hana/concept/searchable.hpp>
+#include <boost/hana/unpack.hpp>
 
 #include <laws/base.hpp>
 #include <laws/foldable.hpp>
 #include <laws/searchable.hpp>
 
 #include <cstddef>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 template <typename T, std::size_t n>
@@ -40,30 +41,30 @@ int main() {
 
         // unpack
         {
-            test::_injection<0> f{};
+            hana::test::_injection<0> f{};
 
-            BOOST_HANA_RUNTIME_CHECK(equal(
-                unpack(a, f),
+            BOOST_HANA_RUNTIME_CHECK(hana::equal(
+                hana::unpack(a, f),
                 f(1)
             ));
 
-            BOOST_HANA_RUNTIME_CHECK(equal(
-                unpack(b, f),
+            BOOST_HANA_RUNTIME_CHECK(hana::equal(
+                hana::unpack(b, f),
                 f(1, 2)
             ));
 
-            BOOST_HANA_RUNTIME_CHECK(equal(
-                unpack(c, f),
+            BOOST_HANA_RUNTIME_CHECK(hana::equal(
+                hana::unpack(c, f),
                 f(1, 2, 3)
             ));
 
-            BOOST_HANA_RUNTIME_CHECK(equal(
-                unpack(d, f),
+            BOOST_HANA_RUNTIME_CHECK(hana::equal(
+                hana::unpack(d, f),
                 f(1, 2, 3, 4)
             ));
         }
 
-        static_assert(Foldable<int[3]>::value, "");
+        static_assert(hana::Foldable<int[3]>::value, "");
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -73,30 +74,30 @@ int main() {
         // any_of
         {
             static_assert(
-                not_(any_of(array<int, 1>{0}, _ == 1))
+                hana::not_(hana::any_of(array<int, 1>{0}, hana::equal.to(1)))
             , "");
 
             static_assert(
-                any_of(array<int, 2>{0, 1}, _ == 0)
+                hana::any_of(array<int, 2>{0, 1}, hana::equal.to(0))
             , "");
             static_assert(
-                any_of(array<int, 2>{0, 1}, _ == 1)
+                hana::any_of(array<int, 2>{0, 1}, hana::equal.to(1))
             , "");
             static_assert(
-                not_(any_of(array<int, 2>{0, 1}, _ == 2))
+                hana::not_(hana::any_of(array<int, 2>{0, 1}, hana::equal.to(2)))
             , "");
 
             static_assert(
-                any_of(array<int, 3>{0, 1, 2}, _ == 0)
+                hana::any_of(array<int, 3>{0, 1, 2}, hana::equal.to(0))
             , "");
             static_assert(
-                any_of(array<int, 3>{0, 1, 2}, _ == 1)
+                hana::any_of(array<int, 3>{0, 1, 2}, hana::equal.to(1))
             , "");
             static_assert(
-                any_of(array<int, 3>{0, 1, 2}, _ == 2)
+                hana::any_of(array<int, 3>{0, 1, 2}, hana::equal.to(2))
             , "");
             static_assert(
-                not_(any_of(array<int, 3>{0, 1, 2}, _ == 3))
+                hana::not_(hana::any_of(array<int, 3>{0, 1, 2}, hana::equal.to(3)))
             , "");
         }
 
@@ -104,17 +105,17 @@ int main() {
         // Note: Because we need the predicate to return a Constant, this
         // is incredibly not powerful.
         {
-            static_assert(equal(
-                find_if(array<int, 1>{0}, always(true_c)),
-                just(0)
+            static_assert(hana::equal(
+                hana::find_if(array<int, 1>{0}, hana::always(hana::true_c)),
+                hana::just(0)
             ), "");
 
-            BOOST_HANA_CONSTANT_CHECK(equal(
-                find_if(array<int, 1>{0}, always(false_c)),
-                nothing
+            BOOST_HANA_CONSTANT_CHECK(hana::equal(
+                hana::find_if(array<int, 1>{0}, hana::always(hana::false_c)),
+                hana::nothing
             ));
         }
 
-        static_assert(Searchable<int[3]>::value, "");
+        static_assert(hana::Searchable<int[3]>::value, "");
     }
 }

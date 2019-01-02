@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test cases</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../tests_organization.html" title="Declaring and organizing tests">
 <link rel="prev" href="../tests_organization.html" title="Declaring and organizing tests">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.tests_organization.test_cases"></a><a class="link" href="test_cases.html" title="Test cases">Test cases</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="test_cases/test_organization_nullary.html">Test
         cases without parameters</a></span></dt>
 <dt><span class="section"><a href="test_cases/test_case_generation.html">Data-driven
@@ -66,7 +66,7 @@
         The <span class="emphasis"><em>Unit Test Framework</em></span> covers the following test case
         scenarios:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>test cases without parameters</strong></span>: those
             are similar to the run of a function in the controlled environment of
@@ -91,7 +91,7 @@
       </p>
 <h5>
 <a name="boost_test.tests_organization.test_cases.h0"></a>
-        <span><a name="boost_test.tests_organization.test_cases.manual_registration"></a></span><a class="link" href="test_cases.html#boost_test.tests_organization.test_cases.manual_registration">Manual
+        <span class="phrase"><a name="boost_test.tests_organization.test_cases.manual_registration"></a></span><a class="link" href="test_cases.html#boost_test.tests_organization.test_cases.manual_registration">Manual
         registration</a>
       </h5>
 <p>
@@ -125,28 +125,30 @@
         You need to be sure you exhausted all possible ways to employ automatic registration
         APIs first before you opt to use manual registration. Specifically:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             If you need optionally include/exclude some of the test cases, consider
-            using enable/disable/enable_if decorators instead
+            using <a class="link" href="../utf_reference/test_org_reference/decorator_enabled.html" title="enabled / disabled (decorator)"><code class="computeroutput"><span class="identifier">enabled</span></code></a> / <a class="link" href="../utf_reference/test_org_reference/decorator_enabled.html" title="enabled / disabled (decorator)"><code class="computeroutput"><span class="identifier">disabled</span></code></a> / <a class="link" href="../utf_reference/test_org_reference/decorator_enable_if.html" title="enable_if (decorator)"><code class="computeroutput"><span class="identifier">enable_if</span></code></a> decorators instead
           </li>
 <li class="listitem">
             If you need to register some parametrized test cases based on some data,
-            consider data-driven test cases instead
+            consider <a class="link" href="test_cases/test_case_generation.html" title="Data-driven test cases">data-driven</a>
+            test cases instead
           </li>
 <li class="listitem">
             If you need to specify complicated test unit dependencies, you can use
-            depends_on decorator instead
+            <a class="link" href="../utf_reference/test_org_reference/decorator_depends_on.html" title="depends_on (decorator)"><code class="computeroutput"><span class="identifier">depends_on</span></code></a> decorator instead
           </li>
 <li class="listitem">
             if you need to share the logic between the test units consider using
-            fixtures instead
+            <a class="link" href="fixtures.html" title="Fixtures">fixtures</a>
+            instead
           </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,7 +1,7 @@
 [library Boost.TypeIndex
     [quickbook 1.6]
-    [version 4.0]
-    [copyright 2012-2014 Antony Polukhin]
+    [version 4.1]
+    [copyright 2012-2016 Antony Polukhin]
     [category Language Features Emulation]
     [license
         Distributed under the Boost Software License, Version 1.0.
@@ -246,6 +246,10 @@ Depending on the `typeid()` availability TypeIndex library will choose an optima
 [macroref BOOST_TYPE_INDEX_REGISTER_CLASS] macro is a helper macro that places some virtual helper functions or
 expands to nothing.
 
+[macroref BOOST_TYPE_INDEX_REGISTER_RUNTIME_CLASS] macro is a helper macro that places the same
+helpers as BOOST_TYPE_INDEX_REGISTER_CLASS plus some additional helpers for boost::typeindex::runtime_cast
+to function.
+
 Issues with cross module type comparison on a bugged compilers are bypassed by directly comparing strings with type 
 (latest versions of those compilers resolved that issue using exactly the same approach).
 
@@ -262,11 +266,20 @@ Issues with cross module type comparison on a bugged compilers are bypassed by d
 [import ../examples/inheritance.cpp]
 [section Getting through the inheritance to receive a real type name ] [type_index_derived_example] [endsect]
 
+[import ../examples/runtime_cast.cpp]
+[section Using runtime_cast where RTTI is unavailable or undesirable ] [type_index_runtime_cast_example] [endsect]
+
 [import ../examples/exact_types_match.cpp]
 [section Exact type matching: storing type with const, volatile and reference qualifiers] [type_index_exact_type_match_example] [endsect]
 
 [import ../examples/table_of_names.cpp]
 [section Table of raw_name() and pretty_name() outputs with and without RTTI ] [type_index_names_table] [endsect]
+
+[import ../examples/constexpr14_namespace_check.cpp]
+[section C++14: Checking namespace at compile time ] [type_index_constexpr14_namespace_example] [endsect]
+
+[import ../examples/constexpr14_sort_check.cpp]
+[section C++14: Checking lexigraphical order of provided types ] [type_index_constexpr14_sort_check_example] [endsect]
 
 [endsect]
 

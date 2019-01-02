@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>cons</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../container.html" title="Container">
 <link rel="prev" href="vector.html" title="vector">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="fusion.container.cons.h0"></a>
-        <span><a name="fusion.container.cons.description"></a></span><a class="link" href="cons.html#fusion.container.cons.description">Description</a>
+        <span class="phrase"><a name="fusion.container.cons.description"></a></span><a class="link" href="cons.html#fusion.container.cons.description">Description</a>
       </h5>
 <p>
         <code class="computeroutput"><span class="identifier">cons</span></code> is a simple <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
@@ -43,21 +43,21 @@
       </p>
 <h5>
 <a name="fusion.container.cons.h1"></a>
-        <span><a name="fusion.container.cons.header"></a></span><a class="link" href="cons.html#fusion.container.cons.header">Header</a>
+        <span class="phrase"><a name="fusion.container.cons.header"></a></span><a class="link" href="cons.html#fusion.container.cons.header">Header</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">list</span><span class="special">/</span><span class="identifier">cons</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">cons</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h5>
 <a name="fusion.container.cons.h2"></a>
-        <span><a name="fusion.container.cons.synopsis"></a></span><a class="link" href="cons.html#fusion.container.cons.synopsis">Synopsis</a>
+        <span class="phrase"><a name="fusion.container.cons.synopsis"></a></span><a class="link" href="cons.html#fusion.container.cons.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Car</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Cdr</span> <span class="special">=</span> <span class="identifier">nil</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">cons</span><span class="special">;</span>
 </pre>
 <h5>
 <a name="fusion.container.cons.h3"></a>
-        <span><a name="fusion.container.cons.template_parameters"></a></span><a class="link" href="cons.html#fusion.container.cons.template_parameters">Template
+        <span class="phrase"><a name="fusion.container.cons.template_parameters"></a></span><a class="link" href="cons.html#fusion.container.cons.template_parameters">Template
         parameters</a>
       </h5>
 <div class="informaltable"><table class="table">
@@ -119,15 +119,15 @@
 </table></div>
 <h5>
 <a name="fusion.container.cons.h4"></a>
-        <span><a name="fusion.container.cons.model_of"></a></span><a class="link" href="cons.html#fusion.container.cons.model_of">Model
+        <span class="phrase"><a name="fusion.container.cons.model_of"></a></span><a class="link" href="cons.html#fusion.container.cons.model_of">Model
         of</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward Sequence</a>
           </li></ul></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">nil</span></code></span></dt>
 <dd><p>
               An empty <code class="computeroutput"><span class="identifier">cons</span></code>
@@ -162,7 +162,7 @@
 </div>
 <h5>
 <a name="fusion.container.cons.h5"></a>
-        <span><a name="fusion.container.cons.expression_semantics"></a></span><a class="link" href="cons.html#fusion.container.cons.expression_semantics">Expression
+        <span class="phrase"><a name="fusion.container.cons.expression_semantics"></a></span><a class="link" href="cons.html#fusion.container.cons.expression_semantics">Expression
         Semantics</a>
       </h5>
 <p>
@@ -288,7 +288,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           <code class="computeroutput"><a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">l</span><span class="special">)</span></code> is
-          provided for convenience and compatibility with the original <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>
+          provided for convenience and compatibility with the original <a href="http://www.boost.org/libs/tuple" target="_top">Boost.Tuple</a>
           library, despite <code class="computeroutput"><span class="identifier">cons</span></code> being
           a <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward Sequence</a>
           only (<code class="computeroutput"><span class="identifier">at</span></code> is supposed to
@@ -299,7 +299,7 @@
 </table></div>
 <h5>
 <a name="fusion.container.cons.h6"></a>
-        <span><a name="fusion.container.cons.example"></a></span><a class="link" href="cons.html#fusion.container.cons.example">Example</a>
+        <span class="phrase"><a name="fusion.container.cons.example"></a></span><a class="link" href="cons.html#fusion.container.cons.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="identifier">cons</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">cons</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">l</span><span class="special">(</span><span class="number">12</span><span class="special">,</span> <span class="identifier">cons</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;(</span><span class="number">5.5f</span><span class="special">));</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <a class="link" href="../sequence/intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">l</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

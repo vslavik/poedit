@@ -20,7 +20,7 @@ Manipulator to stream geometries as SVG.
 
 [heading Synopsis]
 ``template<typename Geometry>
-svg_manipulator<Geometry> svg(Geometry const & geometry, std::string const & style, int size = -1)``
+svg_manipulator<Geometry> svg(Geometry const & geometry, std::string const & style, double size = -1.0)``
 
 [heading Parameters]
 
@@ -28,7 +28,7 @@ svg_manipulator<Geometry> svg(Geometry const & geometry, std::string const & sty
 [[Type] [Concept] [Name] [Description] ]
 [[Geometry const &] [Any type fulfilling a Geometry Concept ] [geometry] [A model of the specified concept ]]
 [[std::string const &] [] [style] [String containing verbatim SVG style information ]]
-[[int] [] [size] [Optional size (used for SVG points) in SVG pixels. For linestrings, specify linewidth in the SVG style information ]]
+[[double] [] [size] [Optional size (used for SVG points) in SVG pixels. For linestrings, specify linewidth in the SVG style information ]]
 ]
 
 
@@ -40,7 +40,7 @@ Either
 
 Or
 
-`#include <boost/geometry/io/svg/write_svg.hpp>`
+`#include <boost/geometry/io/svg/write.hpp>`
 
 
 [endsect]

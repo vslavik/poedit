@@ -489,7 +489,7 @@ int cpp_main(int, char * [])
   be::endian_log = false;
 
   test_inserter_and_extractor();
-    
+
   //  perform the indicated test on ~60*60 operand types
 
   op_test<default_construct>();

@@ -6,8 +6,9 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/config/warning_disable.hpp>
 
-#include <boost/phoenix.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <fstream>
 
@@ -27,7 +28,7 @@ struct test_lexer : boost::spirit::lex::lexer<BaseLexer>
     }
 };
 
-int main(int argc, char* argv[])
+int main()
 {
     typedef lex::lexertl::token<char const*> token_type;
     typedef lex::lexertl::actor_lexer<token_type> lexer_type;

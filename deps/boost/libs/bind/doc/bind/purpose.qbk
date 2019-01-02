@@ -178,7 +178,7 @@ Example:
 The last two examples are interesting in that they produce "self-contained"
 function objects. `bind(&X::f, x, _1)` stores a copy of `x`.
 `bind(&X::f, p, _1)` stores a copy of `p`, and since `p` is a
-[@boost:/libs/smart_ptr/shared_ptr.htm `boost::shared_ptr`], the function
+[@boost:/libs/smart_ptr/doc/html/smart_ptr.html#shared_ptr `boost::shared_ptr`], the function
 object retains a reference to its instance of `X` and will remain valid even
 when `p` goes out of scope or is `reset()`.
 

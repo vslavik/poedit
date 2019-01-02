@@ -1,7 +1,7 @@
 [/
  / Copyright (c) 2008 Howard Hinnant
  / Copyright (c) 2006, 2008 Beman Dawes
- / Copyright (c) 2009-2015 Vicente J. Botet Escriba
+ / Copyright (c) 2009-2018 Vicente J. Botet Escriba
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 
 [library Boost.Chrono
     [quickbook 1.5]
-    [version 2.0.5]
+    [version 2.0.8]
     [authors [Hinnant, Howard]]
     [authors [Dawes, Beman]]
     [authors [Botet Escriba, Vicente J.]]
@@ -361,32 +361,6 @@
 [def __ceil [link chrono.reference.round.ceil_hpp `ceil`]]
 [def __floor [link chrono.reference.round.floor_hpp `floor`]]
 
-[/==================]
-
-[def __StrictStopwatch [link boost_chrono.reference.stopwatches.strict_stopwatch_req `StrictStopwatch`]]
-[def __strict_stopwatch_concept [link boost_chrono.reference.stopwatches.strict_stopwatch_req `StrictStopwatch`]]
-[def __strict_stopwatch [link boost_chrono.reference.stopwatches.strict_stopwatch_hpp.strict_stopwatch `strict_stopwatch`]]
-
-
-[def __strict_stopclock [link boost_chrono.reference.stopclocks.strict_stopclock_hpp.strict_stopclock `strict_stopclock`]]
-
-[def __Stopwatch [link boost_chrono.reference.stopwatches.stopwatch_req `Stopwatch`]]
-[def __stopwatch_concept [link boost_chrono.reference.stopwatches.stopwatch_req `Stopwatch`]]
-[def __stopwatch [link boost_chrono.reference.stopwatches.stopwatch_hpp.stopwatch `stopwatch`]]
-[def __laps_stopwatch [link boost_chrono.reference.stopwatches.stopwatch_hpp.stopwatch `laps_stopwatch`]]
-[def __laps_stopclock [link boost_chrono.reference.stopwatches.stopwatch_hpp.stopwatch `basic_stopclock`]]
-
-[def __SuspendableStopwatch [link boost_chrono.reference.stopwatches.suspendable_stopwatch_req `SuspendableStopwatch`]]
-[def __suspendable_stopwatch_concept [link boost_chrono.reference.stopwatches.suspendable_stopwatch_req `SuspendableStopwatch`]]
-[def __suspendable_stopwatch [link boost_chrono.reference.stopwatches.suspendable_stopwatch_hpp.suspendable_stopwatch `suspendable_stopwatch`]]
-[def __suspendable_stopclock [link boost_chrono.reference.stopwatches.suspendable_stopwatch_hpp.suspendable_stopwatch `suspendable_stopclock`]]
-
-[def __stopwatch_reporter `stopwatch_reporter `]
-[def __stopclock `stopclock `]
-[def __Formatter `Formatter`]
-[def __Formatters `Formatter`s]
-
-
 [/===============]
 [section Overview]
 [/===============]
@@ -463,8 +437,6 @@ thin wrappers around the operating system's process timer API. For POSIX-like sy
 [/These clocks capture the specific time unitarily. __Boost_Chrono__ provides also a clock __process_cpu_clock that captures the three times at once.
 ]
 
-[/include stopwatches/motivation.qbk]
-
 [endsect]
 
 [/==================]
@@ -514,8 +486,6 @@ ISO 8601:2004, Data elements and interchange formats - Information interchange -
 [heading Rounding utilities]
 
 A few simple rounding utility functions for working with durations.
-
-[/include stopwatches/description.qbk]
 
 [heading Caveat Emptor]
 
@@ -714,9 +684,6 @@ If all you want to do is to time a program's execution, here is a complete progr
 Output was:
 
     took 0.832 seconds
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-[/include stopwatches/hello.qbk]
 
 [endsect]
 
@@ -1587,8 +1554,6 @@ The use of this facet is similar to the time_put facet.
 [endsect] [/ Low level I/O]
 
 [endsect] [/ I/O]
-
-[/include stopwatches/tutorial.qbk]
 
 [endsect]
 [/===============]
@@ -2500,9 +2465,6 @@ Include all the chrono header files.
     #include <boost/chrono/floor.hpp>
     #include <boost/chrono/round.hpp>
 
-[/ /////////////////////////////////////////////////////
-    #include <boost/chrono/stopwatches.hpp>
-] [////////////////////////////////////////////////////]
 [endsect]
 
 [section:cpp0x Included on the C++11 Recommendation]
@@ -2569,7 +2531,7 @@ Depending on the static assertion used system you will have an hint of the faili
 
 [section:no_hybrid Don't provide Hybrid Error Handling]
 
-When `BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING` is defined the lib don't provides the hybrid error handling prototypes:
+When `BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING` is defined the lib doesn't provides the hybrid error handling prototypes:
 
   Clock::time_point Clock::now(system::error_code&ec=boost::throws());
 
@@ -7161,228 +7123,7 @@ __thread_clock class provides access to the real thread wall-clock, i.e. the rea
 
 [endsect]
 
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-
-[/include stopwatches/reference.qbk]
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-
-
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-[/
-[section:deprecated Deprecated Headers]
-
-See Boost.Stopwatches for similar functionality.
-
-[/==================================================]
-[section:timer_hpp Deprecated Header `<boost/chrono/timer.hpp>`]
-[/==================================================]
-
-This header has been deprecated, use instead <boost/chrono/stopwatch.hpp>.
-
-    namespace boost { namespace chrono  {
-        template <class __Clock=high_resolution_clock> class timer;
-        typedef <see above> system_timer;
-        #ifdef __BOOST_CHRONO_HAS_CLOCK_STEADY
-        typedef <see above> steady_timer;
-        #endif
-        typedef <see above> high_resolution_timer;
-    }}
-
-[/
-        typedef <see above> process_real_cpu_timer;
-        typedef <see above> process_user_cpu_timer;
-        typedef <see above> process_system_cpu_timer;
-]
-[section:timer Template Class `timer<>`]
-
-Knowing how long a part of a program takes to execute is useful in both test and production environments.
-A `timer` object measures elapsed time. It is recommended to use it with clocks that measure wall clock rather than CPU time since the intended use is performance measurement on systems where total elapsed time is more important than just process or CPU time.
-
-The maximum measurable elapsed time depends on the __Clock parameter. The accuracy of timings depends on the
-accuracy of timing information provided the __Clock, and this could varies a great deal from one clock to another.
-
-        template <class __Clock> class timer {
-        public:
-            typedef __Clock                       clock;
-            typedef typename __Clock::duration    duration;
-            typedef typename __Clock::time_point  time_point;
-
-            explicit timer( system::error_code & ec = system::throws );
-
-            ~timer();
-
-            void start( system::error_code & ec = system::throws );
-            duration elapsed( system::error_code & ec = system::throws );
-
-        };
-
 [endsect]
-
-[section:timer_typedefs `timer` useful typedefs]
-
-        typedef boost::chrono::timer< boost::chrono::system_clock >
-            system_timer;
-        #ifdef __BOOST_CHRONO_HAS_CLOCK_STEADY
-        typedef boost::chrono::timer< boost::chrono::steady_clock >
-            steady_timer;
-        #endif
-        typedef boost::chrono::timer< boost::chrono::high_resolution_clock >
-            high_resolution_timer;
-
-[/
-        typedef boost::chrono::timer< boost::chrono::process_real_cpu_clock > process_real_cpu_timer;
-        typedef boost::chrono::timer< boost::chrono::process_user_cpu_clock > process_user_cpu_timer;
-        typedef boost::chrono::timer< boost::chrono::process_system_cpu_clock > process_system_cpu_timer;
-]
-[endsect]
-[endsect]
-
-
-[/==================================================================]
-[section:process_times_hpp Deprecated Header `<boost/chrono/process_times.hpp>`]
-[/==================================================================]
-
-This header has been deprecated. Use instead `<boost/chrono/process_cpu_clocks.hpp>`, `<boost/chrono/stopwatch.hpp>`, `<boost/chrono/stopwatch_reporter.hpp>` and `<boost/chrono/stopclock.hpp>` files.
-
-    namespace boost { namespace chrono {
-
-        class process_clock;
-        typedef <see below> process_times;
-        class process_timer;
-        class run_timer;
-
-    } }
-
-[section:process_clock Class `process_clock`]
-
-`process_clock` doesn't satisfy the __Clock Requirements as the function now do not follows the __Clock prototype.
-
-`process_clock` provides a thin wrapper around the operating system's process time API. For POSIX-like systems, that's the times() function, while for Windows, it's the GetProcessTimes() function.
-
-The process relative real, user and system current time can be obtained at once by calling `process_clock::now()`.
-
-
-        class process_clock {
-        public:
-            typedef __nanoseconds                          duration;
-            typedef duration::rep                        rep;
-            typedef duration::period                     period;
-            typedef chrono::__time_point<process_clock>    time_point;
-            static constexpr bool is_steady =            true;
-
-            struct process_times;
-            static void now( process_times & times,
-                             system::error_code & ec = system::throws );
-        };
-
-[section:process_times Class `process_times`]
-
-        struct process_times {
-            process_clock::duration real;    // real (i.e wall clock) time
-            process_clock::duration user;    // user cpu time
-            process_clock::duration system;  // system cpu time
-        };
-
-[endsect]
-
-[endsect]
-[section:process_times Typedef `process_times`]
-
-    typedef process_clock::process_times process_times;
-
-This is a synonym of process_clock::process_times included for backward compatibility.
-
-[endsect]
-
-[section:process_timer Class `process_timer`]
-
-Knowing how long a program takes to execute is useful in both test and production environments. It is also helpful if such timing information is broken down into real (wall clock) time, CPU time spent by the user, and CPU time spent by the operating system servicing user requests.
-
-`process_timer<>` is the `timer<>` equivalent associated to the pseudo-clock `process_clock`. It behaves like `timer<>` but it uses the specific `process_clock:now()` function.
-
-        class process_timer {
-        public:
-            typedef process_clock                          clock;
-            typedef process_clock::duration                duration;
-            typedef process_clock::time_point              time_point;
-
-            explicit process_timer( system::error_code & ec = system::throws );
-
-            ~process_timer();
-            void  start( system::error_code & ec = system::throws );
-            void  elapsed( process_times & times, system::error_code & ec = system::throws );
-        };
-
-[endsect]
-[section:run_timer Class `run_timer`]
-
-class `run_timer` provides a complete run-time reporting package that can be invoked in a single line of code. The reporting is controlled by two parameters:
-
-* format : The output format
-* places(precision): the number of decimal places used.
-
-The default places is given by default_places and is 3.
-
-The default format is "nreal %rs, cpu %cs (%p%), user %us, system %ss\\n", where
-
-* `%r` : real process clock
-* `%u` : user process clock
-* `%s` : system process clock
-* `%c` : user+system process clock
-* `%p` : percentage (user+system)/real process clock
-
-All the units are given using the suffix "s" following the System International d'Unites Std.
-
-        class run_timer : public process_timer {
-        public:
-            explicit run_timer( system::error_code & ec = system::throws );
-            explicit run_timer( std::ostream & os,
-                        system::error_code & ec = system::throws );
-
-            explicit run_timer( const std::string & format,
-                        system::error_code & ec = system::throws );
-            explicit run_timer( std::ostream & os, const std::string & format,
-                        system::error_code & ec = system::throws );
-
-            explicit run_timer( const std::string & format, int places,
-                        system::error_code & ec = system::throws );
-            explicit run_timer( std::ostream & os, const std::string & format, int places,
-                        system::error_code & ec = system::throws );
-
-            explicit run_timer( int places,
-                        system::error_code & ec = system::throws );
-            explicit run_timer( std::ostream & os, int places,
-                        system::error_code & ec = system::throws );
-
-            explicit run_timer( int places, const std::string & format,
-                        system::error_code & ec = system::throws );
-            explicit run_timer( std::ostream & os, int places, const std::string & format,
-                        system::error_code & ec = system::throws );
-
-            ~run_timer();
-
-            void start( system::error_code & ec = system::throws );
-
-            void report( system::error_code & ec = system::throws );
-
-            void test_report( duration real_, duration user_, duration system_ );
-            bool reported() const;
-            static int default_places();
-        };
-
-
-[endsect]
-
-[endsect]
-
-[endsect]
-]
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
-
-[endsect]
-
 
 [//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
 [/=================]
@@ -7394,6 +7135,34 @@ All the units are given using the suffix "s" following the System International 
 [section:history Appendix: History]
 [/==================================]
 
+[section [*Version 2.0.8, , 2018 - 1.70] ]
+
+[*Fixes:]
+
+* Remove Stopwatches, which was never be delivered officially.
+
+[endsect] [/section [*Version 2.0.7] ]
+
+[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
+[section [*Version 2.0.7, August 18, 2016 - 1.62] ]
+
+[*Fixes:]
+
+* [@http://svn.boost.org/trac/boost/ticket/11630 #11630] boost chrono documentation about boost chrono version & io API is wrong.
+* [@http://svn.boost.org/trac/boost/ticket/12176 #12176] Chrono without linking to Boost.System 
+* [@http://svn.boost.org/trac/boost/ticket/12260 #12260] Bug: time_fmt does not support for wchar_t on windows
+
+[endsect] [/section [*Version 2.0.7] ]
+[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
+[section [*Version 2.0.6, December 18, 2015 - 1.60] ]
+
+[*Fixes:]
+
+* [@http://svn.boost.org/trac/boost/ticket/11330 #11330] boost::chrono::duration default constructor doesn't initialize rep_
+* [@http://svn.boost.org/trac/boost/ticket/11618 #11618] Chrono IO V2 doc ios_state.hpp does not exist
+* [@http://svn.boost.org/trac/boost/ticket/11631 #11631] boost chrono io v2 does not let you support custom clocks  
+  
+[endsect] [/section [*Version 2.0.6] ]
 [//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
 [section [*Version 2.0.5, February 18, 2015 - 1.58] ]
 
@@ -8040,7 +7809,6 @@ Thanks to Ronald Bock for reporting Valgind issues and for the many suggestions 
 
 [heading For later releases]
 
-* Include Stopwatches.
 * Add User defined literals for some durations.
 * Include chrono::date as defined by Howard Hinnant [@http://home.roadrunner.com/~hinnant/bloomington/date.html here].
 

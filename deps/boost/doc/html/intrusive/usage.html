@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>How to use Boost.Intrusive</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="prev" href="intrusive_vs_nontrusive.html" title="Intrusive and non-intrusive containers">
 <link rel="next" href="usage_when.html" title="When to use?">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="intrusive.usage"></a><a class="link" href="usage.html" title="How to use Boost.Intrusive">How to use Boost.Intrusive</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="usage.html#intrusive.usage.usage_base_hook">Using base hooks</a></span></dt>
 <dt><span class="section"><a href="usage.html#intrusive.usage.usage_member_hook">Using member hooks</a></span></dt>
 <dt><span class="section"><a href="usage.html#intrusive.usage.usage_both_hooks">Using both hooks</a></span></dt>
@@ -70,7 +70,7 @@
         The class can take several options. <span class="bold"><strong>Boost.Intrusive</strong></span>
         classes receive arguments in the form <code class="computeroutput"><span class="identifier">option_name</span><span class="special">&lt;</span><span class="identifier">option_value</span><span class="special">&gt;</span></code>. You can specify the following options:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">tag</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Tag</span><span class="special">&gt;</span></code></strong></span>:
             this argument serves as a tag, so you can derive from more than one
@@ -128,7 +128,7 @@
         as the first parameter and optionally, the user can specify options. We have
         3 option types:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">base_hook</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Hook</span><span class="special">&gt;</span></code></strong></span>
             / <span class="bold"><strong><code class="computeroutput"><span class="identifier">member_hook</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Hook</span><span class="special">,</span> <span class="identifier">Hook</span> <span class="identifier">T</span><span class="special">::*</span> <span class="identifier">PtrToMember</span><span class="special">&gt;</span></code></strong></span>
@@ -159,8 +159,8 @@
             <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code> (for example, STL-like containers
             use the <code class="computeroutput"><span class="identifier">size_type</span></code> defined
             by their allocator). <span class="bold"><strong>Boost.Intrusive</strong></span>
-            can be used to implement such containers specifying the the type of the
-            size. By default the type is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
+            can be used to implement such containers specifying the type of the size.
+            By default the type is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
           </li>
 </ul></div>
 <p>
@@ -350,7 +350,7 @@
         containers, not copies. The lifetime of a stored object is not bound to or
         managed by the container:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             When the container gets destroyed before the object, the object is not
             destroyed, so you have to be careful to avoid resource leaks.

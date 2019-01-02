@@ -125,7 +125,7 @@ void shrink_to_fit_test() {
 
 void iterator_invalidation_test() {
 
-#if !defined(NDEBUG) && !defined(BOOST_CB_DISABLE_DEBUG)
+#if BOOST_CB_ENABLE_DEBUG
 
     cb_space_optimized cb1(10, 1);
     cb1.push_back(2);
@@ -177,7 +177,7 @@ void iterator_invalidation_test() {
     BOOST_CHECK(!it2.is_valid(&cb1));
     BOOST_CHECK(!it3.is_valid(&cb1));
 
-#endif // #if !defined(NDEBUG) && !defined(BOOST_CB_DISABLE_DEBUG)
+#endif // #if BOOST_CB_ENABLE_DEBUG
 }
 
 // test main

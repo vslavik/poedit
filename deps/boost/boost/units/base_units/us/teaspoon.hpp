@@ -28,8 +28,8 @@ typedef scaled_base_unit<pint_base_unit, scale<96, static_rational<-1> > > teasp
 
 template<>
 struct base_unit_info<us::teaspoon_base_unit> {
-    static const char* name()   { return("teaspoon"); }
-    static const char* symbol() { return("tsp"); }
+    static BOOST_CONSTEXPR const char* name()   { return("teaspoon"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("tsp"); }
 };
 
 } // namespace units

@@ -181,7 +181,7 @@ namespace boost
         }
 
         template< class ForwardRng, class BinPredicate >
-        inline adjacent_filtered_range<BinPredicate, ForwardRng, false>
+        inline adjacent_filtered_range<BinPredicate, const ForwardRng, false>
         operator|( const ForwardRng& r,
                    const adjacent_excl_holder<BinPredicate>& f )
         {

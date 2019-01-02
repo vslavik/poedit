@@ -27,35 +27,35 @@ Output:
 
 namespace bu = boost::units;
 
-static const double E_ = 2.718281828459045235360287471352662497757;
+BOOST_STATIC_CONSTEXPR double E_ = 2.718281828459045235360287471352662497757;
 
 int test_main(int,char *[])
 {
     // default constructor
-    const bu::quantity<bu::energy>          E1; 
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy>          E1; 
     BOOST_CHECK(E1.value() == double());
     
     // value_type constructor
-    const bu::quantity<bu::energy>          E2(E_*bu::joules);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy>          E2(E_*bu::joules);
     BOOST_CHECK(E2.value() == E_);
 
     // copy constructor
-    const bu::quantity<bu::energy>          E3(E2);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy>          E3(E2);
     BOOST_CHECK(E3.value() == E_);
 
     // operator=
-    const bu::quantity<bu::energy>          E4 = E2;
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy>          E4 = E2;
     BOOST_CHECK(E4.value() == E_);
 
     // implicit copy constructor value_type conversion
-    const bu::quantity<bu::energy,float>    E5(E2);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy,float>    E5(E2);
     BOOST_UNITS_CHECK_CLOSE(E5.value(),float(E_));
 
     // implicit operator= value_type conversion
-    //const bu::quantity<bu::energy,float>    E7 = E2;
+    //BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy,float>    E7 = E2;
     //BOOST_UNITS_CHECK_CLOSE(E7.value(),float(E_));
     
-    //const bu::quantity<bu::energy,long>     E8 = E2;
+    //BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy,long>     E8 = E2;
     //BOOST_CHECK(E8.value() == long(E_));
     
     // const construction
@@ -91,7 +91,7 @@ int test_main(int,char *[])
     BOOST_CHECK(E9.value() == 1.0);
     
     // static construct quantity from value_type
-    const bu::quantity<bu::energy>      E(bu::quantity<bu::energy>::from_value(2.5));
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::energy>      E(bu::quantity<bu::energy>::from_value(2.5));
     BOOST_CHECK(E.value() == 2.5);
     
     // quantity_cast
@@ -120,10 +120,10 @@ int test_main(int,char *[])
     // scalar / quantity
     BOOST_CHECK(2.0/E == bu::quantity<bu::inverse_energy>::from_value(0.8));
 
-    const bu::quantity<bu::length>      L(1.0*bu::meters);
-    const bu::quantity<bu::mass>        M(2.0*bu::kilograms);
-    const bu::quantity<bu::time>        T(3.0*bu::seconds);
-    const bu::quantity<bu::velocity>    V(bu::quantity<bu::velocity>::from_value(4.0));
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::length>      L(1.0*bu::meters);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::mass>        M(2.0*bu::kilograms);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::time>        T(3.0*bu::seconds);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::velocity>    V(bu::quantity<bu::velocity>::from_value(4.0));
     
     // unit * quantity
     BOOST_CHECK(bu::seconds*V == 4.0*bu::meters);
@@ -155,8 +155,8 @@ int test_main(int,char *[])
     // quantity / quantity
     BOOST_CHECK(L/V == 0.25*bu::seconds);
     
-    const bu::quantity<bu::area>    A(2.0*bu::square_meters);
-    const bu::quantity<bu::volume>  VL(1.0*bu::cubic_meters);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::area>    A(2.0*bu::square_meters);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::volume>  VL(1.0*bu::cubic_meters);
     
     // integer power of quantity
     BOOST_CHECK(2.0*bu::pow<2>(L) == A);
@@ -170,10 +170,10 @@ int test_main(int,char *[])
     // rational root of quantity
     BOOST_CHECK((bu::root< bu::static_rational<3,2> >(VL) == 0.5*A));
     
-    const bu::quantity<bu::area>    A1(0.0*bu::square_meters),
-                                    A2(0.0*bu::square_meters),
-                                    A3(1.0*bu::square_meters),
-                                    A4(-1.0*bu::square_meters);
+    BOOST_CONSTEXPR_OR_CONST bu::quantity<bu::area> A1(0.0*bu::square_meters),
+                                                    A2(0.0*bu::square_meters),
+                                                    A3(1.0*bu::square_meters),
+                                                    A4(-1.0*bu::square_meters);
                                     
     // operator==
     BOOST_CHECK((A1 == A2) == true);

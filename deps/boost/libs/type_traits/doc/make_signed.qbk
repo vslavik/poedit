@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using make_signed_t = typename make_signed<T>::type; // C++11 and above
+
 __type If T is a signed integer type then the same type as T, if T is an 
 unsigned integer type then the corresponding signed type.  
 Otherwise if T is an enumerated or

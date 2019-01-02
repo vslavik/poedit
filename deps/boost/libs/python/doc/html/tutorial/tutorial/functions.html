@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Functions</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Python Tutorial">
 <link rel="up" href="../index.html" title="Boost.Python Tutorial">
 <link rel="prev" href="exposing.html" title="Exposing Classes">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tutorial.functions"></a><a class="link" href="functions.html" title="Functions">Functions</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="functions.html#tutorial.functions.call_policies">Call Policies</a></span></dt>
 <dt><span class="section"><a href="functions.html#tutorial.functions.overloading">Overloading</a></span></dt>
 <dt><span class="section"><a href="functions.html#tutorial.functions.default_arguments">Default Arguments</a></span></dt>
@@ -196,7 +196,7 @@ Namespaces are one honking great idea -- let's do more of those!
 </ol></div>
 <h3>
 <a name="tutorial.functions.call_policies.h0"></a>
-        <span><a name="tutorial.functions.call_policies.call_policies"></a></span><a class="link" href="functions.html#tutorial.functions.call_policies.call_policies">Call
+        <span class="phrase"><a name="tutorial.functions.call_policies.call_policies"></a></span><a class="link" href="functions.html#tutorial.functions.call_policies.call_policies">Call
         Policies</a>
       </h3>
 <p>
@@ -241,7 +241,7 @@ Namespaces are one honking great idea -- let's do more of those!
         Here is the list of predefined call policies. A complete reference detailing
         these can be found <a href="../../reference/function_invocation_and_creation/models_of_callpolicies.html" target="_top">here</a>.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>with_custodian_and_ward</strong></span>: Ties lifetimes
             of the arguments
@@ -256,7 +256,7 @@ Namespaces are one honking great idea -- let's do more of those!
           </li>
 <li class="listitem">
             <span class="bold"><strong>return_value_policy&lt;T&gt; with T one of:</strong></span>
-            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                   <span class="bold"><strong>reference_existing_object</strong></span>: naive
                   (dangerous) approach
@@ -275,8 +275,8 @@ Namespaces are one honking great idea -- let's do more of those!
 </ul></div>
           </li>
 </ul></div>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
         <span class="inlinemediaobject"><img src="../../images/smiley.png"></span>
         <span class="bold"><strong>Remember the Zen, Luke:</strong></span>
@@ -384,7 +384,7 @@ Namespaces are one honking great idea -- let's do more of those!
 <p>
         When you want to wrap functions (or member functions) that either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             have default arguments, or
           </li>
@@ -394,7 +394,7 @@ Namespaces are one honking great idea -- let's do more of those!
 </ul></div>
 <h3>
 <a name="tutorial.functions.default_arguments.h0"></a>
-        <span><a name="tutorial.functions.default_arguments.boost_python_function_overloads"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.boost_python_function_overloads">BOOST_PYTHON_FUNCTION_OVERLOADS</a>
+        <span class="phrase"><a name="tutorial.functions.default_arguments.boost_python_function_overloads"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.boost_python_function_overloads">BOOST_PYTHON_FUNCTION_OVERLOADS</a>
       </h3>
 <p>
         Boost.Python now has a way to make it easier. For instance, given a function:
@@ -421,7 +421,7 @@ Namespaces are one honking great idea -- let's do more of those!
 </pre>
 <h3>
 <a name="tutorial.functions.default_arguments.h1"></a>
-        <span><a name="tutorial.functions.default_arguments.boost_python_member_function_ove"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.boost_python_member_function_ove">BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS</a>
+        <span class="phrase"><a name="tutorial.functions.default_arguments.boost_python_member_function_ove"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.boost_python_member_function_ove">BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS</a>
       </h3>
 <p>
         Objects here, objects there, objects here there everywhere. More frequently
@@ -464,7 +464,7 @@ Namespaces are one honking great idea -- let's do more of those!
       </p>
 <h3>
 <a name="tutorial.functions.default_arguments.h2"></a>
-        <span><a name="tutorial.functions.default_arguments.init_and_optional"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.init_and_optional">init and
+        <span class="phrase"><a name="tutorial.functions.default_arguments.init_and_optional"></a></span><a class="link" href="functions.html#tutorial.functions.default_arguments.init_and_optional">init and
         optional</a>
       </h3>
 <p>
@@ -535,7 +535,7 @@ Namespaces are one honking great idea -- let's do more of those!
       </p>
 <h3>
 <a name="tutorial.functions.auto_overloading.h0"></a>
-        <span><a name="tutorial.functions.auto_overloading.manual_wrapping"></a></span><a class="link" href="functions.html#tutorial.functions.auto_overloading.manual_wrapping">Manual
+        <span class="phrase"><a name="tutorial.functions.auto_overloading.manual_wrapping"></a></span><a class="link" href="functions.html#tutorial.functions.auto_overloading.manual_wrapping">Manual
         Wrapping</a>
       </h3>
 <p>

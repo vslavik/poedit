@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template imbue</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.regex_primitives_hpp" title="Header &lt;boost/xpressive/regex_primitives.hpp&gt;">
 <link rel="prev" href="after.html" title="Function template after">
@@ -35,16 +35,22 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Locale<span class="special">&gt;</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">imbue</span><span class="special">(</span><span class="identifier">Locale</span> <span class="keyword">const</span> <span class="special">&amp;</span> loc<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp509951472"></a><h2>Description</h2>
+<a name="id-1.3.47.5.10.62.4"></a><h2>Description</h2>
 <p>imbue() instructs the regex engine to use the specified traits or locale when matching the regex. The entire expression must use the same traits/locale. For instance, the following specifies a locale for use with a regex: std::locale loc; sregex rx = imbue(loc)(+digit);</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">loc</code></span></p></td>
 <td><p>The std::locale or regex traits object. </p></td>

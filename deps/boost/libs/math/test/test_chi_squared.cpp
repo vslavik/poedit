@@ -63,7 +63,7 @@ void test_spot(
    {
       //
       // We can only check this if P is not too close to 1,
-      // so that we can guarentee Q is free of error:
+      // so that we can guarantee Q is free of error:
       //
       BOOST_CHECK_CLOSE(
          cdf(complement(dist, cs)), Q, tol);
@@ -82,7 +82,7 @@ void test_spot(
    {
       //
       // We can only check this if P is not too close to 1,
-      // so that we can guarentee Q is free of error:
+      // so that we can guarantee Q is free of error:
       //
       BOOST_CHECK_CLOSE(
          cdf(complement(dist2, cs)), Q, tol);

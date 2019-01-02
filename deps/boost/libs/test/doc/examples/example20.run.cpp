@@ -19,7 +19,7 @@ struct MyConfig {
 
 //____________________________________________________________________________//
 
-BOOST_GLOBAL_FIXTURE( MyConfig );
+BOOST_TEST_GLOBAL_FIXTURE( MyConfig );
 
 BOOST_AUTO_TEST_CASE( test_case )
 {

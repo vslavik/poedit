@@ -12,7 +12,7 @@
 >>> f = Foo(1, 2, 'a', bar = 3, baz = 4)
 >>> f.args
 (1, 2, 'a')
->>> f.kw.items()
+>>> sorted(f.kw.items())
 [('bar', 3), ('baz', 4)]
 """
 def run(args = None):
@@ -24,10 +24,10 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
 
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)
 
 

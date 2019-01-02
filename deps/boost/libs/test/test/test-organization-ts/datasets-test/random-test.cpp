@@ -41,8 +41,8 @@ BOOST_AUTO_TEST_CASE( test_default )
     data::for_each_sample( ds^arr, ic );
     BOOST_TEST( ic.m_value == 5 );
 
-    BOOST_CHECK_THROW( ds * arr, std::logic_error );
-    BOOST_CHECK_THROW( arr * ds, std::logic_error );
+    BOOST_CHECK_THROW( (ds * arr).size(), std::logic_error );
+    BOOST_CHECK_THROW( (arr * ds).size(), std::logic_error );
 }
 
 //____________________________________________________________________________//

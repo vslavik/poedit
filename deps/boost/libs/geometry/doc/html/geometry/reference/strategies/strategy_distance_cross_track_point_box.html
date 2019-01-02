@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>strategy::distance::cross_track_point_box</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../strategies.html" title="Strategies">
 <link rel="prev" href="strategy_distance_cross_track.html" title="strategy::distance::cross_track">
-<link rel="next" href="strategy_area_surveyor.html" title="strategy::area::surveyor">
+<link rel="next" href="strategy_side_side_by_triangle.html" title="strategy::side::side_by_triangle">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,19 +20,19 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="strategy_distance_cross_track.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="strategy_distance_cross_track.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_side_side_by_triangle.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box"></a><a class="link" href="strategy_distance_cross_track_point_box.html" title="strategy::distance::cross_track_point_box">strategy::distance::cross_track_point_box</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp102565232"></a><a class="indexterm" name="idp102565920"></a><a class="indexterm" name="idp102566608"></a>
+          <a class="indexterm" name="idp123706944"></a><a class="indexterm" name="idp123707632"></a><a class="indexterm" name="idp123708320"></a>
 Strategy functor for distance point to box calculation.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h0"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.description"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.description">Description</a>
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.description"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.description">Description</a>
         </h6>
 <p>
           Class which calculates the distance of a point to a box, for points and
@@ -40,7 +40,7 @@ Strategy functor for distance point to box calculation.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h1"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.synopsis"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.synopsis"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
@@ -54,7 +54,7 @@ Strategy functor for distance point to box calculation.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h2"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.template_parameter_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.template_parameter_s_">Template
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.template_parameter_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -108,13 +108,12 @@ Strategy functor for distance point to box calculation.
                 </td>
 <td>
                   <p>
-                    cross_track&lt;CalculationType&gt;
+                    haversine&lt;double, CalculationType&gt;
                   </p>
                 </td>
 <td>
                   <p>
-                    underlying point-segment distance strategy, defaults to cross
-                    track
+                    underlying point-point distance strategy
                   </p>
                 </td>
 </tr>
@@ -122,7 +121,7 @@ Strategy functor for distance point to box calculation.
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h3"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.constructor_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.constructor_s_">Constructor(s)</a>
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.constructor_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -198,7 +197,7 @@ Strategy functor for distance point to box calculation.
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h4"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.member_function_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.member_function_s_">Member
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.member_function_s_"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.member_function_s_">Member
           Function(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -272,25 +271,16 @@ Strategy functor for distance point to box calculation.
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h5"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.header"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.header"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.header">Header</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">strategies</span><span class="special">/</span><span class="identifier">spherical</span><span class="special">/</span><span class="identifier">distance_cross_track_point_box</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
-<h6>
-<a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.h6"></a>
-          <span><a name="geometry.reference.strategies.strategy_distance_cross_track_point_box.see_also"></a></span><a class="link" href="strategy_distance_cross_track_point_box.html#geometry.reference.strategies.strategy_distance_cross_track_point_box.see_also">See
-          also</a>
-        </h6>
-<p>
-          <a class="link" href="../algorithms/distance/distance_3_with_strategy.html" title="distance (with strategy)">distance
-          (with strategy)</a>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -298,7 +288,7 @@ Strategy functor for distance point to box calculation.
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="strategy_distance_cross_track.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="strategy_distance_cross_track.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_side_side_by_triangle.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

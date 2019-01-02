@@ -239,7 +239,7 @@ IN: <tt>vertex_index_map(VertexIndexMap i_map)</tt>
   <b>Default:</b> <tt>get(vertex_index, g)</tt>.
     Note: if you use this default, make sure your graph has
     an internal <tt>vertex_index</tt> property. For example,
-    <tt>adjacenty_list</tt> with <tt>VertexList=listS</tt> does
+    <tt>adjacency_list</tt> with <tt>VertexList=listS</tt> does
     not have an internal <tt>vertex_index</tt> property.
    <br>
 
@@ -419,7 +419,7 @@ The time complexity is <i>O(V log V + E)</i>.
   is invoked on vertex <i>v</i> when the edge 
   <i>(u,v)</i> is examined and <i>v</i> is WHITE. Since
   a vertex is colored GRAY when it is discovered,
-  each reacable vertex is discovered exactly once. This
+  each reachable vertex is discovered exactly once. This
   is also when the vertex is inserted into the priority queue.
 <li><b><tt>vis.edge_not_relaxed(e, g)</tt></b>
   is invoked if the edge is not relaxed (see above).
@@ -435,7 +435,7 @@ See <a href="../example/dijkstra-example.cpp">
 <TT>example/dijkstra-example.cpp</TT></a> for an example of using Dijkstra's
 algorithm.
 
-<H3>See also</H3> <a href="dijkstra_shortest_paths_no_color_map.html">dijkstra_shortest_paths_no_color_map</a> for a version of dijkstra's shortest path that does not use a color map.
+<H3>See also</H3> <a href="dijkstra_shortest_paths_no_color_map.html">dijkstra_shortest_paths_no_color_map</a> for a version of Dijkstra's shortest path that does not use a color map.
 
 <H3>Notes</H3>
 

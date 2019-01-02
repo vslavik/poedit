@@ -28,7 +28,7 @@ struct roman
 
 BOOST_FUSION_ADAPT_STRUCT(roman,
     a, b, c
-);
+)
 
 int eval(roman const & c)
 {

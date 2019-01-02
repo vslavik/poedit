@@ -125,11 +125,7 @@ namespace boost { namespace fusion { namespace detail
         }
 
         BOOST_FUSION_GPU_ENABLED
-        value_type get_val(mpl::identity<key_type>);
-        BOOST_FUSION_GPU_ENABLED
-        pair_type get_val(mpl::int_<index>);
-        BOOST_FUSION_GPU_ENABLED
-        value_type get_val(mpl::identity<key_type>) const;
+        mpl::identity<value_type> get_val(mpl::identity<key_type>) const;
         BOOST_FUSION_GPU_ENABLED
         pair_type get_val(mpl::int_<index>) const;
 

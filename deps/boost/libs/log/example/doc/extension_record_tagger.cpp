@@ -14,7 +14,7 @@
 #include <boost/mpl/quote.hpp>
 #include <boost/parameter/keyword.hpp>
 #include <boost/thread/locks.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/attributes/constant.hpp>

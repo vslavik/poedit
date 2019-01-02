@@ -36,8 +36,7 @@ void test_all_2d_ax()
 
     strategy_type strategy;
     comparable_strategy_type comparable_strategy;
-    boost::ignore_unused(strategy);
-    boost::ignore_unused(comparable_strategy);
+    boost::ignore_unused(strategy, comparable_strategy);
 
     test_2d<P1, P2>("POINT(1 1)", "POINT(0 0)", "POINT(2 3)",
                     result_type(0, 0.27735203958327),

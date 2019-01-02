@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2010: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -17,7 +17,6 @@ template <class T, ICL_IntervalSet_TEMPLATE(_T) IntervalSet>
 void itl_set_check_monoid_plus_4_bicremental_types()
 {
     typedef IntervalSet<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
     typedef std::set<T> SetT;
 
     IntervalSetT itv_set_a, itv_set_b, itv_set_c;
@@ -41,7 +40,6 @@ template <class T, ICL_IntervalSet_TEMPLATE(_T) IntervalSet>
 void itl_set_check_monoid_et_4_bicremental_types()
 {
     typedef IntervalSet<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
     typedef std::set<T> SetT;
 
     IntervalSetT itv_set_a, itv_set_b, itv_set_c;
@@ -69,7 +67,6 @@ template <class T, ICL_IntervalSet_TEMPLATE(_T) IntervalSet>
 void itl_set_check_abelian_monoid_plus_4_bicremental_types()
 {
     typedef IntervalSet<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
     typedef std::set<T> SetT;
 
     IntervalSetT itv_set_a, itv_set_b, itv_set_c;
@@ -93,7 +90,6 @@ template <class T, ICL_IntervalSet_TEMPLATE(_T) IntervalSet>
 void itl_set_check_abelian_monoid_et_4_bicremental_types()
 {
     typedef IntervalSet<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
     typedef std::set<T> SetT;
 
     IntervalSetT itv_set_a, itv_set_b, itv_set_c;
@@ -115,13 +111,12 @@ void itl_set_check_abelian_monoid_et_4_bicremental_types()
 
 
 //------------------------------------------------------------------------------
-// Abelian partial invertive monoid 
+// Abelian partial invertive monoid
 //------------------------------------------------------------------------------
 template <class T, ICL_IntervalSet_TEMPLATE(_T) IntervalSet>
 void itl_set_check_partial_invertive_monoid_plus_4_bicremental_types()
 {
     typedef IntervalSet<T> IntervalSetT;
-    typedef typename IntervalSetT::interval_type IntervalT;
     typedef std::set<T> SetT;
 
     IntervalSetT itv_set_a, itv_set_b, itv_set_c;
@@ -142,4 +137,3 @@ void itl_set_check_partial_invertive_monoid_plus_4_bicremental_types()
 }
 
 #endif // LIBS_ICL_TEST_TEST_SET_ICL_SET_HPP_JOFA_090119
-

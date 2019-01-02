@@ -465,7 +465,7 @@ namespace
     CHECK(p.string() == "abc\\def/ghi");
     CHECK(p.wstring() == L"abc\\def/ghi");
 
-    CHECK(p.generic().string() == "abc/def/ghi");
+    CHECK(p.generic_path().string() == "abc/def/ghi");
     CHECK(p.generic_string() == "abc/def/ghi");
     CHECK(p.generic_wstring() == L"abc/def/ghi");
 
@@ -482,7 +482,7 @@ namespace
     CHECK(p.string() == "abc\\def/ghi");
     CHECK(p.wstring() == L"abc\\def/ghi");
 
-    CHECK(p.generic().string() == "abc\\def/ghi");
+    CHECK(p.generic_path().string() == "abc\\def/ghi");
     CHECK(p.generic_string() == "abc\\def/ghi");
     CHECK(p.generic_wstring() == L"abc\\def/ghi");
 
@@ -606,6 +606,51 @@ namespace
 
     CHECK(p1 == "bar");
     CHECK(p2 == "foo");
+
+    CHECK(!path("").filename_is_dot());
+    CHECK(!path("").filename_is_dot_dot());
+    CHECK(!path("..").filename_is_dot());
+    CHECK(!path(".").filename_is_dot_dot());
+    CHECK(!path("...").filename_is_dot_dot());
+    CHECK(path(".").filename_is_dot());
+    CHECK(path("..").filename_is_dot_dot());
+    CHECK(path("/.").filename_is_dot());
+    CHECK(path("/..").filename_is_dot_dot());
+    CHECK(!path("a.").filename_is_dot());
+    CHECK(!path("a..").filename_is_dot_dot());
+
+    // edge cases
+    CHECK(path("foo/").filename() == path("."));
+    CHECK(path("foo/").filename_is_dot());
+    CHECK(path("/").filename() == path("/"));
+    CHECK(!path("/").filename_is_dot());
+# ifdef BOOST_WINDOWS_API
+    CHECK(path("c:.").filename() == path("."));
+    CHECK(path("c:.").filename_is_dot());
+    CHECK(path("c:/").filename() == path("/"));
+    CHECK(!path("c:\\").filename_is_dot());
+# else
+    CHECK(path("c:.").filename() == path("c:."));
+    CHECK(!path("c:.").filename_is_dot());
+    CHECK(path("c:/").filename() == path("."));
+    CHECK(path("c:/").filename_is_dot());
+# endif
+
+    // check that the implementation code to make the edge cases above work right
+    // doesn't cause some non-edge cases to fail
+    CHECK(path("c:").filename() != path("."));
+    CHECK(!path("c:").filename_is_dot());
+
+    // examples from reference.html
+    std::cout << path(".").filename_is_dot();            // outputs 1
+    std::cout << path("/.").filename_is_dot();           // outputs 1
+    std::cout << path("foo/.").filename_is_dot();        // outputs 1
+    std::cout << path("foo/").filename_is_dot();         // outputs 1
+    std::cout << path("/").filename_is_dot();            // outputs 0
+    std::cout << path("/foo").filename_is_dot();         // outputs 0
+    std::cout << path("/foo.").filename_is_dot();        // outputs 0
+    std::cout << path("..").filename_is_dot();           // outputs 0
+    cout << std::endl;
   }
 
 //  //  test_modifiers  ------------------------------------------------------------------//
@@ -1098,6 +1143,27 @@ namespace
 
 # endif
 
+  inline const char* macro_value(const char* name, const char* value)
+  {
+    static const char* no_value = "[no value]";
+    static const char* not_defined = "[not defined]";
+
+    //if (0 != strcmp(name, value + 1))  // macro is defined
+    //{
+    //  if (value[1])
+    //    return value;
+    //  else
+    //    return no_value;
+    //}
+    //return not_defined;
+
+    return 0 == strcmp(name, value + 1)
+      ? not_defined 
+      : (value[1] ? value : no_value);
+  }
+
+#define BOOST_MACRO_VALUE(X) macro_value(#X, BOOST_STRINGIZE(=X))
+
 }  // unnamed namespace
 
 //--------------------------------------------------------------------------------------//
@@ -1117,6 +1183,16 @@ int test_main(int, char*[])
   cout << "BOOST_WINDOWS_API" << endl;
   BOOST_TEST(path::preferred_separator == '\\');
 #endif
+
+  cout << "BOOST_FILESYSTEM_DECL "
+    << BOOST_MACRO_VALUE(BOOST_FILESYSTEM_DECL) << endl;
+
+//#ifdef BOOST_FILESYSTEM_DECL
+//  cout << "BOOST_FILESYSTEM_DECL is defined as "
+//    << BOOST_STRINGIZE(BOOST_FILESYSTEM_DECL) << endl;
+//#else
+//  cout << "BOOST_FILESYSTEM_DECL is not defined" << endl;
+//#endif
 
   l.push_back('s');
   l.push_back('t');

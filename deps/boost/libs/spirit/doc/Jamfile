@@ -53,4 +53,13 @@ boostbook spirit2
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/doc/html
     ;
 
-
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease
+    :
+        spirit2
+        ../repository/doc//spirit2_repository
+        x3//spirit_x3
+    ;
+explicit boostrelease ;

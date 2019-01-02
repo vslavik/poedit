@@ -61,11 +61,11 @@ template <typename G>
 void test_geometry(G const& geometry, std::size_t expected_size = 0)
 {
 #if defined(BOOST_GEOMETRY_TEST_RING)
-    BOOST_CONCEPT_ASSERT( (bg::concept::ConstRing<G>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::ConstRing<G>) );
 #elif defined(BOOST_GEOMETRY_TEST_MULTI_POINT)
-    BOOST_CONCEPT_ASSERT( (bg::concept::ConstMultiPoint<G>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::ConstMultiPoint<G>) );
 #else
-    BOOST_CONCEPT_ASSERT( (bg::concept::ConstLinestring<G>) );
+    BOOST_CONCEPT_ASSERT( (bg::concepts::ConstLinestring<G>) );
 #endif
 
     typedef typename bg::point_type<G>::type P;

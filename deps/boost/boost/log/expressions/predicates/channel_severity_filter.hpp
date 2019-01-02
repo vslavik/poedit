@@ -26,6 +26,7 @@
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/log/detail/config.hpp>
+#include <boost/log/detail/allocator_traits.hpp>
 #include <boost/log/detail/custom_terminal_spec.hpp>
 #include <boost/log/attributes/attribute_name.hpp>
 #include <boost/log/attributes/fallback_policy.hpp>
@@ -57,8 +58,10 @@ template<
 class channel_severity_filter_terminal
 {
 public:
+#ifndef BOOST_LOG_DOXYGEN_PASS
     //! Internal typedef for type categorization
     typedef void _is_boost_log_terminal;
+#endif
 
     //! Function result type
     typedef bool result_type;
@@ -78,7 +81,7 @@ private:
         channel_value_type,
         severity_value_type,
         ChannelOrderT,
-        typename AllocatorT::BOOST_NESTED_TEMPLATE rebind< std::pair< const channel_value_type, severity_value_type > >::other
+        typename boost::log::aux::rebind_alloc< AllocatorT, std::pair< const channel_value_type, severity_value_type > >::type
     > mapping_type;
     //! Attribute value visitor invoker for channel
     typedef value_visitor_invoker< channel_value_type, channel_fallback_policy > channel_visitor_invoker_type;

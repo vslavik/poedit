@@ -4,6 +4,8 @@
 //  accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/lockfree/lockfree_forward.hpp>
+
 #include <boost/lockfree/queue.hpp>
 #include <boost/thread.hpp>
 
@@ -161,7 +163,11 @@ BOOST_AUTO_TEST_CASE( queue_convert_pop_test )
     }
 
     {
+#ifdef BOOST_NO_AUTO_PTR
+        unique_ptr<int> i3;
+#else
         auto_ptr<int> i3;
+#endif
         BOOST_REQUIRE(f.pop(i3));
 
         BOOST_REQUIRE_EQUAL(*i3, 3);

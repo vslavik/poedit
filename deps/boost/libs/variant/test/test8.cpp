@@ -17,7 +17,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
 using namespace boost;
 
 typedef variant<float, std::string, int, std::vector<std::string> > t_var1;

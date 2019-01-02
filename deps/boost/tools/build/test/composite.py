@@ -20,6 +20,6 @@ int main() {}
 
 t.run_build_system()
 
-t.expect_addition("bin/$toolset/release/hello.exe")
+t.expect_addition("bin/$toolset/release*/hello.exe")
 
 t.cleanup()

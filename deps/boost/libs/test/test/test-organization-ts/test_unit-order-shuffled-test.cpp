@@ -109,7 +109,7 @@ struct test_tree {
 BOOST_FIXTURE_TEST_CASE( test_no_seed, test_tree )
 {
     // no seed set
-    ut::runtime_config::s_arguments_store.template set<unsigned int>(ut::runtime_config::RANDOM_SEED, 0);
+    ut::runtime_config::s_arguments_store.set<unsigned int>(ut::runtime_config::btrt_random_seed, 0);
 
     tu_order_collector res1 = run_tree( master );
     tu_order_collector res2 = run_tree( master );
@@ -120,7 +120,7 @@ BOOST_FIXTURE_TEST_CASE( test_no_seed, test_tree )
 BOOST_FIXTURE_TEST_CASE( test_seed_to_time, test_tree )
 {
     // seed = 1 means current time is used.
-    ut::runtime_config::s_arguments_store.template set<unsigned int>(ut::runtime_config::RANDOM_SEED, 1);
+    ut::runtime_config::s_arguments_store.set<unsigned int>(ut::runtime_config::btrt_random_seed, 1);
 
     tu_order_collector res1 = run_tree( master );
     tu_order_collector res2 = run_tree( master );
@@ -132,16 +132,16 @@ BOOST_FIXTURE_TEST_CASE( test_seed_identical, test_tree )
 {
     // seed = 1 means current time is used.
     unsigned int seed = static_cast<unsigned int>( std::time( 0 ) );
-    ut::runtime_config::s_arguments_store.template set<unsigned int>(ut::runtime_config::RANDOM_SEED, seed);
+    ut::runtime_config::s_arguments_store.set<unsigned int>(ut::runtime_config::btrt_random_seed, seed);
     tu_order_collector res1 = run_tree( master );
 
-    ut::runtime_config::s_arguments_store.template set<unsigned int>(ut::runtime_config::RANDOM_SEED, seed);
+    ut::runtime_config::s_arguments_store.set<unsigned int>(ut::runtime_config::btrt_random_seed, seed);
     tu_order_collector res2 = run_tree( master );
 
     BOOST_TEST( res1.m_order == res2.m_order, tt::per_element() );
 
     // using time seed now
-    ut::runtime_config::s_arguments_store.template set<unsigned int>(ut::runtime_config::RANDOM_SEED, 1);
+    ut::runtime_config::s_arguments_store.set<unsigned int>(ut::runtime_config::btrt_random_seed, 1);
     tu_order_collector res3 = run_tree( master );
     BOOST_TEST( res1.m_order != res3.m_order ); // some elements might be the same, but not the full sequences
 

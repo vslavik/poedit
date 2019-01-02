@@ -99,12 +99,13 @@ void test_beta(T, const char* name)
    do_test_beta<T>(ibeta_derivative_data, name, "Incomplete Beta Function Derivative: Medium Values");
 
 #endif
+#ifndef __SUNPRO_CC
 #if !defined(TEST_DATA) || (TEST_DATA == 3)
 #  include "ibeta_derivative_large_data.ipp"
 
    do_test_beta<T>(ibeta_derivative_large_data, name, "Incomplete Beta Function Derivative: Large and Diverse Values");
 #endif
-
+#endif
 #if !defined(TEST_DATA) || (TEST_DATA == 4)
 #  include "ibeta_derivative_int_data.ipp"
 

@@ -51,6 +51,21 @@ option anyway.
 any of the folding parsers, however, for the cost of constructing intermediate
 containers, that are (usually) processed sequentially after that.
 
+* [*Why external code generator for `BOOST_METAPARSE_STRING`?]
+
+To be able to support longer strings. It generates code using macros to reduce
+the size of the header files (the reducion is multiples of MBs).
+
+* [*Why defining a custom version of Boost.Preprocessor macros?]
+
+There are two reasons for the library defining its own set of preprocessor
+metaprogramming macros: to have control over the upper limit of iteration steps
+and to be able to clean the macros up once they have done their job (and avoid
+polluting the macros of the users).
+
+Note that these macros live in the `impl` directory, which means that they are
+an implementation detail of the library and should be used internally only.
+
 [endsect]
 
 [endsect]

@@ -12,7 +12,11 @@
 #include "instantiate.hpp"
 
 
-int main(int argc, char*[])
+int main(int 
+#ifdef BOOST_FLOAT32_C
+   argc
+#endif
+   , char*[])
 {
 #ifdef BOOST_FLOAT32_C
    if(argc > 1000)

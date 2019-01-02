@@ -49,14 +49,15 @@ rule time
 
 actions time
 {
-    echo $(>) user: $(__USER_TIME__) system: $(__SYSTEM_TIME__)
+    echo $(>) user: $(__USER_TIME__) system: $(__SYSTEM_TIME__) clock: $(__CLOCK_TIME__)
     echo timed from $(>) >> $(<)
 }
 
-rule record_time ( target : source : start end user system )
+rule record_time ( target : source : start end user system clock )
 {
     __USER_TIME__ on $(target) = $(user) ;
     __SYSTEM_TIME__ on $(target) = $(system) ;
+    __CLOCK_TIME__ on $(target) = $(clock) ;
 }
 
 rule make
@@ -80,7 +81,7 @@ make bar : baz ;
 \.\.\.updating 2 targets\.\.\.
 make bar
 time foo
-bar +user: [0-9\.]+ +system: +[0-9\.]+ *
+bar +user: [0-9\.]+ +system: +[0-9\.]+ +clock: +[0-9\.]+ *
 \.\.\.updated 2 targets\.\.\.$
 """
 
@@ -117,14 +118,16 @@ time my-time : my-exe ;
 """)
 
     t.run_build_system()
-    t.expect_addition("bin/$toolset/debug/aaa.obj")
-    t.expect_addition("bin/$toolset/debug/my-exe.exe")
-    t.expect_addition("bin/$toolset/debug/my-time.time")
+    t.expect_addition("bin/$toolset/debug*/aaa.obj")
+    t.expect_addition("bin/$toolset/debug*/my-exe.exe")
+    t.expect_addition("bin/$toolset/debug*/my-time.time")
 
-    t.expect_content_lines("bin/$toolset/debug/my-time.time",
+    t.expect_content_lines("bin/$toolset/debug*/my-time.time",
         "user: *[0-9] seconds")
-    t.expect_content_lines("bin/$toolset/debug/my-time.time",
+    t.expect_content_lines("bin/$toolset/debug*/my-time.time",
         "system: *[0-9] seconds")
+    t.expect_content_lines("bin/$toolset/debug*/my-time.time",
+        "clock: *[0-9] seconds")
 
     t.cleanup()
 
@@ -153,12 +156,12 @@ time "my time" : "my exe" ;
 """)
 
     t.run_build_system()
-    t.expect_addition("bin/$toolset/debug/aaa bbb.obj")
-    t.expect_addition("bin/$toolset/debug/my exe.exe")
-    t.expect_addition("bin/$toolset/debug/my time.time")
+    t.expect_addition("bin/$toolset/debug*/aaa bbb.obj")
+    t.expect_addition("bin/$toolset/debug*/my exe.exe")
+    t.expect_addition("bin/$toolset/debug*/my time.time")
 
-    t.expect_content_lines("bin/$toolset/debug/my time.time", "user: *")
-    t.expect_content_lines("bin/$toolset/debug/my time.time", "system: *")
+    t.expect_content_lines("bin/$toolset/debug*/my time.time", "user: *")
+    t.expect_content_lines("bin/$toolset/debug*/my time.time", "system: *")
 
     t.cleanup()
 

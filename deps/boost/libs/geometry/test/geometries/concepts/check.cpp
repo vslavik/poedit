@@ -71,6 +71,6 @@ template <> struct access<rw_point, 1>
 
 int main()
 {
-    bg::concept::check<const ro_point>();
-    bg::concept::check<rw_point>();
+    bg::concepts::check<const ro_point>();
+    bg::concepts::check<rw_point>();
 }

@@ -14,6 +14,7 @@
 #include <boost/test/minimal.hpp>
 #include <vector>
 #include <string>
+#include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/utility.hpp>
 #include <boost/lexical_cast.hpp>

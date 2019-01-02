@@ -3,10 +3,12 @@
 # Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 # Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 # Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+# Copyright (c) 2018 Adam Wulkiewicz, Lodz, Poland.
 #
-# This file was modified by Oracle on 2014, 2015.
-# Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
+# This file was modified by Oracle on 2014, 2015, 2016, 2017.
+# Modifications copyright (c) 2014-2017, Oracle and/or its affiliates.
 #
+# Contributed and/or modified by Vissarion Fisikopoulos, on behalf of Oracle
 # Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 # Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 #
@@ -17,10 +19,7 @@
 test-suite boost-geometry-algorithms
     :
     [ run append.cpp                   : : : : algorithms_append ]
-    [ run area.cpp                     : : : : algorithms_area ]
-    [ run area_multi.cpp               : : : : algorithms_area_multi ]
     [ run assign.cpp                   : : : : algorithms_assign ]
-    [ run buffer.cpp                   : : : : algorithms_buffer ]
     [ run centroid.cpp                 : : : : algorithms_centroid ]
     [ run centroid_multi.cpp           : : : : algorithms_centroid_multi ]
     [ run comparable_distance.cpp      : : : : algorithms_comparable_distance ]
@@ -30,20 +29,17 @@ test-suite boost-geometry-algorithms
     [ run convex_hull_multi.cpp        : : : : algorithms_convex_hull_multi ]
     [ run correct.cpp                  : : : : algorithms_correct ]
     [ run correct_multi.cpp            : : : : algorithms_correct_multi ]
-    [ run envelope.cpp                 : : : : algorithms_envelope ]
-    [ run envelope_multi.cpp           : : : : algorithms_envelope_multi ]
-    [ run envelope_on_spheroid.cpp     : : : : algorithms_envelope_on_spheroid ]
-    [ run expand.cpp                   : : : : algorithms_expand ]
-    [ run expand_on_spheroid.cpp       : : : : algorithms_expand_on_spheroid ]
+    [ run correct_closure.cpp          : : : : algorithms_correct_closure ]
+    [ run densify.cpp                  : : : : algorithms_densify ]
     [ run for_each.cpp                 : : : : algorithms_for_each ]
     [ run for_each_multi.cpp           : : : : algorithms_for_each_multi ]
     [ run is_convex.cpp                : : : : algorithms_is_convex ]
     [ run is_empty.cpp                 : : : : algorithms_is_empty ]
     [ run is_simple.cpp                : : : : algorithms_is_simple ]
+    [ run is_simple_geo.cpp            : : : : algorithms_is_simple_geo ]
     [ run is_valid.cpp                 : : : : algorithms_is_valid ]
     [ run is_valid_failure.cpp         : : : : algorithms_is_valid_failure ]
-    [ run length.cpp                   : : : : algorithms_length ]
-    [ run length_multi.cpp             : : : : algorithms_length_multi ]
+    [ run is_valid_geo.cpp             : : : : algorithms_is_valid_geo ]
     [ run make.cpp                     : : : : algorithms_make ]
     [ run maximum_gap.cpp              : : : : algorithms_maximum_gap ]
     [ run num_geometries.cpp           : : : : algorithms_num_geometries ]
@@ -67,9 +63,22 @@ test-suite boost-geometry-algorithms
     [ run unique_multi.cpp             : : : : algorithms_unique_multi ]
     ;
 
+build-project area ;
 build-project buffer ;
+build-project covered_by ;
+build-project crosses ;
 build-project detail ;
+build-project disjoint ;
 build-project distance ;
+build-project envelope_expand ;
+build-project equals ;
+build-project intersects ;
+build-project length ;
+build-project overlaps ;
 build-project overlay ;
-build-project relational_operations ;
+build-project perimeter ;
+build-project relate ;
 build-project set_operations ;
+build-project similarity ;
+build-project touches ;
+build-project within ;

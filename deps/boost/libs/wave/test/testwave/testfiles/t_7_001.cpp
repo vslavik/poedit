@@ -8,27 +8,42 @@
 =============================================================================*/
 
 //O --c++11
+//O -Werror
 
-//R #line 16 "t_7_001.cpp"
-//R R"de
+//R #line 17 "t_7_001.cpp"
+//R R"(de
 //R fg
-//R h"
-R"de
+//R h)"
+R"(de
 fg
-h"
+h)"
 
-//R #line 21 "t_7_001.cpp"
+//R #line 22 "t_7_001.cpp"
 "abc"   //R "abc" 
-R"abc"  //R R"abc" 
+R"(abc)"  //R R"(abc)" 
 
-//R #line 27 "t_7_001.cpp"
-//R uR"de fg
-//R h"
-uR"de \
+//R #line 28 "t_7_001.cpp"
+//R uR"(de fg
+//R h)"
+uR"(de \
 fg
-h"
+h)"
 
-//R #line 32 "t_7_001.cpp"
+//R #line 33 "t_7_001.cpp"
 u"abc"      //R u"abc" 
 U"def"      //R U"def" 
 u8"ghi"     //R u8"ghi" 
+
+//R #line 40 "t_7_001.cpp"
+//R R"delim("quoted text
+//R with newline")delim"
+R"delim("quoted text
+with newline")delim"
+
+//R #line 45 "t_7_001.cpp"
+//R R"de"lim(some text)de"lim"
+R"de"lim(some text)de"lim"
+
+//R #line 49 "t_7_001.cpp"
+//R no_newline_at_end_of_file
+no_newline_at_end_of_file

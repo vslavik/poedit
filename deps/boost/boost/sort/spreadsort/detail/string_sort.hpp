@@ -79,7 +79,7 @@ namespace spreadsort {
     template<class RandomAccessIter, class Get_char, class Get_length>
     inline void
     update_offset(RandomAccessIter first, RandomAccessIter finish,
-                  size_t &char_offset, Get_char getchar, Get_length length)
+                  size_t &char_offset, Get_char get_character, Get_length length)
     {
       size_t nextOffset = char_offset;
       while (true) {
@@ -88,7 +88,7 @@ namespace spreadsort {
           //ignore empties, but if the nextOffset would exceed the length or
           //not match, exit; we've found the last matching character
           if (length(*curr) > char_offset && (length(*curr) <= (nextOffset + 1)
-            || getchar((*curr), nextOffset) != getchar((*first), nextOffset))) {
+            || get_character((*curr), nextOffset) != get_character((*first), nextOffset))) {
             char_offset = nextOffset;
             return;
           }
@@ -145,14 +145,14 @@ namespace spreadsort {
       {
         size_t minSize = (std::min)(length(x), length(y));
         for (size_t u = fchar_offset; u < minSize; ++u) {
-          if (getchar(x, u) != getchar(y, u)) {
-            return getchar(x, u) < getchar(y, u);
+          if (get_character(x, u) != get_character(y, u)) {
+            return get_character(x, u) < get_character(y, u);
           }
         }
         return length(x) < length(y);
       }
       size_t fchar_offset;
-      Get_char getchar;
+      Get_char get_character;
       Get_length length;
     };
 
@@ -251,9 +251,9 @@ namespace spreadsort {
         //don't sort unless there are at least two items to Compare
         if (count < 2)
           continue;
-        //using std::sort if its worst-case is better
+        //using boost::sort::pdqsort if its worst-case is better
         if (count < max_size)
-          std::sort(lastPos, bin_cache[u],
+          boost::sort::pdqsort(lastPos, bin_cache[u],
               offset_less_than<Data_type, Unsigned_char_type>(char_offset + 1));
         else
           string_sort_rec<RandomAccessIter, Unsigned_char_type>(lastPos,
@@ -362,9 +362,9 @@ namespace spreadsort {
         //don't sort unless there are at least two items to Compare
         if (count < 2)
           continue;
-        //using std::sort if its worst-case is better
+        //using boost::sort::pdqsort if its worst-case is better
         if (count < max_size)
-          std::sort(lastPos, bin_cache[u], offset_greater_than<Data_type,
+          boost::sort::pdqsort(lastPos, bin_cache[u], offset_greater_than<Data_type,
                     Unsigned_char_type>(char_offset + 1));
         else
           reverse_string_sort_rec<RandomAccessIter, Unsigned_char_type>
@@ -379,7 +379,7 @@ namespace spreadsort {
     string_sort_rec(RandomAccessIter first, RandomAccessIter last,
               size_t char_offset, std::vector<RandomAccessIter> &bin_cache,
               unsigned cache_offset, size_t *bin_sizes,
-              Get_char getchar, Get_length length)
+              Get_char get_character, Get_length length)
     {
       typedef typename std::iterator_traits<RandomAccessIter>::value_type
         Data_type;
@@ -394,7 +394,7 @@ namespace spreadsort {
       //Getting the last non-empty
       for (;length(*finish) <= char_offset; --finish);
       ++finish;
-      update_offset(first, finish, char_offset, getchar, length);
+      update_offset(first, finish, char_offset, get_character, length);
 
       const unsigned bin_count = (1 << (sizeof(Unsigned_char_type)*8));
       //Equal worst-case of radix and comparison is when bin_count = n*log(n).
@@ -410,7 +410,7 @@ namespace spreadsort {
           bin_sizes[0]++;
         }
         else
-          bin_sizes[getchar((*current), char_offset) + 1]++;
+          bin_sizes[get_character((*current), char_offset) + 1]++;
       }
       //Assign the bin positions
       bin_cache[cache_offset] = first;
@@ -429,7 +429,7 @@ namespace spreadsort {
           ++current) {
         //empties belong in this bin
         while (length(*current) > char_offset) {
-          target_bin = bins + getchar((*current), char_offset);
+          target_bin = bins + get_character((*current), char_offset);
           iter_swap(current, (*target_bin)++);
         }
       }
@@ -446,9 +446,9 @@ namespace spreadsort {
         for (RandomAccessIter current = *local_bin; current < next_bin_start;
             ++current) {
           //Swapping into place until the correct element has been swapped in
-          for (target_bin = bins + getchar((*current), char_offset);
+          for (target_bin = bins + get_character((*current), char_offset);
               target_bin != local_bin;
-              target_bin = bins + getchar((*current), char_offset))
+              target_bin = bins + get_character((*current), char_offset))
             iter_swap(current, (*target_bin)++);
         }
         *local_bin = next_bin_start;
@@ -464,14 +464,14 @@ namespace spreadsort {
         //don't sort unless there are at least two items to Compare
         if (count < 2)
           continue;
-        //using std::sort if its worst-case is better
+        //using boost::sort::pdqsort if its worst-case is better
         if (count < max_size)
-          std::sort(lastPos, bin_cache[u], offset_char_less_than<Data_type,
+          boost::sort::pdqsort(lastPos, bin_cache[u], offset_char_less_than<Data_type,
                     Get_char, Get_length>(char_offset + 1));
         else
           string_sort_rec<RandomAccessIter, Unsigned_char_type, Get_char,
             Get_length>(lastPos, bin_cache[u], char_offset + 1, bin_cache,
-                        cache_end, bin_sizes, getchar, length);
+                        cache_end, bin_sizes, get_character, length);
       }
     }
 
@@ -482,7 +482,7 @@ namespace spreadsort {
     string_sort_rec(RandomAccessIter first, RandomAccessIter last,
               size_t char_offset, std::vector<RandomAccessIter> &bin_cache,
               unsigned cache_offset, size_t *bin_sizes,
-              Get_char getchar, Get_length length, Compare comp)
+              Get_char get_character, Get_length length, Compare comp)
     {
       //This section makes handling of long identical substrings much faster
       //with a mild average performance impact.
@@ -495,7 +495,7 @@ namespace spreadsort {
       //Getting the last non-empty
       for (;length(*finish) <= char_offset; --finish);
       ++finish;
-      update_offset(first, finish, char_offset, getchar, length);
+      update_offset(first, finish, char_offset, get_character, length);
 
       const unsigned bin_count = (1 << (sizeof(Unsigned_char_type)*8));
       //Equal worst-case of radix and comparison is when bin_count = n*log(n).
@@ -511,7 +511,7 @@ namespace spreadsort {
           bin_sizes[0]++;
         }
         else
-          bin_sizes[getchar((*current), char_offset) + 1]++;
+          bin_sizes[get_character((*current), char_offset) + 1]++;
       }
       //Assign the bin positions
       bin_cache[cache_offset] = first;
@@ -530,7 +530,7 @@ namespace spreadsort {
           ++current) {
         //empties belong in this bin
         while (length(*current) > char_offset) {
-          target_bin = bins + getchar((*current), char_offset);
+          target_bin = bins + get_character((*current), char_offset);
           iter_swap(current, (*target_bin)++);
         }
       }
@@ -547,9 +547,9 @@ namespace spreadsort {
         for (RandomAccessIter current = *local_bin; current < next_bin_start;
             ++current) {
           //Swapping into place until the correct element has been swapped in
-          for (target_bin = bins + getchar((*current), char_offset);
+          for (target_bin = bins + get_character((*current), char_offset);
               target_bin != local_bin;
-              target_bin = bins + getchar((*current), char_offset))
+              target_bin = bins + get_character((*current), char_offset))
             iter_swap(current, (*target_bin)++);
         }
         *local_bin = next_bin_start;
@@ -565,14 +565,14 @@ namespace spreadsort {
         //don't sort unless there are at least two items to Compare
         if (count < 2)
           continue;
-        //using std::sort if its worst-case is better
+        //using boost::sort::pdqsort if its worst-case is better
         if (count < max_size)
-          std::sort(lastPos, bin_cache[u], comp);
+          boost::sort::pdqsort(lastPos, bin_cache[u], comp);
         else
           string_sort_rec<RandomAccessIter, Unsigned_char_type, Get_char,
                           Get_length, Compare>
             (lastPos, bin_cache[u], char_offset + 1, bin_cache, cache_end,
-             bin_sizes, getchar, length, comp);
+             bin_sizes, get_character, length, comp);
       }
     }
 
@@ -583,7 +583,7 @@ namespace spreadsort {
     reverse_string_sort_rec(RandomAccessIter first, RandomAccessIter last,
               size_t char_offset, std::vector<RandomAccessIter> &bin_cache,
               unsigned cache_offset, size_t *bin_sizes,
-              Get_char getchar, Get_length length, Compare comp)
+              Get_char get_character, Get_length length, Compare comp)
     {
       //This section makes handling of long identical substrings much faster
       //with a mild average performance impact.
@@ -598,7 +598,7 @@ namespace spreadsort {
       ++last;
       //Offsetting on identical characters.  This section works
       //a character at a time for optimal worst-case performance.
-      update_offset(curr, last, char_offset, getchar, length);
+      update_offset(curr, last, char_offset, get_character, length);
 
       const unsigned bin_count = (1 << (sizeof(Unsigned_char_type)*8));
       //Equal worst-case of radix and comparison is when bin_count = n*log(n).
@@ -616,7 +616,7 @@ namespace spreadsort {
           bin_sizes[bin_count]++;
         }
         else
-          bin_sizes[max_bin - getchar((*current), char_offset)]++;
+          bin_sizes[max_bin - get_character((*current), char_offset)]++;
       }
       //Assign the bin positions
       bin_cache[cache_offset] = first;
@@ -635,7 +635,7 @@ namespace spreadsort {
           ++current) {
         //empties belong in this bin
         while (length(*current) > char_offset) {
-          target_bin = end_bin - getchar((*current), char_offset);
+          target_bin = end_bin - get_character((*current), char_offset);
           iter_swap(current, (*target_bin)++);
         }
       }
@@ -653,9 +653,9 @@ namespace spreadsort {
         for (RandomAccessIter current = *local_bin; current < next_bin_start;
             ++current) {
           //Swapping into place until the correct element has been swapped in
-          for (target_bin = end_bin - getchar((*current), char_offset);
+          for (target_bin = end_bin - get_character((*current), char_offset);
               target_bin != local_bin;
-              target_bin = end_bin - getchar((*current), char_offset))
+              target_bin = end_bin - get_character((*current), char_offset))
             iter_swap(current, (*target_bin)++);
         }
         *local_bin = next_bin_start;
@@ -670,14 +670,14 @@ namespace spreadsort {
         //don't sort unless there are at least two items to Compare
         if (count < 2)
           continue;
-        //using std::sort if its worst-case is better
+        //using boost::sort::pdqsort if its worst-case is better
         if (count < max_size)
-          std::sort(lastPos, bin_cache[u], comp);
+          boost::sort::pdqsort(lastPos, bin_cache[u], comp);
         else
           reverse_string_sort_rec<RandomAccessIter, Unsigned_char_type,
                                   Get_char, Get_length, Compare>
             (lastPos, bin_cache[u], char_offset + 1, bin_cache, cache_end,
-             bin_sizes, getchar, length, comp);
+             bin_sizes, get_character, length, comp);
       }
     }
 
@@ -700,9 +700,9 @@ namespace spreadsort {
     string_sort(RandomAccessIter first, RandomAccessIter last,
                 Unsigned_char_type)
     {
-      //Warning that we're using std::sort, even though string_sort was called
+      //Warning that we're using boost::sort::pdqsort, even though string_sort was called
       BOOST_STATIC_WARNING( sizeof(Unsigned_char_type) <= 2 );
-      std::sort(first, last);
+      boost::sort::pdqsort(first, last);
     }
 
     //Holds the bin vector and makes the initial recursive call
@@ -726,9 +726,9 @@ namespace spreadsort {
     {
       typedef typename std::iterator_traits<RandomAccessIter>::value_type
         Data_type;
-      //Warning that we're using std::sort, even though string_sort was called
+      //Warning that we're using boost::sort::pdqsort, even though string_sort was called
       BOOST_STATIC_WARNING( sizeof(Unsigned_char_type) <= 2 );
-      std::sort(first, last, std::greater<Data_type>());
+      boost::sort::pdqsort(first, last, std::greater<Data_type>());
     }
 
     //Holds the bin vector and makes the initial recursive call
@@ -737,12 +737,12 @@ namespace spreadsort {
     inline typename boost::enable_if_c< sizeof(Unsigned_char_type) <= 2, void
                                                                       >::type
     string_sort(RandomAccessIter first, RandomAccessIter last,
-                Get_char getchar, Get_length length, Unsigned_char_type)
+                Get_char get_character, Get_length length, Unsigned_char_type)
     {
       size_t bin_sizes[(1 << (8 * sizeof(Unsigned_char_type))) + 1];
       std::vector<RandomAccessIter> bin_cache;
       string_sort_rec<RandomAccessIter, Unsigned_char_type, Get_char,
-        Get_length>(first, last, 0, bin_cache, 0, bin_sizes, getchar, length);
+        Get_length>(first, last, 0, bin_cache, 0, bin_sizes, get_character, length);
     }
 
     template <class RandomAccessIter, class Get_char, class Get_length,
@@ -750,11 +750,11 @@ namespace spreadsort {
     inline typename boost::disable_if_c< sizeof(Unsigned_char_type) <= 2, void
                                                                        >::type
     string_sort(RandomAccessIter first, RandomAccessIter last,
-                Get_char getchar, Get_length length, Unsigned_char_type)
+                Get_char get_character, Get_length length, Unsigned_char_type)
     {
-      //Warning that we're using std::sort, even though string_sort was called
+      //Warning that we're using boost::sort::pdqsort, even though string_sort was called
       BOOST_STATIC_WARNING( sizeof(Unsigned_char_type) <= 2 );
-      std::sort(first, last);
+      boost::sort::pdqsort(first, last);
     }
 
     //Holds the bin vector and makes the initial recursive call
@@ -763,13 +763,13 @@ namespace spreadsort {
     inline typename boost::enable_if_c< sizeof(Unsigned_char_type) <= 2, void
                                                                       >::type
     string_sort(RandomAccessIter first, RandomAccessIter last,
-        Get_char getchar, Get_length length, Compare comp, Unsigned_char_type)
+        Get_char get_character, Get_length length, Compare comp, Unsigned_char_type)
     {
       size_t bin_sizes[(1 << (8 * sizeof(Unsigned_char_type))) + 1];
       std::vector<RandomAccessIter> bin_cache;
       string_sort_rec<RandomAccessIter, Unsigned_char_type, Get_char
         , Get_length, Compare>
-        (first, last, 0, bin_cache, 0, bin_sizes, getchar, length, comp);
+        (first, last, 0, bin_cache, 0, bin_sizes, get_character, length, comp);
     }
 
     //disable_if_c was refusing to compile, so rewrote to use enable_if_c
@@ -778,11 +778,11 @@ namespace spreadsort {
     inline typename boost::enable_if_c< (sizeof(Unsigned_char_type) > 2), void
                                         >::type
     string_sort(RandomAccessIter first, RandomAccessIter last,
-        Get_char getchar, Get_length length, Compare comp, Unsigned_char_type)
+        Get_char get_character, Get_length length, Compare comp, Unsigned_char_type)
     {
-      //Warning that we're using std::sort, even though string_sort was called
+      //Warning that we're using boost::sort::pdqsort, even though string_sort was called
       BOOST_STATIC_WARNING( sizeof(Unsigned_char_type) <= 2 );
-      std::sort(first, last, comp);
+      boost::sort::pdqsort(first, last, comp);
     }
 
     //Holds the bin vector and makes the initial recursive call
@@ -791,13 +791,13 @@ namespace spreadsort {
     inline typename boost::enable_if_c< sizeof(Unsigned_char_type) <= 2, void
                                                                       >::type
     reverse_string_sort(RandomAccessIter first, RandomAccessIter last,
-        Get_char getchar, Get_length length, Compare comp, Unsigned_char_type)
+        Get_char get_character, Get_length length, Compare comp, Unsigned_char_type)
     {
       size_t bin_sizes[(1 << (8 * sizeof(Unsigned_char_type))) + 1];
       std::vector<RandomAccessIter> bin_cache;
       reverse_string_sort_rec<RandomAccessIter, Unsigned_char_type, Get_char,
                               Get_length, Compare>
-        (first, last, 0, bin_cache, 0, bin_sizes, getchar, length, comp);
+        (first, last, 0, bin_cache, 0, bin_sizes, get_character, length, comp);
     }
 
     template <class RandomAccessIter, class Get_char, class Get_length,
@@ -805,11 +805,11 @@ namespace spreadsort {
     inline typename boost::disable_if_c< sizeof(Unsigned_char_type) <= 2, void
                                                                        >::type
     reverse_string_sort(RandomAccessIter first, RandomAccessIter last,
-        Get_char getchar, Get_length length, Compare comp, Unsigned_char_type)
+        Get_char get_character, Get_length length, Compare comp, Unsigned_char_type)
     {
-      //Warning that we're using std::sort, even though string_sort was called
+      //Warning that we're using boost::sort::pdqsort, even though string_sort was called
       BOOST_STATIC_WARNING( sizeof(Unsigned_char_type) <= 2 );
-      std::sort(first, last, comp);
+      boost::sort::pdqsort(first, last, comp);
     }
   }
 }

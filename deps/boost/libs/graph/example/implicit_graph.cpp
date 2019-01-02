@@ -381,7 +381,7 @@ edges_size_type num_edges(const ring_graph& g) {
 std::pair<edge_descriptor, bool>
 edge(vertex_descriptor u, vertex_descriptor v, const ring_graph& g) {
   if ((u == v + 1 || v == u + 1) &&
-      u >= 0 && u < num_vertices(g) && v >= 0 && v < num_vertices(g))
+      u > 0 && u < num_vertices(g) && v > 0 && v < num_vertices(g))
     return std::pair<edge_descriptor, bool>(edge_descriptor(u, v), true);
   else
     return std::pair<edge_descriptor, bool>(edge_descriptor(), false);

@@ -277,6 +277,7 @@ namespace boost
             std::vector<int> v2;
             std::vector<int> joined;
             boost::push_back(joined, join(v1, v2));
+            boost::push_back(joined, join(v2, v1));
         }
 
         namespace trac7376

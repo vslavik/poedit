@@ -234,7 +234,7 @@ date::ymd_type ymd = d.year_month_day();
 	</row>
 	<row>
 	  <entry><screen>date d(2002,Jan,10);
-d.day(); // --> Thursday</screen></entry>
+d.day_of_week(); // --> Thursday</screen></entry>
         </row>
 
 	<row>
@@ -278,7 +278,7 @@ d.is_neg_infinity(); // --> true</screen></entry>
 	  <entry>Returns true if date is positive infinity</entry>
 	</row>
 	<row>
-	  <entry><screen>date d(neg_infin); 
+	  <entry><screen>date d(pos_infin); 
 d.is_pos_infinity(); // --> true</screen></entry>
         </row>
         

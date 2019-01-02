@@ -650,15 +650,15 @@ int main(int argc, char* argv[])
       {
         cout &lt;&lt; p &lt;&lt; &quot; is a directory containing:\n&quot;;
 
-        std::vector&lt;std::string&gt; v;
+        std::vector&lt;path&gt; v;
 
         for (auto&amp;&amp; x : directory_iterator(p))
-          v.push_back(x.path().filename().string()); 
+          v.push_back(x.path()); 
 
         std::sort(v.begin(), v.end());  
 
         for (auto&amp;&amp; x : v)
-          cout &lt;&lt; &quot;    &quot; &lt;&lt; x &lt;&lt; '\n';
+          cout &lt;&lt; &quot;    &quot; &lt;&lt; x.filename() &lt;&lt; '\n';
       }
       else
         cout &lt;&lt; p &lt;&lt; &quot; exists, but is not a regular file or directory\n&quot;;
@@ -679,21 +679,31 @@ int main(int argc, char* argv[])
   </tr>
 </table>
 
-    <p>The key difference between <code>tut3.cpp</code> and <code>tut4.cpp</code> is 
-    what happens in the directory iteration loop. We changed:</p>
+    <p>The only difference between <code>tut3.cpp</code> and <code>tut4.cpp</code> is 
+    what happens for directories. We changed:</p>
     <blockquote>
-      <pre>cout &lt;&lt; &quot; &quot; &lt;&lt; *it &lt;&lt; '\n';   // *it returns a <a href="reference.html#Class-directory_entry">directory_entry</a>,</pre>
+      <pre>for (const directory_entry&amp; x : directory_iterator(p))
+  cout &lt;&lt; &quot; &quot; &lt;&lt; x.path() &lt;&lt; &#39;\n&#39;;</pre>
     </blockquote>
     <p>to:</p>
     <blockquote>
-      <pre>path fn = it-&gt;path().filename();   // extract the filename from the path
-v.push_back(fn);                   // push into vector for later sorting</pre>
+      <pre>std::vector&lt;path&gt; v;
+
+for (auto&amp;&amp; x : directory_iterator(p))
+  v.push_back(x.path()); 
+
+std::sort(v.begin(), v.end()); 
+
+for (auto&amp;&amp; x : v)
+  cout &lt;&lt; &quot; &quot; &lt;&lt; x.filename() &lt;&lt; &#39;\n&#39;;
+</pre>
     </blockquote>
-    <p><code><a href="reference.html#directory_entry-observers">path()</a></code> 
-    is a <code>directory_entry</code> observer function. <code>
+    <p> <code>
     <a href="reference.html#path-filename">filename()</a></code> is one of 
-    several path decomposition functions. It extracts the filename portion (<code>&quot;index.html&quot;</code>) 
-    from a path (<code>&quot;/home/beman/boost/trunk/index.html&quot;</code>). These decomposition functions are 
+    several class <code>path</code> decomposition functions. It extracts the 
+    filename portion 
+    from a path (<font face="Courier New">i.e. </font><code>&quot;index.html&quot;</code><font face="Courier New"> 
+    from </font><code>&quot;/home/beman/boost/trunk/index.html&quot;</code>). These decomposition functions are 
     more fully explored in the <a href="#Class path-iterators-etc">Path iterators, observers, 
     composition, decomposition and query</a> portion of this tutorial.</p>
     <p>The above was written as two lines of code for clarity. It could have 
@@ -1323,7 +1333,7 @@ It has a
 <p>Distributed under the Boost Software License, Version 1.0. See
 <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</a></p>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->26 July 2015<!--webbot bot="Timestamp" endspan i-checksum="18812" --></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->07 August 2017<!--webbot bot="Timestamp" endspan i-checksum="31490" --></p>
 
 </body>
 

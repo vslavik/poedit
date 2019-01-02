@@ -72,7 +72,7 @@ int main() {}
     t.write("x/include2/h2.hpp", "\n")
 
     t.run_build_system()
-    t.expect_addition("x/bin/$toolset/debug/m.exe")
+    t.expect_addition("x/bin/$toolset/debug*/m.exe")
 
     t.cleanup()
 
@@ -90,17 +90,26 @@ int main() { return OK; }
 """)
     t.write("h2/header.h", "int const OK = 0;\n")
     t.run_build_system()
-    t.expect_addition("sub/bin/$toolset/debug/a.exe")
+    t.expect_addition("sub/bin/$toolset/debug*/a.exe")
 
     t.cleanup()
 
 
 def test_paths_set_by_indirect_conditionals():
-    t = BoostBuild.Tester(pass_d0=False, use_test_config=False)
+    t = BoostBuild.Tester(use_test_config=False)
 
     header = "child_dir/folder_to_include/some_header.h"
 
-    t.write("jamroot.jam", "build-project child_dir ;")
+    t.write("jamroot.jam", """
+build-project child_dir ;
+rule attach-include-parent ( properties * )
+{
+    return <include>another_folder ;
+}
+# requirements inherited from a parent project will bind paths
+# relative to the project that actually names the rule.
+project : requirements <conditional>@attach-include-parent ;
+""")
     t.write("child_dir/jamfile.jam", """\
 import remote/remote ;
 
@@ -121,13 +130,15 @@ rule attach-include-remote ( properties * )
 """)
     t.write("child_dir/x.cpp", """\
 #include <some_header.h>
+#include <header2.h>
 int main() {}
 """)
     t.write(header, "int some_func();\n")
+    t.write("another_folder/header2.h", "int f2();\n")
     t.write("child_dir/folder_to_include/jamfile.jam", "")
 
-    expected_x1 = "child_dir/bin/$toolset/debug/x1.obj"
-    expected_x2 = "child_dir/bin/$toolset/debug/x2.obj"
+    expected_x1 = "child_dir/bin/$toolset/debug*/x1.obj"
+    expected_x2 = "child_dir/bin/$toolset/debug*/x2.obj"
 
     t.run_build_system()
     t.expect_addition(expected_x1)
@@ -139,7 +150,7 @@ int main() {}
     t.expect_touch(expected_x2)
 
     t.touch(header)
-    t.run_build_system(["..", "-d2"], subdir="child_dir/folder_to_include")
+    t.run_build_system([".."], subdir="child_dir/folder_to_include")
     t.expect_touch(expected_x1)
     t.expect_touch(expected_x2)
 

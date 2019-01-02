@@ -33,11 +33,11 @@ print_date(boost::gregorian::date d)
 int
 main() {
 
-  std::cout << "Enter Year: ";
-  int year;
-  std::cin >> year;
-
   using namespace boost::gregorian;
+
+  std::cout << "Enter Year: ";
+  greg_year::value_type year;
+  std::cin >> year;
 
   //define a collection of holidays fixed by month and day
   std::vector<year_based_generator*> holidays;

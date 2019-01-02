@@ -15,13 +15,16 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/has_trivial_assign.hpp>
 #include <boost/type_traits/has_trivial_destructor.hpp>
-#include <boost/config.hpp> // for BOOST_LIKELY
+#include <boost/config.hpp> // for BOOST_LIKELY & BOOST_ALIGNMENT
 
+#include <boost/lockfree/detail/allocator_rebind_helper.hpp>
 #include <boost/lockfree/detail/atomic.hpp>
 #include <boost/lockfree/detail/copy_payload.hpp>
 #include <boost/lockfree/detail/freelist.hpp>
 #include <boost/lockfree/detail/parameter.hpp>
 #include <boost/lockfree/detail/tagged_ptr.hpp>
+
+#include <boost/lockfree/lockfree_forward.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -32,6 +35,14 @@
 #pragma warning(push)
 #pragma warning(disable: 4324) // structure was padded due to __declspec(align())
 #endif
+
+#if defined(BOOST_INTEL) && (BOOST_INTEL_CXX_VERSION > 1000)
+#pragma warning(push)
+#pragma warning(disable:488) // template parameter unused in declaring parameter types, 
+                             // gets erronously triggered the queue constructor which
+                             // takes an allocator of another type and rebinds it
+#endif
+
 
 
 namespace boost    {
@@ -59,7 +70,7 @@ typedef parameter::parameters<boost::parameter::optional<tag::allocator>,
  *
  *  - \ref boost::lockfree::capacity, optional \n
  *    If this template argument is passed to the options, the size of the queue is set at compile-time.\n
- *    It this option implies \c fixed_sized<true>
+ *    This option implies \c fixed_sized<true>
  *
  *  - \ref boost::lockfree::allocator, defaults to \c boost::lockfree::allocator<std::allocator<void>> \n
  *    Specifies the allocator that is used for the internal freelist
@@ -70,13 +81,10 @@ typedef parameter::parameters<boost::parameter::optional<tag::allocator>,
  *   - T must have a trivial destructor
  *
  * */
-#ifndef BOOST_DOXYGEN_INVOKED
-template <typename T,
-          class A0 = boost::parameter::void_,
-          class A1 = boost::parameter::void_,
-          class A2 = boost::parameter::void_>
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+template <typename T, class A0, class A1, class A2>
 #else
-template <typename T, ...Options>
+template <typename T, typename ...Options>
 #endif
 class queue
 {
@@ -91,7 +99,11 @@ private:
     BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));
 #endif
 
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
     typedef typename detail::queue_signature::bind<A0, A1, A2>::type bound_args;
+#else
+    typedef typename detail::queue_signature::bind<Options...>::type bound_args;
+#endif
 
     static const bool has_capacity = detail::extract_capacity<bound_args>::has_capacity;
     static const size_t capacity = detail::extract_capacity<bound_args>::capacity + 1; // the queue uses one dummy node
@@ -99,7 +111,7 @@ private:
     static const bool node_based = !(has_capacity || fixed_sized);
     static const bool compile_time_sized = has_capacity;
 
-    struct BOOST_LOCKFREE_CACHELINE_ALIGNMENT node
+    struct BOOST_ALIGNMENT(BOOST_LOCKFREE_CACHELINE_BYTES) node
     {
         typedef typename detail::select_tagged_handle<node, node_based>::tagged_handle_type tagged_node_handle;
         typedef typename detail::select_tagged_handle<node, node_based>::handle_type handle_type;
@@ -178,7 +190,7 @@ public:
     }
 
     template <typename U>
-    explicit queue(typename node_allocator::template rebind<U>::other const & alloc):
+    explicit queue(typename detail::allocator_rebind_helper<node_allocator, U>::type const & alloc):
         head_(tagged_node_handle(0, 0)),
         tail_(tagged_node_handle(0, 0)),
         pool(alloc, capacity)
@@ -209,7 +221,7 @@ public:
     }
 
     template <typename U>
-    queue(size_type n, typename node_allocator::template rebind<U>::other const & alloc):
+    queue(size_type n, typename detail::allocator_rebind_helper<node_allocator, U>::type const & alloc):
         head_(tagged_node_handle(0, 0)),
         tail_(tagged_node_handle(0, 0)),
         pool(alloc, n + 1)
@@ -540,6 +552,10 @@ private:
 
 } /* namespace lockfree */
 } /* namespace boost */
+
+#if defined(BOOST_INTEL) && (BOOST_INTEL_CXX_VERSION > 1000)
+#pragma warning(pop)
+#endif
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

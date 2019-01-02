@@ -2,7 +2,7 @@
 // blocking_tcp_echo_server.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -42,14 +42,12 @@ void session(tcp::socket sock)
   }
 }
 
-void server(boost::asio::io_service& io_service, unsigned short port)
+void server(boost::asio::io_context& io_context, unsigned short port)
 {
-  tcp::acceptor a(io_service, tcp::endpoint(tcp::v4(), port));
+  tcp::acceptor a(io_context, tcp::endpoint(tcp::v4(), port));
   for (;;)
   {
-    tcp::socket sock(io_service);
-    a.accept(sock);
-    std::thread(session, std::move(sock)).detach();
+    std::thread(session, a.accept()).detach();
   }
 }
 
@@ -63,9 +61,9 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
-    server(io_service, std::atoi(argv[1]));
+    server(io_context, std::atoi(argv[1]));
   }
   catch (std::exception& e)
   {

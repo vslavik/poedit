@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template is_subconcept</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.is_subconcept_hpp" title="Header &lt;boost/type_erasure/is_subconcept.hpp&gt;">
 <link rel="prev" href="is_placeholder.html" title="Struct template is_placeholder">
@@ -36,17 +36,17 @@
 <span class="keyword">struct</span> <a class="link" href="is_subconcept.html" title="Struct template is_subconcept">is_subconcept</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp449198064"></a><h2>Description</h2>
+<a name="id-1.3.41.13.22.3.4"></a><h2>Description</h2>
 <p><a class="link" href="is_subconcept.html" title="Struct template is_subconcept">is_subconcept</a> is a boolean metafunction that determines whether one concept is a sub-concept of another.</p>
-<pre class="programlisting"> <span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="special">&gt;</span>             <span class="special">-&gt;</span> <span class="keyword">true</span>
- <span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">addable</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="special">&gt;</span>                   <span class="special">-&gt;</span> <span class="keyword">false</span>
- <span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">forward_iterator</span><span class="special">&lt;</span><span class="identifier">_iter</span><span class="special">&gt;</span><span class="special">,</span>
-   <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">,</span> <span class="identifier">_iter</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span>                          <span class="special">-&gt;</span> <span class="keyword">true</span>
+<pre class="programlisting"><span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="special">&gt;</span>             <span class="special">-&gt;</span> <span class="keyword">true</span>
+<span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">addable</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="special">&gt;</span>                   <span class="special">-&gt;</span> <span class="keyword">false</span>
+<span class="identifier">is_subconcept</span><span class="special">&lt;</span><span class="identifier">incrementable</span><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">forward_iterator</span><span class="special">&lt;</span><span class="identifier">_iter</span><span class="special">&gt;</span><span class="special">,</span>
+  <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">,</span> <span class="identifier">_iter</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span>                          <span class="special">-&gt;</span> <span class="keyword">true</span>
 </pre>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp449231552"></a><h3>Template Parameters</h3>
+<a name="id-1.3.41.13.22.3.4.5"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> Sub</pre>

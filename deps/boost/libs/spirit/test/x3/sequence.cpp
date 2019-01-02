@@ -179,6 +179,22 @@ main()
         BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
     }
 
+    { // check attribute is passed through unary to another sequence
+        using boost::spirit::x3::eps;
+        std::string s;
+        BOOST_TEST(test_attr("ab", eps >> no_case[char_ >> char_], s));
+        BOOST_TEST("ab" == s);
+        s.clear();
+        BOOST_TEST(test_attr("ab", no_case[char_ >> char_] >> eps, s));
+        BOOST_TEST("ab" == s);
+        s.clear();
+        BOOST_TEST(test_attr("abc", char_ >> no_case[char_ >> char_], s));
+        BOOST_TEST("abc" == s);
+        s.clear();
+        BOOST_TEST(test_attr("abc", no_case[char_ >> char_] >> char_, s));
+        BOOST_TEST("abc" == s);
+    }
+
     {
 #ifdef SPIRIT_NO_COMPILE_CHECK
         char_ >> char_ = char_ >> char_; // disallow this!

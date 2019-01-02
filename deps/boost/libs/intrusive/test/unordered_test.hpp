@@ -27,16 +27,10 @@ namespace test{
 
 static const std::size_t BucketSize = 8;
 
-template<class ValueTraits, class ContainerDefiner>
+template<class ContainerDefiner>
 struct test_unordered
 {
-   typedef typename ValueTraits::value_type value_type;
-   typedef typename ValueTraits::pointer pointer;
-   typedef typename ValueTraits::const_pointer const_pointer;
-   typedef typename ValueContainer< value_type >::type value_cont_type;
-   typedef typename pointer_traits<pointer>::reference      reference;
-   typedef typename pointer_traits
-      <const_pointer>::reference                            const_reference;
+   typedef typename ContainerDefiner::value_cont_type value_cont_type;
 
    static void test_all(value_cont_type& values);
    private:
@@ -51,18 +45,17 @@ struct test_unordered
    static void test_clone(value_cont_type& values);
 };
 
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>::
-   test_all (value_cont_type& values)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_all (value_cont_type& values)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
    {
       typename unordered_type::bucket_type buckets [BucketSize];
       unordered_type testset
-         (bucket_traits(pointer_traits<typename unordered_type::bucket_ptr>::
-            pointer_to(buckets[0]), BucketSize));
+         (bucket_traits(pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
       testset.insert(values.begin(), values.end());
       test::test_container(testset);
       testset.clear();
@@ -83,8 +76,7 @@ void test_unordered<ValueTraits, ContainerDefiner>::
          (&vals[i])->value_ = i;
       typename unordered_type::bucket_type buckets [BucketSize];
       unordered_type testset(bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-            pointer_to(buckets[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
       testset.insert(vals.begin(), vals.end());
       test::test_iterator_forward(testset);
    }
@@ -98,13 +90,13 @@ void test_unordered<ValueTraits, ContainerDefiner>::
 }
 
 //test case due to an error in tree implementation:
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_impl()
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_impl()
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
 
    value_cont_type values (5);
    for (int i = 0; i < 5; ++i)
@@ -112,8 +104,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
 
    typename unordered_type::bucket_type buckets [BucketSize];
    unordered_type testset(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets[0]), BucketSize));
+      pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
 
    for (int i = 0; i < 5; ++i)
       testset.insert (values[i]);
@@ -127,19 +118,18 @@ void test_unordered<ValueTraits, ContainerDefiner>
 }
 
 //test: constructor, iterator, clear, reverse_iterator, front, back, size:
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_sort(value_cont_type& values)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_sort(value_cont_type& values)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
 
    typename unordered_type::bucket_type buckets [BucketSize];
    unordered_type testset1
       (values.begin(), values.end(), bucket_traits
-         (pointer_traits<typename unordered_type::bucket_ptr>::
-            pointer_to(buckets[0]), BucketSize));
+         (pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
 
    if(unordered_type::incremental){
       {  int init_values [] = { 4, 5, 1, 2, 2, 3 };
@@ -154,9 +144,8 @@ void test_unordered<ValueTraits, ContainerDefiner>
 }
 
 //test: insert, const_iterator, const_reverse_iterator, erase, iterator_to:
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_insert(value_cont_type& values, detail::false_) //not multikey
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_insert(value_cont_type& values, detail::false_) //not multikey
 {
 
    typedef typename ContainerDefiner::template container
@@ -212,21 +201,20 @@ void test_unordered<ValueTraits, ContainerDefiner>
    }
 }
 
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_insert(value_cont_type& values, detail::true_) //is multikey
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_insert(value_cont_type& values, detail::true_) //is multikey
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
 
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr bucket_ptr;
    typedef typename unordered_type::iterator iterator;
    typedef typename unordered_type::key_type key_type;
    {
       typename unordered_type::bucket_type buckets [BucketSize];
       unordered_type testset(bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-               pointer_to(buckets[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
 
       testset.insert(&values[0] + 2, &values[0] + 5);
 
@@ -265,8 +253,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
             //Now with a single bucket
             typename unordered_type::bucket_type single_bucket[1];
             unordered_type testset2(bucket_traits(
-               pointer_traits<typename unordered_type::bucket_ptr>::
-                  pointer_to(single_bucket[0]), 1));
+               pointer_traits<bucket_ptr>::pointer_to(single_bucket[0]), 1));
             testset2.insert(&values[0], &values[0] + values.size());
             BOOST_TEST (testset2.erase(key_type(5)) == 1);
             BOOST_TEST (testset2.erase(key_type(2)) == 2);
@@ -309,8 +296,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
             //Now with a single bucket
             typename unordered_type::bucket_type single_bucket[1];
             unordered_type testset2(bucket_traits(
-               pointer_traits<typename unordered_type::bucket_ptr>::
-                  pointer_to(single_bucket[0]), 1));
+               pointer_traits<bucket_ptr>::pointer_to(single_bucket[0]), 1));
             testset2.insert(&values[0], &values[0] + values.size());
             BOOST_TEST (testset2.erase(key_type(5)) == 1);
             BOOST_TEST (testset2.erase(key_type(2)) == 2);
@@ -330,8 +316,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
             for (unsigned int j = 0; j < random_size; ++j)
                data[j].value_ = random_init[j];
             unordered_type testset_new(bucket_traits(
-               pointer_traits<typename unordered_type::bucket_ptr>::
-                  pointer_to(single_bucket[0]), 1));
+               pointer_traits<bucket_ptr>::pointer_to(single_bucket[0]), 1));
             testset_new.insert(&data[0], &data[0]+max);
             testset_new.erase(testset_new.iterator_to(data[i]));
             BOOST_TEST (testset_new.size() == (max -1));
@@ -339,10 +324,8 @@ void test_unordered<ValueTraits, ContainerDefiner>
       }
    }
    {
-      typename unordered_type::bucket_type buckets [BucketSize];
-      const unsigned int NumBucketSize = BucketSize;
       const unsigned int LoadFactor    = 3;
-      const unsigned int NumIterations = NumBucketSize*LoadFactor;
+      const unsigned int NumIterations = BucketSize*LoadFactor;
       value_cont_type random_init(NumIterations);//Preserve memory
       value_cont_type set_tester;
       set_tester.reserve(NumIterations);
@@ -352,15 +335,17 @@ void test_unordered<ValueTraits, ContainerDefiner>
          random_init[i].value_ = i*2;//(i/LoadFactor)*LoadFactor;
       }
 
+      typename unordered_type::bucket_type buckets [BucketSize];
+      bucket_traits btraits(pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize);
+
       for(unsigned int initial_pos = 0; initial_pos != (NumIterations+1); ++initial_pos){
          for(unsigned int final_pos = initial_pos; final_pos != (NumIterations+1); ++final_pos){
 
             //Create intrusive container inserting values
             unordered_type testset
-               ( &random_init[0]
-               , &random_init[0] + random_init.size()
-               , bucket_traits(pointer_traits<typename unordered_type::bucket_ptr>::
-                  pointer_to(buckets[0]), NumBucketSize));
+               ( random_init.data()
+               , random_init.data() + random_init.size()
+               , btraits);
 
             BOOST_TEST (testset.size() == random_init.size());
 
@@ -405,23 +390,21 @@ void test_unordered<ValueTraits, ContainerDefiner>
 }
 
 //test: insert (seq-version), swap, erase (seq-version), size:
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>::
-   test_swap(value_cont_type& values)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_swap(value_cont_type& values)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
 
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
    typename unordered_type::bucket_type buckets [BucketSize];
 
    typename unordered_type::bucket_type buckets2 [BucketSize];
    unordered_type testset1(&values[0], &values[0] + 2,
-      bucket_traits(pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets[0]), BucketSize));
+      bucket_traits(pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
    unordered_type testset2(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-                  pointer_to(buckets2[0]), BucketSize));
+      pointer_traits<bucket_ptr>::pointer_to(buckets2[0]), BucketSize));
 
    testset2.insert (&values[0] + 2, &values[0] + 6);
    testset1.swap (testset2);
@@ -454,19 +437,19 @@ void test_unordered<ValueTraits, ContainerDefiner>::
 
 //test: rehash:
 
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_rehash(value_cont_type& values, detail::true_)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_rehash(value_cont_type& values, detail::true_)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
 
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr bucket_ptr;
    //Build a uset
    typename unordered_type::bucket_type buckets1 [BucketSize];
    typename unordered_type::bucket_type buckets2 [BucketSize*2];
    unordered_type testset1(&values[0], &values[0] + values.size(),
-      bucket_traits(pointer_traits<typename unordered_type::bucket_ptr>::
+      bucket_traits(pointer_traits<bucket_ptr>::
          pointer_to(buckets1[0]), BucketSize));
    //Test current state
    BOOST_TEST(testset1.split_count() == BucketSize/2);
@@ -495,7 +478,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
    //
    //This incremental rehash should fail because the new size is not twice the original
    BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
                               pointer_to(buckets1[0]), BucketSize)) == false);
    BOOST_TEST(testset1.split_count() == BucketSize);
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
@@ -506,7 +489,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
    //
    //This incremental rehash should fail because the new size is not twice the original
    BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
                pointer_to(buckets2[0]), BucketSize)) == false);
    BOOST_TEST(testset1.split_count() == BucketSize);
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
@@ -515,7 +498,7 @@ void test_unordered<ValueTraits, ContainerDefiner>
    //This incremental rehash should success because the new size is twice the original
    //and split_count is the same as the old bucket count
    BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
                      pointer_to(buckets2[0]), BucketSize*2)) == true);
    BOOST_TEST(testset1.split_count() == BucketSize);
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
@@ -524,33 +507,38 @@ void test_unordered<ValueTraits, ContainerDefiner>
    //This incremental rehash should also success because the new size is half the original
    //and split_count is the same as the new bucket count
    BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
                            pointer_to(buckets1[0]), BucketSize)) == true);
    BOOST_TEST(testset1.split_count() == BucketSize);
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
    TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 
-   //Full shrink rehash
+   //Shrink rehash
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
          pointer_to(buckets1[0]), 4));
    BOOST_TEST (testset1.incremental_rehash() == false);
    {  int init_values [] = { 4, 5, 1, 2, 2, 3 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
-   //Full shrink rehash again
+
+   //Shrink rehash again
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
          pointer_to(buckets1[0]), 2));
    BOOST_TEST (testset1.incremental_rehash() == false);
    {  int init_values [] = { 2, 2, 4, 3, 5, 1 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
-   //Full growing rehash
+
+   //Growing rehash
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
          pointer_to(buckets1[0]), BucketSize));
-   BOOST_TEST (testset1.incremental_rehash() == false);
+
+   //Full rehash (no effects)
+   testset1.full_rehash();
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
+
    //Incremental rehash shrinking
    //First incremental rehashes should lead to the same sequence
    for(std::size_t split_bucket = testset1.split_count(); split_bucket > 6; --split_bucket){
@@ -559,84 +547,88 @@ void test_unordered<ValueTraits, ContainerDefiner>
       {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
    }
+
    //Incremental rehash step
    BOOST_TEST (testset1.incremental_rehash(false) == true);
    BOOST_TEST(testset1.split_count() == (BucketSize/2+1));
    {  int init_values [] = { 5, 1, 2, 2, 3, 4 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
+
    //Incremental rehash step 2
    BOOST_TEST (testset1.incremental_rehash(false) == true);
    BOOST_TEST(testset1.split_count() == (BucketSize/2));
    {  int init_values [] = { 4, 5, 1, 2, 2, 3 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
+
    //This incremental rehash should fail because we've reached the half of the bucket array
    BOOST_TEST(testset1.incremental_rehash(false) == false);
    BOOST_TEST(testset1.split_count() == BucketSize/2);
    {  int init_values [] = { 4, 5, 1, 2, 2, 3 };
    TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 }
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_rehash(value_cont_type& values, detail::false_)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_rehash(value_cont_type& values, detail::false_)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
 
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
 
    typename unordered_type::bucket_type buckets1 [BucketSize];
    typename unordered_type::bucket_type buckets2 [2];
    typename unordered_type::bucket_type buckets3 [BucketSize*2];
 
    unordered_type testset1(&values[0], &values[0] + 6, bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
+      pointer_traits<bucket_ptr>::
          pointer_to(buckets1[0]), BucketSize));
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets2[0]), 2));
+      pointer_traits<bucket_ptr>::pointer_to(buckets2[0]), 2));
    {  int init_values [] = { 4, 2, 2, 5, 3, 1 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets3[0]), BucketSize*2));
+      pointer_traits<bucket_ptr>::pointer_to(buckets3[0]), BucketSize*2));
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 
    //Now rehash reducing the buckets
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets3[0]), 2));
+      pointer_traits<bucket_ptr>::pointer_to(buckets3[0]), 2));
    {  int init_values [] = { 4, 2, 2, 5, 3, 1 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 
    //Now rehash increasing the buckets
    testset1.rehash(bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets3[0]), BucketSize*2));
+      pointer_traits<bucket_ptr>::pointer_to(buckets3[0]), BucketSize*2));
+   {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
+      TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
+
+   //Full rehash (no effects)
+   testset1.full_rehash();
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
       TEST_INTRUSIVE_SEQUENCE_MAYBEUNIQUE( init_values, testset1 );  }
 }
 
 //test: find, equal_range (lower_bound, upper_bound):
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>::
-   test_find(value_cont_type& values)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_find(value_cont_type& values)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
+   typedef typename unordered_type::value_type value_type;
 
    typedef typename unordered_type::bucket_traits  bucket_traits;
+   typedef typename unordered_type::bucket_ptr     bucket_ptr;
    typedef typename unordered_type::key_of_value   key_of_value;
    const bool is_multikey = boost::intrusive::test::is_multikey_true<unordered_type>::value;
 
    typename unordered_type::bucket_type buckets[BucketSize];
    unordered_type testset(values.begin(), values.end(), bucket_traits(
-      pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets[0]), BucketSize));
+      pointer_traits<bucket_ptr>::pointer_to(buckets[0]), BucketSize));
 
    typedef typename unordered_type::iterator iterator;
 
@@ -660,25 +652,25 @@ void test_unordered<ValueTraits, ContainerDefiner>::
 }
 
 
-template<class ValueTraits, class ContainerDefiner>
-void test_unordered<ValueTraits, ContainerDefiner>
-   ::test_clone(value_cont_type& values)
+template<class ContainerDefiner>
+void test_unordered<ContainerDefiner>::test_clone(value_cont_type& values)
 {
    typedef typename ContainerDefiner::template container
       <>::type unordered_type;
-   typedef std::multiset<typename ValueTraits::value_type> std_multiset_t;
+   typedef typename unordered_type::value_type value_type;
+   typedef std::multiset<value_type> std_multiset_t;
 
    typedef typename unordered_type::bucket_traits bucket_traits;
+   typedef typename unordered_type::bucket_ptr    bucket_ptr;
+
    {
       //Test with equal bucket arrays
       typename unordered_type::bucket_type buckets1 [BucketSize];
       typename unordered_type::bucket_type buckets2 [BucketSize];
       unordered_type testset1 (values.begin(), values.end(), bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets1[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets1[0]), BucketSize));
       unordered_type testset2 (bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets2[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets2[0]), BucketSize));
 
       testset2.clone_from(testset1, test::new_cloner<value_type>(), test::delete_disposer<value_type>());
       BOOST_TEST(testset1 == testset2);
@@ -703,11 +695,9 @@ void test_unordered<ValueTraits, ContainerDefiner>
       typename unordered_type::bucket_type buckets1 [BucketSize*2];
       typename unordered_type::bucket_type buckets2 [BucketSize];
       unordered_type testset1 (values.begin(), values.end(), bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets1[0]), BucketSize*2));
+         pointer_traits<bucket_ptr>::pointer_to(buckets1[0]), BucketSize*2));
       unordered_type testset2 (bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets2[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets2[0]), BucketSize));
 
       testset2.clone_from(testset1, test::new_cloner<value_type>(), test::delete_disposer<value_type>());
       BOOST_TEST(testset1 == testset2);
@@ -732,11 +722,9 @@ void test_unordered<ValueTraits, ContainerDefiner>
       typename unordered_type::bucket_type buckets1 [BucketSize];
       typename unordered_type::bucket_type buckets2 [BucketSize*2];
       unordered_type testset1 (values.begin(), values.end(), bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets1[0]), BucketSize));
+         pointer_traits<bucket_ptr>::pointer_to(buckets1[0]), BucketSize));
       unordered_type testset2 (bucket_traits(
-         pointer_traits<typename unordered_type::bucket_ptr>::
-         pointer_to(buckets2[0]), BucketSize*2));
+         pointer_traits<bucket_ptr>::pointer_to(buckets2[0]), BucketSize*2));
 
       testset2.clone_from(testset1, test::new_cloner<value_type>(), test::delete_disposer<value_type>());
       BOOST_TEST(testset1 == testset2);
@@ -761,98 +749,3 @@ void test_unordered<ValueTraits, ContainerDefiner>
 }  //namespace test{
 }  //namespace intrusive{
 }  //namespace boost{
-/*
-template < class ValueTraits, bool ConstantTimeSize, bool CacheBegin, bool CompareHash, bool Incremental, bool Map, bool DefaultHolder >
-struct rebinder
-{
-   typedef unordered_rebinder_common<ValueTraits, DefaultHolder, Map> common_t;
-
-   template < class Option1 =void
-            , class Option2 =void
-            >
-   struct container
-   {
-      typedef unordered_multiset
-         < typename common_t::value_type
-         , value_traits<ValueTraits>
-         , constant_time_size<ConstantTimeSize>
-         , cache_begin<CacheBegin>
-         , compare_hash<CompareHash>
-         , incremental<Incremental>
-         , typename common_t::holder_opt
-         , typename common_t::key_of_value_opt
-         , Option1
-         , Option2
-         > type;
-      BOOST_STATIC_ASSERT((key_type_tester<typename common_t::key_of_value_opt, type>::value));
-   };
-};
-
-template<class VoidPointer, bool ConstantTimeSize, bool Map, bool DefaultHolder>
-class test_main_template
-{
-   public:
-   static void execute()
-   {
-      typedef testvalue<unordered_hooks<VoidPointer> > value_type;
-      static const int random_init[6] = { 3, 2, 4, 1, 5, 2 };
-      typedef typename ValueContainer< value_type >::type value_cont_type;
-      value_cont_type data (6);
-      for (int i = 0; i < 6; ++i)
-         data[i].value_ = random_init[i];
-
-      typedef testvalue_traits< unordered_hooks<VoidPointer> > testval_traits_t;
-      //base
-      typedef typename detail::if_c
-         < ConstantTimeSize
-         , typename testval_traits_t::base_value_traits
-         , typename testval_traits_t::auto_base_value_traits   //store_hash<true>
-         >::type base_hook_t;
-      test::test_unordered_multiset
-         < base_hook_t                       //cache_begin, compare_hash, incremental
-         , rebinder<base_hook_t, ConstantTimeSize, ConstantTimeSize, !ConstantTimeSize, !!ConstantTimeSize, Map, DefaultHolder>
-         >::test_all(data);
-      //member
-      typedef typename detail::if_c
-         < ConstantTimeSize
-         , typename testval_traits_t::member_value_traits      //optimize_multikey<true>
-         , typename testval_traits_t::auto_member_value_traits //store_hash<true>, optimize_multikey<true>
-         >::type member_hook_t;
-      test::test_unordered_multiset
-         < member_hook_t                           //cache_begin, compare_hash, incremental
-         , rebinder<member_hook_t, ConstantTimeSize, false, !ConstantTimeSize, false, !ConstantTimeSize, DefaultHolder>
-         >::test_all(data);
-      //nonmember
-      test::test_unordered_multiset
-         < typename testval_traits_t::nonhook_value_traits                  //cache_begin, compare_hash, incremental
-         , rebinder<typename testval_traits_t::nonhook_value_traits, ConstantTimeSize, false, false, false, Map, DefaultHolder>
-         >::test_all(data);
-   }
-};
-
-int main()
-{
-   //VoidPointer x ConstantTimeSize x Map x DefaultHolder
-
-   //void pointer
-   test_main_template<void*, false, false, false>::execute();
-   test_main_template<void*, false,  true, false>::execute();
-   test_main_template<void*,  true, false, false>::execute();
-   test_main_template<void*,  true,  true, false>::execute();
-
-   //smart_ptr
-   test_main_template<smart_ptr<void>, false, false, false>::execute();
-   test_main_template<smart_ptr<void>, false,  true, false>::execute();
-   test_main_template<smart_ptr<void>,  true, false, false>::execute();
-   test_main_template<smart_ptr<void>,  true,  true, false>::execute();
-
-   ////bounded_ptr (bool ConstantTimeSize, bool Map)
-   //test_main_template_bptr< false, false >::execute();
-   //test_main_template_bptr< false,  true >::execute();
-   //test_main_template_bptr<  true, false >::execute();
-   test_main_template_bptr<  true,  true >::execute();
-
-   return boost::report_errors();
-}
-*/
-

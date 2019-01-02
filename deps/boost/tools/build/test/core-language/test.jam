@@ -1239,7 +1239,7 @@ for y in $(values)
 }
 
 check-order break-for-exec : r1-v1 ;
-check-equal break-for-cleanup : $(z) : original ; 
+check-equal break-for-cleanup : $(z) : original ;
 
 for local y in $(values)
 {
@@ -1250,7 +1250,7 @@ for local y in $(values)
 }
 
 check-order break-for-local-exec : r1-v1 ;
-check-equal break-for-local-cleanup : $(z) : original ; 
+check-equal break-for-local-cleanup : $(z) : original ;
 
 local z1 = z1val ;
 local z2 = z2val ;
@@ -1471,7 +1471,7 @@ if $(NT)
         for local x in $(param:L)
         {
             if ! x in $(found) &&
-                $(x) in "addservices" "policies" "deleted device ids"
+                $(x) in "addservices" "policies" "deleted device ids" "software"
             {
                 found += $(x) ;
             }
@@ -1505,10 +1505,32 @@ check-equal shell : "value\n"   : [ SHELL $(c) ] ;
 check-equal shell : ""          : [ SHELL $(c) : no-output ] ;
 check-equal shell : "value\n" 0 : [ SHELL $(c) : exit-status ] ;
 check-equal shell : ""      0   : [ SHELL $(c) : no-output : exit-status ] ;
+check-equal shell : ""      0   : [ SHELL $(c) : no-output : exit-status : strip-eol ] ;
 check-equal command : "value\n"   : [ COMMAND $(c) ] ;
 check-equal command : ""          : [ COMMAND $(c) : no-output ] ;
 check-equal command : "value\n" 0 : [ COMMAND $(c) : exit-status ] ;
 check-equal command : ""      0   : [ COMMAND $(c) : no-output : exit-status ] ;
+
+# buffered output
+
+local expected = "When the shell output buffer splits on whitespace, the whitespace shouldn't be trimmed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             end." ;
+local buffered = "echo \"$(expected)\"" ;
+if $(OS) = VMS { buffered = "PIPE WRITE SYS$OUTPUT \"$(expected)\"" ; }
+if $(OS) = NT { buffered = "echo $(expected)" ; }
+
+check-equal shell : "$(expected)\n"   : [ SHELL $(buffered) ] ;
+check-equal shell : ""                : [ SHELL $(buffered) : no-output ] ;
+check-equal shell : "$(expected)\n" 0 : [ SHELL $(buffered) : exit-status ] ;
+check-equal shell : "$(expected)" 0 : [ SHELL $(buffered) : strip-eol : exit-status ] ;
+check-equal shell : ""      0         : [ SHELL $(buffered) : no-output : exit-status ] ;
+check-equal shell : ""      0         : [ SHELL $(buffered) : no-output : exit-status : strip-eol ] ;
+check-equal shell : "$(expected)" 0 : [ SHELL $(buffered) : strip-eol : exit-status ] ;
+
+check-equal command : "$(expected)\n"   : [ COMMAND $(buffered) ] ;
+check-equal command : ""                : [ COMMAND $(buffered) : no-output ] ;
+check-equal command : "$(expected)\n" 0 : [ COMMAND $(buffered) : exit-status ] ;
+check-equal command : "$(expected)" 0 : [ COMMAND $(buffered) : strip-eol : exit-status ] ;
+check-equal command : ""      0         : [ COMMAND $(buffered) : no-output : exit-status ] ;
 
 }
 

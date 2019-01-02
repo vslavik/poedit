@@ -18,8 +18,14 @@
 // Include additional Boost libraries
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/timer.hpp>
 #include <boost/any.hpp>
+#include <boost/algorithm/cxx11/any_of.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/range/algorithm/find.hpp>
+#include <boost/range/end.hpp>
+#include <boost/foreach.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Include Wave itself
@@ -81,7 +87,8 @@ using namespace boost::spirit::classic;
 using std::pair;
 using std::vector;
 using std::getline;
-using std::ofstream;
+using boost::filesystem::ofstream;
+using boost::filesystem::ifstream;
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -171,7 +178,6 @@ namespace fs = boost::filesystem;
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cmd_line_utils {
-
     // Additional command line parser which interprets '@something' as an
     // option "config-file" with the value "something".
     inline pair<std::string, std::string>
@@ -225,7 +231,7 @@ namespace cmd_line_utils {
         po::options_description const &desc, po::variables_map &vm,
         bool may_fail = false)
     {
-    std::ifstream ifs(filename.c_str());
+        ifstream ifs(filename.c_str());
 
         if (!ifs.is_open()) {
             if (!may_fail) {
@@ -372,7 +378,7 @@ namespace {
     //  Generate some meaningful error messages
     template <typename Exception>
     inline int
-    report_error_message(Exception const &e)
+    report_error_message(Exception const &e, bool treat_warnings_as_error)
     {
         // default error reporting
         cerr
@@ -380,16 +386,18 @@ namespace {
             << ": " << e.description() << endl;
 
         // errors count as one
-        return (e.get_severity() == boost::wave::util::severity_error ||
+        return (treat_warnings_as_error ||
+                e.get_severity() == boost::wave::util::severity_error ||
                 e.get_severity() == boost::wave::util::severity_fatal) ? 1 : 0;
     }
 
     template <typename Context>
     inline int
-    report_error_message(Context &ctx, boost::wave::cpp_exception const &e)
+    report_error_message(Context &ctx, boost::wave::cpp_exception const &e,
+        bool treat_warnings_as_error)
     {
         // default error reporting
-        int result = report_error_message(e);
+        int result = report_error_message(e, treat_warnings_as_error);
 
         using boost::wave::preprocess_exception;
         switch(e.get_errorcode()) {
@@ -462,7 +470,7 @@ namespace {
 #if BOOST_WAVE_BINARY_SERIALIZATION != 0
                 mode = (std::ios::openmode)(mode | std::ios::binary);
 #endif
-                std::ifstream ifs (state_file.string().c_str(), mode);
+                ifstream ifs (state_file.string().c_str(), mode);
                 if (ifs.is_open()) {
                     using namespace boost::serialization;
                     iarchive ia(ifs);
@@ -534,7 +542,7 @@ namespace {
     bool list_macro_names(context_type const& ctx, std::string filename)
     {
     // open file for macro names listing
-        std::ofstream macronames_out;
+        ofstream macronames_out;
         fs::path macronames_file (boost::wave::util::create_path(filename));
 
         if (macronames_file != "-") {
@@ -604,7 +612,7 @@ namespace {
     bool list_macro_counts(context_type const& ctx, std::string filename)
     {
     // open file for macro invocation count listing
-        std::ofstream macrocounts_out;
+        ofstream macrocounts_out;
         fs::path macrocounts_file (boost::wave::util::create_path(filename));
 
         if (macrocounts_file != "-") {
@@ -667,6 +675,9 @@ do_actual_work (std::string file_name, std::istream &instream,
 boost::wave::util::file_position_type current_position;
 auto_stop_watch elapsed_time(cerr);
 int error_count = 0;
+const bool treat_warnings_as_error = vm.count("warning") &&
+    boost::algorithm::any_of_equal(
+        vm["warning"].as<std::vector<std::string> >(), "error");
 
     try {
     // process the given file
@@ -678,10 +689,10 @@ int error_count = 0;
 
     // The preprocessing of the input stream is done on the fly behind the
     // scenes during iteration over the context_type::iterator_type stream.
-    std::ofstream output;
-    std::ofstream traceout;
-    std::ofstream includelistout;
-    std::ofstream listguardsout;
+    ofstream output;
+    ofstream traceout;
+    ofstream includelistout;
+    ofstream listguardsout;
 
     trace_flags enable_trace = trace_nothing;
 
@@ -820,7 +831,7 @@ int error_count = 0;
         if (vm.count ("license")) {
         // try to open the file, where to put the preprocessed output
         std::string license_file(vm["license"].as<std::string>());
-        std::ifstream license_stream(license_file.c_str());
+        ifstream license_stream(license_file.c_str());
 
             if (!license_stream.is_open()) {
                 cerr << "wave: could not open specified license file: "
@@ -1175,7 +1186,8 @@ int error_count = 0;
                 catch (boost::wave::cpp_exception const &e) {
                 // some preprocessing error
                     if (is_interactive || boost::wave::is_recoverable(e)) {
-                        error_count += report_error_message(ctx, e);
+                        error_count += report_error_message(ctx, e,
+                            treat_warnings_as_error);
                         need_to_advanve = true;   // advance to the next token
                     }
                     else {
@@ -1187,7 +1199,8 @@ int error_count = 0;
                     if (is_interactive ||
                         boost::wave::cpplexer::is_recoverable(e))
                     {
-                        error_count += report_error_message(e);
+                        error_count +=
+                            report_error_message(e, treat_warnings_as_error);
                         need_to_advanve = true;   // advance to the next token
                     }
                     else {
@@ -1212,12 +1225,12 @@ int error_count = 0;
     }
     catch (boost::wave::cpp_exception const &e) {
     // some preprocessing error
-        report_error_message(e);
+        report_error_message(e, treat_warnings_as_error);
         return 1;
     }
     catch (boost::wave::cpplexer::lexing_exception const &e) {
     // some lexing error
-        report_error_message(e);
+        report_error_message(e, treat_warnings_as_error);
         return 2;
     }
     catch (std::exception const &e) {
@@ -1243,6 +1256,8 @@ int error_count = 0;
 int
 main (int argc, char *argv[])
 {
+    const std::string accepted_w_args[] = {"error"};
+
     // test Wave compilation configuration
     if (!BOOST_WAVE_TEST_CONFIGURATION()) {
         cout << "wave: warning: the library this application was linked against was compiled "
@@ -1263,6 +1278,9 @@ main (int argc, char *argv[])
             ("config-file", po::value<vector<std::string> >()->composing(),
                 "specify a config file (alternatively: @filepath)")
         ;
+
+    const std::string w_arg_desc = "Warning settings. Currently supported: -W" +
+        boost::algorithm::join(accepted_w_args, ", -W");
 
     // declare the options allowed on command line and in config files
     po::options_description desc_generic ("Options allowed additionally in a config file");
@@ -1293,6 +1311,8 @@ main (int argc, char *argv[])
 #endif
             ("nesting,n", po::value<int>(),
                 "specify a new maximal include nesting depth")
+            ("warning,W", po::value<std::vector<std::string> >()->composing(),
+                w_arg_desc.c_str())
         ;
 
     po::options_description desc_ext ("Extended options (allowed everywhere)");
@@ -1417,6 +1437,21 @@ main (int argc, char *argv[])
             }
         }
 
+    // validate warning settings
+        if (vm.count("warning"))
+        {
+            BOOST_FOREACH(const std::string& arg,
+                vm["warning"].as<std::vector<std::string> >())
+            {
+                if (boost::range::find(accepted_w_args, arg) ==
+                    boost::end(accepted_w_args))
+                {
+                    cerr << "wave: Invalid warning setting: " << arg << endl;
+                    return -1;
+                }
+            }
+        }
+
     // ... act as required
         if (vm.count("help")) {
         po::options_description desc_help (
@@ -1451,7 +1486,7 @@ main (int argc, char *argv[])
             }
 
         std::string file_name(arguments[0].value[0]);
-        std::ifstream instream(file_name.c_str());
+        ifstream instream(file_name.c_str());
 
         // preprocess the given input file
             if (!instream.is_open()) {

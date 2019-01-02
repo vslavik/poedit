@@ -4,6 +4,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
 
 #ifndef BOOST_MP_TABLE_TYPE
+#define BOOST_MP_TABLE_TYPE
 
 #include <libs/math/test/table_type.hpp>
 #include <boost/multiprecision/number.hpp>

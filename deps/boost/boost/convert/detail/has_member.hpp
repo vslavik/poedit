@@ -1,11 +1,10 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 #ifndef BOOST_CONVERT_HAS_MEMBER_HPP
 #define BOOST_CONVERT_HAS_MEMBER_HPP
 
-#include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/detail/yes_no_type.hpp>
 
 // This macro allows to check if a type has a member named "__member_name__"...
@@ -41,7 +40,7 @@
     template <typename __boost_has_member_T__> /*C4*/                                       \
     class __trait_name__                                                                    \
     {                                                                                       \
-        typedef typename ::boost::remove_const<__boost_has_member_T__>::type check_type;    \
+        typedef typename boost::remove_const<__boost_has_member_T__>::type check_type;      \
         typedef ::boost::type_traits::yes_type                yes_type;                     \
         typedef ::boost::type_traits:: no_type                 no_type;                     \
                                                                                             \

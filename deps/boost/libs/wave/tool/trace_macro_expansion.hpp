@@ -621,7 +621,7 @@ public:
     char buffer[22];
 
         using namespace std;    // for some systems sprintf is in namespace std
-        sprintf (buffer, "%ld", pos.get_line());
+        sprintf (buffer, "%zd", pos.get_line());
 
         pos.set_column(++column);                 // account for ' '
         pending.push_back(result_type(T_INTLIT, buffer, pos));

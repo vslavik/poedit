@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Getting started with Boost.Metaparse</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../metaparse.html" title="Chapter&#160;20.&#160;Boost.Metaparse">
+<link rel="up" href="../metaparse.html" title="Chapter&#160;24.&#160;Boost.Metaparse">
 <link rel="prev" href="preface.html" title="Preface">
 <link rel="next" href="user_manual.html" title="User manual">
 </head>
@@ -28,7 +28,7 @@
 <a name="metaparse.getting_started_with_boost_metap"></a><a name="getting_started"></a><a class="link" href="getting_started_with_boost_metap.html" title="Getting started with Boost.Metaparse">Getting
     started with Boost.Metaparse</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction">1.
       Introduction</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.2_the_text_to_parse">2.
@@ -63,7 +63,7 @@
 <a name="metaparse.getting_started_with_boost_metap.1_introduction"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction" title="1. Introduction">1.
       Introduction</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction.1_1_testing_environment">1.1.
         Testing environment</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction.1_2_using_a_regular_testing_envi">1.2.
@@ -86,10 +86,9 @@
           text into a type. These types can later be processed by further template
           metaprograms. While you are working on your parsers, you'll probably want
           to look at the result of parsing a test input. This tutorial assumes that
-          you can use <a href="https://github.com/sabel83/metashell" target="_top">Metashell</a>.
-          Since the <a href="http://abel.web.elte.hu/shell/metashell.html" target="_top">online
-          demo</a> makes the Boost headers available, you can use that in the
-          tutorial as well.
+          you can use <a href="http://metashell.org" target="_top">Metashell</a>. Since
+          the <a href="http://metashell.org/about/demo" target="_top">online demo</a> makes
+          the Boost headers available, you can use that in the tutorial as well.
         </p>
 <p>
           If you install Metashell on your computer, make sure that you have the
@@ -133,7 +132,7 @@
 <a name="metaparse.getting_started_with_boost_metap.1_introduction.1_2_using_a_regular_testing_envi"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction.1_2_using_a_regular_testing_envi" title='1.2. Using a "regular" testing environment'>1.2.
         Using a "regular" testing environment</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.1_introduction.1_2_using_a_regular_testing_envi.1_2_1_enforcing_an_error_message">1.2.1.
           Enforcing an error message or a warning containing the result of the metafunction
           call</a></span></dt>
@@ -294,7 +293,7 @@
 <a name="metaparse.getting_started_with_boost_metap.3_creating_a_simple_parser"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.3_creating_a_simple_parser" title="3. Creating a simple parser">3.
       Creating a simple parser</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.3_creating_a_simple_parser.3_1_dealing_with_invalid_input">3.1.
         Dealing with invalid input</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.3_creating_a_simple_parser.3_2_dealing_with_input_containin">3.2.
@@ -542,7 +541,7 @@
 <a name="metaparse.getting_started_with_boost_metap.4_parsing_simple_expressions"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.4_parsing_simple_expressions" title="4. Parsing simple expressions">4.
       Parsing simple expressions</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.4_parsing_simple_expressions.4_1_tokenizer">4.1.
         Tokenizer</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.4_parsing_simple_expressions.4_2_evaluating_the_expression">4.2.
@@ -611,8 +610,8 @@
 <p>
         What you get might look strange to you. It is a <code class="computeroutput"><span class="identifier">vector</span></code>
         from [Boost.MPL]( http://boost.org/libs/mpl). What you can see in the shell
-        is the way this vector is represented. Metashell offers [pretty printing](
-        https://github.com/sabel83/metashell#data-structures-of-boostmpl) for <a href="http://boost.org/libs/mpl" target="_top">Boost.MPL</a> containers:
+        is the way this vector is represented. Metashell offers [pretty printing](metashell.org/manual/getting_started#data-structures-of-boostmpl)
+        for <a href="http://boost.org/libs/mpl" target="_top">Boost.MPL</a> containers:
       </p>
 <pre class="programlisting"><span class="special">&gt;</span> <span class="special">#</span><span class="identifier">include</span> <span class="special">&lt;</span><span class="identifier">metashell</span><span class="special">/</span><span class="identifier">formatter</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -625,7 +624,7 @@
 <p>
         What you get now looks more simple: this is a vector of three elements:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">mpl_</span><span class="special">::</span><span class="identifier">integral_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">11</span><span class="special">&gt;</span></code>
             This is the result of parsing with <a class="link" href="reference.html#token"><code class="computeroutput"><span class="identifier">token</span></code></a><code class="computeroutput"><span class="special">&lt;</span></code><a class="link" href="reference.html#int_"><code class="computeroutput"><span class="identifier">int_</span></code></a><code class="computeroutput"><span class="special">&gt;</span></code>.
@@ -665,7 +664,7 @@
           cleaner if we separate the two layers. The previous example has two types
           of tokens:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               a number (eg. <code class="computeroutput"><span class="number">13</span></code>)
             </li>
@@ -851,7 +850,7 @@
 <a name="metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions" title="5. Parsing longer expressions">5.
       Parsing longer expressions</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_1_parsing_a_subexpression_repe">5.1.
         Parsing a subexpression repeatedly</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_2_evaluating_the_parsed_expres">5.2.
@@ -892,7 +891,7 @@
           We can't solve this problem with <a class="link" href="reference.html#sequence"><code class="computeroutput"><span class="identifier">sequence</span></code></a>, since we don't know
           how many numbers the input will have. We need a parser that:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               parses the first number
             </li>
@@ -931,7 +930,7 @@
           We have a <a class="link" href="reference.html#sequence"><code class="computeroutput"><span class="identifier">sequence</span></code></a>
           with two elements:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The first number (<code class="computeroutput"><span class="identifier">int_token</span></code>)
             </li>
@@ -1001,7 +1000,7 @@
 <a name="metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_2_evaluating_the_parsed_expres"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_2_evaluating_the_parsed_expres" title="5.2. Evaluating the parsed expression">5.2.
         Evaluating the parsed expression</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_2_evaluating_the_parsed_expres.5_2_1_learning_about_boost_mpl_f">5.2.1.
           Learning about <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">fold</span></code></a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.5_parsing_longer_expressions.5_2_evaluating_the_parsed_expres.5_2_2_evaluating_the_expression_">5.2.2.
@@ -1119,7 +1118,7 @@
             to calculate the sum. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">fold</span></code>
             takes three arguments:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 The container to summarise. This is <code class="computeroutput"><span class="identifier">Vector</span></code>.
               </li>
@@ -1206,7 +1205,7 @@
 <p>
             This function takes two arguments:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">Sum</span></code>, which is a number.
                 This is the summary of the already processed elements.
@@ -1418,7 +1417,7 @@
 <p>
             There are two loops in this process:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 first <a class="link" href="reference.html#repeated"><code class="computeroutput"><span class="identifier">repeated</span></code></a>
                 loops over the input to parse all of the <code class="computeroutput"><span class="special">+</span>
@@ -1639,7 +1638,7 @@
 <a name="metaparse.getting_started_with_boost_metap.6_adding_support_for_other_opera"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.6_adding_support_for_other_opera" title="6. Adding support for other operators">6.
       Adding support for other operators</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.6_adding_support_for_other_opera.6_1_parsing_expressions_containi">6.1.
         Parsing expressions containing <code class="computeroutput"><span class="special">-</span></code>
         operators</a></span></dt>
@@ -1823,7 +1822,7 @@
           use from the folding parser to evaluate the expressions using <code class="computeroutput"><span class="special">+</span></code> and <code class="computeroutput"><span class="special">-</span></code>
           operators. This takes two arguments:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The partial result we have evaluated so far. (This used to be the summary
               we have evaluated so far, but we are making it a more general evaluation
@@ -1902,7 +1901,7 @@
 <a name="metaparse.getting_started_with_boost_metap.7_dealing_with_precedence"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.7_dealing_with_precedence" title="7. Dealing with precedence">7.
       Dealing with precedence</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.7_dealing_with_precedence.7_1_adding_support_for_the_opera">7.1.
         Adding support for the <code class="computeroutput"><span class="special">*</span></code> operator</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.7_dealing_with_precedence.7_2_adding_support_for_precedenc">7.2.
@@ -2097,7 +2096,7 @@
 <a name="metaparse.getting_started_with_boost_metap.8_dealing_with_associativity"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.8_dealing_with_associativity" title="8. Dealing with associativity">8.
       Dealing with associativity</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.8_dealing_with_associativity.8_1_understanding_the_current_im">8.1.
         Understanding the current implementation</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.8_dealing_with_associativity.8_2_folding_in_reverse_order">8.2.
@@ -2289,7 +2288,7 @@
           There are multiple differences between <code class="computeroutput"><span class="identifier">binary_op</span></code>
           and <code class="computeroutput"><span class="identifier">reverse_binary_op</span></code>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The <code class="computeroutput"><span class="identifier">Item</span></code> argument,
               which is a <code class="computeroutput"><span class="identifier">vector</span></code> is
@@ -2331,7 +2330,7 @@
           It is almost the same as <code class="computeroutput"><span class="identifier">mult_exp2</span></code>,
           but ...
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               ... the parser applied repeatedly parses <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">number</span><span class="special">&gt;</span>
               <span class="special">&lt;</span><span class="keyword">operator</span><span class="special">&gt;</span></code> elements instead of <code class="computeroutput"><span class="special">&lt;</span><span class="keyword">operator</span><span class="special">&gt;</span> <span class="special">&lt;</span><span class="identifier">number</span><span class="special">&gt;</span></code>
@@ -2599,7 +2598,7 @@
         There is a problem here: this makes the definitions of our parsers <span class="emphasis"><em>recursive</em></span>.
         Think about it:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">plus_exp</span></code> uses <code class="computeroutput"><span class="identifier">mult_exp</span></code>
           </li>
@@ -2707,7 +2706,7 @@
 <a name="metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input"></a><a name="dealing_with_invalid_input"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input" title="11. Dealing with invalid input">11.
       Dealing with invalid input</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_1_improving_the_error_message">11.1.
         Improving the error messages</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_2_defining_custom_errors">11.2.
@@ -2750,7 +2749,7 @@
         output. This is relatively easy to spot (thanks to the <code class="computeroutput"><span class="identifier">____________</span></code>
         part) and contains answers to the main questions one has when parsing fails:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="emphasis"><em>where</em></span> is the error? It is column <code class="computeroutput"><span class="number">1</span></code>
             in line <code class="computeroutput"><span class="number">1</span></code> (inside <a class="link" href="reference.html#BOOST_METAPARSE_STRING"><code class="computeroutput"><span class="identifier">BOOST_METAPARSE_STRING</span></code></a>). This
@@ -2775,7 +2774,7 @@
           So how can we improve the error messages? Let's look at what went wrong
           in the previous case:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               The input was <code class="computeroutput"><span class="identifier">hello</span></code>.
             </li>
@@ -2849,7 +2848,7 @@
           to the user, we need to define those error messages first. The error messages
           are represented by classes with some requirements:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               It should have a static method called <code class="computeroutput"><span class="identifier">get_value</span><span class="special">()</span></code> returning a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
               containing the description of the error.
@@ -2958,7 +2957,7 @@
 <a name="metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_3_missing_closing_parens"></a><a class="link" href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_3_missing_closing_parens" title="11.3. Missing closing parens">11.3.
         Missing closing parens</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_3_missing_closing_parens.11_3_1_simplifying_the_parser">11.3.1.
           Simplifying the parser</a></span></dt>
 <dt><span class="section"><a href="getting_started_with_boost_metap.html#metaparse.getting_started_with_boost_metap.11_dealing_with_invalid_input.11_3_missing_closing_parens.11_3_2_using_foldl_reject_incomp">11.3.2.

@@ -74,6 +74,61 @@ void test_approximation()
 //    BOOST_CHECK(*(++a.begin()) == "foo");
 }
 
+void test_approximation_with_multiname_options()
+{
+    options_description desc;
+    desc.add_options()
+        ("foo", new untyped_value())
+        ("fee", new untyped_value())
+        ("fe,baz", new untyped_value())
+        ("chroots,all-chroots", new untyped_value())
+        ("sessions,all-sessions", new untyped_value())
+        ("everything,all", new untyped_value())
+        ("qux,fo", new untyped_value())
+        ;
+
+    BOOST_CHECK_EQUAL(desc.find("fo", true).long_name(), "qux");
+
+    BOOST_CHECK_EQUAL(desc.find("all", true).long_name(), "everything");
+    BOOST_CHECK_EQUAL(desc.find("all-ch", true).long_name(), "chroots");
+
+    BOOST_CHECK_EQUAL(desc.find("foo", false, false, false).long_names().second, 1u);
+    BOOST_CHECK_EQUAL(desc.find("foo", false, false, false).long_names().first[0], "foo");
+
+    BOOST_CHECK_EQUAL(desc.find("fe", false, false, false).long_names().second, 2u);
+    BOOST_CHECK_EQUAL(desc.find("fe", false, false, false).long_names().first[0], "fe");
+    BOOST_CHECK_EQUAL(desc.find("baz", false, false, false).long_names().first[1], "baz");
+
+    BOOST_CHECK_EQUAL(desc.find("baz", false, false, false).long_names().second, 2u);
+    BOOST_CHECK_EQUAL(desc.find("baz", false, false, false).long_names().first[0], "fizbaz");
+    BOOST_CHECK_EQUAL(desc.find("baz", false, false, false).long_names().first[1], "baz");
+}
+
+void test_long_names_for_option_description()
+{
+    options_description desc;
+    desc.add_options()
+        ("foo", new untyped_value())
+        ("fe,baz", new untyped_value())
+        ("chroots,all-chroots", new untyped_value())
+        ("sessions,all-sessions", new untyped_value())
+        ("everything,all", new untyped_value())
+        ("qux,fo,q", new untyped_value())
+        ;
+
+    BOOST_CHECK_EQUAL(desc.find("foo", false, false, false).long_names().second, 1u);
+    BOOST_CHECK_EQUAL(desc.find("foo", false, false, false).long_names().first[0], "foo");
+
+    BOOST_CHECK_EQUAL(desc.find("fe", false, false, false).long_names().second, 2u);
+    BOOST_CHECK_EQUAL(desc.find("fe", false, false, false).long_names().first[0], "fe");
+    BOOST_CHECK_EQUAL(desc.find("baz", false, false, false).long_names().first[1], "baz");
+
+    BOOST_CHECK_EQUAL(desc.find("qux", false, false, false).long_names().second, 2u);
+    BOOST_CHECK_EQUAL(desc.find("qux", false, false, false).long_names().first[0], "qux");
+    BOOST_CHECK_EQUAL(desc.find("qux", false, false, false).long_names().first[1], "fo");
+}
+
+
 void test_formatting()
 {
     // Long option descriptions used to crash on MSVC-8.0.
@@ -123,6 +178,21 @@ void test_formatting()
 "                        bla bla bla bla bla bla bla bla bla bla bla bla bla bla\n"
    );
 }
+
+void test_multiname_option_formatting()
+{
+    options_description desc;
+    desc.add_options()
+      ("foo,bar", new untyped_value(), "a multiple-name option")
+    ;
+
+    stringstream ss;
+    ss << desc;
+    BOOST_CHECK_EQUAL(ss.str(),
+"  --foo arg             a multiple-name option\n"
+   );
+}
+
 
 void test_formatting_description_length()
 {
@@ -245,12 +315,28 @@ void test_value_name()
    );
 }
 
+void test_multiname_key_and_switch_selection()
+{
+    // cases:
+    // foo,f -> f
+    // foo, c -> c
+    // foo,f,g -> g
+    // f,g,h -> h
+    // f,foo throws
+    // foo,bar -> no switch
+    // foo,f,bar -> no switch
+
+    // what about empty strings - consecutive ,'s ?
+}
 
 int main(int, char* [])
 {
     test_type();
     test_approximation();
+    test_long_names_for_option_description();
     test_formatting();
+    test_multiname_key_and_switch_selection();
+    test_multiname_option_formatting();
     test_formatting_description_length();
     test_long_default_value();
     test_word_wrapping();

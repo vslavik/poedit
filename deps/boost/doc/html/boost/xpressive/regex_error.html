@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct regex_error</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.regex_error_hpp" title="Header &lt;boost/xpressive/regex_error.hpp&gt;">
 <link rel="prev" href="regex_constants/error_type.html" title="Type error_type">
@@ -33,34 +33,40 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../xpressive/reference.html#header.boost.xpressive.regex_error_hpp" title="Header &lt;boost/xpressive/regex_error.hpp&gt;">boost/xpressive/regex_error.hpp</a>&gt;
 
 </span>
-<span class="keyword">struct</span> <a class="link" href="regex_error.html" title="Struct regex_error">regex_error</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="regex_error.html" title="Struct regex_error">regex_error</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span>, <span class="keyword">public</span> <span class="identifier">exception</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="regex_error.html#boost.xpressive.regex_errorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="regex_error.html#idp375065984-bb"><span class="identifier">regex_error</span></a><span class="special">(</span><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="regex_error.html#idp375072128-bb"><span class="special">~</span><span class="identifier">regex_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="regex_error.html#id-1_3_47_5_7_2_1_1_5-bb"><span class="identifier">regex_error</span></a><span class="special">(</span><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_error.html#id-1_3_47_5_7_2_1_1_6-bb"><span class="special">~</span><span class="identifier">regex_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="regex_error.html#idp375062832-bb">public member functions</a></span>
-  <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> <a class="link" href="regex_error.html#idp375063392-bb"><span class="identifier">code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="regex_error.html#id-1_3_47_5_7_2_1_1_4-bb">public member functions</a></span>
+  <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> <a class="link" href="regex_error.html#id-1_3_47_5_7_2_1_1_4_1-bb"><span class="identifier">code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp508826768"></a><h2>Description</h2>
+<a name="id-1.3.47.5.8.5.4"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp508827184"></a><h3>
+<a name="id-1.3.47.5.8.5.4.2"></a><h3>
 <a name="boost.xpressive.regex_errorconstruct-copy-destruct"></a><code class="computeroutput">regex_error</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp375065984-bb"></a><span class="identifier">regex_error</span><span class="special">(</span><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> code<span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> str <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="id-1_3_47_5_7_2_1_1_5-bb"></a><span class="identifier">regex_error</span><span class="special">(</span><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> code<span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> str <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs an object of class <code class="computeroutput"><a class="link" href="regex_error.html" title="Struct regex_error">regex_error</a></code>. 
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">code</code></span></p></td>
@@ -81,11 +87,14 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp375072128-bb"></a><span class="special">~</span><span class="identifier">regex_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="id-1_3_47_5_7_2_1_1_6-bb"></a><span class="special">~</span><span class="identifier">regex_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor for class <code class="computeroutput"><a class="link" href="regex_error.html" title="Struct regex_error">regex_error</a></code> 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Throws:</span></p></td>
 <td>Will not throw.</td>
@@ -95,15 +104,18 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp508855712"></a><h3>
-<a name="idp375062832-bb"></a><code class="computeroutput">regex_error</code> public member functions</h3>
+<a name="id-1.3.47.5.8.5.4.3"></a><h3>
+<a name="id-1_3_47_5_7_2_1_1_4-bb"></a><code class="computeroutput">regex_error</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> <a name="idp375063392-bb"></a><span class="identifier">code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">error_type</span> <a name="id-1_3_47_5_7_2_1_1_4_1-bb"></a><span class="identifier">code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Accessor for the error_type value 
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>

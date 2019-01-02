@@ -110,6 +110,7 @@ public:
           m_interval_sequence( m_k_max+1 ) ,
           m_coeff( m_k_max+1 ) ,
           m_cost( m_k_max+1 ) ,
+          m_facmin_table( m_k_max+1 ) ,
           m_table( m_k_max ) ,
           m_mp_states( m_k_max+1 ) ,
           m_derivs( m_k_max+1 ) ,
@@ -125,9 +126,13 @@ public:
             m_interval_sequence[i] = 2 + 4*i;  // 2 6 10 14 ...
             m_derivs[i].resize( m_interval_sequence[i] );
             if( i == 0 )
+            {
                 m_cost[i] = m_interval_sequence[i];
-            else
+            } else
+            {
                 m_cost[i] = m_cost[i-1] + m_interval_sequence[i];
+            }
+            m_facmin_table[i] = pow BOOST_PREVENT_MACRO_SUBSTITUTION( STEPFAC3 , static_cast< value_type >(1) / static_cast< value_type >( 2*i+1 ) );
             m_coeff[i].resize(i);
             for( size_t k = 0 ; k < i ; ++k  )
             {
@@ -429,7 +434,7 @@ private:
         using std::pow;
 
         value_type expo = static_cast<value_type>(1)/(m_interval_sequence[k-1]);
-        value_type facmin = pow BOOST_PREVENT_MACRO_SUBSTITUTION( STEPFAC3 , expo );
+        value_type facmin = m_facmin_table[k];
         value_type fac;
         if (error == 0.0)
             fac = static_cast<value_type>(1)/facmin;
@@ -692,6 +697,7 @@ private:
     int_vector m_interval_sequence; // stores the successive interval counts
     value_matrix m_coeff;
     int_vector m_cost; // costs for interval count
+    value_vector m_facmin_table; // for precomputed facmin to save pow calls
 
     state_vector_type m_table; // sequence of states for extrapolation
 

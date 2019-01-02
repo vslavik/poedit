@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_volatile_t = typename remove_volatile<T>::type; // C++11 and above
+
 __type The same type as `T`, but with any /top level/ volatile-qualifier removed.
 
 __std_ref 3.9.3.

@@ -84,10 +84,16 @@ void test_all()
     test_geometry<bg::model::linestring<P> >(
         "LINESTRING(0 0,120 6,80 10,200 0)",
         "LINESTRING(0 0,120 6,80 10,200 0)", 7);
+
     // Same which reordered coordinates
     test_geometry<bg::model::linestring<P> >(
         "LINESTRING(0 0,80 10,120 6,200 0)",
         "LINESTRING(0 0,80 10,200 0)", 7);
+
+    // Duplicate point is removed
+    test_geometry<bg::model::linestring<P> >(
+        "LINESTRING(0 0,0 0)",
+        "LINESTRING(0 0)", 1.0);
 
     // Mail 2013-10-07, real-life test, piece of River Leine
     // PostGIS returns exactly the same result
@@ -110,9 +116,15 @@ void test_all()
         "LINESTRING(0 0,5 5,7 5,10 10)", 1.0);
     */
 
-    test_geometry<bg::model::ring<P> >(
-        "POLYGON((4 0,8 2,8 7,4 9,0 7,0 2,2 1,4 0))",
-        "POLYGON((4 0,8 2,8 7,4 9,0 7,0 2,4 0))", 1.0);
+    /*
+
+    Above can be checked in PostGIS by:
+
+    select astext(ST_Simplify(geomfromtext('LINESTRING(0 0, 5 5, 10 10)'),1.0)) as simplified
+    union all select astext(ST_Simplify(geomfromtext('LINESTRING(0 0, 5 5, 6 5, 10 10)'),1.0))
+    etc
+    */
+
 
     test_geometry<bg::model::polygon<P> >(
         "POLYGON((4 0,8 2,8 7,4 9,0 7,0 2,2 1,4 0))",
@@ -122,14 +134,73 @@ void test_all()
         "POLYGON((4 0,8 2,8 7,4 9,0 7,0 2,2 1,4 0),(7 3,7 6,1 6,1 3,4 3,7 3))",
         "POLYGON((4 0,8 2,8 7,4 9,0 7,0 2,4 0),(7 3,7 6,1 6,1 3,7 3))", 1.0);
 
-/*
+    // Closing point should be simplified away
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((1 0,0 0,0 4,4 4,4 0,1 0))",
+        "POLYGON((0 0,0 4,4 4,4 0,0 0))", 0.1);
 
-Above can be checked in PostGIS by:
+    // Section around closing point should be simplified away
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((5 0,4 0,3 0,2 0,1 0,0 0,0 5,5 5,5 0))",
+        "POLYGON((5 0,0 0,0 5,5 5,5 0))", 0.1);
 
-select astext(ST_Simplify(geomfromtext('LINESTRING(0 0, 5 5, 10 10)'),1.0)) as simplified
-union all select astext(ST_Simplify(geomfromtext('LINESTRING(0 0, 5 5, 6 5, 10 10)'),1.0))
-etc
-*/
+    // Manually rotate this WKT over all the 5 redundant points at closing area
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((4 0,3 0,2 0,1 0,0 0,0 5,5 5,5 0,4 0))",
+        "POLYGON((0 0,0 5,5 5,5 0,0 0))", 0.1);
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((3 0,2 0,1 0,0 0,0 5,5 5,5 0,4 0,3 0))",
+        "POLYGON((0 0,0 5,5 5,5 0,0 0))", 0.1);
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((2 0,1 0,0 0,0 5,5 5,5 0,4 0,3 0,2 0))",
+        "POLYGON((0 0,0 5,5 5,5 0,0 0))", 0.1);
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((1 0,0 0,0 5,5 5,5 0,4 0,3 0,2 0,1 0))",
+        "POLYGON((0 0,0 5,5 5,5 0,0 0))", 0.1);
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((0 0,0 5,5 5,5 0,4 0,3 0,2 0,1 0,0 0))",
+        "POLYGON((0 0,0 5,5 5,5 0,0 0))", 0.1);
+
+    // Test wither all collinear points in between are simplified away
+    // First approach did select one of them because it was the end of the
+    // "closing area". Now the opposite is taken, which is farthest and never
+    // collinear
+    test_geometry<bg::model::polygon<P> >(
+            "POLYGON((2 0,1 0,0 0,0 1,0 2,0 3,0 4,1 4,2 4,3 4,4 4,4 3,4 2,4 1,4 0,3 0,2 0))",
+            "POLYGON((0 0,0 4,4 4,4 0,0 0))", 1.0);
+
+    // Test simplifying away one of the sides (collinear), then closing point
+    // and finally the whole polygon
+    std::string const near_triangle = "POLYGON((0.55 0.55,1 0,0.5 0,0 0,0 1,0.55 0.55))";
+    test_geometry<bg::model::polygon<P> >(near_triangle,
+        "POLYGON((0.55 0.55,1 0,0 0,0 1,0.55 0.55))", 0.01);
+    test_geometry<bg::model::polygon<P> >(near_triangle,
+        "POLYGON((1 0,0 0,0 1,1 0))", 0.1);
+    // 0.9 should still result in a simplified polygon
+    test_geometry<bg::model::polygon<P> >(near_triangle,
+        "POLYGON((1 0,0 0,0 1,1 0))", 0.9);
+    test_geometry<bg::model::polygon<P> >(near_triangle,
+        "POLYGON(())", 1.1);
+
+    // Test simplifying away the closing point, and closing it explicitly
+    std::string const salamina = "POLYGON((2616131.59828 4579307.29099,2616687.86177 4579151.05325,2618172.52982 4578718.79836,2618728.79332 4578522.73574,2620336.91468 4577424.54293,2620522.48427 4576992.50129,2621264.76264 4569815.3917,2621140.75272 4569502.07546,2620491.53745 4568208.96982,2620151.34509 4567855.90928,2612606.55528 4562800.36094,2611833.3301 4562291.50023,2611369.5731 4562174.16117,2610225.54269 4562408.69959,2605896.21638 4564367.29512,2605494.13038 4564641.6634,2605277.94792 4566288.44857,2606019.89233 4569423.46562,2609050.12019 4577424.54293,2614337.90732 4579347.12775,2615296.7021 4579543.34723,2616131.59828 4579307.29099))";
+    test_geometry<bg::model::polygon<P> >(salamina, 196318951.5097456, 100);
+    test_geometry<bg::model::polygon<P> >(salamina, 194471472.35804176, 200);
+    test_geometry<bg::model::polygon<P> >(salamina, 191735337.33374023, 500);
+    test_geometry<bg::model::polygon<P> >(salamina, 186593693.18401337, 1000);
+    test_geometry<bg::model::polygon<P> >(salamina, 181448561.04094696, 2000);
+    test_geometry<bg::model::polygon<P> >(salamina, 141965392.92240524, 5000);
+
+    // Interior ring (sized ~ 1) should be simplified away (distance 5)
+    test_geometry<bg::model::polygon<P> >(
+        "POLYGON((0 0,0 10,10 10,10 0,0 0),(5 5,6 6,5 6,5 5))",
+        "POLYGON((0 0,0 10,10 10,10 0,0 0))", 5.0);
+
+//    // Non-closed version
+//    test_geometry<bg::model::polygon<P, true, false> >(
+//        "POLYGON((1 0,0 0,0 4,4 4,4 0))",
+//        "POLYGON((0 0,0 4,4 4,4 0))", 0.1);
+
 
     {
         // Test with explicit strategy
@@ -217,8 +288,11 @@ int test_main(int, char* [])
     // Integer compiles, but simplify-process fails (due to distances)
     //test_all<bg::model::d2::point_xy<int> >();
 
-    test_all<bg::model::d2::point_xy<float> >();
     test_all<bg::model::d2::point_xy<double> >();
+
+#if ! defined(BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE)
+
+    test_all<bg::model::d2::point_xy<float> >();
 
     test_3d<bg::model::point<double, 3, bg::cs::cartesian> >();
 
@@ -230,7 +304,7 @@ int test_main(int, char* [])
     test_all<bg::model::d2::point_xy<ttmath_big> >();
     test_spherical<bg::model::point<ttmath_big, 2, bg::cs::spherical_equatorial<bg::degree> > >();
 #endif
-
+#endif
 
 
     return 0;

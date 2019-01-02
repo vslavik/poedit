@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>vector</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../container.html" title="Container">
 <link rel="prev" href="../container.html" title="Container">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="fusion.container.vector.h0"></a>
-        <span><a name="fusion.container.vector.description"></a></span><a class="link" href="vector.html#fusion.container.vector.description">Description</a>
+        <span class="phrase"><a name="fusion.container.vector.description"></a></span><a class="link" href="vector.html#fusion.container.vector.description">Description</a>
       </h5>
 <p>
         <code class="computeroutput"><span class="identifier">vector</span></code> is a <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
@@ -40,7 +40,7 @@
       </p>
 <h5>
 <a name="fusion.container.vector.h1"></a>
-        <span><a name="fusion.container.vector.header"></a></span><a class="link" href="vector.html#fusion.container.vector.header">Header</a>
+        <span class="phrase"><a name="fusion.container.vector.header"></a></span><a class="link" href="vector.html#fusion.container.vector.header">Header</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -61,7 +61,7 @@
 </pre>
 <h5>
 <a name="fusion.container.vector.h2"></a>
-        <span><a name="fusion.container.vector.synopsis"></a></span><a class="link" href="vector.html#fusion.container.vector.synopsis">Synopsis</a>
+        <span class="phrase"><a name="fusion.container.vector.synopsis"></a></span><a class="link" href="vector.html#fusion.container.vector.synopsis">Synopsis</a>
       </h5>
 <p>
         <span class="bold"><strong>Numbered forms</strong></span>
@@ -131,7 +131,7 @@
 </pre>
 <h5>
 <a name="fusion.container.vector.h3"></a>
-        <span><a name="fusion.container.vector.template_parameters"></a></span><a class="link" href="vector.html#fusion.container.vector.template_parameters">Template
+        <span class="phrase"><a name="fusion.container.vector.template_parameters"></a></span><a class="link" href="vector.html#fusion.container.vector.template_parameters">Template
         parameters</a>
       </h5>
 <div class="informaltable"><table class="table">
@@ -177,16 +177,16 @@
 </table></div>
 <h5>
 <a name="fusion.container.vector.h4"></a>
-        <span><a name="fusion.container.vector.model_of"></a></span><a class="link" href="vector.html#fusion.container.vector.model_of">Model
+        <span class="phrase"><a name="fusion.container.vector.model_of"></a></span><a class="link" href="vector.html#fusion.container.vector.model_of">Model
         of</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
             Access Sequence</a>
           </li></ul></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">v</span></code></span></dt>
 <dd><p>
               Instance of <code class="computeroutput"><span class="identifier">vector</span></code>
@@ -208,7 +208,7 @@
 </div>
 <h5>
 <a name="fusion.container.vector.h5"></a>
-        <span><a name="fusion.container.vector.expression_semantics"></a></span><a class="link" href="vector.html#fusion.container.vector.expression_semantics">Expression
+        <span class="phrase"><a name="fusion.container.vector.expression_semantics"></a></span><a class="link" href="vector.html#fusion.container.vector.expression_semantics">Expression
         Semantics</a>
       </h5>
 <p>
@@ -292,7 +292,7 @@
 </table></div>
 <h5>
 <a name="fusion.container.vector.h6"></a>
-        <span><a name="fusion.container.vector.example"></a></span><a class="link" href="vector.html#fusion.container.vector.example">Example</a>
+        <span class="phrase"><a name="fusion.container.vector.example"></a></span><a class="link" href="vector.html#fusion.container.vector.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">float</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">12</span><span class="special">,</span> <span class="number">5.5f</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <a class="link" href="../sequence/intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

@@ -344,7 +344,7 @@ class SetupAction:
 
 def register_setup_action(action_name,setup_function,function=None):
     global engine
-    if engine.actions.has_key(action_name):
+    if action_name in engine.actions:
         raise "Bjam action %s is already defined" % action_name
     engine.actions[action_name] = SetupAction(setup_function, function)
 
@@ -380,12 +380,12 @@ def setup_preprocess_c_cpp_action(targets, sources, properties):
     return 'preprocess-c-c++'
 
 register_setup_action(
-    'msvc.preprocess.c',
+    'msvc.compile.c.preprocess',
     setup_preprocess_c_cpp_action,
     function=compile_c_preprocess)
 
 register_setup_action(
-    'msvc.preprocess.c++',
+    'msvc.compile.c++.preprocess',
     setup_preprocess_c_cpp_action,
     function=compile_cpp_preprocess)
 
@@ -623,6 +623,102 @@ def auto_detect_toolset_versions():
             register_configuration(i,default_path(i))
 
 
+def maybe_rewrite_setup(toolset, setup_script, setup_options, version, rewrite_setup='off'):
+    """
+    Helper rule to generate a faster alternative to MSVC setup scripts.
+
+    We used to call MSVC setup scripts directly in every action, however in
+    newer MSVC versions (10.0+) they make long-lasting registry queries
+    which have a significant impact on build time.
+    """
+    result = '"{}" {}'.format(setup_script, setup_options)
+
+    # At the moment we only know how to rewrite scripts with cmd shell.
+    if os.name == 'nt' and rewrite_setup != 'off':
+        basename = os.path.basename(setup_script)
+        filename, _ = os.path.splitext(basename)
+        setup_script_id = 'b2_{}_{}_{}'.format(toolset, version, filename)
+        if setup_options:
+            setup_script_id = '{}_{}'.format(setup_script_id, setup_options)
+
+        tempdir = os.environ.get('TEMP')
+        replacement = os.path.join(tempdir, setup_script_id + '.cmd')
+        if rewrite_setup == 'always' or not os.path.exists(replacement):
+            import subprocess
+            # call the setup script and print the environment after doing so
+            p = subprocess.Popen([
+                    setup_script, setup_options, '>', 'nul', '&&', 'set',
+                ], stdout=subprocess.PIPE, shell=True
+            )
+            stdout, _ = p.communicate()
+
+            diff_vars = []
+            for var in stdout.splitlines():
+                # returns a tuple of ('var-name', '=', 'value').
+                # partition is being used here (over something like .split())
+                # for two reasons:
+                #     1) an environment variable may have a value that contains an '=';
+                #        .partition() will still return the correct key and value pair.
+                #     2) if the line doesn't contain an '=' at all, then the returned
+                #        tuple will contain only empty strings rather than raising
+                #        an exception.
+                key, _, value = var.partition('=')
+                # os.environ handles casing differences here. Usually the
+                # call to "set" above will produce pascal-cased environment
+                # variable names, so a normal python dict can't be used here.
+                # check for the existence of key in case the partitioning() above
+                # returned an empty key value pair.
+                if key and os.environ.get(key) != value:
+                    diff_vars.append('SET {}={}'.format(key, value))
+
+            if diff_vars:
+                with open(replacement, 'wb') as f:
+                    f.write(os.linesep.join(diff_vars))
+
+                result = '"{}"'.format(replacement)
+        else:
+            result = '"{}"'.format(replacement)
+
+    return result
+
+
+def generate_setup_cmd(version, command, parent, options, cpu, global_setup,
+                       default_global_setup_options, default_setup):
+    setup_prefix = "call "
+    setup_suffix = """ >nul\n"""
+    if on_cygwin():
+        setup_prefix = "cmd.exe /S /C call "
+        setup_suffix = " \">nul\" \"&&\" "
+
+    setup_options = ''
+    setup_cpu = feature.get_values('<setup-{}>'.format(cpu), options)
+
+    if not setup_cpu:
+        if global_setup:
+            setup_cpu = global_setup
+            # If needed we can easily add using configuration flags
+            # here for overriding which options get passed to the
+            # global setup command for which target platform:
+            # setup_options = feature.get_values('<setup-options-{}>'.format(cpu),options)
+            if not setup_options:
+                setup_options = default_global_setup_options[cpu]
+        else:
+            setup_cpu = locate_default_setup(command, parent, default_setup[cpu])
+    else:
+        setup_cpu = setup_cpu[0]
+
+    # Cygwin to Windows path translation.
+    # setup-$(c) = "\""$(setup-$(c):W)"\"" ;
+
+    # Append setup options to the setup name and add the final setup
+    # prefix & suffix.
+    rewrite = feature.get_values('<rewrite-setup-scripts>', options)
+    rewrite = rewrite[0] if rewrite else ''
+    setup = maybe_rewrite_setup(
+        'msvc', setup_cpu, setup_options, version, rewrite)
+    return '{}{}{}'.format(setup_prefix, setup, setup_suffix)
+
+
 # Worker rule for toolset version configuration. Takes an explicit version id or
 # nothing in case it should configure the default toolset version (the first
 # registered one or a new 'default' one in case no toolset versions have been
@@ -676,7 +772,9 @@ def configure_really(version=None, options=[]):
             # version from the path.
             # FIXME: We currently detect both Microsoft Visual Studio 9.0 and
             # 9.0express as 9.0 here.
-            if re.search("Microsoft Visual Studio 14", command):
+            if re.search("Microsoft Visual Studio[\/\\]2017", command):
+                version = '15.0'
+            elif re.search("Microsoft Visual Studio 14", command):
                 version = '14.0'
             elif re.search("Microsoft Visual Studio 12", command):
                 version = '12.0'
@@ -785,39 +883,15 @@ def configure_really(version=None, options=[]):
             elif somehow_detect_the_itanium_platform:
                 default_global_setup_options[ 'ia64' ] = 'ia64'
 
-            setup_prefix = "call "
-            setup_suffix = """ >nul\n"""
-            if on_cygwin():
-                setup_prefix = "cmd.exe /S /C call "
-                setup_suffix = " \">nul\" \"&&\" "
-
             for c in cpu:
-                setup_options = None
-                setup_cpu = feature.get_values('<setup-{}>'.format(c),options)
-
-                if not setup_cpu:
-                    if global_setup:
-                        setup_cpu = global_setup
-                        # If needed we can easily add using configuration flags
-                        # here for overriding which options get passed to the
-                        # global setup command for which target platform:
-                        # setup_options = feature.get_values('<setup-options-{}>'.format(c),options)
-                        if not setup_options:
-                            setup_options = default_global_setup_options[ c ]
-                    else:
-                        setup_cpu = locate_default_setup(command, parent, default_setup[ c ])
-
-                # Cygwin to Windows path translation.
-                # setup-$(c) = "\""$(setup-$(c):W)"\"" ;
-
-                # Append setup options to the setup name and add the final setup
-                # prefix & suffix.
-                setup_scripts[ c ] = '{}"{}" {}{}'.format(setup_prefix, setup_cpu, setup_options, setup_suffix)
+                setup_scripts[c] = generate_setup_cmd(
+                    version, command, parent, options, c, global_setup,
+                    default_global_setup_options, default_setup
+                )
 
         # Get tool names (if any) and finish setup.
         compiler = feature.get_values("<compiler>", options)
-        if not compiler:
-            compiler = "cl"
+        compiler = compiler[0] if compiler else 'cl'
 
         linker = feature.get_values("<linker>", options)
         if not linker:
@@ -965,7 +1039,7 @@ def register_toolset_really():
     feature.extend('toolset', ['msvc'])
 
     # Intel and msvc supposedly have link-compatible objects.
-    feature.subfeature( 'toolset', 'msvc', 'vendor', 'intel', ['propagated', 'optional'])
+    feature.subfeature( 'toolset', 'msvc', 'vendor', ['intel'], ['propagated', 'optional'])
 
     # Inherit MIDL flags.
     toolset.inherit_flags('msvc', 'midl')
@@ -1191,7 +1265,7 @@ __cpu_type_itanium2 = ['itanium2', 'mckinley']
 
 
 # Known toolset versions, in order of preference.
-_known_versions = ['14.0', '12.0', '11.0', '10.0', '10.0express', '9.0', '9.0express', '8.0', '8.0express', '7.1', '7.1toolkit', '7.0', '6.0']
+_known_versions = ['15.0', '14.0', '12.0', '11.0', '10.0', '10.0express', '9.0', '9.0express', '8.0', '8.0express', '7.1', '7.1toolkit', '7.0', '6.0']
 
 # Version aliases.
 __version_alias_6 = '6.0'
@@ -1203,6 +1277,7 @@ __version_alias_10 = '10.0'
 __version_alias_11 = '11.0'
 __version_alias_12 = '12.0'
 __version_alias_14 = '14.0'
+__version_alias_15 = '15.0'
 
 # Names of registry keys containing the Visual C++ installation path (relative
 # to "HKEY_LOCAL_MACHINE\SOFTWARE\\Microsoft").
@@ -1218,6 +1293,7 @@ __version_10_0express_reg = "VCExpress\\10.0\\Setup\\VC"
 __version_11_0_reg = "VisualStudio\\11.0\\Setup\\VC"
 __version_12_0_reg = "VisualStudio\\12.0\\Setup\\VC"
 __version_14_0_reg = "VisualStudio\\14.0\\Setup\\VC"
+__version_15_0_reg = "VisualStudio\\15.0\\Setup\\VC"
 
 # Visual C++ Toolkit 2003 does not store its installation path in the registry.
 # The environment variable 'VCToolkitInstallDir' and the default installation

@@ -78,9 +78,9 @@ void resource_deadlock_would_occur_tester()
   }
 }
 
-void th_100_ms()
+void th_250_ms()
 {
-  boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
+  boost::this_thread::sleep_for(boost::chrono::milliseconds(250));
 }
 
 int main()
@@ -88,11 +88,11 @@ int main()
   {
     boost::thread t0( (G()));
     BOOST_TEST(t0.joinable());
-    BOOST_TEST(t0.try_join_for(boost::chrono::milliseconds(150)));
+    BOOST_TEST(t0.try_join_for(boost::chrono::milliseconds(250)));
     BOOST_TEST(!t0.joinable());
   }
   {
-    boost::thread t0( (th_100_ms));
+    boost::thread t0( (th_250_ms));
     BOOST_TEST(!t0.try_join_for(boost::chrono::milliseconds(50)));
     t0.join();
   }
@@ -103,7 +103,7 @@ int main()
     resource_deadlock_would_occur_th = &t0;
     BOOST_TEST(t0.joinable());
     lk.unlock();
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(250));
     boost::unique_lock<boost::mutex> lk2(resource_deadlock_would_occur_mtx);
     t0.join();
     BOOST_TEST(!t0.joinable());
@@ -140,7 +140,7 @@ int main()
   {
     boost::thread t0( (G()));
     BOOST_TEST(t0.joinable());
-    t0.try_join_for(boost::chrono::milliseconds(50));
+    t0.try_join_for(boost::chrono::milliseconds(250));
     try
     {
       t0.join();

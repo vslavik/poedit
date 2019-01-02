@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -17,7 +17,7 @@ namespace hana = boost::hana;
 int main() {
     BOOST_HANA_CONSTEXPR_LAMBDA auto block = [](auto ...types) {
         return [=](auto x) {
-            return hana::if_(hana::contains(hana::make_tuple(types...), hana::decltype_(x)),
+            return hana::if_(hana::contains(hana::make_tuple(types...), hana::typeid_(x)),
                 hana::nothing,
                 hana::just(x)
             );

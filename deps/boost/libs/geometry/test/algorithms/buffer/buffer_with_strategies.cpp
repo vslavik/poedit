@@ -111,7 +111,7 @@ void test_all()
 
 
     // PostGIS: 34.2550669294223 216 (40 / qcircle)
-    // SQL Server: 34.2550419903829	220 (default options)
+    // SQL Server: 34.2550419903829 220 (default options)
     test_with_strategies<multi_polygon, multi_polygon>(
         "multi_polygon_simplex", multi_polygon_simplex,
         join, end, side, circle, distance(1.0),
@@ -124,7 +124,7 @@ void test_all()
 
     //
     // PostGIS: 35.2256914798762 164 (40 / qcircle)
-    // SQL Server: 35.2252355201605	153 (default options)
+    // SQL Server: 35.2252355201605 153 (default options)
     test_with_strategies<polygon, multi_polygon>(
         "polygon_simplex", polygon_simplex,
         join, end, side, circle, distance(1.0),

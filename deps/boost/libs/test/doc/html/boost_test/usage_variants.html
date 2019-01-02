@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Usage variants</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
 <link rel="prev" href="intro/how_to_read.html" title="How to read this documentation">
@@ -32,7 +32,7 @@
     </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-          <a class="link" href="usage_variants.html#boost_test.usage_variants.single_header">The single-header
+          <a class="link" href="usage_variants.html#boost_test.usage_variants.single_header">The header-only
           variant</a>
         </li>
 <li class="listitem">
@@ -51,54 +51,54 @@
     </p>
 <h4>
 <a name="boost_test.usage_variants.h0"></a>
-      <span><a name="boost_test.usage_variants.single_header"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.single_header">Single-header
+      <span class="phrase"><a name="boost_test.usage_variants.single_header"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.single_header">Header-only
       usage variant</a>
     </h4>
 <p>
       If you prefer to avoid the compilation of standalone library, you should use
-      the single-header variant of the <span class="emphasis"><em>Unit Test Framework</em></span>.
-      This variant only requires you to include, as it follows from its name, the
-      single header: <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code> and
+      the header-only variant of the <span class="emphasis"><em>Unit Test Framework</em></span>. This
+      variant only requires you to include the unique header: <code class="computeroutput"><span class="preprocessor">#include</span>
+      <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code> and
       there is no need to link with any library. There are several ways to perform
-      the initialization, but the simplest way is this:
+      the initialization, but the simplest way is the following:
     </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <a class="link" href="utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> <span class="identifier">test</span> <span class="identifier">module</span> <span class="identifier">name</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">included</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
       <a class="link" href="utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> macro needs to be
-      defined <span class="bold"><strong>before</strong></span> the include and should be set
-      to test module name. This name can include spaces and does not need to be wrapped
-      in quotes.
+      defined <span class="bold"><strong>before</strong></span> the include and should indicate
+      the name of the test module. This name can include spaces and does not need
+      to be wrapped in quotes.
     </p>
 <p>
-      The limitation of single header variant is that you can only implement this
-      way test modules with a single translation unit.
-    </p>
-<p>
-      For more details on customization for this usage variant you can check <a class="link" href="adv_scenarios/single_header_customizations.html" title="Single-header variant customizations">this section</a>.
+      <a class="link" href="adv_scenarios/single_header_customizations.html" title="Header-only variant customizations">This
+      section</a> gives additional details on how to customize this usage variant.
+      In particular, it is possible to have several compilation units with this variant,
+      as explained in the section <a class="link" href="adv_scenarios/single_header_customizations/multiple_translation_units.html" title="Header-only with multiple translation units">Header-only
+      with multiple translation units</a>.
     </p>
 <h4>
 <a name="boost_test.usage_variants.h1"></a>
-      <span><a name="boost_test.usage_variants.static_lib"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.static_lib">Static
+      <span class="phrase"><a name="boost_test.usage_variants.static_lib"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.static_lib">Static
       library usage variant</a>
     </h4>
 <p>
-      For most users, who has an access to pre-built static library <sup>[<a name="boost_test.usage_variants.f0" href="#ftn.boost_test.usage_variants.f0" class="footnote">1</a>]</sup> of the <span class="emphasis"><em>Unit Test Framework</em></span> or can <a class="link" href="adv_scenarios/build_utf.html" title="Building the Unit Test Framework">build
+      For most users, who has an access to pre-built static library <a href="#ftn.boost_test.usage_variants.f0" class="footnote" name="boost_test.usage_variants.f0"><sup class="footnote">[1]</sup></a> of the <span class="emphasis"><em>Unit Test Framework</em></span> or can <a class="link" href="adv_scenarios/build_utf.html" title="Building the Unit Test Framework">build
       it</a> themselves, following usage can be most versatile and simple approach.
       This usage variant entails two steps.
     </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <p class="simpara">
-          First you need to add following line to all translation units in a test
-          module:
+          First, the following line needs to be added to all translation units in
+          the test module:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p class="simpara">
-          and <span class="bold"><strong>only one</strong></span> translation unit should include
-          following lines
+          One and <span class="bold"><strong>only one</strong></span> translation unit should
+          include following lines:
         </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <a class="link" href="utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> <span class="identifier">test</span> <span class="identifier">module</span> <span class="identifier">name</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -106,13 +106,13 @@
 <p class="simpara">
           <a class="link" href="utf_reference/link_references/link_boost_test_module_macro.html" title="BOOST_TEST_MODULE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MODULE</span></code></a> macro needs
           to be defined <span class="bold"><strong>before</strong></span> the include and should
-          be set to test module name. This name can include spaces and does not need
-          to be wrapped in quotes.
+          indicate the name of the test module. This name can include spaces and
+          does not need to be wrapped in quotes.
         </p>
 </li>
 <li class="listitem">
           The second step is to link with the <span class="emphasis"><em>Unit Test Framework</em></span>
-          static library.
+          <span class="bold"><strong>static</strong></span> library.
         </li>
 </ol></div>
 <div class="note"><table border="0" summary="Note">
@@ -122,20 +122,20 @@
 </tr>
 <tr><td align="left" valign="top"><p>
         Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">unit_test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
-        is an 'aggregate' header: it includes most of the other headers that contains
-        the Unit Test Framework definitions.
+        is an <span class="emphasis"><em>aggregate</em></span> header: it includes most of the other
+        headers that contains the Unit Test Framework definitions.
       </p></td></tr>
 </table></div>
 <p>
       The flip side of this usage variant is that each test module following this
       usage variant is going to be statically linked with <span class="emphasis"><em>Unit Test Framework</em></span>,
-      which might be something you interested to avoid (to save space for example).
-      For more information about these configuration options check <a class="link" href="adv_scenarios/static_lib_customizations.html" title="Static-library variant customizations">this
+      which might be something you want to avoid (to save space for example). For
+      more information about these configuration options check <a class="link" href="adv_scenarios/static_lib_customizations.html" title="Static-library variant customizations">this
       section</a>.
     </p>
 <h4>
 <a name="boost_test.usage_variants.h2"></a>
-      <span><a name="boost_test.usage_variants.shared_lib"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.shared_lib">Shared
+      <span class="phrase"><a name="boost_test.usage_variants.shared_lib"></a></span><a class="link" href="usage_variants.html#boost_test.usage_variants.shared_lib">Shared
       library usage variant</a>
     </h4>
 <p>
@@ -173,7 +173,7 @@
 </li>
 <li class="listitem">
           The second step is to link with the <span class="emphasis"><em>Unit Test Framework</em></span>
-          shared library.
+          <span class="bold"><strong>shared</strong></span> library.
         </li>
 </ol></div>
 <p>
@@ -200,8 +200,8 @@
       </p></td></tr>
 </table></div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.usage_variants.f0" href="#boost_test.usage_variants.f0" class="para">1</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.usage_variants.f0" class="footnote"><p><a href="#boost_test.usage_variants.f0" class="para"><sup class="para">[1] </sup></a>
         these files are distributed with the packaging systems on Linux and OSX for
         instance
       </p></div>
@@ -209,7 +209,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

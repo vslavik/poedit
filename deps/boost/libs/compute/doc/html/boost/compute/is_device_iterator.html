@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template is_device_iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.type_traits.is_device_iterator_hpp" title="Header &lt;boost/compute/type_traits/is_device_iterator.hpp&gt;">
 <link rel="prev" href="uniform_real_distribution.html" title="Class template uniform_real_distribution">
@@ -32,15 +32,15 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_compute/reference.html#header.boost.compute.type_traits.is_device_iterator_hpp" title="Header &lt;boost/compute/type_traits/is_device_iterator.hpp&gt;">boost/compute/type_traits/is_device_iterator.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iterator<span class="special">&gt;</span> 
-<span class="keyword">struct</span> <a class="link" href="is_device_iterator.html" title="Struct template is_device_iterator">is_device_iterator</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="is_device_iterator.html" title="Struct template is_device_iterator">is_device_iterator</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">false_type</span> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp82814560"></a><h2>Description</h2>
+<a name="idp97863760"></a><h2>Description</h2>
 <p>Meta-function returning <code class="computeroutput">true</code> if <code class="computeroutput">Iterator</code> is a device-iterator.</p>
 <p>By default, this function returns false. Device iterator types (such as <a class="link" href="buffer_iterator.html" title="Class template buffer_iterator">buffer_iterator</a>) should specialize this trait and return <code class="computeroutput">true</code>.</p>
 <p>For example: </p>
-<pre class="programlisting"> <span class="identifier">is_device_iterator</span><span class="special">&lt;</span><span class="identifier">buffer_iterator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">true</span>
- <span class="identifier">is_device_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">false</span>
+<pre class="programlisting"><span class="identifier">is_device_iterator</span><span class="special">&lt;</span><span class="identifier">buffer_iterator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">true</span>
+<span class="identifier">is_device_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">false</span>
 </pre>
 <p> </p>
 </div>

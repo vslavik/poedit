@@ -28,20 +28,34 @@ template <class T>
 int test_allocator(const T& i)
 {
    typedef std::allocator<int> alloc1_t;
+#if !((__cplusplus > 201700) || (defined(_MSVC_LANG) && (_MSVC_LANG > 201700)))
+   // stuff deprecated in C++17:
    typedef typename alloc1_t::size_type           size_type;
    typedef typename alloc1_t::difference_type     difference_type BOOST_UNUSED_ATTRIBUTE;
    typedef typename alloc1_t::pointer             pointer;
    typedef typename alloc1_t::const_pointer       const_pointer;
    typedef typename alloc1_t::reference           reference;
    typedef typename alloc1_t::const_reference     const_reference;
+   #endif
    typedef typename alloc1_t::value_type          value_type BOOST_UNUSED_ATTRIBUTE;
-
-   typedef typename alloc1_t::BOOST_NESTED_TEMPLATE rebind<double> binder_t;
-   typedef typename binder_t::other alloc2_t;
 
    alloc1_t a1;
    alloc1_t a2(a1);
+   (void)i;
+#if !((__cplusplus > 201700) || (defined(_MSVC_LANG) && (_MSVC_LANG > 201700)))
+   // stuff deprecated in C++17:
+   typedef typename alloc1_t::BOOST_NESTED_TEMPLATE rebind<double> binder_t;
+   typedef typename binder_t::other alloc2_t;
+   alloc2_t a3(a1);
+   // this chokes early versions of the MSL library
+   // and isn't currently required by anything in boost
+   // so don't test for now...
+   // a3 = a2;
 
+   (void)a2;
+#endif
+
+#if !((__cplusplus > 201700) || (defined(_MSVC_LANG) && (_MSVC_LANG > 201700)))
    pointer p = a1.allocate(1);
    const_pointer cp = p;
    a1.construct(p,i);
@@ -52,15 +66,11 @@ int test_allocator(const T& i)
    if(p != a1.address(r)) return -1;
    if(cp != a1.address(cr)) return -1;
    a1.destroy(p);
+#else
+   auto p = a1.allocate(1);
+#endif
    a1.deallocate(p,1);
 
-   alloc2_t a3(a1);
-   // this chokes early versions of the MSL library
-   // and isn't currently required by anything in boost
-   // so don't test for now...
-   // a3 = a2;
-
-   (void)a2;
    return 0;
 }
 

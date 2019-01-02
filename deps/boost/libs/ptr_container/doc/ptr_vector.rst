@@ -62,7 +62,7 @@ to store the pointers.
             public: // `pointer container requirements`_
                auto_type replace( size_type idx, T* x );  
                template< class U >
-               auto_type replace( size_type idx, std::auto_ptr<U> x );  
+               auto_type replace( size_type idx, compatible-smart-ptr<U> x );  
                bool      is_null( size_type idx ) const;
                
             public: // `C-array support`_
@@ -148,7 +148,7 @@ Semantics: pointer container requirements
 
     - Exception safety: Strong guarantee
 
-- ``template< class U > auto_type replace( size_type idx, std::auto_ptr<U> x );``
+- ``template< class U > auto_type replace( size_type idx, compatible-smart-ptr<U> x );``
 
     - Effects: ``return replace( idx, x.release() );``  
 

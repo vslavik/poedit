@@ -72,10 +72,10 @@ class complex
     public:
         typedef complex<T>  this_type;
         
-        complex(const T& r = 0,const T& i = 0) : r_(r),i_(i) { }
-        complex(const this_type& source) : r_(source.r_),i_(source.i_) { }
+        constexpr complex(const T& r = 0,const T& i = 0) : r_(r),i_(i) { }
+        constexpr complex(const this_type& source) : r_(source.r_),i_(source.i_) { }
         
-        this_type& operator=(const this_type& source)
+        constexpr this_type& operator=(const this_type& source)
         {
             if (this == &source) return *this;
             
@@ -85,59 +85,59 @@ class complex
             return *this;
         }
         
-        T& real()                   { return r_; }
-        T& imag()                   { return i_; }
+        constexpr T& real()             { return r_; }
+        constexpr T& imag()             { return i_; }
         
-        const T& real() const       { return r_; }
-        const T& imag() const       { return i_; }
+        constexpr const T& real() const       { return r_; }
+        constexpr const T& imag() const       { return i_; }
 
-        this_type& operator+=(const T& val)
+        constexpr this_type& operator+=(const T& val)
         {
             r_ += val;
             return *this;
         }
         
-        this_type& operator-=(const T& val)
+        constexpr this_type& operator-=(const T& val)
         {
             r_ -= val;
             return *this;
         }
         
-        this_type& operator*=(const T& val)
+        constexpr this_type& operator*=(const T& val)
         {
             r_ *= val;
             i_ *= val;
             return *this;
         }
         
-        this_type& operator/=(const T& val)
+        constexpr this_type& operator/=(const T& val)
         {
             r_ /= val;
             i_ /= val;
             return *this;
         }
         
-        this_type& operator+=(const this_type& source)
+        constexpr this_type& operator+=(const this_type& source)
         {
             r_ += source.r_;
             i_ += source.i_;
             return *this;
         }
         
-        this_type& operator-=(const this_type& source)
+        constexpr this_type& operator-=(const this_type& source)
         {
             r_ -= source.r_;
             i_ -= source.i_;
             return *this;
         }
         
-        this_type& operator*=(const this_type& source)
+        constexpr this_type& operator*=(const this_type& source)
         {
             *this = *this * source;
             return *this;
         }
         
-        this_type& operator/=(const this_type& source)
+        constexpr this_type& operator/=(const this_type& source)
         {
             *this = *this / source;
             return *this;
@@ -164,6 +164,7 @@ namespace boost {
 namespace units {
 
 template<class X>
+constexpr
 complex<typename unary_plus_typeof_helper<X>::type>
 operator+(const complex<X>& x)
 {
@@ -173,6 +174,7 @@ operator+(const complex<X>& x)
 }
 
 template<class X>
+constexpr
 complex<typename unary_minus_typeof_helper<X>::type>
 operator-(const complex<X>& x)
 {
@@ -182,6 +184,7 @@ operator-(const complex<X>& x)
 }
 
 template<class X,class Y>
+constexpr
 complex<typename add_typeof_helper<X,Y>::type>
 operator+(const complex<X>& x,const complex<Y>& y)
 {
@@ -191,6 +194,7 @@ operator+(const complex<X>& x,const complex<Y>& y)
 }
 
 template<class X,class Y>
+constexpr
 complex<typename boost::units::subtract_typeof_helper<X,Y>::type>
 operator-(const complex<X>& x,const complex<Y>& y)
 {
@@ -200,6 +204,7 @@ operator-(const complex<X>& x,const complex<Y>& y)
 }
 
 template<class X,class Y>
+constexpr
 complex<typename boost::units::multiply_typeof_helper<X,Y>::type>
 operator*(const complex<X>& x,const complex<Y>& y)
 {
@@ -226,6 +231,7 @@ operator*(const complex<X>& x,const complex<Y>& y)
 }
 
 template<class X,class Y>
+constexpr
 complex<typename boost::units::divide_typeof_helper<X,Y>::type>
 operator/(const complex<X>& x,const complex<Y>& y)
 {
@@ -368,7 +374,6 @@ struct root_typeof_helper<complex<quantity<Unit,Y> >,static_rational<N,D> >
 
 int main(void)
 {
-    using namespace boost::math;
     using namespace boost::units;
     using namespace boost::units::test;
     
@@ -376,7 +381,7 @@ int main(void)
     //[complex_snippet_1
     typedef quantity<length,complex<double> >     length_dimension;
         
-    length_dimension    L(complex<double>(2.0,1.0)*meters);
+    const length_dimension    L(complex<double>(2.0,1.0)*meters);
     //]
     
     std::cout << "+L      = " << +L << std::endl
@@ -396,7 +401,7 @@ int main(void)
     //[complex_snippet_2
     typedef complex<quantity<length> >     length_dimension;
         
-    length_dimension    L(2.0*meters,1.0*meters);
+    const length_dimension    L(2.0*meters,1.0*meters);
     //]
     
     std::cout << "+L      = " << +L << std::endl

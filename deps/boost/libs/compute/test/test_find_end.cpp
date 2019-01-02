@@ -24,40 +24,40 @@ namespace bc = boost::compute;
 
 BOOST_AUTO_TEST_CASE(find_end_int)
 {
-    int data[] = {1, 4, 2, 6, 3, 2, 6, 3, 4, 6};
+    bc::int_ data[] = {1, 4, 2, 6, 3, 2, 6, 3, 4, 6};
     bc::vector<bc::int_> vectort(data, data + 10, queue);
 
-    int datap[] = {2, 6};
+    bc::int_ datap[] = {2, 6};
     bc::vector<bc::int_> vectorp(datap, datap + 2, queue);
 
     bc::vector<bc::int_>::iterator iter =
         bc::find_end(vectort.begin(), vectort.end(),
                     vectorp.begin(), vectorp.end(), queue);
 
-    BOOST_VERIFY(iter == vectort.begin() + 5);
+    BOOST_CHECK(iter == vectort.begin() + 5);
 
-    vectorp[1] = 9;
+    vectorp.insert(vectorp.begin() + 1, bc::int_(9), queue);
 
     iter =
         bc::find_end(vectort.begin(), vectort.end(),
-                    vectorp.begin(), vectorp.end(), queue);
+                     vectorp.begin(), vectorp.end(), queue);
 
-    BOOST_VERIFY(iter == vectort.begin() + 10);
+    BOOST_CHECK(iter == vectort.end());
 }
 
 BOOST_AUTO_TEST_CASE(find_end_string)
 {
-    char text[] = "sdabababacabskjabacab";
+    bc::char_ text[] = "sdabababacabskjabacab";
     bc::vector<bc::char_> vectort(text, text + 21, queue);
 
-    char pattern[] = "aba";
+    bc::char_ pattern[] = "aba";
     bc::vector<bc::char_> vectorp(pattern, pattern + 3, queue);
 
     bc::vector<bc::char_>::iterator iter =
         bc::find_end(vectort.begin(), vectort.end(),
-                    vectorp.begin(), vectorp.end(), queue);
+                     vectorp.begin(), vectorp.end(), queue);
 
-    BOOST_VERIFY(iter == vectort.begin() + 15);
+    BOOST_CHECK(iter == (vectort.begin() + 15));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

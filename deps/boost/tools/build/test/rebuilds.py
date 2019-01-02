@@ -21,7 +21,7 @@ def wait_for_bar(t):
     t.wait_for_time_change("bar", touch=False)
 
 
-t = BoostBuild.Tester(["-ffile.jam", "-d+3", "-d+12", "-d+13"], pass_d0=False,
+t = BoostBuild.Tester(["-ffile.jam", "-d+3", "-d+12", "-d+13"],
     pass_toolset=0)
 
 t.write("file.jam", """\

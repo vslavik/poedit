@@ -19,7 +19,9 @@ struct any_base
 {
     typedef void _boost_type_erasure_is_any;
     typedef Derived _boost_type_erasure_derived_type;
-    void* _boost_type_erasure_deduce_constructor(...) { return 0; }
+    // volatile makes this a worse match than the default constructor
+    // for msvc-14.1, which can get confused otherwise.
+    void* _boost_type_erasure_deduce_constructor(...) const volatile { return 0; }
     void* _boost_type_erasure_deduce_assign(...) { return 0; }
 };
 

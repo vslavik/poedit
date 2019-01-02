@@ -1,6 +1,6 @@
 /* Boost.MultiIndex basic test.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2017 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -26,6 +26,39 @@ struct less_by_employee_age
     return e1.age<e2.age;
   }
 };
+
+struct no_addressof_type
+{
+  no_addressof_type(int n):n(n){}
+
+  void operator&()const{}
+
+  int n;
+};
+
+bool operator==(const no_addressof_type& x,const no_addressof_type& y)
+{
+  return x.n==y.n;
+}
+
+bool operator<(const no_addressof_type& x,const no_addressof_type& y)
+{
+  return x.n<y.n;
+}
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+namespace boost{
+#endif
+
+inline std::size_t hash_value(const no_addressof_type& x)
+{
+  boost::hash<int> h;
+  return h(x.n);
+}
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+} /* namespace boost */
+#endif
 
 void test_basic()
 {
@@ -76,6 +109,50 @@ void test_basic()
 
     std::sort(v.begin(),v.end(),less_by_employee_age());
     BOOST_TEST(std::equal(i2.begin(),i2.end(),v.begin()));
+  }
+
+  {
+    /* testcase for https://svn.boost.org/trac10/ticket/13307 */
+
+    typedef multi_index_container<
+      no_addressof_type,
+      indexed_by<
+        random_access<>,
+        ordered_non_unique<identity<no_addressof_type> >,
+        sequenced<>,
+        hashed_non_unique<identity<no_addressof_type> >
+      >
+    > multi_index_t;
+
+    multi_index_t        c;
+    const multi_index_t& cc=c;
+    no_addressof_type    x(0);
+    int                  a[]={1,2};
+    int                  b[]={6,7};
+    c.push_back(x);
+    c.insert(c.end(),a,a+2);
+    c.push_back(no_addressof_type(3));
+    c.emplace_back(4);
+    c.get<1>().emplace_hint(c.get<1>().begin(),5);
+    c.get<1>().insert(b,b+2);
+    (void)c.begin()->n;
+    (void)c.get<1>().begin()->n;
+    (void)c.get<2>().begin()->n;
+    (void)c.get<3>().begin()->n;
+    (void)c.get<3>().begin(0)->n;
+    (void)c.iterator_to(c.front());
+    (void)cc.iterator_to(c.front());
+    (void)c.get<1>().iterator_to(c.front());
+    (void)cc.get<1>().iterator_to(c.front());
+    (void)c.get<2>().iterator_to(c.front());
+    (void)cc.get<2>().iterator_to(c.front());
+    (void)c.get<3>().iterator_to(c.front());
+    (void)cc.get<3>().iterator_to(c.front());
+    (void)c.get<3>().local_iterator_to(c.front());
+    (void)cc.get<3>().local_iterator_to(c.front());
+    multi_index_t c2=c;(void)c2;
+    c.erase(c.begin());
+    c.erase(c.begin(),c.end());
   }
 
 }

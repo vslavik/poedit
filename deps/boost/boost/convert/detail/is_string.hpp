@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -11,7 +11,7 @@ namespace boost { namespace cnv
 {
     namespace detail
     {
-        template<typename T, bool is_range_class> struct is_string : mpl::false_ {};
+        template<typename T, bool is_range_class> struct is_string : std::false_type {};
 
         template<typename T> struct is_string<T*, false>
         {
@@ -27,7 +27,7 @@ namespace boost { namespace cnv
         };
     }
     template<typename T> struct is_string : detail::is_string<
-        typename remove_const<T>::type,
+        typename boost::remove_const<T>::type,
         boost::is_class<T>::value && boost::cnv::is_range<T>::value> {};
 }}
 

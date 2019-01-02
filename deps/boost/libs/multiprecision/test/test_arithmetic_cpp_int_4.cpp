@@ -3,10 +3,6 @@
 //  Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
 
-#ifdef _MSC_VER
-#  define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #define TEST_CHECKED_INT
 
 #include <boost/multiprecision/cpp_int.hpp>
@@ -26,6 +22,9 @@ struct related_type<boost::multiprecision::number<boost::multiprecision::cpp_int
 {
    typedef boost::multiprecision::number<boost::multiprecision::cpp_int_backend<MinBits/2, MaxBits/2, SignType, Checked, Allocator>, ET> type;
 };
+
+template <>
+struct is_checked_cpp_int<boost::multiprecision::checked_cpp_int> : public boost::mpl::true_ {};
 
 int main()
 {

@@ -7,7 +7,7 @@
 #endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
-// polymorphic_xml_oarchive.hpp
+// polymorphic_xml_woarchive.hpp
 
 // (C) Copyright 2002 Robert Ramey - http://www.rrsd.com . 
 // Use, modification and distribution is subject to the Boost Software
@@ -27,9 +27,15 @@
 namespace boost { 
 namespace archive {
 
-typedef detail::polymorphic_oarchive_route<
-        xml_woarchive_impl<xml_woarchive> 
-> polymorphic_xml_woarchive;
+class BOOST_SYMBOL_VISIBLE polymorphic_xml_woarchive :
+    public detail::polymorphic_oarchive_route<xml_woarchive>
+{
+public:
+    polymorphic_xml_woarchive(std::wostream & os, unsigned int flags = 0) :
+        detail::polymorphic_oarchive_route<xml_woarchive>(os, flags)
+    {}
+    ~polymorphic_xml_woarchive(){}
+};
 
 } // namespace archive
 } // namespace boost

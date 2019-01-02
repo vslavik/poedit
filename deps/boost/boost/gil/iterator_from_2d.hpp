@@ -1,37 +1,28 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_ITERATOR_FROM_2D_HPP
+#define BOOST_GIL_ITERATOR_FROM_2D_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/locator.hpp>
+#include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/point.hpp>
 
-#ifndef GIL_ITERATOR_FROM_2D_H
-#define GIL_ITERATOR_FROM_2D_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel step iterator, pixel image iterator and pixel dereference iterator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 18, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/iterator/iterator_facade.hpp>
 
 #include <cassert>
-#include <boost/iterator/iterator_facade.hpp>
-#include "gil_concept.hpp"
-#include "gil_config.hpp"
-#include "pixel_iterator.hpp"
-#include "locator.hpp"
 
 namespace boost { namespace gil {
 
+/// pixel step iterator, pixel image iterator and pixel dereference iterator
+
 ////////////////////////////////////////////////////////////////////////////////////////
-///                 
+///
 ///                 ITERATOR FROM 2D ADAPTOR
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +36,7 @@ namespace boost { namespace gil {
 /// \ingroup PixelIteratorModelFromLocator PixelBasedModel
 /// \brief Provides 1D random-access navigation to the pixels of the image. Models: PixelIteratorConcept, PixelBasedConcept, HasDynamicXStepTypeConcept
 ///
-/// Pixels are traversed from the top to the bottom row and from the left to the right 
+/// Pixels are traversed from the top to the bottom row and from the left to the right
 /// within each row
 
 template <typename Loc2>    // Models PixelLocatorConcept
@@ -93,7 +84,7 @@ private:
             _coords.x=0;
             ++_coords.y;
             _p+=point_t(-_width,1);
-        }           
+        }
     }
     void decrement() {
         --_coords.x;
@@ -105,7 +96,7 @@ private:
         }
     }
 
-    GIL_FORCEINLINE void advance(difference_type d) {  
+    BOOST_FORCEINLINE void advance(difference_type d) {
         if (_width==0) return;  // unfortunately we need to check for that. Default-constructed images have width of 0 and the code below will throw if executed.
         point_t delta;
         if (_coords.x+d>=0) {  // not going back to a previous row?
@@ -114,13 +105,13 @@ private:
         } else {
             delta.x=(_coords.x+(std::ptrdiff_t)d*(1-_width))%_width -_coords.x;
             delta.y=-(_width-_coords.x-(std::ptrdiff_t)d-1)/_width;
-        }   
+        }
         _p+=delta;
         _coords.x+=delta.x;
         _coords.y+=delta.y;
     }
 
-    difference_type distance_to(const iterator_from_2d& it) const { 
+    difference_type distance_to(const iterator_from_2d& it) const {
         if (_width==0) return 0;
         return (it.y_pos()-_coords.y)*_width + (it.x_pos()-_coords.x);
     }
@@ -130,7 +121,7 @@ private:
         return _coords==it._coords && _p==it._p;
     }
 
-    point2<std::ptrdiff_t> _coords;
+    point_t _coords;
     std::ptrdiff_t _width;
     Loc2 _p;
 };

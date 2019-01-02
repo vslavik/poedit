@@ -17,10 +17,17 @@ struct empty
 };
 
 template class ::boost::container::static_vector<empty, 2>;
+volatile ::boost::container::static_vector<empty, 2> dummy;
+
+namespace boost {
+namespace container {
+
+//Explicit instantiation to detect compilation errors
+template class boost::container::static_vector<int, 10>;
+
+}}
 
 int main()
 {
-   ::boost::container::static_vector<empty, 2> dummy;
-   (void)dummy;
    return 0;
 }

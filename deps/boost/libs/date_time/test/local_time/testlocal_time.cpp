@@ -122,16 +122,16 @@ main()
 
     std::cout << "\nChecking calc_options construction" << std::endl;
     { // invalid NADT
-      date d(2004, Apr, 4);
+      date dx(2004, Apr, 4);
       time_duration td(2,30,0); // invalid local time in ny_tz
-      local_date_time calcop(d, td, ny_tz, local_date_time::NOT_DATE_TIME_ON_ERROR);
+      local_date_time calcop(dx, td, ny_tz, local_date_time::NOT_DATE_TIME_ON_ERROR);
       check("is NADT", calcop.is_not_a_date_time());
     }
     { // invalid exception
-      date d(2004, Apr, 4);
+      date dx(2004, Apr, 4);
       time_duration td(2,30,0); // invalid local time in ny_tz
       try{
-        local_date_time calcop(d, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
+        local_date_time calcop(dx, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
         check("Did not catch expected exception", false);
       }catch(time_label_invalid& /*i*/){
         check("Caught expected exception", true);
@@ -140,16 +140,16 @@ main()
       }
     }
     { // ambig NADT
-      date d(2004, Oct, 31);
+      date dx(2004, Oct, 31);
       time_duration td(1,30,0); // ambig local time in ny_tz
-      local_date_time calcop(d, td, ny_tz, local_date_time::NOT_DATE_TIME_ON_ERROR);
+      local_date_time calcop(dx, td, ny_tz, local_date_time::NOT_DATE_TIME_ON_ERROR);
       check("is NADT", calcop.is_not_a_date_time());
     }
     { // ambig exception
-      date d(2004, Oct, 31);
+      date dx(2004, Oct, 31);
       time_duration td(1,30,0); // ambig local time in ny_tz
       try{
-        local_date_time calcop(d, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
+        local_date_time calcop(dx, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
         check("Did not catch expected exception", false);
       }catch(ambiguous_result& /*a*/){
         check("Caught expected exception", true);
@@ -181,8 +181,8 @@ main()
     try{
       local_date_time blt(d, h, ny_tz, true);
       check("Did not catch expected exception (dst_not_valid)", false);
-    }catch(dst_not_valid& d){
-      check(std::string("Caught expected exception (dst_not_valid) ") + d.what(), true);
+    }catch(dst_not_valid& e){
+      check(std::string("Caught expected exception (dst_not_valid) ") + e.what(), true);
     }catch(std::exception& e){
       check(std::string("Caught unexpected exception ") + e.what(), false);
     }
@@ -199,10 +199,10 @@ main()
     // thorough is_dst() tests, tests againts null_tz and non dst tz are
     // done where those local times were tested
     {
-      date d(2004,Apr,4);
+      date dx(2004,Apr,4);
       time_duration td(1,15,0); // local
-      local_date_time lt1(d,td,ny_tz,false);
-      local_date_time lt2(ptime(d,time_duration(6,15,0)), ny_tz);
+      local_date_time lt1(dx,td,ny_tz,false);
+      local_date_time lt2(ptime(dx,time_duration(6,15,0)), ny_tz);
       check("are local_times equal", lt1.utc_time() == lt2.utc_time());
       check("is_dst - transition in 1", lt1.is_dst() == false);
       check("is_dst - transition in 2", lt2.is_dst() == false);
@@ -212,17 +212,17 @@ main()
       check("is_dst - transition in 2", lt2.is_dst() == true);
     }
     {
-      date d(2004,Oct,31);
+      date dx(2004,Oct,31);
       time_duration td(1,15,0); // local
-      local_date_time lt1(d,td,ny_tz,true);
+      local_date_time lt1(dx,td,ny_tz,true);
       /*try{
-        //local_date_time lt1(d,td,ny_tz,false);
-        local_date_time lt1(d,td,ny_tz,true);
+        //local_date_time lt1(dx,td,ny_tz,false);
+        local_date_time lt1(dx,td,ny_tz,true);
         std::cout << "no exception thrown" << std::endl;
       }catch(time_label_invalid& e){
         std::cout << "caught: " << e.what() << std::endl;
       }*/
-      local_date_time lt2(ptime(d,time_duration(5,15,0)), ny_tz);
+      local_date_time lt2(ptime(dx,time_duration(5,15,0)), ny_tz);
       check("are local_times equal", lt1.utc_time() == lt2.utc_time());
       check("is_dst - transition out 1", lt1.is_dst() == true);
       check("is_dst - transition out 2", lt2.is_dst() == true);
@@ -232,17 +232,17 @@ main()
       check("is_dst - transition out 2", lt2.is_dst() == false);
     }
     { // southern hemisphere 
-      date d(2004,Oct,31);
+      date dx(2004,Oct,31);
       time_duration td(1,15,0); // local
-      local_date_time lt1(d,td,sydney,false);
+      local_date_time lt1(dx,td,sydney,false);
       check("is_dst - transition in (sydney)", lt1.is_dst() == false);
       lt1 += hours(1);
       check("is_dst - transition in (sydney)", lt1.is_dst() == true);
     }
     {
-      date d(2004,Mar,28);
+      date dx(2004,Mar,28);
       time_duration td(2,15,0); // local; sydney has a weird trans time
-      local_date_time lt1(d,td,sydney,true);
+      local_date_time lt1(dx,td,sydney,true);
       check("is_dst - transition out (sydney)", lt1.is_dst() == true);
       lt1 += hours(1);
       check("is_dst - transition out (sydney)", lt1.is_dst() == false);
@@ -266,16 +266,16 @@ main()
     
   
     { // test comparisons & math operations
-      date d(2003, Aug, 28);
+      date dx(2003, Aug, 28);
       ptime sv_pt(pos_infin);
       local_date_time sv_lt(sv_pt, ny_tz);
-      ptime utc_pt(d, hours(12));
+      ptime utc_pt(dx, hours(12));
       // all 4 of the following local times happen at the same instant
       // so they are all equal
       local_date_time utc_lt(utc_pt, null_tz);           // noon in utc
-      local_date_time az_lt(d, hours(5), az_tz, false);  // 5am local std
-      local_date_time ny_lt(d, hours(8), ny_tz, true);   // 8am local dst
-      local_date_time au_lt(d, hours(22), sydney, false);// 10pm local std
+      local_date_time az_lt(dx, hours(5), az_tz, false);  // 5am local std
+      local_date_time ny_lt(dx, hours(8), ny_tz, true);   // 8am local dst
+      local_date_time au_lt(dx, hours(22), sydney, false);// 10pm local std
 
       check("local_date_time to tm",
           std::string("4 239 08/28/2003 05:00:00 STD") == tm_out(to_tm(az_lt)));
@@ -290,7 +290,7 @@ main()
         check("Exception not thrown (special_value to_tm)", false);
 	//does nothing useful but stops compiler from complaining about unused ldt_tm
 	std::cout << ldt_tm.tm_sec << std::endl; 
-      }catch(std::out_of_range& e){
+      }catch(std::out_of_range&){
         check("Caught expected exception (special_value to_tm)", true);
       }catch(...){
         check("Caught un-expected exception (special_value to_tm)", false);

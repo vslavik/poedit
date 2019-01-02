@@ -39,7 +39,9 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 #   define BOOST_LOG_HAS_CXXABI_H
 #endif
 
-#if defined(BOOST_LOG_HAS_CXXABI_H)
+#if defined(__cpp_lib_uncaught_exceptions) && __cpp_lib_uncaught_exceptions >= 201411
+#define BOOST_LOG_HAS_UNCAUGHT_EXCEPTIONS
+#elif defined(BOOST_LOG_HAS_CXXABI_H)
 // MinGW GCC 4.4 seem to not work the same way the newer GCC versions do. As a result, __cxa_get_globals based implementation will always return 0.
 // Just disable it for now and fall back to std::uncaught_exception().
 #if !defined(__MINGW32__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)))

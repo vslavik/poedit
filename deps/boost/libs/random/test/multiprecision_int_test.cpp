@@ -20,6 +20,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/multiprecision/debug_adaptor.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
@@ -63,6 +64,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(generator_test, engine_type, engines)
    gen.discard(20);
 
    typename engine_type::base_type base(gen.base());
+   boost::ignore_unused(base);
 
    std::stringstream ss;
    ss << gen;

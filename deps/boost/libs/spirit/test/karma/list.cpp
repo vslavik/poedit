@@ -18,8 +18,6 @@
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/assign/std/vector.hpp>

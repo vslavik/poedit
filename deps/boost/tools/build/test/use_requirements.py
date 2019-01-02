@@ -250,7 +250,7 @@ foo() {}
 """)
 
 t.run_build_system(["link=static"])
-t.expect_addition("libs/bin/$toolset/debug/link-static/a_d.obj")
+t.expect_addition("libs/bin/$toolset/debug/link-static*/a_d.obj")
 
 
 # Test that indirect conditionals are respected in usage requirements.
@@ -278,6 +278,6 @@ foo() {}
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/a.exe")
+t.expect_addition("bin/$toolset/debug*/a.exe")
 
 t.cleanup()

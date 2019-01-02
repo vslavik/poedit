@@ -14,4 +14,7 @@
 #define REQUIRES_OPENCL_VERSION(major, minor) \
     if (!device.check_version(major, minor)) return
 
+#define REQUIRES_OPENCL_PLATFORM_VERSION(major, minor) \
+    if (!device.platform().check_version(major, minor)) return
+
 #endif

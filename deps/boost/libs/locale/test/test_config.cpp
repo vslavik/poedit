@@ -19,6 +19,8 @@
 #include <unicode/uversion.h>
 #endif
 
+#include "test_locale_tools.hpp"
+
 
 char const *env(char const *s)
 {
@@ -101,6 +103,7 @@ int main()
     };
     std::cout << "- Testing locales availability on the operation system:" << std::endl;
     check_locale(locales_to_check);
+    std::cout << "--- Testing Japanese_Japan.932 is working: " << test_std_supports_SJIS_codecvt("Japanese_Japan.932") << std::endl;
 
     std::cout << "- Testing timezone and time " << std::endl;
     {

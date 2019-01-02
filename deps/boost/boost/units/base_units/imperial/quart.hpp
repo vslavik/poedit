@@ -29,8 +29,8 @@ typedef scaled_base_unit<pint_base_unit, scale<2, static_rational<1> > > quart_b
 
 template<>
 struct base_unit_info<imperial::quart_base_unit> {
-    static const char* name()   { return("quart (imp.)"); }
-    static const char* symbol() { return("qt"); }
+    static BOOST_CONSTEXPR const char* name()   { return("quart (imp.)"); }
+    static BOOST_CONSTEXPR const char* symbol() { return("qt"); }
 };
 
 } // namespace units

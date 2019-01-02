@@ -29,7 +29,7 @@ void test_perimeter(Geometry const& geometry, long double expected_perimeter)
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << std::endl
-        << typeid(typename bg::default_length_result<Geometry>::type).name()
+        //<< typeid(typename bg::default_perimeter_result<Geometry>::type).name()
         << std::endl
         << "perimeter : " << bg::perimeter(geometry)
         << std::endl;
@@ -39,6 +39,26 @@ void test_perimeter(Geometry const& geometry, long double expected_perimeter)
     BOOST_CHECK_CLOSE(perimeter, expected_perimeter, 0.0001);
 }
 
+
+template <typename Geometry, typename Strategy>
+void test_perimeter(Geometry const& geometry, long double expected_perimeter, Strategy strategy)
+{
+    typename bg::default_length_result<Geometry>::type
+        perimeter = bg::perimeter(geometry, strategy);
+
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::ostringstream out;
+    out << typeid(typename bg::coordinate_type<Geometry>::type).name()
+        << std::endl
+        //<< typeid(typename bg::default_perimeter_result<Geometry>::type).name()
+        << std::endl
+        << "perimeter : " << bg::perimeter(geometry, strategy)
+        << std::endl;
+    std::cout << out.str();
+#endif
+
+    BOOST_CHECK_CLOSE(perimeter, expected_perimeter, 0.0001);
+}
 
 template <typename Geometry>
 void test_geometry(std::string const& wkt, double expected_perimeter)
@@ -50,6 +70,19 @@ void test_geometry(std::string const& wkt, double expected_perimeter)
     test_perimeter(geometry, expected_perimeter);
 #if !defined(BOOST_GEOMETRY_TEST_DEBUG)
     test_perimeter(v, expected_perimeter);
+#endif
+}
+
+template <typename Geometry, typename Strategy>
+void test_geometry(std::string const& wkt, double expected_perimeter, Strategy strategy)
+{
+    Geometry geometry;
+    bg::read_wkt(wkt, geometry);
+    boost::variant<Geometry> v(geometry);
+
+    test_perimeter(geometry, expected_perimeter, strategy);
+#if !defined(BOOST_GEOMETRY_TEST_DEBUG)
+    test_perimeter(v, expected_perimeter, strategy);
 #endif
 }
 

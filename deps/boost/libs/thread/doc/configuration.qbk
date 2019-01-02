@@ -179,9 +179,9 @@ When `BOOST_THREAD_VERSION>=3` define `BOOST_THREAD_DONT_PROVIDE_GENERIC_SHARED_
 [section:shared_upwards Shared Locking Upwards Conversion]
 
 Boost.Threads includes in version 3 the Shared Locking Upwards Conversion as defined in [@http://home.roadrunner.com/~hinnant/bloomington/shared_mutex.html Shared Locking].
-These conversions need to be used carefully to avoid deadlock or livelock. The user need to define explicitly `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION` to get these upwards conversions. 
+These conversions need to be used carefully to avoid deadlock or livelock. The user need to define explicitly `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS` to get these upwards conversions. 
 
-When `BOOST_THREAD_VERSION==2` define `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION ` if you want these features.
+When `BOOST_THREAD_VERSION==2` define `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS ` if you want these features.
 When `BOOST_THREAD_VERSION>=3` define `BOOST_THREAD_DONT_PROVIDE_SHARED_MUTEX_UPWARDS_CONVERSION ` if you don't want these features.
 
 [endsect]
@@ -352,7 +352,7 @@ The user can request the version 3 by defining `BOOST_THREAD_VERSION` to 3. In t
 * Breaking change `BOOST_THREAD_PROVIDES_EXPLICIT_LOCK_CONVERSION `
 * Conformity & Breaking change `BOOST_THREAD_PROVIDES_FUTURE`
 * Uniformity `BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN`
-* Extension `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION`
+* Extension `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS`
 * Conformity `BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS`
 * Conformity & Breaking change BOOST_THREAD_PROVIDES_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE
 * Conformity & Breaking change BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE

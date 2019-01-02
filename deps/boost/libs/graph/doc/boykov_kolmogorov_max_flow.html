@@ -109,7 +109,7 @@ noticeably increase the performance.</P>
 <B>Algorithm description:</B><BR>The Boykov-Kolmogorov max-flow (or often
 BK max-flow) algorithm is a variety of the augmenting-path algorithm. Standard
 augmenting path algorithms find shortest paths from source to sink vertex and
-augment them by substracting the bottleneck capacity found on that path from the
+augment them by subtracting the bottleneck capacity found on that path from the
 residual capacities of each edge and adding it to the total flow. Additionally
 the minimum capacity is added to the residual capacity of the reverse edges. If
 no more paths in the residual-edge tree are found, the algorithm terminates.
@@ -137,7 +137,7 @@ a path from source to sink is found.</P>
 <P><I>augment-phase</I>: This phase augments the path that was found
 in the grow phase. First it finds the bottleneck capacity of the
 found path, and then it updates the residual-capacity of the edges
-from this path by substracting the bottleneck capacity from the
+from this path by subtracting the bottleneck capacity from the
 residual capacity. Furthermore the residual capacity of the reverse
 edges are updated by adding the bottleneck capacity. This phase can
 destroy the built up search trees, as it creates at least one

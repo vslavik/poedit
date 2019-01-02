@@ -41,24 +41,24 @@ namespace
 #endif
 
   typedef  boost::timer::nanosecond_type nanosecond_t;
- 
+
 //--------------------------------------------------------------------------------------//
 
   nanosecond_t benchmark(timee_func timee, const char* msg,
     nanosecond_t overhead = 0)
   //  Returns: total cpu time (i.e. system time + user time)
-  {                                               
-    if (verbose)                                  
-      cout << "\nRunning benchmark..." << endl;   
-    int64_t sum = 0;                              
+  {
+    if (verbose)
+      cout << "\nRunning benchmark..." << endl;
+    int64_t sum = 0;
     boost::timer::cpu_times times;
     nanosecond_t cpu_time;
-    boost::timer::auto_cpu_timer t(places);                  
-                                                
-    for (long long i = n_cases; i; --i)                 
-    {                                             
+    boost::timer::auto_cpu_timer t(places);
+
+    for (long long i = n_cases; i; --i)
+    {
 #   ifndef BOOST_TWO_ARG
-      sum += timee(static_cast<int32_t>(i)) ;                              
+      sum += timee(static_cast<int32_t>(i)) ;
 #   else
       int32_t y;
       timee(static_cast<int32_t>(i), y);
@@ -71,13 +71,13 @@ namespace
     const long double sec = 1000000000.0L;
     cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
     cout.precision(places);
-    cout << msg << " " << cpu_time / sec << endl;                                 
-                                                
-    if (verbose)                                  
-    { 
+    cout << msg << " " << cpu_time / sec << endl;
+
+    if (verbose)
+    {
       t.report();
-      cout << "  Benchmark complete\n"            
-              "    sum is " << sum << endl;       
+      cout << "  Benchmark complete\n"
+              "    sum is " << sum << endl;
     }
     return cpu_time;
   }
@@ -100,7 +100,7 @@ namespace
       n_cases = _atoi64(argv[1]);
 #endif
 
-    for (; argc > 2; ++argv, --argc) 
+    for (; argc > 2; ++argv, --argc)
     {
       if ( *(argv[2]+1) == 'p' )
         places = atoi( argv[2]+2 );
@@ -114,7 +114,7 @@ namespace
       }
     }
 
-    if (argc < 2) 
+    if (argc < 2)
     {
       cout << "Usage: benchmark n [Options]\n"
               "  The argument n specifies the number of test cases to run\n"
@@ -211,7 +211,7 @@ namespace
 
 //-------------------------------------- main()  ---------------------------------------//
 
-int main(int argc, char * argv[]) 
+int main(int argc, char * argv[])
 {
   process_command_line(argc, argv);
 

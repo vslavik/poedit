@@ -251,6 +251,14 @@ int main(int argc, char *argv[])
     std::cout << "Local Size: " << TILE_DIM << "x" << BLOCK_ROWS << " threads" << std::endl;
     std::cout << std::endl;
 
+    // On OSX this example does not work on CPU devices
+    #if defined(__APPLE__)
+    if(device.type() & compute::device::cpu) {
+        std::cout << "On OSX this example does not work on CPU devices" << std::endl;
+        return 0;
+    }
+    #endif
+
     const size_t global_work_size[2] = {rows, cols*BLOCK_ROWS/TILE_DIM};
     const size_t local_work_size[2] = {TILE_DIM, BLOCK_ROWS};
 

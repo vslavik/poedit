@@ -16,6 +16,7 @@
 #include <map>
 #include <boost/graph/adj_list_serialize.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/string.hpp>
 
 struct vertex_properties {
   std::string name;

@@ -157,22 +157,30 @@ void spot_checks()
 void test(const std::vector< ::boost::uint32_t>& v)
 {
    typedef std::vector< ::boost::uint32_t> vector32_type;
+#ifdef TEST_UTF16
    typedef std::vector< ::boost::uint16_t> vector16_type;
+#endif
    typedef std::vector< ::boost::uint8_t>  vector8_type;
+#ifdef TEST_UTF16
    typedef boost::u32_to_u16_iterator<vector32_type::const_iterator, ::boost::uint16_t> u32to16type;
    typedef boost::u16_to_u32_iterator<vector16_type::const_iterator, ::boost::uint32_t> u16to32type;
 #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION) && !defined(BOOST_NO_STD_ITERATOR) && !defined(_RWSTD_NO_CLASS_PARTIAL_SPEC)
    typedef std::reverse_iterator<u32to16type> ru32to16type;
    typedef std::reverse_iterator<u16to32type> ru16to32type;
 #endif
+#endif // TEST_UTF16
+#ifdef TEST_UTF8
    typedef boost::u32_to_u8_iterator<vector32_type::const_iterator, ::boost::uint8_t> u32to8type;
    typedef boost::u8_to_u32_iterator<vector8_type::const_iterator, ::boost::uint32_t> u8to32type;
 #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION) && !defined(BOOST_NO_STD_ITERATOR) && !defined(_RWSTD_NO_CLASS_PARTIAL_SPEC)
    typedef std::reverse_iterator<u32to8type> ru32to8type;
    typedef std::reverse_iterator<u8to32type> ru8to32type;
 #endif
+#endif // TEST_UTF8
    vector8_type  v8;
+#ifdef TEST_UTF16
    vector16_type v16;
+#endif
    vector32_type v32;
    vector32_type::const_iterator i, j, k;
 

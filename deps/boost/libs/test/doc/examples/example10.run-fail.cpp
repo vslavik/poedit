@@ -16,4 +16,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( my_test, T, test_types )
 {
   BOOST_TEST( sizeof(T) == (unsigned)4 );
 }
+
+typedef std::tuple<int, long, unsigned char> test_types_w_tuples;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE( my_tuple_test, T, test_types_w_tuples )
+{
+  BOOST_TEST( sizeof(T) == (unsigned)4 );
+}
 //]

@@ -4,6 +4,7 @@ var NAVTREE =
     [ "User Manual", "index.html", [
       [ "Description", "index.html#tutorial-description", null ],
       [ "Prerequisites and installation", "index.html#tutorial-installation", [
+        [ "Note for CMake users", "index.html#tutorial-installation-cmake", null ],
         [ "Compiler requirements", "index.html#tutorial-installation-requirements", null ]
       ] ],
       [ "Support", "index.html#tutorial-support", null ],
@@ -12,9 +13,9 @@ var NAVTREE =
         [ "What is this library about?", "index.html#tutorial-quadrants-about", null ]
       ] ],
       [ "Quick start", "index.html#tutorial-quickstart", [
-        [ "A real world example", "index.html#tutorial-quickstart-any", null ],
-        [ "Cheatsheet", "index.html#tutorial-quickstart-cheatsheet", null ]
+        [ "A real world example", "index.html#tutorial-quickstart-any", null ]
       ] ],
+      [ "Cheatsheet", "index.html#tutorial-cheatsheet", null ],
       [ "Assertions", "index.html#tutorial-assert", null ],
       [ "Compile-time numbers", "index.html#tutorial-integral", [
         [ "Compile-time arithmetic", "index.html#tutorial-integral-arithmetic", null ],
@@ -32,8 +33,9 @@ var NAVTREE =
         [ "Checking expression validity", "index.html#tutorial-introspection-is_valid", [
           [ "Non-static members", "index.html#tutorial-introspection-is_valid-non_static", null ],
           [ "Static members", "index.html#tutorial-introspection-is_valid-static", null ],
-          [ "Nested type names", "index.html#tutorial-introspection-is_valid-typename", null ],
-          [ "Nested templates", "index.html#tutorial-introspection-is_valid-template", null ]
+          [ "Nested type names", "index.html#tutorial-introspection-is_valid-nested-typename", null ],
+          [ "Nested templates", "index.html#tutorial-introspection-is_valid-nested-template", null ],
+          [ "Template specializations", "index.html#tutorial-introspection-is_valid-template", null ]
         ] ],
         [ "Taking control of SFINAE", "index.html#tutorial-introspection-sfinae", null ],
         [ "Introspecting user-defined types", "index.html#tutorial-introspection-adapting", null ],
@@ -65,7 +67,9 @@ var NAVTREE =
       ] ],
       [ "Header organization", "index.html#tutorial-header_organization", null ],
       [ "Conclusion", "index.html#tutorial-conclusion", [
-        [ "Fair warning: functional programming ahead", "index.html#tutorial-conclusion-warning", null ]
+        [ "Fair warning: functional programming ahead", "index.html#tutorial-conclusion-warning", null ],
+        [ "Related material", "index.html#tutorial-conclusion-related_material", null ],
+        [ "Projects using Hana", "index.html#tutorial-conclusion-projects_using_hana", null ]
       ] ],
       [ "Using the reference", "index.html#tutorial-reference", [
         [ "Function signatures", "index.html#tutorial-reference-signatures", null ]
@@ -95,6 +99,7 @@ var NAVTREE =
     [ "Alphabetical index", "functions.html", null ],
     [ "Headers", "files.html", "files" ],
     [ "Todo List", "todo.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Bug List", "bug.html", null ]
   ] ]
 ];
@@ -102,10 +107,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "accessors_8hpp.html",
-"fwd_2count__if_8hpp.html#ga39d71be65d5b98e7d035a3e5c607e1b4",
-"group__group-Comparable.html#gae33be2e0d5e04f19082f4b7740dfc9cd",
-"group__group-functional.html#gad1b8669c022d8675d68e5974451073d1",
-"structboost_1_1hana_1_1integral__constant.html#ab4891bf3aec7c15fa2d91c8fbacf4563"
+"fwd_2count_8hpp.html",
+"group__group-Comonad.html#ga181751278bd19a4bfc3c08bd7ddef399",
+"group__group-functional.html#ga41ada6b336e9d5bcb101ff0c737acbd0",
+"structboost_1_1hana_1_1integral__constant.html#a6be175332d55b7bfcf1afc33856d9b7d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

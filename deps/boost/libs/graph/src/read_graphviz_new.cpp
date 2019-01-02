@@ -18,7 +18,7 @@
 //   and page 34 or http://www.graphviz.org/pdf/dotguide.pdf
 //
 //   See documentation for this code at: 
-//     http://www.boost.org/libs/graph/doc/read-graphviz.html
+//     http://www.boost.org/libs/graph/doc/read_graphviz.html
 //
 
 // Author: Jeremiah Willcock
@@ -726,8 +726,8 @@ namespace read_graphviz_detail {
             }
             default: error("Wanted identifier as name of attribute");
           }
-          if (peek().type == token::comma) {get(); continue;}
-          break;
+          if (peek().type == token::comma || peek().type == token::semicolon) get();
+          else if(peek().type == token::right_bracket) break;
         }
         if (peek().type == token::right_bracket) get(); else error("Wanted right bracket to end attribute list");
         if (peek().type != token::left_bracket) break;

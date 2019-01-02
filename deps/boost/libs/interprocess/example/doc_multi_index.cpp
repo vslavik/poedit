@@ -61,11 +61,11 @@ typedef bmi::multi_index_container<
   employee,
   bmi::indexed_by<
     bmi::ordered_unique
-      <bmi::tag<id>,  BOOST_MULTI_INDEX_MEMBER(employee,int,id)>,
+      <bmi::tag<id>,  bmi::member<employee,int,&employee::id> >,
     bmi::ordered_non_unique<
-      bmi::tag<name>,BOOST_MULTI_INDEX_MEMBER(employee,shm_string,name)>,
+      bmi::tag<name>, bmi::member<employee,shm_string,&employee::name> >,
     bmi::ordered_non_unique
-      <bmi::tag<age>, BOOST_MULTI_INDEX_MEMBER(employee,int,age)> >,
+      <bmi::tag<age>, bmi::member<employee,int,&employee::age> > >,
   managed_shared_memory::allocator<employee>::type
 > employee_set;
 

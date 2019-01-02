@@ -49,13 +49,7 @@
 
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
-
-
-#if defined(BOOST_INTEL_CXX_VERSION)
-#define BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE
-#endif
-
-
+#include <boost/core/ignore_unused.hpp>
 #include <boost/foreach.hpp>
 
 #include <string_from_type.hpp>
@@ -119,7 +113,7 @@ inline T1 if_typed_tt(T1 value_tt, T2 value)
 #if defined(HAVE_TTMATH)
     return boost::is_same<CoordinateType, ttmath_big>::type::value ? value_tt : value;
 #else
-    boost::ignore_unused_variable_warning(value_tt);
+    boost::ignore_unused(value_tt);
     return value;
 #endif
 }

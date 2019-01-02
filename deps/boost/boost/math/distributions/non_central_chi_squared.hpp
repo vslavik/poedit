@@ -438,7 +438,7 @@ namespace boost
                return comp ? 0 : policies::raise_overflow_error<RealType>(function, 0, Policy());
             //
             // This is Pearson's approximation to the quantile, see
-            // Pearson, E. S. (1959) "Note on an approximation to the distribution of 
+            // Pearson, E. S. (1959) "Note on an approximation to the distribution of
             // noncentral chi squared", Biometrika 46: 364.
             // See also:
             // "A comparison of approximations to percentiles of the noncentral chi2-distribution",
@@ -460,10 +460,13 @@ namespace boost
             //
             // Sometimes guess goes very small or negative, in that case we have
             // to do something else for the initial guess, this approximation
-            // was provided in a private communication from Thomas Luu, PhD candidate, 
+            // was provided in a private communication from Thomas Luu, PhD candidate,
             // University College London.  It's an asymptotic expansion for the
             // quantile which usually gets us within an order of magnitude of the
             // correct answer.
+            // Fast and accurate parallel computation of quantile functions for random number generation,
+            // Thomas LuuDoctorial Thesis 2016
+            // http://discovery.ucl.ac.uk/1482128/
             //
             if(guess < 0.005)
             {

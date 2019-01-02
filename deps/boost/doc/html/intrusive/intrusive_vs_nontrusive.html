@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Intrusive and non-intrusive containers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
-<link rel="prev" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
+<link rel="prev" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="next" href="usage.html" title="How to use Boost.Intrusive">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -28,7 +28,7 @@
 <a name="intrusive.intrusive_vs_nontrusive"></a><a class="link" href="intrusive_vs_nontrusive.html" title="Intrusive and non-intrusive containers">Intrusive and non-intrusive
     containers</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="intrusive_vs_nontrusive.html#intrusive.intrusive_vs_nontrusive.differences_intrusive_vs_nontrusive">Differences
       between intrusive and non-intrusive containers</a></span></dt>
 <dt><span class="section"><a href="intrusive_vs_nontrusive.html#intrusive.intrusive_vs_nontrusive.properties_of_intrusive">Properties
@@ -125,7 +125,7 @@
 <p>
         A non-intrusive container has some limitations:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             An object can only belong to one container: If you want to share an object
             between two containers, you either have to store multiple copies of those
@@ -139,10 +139,12 @@
             from different threads.
           </li>
 <li class="listitem">
-            Only copies of objects are stored in non-intrusive containers. Hence
-            copy or move constructors and copy or move assignment operators are required.
-            Non-copyable and non-movable objects can't be stored in non-intrusive
-            containers.
+            Before C++11, only copies of objects could be stored in non-intrusive
+            containers. Still copy or move constructors and copy or move assignment
+            operators are required and non-copyable and non-movable objects can't
+            be stored in some containers. In any case, <span class="bold"><strong>new</strong></span>
+            objects have to be created inside the container using constructors and
+            the same object can't be shared between two containers.
           </li>
 <li class="listitem">
             It's not possible to store a derived object in a STL-container while
@@ -152,11 +154,15 @@
 <p>
         Intrusive containers have some important advantages:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Operating with intrusive containers doesn't invoke any memory management
             at all. The time and size overhead associated with dynamic memory can
             be minimized.
+          </li>
+<li class="listitem">
+            The same object can be inserted in more than one container at the same
+            time with a tiny overhead in the object size.
           </li>
 <li class="listitem">
             Iterating an Intrusive container needs less memory accesses than the
@@ -185,7 +191,7 @@
 <p>
         Intrusive containers have also downsides:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Each type stored in an intrusive container needs additional memory holding
             the maintenance information needed by the container. Hence, whenever
@@ -228,7 +234,7 @@
           </li>
 </ul></div>
 <div class="table">
-<a name="intrusive.intrusive_vs_nontrusive.properties_of_intrusive.summary_of_intrusive_containers_"></a><p class="title"><b>Table&#160;16.1.&#160;Summary of intrusive containers advantages and disadvantages</b></p>
+<a name="intrusive.intrusive_vs_nontrusive.properties_of_intrusive.summary_of_intrusive_containers_"></a><p class="title"><b>Table&#160;19.1.&#160;Summary of intrusive containers advantages and disadvantages</b></p>
 <div class="table-contents"><table class="table" summary="Summary of intrusive containers advantages and disadvantages">
 <colgroup>
 <col>
@@ -307,7 +313,7 @@
 <tr>
 <td>
                 <p>
-                  Can hold non-copyable and non-movable objects by value
+                  Can insert the same object in more than one container
                 </p>
               </td>
 <td>

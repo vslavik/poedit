@@ -21,7 +21,6 @@
 
 using namespace boost::interprocess;
 
-static const std::size_t FileSize = 1000;
 inline std::string get_filename()
 {
    std::string ret (ipcdetail::get_temporary_path());

@@ -9,7 +9,6 @@
 
 #include <boost/atomic.hpp>
 #include <boost/cstdint.hpp>
-#include <boost/core/lightweight_test.hpp>
 
 #include "api_test_helpers.hpp"
 
@@ -36,6 +35,17 @@ int main(int, char *[])
     test_integral_api<boost::int64_t>();
     test_integral_api<long long>();
     test_integral_api<unsigned long long>();
+#if defined(BOOST_HAS_INT128)
+    test_integral_api<boost::int128_type>();
+    test_integral_api<boost::uint128_type>();
+#endif
+
+    test_floating_point_api<float>();
+    test_floating_point_api<double>();
+    test_floating_point_api<long double>();
+#if defined(BOOST_HAS_FLOAT128)
+    test_floating_point_api<boost::float128_type>();
+#endif
 
     test_pointer_api<int>();
 

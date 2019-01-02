@@ -37,16 +37,16 @@ class absolute
         typedef absolute<Y>     this_type;
         typedef Y               value_type;
         
-        absolute() : val_() { }
-        absolute(const value_type& val) : val_(val) { }
-        absolute(const this_type& source) : val_(source.val_) { }
+        BOOST_CONSTEXPR absolute() : val_() { }
+        BOOST_CONSTEXPR absolute(const value_type& val) : val_(val) { }
+        BOOST_CONSTEXPR absolute(const this_type& source) : val_(source.val_) { }
    
-        this_type& operator=(const this_type& source)           { val_ = source.val_; return *this; }
+        BOOST_CXX14_CONSTEXPR this_type& operator=(const this_type& source)           { val_ = source.val_; return *this; }
         
-        const value_type& value() const                         { return val_; }
+        BOOST_CONSTEXPR const value_type& value() const                         { return val_; }
         
-        const this_type& operator+=(const value_type& val)      { val_ += val; return *this; }
-        const this_type& operator-=(const value_type& val)      { val_ -= val; return *this; }
+        BOOST_CXX14_CONSTEXPR const this_type& operator+=(const value_type& val)      { val_ += val; return *this; }
+        BOOST_CXX14_CONSTEXPR const this_type& operator-=(const value_type& val)      { val_ -= val; return *this; }
         
     private:
         value_type   val_;
@@ -54,42 +54,42 @@ class absolute
 
 /// add a relative value to an absolute one
 template<class Y>
-absolute<Y> operator+(const absolute<Y>& aval,const Y& rval)
+BOOST_CONSTEXPR absolute<Y> operator+(const absolute<Y>& aval,const Y& rval)
 {
     return absolute<Y>(aval.value()+rval);
 }
 
 /// add a relative value to an absolute one
 template<class Y>
-absolute<Y> operator+(const Y& rval,const absolute<Y>& aval)
+BOOST_CONSTEXPR absolute<Y> operator+(const Y& rval,const absolute<Y>& aval)
 {
     return absolute<Y>(aval.value()+rval);
 }
 
 /// subtract a relative value from an absolute one
 template<class Y>
-absolute<Y> operator-(const absolute<Y>& aval,const Y& rval)
+BOOST_CONSTEXPR absolute<Y> operator-(const absolute<Y>& aval,const Y& rval)
 {
     return absolute<Y>(aval.value()-rval);
 }
 
 /// subtracting two absolutes gives a difference
 template<class Y>
-Y operator-(const absolute<Y>& aval1,const absolute<Y>& aval2)
+BOOST_CONSTEXPR Y operator-(const absolute<Y>& aval1,const absolute<Y>& aval2)
 {
     return Y(aval1.value()-aval2.value());
 }
 
 /// creates a quantity from an absolute unit and a raw value
 template<class D, class S, class T>
-quantity<absolute<unit<D, S> >, T> operator*(const T& t, const absolute<unit<D, S> >&)
+BOOST_CONSTEXPR quantity<absolute<unit<D, S> >, T> operator*(const T& t, const absolute<unit<D, S> >&)
 {
     return(quantity<absolute<unit<D, S> >, T>::from_value(t));
 }
 
 /// creates a quantity from an absolute unit and a raw value
 template<class D, class S, class T>
-quantity<absolute<unit<D, S> >, T> operator*(const absolute<unit<D, S> >&, const T& t)
+BOOST_CONSTEXPR quantity<absolute<unit<D, S> >, T> operator*(const absolute<unit<D, S> >&, const T& t)
 {
     return(quantity<absolute<unit<D, S> >, T>::from_value(t));
 }
@@ -138,9 +138,9 @@ namespace units {
         reduce_unit<From::unit_type>::type,                             \
         reduce_unit<To::unit_type>::type>                               \
     {                                                                   \
-        static const bool is_defined = true;                            \
+        BOOST_STATIC_CONSTEXPR bool is_defined = true;                  \
         typedef type_ type;                                             \
-        static type value() { return(value_); }                         \
+        static BOOST_CONSTEXPR type value() { return(value_); }         \
     };                                                                  \
     }                                                                   \
     }                                                                   \

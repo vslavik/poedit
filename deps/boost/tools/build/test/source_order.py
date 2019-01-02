@@ -27,6 +27,37 @@ actions check-order
 generators.register-composing check-order.check-order : C : ORDER_TEST ;
 """)
 
+t.write(
+    'check-order.py',
+"""
+import bjam
+
+from b2.build import type as type_, generators
+from b2.tools import common
+from b2.manager import get_manager
+
+MANAGER = get_manager()
+ENGINE = MANAGER.engine()
+
+type_.register('ORDER_TEST', ['order-test'])
+
+generators.register_composing('check-order.check-order', ['C'], ['ORDER_TEST'])
+
+def check_order(targets, sources, properties):
+    ENGINE.set_target_variable(targets, 'SPACE', ' ')
+    ENGINE.set_target_variable(targets, 'nl', '\\n')
+
+ENGINE.register_action(
+    'check-order.check-order',
+    function=check_order,
+    command='''
+    echo$(SPACE)$(>[1])>$(<[1])
+    echo$(SPACE)$(>[2-])>>$(<[1])$(nl)
+    '''
+)
+"""
+)
+
 # The aliases are necessary for this test, since
 # the targets were sorted by virtual target
 # id, not by file name.
@@ -43,8 +74,8 @@ t.write("file2.c", "")
 t.write("file3.c", "")
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/check.order-test")
-t.expect_content("bin/$toolset/debug/check.order-test", """\
+t.expect_addition("bin/check.order-test")
+t.expect_content("bin/check.order-test", """\
 file2.c
 file1.c
 file3.c

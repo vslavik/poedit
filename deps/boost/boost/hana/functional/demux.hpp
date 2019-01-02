@@ -2,7 +2,7 @@
 @file
 Defines `boost::hana::demux`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -211,22 +211,22 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) const& {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)(x...)...
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)(x...)...
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) & {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<n+1>(storage_)(x...)...
+            return hana::at_c<0>(storage_)(
+                hana::at_c<n+1>(storage_)(x...)...
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) && {
-            return static_cast<F&&>(hana::get_impl<0>(storage_))(
-                static_cast<G&&>(hana::get_impl<n+1>(storage_))(x...)...
+            return static_cast<F&&>(hana::at_c<0>(storage_))(
+                static_cast<G&&>(hana::at_c<n+1>(storage_))(x...)...
             );
         }
     };
@@ -242,22 +242,22 @@ BOOST_HANA_NAMESPACE_BEGIN
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) const& {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<1>(storage_)(static_cast<X&&>(x)...)
+            return hana::at_c<0>(storage_)(
+                hana::at_c<1>(storage_)(static_cast<X&&>(x)...)
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) & {
-            return hana::get_impl<0>(storage_)(
-                hana::get_impl<1>(storage_)(static_cast<X&&>(x)...)
+            return hana::at_c<0>(storage_)(
+                hana::at_c<1>(storage_)(static_cast<X&&>(x)...)
             );
         }
 
         template <typename ...X>
         constexpr decltype(auto) operator()(X&& ...x) && {
-            return static_cast<F&&>(hana::get_impl<0>(storage_))(
-                static_cast<G&&>(hana::get_impl<1>(storage_))(static_cast<X&&>(x)...)
+            return static_cast<F&&>(hana::at_c<0>(storage_))(
+                static_cast<G&&>(hana::at_c<1>(storage_))(static_cast<X&&>(x)...)
             );
         }
     };

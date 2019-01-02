@@ -19,6 +19,7 @@
 
 #include <boost/random/random_device.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
+#include <iostream>
 
 int main() {
     /*<< We first define the characters that we're going

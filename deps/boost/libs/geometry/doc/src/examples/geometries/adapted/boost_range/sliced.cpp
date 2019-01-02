@@ -12,12 +12,12 @@
 
 #include <iostream>
 
-#include <boost/assign.hpp>
-
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/adapted/boost_range/sliced.hpp>
+
+#include <boost/assign.hpp> /*< At the end to avoid conflicts with Boost.QVM >*/
 
 
 int main()

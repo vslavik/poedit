@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Support for valgrind</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../stack.html" title="Stack allocation">
 <link rel="prev" href="stack_context.html" title="Class stack_context">
@@ -30,6 +30,9 @@
         Running programs that switch stacks under valgrind causes problems. Property
         (b2 command-line) <code class="computeroutput"><span class="identifier">valgrind</span><span class="special">=</span><span class="identifier">on</span></code> let
         valgrind treat the memory regions as stack space which suppresses the errors.
+        Users must define <code class="computeroutput"><span class="identifier">BOOST_USE_VALGRIND</span></code>
+        before including any Boost.Context headers when linking against Boost binaries
+        compiled with <code class="computeroutput"><span class="identifier">valgrind</span><span class="special">=</span><span class="identifier">on</span></code>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

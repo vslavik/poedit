@@ -55,6 +55,7 @@ I*Z == V? true
 using namespace boost::units;
 using namespace boost::units::si;
 
+constexpr
 quantity<energy> 
 work(const quantity<force>& F, const quantity<length>& dx)
 {

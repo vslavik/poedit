@@ -1,5 +1,5 @@
 echo off
-rem quickbook doxgen auto-index docs template circular_buffer_html_index.bat
+rem quickbook doxygen auto-index docs template circular_buffer_html_index.bat
 rem echo circular_buffer_html_index_%date%_%time:~0,2%_%time:~3,2%.log
 rem The DOS time format is assumed 12:34 and the : separator is not used.
 set t=%time% /T

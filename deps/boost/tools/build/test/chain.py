@@ -51,6 +51,6 @@ t.write("dummy.cpp", "// msvc needs at least one object file\n")
 
 t.run_build_system()
 
-t.expect_addition("bin/$toolset/debug/a.exe")
+t.expect_addition("bin/$toolset/debug*/a.exe")
 
 t.cleanup()

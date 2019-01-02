@@ -13,25 +13,21 @@
 
 namespace quickbook
 {
-   quickbook_grammar::quickbook_grammar(quickbook::state& s)
+    quickbook_grammar::quickbook_grammar(quickbook::state& s)
         : impl_(new impl(s))
         , command_line_macro(impl_->command_line, "command_line_macro")
         , inline_phrase(impl_->inline_phrase, "inline_phrase")
         , phrase_start(impl_->phrase_start, "phrase")
         , block_start(impl_->block_start, "block")
-        , attribute_template_body(impl_->attribute_template_body,
-            "attribute_template_body")
+        , attribute_template_body(
+              impl_->attribute_template_body, "attribute_template_body")
         , doc_info(impl_->doc_info_details, "doc_info")
     {
     }
-    
-    quickbook_grammar::~quickbook_grammar()
-    {
-    }
 
-    quickbook_grammar::impl::impl(quickbook::state& s)
-        : state(s)
-        , cleanup_()
+    quickbook_grammar::~quickbook_grammar() {}
+
+    quickbook_grammar::impl::impl(quickbook::state& s) : state(s), cleanup_()
     {
         init_main();
         init_block_elements();

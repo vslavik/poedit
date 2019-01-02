@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
@@ -71,7 +71,7 @@ example2()
 {
 //[algorithm_example2
     /*`If the exception-throwing behavior is the desired behavior, then ['Boost.Convert] supports that.
-      In addition, it also provides a non-throwing process-flow:
+      In addition, it also supports a non-throwing process-flow:
     */
     boost::array<char const*, 3> strs = {{ " 5", "0XF", "not an int" }};
     std::vector<int>             ints;

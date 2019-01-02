@@ -7,6 +7,8 @@
                      Copyright (c) 2001 Jeremy Siek
               Copyright (c) 2003-2004, 2008 Gennaro Prota
                     Copyright (c) 2014 Ahmed Charles
+                 Copyright (c) 2014 Riccardo Marcangelo
+                    Copyright (c) 2018 Evgeny Shulgin
 
        Distributed under the Boost Software License, Version 1.0.
           (See accompanying file LICENSE_1_0.txt or copy at
@@ -196,10 +198,13 @@ public:
     dynamic_bitset <a href="#op-sl">operator&lt;&lt;</a>(size_type n) const;
     dynamic_bitset <a href="#op-sr">operator&gt;&gt;</a>(size_type n) const;
 
+    dynamic_bitset&amp; <a href="#set3">set</a>(size_type n, size_type len, bool val);
     dynamic_bitset&amp; <a href="#set2">set</a>(size_type n, bool val = true);
     dynamic_bitset&amp; <a href="#set1">set</a>();
+    dynamic_bitset&amp; <a href="#reset3">reset</a>(size_type n, size_type len);
     dynamic_bitset&amp; <a href="#reset2">reset</a>(size_type n);
     dynamic_bitset&amp; <a href="#reset1">reset</a>();
+    dynamic_bitset&amp; <a href="#flip3">flip</a>(size_type n, size_type len);
     dynamic_bitset&amp; <a href="#flip2">flip</a>(size_type n);
     dynamic_bitset&amp; <a href="#flip1">flip</a>();
     bool <a href="#test">test</a>(size_type n) const;
@@ -219,6 +224,9 @@ public:
     size_type <a href="#num_blocks">num_blocks</a>() const noexcept;
     size_type <a href="#max_size">max_size</a>() const noexcept;
     bool <a href="#empty">empty</a>() const noexcept;
+    size_type <a href="#capacity">capacity</a>() const noexcept;
+    void <a href="#reserve">reserve</a>(size_type num_bits);
+    void <a href="#shrink_to_fit">shrink_to_fit</a>();
 
     bool <a href="#is_subset_of">is_subset_of</a>(const dynamic_bitset&amp; a) const;
     bool <a href="#is_proper_subset_of">is_proper_subset_of</a>(const dynamic_bitset&amp; a) const;
@@ -843,7 +851,7 @@ void <a id="pop_back">pop_back</a>();
 <b>Precondition:</b> <tt>!this-&gt;empty()</tt>.<br />
 <b>Effects:</b> Decreases the size of the bitset by one.<br />
  <b>Throws:</b> nothing.
- 
+
 <hr />
 <pre>
 void <a id="push_back">push_back</a>(bool value);
@@ -1061,6 +1069,18 @@ dynamic_bitset&amp; <a id="reset1">reset</a>()
 <hr />
 <pre>
 dynamic_bitset&amp; <a id=
+"set3">set</a>(size_type n, size_type len, bool val);
+</pre>
+
+<b>Precondition:</b> <tt>n + len &lt; this-&gt;size()</tt>.<br />
+<b>Effects:</b> Sets every bit indexed from <tt>n</tt> to
+<tt>n + len - 1</tt> inclusively if <tt>val</tt> is <tt>true</tt>, and
+clears them if <tt>val</tt> is <tt>false</tt>. <br />
+<b>Returns:</b> <tt>*this</tt>
+
+<hr />
+<pre>
+dynamic_bitset&amp; <a id=
 "set2">set</a>(size_type n, bool val = true)
 </pre>
 
@@ -1072,11 +1092,32 @@ dynamic_bitset&amp; <a id=
 
 <hr />
 <pre>
+dynamic_bitset&amp; <a id=
+"reset3">reset</a>(size_type n, size_type len);
+</pre>
+
+<b>Precondition:</b> <tt>n + len &lt; this-&gt;size()</tt>.<br />
+<b>Effects:</b> Clears every bit indexed from <tt>n</tt> to
+<tt>n + len - 1</tt> inclusively.<br />
+<b>Returns:</b> <tt>*this</tt>
+
+<hr />
+<pre>
 dynamic_bitset&amp; <a id="reset2">reset</a>(size_type n)
 </pre>
 
 <b>Precondition:</b> <tt>n &lt; this-&gt;size()</tt>.<br />
 <b>Effects:</b> Clears bit <tt>n</tt>.<br />
+<b>Returns:</b> <tt>*this</tt>
+
+<hr />
+<pre>
+dynamic_bitset&amp; <a id="flip3">flip</a>(size_type n, size_type len)
+</pre>
+
+<b>Precondition:</b> <tt>n + len &lt; this-&gt;size()</tt>.<br />
+<b>Effects:</b> Flips every bit indexed from <tt>n</tt> to
+<tt>n + len - 1</tt> inclusively.<br />
 <b>Returns:</b> <tt>*this</tt>
 
 <hr />
@@ -1124,6 +1165,40 @@ bool <a id="empty">empty</a>() const;
 <b>Returns:</b> <tt>true</tt> if <tt>this->size() == 0</tt>, <tt>false</tt>
 otherwise. <i>Note</i>: not to be confused with <tt>none()</tt>, that has
 different semantics.
+
+<hr />
+<pre>
+size_type <a id="capacity">capacity</a>() const;
+</pre>
+
+<b>Returns:</b>  The total number of elements that <tt>*this</tt> can hold without requiring
+reallocation.<br />
+<b>Throws:</b> nothing.
+
+<hr />
+<pre>
+void <a id="reserve">reserve</a>(size_type num_bits);
+</pre>
+
+<b>Effects:</b> A directive that informs the bitset of a planned change in size, so that it can
+manage the storage allocation accordingly. After reserve(), capacity() is greater or equal to the
+argument of reserve() if reallocation happens; and equal to the previous value of capacity() otherwise.
+Reallocation happens at this point if and only if the current capacity is less than the argument of
+reserve(). <br />
+<i>Note:</i> It does not change the size() of the bitset.<br />
+<b>Postcondtitions:</b> <tt>this->capacity() >= num_bits</tt>.<br />
+<b>Throws:</b> An allocation error if memory is exhausted
+(<tt>std::bad_alloc</tt> if <tt>Allocator=std::allocator</tt>).
+
+<hr />
+<pre>
+void <a id="shrink_to_fit">shrink_to_fit</a>();
+</pre>
+
+<b>Effects:</b> shrink_to_fit() is a request to reduce memory use by removing unused capacity.<br />
+<i>Note:</i> It does not change the size() of the bitset.<br />
+<b>Throws:</b> An allocation error if memory is exhausted
+(<tt>std::bad_alloc</tt> if <tt>Allocator=std::allocator</tt>).
 
 <hr />
 <pre>
@@ -1680,7 +1755,11 @@ href="mailto:cda@freshsources.com">cda@freshsources.com</a>)<br
 </tr>
 <tr>
 <td>Copyright &copy; 2014</td>
-<td>Glen Fernandes (<a href="mailto:glenfe@live.com">glenfe@live.com</a>)</td>
+<td>Glen Fernandes (<a href="mailto:glenjofe@gmail.com">glenjofe@gmail.com</a>)</td>
+</tr>
+<tr>
+<td>Copyright &copy; 2014</td>
+<td>Riccardo Marcangelo (<a href="mailto:ricky.65@outlook.com">ricky.65@outlook.com</a>)</td>
 </tr>
 </table>
 <br />

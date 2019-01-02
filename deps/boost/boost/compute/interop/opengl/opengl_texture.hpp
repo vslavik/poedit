@@ -51,7 +51,7 @@ public:
     {
         cl_int error = 0;
 
-        #ifdef CL_VERSION_1_2
+        #ifdef BOOST_COMPUTE_CL_VERSION_1_2
         m_mem = clCreateFromGLTexture(context,
                                       flags,
                                       texture_target,

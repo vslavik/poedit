@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_dll.html" title="Chapter&#160;10.&#160;Boost.DLL">
+<link rel="up" href="../boost_dll.html" title="Chapter&#160;14.&#160;Boost.DLL">
 <link rel="prev" href="getting_started.html" title="Getting started">
-<link rel="next" href="missuses.html" title="Missuses">
+<link rel="next" href="mangled_import.html" title="Mangled Import">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,13 +21,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="getting_started.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost_dll.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="missuses.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="getting_started.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost_dll.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="mangled_import.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_dll.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial">Tutorial</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tutorial.html#boost_dll.tutorial.plugin_basics">Plugin basics</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#boost_dll.tutorial.factory_method_in_plugin">Factory
       method in plugin</a></span></dt>
@@ -47,7 +47,7 @@
       a C function from Windows dll</a></span></dt>
 </dl></div>
 <p>
-      Tutorial is provided to give you an idea of how to create and use plugins.
+      This Tutorial is provided to give you an idea of how to create and use plugins.
     </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -152,7 +152,7 @@ Destructing my_plugin_sum ;o)
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial_common/my_plugin_api.hpp" target="_top">example/tutorial_common/my_plugin_api.hpp</a>
           </li>
@@ -275,7 +275,7 @@ Plugin Name:  aggregator
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial2/my_plugin_aggregator.cpp" target="_top">example/tutorial2/my_plugin_aggregator.cpp</a>
           </li>
@@ -345,7 +345,7 @@ Destructing my_plugin_sum ;o)
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial3/tutorial3.cpp" target="_top">example/tutorial3/tutorial3.cpp</a>
           </li>
@@ -368,7 +368,7 @@ Destructing my_plugin_sum ;o)
 <p>
         Linking plugin into the executable has the advantages of
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             reducing common size of distribution
           </li>
@@ -506,7 +506,7 @@ Destructing my_plugin_static
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial4/static_plugin.hpp" target="_top">example/tutorial4/static_plugin.hpp</a>
           </li>
@@ -629,7 +629,7 @@ Destructing my_plugin_sum ;o)
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial5/load_all.cpp" target="_top">example/tutorial5/load_all.cpp</a>
           </li>
@@ -747,7 +747,7 @@ After library unload.
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial6/on_unload_lib.cpp" target="_top">example/tutorial6/on_unload_lib.cpp</a>
           </li>
@@ -868,7 +868,7 @@ Function 'howdy' prints:
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial7/library1.cpp" target="_top">example/tutorial7/library1.cpp</a>
           </li>
@@ -1144,7 +1144,7 @@ location: "/tutorial8_static"</pre>
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial8/refcounting_api.hpp" target="_top">example/tutorial8/refcounting_api.hpp</a>
           </li>
@@ -1220,7 +1220,7 @@ location: "/tutorial8_static"</pre>
 <p>
         <span class="bold"><strong>Full sources:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <a href="https://github.com/apolukhin/Boost.DLL/blob/develop/example/tutorial9/tutorial9.cpp" target="_top">example/tutorial9/tutorial9.cpp</a>
           </li></ul></div>
 <p>
@@ -1230,7 +1230,7 @@ location: "/tutorial8_static"</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015, 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>
@@ -1238,7 +1238,7 @@ location: "/tutorial8_static"</pre>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="getting_started.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost_dll.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="missuses.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="getting_started.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../boost_dll.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="mangled_import.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

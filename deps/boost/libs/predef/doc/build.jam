@@ -58,6 +58,43 @@ boostbook standalone
         <dependency>css
     ;
 
+###############################################################################
+### Targets for Boost release integration.
+###############################################################################
+
 # Target for Boost global documentation integration.
-alias boostdoc : predef : : : <implcit-dependency>predef ;
+#
+# For documentation that will be integrated into the global documentation
+# this should be an alias similar to:
+#
+#   alias boostdoc : my_lib : : : <implicit-dependency>my_lib_boostbook_xml ;
+#   explicit boostdoc ;
+#
+# For documentation that is not part of the global documentation, i.e.
+# it has stadalone documentation, it should be an empty alias:
+#
+#   alias boostdoc ;
+#   explicit boostdoc ;
+#
+alias boostdoc : predef ;
 explicit boostdoc ;
+
+# Target for Boost standalone release documentation building.
+#
+# For documentation that is not part of the global Boost documentation
+# this should be an alias to building the "standalone" documentation.
+# Usual this is just an alias to a "stadalone" target:
+#
+#   alias boostrelease : stadalone ;
+#   explicit boostrelease ;
+#
+# For documentation that is part of the global Boost documentation this
+# should be an empty alias:
+#
+#   alias boostrelease ;
+#   explicit boostrelease ;
+#
+alias boostrelease ;
+explicit boostrelease ;
+
+###############################################################################

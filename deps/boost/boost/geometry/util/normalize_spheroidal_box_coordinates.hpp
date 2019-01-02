@@ -1,8 +1,9 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2015, Oracle and/or its affiliates.
+// Copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -26,7 +27,7 @@ namespace detail
 {
 
 
-template <typename Units, typename CoordinateType>
+template <typename Units, typename CoordinateType, bool IsEquatorial = true>
 class normalize_spheroidal_box_coordinates
 {
 private:
@@ -49,6 +50,9 @@ public:
     {
         normalize::apply(longitude1, latitude1, false);
         normalize::apply(longitude2, latitude2, false);
+
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude1);
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude2);
 
         if (math::equals(latitude1, constants::min_latitude())
             && math::equals(latitude2, constants::min_latitude()))
@@ -75,6 +79,9 @@ public:
             // the longitudes
             longitude2 += constants::period();
         }
+
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude1);
+        latitude_convert_if_polar<Units, IsEquatorial>::apply(latitude2);
 
 #ifdef BOOST_GEOMETRY_NORMALIZE_LATITUDE
         BOOST_GEOMETRY_ASSERT(! math::larger(latitude1, latitude2));
@@ -126,6 +133,18 @@ inline void normalize_spheroidal_box_coordinates(CoordinateType& longitude1,
         >::apply(longitude1, latitude1, longitude2, latitude2);
 }
 
+template <typename Units, bool IsEquatorial, typename CoordinateType>
+inline void normalize_spheroidal_box_coordinates(CoordinateType& longitude1,
+                                                 CoordinateType& latitude1,
+                                                 CoordinateType& longitude2,
+                                                 CoordinateType& latitude2)
+{
+    detail::normalize_spheroidal_box_coordinates
+        <
+            Units, CoordinateType, IsEquatorial
+        >::apply(longitude1, latitude1, longitude2, latitude2);
+}
+
 /*!
 \brief Short utility to normalize the coordinates of a box on a spheroid
 \tparam Units The units of the coordindate system in the spheroid
@@ -148,6 +167,19 @@ inline void normalize_spheroidal_box_coordinates(CoordinateType& longitude1,
     detail::normalize_spheroidal_box_coordinates
         <
             Units, CoordinateType
+        >::apply(longitude1, latitude1, longitude2, latitude2, band);
+}
+
+template <typename Units, bool IsEquatorial, typename CoordinateType>
+inline void normalize_spheroidal_box_coordinates(CoordinateType& longitude1,
+                                                 CoordinateType& latitude1,
+                                                 CoordinateType& longitude2,
+                                                 CoordinateType& latitude2,
+                                                 bool band)
+{
+    detail::normalize_spheroidal_box_coordinates
+        <
+            Units, CoordinateType, IsEquatorial
         >::apply(longitude1, latitude1, longitude2, latitude2, band);
 }
 

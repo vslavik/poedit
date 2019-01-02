@@ -12,6 +12,7 @@
 #include "test_data.hpp"
 #include <boost/test/unit_test.hpp>
 #include <boost/ptr_container/exception.hpp>
+#include <boost/ptr_container/detail/ptr_container_disable_deprecated.hpp>
 #include <boost/range/sub_range.hpp>
 #include <boost/cast.hpp>
 #include <cstdlib>
@@ -79,6 +80,10 @@ std::string get_next_key<std::string>( const std::string& )
     return boost::lexical_cast<std::string>( rand() );
 }
 
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 template< typename C, typename B, typename T >
 void ptr_map_test()
@@ -101,11 +106,17 @@ void ptr_map_test()
     BOOST_DEDUCED_TYPENAME C::iterator i                  = c.begin();
     BOOST_DEDUCED_TYPENAME C::const_iterator ci           = c2.begin();
     BOOST_DEDUCED_TYPENAME C::iterator i2                 = c.end();
+    hide_warning(i2);
     BOOST_DEDUCED_TYPENAME C::const_iterator ci2          = c2.begin();
+    hide_warning(ci2);
     BOOST_DEDUCED_TYPENAME C::reverse_iterator ri         = c.rbegin();
+    hide_warning(ri);
     BOOST_DEDUCED_TYPENAME C::const_reverse_iterator cri  = c2.rbegin();
+    hide_warning(cri);
     BOOST_DEDUCED_TYPENAME C::reverse_iterator rv2        = c.rend();
+    hide_warning(rv2);
     BOOST_DEDUCED_TYPENAME C::const_reverse_iterator cvr2 = c2.rend();
+    hide_warning(cvr2);
 
     BOOST_DEDUCED_TYPENAME C::key_type a_key;
 
@@ -142,9 +153,18 @@ void ptr_map_test()
     a_key = get_next_key( a_key );
     c.insert( a_key, new T );
     a_key = get_next_key( a_key );
+#ifndef BOOST_NO_AUTO_PTR
     c.insert( a_key, std::auto_ptr<T>( new T ) );
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+    c.insert( a_key, std::unique_ptr<T>( new T ) );
+#endif
     typename C::auto_type ptr2  = c.release( c.begin() );
+#ifndef BOOST_NO_AUTO_PTR
     std::auto_ptr<C> ap         = c.release();
+#else
+    std::unique_ptr<C> up       = c.release();
+#endif
     c                           = c2.clone();
     BOOST_TEST_MESSAGE( "finished release/clone test" );
 
@@ -172,7 +192,12 @@ void ptr_map_test()
 
     BOOST_CHECK( !c3.empty() );
     c3.replace( c3.begin(), new T );
+#ifndef BOOST_NO_AUTO_PTR
     c3.replace( c3.begin(), std::auto_ptr<T>( new T ) );
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+    c3.replace( c3.begin(), std::unique_ptr<T>( new T ) );
+#endif
     BOOST_TEST_MESSAGE( "finished set/map interface test" );
 
     // @todo: make macro with algorithms so that the right erase() is called.
@@ -186,7 +211,7 @@ void ptr_map_test()
 
     i  = c.find( get_next_key( a_key ) );
     ci = c2.find( get_next_key( a_key ) );
-    c2.count( get_next_key( a_key ) );
+    BOOST_CHECK_EQUAL(0, c2.count( get_next_key( a_key ) ));
     i  = c.lower_bound( get_next_key( a_key ) );
     ci = c2.lower_bound( get_next_key( a_key ) );
     i  = c.upper_bound( get_next_key( a_key ) );
@@ -243,6 +268,10 @@ void ptr_map_test()
     c.erase( a_key );
 
 }
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic pop
+#endif
 
 
 
@@ -370,6 +399,7 @@ void test_map()
     map_type::reference        a_reference  = *m2.begin();
     a_reference.second->foo();
     map_type::const_reference  a_creference = *const_begin(m2);
+    hide_warning(a_creference);
    
     //
     //
@@ -422,10 +452,3 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
 
     return test;
 }
-
-
-
-
-
-
-

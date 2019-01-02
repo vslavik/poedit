@@ -39,9 +39,10 @@ into a function which was exited via a call to ['longjmp()] is undefined
 [footnote ISO/IEC 9899:1999, 2005, 7.13.2.1:2].
 
 
+[#ucontext]
 [heading ucontext_t]
 
-Since POSIX.1-2003 `ucontext_t` is deprecated and was removed in POSIX.1-2008!
+Since POSIX.1-2004 `ucontext_t` is deprecated and was removed in POSIX.1-2008!
 The function signature of `makecontext()` is:
 
     void makecontext(ucontext_t *ucp, void (*func)(), int argc, ...);
@@ -56,8 +57,9 @@ in var-arg list is not guaranteed to work, especially it will fail for
 architectures where pointers are larger than integers.
 
 `ucontext_t` preserves signal mask between context switches which involves system
-calls consuming a lot of CPU cycles (ucontext_t is slower by
-perfomance_link[factor 13x] relative to `fcontext_t`).
+calls consuming a lot of CPU cycles (ucontext_t is slower; a context switch
+takes [link performance ['two magnitutes of order more CPU cycles]] more than
+__fcontext__).
 
 
 [heading Windows fibers]

@@ -10,6 +10,7 @@
 #include <boost/graph/graph_as_tree.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/cstdlib.hpp>
+#include <iostream>
 
 class tree_printer {
 public:

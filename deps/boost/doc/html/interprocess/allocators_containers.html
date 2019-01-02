@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Allocators, containers and memory allocation algorithms</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;18.&#160;Boost.Interprocess">
 <link rel="prev" href="managed_memory_segments.html" title="Managed Memory Segments">
 <link rel="next" href="memory_algorithms.html" title="Memory allocation algorithms">
 </head>
@@ -28,7 +28,7 @@
 <a name="interprocess.allocators_containers"></a><a class="link" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">Allocators, containers
     and memory allocation algorithms</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.allocator_introduction">Introduction
       to Interprocess allocators</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_segregated_storage">Segregated
@@ -45,7 +45,7 @@
 <a name="interprocess.allocators_containers.allocator_introduction"></a><a class="link" href="allocators_containers.html#interprocess.allocators_containers.allocator_introduction" title="Introduction to Interprocess allocators">Introduction
       to Interprocess allocators</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.allocator_introduction.allocator_properties">Properties
         of <span class="bold"><strong>Boost.Interprocess</strong></span> allocators</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.allocator_introduction.allocator_swapping">Swapping
@@ -257,7 +257,7 @@
 <a name="interprocess.allocators_containers.stl_allocators_segregated_storage"></a><a class="link" href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_segregated_storage" title="Segregated storage node allocators">Segregated
       storage node allocators</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_segregated_storage.segregated_allocators_common">Additional
         parameters and functions of segregated storage node allocators</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_segregated_storage.node_allocator">node_allocator:
@@ -309,7 +309,7 @@
 <p>
           All these allocators are templatized by 3 parameters:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="keyword">class</span> <span class="identifier">T</span></code>:
               The type to be allocated.
@@ -627,7 +627,7 @@
           offers additional functions to control the cache (the cache can be controlled
           per instance):
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="keyword">void</span> <span class="identifier">set_max_cached_nodes</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
               <span class="identifier">n</span><span class="special">)</span></code>:
@@ -715,7 +715,7 @@
 <a name="interprocess.allocators_containers.stl_allocators_adaptive"></a><a class="link" href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_adaptive" title="Adaptive pool node allocators">Adaptive
       pool node allocators</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_adaptive.adaptive_allocators_common">Additional
         parameters and functions of adaptive pool node allocators</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.stl_allocators_adaptive.adaptive_pool">adaptive_pool:
@@ -770,7 +770,7 @@
 <p>
           All these allocators are templatized by 4 parameters:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="keyword">class</span> <span class="identifier">T</span></code>:
               The type to be allocated.
@@ -1060,7 +1060,7 @@
           offers additional functions to control the cache (the cache can be controlled
           per instance):
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="keyword">void</span> <span class="identifier">set_max_cached_nodes</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
               <span class="identifier">n</span><span class="special">)</span></code>:
@@ -1148,7 +1148,7 @@
 <a name="interprocess.allocators_containers.containers_explained"></a><a class="link" href="allocators_containers.html#interprocess.allocators_containers.containers_explained" title="Interprocess and containers in managed memory segments">Interprocess
       and containers in managed memory segments</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.containers_explained.stl_container_requirements">Container
         requirements for Boost.Interprocess allocators</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.containers_explained.containers">STL
@@ -1169,14 +1169,14 @@
           <span class="bold"><strong>Boost.Interprocess</strong></span> STL compatible allocators
           offer a STL compatible allocator interface and if they define their internal
           <span class="bold"><strong>pointer</strong></span> typedef as a relative pointer,
-          they can sbe used to place STL containers in shared memory, memory mapped
+          they can be used to place STL containers in shared memory, memory mapped
           files or in a user defined memory segment.
         </p>
 <p>
           However, as Scott Meyers mentions in his Effective STL book, Item 10,
           <span class="emphasis"><em>"Be aware of allocator conventions and restrictions"</em></span>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="emphasis"><em>"the Standard explicitly allows library implementers
               to assume that every allocator's pointer typedef is a synonym for T*"</em></span>
@@ -1199,7 +1199,7 @@
           files with <span class="bold"><strong>Boost.Interprocess</strong></span> can't make
           any of these assumptions, so:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               STL containers may not assume that memory allocated with an allocator
               can be deallocated with other allocators of the same type. All allocators
@@ -1234,7 +1234,7 @@
           way, <span class="bold"><strong>Boost.Interprocess</strong></span> offers the following
           classes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>boost:interprocess::vector</strong></span> is the
               implementation of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>
               ready to be used in managed memory segments like shared memory. To
@@ -1242,14 +1242,14 @@
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>boost:interprocess::deque</strong></span> is the implementation
               of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">deque</span></code> ready to be used in managed
               memory segments like shared memory. To use it include:
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">deque</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput">list</code> is the
               implementation of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span></code>
               ready to be used in managed memory segments like shared memory. To
@@ -1257,7 +1257,7 @@
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput">slist</code> is the
               implementation of SGI's <code class="computeroutput"><span class="identifier">slist</span></code>
               container (singly linked list) ready to be used in managed memory segments
@@ -1265,7 +1265,7 @@
             </li></ul></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">slist</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput">set</code>/ <code class="computeroutput">multiset</code>/ <code class="computeroutput">map</code>/ <code class="computeroutput">multimap</code>
               family is the implementation of std::set/multiset/map/multimap family
               ready to be used in managed memory segments like shared memory. To
@@ -1274,7 +1274,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">set</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput">flat_set</code>/
               <code class="computeroutput">flat_multiset</code>/
               <code class="computeroutput">flat_map</code>/
@@ -1289,7 +1289,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">flat_set</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">flat_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput">basic_string</code>
               is the implementation of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></code>
               ready to be used in managed memory segments like shared memory. It's
@@ -1380,7 +1380,7 @@
           <span class="bold"><strong>Boost.Interprocess</strong></span> containers are placed
           in shared memory/memory mapped files, etc... using two mechanisms <span class="bold"><strong>at the same time</strong></span>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Boost.Interprocess </strong></span><code class="computeroutput"><span class="identifier">construct</span><span class="special">&lt;&gt;</span></code>, <code class="computeroutput"><span class="identifier">find_or_construct</span><span class="special">&lt;&gt;</span></code>... functions. These functions
               place a C++ object in the shared memory/memory mapped file. But this
@@ -1398,7 +1398,7 @@
           container (including <span class="bold"><strong>Boost.Interprocess</strong></span>
           strings) in shared memory or memory mapped files, containers <span class="bold"><strong>must</strong></span>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Define their template allocator parameter to a <span class="bold"><strong>Boost.Interprocess</strong></span>
               allocator.
@@ -1679,7 +1679,7 @@
 <a name="interprocess.allocators_containers.additional_containers"></a><a class="link" href="allocators_containers.html#interprocess.allocators_containers.additional_containers" title="Boost containers compatible with Boost.Interprocess">Boost
       containers compatible with Boost.Interprocess</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.additional_containers.unordered">Boost
         unordered containers</a></span></dt>
 <dt><span class="section"><a href="allocators_containers.html#interprocess.allocators_containers.additional_containers.multi_index">Boost.MultiIndex
@@ -1823,11 +1823,11 @@
   <span class="identifier">employee</span><span class="special">,</span>
   <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">indexed_by</span><span class="special">&lt;</span>
     <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">ordered_unique</span>
-      <span class="special">&lt;</span><span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">id</span><span class="special">&gt;,</span>  <span class="identifier">BOOST_MULTI_INDEX_MEMBER</span><span class="special">(</span><span class="identifier">employee</span><span class="special">,</span><span class="keyword">int</span><span class="special">,</span><span class="identifier">id</span><span class="special">)&gt;,</span>
+      <span class="special">&lt;</span><span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">id</span><span class="special">&gt;,</span>  <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">member</span><span class="special">&lt;</span><span class="identifier">employee</span><span class="special">,</span><span class="keyword">int</span><span class="special">,&amp;</span><span class="identifier">employee</span><span class="special">::</span><span class="identifier">id</span><span class="special">&gt;</span> <span class="special">&gt;,</span>
     <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">ordered_non_unique</span><span class="special">&lt;</span>
-      <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">name</span><span class="special">&gt;,</span><span class="identifier">BOOST_MULTI_INDEX_MEMBER</span><span class="special">(</span><span class="identifier">employee</span><span class="special">,</span><span class="identifier">shm_string</span><span class="special">,</span><span class="identifier">name</span><span class="special">)&gt;,</span>
+      <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">name</span><span class="special">&gt;,</span> <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">member</span><span class="special">&lt;</span><span class="identifier">employee</span><span class="special">,</span><span class="identifier">shm_string</span><span class="special">,&amp;</span><span class="identifier">employee</span><span class="special">::</span><span class="identifier">name</span><span class="special">&gt;</span> <span class="special">&gt;,</span>
     <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">ordered_non_unique</span>
-      <span class="special">&lt;</span><span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">age</span><span class="special">&gt;,</span> <span class="identifier">BOOST_MULTI_INDEX_MEMBER</span><span class="special">(</span><span class="identifier">employee</span><span class="special">,</span><span class="keyword">int</span><span class="special">,</span><span class="identifier">age</span><span class="special">)&gt;</span> <span class="special">&gt;,</span>
+      <span class="special">&lt;</span><span class="identifier">bmi</span><span class="special">::</span><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">age</span><span class="special">&gt;,</span> <span class="identifier">bmi</span><span class="special">::</span><span class="identifier">member</span><span class="special">&lt;</span><span class="identifier">employee</span><span class="special">,</span><span class="keyword">int</span><span class="special">,&amp;</span><span class="identifier">employee</span><span class="special">::</span><span class="identifier">age</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;,</span>
   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">employee</span><span class="special">&gt;::</span><span class="identifier">type</span>
 <span class="special">&gt;</span> <span class="identifier">employee_set</span><span class="special">;</span>
 

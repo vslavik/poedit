@@ -8,7 +8,7 @@
 ]
 
 [chapter Phrase Level Elements
-    [quickbook 1.6]
+    [quickbook 1.7]
     [compatibility-mode 1.5]
     [id quickbook.syntax.phrase]
     [source-mode teletype]
@@ -35,7 +35,7 @@ will generate:
 
 [*['bold-italic]]
 
-[endsect] [/font_styles]
+[endsect:font_styles]
 
 [#quickbook.ref.replaceable]
 [section:replaceable Replaceable]
@@ -50,7 +50,7 @@ This will generate:
 
 [~replacement]
 
-[endsect] [/replaceable]
+[endsect:replaceable]
 
 [#quickbook.ref.quotations]
 [section:quotations Quotations]
@@ -79,7 +79,7 @@ will generate:
 ["Here's the rule for bargains: ["Do other men, for they would do you.]
 That's the true business precept.]
 
-[endsect] [/quotations]
+[endsect:quotations]
 
 [#quickbook.ref.simple_formatting]
 [section:simple_formatting Simple formatting]
@@ -163,7 +163,7 @@ Yes sir, yes sir, three bags full!
 One for the master, one for the dame,
 And one for the little boy who lives down the lane.
 
-[endsect] [/simple_formatting]
+[endsect:simple_formatting]
 
 [#quickbook.ref.role]
 [section:role Role]
@@ -199,7 +199,7 @@ The full list of colours that will be available is:
 * [role silver silver]
 * [role gray gray]
 
-[endsect] [/role]
+[endsect:role]
 
 [#quickbook.ref.inline_code]
 [section:inline_code Inline code]
@@ -220,7 +220,7 @@ syntax highlighted.
 single quote: `"'"`. Note too that [^\`some code\`] is preferred over
 `[^some code]`. ]
 
-[endsect] [/inline_code]
+[endsect:inline_code]
 
 [#quickbook.ref.code_blocks]
 [section:code_blocks Code blocks]
@@ -277,7 +277,7 @@ will generate:
 
 [teletype]
 
-[endsect] [/code_blocks]
+[endsect:code_blocks]
 
 [#quickbook.ref.source_mode]
 [section:source_mode Source Mode]
@@ -304,6 +304,71 @@ C++ comment `// looks like this` whereas a Python comment [python]
 
 [teletype]
 
+Quickbook 1.7 introduced the `!` element which can be used to set the
+source mode of the following element:
+
+```
+[teletype]
+Example in C++: [!c++] `int main() {}`,
+example with no highlighting: `int main() {}`.
+```
+
+will generate:
+
+[teletype]
+Example in C++: [!c++] `int main() {}`,
+example with no highlighting: `int main() {}`.
+
+In order to change the source mode for a whole paragraph, put
+the `!` element on a separate line before the paragraph:
+
+```
+[!c++]
+`int main() {}` is highlighted as C++, as is `//example`.
+
+[!c++] `int main() {}` is also highlighted as C++,
+but `//example` isn't.
+```
+
+generates:
+
+[!c++]
+`int main() {}` is highlighted as C++, as is `//example`.
+
+[!c++] `int main() {}` is also highlighted as C++,
+but `//example` isn't.
+
+The `!` element can also be used to set the source mode for blocks
+and sections. For example:
+
+```
+[!python]
+[section:python Section in which all code samples use python]
+
+[/...]
+
+[endsect:python]
+
+[!c++]
+[section:cpp Section in which all code samples use C++]
+
+[/...]
+
+[endsect:cpp]
+```
+
+Or to set the source mode for a table:
+
+```
+[!teletype]
+[table
+    [[code][meaning]]
+    [[`+`][addition]]
+]
+```
+
+[teletype]
+
 [table Supported Source Modes
     [[Mode]                 [Source Mode Markup]]
     [[C++]                  [[^\[c++\]]]]
@@ -313,7 +378,7 @@ C++ comment `// looks like this` whereas a Python comment [python]
 
 [note The source mode strings are lowercase.]
 
-[endsect] [/source_mode]
+[endsect:source_mode]
 
 [#quickbook.ref.line_break]
 [section:line_break line-break]
@@ -326,7 +391,7 @@ C++ comment `// looks like this` whereas a Python comment [python]
 there might be problems, especially when using an alternative docbook
 processor.]
 
-[endsect] [/line_break]
+[endsect:line_break]
 
 [#quickbook.ref.anchors]
 [section:anchors Anchors]
@@ -343,7 +408,7 @@ These anchors are global and can be accessed from anywhere in the
 quickbook documentation. Be careful to avoid clashes with anchors in
 other sections.
 
-[endsect] [/anchors]
+[endsect:anchors]
 
 [#quickbook.ref.links]
 [section:links Links]
@@ -384,7 +449,7 @@ will generate: [@boost:/libs/spirit/index.html the Boost.Spirit documentation]
 Note that this is only available when using BoostBook, and only for links
 - it can't be used for images.
 
-[endsect] [/links]
+[endsect:links]
 
 [#quickbook.ref.anchor_links]
 [section:anchor_links Anchor links]
@@ -397,7 +462,7 @@ You can link within a document using:
 
 See sections __section__ and __heading__ for more info.
 
-[endsect] [/anchor_links]
+[endsect:anchor_links]
 
 [#quickbook.ref.refentry_links]
 [section:refentry_links refentry links]
@@ -419,7 +484,7 @@ automatically be the refentry. Example:
 
 This gets converted into [^<link linkend="xml.refentry">xml.refentry</link>].
 
-[endsect] [/refentry_links]
+[endsect:refentry_links]
 
 [#quickbook.ref.code_links]
 [section:code_links Code Links]
@@ -448,7 +513,7 @@ Example:
 
 would have "boost::bar::baz" as the link text.
 
-[endsect] [/code_links]
+[endsect:code_links]
 
 [#quickbook.ref.escape]
 [section:escape Escape]
@@ -476,7 +541,7 @@ Escaping allows us to pass XML markup to __boostbook__ or __docbook__. For examp
 [important Be careful when using the escape. The text must conform to
 __boostbook__/__docbook__ syntax.]
 
-[endsect] [/escape]
+[endsect:escape]
 
 [#quickbook.ref.single_char_escape]
 [section:single_char_escape Single char escape]
@@ -495,7 +560,7 @@ instead. Although, use it sparingly as it can generated invalid docbook]
 The escaped space: `\ ` also has a special meaning. The escaped space is removed
 from the output.
 
-[endsect] [/single_char_escape]
+[endsect:single_char_escape]
 
 [#quickbook.ref.unicode_escape]
 [section:unicode_escape Unicode escape]
@@ -514,7 +579,7 @@ will generate:
 \u03B1 + \u03B2
 ]
 
-[endsect] [/unicode_escape]
+[endsect:unicode_escape]
 
 [#quickbook.ref.images]
 [section:images Images]
@@ -531,7 +596,7 @@ DocBook imagedata attributes]:
 [$image.jpg [width 200in] [height 200in]]
 ```
 
-[endsect] [/images]
+[endsect:images]
 
 [#quickbook.ref.footnotes]
 [section:footnotes Footnotes]
@@ -546,7 +611,7 @@ of the current page. For example, this:
 
 will generate this[footnote A sample footnote].
 
-[endsect] [/footnotes]
+[endsect:footnotes]
 
 [#quickbook.ref.macro_expansion]
 [section:macro_expansion Macro Expansion]
@@ -557,7 +622,7 @@ __a_macro_identifier__
 
 See __macros__ for details.
 
-[endsect] [/macro_expansion]
+[endsect:macro_expansion]
 
 [#quickbook.ref.template_expansion]
 [section:template_expansion Template Expansion]
@@ -568,7 +633,7 @@ See __macros__ for details.
 
 See __templates__ for details.
 
-[endsect] [/template_expansion]
+[endsect:template_expansion]
 
 [#quickbook.ref.cond]
 [section:cond Conditional Generation]
@@ -580,8 +645,6 @@ a macro. Example:
 [? __to_be__ To be or not to be]
 ```
 
-[? __to_be__ To be or not to be]
-
 Here, the phrase "To be or not to be" will only be generated if the
 macro symbol `__to_be__` has been previously defined. The phrase
 above will not do anything since we haven't defined `__to_be__`.
@@ -589,14 +652,21 @@ Now, let's define the symbol:
 
 ```
 [def __to_be__]
-```
-
-[def __to_be__]
-
-And try again:
 
 [? __to_be__ To be or not to be]
+```
 
-Yes!
+Which results in:
 
-[endsect] [/cond]
+```
+To be or not to be
+```
+
+In quickbook 1.7, you can generate output when a macro isn't defined:
+
+```
+[?! __to_be__ Not to be]
+```
+
+
+[endsect:cond]

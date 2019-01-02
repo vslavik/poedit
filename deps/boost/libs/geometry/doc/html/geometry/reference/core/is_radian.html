@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_radian</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../core.html" title="Core Metafunctions">
 <link rel="prev" href="interior_type.html" title="interior_type">
@@ -27,17 +27,18 @@
 <a name="geometry.reference.core.is_radian"></a><a class="link" href="is_radian.html" title="is_radian">is_radian</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp91284624"></a>
+          <a class="indexterm" name="idp109673680"></a>
 Meta-function to verify if a coordinate system is radian.
         </p>
 <h6>
 <a name="geometry.reference.core.is_radian.h0"></a>
-          <span><a name="geometry.reference.core.is_radian.synopsis"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.core.is_radian.synopsis"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CoordinateSystem</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">is_radian</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">true_type</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -46,7 +47,7 @@ Meta-function to verify if a coordinate system is radian.
         </p>
 <h6>
 <a name="geometry.reference.core.is_radian.h1"></a>
-          <span><a name="geometry.reference.core.is_radian.template_parameter_s_"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.template_parameter_s_">Template
+          <span class="phrase"><a name="geometry.reference.core.is_radian.template_parameter_s_"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -81,7 +82,7 @@ Meta-function to verify if a coordinate system is radian.
 </table></div>
 <h6>
 <a name="geometry.reference.core.is_radian.h2"></a>
-          <span><a name="geometry.reference.core.is_radian.header"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.core.is_radian.header"></a></span><a class="link" href="is_radian.html#geometry.reference.core.is_radian.header">Header</a>
         </h6>
 <p>
           Either
@@ -98,8 +99,8 @@ Meta-function to verify if a coordinate system is radian.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

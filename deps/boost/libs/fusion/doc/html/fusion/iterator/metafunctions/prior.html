@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>prior</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../metafunctions.html" title="Metafunctions">
 <link rel="prev" href="next.html" title="next">
@@ -28,14 +28,14 @@
 </h4></div></div></div>
 <h6>
 <a name="fusion.iterator.metafunctions.prior.h0"></a>
-          <span><a name="fusion.iterator.metafunctions.prior.description"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.description">Description</a>
+          <span class="phrase"><a name="fusion.iterator.metafunctions.prior.description"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.description">Description</a>
         </h6>
 <p>
           Returns the type of the previous iterator in a sequence.
         </p>
 <h6>
 <a name="fusion.iterator.metafunctions.prior.h1"></a>
-          <span><a name="fusion.iterator.metafunctions.prior.synopsis"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.synopsis">Synopsis</a>
+          <span class="phrase"><a name="fusion.iterator.metafunctions.prior.synopsis"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">I</span>
@@ -92,7 +92,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.iterator.metafunctions.prior.h2"></a>
-          <span><a name="fusion.iterator.metafunctions.prior.expression_semantics"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.expression_semantics">Expression
+          <span class="phrase"><a name="fusion.iterator.metafunctions.prior.expression_semantics"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.expression_semantics">Expression
           Semantics</a>
         </h6>
 <pre class="programlisting"><a class="link" href="prior.html" title="prior"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">prior</span></code></a><span class="special">&lt;</span><span class="identifier">I</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -107,14 +107,14 @@
         </p>
 <h6>
 <a name="fusion.iterator.metafunctions.prior.h3"></a>
-          <span><a name="fusion.iterator.metafunctions.prior.header"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.header">Header</a>
+          <span class="phrase"><a name="fusion.iterator.metafunctions.prior.header"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">prior</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">prior</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.iterator.metafunctions.prior.h4"></a>
-          <span><a name="fusion.iterator.metafunctions.prior.example"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.example">Example</a>
+          <span class="phrase"><a name="fusion.iterator.metafunctions.prior.example"></a></span><a class="link" href="prior.html#fusion.iterator.metafunctions.prior.example">Example</a>
         </h6>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">;</span>
 <span class="keyword">typedef</span> <a class="link" href="next.html" title="next"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">next</span></code></a><span class="special">&lt;</span><a class="link" href="../../sequence/intrinsic/metafunctions/begin.html" title="begin"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">begin</span></code></a><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">second</span><span class="special">;</span>

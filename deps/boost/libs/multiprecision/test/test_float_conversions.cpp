@@ -30,6 +30,9 @@ int main()
    BOOST_STATIC_ASSERT(!(boost::is_convertible<float, cpp_bin_float_half>::value));
    BOOST_STATIC_ASSERT(!(boost::is_convertible<double, cpp_bin_float_half>::value));
    BOOST_STATIC_ASSERT(!(boost::is_convertible<long double, cpp_bin_float_half>::value));
+#ifdef BOOST_HAS_FLOAT128
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<__float128, cpp_bin_float_half>::value));
+#endif
 
    cpp_bin_float_half hs = boost::math::constants::pi<cpp_bin_float_half>();
 

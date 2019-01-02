@@ -20,8 +20,27 @@
 #include <boost/detail/lightweight_main.hpp>
 #include "../test_macros.hpp"
 #include <boost/array.hpp>
+#include <cstring>
+
+#ifdef BOOST_HAS_ICU
+#include <boost/regex/icu.hpp>
+#endif
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
+template <int N>
+size_t array_size(const char* (&p)[N])
+{
+   for(size_t i = 0; i < N; ++i)
+      if(p[i] == 0)
+         return i;
+   return N;
+}
+
+std::wstring make_wstring(const char* p)
+{
+   return std::wstring(p, p + std::strlen(p));
+}
 
 #ifdef __sgi
 template <class T>
@@ -42,13 +61,55 @@ void test_captures(const std::string& regx, const std::string& text, T& expected
 #endif
       for(i = 0; i < what.size(); ++i)
       {
-         BOOST_CHECK(what.captures(i).size() <= ARRAY_SIZE(expected[i]));
+         BOOST_CHECK(what.captures(i).size() == array_size(expected[i]));
          for(j = 0; j < what.captures(i).size(); ++j)
          {
             BOOST_CHECK(what.captures(i)[j] == expected[i][j]);
          }
       }
    }
+
+   std::wstring wre(regx.begin(), regx.end());
+   std::wstring wtext(text.begin(), text.end());
+   boost::wregex we(wre);
+   boost::wsmatch wwhat;
+   if(boost::regex_match(wtext, wwhat, we, boost::match_extra))
+   {
+      unsigned i, j;
+#ifndef __sgi
+      // strange type deduction causes this test to fail on SGI:
+      BOOST_CHECK(wwhat.size() == ARRAY_SIZE(expected));
+#endif
+      for(i = 0; i < wwhat.size(); ++i)
+      {
+         BOOST_CHECK(wwhat.captures(i).size() == array_size(expected[i]));
+         for(j = 0; j < wwhat.captures(i).size(); ++j)
+         {
+            BOOST_CHECK(wwhat.captures(i)[j] == make_wstring(expected[i][j]));
+         }
+      }
+   }
+
+#ifdef BOOST_HAS_ICU
+   boost::u32regex ure = boost::make_u32regex(regx);
+   what = boost::smatch();
+   if(boost::u32regex_match(text, what, ure, boost::match_extra))
+   {
+      unsigned i, j;
+#ifndef __sgi
+      // strange type deduction causes this test to fail on SGI:
+      BOOST_CHECK(what.size() == ARRAY_SIZE(expected));
+#endif
+      for(i = 0; i < what.size(); ++i)
+      {
+         BOOST_CHECK(what.captures(i).size() == array_size(expected[i]));
+         for(j = 0; j < what.captures(i).size(); ++j)
+         {
+            BOOST_CHECK(what.captures(i)[j] == expected[i][j]);
+         }
+      }
+   }
+#endif
 }
 
 int cpp_main(int , char* [])

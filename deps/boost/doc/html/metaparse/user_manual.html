@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>User manual</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../metaparse.html" title="Chapter&#160;20.&#160;Boost.Metaparse">
+<link rel="up" href="../metaparse.html" title="Chapter&#160;24.&#160;Boost.Metaparse">
 <link rel="prev" href="getting_started_with_boost_metap.html" title="Getting started with Boost.Metaparse">
 <link rel="next" href="versioning.html" title="Versioning">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="metaparse.user_manual"></a><a name="manual"></a><a class="link" href="user_manual.html" title="User manual">User manual</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.what_is_a_parser">What is a parser</a></span></dt>
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.parsing_based_on_constexpr">Parsing
       based on <code class="computeroutput"><span class="keyword">constexpr</span></code></a></span></dt>
@@ -38,7 +38,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="metaparse.user_manual.what_is_a_parser"></a><a class="link" href="user_manual.html#metaparse.user_manual.what_is_a_parser" title="What is a parser">What is a parser</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.what_is_a_parser.the_input_of_the_parsers">The
         input of the parsers</a></span></dt>
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.what_is_a_parser.source_positions">Source
@@ -101,7 +101,7 @@
           A source position is described using a compile-time data structure. The
           following functions can be used to query it:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="reference.html#get_col"><code class="computeroutput"><span class="identifier">get_col</span></code></a>
             </li>
@@ -134,7 +134,7 @@
 <a name="metaparse.user_manual.what_is_a_parser.some_examples_of_simple_parsers"></a><a class="link" href="user_manual.html#metaparse.user_manual.what_is_a_parser.some_examples_of_simple_parsers" title="Some examples of simple parsers">Some
         examples of simple parsers</a>
 </h4></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               A parser that parses nothing and always succeeds is <a class="link" href="reference.html#return_"><code class="computeroutput"><span class="identifier">return_</span></code></a>.
             </li>
@@ -191,7 +191,7 @@
           The parser library provides a parser combinator, <a class="link" href="reference.html#sequence"><code class="computeroutput"><span class="identifier">sequence</span></code></a>, that takes a number
           of parsers as arguments and builds a new parser from them that:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Parses the input using the first parser
             </li>
@@ -215,7 +215,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="metaparse.user_manual.what_is_a_parser.repetition"></a><a name="repetition"></a><a class="link" href="user_manual.html#metaparse.user_manual.what_is_a_parser.repetition" title="Repetition">Repetition</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.what_is_a_parser.repetition.introducing_foldl">Introducing
           foldl</a></span></dt>
 <dt><span class="section"><a href="user_manual.html#metaparse.user_manual.what_is_a_parser.repetition.introducing_foldr">Introducing
@@ -363,7 +363,7 @@
             With <a class="link" href="reference.html#foldl"><code class="computeroutput"><span class="identifier">foldl</span></code></a>
             you specify:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 the parser to parse the individual elements of the list (which is
                 <code class="computeroutput"><span class="identifier">int_token</span></code> in our
@@ -502,7 +502,7 @@
             is <a class="link" href="reference.html#last_of"><code class="computeroutput"><span class="identifier">last_of</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">plus_token</span><span class="special">,</span> <span class="identifier">int_token</span><span class="special">&gt;</span></code> as the parser that is used repeatedly
             to get the numbers. It does the following:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 Uses <code class="computeroutput"><span class="identifier">plus_token</span></code> to
                 parse the <code class="computeroutput"><span class="special">+</span></code> symbol and
@@ -735,7 +735,7 @@
           code) at compile-time. Here is a list of things that can be the "result"
           of parsing:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               A <span class="emphasis"><em>type</em></span>. An example for this is a parser parsing
               a <code class="computeroutput"><span class="identifier">printf</span></code> format string

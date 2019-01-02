@@ -52,47 +52,6 @@ bool check_string_rich_slice()
         return "assertion failed: " #e1 " == " #e2 "\nLHS:\n%s\nRHS:\n%s" % make_tuple(e1,e2);    \
 else
 
-// These tests work with Python 2.2, but you must have Numeric installed.
-object check_numeric_array_rich_slice(
-    char const* module_name, char const* array_type_name, object all)
-{
-    using numeric::array;
-    array::set_module_and_type(module_name, array_type_name);
-    
-    array original = array( make_tuple( make_tuple( 11, 12, 13, 14),
-                                        make_tuple( 21, 22, 23, 24),
-                                        make_tuple( 31, 32, 33, 34),
-                                        make_tuple( 41, 42, 43, 44)));
-    array upper_left_quadrant = array( make_tuple( make_tuple( 11, 12),
-                                                   make_tuple( 21, 22)));
-    array odd_cells = array( make_tuple( make_tuple( 11, 13),
-                                          make_tuple( 31, 33)));
-    array even_cells = array( make_tuple( make_tuple( 22, 24),
-                                           make_tuple( 42, 44)));
-    array lower_right_quadrant_reversed = array(
-        make_tuple( make_tuple(44, 43),
-                    make_tuple(34, 33)));
-
-    // The following comments represent equivalent Python expressions used
-    // to validate the array behavior.
-    // original[::] == original
-    ASSERT_EQUAL(original[slice()],original);
-        
-    // original[:2,:2] == array( [[11, 12], [21, 22]])
-    ASSERT_EQUAL(original[make_tuple(slice(_,2), slice(_,2))],upper_left_quadrant);
-        
-    // original[::2,::2] == array( [[11, 13], [31, 33]])
-    ASSERT_EQUAL(original[make_tuple( slice(_,_,2), slice(_,_,2))],odd_cells);
-    
-    // original[1::2, 1::2] == array( [[22, 24], [42, 44]])
-    ASSERT_EQUAL(original[make_tuple( slice(1,_,2), slice(1,_,2))],even_cells);
-
-    // original[:-3:-1, :-3,-1] == array( [[44, 43], [34, 33]])
-    ASSERT_EQUAL(original[make_tuple( slice(_,-3,-1), slice(_,-3,-1))],lower_right_quadrant_reversed);
-
-    return object(1);
-}
-
 // Verify functions accepting a slice argument can be called
 bool accept_slice( slice) { return true; }
 
@@ -134,7 +93,6 @@ int check_slice_get_indices(
 BOOST_PYTHON_MODULE(slice_ext)
 {
     def( "accept_slice", accept_slice);
-    def( "check_numeric_array_rich_slice", check_numeric_array_rich_slice);
     def( "check_string_rich_slice", check_string_rich_slice);
     def( "check_slice_get_indices", check_slice_get_indices);
 }

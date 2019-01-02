@@ -57,7 +57,7 @@ struct rtti_policy
 
       bool operator==( id_type right ) const
       {
-        return id_ == right.id_ != 0;
+        return ( id_ == right.id_ ) != 0;
       }
       bool operator!=( id_type right ) const { return !( *this == right ); }
 

@@ -19,10 +19,6 @@
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/support_unused.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/vector.hpp>
 
 #include "test.hpp"

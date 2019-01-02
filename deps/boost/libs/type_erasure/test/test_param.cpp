@@ -187,7 +187,7 @@ void test_rref() {
 
 #endif
 
-#ifndef BOOST_NO_FUNCTION_REFERENCE_QUALIFIERS
+#ifndef BOOST_NO_CXX11_REF_QUALIFIERS
 
 // Test conversion sequence rank
 

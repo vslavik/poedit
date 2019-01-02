@@ -10,6 +10,8 @@
 #include <boost/multiprecision/tommath.hpp>
 
 #define NO_MIXED_OPS
+#define BOOST_MP_NOT_TESTING_NUMBER
+
 #include "test_arithmetic.hpp"
 
 #include <boost/rational.hpp>

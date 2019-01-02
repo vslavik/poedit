@@ -20,6 +20,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "boost/format.hpp"
+
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/vector.hpp>
@@ -27,6 +29,8 @@
 #include <boost/numeric/odeint.hpp>
 
 #include <boost/numeric/ublas/vector.hpp>
+
+#include <boost/format.hpp>
 
 using namespace boost::unit_test;
 using namespace boost::numeric::odeint;

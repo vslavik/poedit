@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for serialization, part 3.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2018 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,7 @@
 #include "test_serialization3.hpp"
 #include "test_serialization_template.hpp"
 
+#include <boost/move/core.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/sequenced_index.hpp>
 #include <boost/multi_index/ordered_index.hpp>
@@ -69,6 +70,36 @@ template<> struct version<non_default_ctble>
 };
 } /* namespace serialization */
 } /* namespace boost*/
+
+struct non_copyable
+{
+  non_copyable(int n_=0):n(n_){}
+  non_copyable(BOOST_RV_REF(non_copyable) x):n(x.n){}
+
+  bool operator==(const non_copyable& x)const{return n==x.n;}
+  bool operator<(const non_copyable& x)const{return n<x.n;}
+
+  int n;
+
+private:
+  BOOST_MOVABLE_BUT_NOT_COPYABLE(non_copyable)
+};
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+namespace boost{
+namespace serialization{
+#endif
+
+template<class Archive>
+void serialize(Archive& ar,non_copyable& x,const unsigned int)
+{
+  ar&boost::serialization::make_nvp("n",x.n);
+}
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+} /* namespace serialization */
+} /* namespace boost*/
+#endif
 
 using namespace boost::multi_index;
 
@@ -163,6 +194,23 @@ void test_serialization3()
 
     multi_index_t m;
     for(int i=0;i<100;++i)m.insert(non_default_ctble(i));
+    test_serialization(m);
+  }
+
+  {
+    /* testcase for https://svn.boost.org/trac10/ticket/13478 */
+
+    typedef multi_index_container<
+      non_copyable,
+      indexed_by<
+        ordered_unique<
+          BOOST_MULTI_INDEX_MEMBER(non_copyable,int,n)
+        >
+      >
+    > multi_index_t;
+
+    multi_index_t m;
+    for(int i=0;i<100;++i)m.emplace(i);
     test_serialization(m);
   }
 }

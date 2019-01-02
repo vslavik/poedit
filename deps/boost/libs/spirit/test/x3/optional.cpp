@@ -34,6 +34,10 @@ struct test_attribute_type
 int
 main()
 {
+    using boost::spirit::x3::traits::is_optional;
+
+    static_assert(is_optional<boost::optional<int>>(), "is_optional problem");
+
     using spirit_test::test;
     using spirit_test::test_attr;
 

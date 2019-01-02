@@ -7,20 +7,15 @@
 
 // See http://www.boost.org for updates, documentation, and revision history.
 
-#define BOOST_TEST_MODULE POLYGON_90_DATA_TEST
+#include <boost/core/lightweight_test.hpp>
+#include <boost/polygon/polygon.hpp>
+#include <iostream>
 #include <vector>
 
-#include <boost/mpl/list.hpp>
-#include <boost/test/test_case_template.hpp>
-
-#include "boost/polygon/polygon.hpp"
 using namespace boost::polygon;
 
-#include <iostream>
-
-typedef boost::mpl::list<int> test_types;
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_90_data_test, T, test_types) {
+void polygon_90_data_test()
+{
     typedef polygon_90_data<int> polygon_type;
     typedef polygon_traits_90<polygon_type>::point_type point_type;
     typedef polygon_type::iterator_type iterator_type;
@@ -47,5 +42,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(polygon_90_data_test, T, test_types) {
 
     iterator_type it_3rd = it;
     it++;
-    BOOST_CHECK(it != it_3rd);
+    BOOST_TEST(it != it_3rd);
+}
+
+int main()
+{
+    polygon_90_data_test();
+    return boost::report_errors();
 }

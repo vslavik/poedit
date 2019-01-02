@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost Pool Interfaces - What interfaces are provided and when to use each one.</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Boost.Pool">
 <link rel="up" href="../pool.html" title="Introduction and Overview">
 <link rel="prev" href="testing.html" title="Building the Test Programs">
@@ -27,7 +27,7 @@
 <a name="boost_pool.pool.interfaces"></a><a class="link" href="interfaces.html" title="Boost Pool Interfaces - What interfaces are provided and when to use each one.">Boost Pool Interfaces - What
       interfaces are provided and when to use each one.</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces">Pool Interfaces</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces.pool">pool</a></span></dt>
@@ -38,7 +38,7 @@
 </dl></div>
 <h5>
 <a name="boost_pool.pool.interfaces.h0"></a>
-        <span><a name="boost_pool.pool.interfaces.introduction"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.introduction">Introduction</a>
+        <span class="phrase"><a name="boost_pool.pool.interfaces.introduction"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.introduction">Introduction</a>
       </h5>
 <p>
         There are several interfaces provided which allow users great flexibility
@@ -47,12 +47,12 @@
       </p>
 <h4>
 <a name="boost_pool.pool.interfaces.h1"></a>
-        <span><a name="boost_pool.pool.interfaces.terminology_and_tradeoffs"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.terminology_and_tradeoffs">Terminology
+        <span class="phrase"><a name="boost_pool.pool.interfaces.terminology_and_tradeoffs"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.terminology_and_tradeoffs">Terminology
         and Tradeoffs</a>
       </h4>
 <h6>
 <a name="boost_pool.pool.interfaces.h2"></a>
-        <span><a name="boost_pool.pool.interfaces.object_usage_vs__singleton_usage"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.object_usage_vs__singleton_usage">Object
+        <span class="phrase"><a name="boost_pool.pool.interfaces.object_usage_vs__singleton_usage"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.object_usage_vs__singleton_usage">Object
         Usage vs. Singleton Usage</a>
       </h6>
 <p>
@@ -69,7 +69,7 @@
       </p>
 <h6>
 <a name="boost_pool.pool.interfaces.h3"></a>
-        <span><a name="boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return">Out-of-Memory
+        <span class="phrase"><a name="boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return">Out-of-Memory
         Conditions: Exceptions vs. Null Return</a>
       </h6>
 <p>
@@ -80,7 +80,7 @@
       </p>
 <h6>
 <a name="boost_pool.pool.interfaces.h4"></a>
-        <span><a name="boost_pool.pool.interfaces.ordered_versus_unordered"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.ordered_versus_unordered">Ordered
+        <span class="phrase"><a name="boost_pool.pool.interfaces.ordered_versus_unordered"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.ordered_versus_unordered">Ordered
         versus unordered</a>
       </h6>
 <p>
@@ -100,7 +100,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="boost_pool.pool.interfaces.interfaces"></a><a class="link" href="interfaces.html#boost_pool.pool.interfaces.interfaces" title="Pool Interfaces">Pool Interfaces</a>
 </h4></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces.pool">pool</a></span></dt>
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces.object_pool">Object_pool</a></span></dt>
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces.singleton_pool">Singleton_pool</a></span></dt>
@@ -351,7 +351,7 @@
             referenced by the static functions in <code class="computeroutput"><span class="identifier">singleton_pool</span></code>
             is actually declared in a way so that it is:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 Thread-safe if there is only one thread running before <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code>
                 begins and after <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> ends. All of the static functions

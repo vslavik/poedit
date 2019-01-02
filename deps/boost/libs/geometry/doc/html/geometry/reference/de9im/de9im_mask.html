@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>de9im::mask</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../de9im.html" title="DE-9IM">
 <link rel="prev" href="../de9im.html" title="DE-9IM">
@@ -27,12 +27,12 @@
 <a name="geometry.reference.de9im.de9im_mask"></a><a class="link" href="de9im_mask.html" title="de9im::mask">de9im::mask</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp92293648"></a><a class="indexterm" name="idp92294336"></a>
+          <a class="indexterm" name="idp110689056"></a><a class="indexterm" name="idp110689744"></a>
 DE-9IM model intersection mask.
         </p>
 <h6>
 <a name="geometry.reference.de9im.de9im_mask.h0"></a>
-          <span><a name="geometry.reference.de9im.de9im_mask.description"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.description">Description</a>
+          <span class="phrase"><a name="geometry.reference.de9im.de9im_mask.description"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.description">Description</a>
         </h6>
 <p>
           This mask can be used to check spatial relations as defined in Dimensionally
@@ -40,11 +40,12 @@ DE-9IM model intersection mask.
         </p>
 <h6>
 <a name="geometry.reference.de9im.de9im_mask.h1"></a>
-          <span><a name="geometry.reference.de9im.de9im_mask.synopsis"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.de9im.de9im_mask.synopsis"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">de9im</span><span class="special">::</span><span class="identifier">mask</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">relate</span><span class="special">::</span><span class="identifier">mask</span><span class="special">&lt;</span> <span class="number">3</span><span class="special">,</span> <span class="number">3</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -53,7 +54,7 @@ DE-9IM model intersection mask.
         </p>
 <h6>
 <a name="geometry.reference.de9im.de9im_mask.h2"></a>
-          <span><a name="geometry.reference.de9im.de9im_mask.constructor_s_"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.constructor_s_">Constructor(s)</a>
+          <span class="phrase"><a name="geometry.reference.de9im.de9im_mask.constructor_s_"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -123,24 +124,24 @@ DE-9IM model intersection mask.
 </table></div>
 <h6>
 <a name="geometry.reference.de9im.de9im_mask.h3"></a>
-          <span><a name="geometry.reference.de9im.de9im_mask.header"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.de9im.de9im_mask.header"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.header">Header</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">algorithms</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">relate</span><span class="special">/</span><span class="identifier">de9im</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <h6>
 <a name="geometry.reference.de9im.de9im_mask.h4"></a>
-          <span><a name="geometry.reference.de9im.de9im_mask.see_also"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.see_also">See
+          <span class="phrase"><a name="geometry.reference.de9im.de9im_mask.see_also"></a></span><a class="link" href="de9im_mask.html#geometry.reference.de9im.de9im_mask.see_also">See
           also</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <a class="link" href="../algorithms/relate.html" title="relate">relate</a>
             </li></ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

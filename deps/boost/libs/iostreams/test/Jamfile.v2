@@ -9,9 +9,12 @@
 
 import stlport ;
 import modules ;
+import ac ;
 
 local NO_BZIP2 = [ modules.peek : NO_BZIP2 ] ;
 local NO_ZLIB = [ modules.peek : NO_ZLIB ] ;
+local NO_LZMA = [ modules.peek : NO_LZMA ] ;
+local NO_ZSTD = [ modules.peek : NO_ZSTD ] ;
 local LARGE_FILE_TEMP = [ modules.peek : LARGE_FILE_TEMP ] ;
 local LARGE_FILE_KEEP = [ modules.peek : LARGE_FILE_KEEP ] ;
 
@@ -66,6 +69,7 @@ rule compile-fail-iostreams ( sources * : requirements * : target-name ? ) {
           [ test-iostreams copy_test.cpp ]
           [ test-iostreams counter_test.cpp ]
           [ test-iostreams direct_adapter_test.cpp ]
+          [ test-iostreams dual_seekable_test.cpp ]
           [ test-iostreams example_test.cpp ]
           [ test-iostreams execute_test.cpp ]
           [ test-iostreams file_test.cpp ]
@@ -92,6 +96,7 @@ rule compile-fail-iostreams ( sources * : requirements * : target-name ? ) {
           [ test-iostreams null_test.cpp ]
           [ test-iostreams operation_sequence_test.cpp ]
           [ test-iostreams pipeline_test.cpp ]
+          [ test-iostreams read_nonblocking_test.cpp ]
           [ test-iostreams 
                 regex_filter_test.cpp     
                 /boost/regex//boost_regex ]
@@ -103,7 +108,7 @@ rule compile-fail-iostreams ( sources * : requirements * : target-name ? ) {
           [ test-iostreams stdio_filter_test.cpp ]
           [ test-iostreams stream_offset_32bit_test.cpp ]
           [ test-iostreams stream_offset_64bit_test.cpp ]
-          #[ test-iostreams stream_state_test.cpp ]
+          [ test-iostreams stream_state_test.cpp ]
           [ test-iostreams symmetric_filter_test.cpp ]
           [ test-iostreams tee_test.cpp ]
           [ test-iostreams wide_stream_test.cpp ]
@@ -135,15 +140,35 @@ rule compile-fail-iostreams ( sources * : requirements * : target-name ? ) {
       if ! $(NO_BZIP2)
       {     
           all-tests += [ test-iostreams 
-                    bzip2_test.cpp ../build//boost_iostreams ] ;
+                    bzip2_test.cpp ../build//boost_iostreams :
+                    [ ac.check-library /bzip2//bzip2 : : <build>no ] ] ;
       }
       if ! $(NO_ZLIB)
       {              
           all-tests += 
               [ test-iostreams 
-                    gzip_test.cpp ../build//boost_iostreams ]
+                    write_failure_test.cpp ../build//boost_iostreams :
+                    [ ac.check-library /zlib//zlib : : <build>no ] ]
               [ test-iostreams 
-                    zlib_test.cpp ../build//boost_iostreams ] ;
+                    gzip_test.cpp ../build//boost_iostreams :
+                    [ ac.check-library /zlib//zlib : : <build>no ] ]
+              [ test-iostreams 
+                    zlib_test.cpp ../build//boost_iostreams :
+                    [ ac.check-library /zlib//zlib : : <build>no ] ] ;
+      }
+      if ! $(NO_LZMA)
+      {
+          using lzma : : <build-name>boost_lzma <tag>@tag : : true ;
+          all-tests += [ test-iostreams 
+                             lzma_test.cpp ../build//boost_iostreams :
+                             [ ac.check-library /lzma//lzma : : <build>no ] ] ;
+      }
+      if ! $(NO_ZSTD)
+      {
+          using zstd ;
+          all-tests += [ test-iostreams 
+                             zstd_test.cpp ../build//boost_iostreams :
+                             [ ac.check-library /zstd//zstd : : <build>no ] ] ;
       }
           
     test-suite "iostreams" : $(all-tests) ;

@@ -3,14 +3,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_integral_constant.hpp"
-
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/has_equal_to.hpp>
 #endif
+#include "test.hpp"
+#include "check_integral_constant.hpp"
 
 #define BOOST_TT_TRAIT_NAME has_equal_to
 #define BOOST_TT_TRAIT_OP ==
@@ -220,6 +219,28 @@ void specific() {
    BOOST_CHECK_INTEGRAL_CONSTANT((::boost::BOOST_TT_TRAIT_NAME< int* const &, int* &, int & >::value), 0);
    BOOST_CHECK_INTEGRAL_CONSTANT((::boost::BOOST_TT_TRAIT_NAME< int* const &, int* const &, int const & >::value), 1);
 
+#if defined(BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION)
+   // There are some things that pass that wouldn't otherwise do so:
+   auto f = []() {};
+   auto f2 = [](double)->int { return 2; };
+#ifndef BOOST_MSVC
+   TEST_TR(decltype(f), bool, true);
+   TEST_TR(decltype(f2), bool, true);
+#else
+   TEST_TR(decltype(f), bool, false);
+   TEST_TR(decltype(f2), bool, false);
+#endif
+   (void)f;
+   (void)f2;
+
+#elif !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_MSVC) && !BOOST_WORKAROUND(BOOST_GCC, < 40700)
+   auto f = []() {};
+   auto f2 = [](double)->int { return 2; };
+   BOOST_CHECK_INTEGRAL_CONSTANT((::boost::BOOST_TT_TRAIT_NAME< decltype(f)>::value), 0);
+   BOOST_CHECK_INTEGRAL_CONSTANT((::boost::BOOST_TT_TRAIT_NAME< decltype(f2)>::value), 0);
+   (void)f;
+   (void)f2;
+#endif
 }
 
 TT_TEST_BEGIN(BOOST_TT_TRAIT_NAME)

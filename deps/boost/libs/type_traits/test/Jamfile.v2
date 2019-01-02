@@ -5,6 +5,13 @@
 
 # bring in the rules for testing
 import testing ;
+import os ;
+
+if [ os.environ CI ] 
+{
+CI_DEFINES = <define>CI_SUPPRESS_KNOWN_ISSUES=1 ;
+}
+
 
 # type_traits in V1 seem to have two modes: standalone, triggered
 # by a command line option, and a regular. For now, just imitate
@@ -16,11 +23,14 @@ project : requirements
    # set warnings as errors for those compilers we know we get warning free:
    <toolset>gcc:<cxxflags>-Wextra
    <toolset>gcc:<cxxflags>-Wno-uninitialized
+   <toolset>gcc:<cxxflags>-Wno-int-in-bool-context
+   <toolset>gcc:<cxxflags>-Wno-bool-operation
    <toolset>gcc:<warnings-as-errors>on
    <toolset>intel:<warnings-as-errors>on
    <toolset>sun:<warnings-as-errors>on
    <toolset>msvc:<warnings-as-errors>on
    <include>libs/tt2/light/include
+   $(CI_DEFINES)
 ;             
 
 rule all-tests {
@@ -28,6 +38,10 @@ rule all-tests {
      for local source in [ glob *_test*.cpp ]
      {
          result += [ run $(source) ] ;
+     }
+     for local source in [ glob compile_fail/*.cpp ]
+     {
+         result += [ compile-fail $(source) ] ;
      }
      #
      # These traits have both intrinsic support, and a std conforming version, test a version with intrinsics disabled for better code coverage:

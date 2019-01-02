@@ -43,7 +43,7 @@ namespace boost { namespace spirit
 {
     //[utree_exceptions
     /*` All exceptions thrown by utree are derived from utree_exception. */
-    struct utree_exception : std::exception {};
+    struct BOOST_SYMBOL_VISIBLE utree_exception : std::exception {};
 
     /*`The `bad_type_exception` is thrown whenever somebody calls a member 
        function, which applies to certain stored utree_type's only, but this 

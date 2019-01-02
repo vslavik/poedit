@@ -20,10 +20,15 @@
 namespace boost { namespace geometry { namespace index {
 
 template <class Container>
-class insert_iterator :
-    public std::iterator<std::output_iterator_tag, void, void, void, void>
+class insert_iterator
 {
 public:
+    typedef std::output_iterator_tag iterator_category;
+    typedef void value_type;
+    typedef void difference_type;
+    typedef void pointer;
+    typedef void reference;
+
     typedef Container container_type;
 
     inline explicit insert_iterator(Container & c)

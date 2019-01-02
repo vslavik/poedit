@@ -9,7 +9,7 @@
 #  http://www.boost.org/LICENSE_1_0.txt)9
 # ============================================================================
 
-import os, sys
+import os, sys, shutil
 
 cmd = "doxygen_xml2qbk"
 cmd = cmd + " --xml xml/%s.xml"
@@ -21,10 +21,11 @@ def run_command(command):
     if os.system(command) != 0:
         raise Exception("Error running %s" % command)
 
-def remove_all_files(dir):
-    if os.path.exists(dir):
-        for f in os.listdir(dir):
-            os.remove(dir+f)
+def remove_all_files(dir_relpath):
+    if os.path.exists(dir_relpath):
+        dir_abspath = os.path.join(os.getcwd(), dir_relpath)
+        print("Boost.Geometry is cleaning Doxygen files in %s" % dir_abspath)
+        shutil.rmtree(dir_abspath, ignore_errors=True)
 
 remove_all_files("xml/")
 
@@ -46,5 +47,10 @@ run_command(cmd % ("group__predicates", "predicates"))
 #run_command(cmd % ("group__nearest__relations", "nearest_relations"))
 run_command(cmd % ("group__adaptors", "adaptors"))
 run_command(cmd % ("group__inserters", "inserters"))
+
+# Clean up generated intermediate files
+if "--release-build" in sys.argv:
+    remove_all_files("xml/")
+    remove_all_files("html_by_doxygen/")
 
 #run_command("b2")

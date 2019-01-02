@@ -6,6 +6,7 @@
   =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/at_key.hpp>
 #include <boost/fusion/include/make_map.hpp>
 #include <boost/fusion/adapted/struct.hpp>
 
@@ -32,12 +33,6 @@ bool test_attr(const std::string in,Parser const& p, Attribute& attr) {
     auto it = in.begin();
     return boost::spirit::x3::parse(it,in.end(), p, attr);
 }
-
-// force tratis::move_to to overwrite destination, insteadof appending
-namespace boost { namespace spirit { namespace x3 { namespace traits {
-template <>
-struct build_container<char> : mpl::identity<std::string> {};
-}}}}
 
 int
 main()

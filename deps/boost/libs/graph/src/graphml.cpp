@@ -33,16 +33,29 @@ public:
       return boost::property_tree::ptree::path_type(str, '/');
     }
 
-    static void get_graphs(const boost::property_tree::ptree& top,
-                           size_t desired_idx /* or -1 for all */,
+    void get_graphs(const boost::property_tree::ptree& top,
+                           size_t desired_idx /* or -1 for all */, bool is_root,
                            std::vector<const boost::property_tree::ptree*>& result) {
       using boost::property_tree::ptree;
       size_t current_idx = 0;
+      bool is_first = is_root;
       BOOST_FOREACH(const ptree::value_type& n, top) {
         if (n.first == "graph") {
           if (current_idx == desired_idx || desired_idx == (size_t)(-1)) {
             result.push_back(&n.second);
-            get_graphs(n.second, (size_t)(-1), result);
+            if(is_first)
+            {
+              is_first = false;
+              BOOST_FOREACH(const ptree::value_type& attr, n.second) {
+                if (attr.first != "data") 
+                  continue;
+                std::string key = attr.second.get<std::string>(path("<xmlattr>/key"));
+                std::string value = attr.second.get_value("");
+                handle_graph_property(key, value);
+              }
+            }
+            
+            get_graphs(n.second, (size_t)(-1), false, result);
             if (desired_idx != (size_t)(-1)) break;
           }
           ++current_idx;
@@ -81,7 +94,8 @@ public:
       }
       // Search for graphs
       std::vector<const ptree*> graphs;
-      get_graphs(gml, desired_idx, graphs);
+      handle_graph();
+      get_graphs(gml, desired_idx, true, graphs);
       BOOST_FOREACH(const ptree* gr, graphs) {
         // Search for nodes
         BOOST_FOREACH(const ptree::value_type& node, *gr) {
@@ -191,6 +205,22 @@ private:
             if (m_keys[iter->first] == edge_key)
                 handle_edge_property(iter->first, e, iter->second);
         }
+    }
+
+    void 
+    handle_graph()
+    {
+      std::map<std::string, std::string>::iterator iter;
+      for (iter = m_key_default.begin(); iter != m_key_default.end(); ++iter)
+      {
+        if (m_keys[iter->first] == graph_key)
+          handle_graph_property(iter->first, iter->second);
+      }
+    }
+
+    void handle_graph_property(const std::string& key_id, const std::string& value)
+    {
+      m_g.set_graph_property(m_key_name[key_id], value, m_key_type[key_id]);
     }
 
     void handle_node_property(const std::string& key_id, const std::string& descriptor, const std::string& value)

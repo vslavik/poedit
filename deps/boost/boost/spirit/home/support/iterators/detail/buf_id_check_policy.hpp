@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace iterator_policies
     //  thrown by buf_id_check CheckingPolicy if an instance of an iterator is
     //  used after another one has invalidated the queue
     ///////////////////////////////////////////////////////////////////////////
-    class illegal_backtracking : public std::exception
+    class BOOST_SYMBOL_VISIBLE illegal_backtracking : public std::exception
     {
     public:
         illegal_backtracking() throw() {}

@@ -40,8 +40,12 @@ instances). To do this, employ the macro __BOOST_TEST_CASE__:
 
 __BOOST_TEST_CASE__ creates an instance of the class [classref boost::unit_test::test_case] and returns a pointer to the
 constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
-assign a different test case name, you have to use the underlying make_test_case interface instead. To
-register a new test case, employ the method [memberref boost::unit_test::test_suite::add `test_suite::add`]. 
+assign a different test case name, you have either to 
+
+* use the macro __BOOST_TEST_CASE_NAME__ instead
+* or use the underlying [headerref boost/test/tree/test_unit.hpp `make_test_case`] interface instead.
+
+To register a new test case, employ the method [memberref boost::unit_test::test_suite::add `test_suite::add`]. 
 Both test case creation and registration are performed in the 
 [link boost_test.adv_scenarios.test_module_init_overview test module initialization function].
 

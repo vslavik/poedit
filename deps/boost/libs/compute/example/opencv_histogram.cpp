@@ -11,8 +11,6 @@
 //Code sample for calculating histogram using OpenCL and
 //displaying image histogram in OpenCV.
 
-#define BOOST_COMPUTE_DEBUG_KERNEL_COMPILATION
-
 #include <iostream>
 #include <string>
 

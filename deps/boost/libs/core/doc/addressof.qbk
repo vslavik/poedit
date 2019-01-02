@@ -14,6 +14,7 @@
 * Brad King
 * Douglas Gregor
 * Peter Dimov
+* Glen Fernandes
 
 [endsimplesect]
 
@@ -56,6 +57,19 @@ void f() {
     // nonaddressable* xpe = &x; /* error */
 }
 ``
+
+[endsect]
+
+[section Notes]
+
+In C++11 and above, `boost::addressof` is conditionally
+`constexpr` when possible. This is indicated by
+`BOOST_CORE_NO_CONSTEXPR_ADDRESSOF` not being defined.
+
+With supported compilers, `boost::addressof` is always
+`constexpr` by leveraging compiler intrinsics. This is
+indicated by `BOOST_CORE_HAS_BUILTIN_ADDRESSOF` being
+defined.
 
 [endsect]
 

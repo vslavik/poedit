@@ -18,92 +18,10 @@
 #define BOOST_GEOMETRY_IO_SVG_WRITE_SVG_MULTI_HPP
 
 
-#include <boost/geometry/io/svg/write_svg.hpp>
+// THIS FILE WAS LEFT HERE FOR BACKWARD COMPATIBILITY
 
 
-namespace boost { namespace geometry
-{
-
-#ifndef DOXYGEN_NO_DETAIL
-namespace detail { namespace svg
-{
-
-
-template <typename MultiGeometry, typename Policy>
-struct svg_multi
-{
-    template <typename Char, typename Traits>
-    static inline void apply(std::basic_ostream<Char, Traits>& os,
-        MultiGeometry const& multi, std::string const& style, int size)
-    {
-        for (typename boost::range_iterator<MultiGeometry const>::type
-                    it = boost::begin(multi);
-            it != boost::end(multi);
-            ++it)
-        {
-            Policy::apply(os, *it, style, size);
-        }
-
-    }
-
-};
-
-
-
-}} // namespace detail::svg
-#endif // DOXYGEN_NO_DETAIL
-
-
-#ifndef DOXYGEN_NO_DISPATCH
-namespace dispatch
-{
-
-template <typename MultiPoint>
-struct svg<multi_point_tag, MultiPoint>
-    : detail::svg::svg_multi
-        <
-            MultiPoint,
-            detail::svg::svg_point
-                <
-                    typename boost::range_value<MultiPoint>::type
-                >
-
-        >
-{};
-
-template <typename MultiLinestring>
-struct svg<multi_linestring_tag, MultiLinestring>
-    : detail::svg::svg_multi
-        <
-            MultiLinestring,
-            detail::svg::svg_range
-                <
-                    typename boost::range_value<MultiLinestring>::type,
-                    detail::svg::prefix_linestring
-                >
-
-        >
-{};
-
-template <typename MultiPolygon>
-struct svg<multi_polygon_tag, MultiPolygon>
-    : detail::svg::svg_multi
-        <
-            MultiPolygon,
-            detail::svg::svg_poly
-                <
-                    typename boost::range_value<MultiPolygon>::type
-                >
-
-        >
-{};
-
-
-} // namespace dispatch
-#endif // DOXYGEN_NO_DISPATCH
-
-
-}} // namespace boost::geometry
+#include <boost/geometry/io/svg/write.hpp>
 
 
 #endif // BOOST_GEOMETRY_IO_SVG_WRITE_SVG_MULTI_HPP

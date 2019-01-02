@@ -60,7 +60,7 @@ class InstallTargetClass(targets.BasicTarget):
             # properties.
 
             if build_ps.get('hardcode-dll-paths') != ['true']:
-                properties = [p for p in properties if p.feature().name() != 'dll-path']
+                properties = [p for p in properties if p.feature.name != 'dll-path']
 
             # If any <dll-path> properties were specified for installing, add
             # them.
@@ -75,7 +75,7 @@ class InstallTargetClass(targets.BasicTarget):
             # sources, then we shall get virtual targets with the <location>
             # property set.
             properties = [p for p in properties
-                          if not p.feature().name() in ['tag', 'location']]
+                          if not p.feature.name in ['tag', 'location']]
 
         properties.extend(build_ps.get_properties('dependency'))
 
@@ -90,7 +90,7 @@ class InstallTargetClass(targets.BasicTarget):
         # making the path absolute will help.
         if d:
             p = d[0]
-            properties.append(property.Property(p.feature(), os.path.abspath(p.value())))
+            properties.append(property.Property(p.feature, os.path.abspath(p.value)))
 
         return property_set.create(properties)
 
@@ -180,8 +180,8 @@ class InstallTargetClass(targets.BasicTarget):
         for r in result:
             if isinstance(r, property.Property):
 
-                if r.feature().name() != 'use':
-                    result2.append(r.value())
+                if r.feature.name != 'use':
+                    result2.append(r.value)
             else:
                 result2.append(r)
         result2 = unique(result2)

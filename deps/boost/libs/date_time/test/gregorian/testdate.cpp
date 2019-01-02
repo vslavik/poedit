@@ -5,10 +5,23 @@
  * Author: Jeff Garland, Bart Garst
  */
 
-#include <iostream>
 #include <boost/cstdint.hpp>
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "../testfrmwk.hpp"
+#include <iostream>
+#include <sstream>
+
+void test_yearlimit(int yr, bool allowed)
+{
+    std::stringstream sdesc;
+    sdesc << "should" << (allowed ? "" : " not") << " be able to make a date in year " << yr;
+
+    try {
+        boost::gregorian::date chkyr(yr, 1, 1);
+        check(sdesc.str(), allowed);
+    }
+    catch (std::out_of_range&) { check(sdesc.str(), !allowed); }
+}
 
 int
 main()
@@ -21,9 +34,9 @@ main()
   date def;
   check("Default constructor", def == date(not_a_date_time));
 #endif
-  date d(2000,1,1);
+  
   date d1(1900,1,1);
-  date d2 = d;
+  date d2 = date(2000,1,1);
   date d3(d2);
   check("Copy constructor", d3 == d2);
   date d4(2000,12,31);
@@ -276,7 +289,7 @@ main()
   }
 
   //converts to date and back -- should get same result
-  check_equal("tm conversion functions 2000-1-1", date_from_tm(to_tm(d)), d);
+  check_equal("tm conversion functions 2000-1-1", date_from_tm(to_tm(d2)), d2);
   check_equal("tm conversion functions 1900-1-1", date_from_tm(to_tm(d1)), d1);
   check_equal("tm conversion functions min date 1400-1-1 ", date_from_tm(to_tm(d14)), d14);
   check_equal("tm conversion functions max date 9999-12-31", date_from_tm(to_tm(d13)), d13);
@@ -286,13 +299,21 @@ main()
     tm d_tm = to_tm(d);
     check("Exception not thrown (special_value to_tm)", false);
     std::cout << d_tm.tm_sec << std::endl; //does nothing useful but stops compiler from complaining about unused d_tm
-  }catch(std::out_of_range& e){
+  }catch(std::out_of_range&){
     check("Caught expected exception (special_value to_tm)", true);
   }catch(...){
     check("Caught un-expected exception (special_value to_tm)", false);
   }
 
-  return printTestStats();
+  // trac-13159
+  test_yearlimit(    0, false);
+  test_yearlimit( 1399, false);
+  test_yearlimit( 1400,  true);
+  test_yearlimit( 1401,  true);
+  test_yearlimit( 9999,  true);
+  test_yearlimit(10000, false);
+  test_yearlimit(10001, false);
 
+  return printTestStats();
 }
 

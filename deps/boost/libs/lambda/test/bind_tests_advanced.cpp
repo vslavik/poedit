@@ -121,7 +121,15 @@ void test_unlambda() {
 
   BOOST_CHECK(call_with_101(_1 + 1) == 102);
 
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+
   BOOST_CHECK(call_with_100(bl::bind(std_functor(std::bind1st(std::plus<int>(), 1)), _1)) == 101);
+
+#else
+
+  BOOST_CHECK(call_with_100(bl::bind(std_functor(std::bind(std::plus<int>(), 1, std::placeholders::_1)), _1)) == 101);
+
+#endif
 
   // std_functor insturcts LL that the functor defines a result_type typedef
   // rather than a sig template.

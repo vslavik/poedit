@@ -17,9 +17,9 @@ r'''>>> import pickle4_ext
     >>> wd = pickle4_ext.world('California')
     >>> pstr = pickle.dumps(wd)
     >>> wl = pickle.loads(pstr)
-    >>> print wd.greet()
+    >>> print(wd.greet())
     Hello from California!
-    >>> print wl.greet()
+    >>> print(wl.greet())
     Hello from California!
 '''
 
@@ -32,8 +32,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

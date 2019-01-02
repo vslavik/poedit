@@ -41,7 +41,7 @@ std::stringstream jamfile_v2;
 std::stringstream build_config_test;
 std::stringstream build_config_jamfile;
 std::set<std::string> macro_list;
-
+std::set<std::string> feature_list;
 
 void write_config_info()
 {
@@ -162,9 +162,6 @@ void write_test_file(const fs::path& file,
 
       ofs << "#include <boost/config.hpp>\n";
 
-      if(regex_match(macro_name, tr1_exp))
-         ofs << "#include <boost/tr1/detail/config.hpp>\n";
-
       ofs << "#include \"test.hpp\"\n\n"
          "#if";
       if(positive_test != expect_success)
@@ -192,8 +189,9 @@ void write_build_tests()
    time_t t = std::time(0);
    ofs << "//  This file was automatically generated on " << std::ctime(&t);
    ofs << "//  by libs/config/tools/generate.cpp\n" << copyright << std::endl;
+   ofs << "#include <boost/config.hpp>\n\n";
    ofs << build_config_test.str() << std::endl;
-   ofs << "int main( int, char *[] )\n{\n" << "   return test::test();\n}\n\n";
+   ofs << "int main( int, char *[] )\n{\n" << "   return 0;\n}\n\n";
 }
 
 void write_build_check_jamfile()
@@ -208,21 +206,7 @@ void write_build_check_jamfile()
       "# Boost Software License, Version 1.0. (See accompanying file \n"
       "# LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)\n\n"
       "import modules ;\nimport path ; \n\n"
-      "actions simple_run_action\n"
-      "{\n"
-      "      $(>) > $(<)\n"
-      "}\n"
       "\n"
-      "rule run-simple ( sources + : args * : input-files * : requirements * : target-name )\n"
-      "{\n"
-      "   obj $(target-name)_obj : $(sources) : $(requirements) ;\n"
-      "   explicit $(target-name)_obj ;\n"
-      "   exe $(target-name)_exe : $(target-name)_obj : $(requirements) ;\n"
-      "   explicit $(target-name)_exe ;\n"
-      "   #testing.capture-output $(target-name)_output : $(target-name) : $(requirements) <name>$(target-name) ;\n"
-      "   make $(target-name).output : $(target-name)_exe : @simple_run_action ;\n"
-      "   explicit $(target-name).output ;\n"
-      "}\n\n"
       ;
    ofs << build_config_jamfile.str() << std::endl;
 }
@@ -295,15 +279,22 @@ void process_ipp_file(const fs::path& file, bool positive_test)
 
    // Generate data for the Build-checks test file:
    build_config_test << "#ifdef TEST_" << macro_name << std::endl;
-   build_config_test << "#  include \"../test/" << file.leaf().string() << "\"\n";
-   build_config_test << "namespace test = " << namespace_name << ";\n#endif\n";
+   if (positive_test)
+   {
+      build_config_test << "#  ifndef " << macro_name << "\n#     error \"Feature macro " << macro_name << " is not defined.\"\n#  endif\n";
+   }
+   else
+   {
+      build_config_test << "#  ifdef " << macro_name << "\n#     error \"Defect macro " << macro_name << " is defined.\"\n#  endif\n";
+   }
+   build_config_test << "#endif\n";
 
    // Generate data for the build-checks Jamfile:
    static const boost::regex feature_regex("boost_(?:no|has)_(.*)");
    std::string feature_name = boost::regex_replace(namespace_name, feature_regex, "\\1");
-   build_config_jamfile << "run-simple test_case.cpp : : : <define>TEST_" << macro_name << " : " << feature_name << " ;\n";
-   build_config_jamfile << "alias " << feature_name << " : " << feature_name << ".output ;\n";
-   build_config_jamfile << "explicit " << feature_name << " ;\n";
+   if(feature_list.find(feature_name) == feature_list.end())
+      build_config_jamfile << "obj " << feature_name << " : test_case.cpp : <define>TEST_" << macro_name << " ;\n";
+   feature_list.insert(feature_name);
 }
 
 int cpp_main(int argc, char* argv[])

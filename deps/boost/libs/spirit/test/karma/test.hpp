@@ -250,7 +250,8 @@ namespace spirit_test
 
         print_binary_if_failed("binary_test", result, generated
           , std::string(expected, size));
-        return result && !std::memcmp(generated.c_str(), expected, size);
+        return result && generated.size() == size
+            && !std::memcmp(generated.c_str(), expected, size);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -272,7 +273,8 @@ namespace spirit_test
 
         print_binary_if_failed("binary_test", result, generated
           , std::string(expected, size));
-        return result && !std::memcmp(generated.c_str(), expected, size);
+        return result && generated.size() == size
+            && !std::memcmp(generated.c_str(), expected, size);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -294,7 +296,8 @@ namespace spirit_test
 
         print_binary_if_failed("binary_test_delimited", result, generated
           , std::string(expected, size));
-        return result && !std::memcmp(generated.c_str(), expected, size);
+        return result && generated.size() == size
+            && !std::memcmp(generated.c_str(), expected, size);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -316,7 +319,8 @@ namespace spirit_test
 
         print_binary_if_failed("binary_test_delimited", result, generated
           , std::string(expected, size));
-        return result && !std::memcmp(generated.c_str(), expected, size);
+        return result && generated.size() == size
+            && !std::memcmp(generated.c_str(), expected, size);
     }
 
 }   // namespace spirit_test

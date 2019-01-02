@@ -8,7 +8,7 @@
 import BoostBuild
 import os
 
-t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+t = BoostBuild.Tester(["-d1"], pass_toolset=0)
 
 t.write("subdir1/file-to-bind", "# This file intentionally left blank")
 
@@ -30,7 +30,7 @@ BINDRULE = bind-rule ;
 
 rule bind-rule ( target : path )
 {
-    ECHO found: $(target) at $(path) ;
+    ECHO "found:" $(target) at $(path) ;
 }
 
 DEPENDS all : fake-target ;

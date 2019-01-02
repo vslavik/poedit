@@ -39,7 +39,8 @@ BOOST_AUTO_TEST_CASE(scatter_if_int)
 
     bc::scatter_if(input.begin(), input.end(),
                    map.begin(), stencil.begin(),
-                   output.begin());
+                   output.begin(),
+                   queue);
 
     CHECK_RANGE_EQUAL(int, 10, output, (9, -1, 7, -1, 5, -1, 3, -1, 1, -1) );
 }

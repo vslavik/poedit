@@ -12,6 +12,7 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_RTREE_LINEAR_REDISTRIBUTE_ELEMENTS_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_RTREE_LINEAR_REDISTRIBUTE_ELEMENTS_HPP
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/type_traits/is_unsigned.hpp>
 
 #include <boost/geometry/index/detail/algorithms/content.hpp>
@@ -156,7 +157,7 @@ struct find_greatest_normalized_separation
         seed1 = highest_low_index;
         seed2 = lowest_high_index;
 
-        ::boost::ignore_unused_variable_warning(parameters);
+        ::boost::ignore_unused(parameters);
     }
 };
 
@@ -211,7 +212,7 @@ struct find_greatest_normalized_separation<Elements, Parameters, Translator, poi
         if ( lowest_index == highest_index )
             seed2 = (lowest_index + 1) % elements_count; // % is just in case since if this is true lowest_index is 0
 
-        ::boost::ignore_unused_variable_warning(parameters);
+        ::boost::ignore_unused(parameters);
     }
 };
 

@@ -168,6 +168,30 @@ main()
         BOOST_TEST(!test_attr("9999999999", uint32_, u32));
         BOOST_TEST(!test_attr("4294967296", uint32_, u32));
         BOOST_TEST(test_attr("4294967295", uint32_, u32));
+
+        boost::spirit::x3::uint_parser<boost::int8_t> u_int8_;
+
+        BOOST_TEST(!test_attr("999", u_int8_, u8));
+        BOOST_TEST(!test_attr("-1", u_int8_, u8));
+        BOOST_TEST(!test_attr("128", u_int8_, u8));
+        BOOST_TEST(test_attr("127", u_int8_, u8));
+        BOOST_TEST(test_attr("0", u_int8_, u8));
+
+        boost::spirit::x3::uint_parser<boost::int16_t> u_int16_;
+
+        BOOST_TEST(!test_attr("99999", u_int16_, u16));
+        BOOST_TEST(!test_attr("-1", u_int16_, u16));
+        BOOST_TEST(!test_attr("32768", u_int16_, u16));
+        BOOST_TEST(test_attr("32767", u_int16_, u16));
+        BOOST_TEST(test_attr("0", u_int16_, u16));
+
+        boost::spirit::x3::uint_parser<boost::int32_t> u_int32_;
+
+        BOOST_TEST(!test_attr("9999999999", u_int32_, u32));
+        BOOST_TEST(!test_attr("-1", u_int32_, u32));
+        BOOST_TEST(!test_attr("2147483648", u_int32_, u32));
+        BOOST_TEST(test_attr("2147483647", u_int32_, u32));
+        BOOST_TEST(test_attr("0", u_int32_, u32));
     }
 
     ///////////////////////////////////////////////////////////////////////////

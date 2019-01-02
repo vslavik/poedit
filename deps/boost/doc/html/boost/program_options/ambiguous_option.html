@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class ambiguous_option</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../program_options/reference.html#header.boost.program_options.errors_hpp" title="Header &lt;boost/program_options/errors.hpp&gt;">
 <link rel="prev" href="unknown_option.html" title="Class unknown_option">
@@ -38,38 +38,38 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="ambiguous_option.html#boost.program_options.ambiguous_optionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="ambiguous_option.html#idp197654944-bb"><span class="identifier">ambiguous_option</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="ambiguous_option.html#idp128574528-bb"><span class="special">~</span><span class="identifier">ambiguous_option</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_4-bb"><span class="identifier">ambiguous_option</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_5-bb"><span class="special">~</span><span class="identifier">ambiguous_option</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="ambiguous_option.html#idp66782048-bb">public member functions</a></span>
-  <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="ambiguous_option.html#idp66782496-bb"><span class="identifier">alternatives</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_3-bb">public member functions</a></span>
+  <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_3_1-bb"><span class="identifier">alternatives</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="ambiguous_option.html#idp128574816-bb">protected member functions</a></span>
-  <span class="keyword">virtual</span> <span class="keyword">void</span> <a class="link" href="ambiguous_option.html#idp189616528-bb"><span class="identifier">substitute_placeholders</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_6-bb">protected member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">void</span> <a class="link" href="ambiguous_option.html#id-1_3_32_9_5_1_1_11_6_1-bb"><span class="identifier">substitute_placeholders</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp310034592"></a><h2>Description</h2>
+<a name="id-1.3.32.9.6.13.4"></a><h2>Description</h2>
 <p>Class thrown when there's ambiguity amoung several possible options. </p>
 <div class="refsect2">
-<a name="idp310035264"></a><h3>
+<a name="id-1.3.32.9.6.13.4.3"></a><h3>
 <a name="boost.program_options.ambiguous_optionconstruct-copy-destruct"></a><code class="computeroutput">ambiguous_option</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp197654944-bb"></a><span class="identifier">ambiguous_option</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> xalternatives<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp128574528-bb"></a><span class="special">~</span><span class="identifier">ambiguous_option</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="id-1_3_32_9_5_1_1_11_4-bb"></a><span class="identifier">ambiguous_option</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> xalternatives<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="id-1_3_32_9_5_1_1_11_5-bb"></a><span class="special">~</span><span class="identifier">ambiguous_option</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp310051424"></a><h3>
-<a name="idp66782048-bb"></a><code class="computeroutput">ambiguous_option</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="idp66782496-bb"></a><span class="identifier">alternatives</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="id-1.3.32.9.6.13.4.4"></a><h3>
+<a name="id-1_3_32_9_5_1_1_11_3-bb"></a><code class="computeroutput">ambiguous_option</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="id-1_3_32_9_5_1_1_11_3_1-bb"></a><span class="identifier">alternatives</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp310064080"></a><h3>
-<a name="idp128574816-bb"></a><code class="computeroutput">ambiguous_option</code> protected member functions</h3>
+<a name="id-1.3.32.9.6.13.4.5"></a><h3>
+<a name="id-1_3_32_9_5_1_1_11_6-bb"></a><code class="computeroutput">ambiguous_option</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">void</span> <a name="idp189616528-bb"></a><span class="identifier">substitute_placeholders</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> error_template<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">void</span> <a name="id-1_3_32_9_5_1_1_11_6_1-bb"></a><span class="identifier">substitute_placeholders</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> error_template<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Makes all substitutions using the template </p>
 </li></ol></div>
 </div>

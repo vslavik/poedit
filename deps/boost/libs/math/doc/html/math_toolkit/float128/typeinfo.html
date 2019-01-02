@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>typeinfo</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../float128.html" title="Implementation of Float128 type">
 <link rel="prev" href="exp_function.html" title="Exponential function">
 <link rel="next" href="../../constants.html" title="Chapter&#160;4.&#160;Mathematical Constants">
@@ -27,12 +27,12 @@
 <a name="math_toolkit.float128.typeinfo"></a><a class="link" href="typeinfo.html" title="typeinfo"><code class="computeroutput"><span class="identifier">typeinfo</span></code></a>
 </h3></div></div></div>
 <p>
-        It is not yet possible to use <code class="computeroutput"><span class="identifier">typeinfo</span></code>
-        for float_128 on GCC: see <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622" target="_top">GCC
-        43622</a>
+        For GCC 4.8.1 it was not yet possible to use <code class="computeroutput"><span class="identifier">typeinfo</span></code>
+        for <code class="computeroutput"><span class="identifier">float_128</span></code> on GCC: see
+        <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622" target="_top">GCC 43622</a>.
       </p>
 <p>
-        so this fails to link <code class="computeroutput"><span class="identifier">undefined</span>
+        So this code (to display the mangled name) failed to link <code class="computeroutput"><span class="identifier">undefined</span>
         <span class="identifier">reference</span> <span class="identifier">to</span>
         <span class="identifier">typeinfo</span> <span class="keyword">for</span>
         <span class="identifier">__float128</span></code>
@@ -45,16 +45,27 @@
         them is defined then some diagnostic displays in Boost.Math will not work.
       </p>
 <p>
-        However this is only used for display purposes and can be commented out until
-        this is fixed.
+        However this was only used for display purposes and could be commented out
+        until this was fixed in GCC 5.
       </p>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Not all managed names can be <span class="bold"><strong>displayed</strong></span>
+          using <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>.
+        </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

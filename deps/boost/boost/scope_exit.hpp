@@ -6,15 +6,14 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // Home at http://www.boost.org/libs/scope_exit
 
-#ifndef FILE_boost_scope_exit_hpp_INCLUDED
-#define FILE_boost_scope_exit_hpp_INCLUDED
+#ifndef BOOST_SCOPE_EXIT_HPP
+#define BOOST_SCOPE_EXIT_HPP
 
 #ifndef DOXYGEN
 
-#include <boost/detail/workaround.hpp>
-#include <boost/mpl/assert.hpp>
-#include <boost/mpl/int.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/config/workaround.hpp>
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/enable_if.hpp>
 #include <boost/function.hpp>
 #include <boost/typeof/typeof.hpp>
 #include <boost/config.hpp>
@@ -61,7 +60,7 @@
 #   define BOOST_SCOPE_EXIT_AUX_TPL_GCC_WORKAROUND_01 0
 #endif
 
-#if BOOST_MSVC
+#if BOOST_MSVC && (BOOST_MSVC <= 1900)
 #   define BOOST_SCOPE_EXIT_AUX_TYPEOF_THIS_MSVC_WORKAROUND_01 1
 #else
 #   define BOOST_SCOPE_EXIT_AUX_TYPEOF_THIS_MSVC_WORKAROUND_01 0
@@ -337,9 +336,9 @@ extern boost::scope_exit::detail::undeclared BOOST_SCOPE_EXIT_AUX_ARGS;
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
-#include <boost/mpl/int.hpp>
+#include <boost/type_traits/integral_constant.hpp>
 #include <boost/type_traits/is_function.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/enable_if.hpp>
 
 #if defined(BOOST_MSVC)
 #   include <typeinfo>
@@ -448,7 +447,7 @@ struct msvc_register_type : msvc_extract_type<ID> {
 
 template<int Id>
 struct msvc_typeid_wrapper {
-    typedef typename msvc_extract_type<boost::mpl::int_<Id>
+    typedef typename msvc_extract_type<boost::integral_constant<int, Id>
             >::id2type id2type;
     typedef typename id2type::type type;
 };
@@ -462,7 +461,7 @@ template<typename T>
 struct encode_type {
     BOOST_STATIC_CONSTANT(unsigned, value = encode_counter<T>::count);
     typedef typename msvc_register_type<T,
-            boost::mpl::int_<value> >::id2type type;
+            boost::integral_constant<int, value> >::id2type type;
     BOOST_STATIC_CONSTANT(unsigned, next = value + 1);
 };
 
@@ -472,14 +471,14 @@ struct sizer {
 };
 
 template<typename T>
-typename boost::disable_if<
-      typename boost::is_function<T>::type
+typename boost::enable_if_<
+      !boost::is_function<T>::value
     , typename sizer<T>::type
 >::type encode_start(T const&);
 
 template<typename T>
-typename boost::enable_if<
-      typename boost::is_function<T>::type
+typename boost::enable_if_<
+      boost::is_function<T>::value
     , typename sizer<T>::type
 >::type encode_start(T&);
 
@@ -1411,5 +1410,5 @@ compilers that support C++11 lambda functions.
 
 #endif // DOXYGEN
 
-#endif // #ifndef FILE_boost_scope_exit_hpp_INCLUDED
+#endif // BOOST_SCOPE_EXIT_HPP
 

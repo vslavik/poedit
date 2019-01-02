@@ -2,7 +2,9 @@
 
 // Copyright (c) 2003-2008 Jan Gaspar
 // Copyright (c) 2013 Antony Polukhin
-// Copyright (c) 2014 Glen Fernandes   // C++11 allocator model support.
+
+// Copyright 2014,2018 Glen Joseph Fernandes
+// (glenjofe@gmail.com)
 
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -153,16 +155,12 @@ void size_test() {
 
 template<class T>
 class my_allocator {
-    typedef std::allocator<T> base_t;
-    base_t base_;
 public:
    typedef T                                    value_type;
 
 
-   typedef value_type&         reference;
-   typedef const value_type&   const_reference;
-   typedef typename base_t::size_type               size_type;
-   typedef typename base_t::difference_type         difference_type;
+   typedef std::size_t size_type;
+   typedef std::ptrdiff_t difference_type;
 
 private:
    template<class U>
@@ -170,8 +168,8 @@ private:
 
    template<class U>
    struct pointer_ {
-       pointer_(){}
-       pointer_(void* p) : hidden_ptr_((U*)p) {}
+       pointer_() : hidden_ptr_(0) {}
+       pointer_(void* p) : hidden_ptr_(static_cast<U*>(p)) {}
        difference_type operator-(const const_pointer_<U>& rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
        difference_type operator-(pointer_ rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
        pointer_ operator-(size_type rhs) const { return hidden_ptr_ - rhs; }
@@ -186,15 +184,16 @@ private:
        pointer_ operator++(int) { pointer_ p = *this; ++hidden_ptr_; return p; }
        pointer_ operator--(int) { pointer_ p = *this; --hidden_ptr_; return p; }
        U& operator*() const { return *hidden_ptr_; }
+       U* operator->() const { return hidden_ptr_; }
 
        U* hidden_ptr_;
    };
 
    template<class U>
    struct const_pointer_ {
-       const_pointer_(){}
+       const_pointer_() : hidden_ptr_(0) {}
        const_pointer_(pointer_<U> p) : hidden_ptr_(p.hidden_ptr_) {}
-       const_pointer_(const void* p) : hidden_ptr_((const U*)p) {}
+       const_pointer_(const void* p) : hidden_ptr_(static_cast<const U*>(p)) {}
        difference_type operator-(pointer_<U> rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
        difference_type operator-(const_pointer_ rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
        const_pointer_ operator-(size_type rhs) const { return hidden_ptr_ - rhs; }
@@ -223,22 +222,19 @@ public:
       typedef my_allocator<T2>     other;
    };
 
-   size_type max_size() const
-   {  return base_.max_size();   }
-
-   pointer allocate(size_type count, const void* hint = 0) {
-      return pointer(base_.allocate(count, hint));
+   pointer allocate(size_type count) {
+      return pointer(::operator new(count * sizeof(value_type)));
    }
 
-   void deallocate(const pointer &ptr, size_type s)
-   {  base_.deallocate(ptr.hidden_ptr_, s);  }
+   void deallocate(const pointer& ptr, size_type)
+   {  ::operator delete(ptr.hidden_ptr_);  }
 
    template<class P>
-   void construct(const pointer &ptr, BOOST_FWD_REF(P) p)
-   {  ::new(ptr.hidden_ptr_) value_type(::boost::forward<P>(p));  }
+   void construct(value_type* ptr, BOOST_FWD_REF(P) p)
+   {  ::new((void*)ptr) value_type(::boost::forward<P>(p));  }
 
-   void destroy(const pointer &ptr)
-   {  (*ptr.hidden_ptr_).~value_type();  }
+   void destroy(value_type* ptr)
+   {  ptr->~value_type();  }
 
 };
 
@@ -258,7 +254,7 @@ void allocator_test() {
     generic_test(cb_a);
 }
 
-#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+#if !defined(BOOST_CB_NO_CXX11_ALLOCATOR)
 template<class T>
 class cxx11_allocator {
 public:
@@ -2188,7 +2184,7 @@ public:
     void reinit() { is_moved_ = false; value_ = next_value ++; }
 };
 
-#ifdef BOOST_NO_CXX11_NOEXCEPT
+#if defined(BOOST_NO_CXX11_NOEXCEPT) || !defined(BOOST_IS_NOTHROW_MOVE_CONSTRUCT)
 namespace boost {
     template <>
     struct is_nothrow_move_constructible<noncopyable_movable_noexcept_t>
@@ -2422,8 +2418,12 @@ void check_containers_exception_specifications() {
 #endif
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#ifdef BOOST_IS_NOTHROW_MOVE_ASSIGN
     BOOST_CHECK(boost::is_nothrow_move_assignable<CB_CONTAINER<int> >::value);
+#endif
+#ifdef BOOST_IS_NOTHROW_MOVE_CONSTRUCT
     BOOST_CHECK(boost::is_nothrow_move_constructible<CB_CONTAINER<int> >::value);
+#endif
 #endif
 #endif // BOOST_NO_CXX11_NOEXCEPT
 }
@@ -2476,7 +2476,7 @@ void add_common_tests(test_suite* tests) {
     tests->add(BOOST_TEST_CASE(&move_container_on_cpp11));
     tests->add(BOOST_TEST_CASE(&move_container_values_noexcept));    
     tests->add(BOOST_TEST_CASE(&check_containers_exception_specifications));
-#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+#if !defined(BOOST_CB_NO_CXX11_ALLOCATOR)
     tests->add(BOOST_TEST_CASE(&cxx11_allocator_test));
 #endif
 }

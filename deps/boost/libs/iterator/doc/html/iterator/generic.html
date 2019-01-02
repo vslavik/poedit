@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Generic Iterators</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Iterator">
-<link rel="prev" href="concepts/concepts_traversal.html" title="Traversal">
+<link rel="prev" href="concepts/traversal.html" title="Traversal">
 <link rel="next" href="generic/adaptor.html" title="Iterator Adaptor">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,13 +20,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="concepts/concepts_traversal.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="generic/adaptor.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="concepts/traversal.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="generic/adaptor.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="iterator.generic"></a><a class="link" href="generic.html" title="Generic Iterators">Generic Iterators</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="generic.html#iterator.generic.facade">Iterator Facade</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="generic.html#iterator.generic.facade.facade_reference">Reference</a></span></dt>
@@ -35,14 +35,14 @@
 <dt><span class="section"><a href="generic/adaptor.html">Iterator Adaptor</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="generic/adaptor.html#iterator.generic.adaptor.adaptor_reference">Reference</a></span></dt>
-<dt><span class="section"><a href="generic/adaptor/adaptor_tutorial.html">Tutorial</a></span></dt>
+<dt><span class="section"><a href="generic/adaptor.html#iterator.generic.adaptor.adaptor_tutorial">Tutorial</a></span></dt>
 </dl></dd>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="iterator.generic.facade"></a><a class="link" href="generic.html#iterator.generic.facade" title="Iterator Facade">Iterator Facade</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="generic.html#iterator.generic.facade.facade_reference">Reference</a></span></dt>
 <dt><span class="section"><a href="generic.html#iterator.generic.facade.facade_tutorial">Tutorial</a></span></dt>
 </dl></div>
@@ -51,7 +51,7 @@
         that is necessary for all the functionality. We have identified the following
         core behaviors for iterators:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             dereferencing
           </li>
@@ -103,7 +103,7 @@
       </p>
 <h3>
 <a name="iterator.generic.facade.h0"></a>
-        <span><a name="iterator.generic.facade.usage"></a></span><a class="link" href="generic.html#iterator.generic.facade.usage">Usage</a>
+        <span class="phrase"><a name="iterator.generic.facade.usage"></a></span><a class="link" href="generic.html#iterator.generic.facade.usage">Usage</a>
       </h3>
 <p>
         The user of <code class="computeroutput"><span class="identifier">iterator_facade</span></code>
@@ -233,7 +233,7 @@
       </p>
 <h3>
 <a name="iterator.generic.facade.h1"></a>
-        <span><a name="iterator.generic.facade.iterator_core_access"></a></span><a class="link" href="generic.html#iterator.generic.facade.iterator_core_access">Iterator
+        <span class="phrase"><a name="iterator.generic.facade.iterator_core_access"></a></span><a class="link" href="generic.html#iterator.generic.facade.iterator_core_access">Iterator
         Core Access</a>
       </h3>
 <p>
@@ -274,7 +274,7 @@
       </p>
 <h3>
 <a name="iterator.generic.facade.h2"></a>
-        <span><a name="iterator.generic.facade.operator"></a></span><a class="link" href="generic.html#iterator.generic.facade.operator"><code class="computeroutput"><span class="keyword">operator</span><span class="special">\[\]</span></code></a>
+        <span class="phrase"><a name="iterator.generic.facade.operator"></a></span><a class="link" href="generic.html#iterator.generic.facade.operator"><code class="computeroutput"><span class="keyword">operator</span><span class="special">[]</span></code></a>
       </h3>
 <p>
         The indexing operator for a generalized iterator presents special challenges.
@@ -317,7 +317,7 @@
       </p>
 <h3>
 <a name="iterator.generic.facade.h3"></a>
-        <span><a name="iterator.generic.facade.operator0"></a></span><a class="link" href="generic.html#iterator.generic.facade.operator0"><code class="computeroutput"><span class="keyword">operator</span><span class="special">-&gt;</span></code></a>
+        <span class="phrase"><a name="iterator.generic.facade.operator0"></a></span><a class="link" href="generic.html#iterator.generic.facade.operator0"><code class="computeroutput"><span class="keyword">operator</span><span class="special">-&gt;</span></code></a>
       </h3>
 <p>
         The <code class="computeroutput"><span class="identifier">reference</span></code> type of a readable
@@ -449,7 +449,7 @@
 <p>
           .. parsed-literal::
         </p>
-<pre class="programlisting"><span class="special">*</span><span class="identifier">iterator</span><span class="special">-</span><span class="identifier">category</span><span class="special">*\</span> <span class="special">(</span><span class="identifier">CategoryOrTraversal</span><span class="special">,</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="identifier">reference</span><span class="special">)</span>
+<pre class="programlisting"><span class="special">*</span><span class="identifier">iterator</span><span class="special">-</span><span class="identifier">category</span><span class="special">*\</span> <span class="special">(</span><span class="identifier">CategoryOrTraversal</span><span class="special">,</span> <span class="identifier">reference</span><span class="special">,</span> <span class="identifier">value_type</span><span class="special">)</span>
 </pre>
 <p>
           where <span class="bold"><strong>iterator-category</strong></span> is defined as
@@ -485,7 +485,7 @@
 </pre>
 <h3>
 <a name="iterator.generic.facade.facade_reference.h0"></a>
-          <span><a name="iterator.generic.facade.facade_reference.requirements"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_reference.requirements">Requirements</a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_reference.requirements"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_reference.requirements">Requirements</a>
         </h3>
 <p>
           The following table describes the typical valid expressions on <code class="computeroutput"><span class="identifier">iterator_facade</span></code>'s <code class="computeroutput"><span class="identifier">Derived</span></code>
@@ -673,7 +673,7 @@
 </div>
 <br class="table-break"><h3>
 <a name="iterator.generic.facade.facade_reference.h1"></a>
-          <span><a name="iterator.generic.facade.facade_reference.operations"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_reference.operations">Operations</a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_reference.operations"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_reference.operations">Operations</a>
         </h3>
 <p>
           The operations in this section are described in terms of operations on
@@ -938,7 +938,7 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h0"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.the_problem"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.the_problem">The Problem</a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.the_problem"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.the_problem">The Problem</a>
         </h3>
 <p>
           Say we've written a polymorphic linked list node base class:
@@ -1005,7 +1005,7 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h1"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.a_basic_iterator_using_iterator_"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.a_basic_iterator_using_iterator_">A
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.a_basic_iterator_using_iterator_"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.a_basic_iterator_using_iterator_">A
           Basic Iterator Using <code class="computeroutput"><span class="identifier">iterator_facade</span></code></a>
         </h3>
 <p>
@@ -1024,7 +1024,7 @@
 </pre>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h2"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.template_arguments_for_iterator_"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.template_arguments_for_iterator_">Template
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.template_arguments_for_iterator_"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.template_arguments_for_iterator_">Template
           Arguments for <code class="computeroutput"><span class="identifier">iterator_facade</span></code></a>
         </h3>
 <p>
@@ -1036,7 +1036,7 @@
         </p>
 <h4>
 <a name="iterator.generic.facade.facade_tutorial.h3"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.derived"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.derived"><code class="computeroutput"><span class="identifier">Derived</span></code></a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.derived"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.derived"><code class="computeroutput"><span class="identifier">Derived</span></code></a>
         </h4>
 <p>
           Because <code class="computeroutput"><span class="identifier">iterator_facade</span></code>
@@ -1045,7 +1045,7 @@
         </p>
 <h4>
 <a name="iterator.generic.facade.facade_tutorial.h4"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.value"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.value"><code class="computeroutput"><span class="identifier">Value</span></code></a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.value"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.value"><code class="computeroutput"><span class="identifier">Value</span></code></a>
         </h4>
 <p>
           The <code class="computeroutput"><span class="identifier">Value</span></code> parameter determines
@@ -1055,7 +1055,7 @@
         </p>
 <h4>
 <a name="iterator.generic.facade.facade_tutorial.h5"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.categoryortraversal"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.categoryortraversal"><code class="computeroutput"><span class="identifier">CategoryOrTraversal</span></code></a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.categoryortraversal"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.categoryortraversal"><code class="computeroutput"><span class="identifier">CategoryOrTraversal</span></code></a>
         </h4>
 <p>
           Now we have to determine which <code class="computeroutput"><span class="identifier">iterator</span>
@@ -1079,7 +1079,7 @@
         </p>
 <h4>
 <a name="iterator.generic.facade.facade_tutorial.h6"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.reference"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.reference"><code class="computeroutput"><span class="identifier">Reference</span></code></a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.reference"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.reference"><code class="computeroutput"><span class="identifier">Reference</span></code></a>
         </h4>
 <p>
           The <code class="computeroutput"><span class="identifier">Reference</span></code> argument
@@ -1091,7 +1091,7 @@
         </p>
 <h4>
 <a name="iterator.generic.facade.facade_tutorial.h7"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.difference"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.difference"><code class="computeroutput"><span class="identifier">Difference</span></code></a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.difference"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.difference"><code class="computeroutput"><span class="identifier">Difference</span></code></a>
         </h4>
 <p>
           The <code class="computeroutput"><span class="identifier">Difference</span></code> argument
@@ -1121,7 +1121,7 @@
 </pre>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h8"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.constructors_and_data_members"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.constructors_and_data_members">Constructors
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.constructors_and_data_members"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.constructors_and_data_members">Constructors
           and Data Members</a>
         </h3>
 <p>
@@ -1166,7 +1166,7 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h9"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.implementing_the_core_operations"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.implementing_the_core_operations">Implementing
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.implementing_the_core_operations"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.implementing_the_core_operations">Implementing
           the Core Operations</a>
         </h3>
 <p>
@@ -1232,11 +1232,11 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h10"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.a_constant_node_iterator"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.a_constant_node_iterator">A
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.a_constant_node_iterator"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.a_constant_node_iterator">A
           constant <code class="computeroutput"><span class="identifier">node_iterator</span></code></a>
         </h3>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <span class="bold"><strong>Constant and Mutable iterators</strong></span><br>
           <br> The term **mutable iterator** means an iterator through which the
@@ -1265,7 +1265,7 @@
         </p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">const_node_iterator</span>
   <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_facade</span><span class="special">&lt;</span>
-        <span class="identifier">node_iterator</span>
+        <span class="identifier">const_node_iterator</span>
       <span class="special">,</span> <span class="identifier">node_base</span> <span class="special">**</span><span class="keyword">const</span><span class="special">**</span>
       <span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">forward_traversal_tag</span>
     <span class="special">&gt;</span>
@@ -1292,8 +1292,8 @@
     <span class="identifier">node_base</span> <span class="special">**</span><span class="keyword">const</span><span class="special">**\</span> <span class="special">*</span> <span class="identifier">m_node</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<div class="sidebar">
-<div class="titlepage"></div>
+<div class="blurb">
+<div class="titlepage"><div><div><p class="title"><b></b></p></div></div></div>
 <p>
           <code class="computeroutput"><span class="keyword">const</span></code> and an iterator's <code class="computeroutput"><span class="identifier">value_type</span></code><br> <br> The C++ standard
           requires an iterator's <code class="computeroutput"><span class="identifier">value_type</span></code>
@@ -1351,7 +1351,7 @@
 </pre>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h11"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.interoperability"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.interoperability">Interoperability</a>
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.interoperability"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.interoperability">Interoperability</a>
         </h3>
 <p>
           Our <code class="computeroutput"><span class="identifier">const_node_iterator</span></code>
@@ -1436,7 +1436,7 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h12"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.telling_the_truth"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.telling_the_truth">Telling
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.telling_the_truth"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.telling_the_truth">Telling
           the Truth</a>
         </h3>
 <p>
@@ -1495,7 +1495,7 @@
         </p>
 <h3>
 <a name="iterator.generic.facade.facade_tutorial.h13"></a>
-          <span><a name="iterator.generic.facade.facade_tutorial.wrap_up"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.wrap_up">Wrap
+          <span class="phrase"><a name="iterator.generic.facade.facade_tutorial.wrap_up"></a></span><a class="link" href="generic.html#iterator.generic.facade.facade_tutorial.wrap_up">Wrap
           Up</a>
         </h3>
 <p>
@@ -1540,7 +1540,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="concepts/concepts_traversal.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="generic/adaptor.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="concepts/traversal.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="generic/adaptor.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

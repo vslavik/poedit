@@ -40,9 +40,7 @@ time2_demo contained this comment:
 ///////////// simulated thread interface /////////////////
 //////////////////////////////////////////////////////////
 
-namespace boost {
-
-namespace detail {
+namespace {
 void print_time(boost::chrono::system_clock::time_point t)
 {
     using namespace boost::chrono;
@@ -53,6 +51,8 @@ void print_time(boost::chrono::system_clock::time_point t)
               << '.' << (d - duration_cast<seconds>(d)).count();
 }
 }
+
+namespace boost {
 namespace this_thread {
 
 template <class Rep, class Period>
@@ -81,7 +81,7 @@ void sleep_until(const boost::chrono::time_point<Clock, Duration>& t)
             ++us;
         SysTime st = system_clock::now() + us;
         std::cout << "sleep_until    ";
-        boost::detail::print_time(st);
+        ::print_time(st);
         std::cout << " which is " << (st - system_clock::now()).count() << " microseconds away\n";
     }
 }
@@ -118,7 +118,7 @@ struct timed_mutex
         microseconds us = duration_cast<microseconds>(d);
         SysTime st = system_clock::now() + us;
         std::cout << "try_lock_until ";
-        boost::detail::print_time(st);
+        ::print_time(st);
         std::cout << " which is " << (st - system_clock::now()).count()
           << " microseconds away\n";
         return true;
@@ -149,7 +149,7 @@ struct condition_variable
         microseconds us = duration_cast<microseconds>(d);
         SysTime st = system_clock::now() + us;
          std::cout << "wait_until     ";
-        boost::detail::print_time(st);
+        ::print_time(st);
         std::cout << " which is " << (st - system_clock::now()).count()
           << " microseconds away\n";
         return true;

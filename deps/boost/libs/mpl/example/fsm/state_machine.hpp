@@ -83,7 +83,17 @@ class state_machine
     {
     }
 
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     void post_event(std::auto_ptr<base_event_t const> evt)
+    
+#else
+
+    void post_event(std::unique_ptr<base_event_t const> evt)
+    
+#endif
+
     {
         m_events_queue.push(base_event_ptr_t(evt.release()));
     }

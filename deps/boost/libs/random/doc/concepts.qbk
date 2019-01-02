@@ -10,26 +10,26 @@
 
 Random numbers are required in a number of different problem domains, such as
 
-* numerics (simulation, Monte-Carlo integration) 
-* games (non-deterministic enemy behavior) 
-* security (key generation) 
-* testing (random coverage in white-box tests) 
+* numerics (simulation, Monte-Carlo integration)
+* games (non-deterministic enemy behavior)
+* security (key generation)
+* testing (random coverage in white-box tests)
 
 The Boost Random Number Generator Library provides a framework for random
 number generators with well-defined properties so that the generators can be
 used in the demanding numerics and security domains. For a general
-introduction to random numbers in numerics, see 
+introduction to random numbers in numerics, see
 
 [:"Numerical Recipes in C: The art of scientific computing", William H. Press,
 Saul A. Teukolsky, William A. Vetterling, Brian P. Flannery, 2nd ed., 1992,
 pp. 274-328]
- 
-Depending on the requirements of the problem domain, different variations of
-random number generators are appropriate: 
 
-* non-deterministic random number generator 
-* pseudo-random number generator 
-* quasi-random number generator 
+Depending on the requirements of the problem domain, different variations of
+random number generators are appropriate:
+
+* non-deterministic random number generator
+* pseudo-random number generator
+* quasi-random number generator
 
 All variations have some properties in common, the concepts (in the STL
 sense) is called __UniformRandomNumberGenerator. This
@@ -38,8 +38,8 @@ concept will be defined in a subsequent section.
 The goals for this library are the following:
 
 * allow easy integration of third-party random-number generators
-* provide easy-to-use front-end classes which model popular distributions 
-* provide maximum efficiency 
+* provide easy-to-use front-end classes which model popular distributions
+* provide maximum efficiency
 
 [endsect]
 
@@ -196,6 +196,76 @@ function(s) allow for a user-provided state to be installed in the generator.
 This is useful for debugging Monte-Carlo algorithms and analyzing particular
 test scenarios. The __Streamable concept allows to save/restore the state of
 the generator, for example to re-run a test suite at a later time.]
+
+[endsect]
+
+[section Quasi-Random Number Generator]
+
+A quasi-random number generator is a __UniformRandomNumberGenerator which
+provides a deterministic sequence of quasi-random numbers, based on some
+algorithm and internal state. [classref boost::random::niederreiter_base2_engine
+Niederreiter base 2] generator is an example of such a [qrng quasi-random
+number generator]. The "quasi" modifier is used to denote more clearly that the
+values produced by such a generator are neither random nor pseudo-random, but
+they form a low discrepancy sequence. The intuitive idea is that a low discrepancy
+sequence is more evenly distributed than a pseudo random sequence would be.
+For example, if we generate a low discrepancy sequence of 2D points on a square,
+this square would be covered more evenly, and the number of points falling to any
+part of the square would be proportional to the number of points in the whole square.
+Such sequences share some properties of  random variables and in certain applications
+such as the quasi-Monte Carlo method their lower discrepancy is an important advantage.
+
+[note The quasi-Monte Carlo method uses a low-discrepancy sequence such as the
+Niederreiter base 2 sequence, the Sobol sequence, or the Faure sequence among the others.
+The advantage of using low-discrepancy sequences is a probabilistically faster rate of
+convergence. Quasi-Monte Carlo has a rate of convergence O(log(N)[sup s]/N),
+whereas the rate of convergence for the Monte Carlo method, which uses a pseudo-random sequence,
+is O(N[sup -0.5]).]
+
+Harold Niederreiter gives an extensive overview on random number generation
+and quasi-Monte Carlo methods in his book "Random number generation and
+quasi-Monte Carlo methods, Society for Industrial and Applied Mathematics, 1992".
+
+In addition to the __UniformRandomNumberGenerator requirements,
+a quasi-random number generator has some additional requirements. In the
+following table, `X` denotes a quasi-random number generator class, `u` is a value of `X`,
+`v` is a const value of `X`, and `j` a value of type `unsigned long long`.
+
+[table QuasiRandomNumberGenerator requirements
+  [[expression] [return type] [pre/post-condition]]
+  [[`X(s)`] [-] [creates an `s`-dimensional generator with a default seed. Dimension `s` is an integer no less than 1.]]
+  [[`v.dimension()`] [std::size_t] [the dimension of quasi-random domain.]]
+  [[`u.seed(i)`] [`void`] [seeds the generator with the integer `i`.]]
+  [[`u.discard(j)`] [`void`] [Advances the generator by `j` steps as if by
+                              `j` calls to `u()`.]]
+ ]
+
+[note The `operator()` returns a successive element of an `s`-dimensional (`s` = `v.dimension()`) vector
+at each invocation. When all elements are exhausted, `operator()` begins anew with the starting
+element of a subsequent `s`-dimensional vector.]
+
+Classes which model a quasi-random number generator shall also model
+__EqualityComparable, i.e. implement `operator==`. Two quasi-random number
+generators are defined to be /equivalent/ if they both return an identical
+sequence of numbers starting from a given state.
+
+Classes which model a quasi-random number generator shall also model the
+__Streamable concept, i.e. implement `operator<<` and `operator>>`.
+`operator<<` writes all current state of the quasi-random number generator
+to the given `ostream` so that `operator>>` can restore the state at a later
+time. The state shall be written in a platform-independent manner, but it is
+assumed that the `locales` used for writing and reading be the same. The
+quasi-random number generator with the restored state and the original at
+the just-written state shall be equivalent.
+
+Classes which model a quasi-random number generator should also model the
+__CopyConstructible and __Assignable concepts. However, note that the
+sequences of the original and the copy are strongly correlated (in fact,
+they are identical), which may make them unsuitable for some problem domains.
+Thus, copying quasi-random number generators is discouraged; they should
+always be passed by (non-const) reference.
+
+The classes __niederreiter_base2, __sobol, __faure are models for a quasi-random number generator.
 
 [endsect]
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct default_user_allocator_new_delete</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Boost.Pool">
 <link rel="up" href="../header/boost/pool/pool_hpp.html" title="Header &lt;boost/pool/pool.hpp&gt;">
 <link rel="prev" href="../header/boost/pool/pool_hpp.html" title="Header &lt;boost/pool/pool.hpp&gt;">
@@ -37,26 +37,29 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>    <a name="boost.default_user_allocator_new_delete.size_type"></a><span class="identifier">size_type</span><span class="special">;</span>        <span class="comment">// An unsigned integral type that can represent the size of the largest object to be allocated. </span>
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ptrdiff_t</span> <a name="boost.default_user_allocator_new_delete.difference_type"></a><span class="identifier">difference_type</span><span class="special">;</span>  <span class="comment">// A signed integral type that can represent the difference of any two pointers. </span>
 
-  <span class="comment">// <a class="link" href="default_user_allocator_new_delete.html#idp6602096-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="default_user_allocator_new_delete.html#idp6602592-bb"><span class="identifier">malloc</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="default_user_allocator_new_delete.html#idp6604688-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">char</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="default_user_allocator_new_delete.html#idp15600480-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="default_user_allocator_new_delete.html#idp15601040-bb"><span class="identifier">malloc</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="default_user_allocator_new_delete.html#idp15603232-bb"><span class="identifier">free</span></a><span class="special">(</span><span class="keyword">char</span> <span class="special">*</span><span class="keyword">const</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp6395424"></a><h2>Description</h2>
+<a name="idp87641360"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp6395840"></a><h3>
-<a name="idp6602096-bb"></a><code class="computeroutput">default_user_allocator_new_delete</code> public static functions</h3>
+<a name="idp87641744"></a><h3>
+<a name="idp15600480-bb"></a><code class="computeroutput">default_user_allocator_new_delete</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp6602592-bb"></a><span class="identifier">malloc</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> bytes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp15601040-bb"></a><span class="identifier">malloc</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> bytes<span class="special">)</span><span class="special">;</span></pre>
 <p>Attempts to allocate n bytes from the system. Returns 0 if out-of-memory </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp6604688-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">char</span> <span class="special">*</span><span class="keyword">const</span> block<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp15603232-bb"></a><span class="identifier">free</span><span class="special">(</span><span class="keyword">char</span> <span class="special">*</span><span class="keyword">const</span> block<span class="special">)</span><span class="special">;</span></pre>
 <p>Attempts to de-allocate block. 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Requires:</span></p></td>
 <td><p>Block must have been previously returned from a call to UserAllocator::malloc. </p></td>

@@ -12,18 +12,18 @@
 42
 >>> try: make_x('fool')
 ... except TypeError: pass
-... else: print 'no error'
+... else: print('no error')
 
->>> print x_value.__doc__.splitlines()[1]
+>>> print(x_value.__doc__.splitlines()[1])
 x_value( (X)arg1) -> int :
 
->>> print make_x.__doc__.splitlines()[1]
+>>> print(make_x.__doc__.splitlines()[1])
 make_x( (object)arg1) -> X :
 
->>> print X.value.__doc__.splitlines()[1]
+>>> print(X.value.__doc__.splitlines()[1])
 value( (X)arg1) -> int :
 
->>> print X.set.__doc__.splitlines()[1]
+>>> print(X.set.__doc__.splitlines()[1])
 set( (X)arg1, (object)arg2) -> None :
 
 '''
@@ -37,8 +37,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

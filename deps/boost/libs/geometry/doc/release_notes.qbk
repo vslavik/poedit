@@ -1,14 +1,14 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2016 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2016 Bruno Lalande, Paris, France.
-  Copyright (c) 2009-2016 Mateusz Loskot <mateusz@loskot.net>, London, UK.
-  Copyright (c) 2011-2016 Adam Wulkiewicz, Lodz, Poland.
+  Copyright (c) 2009-2017 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2017 Bruno Lalande, Paris, France.
+  Copyright (c) 2009-2017 Mateusz Loskot <mateusz@loskot.net>, London, UK.
+  Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
 
-  This file was modified by Oracle on 2015, 2016.
-  Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
-
+  This file was modified by Oracle on 2015, 2017, 2018.
+  Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+  Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
   Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
   Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -18,6 +18,196 @@
 =============================================================================/]
 
 [section:release_notes Release Notes]
+
+[/=================]
+[heading Boost 1.69]
+[/=================]
+
+[*Improvements]
+
+* [@https://github.com/boostorg/geometry/pull/486 486] Karney's solution of direct geodesic problem for internal use (thanks to Adeel Ahmad).
+* [@https://github.com/boostorg/geometry/pull/490 490] Discrete Frechet and Hausdorff distance algorithms (thanks to Yaghyavardhan Singh Khangarot).
+* [@https://github.com/boostorg/geometry/pull/496 496] New run-time and upgraded compile-time SRS transformation interfaces (undocumented for now due to potential interface changes).
+
+[*Solved issues]
+
+* [@https://github.com/boostorg/geometry/issues/520 520] Missing documentation for dsv().
+* [@https://github.com/boostorg/geometry/issues/521 521] Wrong documentation description for distance().
+* [@https://github.com/boostorg/geometry/issues/524 524] Fixed 'enumeration values not handled in switch' warnings.
+* [@https://github.com/boostorg/geometry/issues/527 527] Workaround for VS 2017 (msvc-15).
+
+[*Bugfixes]
+
+* [@https://github.com/boostorg/geometry/pull/505 505] Fixed overflow in overlay algorithms (thanks to Dane Springmeyer).
+* [@https://github.com/boostorg/geometry/pull/518 518] Fixed passing of temporaries in append() (thanks to xventura81).
+* [@https://github.com/boostorg/geometry/pull/522 522] Support python3 in building documentation.
+
+[/=================]
+[heading Boost 1.68]
+[/=================]
+
+[*Improvements]
+
+* [@https://github.com/boostorg/geometry/pull/469 469] Horizontal grid shift (nadgrids) in SRS transformations (undocumented for now due to potential interface changes).
+* [@https://github.com/boostorg/geometry/pull/478 478] Box-Segment distance for spherical and geographic coordinate systems.
+* [@https://github.com/boostorg/geometry/pull/487 487] Missing combinations of geometries in distance for spherical and geographic cs
+* [@https://github.com/boostorg/geometry/pull/489 489] Additional direct geodesic problem formulas for internal use 
+
+[*Solved issues]
+
+* [@https://github.com/boostorg/geometry/issues/470 470] Assertion failure with short spherical and geographic segments.
+* [@https://github.com/boostorg/geometry/issues/471 471] Invalid envelope of spherical polygon
+* [@https://github.com/boostorg/geometry/issues/498 498] Unexpected results with expand() and make_inverse() for spherical and geographic CS
+* [@https://github.com/boostorg/geometry/issues/504 504] Unused parameter warnings.
+
+[*Bugfixes]
+
+* [@https://github.com/boostorg/geometry/pull/488 488] Handle non-true-references in closing_iterator and ever_circling_range_iterator
+* [@https://github.com/boostorg/geometry/pull/495 495] VxWorks 7 cross-compilation issue.
+
+[/=================]
+[heading Boost 1.67]
+[/=================]
+
+[*Improvements]
+
+* New map projection and SRS transformation representations (undocumented for now due to potential interface changes).
+* New densify() algorithm.
+* No longer using std::iterator (thanks to Daniela Engert).
+* No longer using allocator directly in the rtree. Replaced with boost::container::allocator_traits (thanks to Daniela Engert).
+* Default rtree allocator changed to boost::container::new_allocator to still support move semantics emulation in C++03 with boost::container::allocator_traits.
+* Area strategies interface changed. This is potentially a breaking change.
+* Radius or Sphere can be passed into spherical strategies.
+* Added Point-Box and Box-Box spherical and geographic distance() strategies.
+* Simplify (multi)polygons will discard output rings of 2 points or (for closed polygons) 3 points, but it tries to avoid creating those
+* Simplify (multi)polygons will omit empty interior rings or polygons from output
+
+[*Solved issues]
+
+* [@https://svn.boost.org/trac10/ticket/13386 13386] Workaround for some gcc compilers
+* [@https://svn.boost.org/trac10/ticket/13381 13381] Compile error with matrix_transformer in Visual C++ 2015
+* [@https://svn.boost.org/trac10/ticket/13436 13436] Incorrectness in boost::geometry::model::polygon documentation
+
+[*Bugfixes]
+
+* Add missing strategy resolving in length() algorithm, affecting Variant support.
+* Simplify (multi)polygons now simplifies closing point
+
+[*Changes in behavior]
+
+* Simplify (multi)polygons now usually rotates input rings before simplifying to select a non collinear point on its convex hull. This improves output.
+
+[/=================]
+[heading Boost 1.66]
+[/=================]
+
+[*Improvements]
+
+* Add distance for geographic PointLike/AnyGeometry.
+
+[*Solved issues]
+
+* [@https://svn.boost.org/trac10/ticket/12503 12503] Validity of complex polygon
+
+[*Bugfixes]
+
+* Fixes in validity of union/intersection/difference which were sometimes invalid. In most cases, results are valid now.
+* Fixes in validity of buffer which were sometimes invalid. In most cases, results are valid now.
+* Fixes in results of union/intersection/difference which could be incorrect in very complex cases
+* Fixes in set and relational operations for non-cartesian coordinate systems.
+
+[/=================]
+[heading Boost 1.65]
+[/=================]
+
+[*Improvements]
+
+* Add correct() overload taking area strategy
+* Add is_convex() overload taking side strategy
+* Add missing relational operations (covered_by, crosses, equals, etc.) for MultiPoint/AnyGeometry
+
+[*Solved issues]
+
+* [@https://svn.boost.org/trac/boost/ticket/12410 12410] Lack of support of geographic coordinate system in correct()
+* [@https://svn.boost.org/trac/boost/ticket/13035 13035] Wrong result of non-cartesian intersection strategies for segments near poles.
+* [@https://svn.boost.org/trac/boost/ticket/13057 13057] Wrong result of intersects() for linestrings caused by numerical issue in disjoint() for boxes.
+
+[*Bugfixes]
+
+* Fix is_valid which could return false for multipolygons where an interior ring touches another interior ring
+* Fix is_valid which could return false for multipolygons where a polygon was located in an interior ring, all touching each other
+* Fix union which could produce invalid results (for some cases, this needs to define BOOST_GEOMETRY_INCLUDE_SELF_TURNS)
+* Fix intersection (idem), but some cases are still not yet valid
+* Fix difference (idem), but some cases are still not yet valid
+* Fix propagation of area strategy into the internals of various algorithms from intersection strategy
+* Fix uninitialized variable in relate and reference to temporary in overlay
+* Fix error in disjoint for geographic Segment/Box
+* Fix handling of non-cartesian geometries in various algorithms
+
+[/=================]
+[heading Boost 1.64]
+[/=================]
+
+[*Improvements]
+
+* matrix transformation is now based on Boost.QVM instead of Boost.Ublas
+
+[*Breaking changes]
+
+* ublas_transformer is renamed to matrix_transformer
+* explicit modifier is added to constructors of rtree index::dynamic_* parameters
+* strategy::area::huiller replaced by strategy::area::spherical
+
+[*Solved issues]
+
+* [@https://github.com/boostorg/geometry/issues/363 363] Missing includes in geometry/index/parameters.hpp
+* [@https://github.com/boostorg/geometry/issues/364 364] within(Linear, Areal) compilation error when arguments use different point types
+* [@https://github.com/boostorg/geometry/issues/370 370] Buffer Seg Faults with Ring as Input
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/11899 11899] boost::geometry::equals doesn't handle open polygons
+* [@https://svn.boost.org/trac/boost/ticket/11930 11930] Inaccuracy of area::huiller strategy
+* [@https://svn.boost.org/trac/boost/ticket/11931 11931] Wrong spherical area with pole encircling polygons
+* [@https://svn.boost.org/trac/boost/ticket/12566 12566] Ambiguous template instantiation in equal_to<> when pair value contains raw pointer
+* [@https://svn.boost.org/trac/boost/ticket/12861 12861] Segmentation fault in stdlibc++ (gcc 4.8.2) affecting rtree
+* [@https://svn.boost.org/trac/boost/ticket/12885 12885] Use BOOST_THROW_EXCEPTION instead of throw
+
+[*Bugfixes]
+
+* Fix distance_measure in get_turn_info
+
+[/=================]
+[heading Boost 1.63]
+[/=================]
+
+[*Improvements]
+
+* Intersection: take care that output is valid (work in progres, not yet finished - but more is valid)
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/12289 12289] Avoid warning/compilation error for std::cout
+* [@https://svn.boost.org/trac/boost/ticket/12412 12412] Invalid result of covered_by() with geographic Points and Boxes
+* [@https://svn.boost.org/trac/boost/ticket/12413 12413] rtree::remove() not working properly with geographic Points
+
+[/=================]
+[heading Boost 1.62]
+[/=================]
+
+[*Improvements]
+
+* Union: take care that output is valid (with some exceptions), also with self-tangent polygons or shared edges
+* SVG: support boost::variant of geometries
+* SVG: coordinates are now written as double (by default) to svg
+* Rename namespace concept to concepts to avoid conflicts with the newest compilers
+* New spherical intersection strategy used in relational and set operations for spherical and geographic Geometries (previously cartesian intersection strategy was used for all coordinate systems).
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/12189 12189] Relational operations not compiling when point types of inputs are different (cartesian, affecting rtree)
+* [@https://svn.boost.org/trac/boost/ticket/12287 12287] Invalid result of rtree.query() for contains() predicate
+* [@https://svn.boost.org/trac/boost/ticket/12342 12342] Relational operations not compiling when point types of inputs are different (geographic, affecting rtree)
 
 [/=================]
 [heading Boost 1.61]
@@ -33,6 +223,7 @@
 
 [*Solved tickets]
 
+* [@https://svn.boost.org/trac/boost/ticket/9162 9162] Invalid result of relational operations for non-cartesian Point/Areal.
 * [@https://svn.boost.org/trac/boost/ticket/10866 10866] union_ doesn't work in 1.56 and 1.57.
 * [@https://svn.boost.org/trac/boost/ticket/11018 11018] Invalid geometry intersection
 * [@https://svn.boost.org/trac/boost/ticket/11576 11576] Intersection gives wrong results.
@@ -40,7 +231,7 @@
 * [@https://svn.boost.org/trac/boost/ticket/11725 11725] union_ fails to create holes
 * [@https://svn.boost.org/trac/boost/ticket/11789 11789] Assertion failure or invalid result of set operations for spherical_equatorial coordinate system.
 * [@https://svn.boost.org/trac/boost/ticket/11917 11917] Andoyer distance strategy returns 0 for antipodal points (default geographic distance).
-* [@https://svn.boost.org/trac/boost/ticket/11928 11928] Improvement of the accuracy of surveyor area strategy.
+* [@https://svn.boost.org/trac/boost/ticket/11928 11928] Improvement of the accuracy of surveyor (cartesian) area strategy.
 * [@https://svn.boost.org/trac/boost/ticket/11966 11966] Compilation error in svg() for box and non-int coordinate type.
 * [@https://svn.boost.org/trac/boost/ticket/11984 11984] union_() generates self-intersecting polygon
 * [@https://svn.boost.org/trac/boost/ticket/11987 11987] rtree::remove() not compiling for geographic CS.
@@ -49,9 +240,9 @@
 
 [*Bugfixes]
 
-* Fix intersects and disjoints for Segment/Box in cartesian coordinate system when Segment is parallel to Box's face.
+* Fix intersects and disjoint for Segment/Box in cartesian coordinate system when Segment is parallel to Box's face.
 * Fix relation operations for Point/Areal in spherical and geographic coordinate systems for edge cases.
-* Fix intersect and disjoint for Point/Box and Box/Box in spherical and geographic coordinate systems for some cases.
+* Fix intersects and disjoint for Point/Box and Box/Box in spherical and geographic coordinate systems for some cases.
 * Fix within and covered_by for Point/Box in spherical and geographic coordinate systems for some cases.
 
 [/=================]

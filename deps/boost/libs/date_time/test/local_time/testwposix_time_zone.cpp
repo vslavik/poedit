@@ -203,7 +203,7 @@ int main(){
     try{
       check("Non-Julian First/last of month", fl_2.dst_local_start_time(2003) ==
           ptime(date(2003,Mar,1),hours(2)));
-    }catch(std::exception& e){
+    }catch(std::exception&){
       check("Expected exception caught for Non-Julian day of 59, in non-leap year (Feb-29)", true);
     }
     check("Non-Julian First/last of month", fl_2.dst_local_end_time(2003) == 

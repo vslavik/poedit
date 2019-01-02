@@ -17,6 +17,7 @@
 
 // Boost.Test Runtime parameters
 #include <boost/test/utils/runtime/fwd.hpp>
+#include <cstring>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

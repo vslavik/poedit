@@ -28,11 +28,19 @@ BOOST_AUTO_TEST_CASE(empty)
 
 BOOST_AUTO_TEST_CASE(swap)
 {
+    // boost::compute::string currently uses only default_queue, default_context,
+    // default_device so this overrides queue variable set in
+    // BOOST_FIXTURE_TEST_SUITE(compute_test, Context) in context_setup.hpp
+    // in case it is not the default_queue
+    boost::compute::command_queue& queue =
+        boost::compute::system::default_queue();
+
     boost::compute::string str1 = "compute";
     boost::compute::string str2 = "boost";
     BOOST_VERIFY(!str2.empty());
     BOOST_VERIFY(!str2.empty()); 
     str1.swap(str2);
+    // this macro uses queue variable and it must be default_queue
     CHECK_STRING_EQUAL(str1, "boost");
     CHECK_STRING_EQUAL(str2, "compute");
     str1.clear();

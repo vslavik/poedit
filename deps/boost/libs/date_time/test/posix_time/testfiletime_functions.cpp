@@ -22,7 +22,7 @@ int main()
 
   // adjustor is used to truncate ptime's fractional seconds for 
   // comparison with SYSTEMTIME's milliseconds
-  const int adjustor = time_duration::ticks_per_second() / 1000;
+  const time_duration::tick_type adjustor = time_duration::ticks_per_second() / 1000;
   
   for(int i = 0; i < 5; ++i){
 

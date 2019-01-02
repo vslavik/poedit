@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template lexicographical_compare</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.lexicographical_compare_hpp" title="Header &lt;boost/compute/algorithm/lexicographical_compare.hpp&gt;">
 <link rel="prev" href="is_sorted.html" title="Function is_sorted">
@@ -37,8 +37,9 @@
                                <span class="identifier">InputIterator2</span> first2<span class="special">,</span> <span class="identifier">InputIterator2</span> last2<span class="special">,</span> 
                                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp66472624"></a><h2>Description</h2>
-<p>Checks if the first range [first1, last1) is lexicographically less than the second range [first2, last2). </p>
+<a name="idp80861648"></a><h2>Description</h2>
+<p>Checks if the first range [first1, last1) is lexicographically less than the second range [first2, last2).</p>
+<p>Space complexity: (max(distance(<code class="computeroutput">first1</code>, <code class="computeroutput">last1</code>), distance(<code class="computeroutput">first2</code>, <code class="computeroutput">last2</code>))) </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

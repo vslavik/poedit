@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template copy_n</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.copy_n_hpp" title="Header &lt;boost/compute/algorithm/copy_n.hpp&gt;">
 <link rel="prev" href="copy_if.html" title="Function template copy_if">
@@ -37,16 +37,17 @@
   <span class="identifier">copy_n</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">Size</span> count<span class="special">,</span> <span class="identifier">OutputIterator</span> result<span class="special">,</span> 
          <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp64882240"></a><h2>Description</h2>
+<a name="idp79254704"></a><h2>Description</h2>
 <p>Copies <code class="computeroutput">count</code> elements from <code class="computeroutput">first</code> to <code class="computeroutput">result</code>.</p>
 <p>For example, to copy four values from the host to the device: </p>
-<pre class="programlisting"> <span class="comment">// values on the host and vector on the device</span>
- <span class="keyword">float</span> <span class="identifier">values</span><span class="special">[</span><span class="number">4</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">1</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">2</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">3</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">4</span><span class="special">.</span><span class="identifier">f</span> <span class="special">}</span><span class="special">;</span>
- <a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;float&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="number">4</span><span class="special">,</span> <span class="identifier">context</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="comment">// values on the host and vector on the device</span>
+<span class="keyword">float</span> <span class="identifier">values</span><span class="special">[</span><span class="number">4</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">1</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">2</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">3</span><span class="special">.</span><span class="identifier">f</span><span class="special">,</span> <span class="number">4</span><span class="special">.</span><span class="identifier">f</span> <span class="special">}</span><span class="special">;</span>
+<a class="link" href="vector.html" title="Class template vector">boost::compute::vector&lt;float&gt;</a> <span class="identifier">vec</span><span class="special">(</span><span class="number">4</span><span class="special">,</span> <span class="identifier">context</span><span class="special">)</span><span class="special">;</span>
 
- <span class="comment">// copy from the host to the device</span>
- <span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">copy_n</span><span class="special">(</span><span class="identifier">values</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
+<span class="comment">// copy from the host to the device</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">copy_n</span><span class="special">(</span><span class="identifier">values</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="identifier">vec</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">queue</span><span class="special">)</span><span class="special">;</span>
 </pre>
+<p>Space complexity: (1)</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p>copy() </p>
 <p>

@@ -57,6 +57,7 @@ struct segment_identifier
         return source_index != other.source_index ? source_index < other.source_index
             : multi_index !=other.multi_index ? multi_index < other.multi_index
             : ring_index != other.ring_index ? ring_index < other.ring_index
+            : piece_index != other.piece_index ? piece_index < other.piece_index
             : segment_index < other.segment_index
             ;
     }
@@ -66,6 +67,7 @@ struct segment_identifier
         return source_index == other.source_index
             && segment_index == other.segment_index
             && ring_index == other.ring_index
+            && piece_index == other.piece_index
             && multi_index == other.multi_index
             ;
     }
@@ -79,6 +81,7 @@ struct segment_identifier
             ;
         if (seg_id.ring_index >= 0) os << ", r:" << seg_id.ring_index;
         if (seg_id.multi_index >= 0) os << ", m:" << seg_id.multi_index;
+        if (seg_id.piece_index >= 0) os << ", p:" << seg_id.piece_index;
         return os;
     }
 #endif

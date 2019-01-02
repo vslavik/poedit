@@ -43,7 +43,7 @@ struct test_grammar : public grammar <test_grammar>
     {
         rule <ScannerT, parser_tag <0> > test;
         
-        definition(const test_grammar& self)
+        definition(const test_grammar& /*self*/)
         {
             test
                 = if_p(local::var(the_var_to_be_tested))

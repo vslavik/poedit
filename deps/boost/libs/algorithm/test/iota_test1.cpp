@@ -20,7 +20,7 @@
 
 //  Test to make sure a sequence is "correctly formed"; i.e, ascending by one
 template <typename Iterator, typename T>
-bool test_iota_results ( Iterator first, Iterator last, T initial_value ) {
+BOOST_CXX14_CONSTEXPR bool test_iota_results ( Iterator first, Iterator last, T initial_value ) {
     if ( first == last ) return true;
     if ( initial_value != *first ) return false;
     Iterator prev = first;
@@ -32,12 +32,13 @@ bool test_iota_results ( Iterator first, Iterator last, T initial_value ) {
     return true;
     }
 
+    
 template <typename Range, typename T>
-bool test_iota_results ( const Range &r, T initial_value ) {
+BOOST_CXX14_CONSTEXPR bool test_iota_results ( const Range &r, T initial_value ) {
     return test_iota_results (boost::begin (r), boost::end (r), initial_value );
 }
 
-
+    
 void test_ints () {
     std::vector<int> v;
     std::list<int> l;
@@ -76,9 +77,38 @@ void test_ints () {
     boost::algorithm::iota_n ( std::front_inserter(l), 123, 20 );
     BOOST_CHECK ( test_iota_results ( l.rbegin (), l.rend (), 123 ));
     }
+    
+BOOST_CXX14_CONSTEXPR inline bool test_constexpr_iota() {
+    bool res = true;
+    int data[] = {0, 0, 0};
+    boost::algorithm::iota(data, data, 1); // fill none
+    res = (res && data[0] == 0);
+    
+    boost::algorithm::iota(data, data + 3, 1); // fill all
+    res = (res && test_iota_results(data, data + 3, 1));
+    
+    return res;
+    }
+    
+    
+BOOST_CXX14_CONSTEXPR inline bool test_constexpr_iota_n() {
+    bool res = true;
+    int data[] = {0, 0, 0};
+    boost::algorithm::iota_n(data, 1, 0); // fill none
+    res = (res && data[0] == 0);
+    
+    boost::algorithm::iota_n(data, 1, 3); // fill all
+    res = (res && test_iota_results(data, 1));
+    
+    return res;
+    }
 
 
 BOOST_AUTO_TEST_CASE( test_main )
 {
   test_ints ();
+  BOOST_CXX14_CONSTEXPR bool constexpr_iota_res = test_constexpr_iota ();
+  BOOST_CHECK(constexpr_iota_res);
+  BOOST_CXX14_CONSTEXPR bool constexpr_iota_n_res = test_constexpr_iota_n ();
+  BOOST_CHECK(constexpr_iota_n_res);
 }

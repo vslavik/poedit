@@ -59,6 +59,10 @@ main()
         real_parser<double, ts_real_policies<double> > ts_real;
         double  d;
 
+        BOOST_TEST(test("123.01", ts_real));
+        BOOST_TEST(test_attr("123.01", ts_real, d)
+                && compare(d, 123.01));
+
         BOOST_TEST(test("123,456,789.01", ts_real));
         BOOST_TEST(test_attr("123,456,789.01", ts_real, d)
                 && compare(d, 123456789.01));

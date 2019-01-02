@@ -21,7 +21,7 @@
 <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
   <tr>
     <td width="277">
-<p dir="ltr">
+<p>
 <a href="../../../index.htm">
 <img src="../../../boost.png" alt="boost.png (6897 bytes)" align="middle" width="300" height="86" border="0"></a></td>
     <td align="middle">
@@ -51,7 +51,8 @@
 
 
 
-<p><i>Headings and synopsis for recently added functionality is show with <ins>a green background</ins>. </i></p>
+<p><i>Headings and synopsis for recently added functionality are shown with a 
+<span style="background-color: #CCFFCC">green background</span>. </i></p>
 
 
 
@@ -95,9 +96,9 @@
  &nbsp;<a href="#Class-filesystem_error">Class <code>filesystem_error</code></a><br>
 &nbsp;&nbsp;&nbsp; <a href="#filesystem_error-members"><code>filesystem_error</code> 
     constructors</a><br>
-&nbsp;&nbsp;&nbsp; <code>f</code><a href="#filesystem_error-path1"><code>ilesystem_error</code> path1</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#filesystem_error-path1"><code>filesystem_error</code> path1</a><br>
 &nbsp;&nbsp;&nbsp; <a href="#filesystem_error-path2"><code>filesystem_error</code> path2</a><br>
-&nbsp;&nbsp;&nbsp; <a href="#filesystem_error-what"><code>filesystem_error </code>what</a></td>
+&nbsp;&nbsp;&nbsp; <a href="#filesystem_error-what"><code>filesystem_error</code> what</a></td>
     <td width="33%" valign="top">
     <p>
     <a href="#Enum-file_type">Enum <code>file_type</code></a><br>
@@ -146,7 +147,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#last_write_time">last_write_time</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#permissions">permissions</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#read_symlink">read_symlink</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp; <a href="#op-relative"><ins>relative</ins></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; <a href="#op-relative">
+    <span style="background-color: #CCFFCC">relative</span></a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#remove">remove</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#remove_all">remove_all</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#rename">rename</a><br>
@@ -158,7 +160,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#system_complete">system_complete</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#temp_directory_path">temp_directory_path</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="#unique_path">unique_path</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp; <a href="#weakly_canonical"><ins>weakly_canonical</ins></a><br></code>
+&nbsp;&nbsp;&nbsp;&nbsp; <a href="#weakly_canonical">
+    <span style="background-color: #CCFFCC">weakly_canonical</span></a><br></code>
     <a href="#File-streams">File streams</a><br>
 <a href="#path-decomposition-table">Path decomposition table</a><br>
     <a href="#long-path-warning">Warning: Long paths on Windows and the 
@@ -386,7 +389,7 @@ native pathname format.</p>
 
 <h3><a name="native-pathname-format">native pathname format</a> [fs.def.native]</h3>
 <p>The operating system dependent pathname format accepted by the host operating system.</p>
-<h3><ins><a name="normal-form">normal form</a> path [fs.def.normal]</ins></h3>
+<h3><a name="normal-form"><span style="background-color: #CCFFCC">normal form</span></a><span style="background-color: #CCFFCC"> path</span> [fs.def.normal]</h3>
 <p>A path with no redundant current directory (<i>dot</i>) or parent directory (<i>dot-dot</i>) 
 elements. The normal form for an empty path is an empty path. The normal form 
 for a path ending in a <i>directory-separator</i> that is not the root directory 
@@ -998,6 +1001,8 @@ of a path. The path does not necessarily exist in external storage, and the
 pathname is not necessarily valid for the current operating 
 system or for a particular file system.</p>
 
+<div dir="ltr">
+
 <pre>namespace boost
 {
   namespace filesystem
@@ -1008,6 +1013,8 @@ system or for a particular file system.</p>
         typedef <b><i><a href="#value_type">see below</a></i></b>                                    value_type;
         typedef std::basic_string&lt;value_type&gt;                string_type;
         typedef std::codecvt&lt;wchar_t, char, std::mbstate_t&gt;  codecvt_type;
+        constexpr value_type                                 dot;
+        constexpr value_type                                 separator;
         constexpr value_type                                 preferred_separator;
 
         // <a href="#path-constructors">constructors</a> and destructor
@@ -1117,6 +1124,8 @@ system or for a particular file system.</p>
 
         // <a href="#path-query">query</a>
         bool <a href="#path-query">empty</a>() const;
+        <span style="background-color: #CCFFCC">bool <a href="#filename_is_dot">filename_is_dot</a>() const;</span>
+        <span style="background-color: #CCFFCC">bool <a href="#filename_is_dot­_dot">filename_is_dot_dot</a>() const;</span>
         bool <a href="#path-has_root_name">has_root_name</a>() const;
         bool <a href="#path-has_root_directory">has_root_directory</a>() const;
         bool <a href="#path-has_root_path">has_root_path</a>() const;
@@ -1149,6 +1158,8 @@ system or for a particular file system.</p>
 
   }  // namespace filesystem
 }  // namespace boost</pre>
+
+</div>
 
 <p><code><a name="value_type">value_type</a></code> is a <code>typedef</code> for the 
 character type used by the operating system to represent pathnames.</p>
@@ -1516,7 +1527,7 @@ does not affect <code>path</code> equality.<i> —end example</i>]</p>
 <p><i>Returns:</i> <code>pathname.c_str()</code>.</p>
 </blockquote>
 
-<pre><ins>string_type::size_type <a name="path-size">size</a>() const noexcept;</ins></pre>
+<pre><span style="background-color: #CCFFCC">string_type::size_type </span><a name="path-size"><span style="background-color: #CCFFCC">size</span></a><span style="background-color: #CCFFCC">() const noexcept;</span></pre>
 
 <blockquote>
 <p><i>Returns:</i> <code>pathname.size()</code>.</p>
@@ -1663,7 +1674,7 @@ std::cout &lt;&lt; path(&quot;..&quot;).filename();           // outputs &quot;.
   <p> <i>—end example</i>]</p>
 </blockquote>
 
-<pre>path <a name="path-stem">stem</a>(const path&amp; p) const;</pre>
+<pre>path <a name="path-stem">stem</a>() const;</pre>
 
 <blockquote>
   <p><i>Returns:</i> if <code>p.filename()</code> contains a dot but does not 
@@ -1686,7 +1697,7 @@ for (; !p.extension().empty(); p = p.stem())
   <p> <i>—end example</i>]</p>
 </blockquote>
 
-<pre>path <a name="path-extension">extension</a>(const path&amp; p) const;</pre>
+<pre>path <a name="path-extension">extension</a>() const;</pre>
 
 <blockquote>
   <p><i>Returns:</i> if <code>p.filename()</code> contains a dot but does not 
@@ -1704,11 +1715,10 @@ for (; !p.extension().empty(); p = p.stem())
   </blockquote>
   <p> <i>—end example</i>]</p>
   <p>[<i>Note:<b> </b></i>The dot is included in the return value so that it is 
-  possible to distinguish between no extension and an empty extension. <span style="background-color: #FFFF00">
-  See
-  </span> <a href="http://permalink.gmane.org/gmane.comp.lib.boost.devel/199744">
-  <span style="background-color: #FFFF00">http://permalink.gmane.org/gmane.comp.lib.boost.devel/199744</span></a><span style="background-color: #FFFF00"> for more 
-  extensive rationale.&nbsp; </span> <i><span style="background-color: #FFFF00">—end note</span></i><span style="background-color: #FFFF00">]</span></p>
+  possible to distinguish between no extension and an empty extension.
+  See <a href="http://permalink.gmane.org/gmane.comp.lib.boost.devel/199744">
+  http://permalink.gmane.org/gmane.comp.lib.boost.devel/199744</a> for more 
+  extensive rationale.&nbsp; <i>—end note</i>]</p>
 </blockquote>
 <h3> <a name="path-query"> <code><font size="4">path</font></code> query</a> [path.query]</h3>
 
@@ -1716,6 +1726,34 @@ for (; !p.extension().empty(); p = p.stem())
 
 <blockquote>
   <p><i>Returns:</i> <code>m_pathname.empty()</code>.</p>
+</blockquote>
+
+<pre><span style="background-color: #CCFFCC">bool </span><a name="filename_is_dot"><span style="background-color: #CCFFCC">filename_is_dot</span></a><span style="background-color: #CCFFCC">() const;</span></pre>
+
+<blockquote>
+  <p><i>Returns:</i> <code>filename() == path(&quot;.&quot;)</code></p>
+  <p>[<i>Example:</i></p>
+  <blockquote>
+    
+    <pre>std::cout &lt;&lt; path(&quot;.&quot;).filename_is_dot();     // outputs 1
+std::cout &lt;&lt; path(&quot;/.&quot;).filename_is_dot();    // outputs 1
+std::cout &lt;&lt; path(&quot;foo/.&quot;).filename_is_dot(); // outputs 1
+std::cout &lt;&lt; path(&quot;foo/&quot;).filename_is_dot();  // outputs 1
+std::cout &lt;&lt; path(&quot;/&quot;).filename_is_dot();     // outputs 0
+std::cout &lt;&lt; path(&quot;/foo&quot;).filename_is_dot();  // outputs 0
+std::cout &lt;&lt; path(&quot;/foo.&quot;).filename_is_dot(); // outputs 0
+std::cout &lt;&lt; path(&quot;..&quot;).filename_is_dot();    // outputs 0</pre>
+    
+  </blockquote>
+  <p> See the last bullet item in the <a href="#path-iterators">forward traversal order</a> 
+  list for why <code>path(&quot;foo/&quot;).filename()</code> is a dot filename.</p>
+  <p> <i>—end example</i>]</p>
+</blockquote>
+
+<pre><span style="background-color: #CCFFCC">bool </span><span style="background-color: #CCFFCC"><a name="filename_is_dot­_dot">filename_is_dot_dot</a>() const;</span></pre>
+
+<blockquote>
+  <p><i>Returns:</i> <code>filename() == path(&quot;..&quot;)</code></p>
 </blockquote>
 
 <pre>bool <a name="path-has_root_path">has_root_path</a>() const;</pre>
@@ -1897,7 +1935,11 @@ const string_type  external_directory_string() const { return native(); }</pre>
   <p>[<i>Note:</i> A <code>path</code> aware <code>lexicographical_compare</code> algorithm is provided for historical reasons. <i>—end note</i>]</p>
 </blockquote>
 
-  <pre><ins>path lexically_<a name="lex-normal">normal</a>(const path&amp; p);</ins></pre>
+  <div>
+
+  <pre><span style="background-color: #CCFFCC">path lexically_</span><a name="lex-normal"><span style="background-color: #CCFFCC">normal</span></a><span style="background-color: #CCFFCC">(const path&amp; p);</span></pre>
+
+  </div>
 
 <blockquote>
   <p><i>Overview:</i> Returns <code>p</code> with redundant current 
@@ -1917,7 +1959,11 @@ const string_type  external_directory_string() const { return native(); }</pre>
   —end example</i>]</p>
 </blockquote>
 
-  <pre><ins>path lexically_<a name="lex-relative">relative</a>(const path&amp; p, const path&amp; base);</ins></pre>
+  <div>
+
+  <pre>path lexically_<a name="lex-relative">relative</a>(const path&amp; p, const path&amp; base);</pre>
+
+  </div>
 
 <blockquote>
   <p><i>Overview:</i> Returns <code>p</code> made relative to <code>
@@ -4221,7 +4267,7 @@ multiple string types. His idea became the basis for the version 3 path design.<
 </font>
 <a href="http://www.boost.org/LICENSE_1_0.txt"><font size="2">www.boost.org/LICENSE_1_0.txt</font></a></p>
 <p><font size="2">Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->25 October 2015<!--webbot bot="Timestamp" endspan i-checksum="32445" --></font></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B %Y" startspan -->01 December 2015<!--webbot bot="Timestamp" endspan i-checksum="39286" --></font></p>
 
 
 </body></html>

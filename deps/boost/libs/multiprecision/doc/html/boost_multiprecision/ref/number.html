@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>number</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="../ref.html" title="Reference">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="boost_multiprecision.ref.number.h0"></a>
-        <span><a name="boost_multiprecision.ref.number.synopsis"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.synopsis">Synopsis</a>
+        <span class="phrase"><a name="boost_multiprecision.ref.number.synopsis"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">multiprecision</span><span class="special">{</span>
 
@@ -40,6 +40,10 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span> <span class="special">=</span> <span class="identifier">expression_template_default</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">number</span>
 <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+   <span class="keyword">typedef</span>          <span class="identifier">Backend</span>                          <span class="identifier">backend_type</span><span class="special">;</span>
+   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">component_type</span><span class="special">&lt;</span><span class="identifier">self_type</span><span class="special">&gt;::</span><span class="identifier">type</span>  <span class="identifier">value_type</span><span class="special">;</span>
+
    <span class="identifier">number</span><span class="special">();</span>
    <span class="identifier">number</span><span class="special">(</span><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span><span class="special">);</span>
    <span class="identifier">number</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span><span class="special">);</span>
@@ -86,6 +90,13 @@
    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">V</span><span class="special">&gt;</span>
    <span class="keyword">typename</span> <span class="identifier">enable_if</span><span class="special">&lt;</span><span class="identifier">is_convertible</span><span class="special">&lt;</span><span class="identifier">V</span><span class="special">,</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span> <span class="special">&gt;,</span> <span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">type</span>
       <span class="identifier">compare</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">V</span><span class="special">&amp;</span> <span class="identifier">o</span><span class="special">)</span><span class="keyword">const</span><span class="special">;</span>
+   <span class="comment">// real and imaginary parts:</span>
+   <span class="identifier">value_type</span> <span class="identifier">real</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
+   <span class="identifier">value_type</span> <span class="identifier">imag</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
+   <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+   <span class="keyword">void</span> <span class="identifier">real</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">);</span>
+   <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+   <span class="keyword">void</span> <span class="identifier">imag</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">);</span>
    <span class="comment">// Access to the underlying implementation:</span>
    <span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">();</span>
    <span class="keyword">const</span> <span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
@@ -136,41 +147,94 @@
 <span class="emphasis"><em>number</em></span>                                    <span class="identifier">min</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>number</em></span>                                    <span class="identifier">max</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
-<span class="comment">// Non-member function standard library support:</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fabs</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sqrt</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">floor</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ceil</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">trunc</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="comment">// C99 Non-member function standard library support:</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">acos</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">acosh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">asin</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">asinh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">atanh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">cbrt</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ceil</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">copysign</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cos</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cosh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">erf</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">erfc</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp2</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">expm1</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fabs</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fdim</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">floor</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fma</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmin</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmax</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">hypot</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">lgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span> <span class="keyword">long</span>                                 <span class="identifier">llrint</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span> <span class="keyword">long</span>                                 <span class="identifier">llround</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log2</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log10</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">log1p</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span>                                      <span class="identifier">lrint</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span>                                      <span class="identifier">lround</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">modf</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">nearbyint</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">nextafter</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">nexttoward</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">remainder</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">remquo</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">rint</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">round</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbln</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sin</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sqrt</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tan</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">tgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">trunc</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+
+<span class="keyword">int</span>                                       <span class="identifier">fpclassify</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isfinite</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isinf</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isnan</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isnormal</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">int</span>                                       <span class="identifier">signbit</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+
+<span class="keyword">bool</span>                                      <span class="identifier">isgreater</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isgreaterequal</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isless</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">islessequal</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">islessgreater</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isunordered</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="comment">// Complex number functions:</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">real</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">imag</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">abs</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">arg</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">norm</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">conj</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">proj</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">polar</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="comment">// Misc other common C library functions:</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">itrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ltrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">lltrunc</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">round</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">iround</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">lround</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">llround</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log10</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cos</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sin</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tan</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">acos</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">asin</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cosh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">changesign</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">copysign</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
 <span class="comment">// Traits support:</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -239,7 +303,7 @@
 </pre>
 <h5>
 <a name="boost_multiprecision.ref.number.h1"></a>
-        <span><a name="boost_multiprecision.ref.number.description"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.description">Description</a>
+        <span class="phrase"><a name="boost_multiprecision.ref.number.description"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.description">Description</a>
       </h5>
 <pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">expression_template_option</span> <span class="special">{</span> <span class="identifier">et_on</span> <span class="special">=</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">et_off</span> <span class="special">=</span> <span class="number">0</span> <span class="special">};</span>
 </pre>
@@ -263,7 +327,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Backend</span></dt>
 <dd><p>
               The actual arithmetic back-end that does all the work.
@@ -288,7 +352,7 @@
         Type <code class="computeroutput"><span class="identifier">number</span></code> is default constructible,
         and both copy constructible and assignable from:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Itself.
           </li>
@@ -319,7 +383,7 @@
         Type <code class="computeroutput"><span class="identifier">number</span></code> is explicitly
         constructible from:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Any type mentioned above.
           </li>
@@ -363,6 +427,21 @@
         Where the two args must either be arithmetic types, or types that are convertible
         to the two components of <code class="computeroutput"><span class="keyword">this</span></code>.
       </p>
+<p>
+        Finally, when the type has a variable precision, then there are constructors:
+      </p>
+<pre class="programlisting"><span class="identifier">number</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">,</span> <span class="identifier">precision</span><span class="special">);</span>
+<span class="identifier">number</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">,</span> <span class="identifier">arg2</span><span class="special">,</span> <span class="identifier">precision</span><span class="special">);</span>
+</pre>
+<p>
+        Where <code class="computeroutput"><span class="identifier">precision</span></code> is an unsigned
+        value, the 2 arg version is active for scalar types and/or copy-construction
+        with specific precision, and the 3-arg version for complex types.
+      </p>
+<p>
+        Likewise <code class="computeroutput"><span class="identifier">assign</span></code> has a 2-arg
+        overloaded, with the second argument being the precision.
+      </p>
 <pre class="programlisting"><span class="identifier">number</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">+=(</span><span class="keyword">const</span> <span class="emphasis"><em>see-below</em></span><span class="special">&amp;);</span>
 <span class="identifier">number</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">-=(</span><span class="keyword">const</span> <span class="emphasis"><em>see-below</em></span><span class="special">&amp;);</span>
 <span class="identifier">number</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">*=(</span><span class="keyword">const</span> <span class="emphasis"><em>see-below</em></span><span class="special">&amp;);</span>
@@ -385,7 +464,7 @@
 <p>
         The arguments to these operators is either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Another <code class="computeroutput"><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span>
             <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span></code>.
@@ -474,7 +553,7 @@
 <p>
         Returns:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             A value less that 0 for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span> <span class="special">&lt;</span> <span class="identifier">other</span></code>
           </li>
@@ -486,17 +565,35 @@
             Zero for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span>
             <span class="special">==</span> <span class="identifier">other</span></code>
           </p>
-<pre class="programlisting"><span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">();</span>
-<span class="keyword">const</span> <span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">value_type</span> <span class="identifier">real</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
+<span class="identifier">value_type</span> <span class="identifier">imag</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
 </pre>
 </li>
 </ul></div>
+<p>
+        These return the real and imaginary parts respectively. If the number is
+        not a complex type, then the imaginary part is always zero.
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">real</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">imag</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">);</span>
+</pre>
+<p>
+        These set the real and imaginary parts respectively of the number. If the
+        number is not a complex type, then setting the real part is equivalent to
+        assignment, and attempting to set the imaginary part will result in a compile
+        time error.
+      </p>
+<pre class="programlisting"><span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">();</span>
+<span class="keyword">const</span> <span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
+</pre>
 <p>
         Returns the underlying back-end instance used by <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h2"></a>
-        <span><a name="boost_multiprecision.ref.number.non_member_operators"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_operators">Non-member
+        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_operators"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_operators">Non-member
         operators</a>
       </h5>
 <pre class="programlisting"><span class="comment">// Non member operators:</span>
@@ -527,7 +624,7 @@
 <p>
         The arguments to these functions must contain at least one of the following:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             A <code class="computeroutput"><span class="identifier">number</span></code>.
           </li>
@@ -542,7 +639,7 @@
 <p>
         The return type of these operators is either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             An <span class="emphasis"><em>unmentionable-type</em></span> expression template type when
             <code class="computeroutput"><span class="identifier">ExpressionTemplates</span></code> is
@@ -567,7 +664,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h3"></a>
-        <span><a name="boost_multiprecision.ref.number.swap"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.swap">swap</a>
+        <span class="phrase"><a name="boost_multiprecision.ref.number.swap"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.swap">swap</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">b</span><span class="special">);</span>
@@ -577,7 +674,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h4"></a>
-        <span><a name="boost_multiprecision.ref.number.iostream_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.iostream_support">Iostream
+        <span class="phrase"><a name="boost_multiprecision.ref.number.iostream_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.iostream_support">Iostream
         Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
@@ -598,7 +695,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h5"></a>
-        <span><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi">Arithmetic
+        <span class="phrase"><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi">Arithmetic
         with a higher precision result</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">ResultType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Source1</span> <span class="keyword">class</span> <span class="identifier">Source2</span><span class="special">&gt;</span>
@@ -630,50 +727,87 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h6"></a>
-        <span><a name="boost_multiprecision.ref.number.non_member_standard_library_func"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_func">Non-member
+        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_standard_library_func"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_func">Non-member
         standard library function support</a>
       </h5>
-<pre class="programlisting"><span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fabs</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sqrt</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">floor</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ceil</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">trunc</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">itrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ltrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">lltrunc</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">round</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">iround</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">lround</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">llround</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log10</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cos</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sin</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tan</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">acos</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">asin</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cosh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<pre class="programlisting"><span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">acos</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">acosh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">asin</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">asinh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">atanh</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">cbrt</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ceil</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">copysign</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cos</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">cosh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">erf</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">erfc</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">exp2</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">expm1</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fabs</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fdim</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">floor</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fma</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmin</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmax</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">hypot</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">lgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span> <span class="keyword">long</span>                                 <span class="identifier">llrint</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span> <span class="keyword">long</span>                                 <span class="identifier">llround</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log2</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">log10</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">log1p</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span>                                      <span class="identifier">lrint</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">long</span>                                      <span class="identifier">lround</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">modf</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">nearbyint</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">nextafter</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">nexttoward</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">remainder</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">remquo</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">rint</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">round</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbln</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sin</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sqrt</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tan</span>        <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>       <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">tgamma</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">trunc</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
-<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">int</span>                                       <span class="identifier">fpclassify</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isfinite</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isinf</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isnan</span>      <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isnormal</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">int</span>                                       <span class="identifier">signbit</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+
+<span class="keyword">bool</span>                                      <span class="identifier">isgreater</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isgreaterequal</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isless</span>     <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">islessequal</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">islessgreater</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="keyword">bool</span>                                      <span class="identifier">isunordered</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 </pre>
 <p>
         These functions all behave exactly as their standard library C++11 counterparts
         do: their argument is either an instance of <code class="computeroutput"><span class="identifier">number</span></code>
         or an expression template derived from it; If the argument is of type <code class="computeroutput"><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;</span></code>
         then that is also the return type, otherwise the return type is an expression
-        template.
+        template unless otherwise stated.
       </p>
 <p>
         The integer type arguments to <code class="computeroutput"><span class="identifier">ldexp</span></code>,
@@ -683,9 +817,41 @@
         exponent of the number type.
       </p>
 <p>
-        These functions are normally implemented by the Backend type. However, default
-        versions are provided for Backend types that don't have native support for
-        these functions. Please note however, that this default support requires
+        Complex number types support the following functions:
+      </p>
+<pre class="programlisting"><span class="comment">// Complex number functions:</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">real</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">imag</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">abs</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">arg</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number&lt;...&gt;::value_type</em></span>                   <span class="identifier">norm</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">conj</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">proj</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">polar</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+</pre>
+<p>
+        In addition the functions <code class="computeroutput"><span class="identifier">real</span></code>,
+        <code class="computeroutput"><span class="identifier">imag</span></code>, <code class="computeroutput"><span class="identifier">arg</span></code>,
+        <code class="computeroutput"><span class="identifier">norm</span></code>, <code class="computeroutput"><span class="identifier">conj</span></code>
+        and <code class="computeroutput"><span class="identifier">proj</span></code> are overloaded for
+        scalar (ie non-complex) types in the same manner as <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">complex</span><span class="special">&gt;</span></code>
+        and treat the argument as a value whose imaginary part is zero.
+      </p>
+<p>
+        There are also some functions implemented for compatibility with the Boost.Math
+        functions of the same name:
+      </p>
+<pre class="programlisting"><span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">itrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ltrunc</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">lltrunc</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">iround</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">changesign</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">copysign</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+</pre>
+<p>
+        All these functions are normally implemented by the Backend type. However,
+        default versions are provided for Backend types that don't have native support
+        for these functions. Please note however, that this default support requires
         the precision of the type to be a compile time constant - this means for
         example that the <a href="http://gmplib.org" target="_top">GMP</a> MPF Backend will
         not work with these functions when that type is used at variable precision.
@@ -972,7 +1138,7 @@
               </td>
 <td>
                 <p>
-                  1045eps<sup>[<a name="boost_multiprecision.ref.number.f0" href="#ftn.boost_multiprecision.ref.number.f0" class="footnote">1</a>]</sup>
+                  1045eps<a href="#ftn.boost_multiprecision.ref.number.f0" class="footnote" name="boost_multiprecision.ref.number.f0"><sup class="footnote">[1]</sup></a>
                 </p>
               </td>
 <td>
@@ -1075,14 +1241,14 @@
               </td>
 </tr>
 </tbody>
-<tbody class="footnotes"><tr><td colspan="4"><div class="footnote"><p><sup>[<a id="ftn.boost_multiprecision.ref.number.f0" href="#boost_multiprecision.ref.number.f0" class="para">1</a>] </sup>
+<tbody class="footnotes"><tr><td colspan="4"><div id="ftn.boost_multiprecision.ref.number.f0" class="footnote"><p><a href="#boost_multiprecision.ref.number.f0" class="para"><sup class="para">[1] </sup></a>
                     It's likely that the inherent error in the input values to our
                     test cases are to blame here.
                   </p></div></td></tr></tbody>
 </table></div>
 <h5>
 <a name="boost_multiprecision.ref.number.h7"></a>
-        <span><a name="boost_multiprecision.ref.number.traits_class_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.traits_class_support">Traits Class
+        <span class="phrase"><a name="boost_multiprecision.ref.number.traits_class_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.traits_class_support">Traits Class
         Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -1123,7 +1289,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h8"></a>
-        <span><a name="boost_multiprecision.ref.number.integer_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.integer_functions">Integer
+        <span class="phrase"><a name="boost_multiprecision.ref.number.integer_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.integer_functions">Integer
         functions</a>
       </h5>
 <p>
@@ -1262,7 +1428,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h9"></a>
-        <span><a name="boost_multiprecision.ref.number.rational_number_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.rational_number_functions">Rational
+        <span class="phrase"><a name="boost_multiprecision.ref.number.rational_number_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.rational_number_functions">Rational
         Number Functions</a>
       </h5>
 <pre class="programlisting"><span class="keyword">typename</span> <span class="identifier">component_type</span><span class="special">&lt;</span><span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">numerator</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
@@ -1274,7 +1440,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h10"></a>
-        <span><a name="boost_multiprecision.ref.number.boost_math_interoperability_supp"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_supp">Boost.Math
+        <span class="phrase"><a name="boost_multiprecision.ref.number.boost_math_interoperability_supp"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_supp">Boost.Math
         Interoperability Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
@@ -1297,7 +1463,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h11"></a>
-        <span><a name="boost_multiprecision.ref.number.std_numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std_numeric_limits_support">std::numeric_limits
+        <span class="phrase"><a name="boost_multiprecision.ref.number.std_numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std_numeric_limits_support">std::numeric_limits
         support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span><span class="special">{</span>

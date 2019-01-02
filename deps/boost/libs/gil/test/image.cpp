@@ -1,31 +1,30 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-// image_test.cpp : 
 //
-
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifdef _MSC_VER
-//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
+#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
 #pragma warning(disable : 4503)     // decorated name length exceeded, name was truncated
 #endif
 
-#include <string>
-#include <vector>
+#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
+
+#include <boost/core/ignore_unused.hpp>
+#include <boost/crc.hpp>
+#include <boost/lambda/bind.hpp>
+#include <boost/lambda/lambda.hpp>
+#include <boost/mpl/vector.hpp>
+
 #include <ios>
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <boost/lambda/lambda.hpp>
-#include <boost/lambda/bind.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
-#include <boost/crc.hpp>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace boost::gil;
 using namespace std;
@@ -33,6 +32,11 @@ using namespace boost;
 
 extern rgb8c_planar_view_t sample_view;
 void error_if(bool condition);
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4127) //conditional expression is constant
+#endif
 
 
 // When BOOST_GIL_GENERATE_REFERENCE_DATA is defined, the reference data is generated and saved.
@@ -71,7 +75,7 @@ struct my_color_converter_impl<C1,gray_t> {
 
 struct my_color_converter {
     template <typename SrcP,typename DstP>
-    void operator()(const SrcP& src,DstP& dst) const { 
+    void operator()(const SrcP& src,DstP& dst) const {
         typedef typename color_space_type<SrcP>::type src_cs_t;
         typedef typename color_space_type<DstP>::type dst_cs_t;
         my_color_converter_impl<src_cs_t,dst_cs_t>()(src,dst);
@@ -81,8 +85,7 @@ struct my_color_converter {
 // Models a Unary Function
 template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn {
-    typedef point2<std::ptrdiff_t>    point_t;
-
+    using point_t = boost::gil::point_t;
     typedef mandelbrot_fn        const_t;
     typedef P                    value_type;
     typedef value_type           reference;
@@ -101,7 +104,7 @@ struct mandelbrot_fn {
     result_type operator()(const point_t& p) const {
         // normalize the coords to (-2..1, -1.5..1.5)
         // (actually make y -1.0..2 so it is asymmetric, so we can verify some view factory methods)
-        double t=get_num_iter(point2<double>(p.x/(double)_img_size.x*3-2, p.y/(double)_img_size.y*3-1.0f));//1.5f));
+        double t=get_num_iter(point<double>(p.x/(double)_img_size.x*3-2, p.y/(double)_img_size.y*3-1.0f));//1.5f));
         t=pow(t,0.2);
 
         value_type ret;
@@ -111,10 +114,10 @@ struct mandelbrot_fn {
     }
 
 private:
-    double get_num_iter(const point2<double>& p) const {
-        point2<double> Z(0,0);
+    double get_num_iter(const point<double>& p) const {
+        point<double> Z(0,0);
         for (int i=0; i<MAX_ITER; ++i) {
-            Z = point2<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
+            Z = point<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
             if (Z.x*Z.x + Z.y*Z.y > 4)
                 return i/(double)MAX_ITER;
         }
@@ -144,7 +147,6 @@ struct pixel_is_homogeneous<packed_pixel<P,C,L> > : public mpl::false_ {};
 template <typename View>
 struct view_is_homogeneous : public pixel_is_homogeneous<typename View::value_type> {};
 
-
 ////////////////////////////////////////////////////
 ///
 ///  Tests image view transformations and algorithms
@@ -169,14 +171,17 @@ private:
     template <typename Img> void basic_test(const string& prefix);
     template <typename View> void view_transformations_test(const View& img_view, const string& prefix);
     template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::true_);
-    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::false_) {}
+    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::false_)
+    {
+        boost::ignore_unused(img_view);
+        boost::ignore_unused(prefix);
+    }
     template <typename View> void histogram_test(const View& img_view, const string& prefix);
     void virtual_view_test();
     void packed_image_test();
     void dynamic_image_test();
     template <typename Img> void image_all_test(const string& prefix);
 };
-
 
 // testing image iterators, clone, fill, locators, color convert
 template <typename Img>
@@ -246,7 +251,6 @@ void image_test::histogram_test(const View& img_view, const string& prefix) {
     check_view(hist_view,prefix+"histogram");
 }
 
-
 template <typename View>
 void image_test::view_transformations_test(const View& img_view, const string& prefix) {
     check_view(img_view,prefix+"original");
@@ -260,7 +264,7 @@ void image_test::view_transformations_test(const View& img_view, const string& p
     check_view(rotated90ccw_view(img_view),prefix+"90ccw");
     check_view(flipped_up_down_view(img_view),prefix+"flipped_ud");
     check_view(flipped_left_right_view(img_view),prefix+"flipped_lr");
-    check_view(subsampled_view(img_view,typename View::point_t(2,1)),prefix+"subsampled");   
+    check_view(subsampled_view(img_view,typename View::point_t(2,1)),prefix+"subsampled");
     check_view(kth_channel_view<0>(img_view),prefix+"0th_k_channel");
     homogeneous_view_transformations_test(img_view, prefix, view_is_homogeneous<View>());
 }
@@ -269,7 +273,6 @@ template <typename View>
 void image_test::homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::true_) {
     check_view(nth_channel_view(img_view,0),prefix+"0th_n_channel");
 }
-
 
 void image_test::virtual_view_test() {
     typedef mandelbrot_fn<rgb8_pixel_t> deref_t;
@@ -320,7 +323,7 @@ void image_test::dynamic_image_test() {
     check_view(view(any_img), "dynamic_");
     check_view(flipped_left_right_view(view(any_img)), "dynamic_fliplr");
     check_view(flipped_up_down_view(view(any_img)), "dynamic_flipud");
-    
+
     any_image_t::view_t subimageView=subimage_view(view(any_img),0,0,10,15);
 
     check_view(subimageView, "dynamic_subimage");
@@ -353,7 +356,7 @@ void image_test::run() {
     image_all_test<bgr121_image_t>("bgr121_");
 
     // TODO: Remove?
-    view_transformations_test(subsampled_view(sample_view,point2<ptrdiff_t>(1,2)),"subsampled_");
+    view_transformations_test(subsampled_view(sample_view, point_t(1,2)), "subsampled_");
     view_transformations_test(color_converted_view<gray8_pixel_t>(sample_view),"color_converted_");
 
     virtual_view_test();
@@ -362,8 +365,6 @@ void image_test::run() {
 
     finalize();
 }
-
-
 
 ////////////////////////////////////////////////////
 ///
@@ -394,12 +395,17 @@ private:
 
 // Load the checksums from the reference file and create the start image
 void checksum_image_test::initialize() {
-    string crc_name; 
     boost::crc_32_type::value_type crc_result;
     fstream checksum_ref(_filename,ios::in);
     while (true) {
+        string crc_name;
         checksum_ref >> crc_name >> std::hex >> crc_result;
         if(checksum_ref.fail()) break;
+        if (!crc_name.empty() && crc_name[0] == '#')
+        {
+            crc_result = 0; // skip test case
+            crc_name = crc_name.substr(1);
+        }
         _crc_map[crc_name]=crc_result;
     }
     checksum_ref.close();
@@ -409,10 +415,20 @@ void checksum_image_test::initialize() {
 void checksum_image_test::check_view_impl(const rgb8c_view_t& img_view, const string& name) {
     boost::crc_32_type checksum_acumulator;
     checksum_acumulator.process_bytes(img_view.row_begin(0),img_view.size()*3);
+    unsigned int const crc_expect = _crc_map[name];
+    if (crc_expect == 0)
+    {
+        cerr << "Skipping checksum check for " << name << " (crc=0)" << endl;
+        return;
+    }
 
-    cerr << "Checking checksum for " << name << endl;
-    if (checksum_acumulator.checksum()!=_crc_map[name]) {
-        cerr << "Checksum error in "<<name<<"\n";
+    boost::crc_32_type::value_type const crc = checksum_acumulator.checksum();
+    if (crc==crc_expect) {
+        cerr << "Checking checksum for " << name << " (crc=" << std::hex << crc << ")" << endl;
+    }
+    else {
+        cerr << "Checksum error in " << name
+             << " (crc=" << std::hex << crc << " != " << std::hex << crc_expect << ")" << endl;
         error_if(true);
     }
 }
@@ -449,7 +465,6 @@ void checksum_image_generate::finalize() {
     checksum_ref.close();
 }
 
-
 ////////////////////////////////////////////////////
 ///
 ///  Performs or generates image tests using image I/O
@@ -463,48 +478,6 @@ extern const string ref_dir;
 const string in_dir="";  // directory of source images
 const string out_dir=in_dir+"image-out/";    // directory where to write output
 const string ref_dir=in_dir+"image-ref/";  // reference directory to compare written with actual output
-
-#ifndef BOOST_GIL_NO_IO
-
-#include <boost/gil/extension/io/jpeg_io.hpp>
-
-class file_image_mgr : public image_test {};
-
-class file_image_test : public file_image_mgr {
-public:
-    file_image_test(const char*) {}
-protected:
-    void check_view_impl(const boost::gil::rgb8c_view_t& img_view,const string& name) {
-        jpeg_write_view(out_dir+name+".jpg",img_view);
-        rgb8_image_t img1, img2;
-        jpeg_read_and_convert_image(out_dir+name+".jpg",img1);
-        cerr << "Testing "<<name<<"\n";
-
-        jpeg_read_and_convert_image(ref_dir+name+".jpg",img2);
-        if (img1!=img2) {
-            cerr << "Error with "<<name<<"\n";
-            error_if(true);
-        }
-    }
-};
-
-class file_image_generate : public file_image_mgr {
-public:
-    file_image_generate(const char*) {}
-protected:
-    void check_view_impl(const boost::gil::rgb8c_view_t& img_view,const string& name) {
-        jpeg_write_view(ref_dir+name+".jpg",img_view);
-        cerr << "Writing "<<name<<"\n";
-    }
-};
-#endif
-
-
-
-
-
-
-
 
 void static_checks() {
     gil_function_requires<ImageConcept<rgb8_image_t> >();
@@ -526,7 +499,7 @@ void static_checks() {
     BOOST_STATIC_ASSERT(view_is_mutable<rgb8_planar_view_t>::value);
 
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t>::type, cmyk8c_planar_step_view_t>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, bits16, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, std::uint16_t, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, mpl::false_, use_default, mpl::false_>::type,  rgb8c_step_view_t>::value));
 
     // test view get raw data (mostly compile-time test)
@@ -545,13 +518,8 @@ void static_checks() {
     }
 }
 
-#ifdef BOOST_GIL_NO_IO
 typedef checksum_image_test     image_test_t;
 typedef checksum_image_generate image_generate_t;
-#else
-typedef file_image_test         image_test_t;
-typedef file_image_generate     image_generate_t;
-#endif
 
 #ifdef BOOST_GIL_GENERATE_REFERENCE_DATA
 typedef image_generate_t        image_mgr_t;
@@ -559,32 +527,37 @@ typedef image_generate_t        image_mgr_t;
 typedef image_test_t            image_mgr_t;
 #endif
 
-
 void test_image(const char* ref_checksum) {
     image_mgr_t mgr(ref_checksum);
 
+    cerr << "Reading checksums from " << ref_checksum << endl;
     mgr.run();
     static_checks();
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
+    try
+    {
+        if (argc != 2)
+            throw std::runtime_error("No file with reference checksums specified");
 
-    const char* local_name = "gil_reference_checksums.txt";
-    const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
+        std::string local_name = argv[1];
+        std::ifstream file_is_there(local_name.c_str());
+        if (!file_is_there)
+            throw std::runtime_error("Unable to open gil_reference_checksums.txt");
 
-    std::ifstream file_is_there(local_name);
-    if (file_is_there) {
-        test_image(local_name);
-    } else {
-        std::ifstream file_is_there(name_from_status);
-        if (file_is_there)
-            test_image(name_from_status);
-        else {
-            std::cerr << "Unable to open gil_reference_checksums.txt"<<std::endl;
-            return 1;
-        }
+        test_image(local_name.c_str());
+
+        return EXIT_SUCCESS;
     }
-
-    return 0;
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
-

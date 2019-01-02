@@ -12,7 +12,17 @@
 
 int main()
 {
+
+#if defined(BOOST_NO_CXX11_SMART_PTR)
+
     std::auto_ptr<node<int> > nodes(new node<int>(42));
+    
+#else
+
+    std::unique_ptr<node<int> > nodes(new node<int>(42));
+    
+#endif
+
     nodes->append(new node<std::string>(" is greater than "));
     nodes->append(new node<int>(13));
 

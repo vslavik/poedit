@@ -26,7 +26,7 @@ struct model {
 int f1(model& m) { return m.val; }
 int f1(model& m, int i) { return m.val + i; }
 
-BOOST_TYPE_ERASURE_FREE((global_has_f1_1), f1, 1);
+BOOST_TYPE_ERASURE_FREE((global_has_f1_1), f1, 1)
 
 BOOST_AUTO_TEST_CASE(test_global_has_f1_1) {
     typedef ::boost::mpl::vector<
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(test_global_has_f1_1) {
     BOOST_CHECK_EQUAL(f1(x), 10);
 }
 
-BOOST_TYPE_ERASURE_FREE((ns1)(ns2)(ns_has_f1_1), f1, 1);
+BOOST_TYPE_ERASURE_FREE((ns1)(ns2)(ns_has_f1_1), f1, 1)
 
 BOOST_AUTO_TEST_CASE(test_ns_has_f1_1) {
     typedef ::boost::mpl::vector<
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(test_global_has_f1_1_void) {
     f1(x);
 }
 
-BOOST_TYPE_ERASURE_FREE((global_has_f1_2), f1, 2);
+BOOST_TYPE_ERASURE_FREE((global_has_f1_2), f1, 2)
 
 BOOST_AUTO_TEST_CASE(test_global_has_f1_overload) {
     typedef ::boost::mpl::vector<
@@ -107,6 +107,40 @@ BOOST_AUTO_TEST_CASE(test_global_has_f1_rv) {
     model_const m(10);
     any<concept_type> x(m);
     BOOST_CHECK_EQUAL(f1(std::move(x), 5), 15);
+}
+
+#endif
+
+#if !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES) && \
+    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined(BOOST_NO_CXX11_DECLTYPE) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, == 1800)
+
+namespace ns3 {
+BOOST_TYPE_ERASURE_FREE(f1)
+}
+
+BOOST_AUTO_TEST_CASE(test_simple_free_1) {
+    typedef ::boost::mpl::vector<
+        ns3::has_f1<int(_self&)>,
+        copy_constructible<> > concept_type;
+    model m(10);
+    any<concept_type> x(m);
+    BOOST_CHECK_EQUAL(f1(x), 10);
+}
+
+namespace ns3 {
+BOOST_TYPE_ERASURE_FREE(has_f1_ex, f1)
+}
+
+BOOST_AUTO_TEST_CASE(test_named_free_1) {
+    typedef ::boost::mpl::vector<
+        ns3::has_f1_ex<int(_self&)>,
+        copy_constructible<> > concept_type;
+    model m(10);
+    any<concept_type> x(m);
+    BOOST_CHECK_EQUAL(f1(x), 10);
 }
 
 #endif

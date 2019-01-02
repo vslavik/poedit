@@ -8,6 +8,7 @@
 import "class" : new ;
 import errors ;
 import feature ;
+import param ;
 import project ;
 import property ;
 import property-set ;
@@ -94,6 +95,8 @@ class generated-target-class : basic-target
 rule generate ( name : sources * : requirements * : default-build *
     : usage-requirements * )
 {
+    param.handle-named-params
+        sources requirements default-build usage-requirements ;
     local project = [ project.current ] ;
 
     targets.main-target-alternative

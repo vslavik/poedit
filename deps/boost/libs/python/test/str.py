@@ -1,11 +1,12 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+from __future__ import print_function
 """
 >>> from str_ext import *
 >>> def printer(*args):
-...     for x in args: print x,
-...     print
+...     for x in args: print(x, end='')
+...     print('')
 ...
 >>> work_with_string(printer) #doctest: +NORMALIZE_WHITESPACE
 ['this', 'is', 'a', 'demo', 'string']
@@ -46,8 +47,8 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
     
 if __name__ == '__main__':
-    print "running..."
+    print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)

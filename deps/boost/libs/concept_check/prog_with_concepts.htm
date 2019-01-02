@@ -60,7 +60,7 @@ in the concept.
 For example, the
 <tt>std::stable_sort()</tt> function requires that the value type of
 the iterator be <a
-href="http://www.sgi.com/tech/stl/LessThanComparable.html">
+href="http://www.boost.org/sgi/stl/LessThanComparable.html">
 LessThanComparable</a>, which not only
 includes <tt>operator&lt;()</tt>, but also <tt>operator&gt;()</tt>,
 <tt>operator&lt;=()</tt>, and <tt>operator&gt;=()</tt>.  
@@ -68,19 +68,19 @@ It turns out that <tt>std::stable_sort()</tt> only uses
 <tt>operator&lt;()</tt>.  The question then arises: should 
 <tt>std::stable_sort()</tt> be specified in terms of the concept
 <a
-href="http://www.sgi.com/tech/stl/LessThanComparable.html">
+href="http://www.boost.org/sgi/stl/LessThanComparable.html">
 LessThanComparable</a> or in terms of a concept that only
 requires <tt>operator&lt;()</tt>?
 
 <p>
 We remark first that the use of <a
-href="http://www.sgi.com/tech/stl/LessThanComparable.html">
+href="http://www.boost.org/sgi/stl/LessThanComparable.html">
 LessThanComparable</a> does not really violate the requirement
 minimization principle because all of the other operators can be
 trivially implemented in terms of <tt>operator&lt;()</tt>. By
 ``trivial'' we mean one line of code and a constant run-time cost.  
 More fundamentally, however, the use of <a
-href="http://www.sgi.com/tech/stl/LessThanComparable.html">
+href="http://www.boost.org/sgi/stl/LessThanComparable.html">
 LessThanComparable</a> does not violate the requirement minimization
 principle because all of the comparison operators (<tt>&lt;</tt>,
 <tt>></tt>, <tt><=</tt>, <tt>>=</tt>) are conceptually equivalent (in
@@ -98,7 +98,7 @@ implementation in places to use <tt>operator>()</tt> instead of
 requirements are part of the public interface, such a change could
 potentially break client code.  If instead
 <a
-href="http://www.sgi.com/tech/stl/LessThanComparable.html">
+href="http://www.boost.org/sgi/stl/LessThanComparable.html">
 LessThanComparable</a> is given as the requirement for
 <tt>std::stable_sort()</tt>, then the maintainer is given a reasonable
 amount of flexibility within which to work.
@@ -110,9 +110,9 @@ amount of flexibility within which to work.
   basic containers, requiring traversal in a single direction is a smaller
   requirement than requiring traversal in both directions (hence the
   distinction between <a href=
-  "http://www.sgi.com/tech/stl/ForwardIterator.html">ForwardIterator</a> and
+  "http://www.boost.org/sgi/stl/ForwardIterator.html">ForwardIterator</a> and
   <a href=
-  "http://www.sgi.com/tech/stl/BidirectionalIterator.html">BidirectionalIterator</a>).
+  "http://www.boost.org/sgi/stl/BidirectionalIterator.html">BidirectionalIterator</a>).
   The semantic difference can be easily seen in the difference between the
   set of concrete data structures that have forward iterators versus the set
   that has bidirectional iterators. For example, singly-linked lists would

@@ -49,12 +49,12 @@ main()
   check("signed int - value",   wi3 == 0);
 
   { // subtracting negative values
-    wrapping_int<short, 10> wi3(5);
+    wrapping_int<short, 10> wi4(5);
     check("subtract negative value to cause wrap",
-          (wi3.subtract(-8) == -1 && wi3 == 3));
-    check("reset", wi3.add(2) == 0 && wi3 ==5);
+          (wi4.subtract(-8) == -1 && wi4 == 3));
+    check("reset", wi4.add(2) == 0 && wi4 ==5);
     check("add negative value to cause wrap",
-          (wi3.add(-8) == -1 && wi3 == 7));
+          (wi4.add(-8) == -1 && wi4 == 7));
   }
 
   wrapping_int2<short, 1, 5> wi4(1);

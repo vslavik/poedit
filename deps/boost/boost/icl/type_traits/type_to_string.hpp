@@ -43,7 +43,6 @@ namespace boost{ namespace icl
 
     template<>inline std::string type_to_string<float>::apply() { return "flt"; }
     template<>inline std::string type_to_string<double>::apply() { return "dbl"; }
-    template<>inline std::string type_to_string<std::string>::apply() { return "string"; }
 
     //-------------------------------------------------------------------------
     template<template<class> class Templ>
@@ -76,6 +75,13 @@ namespace boost{ namespace icl
             return binary_template_to_string<Binary>::apply()+
                 "<"+type_to_string<Type1>::apply()+","+type_to_string<Type2>::apply()+">"; 
         }
+    };
+
+    // ---------------------------------------------------------------------------
+    template<>
+    struct type_to_string<std::string>
+    {
+        static std::string apply() { return "string"; }
     };
 
 }} // namespace boost icl

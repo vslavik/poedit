@@ -1,32 +1,34 @@
 /*
-(c) 2012-2015 Glen Joseph Fernandes
-<glenjofe -at- gmail.com>
+Copyright 2012-2015 Glen Joseph Fernandes
+(glenjofe@gmail.com)
 
-Distributed under the Boost Software
-License, Version 1.0.
-http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software License, Version 1.0.
+(http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
 class type {
 public:
-    static unsigned int instances;
-    explicit type() {
+    static unsigned instances;
+
+    type() {
         if (instances == 5) {
             throw true;
         }
-        instances++;
+        ++instances;
     }
+
     ~type() {
-        instances--;
+        --instances;
     }
+
 private:
     type(const type&);
     type& operator=(const type&);
 };
 
-unsigned int type::instances = 0;
+unsigned type::instances = 0;
 
 int main()
 {

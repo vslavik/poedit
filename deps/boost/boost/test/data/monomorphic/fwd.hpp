@@ -43,9 +43,6 @@ namespace monomorphic {
 
 #if !defined(BOOST_TEST_DOXYGEN_DOC__)
 
-template<typename T, typename Specific>
-class dataset;
-
 template<typename T>
 class singleton;
 
@@ -57,6 +54,12 @@ class array;
 
 template<typename T>
 class init_list;
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+class delayed_dataset;
+#endif
 
 #endif
 
@@ -73,12 +76,26 @@ struct is_dataset : mpl::false_ {};
 //! A reference to a dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet&> : is_dataset<DataSet> {};
+template<typename DataSet>
+struct is_dataset<DataSet&&> : is_dataset<DataSet> {};
 
 //____________________________________________________________________________//
 
 //! A const dataset is a dataset
 template<typename DataSet>
 struct is_dataset<DataSet const> : is_dataset<DataSet> {};
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+//! Helper to check if a list of types contains a dataset
+template<class DataSet, class...>
+struct has_dataset : is_dataset<DataSet> {};
+
+template<class DataSet0, class DataSet1, class... DataSetTT>
+struct has_dataset<DataSet0, DataSet1, DataSetTT...>
+  : std::integral_constant<bool, is_dataset<DataSet0>::value || has_dataset<DataSet1, DataSetTT...>::value>
+{};
+#endif
 
 } // namespace monomorphic
 
@@ -119,7 +136,7 @@ make(DataSet&& ds)
 
 //! @overload boost::unit_test::data::make()
 template<typename T>
-inline typename std::enable_if<!is_forward_iterable<T>::value && 
+inline typename std::enable_if<!is_container_forward_iterable<T>::value && 
                                !monomorphic::is_dataset<T>::value &&
                                !is_array<typename remove_reference<T>::type>::value, 
                                monomorphic::singleton<T>>::type
@@ -129,7 +146,7 @@ make( T&& v );
 
 //! @overload boost::unit_test::data::make()
 template<typename C>
-inline typename std::enable_if<is_forward_iterable<C>::value,monomorphic::collection<C>>::type
+inline typename std::enable_if<is_container_forward_iterable<C>::value,monomorphic::collection<C>>::type
 make( C&& c );
 
 //____________________________________________________________________________//
@@ -157,6 +174,31 @@ make( char const* str );
 template<typename T>
 inline monomorphic::init_list<T>
 make( std::initializer_list<T>&& );
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_TEST_ERRONEOUS_INIT_LIST)
+//! @overload boost::unit_test::data::make()
+template<class T, class ...Args>
+inline typename std::enable_if<
+  !monomorphic::has_dataset<T, Args...>::value,
+  monomorphic::init_list<T>
+>::type
+make( T&& arg0, Args&&... args );
+#endif
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_HDR_TUPLE)
+template<class dataset_t, class ...Args>
+inline typename std::enable_if<
+  monomorphic::is_dataset< dataset_t >::value,
+  monomorphic::delayed_dataset<dataset_t, Args...>
+>::type
+make_delayed(Args... args);
+#endif
 
 //____________________________________________________________________________//
 

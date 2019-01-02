@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template threefry_engine</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.random.threefry_engine_hpp" title="Header &lt;boost/compute/random/threefry_engine.hpp&gt;">
 <link rel="prev" href="normal_distribution.html" title="Class template normal_distribution">
@@ -38,54 +38,101 @@
   <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.compute.threefry_engine.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="threefry_engine.html#boost.compute.threefry_engineconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="threefry_engine.html#idp13060224-bb"><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="threefry_engine.html#idp13062944-bb"><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="threefry_engine.html#idp13065840-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="threefry_engine.html#idp13069024-bb"><span class="special">~</span><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="threefry_engine.html#idp50926704-bb"><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">ulong_</span> <span class="special">=</span> <span class="identifier">default_seed</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="threefry_engine.html#idp50930400-bb"><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="threefry_engine.html#idp50933296-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="threefry_engine.html#idp50936480-bb"><span class="special">~</span><span class="identifier">threefry_engine</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="threefry_engine.html#idp13049200-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="threefry_engine.html#idp50904400-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50904960-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">ulong_</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50909696-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp13049760-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">OutputIterator</span><span class="special">,</span> 
-                  <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp13056304-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50911776-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">,</span> <span class="keyword">typename</span> Function<span class="special">&gt;</span> 
+    <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50916752-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">Function</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50923568-bb"><span class="identifier">discard</span></a><span class="special">(</span><span class="identifier">size_t</span><span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a class="link" href="threefry_engine.html#idp50937792-bb">private member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="threefry_engine.html#idp50938368-bb"><span class="identifier">load_program</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
-  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">size_t</span> <span class="identifier">threads</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">ulong_</span> <span class="identifier">default_seed</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp82473472"></a><h2>Description</h2>
+<a name="idp97438032"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp82473888"></a><h3>
+<a name="idp97438448"></a><h3>
 <a name="boost.compute.threefry_engineconstruct-copy-destruct"></a><code class="computeroutput">threefry_engine</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp13060224-bb"></a><span class="identifier">threefry_engine</span><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> and seeds it with <code class="computeroutput">value</code>. </li>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp50926704-bb"></a><span class="identifier">threefry_engine</span><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">,</span> <span class="identifier">ulong_</span> value <span class="special">=</span> <span class="identifier">default_seed</span><span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> and seeds it with <code class="computeroutput">value</code>. </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp13062944-bb"></a><span class="identifier">threefry_engine</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> object as a copy of <code class="computeroutput">other</code>. </li>
+<pre class="literallayout"><a name="idp50930400-bb"></a><span class="identifier">threefry_engine</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> object as a copy of <code class="computeroutput">other</code>. </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="idp13065840-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>Copies <code class="computeroutput">other</code> to <code class="computeroutput">*this</code>. </li>
+<pre class="literallayout"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="idp50933296-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>Copies <code class="computeroutput">other</code> to <code class="computeroutput">*this</code>. </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp13069024-bb"></a><span class="special">~</span><span class="identifier">threefry_engine</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> object. </li>
+<pre class="literallayout"><a name="idp50936480-bb"></a><span class="special">~</span><span class="identifier">threefry_engine</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the <code class="computeroutput"><a class="link" href="threefry_engine.html" title="Class template threefry_engine">threefry_engine</a></code> object. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp82512640"></a><h3>
-<a name="idp13049200-bb"></a><code class="computeroutput">threefry_engine</code> public member functions</h3>
+<a name="idp97479872"></a><h3>
+<a name="idp50904400-bb"></a><code class="computeroutput">threefry_engine</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp13049760-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">OutputIterator</span> first_ctr<span class="special">,</span> <span class="identifier">OutputIterator</span> last_ctr<span class="special">,</span> 
-                <span class="identifier">OutputIterator</span> first_key<span class="special">,</span> <span class="identifier">OutputIterator</span> last_key<span class="special">,</span> 
-                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>
-<p>Generates Threefry random numbers using both the counter and key values, and then stores them to the range [<code class="computeroutput">first_ctr</code>, <code class="computeroutput">last_ctr</code>). </p>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp50904960-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">ulong_</span> value<span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>
+<p>Seeds the random number generator with <code class="computeroutput">value</code>.</p>
+<p>
+If no seed value is provided, <code class="computeroutput">default_seed</code> is used. </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">queue</code></span></p></td>
+<td><p>command queue to perform the operation</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">value</code></span></p></td>
+<td><p>seed value for the random-number generator </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp13056304-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">OutputIterator</span> first_ctr<span class="special">,</span> <span class="identifier">OutputIterator</span> last_ctr<span class="special">,</span> 
-                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp50909696-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
+  <span class="keyword">void</span> <a name="idp50911776-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">OutputIterator</span> first<span class="special">,</span> <span class="identifier">OutputIterator</span> last<span class="special">,</span> 
+                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>Generates random numbers and stores them to the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>). </li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">,</span> <span class="keyword">typename</span> Function<span class="special">&gt;</span> 
+  <span class="keyword">void</span> <a name="idp50916752-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">OutputIterator</span> first<span class="special">,</span> <span class="identifier">OutputIterator</span> last<span class="special">,</span> <span class="identifier">Function</span> op<span class="special">,</span> 
+                <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>
+<p>Generates random numbers, transforms them with <code class="computeroutput">op</code>, and then stores them to the range [<code class="computeroutput">first</code>, <code class="computeroutput">last</code>). </p>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp50923568-bb"></a><span class="identifier">discard</span><span class="special">(</span><span class="identifier">size_t</span> z<span class="special">,</span> <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue<span class="special">)</span><span class="special">;</span></pre>Generates <code class="computeroutput">z</code> random numbers and discards them. </li>
 </ol></div>
+</div>
+<div class="refsect2">
+<a name="idp97538048"></a><h3>
+<a name="idp50937792-bb"></a><code class="computeroutput">threefry_engine</code> private member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp50938368-bb"></a><span class="identifier">load_program</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

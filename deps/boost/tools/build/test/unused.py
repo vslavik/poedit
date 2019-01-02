@@ -13,7 +13,7 @@ t = BoostBuild.Tester(["-d+2"], use_test_config=False)
 
 t.write("a.cpp", "int main() {}\n")
 t.write("b.cpp", "\n")
-t.write("b.x", "")
+t.write("b.xyz", "")
 t.write("jamroot.jam", """\
 import "class" : new ;
 import modules ;
@@ -22,7 +22,7 @@ import targets ;
 import type ;
 import virtual-target ;
 
-type.register X : x ;
+type.register X : xyz ;
 
 class test-target-class : basic-target
 {
@@ -31,7 +31,7 @@ class test-target-class : basic-target
         local result = [ property-set.empty ] ;
         if ! [ modules.peek : GENERATE_NOTHING ]
         {
-            result += [ virtual-target.from-file b.x : . : $(self.project) ] ;
+            result += [ virtual-target.from-file b.xyz : . : $(self.project) ] ;
             if ! [ modules.peek : GENERATE_ONLY_UNUSABLE ]
             {
                 result += [ virtual-target.from-file b.cpp : . : $(self.project)

@@ -31,10 +31,10 @@ class new_delete_resource_imp
    {}
 
    virtual void* do_allocate(std::size_t bytes, std::size_t alignment)
-   {  return new char[bytes]; (void)bytes; (void)alignment;  }
+   {  (void)bytes; (void)alignment; return new char[bytes];  }
 
    virtual void do_deallocate(void* p, std::size_t bytes, std::size_t alignment)
-   {  delete[]((char*)p);  (void)bytes; (void)alignment;  }
+   {  (void)bytes; (void)alignment; delete[]((char*)p);  }
 
    virtual bool do_is_equal(const memory_resource& other) const BOOST_NOEXCEPT
    {  return &other == this;   }

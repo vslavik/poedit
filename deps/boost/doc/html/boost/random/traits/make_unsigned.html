@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template make_unsigned</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../boost_random/reference.html#header.boost.random.traits_hpp" title="Header &lt;boost/random/traits.hpp&gt;">
 <link rel="prev" href="../taus88.html" title="Type definition taus88">
@@ -36,8 +36,8 @@
 <span class="keyword">struct</span> <a class="link" href="make_unsigned.html" title="Struct template make_unsigned">make_unsigned</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp382024512"></a><h2>Description</h2>
-<p>This trait has a single member `type` which is the unsigned type corresponding to T. Note that if T is signed, then member `type` *should define a type with one more bit precision than T*. For built-in types this trait defaults to `boost::make_unsigned&lt;T&gt;::type`. For user defined types it simply asserts that the argument type T is an unsigned integer (using std::numeric_limits). User defined specializations may be provided for other cases. </p>
+<a name="id-1.3.35.5.6.42.3.4"></a><h2>Description</h2>
+<p>This trait has a single member <code class="computeroutput">type</code> which is the unsigned type corresponding to T. Note that if T is signed, then member <code class="computeroutput">type</code> <span class="emphasis"><em>should define a type with one more bit precision than T</em></span>. For built-in types this trait defaults to <code class="computeroutput">boost::make_unsigned&lt;T&gt;::type</code>. For user defined types it simply asserts that the argument type T is an unsigned integer (using std::numeric_limits). User defined specializations may be provided for other cases. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

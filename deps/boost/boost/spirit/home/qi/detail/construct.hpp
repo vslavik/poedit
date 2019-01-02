@@ -143,20 +143,20 @@ namespace boost { namespace spirit { namespace traits
 
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Iterator>
-    struct assign_to_attribute_from_iterators<long_long_type, Iterator>
+    struct assign_to_attribute_from_iterators<boost::long_long_type, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, long_long_type& attr)
+        call(Iterator const& first, Iterator const& last, boost::long_long_type& attr)
         {
             Iterator first_ = first;
             qi::parse(first_, last, long_long_type(), attr);
         }
     };
     template <typename Iterator>
-    struct assign_to_attribute_from_iterators<ulong_long_type, Iterator>
+    struct assign_to_attribute_from_iterators<boost::ulong_long_type, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, ulong_long_type& attr)
+        call(Iterator const& first, Iterator const& last, boost::ulong_long_type& attr)
         {
             Iterator first_ = first;
             qi::parse(first_, last, ulong_long_type(), attr);

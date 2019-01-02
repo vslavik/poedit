@@ -49,11 +49,11 @@ class allocator<void, Version, AllocationDisableMask>
    typedef const int &                          const_reference;
    typedef std::size_t                          size_type;
    typedef std::ptrdiff_t                       difference_type;
-   typedef boost::container::container_detail::
+   typedef boost::container::dtl::
       version_type<self_t, Version>             version;
 
    #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
-   typedef boost::container::container_detail::
+   typedef boost::container::dtl::
          basic_multiallocation_chain<void*>        multiallocation_chain;
    #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
@@ -113,9 +113,6 @@ class allocator
    template<class T2, unsigned int Version2, unsigned int AllocationDisableMask2>
    allocator& operator=(const allocator<T2, Version2, AllocationDisableMask2>&);
 
-   //Not assignable from other allocator
-   allocator& operator=(const allocator&);
-
    static const unsigned int ForbiddenMask =
       BOOST_CONTAINER_ALLOCATE_NEW | BOOST_CONTAINER_EXPAND_BWD | BOOST_CONTAINER_EXPAND_FWD ;
 
@@ -136,14 +133,14 @@ class allocator
    typedef std::size_t                          size_type;
    typedef std::ptrdiff_t                       difference_type;
 
-   typedef boost::container::container_detail::
+   typedef boost::container::dtl::
       version_type<self_t, Version>                version;
 
    #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
-   typedef boost::container::container_detail::
+   typedef boost::container::dtl::
          basic_multiallocation_chain<void*>        void_multiallocation_chain;
 
-   typedef boost::container::container_detail::
+   typedef boost::container::dtl::
       transform_multiallocation_chain
          <void_multiallocation_chain, T>           multiallocation_chain;
    #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
@@ -287,7 +284,7 @@ class allocator
    //!This function is available only with Version == 2
    void allocate_many(size_type elem_size, std::size_t n_elements, multiallocation_chain &chain)
    {
-      BOOST_STATIC_ASSERT(( Version > 1 ));/*
+      BOOST_STATIC_ASSERT(( Version > 1 ));
       dlmalloc_memchain ch;
       BOOST_CONTAINER_MEMCHAIN_INIT(&ch);
       if(!dlmalloc_multialloc_nodes(n_elements, elem_size*sizeof(T), DL_MULTIALLOC_DEFAULT_CONTIGUOUS, &ch)){
@@ -296,10 +293,11 @@ class allocator
       chain.incorporate_after(chain.before_begin()
                              ,(T*)BOOST_CONTAINER_MEMCHAIN_FIRSTMEM(&ch)
                              ,(T*)BOOST_CONTAINER_MEMCHAIN_LASTMEM(&ch)
-                             ,BOOST_CONTAINER_MEMCHAIN_SIZE(&ch) );*/
+                             ,BOOST_CONTAINER_MEMCHAIN_SIZE(&ch) );
+/*
       if(!dlmalloc_multialloc_nodes(n_elements, elem_size*sizeof(T), DL_MULTIALLOC_DEFAULT_CONTIGUOUS, reinterpret_cast<dlmalloc_memchain *>(&chain))){
          boost::container::throw_bad_alloc();
-      }
+      }*/
    }
 
    //!Allocates n_elements elements, each one of size elem_sizes[i]

@@ -50,7 +50,7 @@ inline typename tools::promote_args<T>::type trunc(const T& v)
 // implicit convertion to the integer types.  For user-defined
 // number types this will likely not be the case.  In that case
 // these functions should either be specialized for the UDT in
-// question, or else overloads should be placed in the same 
+// question, or else overloads should be placed in the same
 // namespace as the UDT: these will then be found via argument
 // dependent lookup.  See our concept archetypes for examples.
 //

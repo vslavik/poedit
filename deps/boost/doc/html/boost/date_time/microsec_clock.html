@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template microsec_clock</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.microsec_time_clock_hpp" title="Header &lt;boost/date_time/microsec_time_clock.hpp&gt;">
 <link rel="prev" href="acst_dst_trait.html" title="Struct template acst_dst_trait">
@@ -40,35 +40,53 @@
   <span class="keyword">typedef</span> <span class="identifier">time_type</span><span class="special">::</span><span class="identifier">time_duration_type</span> <a name="boost.date_time.microsec_clock.time_duration_type"></a><span class="identifier">time_duration_type</span><span class="special">;</span>    
   <span class="keyword">typedef</span> <span class="identifier">time_duration_type</span><span class="special">::</span><span class="identifier">rep_type</span>  <a name="boost.date_time.microsec_clock.resolution_traits_type"></a><span class="identifier">resolution_traits_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="microsec_clock.html#idp77250896-bb">public static functions</a></span>
+  <span class="comment">// <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_7-bb">public static functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> time_zone_type<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#idp77251456-bb"><span class="identifier">local_time</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">time_zone_type</span> <span class="special">&gt;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#idp12669824-bb"><span class="identifier">local_time</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#idp23061568-bb"><span class="identifier">universal_time</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_7_1-bb"><span class="identifier">local_time</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">time_zone_type</span> <span class="special">&gt;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_7_2-bb"><span class="identifier">local_time</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_7_3-bb"><span class="identifier">universal_time</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="microsec_clock.html#idp64732416-bb">private static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#idp64732944-bb"><span class="identifier">create_time</span></a><span class="special">(</span><span class="identifier">time_converter</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_8-bb">private static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">time_type</span> <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_8_1-bb"><span class="identifier">create_time</span></a><span class="special">(</span><span class="identifier">time_converter</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> 
+  <a class="link" href="microsec_clock.html#id-1_3_14_15_3_33_2_1_1_8_2-bb"><span class="identifier">file_time_to_microseconds</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">winapi</span><span class="special">::</span><span class="identifier">FILETIME_</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp117145712"></a><h2>Description</h2>
+<a name="id-1.3.14.15.3.32.4.4"></a><h2>Description</h2>
 <p>A high precision clock that measures the local time at a resolution up to microseconds and adjusts to the resolution of the time system. For example, for the a library configuration with nano second resolution, the last 3 places of the fractional seconds will always be 000 since there are 1000 nano-seconds in a micro second. </p>
 <div class="refsect2">
-<a name="idp117146720"></a><h3>
-<a name="idp77250896-bb"></a><code class="computeroutput">microsec_clock</code> public static functions</h3>
+<a name="id-1.3.14.15.3.32.4.4.3"></a><h3>
+<a name="id-1_3_14_15_3_33_2_1_1_7-bb"></a><code class="computeroutput">microsec_clock</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> time_zone_type<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="identifier">time_type</span> <a name="idp77251456-bb"></a><span class="identifier">local_time</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">time_zone_type</span> <span class="special">&gt;</span> tz_ptr<span class="special">)</span><span class="special">;</span></pre>return a local time object for the given zone, based on computer clock </li>
+  <span class="keyword">static</span> <span class="identifier">time_type</span> <a name="id-1_3_14_15_3_33_2_1_1_7_1-bb"></a><span class="identifier">local_time</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">time_zone_type</span> <span class="special">&gt;</span> tz_ptr<span class="special">)</span><span class="special">;</span></pre>return a local time object for the given zone, based on computer clock </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="idp12669824-bb"></a><span class="identifier">local_time</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns the local time based on computer clock settings. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="id-1_3_14_15_3_33_2_1_1_7_2-bb"></a><span class="identifier">local_time</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns the local time based on computer clock settings. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="idp23061568-bb"></a><span class="identifier">universal_time</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns the UTC time based on computer settings. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="id-1_3_14_15_3_33_2_1_1_7_3-bb"></a><span class="identifier">universal_time</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Returns the UTC time based on computer settings. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp27498352"></a><h3>
-<a name="idp64732416-bb"></a><code class="computeroutput">microsec_clock</code> private static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="idp64732944-bb"></a><span class="identifier">create_time</span><span class="special">(</span><span class="identifier">time_converter</span> converter<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="id-1.3.14.15.3.32.4.4.4"></a><h3>
+<a name="id-1_3_14_15_3_33_2_1_1_8-bb"></a><code class="computeroutput">microsec_clock</code> private static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_type</span> <a name="id-1_3_14_15_3_33_2_1_1_8_1-bb"></a><span class="identifier">create_time</span><span class="special">(</span><span class="identifier">time_converter</span> converter<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> 
+<a name="id-1_3_14_15_3_33_2_1_1_8_2-bb"></a><span class="identifier">file_time_to_microseconds</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">winapi</span><span class="special">::</span><span class="identifier">FILETIME_</span> <span class="keyword">const</span> <span class="special">&amp;</span> ft<span class="special">)</span><span class="special">;</span></pre>
+<p>The function converts file_time into number of microseconds elapsed since 1970-Jan-01</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Only dates after 1970-Jan-01 are supported. Dates before will be wrapped. </p></td></tr>
+</table></div>
+<p>
+</p>
+</li>
+</ol></div>
 </div>
 </div>
 </div>

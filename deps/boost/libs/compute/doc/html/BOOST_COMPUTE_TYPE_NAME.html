@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_COMPUTE_TYPE_NAME</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="boost_compute/reference.html#header.boost.compute.type_traits.type_name_hpp" title="Header &lt;boost/compute/type_traits/type_name.hpp&gt;">
 <link rel="prev" href="boost/compute/type_name.html" title="Function template type_name">
@@ -33,10 +33,10 @@
 
 </span>BOOST_COMPUTE_TYPE_NAME(type, name)</pre></div>
 <div class="refsect1">
-<a name="idp83185008"></a><h2>Description</h2>
+<a name="idp98160656"></a><h2>Description</h2>
 <p>Registers the OpenCL type for the C++ <code class="computeroutput">type</code> to <code class="computeroutput">name</code>.</p>
 <p>For example, the following will allow Eigen's <code class="computeroutput">Vector2f</code> type to be used with Boost.Compute algorithms and containers as the built-in <code class="computeroutput">float2</code> type. </p>
-<pre class="programlisting"> <span class="identifier">BOOST_COMPUTE_TYPE_NAME</span><span class="special">(</span><span class="identifier">Eigen</span><span class="special">::</span><span class="identifier">Vector2f</span><span class="special">,</span> <span class="identifier">float2</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">BOOST_COMPUTE_TYPE_NAME</span><span class="special">(</span><span class="identifier">Eigen</span><span class="special">::</span><span class="identifier">Vector2f</span><span class="special">,</span> <span class="identifier">float2</span><span class="special">)</span>
 </pre>
 <p>This macro should be invoked in the global namespace.</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>

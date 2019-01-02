@@ -23,36 +23,36 @@ void required_throw_test()
    ;
 
    variables_map vm;
-   bool throwed = false;
+   bool thrown = false;
    {
       // This test must throw exception
       string cmdline = "prg -f file.txt";
       vector< string > tokens =  split_unix(cmdline);
-      throwed = false;
+      thrown = false;
       try {
          store(command_line_parser(tokens).options(opts).run(), vm);
          notify(vm);    
       } 
       catch (required_option& e) {
          BOOST_CHECK_EQUAL(e.what(), string("the option '--cfgfile' is required but missing"));
-         throwed = true;
+         thrown = true;
       }      
-      BOOST_CHECK(throwed);
+      BOOST_CHECK(thrown);
    }
    
    {
       // This test mustn't throw exception
       string cmdline = "prg -c config.txt";
       vector< string > tokens =  split_unix(cmdline);
-      throwed = false;
+      thrown = false;
       try {
          store(command_line_parser(tokens).options(opts).run(), vm);
          notify(vm);    
       } 
       catch (required_option& e) {
-         throwed = true;
+         thrown = true;
       }
-      BOOST_CHECK(!throwed);
+      BOOST_CHECK(!thrown);
    }
 }
 
@@ -67,12 +67,12 @@ void simple_required_test(const char* config_file)
    ;
 
    variables_map vm;
-   bool throwed = false;
+   bool thrown = false;
    {
       // This test must throw exception
       string cmdline = "prg -f file.txt";
       vector< string > tokens =  split_unix(cmdline);
-      throwed = false;
+      thrown = false;
       try {
          // options coming from different sources
          store(command_line_parser(tokens).options(opts).run(), vm);
@@ -80,9 +80,35 @@ void simple_required_test(const char* config_file)
          notify(vm);    
       } 
       catch (required_option& e) {
-         throwed = true;
+         thrown = true;
       }      
-      BOOST_CHECK(!throwed);
+      BOOST_CHECK(!thrown);
+   }
+}
+
+void multiname_required_test()
+{
+   options_description          opts;
+   opts.add_options()
+     ("foo,bar", value<string>()->required(), "the foo")
+   ;
+
+   variables_map vm;
+   bool thrown = false;
+   {
+      // This test must throw exception
+      string cmdline = "prg --bar file.txt";
+      vector< string > tokens =  split_unix(cmdline);
+      thrown = false;
+      try {
+         // options coming from different sources
+         store(command_line_parser(tokens).options(opts).run(), vm);
+         notify(vm);
+      }
+      catch (required_option& e) {
+         thrown = true;
+      }
+      BOOST_CHECK(!thrown);
    }
 }
 
@@ -92,6 +118,7 @@ int main(int /*argc*/, char* av[])
 {  
    required_throw_test();
    simple_required_test(av[1]);
+   multiname_required_test();
    
    return 0;
 }

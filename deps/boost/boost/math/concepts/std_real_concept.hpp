@@ -226,6 +226,24 @@ inline boost::math::concepts::std_real_concept sqrt(boost::math::concepts::std_r
 { return std::sqrt(a.value()); }
 inline boost::math::concepts::std_real_concept tanh(boost::math::concepts::std_real_concept a)
 { return std::tanh(a.value()); }
+inline boost::math::concepts::std_real_concept (nextafter)(boost::math::concepts::std_real_concept a, boost::math::concepts::std_real_concept b)
+{ return (boost::math::nextafter)(a, b); }
+//
+// C++11 ism's
+// Note that these must not actually call the std:: versions as that precludes using this
+// header to test in C++03 mode, call the Boost versions instead:
+//
+inline boost::math::concepts::std_real_concept asinh(boost::math::concepts::std_real_concept a)
+{ return boost::math::asinh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>())); }
+inline boost::math::concepts::std_real_concept acosh(boost::math::concepts::std_real_concept a)
+{ return boost::math::acosh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>())); }
+inline boost::math::concepts::std_real_concept atanh(boost::math::concepts::std_real_concept a)
+{ return boost::math::atanh(a.value(), boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::ignore_error>())); }
+inline bool (isfinite)(boost::math::concepts::std_real_concept a)
+{
+   return (boost::math::isfinite)(a.value());
+}
+
 
 } // namespace std
 
@@ -384,6 +402,13 @@ inline BOOST_MATH_CONSTEXPR int digits<concepts::std_real_concept>(BOOST_MATH_EX
    return digits<concepts::std_real_concept_base_type>();
 }
 
+template <>
+inline double real_cast<double, concepts::std_real_concept>(concepts::std_real_concept r)
+{
+   return static_cast<double>(r.value());
+}
+
+
 } // namespace tools
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
@@ -398,8 +423,12 @@ using concepts::llround;
 } // namespace math
 } // namespace boost
 
+//
+// These must go at the end, as they include stuff that won't compile until
+// after std_real_concept has been defined:
+//
+#include <boost/math/special_functions/acosh.hpp>
+#include <boost/math/special_functions/asinh.hpp>
+#include <boost/math/special_functions/atanh.hpp>
+
 #endif // BOOST_MATH_STD_REAL_CONCEPT_HPP
-
-
-
-

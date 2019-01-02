@@ -151,7 +151,7 @@ private:
     const E x;
     seed_seq_archetype<> q;
     typename detail::seed_type<result_type>::type s;
-    unsigned long long z;
+    uintmax_t z;
     
     input_iterator_archetype<boost::uint32_t> sb, se;
 };

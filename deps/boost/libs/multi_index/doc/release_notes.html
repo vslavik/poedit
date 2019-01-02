@@ -30,6 +30,12 @@ Acknowledgements
 <h2>Contents</h2>
 
 <ul>
+  <li><a href="#boost_1_69">Boost 1.69 release</a></li>
+  <li><a href="#boost_1_68">Boost 1.68 release</a></li>
+  <li><a href="#boost_1_67">Boost 1.67 release</a></li>
+  <li><a href="#boost_1_66">Boost 1.66 release</a></li>
+  <li><a href="#boost_1_64">Boost 1.64 release</a></li>
+  <li><a href="#boost_1_62">Boost 1.62 release</a></li>
   <li><a href="#boost_1_60">Boost 1.60 release</a></li>
   <li><a href="#boost_1_59">Boost 1.59 release</a></li>
   <li><a href="#boost_1_58">Boost 1.58 release</a></li>
@@ -52,6 +58,88 @@ Acknowledgements
   <li><a href="#boost_1_33_1">Boost 1.33.1 release</a></li>
   <li><a href="#boost_1_33">Boost 1.33 release</a></li>
 </ul>
+
+<h2><a name="boost_1_69">Boost 1.69 release</a></h2>
+
+<p>
+<ul>
+  <li>Introduced an alternative
+    <a href="tutorial/key_extraction.html#key">terse key specification syntax</a>
+    for C++17 compliant environments.
+  </li>
+</ul>
+</p>
+
+<h2><a name="boost_1_68">Boost 1.68 release</a></h2>
+
+<p>
+<ul>
+  <li>Containers of moveable but non-copyable elements can now be serialized
+    (ticket <a href="https://svn.boost.org/trac10/ticket/13478">#13478</a>).
+    Thanks to S&eacute;bastien Paris for the report.
+  </li>
+  <li><code>multi_index_container</code>'s default constructor is no longer
+    <code>explicit</code>
+    (ticket <a href="https://svn.boost.org/trac10/ticket/13518">#13518</a>).
+  </li>
+</ul>
+</p>
+
+<h2><a name="boost_1_67">Boost 1.67 release</a></h2>
+
+<p>
+<ul>
+  <li>Elements with overloaded <code>operator&amp;</code> are now fully accepted
+    (ticket <a href="https://svn.boost.org/trac10/ticket/13307">#13307</a>).
+    Thanks to Daniel Frey for his updating
+    <a href="../../utility/operators.htm#deref">Boost.Operators</a> to help
+    fix this issue.
+  </li>
+  <li>Avoided usage of <code>std::allocator</code> members deprecated in C++17.
+    Contributed by Daniela Engert.
+  </li>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
+
+<h2><a name="boost_1_66">Boost 1.66 release</a></h2>
+
+<p>
+<ul>
+  <li>Made <code>modify</code> and <code>modify_key</code> more robust so that
+    the modified element is erased if the modifier throws or the rollback
+    functor does not properly restore the element (full discussion at
+    ticket <a href="https://svn.boost.org/trac/boost/ticket/12542">#12542</a>).
+    This is technically backwards incompatible; for instance, the following code:
+<blockquote><pre>
+<span class=identifier>c</span><span class=special>.</span><span class=identifier>modify</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),[](</span><span class=keyword>auto</span><span class=special>&amp;){</span><span class=keyword>throw</span> <span class=number>0</span><span class=special>;});</span>  
+</pre></blockquote>
+    keeps the container <code>c</code> untouched in former versions of Boost whereas
+    now <code>c.begin()</code> is erased. Thanks to Jon Kalb for raising the issue.
+  </li>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
+
+<h2><a name="boost_1_64">Boost 1.64 release</a></h2>
+
+<p>
+<ul>
+  <li>Fixed a bug related to ambiguous references in the presence of more than
+    one ranked index
+    (ticket <a href="https://svn.boost.org/trac/boost/ticket/12955">#12955</a>).
+  </li>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
+
+<h2><a name="boost_1_62">Boost 1.62 release</a></h2>
+
+<p>
+<ul>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
 
 <h2><a name="boost_1_60">Boost 1.60 release</a></h2>
 
@@ -512,9 +600,9 @@ Acknowledgements
 
 <br>
 
-<p>Revised October 19th 2015</p>
+<p>Revised August 17th 2018</p>
 
-<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2018 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

@@ -29,9 +29,10 @@
 #include <cstddef>
 #include <boost/aligned_storage.hpp>
 #include <boost/move/core.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/type_traits/alignment_of.hpp>
 #include <boost/type_traits/type_with_alignment.hpp>
+#include <boost/log/detail/allocator_traits.hpp>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {
@@ -69,23 +70,22 @@ struct threadsafe_queue_impl
     virtual bool try_pop(node_base*& node_to_free, node_base*& node_with_value) = 0;
 };
 
-//! A helper class to compose some of the types used by the queue
-template< typename T, typename AllocatorT >
-struct threadsafe_queue_types
+//! Thread-safe queue node type
+template< typename T >
+struct threadsafe_queue_node :
+    public threadsafe_queue_impl::node_base
 {
-    struct node :
-        public threadsafe_queue_impl::node_base
-    {
-        typedef typename aligned_storage< sizeof(T), alignment_of< T >::value >::type storage_type;
-        storage_type storage;
+    typedef typename aligned_storage< sizeof(T), alignment_of< T >::value >::type storage_type;
+    storage_type storage;
 
-        node() {}
-        explicit node(T const& val) { new (storage.address()) T(val); }
-        T& value() { return *static_cast< T* >(storage.address()); }
-        void destroy() { static_cast< T* >(storage.address())->~T(); }
-    };
+    BOOST_DEFAULTED_FUNCTION(threadsafe_queue_node(), {})
+    explicit threadsafe_queue_node(T const& val) { new (storage.address()) T(val); }
+    T& value() BOOST_NOEXCEPT { return *static_cast< T* >(storage.address()); }
+    void destroy() BOOST_NOEXCEPT { static_cast< T* >(storage.address())->~T(); }
 
-    typedef typename AllocatorT::BOOST_NESTED_TEMPLATE rebind< node >::other allocator_type;
+    // Copying and assignment is prohibited
+    BOOST_DELETED_FUNCTION(threadsafe_queue_node(threadsafe_queue_node const&))
+    BOOST_DELETED_FUNCTION(threadsafe_queue_node& operator= (threadsafe_queue_node const&))
 };
 
 /*!
@@ -108,36 +108,13 @@ struct threadsafe_queue_types
  */
 template< typename T, typename AllocatorT = std::allocator< void > >
 class threadsafe_queue :
-    private threadsafe_queue_types< T, AllocatorT >::allocator_type
+    private boost::log::aux::rebind_alloc< AllocatorT, threadsafe_queue_node< T > >::type
 {
 private:
-    typedef typename threadsafe_queue_types< T, AllocatorT >::allocator_type base_type;
-    typedef typename threadsafe_queue_types< T, AllocatorT >::node node;
-
-    //! A simple scope guard to automate memory reclaiming
-    struct auto_deallocate;
-    friend struct auto_deallocate;
-    struct auto_deallocate
-    {
-        auto_deallocate(base_type* alloc, node* dealloc, node* destr) :
-            m_pAllocator(alloc),
-            m_pDeallocate(dealloc),
-            m_pDestroy(destr)
-        {
-        }
-        ~auto_deallocate()
-        {
-            m_pAllocator->deallocate(m_pDeallocate, 1);
-            m_pDestroy->destroy();
-        }
-
-    private:
-        base_type* m_pAllocator;
-        node* m_pDeallocate;
-        node* m_pDestroy;
-    };
+    typedef threadsafe_queue_node< T > node;
 
 public:
+    typedef typename boost::log::aux::rebind_alloc< AllocatorT, node >::type allocator_type;
     typedef T value_type;
     typedef T& reference;
     typedef T const& const_reference;
@@ -145,7 +122,33 @@ public:
     typedef T const* const_pointer;
     typedef std::ptrdiff_t difference_type;
     typedef std::size_t size_type;
-    typedef AllocatorT allocator_type;
+
+private:
+    typedef boost::log::aux::allocator_traits< allocator_type > alloc_traits;
+
+    //! A simple scope guard to automate memory reclaiming
+    struct auto_deallocate;
+    friend struct auto_deallocate;
+    struct auto_deallocate
+    {
+        auto_deallocate(allocator_type* alloc, node* dealloc, node* destr) BOOST_NOEXCEPT :
+            m_pAllocator(alloc),
+            m_pDeallocate(dealloc),
+            m_pDestroy(destr)
+        {
+        }
+        ~auto_deallocate() BOOST_NOEXCEPT
+        {
+            alloc_traits::destroy(*m_pAllocator, m_pDeallocate);
+            alloc_traits::deallocate(*m_pAllocator, m_pDeallocate, 1);
+            m_pDestroy->destroy();
+        }
+
+    private:
+        allocator_type* m_pAllocator;
+        node* m_pDeallocate;
+        node* m_pDestroy;
+    };
 
 public:
     /*!
@@ -154,28 +157,28 @@ public:
      *
      * \throw std::bad_alloc if there is not sufficient memory
      */
-    threadsafe_queue(base_type const& alloc = base_type()) :
-        base_type(alloc)
+    threadsafe_queue(allocator_type const& alloc = allocator_type()) :
+        allocator_type(alloc)
     {
-        node* p = base_type::allocate(1);
+        node* p = alloc_traits::allocate(get_allocator(), 1);
         if (p)
         {
             try
             {
-                new (p) node();
+                alloc_traits::construct(get_allocator(), p);
                 try
                 {
                     m_pImpl = threadsafe_queue_impl::create(p);
                 }
                 catch (...)
                 {
-                    p->~node();
+                    alloc_traits::destroy(get_allocator(), p);
                     throw;
                 }
             }
             catch (...)
             {
-                base_type::deallocate(p, 1);
+                alloc_traits::deallocate(get_allocator(), p, 1);
                 throw;
             }
         }
@@ -185,7 +188,7 @@ public:
     /*!
      * Destructor
      */
-    ~threadsafe_queue()
+    ~threadsafe_queue() BOOST_NOEXCEPT
     {
         // Clear the queue
         if (!unsafe_empty())
@@ -196,8 +199,8 @@ public:
 
         // Remove the last dummy node
         node* p = static_cast< node* >(m_pImpl->reset_last_node());
-        p->~node();
-        base_type::deallocate(p, 1);
+        alloc_traits::destroy(get_allocator(), p);
+        alloc_traits::deallocate(get_allocator(), p, 1);
 
         delete m_pImpl;
     }
@@ -213,16 +216,16 @@ public:
      */
     void push(const_reference value)
     {
-        node* p = base_type::allocate(1);
+        node* p = alloc_traits::allocate(get_allocator(), 1);
         if (p)
         {
             try
             {
-                new (p) node(value);
+                alloc_traits::construct(get_allocator(), p, value);
             }
             catch (...)
             {
-                base_type::deallocate(p, 1);
+                alloc_traits::deallocate(get_allocator(), p, 1);
                 throw;
             }
             m_pImpl->push(p);
@@ -242,7 +245,7 @@ public:
         if (m_pImpl->try_pop(dealloc, destr))
         {
             node* p = static_cast< node* >(destr);
-            auto_deallocate guard(static_cast< base_type* >(this), static_cast< node* >(dealloc), p);
+            auto_deallocate guard(static_cast< allocator_type* >(this), static_cast< node* >(dealloc), p);
             value = boost::move(p->value());
             return true;
         }
@@ -253,6 +256,10 @@ public:
     // Copying and assignment is prohibited
     BOOST_DELETED_FUNCTION(threadsafe_queue(threadsafe_queue const&))
     BOOST_DELETED_FUNCTION(threadsafe_queue& operator= (threadsafe_queue const&))
+
+private:
+    //! Returns the allocator instance
+    allocator_type& get_allocator() BOOST_NOEXCEPT { return *static_cast< allocator_type* >(this); }
 
 private:
     //! Pointer to the implementation

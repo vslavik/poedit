@@ -38,15 +38,22 @@
 [import ../example/mixed_integer_arithmetic.cpp]
 [import ../example/logged_adaptor.cpp]
 [import ../example/numeric_limits_snips.cpp]
+[import ../example/hashing_examples.cpp]
+[import ../example/cpp_complex_examples.cpp]
+[import ../example/mpc_examples.cpp]
+[import ../example/complex128_examples.cpp]
+[import ../example/eigen_example.cpp]
+[import ../example/mpfr_precision.cpp]
 
 [template mpfr[] [@http://www.mpfr.org MPFR]]
+[template mpc[] [@http://www.multiprecision.org MPC]]
 [template mpfi[] [@http://perso.ens-lyon.fr/nathalie.revol/software.html MPFI]]
 [template gmp[] [@http://gmplib.org GMP]]
 [template mpf_class[] [@http://gmplib.org/manual/C_002b_002b-Interface-Floats.html#C_002b_002b-Interface-Floats mpf_class]]
 [template mpfr_class[] [@http://math.berkeley.edu/~wilken/code/gmpfrxx/ mpfr_class]]
 [template mpreal[] [@http://www.holoborodko.com/pavel/mpfr/ mpreal]]
 [template mpir[] [@http://mpir.org/ MPIR]]
-[template tommath[] [@http://libtom.org/?page=features&newsitems=5&whatfile=ltm libtommath]]
+[template tommath[] [@http://libtom.net libtommath]]
 [template quadmath[] [@http://gcc.gnu.org/onlinedocs/libquadmath/ libquadmath]]
 
 [template super[x]'''<superscript>'''[x]'''</superscript>''']
@@ -74,15 +81,22 @@
 [def __tommath_rational [link boost_multiprecision.tut.rational.tommath_rational tommath_rational]]
 [def __number [link boost_multiprecision.ref.number number]]
 [def __float128 [link boost_multiprecision.tut.floats.float128 float128]]
+[def __cpp_complex [link boost_multiprecision.tut.complex.cpp_complex cpp_complex]]
+[def __mpc_complex [link boost_multiprecision.tut.complex.mpc_complex mpc_complex]]
 [def __debug_adaptor [link boost_multiprecision.tut.misc.debug_adaptor debug_adaptor]]
 [def __logged_adaptor [link boost_multiprecision.tut.misc.logged_adaptor logged_adaptor]]
 [def __rational_adaptor [link boost_multiprecision.tut.rational.rational_adaptor rational_adaptor]]
+[def __cpp_complex [link boost_multiprecision.tut.complex.cpp_complex cpp_complex]]
+[def __mpc_complex [link boost_multiprecision.tut.complex.mpc_complex mpc_complex]]
+[def __complex128 [link boost_multiprecision.tut.complex.complex128 complex128]]
+[def __complex_adaptor [link boost_multiprecision.tut.complex.complex_adaptor complex_adaptor]]
 
 [section:intro Introduction]
 
 The Multiprecision Library provides [link boost_multiprecision.tut.ints integer],
-[link boost_multiprecision.tut.rational rational]
-and [link boost_multiprecision.tut.floats floating-point] types in C++ that have more
+[link boost_multiprecision.tut.rational rational],
+[link boost_multiprecision.tut.floats floating-point],
+and [link boost_multiprecision.tut.complex complex] types in C++ that have more
 range and precision than C++'s ordinary built-in types.
 The big number types in Multiprecision can be used with a wide
 selection of basic mathematical operations, elementary transcendental
@@ -96,10 +110,10 @@ range and precision.
 
 Multiprecision consists of a generic interface to the
 mathematics of large numbers as well as a selection of
-big number back ends, with support for integer, rational and
-floating-point types. Boost.Multiprecision provides a selection
+big number back ends, with support for integer, rational,
+floating-point, and complex types. Boost.Multiprecision provides a selection
 of back ends provided off-the-rack in including
-interfaces to GMP, MPFR, MPIR, TomMath as well as
+interfaces to GMP, MPFR, MPIR, MPC, TomMath as well as
 its own collection of Boost-licensed, header-only back ends for
 integers, rationals and floats. In addition, user-defined back ends
 can be created and used with the interface of Multiprecision,
@@ -121,12 +135,14 @@ reduced interface requirements of the front-end.
 
 Separation of front-end and back-end allows use of highly refined, but restricted license libraries
 where possible, but provides Boost license alternatives for users who must have a portable
-unconstrained license.  Which is to say some back-ends rely on 3rd party libraries, but a header-only Boost license version is always
-available (if somewhat slower).
+unconstrained license.
+Which is to say some back-ends rely on 3rd party libraries,
+but a header-only Boost license version is always available (if somewhat slower).
 
 Should you just wish to cut to the chase and use a fully Boost-licensed number type, then skip to
-__cpp_int for multiprecision integers, __cpp_dec_float for multiprecision floating-point types
-and __cpp_rational for rational types.
+__cpp_int for multiprecision integers, __cpp_rational for rational types,
+__cpp_dec_float for multiprecision floating-point types
+and __cpp_complex for complex types.
 
 The library is often used via one of the predefined typedefs: for example if you wanted an
 [@http://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic arbitrary precision]
@@ -179,7 +195,7 @@ Conversions are also allowed:
 
 However conversions that are inherently lossy are either declared explicit or else forbidden altogether:
 
-   d = 3.14;  // Error implicit conversion from float not allowed.
+   d = 3.14;  // Error implicit conversion from double not allowed.
    d = static_cast<mp::int512_t>(3.14);  // OK explicit construction is allowed
 
 Mixed arithmetic will fail if the conversion is either ambiguous or explicit:
@@ -204,11 +220,11 @@ that look something like:
    }
 
 These operator overloads ensure that many expressions can be evaluated without actually generating any temporaries.
-However, there are still many simple expressions such as:
+However, there are still many simple expressions such as
 
    a = b * c;
 
-Which don't noticeably benefit from move support.  Therefore, optimal performance comes from having both
+which don't noticeably benefit from move support.  Therefore, optimal performance comes from having both
 move-support, and expression templates enabled.
 
 Note that while "moved-from" objects are left in a sane state, they have an unspecified value, and the only permitted
@@ -258,7 +274,7 @@ the number of temporaries directly, note also that the [mpf_class] wrapper that 
 temporaries to pretty much zero).  Note that if we compile with expression templates disabled and rvalue-reference support
 on, then actually still have no wasted memory allocations as even though temporaries are created, their contents are moved
 rather than copied.
-[footnote The actual number generated will depend on the compiler, how well it optimises the code, and whether it supports
+[footnote The actual number generated will depend on the compiler, how well it optimizes the code, and whether it supports
 rvalue references.  The number of 11 temporaries was generated with Visual C++ 10]
 
 [important
@@ -321,11 +337,23 @@ to the underlying number type without you having to do anything, so:
 Will work just fine, with the `a + delta` expression template argument getting converted to an `mpfr_float_100`
 internally by the Boost.Math library.
 
-One other potential pitfall that's only possible in C++11: you should never store an expression template using:
+[caution In C++11 you should never store an expression template using:
 
-   auto my_expression = a + b - c;
+`auto my_expression = a + b - c;`
 
 unless you're absolutely sure that the lifetimes of `a`, `b` and `c` will outlive that of `my_expression`.
+
+In fact it is particularly easy to create dangling references by mixing expression templates with the auto
+keyword, for example:
+
+`auto val = cpp_dec_float_50("23.1") * 100;`
+
+In this situation the integer literal is stored directly in the expression template - so its use is OK here -
+but the cpp_dec_float_50 temporary is stored by reference and then destructed when the statement completes
+leaving a dangling reference.
+
+[*['If in doubt, do not ever mix expression templates with the auto keyword.]]
+]
 
 And finally... the performance improvements from an expression template library like this are often not as
 dramatic as the reduction in number of temporaries would suggest.  For example if we compare this library with
@@ -386,8 +414,8 @@ with MPFR 3.0 and MPIR 2.3.0.
 In order to use this library you need to make two choices:
 
 * What kind of number do I want ([link boost_multiprecision.tut.ints integer],
-[link boost_multiprecision.tut.floats floating-point] or [link boost_multiprecision.tut.rational rational]).
-* Which back-end do I want to perform the actual arithmetic (Boost-supplied, GMP, MPFR, Tommath etc)?
+[link boost_multiprecision.tut.floats floating-point], [link boost_multiprecision.tut.rational rational], or [link boost_multiprecision.tut.complex complex]).
+* Which back-end do I want to perform the actual arithmetic (Boost-supplied, GMP, MPFR, MPC, Tommath etc)?
 
 [section:ints Integer Types]
 
@@ -680,10 +708,11 @@ The following back-ends provide floating-point arithmetic:
    typedef number<cpp_bin_float<50> > cpp_bin_float_50;
    typedef number<cpp_bin_float<100> > cpp_bin_float_100;
 
-   typedef number<backends::cpp_bin_float<24, backends::digit_base_2, void, boost::int16_t, -126, 127>, et_off>       cpp_bin_float_single;
-   typedef number<backends::cpp_bin_float<53, backends::digit_base_2, void, boost::int16_t, -1022, 1023>, et_off>     cpp_bin_float_double;
-   typedef number<backends::cpp_bin_float<64, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>   cpp_bin_float_double_extended;
-   typedef number<backends::cpp_bin_float<113, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>  cpp_bin_float_quad;
+   typedef number<backends::cpp_bin_float<24, backends::digit_base_2, void, boost::int16_t, -126, 127>, et_off>         cpp_bin_float_single;
+   typedef number<backends::cpp_bin_float<53, backends::digit_base_2, void, boost::int16_t, -1022, 1023>, et_off>       cpp_bin_float_double;
+   typedef number<backends::cpp_bin_float<64, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>     cpp_bin_float_double_extended;
+   typedef number<backends::cpp_bin_float<113, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>    cpp_bin_float_quad;
+   typedef number<backends::cpp_bin_float<237, backends::digit_base_2, void, boost::int32_t, -262142, 262143>, et_off>  cpp_bin_float_oct;
 
    }} // namespaces
 
@@ -698,8 +727,8 @@ respectively.
 Optionally, you can specify whether the precision is specified in decimal digits or binary bits - for example
 to declare a `cpp_bin_float` with exactly the same precision as `double` one would use
 `number<cpp_bin_float<53, digit_base_2> >`.  The typedefs `cpp_bin_float_single`, `cpp_bin_float_double`,
-`cpp_bin_float_quad` and `cpp_bin_float_double_extended` provide
-software analogues of the IEEE single, double and quad float data types, plus the Intel-extended-double type respectively.
+`cpp_bin_float_quad`, `cpp_bin_float_oct` and `cpp_bin_float_double_extended` provide
+software analogues of the IEEE single, double, quad and octuple float data types, plus the Intel-extended-double type respectively.
 Note that while these types are functionally equivalent to the native IEEE types, but they do not have the same size
 or bit-layout as true IEEE compatible types.
 
@@ -934,7 +963,7 @@ It's also possible to access the underlying `mpfr_t` via the data() member funct
 
 Things you should know when using this type:
 
-* A default constructed `mpfr_float_backend` is set to a NaN (this is the default [mpfr] behavior).
+* A default constructed `mpfr_float_backend` is set to zero (['Note that this is [*not] the default [mpfr] behavior]).
 * All operations use round to nearest.
 * No changes are made to [gmp] or [mpfr] global settings, so this type can coexist with existing
 [mpfr] or [gmp] code.
@@ -943,6 +972,13 @@ Things you should know when using this type:
 * Conversion from a string results in a `std::runtime_error` being thrown if the string can not be interpreted
 as a valid floating-point number.
 * Division by zero results in an infinity.
+* When using the variable precision type `mpfr_float`, then copy construction and assignment ['copies the precision
+of the source variable].  Likewise move construction and assignment.
+* When constructing the variable precision type `mpfr_float` you can specify two arguments to the constructor - the first
+is the value to assign to the variable, the second is an unsigned integer specifying the precision in decimal places.  The
+`assign` member function similarly has a 2-argument overload taking the value to assign and the precision.  You can use this
+to preserve the precision of the target variable using the somewhat arcane: `a.assign(b, a.precision())`, which assigns `b` to `a`
+but preserves the precision of `a`.
 
 [h5 [mpfr] example:]
 
@@ -1036,6 +1072,12 @@ the default by defining either `BOOST_MP_USE_FLOAT128` or `BOOST_MP_USE_QUAD`.
 
 [endsect] [/section:poly_eg Polynomial Evaluation]
 
+[section:variable_precision Variable Precision Newton Evaluation]
+
+[mpfr_variable]
+
+[endsect]
+
 [endsect] [/section:fp_eg Examples]
 
 [endsect] [/section:floats floating-point Numbers]
@@ -1084,7 +1126,7 @@ It's also possible to access the underlying `mpfi_t` via the data() member funct
 
 Things you should know when using this type:
 
-* A default constructed `mpfi_float_backend` is set to a NaN (this is the default [mpfi] behavior).
+* A default constructed `mpfi_float_backend` is set to zero (['Note that this is [*not] the default [mpfi] behavior]).
 * No changes are made to [gmp] or [mpfr] global settings, so this type can coexist with existing
 [mpfr] or [gmp] code.
 * The code can equally use [mpir] in place of [gmp] - indeed that is the preferred option on Win32.
@@ -1172,6 +1214,242 @@ Returns `true` if `lower(a) == upper(a)`.
 [h5 [mpfi] example:]
 
 [mpfi_eg]
+
+[endsect]
+
+[endsect]
+
+[section:complex Complex Number Types]
+
+The following backends provide complex number arithmetic:
+
+[table
+[[Backend Type][Header][Radix][Dependencies][Pros][Cons]]
+[[`cpp_complex`][boost/multiprecision/cpp_complex.hpp][2][None][An all C++ Boost-licensed implementation.][Slower than [mpc].]]
+[[`mpc`][boost/multiprecision/mpc.hpp][2][[mpc]][Very fast and efficient back-end.][Dependency on LGLP-licensed [MPC] library.]]
+[[`compplex128`][boost/multiprecision/complex128.hpp][2][`__float128` and libquadmath][Very fast and efficient number type.][128-bit precision only, and resticted to GCC.]]
+[[`complex_adaptor`][boost/multiprecision/complex_adaptor.hpp][-][none][Can convert any backend type into a complex number backend.][Not a numbe rin it's own right, and hard to use as a result.]]
+]
+
+[section:cpp_complex cpp_complex]
+
+`#include <boost/multiprecision/cpp_complex.hpp>`
+
+   namespace boost{ namespace multiprecision{
+
+      template <unsigned Digits, backends::digit_base_type DigitBase = backends::digit_base_10, class Allocator = void, class Exponent = int, Exponent MinExponent = 0, Exponent MaxExponent = 0>
+      using cpp_complex_backend = complex_adaptor<cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinExponent, MaxExponent> >;
+
+      template <unsigned Digits, backends::digit_base_type DigitBase = digit_base_10, class Allocator = void, class Exponent = int, Exponent MinExponent = 0, Exponent MaxExponent = 0, expression_template_option ExpressionTemplates = et_off>
+      using cpp_complex = number<complex_adaptor<cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinExponent, MaxExponent> >, ExpressionTemplates>;
+
+      typedef cpp_complex<50> cpp_complex_50;
+      typedef cpp_complex<100> cpp_complex_100;
+
+      typedef cpp_complex<24, backends::digit_base_2, void, boost::int16_t, -126, 127> cpp_complex_single;
+      typedef cpp_complex<53, backends::digit_base_2, void, boost::int16_t, -1022, 1023> cpp_complex_double;
+      typedef cpp_complex<64, backends::digit_base_2, void, boost::int16_t, -16382, 16383> cpp_complex_extended;
+      typedef cpp_complex<113, backends::digit_base_2, void, boost::int16_t, -16382, 16383> cpp_complex_quad;
+      typedef cpp_complex<237, backends::digit_base_2, void, boost::int32_t, -262142, 262143> cpp_complex_oct;
+
+
+   }} // namespaces
+
+The `cpp_complex_backend` back-end is used in conjunction with `number`: It acts as an entirely C++ (header only and dependency free)
+complex number type that is a drop-in replacement for `std::complex`, but with much greater precision.
+
+The template alias `cpp_complex` avoids the need to use class `number` directly.
+
+Type `cpp_complex` can be used at fixed precision by specifying a non-zero `Digits` template parameter.
+The typedefs `cpp_complex_50` and `cpp_complex_100` provide complex number types at 50 and 100 decimal digits precision
+respectively.
+
+Optionally, you can specify whether the precision is specified in decimal digits or binary bits - for example
+to declare a `cpp_complex` with exactly the same precision as `std::complex<double>` one would use
+`cpp_complex<53, digit_base_2>`.  The typedefs `cpp_complex_single`, `cpp_complex_double`,
+`cpp_complex_quad`, `cpp_complex_oct` and `cpp_complex_double_extended` provide
+software analogues of the IEEE single, double, quad and octuple float data types, plus the Intel-extended-double type respectively.
+Note that while these types are functionally equivalent to the native IEEE types, but they do not have the same size
+or bit-layout as true IEEE compatible types.
+
+Normally `cpp_complex` allocates no memory: all of the space required for its digits are allocated
+directly within the class.  As a result care should be taken not to use the class with too high a digit count
+as stack space requirements can grow out of control.  If that represents a problem then providing an allocator
+as a template parameter causes `cpp_complex` to dynamically allocate the memory it needs: this
+significantly reduces the size of `cpp_complex` and increases the viable upper limit on the number of digits
+at the expense of performance.  However, please bear in mind that arithmetic operations rapidly become ['very] expensive
+as the digit count grows: the current implementation really isn't optimized or designed for large digit counts.
+Note that since the actual type of the objects allocated
+is completely opaque, the suggestion would be to use an allocator with `char` `value_type`, for example:
+`cpp_complex<1000, digit_base_10, std::allocator<char> >`.
+
+The next template parameters determine the type and range of the exponent: parameter `Exponent` can be
+any signed integer type, but note that `MinExponent` and `MaxExponent` can not go right up to the limits
+of the `Exponent` type as there has to be a little extra headroom for internal calculations.  You will
+get a compile time error if this is the case.  In addition if MinExponent or MaxExponent are zero, then
+the library will choose suitable values that are as large as possible given the constraints of the type
+and need for extra headroom for internal calculations.
+
+Finally, as with class `number`, the final template parameter determines whether expression templates are turn
+on or not.  Since by default this type allocates no memory, expression template support is off by default.
+However, you should probably turn it on if you specify an allocator.
+
+There is full standard library support available for this type, comparable with what `std::complex` provides.
+
+Things you should know when using this type:
+
+* Default constructed `cpp_complex`s have a value of zero.
+* The radix of this type is 2, even when the precision is specified as decimal digits.
+* The type supports both infinities and NaN's.  An infinity is generated whenever the result would overflow,
+and a NaN is generated for any mathematically undefined operation.
+* There is no `std::numeric_limits` specialisation for this type: this is the same behaviour as `std::complex`.  If you need
+`std::numeric_limits` support you need to look at `std::numeric_limits<my_complex_number_type::value_type>`.
+* Any `number` instantiated on this type, is convertible to any other `number` instantiated on this type -
+for example you can convert from `number<cpp_complex<50> >` to `number<cpp_bin_float<SomeOtherValue> >`.
+Narrowing conversions round to nearest and are `explicit`.
+* Conversion from a string results in a `std::runtime_error` being thrown if the string can not be interpreted
+as a valid complex number.
+
+[h5 example:]
+
+[cpp_complex_eg]
+
+Which produces the output (for the multiprecision type):
+
+[cpp_complex_out]
+
+[endsect]
+
+[section:mpc_complex mpc_complex]
+
+`#include <boost/multiprecision/mpc.hpp>`
+
+   namespace boost{ namespace multiprecision{
+
+   template <unsigned Digits10>
+   class mpc_complex_backend;
+
+   typedef number<mpc_complex_backend<50> >    mpc_complex_50;
+   typedef number<mpc_complex_backend<100> >   mpc_complex_100;
+   typedef number<mpc_complex_backend<500> >   mpc_complex_500;
+   typedef number<mpc_complex_backend<1000> >  mpc_complex_1000;
+   typedef number<mpc_complex_backend<0> >     mpc_complex;
+
+   }} // namespaces
+
+The `mpc_complex_backend` type is used in conjunction with `number`: It acts as a thin wrapper around the [mpc] `mpc_t`
+to provide an real-number type that is a drop-in replacement for `std::complex`, but with
+much greater precision.
+
+Type `mpc_complex_backend` can be used at fixed precision by specifying a non-zero `Digits10` template parameter, or
+at variable precision by setting the template argument to zero.  The typedefs mpc_complex_50, mpc_complex_100,
+mpc_complex_500, mpc_complex_1000 provide complex types at 50, 100, 500 and 1000 decimal digits precision
+respectively.  The typedef mpc_complex provides a variable precision type whose precision can be controlled via the
+`number`s member functions.
+
+The `mpc` backend should allow use of the same syntax as the C++ standard library complex type.
+When using this backend, remember to link with the flags `-lmpc -lmpfr -lgmp`.
+
+As well as the usual conversions from arithmetic and string types, instances of `number<mpc_complex_backend<N> >` are
+copy constructible and assignable from:
+
+* The [gmp] native types `mpf_t`, `mpz_t`, `mpq_t`.
+* The [mpfr] native type `mpfr_t`.
+* The [mpc] native type `mpc_t`.
+* The `number` wrappers around those types: `number<mpfr_float_backend<M> >`, `number<mpf_float<M> >`, `number<gmp_int>`, `number<gmp_rational>`.
+
+It's also possible to access the underlying `mpc_t` via the data() member function of `mpfr_float_backend`.
+
+Things you should know when using this type:
+
+* A default constructed `mpc_complex_backend` is set to zero (['Note that this is [*not] the default [mpc] behavior]).
+* All operations use round to nearest.
+* No changes are made to [mpc], [gmp] or [mpfr] global settings, so this type can coexist with existing
+[mpc], [mpfr] or [gmp] code.
+* The code can equally use [mpir] in place of [gmp] - indeed that is the preferred option on Win32.
+* This backend supports rvalue-references and is move-aware, making instantiations of `number` on this backend move aware.
+* Conversion from a string results in a `std::runtime_error` being thrown if the string can not be interpreted
+as a valid complex number.
+* Division by zero results in a complex-infinity.
+* Unlike `std::complex`, you can not use `reinterpret_cast` to treat this type as an array of the underlying floating point type.
+* Unlike `std::complex`, there are no literals for imaginary values.
+* When using the variable precision type `mpc_complex`, then copy construction and assignment ['copies the precision
+of the source variable].  Likewise move construction and assignment.
+* When constructing the variable precision type `mpc_complex` you can specify two arguments to the constructor - the first
+is the value to assign to the variable, the second is an unsigned integer specifying the precision in decimal places.  The
+`assign` member function similarly has a 2-argument overload taking the value to assign and the precision.  You can use this
+to preserve the precision of the target variable using the somewhat arcane: `a.assign(b, a.precision())`, which assigns `b` to `a`
+but preserves the precision of `a`.
+
+[h5 [mpc] example:]
+
+[mpc_eg]
+
+Which produces the output (for the multiprecision type):
+
+[mpc_out]
+
+[endsect]
+
+[section:complex128 complex128]
+
+`#include <boost/multiprecision/complex128.hpp>`
+
+   namespace boost{ namespace multiprecision{
+
+   class complex128_backend;
+
+   typedef number<complex128_backend, et_off>    complex128;
+
+   }} // namespaces
+
+The `complex128` number type is a very thin wrapper around GCC's `__float128` or Intel's `_Quad` data types
+and provides a complex-number type that is a drop-in replacement for the native C++ floating-point types, but with
+a 113 bit mantissa, and compatible with FORTRAN's 128-bit QUAD real.
+
+All the usual standard library functions are available, performance should be equivalent
+to the underlying native types.
+
+As well as the usual conversions from arithmetic and string types, instances of `float128` are
+copy constructible and assignable from GCC's `__float128` and Intel's `_Quad` data types.
+
+Things you should know when using this type:
+
+* Default constructed `complex128`s have the value zero.
+* This backend supports rvalue-references and is move-aware, making instantiations of `number` on this backend move aware.
+* It is not possible to round-trip objects of this type to and from a string and get back
+exactly the same value when compiled with Intel's C++ compiler and using `_Quad` as the underlying type: this is a current limitation of
+our code.  Round tripping when using `__float128` as the underlying type is possible (both for GCC and Intel).
+* Conversion from a string results in a `std::runtime_error` being thrown if the string can not be interpreted
+as a valid floating-point number.
+* Division by zero results in an infinity being produced.
+* When using the Intel compiler, the underlying type defaults to `__float128` if it's available and `_Quad` if not.  You can override
+the default by defining either `BOOST_MP_USE_FLOAT128` or `BOOST_MP_USE_QUAD`.
+* When the underlying type is Intel's `_Quad` type, the code must be compiled with the compiler option `-Qoption,cpp,--extended_float_type`.
+
+[h5 complex128 example:]
+
+[complex128_eg]
+
+Which results in the output:
+
+[complex128_out]
+
+[endsect]
+
+[section:complex_adaptor complex_adaptor]
+
+   namespace boost{ namespace multiprecision{
+   
+   template <class Backend>
+   struct complex_adaptor;
+   
+   }}
+
+Class template `complex_adaptor` is designed to sit inbetween class `number` and an actual floating point backend, 
+in order to create a new complex number type.
+
+It is the means by which we implement __cpp_complex and __complex128.
 
 [endsect]
 
@@ -1511,7 +1789,7 @@ In particular:
 * A `number` can be converted to any built in type, via the `convert_to` member function:
 
    mpz_int z(2);
-   int i = z.template convert_to<int>(); // sets i to 2
+   int i = z.convert_to<int>(); // sets i to 2
 
 * Conversions to rational numbers from floating-point ones are always allowed, and are exact and implicit
 as long as the rational number uses an unbounded integer type.  Please be aware that constructing a rational
@@ -1793,57 +2071,57 @@ Examples:
 
 Any integer number type that uses `cpp_int_backend` as it's implementation layer can import or export it's bits via two non-member functions:
 
-      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator, 
+      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator,
                 expression_template_option ExpressionTemplates, class OutputIterator>
       OutputIterator export_bits(
-         const number<const cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val, 
-         OutputIterator out, 
-         unsigned chunk_size, 
+         const number<const cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val,
+         OutputIterator out,
+         unsigned chunk_size,
          bool msv_first = true);
 
-      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator, 
+      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator,
                 expression_template_option ExpressionTemplates, class Iterator>
       number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>&
          import_bits(
-            number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val, 
-            Iterator i, 
-            Iterator j, 
-            unsigned chunk_size = 0, 
+            number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val,
+            Iterator i,
+            Iterator j,
+            unsigned chunk_size = 0,
             bool msv_first = true);
 
 These functions are designed for data-interchange with other storage formats, and since __cpp_bin_float uses __cpp_int internally,
 by extension they can be used for floating point numbers based on that backend as well (see example below).  Parameters and use are as follows:
 
-      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator, 
+      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator,
                 expression_template_option ExpressionTemplates, class OutputIterator>
       OutputIterator export_bits(
-         const number<const cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val, 
-         OutputIterator out, 
-         unsigned chunk_size, 
+         const number<const cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val,
+         OutputIterator out,
+         unsigned chunk_size,
          bool msv_first = true);
 
 Exports the absolute value of `val` to OutputIterator `out`.  The function will write `chunk_size` bits at a time
 to the OutputIterator, and if `msv_first` is true, will write the most-significant block first.  Byte and bit order
-within each `chunk_size` block is always in the machines native format.  Further, each block is stored in a 
+within each `chunk_size` block is always in the machines native format.  Further, each block is stored in a
 `boost::uintmax_t` when it's assigned to `*out`.
 
 [note Unfortunately, the standard's OutputIterator concept provides no means of deducing the type to output since
 `std::iterator_traits<OutputIteratorType>::value_type` is type `void`.  This is why the bit count for each block
 has to be specified manually.  It may also result in compiler warnings about the value being narrowed.]
 
-[tip If you're exporting to non-native byte layout, then use 
-[@http://www.boost.org/doc/libs/release/libs/endian/doc/index.html 
+[tip If you're exporting to non-native byte layout, then use
+[@http://www.boost.org/doc/libs/release/libs/endian/doc/index.html
 Boost.Endian] to create a custom OutputIterator that
 reverses the byte order of each chunk prior to actually storing the result.]
 
-      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator, 
+      template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator,
                 expression_template_option ExpressionTemplates, class ForwardIterator>
       number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>&
          import_bits(
-            number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val, 
-            ForwardIterator i, 
-            ForwardIterator j, 
-            unsigned chunk_size = 0, 
+            number<cpp_int_backend<MinBits, MaxBits, SignType, Checked, Allocator>, ExpressionTemplates>& val,
+            ForwardIterator i,
+            ForwardIterator j,
+            unsigned chunk_size = 0,
             bool msv_first = true);
 
 Imports bits from the iterator range ['\[i,j)] and stores them in `val` to produce an unsigned result (if the result
@@ -2639,7 +2917,7 @@ Adding any smaller value, like half `epsilon`,  will have no effect on this valu
 So this cancellation error leaves the values equal, despite adding half `epsilon`.
 
 To achieve greater portability over platform and floating-point type,
-Boost.Math and Boost.Multiprecion provide a package of functions that
+Boost.Math and Boost.Multiprecision provide a package of functions that
 'do something sensible' if the standard `numeric_limits` is not available.
 To use these `#include <boost/math/tools/precision.hpp>`.
 
@@ -2650,7 +2928,7 @@ To use these `#include <boost/math/tools/precision.hpp>`.
 `epsilon` is very useful to compute a tolerance when comparing floating-point values,
 a much more difficult task than is commonly imagined.
 
-For more information you probably want (but still need) see
+For more information than you probably want (but still need) see
 [@http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html What Every Computer Scientist Should Know About Floating-Point Arithmetic]
 
 The naive test comparing the absolute difference between two values and a tolerance
@@ -2834,7 +3112,7 @@ have no division operator and are the same as floating-point types except:
 [h4 Complex Numbers]
 
 For historical reasons, complex numbers do not specialize `std::numeric_limits`, instead you must
-inspect `std::numeric_limits<T::value_type>`.
+inspect `std::numeric_limits<typename T::value_type>`.
 
 [endsect] [/section:how_to_tell How to Determine the Kind of a Number From `std::numeric_limits`]
 
@@ -2953,7 +3231,35 @@ which may be useful to ensure that columns line up.
 
 [endsect] [/section:input_output  Input Output]
 
+[section:hash Hash Function Support]
 
+[hash1]
+
+[hash2]
+
+[hash3]
+
+[hash4]
+
+[endsect][/hash]
+
+[section:eigen Eigen Interoperability]
+
+This library provides the header:
+
+   #include <boost/multiprecision/eigen.hpp>
+
+which defines the traits classes and functions that the Eigen library needs all user-defined number types to provide.
+
+For example the following code performs quad-precision matrix solving on complex numbers:
+
+[eigen_eg]
+
+Which produces the following output:
+
+[eigen_out]
+
+[endsect]
 [endsect]
 
 [section:ref Reference]
@@ -2972,6 +3278,10 @@ which may be useful to ensure that columns line up.
    template <class Backend, expression_template_option ExpressionTemplates = expression_template_default<Backend>::value>
    class number
    {
+   public:
+      typedef          Backend                          backend_type;
+      typedef typename component_type<self_type>::type  value_type;
+
       number();
       number(see-below);
       number& operator=(see-below);
@@ -3018,6 +3328,13 @@ which may be useful to ensure that columns line up.
       template <class V>
       typename enable_if<is_convertible<V, number<Backend, ExpressionTemplates> >, int>::type
          compare(const V& o)const;
+      // real and imaginary parts:
+      value_type real()const;
+      value_type imag()const;
+      template <class T>
+      void real(const T& val);
+      template <class T>
+      void imag(const T& val);
       // Access to the underlying implementation:
       Backend& backend();
       const Backend& backend()const;
@@ -3068,41 +3385,94 @@ which may be useful to ensure that columns line up.
    ``['number]``                                    min    (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['number]``                                    max    (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
 
-   // Non-member function standard library support:
-   ``['unmentionable-expression-template-type]``    abs    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    fabs   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sqrt   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    floor  (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    ceil   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    trunc  (const ``['number-or-expression-template-type]``&);
+   // C99 Non-member function standard library support:
+   ``['unmentionable-expression-template-type]``    abs        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    acos       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    acosh      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    asin       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    asinh      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    atan       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    atan2      (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    atanh      (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    cbrt       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    ceil       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    copysign   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    cos        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    cosh       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    erf        (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    erfc       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    exp        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    exp2       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    expm1      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fabs       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fdim       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    floor      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fma        (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmin       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmax       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmod       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    frexp      (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
+   ``['unmentionable-expression-template-type]``    hypot      (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['integer-type]``                              ilogb      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    ldexp      (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['number]``                                    lgamma     (const ``['number-or-expression-template-type]``&);
+   long long                                 llrint     (const ``['number-or-expression-template-type]``&);
+   long long                                 llround    (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log2       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log10      (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    log1p      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    logb       (const ``['number-or-expression-template-type]``&);
+   long                                      lrint      (const ``['number-or-expression-template-type]``&);
+   long                                      lround     (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    modf       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    nearbyint  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    nextafter  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    nexttoward (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    pow        (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    remainder  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    remquo     (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&, int*);
+   ``['unmentionable-expression-template-type]``    rint       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    round      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    scalbn     (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    scalbln    (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    sin        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    sinh       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    sqrt       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    tan        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    tanh       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    tgamma     (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    trunc      (const ``['number-or-expression-template-type]``&);
+
+   int                                       fpclassify (const ``['number-or-expression-template-type]``&);
+   bool                                      isfinite   (const ``['number-or-expression-template-type]``&);
+   bool                                      isinf      (const ``['number-or-expression-template-type]``&);
+   bool                                      isnan      (const ``['number-or-expression-template-type]``&);
+   bool                                      isnormal   (const ``['number-or-expression-template-type]``&);
+   int                                       signbit    (const ``['number-or-expression-template-type]``&);
+
+   bool                                      isgreater  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isgreaterequal(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isless     (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      islessequal(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      islessgreater(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isunordered(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   // Complex number functions:
+   ``['number<...>::value_type]``                   real  (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   imag  (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   abs   (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   arg   (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   norm  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    conj  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    proj  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    polar (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   // Misc other common C library functions:
    ``['unmentionable-expression-template-type]``    itrunc (const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    ltrunc (const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    lltrunc(const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    round  (const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    iround (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    lround (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    llround(const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    exp    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    log    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    log10    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    cos    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sin    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    tan    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    acos   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    asin   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    atan   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    cosh   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sinh   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    tanh   (const ``['number-or-expression-template-type]``&);
-
-   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
-   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
-   ``['unmentionable-expression-template-type]``    pow   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    fmod  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    atan2 (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    scalbn(const ``['number-or-expression-template-type]``&, ``['integer-type]``);
-   ``['unmentionable-expression-template-type]``    logb  (const ``['number-or-expression-template-type]``&);
-   ``['integer-type]``                              ilogb (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    changesign(const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    copysign(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
 
    // Traits support:
    template <class T>
@@ -3236,6 +3606,15 @@ two argument constructor:
 
 Where the two args must either be arithmetic types, or types that are convertible to the two components of `this`.
 
+Finally, when the type has a variable precision, then there are constructors:
+
+   number(arg1, precision);
+   number(arg1, arg2, precision);
+
+Where `precision` is an unsigned value, the 2 arg version is active for scalar types and/or copy-construction with specific precision, and the 3-arg version for complex types.
+
+Likewise `assign` has a 2-arg overloaded, with the second argument being the precision.
+
       number& operator+=(const ``['see-below]``&);
       number& operator-=(const ``['see-below]``&);
       number& operator*=(const ``['see-below]``&);
@@ -3318,6 +3697,19 @@ Returns:
 * A value less that 0 for `*this < other`
 * A value greater that 0 for `*this > other`
 * Zero for `*this == other`
+
+      value_type real()const;
+      value_type imag()const;
+
+These return the real and imaginary parts respectively.  If the number is not a complex type, then the imaginary part is always zero.
+
+      template <class T>
+      void real(const T& val);
+      template <class T>
+      void imag(const T& val);
+
+These set the real and imaginary parts respectively of the number.  If the number is not a complex type, then setting the real part
+is equivalent to assignment, and attempting to set the imaginary part will result in a compile time error.
 
       Backend& backend();
       const Backend& backend()const;
@@ -3408,49 +3800,110 @@ that allows arithmetic to be performed on native integer types producing an exte
 
 [h4 Non-member standard library function support]
 
-   ``['unmentionable-expression-template-type]``    abs    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    fabs   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sqrt   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    floor  (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    ceil   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    trunc  (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    itrunc (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    ltrunc (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    lltrunc(const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    round  (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    iround (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    lround (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    llround(const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    exp    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    log    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    log10    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    cos    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sin    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    tan    (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    acos   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    asin   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    atan   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    cosh   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    sinh   (const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    tanh   (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    abs        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    acos       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    acosh      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    asin       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    asinh      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    atan       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    atan2      (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    atanh      (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    cbrt       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    ceil       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    copysign   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    cos        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    cosh       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    erf        (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    erfc       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    exp        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    exp2       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    expm1      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fabs       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fdim       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    floor      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fma        (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmin       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmax       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    fmod       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    frexp      (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
+   ``['unmentionable-expression-template-type]``    hypot      (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['integer-type]``                              ilogb      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    ldexp      (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['number]``                                    lgamma     (const ``['number-or-expression-template-type]``&);
+   long long                                 llrint     (const ``['number-or-expression-template-type]``&);
+   long long                                 llround    (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log2       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    log10      (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    log1p      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    logb       (const ``['number-or-expression-template-type]``&);
+   long                                      lrint      (const ``['number-or-expression-template-type]``&);
+   long                                      lround     (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    modf       (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    nearbyint  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    nextafter  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    nexttoward (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    pow        (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    remainder  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    remquo     (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&, int*);
+   ``['unmentionable-expression-template-type]``    rint       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    round      (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    scalbn     (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    scalbln    (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    sin        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    sinh       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    sqrt       (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    tan        (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    tanh       (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    tgamma     (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    trunc      (const ``['number-or-expression-template-type]``&);
 
-   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
-   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
-   ``['unmentionable-expression-template-type]``    pow   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    fmod  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    atan2 (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
-   ``['unmentionable-expression-template-type]``    scalbn(const ``['number-or-expression-template-type]``&, ``['integer-type]``);
-   ``['unmentionable-expression-template-type]``    logb  (const ``['number-or-expression-template-type]``&);
-   ``['integer-type]``                              ilogb (const ``['number-or-expression-template-type]``&);
+   int                                       fpclassify (const ``['number-or-expression-template-type]``&);
+   bool                                      isfinite   (const ``['number-or-expression-template-type]``&);
+   bool                                      isinf      (const ``['number-or-expression-template-type]``&);
+   bool                                      isnan      (const ``['number-or-expression-template-type]``&);
+   bool                                      isnormal   (const ``['number-or-expression-template-type]``&);
+   int                                       signbit    (const ``['number-or-expression-template-type]``&);
+
+   bool                                      isgreater  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isgreaterequal(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isless     (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      islessequal(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      islessgreater(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   bool                                      isunordered(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
 
 These functions all behave exactly as their standard library C++11 counterparts do: their argument is either an instance of `number` or
 an expression template derived from it; If the argument is of type `number<Backend, et_off>` then that is also the return type,
-otherwise the return type is an expression template.
+otherwise the return type is an expression template unless otherwise stated.
 
 The integer type arguments to `ldexp`, `frexp`, `scalbn` and `ilogb` may be either type `int`, or the actual
 type of the exponent of the number type.
 
-These functions are normally implemented by the Backend type.  However, default versions are provided for Backend types that
+Complex number types support the following functions:
+
+   // Complex number functions:
+   ``['number<...>::value_type]``                   real  (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   imag  (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   abs   (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   arg   (const ``['number-or-expression-template-type]``&);
+   ``['number<...>::value_type]``                   norm  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    conj  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    proj  (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    polar (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+
+In addition the functions `real`, `imag`, `arg`, `norm`, `conj` and `proj` are overloaded for scalar (ie non-complex) types in the same
+manner as `<complex>` and treat the argument as a value whose imaginary part is zero.
+
+There are also some functions implemented for compatibility with the Boost.Math functions of the same name:
+
+   ``['unmentionable-expression-template-type]``    itrunc (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    ltrunc (const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    lltrunc(const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    iround (const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    changesign(const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    copysign(const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+
+All these functions are normally implemented by the Backend type.  However, default versions are provided for Backend types that
 don't have native support for these functions.  Please note however, that this default support requires the precision of the type
 to be a compile time constant - this means for example that the [gmp] MPF Backend will not work with these functions when that type is
 used at variable precision.
@@ -3686,7 +4139,7 @@ whose precision can vary at compile time (such as `mpf_float`).
    // Over again, but with checking enabled this time:
    typedef number<cpp_int_backend<0, 0, signed_magnitude, checked> >                 checked_cpp_int;
    typedef rational_adaptor<cpp_int_backend<0, 0, signed_magnitude, checked> >       checked_cpp_rational_backend;
-   typedef number<cpp_rational_backend>                                              checked_cpp_rational;
+   typedef number<checked_cpp_rational_backend>                                      checked_cpp_rational;
 
    // Checked fixed precision unsigned types:
    typedef number<cpp_int_backend<128, 128, unsigned_magnitude, checked, void> >     checked_uint128_t;
@@ -3851,10 +4304,11 @@ More information on this type can be found in the [link boost_multiprecision.tut
    typedef number<cpp_bin_float<50> > cpp_bin_float_50;
    typedef number<cpp_bin_float<100> > cpp_bin_float_100;
 
-   typedef number<backends::cpp_bin_float<24, backends::digit_base_2, void, boost::int16_t, -126, 127>, et_off>       cpp_bin_float_single;
-   typedef number<backends::cpp_bin_float<53, backends::digit_base_2, void, boost::int16_t, -1022, 1023>, et_off>     cpp_bin_float_double;
-   typedef number<backends::cpp_bin_float<64, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>   cpp_bin_float_double_extended;
-   typedef number<backends::cpp_bin_float<113, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>  cpp_bin_float_quad;
+   typedef number<backends::cpp_bin_float<24, backends::digit_base_2, void, boost::int16_t, -126, 127>, et_off>         cpp_bin_float_single;
+   typedef number<backends::cpp_bin_float<53, backends::digit_base_2, void, boost::int16_t, -1022, 1023>, et_off>       cpp_bin_float_double;
+   typedef number<backends::cpp_bin_float<64, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>     cpp_bin_float_double_extended;
+   typedef number<backends::cpp_bin_float<113, backends::digit_base_2, void, boost::int16_t, -16382, 16383>, et_off>    cpp_bin_float_quad;
+   typedef number<backends::cpp_bin_float<237, backends::digit_base_2, void, boost::int32_t, -262142, 262143>, et_off>  cpp_bin_float_oct;
 
    }} // namespaces
 
@@ -4023,7 +4477,7 @@ Optional requirements have default implementations that are called if the backen
 it's own.  Typically the backend will implement these to improve performance.
 
 In the following tables, type B is the `Backend` template argument to `number`, `b` and `b2` are
-a variables of type B, `cb`, `cb2` and `cb3` are constant variables of type `const B`,
+a variables of type B, `pb` is a variable of type B*, `cb`, `cb2` and `cb3` are constant variables of type `const B`,
 `rb` is a variable of type `B&&`, `a` and `a2` are variables of Arithmetic type,
 `s` is a variable of type `const char*`, `ui` is a variable of type `unsigned`, `bb` is a variable of type `bool`,
 `pa` is a variable of type pointer-to-arithmetic-type, `exp` is a variable of type `B::exp_type`,
@@ -4080,8 +4534,14 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
 [[`eval_floor(b, cb)`][`void`][Stores the floor of `cb` in `b`, only required when `B` is a floating-point type.][[space]]]
 [[`eval_ceil(b, cb)`][`void`][Stores the ceiling of `cb` in `b`, only required when `B` is a floating-point type.][[space]]]
 [[`eval_sqrt(b, cb)`][`void`][Stores the square root of `cb` in `b`, only required when `B` is a floating-point type.][[space]]]
-[[`boost::multiprecision::number_category<B>::type`][`mpl::int_<N>`][`N` is one of the values `number_kind_integer`, `number_kind_floating_point`, `number_kind_rational` or `number_kind_fixed_point`.
+[[`boost::multiprecision::number_category<B>::type`][`mpl::int_<N>`][`N` is one of the values `number_kind_integer`, `number_kind_floating_point`, `number_kind_complex`, `number_kind_rational` or `number_kind_fixed_point`.
                                                 Defaults to `number_kind_floating_point`.][[space]]]
+[[`eval_conj(b, cb)`][`void`][Sets `b` to the complex conjugate of `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
+[[`eval_proj(b, cb)`][`void`][Sets `b` to the Riemann projection of `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
+[[`eval_real(b, cb)`][`void`][Sets `b` to the real part of `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
+[[`eval_imag(b, cb)`][`void`][Sets `b` to the imaginary of `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
+[[`eval_set_real(b, a)`][`void`][Sets the real part of `b` to `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
+[[`eval_set_imag(b, a)`][`void`][Sets the imaginary part of `b` to `cb`.  Required for complex types only - other types have a sensible default.][[space]]]
 ]
 
 [table Optional Requirements on the Backend Type
@@ -4362,6 +4822,8 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_exp(b, cb)`][`void`][Performs the equivalent operation to `std::exp` on argument `cb` and stores the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
+[[`eval_exp2(b, cb)`][`void`][Performs the equivalent operation to `std::exp2` on argument `cb` and stores the result in `b`.  Only required when `B` is an floating-point type.
+            The default version of this function is implemented in terms of `eval_pow`.][[space]]]
 [[`eval_log(b, cb)`][`void`][Performs the equivalent operation to `std::log` on argument `cb` and stores the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_log10(b, cb)`][`void`][Performs the equivalent operation to `std::log10` on argument `cb` and stores the result in `b`.  Only required when `B` is an floating-point type.
@@ -4386,16 +4848,49 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_fmod(b, cb, cb2)`][`void`][Performs the equivalent operation to `std::fmod` on arguments `cb` and `cb2`, and store the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
+[[`eval_modf(b, cb, pb)`][`void`][Performs the equivalent operation to `std::modf` on argument `cb`, and store the integer result in `*pb` and the fractional part in `b`.
+            Only required when `B` is an floating-point type.
+            The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_pow(b, cb, cb2)`][`void`][Performs the equivalent operation to `std::pow` on arguments `cb` and `cb2`, and store the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_atan2(b, cb, cb2)`][`void`][Performs the equivalent operation to `std::atan` on arguments `cb` and `cb2`, and store the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_scalbn(b, cb, e)`][`void`][Scales value `cb` by ['r[super e]], where ['r] is the radix of the type.  The default version of this function
                   is implemented in terms of eval_ldexp, consequently this function must be provided for types with a radix other than 2.]]
+[[`eval_scalbln(b, cb, e)`][`void`][Calls `eval_scalbn(b, cb, e)`.]]
 [[`eval_ilogb(cb)`][`B::exponent_type`][Returns the exponent ['e] of value `cb` such that ['1 <= cb*r[super -e] < r], where ['r] is the radix of type B.
                     The default version of this function is implemented in terms of eval_frexp, consequently this function must be provided for types with a radix other than 2.]]
+[[`eval_remquo(b, cb, cb2, pi)`][`void`][Sets `b = cb - n * cb2` and stores `n` in `*pi`.]]
+[[`eval_remquo(b, cb, a, pi)`][`void`][Default version converts a to type B and calls the overload above.]]
+[[`eval_remquo(b, a, cb, pi)`][`void`][Default version converts a to type B and calls the overload above.]]
+[[`eval_remainder(b, cb, cb2)`][`void`][Default version calls eval_remquo with a dummy final argument.]]
+[[`eval_remainder(b, cb, a)`][`void`][Default version calls eval_remquo with a dummy final argument.]]
+[[`eval_remainder(b, a, cb)`][`void`][Default version calls eval_remquo with a dummy final argument.]]
+
+[[`eval_fdim(b, cb, cb2)`][`void`][Default version sets `b = cb - cb2` if `cb > cb2` and zero otherwise.  Special cases are handled as in the C99 annex.]]
+[[`eval_fdim(b, cb, a)`][`void`][Default version sets `b = cb - cb2` if `cb > cb2` and zero otherwise.  Special cases are handled as in the C99 annex.]]
+[[`eval_fdim(b, a, cb)`][`void`][Default version sets `b = cb - cb2` if `cb > cb2` and zero otherwise.  Special cases are handled as in the C99 annex.]]
+
+[[`eval_fmax(b, cb, cb2)`][`void`][Sets `b` to the larger of `cb` and `cb2`.]]
+[[`eval_fmax(b, cb, a)`][`void`][Sets `b` to the larger of `cb` and `a`.]]
+[[`eval_fmax(b, a, cb)`][`void`][Sets `b` to the larger of `cb` and `a`.]]
+[[`eval_fmin(b, cb, cb2)`][`void`][Sets `b` to the smaller of `cb` and `cb2`.]]
+[[`eval_fmin(b, cb, a)`][`void`][Sets `b` to the smaller of `cb` and `a`.]]
+[[`eval_fmin(b, a, cb)`][`void`][Sets `b` to the smaller of `cb` and `a`.]]
+
+[[`eval_hypot(b, cb, cb2)`][`void`][Sets `b` to the square root of the sum of the squares of `cb` and `cb2` without undue over or under flow.]]
+[[`eval_hypot(b, cb, a)`][`void`][As above.]]
+[[`eval_hypot(b, a, cb)`][`void`][As above.]]
+
 [[`eval_logb(b, cb)`][`B::exponent_type`][Sets `b` to the exponent ['e] of value `cb` such that ['1 <= cb*r[super -b] < r], where ['r] is the radix of type B.
                   The default version of this function is implemented in terms of `eval_ilogb`.]]
+[[`eval_nearbyint(b, cb)`][`void`][Calls `eval_round(b, cb)`.]]
+[[`eval_rint(b, cb)`][`void`][Calls `eval_nearbyint(b, cb)`.]]
+[[`eval_log2(b, cb)`][`void`][Sets `b` to the logarithm base 2 of `cb`.]]
+
+[[['hashing:]]]
+[[`hash_value(cb)`][`std::size_t`]
+         [Returns a hash value for the argument that is suitable for use with `std::hash` etc.  If not provided then no automatic hashing support will be available for the number type.]]
 ]
 
 When the tables above place no ['throws] requirements on an operation, then it is up to each type modelling this concept to
@@ -4406,6 +4901,31 @@ whenever the result of an operation would be infinite, and `std::underflow_error
 [note
 The non-member functions are all named with an "eval_" prefix to avoid conflicts with template classes of the same name -
 in point of fact this naming convention shouldn't be necessary, but rather works around some compiler bugs.]
+
+[h4 Overloadable Functions]
+
+Some of the C99 math functions do not have `eval_` functions but must be overloaded directly: these functions
+are either trivial or are forwarded to the Boost.Math implementations by default.
+The full list of these functions is:
+
+   int           sign       (const ``['number-or-expression-template-type]``&);
+   int           signbit    (const ``['number-or-expression-template-type]``&);
+   ``['number]``        changesign (const ``['number-or-expression-template-type]``&);
+   ``['number]``        copysign   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``        asinh      (const ``['number-or-expression-template-type]``&);
+   ``['number]``        acosh      (const ``['number-or-expression-template-type]``&);
+   ``['number]``        atanh      (const ``['number-or-expression-template-type]``&);
+   ``['number]``        cbrt       (const ``['number-or-expression-template-type]``&);
+   ``['number]``        erf        (const ``['number-or-expression-template-type]``&);
+   ``['number]``        erfc       (const ``['number-or-expression-template-type]``&);
+   ``['number]``        expm1      (const ``['number-or-expression-template-type]``&);
+   ``['number]``        log1p      (const ``['number-or-expression-template-type]``&);
+   ``['number]``        tgamma     (const ``['number-or-expression-template-type]``&);
+   ``['number]``        lgamma     (const ``['number-or-expression-template-type]``&);
+   long          lrint      (const ``['number-or-expression-template-type]``&);
+   long long     llrint     (const ``['number-or-expression-template-type]``&);
+   ``['number]``        nextafter  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``        nexttoward (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
 
 [endsect]
 
@@ -5080,7 +5600,110 @@ Windows Vista machine.
 
 [section:map Roadmap]
 
+* Support for atomic loads and stores is not currently supported, but will become more important as a larger number of floating point algorithms become parallelized.
+
 [section:hist History]
+
+[h4 Multiprecision-3.1.1 (Boost-1.69)]
+
+* Big update to better support variable precision types so that the precision of the result
+is always the largest of all the arguments.
+* Add support for allocators that are `final` in __cpp_int.
+* Removed use of deprecated Boost.Endian in favour of Predef.
+* Add support for `std::string_view`.
+* Fixed minor bug in constant initialization.  See [@https://github.com/boostorg/multiprecision/issues/67 #67].
+* Make assignment of non-finite value to `cpp_int` a runtime errors.  See [@https://github.com/boostorg/multiprecision/issues/58 #58].
+* Added typedefs for `cpp_bin_float_oct` and `cpp_complex_oct`.
+
+[h4 Multiprecision-3.1.0 (Boost-1.68)]
+
+* Support added for complex multiprecision numbers.
+* Changed conversion to unsigned integer types to be truncating to match standard defined behaviour.
+* Correct bug in MPFR string formatting.
+* Fix undefined behaviour in cpp_dec_float conversion from long long.
+* Add support for Eigen interoperability.
+* float128.hpp: Fix Intel on Windows build.
+* Fix type used in temporaries when expanding expression templates containing mixed expressions.
+* Fix infinite loop in gmp_float to fixed-point string conversion.
+* Update the expression templates to issue static_asserts with better error messages when you try and do something unsupported.
+* Fix bug in cpp_int where incrementing to zero doesn't set the sign correctly.
+* Remove erroneous use of std::move, and rely on NVRO instead.
+* Fix up support for changes to MPIR-3.0.
+* Fix various conversion errors in cpp_bin_float when the exponent type is a `long long`, or else we're converting to
+an integer that is wider than we are.
+* Fix compatibility issue with GCC-8 caused by the introduction of `std::byte`.
+
+[h4 Multiprecision-3.0.0 (Boost-1.67)]
+
+* [*Breaking Change:] When converting a multiprecision integer to a narrower type, if the value is too large (or negative) to
+fit in the smaller type, then the result is either the maximum (or minimum) value of the target type.  This was always the intended
+behaviour, but was somewhat haphazardly enforced before.  If you really do want just the low order N bits of a value, then you will
+need to mask these out prior to the case, for example: `static_cast<unsigned>(~static_cast<unsigned>(0) & my_value)`.  Note that
+technically (to avoid undefined behaviour) you should do the same thing with built in integer types too.
+See [@https://svn.boost.org/trac/boost/ticket/13109 #13109].
+* Fix bug in conversion of decimal to rational types (zero needs special handling), see [@https://svn.boost.org/trac/boost/ticket/13148 #13148].
+* Fix conversion from cpp_bin_float to a wider built in integer type, see [@https://svn.boost.org/trac/boost/ticket/13301 #13301].
+* Improve performance heurists used in cpp_bin_float exp function.
+* Fix bug in floor/ceil and cpp_bin_float when the exponent type is wider than an int, see [@https://svn.boost.org/trac/boost/ticket/13264 #13264].
+* Disable explicit conversion operator when the target type is already constructible from this type, see  [@https://github.com/boostorg/multiprecision/issues/30 #30].
+* Fix support for changes new to MPIR-3.0, see [@https://svn.boost.org/trac/boost/ticket/13124 #13124].
+
+[h4 Multiprecision-2.3.2 (Boost-1.65)]
+
+* Updated expression templates to store arithmetic literals directly in the expression template to prevent dangling references, see [@https://github.com/boostorg/multiprecision/issues/19 #19].
+* Fix various issues with huge values and overflow in the trig, pow and exp functions, see [@https://github.com/boostorg/multiprecision/issues/24 #24].
+* Fix error handling of checked cpp_int multiply that could cause some overflows to be missed.
+
+[h4 Multiprecision-2.3.1 (Boost-1.64)]
+
+* In `cpp_bin_float` prevent double rounding when converting to a denormalized float.  See [@https://svn.boost.org/trac/boost/ticket/12527 #12527].
+* Fix bug in integer sqrt for very small integers.  See [@https://svn.boost.org/trac/boost/ticket/12559 #12559].
+* Fix conversion to signed-zero in `cpp_bin_float`.
+* Change `cpp_bin_float` rounding code to round at arbitrary location so we can use it for conversions, see [@https://svn.boost.org/trac/boost/ticket/12527 #12527].
+* Improve performance of 128-bit bit-scan operations.
+* Fix subtraction of very small quantities in `cpp_bin_float`.  See: [@https://svn.boost.org/trac/boost/ticket/12580 #12580].
+* Bring error handling into line with C99 Annex F.  See [@https://svn.boost.org/trac/boost/ticket/12581 #12581].
+* Fix bitwise export of trivial `cpp_int`'s, see [@https://svn.boost.org/trac/boost/ticket/12627 #12627].
+* Fix `ilogb` (and code that uses it) to consistently return the smallest value of the exponent type when the argument is zero, see [@https://svn.boost.org/trac/boost/ticket/12625 #12625].
+* Allow conversion from `__float128` to `cpp_bin_float`.
+* Fix bug in left shift of `cpp_int` which would result in bit-loss, see [@https://svn.boost.org/trac/boost/ticket/12790 #12790].
+* Fixed bugs in bounded but variable precision `cpp_int`'s caused by over-aggressive constexpr optimization, see [@https://svn.boost.org/trac/boost/ticket/12798 #12798].
+
+
+[h4 Multiprecision-2.3.0 (Boost-1.63)]
+
+* Added support for all the C99 math functions.
+* Extended generic-interconversions to handle narrowing cases as well, changed convert_to member function and hence explicit
+conversion operators to use the same conversion code as the explicit constructors.
+* Fix IO stream parsing error, see [@https://svn.boost.org/trac/boost/ticket/12488 #12488].
+* Make default constructed floating point types all zero for consistency, see [@https://svn.boost.org/trac/boost/ticket/12500 #12500].
+* Fix conversion of cpp_bin_float to float/double/long double when the exponent value would overflow an int, see [@https://svn.boost.org/trac/boost/ticket/12512 #12512].
+* Fix cpp_bin_float subtractions that yield signed-zeros, see [@https://svn.boost.org/trac/boost/ticket/12524 #12524].
+* Fix ceil/trunc/round applied to cpp_bin_float and yielding a signed zero, see [@https://svn.boost.org/trac/boost/ticket/12525 #12525].
+
+[h4 Multiprecision-2.2.8 (Boost-1.62)]
+
+* Added support for hashing via `Boost.Hash` or `std::hash`.
+* Fixed some arithmetic operations in cpp_bin_float and cpp_dec_float that should generate a NaN, see [@https://svn.boost.org/trac/boost/ticket/12157 #12157].
+* Prevent inadvertant instantiation of variable-precision `mpfr_float_backend` with fixed allocation.
+* Fixed division over/underflow in cpp_bin_float, see [@https://svn.boost.org/trac/boost/ticket/12167 #12167].
+* Added support for signed-zeros throughout the library, including support for `signbit` and `copysign`, mpfr, float128, and cpp_bin_float types
+should now respect signed-zeros correctly.
+* Fixed bug in conversion of cpp_bin_float infinities to double etc, see [@https://svn.boost.org/trac/boost/ticket/12196 #12196].
+* Fix add and subtract of cpp_bin_float when the exponents would overflow., see [@https://svn.boost.org/trac/boost/ticket/12198 #12198].
+* Improve variable-precision support in mpfr and mpf backends, allow these types to be used with Boost.Math.
+* Fixed bug in subtraction of signed infinities in cpp_bin_float, see [@https://svn.boost.org/trac/boost/ticket/12209 #12209].
+* Fix result of sqrt(infinity) in cpp_bin_float (result should be infinity), see [@https://svn.boost.org/trac/boost/ticket/12227 #12227].
+* Added workaround in gmp.hpp for recent MPIR releases which are not quite source-compatible with GMP on Windows x64.
+* Allow `cpp_int` code to be used with /RTCc with MSVC.
+* Fix conversion of `cpp_int` to signed integer when the result is INT_MIN, see [@https://svn.boost.org/trac/boost/ticket/12343 #12343].
+* Update uBlas support to match latest uBlas code.
+* Fix some errors present when building on big-endian machines (not all `cpp_int` constructors are available on non-little-endian machines).
+* Fix fencepost error in rational to float conversion routines, see [@https://svn.boost.org/trac/boost/ticket/12327 #12327].
+* Fix some Oracle C++ compiler compatibility issues.
+* Add modf support to complete C90 compatibility.
+* Fix self assignment bug in expression template code for expressions such as `a = a * a * a`, see [@https://svn.boost.org/trac/boost/ticket/12408 #12408].
+* Fixed some compiler errors that occur when converting from `cpp_int` to `cpp_bin_float`.
 
 [h4 Multiprecision-2.2.7 (Boost-1.61)]
 
@@ -5384,7 +6007,3 @@ Donald E. Knuth, Volume 2: Seminumerical Algorithms, Third Edition
 '''
 
 [endsect]
-
-
-
-

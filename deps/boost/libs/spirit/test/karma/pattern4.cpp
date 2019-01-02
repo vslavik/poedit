@@ -19,8 +19,6 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
 
 #include "test.hpp"
 
@@ -79,8 +77,6 @@ int main()
 
     // copy tests
     {
-        typedef variant<char, int, double> var_type;
-
         karma::rule<outiter_type> a, b, c, start;
 
         a = 'a';
@@ -97,8 +93,6 @@ int main()
     }
 
     {
-        typedef variant<char, int, double> var_type;
-
         karma::rule<outiter_type, space_type> a, b, c, start;
 
         a = 'a';

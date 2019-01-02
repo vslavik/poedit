@@ -12,14 +12,16 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+//#include <boost/geometry/geometry.hpp>
 
 #include <string>
 #include <sstream>
 
 #include "test_distance.hpp"
 
-#include <boost/mpl/if.hpp>
 #include <boost/array.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/typeof/typeof.hpp>
 
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
@@ -76,7 +78,7 @@ void test_distance_point()
 
     {
         // Test custom strategy
-        BOOST_CONCEPT_ASSERT( (bg::concept::PointDistanceStrategy<taxicab_distance, P, P>) );
+        BOOST_CONCEPT_ASSERT( (bg::concepts::PointDistanceStrategy<taxicab_distance, P, P>) );
 
         typedef typename services::return_type<taxicab_distance, P, P>::type cab_return_type;
         BOOST_MPL_ASSERT((boost::is_same<cab_return_type, typename bg::coordinate_type<P>::type>));

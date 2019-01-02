@@ -20,6 +20,8 @@ namespace compute {
 /// Performs left rotation such that element at n_first comes to the
 /// beginning and the output is stored in range starting at result.
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see rotate()
 template<class InputIterator, class OutputIterator>
 inline void rotate_copy(InputIterator first,

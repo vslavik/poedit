@@ -62,6 +62,15 @@ a low absolute error can be guaranteed.
 
 [table_lgamma]
 
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph lgamma__double]
+
+[graph lgamma__80_bit_long_double]
+
+[graph lgamma____float128]
+
 [h4 Testing]
 
 The main tests for this function involve comparisons against the logs of 

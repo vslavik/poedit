@@ -6,17 +6,27 @@
 
 
 
-#include <libs/statechart/test/ThrowingBoostAssert.hpp>
+#define BOOST_ENABLE_ASSERT_HANDLER
+
+static int s_failed_assertions = 0;
+
+namespace boost
+{
+
+void assertion_failed(
+  char const *, char const *, char const *, long )
+{
+  ++s_failed_assertions;
+}
+
+} // namespace boost
+
+
 #include <boost/statechart/result.hpp>
-
 #include <boost/test/test_tools.hpp>
-
-#include <stdexcept> // std::logic_error
-
 
 
 namespace sc = boost::statechart;
-
 
 
 void make_unconsumed_result()
@@ -29,15 +39,15 @@ void make_unconsumed_result()
   sc::detail::result_utility::make_result( sc::detail::do_discard_event );
 }
 
-// TODO: The current test setup lets an exception propagate out of a
-// destructor. Find a better way to test this.
 int test_main( int, char* [] )
 {
-  #ifdef NDEBUG
-    BOOST_REQUIRE_NO_THROW( make_unconsumed_result() );
-  #else
-    BOOST_REQUIRE_THROW( make_unconsumed_result(), std::logic_error );
-  #endif
+  make_unconsumed_result();
+
+#ifdef NDEBUG
+  BOOST_TEST( s_failed_assertions == 0 );
+#else
+  BOOST_TEST( s_failed_assertions == 1 );
+#endif
 
   return 0;
 }

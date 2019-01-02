@@ -13,6 +13,7 @@
 # in the Wave tool anyway.
 
 import feature ;
+import option ;
 
 feature.feature wavetool 
     : on 
@@ -47,13 +48,16 @@ exe wave
     :
     release
     ;
+    
+local bindir = [ option.get bindir : ../../../dist/bin ] ;
+local libdir = [ option.get libdir : ../../../dist/lib ] ;
 
 install dist-bin
     :
     wave
     :
     <install-type>EXE
-    <location>../../../dist/bin
+    <location>$(bindir)
     :
     release
     ;
@@ -63,7 +67,7 @@ install dist-lib
     wave
     :
     <install-type>LIB
-    <location>../../../dist/lib
+    <location>$(libdir)
     :
     release
     ;

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Type type</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../boost_dll/reference.html#header.boost.dll.shared_library_load_mode_hpp" title="Header &lt;boost/dll/shared_library_load_mode.hpp&gt;">
 <link rel="prev" href="../shared_library.html" title="Class shared_library">
@@ -38,11 +38,11 @@
             <a class="link" href="type.html#boost.dll.load_mode.type.rtld_lazy">rtld_lazy</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_now">rtld_now</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_global">rtld_global</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_local">rtld_local</a>, <a class="link" href="type.html#boost.dll.load_mode.type.rtld_deepbind">rtld_deepbind</a>, 
             <a class="link" href="type.html#boost.dll.load_mode.type.append_decorations">append_decorations</a>, <a class="link" href="type.html#boost.dll.load_mode.type.search_system_folders">search_system_folders</a> <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp133323296"></a><h2>Description</h2>
+<a name="id-1.3.15.8.2.6.4.4"></a><h2>Description</h2>
 <p>Library load modes.</p>
 <p>Each of system family provides own modes. Flags not supported by a particular platform will be silently ignored.</p>
 <p>For a detailed description of platform specific options see: <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684179(v=vs.85).aspx" target="_top">Windows specific options</a>, <a href="http://pubs.opengroup.org/onlinepubs/000095399/functions/dlopen.html" target="_top">POSIX specific options</a>. </p>
-<div class="variablelist"><dl>
+<div class="variablelist"><dl class="variablelist compact">
 <dt><span class="term"><code class="computeroutput">default_mode</code><a name="boost.dll.load_mode.type.default_mode"></a></span></dt>
 <dd><p>Default open mode. See the <span class="bold"><strong>Default:</strong></span> comments below to find out the flags that are enabled by default. </p></dd>
 <dt><span class="term"><code class="computeroutput">dont_resolve_dll_references</code><a name="boost.dll.load_mode.type.dont_resolve_dll_references"></a></span></dt>
@@ -103,9 +103,9 @@
 <p><span class="bold"><strong>Default:</strong></span> disabled</p>
 <p>Append a platform specific extension and prefix to shared library filename before trying to load it. If load attempt fails, try to load with exactly specified name.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"> <span class="comment">// Opens `./my_plugins/plugin1.dll` on Windows, `./my_plugins/libplugin1.so` on Linux, `./my_plugins/libplugin1.dylib` on MacOS.</span>
- <span class="comment">// If that fails, loads `./my_plugins/plugin1`</span>
- <a class="link" href="../shared_library.html" title="Class shared_library">boost::dll::shared_library</a> <span class="identifier">lib</span><span class="special">(</span><span class="string">"./my_plugins/plugin1"</span><span class="special">,</span> <span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="comment">// Opens `./my_plugins/plugin1.dll` on Windows, `./my_plugins/libplugin1.so` on Linux, `./my_plugins/libplugin1.dylib` on MacOS.</span>
+<span class="comment">// If that fails, loads `./my_plugins/plugin1`</span>
+<a class="link" href="../shared_library.html" title="Class shared_library">boost::dll::shared_library</a> <span class="identifier">lib</span><span class="special">(</span><span class="string">"./my_plugins/plugin1"</span><span class="special">,</span> <span class="identifier">load_mode</span><span class="special">::</span><span class="identifier">append_decorations</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 </dd>
@@ -120,7 +120,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015, 2016 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Renato Tegon Forti, Antony Polukhin<br>Copyright &#169; 2015 Antony Polukhin<br>Copyright &#169; 2016 Antony Polukhin, Klemens Morgenstern<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </p>

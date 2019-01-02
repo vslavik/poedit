@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;30.&#160;Boost.Signals2</title>
+<title>Chapter&#160;36.&#160;Boost.Signals2</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
-<link rel="prev" href="signals/tests.html" title="Testsuite">
+<link rel="prev" href="ratio/appendices.html" title="Appendices">
 <link rel="next" href="signals2/tutorial.html" title="Tutorial">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,12 +21,12 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="signals/tests.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals2/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ratio/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals2/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="signals2"></a>Chapter&#160;30.&#160;Boost.Signals2</h2></div>
+<a name="signals2"></a>Chapter&#160;36.&#160;Boost.Signals2</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Douglas</span> <span class="surname">Gregor</span>
 </h3></div></div>
@@ -36,27 +36,27 @@
 <div><p class="copyright">Copyright &#169; 2001-2004 Douglas Gregor</p></div>
 <div><p class="copyright">Copyright &#169; 2007-2009 Frank Mori Hess</p></div>
 <div><div class="legalnotice">
-<a name="idp394513168"></a><p>Distributed under the Boost
+<a name="id-1.3.37.1.5"></a><p>Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
 </div></div>
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
-<dt><span class="section"><a href="signals2.html#idp394515904">Introduction</a></span></dt>
-<dd><dl><dt><span class="section"><a href="signals2.html#idp394519184">Signals2</a></span></dt></dl></dd>
+<dl class="toc">
+<dt><span class="section"><a href="signals2.html#id-1.3.37.3">Introduction</a></span></dt>
+<dd><dl><dt><span class="section"><a href="signals2.html#id-1.3.37.3.5">Signals2</a></span></dt></dl></dd>
 <dt><span class="section"><a href="signals2/tutorial.html">Tutorial</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394522480">How to Read this Tutorial</a></span></dt>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394529264">Hello, World! (Beginner)</a></span></dt>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394536896">Calling Multiple Slots</a></span></dt>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394564960">Passing Values to and from Slots</a></span></dt>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394616720">Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.2">How to Read this Tutorial</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.3">Hello, World! (Beginner)</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.4">Calling Multiple Slots</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.5">Passing Values to and from Slots</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.6">Connection Management</a></span></dt>
 <dt><span class="section"><a href="signals2/tutorial.html#signals2.tutorial.document-view">Example: Document-View</a></span></dt>
 <dt><span class="section"><a href="signals2/tutorial.html#signals2.tutorial.extended-slot-type">Giving a Slot Access to its Connection (Advanced)</a></span></dt>
 <dt><span class="section"><a href="signals2/tutorial.html#signals2.tutorial.signal-mutex-template-parameter">Changing the <code class="computeroutput">Mutex</code> Type of a Signal (Advanced).</a></span></dt>
-<dt><span class="section"><a href="signals2/tutorial.html#idp394767824">Linking against the Signals2 library</a></span></dt>
+<dt><span class="section"><a href="signals2/tutorial.html#id-1.3.37.4.10">Linking against the Signals2 library</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals2/examples.html">Example programs</a></span></dt>
 <dd><dl>
@@ -83,20 +83,20 @@
 </dl></dd>
 <dt><span class="section"><a href="signals2/thread-safety.html">Thread-Safety</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals2/thread-safety.html#idp397892816">Introduction</a></span></dt>
-<dt><span class="section"><a href="signals2/thread-safety.html#idp397898912">Signals and combiners</a></span></dt>
-<dt><span class="section"><a href="signals2/thread-safety.html#idp397921584">Connections and other classes</a></span></dt>
+<dt><span class="section"><a href="signals2/thread-safety.html#id-1.3.37.7.2">Introduction</a></span></dt>
+<dt><span class="section"><a href="signals2/thread-safety.html#id-1.3.37.7.3">Signals and combiners</a></span></dt>
+<dt><span class="section"><a href="signals2/thread-safety.html#id-1.3.37.7.4">Connections and other classes</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals2/faq.html">Frequently Asked Questions</a></span></dt>
 <dt><span class="section"><a href="signals2/rationale.html">Design Rationale</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals2/rationale.html#idp397957936">User-level Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp397976576">Automatic Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp397993696"><code class="computeroutput">optional_last_value</code> as the Default Combiner</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp398000240">Combiner Interface</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp398015312">Connection Interfaces: +=  operator</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp398034688">Signals2 Mutex Classes</a></span></dt>
-<dt><span class="section"><a href="signals2/rationale.html#idp398045168">Comparison with other Signal/Slot implementations</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.2">User-level Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.3">Automatic Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.4"><code class="computeroutput">optional_last_value</code> as the Default Combiner</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.5">Combiner Interface</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.6">Connection Interfaces: +=  operator</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.7">Signals2 Mutex Classes</a></span></dt>
+<dt><span class="section"><a href="signals2/rationale.html#id-1.3.37.9.8">Comparison with other Signal/Slot implementations</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals2/api_changes.html">Signals2 API Changes</a></span></dt>
 <dd><dl>
@@ -104,13 +104,13 @@
 <dt><span class="section"><a href="signals2/api_changes.html#signals2.api_history">Signals2 API Development</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals2/tests.html">Testsuite</a></span></dt>
-<dd><dl><dt><span class="section"><a href="signals2/tests.html#idp398189328">Acceptance tests</a></span></dt></dl></dd>
+<dd><dl><dt><span class="section"><a href="signals2/tests.html#id-1.3.37.11.2">Acceptance tests</a></span></dt></dl></dd>
 </dl>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idp394515904"></a>Introduction</h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="signals2.html#idp394519184">Signals2</a></span></dt></dl></div>
+<a name="id-1.3.37.3"></a>Introduction</h2></div></div></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="signals2.html#id-1.3.37.3.5">Signals2</a></span></dt></dl></div>
 <p>The Boost.Signals2 library is an implementation of a managed
   signals and slots system. Signals represent callbacks with multiple
   targets, and are also called publishers or events in similar
@@ -131,7 +131,7 @@
   combined.</p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp394519184"></a>Signals2</h3></div></div></div>
+<a name="id-1.3.37.3.5"></a>Signals2</h3></div></div></div>
 <p>This documentation describes a thread-safe variant of the
     original Boost.Signals library.  There have been some changes to
     the interface to support thread-safety, mostly with respect to
@@ -149,7 +149,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="signals/tests.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals2/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ratio/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals2/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

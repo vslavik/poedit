@@ -9,7 +9,6 @@
 
 #include <boost/config.hpp>
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
-#include <boost/iterator.hpp>
 #include <boost/mpl/bool.hpp>
 #include <iterator>
 #include <algorithm> 

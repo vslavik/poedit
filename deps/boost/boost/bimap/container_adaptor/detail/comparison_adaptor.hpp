@@ -19,7 +19,6 @@
 #include <boost/config.hpp>
 
 #include <boost/call_traits.hpp>
-#include <functional>
 
 namespace boost {
 namespace bimaps {
@@ -33,8 +32,12 @@ A simple comparison adaptor.
                                                                                     **/
 
 template < class Compare, class NewType, class Converter >
-struct comparison_adaptor : std::binary_function<NewType,NewType,bool>
+struct comparison_adaptor
 {
+    typedef NewType first_argument_type;
+    typedef NewType second_argument_type;
+    typedef bool result_type;
+
     comparison_adaptor( const Compare & comp, const Converter & conv)
         : compare(comp), converter(conv) {}
 
@@ -50,8 +53,12 @@ struct comparison_adaptor : std::binary_function<NewType,NewType,bool>
 };
 
 template < class Compare, class NewType, class Converter >
-struct compatible_comparison_adaptor : std::binary_function<NewType,NewType,bool>
+struct compatible_comparison_adaptor
 {
+    typedef NewType first_argument_type;
+    typedef NewType second_argument_type;
+    typedef bool result_type;
+
     compatible_comparison_adaptor( const Compare & comp, const Converter & conv)
         : compare(comp), converter(conv) {}
 
@@ -75,8 +82,11 @@ A simple unary check adaptor.
                                                                                     **/
 
 template < class Compare, class NewType, class Converter >
-struct unary_check_adaptor : std::unary_function<NewType,bool>
+struct unary_check_adaptor
 {
+    typedef BOOST_DEDUCED_TYPENAME call_traits<NewType>::param_type argument_type;
+    typedef bool result_type;
+
     unary_check_adaptor( const Compare & comp, const Converter & conv ) :
         compare(comp), converter(conv) {}
 

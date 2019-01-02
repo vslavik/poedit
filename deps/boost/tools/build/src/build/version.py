@@ -10,12 +10,12 @@ from b2.manager import get_manager
 MANAGER = get_manager()
 ERROR_HANDLER = MANAGER.errors()
 
-_major = "2014"
-_minor = "03"
+_major = "2015"
+_minor = "07"
 
 
 def boost_build():
-    return "{}.{}-svn".format(_major, _minor)
+    return "{}.{}-git".format(_major, _minor)
 
 
 def verify_engine_version():

@@ -1522,6 +1522,16 @@ each element. Analogously, the global `operator>>` has been overloaded
 to extract __sequence__(s) from generic input streams by recursively
 calling `operator>>` for each element.
 
+Please note that, to display your adapted types via fusion IO system,
+corresponding overloaded operators should be introduced to same namespace
+of the type.
+
+    namespace your_awesome_library
+    {
+        using boost::fusion::operators::operator>>; // for input
+        using boost::fusion::operators::operator<<; // for output
+        ...
+
 The default delimiter between the elements is space, and the __sequence__
 is enclosed in parenthesis. For Example:
 

@@ -11,7 +11,7 @@
 //
 
 #include <boost/property_map/function_property_map.hpp>
-#include <boost/concept_check.hpp>
+#include <boost/concept/assert.hpp>
 #include <boost/property_map/property_map.hpp>
 #include <boost/test/minimal.hpp>
 #include <boost/static_assert.hpp>
@@ -32,14 +32,14 @@ struct return_fixed_ref {
 
 int test_main(int, char**) {
   using namespace boost;
-  function_requires<ReadablePropertyMapConcept<function_property_map<add1<int>, int>, int> >();
-  function_requires<ReadablePropertyMapConcept<function_property_map<add1<int>, int, double>, int> >();
-  function_requires<ReadablePropertyMapConcept<function_property_map<add1_val<int>, int>, int> >();
-  function_requires<ReadablePropertyMapConcept<function_property_map<add1_val<int>, int, double>, int> >();
-  function_requires<ReadablePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
-  function_requires<WritablePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
-  function_requires<ReadWritePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
-  function_requires<LvaluePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<function_property_map<add1<int>, int>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<function_property_map<add1<int>, int, double>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<function_property_map<add1_val<int>, int>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<function_property_map<add1_val<int>, int, double>, int>));
+  BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int>));
+  BOOST_CONCEPT_ASSERT((WritablePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int>));
+  BOOST_CONCEPT_ASSERT((ReadWritePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int>));
+  BOOST_CONCEPT_ASSERT((LvaluePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int>));
 
   BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<function_property_map<add1<int>, int> >::category, boost::readable_property_map_tag>::value));
   BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<function_property_map<add1_val<int>, int> >::category, boost::readable_property_map_tag>::value));

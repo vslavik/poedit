@@ -24,7 +24,7 @@
 #include <boost/detail/allocator_utilities.hpp>
 
 #include <set>
-#include <memory>   // std::allocator, std::auto_ptr
+#include <memory>   // std::allocator, std::unique_ptr
 
 
 
@@ -60,11 +60,15 @@ namespace detail
 template<
   class Scheduler,
   class WorkItem,
-  class Allocator = std::allocator< void > >
+  class Allocator = std::allocator< none > >
 class processor_container : noncopyable
 {
   typedef event_processor< Scheduler > processor_base_type;
+#ifdef BOOST_NO_AUTO_PTR
+  typedef std::unique_ptr< processor_base_type > processor_holder_type;
+#else
   typedef std::auto_ptr< processor_base_type > processor_holder_type;
+#endif
   typedef shared_ptr< processor_holder_type > processor_holder_ptr_type;
 
   public:
@@ -308,8 +312,7 @@ class processor_container : noncopyable
       const processor_context & context )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder( new Processor( context ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context ) );
     }
 
     template< class Processor, typename Arg1 >
@@ -318,8 +321,7 @@ class processor_container : noncopyable
       const processor_context & context, Arg1 arg1 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder( new Processor( context, arg1 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1 ) );
     }
 
     template< class Processor, typename Arg1, typename Arg2 >
@@ -328,8 +330,7 @@ class processor_container : noncopyable
       const processor_context & context, Arg1 arg1, Arg2 arg2 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder( new Processor( context, arg1, arg2 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1, arg2 ) );
     }
 
     template< class Processor, typename Arg1, typename Arg2, typename Arg3 >
@@ -338,9 +339,7 @@ class processor_container : noncopyable
       const processor_context & context, Arg1 arg1, Arg2 arg2, Arg3 arg3 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder(
-        new Processor( context, arg1, arg2, arg3 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1, arg2, arg3 ) );
     }
 
     template<
@@ -352,9 +351,7 @@ class processor_container : noncopyable
       Arg1 arg1, Arg2 arg2, Arg3 arg3, Arg4 arg4 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder(
-        new Processor( context, arg1, arg2, arg3, arg4 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1, arg2, arg3, arg4 ) );
     }
 
     template<
@@ -366,9 +363,7 @@ class processor_container : noncopyable
       Arg1 arg1, Arg2 arg2, Arg3 arg3, Arg4 arg4, Arg5 arg5 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder(
-        new Processor( context, arg1, arg2, arg3, arg4, arg5 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1, arg2, arg3, arg4, arg5 ) );
     }
 
     template<
@@ -380,9 +375,7 @@ class processor_container : noncopyable
       Arg1 arg1, Arg2 arg2, Arg3 arg3, Arg4 arg4, Arg5 arg5, Arg6 arg6 )
     {
       processorSet_.insert( pProcessor );
-      processor_holder_type holder(
-        new Processor( context, arg1, arg2, arg3, arg4, arg5, arg6 ) );
-      *pProcessor = holder;
+      *pProcessor = processor_holder_type( new Processor( context, arg1, arg2, arg3, arg4, arg5, arg6 ) );
     }
 
     void destroy_processor_impl( const processor_handle & processor )

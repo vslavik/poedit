@@ -221,14 +221,17 @@ See here for more information about [qi_auto Auto Parsers].
     [[__qi_as_wstring__`[a]`]       [`A`]                           [Force atomic assignment for wide character string attributes]]
 
     [[__qi_raw__`[a]`]              [__boost_iterator_range__`<I>`] [Presents the transduction of `a` as an iterator range]]
-
-    [[[qi_repeat `repeat[a]`]]      [`vector<A>`]                   [Repeat `a` zero or more times]]
+    
+	[[__qi_expectd__`[a]`]          [`A`]                           [Throw an exception if parsing `a` fails]]	
+    
+	[[[qi_repeat `repeat[a]`]]      [`vector<A>`]                   [Repeat `a` zero or more times]]
     [[[qi_repeat `repeat(N)[a]`]]         [`vector<A>`]             [Repeat `a` `N` times]]
     [[[qi_repeat `repeat(N, M)[a]`]]      [`vector<A>`]             [Repeat `a` `N` to `M` times]]
     [[[qi_repeat `repeat(N, inf)[a]`]]    [`vector<A>`]             [Repeat `a` `N` or more times]]
 
     [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme or no_skip.]]
     [[__qi_skip__`(p)[a]`]          [`A`]                           [Use `p` as a skipper for parsing `a`]]
+]   
 ]
 
 [endsect]
@@ -428,10 +431,11 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
     [[`r.name()`]                               [Getting the name of a rule]]
     [[debug(r)]                                 [Debug rule `r`]]
     [[`r = p;`]                                 [Rule definition]]
-    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
-                                                compatible with the synthesized attribute of `r`. When `p`
+    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` must be
+                                                compatible with the synthesized attribute of `r`. If `p`
                                                 is successful, its attribute is automatically propagated
-                                                to `r`'s synthesized attribute.]]
+                                                to `r`'s synthesized attribute.  Semantic actions, if present,
+                                                may not change the attribute's type.]]
 
     [[
 ``
@@ -483,12 +487,12 @@ For more detailed information about semantic actions see:
 [endsect]
 [section Phoenix]
 
-__boost_phoenix__ makes it easier to attach semantic actions. You just
+__phoenix__ makes it easier to attach semantic actions. You just
 inline your lambda expressions:
 
     p[phoenix-lambda-expression]
 
-Spirit.Qi provides some __boost_phoenix__ placeholders to important
+Spirit.Qi provides some __phoenix__ placeholders to important
 information from the `Attrib` and `Context` that are otherwise fiddly to extract.
 
 [variablelist Spirit.Qi specific Phoenix placeholders

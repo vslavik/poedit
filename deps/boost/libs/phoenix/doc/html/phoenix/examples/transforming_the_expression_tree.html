@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Transforming the Expression Tree</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.2.0">
 <link rel="up" href="../examples.html" title="Advanced Examples">
 <link rel="prev" href="adding_an_expression.html" title="Adding an expression">
@@ -52,16 +52,39 @@
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Rule</span><span class="special">&gt;</span>
     <span class="keyword">struct</span> <span class="identifier">when</span>
-        <span class="special">:</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span> <span class="comment">// the default is proto::_</span>
+        <span class="special">:</span> <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/nary_expr.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">nary_expr</span></code></a>
+              <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span></code></a>
+            <span class="special">,</span> <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/vararg.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">vararg</span></code></a>
+                  <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/when.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">when</span></code></a><span class="special">&lt;</span><a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span></code></a><span class="special">,</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">evaluator</span><span class="special">(</span><a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span></code></a><span class="special">,</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">_context</span><span class="special">)</span>
+              <span class="special">&gt;</span>
+          <span class="special">&gt;</span>
     <span class="special">{};</span>
 <span class="special">};</span>
 </pre>
 <p>
-        By default, we don't want to do anything, well, not exactly nothing, but
-        just return the expression. This is done by <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html" target="_top">proto::_</a>
-        which, used as a transform, just passes the current expression along. Making
-        this action an identity transform.
+        Wow, this looks complicated! Granted you need to know a little bit about
+        <a href="http://www.boost.org/doc/libs/release/libs/proto/index.html" target="_top">Boost.Proto</a>
+        (For a good introduction read through the <a href="http://cpp-next.com/archive/2010/08/expressive-c-introduction/" target="_top">Expressive
+        C++</a> series).
       </p>
+<p>
+        By default, we don't want to do anything, well, not exactly nothing, but
+        just continue transformation into its arguments.
+      </p>
+<p>
+        So, it is done by the following:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            For each arguments are passed to evaluator (with the current context,
+            that contains our invert_actions)
+          </li>
+<li class="listitem">
+            Create new expression using current expression tag, what is done by
+            <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/_.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">_</span></code></a>, with the result of evaluated
+            arguments
+          </li>
+</ul></div>
 <p>
         So, after the basics are set up, we can start by writing the transformations
         we want to have on our tree:
@@ -78,15 +101,9 @@
 <span class="special">{};</span>
 </pre>
 <p>
-        Wow, this looks complicated! Granted you need to know a little bit about
-        <a href="http://www.boost.org/doc/libs/release/libs/proto/index.html" target="_top">Boost.Proto</a>
-        (For a good introduction read through the <a href="http://cpp-next.com/archive/2010/08/expressive-c-introduction/" target="_top">Expressive
-        C++</a> series).
-      </p>
-<p>
         What is done is the following:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             The left expression is passed to evaluator (with the current context,
             that contains our invert_actions)
@@ -97,7 +114,7 @@
           </li>
 <li class="listitem">
             The result of these two <a href="http://www.boost.org/doc/libs/release/doc/html/Transform.html" target="_top">Proto
-            Transforms</a> is passed to <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/functional/make_expr.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">make_expr</span></code></a> which returns the
+            Transforms</a> are passed to <a href="http://www.boost.org/doc/libs/release/doc/html/boost/proto/functional/make_expr.html" target="_top"><code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">functional</span><span class="special">::</span><span class="identifier">make_expr</span></code></a> which returns the
             freshly created expression
           </li>
 </ul></div>

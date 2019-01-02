@@ -9,6 +9,88 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_7 Spirit V2.5.7]
+
+[heading What's changed from V2.5.6 (Boost V1.68.0) to V2.5.7 (Boost V1.69.0)]
+
+* Drop own FP routines in favor of `boost::math` PR#392 #13531
+* Missing visibility mark on exception types PR#409
+* Fixed transform_attribute ambiguity PR#407 GH#396
+* to_utf8: Fixed wchar_t handling on Windows PR#413 GH#395
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_6 Spirit V2.5.6]
+
+[heading What's changed from V2.5.5 (Boost V1.67.0) to V2.5.6 (Boost V1.68.0)]
+
+[heading Bug Fixes in Qi]
+* Fixed ADT support by permutation and sequence_or operator PR#376.
+* Specialize iterator_source for random access PR#383.
+* Removed redundant check in `skip_over` PR#373.
+
+[heading Bug Fixes in Karma]
+* Fixed UB in `get_absolute_value` function PR#246.
+* Fixed use after scope bug if ADT getter returns by value PR#375 #6126.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_5 Spirit V2.5.5]
+
+[heading What's changed from V2.5.4 (Boost V1.66.0) to V2.5.5 (Boost V1.67.0)]
+
+There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
+
+[heading Bug Fixes in Qi or Karma]
+* Fixed keyword directives compilation on C++11 PR#256 #11493.
+* Fixed subrules compilation PR#279 PR#259.
+* Fixed subrules use after scope bug PR#284 #5270.
+* Fixed undefined behavior in sequential or operator. Underlying parsers
+  order of execution was dependent on compiler PR#310.
+* Spirit was accidentally relaying on `types` typedef of `boost::optional`.
+  The typedef was removed in the new optional implementation PR#271 #12349.
+* Fixed problems with `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` (`attr_cast`,
+  `confix`, `distinct`, `keywords`, and `flush_multi_pass`) PR#314 #13311.
+* Added missing copy assignment operator to `hold_any` PR#361 #8268.
+
+[heading Bug Fixes in Qi]
+* Fixed alternate operator PR#201 PR#271 #12349.
+* Fixed signed integer overflow in real parser PR#245.
+* Fixed overflow problem in `uint_parser<signed T>` PR#297.
+* Fixed `get_current_line`, `get_line_start`, and added `get_line_end` PR#304.
+* Permutations parser were always initializing optionals PR#319 #12473.
+* Changed iterator concept static assert from `ForwardIterator` to
+  `ReadableIteratorConcept` && `ForwardTraversalConcept` PR#320.
+* Added assertations to real parsers to ensure that the `parse_frac_n` from
+  user defined real policy does not return negative values and also to prevent
+  static analyzers false-positives PR#358.
+
+[heading Bug Fixes in Karma]
+* Fixed alternate operator PR#271.
+* Fixed `no_buffering_policy` missing copy constructor PR#261.
+* The `ostream_iterator` was inheriting `std::iterator` which is deprecated
+  in C++17 PR#345.
+
+[heading Bug Fixes in Lex]
+* Store id as promoted type to allow out-of-enum values PR#247.
+* Fixed C2001 'newline in constant' warning in generated lexers PR#324 #11540.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_4 Spirit V2.5.4]
+
+[heading What's changed from V2.5.3 (Boost V1.50.0) to V2.5.4 (Boost V1.61.0)]
+
+* Phoenix V2 was completely removed in Boost V1.56.
+* Introduced the new expect parser directive (see __qi_expectd__) in addition to 
+  the expecation operator (see __qi_expect__).
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_3 Spirit V2.5.3]
 
 [heading What's changed from V2.5.2 (Boost V1.49.0) to V2.5.3 (Boost V1.50.0)]
@@ -71,13 +153,13 @@
 
 [heading What's changed in __qi__ and __karma__ from V2.4.2 (Boost V1.46.0) to V2.5 (Boost V1.47.0)]
 
-This version of __spirit__ now supports the new version of __boost_phoenix__ (V3),
+This version of __spirit__ now supports the new version of __phoenix__ (V3),
 which has been released as part of Boost V1.47. Please note that this support
 is purely preliminary and should not be considered production quality. The
 reason why we are releasing this now is to enable people who want to use the
-new version of __boost_phoenix__ in their code to do so without any conflicts with
+new version of __phoenix__ in their code to do so without any conflicts with
 existing code using __spirit__. Generally, no __spirit__ code needs to be
-changed. To activate the use of __boost_phoenix__ V3 for __spirit__ you need to
+changed. To activate the use of __phoenix__ V3 for __spirit__ you need to
 define the following preprocessor constant for your builds (before including
 any of Spirit's include files):
 

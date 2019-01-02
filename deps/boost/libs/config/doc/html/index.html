@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost.Config</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Boost.Config">
 <link rel="next" href="boost_config/boost_macro_reference.html" title="Boost Macro Reference">
 </head>
@@ -39,7 +39,7 @@
 </div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#boost_config.configuring_boost_for_your_platform">Configuring
     Boost for Your Platform</a></span></dt>
 <dd><dl>
@@ -72,6 +72,10 @@
       that describe C++14 features not supported</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_allow_use_of_c__14_features_with_c__11_or_earlier_compilers">Macros
       that allow use of C++14 features with C++11 or earlier compilers</a></span></dt>
+<dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__17_features_not_supported">Macros
+      that describe C++17 features not supported</a></span></dt>
+<dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_features_that_have_been_removed_from_the_standard_">Macros
+      that describe features that have been removed from the standard.</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.boost_helper_macros">Boost
       Helper Macros</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.boost_informational_macros">Boost
@@ -97,6 +101,7 @@
       integer types</a></span></dt>
 <dt><span class="section"><a href="boost_config/cstdint.html#boost_config.cstdint.integer_constant_macros">Integer
       Constant Macros</a></span></dt>
+<dt><span class="section"><a href="boost_config/cstdint.html#boost_config.cstdint.intptr">Integers for Storing Pointers</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_config/guidelines_for_boost_authors.html">Guidelines for
     Boost Authors</a></span></dt>
@@ -123,7 +128,7 @@
 <a name="boost_config.configuring_boost_for_your_platform"></a><a class="link" href="index.html#boost_config.configuring_boost_for_your_platform" title="Configuring Boost for Your Platform">Configuring
     Boost for Your Platform</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="index.html#boost_config.configuring_boost_for_your_platform.using_the_default_boost_configuration">Using
       the default boost configuration</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_config.configuring_boost_for_your_platform.the__boost_config_hpp__header">The
@@ -157,7 +162,7 @@
       </p>
 <p>
         Boost library users can request support for additional compilers or platforms
-        by visiting our <a href="https://svn.boost.org/trac/boost/newticket" target="_top">Trac</a>
+        by visiting our <a href="https://github.com/boostorg/config/issues" target="_top">Github</a>
         and submitting a support request.
       </p>
 </div>
@@ -313,7 +318,7 @@
         (located under <span class="emphasis"><em>&lt;boost-root&gt;</em></span><code class="computeroutput"><span class="special">/</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span></code>).
         There are two ways you can use this header:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <span class="bold"><strong>Option 1:</strong></span> copy the header into <span class="emphasis"><em>&lt;boost-root&gt;</em></span><code class="computeroutput"><span class="special">/</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span></code> so that it replaces the default user.hpp
             provided by boost. This option allows only one configure-generated setup;
@@ -721,7 +726,7 @@
 <a name="boost_config.configuring_boost_for_your_platform.advanced_configuration_usage"></a><a class="link" href="index.html#boost_config.configuring_boost_for_your_platform.advanced_configuration_usage" title="Advanced configuration usage">Advanced
       configuration usage</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="index.html#boost_config.configuring_boost_for_your_platform.advanced_configuration_usage.example_1__creating_our_own_frozen_configuration">Example
         1: creating our own frozen configuration</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_config.configuring_boost_for_your_platform.advanced_configuration_usage.example_2__skipping_files_that_you_don_t_need">Example
@@ -753,7 +758,7 @@
         user settable macros</a>).
       </p>
 <p>
-        Finally the boost configuration header, includes <a href="../../../../boost/config/user.hpp" target="_top">&lt;boost/config/suffix.hpp&gt;</a>;
+        Finally the boost configuration header, includes <a href="../../../../boost/config/detail/suffix.hpp" target="_top">&lt;boost/config/detail/suffix.hpp&gt;</a>;
         this header contains any boiler plate configuration code - for example where
         one boost macro being set implies that another must be set also.
       </p>
@@ -988,7 +993,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:38:19 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:08:11 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

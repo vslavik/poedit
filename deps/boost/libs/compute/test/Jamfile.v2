@@ -6,6 +6,9 @@ import testing ;
 
 lib boost_unit_test_framework ;
 
+obj has_opencl : check/has_opencl.cpp ;
+explicit has_opencl ;
+
 project
     : source-location .
     : requirements
@@ -19,6 +22,8 @@ project
         <toolset>msvc:<cxxflags>/wd4800 # Warning C4800: 'uint32_t' : forcing value to bool 'true' or 'false' (performance warning)
         <toolset>msvc:<cxxflags>/wd4838 # Warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
         <library>/boost/test//boost_unit_test_framework
+
+        [ check-target-builds has_opencl "OpenCL" : : <build>no ]
     ;
 
 rule test_all

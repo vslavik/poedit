@@ -96,10 +96,10 @@ void test_int()
   check("is special_value (pos_inf)", l.is_special());
   check("add infinity" ,         l == int_type::pos_infinity());
   { // limiting the scope for these tests was easier than recalculating l
-    int_type l = i - int_type::pos_infinity();
-    check("value - +infinity",         l == int_type::neg_infinity());
-    l = i + int_type::neg_infinity();
-    check("value + -infinity",         l == int_type::neg_infinity());
+    int_type m = i - int_type::pos_infinity();
+    check("value - +infinity",         m == int_type::neg_infinity());
+    m = i + int_type::neg_infinity();
+    check("value + -infinity",         m == int_type::neg_infinity());
   }
   check("inf - inf = nan",       (l - l) == int_type::not_a_number());
   check("-inf + inf = nan",       (j + l) == int_type::not_a_number());

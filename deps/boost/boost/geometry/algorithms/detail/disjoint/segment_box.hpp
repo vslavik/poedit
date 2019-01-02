@@ -5,11 +5,12 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2013-2014.
-// Modifications copyright (c) 2013-2014, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013-2017.
+// Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
 
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -22,22 +23,21 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_DISJOINT_SEGMENT_BOX_HPP
 
 #include <cstddef>
-#include <utility>
 
-#include <boost/numeric/conversion/cast.hpp>
-
-#include <boost/geometry/util/math.hpp>
-#include <boost/geometry/util/calculation_type.hpp>
-
-#include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/tags.hpp>
-#include <boost/geometry/core/coordinate_dimension.hpp>
-#include <boost/geometry/core/point_type.hpp>
+#include <boost/geometry/core/radian_access.hpp>
 
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
-
+#include <boost/geometry/algorithms/detail/disjoint/point_box.hpp>
+#include <boost/geometry/algorithms/detail/disjoint/box_box.hpp>
+#include <boost/geometry/algorithms/detail/envelope/segment.hpp>
+#include <boost/geometry/algorithms/detail/normalize.hpp>
 #include <boost/geometry/algorithms/dispatch/disjoint.hpp>
+#include <boost/geometry/algorithms/envelope.hpp>
 
+#include <boost/geometry/formulas/vertex_longitude.hpp>
+
+#include <boost/geometry/geometries/box.hpp>
 
 namespace boost { namespace geometry
 {
@@ -47,234 +47,202 @@ namespace boost { namespace geometry
 namespace detail { namespace disjoint
 {
 
-
-template <std::size_t I>
-struct compute_tmin_tmax_per_dim
+template <typename CS_Tag>
+struct disjoint_segment_box_sphere_or_spheroid
 {
-    template <typename SegmentPoint, typename Box, typename RelativeDistance>
-    static inline void apply(SegmentPoint const& p0,
-                             SegmentPoint const& p1,
+private:
+
+    template <typename CT>
+    static inline void swap(CT& lon1,
+                            CT& lat1,
+                            CT& lon2,
+                            CT& lat2)
+    {
+        std::swap(lon1, lon2);
+        std::swap(lat1, lat2);
+    }
+
+
+public:
+
+    struct disjoint_info
+    {
+        enum type
+        {
+            intersect,
+            disjoint_no_vertex,
+            disjoint_vertex
+        };
+        disjoint_info(type t) : m_(t){}
+        operator type () const {return m_;}
+        type m_;
+    private :
+        //prevent automatic conversion for any other built-in types
+        template <typename T>
+        operator T () const;
+    };
+
+    template <typename Segment, typename Box, typename Strategy>
+    static inline bool apply(Segment const& segment,
                              Box const& box,
-                             RelativeDistance& ti_min,
-                             RelativeDistance& ti_max,
-                             RelativeDistance& diff)
+                             Strategy const& azimuth_strategy)
     {
-        typedef typename coordinate_type<Box>::type box_coordinate_type;
-        typedef typename coordinate_type
-            <
-                SegmentPoint
-            >::type point_coordinate_type;
-
-        RelativeDistance c_p0 = boost::numeric_cast
-            <
-                point_coordinate_type
-            >( geometry::get<I>(p0) );
-
-        RelativeDistance c_p1 = boost::numeric_cast
-            <
-                point_coordinate_type
-            >( geometry::get<I>(p1) );
-
-        RelativeDistance c_b_min = boost::numeric_cast
-            <
-                box_coordinate_type
-            >( geometry::get<geometry::min_corner, I>(box) );
-
-        RelativeDistance c_b_max = boost::numeric_cast
-            <
-                box_coordinate_type
-            >( geometry::get<geometry::max_corner, I>(box) );
-
-        if ( geometry::get<I>(p1) >= geometry::get<I>(p0) )
-        {
-            diff = c_p1 - c_p0;
-            ti_min = c_b_min - c_p0;
-            ti_max = c_b_max - c_p0;
-        }
-        else
-        {
-            diff = c_p0 - c_p1;
-            ti_min = c_p0 - c_b_max;
-            ti_max = c_p0 - c_b_min;
-        }
+        typedef typename point_type<Segment>::type segment_point;
+        segment_point vertex;
+        return (apply(segment, box, azimuth_strategy, vertex) != disjoint_info::intersect);
     }
-};
 
-
-template
-<
-    typename RelativeDistance,
-    typename SegmentPoint,
-    typename Box,
-    std::size_t I,
-    std::size_t Dimension
->
-struct disjoint_segment_box_impl
-{
-    template <typename RelativeDistancePair>
-    static inline bool apply(SegmentPoint const& p0,
-                             SegmentPoint const& p1,
-                             Box const& box,
-                             RelativeDistancePair& t_min,
-                             RelativeDistancePair& t_max)
-    {
-        RelativeDistance ti_min, ti_max, diff;
-
-        compute_tmin_tmax_per_dim<I>::apply(p0, p1, box, ti_min, ti_max, diff);
-
-        if ( geometry::math::equals(diff, 0) )
-        {
-            if ( (geometry::math::equals(t_min.second, 0)
-                  && t_min.first > ti_max)
-                 ||
-                 (geometry::math::equals(t_max.second, 0)
-                  && t_max.first < ti_min)
-                 ||
-                 (math::sign(ti_min) * math::sign(ti_max) > 0) )
-            {
-                return true;
-            }
-        }
-
-        RelativeDistance t_min_x_diff = t_min.first * diff;
-        RelativeDistance t_max_x_diff = t_max.first * diff;
-
-        if ( t_min_x_diff > ti_max * t_min.second
-             || t_max_x_diff < ti_min * t_max.second )
-        {
-            return true;
-        }
-
-        if ( ti_min * t_min.second > t_min_x_diff )
-        {
-            t_min.first = ti_min;
-            t_min.second = diff;
-        }
-        if ( ti_max * t_max.second < t_max_x_diff )
-        {
-            t_max.first = ti_max;
-            t_max.second = diff;
-        }
-
-        if ( t_min.first > t_min.second || t_max.first < 0 )
-        {
-            return true;
-        }
-
-        return disjoint_segment_box_impl
-            <
-                RelativeDistance,
-                SegmentPoint,
-                Box, 
-                I + 1,
-                Dimension
-            >::apply(p0, p1, box, t_min, t_max);
-    }
-};
-
-
-template
-<
-    typename RelativeDistance,
-    typename SegmentPoint,
-    typename Box,
-    std::size_t Dimension
->
-struct disjoint_segment_box_impl
-    <
-        RelativeDistance, SegmentPoint, Box, 0, Dimension
-    >
-{
-    static inline bool apply(SegmentPoint const& p0,
-                             SegmentPoint const& p1,
-                             Box const& box)
-    {
-        std::pair<RelativeDistance, RelativeDistance> t_min, t_max;
-        RelativeDistance diff;
-
-        compute_tmin_tmax_per_dim<0>::apply(p0, p1, box,
-                                            t_min.first, t_max.first, diff);
-
-        if ( geometry::math::equals(diff, 0) )
-        {
-            if ( geometry::math::equals(t_min.first, 0) ) { t_min.first = -1; }
-            if ( geometry::math::equals(t_max.first, 0) ) { t_max.first = 1; }
-
-            if (math::sign(t_min.first) * math::sign(t_max.first) > 0)
-            {
-                return true;
-            }
-        }
-
-        if ( t_min.first > diff || t_max.first < 0 )
-        {
-            return true;
-        }
-
-        t_min.second = t_max.second = diff;
-
-        return disjoint_segment_box_impl
-            <
-                RelativeDistance, SegmentPoint, Box, 1, Dimension
-            >::apply(p0, p1, box, t_min, t_max);
-    }
-};
-
-
-template
-<
-    typename RelativeDistance,
-    typename SegmentPoint,
-    typename Box,
-    std::size_t Dimension
->
-struct disjoint_segment_box_impl
-    <
-        RelativeDistance, SegmentPoint, Box, Dimension, Dimension
-    >
-{
-    template <typename RelativeDistancePair>
-    static inline bool apply(SegmentPoint const&, SegmentPoint const&,
-                             Box const&,
-                             RelativeDistancePair&, RelativeDistancePair&)
-    {
-        return false;
-    }
-};
-
-
-//=========================================================================
-
-
-template <typename Segment, typename Box>
-struct disjoint_segment_box
-{ 
-    static inline bool apply(Segment const& segment, Box const& box)
+    template <typename Segment, typename Box, typename Strategy, typename P>
+    static inline disjoint_info apply(Segment const& segment,
+                                      Box const& box,
+                                      Strategy const& azimuth_strategy,
+                                      P& vertex)
     {
         assert_dimension_equal<Segment, Box>();
 
-        typedef typename util::calculation_type::geometric::binary
-            <
-                Segment, Box, void
-            >::type relative_distance_type;
-
         typedef typename point_type<Segment>::type segment_point_type;
+        typedef typename cs_tag<Segment>::type segment_cs_type;
+
         segment_point_type p0, p1;
         geometry::detail::assign_point_from_index<0>(segment, p0);
         geometry::detail::assign_point_from_index<1>(segment, p1);
 
-        return disjoint_segment_box_impl
-            <
-                relative_distance_type, segment_point_type, Box,
-                0, dimension<Box>::value
-            >::apply(p0, p1, box);
+        //vertex not computed here
+        disjoint_info disjoint_return_value = disjoint_info::disjoint_no_vertex;
+
+        // Simplest cases first
+
+        // Case 1: if box contains one of segment's endpoints then they are not disjoint
+        if (! disjoint_point_box(p0, box) || ! disjoint_point_box(p1, box))
+        {
+            return disjoint_info::intersect;
+        }
+
+        // Case 2: disjoint if bounding boxes are disjoint
+
+        typedef typename coordinate_type<segment_point_type>::type CT;
+
+        segment_point_type p0_normalized =
+                geometry::detail::return_normalized<segment_point_type>(p0);
+        segment_point_type p1_normalized =
+                geometry::detail::return_normalized<segment_point_type>(p1);
+
+        CT lon1 = geometry::get_as_radian<0>(p0_normalized);
+        CT lat1 = geometry::get_as_radian<1>(p0_normalized);
+        CT lon2 = geometry::get_as_radian<0>(p1_normalized);
+        CT lat2 = geometry::get_as_radian<1>(p1_normalized);
+
+        if (lon1 > lon2)
+        {
+            swap(lon1, lat1, lon2, lat2);
+        }
+
+        //Compute alp1 outside envelope and pass it to envelope_segment_impl
+        //in order for it to be used later in the algorithm
+        CT alp1;
+
+        azimuth_strategy.apply(lon1, lat1, lon2, lat2, alp1);
+
+        geometry::model::box<segment_point_type> box_seg;
+
+        geometry::detail::envelope::envelope_segment_impl<segment_cs_type>
+                ::template apply<geometry::radian>(lon1, lat1,
+                                                   lon2, lat2,
+                                                   box_seg,
+                                                   azimuth_strategy,
+                                                   alp1);
+
+        if (disjoint_box_box(box, box_seg))
+        {
+            return disjoint_return_value;
+        }
+
+        // Case 3: test intersection by comparing angles
+
+        CT a_b0, a_b1, a_b2, a_b3;
+
+        CT b_lon_min = geometry::get_as_radian<geometry::min_corner, 0>(box);
+        CT b_lat_min = geometry::get_as_radian<geometry::min_corner, 1>(box);
+        CT b_lon_max = geometry::get_as_radian<geometry::max_corner, 0>(box);
+        CT b_lat_max = geometry::get_as_radian<geometry::max_corner, 1>(box);
+
+        azimuth_strategy.apply(lon1, lat1, b_lon_min, b_lat_min, a_b0);
+        azimuth_strategy.apply(lon1, lat1, b_lon_max, b_lat_min, a_b1);
+        azimuth_strategy.apply(lon1, lat1, b_lon_min, b_lat_max, a_b2);
+        azimuth_strategy.apply(lon1, lat1, b_lon_max, b_lat_max, a_b3);
+
+        bool b0 = formula::azimuth_side_value(alp1, a_b0) > 0;
+        bool b1 = formula::azimuth_side_value(alp1, a_b1) > 0;
+        bool b2 = formula::azimuth_side_value(alp1, a_b2) > 0;
+        bool b3 = formula::azimuth_side_value(alp1, a_b3) > 0;
+
+        if (!(b0 && b1 && b2 && b3) && (b0 || b1 || b2 || b3))
+        {
+            return disjoint_info::intersect;
+        }
+
+        // Case 4: The only intersection case not covered above is when all four
+        // points of the box are above (below) the segment in northern (southern)
+        // hemisphere. Then we have to compute the vertex of the segment
+
+        CT vertex_lat;
+        CT lat_sum = lat1 + lat2;
+
+        if ((lat1 < b_lat_min && lat_sum > CT(0))
+                || (lat1 > b_lat_max && lat_sum < CT(0)))
+        {
+            CT b_lat_below; //latitude of box closest to equator
+
+            if (lat_sum > CT(0))
+            {
+                vertex_lat = geometry::get_as_radian<geometry::max_corner, 1>(box_seg);
+                b_lat_below = b_lat_min;
+            } else {
+                vertex_lat = geometry::get_as_radian<geometry::min_corner, 1>(box_seg);
+                b_lat_below = b_lat_max;
+            }
+
+            //optimization TODO: computing the spherical longitude should suffice for
+            // the majority of cases
+            CT vertex_lon = geometry::formula::vertex_longitude<CT, CS_Tag>
+                                    ::apply(lon1, lat1,
+                                            lon2, lat2,
+                                            vertex_lat,
+                                            alp1,
+                                            azimuth_strategy);
+
+            geometry::set_from_radian<0>(vertex, vertex_lon);
+            geometry::set_from_radian<1>(vertex, vertex_lat);
+            disjoint_return_value = disjoint_info::disjoint_vertex; //vertex_computed
+
+            // Check if the vertex point is within the band defined by the
+            // minimum and maximum longitude of the box; if yes, then return
+            // false if the point is above the min latitude of the box; return
+            // true in all other cases
+            if (vertex_lon >= b_lon_min && vertex_lon <= b_lon_max
+                    && std::abs(vertex_lat) > std::abs(b_lat_below))
+            {
+                return disjoint_info::intersect;
+            }
+        }
+
+        return disjoint_return_value;
     }
 };
 
+struct disjoint_segment_box
+{
+    template <typename Segment, typename Box, typename Strategy>
+    static inline bool apply(Segment const& segment,
+                             Box const& box,
+                             Strategy const& strategy)
+    {
+        return strategy.apply(segment, box);
+    }
+};
 
 }} // namespace detail::disjoint
 #endif // DOXYGEN_NO_DETAIL
-
 
 
 #ifndef DOXYGEN_NO_DISPATCH
@@ -284,7 +252,7 @@ namespace dispatch
 
 template <typename Segment, typename Box, std::size_t DimensionCount>
 struct disjoint<Segment, Box, DimensionCount, segment_tag, box_tag, false>
-    : detail::disjoint::disjoint_segment_box<Segment, Box>
+        : detail::disjoint::disjoint_segment_box
 {};
 
 

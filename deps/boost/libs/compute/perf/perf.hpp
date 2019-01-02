@@ -22,7 +22,7 @@
 #include <boost/timer/timer.hpp>
 
 static size_t PERF_N = 1024;
-static size_t PERF_TRIALS = 1;
+static size_t PERF_TRIALS = 3;
 
 // parses command line arguments and sets the corresponding perf variables
 inline void perf_parse_args(int argc, char *argv[])
@@ -31,8 +31,9 @@ inline void perf_parse_args(int argc, char *argv[])
         PERF_N = boost::lexical_cast<size_t>(argv[1]);
     }
 
-    // TODO: make this configurable from the command line
-    PERF_TRIALS = 3;
+    if(argc >= 3){
+        PERF_TRIALS = boost::lexical_cast<size_t>(argv[2]);
+    }
 }
 
 // generates a vector of random numbers

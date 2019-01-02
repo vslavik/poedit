@@ -40,7 +40,7 @@ goto :end
 
 ECHO.
 ECHO Failed to bootstrap the build engine
-ECHO Please consult bootstrap.log for furter diagnostics.
+ECHO Please consult bootstrap.log for further diagnostics.
 ECHO.
 
 

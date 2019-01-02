@@ -26,6 +26,8 @@
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 
+#include <boost/range/adaptor/transformed.hpp>
+
 
 // The closing iterator should also work on normal std:: containers
 void test_empty_non_geometry()
@@ -64,6 +66,36 @@ void test_non_geometry()
 
     closing_iterator it(v);
     closing_iterator end(v, true);
+
+    std::ostringstream out;
+    for (; it != end; ++it)
+    {
+        out << *it;
+    }
+    BOOST_CHECK_EQUAL(out.str(), "1231");
+}
+
+void test_transformed_non_geometry()
+{
+    std::vector<int> v;
+    v.push_back(-1);
+    v.push_back(-2);
+    v.push_back(-3);
+
+    typedef boost::transformed_range
+        <
+            std::negate<int>,
+            std::vector<int>
+        > transformed_range;
+
+    typedef bg::closing_iterator
+        <
+            transformed_range const
+        > closing_iterator;
+
+    transformed_range v2 = v | boost::adaptors::transformed(std::negate<int>());
+    closing_iterator it(v2);
+    closing_iterator end(v2, true);
 
     std::ostringstream out;
     for (; it != end; ++it)
@@ -129,6 +161,7 @@ void test_all()
 {
     test_empty_non_geometry();
     test_non_geometry();
+    test_transformed_non_geometry();
     test_geometry<bg::model::ring<P> >("POLYGON((1 1,1 4,4 4,4 1))");
 }
 

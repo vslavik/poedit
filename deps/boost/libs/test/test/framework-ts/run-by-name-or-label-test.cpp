@@ -79,206 +79,216 @@ BOOST_AUTO_TEST_CASE( test_run_by_name )
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*" };
+        char const* argv[] = { "a.exe", "--run_test=*" };
         test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!*" };
+        char const* argv[] = { "a.exe", "--run_test=!*" };
         test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*/*" };
+        char const* argv[] = { "a.exe", "--run_test=*/*" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!*/*" };
+        char const* argv[] = { "a.exe", "--run_test=!*/*" };
         test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*/*/*" };
+        char const* argv[] = { "a.exe", "--run_test=*/*/*" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
     {
-        char const* argv[] = { "a.exe", "--run=!*/*/*" };
+        char const* argv[] = { "a.exe", "--run_test=!*/*/*" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=klmn" };
+        char const* argv[] = { "a.exe", "--run_test=klmn" };
         test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!klmn" };
+        char const* argv[] = { "a.exe", "--run_test=!klmn" };
         test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=A" };
+        char const* argv[] = { "a.exe", "--run_test=A" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!A" };
+        char const* argv[] = { "a.exe", "--run_test=!A" };
         test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*A" };
+        char const* argv[] = { "a.exe", "--run_test=*A" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!*A" };
+        char const* argv[] = { "a.exe", "--run_test=!*A" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=B*" };
+        char const* argv[] = { "a.exe", "--run_test=B*" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!B*" };
+        char const* argv[] = { "a.exe", "--run_test=!B*" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*ngn*" };
+        char const* argv[] = { "a.exe", "--run_test=*ngn*" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2" };
+        char const* argv[] = { "a.exe", "--run_test=ts2" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2" };
         test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/*" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/*" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/*" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/*" };
         test_count( master_ts, argv, sizeof(argv), 4 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/C" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/C" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/C" };
         test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/*A" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/*A" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/*A" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/*A" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/ts1" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/ts1" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/ts1" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/ts1" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/ts1/C" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/ts1/C" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/ts1/C" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/ts1/C" };
         test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/ts1/*D*" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/ts1/*D*" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/ts1/*D*" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/ts1/*D*" };
         test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=A,B" };
+        char const* argv[] = { "a.exe", "--run_test=A,B" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!A,B" };
+        char const* argv[] = { "a.exe", "--run_test=!A,B" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=*A,B" };
+        char const* argv[] = { "a.exe", "--run_test=*A,B" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!*A,B" };
+        char const* argv[] = { "a.exe", "--run_test=!*A,B" };
         test_count( master_ts, argv, sizeof(argv), 6 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/C,ts1" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/C,ts1" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/C,ts1" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/C,ts1" };
         test_count( master_ts, argv, sizeof(argv), 6 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/C,ts1/D" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/C,ts1/D" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts2/C,ts1/D" };
+        char const* argv[] = { "a.exe", "--run_test=!ts2/C,ts1/D" };
         test_count( master_ts, argv, sizeof(argv), 8 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=A", "--run=B" };
+        char const* argv[] = { "a.exe", "--run_test=A", "--run_test=B" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!A", "--run=!B" };
+        char const* argv[] = { "a.exe", "--run_test=!A", "--run_test=!B" };
         test_count( master_ts, argv, sizeof(argv), 7 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=A", "--run=ts2/ts1/C" };
+        char const* argv[] = { "a.exe", "--run_test=A", "--run_test=ts2/ts1/C" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2", "--run=!ts2/*A" };
+        char const* argv[] = { "a.exe", "--run_test=A", "--run_test=ts2/ts1/C,D" };
+        test_count( master_ts, argv, sizeof(argv), 3 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run_test=A", "--run_test=ts2/ts1/C,D:longnameA" };
+        test_count( master_ts, argv, sizeof(argv), 4 );
+    }
+
+    {
+        char const* argv[] = { "a.exe", "--run_test=ts2", "--run_test=!ts2/*A" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 }
@@ -319,47 +329,47 @@ BOOST_AUTO_TEST_CASE( test_run_by_label )
     utf::framework::finalize_setup_phase( master_ts->p_id );
 
     {
-        char const* argv[] = { "a.exe", "--run=@L1" };
+        char const* argv[] = { "a.exe", "--run_test=@L1" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!@INV" };
+        char const* argv[] = { "a.exe", "--run_test=!@INV" };
         test_count( master_ts, argv, sizeof(argv), 9 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!@L1" };
+        char const* argv[] = { "a.exe", "--run_test=!@L1" };
         test_count( master_ts, argv, sizeof(argv), 6 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@l2" };
+        char const* argv[] = { "a.exe", "--run_test=@l2" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@inval" };
+        char const* argv[] = { "a.exe", "--run_test=@inval" };
         test_count( master_ts, argv, sizeof(argv), 0 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@FAST" };
+        char const* argv[] = { "a.exe", "--run_test=@FAST" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@f2" };
+        char const* argv[] = { "a.exe", "--run_test=@f2" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@L1", "--run=@l2" };
+        char const* argv[] = { "a.exe", "--run_test=@L1", "--run_test=@l2" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=@L1", "--run=!@l2" };
+        char const* argv[] = { "a.exe", "--run_test=@L1", "--run_test=!@l2" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 }
@@ -410,42 +420,42 @@ BOOST_AUTO_TEST_CASE( test_dependency_handling )
     utf::framework::finalize_setup_phase( master_ts->p_id );
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/C" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts3" };
+        char const* argv[] = { "a.exe", "--run_test=ts3" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2/C" };
+        char const* argv[] = { "a.exe", "--run_test=ts2/C" };
         test_count( master_ts, argv, sizeof(argv), 1 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts4/ts1/B" };
+        char const* argv[] = { "a.exe", "--run_test=ts4/ts1/B" };
         test_count( master_ts, argv, sizeof(argv), 2 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts4/ts1" };
+        char const* argv[] = { "a.exe", "--run_test=ts4/ts1" };
         test_count( master_ts, argv, sizeof(argv), 3 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=ts2" };
+        char const* argv[] = { "a.exe", "--run_test=ts2" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!ts3/F" };
+        char const* argv[] = { "a.exe", "--run_test=!ts3/F" };
         test_count( master_ts, argv, sizeof(argv), 5 );
     }
 
     {
-        char const* argv[] = { "a.exe", "--run=!*/ts1" };
+        char const* argv[] = { "a.exe", "--run_test=!*/ts1" };
         test_count( master_ts, argv, sizeof(argv), 4 );
     }
 }

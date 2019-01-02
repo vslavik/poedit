@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
@@ -28,25 +28,26 @@
 </h2></div></div></div>
 <p>
       The Multiprecision Library provides <a class="link" href="tut/ints.html" title="Integer Types">integer</a>,
-      <a class="link" href="tut/rational.html" title="Rational Number Types">rational</a> and <a class="link" href="tut/floats.html" title="floating-point Numbers">floating-point</a> types in C++
-      that have more range and precision than C++'s ordinary built-in types. The
-      big number types in Multiprecision can be used with a wide selection of basic
-      mathematical operations, elementary transcendental functions as well as the
-      functions in Boost.Math. The Multiprecision types can also interoperate with
-      the built-in types in C++ using clearly defined conversion rules. This allows
-      Boost.Multiprecision to be used for all kinds of mathematical calculations
+      <a class="link" href="tut/rational.html" title="Rational Number Types">rational</a>, <a class="link" href="tut/floats.html" title="floating-point Numbers">floating-point</a>,
+      and <a class="link" href="tut/complex.html" title="Complex Number Types">complex</a> types in
+      C++ that have more range and precision than C++'s ordinary built-in types.
+      The big number types in Multiprecision can be used with a wide selection of
+      basic mathematical operations, elementary transcendental functions as well
+      as the functions in Boost.Math. The Multiprecision types can also interoperate
+      with the built-in types in C++ using clearly defined conversion rules. This
+      allows Boost.Multiprecision to be used for all kinds of mathematical calculations
       involving integer, rational and floating-point types requiring extended range
       and precision.
     </p>
 <p>
       Multiprecision consists of a generic interface to the mathematics of large
       numbers as well as a selection of big number back ends, with support for integer,
-      rational and floating-point types. Boost.Multiprecision provides a selection
-      of back ends provided off-the-rack in including interfaces to GMP, MPFR, MPIR,
-      TomMath as well as its own collection of Boost-licensed, header-only back ends
-      for integers, rationals and floats. In addition, user-defined back ends can
-      be created and used with the interface of Multiprecision, provided the class
-      implementation adheres to the necessary <a class="link" href="ref/backendconc.html" title="Backend Requirements">concepts</a>.
+      rational, floating-point, and complex types. Boost.Multiprecision provides
+      a selection of back ends provided off-the-rack in including interfaces to GMP,
+      MPFR, MPIR, MPC, TomMath as well as its own collection of Boost-licensed, header-only
+      back ends for integers, rationals and floats. In addition, user-defined back
+      ends can be created and used with the interface of Multiprecision, provided
+      the class implementation adheres to the necessary <a class="link" href="ref/backendconc.html" title="Backend Requirements">concepts</a>.
     </p>
 <p>
       Depending upon the number type, precision may be arbitrarily large (limited
@@ -58,7 +59,7 @@
 <p>
       The Multiprecision library comes in two distinct parts:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           An expression-template-enabled front-end <code class="computeroutput"><span class="identifier">number</span></code>
           that handles all the operator overloading, expression evaluation optimization,
@@ -79,9 +80,10 @@
 <p>
       Should you just wish to cut to the chase and use a fully Boost-licensed number
       type, then skip to <a class="link" href="tut/ints/cpp_int.html" title="cpp_int">cpp_int</a>
-      for multiprecision integers, <a class="link" href="tut/floats/cpp_dec_float.html" title="cpp_dec_float">cpp_dec_float</a>
-      for multiprecision floating-point types and <a class="link" href="tut/rational/cpp_rational.html" title="cpp_rational">cpp_rational</a>
-      for rational types.
+      for multiprecision integers, <a class="link" href="tut/rational/cpp_rational.html" title="cpp_rational">cpp_rational</a>
+      for rational types, <a class="link" href="tut/floats/cpp_dec_float.html" title="cpp_dec_float">cpp_dec_float</a>
+      for multiprecision floating-point types and <a class="link" href="tut/complex/cpp_complex.html" title="cpp_complex">cpp_complex</a>
+      for complex types.
     </p>
 <p>
       The library is often used via one of the predefined typedefs: for example if
@@ -145,7 +147,7 @@
       However conversions that are inherently lossy are either declared explicit
       or else forbidden altogether:
     </p>
-<pre class="programlisting"><span class="identifier">d</span> <span class="special">=</span> <span class="number">3.14</span><span class="special">;</span>  <span class="comment">// Error implicit conversion from float not allowed.</span>
+<pre class="programlisting"><span class="identifier">d</span> <span class="special">=</span> <span class="number">3.14</span><span class="special">;</span>  <span class="comment">// Error implicit conversion from double not allowed.</span>
 <span class="identifier">d</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">mp</span><span class="special">::</span><span class="identifier">int512_t</span><span class="special">&gt;(</span><span class="number">3.14</span><span class="special">);</span>  <span class="comment">// OK explicit construction is allowed</span>
 </pre>
 <p>
@@ -159,7 +161,7 @@
 </pre>
 <h5>
 <a name="boost_multiprecision.intro.h0"></a>
-      <span><a name="boost_multiprecision.intro.move_semantics"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.move_semantics">Move
+      <span class="phrase"><a name="boost_multiprecision.intro.move_semantics"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.move_semantics">Move
       Semantics</a>
     </h5>
 <p>
@@ -179,12 +181,12 @@
 <p>
       These operator overloads ensure that many expressions can be evaluated without
       actually generating any temporaries. However, there are still many simple expressions
-      such as:
+      such as
     </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">=</span> <span class="identifier">b</span> <span class="special">*</span> <span class="identifier">c</span><span class="special">;</span>
 </pre>
 <p>
-      Which don't noticeably benefit from move support. Therefore, optimal performance
+      which don't noticeably benefit from move support. Therefore, optimal performance
       comes from having both move-support, and expression templates enabled.
     </p>
 <p>
@@ -199,7 +201,7 @@
     </p>
 <h5>
 <a name="boost_multiprecision.intro.h1"></a>
-      <span><a name="boost_multiprecision.intro.expression_templates"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.expression_templates">Expression
+      <span class="phrase"><a name="boost_multiprecision.intro.expression_templates"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.expression_templates">Expression
       Templates</a>
     </h5>
 <p>
@@ -257,7 +259,7 @@
       to pretty much zero). Note that if we compile with expression templates disabled
       and rvalue-reference support on, then actually still have no wasted memory
       allocations as even though temporaries are created, their contents are moved
-      rather than copied. <sup>[<a name="boost_multiprecision.intro.f0" href="#ftn.boost_multiprecision.intro.f0" class="footnote">1</a>]</sup>
+      rather than copied. <a href="#ftn.boost_multiprecision.intro.f0" class="footnote" name="boost_multiprecision.intro.f0"><sup class="footnote">[1]</sup></a>
     </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -351,17 +353,45 @@
       template argument getting converted to an <code class="computeroutput"><span class="identifier">mpfr_float_100</span></code>
       internally by the Boost.Math library.
     </p>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top">
 <p>
-      One other potential pitfall that's only possible in C++11: you should never
-      store an expression template using:
-    </p>
-<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">my_expression</span> <span class="special">=</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span> <span class="special">-</span> <span class="identifier">c</span><span class="special">;</span>
-</pre>
+        In C++11 you should never store an expression template using:
+      </p>
 <p>
-      unless you're absolutely sure that the lifetimes of <code class="computeroutput"><span class="identifier">a</span></code>,
-      <code class="computeroutput"><span class="identifier">b</span></code> and <code class="computeroutput"><span class="identifier">c</span></code>
-      will outlive that of <code class="computeroutput"><span class="identifier">my_expression</span></code>.
-    </p>
+        <code class="computeroutput"><span class="keyword">auto</span> <span class="identifier">my_expression</span>
+        <span class="special">=</span> <span class="identifier">a</span> <span class="special">+</span> <span class="identifier">b</span> <span class="special">-</span>
+        <span class="identifier">c</span><span class="special">;</span></code>
+      </p>
+<p>
+        unless you're absolutely sure that the lifetimes of <code class="computeroutput"><span class="identifier">a</span></code>,
+        <code class="computeroutput"><span class="identifier">b</span></code> and <code class="computeroutput"><span class="identifier">c</span></code>
+        will outlive that of <code class="computeroutput"><span class="identifier">my_expression</span></code>.
+      </p>
+<p>
+        In fact it is particularly easy to create dangling references by mixing expression
+        templates with the auto keyword, for example:
+      </p>
+<p>
+        <code class="computeroutput"><span class="keyword">auto</span> <span class="identifier">val</span>
+        <span class="special">=</span> <span class="identifier">cpp_dec_float_50</span><span class="special">(</span><span class="string">"23.1"</span><span class="special">)</span> <span class="special">*</span> <span class="number">100</span><span class="special">;</span></code>
+      </p>
+<p>
+        In this situation the integer literal is stored directly in the expression
+        template - so its use is OK here - but the cpp_dec_float_50 temporary is
+        stored by reference and then destructed when the statement completes leaving
+        a dangling reference.
+      </p>
+<p>
+        <span class="bold"><strong><span class="emphasis"><em>If in doubt, do not ever mix expression templates
+        with the auto keyword.</em></span></strong></span>
+      </p>
+</td></tr>
+</table></div>
 <p>
       And finally... the performance improvements from an expression template library
       like this are often not as dramatic as the reduction in number of temporaries
@@ -455,7 +485,7 @@
       As you can see, the execution time increases a lot more slowly than the number
       of memory allocations. There are a number of reasons for this:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           The cost of extended-precision multiplication and division is so great,
           that the times taken for these tend to swamp everything else.
@@ -686,9 +716,9 @@
       optimizations on (/Ox), with MPFR 3.0 and MPIR 2.3.0.
     </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_multiprecision.intro.f0" href="#boost_multiprecision.intro.f0" class="para">1</a>] </sup>
-        The actual number generated will depend on the compiler, how well it optimises
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_multiprecision.intro.f0" class="footnote"><p><a href="#boost_multiprecision.intro.f0" class="para"><sup class="para">[1] </sup></a>
+        The actual number generated will depend on the compiler, how well it optimizes
         the code, and whether it supports rvalue references. The number of 11 temporaries
         was generated with Visual C++ 10
       </p></div>

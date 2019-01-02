@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Using and building the library</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
-<link rel="prev" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
+<link rel="prev" href="../thread.html" title="Chapter&#160;39.&#160;Thread 4.8.0">
 <link rel="next" href="changes.html" title="History">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.build"></a><a class="link" href="build.html" title="Using and building the library">Using and building the library</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="build.html#thread.build.configuration">Configuration</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.limitations">Limitations</a></span></dt>
 </dl></div>
@@ -54,7 +54,7 @@
 <p>
       Boost.Thread depends on some non header-only libraries.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Boost.System: This dependency is mandatory and you will need to link with
           the library.
@@ -95,7 +95,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.build.configuration"></a><a class="link" href="build.html#thread.build.configuration" title="Configuration">Configuration</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="build.html#thread.build.configuration.chrono">Boost.Chrono</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.configuration.move">Boost.Move</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.configuration.date_time">Boost.DateTime</a></span></dt>
@@ -131,7 +131,7 @@
 <dt><span class="section"><a href="build.html#thread.build.configuration.version">Version</a></span></dt>
 </dl></div>
 <div class="table">
-<a name="thread.build.configuration.default_values_for_configurable_features"></a><p class="title"><b>Table&#160;33.1.&#160;Default Values for Configurable Features</b></p>
+<a name="thread.build.configuration.default_values_for_configurable_features"></a><p class="title"><b>Table&#160;39.1.&#160;Default Values for Configurable Features</b></p>
 <div class="table-contents"><table class="table" summary="Default Values for Configurable Features">
 <colgroup>
 <col>
@@ -810,10 +810,10 @@
 </h4></div></div></div>
 <p>
           The Boost.DateTime time related functions introduced in Boost 1.35.0, using
-          the <a class="link" href="../date_time.html" title="Chapter&#160;9.&#160;Boost.Date_Time">Boost.Date_Time</a> library are deprecated.
+          the <a class="link" href="../date_time.html" title="Chapter&#160;13.&#160;Boost.Date_Time">Boost.Date_Time</a> library are deprecated.
           These include (but are not limited to):
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep" title="Non-member function sleep() DEPRECATED"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">sleep</span><span class="special">()</span></code></a>
             </li>
@@ -868,7 +868,7 @@
 <p>
           The following operators are deprecated:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
             </li>
@@ -883,7 +883,7 @@
 <p>
           Use instead
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">::</span><span class="keyword">operator</span><span class="special">==</span></code>
             </li>
@@ -945,7 +945,7 @@
 <p>
           The following nested typedefs are deprecated:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mutex</span><span class="special">::</span><span class="identifier">scoped_lock</span></code>,
             </li>
@@ -1059,12 +1059,12 @@
           Boost.Threads includes in version 3 the Shared Locking Upwards Conversion
           as defined in <a href="http://home.roadrunner.com/~hinnant/bloomington/shared_mutex.html" target="_top">Shared
           Locking</a>. These conversions need to be used carefully to avoid deadlock
-          or livelock. The user need to define explicitly <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION</span></code>
+          or livelock. The user need to define explicitly <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS</span></code>
           to get these upwards conversions.
         </p>
 <p>
           When <code class="computeroutput"><span class="identifier">BOOST_THREAD_VERSION</span><span class="special">==</span><span class="number">2</span></code> define
-          <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION</span>
+          <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS</span>
           </code> if you want these features. When <code class="computeroutput"><span class="identifier">BOOST_THREAD_VERSION</span><span class="special">&gt;=</span><span class="number">3</span></code> define
           <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_PROVIDE_SHARED_MUTEX_UPWARDS_CONVERSION</span>
           </code> if you don't want these features.
@@ -1276,7 +1276,7 @@
           </code> is defined Boost.Thread provides this C++ feature if the following
           are not defined
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               BOOST_NO_SFINAE_EXPR
             </li>
@@ -1363,7 +1363,7 @@
           the Boost.Thread version. The default version is 2. In this case the following
           breaking or extending macros are defined if the opposite is not requested:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_PROMISE_LAZY</span></code>
             </li></ul></div>
 <p>
@@ -1371,7 +1371,7 @@
           to 3. In this case the following breaking or extending macros are defined
           if the opposite is not requested:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Breaking change <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_EXPLICIT_LOCK_CONVERSION</span>
               </code>
@@ -1383,7 +1383,7 @@
               Uniformity <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN</span></code>
             </li>
 <li class="listitem">
-              Extension <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION</span></code>
+              Extension <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSIONS</span></code>
             </li>
 <li class="listitem">
               Conformity <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS</span></code>
@@ -1406,7 +1406,7 @@
           to 4. In this case the following breaking or extending macros are defined
           if the opposite is not requested:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Conformity &amp; Breaking change <code class="computeroutput"><span class="identifier">BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK</span>
               </code>
@@ -1431,7 +1431,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.build.limitations"></a><a class="link" href="build.html#thread.build.limitations" title="Limitations">Limitations</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="build.html#thread.build.limitations.sun">SunPro</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.limitations.vacpp">VACPP</a></span></dt>
 <dt><span class="section"><a href="build.html#thread.build.limitations.ce">WCE</a></span></dt>
@@ -1446,13 +1446,13 @@
 <p>
           If __SUNPRO_CC &lt; 0x5100 the library defines
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_USE_MOVE</span></code>
             </li></ul></div>
 <p>
           If __SUNPRO_CC &lt; 0x5100 the library defines
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_PROVIDE_FUTURE_CTOR_ALLOCATORS</span></code>
             </li></ul></div>
 </div>
@@ -1463,7 +1463,7 @@
 <p>
           If __IBMCPP__ &lt; 1100 the library defines
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_USE_CHRONO</span></code>
             </li>
@@ -1482,7 +1482,7 @@
 <p>
           If _WIN32_WCE &amp;&amp; _WIN32_WCE==0x501 the library defines
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_DONT_PROVIDE_FUTURE_CTOR_ALLOCATORS</span></code>
             </li></ul></div>
 </div>
@@ -1490,7 +1490,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -17 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

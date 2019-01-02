@@ -390,13 +390,11 @@ resumed with __push_coro_op__, __pull_coro_op__).]
     class coroutine<>::pull_type
     {
     public:
-        pull_type() noexcept;
-
         template< typename Fn >
-        pull_type( Fn && fn, attributes const& attr = attributes() );
+        pull_type( Fn && fn);
 
-        template< typename Fn, typename StackAllocator >
-        pull_type( Fn && fn, attributes const& attr, StackAllocator stack_alloc);
+        template< typename StackAllocator, typename Fn >
+        pull_type( StackAllocator stack_alloc, Fn && fn);
 
         pull_type( pull_type const& other)=delete;
 
@@ -408,19 +406,14 @@ resumed with __push_coro_op__, __pull_coro_op__).]
 
         pull_type & operator=( pull_type && other) noexcept;
 
-        operator unspecified-bool-type() const noexcept;
+        pull_coroutine & operator()();
+
+        explicit operator bool() const noexcept;
 
         bool operator!() const noexcept;
 
-        void swap( pull_type & other) noexcept;
-
-        pull_type & operator()();
-
-        R get() const;
+        R get() noexcept;
     };
-
-    template< typename R >
-    void swap( pull_type< R > & l, pull_type< R > & r);
 
     template< typename R >
     range_iterator< pull_type< R > >::type begin( pull_type< R > &);
@@ -428,30 +421,17 @@ resumed with __push_coro_op__, __pull_coro_op__).]
     template< typename R >
     range_iterator< pull_type< R > >::type end( pull_type< R > &);
 
-[heading `pull_type()`]
-[variablelist
-[[Effects:] [Creates a coroutine representing __not_a_coro__.]]
-[[Throws:] [Nothing.]]
-]
-
 [heading `template< typename Fn >
-          pull_type( Fn && fn, attributes const& attr)`]
+          pull_type( Fn && fn)`]
 [variablelist
-[[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
-when ! is_stack_unbounded().]]
-[[Effects:] [Creates a coroutine which will execute `fn`, and enters it.
-Argument `attr` determines stack clean-up and preserving floating-point
-registers.]]
+[[Effects:] [Creates a coroutine which will execute `fn`, and enters it.]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
 ]
 
-[heading `template< typename Fn, typename StackAllocator >
-          pull_type( Fn && fn, attributes const& attr, StackAllocator const& stack_alloc)`]
+[heading `template< typename StackAllocator, typename Fn >
+          pull_type( StackAllocator const& stack_alloc, Fn && fn)`]
 [variablelist
-[[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
-when ! is_stack_unbounded().]]
-[[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.
+[[Effects:] [Creates a coroutine which will execute `fn`.
 For allocating/deallocating the stack `stack_alloc` is used.]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
 ]
@@ -475,14 +455,14 @@ internal data of `other` to `*this`. `other` becomes __not_a_coro__.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `operator unspecified-bool-type() const`]
+[heading `explicit operator bool() const noexcept`]
 [variablelist
 [[Returns:] [If `*this` refers to __not_a_coro__ or the coroutine-function
 has returned (completed), the function returns `false`. Otherwise `true`.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `bool operator!() const`]
+[heading `bool operator!() const noexcept`]
 [variablelist
 [[Returns:] [If `*this` refers to __not_a_coro__ or the coroutine-function
 has returned (completed), the function returns `true`. Otherwise `false`.]]
@@ -497,7 +477,7 @@ passed to the coroutine-function).]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
 ]
 
-[heading `R get()`]
+[heading `R get() noexcept`]
 
     R    coroutine<R,StackAllocator>::pull_type::get();
     R&   coroutine<R&,StackAllocator>::pull_type::get();
@@ -510,22 +490,6 @@ __push_coro_op__.]]
 [[Throws:] [`invalid_result`]]
 [[Note:] [If `R` is a move-only type, you may only call `get()` once before
 the next __pull_coro_op__ call.]]
-]
-
-[heading `void swap( pull_type & other)`]
-[variablelist
-[[Effects:] [Swaps the internal data from `*this` with the values
-of `other`.]]
-[[Throws:] [Nothing.]]
-]
-
-[heading Non-member function `swap()`]
-
-    template< typename R >
-    void swap( pull_type< R > & l, pull_type< R > & r);
-
-[variablelist
-[[Effects:] [As if 'l.swap( r)'.]]
 ]
 
 [heading Non-member function `begin( pull_type< R > &)`]
@@ -559,13 +523,11 @@ would return `false`.]]
     class coroutine<>::push_type
     {
     public:
-        push_type() noexcept;
-
         template< typename Fn >
-        push_type( Fn && fn, attributes const& attr = attributes() );
+        push_type( Fn && fn);
 
-        template< typename Fn, typename StackAllocator >
-        push_type( Fn && fn, attributes const& attr, StackAllocator stack_alloc);
+        template< typename StackAllocator, typename Fn >
+        push_type( StackAllocator stack_alloc, Fn && fn);
 
         push_type( push_type const& other)=delete;
 
@@ -577,17 +539,12 @@ would return `false`.]]
 
         push_type & operator=( push_type && other) noexcept;
 
-        operator unspecified-bool-type() const noexcept;
+        explicit operator bool() const noexcept;
 
         bool operator!() const noexcept;
 
-        void swap( push_type & other) noexcept;
-
         push_type & operator()( Arg arg);
     };
-
-    template< typename Arg >
-    void swap( push_type< Arg > & l, push_type< Arg > & r);
 
     template< typename Arg >
     range_iterator< push_type< Arg > >::type begin( push_type< Arg > &);
@@ -595,28 +552,16 @@ would return `false`.]]
     template< typename Arg >
     range_iterator< push_type< Arg > >::type end( push_type< Arg > &);
 
-[heading `push_type()`]
-[variablelist
-[[Effects:] [Creates a coroutine representing __not_a_coro__.]]
-[[Throws:] [Nothing.]]
-]
-
 [heading `template< typename Fn >
-          push_type( Fn && fn, attributes const& attr)`]
+          push_type( Fn && fn)`]
 [variablelist
-[[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
-when ! is_stack_unbounded().]]
-[[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.]]
+[[Effects:] [Creates a coroutine which will execute `fn`.]]
 ]
 
-[heading `template< typename Fn, typename StackAllocator >
-          push_type( Fn && fn, attributes const& attr, StackAllocator const& stack_alloc)`]
+[heading `template< typename StackAllocator, typename Fn >
+          push_type( StackAllocator const& stack_alloc, Fn && fn)`]
 [variablelist
-[[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
-when ! is_stack_unbounded().]]
-[[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.
+[[Effects:] [Creates a coroutine which will execute `fn`.
 For allocating/deallocating the stack `stack_alloc` is used.]]
 ]
 
@@ -625,28 +570,28 @@ For allocating/deallocating the stack `stack_alloc` is used.]]
 [[Effects:] [Destroys the context and deallocates the stack.]]
 ]
 
-[heading `push_type( push_type && other)`]
+[heading `push_type( push_type && other) noexcept`]
 [variablelist
 [[Effects:] [Moves the internal data of `other` to `*this`.
 `other` becomes __not_a_coro__.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `push_type & operator=( push_type && other)`]
+[heading `push_type & operator=( push_type && other) noexcept`]
 [variablelist
 [[Effects:] [Destroys the internal data of `*this` and moves the
 internal data of `other` to `*this`. `other` becomes __not_a_coro__.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `operator unspecified-bool-type() const`]
+[heading `explicit operator bool() const noexcept`]
 [variablelist
 [[Returns:] [If `*this` refers to __not_a_coro__ or the coroutine-function
 has returned (completed), the function returns `false`. Otherwise `true`.]]
 [[Throws:] [Nothing.]]
 ]
 
-[heading `bool operator!() const`]
+[heading `bool operator!() const noexcept`]
 [variablelist
 [[Returns:] [If `*this` refers to __not_a_coro__ or the coroutine-function
 has returned (completed), the function returns `true`. Otherwise `false`.]]
@@ -664,22 +609,6 @@ has returned (completed), the function returns `true`. Otherwise `false`.]]
 [[Effects:] [Execution control is transferred to __coro_fn__ and the argument
 `arg` is passed to the coroutine-function.]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
-]
-
-[heading `void swap( push_type & other)`]
-[variablelist
-[[Effects:] [Swaps the internal data from `*this` with the values
-of `other`.]]
-[[Throws:] [Nothing.]]
-]
-
-[heading Non-member function `swap()`]
-
-    template< typename Arg >
-    void swap( push_type< Arg > & l, push_type< Arg > & r);
-
-[variablelist
-[[Effects:] [As if 'l.swap( r)'.]]
 ]
 
 [heading Non-member function `begin( push_type< Arg > &)`]

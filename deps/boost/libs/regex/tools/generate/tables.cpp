@@ -17,13 +17,13 @@
   *                paste into regex source.
   */
 
+#include <boost/config.hpp>
 #include <map>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <algorithm>
 #include <cctype>
-#include <boost/config.hpp>
 
 std::string g_char_type;
 std::string g_data_type;

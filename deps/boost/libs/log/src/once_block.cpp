@@ -24,12 +24,12 @@
 
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
 
-#include <boost/detail/winapi/wait.hpp> // INFINITE
-#include <boost/detail/winapi/srw_lock.hpp>
-#include <boost/detail/winapi/condition_variable.hpp>
+#include <boost/winapi/wait.hpp> // INFINITE
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
+#include <boost/winapi/srw_lock.hpp>
+#include <boost/winapi/condition_variable.hpp>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {
@@ -40,14 +40,14 @@ namespace aux {
 
 BOOST_LOG_ANONYMOUS_NAMESPACE {
 
-boost::detail::winapi::SRWLOCK_ g_OnceBlockMutex = BOOST_DETAIL_WINAPI_SRWLOCK_INIT;
-boost::detail::winapi::CONDITION_VARIABLE_ g_OnceBlockCond = BOOST_DETAIL_WINAPI_CONDITION_VARIABLE_INIT;
+boost::winapi::SRWLOCK_ g_OnceBlockMutex = BOOST_WINAPI_SRWLOCK_INIT;
+boost::winapi::CONDITION_VARIABLE_ g_OnceBlockCond = BOOST_WINAPI_CONDITION_VARIABLE_INIT;
 
 } // namespace
 
 BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
 {
-    boost::detail::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
     once_block_flag volatile& flag = m_flag;
     while (flag.status != once_block_flag::initialized)
@@ -55,7 +55,7 @@ BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
         if (flag.status == once_block_flag::uninitialized)
         {
             flag.status = once_block_flag::being_initialized;
-            boost::detail::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
+            boost::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
 
             // Invoke the initializer block
             return false;
@@ -64,37 +64,37 @@ BOOST_LOG_API bool once_block_sentry::enter_once_block() const BOOST_NOEXCEPT
         {
             while (flag.status == once_block_flag::being_initialized)
             {
-                BOOST_VERIFY(boost::detail::winapi::SleepConditionVariableSRW(
-                    &g_OnceBlockCond, &g_OnceBlockMutex, boost::detail::winapi::INFINITE_, 0));
+                BOOST_VERIFY(boost::winapi::SleepConditionVariableSRW(
+                    &g_OnceBlockCond, &g_OnceBlockMutex, boost::winapi::INFINITE_, 0));
             }
         }
     }
 
-    boost::detail::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
 
     return true;
 }
 
 BOOST_LOG_API void once_block_sentry::commit() BOOST_NOEXCEPT
 {
-    boost::detail::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
     // The initializer executed successfully
     m_flag.status = once_block_flag::initialized;
 
-    boost::detail::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
-    boost::detail::winapi::WakeAllConditionVariable(&g_OnceBlockCond);
+    boost::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::WakeAllConditionVariable(&g_OnceBlockCond);
 }
 
 BOOST_LOG_API void once_block_sentry::rollback() BOOST_NOEXCEPT
 {
-    boost::detail::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::AcquireSRWLockExclusive(&g_OnceBlockMutex);
 
     // The initializer failed, marking the flag as if it hasn't run at all
     m_flag.status = once_block_flag::uninitialized;
 
-    boost::detail::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
-    boost::detail::winapi::WakeAllConditionVariable(&g_OnceBlockCond);
+    boost::winapi::ReleaseSRWLockExclusive(&g_OnceBlockMutex);
+    boost::winapi::WakeAllConditionVariable(&g_OnceBlockCond);
 }
 
 } // namespace aux
@@ -109,9 +109,8 @@ BOOST_LOG_CLOSE_NAMESPACE // namespace log
 
 #include <cstdlib> // atexit
 #include <boost/detail/interlocked.hpp>
-#include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/wait.hpp> // INFINITE
-#include <boost/detail/winapi/dll.hpp>
+#include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/dll.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/condition_variable.hpp>
@@ -140,12 +139,12 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         struct winapi_srwlock { void* p; };
         struct winapi_condition_variable { void* p; };
 
-        typedef void (WINAPI *InitializeSRWLock_t)(winapi_srwlock*);
-        typedef void (WINAPI *AcquireSRWLockExclusive_t)(winapi_srwlock*);
-        typedef void (WINAPI *ReleaseSRWLockExclusive_t)(winapi_srwlock*);
-        typedef void (WINAPI *InitializeConditionVariable_t)(winapi_condition_variable*);
-        typedef boost::detail::winapi::BOOL_ (WINAPI *SleepConditionVariableSRW_t)(winapi_condition_variable*, winapi_srwlock*, boost::detail::winapi::DWORD_, boost::detail::winapi::ULONG_);
-        typedef void (WINAPI *WakeAllConditionVariable_t)(winapi_condition_variable*);
+        typedef void (BOOST_WINAPI_WINAPI_CC *InitializeSRWLock_t)(winapi_srwlock*);
+        typedef void (BOOST_WINAPI_WINAPI_CC *AcquireSRWLockExclusive_t)(winapi_srwlock*);
+        typedef void (BOOST_WINAPI_WINAPI_CC *ReleaseSRWLockExclusive_t)(winapi_srwlock*);
+        typedef void (BOOST_WINAPI_WINAPI_CC *InitializeConditionVariable_t)(winapi_condition_variable*);
+        typedef boost::winapi::BOOL_ (BOOST_WINAPI_WINAPI_CC *SleepConditionVariableSRW_t)(winapi_condition_variable*, winapi_srwlock*, boost::winapi::DWORD_, boost::winapi::ULONG_);
+        typedef void (BOOST_WINAPI_WINAPI_CC *WakeAllConditionVariable_t)(winapi_condition_variable*);
 
     private:
         winapi_srwlock m_Mutex;
@@ -193,7 +192,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
                     while (flag.status == once_block_flag::being_initialized)
                     {
                         BOOST_VERIFY(m_pSleepConditionVariableSRW(
-                            &m_Cond, &m_Mutex, boost::detail::winapi::INFINITE_, 0));
+                            &m_Cond, &m_Mutex, boost::winapi::INFINITE_, 0));
                     }
                 }
             }
@@ -280,31 +279,31 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 
     once_block_impl_base* create_once_block_impl()
     {
-        boost::detail::winapi::HMODULE_ hKernel32 = boost::detail::winapi::GetModuleHandleW(L"kernel32.dll");
+        boost::winapi::HMODULE_ hKernel32 = boost::winapi::GetModuleHandleW(L"kernel32.dll");
         if (hKernel32)
         {
             once_block_impl_nt6::InitializeSRWLock_t pInitializeSRWLock =
-                (once_block_impl_nt6::InitializeSRWLock_t)boost::detail::winapi::get_proc_address(hKernel32, "InitializeSRWLock");
+                (once_block_impl_nt6::InitializeSRWLock_t)boost::winapi::get_proc_address(hKernel32, "InitializeSRWLock");
             if (pInitializeSRWLock)
             {
                 once_block_impl_nt6::AcquireSRWLockExclusive_t pAcquireSRWLockExclusive =
-                    (once_block_impl_nt6::AcquireSRWLockExclusive_t)boost::detail::winapi::get_proc_address(hKernel32, "AcquireSRWLockExclusive");
+                    (once_block_impl_nt6::AcquireSRWLockExclusive_t)boost::winapi::get_proc_address(hKernel32, "AcquireSRWLockExclusive");
                 if (pAcquireSRWLockExclusive)
                 {
                     once_block_impl_nt6::ReleaseSRWLockExclusive_t pReleaseSRWLockExclusive =
-                        (once_block_impl_nt6::ReleaseSRWLockExclusive_t)boost::detail::winapi::get_proc_address(hKernel32, "ReleaseSRWLockExclusive");
+                        (once_block_impl_nt6::ReleaseSRWLockExclusive_t)boost::winapi::get_proc_address(hKernel32, "ReleaseSRWLockExclusive");
                     if (pReleaseSRWLockExclusive)
                     {
                         once_block_impl_nt6::InitializeConditionVariable_t pInitializeConditionVariable =
-                            (once_block_impl_nt6::InitializeConditionVariable_t)boost::detail::winapi::get_proc_address(hKernel32, "InitializeConditionVariable");
+                            (once_block_impl_nt6::InitializeConditionVariable_t)boost::winapi::get_proc_address(hKernel32, "InitializeConditionVariable");
                         if (pInitializeConditionVariable)
                         {
                             once_block_impl_nt6::SleepConditionVariableSRW_t pSleepConditionVariableSRW =
-                                (once_block_impl_nt6::SleepConditionVariableSRW_t)boost::detail::winapi::get_proc_address(hKernel32, "SleepConditionVariableSRW");
+                                (once_block_impl_nt6::SleepConditionVariableSRW_t)boost::winapi::get_proc_address(hKernel32, "SleepConditionVariableSRW");
                             if (pSleepConditionVariableSRW)
                             {
                                 once_block_impl_nt6::WakeAllConditionVariable_t pWakeAllConditionVariable =
-                                    (once_block_impl_nt6::WakeAllConditionVariable_t)boost::detail::winapi::get_proc_address(hKernel32, "WakeAllConditionVariable");
+                                    (once_block_impl_nt6::WakeAllConditionVariable_t)boost::winapi::get_proc_address(hKernel32, "WakeAllConditionVariable");
                                 if (pWakeAllConditionVariable)
                                 {
                                     return new once_block_impl_nt6(

@@ -16,6 +16,8 @@
 
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
+#include <boost/geometry/core/closure.hpp>
+#include <boost/geometry/core/point_order.hpp>
 #include <boost/geometry/core/point_type.hpp>
 
 #include <boost/geometry/strategies/buffer.hpp>
@@ -146,6 +148,20 @@ struct ring_type
 {
     typedef Ring type;
 };
+
+
+// There is a specific tag, so this specialization cannot be placed in traits
+template <typename Ring>
+struct point_order<detail::buffer::buffered_ring_collection_tag,
+        geometry::detail::buffer::buffered_ring_collection
+        <
+            geometry::detail::buffer::buffered_ring<Ring>
+        > >
+{
+    static const order_selector value
+        = core_dispatch::point_order<ring_tag, Ring>::value;
+};
+
 
 }
 

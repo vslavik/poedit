@@ -34,6 +34,7 @@ class property-set
 {
     import errors ;
     import feature ;
+    import modules ;
     import path ;
     import property ;
     import property-set ;
@@ -84,6 +85,48 @@ class property-set
             init-base ;
         }
         return $(self.free) ;
+    }
+
+    # Returns relevant base properties.  This is used for computing
+    # target paths, so it must return the expanded set of relevant
+    # properties.
+    #
+    rule base-relevant ( )
+    {
+        if ! $(self.relevant-initialized)
+        {
+            init-relevant ;
+        }
+        return $(self.base-relevant) ;
+    }
+
+    # Returns all properties marked as relevant by features-ps
+    # Does not attempt to expand features-ps in any way, as
+    # this matches what virtual-target.register needs.
+    #
+    rule relevant ( features-ps )
+    {
+        if ! $(self.relevant.$(features-ps))
+        {
+            local result ;
+            local features = [ $(features-ps).get <relevant> ] ;
+            features = <$(features)> ;
+            local ignore-relevance = [ modules.peek
+                property-set : .ignore-relevance ] ;
+            for local p in $(self.raw)
+            {
+                if $(ignore-relevance) || $(p:G) in $(features)
+                {
+                    local att = [ feature.attributes $(p:G) ] ;
+                    if ! ( incidental in $(att) )
+                    {
+                        result += $(p) ;
+                    }
+                }
+            }
+            self.relevant.$(features-ps) = [ property-set.create $(result) ] ;
+        }
+        return $(self.relevant.$(features-ps)) ;
     }
 
     # Returns dependency properties.
@@ -215,7 +258,7 @@ class property-set
     {
         if ! $(self.as-path)
         {
-            self.as-path = [ property.as-path [ base ] ] ;
+            self.as-path = [ property.as-path [ base-relevant ] ] ;
         }
         return $(self.as-path) ;
     }
@@ -345,6 +388,30 @@ class property-set
         self.base-initialized = true ;
     }
 
+    rule init-relevant ( )
+    {
+        local relevant-features = [ get <relevant> ] ;
+        relevant-features = [ feature.expand-relevant $(relevant-features) ] ;
+        relevant-features = <$(relevant-features)> ;
+        ignore-relevance = [ modules.peek property-set : .ignore-relevance ] ;
+        for local p in $(self.raw)
+        {
+            if $(ignore-relevance) || $(p:G) in $(relevant-features)
+            {
+                local att = [ feature.attributes $(p:G) ] ;
+                if ! ( incidental in $(att) ) 
+                {
+                    self.relevant += $(p) ;
+                    if ! ( free in $(att) )
+                    {
+                        self.base-relevant += $(p) ;
+                    }
+                }
+            }
+        }
+        self.relevant-initialized = true ;
+    }
+
     rule init-dependency ( )
     {
         for local p in $(self.raw)
@@ -369,7 +436,7 @@ class property-set
             # characters as well, e.g. free or indirect properties. Indirect
             # properties for example contain a full Jamfile path in their value
             # which on Windows file systems contains ':' as the drive separator.
-            if [ MATCH (:) : $(p:G=) ]
+            if ( [ MATCH "(:)" : $(p:G=) ] && ! ( free in [ feature.attributes $(p:G) ] ) ) || $(p:G) = <conditional>
             {
                 self.conditional += $(p) ;
             }
@@ -382,6 +449,13 @@ class property-set
     }
 }
 
+# This is a temporary measure to help users work around
+# any problems.  Remove it once we've verified that
+# everything works.
+if --ignore-relevance in [ modules.peek : ARGV ]
+{
+    .ignore-relevance = true ;
+}
 
 # Creates a new 'property-set' instance for the given raw properties or returns
 # an already existing ones.

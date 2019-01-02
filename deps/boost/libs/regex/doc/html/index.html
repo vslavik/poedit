@@ -1,10 +1,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Boost.Regex 5.1.1</title>
+<title>Boost.Regex 5.1.3</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="index.html" title="Boost.Regex 5.1.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="Boost.Regex 5.1.3">
 <link rel="next" href="boost_regex/configuration.html" title="Configuration">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,7 +22,7 @@
 <div class="titlepage">
 <div>
 <div><h2 class="title">
-<a name="boost_regex"></a>Boost.Regex 5.1.1</h2></div>
+<a name="boost_regex"></a>Boost.Regex 5.1.3</h2></div>
 <div><div class="authorgroup"><div class="author"><h3 class="author">
 <span class="firstname">John</span> <span class="surname">Maddock</span>
 </h3></div></div></div>
@@ -38,7 +38,7 @@
 </div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="boost_regex/configuration.html">Configuration</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_regex/configuration/compiler.html">Compiler Setup</a></span></dt>
@@ -49,8 +49,7 @@
 <dt><span class="section"><a href="boost_regex/configuration/tuning.html">Algorithm Tuning</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_regex/install.html">Building and Installing the Library</a></span></dt>
-<dt><span class="section"><a href="boost_regex/introduction_and_overview.html">Introduction and
-    Overview</a></span></dt>
+<dt><span class="section"><a href="boost_regex/intro.html">Introduction and Overview</a></span></dt>
 <dt><span class="section"><a href="boost_regex/unicode.html">Unicode and Boost.Regex</a></span></dt>
 <dt><span class="section"><a href="boost_regex/captures.html">Understanding Marked Sub-Expressions
     and Captures</a></span></dt>
@@ -157,61 +156,56 @@
 <dt><span class="section"><a href="boost_regex/ref/concepts/iterator_concepts.html">Iterator
         Requirements</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="boost_regex/ref/deprecated_interfaces.html">Deprecated Interfaces</a></span></dt>
+<dt><span class="section"><a href="boost_regex/ref/deprecated.html">Deprecated Interfaces</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_regex/ref/deprecated_interfaces/regex_format.html">regex_format
+<dt><span class="section"><a href="boost_regex/ref/deprecated/regex_format.html">regex_format
         (Deprecated)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/ref/deprecated_interfaces/regex_grep.html">regex_grep
-        (Deprecated)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/ref/deprecated_interfaces/regex_split.html">regex_split
+<dt><span class="section"><a href="boost_regex/ref/deprecated/regex_grep.html">regex_grep (Deprecated)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/ref/deprecated/regex_split.html">regex_split
         (deprecated)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/ref/deprecated_interfaces/old_regex.html">High
-        Level Class RegEx (Deprecated)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/ref/deprecated/old_regex.html">High Level Class
+        RegEx (Deprecated)</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="boost_regex/ref/internal_details.html">Internal Details</a></span></dt>
-<dd><dl><dt><span class="section"><a href="boost_regex/ref/internal_details/uni_iter.html">Unicode
-        Iterators</a></span></dt></dl></dd>
+<dt><span class="section"><a href="boost_regex/ref/internals.html">Internal Details</a></span></dt>
+<dd><dl><dt><span class="section"><a href="boost_regex/ref/internals/uni_iter.html">Unicode Iterators</a></span></dt></dl></dd>
 </dl></dd>
-<dt><span class="section"><a href="boost_regex/background_information.html">Background Information</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background.html">Background Information</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_regex/background_information/headers.html">Headers</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/locale.html">Localization</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/thread_safety.html">Thread
-      Safety</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/examples.html">Test and
-      Example Programs</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/futher.html">References
-      and Further Information</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/faq.html">FAQ</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance.html">Performance</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/headers.html">Headers</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/locale.html">Localization</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/thread_safety.html">Thread Safety</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/examples.html">Test and Example Programs</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/futher.html">References and Further
+      Information</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/faq.html">FAQ</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance.html">Performance</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_Perl_searches_platform_Windows_x64_compiler_Microsoft_Visual_C_version_14_0_.html">Testing
-        Perl searches (platform = Windows x64, compiler = Microsoft Visual C++ version
-        14.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_Perl_searches_platform_linux_compiler_GNU_C_version_5_1_0_.html">Testing
-        Perl searches (platform = linux, compiler = GNU C++ version 5.1.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_leftmost_longest_searches_platform_Windows_x64_compiler_Microsoft_Visual_C_version_14_0_.html">Testing
-        leftmost-longest searches (platform = Windows x64, compiler = Microsoft Visual
-        C++ version 14.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_leftmost_longest_searches_platform_linux_compiler_GNU_C_version_5_1_0_.html">Testing
-        leftmost-longest searches (platform = linux, compiler = GNU C++ version 5.1.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_simple_Perl_matches_platform_Windows_x64_compiler_Microsoft_Visual_C_version_14_0_.html">Testing
-        simple Perl matches (platform = Windows x64, compiler = Microsoft Visual
-        C++ version 14.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_simple_Perl_matches_platform_linux_compiler_GNU_C_version_5_1_0_.html">Testing
-        simple Perl matches (platform = linux, compiler = GNU C++ version 5.1.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_simple_leftmost_longest_matches_platform_Windows_x64_compiler_Microsoft_Visual_C_version_14_0_.html">Testing
-        simple leftmost-longest matches (platform = Windows x64, compiler = Microsoft
-        Visual C++ version 14.0)</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/performance/section_Testing_simple_leftmost_longest_matches_platform_linux_compiler_GNU_C_version_5_1_0_.html">Testing
+<dt><span class="section"><a href="boost_regex/background/performance/section_id1378460593.html">Testing
         simple leftmost-longest matches (platform = linux, compiler = GNU C++ version
-        5.1.0)</a></span></dt>
+        6.3.0)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id1675827111.html">Testing
+        Perl searches (platform = linux, compiler = GNU C++ version 6.3.0)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id3141719723.html">Testing
+        simple leftmost-longest matches (platform = Windows x64, compiler = Microsoft
+        Visual C++ version 14.1)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id3258595385.html">Testing
+        leftmost-longest searches (platform = Windows x64, compiler = Microsoft Visual
+        C++ version 14.1)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id3261825021.html">Testing
+        simple Perl matches (platform = linux, compiler = GNU C++ version 6.3.0)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id3752650613.html">Testing
+        Perl searches (platform = Windows x64, compiler = Microsoft Visual C++ version
+        14.1)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id4128344975.html">Testing
+        simple Perl matches (platform = Windows x64, compiler = Microsoft Visual
+        C++ version 14.1)</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/performance/section_id4148872883.html">Testing
+        leftmost-longest searches (platform = linux, compiler = GNU C++ version 6.3.0)</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="boost_regex/background_information/standards.html">Standards
-      Conformance</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/redist.html">Redistributables</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/acknowledgements.html">Acknowledgements</a></span></dt>
-<dt><span class="section"><a href="boost_regex/background_information/history.html">History</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/standards.html">Standards Conformance</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/redist.html">Redistributables</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/acknowledgements.html">Acknowledgements</a></span></dt>
+<dt><span class="section"><a href="boost_regex/background/history.html">History</a></span></dt>
 </dl></dd>
 </dl>
 </div>
@@ -221,7 +215,7 @@
   </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 05, 2016 at 21:43:14 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 05, 2018 at 20:02:49 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

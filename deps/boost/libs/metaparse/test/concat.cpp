@@ -3,7 +3,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/metaparse/v1/impl/concat.hpp>
+#include <boost/metaparse/config.hpp>
+
+#if BOOST_METAPARSE_STD >= 2011
+
+#include <boost/metaparse/v1/cpp11/impl/concat.hpp>
 #include <boost/metaparse/string.hpp>
 
 #include <boost/mpl/equal_to.hpp>
@@ -40,4 +44,5 @@ BOOST_METAPARSE_TEST_CASE(concat)
   ));
 }
 
+#endif
 

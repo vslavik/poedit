@@ -27,6 +27,7 @@ Multi-linestring can be used to group lines belonging to each other, e.g. a high
 [heading Synopsis]
 ``template<typename LineString, template< typename, typename > class Container, template< typename > class Allocator>
 class model::multi_linestring
+      : public Container< LineString, Allocator< LineString > >
 {
   // ...
 };
@@ -45,12 +46,12 @@ class model::multi_linestring
 [[Function] [Description] [Parameters] ]
 [[``multi_linestring()``
 
-] [Default constructor, creating an empty \1. ] [
+] [Default constructor, creating an empty multi_linestring. ] [
 
 ]]
 [[``multi_linestring(std::initializer_list< LineString > l)``
 
-] [Constructor taking std::initializer_list, filling the \1. ] [[* std::initializer_list< LineString >]: ['l]:  
+] [Constructor taking std::initializer_list, filling the multi_linestring. ] [[* std::initializer_list< LineString >]: ['l]:  
 
 
 

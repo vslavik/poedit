@@ -2,7 +2,7 @@
 // stream_server.cpp
 // ~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,8 +24,8 @@ class session
   : public boost::enable_shared_from_this<session>
 {
 public:
-  session(boost::asio::io_service& io_service)
-    : socket_(io_service)
+  session(boost::asio::io_context& io_context)
+    : socket_(io_context)
   {
   }
 
@@ -81,11 +81,11 @@ typedef boost::shared_ptr<session> session_ptr;
 class server
 {
 public:
-  server(boost::asio::io_service& io_service, const std::string& file)
-    : io_service_(io_service),
-      acceptor_(io_service, stream_protocol::endpoint(file))
+  server(boost::asio::io_context& io_context, const std::string& file)
+    : io_context_(io_context),
+      acceptor_(io_context, stream_protocol::endpoint(file))
   {
-    session_ptr new_session(new session(io_service_));
+    session_ptr new_session(new session(io_context_));
     acceptor_.async_accept(new_session->socket(),
         boost::bind(&server::handle_accept, this, new_session,
           boost::asio::placeholders::error));
@@ -99,14 +99,14 @@ public:
       new_session->start();
     }
 
-    new_session.reset(new session(io_service_));
+    new_session.reset(new session(io_context_));
     acceptor_.async_accept(new_session->socket(),
         boost::bind(&server::handle_accept, this, new_session,
           boost::asio::placeholders::error));
   }
 
 private:
-  boost::asio::io_service& io_service_;
+  boost::asio::io_context& io_context_;
   stream_protocol::acceptor acceptor_;
 };
 
@@ -121,12 +121,12 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     std::remove(argv[1]);
-    server s(io_service, argv[1]);
+    server s(io_context, argv[1]);
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

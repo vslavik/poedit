@@ -35,13 +35,13 @@ void test_all()
         // cw(duplicated point)
         test_geometry<poly, poly>("POLYGON((-8042 -1485,-8042 250,-8042 250,15943 254,15943 -1485,-8042 -1485))",
                                   "POLYGON((-7901 -1485,-7901 529,-7901 529, 15802 544, 15802 -1485, -7901 -1485))",
-                                  expected_pusher<0>()("iiu")("iui")("mcc")("cui"));
+                                  expected("iiu")("iui")("mcc")("cui"));
         //to_svg<poly, poly>("POLYGON((-8042 -1485,-8042 250,15943 254,15943 -1485,-8042 -1485))",
         //                   "POLYGON((-7901 -1485,-7901 529,15802 544, 15802 -1485, -7901 -1485))",
         //                   "poly_poly_1.svg");
         test_geometry<poly, poly>("POLYGON((-7901 -1485,-7901 529,-7901 529, 15802 544, 15802 -1485, -7901 -1485))",
                                   "POLYGON((-8042 -1485,-8042 250,-8042 250,15943 254,15943 -1485,-8042 -1485))",
-                                  expected_pusher<0>()("iui")("iiu")("mcc")("ciu"));
+                                  expected("iui")("iiu")("mcc")("ciu"));
     }
 }
 

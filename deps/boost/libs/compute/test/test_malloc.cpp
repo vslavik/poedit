@@ -23,10 +23,10 @@ BOOST_AUTO_TEST_CASE(malloc_int)
     bc::experimental::device_ptr<int> ptr = bc::experimental::malloc<int>(5, context);
 
     int input_data[] = { 2, 5, 8, 3, 6 };
-    bc::copy(input_data, input_data + 5, ptr);
+    bc::copy(input_data, input_data + 5, ptr, queue);
 
     int output_data[5];
-    bc::copy(ptr, ptr + 5, output_data);
+    bc::copy(ptr, ptr + 5, output_data, queue);
 
     BOOST_CHECK_EQUAL(output_data[0], 2);
     BOOST_CHECK_EQUAL(output_data[1], 5);

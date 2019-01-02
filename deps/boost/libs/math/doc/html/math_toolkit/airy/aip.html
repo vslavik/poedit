@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Airy Ai' Function</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../airy.html" title="Airy Functions">
 <link rel="prev" href="bi.html" title="Airy Bi Function">
 <link rel="next" href="bip.html" title="Airy Bi' Function">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.airy.aip.h0"></a>
-        <span><a name="math_toolkit.airy.aip.synopsis"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.synopsis">Synopsis</a>
+        <span class="phrase"><a name="math_toolkit.airy.aip.synopsis"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">airy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -44,7 +44,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.airy.aip.h1"></a>
-        <span><a name="math_toolkit.airy.aip.description"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.description">Description</a>
+        <span class="phrase"><a name="math_toolkit.airy.aip.description"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.description">Description</a>
       </h5>
 <p>
         The function <a class="link" href="aip.html" title="Airy Ai' Function">airy_ai_prime</a> calculates
@@ -55,9 +55,9 @@
         <span class="inlinemediaobject"><img src="../../../equations/airy.svg"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -70,7 +70,7 @@
       </p>
 <h5>
 <a name="math_toolkit.airy.aip.h2"></a>
-        <span><a name="math_toolkit.airy.aip.accuracy"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.accuracy">Accuracy</a>
+        <span class="phrase"><a name="math_toolkit.airy.aip.accuracy"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.accuracy">Accuracy</a>
       </h5>
 <p>
         This function is implemented entirely in terms of the Bessel functions <a class="link" href="../bessel/bessel_first.html" title="Bessel Functions of the First and Second Kinds">cyl_bessel_j</a> and <a class="link" href="../bessel/mbessel.html" title="Modified Bessel Functions of the First and Second Kinds">cyl_bessel_k</a> - refer to those
@@ -79,11 +79,14 @@
 <p>
         In general though, the relative error is low (less than 100 &#949;) for <span class="emphasis"><em>x
         &gt; 0</em></span> while only the absolute error is low for <span class="emphasis"><em>x &lt;
-        0</em></span>.
+        0</em></span> as the following error plot illustrates:
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../graphs/ai_prime__double.svg" align="middle"></span>
       </p>
 <h5>
 <a name="math_toolkit.airy.aip.h3"></a>
-        <span><a name="math_toolkit.airy.aip.testing"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.testing">Testing</a>
+        <span class="phrase"><a name="math_toolkit.airy.aip.testing"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.testing">Testing</a>
       </h5>
 <p>
         Since this function is implemented in terms of other special functions, there
@@ -91,7 +94,7 @@
       </p>
 <h5>
 <a name="math_toolkit.airy.aip.h4"></a>
-        <span><a name="math_toolkit.airy.aip.implementation"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.implementation">Implementation</a>
+        <span class="phrase"><a name="math_toolkit.airy.aip.implementation"></a></span><a class="link" href="aip.html#math_toolkit.airy.aip.implementation">Implementation</a>
       </h5>
 <p>
         This function is implemented in terms of the Bessel functions using the relations:
@@ -102,10 +105,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

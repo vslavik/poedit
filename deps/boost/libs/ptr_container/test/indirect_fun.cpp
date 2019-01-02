@@ -30,8 +30,10 @@ void test_fun()
 
     indirect_fun< std::less<std::string> > fun;
 
-    std::string* ptr1  = new std::string("bar");
-    std::string* ptr2  = new std::string("foo");
+    std::string s1("bar");
+    std::string* ptr1 = &s1;
+    std::string s2("foo");
+    std::string* ptr2 = &s2;
     BOOST_CHECK( fun( ptr1, ptr2 ) == true );
     
     void*       vptr1  = ptr1;
@@ -55,8 +57,10 @@ void test_fun()
     BOOST_CHECK( vec[1] == "aa" );
     BOOST_CHECK( vec[2] == "bb" );    
 
-    void* iptr1 = new int(2);
-    void* iptr2 = new int(3);
+    int i1 = 2;
+    void *iptr1 = &i1;
+    int i2 = 3;
+    void* iptr2 = &i2;
 
     void_ptr_indirect_fun<std::less<int>, int> int_cast_fun;
     BOOST_CHECK( int_cast_fun(iptr1,iptr2) );

@@ -38,7 +38,7 @@ int main() { TestClass c(1, 2); }
 """)
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/hello.exe")
+t.expect_addition("bin/$toolset/debug*/hello.exe")
 
 
 # Now make the header unusable, without changing timestamp. If everything is OK,
@@ -48,8 +48,9 @@ t.expect_addition("bin/$toolset/debug/hello.exe")
 t.copy_preserving_timestamp("pch.hpp.bad", "pch.hpp")
 
 t.rm("bin/$toolset/debug/hello.obj")
+t.rm("bin/$toolset/debug/*/hello.obj")
 
 t.run_build_system()
-t.expect_addition("bin/$toolset/debug/hello.obj")
+t.expect_addition("bin/$toolset/debug*/hello.obj")
 
 t.cleanup()

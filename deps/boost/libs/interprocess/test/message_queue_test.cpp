@@ -20,6 +20,8 @@
 #include <boost/intrusive/detail/minimal_pair_header.hpp>
 #include <boost/intrusive/detail/minimal_less_equal_header.hpp>
 
+#include <boost/move/unique_ptr.hpp>
+
 #include <cstddef>
 #include <memory>
 #include <iostream>
@@ -251,7 +253,7 @@ bool test_buffer_overflow()
 {
    boost::interprocess::message_queue::remove(test::get_process_id_name());
    {
-      std::auto_ptr<boost::interprocess::message_queue>
+      boost::movelib::unique_ptr<boost::interprocess::message_queue>
          ptr(new boost::interprocess::message_queue
                (create_only, test::get_process_id_name(), 10, 10));
       pmessage_queue = ptr.get();

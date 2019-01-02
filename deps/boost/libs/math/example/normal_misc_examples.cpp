@@ -124,7 +124,7 @@ that the true occurrence frequency lies *inside* the calculated interval.
 */
     cout << "level of significance (alpha)" << setprecision(4) << endl;
     cout << "2-sided       1 -sided          z(alpha) " << endl;
-    for (int i = 0; i < sizeof(alpha)/sizeof(alpha[0]); ++i)
+    for (unsigned i = 0; i < sizeof(alpha)/sizeof(alpha[0]); ++i)
     {
       cout << setw(15) << alpha[i] << setw(15) << alpha[i] /2 << setw(10) << quantile(complement(s,  alpha[i]/2)) << endl;
       // Use quantile(complement(s, alpha[i]/2)) to avoid potential loss of accuracy from quantile(s,  1 - alpha[i]/2)

@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------------+    
+/*-----------------------------------------------------------------------------+
 Copyright (c) 2008-2009: Joachim Faulhaber
 +------------------------------------------------------------------------------+
    Distributed under the Boost Software License, Version 1.0.
@@ -13,7 +13,7 @@ Copyright (c) 2008-2009: Joachim Faulhaber
 //- part1: Basic operations and predicates
 //------------------------------------------------------------------------------
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_ctor_4_ordered_types()
 {
     typedef interval_map<T,U>       IntervalMapT;
@@ -23,7 +23,7 @@ void interval_map_mixed_ctor_4_ordered_types()
     U u1 = unit_element<U>::value();
 
     SplitIntervalMapT split_map(mapping_pair<T,U>(v0,u1));
-    //JODO: clang err: ctor ambiguous. Should compile 
+    //JODO: clang err: ctor ambiguous. Should compile
     //JODO CLANG SplitIntervalMapT split_map(make_pair(v0,u1));
     IntervalMapT      join_map(split_map);
 
@@ -31,12 +31,11 @@ void interval_map_mixed_ctor_4_ordered_types()
     BOOST_CHECK_EQUAL( hull(split_map).upper(), hull(join_map).upper() );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_equal_4_ordered_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef typename IntervalMapT::interval_type IntervalT;
 
     T v0 = boost::icl::identity_element<T>::value();
     U u1 = unit_element<U>::value();
@@ -78,12 +77,11 @@ void interval_map_mixed_equal_4_ordered_types()
     BOOST_CHECK_EQUAL( is_element_equal(join_single, join_empty),  false );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_assign_4_ordered_types()
-{         
+{
     typedef interval_map<T,U>        IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef typename IntervalMapT::interval_type IntervalT;
 
     T v0 = boost::icl::identity_element<T>::value();
     T v1 = unit_element<T>::value();
@@ -111,9 +109,9 @@ void interval_map_mixed_assign_4_ordered_types()
     BOOST_CHECK_EQUAL( join_self, join_self );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_ctor_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -141,9 +139,9 @@ void interval_map_mixed_ctor_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_assign_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -173,9 +171,9 @@ void interval_map_mixed_assign_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_equal_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -198,13 +196,13 @@ void interval_map_mixed_equal_4_bicremental_types()
 
     IntervalMapT join_map;
     join_map.add(I1_3D_1).add(I2_4D_1).add(I4_5D_1);
-    IntervalMapT join_map2 = join_map;    
+    IntervalMapT join_map2 = join_map;
     BOOST_CHECK_EQUAL( join_map, join_map2 );
     BOOST_CHECK_EQUAL( is_element_equal(join_map, join_map2), true );
 
-    SplitIntervalMapT split_map;    
+    SplitIntervalMapT split_map;
     split_map.add(I1_3D_1).add(I2_4D_1).add(I4_5D_1);
-    SplitIntervalMapT split_map2 = split_map;    
+    SplitIntervalMapT split_map2 = split_map;
     BOOST_CHECK_EQUAL( split_map, split_map2 );
     BOOST_CHECK_EQUAL( is_element_equal(split_map2, split_map), true );
 
@@ -217,7 +215,6 @@ template <class T, class U, class Trt>
 void partial_interval_map_mixed_inclusion_compare_4_bicremental_types()
 {
     typedef interval_map<T,U,Trt> IntervalMapT;
-    typedef typename IntervalMapT::interval_type IntervalT;
 
     //--------------------------------------------------------------------------
     // equalities
@@ -276,9 +273,9 @@ void partial_interval_map_mixed_inclusion_compare_4_bicremental_types()
     join_sub_map2.erase(MK_v(1));
     BOOST_CHECK_EQUAL( icl::contains(join_sub_map2, MK_v(1)), false );
 
-    split_interval_set<T>    split_sub_set1; 
-    separate_interval_set<T> sep_sub_set1; 
-    interval_set<T>          join_sub_set1; 
+    split_interval_set<T>    split_sub_set1;
+    separate_interval_set<T> sep_sub_set1;
+    interval_set<T>          join_sub_set1;
 
     icl::domain(split_sub_set1, split_sub_map1);
     icl::domain(sep_sub_set1, split_sub_map1);
@@ -340,7 +337,6 @@ template <class T, class U, class Trt>
 void partial_interval_map_mixed_contains_4_bicremental_types()
 {
     typedef interval_map<T,U,Trt> IntervalMapT;
-    typedef typename IntervalMapT::interval_type IntervalT;
     //--------------------------------------------------------------------------
     // { 0 1  2 3  4 5     8 9 }
     // {[0,2)[2,3](3,6)   (7,9]}
@@ -410,9 +406,9 @@ void partial_interval_map_mixed_contains_4_bicremental_types()
     join_sub_map2.erase(MK_v(1));
     BOOST_CHECK_EQUAL( icl::contains(join_sub_map2, MK_v(1)), false );
 
-    split_interval_set<T>    split_sub_set1; 
-    separate_interval_set<T> sep_sub_set1; 
-    interval_set<T>          join_sub_set1; 
+    split_interval_set<T>    split_sub_set1;
+    separate_interval_set<T> sep_sub_set1;
+    interval_set<T>          join_sub_set1;
 
     icl::domain(split_sub_set1, split_sub_map1);
     icl::domain(sep_sub_set1, split_sub_map1);
@@ -466,7 +462,7 @@ void partial_interval_map_mixed_contains_4_bicremental_types()
 
 template <class T, class U>
 void interval_map_mixed_add_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>           IntervalMapT;
     typedef split_interval_map<T,U>     SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -506,9 +502,9 @@ void interval_map_mixed_add_4_bicremental_types()
     BOOST_CHECK_EQUAL( iterative_size(split_map3), 3 );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_add2_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>        IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -550,9 +546,9 @@ void interval_map_mixed_add2_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_subtract_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -634,9 +630,9 @@ void interval_map_mixed_subtract_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_erase_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>        IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -718,9 +714,9 @@ void interval_map_mixed_erase_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_erase2_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef interval_set<T>         IntervalSetT;
@@ -830,9 +826,9 @@ void interval_map_mixed_erase2_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_insert_erase_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef typename IntervalMapT::interval_type IntervalT;
@@ -923,9 +919,9 @@ void interval_map_mixed_insert_erase_4_bicremental_types()
     BOOST_CHECK_EQUAL( is_element_equal(join_X, IntervalMapT()), true );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_insert_erase2_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef interval_set<T>         IntervalSetT;
@@ -1025,13 +1021,11 @@ void interval_map_mixed_insert_erase2_4_bicremental_types()
     BOOST_CHECK_EQUAL( is_element_equal(join_X, IntervalMapT()), true );
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_basic_intersect_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef interval_set<T>         IntervalSetT;
-    typedef split_interval_set<T>   SplitIntervalSetT;
     typedef typename IntervalMapT::interval_type IntervalT;
 
     U u1 = make<U>(1);
@@ -1077,7 +1071,7 @@ void interval_map_mixed_basic_intersect_4_bicremental_types()
     //split_A      [0       3)       [6    9)
     //         &=      [1                8)
     //split_AB ->      [1   3)       [6  8)
-    //         &=        [2             7)     
+    //         &=        [2             7)
     //         ->        [2 3)       [6 7)
     SplitIntervalMapT split_A, split_B, split_AB, split_ab, split_ab2;
 
@@ -1125,13 +1119,11 @@ void interval_map_mixed_basic_intersect_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_basic_intersect2_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef interval_set<T>         IntervalSetT;
-    typedef split_interval_set<T>   SplitIntervalSetT;
     typedef typename IntervalMapT::interval_type IntervalT;
 
     U u1 = make<U>(1);
@@ -1177,7 +1169,7 @@ void interval_map_mixed_basic_intersect2_4_bicremental_types()
     //split_A      [0       3)       [6    9)
     //         &=      [1                8)
     //split_AB ->      [1   3)       [6  8)
-    //         &=        [2             7)     
+    //         &=        [2             7)
     //         ->        [2 3)       [6 7)
     SplitIntervalMapT split_A, split_B, split_AB, split_ab, split_ab2;
 
@@ -1235,13 +1227,11 @@ void interval_map_mixed_basic_intersect2_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_intersect_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef interval_set<T>         IntervalSetT;
-    typedef split_interval_set<T>   SplitIntervalSetT;
     typedef typename IntervalMapT::interval_type IntervalT;
 
     U u1 = make<U>(1);
@@ -1301,7 +1291,7 @@ void interval_map_mixed_intersect_4_bicremental_types()
     split_AB &= split_B;
     BOOST_CHECK_EQUAL( iterative_size(split_AB), 3 );
     BOOST_CHECK_EQUAL( split_AB, split_ab );
-    
+
     //split_A      [0          3)       [6   9)
     //                    1                1
     //join_B   &=      [1         4) [5    8)
@@ -1318,9 +1308,9 @@ void interval_map_mixed_intersect_4_bicremental_types()
 
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_intersect2_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
     typedef interval_set<T>         IntervalSetT;
@@ -1385,7 +1375,7 @@ void interval_map_mixed_intersect2_4_bicremental_types()
     split_AB &= split_B;
     BOOST_CHECK_EQUAL( iterative_size(split_AB), 3 );
     BOOST_CHECK_EQUAL( split_AB, split_ab );
-    
+
     //split_A      [0          3)       [6   9)
     //                    1                1
     //join_B   &=      [1         4) [5    8)
@@ -1400,13 +1390,11 @@ void interval_map_mixed_intersect2_4_bicremental_types()
 }
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_disjoint_4_bicremental_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef interval_set<T>         IntervalSetT;
-    typedef split_interval_set<T>   SplitIntervalSetT;
     typedef typename IntervalMapT::interval_type IntervalT;
 
     U u1 = make<U>(1);
@@ -1457,13 +1445,11 @@ struct size_greater_1 : public icl::property<Type>
 };
 
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_erase_if_4_integral_types()
-{         
+{
     typedef interval_map<T,U>       IntervalMapT;
     typedef split_interval_map<T,U> SplitIntervalMapT;
-    typedef interval_set<T>         IntervalSetT;
-    typedef split_interval_set<T>   SplitIntervalSetT;
     typedef typename IntervalMapT::interval_type IntervalT;
 
     U u1 = make<U>(1);
@@ -1504,11 +1490,10 @@ void interval_map_mixed_erase_if_4_integral_types()
 //- infix operators
 //------------------------------------------------------------------------------
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_infix_plus_overload_4_bicremental_types()
 {
     typedef interval_map<T,U>  IntervalMapT;
-    typedef typename IntervalMapT::interval_type IntervalT;
 
     interval_map<T,U>          join_a;
     split_interval_map<T,U>    split_a;
@@ -1519,7 +1504,7 @@ void interval_map_mixed_infix_plus_overload_4_bicremental_types()
     BOOST_CHECK_EQUAL(split_a + join_a, join_a + split_a);
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_infix_pipe_overload_4_bicremental_types()
 {
     typedef interval_map<T,U>  IntervalMapT;
@@ -1532,7 +1517,7 @@ void interval_map_mixed_infix_pipe_overload_4_bicremental_types()
     BOOST_CHECK_EQUAL(split_a | join_a, join_a | split_a);
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_infix_minus_overload_4_bicremental_types()
 {
     typedef interval_map<T,U>  IntervalMapT;
@@ -1552,7 +1537,7 @@ void interval_map_mixed_infix_minus_overload_4_bicremental_types()
     BOOST_CHECK_EQUAL(join_a - split_a, join_b);
 }
 
-template <class T, class U> 
+template <class T, class U>
 void interval_map_mixed_infix_et_overload_4_bicremental_types()
 {
     typedef interval_map<T,U>  IntervalMapT;
@@ -1573,5 +1558,3 @@ void interval_map_mixed_infix_et_overload_4_bicremental_types()
 
 
 #endif // LIBS_ICL_TEST_TEST_ICL_interval_map_mixed_hpp_JOFA_081005__
-
-

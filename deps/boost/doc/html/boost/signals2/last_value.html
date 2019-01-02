@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template last_value</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../signals2/reference.html#header.boost.signals2.last_value_hpp" title="Header &lt;boost/signals2/last_value.hpp&gt;">
 <link rel="prev" href="dummy_mutex.html" title="Class dummy_mutex">
-<link rel="next" href="last_value_vo_idp180502960.html" title="Class last_value&lt;void&gt;">
+<link rel="next" href="last_valu_1_3_37_6_5_1_1_2.html" title="Class last_value&lt;void&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,13 +21,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="dummy_mutex.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.last_value_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_value_vo_idp180502960.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="dummy_mutex.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.last_value_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_valu_1_3_37_6_5_1_1_2.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.signals2.last_value"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Class template last_value</span></h2>
-<p>boost::signals2::last_value &#8212; Evaluate an InputIterator sequence and return the
+<p>boost::signals2::last_value &#8212; Evaluate an <a class="link" href="../../InputIterator.html" title="Concept InputIterator">InputIterator</a> sequence and return the
         last value in the sequence.</p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
@@ -39,12 +39,12 @@
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.signals2.last_value.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="last_value.html#idp136065952-bb">invocation</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> InputIterator<span class="special">&gt;</span> 
-    <span class="identifier">result_type</span> <a class="link" href="last_value.html#idp72791440-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">InputIterator</span><span class="special">,</span> <span class="identifier">InputIterator</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="last_value.html#id-1_3_37_6_5_1_1_1_5-bb">invocation</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../InputIterator.html" title="Concept InputIterator">InputIterator</a><span class="special">&gt;</span> 
+    <span class="identifier">result_type</span> <a class="link" href="last_value.html#id-1_3_37_6_5_1_1_1_5_1-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">InputIterator</span><span class="special">,</span> <span class="identifier">InputIterator</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp395686672"></a><h2>Description</h2>
+<a name="id-1.3.37.6.6.3.4"></a><h2>Description</h2>
 <p>
             The <code class="computeroutput">last_value</code> class was the default <code class="computeroutput">Combiner</code> template parameter
             type for signals in the original Signals library.
@@ -52,13 +52,16 @@
             does not throw.
           </p>
 <div class="refsect2">
-<a name="idp395690128"></a><h3>
-<a name="idp136065952-bb"></a><code class="computeroutput">last_value</code> invocation</h3>
+<a name="id-1.3.37.6.6.3.4.3"></a><h3>
+<a name="id-1_3_37_6_5_1_1_1_5-bb"></a><code class="computeroutput">last_value</code> invocation</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> InputIterator<span class="special">&gt;</span> 
-  <span class="identifier">result_type</span> <a name="idp72791440-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
-<div class="variablelist"><table border="0">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../InputIterator.html" title="Concept InputIterator">InputIterator</a><span class="special">&gt;</span> 
+  <span class="identifier">result_type</span> <a name="id-1_3_37_6_5_1_1_1_5_1-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">InputIterator</span> first<span class="special">,</span> <span class="identifier">InputIterator</span> last<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Effects:</span></p></td>
@@ -79,8 +82,8 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp395709072"></a><h3>Specializations</h3>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><a class="link" href="last_value_vo_idp180502960.html" title="Class last_value&lt;void&gt;">Class last_value&lt;void&gt;</a></p></li></ul></div>
+<a name="id-1.3.37.6.6.3.4.4"></a><h3>Specializations</h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="link" href="last_valu_1_3_37_6_5_1_1_2.html" title="Class last_value&lt;void&gt;">Class last_value&lt;void&gt;</a></p></li></ul></div>
 </div>
 </div>
 </div>
@@ -93,7 +96,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="dummy_mutex.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.last_value_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_value_vo_idp180502960.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="dummy_mutex.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../signals2/reference.html#header.boost.signals2.last_value_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_valu_1_3_37_6_5_1_1_2.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

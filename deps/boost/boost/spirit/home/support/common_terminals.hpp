@@ -83,6 +83,7 @@ namespace boost { namespace spirit
         ( strict, strict_type )
         ( relaxed, relaxed_type )
         ( duplicate, duplicate_type )
+        ( expect, expect_type )
     )
 
     // Our extended terminals

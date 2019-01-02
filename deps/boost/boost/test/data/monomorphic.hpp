@@ -22,6 +22,7 @@
 #include <boost/test/data/monomorphic/join.hpp>
 #include <boost/test/data/monomorphic/singleton.hpp>
 #include <boost/test/data/monomorphic/zip.hpp>
+#include <boost/test/data/monomorphic/delayed.hpp>
 
 #endif // BOOST_TEST_DATA_MONOMORPHIC_HPP_102211GER
 

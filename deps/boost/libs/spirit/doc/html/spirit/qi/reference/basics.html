@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parser Basics</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="parser_concepts/nonterminal.html" title="Nonterminal">
 <link rel="next" href="parse_api.html" title="Parser API">
@@ -28,7 +28,7 @@
 </h4></div></div></div>
 <h6>
 <a name="spirit.qi.reference.basics.h0"></a>
-          <span><a name="spirit.qi.reference.basics.lazy_argument"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+          <span class="phrase"><a name="spirit.qi.reference.basics.lazy_argument"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
           Argument</a>
         </h6>
 <p>
@@ -53,7 +53,7 @@
         </p>
 <h6>
 <a name="spirit.qi.reference.basics.h1"></a>
-          <span><a name="spirit.qi.reference.basics.character_encoding_namespace"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+          <span class="phrase"><a name="spirit.qi.reference.basics.character_encoding_namespace"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
 <p>
@@ -80,7 +80,7 @@
 <p>
           Namespaces:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               boost::spirit::ascii
             </li>
@@ -98,7 +98,7 @@
           For ease of use, the components in this namespaces are also brought into
           the qi sub-namespaces with the same names:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               boost::spirit::qi::ascii
             </li>
@@ -114,7 +114,7 @@
 </ul></div>
 <h6>
 <a name="spirit.qi.reference.basics.h2"></a>
-          <span><a name="spirit.qi.reference.basics.examples"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
+          <span class="phrase"><a name="spirit.qi.reference.basics.examples"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
         </h6>
 <p>
           All sections in the reference present some real world examples. The examples
@@ -132,6 +132,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">adapt_struct</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">assert</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">predef</span><span class="special">/</span><span class="identifier">other</span><span class="special">/</span><span class="identifier">endian</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
@@ -249,11 +250,11 @@
         </p>
 <h6>
 <a name="spirit.qi.reference.basics.h3"></a>
-          <span><a name="spirit.qi.reference.basics.string"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
+          <span class="phrase"><a name="spirit.qi.reference.basics.string"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h6>
 <h6>
 <a name="spirit.qi.reference.basics.h4"></a>
-          <span><a name="spirit.qi.reference.basics.header"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
+          <span class="phrase"><a name="spirit.qi.reference.basics.header"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">support_string_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -330,7 +331,7 @@
                 </td>
 <td>
                   <p>
-                    Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                    Function that returns an <a href="https://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
                     iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                     that points to the beginning the string.
                   </p>
@@ -344,7 +345,7 @@
                 </td>
 <td>
                   <p>
-                    Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                    Function that returns an <a href="https://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
                     iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                     that points to the end of the string.
                   </p>
@@ -354,12 +355,12 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.basics.h5"></a>
-          <span><a name="spirit.qi.reference.basics.models"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
+          <span class="phrase"><a name="spirit.qi.reference.basics.models"></a></span><a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h6>
 <p>
           Predefined models include:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               any literal string, e.g. "Hello, World",
             </li>

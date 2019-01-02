@@ -37,8 +37,18 @@ struct is_deduced< ::boost::type_erasure::deduced<T> > : boost::mpl::true_ {};
 // returns true if Map has a key for every non-deduced placeholder in Concept
 template<class Concept, class Map>
 struct check_map {
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
     typedef typename normalize_concept<Concept>::basic basic_components;
-    
+
+    typedef typename ::boost::mpl::fold<
+        basic_components,
+        ::boost::mpl::set0<>,
+        ::boost::type_erasure::detail::get_placeholders<
+            ::boost::mpl::_2,
+            ::boost::mpl::_1
+        >
+    >::type placeholders;
+
     // Every non-deduced placeholder referenced in this
     // map is indirectly deduced.
     typedef typename ::boost::type_erasure::detail::get_placeholder_normalization_map<
@@ -51,15 +61,6 @@ struct check_map {
             ::boost::mpl::second< ::boost::mpl::_2>
         >
     >::type indirect_deduced_placeholders;
-
-    typedef typename ::boost::mpl::fold<
-        basic_components,
-        ::boost::mpl::set0<>,
-        ::boost::type_erasure::detail::get_placeholders<
-            ::boost::mpl::_2,
-            ::boost::mpl::_1
-        >
-    >::type placeholders;
     typedef typename ::boost::is_same<
         typename ::boost::mpl::find_if<
             placeholders,
@@ -73,6 +74,35 @@ struct check_map {
         >::type,
         typename ::boost::mpl::end<placeholders>::type
     >::type type;
+
+#else
+    typedef ::boost::type_erasure::detail::get_all_placeholders<
+        ::boost::type_erasure::detail::normalize_concept_t<Concept>
+    > placeholders;
+
+    // Every non-deduced placeholder referenced in this
+    // map is indirectly deduced.
+    typedef typename ::boost::type_erasure::detail::get_placeholder_normalization_map<
+        Concept>::type placeholder_subs;
+    typedef ::boost::mp11::mp_unique<
+        ::boost::mp11::mp_append<
+            ::boost::mp11::mp_transform<
+                ::boost::mp11::mp_first,
+                ::boost::type_erasure::detail::make_mp_list<Map>
+            >,
+            ::boost::mp11::mp_transform<
+                ::boost::mp11::mp_second,
+                ::boost::type_erasure::detail::make_mp_list<placeholder_subs>
+            >
+        >
+    > okay_placeholders;
+    template<class P>
+    using check_placeholder = ::boost::mpl::or_<
+        ::boost::type_erasure::detail::is_deduced<P>,
+        ::boost::mp11::mp_set_contains<okay_placeholders, P>
+    >;
+    typedef ::boost::mp11::mp_all_of<placeholders, check_placeholder> type;
+#endif
 };
 
 template<class Concept, class Map>

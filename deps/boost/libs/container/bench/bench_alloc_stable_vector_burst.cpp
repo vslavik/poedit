@@ -20,11 +20,14 @@
 #include <iostream>  //std::cout, std::endl
 #include <vector>    //std::vector
 #include <cstddef>   //std::size_t
+#include <cassert>   //assert
+
 #include <boost/container/allocator.hpp>
 #include <boost/container/adaptive_pool.hpp>
 #include <boost/container/stable_vector.hpp>
 #include <boost/container/vector.hpp>
 #include <boost/timer/timer.hpp>
+
 using boost::timer::cpu_timer;
 using boost::timer::cpu_times;
 using boost::timer::nanosecond_type;
@@ -218,21 +221,25 @@ void stable_vector_operations()
 
 int main(int argc, const char *argv[])
 {
-   #define SINGLE_TEST
-   #ifndef SINGLE_TEST
-      #ifdef NDEBUG
-      unsigned int numit [] = { 40, 400, 4000, 40000 };
-      #else
-      unsigned int numit [] = { 4,   40,   400,   4000 };
-      #endif
-      unsigned int numele [] = { 10000, 1000, 100,   10     };
-   #else
+   //#define SINGLE_TEST
+   #define SIMPLE_IT
+   #ifdef SINGLE_TEST
       #ifdef NDEBUG
       unsigned int numit [] = { 40 };
       #else
       unsigned int numit [] = { 4 };
       #endif
       unsigned int numele [] = { 10000 };
+   #elif defined(SIMPLE_IT)
+      unsigned int numit [] = { 3 };
+      unsigned int numele [] = { 10000 };
+   #else
+      #ifdef NDEBUG
+      unsigned int numit [] = { 40, 400, 4000, 40000 };
+      #else
+      unsigned int numit [] = { 4,   40,   400,   4000 };
+      #endif
+      unsigned int numele [] = { 10000, 1000, 100,   10     };
    #endif
 
    //Warning: range erasure is buggy. Vector iterators are not stable, so it is not

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Nonterminal</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="naryparser.html" title="NaryParser">
 <link rel="next" href="../basics.html" title="Parser Basics">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h0"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.description"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.description">Description</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.description"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.description">Description</a>
           </h6>
 <p>
             A Nonterminal is a symbol in a <a class="link" href="../../../abstracts/parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing
@@ -39,7 +39,7 @@
           </p>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h1"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.refinement_of"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.refinement_of">Refinement
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.refinement_of"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -47,7 +47,7 @@
             </p></blockquote></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h2"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.signature"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.signature">Signature</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.signature"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.signature">Signature</a>
           </h6>
 <p>
             Nonterminals can have both synthesized and inherited attributes. The
@@ -63,9 +63,12 @@
             ... <code class="computeroutput"><span class="identifier">AN</span></code> are the Nonterminal's
             inherited attributes.
           </p>
+<p>
+            The default value is <code class="computeroutput"><span class="keyword">void</span><span class="special">()</span></code> (no synthesized and inherited attributes).
+          </p>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h3"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.attributes"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.attributes">Attributes</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.attributes"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.attributes">Attributes</a>
           </h6>
 <p>
             The Nonterminal models a C++ function. The Nonterminal's synthesized
@@ -78,11 +81,11 @@
 </pre>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h4"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"><code class="computeroutput"><span class="identifier">_val</span></code></a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"><code class="computeroutput"><span class="identifier">_val</span></code></a>
           </h6>
 <p>
-            The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">_val</span></code> placeholder can be used in <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> semantic actions
-            anywhere in the Nonterminal's definition. This <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">_val</span></code> placeholder can be used in <a href="../../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a> semantic
+            actions anywhere in the Nonterminal's definition. This <a href="../../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
             placeholder refers to the Nonterminal's (synthesized) attribute. The
             <code class="computeroutput"><span class="identifier">_val</span></code> placeholder acts
             like a mutable reference to the Nonterminal's attribute.
@@ -102,17 +105,17 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h5"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_______code__phrase_role__identifier__r10__phrase___code_"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_______code__phrase_role__identifier__r10__phrase___code_"><code class="computeroutput"><span class="identifier">_r1</span></code> ... <code class="computeroutput"><span class="identifier">r10</span></code></a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_______code__phrase_role__identifier__r10__phrase___code_"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_______code__phrase_role__identifier__r10__phrase___code_"><code class="computeroutput"><span class="identifier">_r1</span></code> ... <code class="computeroutput"><span class="identifier">r10</span></code></a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_r1</span></code> ... <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">r10</span></code>
-            placeholders can be used in <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-            semantic actions anywhere in the Nonterminal's definition. These <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholders
+            placeholders can be used in <a href="../../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+            semantic actions anywhere in the Nonterminal's definition. These <a href="../../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a> placeholders
             refer to the Nonterminal's inherited attributes.
           </p>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h6"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.locals"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.locals">Locals</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.locals"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.locals">Locals</a>
           </h6>
 <p>
             Nonterminals can have local variables that will be created on the stack
@@ -124,10 +127,10 @@
 </pre>
 <p>
             where <code class="computeroutput"><span class="identifier">T0</span></code> ... <code class="computeroutput"><span class="identifier">TN</span></code> are the types of local variables
-            accessible in your <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            accessible in your <a href="../../../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
             semantic actions using the placeholders:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_a</span></code>
               </li>
@@ -165,7 +168,7 @@
           </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">x</span></code></span></dt>
 <dd><p>
                   A Nonterminal
@@ -183,7 +186,7 @@
 </div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h7"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.valid_expressions"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.valid_expressions">Valid
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.valid_expressions"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
@@ -307,7 +310,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h8"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.type_expressions"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.type_expressions">Type
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.type_expressions"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -337,10 +340,8 @@
 <td>
                     <p>
                       The Signature of <code class="computeroutput"><span class="identifier">X</span></code>:
-                      An <a href="../../../../../../../../libs/mpl/doc/refmanual/forward-sequence.html" target="_top">MPL
-                      Forward Sequence</a>. The first element is the Nonterminal's
-                      synthesized attribute type and the rest are the inherited attribute
-                      types.
+                      In a function signature form as described above in the Signature
+                      paragraph.
                     </p>
                   </td>
 </tr>
@@ -362,9 +363,9 @@
 </table></div>
 <h6>
 <a name="spirit.qi.reference.parser_concepts.nonterminal.h9"></a>
-            <span><a name="spirit.qi.reference.parser_concepts.nonterminal.models"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.models">Models</a>
+            <span class="phrase"><a name="spirit.qi.reference.parser_concepts.nonterminal.models"></a></span><a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.models">Models</a>
           </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 <a class="link" href="../nonterminal/rule.html" title="Parser Rule">rule</a>
               </li>

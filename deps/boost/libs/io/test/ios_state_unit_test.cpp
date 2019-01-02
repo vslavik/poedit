@@ -9,6 +9,7 @@
 //  Revision History
 //   12 Sep 2003  Initial version (Daryle Walker)
 
+#include <boost/config.hpp>
 #include <boost/io/ios_state.hpp>    // for boost::io::ios_flags_saver, etc.
 #include <boost/test/unit_test.hpp>  // for main, BOOST_CHECK, etc.
 
@@ -19,6 +20,9 @@
 #include <istream>   // for std::iostream
 #include <locale>    // for std::locale, std::numpunct
 #include <sstream>   // for std::stringstream, etc.
+#if defined(BOOST_GCC) || (defined(BOOST_CLANG) && defined(BOOST_GNU_STDLIB))
+#include <stdexcept>
+#endif
 
 
 // Global constants
@@ -226,9 +230,14 @@ ios_exception_saver_unit_test
 
         {
             boost::io::ios_iostate_saver  iis( ss );
+            ss.exceptions( ios_base::failbit | ios_base::badbit );
             char                          c;
 
+#if defined(BOOST_GCC) || (defined(BOOST_CLANG) && defined(BOOST_GNU_STDLIB))
+            BOOST_CHECK_THROW( ss >> c, std::exception );
+#else
             BOOST_CHECK_THROW( ss >> c, std::ios_base::failure );
+#endif
         }
     }
 
@@ -575,9 +584,14 @@ ios_all_saver_unit_test
 
         {
             boost::io::ios_iostate_saver  iis( ss );
+            ss.exceptions( ios_base::failbit | ios_base::badbit );
             char                          c;
 
+#if defined(BOOST_GCC) || (defined(BOOST_CLANG) && defined(BOOST_GNU_STDLIB))
+            BOOST_CHECK_THROW( ss >> c, std::exception );
+#else
             BOOST_CHECK_THROW( ss >> c, std::ios_base::failure );
+#endif
         }
 
         ss.tie( &clog );
@@ -639,14 +653,14 @@ ios_word_saver_unit_test
 
 
 // Unit test program
-boost::unit_test_framework::test_suite *
+boost::unit_test::test_suite *
 init_unit_test_suite
 (
     int         ,   // "argc" is unused
     char *      []  // "argv" is unused
 )
 {
-    boost::unit_test_framework::test_suite *  test
+    boost::unit_test::test_suite *  test
      = BOOST_TEST_SUITE( "I/O state saver test" );
 
     test->add( BOOST_TEST_CASE(ios_flags_saver_unit_test) );

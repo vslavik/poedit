@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 for svg in *.svg
 do

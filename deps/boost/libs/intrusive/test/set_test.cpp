@@ -23,6 +23,7 @@ template < class ValueTraits, bool ConstantTimeSize, bool DefaultHolder, bool Ma
 struct rebinder
 {
    typedef tree_rebinder_common<ValueTraits, DefaultHolder, Map> common_t;
+   typedef typename ValueContainer< typename ValueTraits::value_type >::type value_cont_type;
 
    template < class Option1 =void
             , class Option2 =void
@@ -66,8 +67,7 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Base
          , typename testval_traits_t::auto_base_value_traits
          >::type base_hook_t;
       test::test_generic_set
-         < base_hook_t
-         , rebinder<base_hook_t, ConstantTimeSize, DefaultHolder, Map>
+         < rebinder<base_hook_t, ConstantTimeSize, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -86,8 +86,7 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Memb
          , typename testval_traits_t::auto_member_value_traits
          >::type member_hook_t;
       test::test_generic_set
-         < member_hook_t
-         , rebinder<member_hook_t, ConstantTimeSize, DefaultHolder, Map>
+         < rebinder<member_hook_t, ConstantTimeSize, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -101,8 +100,7 @@ class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, NonM
       typedef testvalue_traits< rb_hooks<VoidPointer> > testval_traits_t;
       //nonmember
       test::test_generic_set
-         < typename testval_traits_t::nonhook_value_traits
-         , rebinder<typename testval_traits_t::nonhook_value_traits, ConstantTimeSize, DefaultHolder, Map>
+         < rebinder<typename testval_traits_t::nonhook_value_traits, ConstantTimeSize, DefaultHolder, Map>
          >::test_all();
    }
 };
@@ -117,8 +115,7 @@ struct test_main_template_bptr
 
       bounded_allocator_scope<allocator_type> bounded_scope; (void)bounded_scope;
       test::test_generic_set
-         < value_traits
-         , rebinder< value_traits, ConstantTimeSize, true, Map>
+         < rebinder< value_traits, ConstantTimeSize, true, Map>
          >::test_all();
    }
 };

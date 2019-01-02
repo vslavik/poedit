@@ -61,7 +61,7 @@ of the interface from ``associative_ptr_container``.
             public: // `modifiers`_         
                 std::pair<iterator,bool>  insert( key_type& k, T* x );                         
 		template< class U >
-		std::pair<iterator,bool>  insert( const key_type& k, std::auto_ptr<U> x );                         
+		std::pair<iterator,bool>  insert( const key_type& k, compatible-smart-ptr<U> x );                         
 
             public; // `lookup`_
                 T&       operator[]( const key_type& key );
@@ -129,7 +129,7 @@ Semantics: modifiers
     - Exception safety: Strong guarantee
 
 
-- ``template< class U > std::pair<iterator,bool> insert( const key_type& k, std::auto_ptr<U> x );``                         
+- ``template< class U > std::pair<iterator,bool> insert( const key_type& k, compatible-smart-ptr<U> x );``                         
 
    - Equivalent to (but without the ``const_cast``): ``return insert( const_cast<key_type&>(k), x.release() );``
 

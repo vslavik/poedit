@@ -154,7 +154,7 @@ public:
     /// \p queue to perform the copy.
     buffer clone(command_queue &queue) const;
 
-    #if defined(CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
     /// Creates a new buffer out of this buffer.
     /// The new buffer is a sub region of this buffer.
     /// \p flags The mem_flags which should be used to create the new buffer
@@ -187,7 +187,7 @@ public:
 
         return buffer(mem, false);
     }
-  #endif // CL_VERSION_1_1
+  #endif // BOOST_COMPUTE_CL_VERSION_1_1
 };
 
 /// \internal_ define get_info() specializations for buffer
@@ -201,12 +201,12 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(buffer,
     ((cl_context, CL_MEM_CONTEXT))
 )
 
-#ifdef CL_VERSION_1_1
+#ifdef BOOST_COMPUTE_CL_VERSION_1_1
 BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(buffer,
     ((cl_mem, CL_MEM_ASSOCIATED_MEMOBJECT))
     ((size_t, CL_MEM_OFFSET))
 )
-#endif // CL_VERSION_1_1
+#endif // BOOST_COMPUTE_CL_VERSION_1_1
 
 namespace detail {
 

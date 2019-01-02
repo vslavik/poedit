@@ -10,7 +10,7 @@
 
 #include <boost/pool/pool.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 int main()
 {
@@ -23,4 +23,5 @@ int main()
     p.ordered_free( pBlock1 );
 
     BOOST_TEST(p.release_memory());
+    return boost::report_errors();
 }

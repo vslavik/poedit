@@ -21,6 +21,9 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <cassert>
+#include <iostream>
+#include "../../../timming.hpp"
 
 #if defined BOOST_THREAD_USES_CHRONO
 
@@ -47,36 +50,43 @@ int test2 = 0;
 
 int runs = 0;
 
+typedef boost::chrono::system_clock Clock;
+typedef boost::chrono::milliseconds milliseconds;
+typedef boost::chrono::milliseconds ms;
+typedef boost::chrono::nanoseconds ns;
+
+const ms max_diff(BOOST_THREAD_TEST_TIME_MS);
+
 void f()
 {
-  typedef boost::chrono::system_clock Clock;
-  typedef boost::chrono::milliseconds milliseconds;
-  boost::unique_lock < boost::mutex > lk(mut);
-  BOOST_TEST(test2 == 0);
-  test1 = 1;
-  cv.notify_one();
-  Clock::time_point t0 = Clock::now();
-  int count=0;
-  //bool r =
-      (void)cv.wait_for(lk, milliseconds(250), Pred(test2));
-  count++;
-  Clock::time_point t1 = Clock::now();
-  if (runs == 0)
-  {
-    // This test is spurious as it depends on the time the thread system switches the threads
-    BOOST_TEST(t1 - t0 < milliseconds(250+1000));
-    BOOST_TEST(test2 != 0);
+  try {
+    boost::unique_lock < boost::mutex > lk(mut);
+    assert(test2 == 0);
+    test1 = 1;
+    cv.notify_one();
+    Clock::time_point t0 = Clock::now();
+    cv.wait_for(lk, milliseconds(250), Pred(test2));
+    Clock::time_point t1 = Clock::now();
+    if (runs == 0)
+    {
+      assert(t1 - t0 < max_diff);
+      assert(test2 != 0);
+    }
+    else
+    {
+      assert(t1 - t0 - milliseconds(250) < max_diff);
+      assert(test2 == 0);
+    }
+    ++runs;
+  } catch(...) {
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
+    assert(false);
   }
-  else
-  {
-    BOOST_TEST(t1 - t0 - milliseconds(250) < milliseconds(count*250+2));
-    BOOST_TEST(test2 == 0);
-  }
-  ++runs;
 }
 
 int main()
 {
+  try
   {
     boost::unique_lock < boost::mutex > lk(mut);
     boost::thread t(f);
@@ -88,9 +98,13 @@ int main()
     lk.unlock();
     cv.notify_one();
     t.join();
+  } catch(...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
   test1 = 0;
   test2 = 0;
+  try
   {
     boost::unique_lock < boost::mutex > lk(mut);
     boost::thread t(f);
@@ -100,6 +114,9 @@ int main()
     BOOST_TEST(test1 != 0);
     lk.unlock();
     t.join();
+  } catch(...) {
+    BOOST_TEST(false);
+    std::cout << "ERROR exception" << __LINE__ << std::endl;
   }
 
   return boost::report_errors();

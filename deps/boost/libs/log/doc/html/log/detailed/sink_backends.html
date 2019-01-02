@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sink backends</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="sink_frontends.html" title="Sink frontends">
@@ -19,12 +19,14 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.sink_backends"></a><a class="link" href="sink_backends.html" title="Sink backends">Sink backends</a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_ostream">Text stream
         backend</a></span></dt>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_file">Text file backend</a></span></dt>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_multifile">Text multi-file
         backend</a></span></dt>
+<dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_ipc_message_queue">Text
+        IPC message queue backend</a></span></dt>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.syslog">Syslog backend</a></span></dt>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.debugger">Windows debugger
         output backend</a></span></dt>
@@ -96,7 +98,7 @@
           an extended set of features suitable for file-based logging. The features
           include:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Log file rotation based on file size and/or time
             </li>
@@ -125,7 +127,7 @@
 </table></div>
 <h6>
 <a name="log.detailed.sink_backends.text_file.h0"></a>
-          <span><a name="log.detailed.sink_backends.text_file.file_rotation"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.file_rotation">File rotation</a>
+          <span class="phrase"><a name="log.detailed.sink_backends.text_file.file_rotation"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.file_rotation">File rotation</a>
         </h6>
 <p>
           File rotation is implemented by the sink backend itself. The file name
@@ -188,7 +190,8 @@
             and DOS operating systems have a special treatment with regard to new-line
             characters. Each new-line character is written as a two byte sequence
             0x0D 0x0A instead of a single 0x0A. Other platform-specific character
-            translations are also known.
+            translations are also known. The actual size on disk can also be less
+            than the number of written characters on compressed filesystems.
           </p></td></tr>
 </table></div>
 <p>
@@ -200,7 +203,7 @@
               Time point rotations: <code class="computeroutput"><a class="link" href="../../boost/log/sinks/file/rotation_at_time_point.html" title="Class rotation_at_time_point">rotation_at_time_point</a></code>
               class. This kind of rotation takes place whenever the specified time
               point is reached. The following variants are available:
-              <div class="itemizedlist"><ul class="itemizedlist" type="disc">
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                     Every day rotation, at the specified time. This is what was presented
                     in the code snippet above:
@@ -272,10 +275,31 @@
           </p></td></tr>
 </table></div>
 <p>
+          In addition to time and size-based file rotation the backend also performs
+          rotation on its destruction by default. This is done in order to maintain
+          all log files collected in the target directory after program termination
+          and ensure that temporary log files don't pile up in the directory the
+          sink backend writes to. This behavior can be disabled with the <code class="computeroutput"><span class="identifier">enable_final_rotation</span></code> parameter of the
+          backend constructor or the similarly named method of the backend:
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">init_logging</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="comment">// ...</span>
+
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_file_backend</span> <span class="special">&gt;</span> <span class="identifier">backend</span> <span class="special">=</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_file_backend</span> <span class="special">&gt;(</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">file_name</span> <span class="special">=</span> <span class="string">"file_%5N.log"</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">enable_final_rotation</span> <span class="special">=</span> <span class="keyword">false</span>
+        <span class="special">);</span>
+
+    <span class="comment">// ...</span>
+<span class="special">}</span>
+</pre>
+<p>
           The file name pattern may contain a number of wildcards, like the one you
           can see in the example above. Supported placeholders are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               Current date and time components. The placeholders conform to the ones
               specified by <a href="http://www.boost.org/doc/libs/release/doc/html/date_time.html" target="_top">Boost.DateTime</a>
@@ -453,7 +477,7 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.text_file.h1"></a>
-          <span><a name="log.detailed.sink_backends.text_file.managing_rotated_files"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.managing_rotated_files">Managing
+          <span class="phrase"><a name="log.detailed.sink_backends.text_file.managing_rotated_files"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.managing_rotated_files">Managing
           rotated files</a>
         </h6>
 <p>
@@ -686,6 +710,140 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="log.detailed.sink_backends.text_ipc_message_queue"></a><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_ipc_message_queue" title="Text IPC message queue backend">Text
+        IPC message queue backend</a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../sinks.html#header.boost.log.sinks.text_ipc_message_queue_backend_hpp" title="Header &lt;boost/log/sinks/text_ipc_message_queue_backend.hpp&gt;">boost/log/sinks/text_ipc_message_queue_backend.hpp</a></code><span class="special">&gt;</span>
+</pre>
+<p>
+          Sometimes, it is convenient to pass log records between different processes
+          on a local machine. For example, one could collect logs from multiple processes
+          into a common logger process. Or create a log viewer which is able to monitor
+          running processes. To implement this idea, a sink backend that sends logs
+          across processes is needed. The text interprocess sink backend puts formatted
+          log messages to an <a class="link" href="utilities.html#log.detailed.utilities.ipc.reliable_message_queue" title="Reliable message queue">interprocess
+          message queue</a>, which can then be retrieved and processed by another
+          process. In particular, one may choose to encode a log record with various
+          attribute values into a JSON or XML formatted text message, and then decode
+          the message at the receiving side for processing such as filtering and
+          displaying.
+        </p>
+<p>
+          The backend is implemented by the <code class="computeroutput"><a class="link" href="../../boost/log/sinks/text_ipc_messa_idp52096416.html" title="Class template text_ipc_message_queue_backend">text_ipc_message_queue_backend</a></code>
+          class template which should be instantiated with an interprocess message
+          queue such as <code class="computeroutput"><a class="link" href="../../boost/log/ipc/reliable_message_queue.html" title="Class reliable_message_queue">reliable_message_queue</a></code>.
+          The following example program illustrates a logger process.
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">BOOST_LOG_ATTRIBUTE_KEYWORD</span><span class="special">(</span><span class="identifier">a_timestamp</span><span class="special">,</span> <span class="string">"TimeStamp"</span><span class="special">,</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">local_clock</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">)</span>
+<span class="identifier">BOOST_LOG_ATTRIBUTE_KEYWORD</span><span class="special">(</span><span class="identifier">a_process_id</span><span class="special">,</span> <span class="string">"ProcessID"</span><span class="special">,</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">current_process_id</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">)</span>
+<span class="identifier">BOOST_LOG_ATTRIBUTE_KEYWORD</span><span class="special">(</span><span class="identifier">a_thread_id</span><span class="special">,</span> <span class="string">"ThreadID"</span><span class="special">,</span> <span class="identifier">attrs</span><span class="special">::</span><span class="identifier">current_thread_id</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">)</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">try</span>
+    <span class="special">{</span>
+        <span class="keyword">typedef</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">reliable_message_queue</span> <span class="identifier">queue_t</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">text_ipc_message_queue_backend</span><span class="special">&lt;</span> <span class="identifier">queue_t</span> <span class="special">&gt;</span> <span class="identifier">backend_t</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">synchronous_sink</span><span class="special">&lt;</span> <span class="identifier">backend_t</span> <span class="special">&gt;</span> <span class="identifier">sink_t</span><span class="special">;</span>
+
+        <span class="comment">// Create a sink that is associated with the interprocess message queue</span>
+        <span class="comment">// named "ipc_message_queue".</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sink_t</span> <span class="special">&gt;</span> <span class="identifier">sink</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_shared</span><span class="special">&lt;</span> <span class="identifier">sink_t</span> <span class="special">&gt;</span>
+        <span class="special">(</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">name</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">::</span><span class="identifier">user</span><span class="special">,</span> <span class="string">"ipc_message_queue"</span><span class="special">),</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">open_mode</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">open_mode</span><span class="special">::</span><span class="identifier">open_or_create</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">capacity</span> <span class="special">=</span> <span class="number">256</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">block_size</span> <span class="special">=</span> <span class="number">1024</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">overflow_policy</span> <span class="special">=</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">block_on_overflow</span>
+        <span class="special">);</span>
+
+        <span class="comment">// Set the formatter</span>
+        <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_formatter</span>
+        <span class="special">(</span>
+            <span class="identifier">expr</span><span class="special">::</span><span class="identifier">stream</span> <span class="special">&lt;&lt;</span> <span class="string">"["</span> <span class="special">&lt;&lt;</span> <span class="identifier">a_timestamp</span> <span class="special">&lt;&lt;</span> <span class="string">"] ["</span> <span class="special">&lt;&lt;</span> <span class="identifier">a_process_id</span> <span class="special">&lt;&lt;</span> <span class="string">":"</span> <span class="special">&lt;&lt;</span> <span class="identifier">a_thread_id</span> <span class="special">&lt;&lt;</span> <span class="string">"] "</span> <span class="special">&lt;&lt;</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">smessage</span>
+        <span class="special">);</span>
+
+        <span class="identifier">logging</span><span class="special">::</span><span class="identifier">core</span><span class="special">::</span><span class="identifier">get</span><span class="special">()-&gt;</span><span class="identifier">add_sink</span><span class="special">(</span><span class="identifier">sink</span><span class="special">);</span>
+
+        <span class="comment">// Add the commonly used attributes, including TimeStamp, ProcessID and ThreadID</span>
+        <span class="identifier">logging</span><span class="special">::</span><span class="identifier">add_common_attributes</span><span class="special">();</span>
+
+        <span class="comment">// Do some logging</span>
+        <span class="identifier">src</span><span class="special">::</span><span class="identifier">logger</span> <span class="identifier">logger</span><span class="special">;</span>
+        <span class="keyword">for</span> <span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">10</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="identifier">BOOST_LOG</span><span class="special">(</span><span class="identifier">logger</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"Message #"</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span><span class="special">;</span>
+        <span class="special">}</span>
+    <span class="special">}</span>
+    <span class="keyword">catch</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Failure: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+        </p>
+<p>
+          <a href="../../../../../../libs/log/example/doc/sinks_ipc_logger.cpp" target="_top">See the complete
+          code</a>.
+        </p>
+<p>
+          The same interprocess queue can be used to implement the receiving side
+          as well. The following code displays the received log messages on the console.
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">try</span>
+    <span class="special">{</span>
+        <span class="keyword">typedef</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">reliable_message_queue</span> <span class="identifier">queue_t</span><span class="special">;</span>
+
+        <span class="comment">// Create a message_queue_type object that is associated with the interprocess</span>
+        <span class="comment">// message queue named "ipc_message_queue".</span>
+        <span class="identifier">queue_t</span> <span class="identifier">queue</span>
+        <span class="special">(</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">name</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">ipc</span><span class="special">::</span><span class="identifier">object_name</span><span class="special">::</span><span class="identifier">user</span><span class="special">,</span> <span class="string">"ipc_message_queue"</span><span class="special">),</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">open_mode</span> <span class="special">=</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">open_mode</span><span class="special">::</span><span class="identifier">open_or_create</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">capacity</span> <span class="special">=</span> <span class="number">256</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">block_size</span> <span class="special">=</span> <span class="number">1024</span><span class="special">,</span>
+            <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">overflow_policy</span> <span class="special">=</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">block_on_overflow</span>
+        <span class="special">);</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Viewer process running..."</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+        <span class="comment">// Keep reading log messages from the associated message queue and print them on the console.</span>
+        <span class="comment">// queue.receive() will block if the queue is empty.</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">message</span><span class="special">;</span>
+        <span class="keyword">while</span> <span class="special">(</span><span class="identifier">queue</span><span class="special">.</span><span class="identifier">receive</span><span class="special">(</span><span class="identifier">message</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">queue_t</span><span class="special">::</span><span class="identifier">succeeded</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">message</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+            <span class="comment">// Clear the buffer for the next message</span>
+            <span class="identifier">message</span><span class="special">.</span><span class="identifier">clear</span><span class="special">();</span>
+        <span class="special">}</span>
+    <span class="special">}</span>
+    <span class="keyword">catch</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Failure: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+        </p>
+<p>
+          <a href="../../../../../../libs/log/example/doc/sinks_ipc_receiver.cpp" target="_top">See the
+          complete code</a>.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.sink_backends.syslog"></a><a class="link" href="sink_backends.html#log.detailed.sink_backends.syslog" title="Syslog backend">Syslog backend</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../sinks.html#header.boost.log.sinks.syslog_backend_hpp" title="Header &lt;boost/log/sinks/syslog_backend.hpp&gt;">boost/log/sinks/syslog_backend.hpp</a></code><span class="special">&gt;</span>
@@ -911,11 +1069,11 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.event_log.h0"></a>
-          <span><a name="log.detailed.sink_backends.event_log.simple_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.simple_event_log_backend">Simple
+          <span class="phrase"><a name="log.detailed.sink_backends.event_log.simple_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.simple_event_log_backend">Simple
           event log backend</a>
         </h6>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_simple_e_idp22306752.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
+          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_simple_e_idp51586224.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
           backend is intended to encapsulate as much of the event log API as possible,
           leaving interface and usage model very similar to other sink backends.
           It contains all resources that are needed for the Event Viewer to function
@@ -986,7 +1144,7 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.event_log.h1"></a>
-          <span><a name="log.detailed.sink_backends.event_log.advanced_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.advanced_event_log_backend">Advanced
+          <span class="phrase"><a name="log.detailed.sink_backends.event_log.advanced_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.advanced_event_log_backend">Advanced
           event log backend</a>
         </h6>
 <p>

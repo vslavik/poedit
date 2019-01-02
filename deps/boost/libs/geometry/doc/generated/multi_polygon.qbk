@@ -27,6 +27,7 @@ Multi-polygon can be used to group polygons belonging to each other, e.g. Hawaii
 [heading Synopsis]
 ``template<typename Polygon, template< typename, typename > class Container, template< typename > class Allocator>
 class model::multi_polygon
+      : public Container< Polygon, Allocator< Polygon > >
 {
   // ...
 };
@@ -45,12 +46,12 @@ class model::multi_polygon
 [[Function] [Description] [Parameters] ]
 [[``multi_polygon()``
 
-] [Default constructor, creating an empty \1. ] [
+] [Default constructor, creating an empty multi_polygon. ] [
 
 ]]
 [[``multi_polygon(std::initializer_list< Polygon > l)``
 
-] [Constructor taking std::initializer_list, filling the \1. ] [[* std::initializer_list< Polygon >]: ['l]:  
+] [Constructor taking std::initializer_list, filling the multi_polygon. ] [[* std::initializer_list< Polygon >]: ['l]:  
 
 
 

@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -138,4 +138,21 @@ struct Bar { };
 BOOST_HANA_CONSTANT_CHECK(has_member(hana::type_c<Foo>));
 BOOST_HANA_CONSTANT_CHECK(!has_member(hana::type_c<Bar>));
 //! [nested_template]
+}
+
+namespace template_specialization {
+//! [template_specialization]
+template <typename T, typename U>
+struct Foo;
+
+template <typename T>
+struct Bar;
+
+auto is_binary_template = hana::is_valid([](auto trait) -> decltype(
+  trait(hana::type_c<void>, hana::type_c<void>)
+) { });
+
+BOOST_HANA_CONSTANT_CHECK(is_binary_template(hana::template_<Foo>));
+BOOST_HANA_CONSTANT_CHECK(!is_binary_template(hana::template_<Bar>));
+//! [template_specialization]
 }

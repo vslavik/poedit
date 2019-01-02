@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Operations on dataset</title>
 <link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_case_generation.html" title="Data-driven test cases">
 <link rel="prev" href="datasets_auto_registration.html" title="Declaring and registering test cases with datasets">
@@ -35,7 +35,7 @@
 <p>
             For that purpose, three operators are provided:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 joins with <code class="computeroutput"><span class="keyword">operator</span><span class="special">+</span></code>
               </li>
@@ -78,7 +78,7 @@
 <p>
               The following properties hold:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   the resulting dataset is of same arity as the operand datasets,
                 </li>
@@ -114,7 +114,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.operations.joins.h0"></a>
-              <span><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.joins.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.joins.example_descr">Example:
+              <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.joins.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.joins.example_descr">Example:
               Example of join on datasets</a>
             </h6>
 <div class="informaltable"><table class="table">
@@ -188,7 +188,7 @@
 <p>
               The following properties hold:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   the arity of the resulting dataset is the sum of the arities of
                   the operand datasets,
@@ -210,11 +210,11 @@
 </li>
 </ul></div>
 <p>
-              A particular handling of the size is performed if <code class="computeroutput"><span class="identifier">dsa</span></code>
+              A particular handling is performed if <code class="computeroutput"><span class="identifier">dsa</span></code>
               and <code class="computeroutput"><span class="identifier">dsb</span></code> are of different
               size. The rule is as follow:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   if the both zipped datasets have the same size, this is the size
                   of the resulting dataset (this size can then be infinite).
@@ -234,13 +234,13 @@
 </tr>
 <tr><td align="left" valign="top"><p>
                 If the <span class="emphasis"><em>zip</em></span> operation is not supported for your
-                compiler, the macro <code class="computeroutput"><a class="link" href="../../../../BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE.html" title="Macro BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE">BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE</a></code>
+                compiler, the macro <code class="computeroutput"><a class="link" href="../../../../BOOST_TEST_NO__idp38672272.html" title="Macro BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE">BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE</a></code>
                 will be automatically set by the <span class="emphasis"><em>Unit Test Framework</em></span>
               </p></td></tr>
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.operations.zips.h0"></a>
-              <span><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.zips.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.zips.example_descr">Example:
+              <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.zips.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.zips.example_descr">Example:
               Example of zip on datasets</a>
             </h6>
 <div class="informaltable"><table class="table">
@@ -311,12 +311,12 @@
 </pre>
 <p>
               The grid hence is similar to the mathematical notion of Cartesian product
-              <sup>[<a name="boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" href="#ftn.boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" class="footnote">3</a>]</sup>.
+              <a href="#ftn.boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" class="footnote" name="boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0"><sup class="footnote">[3]</sup></a>.
             </p>
 <p>
               The following properties hold:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                   the arity of the resulting dataset is the sum of the arities of
                   the operand datasets,
@@ -341,7 +341,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
                 If the <span class="emphasis"><em>grid</em></span> operation is not supported for your
-                compiler, the macro <code class="computeroutput"><a class="link" href="../../../../BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE.html" title="Macro BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE">BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE</a></code>
+                compiler, the macro <code class="computeroutput"><a class="link" href="../../../../BOOST_TEST_NO__idp38632800.html" title="Macro BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE">BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE</a></code>
                 will be automatically set by the <span class="emphasis"><em>Unit Test Framework</em></span>
               </p></td></tr>
 </table></div>
@@ -355,7 +355,7 @@
             </p>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.h0"></a>
-              <span><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.example_descr">Example:
+              <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.example_descr"></a></span><a class="link" href="operations.html#boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.example_descr">Example:
               Example of Cartesian product</a>
             </h6>
 <div class="informaltable"><table class="table">
@@ -418,40 +418,31 @@
 <span class="identifier">test</span> <span class="number">1</span><span class="special">:</span> <span class="number">1</span><span class="special">,</span> <span class="number">0</span>
 <span class="identifier">test</span> <span class="number">1</span><span class="special">:</span> <span class="number">1</span><span class="special">,</span> <span class="number">1</span>
 <span class="identifier">test</span> <span class="number">1</span><span class="special">:</span> <span class="number">1</span><span class="special">,</span> <span class="number">2</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">0</span> <span class="special">/</span> <span class="number">1.81472</span><span class="special">,</span> <span class="number">0</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">40</span><span class="special">):</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">in</span> <span class="string">"test2"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">random_sample</span> <span class="special">&lt;</span> <span class="number">1.7</span> <span class="identifier">has</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1.81472373</span> <span class="special">&gt;=</span> <span class="number">1.7</span><span class="special">]</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">0</span> <span class="special">/</span> <span class="number">1.00001</span><span class="special">,</span> <span class="number">0</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">0</span> <span class="special">/</span> <span class="number">1.13154</span><span class="special">,</span> <span class="number">1</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">1</span> <span class="special">/</span> <span class="number">1.75561</span><span class="special">,</span> <span class="number">0</span>
+<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">40</span><span class="special">):</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">in</span> <span class="string">"test2/_2"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">random_sample</span> <span class="special">&lt;</span> <span class="number">1.7</span> <span class="identifier">has</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1.75560534</span> <span class="special">&gt;=</span> <span class="number">1.7</span><span class="special">]</span>
 <span class="identifier">Failure</span> <span class="identifier">occurred</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">following</span> <span class="identifier">context</span><span class="special">:</span>
-    <span class="identifier">xr</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">random_sample</span> <span class="special">=</span> <span class="number">1.81472373</span><span class="special">;</span> <span class="identifier">index</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">0</span> <span class="special">/</span> <span class="number">1.13548</span><span class="special">,</span> <span class="number">1</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">1</span> <span class="special">/</span> <span class="number">1.90579</span><span class="special">,</span> <span class="number">0</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">40</span><span class="special">):</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">in</span> <span class="string">"test2"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">random_sample</span> <span class="special">&lt;</span> <span class="number">1.7</span> <span class="identifier">has</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1.905792</span> <span class="special">&gt;=</span> <span class="number">1.7</span><span class="special">]</span>
-<span class="identifier">Failure</span> <span class="identifier">occurred</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">following</span> <span class="identifier">context</span><span class="special">:</span>
-    <span class="identifier">xr</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">random_sample</span> <span class="special">=</span> <span class="number">1.905792</span><span class="special">;</span> <span class="identifier">index</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">1</span> <span class="special">/</span> <span class="number">1.83501</span><span class="special">,</span> <span class="number">1</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">40</span><span class="special">):</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">in</span> <span class="string">"test2"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">random_sample</span> <span class="special">&lt;</span> <span class="number">1.7</span> <span class="identifier">has</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1.83500862</span> <span class="special">&gt;=</span> <span class="number">1.7</span><span class="special">]</span>
-<span class="identifier">Failure</span> <span class="identifier">occurred</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">following</span> <span class="identifier">context</span><span class="special">:</span>
-    <span class="identifier">xr</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">random_sample</span> <span class="special">=</span> <span class="number">1.83500862</span><span class="special">;</span> <span class="identifier">index</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">2</span> <span class="special">/</span> <span class="number">1.12699</span><span class="special">,</span> <span class="number">0</span>
-<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">2</span> <span class="special">/</span> <span class="number">1.96887</span><span class="special">,</span> <span class="number">1</span>
-<span class="identifier">test</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">(</span><span class="number">40</span><span class="special">):</span> <span class="identifier">error</span><span class="special">:</span> <span class="identifier">in</span> <span class="string">"test2"</span><span class="special">:</span> <span class="identifier">check</span> <span class="identifier">random_sample</span> <span class="special">&lt;</span> <span class="number">1.7</span> <span class="identifier">has</span> <span class="identifier">failed</span> <span class="special">[</span><span class="number">1.96886778</span> <span class="special">&gt;=</span> <span class="number">1.7</span><span class="special">]</span>
-<span class="identifier">Failure</span> <span class="identifier">occurred</span> <span class="identifier">in</span> <span class="identifier">a</span> <span class="identifier">following</span> <span class="identifier">context</span><span class="special">:</span>
-    <span class="identifier">xr</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span> <span class="identifier">random_sample</span> <span class="special">=</span> <span class="number">1.96886778</span><span class="special">;</span> <span class="identifier">index</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+    <span class="identifier">xr</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">random_sample</span> <span class="special">=</span> <span class="number">1.75560534</span><span class="special">;</span> <span class="identifier">index</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">1</span> <span class="special">/</span> <span class="number">1.45865</span><span class="special">,</span> <span class="number">1</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">2</span> <span class="special">/</span> <span class="number">1.53277</span><span class="special">,</span> <span class="number">0</span>
+<span class="identifier">test</span> <span class="number">2</span><span class="special">:</span> <span class="number">2</span> <span class="special">/</span> <span class="number">1.21896</span><span class="special">,</span> <span class="number">1</span>
 
-<span class="special">***</span> <span class="number">4</span> <span class="identifier">failures</span> <span class="identifier">are</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">the</span> <span class="identifier">test</span> <span class="identifier">module</span> <span class="string">"dataset_example64"</span>
+<span class="special">***</span> <span class="number">1</span> <span class="identifier">failure</span> <span class="identifier">is</span> <span class="identifier">detected</span> <span class="identifier">in</span> <span class="identifier">the</span> <span class="identifier">test</span> <span class="identifier">module</span> <span class="string">"dataset_example64"</span>
 </pre>
                     </td></tr></tbody>
 </table></div>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" href="#boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" class="para">3</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" class="footnote"><p><a href="#boost_test.tests_organization.test_cases.test_case_generation.operations.grid_cartesian_products.f0" class="para"><sup class="para">[3] </sup></a>
                 if the sequence is viewed as a set
               </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

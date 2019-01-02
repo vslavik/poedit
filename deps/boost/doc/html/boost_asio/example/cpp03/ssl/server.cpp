@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,9 +19,9 @@ typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;
 class session
 {
 public:
-  session(boost::asio::io_service& io_service,
+  session(boost::asio::io_context& io_context,
       boost::asio::ssl::context& context)
-    : socket_(io_service, context)
+    : socket_(io_context, context)
   {
   }
 
@@ -92,9 +92,9 @@ private:
 class server
 {
 public:
-  server(boost::asio::io_service& io_service, unsigned short port)
-    : io_service_(io_service),
-      acceptor_(io_service,
+  server(boost::asio::io_context& io_context, unsigned short port)
+    : io_context_(io_context),
+      acceptor_(io_context,
           boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)),
       context_(boost::asio::ssl::context::sslv23)
   {
@@ -117,7 +117,7 @@ public:
 
   void start_accept()
   {
-    session* new_session = new session(io_service_, context_);
+    session* new_session = new session(io_context_, context_);
     acceptor_.async_accept(new_session->socket(),
         boost::bind(&server::handle_accept, this, new_session,
           boost::asio::placeholders::error));
@@ -139,7 +139,7 @@ public:
   }
 
 private:
-  boost::asio::io_service& io_service_;
+  boost::asio::io_context& io_context_;
   boost::asio::ip::tcp::acceptor acceptor_;
   boost::asio::ssl::context context_;
 };
@@ -154,12 +154,12 @@ int main(int argc, char* argv[])
       return 1;
     }
 
-    boost::asio::io_service io_service;
+    boost::asio::io_context io_context;
 
     using namespace std; // For atoi.
-    server s(io_service, atoi(argv[1]));
+    server s(io_context, atoi(argv[1]));
 
-    io_service.run();
+    io_context.run();
   }
   catch (std::exception& e)
   {

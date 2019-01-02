@@ -12,20 +12,6 @@ some point.  Such classifications are obviously highly subjective.
 If you don't see a component listed here, then we don't have any known
 issues with it.
 
-[h4 Derivatives of Bessel functions (and their zeros)]
-
-Potentially, there could be native support
-for `cyl_bessel_j_prime()` and `cyl_neumann_prime()`.
-One could also imagine supporting the zeros
-thereof, but they might be slower to calculate
-since root bracketing might be needed instead
-of Newton iteration (for the lack of 2nd derivatives).
-
-Since Boost.Math's Bessel functions are so excellent,
-the quick way to `cyl_bessel_j_prime()` and
-`cyl_neumann_prime()` would be via relationship with
-`cyl_bessel_j()` and `cyl_neumann()`.
-
 [h4 tgamma]
 
 * Can the __lanczos be optimized any further?  (low priority)
@@ -71,10 +57,6 @@ the value for ['T(h, 1)] is well known and easy to compute, and if we replaced t
 difference between ['T(h, a)] and ['T(h, 1)].  Unfortunately this doesn't improve the
 convergence of those series in that area.  It certainly looks as though a new series in terms
 of ['(1-a)[super k]] is both possible and desirable in this area, but it remains elusive at present.
-
-[h4 Jocobi elliptic functions]
-
-These are useful in engineering applications - we have had a request to add these.
 
 [h4 Statistical distributions]
 

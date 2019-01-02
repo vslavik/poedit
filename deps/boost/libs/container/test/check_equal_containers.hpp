@@ -25,9 +25,9 @@ namespace test{
 
 template< class T1, class T2>
 bool CheckEqual( const T1 &t1, const T2 &t2
-               , typename boost::container::container_detail::enable_if_c
-                  <!boost::container::container_detail::is_pair<T1>::value &&
-                   !boost::container::container_detail::is_pair<T2>::value
+               , typename boost::container::dtl::enable_if_c
+                  <!boost::container::dtl::is_pair<T1>::value &&
+                   !boost::container::dtl::is_pair<T2>::value
                   >::type* = 0)
 {  return t1 == t2;  }
 
@@ -50,9 +50,9 @@ bool CheckEqualIt( const T1 &i1, const T2 &i2, const C1 &c1, const C2 &c2 )
 
 template< class Pair1, class Pair2>
 bool CheckEqual( const Pair1 &pair1, const Pair2 &pair2
-               , typename boost::container::container_detail::enable_if_c
-                  <boost::container::container_detail::is_pair<Pair1>::value &&
-                   boost::container::container_detail::is_pair<Pair2>::value
+               , typename boost::container::dtl::enable_if_c
+                  <boost::container::dtl::is_pair<Pair1>::value &&
+                   boost::container::dtl::is_pair<Pair2>::value
                   >::type* = 0)
 {
    return CheckEqual(pair1.first, pair2.first) && CheckEqual(pair1.second, pair2.second);
@@ -97,14 +97,38 @@ bool CheckEqualPairContainers(const MyBoostCont &boostcont, const MyStdCont &std
    typename MyBoostCont::const_iterator itboost(boostcont.begin()), itboostend(boostcont.end());
    typename MyStdCont::const_iterator itstd(stdcont.begin());
    for(; itboost != itboostend; ++itboost, ++itstd){
-      if(itboost->first != key_type(itstd->first))
+      key_type k(itstd->first);
+      if(itboost->first != k)
          return false;
 
-      if(itboost->second != mapped_type(itstd->second))
+      mapped_type m(itstd->second);
+      if(itboost->second != m)
          return false;
    }
    return true;
 }
+
+struct less_transparent
+{
+   typedef void is_transparent;
+
+   template<class T, class U>
+   bool operator()(const T &t, const U &u) const
+   {
+      return t < u;
+   }
+};
+
+struct equal_transparent
+{
+   typedef void is_transparent;
+
+   template<class T, class U>
+   bool operator()(const T &t, const U &u) const
+   {
+      return t == u;
+   }
+};
 
 }  //namespace test{
 }  //namespace container {

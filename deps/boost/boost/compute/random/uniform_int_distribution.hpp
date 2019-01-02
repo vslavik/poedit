@@ -13,6 +13,9 @@
 
 #include <limits>
 
+#include <boost/type_traits.hpp>
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/container/vector.hpp>
 #include <boost/compute/function.hpp>
@@ -103,6 +106,11 @@ public:
 private:
     IntType m_a;
     IntType m_b;
+
+    BOOST_STATIC_ASSERT_MSG(
+        boost::is_integral<IntType>::value,
+        "Template argument must be integral"
+    );
 };
 
 } // end compute namespace

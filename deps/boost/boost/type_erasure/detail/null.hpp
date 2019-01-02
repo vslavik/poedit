@@ -13,6 +13,7 @@
 #ifndef BOOST_TYPE_ERASURE_DETAIL_NULL_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_DETAIL_NULL_HPP_INCLUDED
 
+#include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/preprocessor/iteration/iterate.hpp>
@@ -34,9 +35,22 @@ struct get_null_vtable_entry {
         typename ::boost::remove_pointer<typename Concept::type>::type> type;
 };
 
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+
 #define BOOST_PP_FILENAME_1 <boost/type_erasure/detail/null.hpp>
 #define BOOST_PP_ITERATION_LIMITS (0, BOOST_TYPE_ERASURE_MAX_ARITY)
 #include BOOST_PP_ITERATE()
+
+#else
+
+template<class R, class... T>
+struct null_throw<R(T...)> {
+    static R value(T...) { 
+        BOOST_THROW_EXCEPTION(::boost::type_erasure::bad_function_call());
+    }
+};
+
+#endif
 
 }
 }

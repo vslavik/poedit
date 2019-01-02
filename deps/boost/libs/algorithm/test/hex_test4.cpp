@@ -11,6 +11,7 @@ Try ostream_iterators
 
 #include <boost/config.hpp>
 #include <boost/algorithm/hex.hpp>
+#include <boost/exception/get_error_info.hpp>
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>

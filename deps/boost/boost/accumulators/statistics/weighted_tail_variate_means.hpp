@@ -169,7 +169,11 @@ namespace impl
                 this->tail_means_.begin()
               , this->tail_means_.end()
               , this->tail_means_.begin()
+#ifdef BOOST_NO_CXX98_BINDERS
+              , std::bind(numeric::functional::divides<typename array_type::value_type const, float_type const>(), std::placeholders::_1, factor)
+#else
               , std::bind2nd(numeric::functional::divides<typename array_type::value_type const, float_type const>(), factor)
+#endif
             );
 
             return make_iterator_range(this->tail_means_);

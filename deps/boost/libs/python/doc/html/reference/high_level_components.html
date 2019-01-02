@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;2.&#160;High Level Components</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Boost.Python Reference Manual">
 <link rel="up" href="index.html" title="Boost.Python Reference Manual">
 <link rel="prev" href="concepts/objectwrapper.html" title="ObjectWrapper">
@@ -16,11 +16,11 @@
 <a accesskey="p" href="concepts/objectwrapper.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="high_level_components/boost_python_def_hpp.html"><img src="../images/next.png" alt="Next"></a>
 </div>
 <div class="chapter">
-<div class="titlepage"><div><div><h2 class="title">
-<a name="high_level_components"></a>Chapter&#160;2.&#160;High Level Components</h2></div></div></div>
+<div class="titlepage"><div><div><h1 class="title">
+<a name="high_level_components"></a>Chapter&#160;2.&#160;High Level Components</h1></div></div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp">boost/python/class.hpp</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.introduction">Introduction</a></span></dt>
@@ -172,7 +172,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="high_level_components.boost_python_class_hpp"></a><a class="link" href="high_level_components.html#high_level_components.boost_python_class_hpp" title="boost/python/class.hpp">boost/python/class.hpp</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_class_t_bases_hel">Class
         template <code class="computeroutput"><span class="identifier">class_</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Bases</span><span class="special">,</span> <span class="identifier">HeldType</span><span class="special">,</span> <span class="identifier">NonCopyable</span><span class="special">&gt;</span></code></a></span></dt>
@@ -203,7 +203,7 @@
 <a name="high_level_components.boost_python_class_hpp.class_template_class_t_bases_hel"></a><a class="link" href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_class_t_bases_hel" title="Class template class_&lt;T, Bases, HeldType, NonCopyable&gt;">Class
         template <code class="computeroutput"><span class="identifier">class_</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Bases</span><span class="special">,</span> <span class="identifier">HeldType</span><span class="special">,</span> <span class="identifier">NonCopyable</span><span class="special">&gt;</span></code></a>
 </h3></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_class_t_bases_hel.heldtype_semantics">HeldType
           Semantics</a></span></dt>
 <dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_class_t_bases_hel.class_template_class_synopsis">Class
@@ -496,7 +496,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conforms to Python's
@@ -516,7 +516,7 @@
                   attribute of the <a class="link" href="high_level_components/boost_python_scope_hpp.html#high_level_components.boost_python_scope_hpp.introduction" title="Introduction">current
                   scope</a> is bound to the new extension class.
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                       If supplied, the value of docstring is bound to the <code class="computeroutput"><span class="identifier">__doc__</span></code> attribute of the
                       extension class.
@@ -561,7 +561,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">init_expr</span></code> is the
@@ -603,7 +603,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd>
 <p>
@@ -628,10 +628,10 @@
                   but the first <code class="computeroutput"><span class="identifier">N</span> <span class="special">-</span> <span class="identifier">M</span></code>
                   arguments of each overload.
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
                       Otherwise, a single method overload is built around fn, which
                       must not be null:
-                      <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+                      <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
                             If fn is a function pointer, its first argument must
                             be of the form U, U cv&amp;, U cv*, or U cv* const&amp;,
@@ -748,7 +748,7 @@
 <pre class="programlisting"><span class="identifier">class_</span><span class="special">&amp;</span> <span class="identifier">staticmethod</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">name</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conforms to Python's
@@ -768,7 +768,7 @@
 <pre class="programlisting"><span class="identifier">setattr</span><span class="special">(</span><span class="identifier">self</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">staticmethod</span><span class="special">(</span><span class="identifier">getattr</span><span class="special">(</span><span class="identifier">self</span><span class="special">,</span> <span class="identifier">name</span><span class="special">)))</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Note</span></dt>
 <dd><p>
                   Attempting to invoke def(name,...) after invoking staticmethod(name)
@@ -785,7 +785,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   Adds a Python <a href="http://www.python.org/doc/ref/specialnames.html" target="_top">special
@@ -802,7 +802,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conforms to Python's
@@ -831,7 +831,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conform to Python's
@@ -864,7 +864,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conforms to Python's
@@ -898,7 +898,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   name is an <a class="link" href="glossary.html#ntbs">ntbs</a> which conforms to Python's
@@ -935,7 +935,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd>
 <pre class="programlisting"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">add_property</span><span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">make_getter</span><span class="special">(</span><span class="identifier">pm</span><span class="special">),</span> <span class="identifier">make_setter</span><span class="special">(</span><span class="identifier">pm</span><span class="special">),</span> <span class="identifier">doc</span><span class="special">);</span></pre>
@@ -964,7 +964,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   PickleSuite must be publically derived from <a class="link" href="topics/pickle_support.html#topics.pickle_support.the_pickle_interface" title="The Pickle Interface">pickle_suite</a>.
@@ -991,7 +991,7 @@
 <pre class="programlisting"><span class="identifier">class_</span><span class="special">&amp;</span> <span class="identifier">enable_pickling</span><span class="special">();</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                   Defines the __reduce__ method and the __safe_for_unpickling__ attribute.
@@ -1014,7 +1014,7 @@
 <a name="high_level_components.boost_python_class_hpp.class_template_bases_t1_t2_tn"></a><a class="link" href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_bases_t1_t2_tn" title="Class template bases&lt;T1, T2, ...TN&gt;">Class
         template bases&lt;T1, T2, ...TN&gt;</a>
 </h3></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_bases_t1_t2_tn.class_template_bases_synopsis">Class
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="high_level_components.html#high_level_components.boost_python_class_hpp.class_template_bases_t1_t2_tn.class_template_bases_synopsis">Class
           template bases synopsis</a></span></dt></dl></div>
 <p>
           An MPL sequence which can be used in class_&lt;...&gt; instantiations indicate

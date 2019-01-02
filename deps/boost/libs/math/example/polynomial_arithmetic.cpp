@@ -85,13 +85,16 @@ string formula_format(polynomial<T> const &a)
           result += "^" + lexical_cast<string>(i);
           i--;
           for (; i != 1; i--)
-              result += inner_coefficient(a[i]) + "x^" + lexical_cast<string>(i);
+              if (a[i])
+                result += inner_coefficient(a[i]) + "x^" + lexical_cast<string>(i);
 
-          result += inner_coefficient(a[i]) + "x";
+          if (a[i])
+            result += inner_coefficient(a[i]) + "x";
       }
       i--;
 
-      result += " " + sign_str(a[i]) + " " + lexical_cast<string>(abs(a[i]));
+      if (a[i])
+        result += " " + sign_str(a[i]) + " " + lexical_cast<string>(abs(a[i]));
     }
   }
   return result;
@@ -161,6 +164,50 @@ to get both results together as a pair.
   BOOST_ASSERT(result.first == q);
   BOOST_ASSERT(result.second == r);
 //] [/polynomial_arithmetic_4]
+//[polynomial_arithmetic_5
+  /* 
+We can use the right and left shift operators to add and remove a factor of x.
+This has the same semantics as left and right shift for integers where it is a 
+factor of 2. x is the smallest prime factor of a polynomial as is 2 for integers.
+*/
+    cout << "Right and left shift operators.\n";
+    cout << "\n" << formula_format(p) << "\n";
+    cout << "... right shift by 1 ...\n";
+    p >>= 1;
+    cout << formula_format(p) << "\n";
+    cout << "... left shift by 2 ...\n";
+    p <<= 2;
+    cout << formula_format(p) << "\n";    
+  
+/*
+We can also give a meaning to odd and even for a polynomial that is consistent
+with these operations: a polynomial is odd if it has a non-zero constant value, 
+even otherwise. That is:
+    x^2 + 1     odd
+    x^2         even    
+   */
+    cout << std::boolalpha;
+    cout << "\nPrint whether a polynomial is odd.\n";
+    cout << formula_format(s) << "   odd? " << odd(s) << "\n";
+    // We cheekily use the internal details to subtract the constant, making it even.
+    s -= s.data().front();
+    cout << formula_format(s) << "   odd? " << odd(s) << "\n";
+    // And of course you can check if it is even:
+    cout << formula_format(s) << "   even? " << even(s) << "\n";
+    
+    
+    //] [/polynomial_arithmetic_5]
+    //[polynomial_arithmetic_6]
+    /* For performance and convenience, we can test whether a polynomial is zero 
+     * by implicitly converting to bool with the same semantics as int.    */
+    polynomial<double> zero; // Default construction is 0.
+    cout << "zero: " << (zero ? "not zero" : "zero") << "\n";
+    cout << "r: " << (r ? "not zero" : "zero") << "\n";
+    /* We can also set a polynomial to zero without needing a another zero 
+     * polynomial to assign to it. */
+    r.set_zero();
+    cout << "r: " << (r ? "not zero" : "zero") << "\n";    
+    //] [/polynomial_arithmetic_6]
 }
 catch (exception const &e)
 {

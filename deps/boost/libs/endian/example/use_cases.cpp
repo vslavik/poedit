@@ -121,7 +121,7 @@ using std::endl;
 //  Recommended approach when conversion time is a concern
   //
   //  Conversion time is a concert with this application because (1) any conversions
-  //  performed in the loop will consume a great deal of time and because (2) 
+  //  performed in the loop will consume a great deal of time and because (2)
   //  computation time will be much greater than I/O time.
 
   {

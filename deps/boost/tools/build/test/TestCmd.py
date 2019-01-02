@@ -173,6 +173,13 @@ def pass_test(self=None, condition=True, function=None):
     sys.stderr.write("PASSED\n")
     sys.exit(0)
 
+class MatchError(object):
+    def __init__(self, message):
+        self.message = message
+    def __nonzero__(self):
+        return False
+    def __bool__(self):
+        return False
 
 def match_exact(lines=None, matches=None):
     """
@@ -188,7 +195,14 @@ def match_exact(lines=None, matches=None):
         return
     for i in range(len(lines)):
         if lines[i] != matches[i]:
-            return
+            return MatchError("Mismatch at line %d\n- %s\n+ %s\n" %
+                (i+1, matches[i], lines[i]))
+    if len(lines) < len(matches):
+        return MatchError("Missing lines at line %d\n- %s" %
+            (len(lines), "\n- ".join(matches[len(lines):])))
+    if len(lines) > len(matches):
+        return MatchError("Extra lines at line %d\n+ %s" %
+            (len(matches), "\n+ ".join(lines[len(matches):])))
     return 1
 
 
@@ -203,11 +217,16 @@ def match_re(lines=None, res=None):
         lines = split(lines, "\n")
     if not type(res) is ListType:
         res = split(res, "\n")
-    if len(lines) != len(res):
-        return
-    for i in range(len(lines)):
+    for i in range(min(len(lines), len(res))):
         if not re.compile("^" + res[i] + "$").search(lines[i]):
-            return
+            return MatchError("Mismatch at line %d\n- %s\n+ %s\n" %
+                (i+1, res[i], lines[i]))
+    if len(lines) < len(res):
+        return MatchError("Missing lines at line %d\n- %s" %
+            (len(lines), "\n- ".join(res[len(lines):])))
+    if len(lines) > len(res):
+        return MatchError("Extra lines at line %d\n+ %s" %
+            (len(res), "\n+ ".join(lines[len(res):])))
     return 1
 
 
@@ -410,11 +429,8 @@ class TestCmd:
 
         if stdin:
             if type(stdin) is ListType:
-                for line in stdin:
-                    p.tochild.write(line)
-            else:
-                p.tochild.write(stdin)
-        out, err = p.communicate()
+                stdin = "".join(stdin)
+        out, err = p.communicate(stdin)
         self._stdout.append(out)
         self._stderr.append(err)
         self.status = p.returncode

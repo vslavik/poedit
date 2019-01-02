@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -52,7 +52,7 @@ BOOST_HANA_CONSTANT_CHECK(
 
 // group.by is syntactic sugar
 static_assert(
-    hana::group.by(hana::comparing(hana::decltype_),
+    hana::group.by(hana::comparing(hana::typeid_),
                    hana::make_tuple(1, 2, 3, 'x', 'y', 4.4, 5.5))
         == hana::make_tuple(
             hana::make_tuple(1, 2, 3),

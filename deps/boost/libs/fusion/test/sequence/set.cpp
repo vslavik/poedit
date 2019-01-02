@@ -89,6 +89,9 @@ main()
         BOOST_MPL_ASSERT((traits::is_sequence<t1>));
         BOOST_MPL_ASSERT((traits::is_sequence<t2>));
         BOOST_MPL_ASSERT((traits::is_sequence<t3>));
+        BOOST_STATIC_ASSERT(traits::is_sequence<t1>::value);
+        BOOST_STATIC_ASSERT(traits::is_sequence<t2>::value);
+        BOOST_STATIC_ASSERT(traits::is_sequence<t3>::value);
     }
 
     {   // testing mpl::is_sequence

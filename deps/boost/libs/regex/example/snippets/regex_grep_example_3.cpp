@@ -17,9 +17,9 @@
   *                using a bound member function callback.
   */
 
+#include <boost/regex.hpp>
 #include <string>
 #include <map>
-#include <boost/regex.hpp>
 #include <functional>
 #include <boost/detail/workaround.hpp>
 
@@ -86,6 +86,11 @@ void class_index::IndexClasses(const std::string& file)
    base = start;
 #if BOOST_WORKAROUND(_MSC_VER, < 1300) && !defined(_STLP_VERSION)
    boost::regex_grep(std::bind1st(std::mem_fun1(&class_index::grep_callback), this),
+            start,
+            end,
+            expression);
+#elif defined(BOOST_NO_CXX98_BINDERS)
+   boost::regex_grep(std::bind(&class_index::grep_callback, this, std::placeholders::_1),
             start,
             end,
             expression);

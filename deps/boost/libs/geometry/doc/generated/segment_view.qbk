@@ -27,6 +27,7 @@ Adapts a segment to the Boost.Range concept, enabling the user to iterate the tw
 [heading Synopsis]
 ``template<typename Segment>
 struct segment_view
+      : public detail::points_view< geometry::point_type< Segment >::type, 2 >
 {
   // ...
 };

@@ -46,7 +46,7 @@ int test_main(int, char*[])
         uuid u3 = nil_uuid();
         BOOST_CHECK_EQUAL(u3, u2);
     }
-    
+
     { // test string_generator
         string_generator gen;
         uuid u = gen("00000000-0000-0000-0000-000000000000");
@@ -58,7 +58,7 @@ int test_main(int, char*[])
 
         u = gen("0123456789abcdef0123456789ABCDEF");
         BOOST_CHECK_EQUAL(u, u_increasing);
-        
+
         u = gen("{0123456789abcdef0123456789ABCDEF}");
         BOOST_CHECK_EQUAL(u, u_increasing);
 
@@ -67,7 +67,7 @@ int test_main(int, char*[])
 
         u = gen("01234567-89AB-CDEF-0123-456789abcdef");
         BOOST_CHECK_EQUAL(u, u_increasing);
-        
+
         u = gen(std::string("fedcba98-7654-3210-fedc-ba9876543210"));
         BOOST_CHECK_EQUAL(u, u_decreasing);
 
@@ -79,7 +79,7 @@ int test_main(int, char*[])
         BOOST_CHECK_EQUAL(u, u_increasing);
 #endif //BOOST_NO_STD_WSTRING
     }
-    
+
     { // test name_generator
         uuid dns_namespace_uuid = {{0x6b, 0xa7, 0xb8, 0x10, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8}};
         uuid correct = {{0x21, 0xf7, 0xf8, 0xde, 0x80, 0x51, 0x5b, 0x89, 0x86, 0x80, 0x01, 0x95, 0xef, 0x79, 0x8b, 0x6a}};
@@ -113,16 +113,16 @@ int test_main(int, char*[])
         // default random number generator
         random_generator uuid_gen1;
         check_random_generator(uuid_gen1);
-        
+
         // specific random number generator
         basic_random_generator<boost::rand48> uuid_gen2;
         check_random_generator(uuid_gen2);
-        
+
         // pass by reference
         boost::ecuyer1988 ecuyer1988_gen;
         basic_random_generator<boost::ecuyer1988> uuid_gen3(ecuyer1988_gen);
         check_random_generator(uuid_gen3);
-        
+
         // pass by pointer
         boost::lagged_fibonacci607 lagged_fibonacci607_gen;
         basic_random_generator<boost::lagged_fibonacci607> uuid_gen4(&lagged_fibonacci607_gen);
@@ -132,6 +132,6 @@ int test_main(int, char*[])
         //basic_random_generator<boost::random_device> uuid_gen5;
         //check_random_generator(uuid_gen5);
     }
-    
+
     return 0;
 }

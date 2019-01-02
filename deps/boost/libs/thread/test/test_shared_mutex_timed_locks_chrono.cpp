@@ -65,7 +65,6 @@ BOOST_AUTO_TEST_CASE(test_timed_lock_shared_succeeds_if_no_lock_held)
 
     boost::chrono::steady_clock::time_point const start=boost::chrono::steady_clock::now();
     boost::chrono::steady_clock::time_point const timeout=start+boost::chrono::milliseconds(500);
-    boost::chrono::milliseconds const timeout_resolution(50);
     bool timed_lock_succeeded=rw_mutex.try_lock_shared_until(timeout);
     BOOST_CHECK(boost::chrono::steady_clock::now()<timeout);
     BOOST_CHECK(timed_lock_succeeded);
@@ -99,7 +98,6 @@ BOOST_AUTO_TEST_CASE(test_timed_lock_shared_succeeds_if_read_lock_held)
 
     boost::chrono::steady_clock::time_point const start=boost::chrono::steady_clock::now();
     boost::chrono::steady_clock::time_point const timeout=start+boost::chrono::milliseconds(500);
-    boost::chrono::milliseconds const timeout_resolution(50);
     bool timed_lock_succeeded=rw_mutex.try_lock_shared_until(timeout);
     BOOST_CHECK(boost::chrono::steady_clock::now()<timeout);
     BOOST_CHECK(timed_lock_succeeded);
@@ -166,7 +164,6 @@ BOOST_AUTO_TEST_CASE(test_timed_lock_succeeds_if_no_lock_held)
 
     boost::chrono::steady_clock::time_point const start=boost::chrono::steady_clock::now();
     boost::chrono::steady_clock::time_point const timeout=start+boost::chrono::milliseconds(500);
-    boost::chrono::milliseconds const timeout_resolution(50);
     bool timed_lock_succeeded=rw_mutex.try_lock_until(timeout);
     BOOST_CHECK(boost::chrono::steady_clock::now()<timeout);
     BOOST_CHECK(timed_lock_succeeded);

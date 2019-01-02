@@ -8,8 +8,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <boost/graph/topological_sort.hpp>
 #include <boost/graph/stanford_graph.hpp>
+#include <boost/graph/topological_sort.hpp>
 
 int
 main()

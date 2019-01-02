@@ -17,11 +17,11 @@
   */
 
 
+#include <boost/regex.hpp>
 #include <list>
 #include <fstream>
 #include <iostream>
 #include <iterator>
-#include <boost/regex.hpp>
 
 boost::regex e("<\\s*A\\s+[^>]*href\\s*=\\s*\"([^\"]*)\"",
                boost::regex::normal | boost::regbase::icase);

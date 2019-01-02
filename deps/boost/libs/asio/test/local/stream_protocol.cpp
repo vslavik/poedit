@@ -2,7 +2,7 @@
 // stream_protocol.cpp
 // ~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@
 #include <boost/asio/local/stream_protocol.hpp>
 
 #include <cstring>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include "../unit_test.hpp"
 
 //------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void test()
 
   try
   {
-    io_service ios;
+    io_context ioc;
     char mutable_char_buffer[128] = "";
     const char const_char_buffer[128] = "";
     socket_base::message_flags in_flags = 0;
@@ -69,16 +69,21 @@ void test()
 
     // basic_stream_socket constructors.
 
-    sp::socket socket1(ios);
-    sp::socket socket2(ios, sp());
-    sp::socket socket3(ios, sp::endpoint(""));
+    sp::socket socket1(ioc);
+    sp::socket socket2(ioc, sp());
+    sp::socket socket3(ioc, sp::endpoint(""));
     int native_socket1 = ::socket(AF_UNIX, SOCK_STREAM, 0);
-    sp::socket socket4(ios, sp(), native_socket1);
+    sp::socket socket4(ioc, sp(), native_socket1);
 
     // basic_io_object functions.
 
-    io_service& ios_ref = socket1.get_io_service();
-    (void)ios_ref;
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+    io_context& ioc_ref = socket1.get_io_context();
+    (void)ioc_ref;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+
+    sp::socket::executor_type ex = socket1.get_executor();
+    (void)ex;
 
     // basic_socket functions.
 
@@ -99,7 +104,7 @@ void test()
     socket1.close();
     socket1.close(ec);
 
-    sp::socket::native_type native_socket4 = socket1.native();
+    sp::socket::native_handle_type native_socket4 = socket1.native_handle();
     (void)native_socket4;
 
     socket1.cancel();

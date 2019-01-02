@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template close_at_tolerance</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../header/boost/test/tools/floating_point_comparison_hpp.html" title="Header &lt;boost/test/tools/floating_point_comparison.hpp&gt;">
 <link rel="prev" href="percent_tolerance_t.html" title="Struct template percent_tolerance_t">
@@ -39,53 +39,60 @@
 
   <span class="comment">// <a class="link" href="close_at_tolerance.html#boost.math.fpc.close_at_toleranceconstruct-copy-destruct">construct/copy/destruct</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ToleranceType<span class="special">&gt;</span> 
-    <span class="keyword">explicit</span> <a class="link" href="close_at_tolerance.html#idp27479792-bb"><span class="identifier">close_at_tolerance</span></a><span class="special">(</span><span class="identifier">ToleranceType</span><span class="special">,</span> <span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <span class="special">=</span> <span class="identifier">FPC_STRONG</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="close_at_tolerance.html#idp69647504-bb"><span class="identifier">close_at_tolerance</span></a><span class="special">(</span><span class="identifier">ToleranceType</span><span class="special">,</span> <span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <span class="special">=</span> <span class="identifier">FPC_STRONG</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="close_at_tolerance.html#idp27467776-bb">public member functions</a></span>
-  <span class="identifier">FPT</span> <a class="link" href="close_at_tolerance.html#idp27468336-bb"><span class="identifier">fraction_tolerance</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <a class="link" href="close_at_tolerance.html#idp27469744-bb"><span class="identifier">strength</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">FPT</span> <a class="link" href="close_at_tolerance.html#idp27471168-bb"><span class="identifier">tested_rel_diff</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="close_at_tolerance.html#idp27472592-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">FPT</span><span class="special">,</span> <span class="identifier">FPT</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="close_at_tolerance.html#idp69635488-bb">public member functions</a></span>
+  <span class="identifier">FPT</span> <a class="link" href="close_at_tolerance.html#idp69636048-bb"><span class="identifier">fraction_tolerance</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <a class="link" href="close_at_tolerance.html#idp69637456-bb"><span class="identifier">strength</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">FPT</span> <a class="link" href="close_at_tolerance.html#idp69638880-bb"><span class="identifier">tested_rel_diff</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="close_at_tolerance.html#idp69640304-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">FPT</span><span class="special">,</span> <span class="identifier">FPT</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp31879824"></a><h2>Description</h2>
-<p>This predicate is used to compare floating point numbers. In addition the comparison produces maximum related differnce, which can be used to generate detailed error message The methods for comparing floating points are detailed in the documentation. The method is chosen by the boost::math::fpc::strength given at construction. </p>
+<a name="idp102524672"></a><h2>Description</h2>
+<p>This predicate is used to compare floating point numbers. In addition the comparison produces maximum related difference, which can be used to generate detailed error message The methods for comparing floating points are detailed in the documentation. The method is chosen by the boost::math::fpc::strength given at construction.</p>
+<p>This predicate is not suitable for comparing to 0 or to infinity. </p>
 <div class="refsect2">
-<a name="idp31880848"></a><h3>
+<a name="idp102525952"></a><h3>
 <a name="boost.math.fpc.close_at_toleranceconstruct-copy-destruct"></a><code class="computeroutput">close_at_tolerance</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ToleranceType<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp27479792-bb"></a><span class="identifier">close_at_tolerance</span><span class="special">(</span><span class="identifier">ToleranceType</span> tolerance<span class="special">,</span> 
+  <span class="keyword">explicit</span> <a name="idp69647504-bb"></a><span class="identifier">close_at_tolerance</span><span class="special">(</span><span class="identifier">ToleranceType</span> tolerance<span class="special">,</span> 
                               <span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> fpc_strength <span class="special">=</span> <span class="identifier">FPC_STRONG</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp31894416"></a><h3>
-<a name="idp27467776-bb"></a><code class="computeroutput">close_at_tolerance</code> public member functions</h3>
+<a name="idp102539504"></a><h3>
+<a name="idp69635488-bb"></a><code class="computeroutput">close_at_tolerance</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">FPT</span> <a name="idp27468336-bb"></a><span class="identifier">fraction_tolerance</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the tolerance. </li>
+<pre class="literallayout"><span class="identifier">FPT</span> <a name="idp69636048-bb"></a><span class="identifier">fraction_tolerance</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the tolerance. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <a name="idp27469744-bb"></a><span class="identifier">strength</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the comparison method. </li>
+<pre class="literallayout"><span class="identifier">fpc</span><span class="special">::</span><span class="identifier">strength</span> <a name="idp69637456-bb"></a><span class="identifier">strength</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the comparison method. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">FPT</span> <a name="idp27471168-bb"></a><span class="identifier">tested_rel_diff</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the failing fraction. </li>
+<pre class="literallayout"><span class="identifier">FPT</span> <a name="idp69638880-bb"></a><span class="identifier">tested_rel_diff</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the failing fraction. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27472592-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">FPT</span> left<span class="special">,</span> <span class="identifier">FPT</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp69640304-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">FPT</span> left<span class="special">,</span> <span class="identifier">FPT</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Compares two floating point numbers a and b such that their "left" relative difference |a-b|/a and/or "right" relative difference |a-b|/b does not exceed specified relative (fraction) tolerance.</p>
 <p>
 What is reported by <code class="computeroutput">tested_rel_diff</code> in case of failure depends on the comparison method:</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>for <code class="computeroutput">FPC_STRONG:</code> the max of the two fractions</p></li>
 <li class="listitem"><p>for <code class="computeroutput">FPC_WEAK:</code> the min of the two fractions The rationale behind is to report the tolerance to set in order to make a test pass. </p></li>
 </ul></div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">left</code></span></p></td>
@@ -106,7 +113,7 @@ What is reported by <code class="computeroutput">tested_rel_diff</code> in case 
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

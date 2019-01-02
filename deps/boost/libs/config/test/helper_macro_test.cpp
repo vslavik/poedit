@@ -34,6 +34,9 @@ BOOST_NORETURN void always_throw()
    throw 0;
 }
 
+struct BOOST_MAY_ALIAS aliasing_struct {};
+typedef unsigned int BOOST_MAY_ALIAS aliasing_uint;
+
 
 #define test_fallthrough(x) foobar(x)
 

@@ -32,7 +32,7 @@ function templates to compute a CRC in one step.</p>
 	<li><a href="#crc_optimal">Optimized CRC Computer</a></li>
 	<li><a href="#usage">Computer Usage</a></li>
 	<li><a href="#crc_func">CRC Function</a></li>
-	<li><a href="#a_crc_func">Augmented-CRC Functions</a></li>
+	<li><a href="#a_crc_func">Augmented-CRC Function</a></li>
 	<li><a href="#crc_ex">Pre-Defined CRC Samples</a></li>
 	<li><a href="#references">References</a></li>
 	<li><a href="#credits">Credits</a>
@@ -69,11 +69,7 @@ template &lt; std::size_t Bits, <em>impl_def</em> TruncPoly,
 template &lt; std::size_t Bits, <em>impl_def</em> TruncPoly &gt;
     typename uint_t&lt;Bits&gt;::fast  augmented_crc( void const *buffer,
      std::size_t byte_count,
-     typename uint_t&lt;Bits&gt;::fast initial_remainder );
-
-template &lt; std::size_t Bits, <em>impl_def</em> TruncPoly &gt;
-    typename uint_t&lt;Bits&gt;::fast  augmented_crc( void const *buffer,
-     std::size_t byte_count );
+     typename uint_t&lt;Bits&gt;::fast initial_remainder = 0u );
 
 typedef crc_optimal&lt;16, 0x8005, 0, 0, true, true&gt;         crc_16_type;
 typedef crc_optimal&lt;16, 0x1021, 0xFFFF, 0, false, false&gt;  crc_ccitt_type;
@@ -118,8 +114,8 @@ carries) for the coefficents.</p>
 <p>See <cite><a href="http://www.ross.net/crc/crcpaper.html">A
 Painless Guide to CRC Error Detection Algorithms</a></cite> for complete
 information.  A clearer guide is at the <a
-href="http://www.netrino.com/Connecting/2000-01/">Easier Said Than
-Done</a> web page.</p>
+href="http://www.netrino.com/Embedded-Systems/How-To/CRC-Calculation-C-Code">CRC
+Implementation Code in C</a> web page.</p>
 
 <h3><a name="parameters">CRC Parameters</a></h3>
 
@@ -432,21 +428,17 @@ parameters are passed through template arguments, identical to the
 optimized CRC computer (<a href="#crc_optimal">see above</a>).  In fact,
 such a computer is used to implement this function.</p>
 
-<h2><a name="a_crc_func">Augmented-CRC Functions</a></h2>
+<h2><a name="a_crc_func">Augmented-CRC Function</a></h2>
 
 <blockquote><pre>template &lt; std::size_t Bits, <em>impl_def</em> TruncPoly &gt;
 typename boost::uint_t&lt;Bits&gt;::fast
 boost::augmented_crc( void const *buffer, std::size_t byte_count,
- typename boost::uint_t&lt;Bits&gt;::fast initial_remainder );
-
-template &lt; std::size_t Bits, <em>impl_def</em> TruncPoly &gt;
-typename boost::uint_t&lt;Bits&gt;::fast
-boost::augmented_crc( void const *buffer, std::size_t byte_count );
+ typename boost::uint_t&lt;Bits&gt;::fast initial_remainder = 0u );
 </pre></blockquote>
 
 <p>All the other CRC-computing function or class templates work assuming
 that the division steps start immediately on the first message bits. 
-The two <code>boost::augmented_crc</code> function templates have a
+The <code>boost::augmented_crc</code> function template has a
 different division order.  Instead of combining (<i>via</i> bitwise
 exclusive-or) the current message bit with the highest bit of a separate
 remainder, these templates shift a new message bit into the low bit of a
@@ -456,15 +448,15 @@ any of the actual message bits are processed.  To compensate, the real
 CRC can only be extracted after feeding enough zero bits (the same count
 as the register size) after the message bits.</p>
 
-<p>The template parameters of both versions of the function template are
+<p>The template parameters of the function template are
 the CRC's bit size (<code>Bits</code>) and the truncated polynominal
-(<code>TruncPoly</code>).  The version of the function template that
-takes two arguments calls the three-argument version with the
-<var>initial_remainder</var> parameter filled as zero.  Both versions
-work on the data block starting at the address <var>buffer</var> for
-<var>byte_count</var> bytes.</p>
+(<code>TruncPoly</code>).  The function parameters are the starting address of
+the data block to be worked on (<var>buffer</var>), the number of bytes in that
+data block (<var>byte_count</var>), and the incoming value of the remainder
+(<var>initial_remainder</var>).  That last parameter defaults to zero if it is
+ommitted.</p>
 
-<p>These function templates are useful if the bytes of the CRC directly
+<p>This function template is useful if the bytes of the CRC directly
 follow the message's bytes.  First, set the bytes of where the CRC will
 go to zero.  Then use <code>augmented_crc</code> over the augmented
 message, <i>i.e.</i> the message bytes and the appended CRC bytes.  Then
@@ -576,12 +568,14 @@ library is concerned with CRC implementation, and not with determining
 	<dt>Michael Barr (<a
 		href="mailto:mbarr@netrino.com">mbarr@netrino.com</a>)
 	<dd>Wrote <a
-		href="http://www.netrino.com/Connecting/2000-01/">Easier Said
-		Than Done</a>, a less-confusing guide to implementing CRC
+		href="http://www.netrino.com/Embedded-Systems/How-To/CRC-Calculation-C-Code">CRC 
+		Implementation Code in C</a>, a less-confusing guide to implementing CRC
 		algorithms.  (Originally published as &quot;Slow and Steady
 		Never Lost the Race&quot; in the January 2000 issue of <cite><a
 		href="http://www.embedded.com/">Embedded Systems
-		Programming</a></cite>, pages 37&ndash;46.)
+		Programming</a></cite>, pages 37&ndash;46.  The web version used to be
+		known as <cite><a href="http://www.netrino.com/Connecting/2000-01/">Easier
+		Said Than Done</a></cite>.)
 
 	<dt>Daryle Walker
 	<dd>Started the library and contributed the theoretical and optimal
@@ -615,6 +609,9 @@ interface, algorithms, and bug reports:</p>
 <h3><a name="history">History</a></h3>
 
 <dl>
+	<dt>18 Dec 2011, Daryle Walker
+	<dd>Folded the two versions of <code>boost::augmented_crc</code> together.
+
 	<dt>15 Jun 2003, Daryle Walker
 	<dd>Added example program.
 
@@ -624,9 +621,9 @@ interface, algorithms, and bug reports:</p>
 
 <hr>
 
-<p>Revised: 15 June 2003</p>
+<p>Revised: 18 December 2011</p>
 
-<p>Copyright 2001, 2003 Daryle Walker.  Use, modification, and distribution
+<p>Copyright 2001, 2003, 2011 Daryle Walker. Use, modification, and distribution
 are subject to the Boost Software License, Version 1.0.  (See accompanying
 file <a href="../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or a copy at
 &lt;<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>&gt;.)</p>

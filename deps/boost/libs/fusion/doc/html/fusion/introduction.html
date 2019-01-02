@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="prev" href="preface.html" title="Preface">
@@ -44,19 +44,19 @@
       its base. The held objects must be related: you cannot hold objects of unrelated
       types such as <code class="computeroutput"><span class="keyword">char</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>, <code class="computeroutput"><span class="keyword">class</span>
       <span class="identifier">X</span></code>, <code class="computeroutput"><span class="keyword">float</span></code>,
-      etc. Oh sure you can use something like <a href="http://www.boost.org/doc/html/any.html" target="_top">Boost.Any</a>
-      to hold arbitrary types, but then you pay more in terms of runtime costs and
-      due to the fact that you practically erased all type information, you'll have
-      to perform dangerous casts to get back the original type.
+      etc. Oh sure you can use something like <a href="http://www.boost.org/libs/any" target="_top">Boost.Any
+      Library</a> to hold arbitrary types, but then you pay more in terms of
+      runtime costs and due to the fact that you practically erased all type information,
+      you'll have to perform dangerous casts to get back the original type.
     </p>
 <p>
-      The <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>
-      library written by <a href="http://www.boost.org/people/jaakko_jarvi.htm" target="_top">Jaakko
+      The <a href="http://www.boost.org/libs/tuple" target="_top">Boost.Tuple</a> library
+      written by <a href="http://www.boost.org/people/jaakko_jarvi.htm" target="_top">Jaakko
       Jarvi</a> provides heterogeneous containers in C++. The <code class="computeroutput"><span class="identifier">tuple</span></code>
       is a basic data structure that can hold heterogeneous types. It's a good first
       step, but it's not complete. What's missing are the algorithms. It's nice that
       we can store and retrieve data to and from tuples, pass them around as arguments
-      and return types. As it is, the <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>
+      and return types. As it is, the <a href="http://www.boost.org/libs/tuple" target="_top">Boost.Tuple</a>
       facility is already very useful. Yet, as soon as you use it more often, usage
       patterns emerge. Eventually, you collect these patterns into algorithm libraries.
     </p>
@@ -67,12 +67,12 @@
     </p>
 <p>
       Fusion is a library and a framework similar to both <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
-      and the boost <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>.
-      The structure is modeled after <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>,
-      which is modeled after <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>.
+      and the boost <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>. The structure
+      is modeled after <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>, which
+      is modeled after <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>.
       It is named "fusion" because the library is reminiscent of the "fusion"
       of compile time meta-programming with runtime programming. The library inherently
-      has some interesting flavors and characteristics of both <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+      has some interesting flavors and characteristics of both <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
       and <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>.
       It lives in the twilight zone between compile time meta-programming and run
       time programming. <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
@@ -80,13 +80,12 @@
       work on both types and values.
     </p>
 <p>
-      Unlike <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, Fusion
-      algorithms are lazy and non sequence-type preserving. What does that mean?
-      It means that when you operate on a sequence through a Fusion algorithm that
-      returns a sequence, the sequence returned may not be of the same class as the
-      original. This is by design. Runtime efficiency is given a high priority. Like
-      <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, and unlike
-      <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>,
+      Unlike <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>, Fusion algorithms
+      are lazy and non sequence-type preserving. What does that mean? It means that
+      when you operate on a sequence through a Fusion algorithm that returns a sequence,
+      the sequence returned may not be of the same class as the original. This is
+      by design. Runtime efficiency is given a high priority. Like <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>,
+      and unlike <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>,
       fusion algorithms are functional in nature such that algorithms are non mutating
       (no side effects). However, due to the high cost of returning full sequences
       such as vectors and lists, <span class="emphasis"><em>Views</em></span> are returned from Fusion
@@ -111,29 +110,26 @@
       different sequences are now implemented only once.
     </p>
 <p>
-      Fusion provides full round compatibility with <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>.
-      Fusion sequences are fully conforming <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      sequences and <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      sequences are fully compatible with Fusion. You can work with Fusion sequences
-      on <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> if you
-      wish to work solely on types <sup>[<a name="fusion.introduction.f0" href="#ftn.fusion.introduction.f0" class="footnote">1</a>]</sup>. In <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>,
-      Fusion sequences follow <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>'s
-      sequence-type preserving semantics (i.e. algorithms preserve the original sequence
-      type. e.g. transforming a vector returns a vector). You can also convert from
-      an <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> sequence
-      to a Fusion sequence. For example, there are times when it is convenient to
-      work solely on <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      using pure <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-      sequences, then, convert them to Fusion sequences as a final step before actual
-      instantiation of real runtime objects with data. You have the best of both
-      worlds.
+      Fusion provides full round compatibility with <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>.
+      Fusion sequences are fully conforming <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>
+      sequences and <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> sequences
+      are fully compatible with Fusion. You can work with Fusion sequences on <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> if you wish to work solely
+      on types <a href="#ftn.fusion.introduction.f0" class="footnote" name="fusion.introduction.f0"><sup class="footnote">[1]</sup></a>. In <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>, Fusion
+      sequences follow <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a>'s sequence-type
+      preserving semantics (i.e. algorithms preserve the original sequence type.
+      e.g. transforming a vector returns a vector). You can also convert from an
+      <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> sequence to a Fusion
+      sequence. For example, there are times when it is convenient to work solely
+      on <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> using pure <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> sequences, then, convert them
+      to Fusion sequences as a final step before actual instantiation of real runtime
+      objects with data. You have the best of both worlds.
     </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.fusion.introduction.f0" href="#fusion.introduction.f0" class="para">1</a>] </sup>
-        Choose <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
-        over fusion when doing pure type calculations. Once the static type calculation
-        is finished, you can instantiate a fusion sequence (see <a class="link" href="container/conversion/functions.html" title="Functions">Conversion</a>)
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.fusion.introduction.f0" class="footnote"><p><a href="#fusion.introduction.f0" class="para"><sup class="para">[1] </sup></a>
+        Choose <a href="http://www.boost.org/libs/mpl" target="_top">MPL</a> over fusion
+        when doing pure type calculations. Once the static type calculation is finished,
+        you can instantiate a fusion sequence (see <a class="link" href="container/conversion/functions.html" title="Functions">Conversion</a>)
         for the runtime part.
       </p></div>
 </div>

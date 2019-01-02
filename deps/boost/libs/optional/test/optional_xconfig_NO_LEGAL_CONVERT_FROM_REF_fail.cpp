@@ -15,7 +15,7 @@
 
 #if (defined BOOST_NO_CXX11_RVALUE_REFERENCES) || (!defined BOOST_OPTIONAL_CONFIG_NO_LEGAL_CONVERT_FROM_REF)
 
-static_assert(false, "failed as requested");
+# error "failed as requested"
 
 #else
 

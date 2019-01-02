@@ -16,9 +16,9 @@
   *   DESCRIPTION: regex_match example using partial matches.
   */
 
+#include <boost/regex.hpp>
 #include <string>
 #include <iostream>
-#include <boost/regex.hpp>
 
 boost::regex e("(\\d{3,4})[- ]?(\\d{4})[- ]?(\\d{4})[- ]?(\\d{4})");
 

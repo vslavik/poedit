@@ -19,7 +19,6 @@
 #include <boost/spirit/include/classic_meta.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
 
-using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef ref_value_actor<char, assign_action> assign_actor;

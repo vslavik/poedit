@@ -61,6 +61,7 @@ void run_test()
     
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<Point>));
+        BOOST_STATIC_ASSERT(!traits::is_view<Point>::value);
         Point p(123, 456);
 
         std::cout << at_c<0>(p) << std::endl;

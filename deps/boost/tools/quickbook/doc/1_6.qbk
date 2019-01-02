@@ -9,47 +9,6 @@
 
 [section:1_6 Quickbook 1.6]
 
-Upgrading a document from an earlier version of quickbook shouldn't be too
-hard. The first thing to do is update the version in the docinfo block.
-For example, if you were updating the Xpressive documentation, the existing
-docinfo block looks like:
-
-    [library Boost.Xpressive
-        [quickbook 1.3]
-        ...
-    ]
-
-Change this to:
-
-    [library Boost.Xpressive
-        [quickbook 1.6]
-        [compatibility-mode 1.3]
-        ...
-    ]
-
-The =compatibility-mode= tag ensures that automatically generated links
-won't change. It might turn out that it isn't required, but in Xpressive's
-case if it isn't included it will break a lot of links.
-
-Then try building it. You might need to fix some stray square brackets. The
-new version has a stricter parser which will have an error for brackets
-which don't pair up. They might be there by mistake, in which case they
-should probably be deleted, or if they're intentional escaped. For example,
-to write out the half-open range \[a,b), use: `\[a,b)`.
-
-Next, you might need to reconsider how templates and macros are defined.
-If you `include` a file to use its templates, you'll now need to `import` it
-instead as templates are now scoped by included files. Also, if you define
-templates and macros in your main quickbook file, you might want to put them
-into a separate file and `import` that, which allows the main documentation
-files to concentrate on the structure and contents of the document, making them
-easier to read.
-
-Now that headings can have ids, it can be a good idea to add ids to existing
-headings. This means that the headings will have more predictable ids which
-don't change when the text of the heading changes. In order to preserve
-links you can use the existing generated id as the heading.
-
 [section:docinfo Includes with docinfo]
 
 In quickbook 1.5 if you include a file which starts with a docinfo block, it's
@@ -72,7 +31,7 @@ between multiple documents.
 If an included document doesn't have a docinfo block, it's just included as
 before.
 
-[endsect] [/docinfo]
+[endsect:docinfo]
 
 [section:doc_info_macros Macros in docinfo block]
 
@@ -85,7 +44,7 @@ and `purpose` fields, but since only the predefined macros are available, it's
 unlikely to break any existing documents. So I'd rather not complicate the code
 further by fixing that.
 
-[endsect]
+[endsect:doc_info_macros]
 
 [section:scope Scoping templates and macros]
 
@@ -107,7 +66,7 @@ a different version it won't change the way they're interpreted. Although,
 as we'll see [link compatibility later], the generated boostbook is slightly
 different.
 
-[endsect] [/scope]
+[endsect:scope]
 
 [section:include Including C++ and python files]
 
@@ -117,7 +76,7 @@ Code snippets in the file are available to be expanded within the file but
 are scoped to the file. In exactly the same manner as when templates and macros
 are scoped in an included quickbook file.
 
-[endsect] [/include]
+[endsect:include]
 
 [section:ids Id Generation]
 
@@ -146,7 +105,7 @@ Older language versions still generate the same ids they always have, with the
 exception of duplicate ids which are handled using the new mechanism - this
 is not a breaking change since duplicate ids can't be linked to.
 
-[endsect] [/ids]
+[endsect:ids]
 
 [#compatibility]
 [section:compatibility Compatibility Mode]
@@ -169,7 +128,7 @@ in a different language version to the current document. So the template is
 parsed in the version it was written for, but generates boostbook that's
 compatible with the current document.
 
-[endsect] [/compatibility]
+[endsect:compatibility]
 
 [section:version Version info outside of document info block]
 
@@ -189,7 +148,7 @@ This change is also backdated to older versions. So when including from an
 older version, the included file's version can be set (older versions
 ignore document info in included files).
 
-[endsect]
+[endsect:version]
 
 [section:heading_ids Explicit Heading Ids]
 
@@ -197,7 +156,7 @@ Headings can now be given explicit ids:
 
     [heading:id A heading with an explicit id]
 
-[endsect] [/heading_ids]
+[endsect:heading_ids]
 
 [section:escapes Punctuation changes]
 
@@ -213,7 +172,7 @@ that the closing square bracket isn't bold, now it parses as
 [*\[bold\]]. In this case it's just a subtle visual difference, but it
 could cause odd problems, for example when nested in a table cell.
 
-[endsect] [/escapes]
+[endsect:escapes]
 
 [section:table Table Titles]
 
@@ -228,7 +187,7 @@ this now works:
 
     [table Simple[[heading 1][heading 2]][[cell 1][cell 2]]]
 
-[endsect] [/table]
+[endsect:table]
 
 [section:xmlbase XML base]
 
@@ -248,7 +207,7 @@ Any paths in `xinclude` elements will be rewritten accordingly. Note that
 most documents won't need this, and probably shouldn't use it. Only use it
 if you're totally sure that you will need it.
 
-[endsect] [/xmlbase]
+[endsect:xmlbase]
 
 [section:template_parser Improved template parser]
 
@@ -272,7 +231,7 @@ error. To work around this put an escaped space before the code phrase:
     ]
     ]
 
-[endsect]
+[endsect:template_parser]
 
 [section:elements New Elements]
 
@@ -282,6 +241,6 @@ New elements added in quickbook 1.6:
 * [link quickbook.ref.list_tags `ordered_list` and `itemized_list`]
 * [link quickbook.ref.role `role`]
 
-[endsect] [/ elements]
+[endsect:elements]
 
-[endsect] [/ Quickbok 1.6]
+[endsect:1_6]

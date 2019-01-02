@@ -8,9 +8,12 @@
 # considered different by 'virtual-target.register', but the code which
 # determined the actual target paths ignored dependency properties so both
 # targets ended up being in the same location.
+#
+# This test has flip-flopped several times between passing and failing.
+# Currently, the library is only considered relevant for linking and thus
+# does not cause a conflict. SJW 20180115
 
 import BoostBuild
-import string
 
 
 t = BoostBuild.Tester()
@@ -30,7 +33,6 @@ __declspec(dllexport)
 void foo() {}
 """)
 
-t.run_build_system(["--no-error-backtrace"], status=1)
-t.fail_test(string.find(t.stdout(), "Tried to build the target twice") == -1)
+t.run_build_system(["--no-error-backtrace"], status=0)
 
 t.cleanup()

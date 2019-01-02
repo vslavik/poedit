@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -8,11 +8,8 @@
 namespace hana = boost::hana;
 
 
-// Make sure that the tuple(Yn&&...) is not preferred over the
-// tuple(tuple<Yn...> const&) and the tuple(tuple<Yn...>&&)
-// constructors when copy-constructing a tuple with a single
-// element that can be constructed from tuple<Yn...> const& and
-// tuple<Yn...>&&, respectively.
+// Make sure that the tuple(Yn&&...) is not preferred over copy constructors
+// in single-element cases and other similar cases.
 
 struct Trap1 {
     Trap1() = default;
@@ -40,6 +37,29 @@ struct Trap2 {
     }
 };
 
+struct Trap3 {
+    Trap3() = default;
+    Trap3(Trap3 const&) = default;
+    Trap3(Trap3&) = default;
+    Trap3(Trap3&&) = default;
+
+    template <typename X>
+    constexpr explicit Trap3(X&&) { // explicit, and constexpr
+        static_assert(sizeof(X) && false,
+        "this constructor must not be instantiated");
+    }
+};
+
+struct Trap4 {
+    template <typename Args>
+    constexpr explicit Trap4(Args&&) {
+        static_assert(sizeof(Args) && false, "must never be instantiated");
+    }
+
+    Trap4(Trap4 const&) = default;
+    Trap4(Trap4&&) = default;
+};
+
 int main() {
     {
         hana::tuple<Trap1> tuple{};
@@ -65,5 +85,29 @@ int main() {
         (void)explicit_copy;
         (void)implicit_move;
         (void)explicit_move;
+    }
+
+    {
+        hana::tuple<Trap3> tuple{};
+        hana::tuple<Trap3> implicit_copy = tuple;
+        hana::tuple<Trap3> explicit_copy(tuple);
+        hana::tuple<Trap3> implicit_move = std::move(tuple);
+        hana::tuple<Trap3> explicit_move(std::move(tuple));
+
+        (void)implicit_copy;
+        (void)explicit_copy;
+        (void)implicit_move;
+        (void)explicit_move;
+    }
+
+    // Just defining the structure used to cause a failure, because of the
+    // explicitly defaulted copy-constructor.
+    {
+        struct Foo {
+            Foo() = default;
+            Foo(Foo const&) = default;
+            Foo(Foo&&) = default;
+            hana::tuple<Trap4> t;
+        };
     }
 }

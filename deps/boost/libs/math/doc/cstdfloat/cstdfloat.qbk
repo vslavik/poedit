@@ -6,8 +6,10 @@
 
 [import ../../example/cstdfloat_example.cpp]
 [import ../../example/normal_tables.cpp]
+[/Removed as unhelpful for C++ users, but might have use as a check that quadmath is available and linked OK.]
+[/import ../../example/quadmath_snprintf.c]
 
-[section:overview Overview]
+[section:specified_typedefs Overview]
 
 The header `<boost/cstdfloat.hpp>` provides [*optional]
 standardized floating-point `typedef`s having [*specified widths].
@@ -25,11 +27,12 @@ The `typedef`s include `float16_t, float32_t, float64_t, float80_t, float128_t`,
 their corresponding least and fast types,
 and the corresponding maximum-width type.
 The `typedef`s are based on underlying built-in types
-such as `float`, `double`, or `long double`, or based on other compiler-specific
-non-standardized types such as `__float128`.
+such as `float`, `double`, or `long double`, or the proposed __short_float,
+or based on other compiler-specific non-standardized types such as `__float128`.
 The underlying types of these `typedef`s must conform with
 the corresponding specifications of binary16, binary32, binary64,
-and binary128 in __IEEE754 floating-point format.
+and binary128 in __IEEE754 floating-point format, and
+`std::numeric_limits<>::is_iec559 == true`.
 
 The 128-bit floating-point type (of great interest in scientific and
 numeric programming) is not required in the Boost header,
@@ -37,14 +40,24 @@ and may not be supplied for all platforms/compilers, because compiler
 support for a 128-bit floating-point type is not mandated by either
 the C standard or the C++ standard.
 
+If 128-bit floating-point is supported, then including `boost/cstdfloat.hpp`
+provides a [*native] 128-bit type, and
+includes other headers in folder `boost/math/cstdfloat` that provide C++
+quad support for __C_math in `<cmath>`, `<limits>`, `<iostream>`, `<complex>`,
+and the available floating-point types.
+
+One can also, more robustly, include `boost/multiprecision/float128.hpp`
+and this provides a thin wrapper selecting the appropriate 128-bit native type
+from `cstdfloat` if available, or else a 128-bit multiprecision type.
+
 See [link math_toolkit.examples.je_lambda Jahnke-Emden-Lambda function example]
-for an example using both a CMath function and a Boost.Math function
+for an example using both a `<cmath>` function and a Boost.Math function
 to evaluate a moderately interesting function, the
 [@http://mathworld.wolfram.com/LambdaFunction.html Jahnke-Emden-Lambda function]
 and [link math_toolkit.examples.normal_table normal distribution]
-an example of a statistical distribution from Boost.Math
+as an example of a statistical distribution from Boost.Math.
 
-[endsect]  [/section:overview Overview]
+[endsect] [/section:specified_typedefs Overview]
 
 [section:rationale Rationale]
 
@@ -53,7 +66,7 @@ defined in the 1989 C standard. The preprocessor is used to query certain
 preprocessor definitions in `<float.h>` such as FLT_MAX, DBL_MAX, etc.
 Based on the results of these queries, an attempt is made to automatically
 detect the presence of built-in floating-point types having specified widths.
-An unequivocal test regarding conformance with __IEEE754 (IEC599) based on
+An unequivocal test requiring conformance with __IEEE754 (IEC599) based on
 [@ http://en.cppreference.com/w/cpp/types/numeric_limits/is_iec559 `std::numeric_limits<>::is_iec559`]
 is performed with `BOOST_STATIC_ASSERT`.
 
@@ -62,7 +75,7 @@ supports an 80-bit floating-point `typedef` if it can be detected,
 and a 128-bit floating-point `typedef` if it can be detected,
 provided that the underlying types conform with
 [@http://en.wikipedia.org/wiki/Extended_precision IEEE-754 precision extension]
-(if`std::numeric_limits<>::is_iec559` is true for this type).
+(provided `std::numeric_limits<>::is_iec559 == true` for this type).
 
 The header `<boost/cstdfloat.hpp>` makes the standardized floating-point
 `typedef`s safely available in `namespace boost` without placing any names
@@ -81,7 +94,7 @@ naming conventions.
 a `typedef` if the underlying type is not provided by the compiler].
 For example, if a compiler does not have an underlying floating-point
 type with 128 bits (highly sought-after in scientific and numeric programming),
-then `float128_t` and its corresponding least and fast types are not
+then `float128_t` and its corresponding least and fast types are [*not]
 provided by `<boost/cstdfloat.hpp`>.]
 
 [warning If `<boost/cstdfloat.hpp>` uses a compiler-specific non-standardized type
@@ -109,7 +122,8 @@ standard library functions where a non-standard type (i.e. other than
 width types.  If generic code (for example in another Boost.Math header)
 calls a standard library function, then the correct overload will only be
 found if these overloads are defined prior to the point of use.
-See implementation for more details.
+See [link math_toolkit.float128.overloading overloading template functions with float128_t]
+and the implementation of `cstdfloat.hpp` for more details.
 
 For this reason, making `#include <boost/cstdfloat.hpp>` the [*first
 include] is usually best.
@@ -137,37 +151,41 @@ and the corresponding maximum-width type.
 
 The definition (or not) of a
 [link math_toolkit.macros floating-point constant macro]
-is the way to test if a specific width is available on a platform.
+is a way to test if a [*specific width floating-point] is available on a platform.
 
 	#if defined(BOOST_FLOAT16_C)
-	// Can use boost::float16_t.
+	// Can use boost::float16_t, perhaps a proposed __short_float.
+	// P0192R1, Adding Fundamental Type for Short Float,
+	// Boris Fomitchev, Sergei Nikolaev, Olivier Giroux, Lawrence Crowl, 2016 Feb14
+	// http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2016.pdf
 	#endif
 
 	#if defined(BOOST_FLOAT32_C)
-	// Can use boost::float32_t.
+	// Can use boost::float32_t, usually type `float`.
 	#endif
 
 	#if defined(BOOST_FLOAT64_C)
-	// Can use boost::float64_t.
+	// Can use boost::float64_t, usually type `double`, and sometimes also type `long double`.
 	#endif
 
 	#if defined(BOOST_FLOAT80_C)
-	// Can use boost::float80_t.
+	// Can use boost::float80_t, sometimes type `long double`.
 	#endif
 
 	#if defined(BOOST_FLOAT128_C)
-	// Can use boost::float128_t.
+	// Can use boost::float128_t. Sometimes type `__float128` or `_Quad`.
 	#endif
 
 This can be used to write code which will compile and run (albeit differently) on several platforms.
 Without these tests, if a width, say `float128_t` is not supported, then compilation would fail.
-(It is of course, rare for `float64_t` or `float32_t` not to be supported).
+(It is, of course, rare for `float64_t` or `float32_t` not to be supported).
 
 The number of bits in just the significand can be determined using:
 
    std::numeric_limits<boost::floatmax_t>::digits
 
 and from this one can safely infer the total number of bits because the type must be IEEE754 format,
+`std::numeric_limits<boost::floatmax_t>::is_iec559 == true`,
 so, for example, if `std::numeric_limits<boost::floatmax_t>::digits == 113`,
 then `floatmax_t` must be` float128_t`.
 
@@ -184,15 +202,17 @@ and the maximum number of  possibly significant decimal digits using
     std::numeric_limits<boost::floatmax_t>::max_digits10
 
 [tip  `max_digits10` is not always supported,
-but can be calculated at compile-time using the Kahan formula.
+but can be calculated at compile-time using the Kahan formula,
+`2 + binary_digits * 0.3010` which can be calculated [*at compile time] using
+`2 + binary_digits * 3010/10000`.
 ]
 
-[note One could test
+[note One could test that
 
   std::is_same<boost::floatmax_t, boost::float128_t>::value == true
 
-but this would fail to compile  on a platform where  `boost::float128_t` is not defined.
-So use the MACROs BOOST_FLOATnnn_C. ]
+but this would fail to compile on a platform where  `boost::float128_t` is not defined.
+So it is better to use the MACROs `BOOST_FLOATnnn_C`. ]
 
 [endsect] [/section:exact_typdefs Exact-Width Floating-Point `typedef`s]
 
@@ -235,8 +255,8 @@ any value of any floating-point type in a given platform most precisely.
 
 The greatest-width `typedef` is provided for all platforms, but, of course, the size may vary.
 
-To provide floating-point [*constants] most precisely for a `floatmax_t` type,
-use the macro BOOST_FLOATMAX_C.
+To provide floating-point [*constants] most precisely representable for a `floatmax_t` type,
+use the macro `BOOST_FLOATMAX_C`.
 
 For example, replace a constant `123.4567890123456789012345678901234567890` with
 
@@ -244,13 +264,13 @@ For example, replace a constant `123.4567890123456789012345678901234567890` with
 
 If, for example, `floatmax_t` is `float64_t` then the result will be equivalent to a `long double` suffixed with L,
 but if `floatmax_t` is `float128_t` then the result will be equivalent to a `quad type` suffixed with Q
-(assuming, of course, that `float128` is supported).
+(assuming, of course, that `float128_t` (`__float128` or `Quad`) is supported).
 
 If we display with `max_digits10`, the maximum possibly significant decimal digits:
 
 [floatmax_widths_1]
 
-then on a 128-bit platform (GCC 4.8.1. with quadmath):
+then on a 128-bit platform (GCC 4.8.1 or higher with quadmath):
 
 [floatmax_widths_2]
 
@@ -269,6 +289,8 @@ are always defined after inclusion of `<boost/cstdfloat.hpp>`.
 [cstdfloat_constant_1]
 
 from [@../../example/cstdfloat_example.cpp  cstdfloat_example.cpp].
+
+See the complete list of __constants.
 
 [endsect] [/section:macros Floating-Point Constant Macros]
 
@@ -301,9 +323,9 @@ For details, see [@../../example/cstdfloat_example.cpp  cstdfloat_example.cpp]
 [h3:normal_table Normal distribution table]
 
 This example shows printing tables of a normal distribution's PDF and CDF,
-using `boost::math` implmentation of normal.
+using `boost::math` implementation of normal distribution.
 
-A function templated on floating-point type prints a table for a range of z values.
+A function templated on floating-point type prints a table for a range of standard variate z values.
 
 The example shows use of the specified-width typedefs to either use a specific width,
 or to use the maximum available on the platform, perhaps a high as 128-bit.
@@ -321,15 +343,55 @@ Some sample output for two different platforms is appended to the code at
 
 [endsect]  [/section:examples examples]
 
+[section:float128_hints  Hints on using float128 (and __float128)]
+
+[h5:different_float128 __float128 versus float128]
+* __float128 is the (optionally) compiler supplied hardware type,
+it's an C-ish extension to C++ and there is only
+minimal support for it in normal C++
+(no IO streams or `numeric_limits` support,
+function names in libquadmath all have different names to the
+`std::` ones etc.)
+So you can program type `__float128` directly, but it's harder work.
+
+* Type `float128` uses __float128 and makes it C++ and generic code friendly,
+with all the usual standard `iostream`, `numeric_limits`, `complex` in namspace `std::` available,
+so strongly recommended for C++ use.
+
+[h5 Hints and tips]
+
+* Make sure you declare variables with the correct type, here `float128`.
+* Make sure that if you pass a variable to a function then it is casted to `float128`.
+* Make sure you declare literals with the correct suffix - otherwise
+they'll be treated as type `double` with catastrophic loss of precision.
+So make sure they have a Q suffix for 128-bit floating-point literals.
+* All the std library functions, cmath functions, plus all the constants, and special
+functions from Boost.Math should then just work.
+* Make sure std lib functions are called [*unqualified] so that the correct
+overload is found via __ADL. So write
+  sqrt(variable)
+and not
+  std::sqrt(variable).
+* In general, try not to reinvent stuff - using constants from
+Boost.Math is probably less error prone than declaring your own,
+likewise the special functions etc.
+
+Some examples of what can go horribly and silently wrong are at
+[@../../example/float128_example.cpp  float128_example.cpp].
+
+[endsect]  [/section:float128_hints  Hints on using float128]
+
 [section:float128 Implementation of Float128 type]
 
-Since few compilers implement a true 128-bit floating-point, and language features like the suffix Q,
+Since few compilers implement a true 128-bit floating-point, and language features like the suffix Q
+(which may need an option `-fext-numeric-literals` to enable),
 and C++ Standard library functions are as-yet missing or incomplete in C++11,
-this Boost.Math implementation wraps `__float128` provided by the GCC compiler or the `_Quad` type
-provided by the Intel compiler.
+this Boost.Math implementation wraps `__float128` provided by the GCC compiler
+[@https://gcc.gnu.org/onlinedocs/gcc/Floating-Types.html GCC floating-point types]
+or the `_Quad` type provided by the Intel compiler.
 
 This is provided to in order to demonstrate, and users to evaluate, the feasibility and benefits of higher-precision floating-point,
-especially to allow use of the full Boost.Math library of functions and distributions at high precision.
+especially to allow use of the full <cmath> and Boost.Math library of functions and distributions at high precision.
 
 (It is also possible to use Boost.Math with Boost.Multiprecision decimal and binary, but since these are entirely software solutions,
 allowing much higher precision or arbitrary precision, they are likely to be slower).
@@ -339,13 +401,25 @@ We also provide (we believe full) support for `<limits>, <cmath>`, I/O stream op
 As a prototype for a future C++ standard, we place all these in `namespace std`.
 This contravenes the existing C++ standard of course, so selecting any compiler that promises to check conformance will fail.
 
-[tip For GCC, compile with `-std=gnu++11` or `-std=gnu++03` and do not use `-std=stdc++11`or any 'strict' options as
+[tip For GCC, compile with `-std=gnu++11` or `-std=gnu++03` and do not use `-std=stdc++11` or any 'strict' options, as
 these turn off full support for `__float128`.  These requirements also apply to the Intel compiler on Linux, for
 Intel on Windows you need to compile with `-Qoption,cpp,--extended_float_type -DBOOST_MATH_USE_FLOAT128` in order to
 activate 128-bit floating point support.]
 
 The `__float128` type is provided by the [@http://gcc.gnu.org/onlinedocs/libquadmath/ libquadmath library] on GCC or
-by Intel's FORTRAN library with Intel C++.
+by Intel's FORTRAN library with Intel C++. THey also provide a full set of `<cmath>` functions in `namespace std`.
+
+[h4 Using C __float128 quadmath type]
+
+[quadmath_snprintf_1]
+
+The source code is at [@../../example/quadmath_snprintf.c quadmath_snprintf.c].
+
+[h4 Using C++ `float128` quadmath type]
+
+For C++ programs, you will want to use the C++ type `float128`
+
+See example at [@../../example/cstdfloat_example.cpp cstdfloat_example.cpp].
 
 A typical invocation of the compiler is
 
@@ -355,11 +429,33 @@ A typical invocation of the compiler is
 
   g++ -O3 -std=gnu++11 test.cpp -I/c/modular-boost/libs/math/include -I/c/modular-boost -lquadmath -o test.exe
 
-[note So far, the only missing detail that we have noted is in trying to use `<typeinfo>`, for example for
-`std::cout << typeid<__float_128>.name();`.  Link fails: undefined reference to `typeinfo for __float128`.
-See [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622  GCC Bug 43622 - no C++ typeinfo for __float128].]
+[note So far, the only missing detail that we had noted was in trying to use `<typeinfo>`,
+for example for `std::cout << typeid<__float_128>.name();`.
+``
+Link fails: undefined reference to typeinfo for __float128.
+``
+See [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622  GCC Bug 43622 - no C++ typeinfo for __float128].
+But this is reported (Marc Glisse 2015-04-04 ) fixed in GCC 5 (and above).
 
-[section Overloading template functions with float128_t]
+For example, with GCC6.1.1 this works as expected to  a [*mangled] string name, and output (if possible - not always).
+``
+const std::type_info& tifu128 = typeid(__float128); // OK.
+//std::cout << tifu128.name() << std::endl; // On GCC, aborts (because not printable string).
+//std::cout << typeid(__float128).name() << std::endl; // Aborts - string name cannot be output.
+
+const std::type_info& tif128 = typeid(float128); // OK.
+std::cout << tif128.name() << std::endl; // OK.
+std::cout << typeid(float128).name() << std::endl; // OK.
+
+const std::type_info& tpi = typeid(pi1); // OK GCC 6.1.1 (from GCC 5 according to http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622)
+std::cout << tpi.name() << std::endl; // Output mangled name:
+
+// N5boost14multiprecision6numberINS0_8backends16float128_backendELNS0_26expression_template_optionE0EEE
+
+``
+] [/note]
+
+[section:overloading Overloading template functions with float128_t]
 
 An artifact of providing C++ standard library support for
 quadmath may mandate the inclusion of `<boost/cstdfloat.hpp>`
@@ -400,28 +496,31 @@ Boost.Math headers, then the compiler
 will know about and use the `std::fabs(std::float128_t)`
 that we provide in `#include <boost/cstdfloat.hpp>`.
 
-
 [endsect]
 
 [section:exp_function Exponential function]
 
-There is a bug whe using any quadmath `expq` function  on GCC:
-
+There was a bug when using any quadmath `expq` function  on GCC :
 [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=60349  GCC bug #60349]
-
-[@http://sourceforge.net/p/mingw-w64/bugs/368/ mingw-64 bug #368]
+caused by
+[@http://sourceforge.net/p/mingw-w64/bugs/368/ mingw-64 bug #368].
 
 To work round this defect, an alternative implementation of 128-bit exp
-is temporarily provided by `boost/cstdfloat.hpp`.
+was temporarily provided by `boost/cstdfloat.hpp`.
+
+The mingw bug was fixed at 2014-03-12 and GCC 6.1.1 now works as expected.
+
+[tip It is essential to link to the quadmath library].
 
 [endsect] [/section:exp_function exp function]
 
 [section:typeinfo `typeinfo`]
 
-It is not yet possible to use `typeinfo` for float_128 on GCC: see
-[@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622   GCC 43622]
+For GCC 4.8.1 it was not yet possible to use `typeinfo` for `float_128` on GCC:
+see [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43622   GCC 43622].
 
-so this fails to link `undefined reference to typeinfo for __float128`
+So this code (to display the mangled name)
+failed to link `undefined reference to typeinfo for __float128`
 
   std::cout << typeid(boost::float128_t).name() << std::endl;
 
@@ -430,7 +529,10 @@ This prevent using the existing tests for Boost.Math distributions,
 and if a MACRO BOOST_MATH_INSTRUMENT controlling them is defined
 then some diagnostic displays in Boost.Math will not work.
 
-However this is only used for display purposes and can be commented out until this is fixed.
+However this was only used for display purposes
+and could be commented out until this was fixed in GCC 5.
+
+[tip Not all managed names can be [*displayed] using `std::cout`.]
 
 [endsect] [/section:typeinfo `typeinfo`]
 

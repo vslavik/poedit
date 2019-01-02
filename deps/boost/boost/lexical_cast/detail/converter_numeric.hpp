@@ -1,6 +1,6 @@
 // Copyright Kevlin Henney, 2000-2005.
 // Copyright Alexander Nasonov, 2006-2010.
-// Copyright Antony Polukhin, 2011-2014.
+// Copyright Antony Polukhin, 2011-2018.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -13,7 +13,7 @@
 //        Beman Dawes, Dave Abrahams, Daryle Walker, Peter Dimov,
 //        Alexander Nasonov, Antony Polukhin, Justin Viiret, Michael Hofmann,
 //        Cheng Yang, Matthew Bradbury, David W. Birdsall, Pavel Korzh and other Boosters
-// when:  November 2000, March 2003, June 2005, June 2006, March 2011 - 2014
+// when:  November 2000, March 2003, June 2005, June 2006, March 2011 - 2016
 
 #ifndef BOOST_LEXICAL_CAST_DETAIL_CONVERTER_NUMERIC_HPP
 #define BOOST_LEXICAL_CAST_DETAIL_CONVERTER_NUMERIC_HPP
@@ -24,9 +24,8 @@
 #endif
 
 #include <boost/limits.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/type_traits/type_identity.hpp>
+#include <boost/type_traits/conditional.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
 #include <boost/type_traits/is_signed.hpp>
 #include <boost/type_traits/is_integral.hpp>
@@ -43,8 +42,8 @@ struct detect_precision_loss
 {
     typedef Source source_type;
     typedef boost::numeric::Trunc<Source> Rounder;
-    typedef BOOST_DEDUCED_TYPENAME mpl::if_<
-        boost::is_arithmetic<Source>, Source, Source const&
+    typedef BOOST_DEDUCED_TYPENAME conditional<
+        boost::is_arithmetic<Source>::value, Source, Source const&
     >::type argument_type ;
 
     static inline source_type nearbyint(argument_type s, bool& is_ok) BOOST_NOEXCEPT {
@@ -66,8 +65,8 @@ template <typename Base, class Source>
 struct fake_precision_loss: public Base
 {
     typedef Source source_type ;
-    typedef BOOST_DEDUCED_TYPENAME mpl::if_<
-        boost::is_arithmetic<Source>, Source, Source const&
+    typedef BOOST_DEDUCED_TYPENAME conditional<
+        boost::is_arithmetic<Source>::value, Source, Source const&
     >::type argument_type ;
 
     static inline source_type nearbyint(argument_type s, bool& /*is_ok*/) BOOST_NOEXCEPT {
@@ -92,7 +91,7 @@ inline bool noexcept_numeric_convert(const Source& arg, Target& result) BOOST_NO
             detect_precision_loss<Source >
     > converter_orig_t;
 
-    typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_c<
+    typedef BOOST_DEDUCED_TYPENAME boost::conditional<
         boost::is_base_of< detect_precision_loss<Source >, converter_orig_t >::value,
         converter_orig_t,
         fake_precision_loss<converter_orig_t, Source>
@@ -115,11 +114,12 @@ template <typename Target, typename Source>
 struct lexical_cast_dynamic_num_ignoring_minus
 {
     static inline bool try_convert(const Source &arg, Target& result) BOOST_NOEXCEPT {
-        typedef BOOST_DEDUCED_TYPENAME boost::mpl::eval_if_c<
+        typedef BOOST_DEDUCED_TYPENAME boost::conditional<
                 boost::is_float<Source>::value,
-                boost::mpl::identity<Source>,
+                boost::type_identity<Source>,
                 boost::make_unsigned<Source>
-        >::type usource_t;
+        >::type usource_lazy_t;
+        typedef BOOST_DEDUCED_TYPENAME usource_lazy_t::type usource_t;
 
         if (arg < 0) {
             const bool res = noexcept_numeric_convert<Target, usource_t>(0u - arg, result);
@@ -153,36 +153,14 @@ template <typename Target, typename Source>
 struct dynamic_num_converter_impl
 {
     static inline bool try_convert(const Source &arg, Target& result) BOOST_NOEXCEPT {
-        typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_c<
-        	boost::is_unsigned<Target>::value &&
-        	(boost::is_signed<Source>::value || boost::is_float<Source>::value) &&
-        	!(boost::is_same<Source, bool>::value) &&
-        	!(boost::is_same<Target, bool>::value),
+        typedef BOOST_DEDUCED_TYPENAME boost::conditional<
+            boost::is_unsigned<Target>::value &&
+            (boost::is_signed<Source>::value || boost::is_float<Source>::value) &&
+            !(boost::is_same<Source, bool>::value) &&
+            !(boost::is_same<Target, bool>::value),
             lexical_cast_dynamic_num_ignoring_minus<Target, Source>,
             lexical_cast_dynamic_num_not_ignoring_minus<Target, Source>
         >::type caster_type;
-        
-#if 0
-
-        typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_<
-            BOOST_DEDUCED_TYPENAME boost::mpl::and_<
-                boost::is_unsigned<Target>,
-                boost::mpl::or_<
-                    boost::is_signed<Source>,
-                    boost::is_float<Source>
-                >,
-                boost::mpl::not_<
-                    boost::is_same<Source, bool>
-                >,
-                boost::mpl::not_<
-                    boost::is_same<Target, bool>
-                >
-            >::type,
-            lexical_cast_dynamic_num_ignoring_minus<Target, Source>,
-            lexical_cast_dynamic_num_not_ignoring_minus<Target, Source>
-        >::type caster_type;
-        
-#endif
 
         return caster_type::try_convert(arg, result);
     }

@@ -19,22 +19,15 @@
 //--------------------------------------------------------------------------------------// 
 
 #include <boost/system/system_error.hpp>
-
 #include <iostream>
 
-namespace boost
-{
-  namespace system
-  {
-    BOOST_SYSTEM_DECL void throw_test();
-  }
-}
+void throw_test();
 
 int main()
 {
   try
   {
-    boost::system::throw_test();
+    throw_test();
   }
   catch (const boost::system::system_error& ex)
   {
@@ -42,7 +35,6 @@ int main()
     std::cout << "  what() reports " << ex.what() << '\n';
     return 0;
   }
-
   catch (const std::runtime_error& ex)
   {
     std::cout << "  error: caught std::runtime_error instead of boost::system::system_error\n";

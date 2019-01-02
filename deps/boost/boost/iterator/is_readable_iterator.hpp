@@ -6,10 +6,11 @@
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/aux_/lambda_support.hpp>
-#include <boost/detail/iterator.hpp>
 #include <boost/type_traits/add_lvalue_reference.hpp>
 
 #include <boost/iterator/detail/any_conversion_eater.hpp>
+
+#include <iterator>
 
 // should be the last #include
 #include <boost/type_traits/integral_constant.hpp>
@@ -93,7 +94,7 @@ namespace detail
   template <class It>
   struct is_readable_iterator_impl2
     : is_readable_iterator_impl<
-          BOOST_DEDUCED_TYPENAME boost::detail::iterator_traits<It>::value_type const
+          BOOST_DEDUCED_TYPENAME std::iterator_traits<It>::value_type const
       >::template rebind<It>
   {};
 } // namespace detail

@@ -16,8 +16,8 @@
 #define BOOST_LOG_CORE_RECORD_HPP_INCLUDED_
 
 #include <boost/move/core.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/log/detail/config.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/attributes/attribute_value_set.hpp>
 #include <boost/log/expressions/keyword_fwd.hpp>
 #include <boost/log/core/record_view.hpp>
@@ -55,6 +55,10 @@ private:
     //! A pointer to the log record implementation
     public_data* m_impl;
 
+private:
+    //  A private constructor, accessible from core
+    BOOST_CONSTEXPR explicit record(public_data* impl) BOOST_NOEXCEPT : m_impl(impl) {}
+
 #endif // BOOST_LOG_DOXYGEN_PASS
 
 public:
@@ -63,7 +67,7 @@ public:
      *
      * \post <tt>!*this == true</tt>
      */
-    record() : m_impl(NULL) {}
+    BOOST_CONSTEXPR record() BOOST_NOEXCEPT : m_impl(NULL) {}
 
     /*!
      * Move constructor. Source record contents unspecified after the operation.

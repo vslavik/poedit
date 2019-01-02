@@ -29,39 +29,6 @@ project boost/context/performance/fcontext
       <cxxflags>-DBOOST_DISABLE_ASSERTS
     ;
 
-alias sources
-   : ../bind_processor_aix.cpp
-   : <target-os>aix
-   ;
-
-alias sources
-   : ../bind_processor_freebsd.cpp
-   : <target-os>freebsd
-   ;
-
-alias sources
-   : ../bind_processor_hpux.cpp
-   : <target-os>hpux
-   ;
-
-alias sources
-   : ../bind_processor_linux.cpp
-   : <target-os>linux
-   ;
-
-alias sources
-   : ../bind_processor_solaris.cpp
-   : <target-os>solaris
-   ;
-
-alias sources
-   : ../bind_processor_windows.cpp
-   : <target-os>windows
-   ;
-
-explicit sources ;
-
 exe performance
-   : sources
-     performance.cpp
+   : performance.cpp
    ;

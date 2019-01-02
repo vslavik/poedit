@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <iostream>
+#include <iterator>
 
 #include <boost/algorithm/minmax.hpp>
 #include <boost/algorithm/minmax_element.hpp>

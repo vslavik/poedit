@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>use_alt_stack</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../rt_param_reference.html" title="Runtime parameters reference">
 <link rel="prev" href="show_progress.html" title="show_progress">
@@ -33,9 +33,29 @@
           is available <a href="http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html" target="_top">here</a>.
           The feature is enabled by default, but can be disabled using this parameter.
         </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            If this feature is not supported by your compiler, this command line
+            option will be silently ignored.
+          </p></td></tr>
+</table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            it is possible to remove the support of the alternative stack with the
+            macro <a class="link" href="../link_references/config_disable_alt_stack.html" title="BOOST_TEST_DISABLE_ALT_STACK"><code class="computeroutput"><span class="identifier">BOOST_TEST_DISABLE_ALT_STACK</span></code></a>
+          </p></td></tr>
+</table></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.h0"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.acceptable_values"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.acceptable_values">Acceptable
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.acceptable_values"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.acceptable_values">Acceptable
           values</a>
         </h5>
 <p>
@@ -44,16 +64,16 @@
         </p>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.h1"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.command_line_syntax"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.command_line_syntax">Command
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.command_line_syntax"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.command_line_syntax">Command
           line syntax</a>
         </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <code class="computeroutput"><span class="special">--</span><span class="identifier">use_alt_stack</span><span class="special">[=&lt;</span><span class="identifier">boolean</span>
               <span class="identifier">value</span><span class="special">&gt;]</span></code>
             </li></ul></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.h2"></a>
-          <span><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.environment_variable"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.environment_variable">Environment
+          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.use_alt_stack.environment_variable"></a></span><a class="link" href="use_alt_stack.html#boost_test.utf_reference.rt_param_reference.use_alt_stack.environment_variable">Environment
           variable</a>
         </h5>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_USE_ALT_STACK</span>
@@ -61,7 +81,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2018 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

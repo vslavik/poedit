@@ -72,6 +72,10 @@
 
 
 
+
+
+
+
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -86,10 +90,6 @@
           <template-nontype-parameter name="F"><type>std::size_t</type></template-nontype-parameter>
           <template-nontype-parameter name="OP"><type>unsigned char</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::adaptive_pool">adaptive_pool</classname> </para></description></function>
-
-
-
-
 
 
 
@@ -177,6 +177,14 @@
 
 
 
+
+
+
+
+
+
+
+
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="SegmentManager"/>
@@ -185,14 +193,6 @@
           <template-type-parameter name="T"/>
           <template-type-parameter name="SegmentManager"/>
         </template><parameter name="alloc1"><paramtype>const <classname>allocator</classname>&lt; T, SegmentManager &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>allocator</classname>&lt; T, SegmentManager &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of allocator </para></description></function>
-
-
-
-
-
-
-
-
 
 
 
@@ -295,6 +295,14 @@
 
 
 
+
+
+
+
+
+
+
+
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -309,14 +317,6 @@
           <template-nontype-parameter name="F"><type>std::size_t</type></template-nontype-parameter>
           <template-nontype-parameter name="OP"><type>std::size_t</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>cached_adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>cached_adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::cached_adaptive_pool">cached_adaptive_pool</classname> </para></description></function>
-
-
-
-
-
-
-
-
 
 
 
@@ -421,6 +421,8 @@
 
 
 
+
+
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -431,8 +433,6 @@
           <template-type-parameter name="S"/>
           <template-nontype-parameter name="NPC"><type>std::size_t</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>cached_node_allocator</classname>&lt; T, S, NPC &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>cached_node_allocator</classname>&lt; T, S, NPC &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::cached_node_allocator">cached_node_allocator</classname> </para></description></function>
-
-
 
 
 
@@ -536,12 +536,6 @@
 
 
 
-
-
-
-
-
-
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -552,6 +546,12 @@
           <template-type-parameter name="S"/>
           <template-nontype-parameter name="NPC"><type>std::size_t</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>node_allocator</classname>&lt; T, S, NPC &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>node_allocator</classname>&lt; T, S, NPC &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::node_allocator">node_allocator</classname> </para></description></function>
+
+
+
+
+
+
 
 
 
@@ -654,10 +654,6 @@
 
 
 
-
-
-
-
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -672,6 +668,10 @@
           <template-nontype-parameter name="F"><type>std::size_t</type></template-nontype-parameter>
           <template-nontype-parameter name="OP"><type>unsigned char</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>private_adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>private_adaptive_pool</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::private_adaptive_pool">private_adaptive_pool</classname> </para></description></function>
+
+
+
+
 
 
 
@@ -772,18 +772,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 <function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="S"/>
@@ -798,6 +786,18 @@
           <template-nontype-parameter name="F"><type>std::size_t</type></template-nontype-parameter>
           <template-nontype-parameter name="OP"><type>unsigned char</type></template-nontype-parameter>
         </template><parameter name="alloc1"><paramtype>const <classname>private_node_allocator</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><parameter name="alloc2"><paramtype>const <classname>private_node_allocator</classname>&lt; T, S, NodesPerBlock, F, OP &gt; &amp;</paramtype></parameter><description><para>Inequality test for same type of <classname alt="boost::interprocess::private_node_allocator">private_node_allocator</classname> </para></description></function>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1655,7 +1655,7 @@
 <header name="boost/interprocess/errors.hpp">
 <para>Describes the error numbering of interprocess classes </para><namespace name="boost">
 <namespace name="interprocess">
-<enum name="error_code_t"><enumvalue name="no_error"><default> 0</default></enumvalue><enumvalue name="system_error"/><enumvalue name="other_error"/><enumvalue name="security_error"/><enumvalue name="read_only_error"/><enumvalue name="io_error"/><enumvalue name="path_error"/><enumvalue name="not_found_error"/><enumvalue name="busy_error"/><enumvalue name="already_exists_error"/><enumvalue name="not_empty_error"/><enumvalue name="is_directory_error"/><enumvalue name="out_of_space_error"/><enumvalue name="out_of_memory_error"/><enumvalue name="out_of_resource_error"/><enumvalue name="lock_error"/><enumvalue name="sem_error"/><enumvalue name="mode_error"/><enumvalue name="size_error"/><enumvalue name="corrupted_error"/><enumvalue name="not_such_file_or_directory"/><enumvalue name="invalid_argument"/><enumvalue name="timeout_when_locking_error"/><enumvalue name="timeout_when_waiting_error"/><enumvalue name="owner_dead_error"/></enum>
+<enum name="error_code_t"><enumvalue name="no_error"><default>= 0</default></enumvalue><enumvalue name="system_error"/><enumvalue name="other_error"/><enumvalue name="security_error"/><enumvalue name="read_only_error"/><enumvalue name="io_error"/><enumvalue name="path_error"/><enumvalue name="not_found_error"/><enumvalue name="busy_error"/><enumvalue name="already_exists_error"/><enumvalue name="not_empty_error"/><enumvalue name="is_directory_error"/><enumvalue name="out_of_space_error"/><enumvalue name="out_of_memory_error"/><enumvalue name="out_of_resource_error"/><enumvalue name="lock_error"/><enumvalue name="sem_error"/><enumvalue name="mode_error"/><enumvalue name="size_error"/><enumvalue name="corrupted_error"/><enumvalue name="not_such_file_or_directory"/><enumvalue name="invalid_argument"/><enumvalue name="timeout_when_locking_error"/><enumvalue name="timeout_when_waiting_error"/><enumvalue name="owner_dead_error"/></enum>
 <typedef name="native_error_t"><type>int</type></typedef>
 
 
@@ -1711,8 +1711,8 @@
 <header name="boost/interprocess/exceptions.hpp">
 <para>Describes exceptions thrown by interprocess classes </para><namespace name="boost">
 <namespace name="interprocess">
-<class name="interprocess_exception"><description><para>This class is the base class of all exceptions thrown by boost::interprocess </para></description><method-group name="public member functions">
-<method name="what" cv="const" specifiers="virtual"><type>const char *</type></method>
+<class name="interprocess_exception"><inherit access="public">exception</inherit><description><para>This class is the base class of all exceptions thrown by boost::interprocess </para></description><method-group name="public member functions">
+<method name="what" cv="const noexcept" specifiers="virtual"><type>const char *</type></method>
 <method name="get_native_error" cv="const"><type>native_error_t</type></method>
 <method name="get_error_code" cv="const"><type>error_code_t</type></method>
 </method-group>
@@ -1720,11 +1720,11 @@
 <constructor><parameter name="err_info"><paramtype>const error_info &amp;</paramtype></parameter><parameter name="str"><paramtype>const char *</paramtype><default>0</default></parameter></constructor>
 <destructor/>
 </class><class name="lock_exception"><inherit access="public">boost::interprocess::interprocess_exception</inherit><description><para>This is the exception thrown by shared <classname alt="boost::interprocess::interprocess_mutex">interprocess_mutex</classname> family when a deadlock situation is detected or when using a <classname alt="boost::interprocess::interprocess_condition">interprocess_condition</classname> the <classname alt="boost::interprocess::interprocess_mutex">interprocess_mutex</classname> is not locked </para></description><method-group name="public member functions">
-<method name="what" cv="const" specifiers="virtual"><type>const char *</type></method>
+<method name="what" cv="const noexcept" specifiers="virtual"><type>const char *</type></method>
 </method-group>
 <constructor/>
 </class><class name="bad_alloc"><inherit access="public">boost::interprocess::interprocess_exception</inherit><description><para>This exception is thrown when a memory request can't be fulfilled. </para></description><method-group name="public member functions">
-<method name="what" cv="const" specifiers="virtual"><type>const char *</type></method>
+<method name="what" cv="const noexcept" specifiers="virtual"><type>const char *</type></method>
 </method-group>
 <constructor/>
 </class>
@@ -1851,7 +1851,7 @@
 <namespace name="interprocess">
 <class name="flat_map_index"><template>
       <template-type-parameter name="MapConfig"/>
-    </template><description><para>Index type based in flat_map. Just derives from flat_map and defines the interface needed by managed memory segments. </para></description><method-group name="public member functions">
+    </template><inherit access="public">flat_map_index_aux::index_t&lt; MapConfig &gt;</inherit><description><para>Index type based in flat_map. Just derives from flat_map and defines the interface needed by managed memory segments. </para></description><method-group name="public member functions">
 <method name="reserve"><type>void</type><parameter name="n"><paramtype>typename segment_manager_base::size_type</paramtype></parameter><purpose>This reserves memory to optimize the insertion of n elements in the index. </purpose></method>
 <method name="shrink_to_fit"><type>void</type><purpose>This frees all unnecessary memory. </purpose></method>
 </method-group>
@@ -1912,7 +1912,7 @@
 <namespace name="interprocess">
 <class name="iset_index"><template>
       <template-type-parameter name="MapConfig"/>
-    </template><description><para>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </para></description><typedef name="iterator"><type>index_type::iterator</type></typedef>
+    </template><inherit access="public">iset_index_aux::index_t&lt; MapConfig &gt;</inherit><description><para>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </para></description><typedef name="iterator"><type>index_type::iterator</type></typedef>
 <typedef name="const_iterator"><type>index_type::const_iterator</type></typedef>
 <typedef name="insert_commit_data"><type>index_type::insert_commit_data</type></typedef>
 <typedef name="value_type"><type>index_type::value_type</type></typedef>
@@ -1980,7 +1980,7 @@
 <namespace name="interprocess">
 <class name="iunordered_set_index"><template>
       <template-type-parameter name="MapConfig"/>
-    </template><description><para>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </para></description><typedef name="iterator"><type>index_type::iterator</type></typedef>
+    </template><inherit access="private">iunordered_set_index_aux::allocator_holder&lt; MapConfig &gt;</inherit><inherit access="public">iunordered_set_index_aux::index_t&lt; MapConfig &gt;</inherit><description><para>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </para></description><typedef name="iterator"><type>index_type::iterator</type></typedef>
 <typedef name="const_iterator"><type>index_type::const_iterator</type></typedef>
 <typedef name="insert_commit_data"><type>index_type::insert_commit_data</type></typedef>
 <typedef name="value_type"><type>index_type::value_type</type></typedef>
@@ -2180,7 +2180,7 @@
 <namespace name="interprocess">
 <class name="unordered_map_index"><template>
       <template-type-parameter name="MapConfig"/>
-    </template><description><para>Index type based in unordered_map. Just derives from unordered_map and defines the interface needed by managed memory segments </para></description><method-group name="public member functions">
+    </template><inherit access="public">unordered_map_index_aux::index_t&lt; MapConfig &gt;</inherit><description><para>Index type based in unordered_map. Just derives from unordered_map and defines the interface needed by managed memory segments </para></description><method-group name="public member functions">
 <method name="reserve"><type>void</type><parameter name="n"><paramtype>typename segment_manager_base::size_type</paramtype></parameter><description><para>This reserves memory to optimize the insertion of n elements in the index </para></description></method>
 <method name="shrink_to_fit"><type>void</type><description><para>This tries to free previously allocate unused memory. </para></description></method>
 </method-group>
@@ -2268,7 +2268,7 @@
     </template><description><para>A class that allows sending messages between processes. </para></description><typedef name="void_pointer"><type>VoidPointer</type></typedef>
 <typedef name="char_ptr"><type>boost::intrusive::pointer_traits&lt; void_pointer &gt;::template rebind_pointer&lt; char &gt;::type</type></typedef>
 <typedef name="difference_type"><type>boost::intrusive::pointer_traits&lt; char_ptr &gt;::difference_type</type></typedef>
-<typedef name="size_type"><type><emphasis>unspecified</emphasis></type></typedef>
+<typedef name="size_type"><type>boost::container::dtl::make_unsigned&lt; difference_type &gt;::type</type></typedef>
 <method-group name="public member functions">
 <method name="send"><type>void</type><parameter name="buffer"><paramtype>const void *</paramtype></parameter><parameter name="buffer_size"><paramtype>size_type</paramtype></parameter><parameter name="priority"><paramtype>unsigned int</paramtype></parameter><description><para>Sends a message stored in buffer "buffer" with size "buffer_size" in the message queue with priority "priority". If the message queue is full the sender is blocked. Throws interprocess_error on error. </para></description></method>
 <method name="try_send"><type>bool</type><parameter name="buffer"><paramtype>const void *</paramtype></parameter><parameter name="buffer_size"><paramtype>size_type</paramtype></parameter><parameter name="priority"><paramtype>unsigned int</paramtype></parameter><description><para>Sends a message stored in buffer "buffer" with size "buffer_size" through the message queue with priority "priority". If the message queue is full the sender is not blocked and returns false, otherwise returns true. Throws interprocess_error on error. </para></description></method>
@@ -2869,7 +2869,7 @@
 <typedef name="void_pointer"><purpose>Pointer type to be used with the rest of the Interprocess framework. </purpose><type>VoidPointer</type></typedef>
 <typedef name="multiallocation_chain"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="difference_type"><type>boost::intrusive::pointer_traits&lt; char_ptr &gt;::difference_type</type></typedef>
-<typedef name="size_type"><type><emphasis>unspecified</emphasis></type></typedef>
+<typedef name="size_type"><type>boost::container::dtl::make_unsigned&lt; difference_type &gt;::type</type></typedef>
 <data-member name="PayloadPerAllocation" specifiers="static"><type>const size_type</type></data-member>
 <method-group name="public member functions">
 <method name="allocate"><type>void *</type><parameter name="nbytes"><paramtype>size_type</paramtype></parameter><purpose>Allocates bytes, returns 0 if there is not more memory. </purpose></method>
@@ -3015,17 +3015,15 @@
       <template-nontype-parameter name="OffsetAlignment"><type>std::size_t</type><purpose><para>Alignment of the OffsetType stored inside. In some systems might be necessary to align it to 64 bits in order to communicate 32 and 64 bit processes using 64 bit offsets.</para></purpose></template-nontype-parameter>
     </template><description><para>A smart pointer that stores the offset between between the pointer and the the object it points. This allows offset allows special properties, since the pointer is independent from the address of the pointee, if the pointer and the pointee are still separated by the same offset. This feature converts <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname> in a smart pointer that can be placed in shared memory and memory mapped files mapped in different addresses in every process.</para><para>
 b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname> uses implementation defined properties, present in most platforms, for performance reasons:<itemizedlist>
-<listitem><para>Assumes that uintptr_t representation of nullptr is (uintptr_t)zero.</para></listitem><listitem><para>Assumes that incrementing a uintptr_t obtained from a pointer is equivalent to incrementing the pointer and then converting it back to uintptr_t. </para></listitem></itemizedlist>
-</para></description><struct name="rebind"><template>
-      <template-type-parameter name="U"/>
-    </template><description><para>Compatibility with pointer_traits </para></description><typedef name="other"><type><classname>offset_ptr</classname>&lt; U, DifferenceType, OffsetType, OffsetAlignment &gt;</type></typedef>
-</struct><typedef name="element_type"><type>PointedType</type></typedef>
+<listitem><para>Assumes that OffsetType representation of nullptr is (OffsetType)zero.</para></listitem><listitem><para>Assumes that incrementing a OffsetType obtained from a pointer is equivalent to incrementing the pointer and then converting it back to OffsetType. </para></listitem></itemizedlist>
+</para></description><typedef name="element_type"><type>PointedType</type></typedef>
 <typedef name="pointer"><type>PointedType *</type></typedef>
 <typedef name="reference"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="value_type"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="difference_type"><type>DifferenceType</type></typedef>
 <typedef name="iterator_category"><type>std::random_access_iterator_tag</type></typedef>
 <typedef name="offset_type"><type>OffsetType</type></typedef>
+<typedef name="rebind"><description><para>Compatibility with pointer_traits </para></description><type><classname>offset_ptr</classname>&lt; U, DifferenceType, OffsetType, OffsetAlignment &gt;</type></typedef>
 <method-group name="public member functions">
 <method name="get" cv="const noexcept"><type>pointer</type><description><para>Obtains raw pointer from offset. Never throws. </para></description></method>
 <method name="get_offset" cv="const noexcept"><type>offset_type</type></method>
@@ -3036,8 +3034,8 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <method name="operator-=" cv="noexcept"><type><classname>offset_ptr</classname> &amp;</type><parameter name="offset"><paramtype>difference_type</paramtype></parameter><description><para><classname alt="boost::interprocess::offset_ptr">offset_ptr</classname> -= difference_type. Never throws. </para></description></method>
 <method name="operator++" cv="noexcept"><type><classname>offset_ptr</classname> &amp;</type><parameter name=""><paramtype>void</paramtype></parameter><description><para>++offset_ptr. Never throws. </para></description></method>
 <method name="operator++" cv="noexcept"><type><classname>offset_ptr</classname></type><parameter name=""><paramtype>int</paramtype></parameter><description><para>offset_ptr++. Never throws. </para></description></method>
-<method name="operator--" cv="noexcept"><type><classname>offset_ptr</classname> &amp;</type><parameter name=""><paramtype>void</paramtype></parameter><description><para>--offset_ptr. Never throws. </para></description></method>
-<method name="operator--" cv="noexcept"><type><classname>offset_ptr</classname></type><parameter name=""><paramtype>int</paramtype></parameter><description><para>offset_ptr--. Never throws. </para></description></method>
+<method name="operator--" cv="noexcept"><type><classname>offset_ptr</classname> &amp;</type><parameter name=""><paramtype>void</paramtype></parameter><description><para>–<classname alt="boost::interprocess::offset_ptr">offset_ptr</classname>. Never throws. </para></description></method>
+<method name="operator--" cv="noexcept"><type><classname>offset_ptr</classname></type><parameter name=""><paramtype>int</paramtype></parameter><description><para><classname alt="boost::interprocess::offset_ptr">offset_ptr</classname>–. Never throws. </para></description></method>
 <method name="conversion-operator" cv="const noexcept" specifiers="explicit"><type>bool</type><description><para>safe bool conversion operator. Never throws. </para></description></method>
 <method name="operator!" cv="const noexcept"><type>bool</type><description><para>Not operator. Not needed in theory, but improves portability. Never throws </para></description></method>
 </method-group>
@@ -3049,7 +3047,10 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <constructor cv="noexcept"><parameter name="ptr"><paramtype>const <classname>offset_ptr</classname> &amp;</paramtype></parameter><description><para>Constructor from other <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname> Never throws. </para></description></constructor>
 <constructor cv="noexcept"><template>
           <template-type-parameter name="T2"/>
-        </template><parameter name="ptr"><paramtype>const <classname>offset_ptr</classname>&lt; T2, DifferenceType, OffsetType, OffsetAlignment &gt; &amp;</paramtype></parameter><description><para>Constructor from other <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname>. If pointers of pointee types are convertible, offset_ptrs will be convertibles. Never throws. </para></description></constructor>
+        </template><parameter name="ptr"><paramtype>const <classname>offset_ptr</classname>&lt; T2, DifferenceType, OffsetType, OffsetAlignment &gt; &amp;</paramtype></parameter><description><para>Constructor from other <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname>. Only takes part in overload resolution if T2* is convertible to PointedType*. Never throws. </para></description></constructor>
+<constructor specifiers="explicit" cv="noexcept"><template>
+          <template-type-parameter name="T2"/>
+        </template><parameter name="ptr"><paramtype>const <classname>offset_ptr</classname>&lt; T2, DifferenceType, OffsetType, OffsetAlignment &gt; &amp;</paramtype></parameter><description><para>Constructor from other <classname alt="boost::interprocess::offset_ptr">offset_ptr</classname>. Only takes part in overload resolution if PointedType* is constructible from T2* other than via a conversion (e.g. cast to a derived class). Never throws. </para></description></constructor>
 <constructor cv="noexcept"><template>
           <template-type-parameter name="T2"/>
           <template-type-parameter name="P2"/>
@@ -3265,7 +3266,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <namespace name="interprocess">
 <class name="segment_manager_base"><template>
       <template-type-parameter name="MemoryAlgorithm"/>
-    </template><description><para>This object is the public base class of segment manager. This class only depends on the memory allocation algorithm and implements all the allocation features not related to named or unique objects.</para><para>Storing a reference to <classname alt="boost::interprocess::segment_manager">segment_manager</classname> forces the holder class to be dependent on index types and character types. When such dependence is not desirable and only anonymous and raw allocations are needed, <classname alt="boost::interprocess::segment_manager_base">segment_manager_base</classname> is the correct answer. </para></description><typedef name="segment_manager_base_type"><type><classname>segment_manager_base</classname>&lt; MemoryAlgorithm &gt;</type></typedef>
+    </template><inherit access="private">MemoryAlgorithm</inherit><description><para>This object is the public base class of segment manager. This class only depends on the memory allocation algorithm and implements all the allocation features not related to named or unique objects.</para><para>Storing a reference to <classname alt="boost::interprocess::segment_manager">segment_manager</classname> forces the holder class to be dependent on index types and character types. When such dependence is not desirable and only anonymous and raw allocations are needed, <classname alt="boost::interprocess::segment_manager_base">segment_manager_base</classname> is the correct answer. </para></description><typedef name="segment_manager_base_type"><type><classname>segment_manager_base</classname>&lt; MemoryAlgorithm &gt;</type></typedef>
 <typedef name="void_pointer"><type>MemoryAlgorithm::void_pointer</type></typedef>
 <typedef name="mutex_family"><type>MemoryAlgorithm::mutex_family</type></typedef>
 <typedef name="memory_algorithm"><type>MemoryAlgorithm</type></typedef>
@@ -3308,7 +3309,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <typedef name="mutex_family"><type>segment_manager_base_t::mutex_family</type></typedef>
 <typedef name="const_named_iterator"><type>transform_iterator&lt; typename named_index_t::const_iterator, named_transform &gt;</type></typedef>
 <typedef name="const_unique_iterator"><type>transform_iterator&lt; typename unique_index_t::const_iterator, unique_transform &gt;</type></typedef>
-<data-member name="PayloadPerAllocation" specifiers="static"><type>const size_type</type><description><para>This constant indicates the payload size associated with each allocation of the memory algorithm </para></description></data-member>
+<data-member name="PayloadPerAllocation" specifiers="static"><type>const size_type</type></data-member>
 <method-group name="public member functions">
 <method name="find"><type>std::pair&lt; T *, size_type &gt;</type><template>
           <template-type-parameter name="T"/>
@@ -3569,15 +3570,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <header name="boost/interprocess/smart_ptr/enable_shared_from_this.hpp">
 <para>Describes an utility to form a shared pointer from this </para><namespace name="boost">
 <namespace name="interprocess">
-<class name="enable_shared_from_this"><template>
-      <template-type-parameter name="T"/>
-      <template-type-parameter name="A"/>
-      <template-type-parameter name="D"/>
-    </template><description><para>This class is used as a base class that allows a <classname alt="boost::interprocess::shared_ptr">shared_ptr</classname> to the current object to be obtained from within a member function. <classname alt="boost::interprocess::enable_shared_from_this">enable_shared_from_this</classname> defines two member functions called shared_from_this that return a shared_ptr&lt;T&gt; and shared_ptr&lt;T const&gt;, depending on constness, to this. </para></description><method-group name="public member functions">
-<method name="shared_from_this"><type><classname>shared_ptr</classname>&lt; T, A, D &gt;</type></method>
-<method name="shared_from_this" cv="const"><type><classname>shared_ptr</classname>&lt; T const, A, D &gt;</type></method>
-</method-group>
-</class>
+
 
 
 
@@ -3634,30 +3627,33 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <class name="intrusive_ptr"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="VoidPointer"/>
-    </template><description><para>The <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> class template stores a pointer to an object with an embedded reference count. <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> is parameterized on T (the type of the object pointed to) and VoidPointer(a void pointer type that defines the type of pointer that <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> will store). intrusive_ptr&lt;T, void *&gt; defines a class with a T* member whereas <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname>&lt;T, offset_ptr&lt;void&gt; &gt; defines a class with a offset_ptr&lt;T&gt; member. Relies on unqualified calls to:</para><para>void intrusive_ptr_add_ref(T * p); void intrusive_ptr_release(T * p);</para><para>with (p != 0)</para><para>The object is responsible for destroying itself. </para></description><typedef name="pointer"><purpose>Provides the type of the internal stored pointer. </purpose><type>boost::intrusive::pointer_traits&lt; VoidPointer &gt;::template rebind_pointer&lt; T &gt;::type</type></typedef>
+    </template><description><para>The <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> class template stores a pointer to an object with an embedded reference count. <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> is parameterized on T (the type of the object pointed to) and VoidPointer(a void pointer type that defines the type of pointer that <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname> will store). intrusive_ptr&lt;T, void *&gt; defines a class with a T* member whereas <classname alt="boost::interprocess::intrusive_ptr">intrusive_ptr</classname>&lt;T, offset_ptr&lt;void&gt; &gt; defines a class with a offset_ptr&lt;T&gt; member. Relies on unqualified calls to:</para><para>void intrusive_ptr_add_ref(T * p) BOOST_NOEXCEPT; void intrusive_ptr_release(T * p) BOOST_NOEXCEPT;</para><para>with (p != 0)</para><para>The object is responsible for destroying itself. </para></description><typedef name="pointer"><purpose>Provides the type of the internal stored pointer. </purpose><type>boost::intrusive::pointer_traits&lt; VoidPointer &gt;::template rebind_pointer&lt; T &gt;::type</type></typedef>
 <typedef name="element_type"><purpose>Provides the type of the stored pointer. </purpose><type>T</type></typedef>
 <method-group name="public member functions">
-<method name="get"><type>pointer &amp;</type><description><para>Returns a reference to the internal pointer. Does not throw </para></description></method>
-<method name="get" cv="const"><type>const pointer &amp;</type><description><para>Returns a reference to the internal pointer. Does not throw </para></description></method>
-<method name="operator*" cv="const"><type>T &amp;</type><description><para>Returns *get(). Does not throw </para></description></method>
-<method name="operator-&gt;" cv="const"><type>const pointer &amp;</type><description><para>Returns *get(). Does not throw </para></description></method>
-<method name="operator-&gt;"><type>pointer &amp;</type><description><para>Returns get(). Does not throw </para></description></method>
-<method name="conversion-operator" cv="const"><type>unspecified_bool_type</type><description><para>Conversion to boolean. Does not throw </para></description></method>
-<method name="operator!" cv="const"><type>bool</type><description><para>Not operator. Does not throw </para></description></method>
-<method name="swap"><type>void</type><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> &amp;</paramtype></parameter><description><para>Exchanges the contents of the two smart pointers. Does not throw </para></description></method>
+<method name="reset" cv="noexcept"><type>void</type><description><para>Release internal pointer and set it to 0. If internal pointer is not 0, calls intrusive_ptr_release(to_raw_pointer(m_ptr)). Does not throw </para></description></method>
+<method name="get" cv="noexcept"><type>pointer &amp;</type><description><para>Returns a reference to the internal pointer. Does not throw </para></description></method>
+<method name="get" cv="const noexcept"><type>const pointer &amp;</type><description><para>Returns a reference to the internal pointer. Does not throw </para></description></method>
+<method name="operator*" cv="const noexcept"><type>T &amp;</type><description><para>Returns *get(). Does not throw </para></description></method>
+<method name="operator-&gt;" cv="const noexcept"><type>const pointer &amp;</type><description><para>Returns *get(). Does not throw </para></description></method>
+<method name="operator-&gt;" cv="noexcept"><type>pointer &amp;</type><description><para>Returns get(). Does not throw </para></description></method>
+<method name="conversion-operator" cv="const noexcept"><type>unspecified_bool_type</type><description><para>Conversion to boolean. Does not throw </para></description></method>
+<method name="operator!" cv="const noexcept"><type>bool</type><description><para>Not operator. Does not throw </para></description></method>
+<method name="swap" cv="noexcept"><type>void</type><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> &amp;</paramtype></parameter><description><para>Exchanges the contents of the two smart pointers. Does not throw </para></description></method>
 </method-group>
-<constructor><description><para>Constructor. Initializes internal pointer to 0. Does not throw </para></description></constructor>
-<constructor><parameter name="p"><paramtype>const pointer &amp;</paramtype></parameter><parameter name="add_ref"><paramtype>bool</paramtype><default>true</default></parameter><description><para>Constructor. Copies pointer and if "p" is not zero and "add_ref" is true calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw </para></description></constructor>
-<constructor><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> const &amp;</paramtype></parameter><description><para>Copy constructor. Copies the internal pointer and if "p" is not zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw </para></description></constructor>
-<constructor><template>
+<constructor cv="noexcept"><description><para>Constructor. Initializes internal pointer to 0. Does not throw </para></description></constructor>
+<constructor cv="noexcept"><parameter name="p"><paramtype>const pointer &amp;</paramtype></parameter><parameter name="add_ref"><paramtype>bool</paramtype><default>true</default></parameter><description><para>Constructor. Copies pointer and if "p" is not zero and "add_ref" is true calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw </para></description></constructor>
+<constructor cv="noexcept"><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> const &amp;</paramtype></parameter><description><para>Copy constructor. Copies the internal pointer and if "p" is not zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw </para></description></constructor>
+<constructor cv="noexcept"><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> &amp;&amp;</paramtype></parameter><purpose>Move constructor. Moves the internal pointer. Does not throw. </purpose></constructor>
+<constructor cv="noexcept"><template>
           <template-type-parameter name="U"/>
         </template><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname>&lt; U, VP &gt; const &amp;</paramtype></parameter><description><para>Constructor from related. Copies the internal pointer and if "p" is not zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw </para></description></constructor>
-<destructor><description><para>Destructor. If internal pointer is not 0, calls intrusive_ptr_release(to_raw_pointer(m_ptr)). Does not throw </para></description></destructor>
-<copy-assignment><type><classname>intrusive_ptr</classname> &amp;</type><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> const &amp;</paramtype></parameter><description><para>Assignment operator. Equivalent to intrusive_ptr(r).swap(*this). Does not throw </para></description></copy-assignment>
-<copy-assignment><type><classname>intrusive_ptr</classname> &amp;</type><template>
+<destructor><purpose>Destructor. Calls reset(). Does not throw. </purpose></destructor>
+<copy-assignment cv="noexcept"><type><classname>intrusive_ptr</classname> &amp;</type><parameter name="rhs"><paramtype>BOOST_COPY_ASSIGN_REF(<classname>intrusive_ptr</classname>)</paramtype></parameter><description><para>Assignment operator. Equivalent to intrusive_ptr(r).swap(*this). Does not throw </para></description></copy-assignment>
+<copy-assignment cv="noexcept"><type><classname>intrusive_ptr</classname> &amp;</type><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname> &amp;&amp;</paramtype></parameter><description><para>Move Assignment operator Does not throw </para></description></copy-assignment>
+<copy-assignment cv="noexcept"><type><classname>intrusive_ptr</classname> &amp;</type><template>
           <template-type-parameter name="U"/>
         </template><parameter name="rhs"><paramtype><classname>intrusive_ptr</classname>&lt; U, VP &gt; const &amp;</paramtype></parameter><description><para>Assignment from related. Equivalent to intrusive_ptr(r).swap(*this). Does not throw </para></description></copy-assignment>
-<copy-assignment><type><classname>intrusive_ptr</classname> &amp;</type><parameter name="rhs"><paramtype>pointer</paramtype></parameter><description><para>Assignment from pointer. Equivalent to intrusive_ptr(r).swap(*this). Does not throw </para></description></copy-assignment>
+<copy-assignment cv="noexcept"><type><classname>intrusive_ptr</classname> &amp;</type><parameter name="rhs"><paramtype>pointer</paramtype></parameter><description><para>Assignment from pointer. Equivalent to intrusive_ptr(r).swap(*this). Does not throw </para></description></copy-assignment>
 </class>
 
 
@@ -3749,7 +3745,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <class name="scoped_ptr"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="Deleter"/>
-    </template><description><para><classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname> stores a pointer to a dynamically allocated object. The object pointed to is guaranteed to be deleted, either on destruction of the <classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname>, or via an explicit reset. The user can avoid this deletion using release(). <classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname> is parameterized on T (the type of the object pointed to) and Deleter (the functor to be executed to delete the internal pointer). The internal pointer will be of the same pointer type as typename Deleter::pointer type (that is, if typename Deleter::pointer is offset_ptr&lt;void&gt;, the internal pointer will be offset_ptr&lt;T&gt;). </para></description><typedef name="element_type"><type>T</type></typedef>
+    </template><inherit access="private">Deleter</inherit><description><para><classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname> stores a pointer to a dynamically allocated object. The object pointed to is guaranteed to be deleted, either on destruction of the <classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname>, or via an explicit reset. The user can avoid this deletion using release(). <classname alt="boost::interprocess::scoped_ptr">scoped_ptr</classname> is parameterized on T (the type of the object pointed to) and Deleter (the functor to be executed to delete the internal pointer). The internal pointer will be of the same pointer type as typename Deleter::pointer type (that is, if typename Deleter::pointer is offset_ptr&lt;void&gt;, the internal pointer will be offset_ptr&lt;T&gt;). </para></description><typedef name="element_type"><type>T</type></typedef>
 <typedef name="deleter_type"><type>Deleter</type></typedef>
 <typedef name="pointer"><type><emphasis>unspecified</emphasis></type></typedef>
 <typedef name="unspecified_bool_type"><type>pointer this_type::*</type></typedef>
@@ -3828,7 +3824,15 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <header name="boost/interprocess/smart_ptr/shared_ptr.hpp">
 <para>Describes the smart pointer shared_ptr </para><namespace name="boost">
 <namespace name="interprocess">
-<class name="shared_ptr"><template>
+<class name="enable_shared_from_this"><template>
+      <template-type-parameter name="T"/>
+      <template-type-parameter name="VoidAllocator"/>
+      <template-type-parameter name="Deleter"/>
+    </template><description><para>This class is used as a base class that allows a <classname alt="boost::interprocess::shared_ptr">shared_ptr</classname> to the current object to be obtained from within a member function. <classname alt="boost::interprocess::enable_shared_from_this">enable_shared_from_this</classname> defines two member functions called shared_from_this that return a shared_ptr&lt;T&gt; and shared_ptr&lt;T const&gt;, depending on constness, to this. </para></description><method-group name="public member functions">
+<method name="shared_from_this"><type><classname>shared_ptr</classname>&lt; T, A, D &gt;</type></method>
+<method name="shared_from_this" cv="const"><type><classname>shared_ptr</classname>&lt; T const, A, D &gt;</type></method>
+</method-group>
+</class><class name="shared_ptr"><template>
       <template-type-parameter name="T"/>
       <template-type-parameter name="VoidAllocator"/>
       <template-type-parameter name="Deleter"/>
@@ -3878,6 +3882,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <typedef name="deleter"><type>ManagedMemory::template deleter&lt; T &gt;::<classname>type</classname></type></typedef>
 <typedef name="type"><type><classname>shared_ptr</classname>&lt; T, void_allocator, deleter &gt;</type></typedef>
 </struct>
+
 
 
 
@@ -3980,7 +3985,6 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 
 
 
-
 </namespace>
 </namespace>
 </header>
@@ -4015,21 +4019,21 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <function name="make_managed_unique_ptr"><type><classname>managed_unique_ptr</classname>&lt; T, ManagedMemory &gt;::type</type><template>
           <template-type-parameter name="T"/>
           <template-type-parameter name="ManagedMemory"/>
         </template><parameter name="constructed_object"><paramtype>T *</paramtype></parameter><parameter name="managed_memory"><paramtype>ManagedMemory &amp;</paramtype></parameter><description><para>Returns an instance of a unique pointer constructed with boost::interproces::deleter from a pointer of type T that has been allocated in the passed managed segment </para></description></function>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4149,12 +4153,12 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <class name="basic_bufferbuf"><template>
       <template-type-parameter name="CharT"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A streambuf class that controls the transmission of elements to and from a basic_xbufferstream. The elements are transmitted from a to a fixed size buffer </para></description><typedef name="char_type"><type>CharT</type></typedef>
+    </template><inherit access="public">std::basic_streambuf&lt; CharT, CharTraits &gt;</inherit><description><para>A streambuf class that controls the transmission of elements to and from a basic_xbufferstream. The elements are transmitted from a to a fixed size buffer </para></description><typedef name="char_type"><type>CharT</type></typedef>
 <typedef name="int_type"><type>CharTraits::int_type</type></typedef>
 <typedef name="pos_type"><type>CharTraits::pos_type</type></typedef>
 <typedef name="off_type"><type>CharTraits::off_type</type></typedef>
 <typedef name="traits_type"><type>CharTraits</type></typedef>
-<typedef name="base_t"><type>std::basic_streambuf&lt; char_type, traits_type &gt;</type></typedef>
+<typedef name="basic_streambuf_t"><type>std::basic_streambuf&lt; char_type, traits_type &gt;</type></typedef>
 <method-group name="public member functions">
 <method name="buffer" cv="const"><type>std::pair&lt; CharT *, std::size_t &gt;</type><description><para>Returns the pointer and size of the internal buffer. Does not throw. </para></description></method>
 <method name="buffer"><type>void</type><parameter name="buf"><paramtype>CharT *</paramtype></parameter><parameter name="length"><paramtype>std::size_t</paramtype></parameter><description><para>Sets the underlying buffer to a new value Does not throw. </para></description></method>
@@ -4165,7 +4169,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_ibufferstream"><template>
       <template-type-parameter name="CharT"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_istream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
+    </template><inherit access="public">std::basic_istream&lt; CharT, CharTraits &gt;</inherit><description><para>A basic_istream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
 <typedef name="off_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::off_type</type></typedef>
@@ -4181,7 +4185,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_obufferstream"><template>
       <template-type-parameter name="CharT"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_ostream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
+    </template><inherit access="public">std::basic_ostream&lt; CharT, CharTraits &gt;</inherit><description><para>A basic_ostream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
 <typedef name="off_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::off_type</type></typedef>
@@ -4197,7 +4201,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_bufferstream"><template>
       <template-type-parameter name="CharT"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_iostream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
+    </template><inherit access="public">std::basic_iostream&lt; CharT, CharTraits &gt;</inherit><description><para>A basic_iostream class that uses a fixed size character buffer as its formatting buffer. </para></description><typedef name="char_type"><type>std::basic_ios&lt; CharT, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
 <typedef name="off_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::off_type</type></typedef>
@@ -4275,7 +4279,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <class name="basic_vectorbuf"><template>
       <template-type-parameter name="CharVector"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A streambuf class that controls the transmission of elements to and from a <classname alt="boost::interprocess::basic_ivectorstream">basic_ivectorstream</classname>, <classname alt="boost::interprocess::basic_ovectorstream">basic_ovectorstream</classname> or <classname alt="boost::interprocess::basic_vectorstream">basic_vectorstream</classname>. It holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
+    </template><inherit access="public">std::basic_streambuf&lt; CharVector::value_type, CharTraits &gt;</inherit><description><para>A streambuf class that controls the transmission of elements to and from a <classname alt="boost::interprocess::basic_ivectorstream">basic_ivectorstream</classname>, <classname alt="boost::interprocess::basic_ovectorstream">basic_ovectorstream</classname> or <classname alt="boost::interprocess::basic_vectorstream">basic_vectorstream</classname>. It holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
 <typedef name="char_type"><type>CharVector::value_type</type></typedef>
 <typedef name="int_type"><type>CharTraits::int_type</type></typedef>
 <typedef name="pos_type"><type>CharTraits::pos_type</type></typedef>
@@ -4294,7 +4298,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_ivectorstream"><template>
       <template-type-parameter name="CharVector"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_istream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
+    </template><inherit access="public">std::basic_istream&lt; CharVector::value_type, CharTraits &gt;</inherit><description><para>A basic_istream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
 <typedef name="char_type"><type>std::basic_ios&lt; typename CharVector::value_type, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
@@ -4314,7 +4318,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_ovectorstream"><template>
       <template-type-parameter name="CharVector"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_ostream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
+    </template><inherit access="public">std::basic_ostream&lt; CharVector::value_type, CharTraits &gt;</inherit><description><para>A basic_ostream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
 <typedef name="char_type"><type>std::basic_ios&lt; typename CharVector::value_type, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
@@ -4333,7 +4337,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 </class><class name="basic_vectorstream"><template>
       <template-type-parameter name="CharVector"/>
       <template-type-parameter name="CharTraits"/>
-    </template><description><para>A basic_iostream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
+    </template><inherit access="public">std::basic_iostream&lt; CharVector::value_type, CharTraits &gt;</inherit><description><para>A basic_iostream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </para></description><typedef name="vector_type"><type>CharVector</type></typedef>
 <typedef name="char_type"><type>std::basic_ios&lt; typename CharVector::value_type, CharTraits &gt;::char_type</type></typedef>
 <typedef name="int_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::int_type</type></typedef>
 <typedef name="pos_type"><type>std::basic_ios&lt; char_type, CharTraits &gt;::pos_type</type></typedef>
@@ -5700,7 +5704,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
           <template-type-parameter name="T"/>
         </template><parameter name="shar"><paramtype><classname>sharable_lock</classname>&lt; T &gt; &amp;&amp;</paramtype></parameter><parameter name=""><paramtype><classname>try_to_lock_type</classname></paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><description><para>Effects: If shar.owns() then calls try_unlock_sharable_and_lock() on the referenced mutex. a)if try_unlock_sharable_and_lock() returns true then mutex() obtains the value from shar.release() and owns() is set to true. b)if try_unlock_sharable_and_lock() returns false then shar is unaffected and this <classname alt="boost::interprocess::scoped_lock">scoped_lock</classname> construction has the same effects as a default construction. c)Else shar.owns() is false. mutex() obtains the value from shar.release() and owns() is set to false Notes: This construction will not block. It will try to obtain mutex ownership from shar immediately, while changing the lock type from a "read lock" to a "write lock". If the "read lock" isn't held in the first place, the mutex merely changes type to an unlocked "write lock". If the "read lock" is held, then mutex transfer occurs only if it can do so in a non-blocking manner. </para></description></constructor>
 <destructor><description><para>Effects: if (owns()) mp_mutex-&gt;unlock(). Notes: The destructor behavior ensures that the mutex lock is not leaked. </para></description></destructor>
-<copy-assignment><type><classname>scoped_lock</classname> &amp;</type><parameter name="scop"><paramtype><classname>scoped_lock</classname> &amp;&amp;</paramtype></parameter><description><para>Effects: If owns() before the call, then unlock() is called on mutex(). this gets the state of scop and scop gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and scop own the same mutex before the assignment. In this case, this will own the mutex after the assignment (and scop will not), but the mutex's lock count will be decremented by one. </para></description></copy-assignment>
+<copy-assignment><type><classname>scoped_lock</classname> &amp;</type><parameter name="scop"><paramtype><classname>scoped_lock</classname> &amp;&amp;</paramtype></parameter><description><para>Effects: If owns() before the call, then unlock() is called on mutex(). *this gets the state of scop and scop gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and scop own the same mutex before the assignment. In this case, this will own the mutex after the assignment (and scop will not), but the mutex's lock count will be decremented by one. </para></description></copy-assignment>
 </class>
 
 
@@ -5783,7 +5787,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
           <template-type-parameter name="T"/>
         </template><parameter name="scop"><paramtype><classname>scoped_lock</classname>&lt; T &gt; &amp;&amp;</paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><description><para>Effects: If scop.owns() then calls unlock_and_lock_sharable() on the referenced mutex. Postconditions: mutex() == the value scop.mutex() had before the construction. scop.mutex() == 0 owns() == scop.owns() before the constructor. After the construction, scop.owns() == false. Notes: If scop is locked, this constructor will transfer the exclusive ownership to a sharable-ownership of this <classname alt="boost::interprocess::sharable_lock">sharable_lock</classname>. Only a moved <classname alt="boost::interprocess::scoped_lock">scoped_lock</classname>'s will match this signature. An non-moved <classname alt="boost::interprocess::scoped_lock">scoped_lock</classname> can be moved with the expression: "boost::move(lock);". </para></description></constructor>
 <destructor><description><para>Effects: if (owns()) mp_mutex-&gt;unlock_sharable(). Notes: The destructor behavior ensures that the mutex lock is not leaked. </para></description></destructor>
-<copy-assignment><type><classname>sharable_lock</classname> &amp;</type><parameter name="upgr"><paramtype><classname>sharable_lock</classname>&lt; mutex_type &gt; &amp;&amp;</paramtype></parameter><description><para>Effects: If owns() before the call, then unlock_sharable() is called on mutex(). this gets the state of upgr and upgr gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and upgr own the mutex before the assignment. In this case, this will own the mutex after the assignment (and upgr will not), but the mutex's lock count will be decremented by one. </para></description></copy-assignment>
+<copy-assignment><type><classname>sharable_lock</classname> &amp;</type><parameter name="upgr"><paramtype><classname>sharable_lock</classname>&lt; mutex_type &gt; &amp;&amp;</paramtype></parameter><description><para>Effects: If owns() before the call, then unlock_sharable() is called on mutex(). *this gets the state of upgr and upgr gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and upgr own the mutex before the assignment. In this case, this will own the mutex after the assignment (and upgr will not), but the mutex's lock count will be decremented by one. </para></description></copy-assignment>
 </class>
 
 
@@ -5866,7 +5870,7 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
           <template-type-parameter name="T"/>
         </template><parameter name="shar"><paramtype><classname>sharable_lock</classname>&lt; T &gt; &amp;&amp;</paramtype></parameter><parameter name=""><paramtype><classname>try_to_lock_type</classname></paramtype></parameter><parameter name=""><paramtype><emphasis>unspecified</emphasis></paramtype><default>0</default></parameter><description><para>Effects: If shar.owns() then calls try_unlock_sharable_and_lock_upgradable() on the referenced mutex. a)if try_unlock_sharable_and_lock_upgradable() returns true then mutex() obtains the value from shar.release() and owns() is set to true. b)if try_unlock_sharable_and_lock_upgradable() returns false then shar is unaffected and this <classname alt="boost::interprocess::upgradable_lock">upgradable_lock</classname> construction has the same effects as a default construction. c)Else shar.owns() is false. mutex() obtains the value from shar.release() and owns() is set to false. Notes: This construction will not block. It will try to obtain mutex ownership from shar immediately, while changing the lock type from a "read lock" to an "upgradable lock". If the "read lock" isn't held in the first place, the mutex merely changes type to an unlocked "upgradable lock". If the "read lock" is held, then mutex transfer occurs only if it can do so in a non-blocking manner. </para></description></constructor>
 <destructor><description><para>Effects: if (owns()) m_-&gt;unlock_upgradable(). Notes: The destructor behavior ensures that the mutex lock is not leaked. </para></description></destructor>
-<copy-assignment><type><classname>upgradable_lock</classname> &amp;</type><parameter name="upgr"><paramtype><classname>upgradable_lock</classname> &amp;&amp;</paramtype></parameter><description><para>Effects: If owns(), then unlock_upgradable() is called on mutex(). this gets the state of upgr and upgr gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and upgr own the mutex before the assignment. In this case, this will own the mutex after the assignment (and upgr will not), but the mutex's upgradable lock count will be decremented by one. </para></description></copy-assignment>
+<copy-assignment><type><classname>upgradable_lock</classname> &amp;</type><parameter name="upgr"><paramtype><classname>upgradable_lock</classname> &amp;&amp;</paramtype></parameter><description><para>Effects: If owns(), then unlock_upgradable() is called on mutex(). *this gets the state of upgr and upgr gets set to a default constructed state. Notes: With a recursive mutex it is possible that both this and upgr own the mutex before the assignment. In this case, this will own the mutex after the assignment (and upgr will not), but the mutex's upgradable lock count will be decremented by one. </para></description></copy-assignment>
 </class>
 
 
@@ -5989,10 +5993,11 @@ b&gt;Note: <classname alt="boost::interprocess::offset_ptr">offset_ptr</classnam
 <header name="boost/interprocess/xsi_key.hpp">
 <para>Describes a class representing a xsi key type. </para><namespace name="boost">
 <namespace name="interprocess">
-<class name="xsi_key"><description><para>A class that wraps XSI (System V) key_t type. This type calculates key_t from path and id using ftok or sets key to IPC_PRIVATE using the default constructor. </para></description><method-group name="public member functions">
+<class name="xsi_key"><description><para>A class that wraps XSI (System V) key_t type. This type calculates key_t from path and id using ftok, sets key to a specified value, or sets key to IPC_PRIVATE using the default constructor. </para></description><method-group name="public member functions">
 <method name="get_key" cv="const"><type>key_t</type><purpose>Returns the internal key_t value. </purpose></method>
 </method-group>
 <constructor><description><para>Default constructor. Represents a private <classname alt="boost::interprocess::xsi_key">xsi_key</classname>. </para></description></constructor>
+<constructor specifiers="explicit"><parameter name="key"><paramtype>key_t</paramtype></parameter><purpose>Creates a new XSI key using a specified value. Constructor is explicit to avoid ambiguity with shmid. </purpose></constructor>
 <constructor><parameter name="path"><paramtype>const char *</paramtype></parameter><parameter name="id"><paramtype>boost::uint8_t</paramtype></parameter><description><para>Creates a new XSI shared memory with a key obtained from a call to ftok (with path "path" and id "id"), of size "size" and permissions "perm". If the shared memory previously exists, throws an error. </para></description></constructor>
 </class>
 

@@ -1,10 +1,9 @@
 /*
-(c) 2014 Glen Joseph Fernandes
-<glenjofe -at- gmail.com>
+Copyright 2014 Glen Joseph Fernandes
+(glenjofe@gmail.com)
 
-Distributed under the Boost Software
-License, Version 1.0.
-http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software License, Version 1.0.
+(http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/aligned_delete.hpp>
@@ -12,64 +11,41 @@ http://boost.org/LICENSE_1_0.txt
 #include <boost/core/lightweight_test.hpp>
 #include <new>
 
-template<class T>
 class type {
 public:
-    static int count;
-    type()
-        : value() {
-        count++;
+    static unsigned count;
+
+    type() {
+        ++count;
     }
+
     ~type() {
-        count--;
+        --count;
     }
+
 private:
-    T value;
+    type(const type&);
+    type& operator=(const type&);
 };
 
-template<class T>
-int type<T>::count = 0;
-
-template<class T>
-T* aligned_new()
-{
-    void* p = boost::alignment::aligned_alloc(boost::
-        alignment::alignment_of<T>::value, sizeof(T));
-    if (p) {
-        return ::new(p) T();
-    } else {
-        throw std::bad_alloc();
-    }
-}
-
-template<class T>
-void test()
-{
-    type<T>* p = aligned_new<type<T> >();
-    BOOST_TEST(type<T>::count == 1);
-    boost::alignment::aligned_delete()(p);
-    BOOST_TEST(type<T>::count == 0);
-}
-
-class C { };
-union U { };
+unsigned type::count = 0;
 
 int main()
 {
-    test<char>();
-    test<bool>();
-    test<short>();
-    test<int>();
-    test<long>();
-    test<float>();
-    test<double>();
-    test<long double>();
-    test<void*>();
-    test<void(*)()>();
-    test<C>();
-    test<int C::*>();
-    test<int (C::*)()>();
-    test<U>();
-
+    {
+        void* p = boost::alignment::aligned_alloc(1, 1);
+        char* q = ::new(p) char;
+        boost::alignment::aligned_delete()(q);
+    }
+    {
+        enum {
+            N = boost::alignment::alignment_of<type>::value
+        };
+        void* p = boost::alignment::aligned_alloc(N, sizeof(type));
+        type* q = ::new(p) type;
+        BOOST_TEST(type::count == 1);
+        boost::alignment::aligned_delete()(q);
+        BOOST_TEST(type::count == 0);
+    }
     return boost::report_errors();
 }

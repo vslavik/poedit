@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Error Handling</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.4.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.8.0">
 <link rel="up" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="prev" href="result_type.html" title="Calculation of the Type of the Result">
 <link rel="next" href="compilers_overview.html" title="Compilers">
@@ -28,13 +28,13 @@
 </h2></div></div></div>
 <h4>
 <a name="math_toolkit.error_handling.h0"></a>
-      <span><a name="math_toolkit.error_handling.quick_reference"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.quick_reference">Quick
+      <span class="phrase"><a name="math_toolkit.error_handling.quick_reference"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.quick_reference">Quick
       Reference</a>
     </h4>
 <p>
       Handling of errors by this library is split into two orthogonal parts:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           What kind of error has been raised?
         </li>
@@ -57,7 +57,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">Domain Error</span></dt>
 <dd><p>
             Occurs when one or more arguments to a function are out of range.
@@ -108,7 +108,7 @@
 </div>
 <p>
       The action undertaken by each error condition is determined by the current
-      <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> in effect. This can be changed program-wide
+      <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> in effect. This can be changed program-wide
       by setting some configuration macros, or at namespace scope, or at the call
       site (by specifying a specific policy in the function call).
     </p>
@@ -117,7 +117,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">throw_on_error</span></dt>
 <dd><p>
             Throws the exception most appropriate to the error condition.
@@ -754,14 +754,14 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h1"></a>
-      <span><a name="math_toolkit.error_handling.rationale"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rationale">Rationale</a>
+      <span class="phrase"><a name="math_toolkit.error_handling.rationale"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rationale">Rationale</a>
     </h4>
 <p>
       The flexibility of the current implementation should be reasonably obvious:
       the default behaviours were chosen based on feedback during the formal review
       of this library. It was felt that:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Genuine errors should be flagged with exceptions rather than following
           C-compatible behaviour and setting <code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code>.
@@ -777,12 +777,12 @@
 </ul></div>
 <h4>
 <a name="math_toolkit.error_handling.h2"></a>
-      <span><a name="math_toolkit.error_handling.finding_more_information"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.finding_more_information">Finding
+      <span class="phrase"><a name="math_toolkit.error_handling.finding_more_information"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.finding_more_information">Finding
       More Information</a>
     </h4>
 <p>
       There are some pre-processor macro defines that can be used to <a class="link" href="pol_ref/policy_defaults.html" title="Using Macros to Change the Policy Defaults">change
-      the policy defaults</a>. See also the <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy section</a>.
+      the policy defaults</a>. See also the <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">policy section</a>.
     </p>
 <p>
       An example is at the Policy tutorial in <a class="link" href="pol_tutorial/changing_policy_defaults.html" title="Changing the Policy Defaults">Changing
@@ -798,7 +798,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h3"></a>
-      <span><a name="math_toolkit.error_handling.domain_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.domain_error">Domain
+      <span class="phrase"><a name="math_toolkit.error_handling.domain_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.domain_error">Domain
       Errors</a>
     </h4>
 <p>
@@ -806,19 +806,19 @@
       values for which that function is defined, then the function returns the result
       of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_domain_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_domain_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating-point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
       is an error message describing the problem, Val is the value that was out of
-      range, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current policy in use
+      range, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current policy in use
       for the function that was called.
     </p>
 <p>
       The default policy behaviour of this function is to throw a std::domain_error
-      C++ exception. But if the <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is to ignore
+      C++ exception. But if the <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is to ignore
       the error, or set global <code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code>,
       then a NaN will be returned.
     </p>
@@ -871,21 +871,21 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h4"></a>
-      <span><a name="math_toolkit.error_handling.pole_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.pole_error">Evaluation
+      <span class="phrase"><a name="math_toolkit.error_handling.pole_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.pole_error">Evaluation
       at a pole</a>
     </h4>
 <p>
       When a special function is passed an argument that is at a pole without a well
       defined residual value, then the function returns the result of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_pole_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_pole_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
       is an error message describing the problem, <code class="computeroutput"><span class="identifier">Val</span></code>
-      is the value of the argument that is at a pole, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
+      is the value of the argument that is at a pole, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
       is the current policy in use for the function that was called.
     </p>
 <p>
@@ -911,20 +911,20 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h5"></a>
-      <span><a name="math_toolkit.error_handling.overflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.overflow_error">Numeric
+      <span class="phrase"><a name="math_toolkit.error_handling.overflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.overflow_error">Numeric
       Overflow</a>
     </h4>
 <p>
       When the result of a special function is too large to fit in the argument floating-point
       type, then the function returns the result of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_overflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_overflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating-point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
-      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
+      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
       is the current policy in use for the function that was called.
     </p>
 <p>
@@ -936,20 +936,20 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h6"></a>
-      <span><a name="math_toolkit.error_handling.underflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.underflow_error">Numeric
+      <span class="phrase"><a name="math_toolkit.error_handling.underflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.underflow_error">Numeric
       Underflow</a>
     </h4>
 <p>
       If the result of a special function is known to be non-zero, but the calculated
       result underflows to zero, then the function returns the result of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_underflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_underflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
-      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
+      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
       is the current policy in use for the called function.
     </p>
 <p>
@@ -959,20 +959,20 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h7"></a>
-      <span><a name="math_toolkit.error_handling.denorm_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.denorm_error">Denormalisation
+      <span class="phrase"><a name="math_toolkit.error_handling.denorm_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.denorm_error">Denormalisation
       Errors</a>
     </h4>
 <p>
       If the result of a special function is a denormalised value <span class="emphasis"><em>z</em></span>
       then the function returns the result of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_denorm_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">z</span><span class="special">,</span> <span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_denorm_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">z</span><span class="special">,</span> <span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
-      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
+      is an error message describing the problem, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>
       is the current policy in use for the called function.
     </p>
 <p>
@@ -982,21 +982,21 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h8"></a>
-      <span><a name="math_toolkit.error_handling.evaluation_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.evaluation_error">Evaluation
+      <span class="phrase"><a name="math_toolkit.error_handling.evaluation_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.evaluation_error">Evaluation
       Errors</a>
     </h4>
 <p>
       When a special function calculates a result that is known to be erroneous,
       or where the result is incalculable then it calls:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_evaluation_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_evaluation_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
       is an error message describing the problem, <code class="computeroutput"><span class="identifier">Val</span></code>
-      is the erroneous value, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current
+      is the erroneous value, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current
       policy in use for the called function.
     </p>
 <p>
@@ -1019,14 +1019,14 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h9"></a>
-      <span><a name="math_toolkit.error_handling.indeterminate_result_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.indeterminate_result_error">Indeterminate
+      <span class="phrase"><a name="math_toolkit.error_handling.indeterminate_result_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.indeterminate_result_error">Indeterminate
       Result Errors</a>
     </h4>
 <p>
       When the result of a special function is indeterminate for the value that was
       passed to it, then the function returns the result of:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_overflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <span class="identifier">Default</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_overflow_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <span class="identifier">Default</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating-point
@@ -1036,7 +1036,7 @@
       result is indeterminate, Default is an alternative default result that must
       be returned for <code class="computeroutput"><span class="identifier">ignore_error</span></code>
       and <code class="computeroutput"><span class="identifier">errno_on_erro</span></code> policies,
-      and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current policy in use for the
+      and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the current policy in use for the
       function that was called.
     </p>
 <p>
@@ -1048,7 +1048,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h10"></a>
-      <span><a name="math_toolkit.error_handling.rounding_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rounding_error">Rounding
+      <span class="phrase"><a name="math_toolkit.error_handling.rounding_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rounding_error">Rounding
       Errors</a>
     </h4>
 <p>
@@ -1058,14 +1058,14 @@
       to be represented in the result type then the value returned is the result
       of a call to:
     </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_rounding_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">raise_rounding_error</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">FunctionName</span><span class="special">,</span> <span class="identifier">Message</span><span class="special">,</span> <span class="identifier">Val</span><span class="special">,</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">);</span>
 </pre>
 <p>
       Where <code class="computeroutput"><span class="identifier">T</span></code> is the floating point
       type passed to the function, <code class="computeroutput"><span class="identifier">FunctionName</span></code>
       is the name of the function, <code class="computeroutput"><span class="identifier">Message</span></code>
       is an error message describing the problem, <code class="computeroutput"><span class="identifier">Val</span></code>
-      is the erroneous argument, and <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the
+      is the erroneous argument, and <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> is the
       current policy in use for the called function.
     </p>
 <p>
@@ -1088,7 +1088,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h11"></a>
-      <span><a name="math_toolkit.error_handling.checked_narrowing_cast"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.checked_narrowing_cast">Errors
+      <span class="phrase"><a name="math_toolkit.error_handling.checked_narrowing_cast"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.checked_narrowing_cast">Errors
       from typecasts</a>
     </h4>
 <p>
@@ -1099,7 +1099,7 @@
       evaluation, but when converting the result to the narrower result type. The
       function:
     </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../policy.html" title="Chapter&#160;18.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span>
 <span class="identifier">T</span> <span class="identifier">checked_narrowing_cast</span><span class="special">(</span><span class="identifier">U</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">function</span><span class="special">);</span>
 </pre>
 <p>
@@ -1111,10 +1111,11 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
-      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
-      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014, 2017 Nikhar
+      Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos,
+      Hubert Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam
+      Sewani, Benjamin Sobotta, Nicholas Thompson, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

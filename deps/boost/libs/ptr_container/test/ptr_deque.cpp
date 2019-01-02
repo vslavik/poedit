@@ -12,6 +12,12 @@
 #include <boost/test/unit_test.hpp>
 #include "sequence_test_data.hpp"
 #include <boost/ptr_container/ptr_deque.hpp>
+#include <boost/ptr_container/detail/ptr_container_disable_deprecated.hpp>
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
 void test_ptr_deque()
 {
@@ -37,10 +43,22 @@ void test_ptr_deque()
     random_access_algorithms_test< ptr_deque<int> >();
     ptr_deque<int> di;
     di.push_front( new int(0) );
-    BOOST_CHECK_EQUAL( di.size(), 1u );
+    std::size_t size = 1u;
+    BOOST_CHECK_EQUAL( di.size(), size );
+#ifndef BOOST_NO_AUTO_PTR
     di.push_front( std::auto_ptr<int>( new int(1) ) );
-    BOOST_CHECK_EQUAL( di.size(), 2u ); 
+    ++size;
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+    di.push_front( std::unique_ptr<int>( new int(2) ) );
+    ++size;
+#endif
+    BOOST_CHECK_EQUAL( di.size(), size );
 }
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic pop
+#endif
 
 using boost::unit_test::test_suite;
 

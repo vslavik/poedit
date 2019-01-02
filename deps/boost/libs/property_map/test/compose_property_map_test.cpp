@@ -20,7 +20,7 @@ void concept_checks()
         typedef readable_property_map_archetype<Key, Key> GPMap;
         typedef readable_property_map_archetype<Key, Value> FPMap;
         typedef compose_property_map<FPMap, GPMap> CPM;
-        function_requires<ReadablePropertyMapConcept<CPM, Key> >();
+        BOOST_CONCEPT_ASSERT((ReadablePropertyMapConcept<CPM, Key>));
     }
     {
         typedef null_archetype<> Key;
@@ -28,7 +28,7 @@ void concept_checks()
         typedef readable_property_map_archetype<Key, Key> GPMap;
         typedef writable_property_map_archetype<Key, Value> FPMap;
         typedef compose_property_map<FPMap, GPMap> CPM;
-        function_requires<WritablePropertyMapConcept<CPM, Key> >();
+        BOOST_CONCEPT_ASSERT((WritablePropertyMapConcept<CPM, Key>));
     }
     {
         typedef null_archetype<> Key;
@@ -36,7 +36,7 @@ void concept_checks()
         typedef readable_property_map_archetype<Key, Key> GPMap;
         typedef read_write_property_map_archetype<Key, Value> FPMap;
         typedef compose_property_map<FPMap, GPMap> CPM;
-        function_requires<ReadWritePropertyMapConcept<CPM, Key> >();
+        BOOST_CONCEPT_ASSERT((ReadWritePropertyMapConcept<CPM, Key>));
     }
     {
         typedef null_archetype<> Key;
@@ -44,7 +44,7 @@ void concept_checks()
         typedef readable_property_map_archetype<Key, Key> GPMap;
         typedef lvalue_property_map_archetype<Key, Value> FPMap;
         typedef compose_property_map<FPMap, GPMap> CPM;
-        function_requires<LvaluePropertyMapConcept<CPM, Key> >();
+        BOOST_CONCEPT_ASSERT((LvaluePropertyMapConcept<CPM, Key>));
     }
     {
         typedef null_archetype<> Key;
@@ -52,7 +52,7 @@ void concept_checks()
         typedef readable_property_map_archetype<Key, Key> GPMap;
         typedef mutable_lvalue_property_map_archetype<Key, Value> FPMap;
         typedef compose_property_map<FPMap, GPMap> CPM;
-        function_requires<Mutable_LvaluePropertyMapConcept<CPM, Key> >();
+        BOOST_CONCEPT_ASSERT((Mutable_LvaluePropertyMapConcept<CPM, Key>));
     }
 }
 

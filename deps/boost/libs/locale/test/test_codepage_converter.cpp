@@ -80,8 +80,10 @@ bool test_incomplete(boost::locale::util::base_converter &cvt,unsigned codepoint
 #define TEST_FROM(str,codepoint) TEST(test_from(*cvt,codepoint,str))
 #define TEST_INC(codepoint,len) TEST(test_incomplete(*cvt,codepoint,len))
 
-void test_shiftjis(std::auto_ptr<boost::locale::util::base_converter> cvt)
+void test_shiftjis(boost::locale::util::base_converter* pcvt)
 {
+    boost::locale::hold_ptr<boost::locale::util::base_converter> cvt(pcvt);
+
         std::cout << "- Correct" << std::endl;
         TEST_TO("a",'a');
         TEST_TO("X",'X');
@@ -113,13 +115,22 @@ int main()
     try {
         using namespace boost::locale::util;
 
+        #ifndef BOOST_NO_CXX11_SMART_PTR
+        std::unique_ptr<base_converter> cvt;
+        #else
         std::auto_ptr<base_converter> cvt;
+        #endif
 
         std::cout << "Test UTF-8" << std::endl;
         std::cout << "- From UTF-8" << std::endl;
 
 
+        #ifndef BOOST_NO_CXX11_SMART_PTR
+        cvt = std::move(create_utf8_converter_unique_ptr());
+        #else
         cvt = create_utf8_converter();
+        #endif
+
         TEST(cvt.get());
         TEST(cvt->is_thread_safe());
         TEST(cvt->max_len() == 4);
@@ -250,7 +261,11 @@ int main()
 
         std::cout << "Test windows-1255" << std::endl;
 
+        #ifndef BOOST_NO_CXX11_SMART_PTR
+        cvt = std::move(create_simple_converter_unique_ptr("windows-1255"));
+        #else
         cvt = create_simple_converter("windows-1255");
+        #endif
 
         TEST(cvt.get());
         TEST(cvt->is_thread_safe());
@@ -279,17 +294,17 @@ int main()
         #ifdef BOOST_LOCALE_WITH_ICU
         std::cout << "Testing Shift-JIS using ICU/uconv" << std::endl;
 
-        cvt = boost::locale::impl_icu::create_uconv_converter("Shift-JIS");
+        cvt.reset(boost::locale::impl_icu::create_uconv_converter("Shift-JIS"));
         TEST(cvt.get());
-        test_shiftjis(cvt);
+        test_shiftjis(cvt.release());
         #endif
 
         #if defined(BOOST_LOCALE_WITH_ICONV) && !defined(BOOST_LOCALE_NO_POSIX_BACKEND)
         std::cout << "Testing Shift-JIS using POSIX/iconv" << std::endl;
 
-        cvt = boost::locale::impl_posix::create_iconv_converter("Shift-JIS");
+        cvt.reset(boost::locale::impl_posix::create_iconv_converter("Shift-JIS"));
         if(cvt.get()) {
-            test_shiftjis(cvt);
+            test_shiftjis(cvt.release());
         }
         else {
             std::cout<< "- Shift-JIS is not supported!" << std::endl;

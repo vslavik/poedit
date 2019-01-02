@@ -20,7 +20,7 @@
 
 import BoostBuild
 
-t = BoostBuild.Tester(pass_toolset=0, pass_d0=False)
+t = BoostBuild.Tester(pass_toolset=0)
 
 t.write("sleep.bat", """\
 ::@timeout /T %1 /NOBREAK >nul

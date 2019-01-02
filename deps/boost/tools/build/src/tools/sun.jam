@@ -4,6 +4,61 @@
 #  "as is" without express or implied warranty, and with no claim as
 #  to its suitability for any purpose.
 
+#| tag::doc[]
+
+[[bbv2.reference.tools.compiler.sun]]
+= Sun Studio
+
+The `sun` module supports the
+http://developers.sun.com/sunstudio/index.jsp[Sun Studio] C++ compilers
+for the Solaris OS.
+
+The module is initialized using the following syntax:
+
+----
+using sun : [version] : [c++-compile-command] : [compiler options] ;
+----
+
+This statement may be repeated several times, if you want to configure
+several versions of the compiler.
+
+If the command is not specified, Boost.Build will search for a binary
+named `CC` in `/opt/SUNWspro/bin` and in PATH.
+
+When using this compiler on complex C++ code, such as the
+http://boost.org[Boost C++ library], it is recommended to specify the
+following options when initializing the `sun` module:
+
+----
+-library=stlport4 -features=tmplife -features=tmplrefstatic
+----
+
+See the http://blogs.sun.com/sga/entry/command_line_options[Sun C++
+Frontend Tales] for details.
+
+The following options can be provided, using
+_`<option-name>option-value syntax`_:
+
+`cflags`::
+Specifies additional compiler flags that will be used when compiling C
+sources.
+
+`cxxflags`::
+Specifies additional compiler flags that will be used when compiling C++
+sources.
+
+`compileflags`::
+Specifies additional compiler flags that will be used when compiling both C
+and C++ sources.
+
+`linkflags`::
+Specifies additional command line options that will be passed to the linker.
+
+Starting with Sun Studio 12, you can create 64-bit applications by using
+the `address-model=64` property.
+
+|# # end::doc[]
+
 import property ;
 import generators ;
 import os ;
@@ -27,17 +82,19 @@ generators.override sun.searched-lib-generator : searched-lib-generator ;
 # 4) C++03 or C++11 in g++ compatibility mode, and GNU libstdc++3, selected via -std=c++03/11.
 #
 # Note that the -std, -library and -compat compiler switches appear to be largely mutually
-# incompatible, and that going forward the -std switch seems to be the prefered one.
+# incompatible, and that going forward the -std switch seems to be the preferred one.
 #
 # See http://docs.oracle.com/cd/E37069_01/html/E37075/bkamw.html#OSSCPgnaof
 #
 feature.extend stdlib : sun-stlport ;
 feature.compose <stdlib>sun-stlport
-    : <cxxflags>-library=stlport4 <linkflags>-library=stlport4
+    : <cxxflags>-library=stlport4 <cxxflags>-compat=5 <cxxflags>-features=zla
+      <linkflags>-library=stlport4 <linkflags>-compat=5
     ;
 feature.extend stdlib : apache ;
 feature.compose <stdlib>apache
-    : <cxxflags>-library=stdcxx4 <linkflags>-library=stdcxx4
+    : <cxxflags>-library=stdcxx4 <cxxflags>-compat=5 <cxxflags>-features=zla
+      <linkflags>-library=stdcxx4 <cxxflags>-compat=5
     ;
 feature.extend stdlib : gnu ;
 feature.compose <stdlib>gnu
@@ -77,6 +134,10 @@ flags sun.compile OPTIONS <warnings>off : -erroff ;
 flags sun.compile OPTIONS <warnings>on : -erroff=%none ;
 flags sun.compile OPTIONS <warnings>all  : -erroff=%none ;
 flags sun.compile OPTIONS <warnings-as-errors>on : -errwarn ;
+
+flags sun.compile OPTIONS <local-visibility>hidden : -xldscope=hidden ;
+flags sun.compile OPTIONS <local-visibility>protected : -xldscope=symbolic ;
+flags sun.compile OPTIONS <local-visibility>global : -xldscope=global ;
 
 flags sun.compile.c++ OPTIONS <inlining>off : +d ;
 

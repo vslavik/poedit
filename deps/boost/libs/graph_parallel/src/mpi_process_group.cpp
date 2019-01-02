@@ -12,6 +12,7 @@
 #include <boost/assert.hpp>
 #include <boost/graph/use_mpi.hpp>
 #include <boost/graph/distributed/mpi_process_group.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/mpi/environment.hpp>
 #include <boost/lexical_cast.hpp>
 #include <memory>

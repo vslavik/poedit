@@ -27,16 +27,16 @@ class mangled_storage_impl  : public mangled_storage_base
     struct dummy {};
 
     template<typename Return, typename ...Args>
-    std::vector<std::string> get_func_params(dummy<Return(Args...)>)
+    std::vector<std::string> get_func_params(dummy<Return(Args...)>) const
     {
         return {get_name<Args>()...};
     }
     template<typename Return, typename ...Args>
-    std::string get_return_type(dummy<Return(Args...)>)
+    std::string get_return_type(dummy<Return(Args...)>) const
     {
         return get_name<Return>();
     }
-    //function to remove preceeding 'class ' or 'struct ' if the are given in this format.
+    //function to remove preceding 'class ' or 'struct ' if the are given in this format.
 
     inline static void trim_typename(std::string & val);
 public:
@@ -46,19 +46,19 @@ public:
     using mangled_storage_base::mangled_storage_base;
 
     template<typename T>
-    std::string get_variable(const std::string &name);
+    std::string get_variable(const std::string &name) const;
 
     template<typename Func>
-    std::string get_function(const std::string &name);
+    std::string get_function(const std::string &name) const;
 
     template<typename Class, typename Func>
-    std::string get_mem_fn(const std::string &name);
+    std::string get_mem_fn(const std::string &name) const;
 
     template<typename Signature>
-    ctor_sym get_constructor();
+    ctor_sym get_constructor() const;
 
     template<typename Class>
-    dtor_sym get_destructor();
+    dtor_sym get_destructor() const;
 
     template<typename T> //overload, does not need to virtual.
     std::string get_name() const
@@ -67,11 +67,18 @@ public:
         trim_typename(nm);
         return nm;
     }
+
+    template<typename T>
+    std::string get_vtable() const;
+
+    template<typename T>
+    std::vector<std::string> get_related() const;
+
 };
 
 void mangled_storage_impl::trim_typename(std::string & val)
 {
-    //remove preceeding class or struct, because you might want to use a struct as class, et vice versa
+    //remove preceding class or struct, because you might want to use a struct as class, et vice versa
     if (val.size() >= 6)
     {
         using namespace std;
@@ -91,46 +98,48 @@ namespace parser
 {
     namespace x3 = spirit::x3;
 
-    auto ptr_rule_impl(std::integral_constant<std::size_t, 32>)
+    inline auto ptr_rule_impl(std::integral_constant<std::size_t, 32>)
     {
         return -((-x3::space) >> "__ptr32");
     }
-    auto ptr_rule_impl(std::integral_constant<std::size_t, 64>)
+    inline auto ptr_rule_impl(std::integral_constant<std::size_t, 64>)
     {
         return -((-x3::space) >> "__ptr64");
     }
 
-    auto ptr_rule() { return ptr_rule_impl(std::integral_constant<std::size_t, sizeof(std::size_t)*8>());}
+    inline auto ptr_rule() {
+        return ptr_rule_impl(std::integral_constant<std::size_t, sizeof(std::size_t)*8>());
+    }
 
     auto const visibility = ("public:" | x3::lit("protected:") | "private:");
     auto const virtual_ = x3::space >> "virtual";
     auto const static_     = x3::space >> x3::lit("static") ;
 
-    auto const_rule_impl(true_type )  {return x3::space >> "const";};
-    auto const_rule_impl(false_type)  {return x3::eps;};
+    inline auto const_rule_impl(true_type )  {return x3::space >> "const";};
+    inline auto const_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
     auto const_rule() {using t = is_const<typename remove_reference<T>::type>; return const_rule_impl(t());}
 
-    auto volatile_rule_impl(true_type )  {return x3::space >> "volatile";};
-    auto volatile_rule_impl(false_type)  {return x3::eps;};
+    inline auto volatile_rule_impl(true_type )  {return x3::space >> "volatile";};
+    inline auto volatile_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
     auto volatile_rule() {using t = is_volatile<typename remove_reference<T>::type>; return volatile_rule_impl(t());}
 
 
-    auto inv_const_rule_impl(true_type )  {return "const" >>  x3::space ;};
-    auto inv_const_rule_impl(false_type)  {return x3::eps;};
+    inline auto inv_const_rule_impl(true_type )  {return "const" >>  x3::space ;};
+    inline auto inv_const_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
     auto inv_const_rule() {using t = is_const<typename remove_reference<T>::type>; return inv_const_rule_impl(t());}
 
-    auto inv_volatile_rule_impl(true_type )  {return "volatile" >> x3::space;};
-    auto inv_volatile_rule_impl(false_type)  {return x3::eps;};
+    inline auto inv_volatile_rule_impl(true_type )  {return "volatile" >> x3::space;};
+    inline auto inv_volatile_rule_impl(false_type)  {return x3::eps;};
     template<typename T>
     auto inv_volatile_rule() {using t = is_volatile<typename remove_reference<T>::type>; return inv_volatile_rule_impl(t());}
 
 
-    auto reference_rule_impl(false_type, false_type) {return x3::eps;}
-    auto reference_rule_impl(true_type,  false_type) {return x3::space >>"&"  ;}
-    auto reference_rule_impl(false_type, true_type ) {return x3::space >>"&&" ;}
+    inline auto reference_rule_impl(false_type, false_type) {return x3::eps;}
+    inline auto reference_rule_impl(true_type,  false_type) {return x3::space >>"&"  ;}
+    inline auto reference_rule_impl(false_type, true_type ) {return x3::space >>"&&" ;}
 
 
     template<typename T>
@@ -151,7 +160,7 @@ namespace parser
                 ptr_rule();
     }
     template<>
-    auto type_rule<void>(const std::string &) { return x3::string("void"); };
+    inline auto type_rule<void>(const std::string &) { return x3::string("void"); };
 
     auto const cdecl_   = "__cdecl"     >> x3::space;
     auto const stdcall  = "__stdcall"     >> x3::space;
@@ -178,14 +187,14 @@ namespace parser
     }
 
     template<typename Return>
-    auto arg_list(const mangled_storage_impl & ms, Return (*)())
+    auto arg_list(const mangled_storage_impl& /*ms*/, Return (*)())
     {
         return x3::string("void");
     }
 }
 
 
-template<typename T> std::string mangled_storage_impl::get_variable(const std::string &name)
+template<typename T> std::string mangled_storage_impl::get_variable(const std::string &name) const
 {
     using namespace std;
     using namespace boost;
@@ -219,7 +228,7 @@ template<typename T> std::string mangled_storage_impl::get_variable(const std::s
         return "";
 }
 
-template<typename Func> std::string mangled_storage_impl::get_function(const std::string &name)
+template<typename Func> std::string mangled_storage_impl::get_function(const std::string &name) const
 {
     namespace x3 = spirit::x3;
     using namespace parser;
@@ -257,7 +266,7 @@ template<typename Func> std::string mangled_storage_impl::get_function(const std
 }
 
 template<typename Class, typename Func>
-std::string mangled_storage_impl::get_mem_fn(const std::string &name)
+std::string mangled_storage_impl::get_mem_fn(const std::string &name) const
 {
     namespace x3 = spirit::x3;
     using namespace parser;
@@ -295,7 +304,7 @@ std::string mangled_storage_impl::get_mem_fn(const std::string &name)
 
 
 template<typename Signature>
-auto mangled_storage_impl::get_constructor() -> ctor_sym
+auto mangled_storage_impl::get_constructor() const -> ctor_sym
 {
     namespace x3 = spirit::x3;
     using namespace parser;
@@ -345,7 +354,7 @@ auto mangled_storage_impl::get_constructor() -> ctor_sym
 }
 
 template<typename Class>
-auto mangled_storage_impl::get_destructor() -> dtor_sym
+auto mangled_storage_impl::get_destructor() const -> dtor_sym
 {
     namespace x3 = spirit::x3;
     using namespace parser;
@@ -390,11 +399,43 @@ auto mangled_storage_impl::get_destructor() -> dtor_sym
         return "";
 }
 
+template<typename T>
+std::string mangled_storage_impl::get_vtable() const
+{
+    std::string id = "const " + get_name<T>() + "::`vftable'";
 
+    auto predicate = [&](const mangled_storage_base::entry & e)
+                {
+                    return e.demangled == id;
+                };
+
+    auto found = std::find_if(storage_.begin(), storage_.end(), predicate);
+
+
+    if (found != storage_.end())
+        return found->mangled;
+    else
+        return "";
+}
+
+template<typename T>
+std::vector<std::string> mangled_storage_impl::get_related() const
+{
+    std::vector<std::string> ret;
+    auto name = get_name<T>();
+
+    for (auto & c : storage_)
+    {
+        if (c.demangled.find(name) != std::string::npos)
+            ret.push_back(c.demangled);
+    }
+
+    return ret;
+}
 
 
 }}}
 
 
 
-#endif /* INCLUDE_BOOST_DLL_DETAIL_DEMANGLING_MSVC_HPP_ */
+#endif /* BOOST_DLL_DETAIL_DEMANGLING_MSVC_HPP_ */

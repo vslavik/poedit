@@ -67,5 +67,5 @@ int test_main( int /* argc */, char* /* argv */[] )
     test_archive<xml_woarchive, xml_wiarchive, wostringstream, wistringstream>();
     test_archive<binary_woarchive, binary_wiarchive, wostringstream, wistringstream>();
 
-    return report_errors();
+    return boost::report_errors();
 }

@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(roundtrip_int_float)
 
     // check values
     CHECK_RANGE_EQUAL(
-        int, 8, output, (1, 2, 3, 4, 5, 6, 7, 8)
+        int, 8, input, (1, 2, 3, 4, 5, 6, 7, 8)
     );
 }
 

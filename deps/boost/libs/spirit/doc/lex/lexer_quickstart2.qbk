@@ -24,11 +24,11 @@ see here: [@../../example/lex/word_count_lexer.cpp word_count_lexer.cpp]).
 [heading Prerequisites]
 
 In addition to the only required `#include` specific to /Spirit.Lex/ this 
-example needs to include a couple of header files from the __boost_phoenix__ 
+example needs to include a couple of header files from the __phoenix__ 
 library. This example shows how to attach functors to token definitions, which 
 could be done using any type of C++ technique resulting in a callable object.
-Using __boost_phoenix__ for this task simplifies things and avoids adding 
-dependencies to other libraries (__boost_phoenix__ is already in use for 
+Using __phoenix__ for this task simplifies things and avoids adding 
+dependencies to other libraries (__phoenix__ is already in use for 
 __spirit__ anyway).
 
 [wcl_includes]
@@ -59,7 +59,7 @@ brackets will be executed whenever the corresponding token has been matched by
 the lexical analyzer. This is very similar to __flex__, where the action code 
 associated with a token definition gets executed after the recognition of a
 matching input sequence. The code above uses function objects constructed using 
-__boost_phoenix__, but it is possible to insert any C++ function or function object 
+__phoenix__, but it is possible to insert any C++ function or function object 
 as long as it exposes the proper interface. For more details on please refer 
 to the section __sec_lex_semactions__. 
 

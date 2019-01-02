@@ -12,7 +12,7 @@
 #include <boost/detail/workaround.hpp>
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
-#  pragma warn -8091 // supress warning in Boost.Test
+#  pragma warn -8091 // suppress warning in Boost.Test
 #  pragma warn -8057 // unused argument argc/argv in Boost.Test
 #endif
 
@@ -104,9 +104,17 @@ void test_sequence_list_of_int()
     BOOST_CHECK_EQUAL( aux.size(), 13u );
     c3 = aux;
     BOOST_CHECK_EQUAL( c3.size(), 13u );
-#else
+#elif defined( BOOST_NO_CXX11_HDR_INITIALIZER_LIST )
     c3 = ba::list_of(1).repeat_fun( 10, &rand )(2)(3);
     BOOST_CHECK_EQUAL( c3.size(), 13u );
+#endif
+
+#if !defined( BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS )
+    C c4;
+    c4 = ba::list_of(1)(2)(3)(4);
+    BOOST_CHECK_EQUAL( c4.size(), 4u );
+    C c5(ba::list_of(1)(2)(3)(4)(5));
+    BOOST_CHECK_EQUAL( c5.size(), 5u );
 #endif
 
 #endif
@@ -210,7 +218,7 @@ void test_list_of()
 {
     ba::list_of< five >(1,2,3,4,5)(6,7,8,9,10);
     
-/* Maybe this could be usefull in a later version?
+/* Maybe this could be useful in a later version?
 
     // an anonymous lists, fulfills Range concept
     for_each( ba::list_of( T() )( T() )( T() ) );
@@ -226,7 +234,7 @@ void test_list_of()
 }
 
 //
-// @remark: ADL is required here, but it is a bit wierd to
+// @remark: ADL is required here, but it is a bit weird to
 //          open up namespace std. Perhaps Boost.Test needs a
 //          better configuration option. 
 //

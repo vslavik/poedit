@@ -8,6 +8,13 @@
 // See http://boostorg.github.com/compute for more information.
 //---------------------------------------------------------------------------//
 
+// Undefining BOOST_COMPUTE_USE_OFFLINE_CACHE macro as we want to modify cached
+// parameters for copy algorithm without any undesirable consequences (like
+// saving modified values of those parameters).
+#ifdef BOOST_COMPUTE_USE_OFFLINE_CACHE
+    #undef BOOST_COMPUTE_USE_OFFLINE_CACHE
+#endif
+
 #define BOOST_TEST_MODULE TestExtrema
 #include <boost/test/unit_test.hpp>
 
@@ -21,23 +28,131 @@
 #include <boost/compute/algorithm/minmax_element.hpp>
 #include <boost/compute/container/vector.hpp>
 #include <boost/compute/iterator/transform_iterator.hpp>
+#include <boost/compute/detail/parameter_cache.hpp>
 
+#include "quirks.hpp"
 #include "context_setup.hpp"
+
+namespace bc = boost::compute;
+namespace compute = boost::compute;
+
+BOOST_AUTO_TEST_CASE(empyt_min)
+{
+    using boost::compute::int_;
+
+    boost::compute::vector<int_> vector(size_t(16), int_(0), queue);
+    boost::compute::vector<int_>::iterator min_iter =
+        boost::compute::min_element(vector.begin(), vector.begin(), queue);
+    BOOST_CHECK(min_iter == vector.begin());
+
+    min_iter =
+        boost::compute::min_element(vector.begin(), vector.begin() + 1, queue);
+    BOOST_CHECK(min_iter == vector.begin());
+}
 
 BOOST_AUTO_TEST_CASE(int_min_max)
 {
-    boost::compute::vector<int> vector(size_t(4096), int(0), queue);
+    using boost::compute::int_;
+    using boost::compute::uint_;
+
+    boost::compute::vector<int_> vector(size_t(4096), int_(0), queue);
     boost::compute::iota(vector.begin(), (vector.begin() + 512), 1, queue);
     boost::compute::fill((vector.end() - 512), vector.end(), 513, queue);
 
-    boost::compute::vector<int>::iterator min_iter =
+    boost::compute::vector<int_>::iterator min_iter =
         boost::compute::min_element(vector.begin(), vector.end(), queue);
     BOOST_CHECK(min_iter == vector.begin() + 512);
     BOOST_CHECK_EQUAL((vector.begin() + 512).read(queue), 0);
     BOOST_CHECK_EQUAL(min_iter.read(queue), 0);
 
-    boost::compute::vector<int>::iterator max_iter =
+    boost::compute::vector<int_>::iterator max_iter =
         boost::compute::max_element(vector.begin(), vector.end(), queue);
+    BOOST_CHECK(max_iter == vector.end() - 512);
+    BOOST_CHECK_EQUAL((vector.end() - 512).read(queue), 513);
+    BOOST_CHECK_EQUAL(max_iter.read(queue), 513);
+
+    // compare function
+    boost::compute::less<int_> lessint;
+
+    // test minmax_element
+    std::pair<
+        boost::compute::vector<int_>::iterator,
+        boost::compute::vector<int_>::iterator
+    > minmax_iter =
+        boost::compute::minmax_element(vector.begin(), vector.end(), queue);
+    BOOST_CHECK_EQUAL((minmax_iter.first).read(queue), 0);
+    BOOST_CHECK_EQUAL((minmax_iter.second).read(queue), 513);
+
+    minmax_iter =
+        boost::compute::minmax_element(vector.begin(), vector.end(), lessint, queue);
+    BOOST_CHECK_EQUAL((minmax_iter.first).read(queue), 0);
+    BOOST_CHECK_EQUAL((minmax_iter.second).read(queue), 513);
+
+    // find_extrama_on_cpu
+
+    // make sure find_extrama_on_cpu is used, no serial_find_extrema
+    std::string cache_key =
+        "__boost_find_extrema_cpu_4";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_find_extrema_threshold", 0);
+    // force find_extrama_on_cpu
+    parameters->set(cache_key, "serial_find_extrema_threshold", 16);
+
+    min_iter = boost::compute::detail::find_extrema_on_cpu(
+        vector.begin(), vector.end(), lessint, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 512);
+    BOOST_CHECK_EQUAL((vector.begin() + 512).read(queue), 0);
+    BOOST_CHECK_EQUAL(min_iter.read(queue), 0);
+
+    max_iter = boost::compute::detail::find_extrema_on_cpu(
+        vector.begin(), vector.end(), lessint, false /* find minimum */, queue
+    );
+    BOOST_CHECK(max_iter == vector.end() - 512);
+    BOOST_CHECK_EQUAL((vector.end() - 512).read(queue), 513);
+    BOOST_CHECK_EQUAL(max_iter.read(queue), 513);
+
+    // restore
+    parameters->set(cache_key, "serial_find_extrema_threshold", map_copy_threshold);
+
+    if(is_apple_cpu_device(device)) {
+        std::cerr
+            << "skipping all further tests due to Apple platform"
+            << " behavior when local memory is used on a CPU device"
+            << std::endl;
+        return;
+    }
+
+    // find_extrama_with_reduce
+    min_iter = boost::compute::detail::find_extrema_with_reduce(
+        vector.begin(), vector.end(), lessint, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 512);
+    BOOST_CHECK_EQUAL((vector.begin() + 512).read(queue), 0);
+    BOOST_CHECK_EQUAL(min_iter.read(queue), 0);
+
+    max_iter = boost::compute::detail::find_extrema_with_reduce(
+        vector.begin(), vector.end(), lessint, false /* find minimum */, queue
+    );
+    BOOST_CHECK(max_iter == vector.end() - 512);
+    BOOST_CHECK_EQUAL((vector.end() - 512).read(queue), 513);
+    BOOST_CHECK_EQUAL(max_iter.read(queue), 513);
+
+    // find_extram_with_atomics
+    min_iter = boost::compute::detail::find_extrema_with_atomics(
+        vector.begin(), vector.end(), lessint, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 512);
+    BOOST_CHECK_EQUAL((vector.begin() + 512).read(queue), 0);
+    BOOST_CHECK_EQUAL(min_iter.read(queue), 0);
+
+    max_iter = boost::compute::detail::find_extrema_with_atomics(
+        vector.begin(), vector.end(), lessint, false /* find minimum */, queue
+    );
     BOOST_CHECK(max_iter == vector.end() - 512);
     BOOST_CHECK_EQUAL((vector.end() - 512).read(queue), 513);
     BOOST_CHECK_EQUAL(max_iter.read(queue), 513);
@@ -46,6 +161,7 @@ BOOST_AUTO_TEST_CASE(int_min_max)
 BOOST_AUTO_TEST_CASE(int2_min_max_custom_comparision_function)
 {
     using boost::compute::int2_;
+    using boost::compute::uint_;
 
     boost::compute::vector<int2_> vector(context);
     vector.push_back(int2_(1, 10), queue);
@@ -73,6 +189,69 @@ BOOST_AUTO_TEST_CASE(int2_min_max_custom_comparision_function)
         boost::compute::max_element(
             vector.begin(), vector.end(), compare_second, queue
         );
+    BOOST_CHECK(max_iter == vector.begin() + 2);
+    BOOST_CHECK_EQUAL(*max_iter, int2_(3, 30));
+
+    // find_extrama_on_cpu
+
+    // make sure find_extrama_on_cpu is used, no serial_find_extrema
+    std::string cache_key =
+        "__boost_find_extrema_cpu_8";
+    boost::shared_ptr<bc::detail::parameter_cache> parameters =
+        bc::detail::parameter_cache::get_global_cache(device);
+
+    // save
+    uint_ map_copy_threshold =
+        parameters->get(cache_key, "serial_find_extrema_threshold", 0);
+    // force find_extrama_on_cpu
+    parameters->set(cache_key, "serial_find_extrema_threshold", 16);
+
+    min_iter = boost::compute::detail::find_extrema_on_cpu(
+        vector.begin(), vector.end(), compare_second, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 1);
+    BOOST_CHECK_EQUAL(*min_iter, int2_(2, -100));
+
+    max_iter = boost::compute::detail::find_extrema_on_cpu(
+        vector.begin(), vector.end(), compare_second, false /* find minimum */, queue
+    );
+    BOOST_CHECK(max_iter == vector.begin() + 2);
+    BOOST_CHECK_EQUAL(*max_iter, int2_(3, 30));
+
+    // restore
+    parameters->set(cache_key, "serial_find_extrema_threshold", map_copy_threshold);
+
+    if(is_apple_cpu_device(device)) {
+        std::cerr
+            << "skipping all further tests due to Apple platform"
+            << " behavior when local memory is used on a CPU device"
+            << std::endl;
+        return;
+    }
+
+    // find_extrama_with_reduce
+    min_iter = boost::compute::detail::find_extrema_with_reduce(
+        vector.begin(), vector.end(), compare_second, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 1);
+    BOOST_CHECK_EQUAL(*min_iter, int2_(2, -100));
+
+    max_iter = boost::compute::detail::find_extrema_with_reduce(
+        vector.begin(), vector.end(), compare_second, false /* find minimum */, queue
+    );
+    BOOST_CHECK(max_iter == vector.begin() + 2);
+    BOOST_CHECK_EQUAL(*max_iter, int2_(3, 30));
+
+    // find_extram_with_atomics
+    min_iter = boost::compute::detail::find_extrema_with_atomics(
+        vector.begin(), vector.end(), compare_second, true /* find minimum */, queue
+    );
+    BOOST_CHECK(min_iter == vector.begin() + 1);
+    BOOST_CHECK_EQUAL(*min_iter, int2_(2, -100));
+
+    max_iter = boost::compute::detail::find_extrema_with_atomics(
+        vector.begin(), vector.end(), compare_second, false /* find minimum */, queue
+    );
     BOOST_CHECK(max_iter == vector.begin() + 2);
     BOOST_CHECK_EQUAL(*max_iter, int2_(3, 30));
 }

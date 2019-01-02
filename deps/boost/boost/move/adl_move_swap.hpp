@@ -231,8 +231,8 @@ BOOST_MOVE_FORCEINLINE void adl_move_swap(T& x, T& y)
 //! using boost::adl_move_swap.
 //! 
 //! Parameters:
-//!   first1, last1	-	the first range of elements to swap
-//!   first2	-	beginning of the second range of elements to swap
+//!   first1, last1   -   the first range of elements to swap
+//!   first2   -   beginning of the second range of elements to swap
 //!
 //! Type requirements:
 //!   - ForwardIt1, ForwardIt2 must meet the requirements of ForwardIterator.
@@ -259,6 +259,12 @@ BidirIt2 adl_move_swap_ranges_backward(BidirIt1 first1, BidirIt1 last1, BidirIt2
       ::boost::adl_move_swap(*(--last1), *(--last2));
    }
    return last2;
+}
+
+template<class ForwardIt1, class ForwardIt2>
+void adl_move_iter_swap(ForwardIt1 a, ForwardIt2 b)
+{
+   boost::adl_move_swap(*a, *b); 
 }
 
 }  //namespace boost{

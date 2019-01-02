@@ -33,6 +33,8 @@ BOOST_FUSION_DEFINE_STRUCT(
 
 BOOST_FUSION_DEFINE_STRUCT(BOOST_PP_EMPTY(), s, (int, m))
 
+BOOST_FUSION_DEFINE_STRUCT(BOOST_PP_EMPTY(), empty_struct, )
+
 // Testing non-constexpr compatible types
 BOOST_FUSION_DEFINE_STRUCT(
     (ns),
@@ -52,6 +54,7 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point>));
+        BOOST_STATIC_ASSERT(!traits::is_view<ns::point>::value);
         ns::point p(123, 456);
 
         std::cout << at_c<0>(p) << std::endl;

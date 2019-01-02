@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class image_object</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.image.image_object_hpp" title="Header &lt;boost/compute/image/image_object.hpp&gt;">
 <link rel="prev" href="image_format.html" title="Class image_format">
@@ -32,91 +32,91 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_compute/reference.html#header.boost.compute.image.image_object_hpp" title="Header &lt;boost/compute/image/image_object.hpp&gt;">boost/compute/image/image_object.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">memory_object</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="image_object.html#boost.compute.image_objectconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="image_object.html#idp12289888-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="image_object.html#idp12290176-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="identifier">cl_mem</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="image_object.html#idp12292400-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="image_object.html#idp12295824-bb"><span class="identifier">image_object</span></a><span class="special">(</span><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;&amp;</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
-  <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> <a class="link" href="image_object.html#idp12293824-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="image_object.html#idp12297360-bb"><span class="special">~</span><span class="identifier">image_object</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="image_object.html#idp50127456-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="image_object.html#idp50127744-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="identifier">cl_mem</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="image_object.html#idp50129968-bb"><span class="identifier">image_object</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="image_object.html#idp50133392-bb"><span class="identifier">image_object</span></a><span class="special">(</span><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;&amp;</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+  <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> <a class="link" href="image_object.html#idp50131392-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="image_object.html#idp50134928-bb"><span class="special">~</span><span class="identifier">image_object</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="image_object.html#idp12277360-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="image_object.html#idp12277920-bb"><span class="identifier">get_image_info</span></a><span class="special">(</span><span class="identifier">cl_mem_info</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="image_format.html" title="Class image_format">image_format</a> <a class="link" href="image_object.html#idp12282112-bb"><span class="identifier">format</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp12283664-bb"><span class="identifier">width</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp12285088-bb"><span class="identifier">height</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp12287408-bb"><span class="identifier">depth</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="image_object.html#idp50114928-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="image_object.html#idp50115488-bb"><span class="identifier">get_image_info</span></a><span class="special">(</span><span class="identifier">cl_mem_info</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="image_format.html" title="Class image_format">image_format</a> <a class="link" href="image_object.html#idp50119680-bb"><span class="identifier">format</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp50121232-bb"><span class="identifier">width</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp50122656-bb"><span class="identifier">height</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_t</span> <a class="link" href="image_object.html#idp50124976-bb"><span class="identifier">depth</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="image_object.html#idp12297952-bb">public static functions</a></span>
+  <span class="comment">// <a class="link" href="image_object.html#idp50135520-bb">public static functions</a></span>
   <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&gt;</span> 
-  <a class="link" href="image_object.html#idp12298512-bb"><span class="identifier">get_supported_formats</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">cl_mem_object_type</span><span class="special">,</span> 
+  <a class="link" href="image_object.html#idp50136080-bb"><span class="identifier">get_supported_formats</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">cl_mem_object_type</span><span class="special">,</span> 
                         <span class="identifier">cl_mem_flags</span> <span class="special">=</span> <span class="identifier">read_write</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="image_object.html#idp12304896-bb"><span class="identifier">is_supported_format</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="image_object.html#idp50142464-bb"><span class="identifier">is_supported_format</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span><span class="special">,</span> 
                                   <span class="identifier">cl_mem_object_type</span><span class="special">,</span> 
                                   <span class="identifier">cl_mem_flags</span> <span class="special">=</span> <span class="identifier">read_write</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp77962496"></a><h2>Description</h2>
+<a name="idp92704432"></a><h2>Description</h2>
 <p>The <a class="link" href="image_object.html" title="Class image_object">image_object</a> class is the base-class for image objects on compute devices.</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p><a class="link" href="image1d.html" title="Class image1d">image1d</a>, <a class="link" href="image2d.html" title="Class image2d">image2d</a>, <a class="link" href="image3d.html" title="Class image3d">image3d</a> </p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp77967584"></a><h3>
+<a name="idp92709472"></a><h3>
 <a name="boost.compute.image_objectconstruct-copy-destruct"></a><code class="computeroutput">image_object</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp12289888-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp12290176-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="identifier">cl_mem</span> mem<span class="special">,</span> <span class="keyword">bool</span> retain <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp12292400-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp12295824-bb"></a><span class="identifier">image_object</span><span class="special">(</span><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> <a name="idp12293824-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp50127456-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp50127744-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="identifier">cl_mem</span> mem<span class="special">,</span> <span class="keyword">bool</span> retain <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp50129968-bb"></a><span class="identifier">image_object</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp50133392-bb"></a><span class="identifier">image_object</span><span class="special">(</span><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> <a name="idp50131392-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_object.html" title="Class image_object">image_object</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp12297360-bb"></a><span class="special">~</span><span class="identifier">image_object</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the image object. </li>
+<pre class="literallayout"><a name="idp50134928-bb"></a><span class="special">~</span><span class="identifier">image_object</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the image object. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp78005088"></a><h3>
-<a name="idp12277360-bb"></a><code class="computeroutput">image_object</code> public member functions</h3>
+<a name="idp92747056"></a><h3>
+<a name="idp50114928-bb"></a><code class="computeroutput">image_object</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a name="idp12277920-bb"></a><span class="identifier">get_image_info</span><span class="special">(</span><span class="identifier">cl_mem_info</span> info<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a name="idp50115488-bb"></a><span class="identifier">get_image_info</span><span class="special">(</span><span class="identifier">cl_mem_info</span> info<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns information about the image object.</p>
 <p>See the documentation for <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clGetImageInfo.html" target="_top">clGetImageInfo()</a> for more information. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="image_format.html" title="Class image_format">image_format</a> <a name="idp12282112-bb"></a><span class="identifier">format</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the format for the image. </li>
+<pre class="literallayout"><a class="link" href="image_format.html" title="Class image_format">image_format</a> <a name="idp50119680-bb"></a><span class="identifier">format</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the format for the image. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp12283664-bb"></a><span class="identifier">width</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the width of the image. </li>
+<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp50121232-bb"></a><span class="identifier">width</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the width of the image. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp12285088-bb"></a><span class="identifier">height</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp50122656-bb"></a><span class="identifier">height</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the height of the image.</p>
 <p>For 1D images, this function will return <code class="computeroutput">1</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp12287408-bb"></a><span class="identifier">depth</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_t</span> <a name="idp50124976-bb"></a><span class="identifier">depth</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the depth of the image.</p>
 <p>For 1D and 2D images, this function will return <code class="computeroutput">1</code>. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp78040000"></a><h3>
-<a name="idp12297952-bb"></a><code class="computeroutput">image_object</code> public static functions</h3>
+<a name="idp92781968"></a><h3>
+<a name="idp50135520-bb"></a><code class="computeroutput">image_object</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&gt;</span> 
-<a name="idp12298512-bb"></a><span class="identifier">get_supported_formats</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span> context<span class="special">,</span> <span class="identifier">cl_mem_object_type</span> type<span class="special">,</span> 
+<a name="idp50136080-bb"></a><span class="identifier">get_supported_formats</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span> context<span class="special">,</span> <span class="identifier">cl_mem_object_type</span> type<span class="special">,</span> 
                       <span class="identifier">cl_mem_flags</span> flags <span class="special">=</span> <span class="identifier">read_write</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns the supported image formats for the <code class="computeroutput">type</code> in <code class="computeroutput">context</code>.</p>
 <p>See the documentation for <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clGetSupportedImageFormats.html" target="_top">clGetSupportedImageFormats()</a> for more information. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp12304896-bb"></a><span class="identifier">is_supported_format</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&amp;</span> format<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp50142464-bb"></a><span class="identifier">is_supported_format</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="image_format.html" title="Class image_format">image_format</a> <span class="special">&amp;</span> format<span class="special">,</span> 
                                 <span class="keyword">const</span> <span class="identifier">context</span> <span class="special">&amp;</span> context<span class="special">,</span> 
                                 <span class="identifier">cl_mem_object_type</span> type<span class="special">,</span> 
                                 <span class="identifier">cl_mem_flags</span> flags <span class="special">=</span> <span class="identifier">read_write</span><span class="special">)</span><span class="special">;</span></pre>

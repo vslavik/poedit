@@ -7,12 +7,10 @@
 project spirit-x3-example
     : requirements
         <include>.
+        <c++-template-depth>512
         <toolset>gcc:<cxxflags>-std=c++1y
-        <toolset>gcc:<cxxflags>-ftemplate-depth-512
         <toolset>clang:<cxxflags>-std=c++1y
-        <toolset>clang:<cxxflags>-ftemplate-depth-512
         <toolset>darwin:<cxxflags>-std=c++1y
-        <toolset>darwin:<cxxflags>-ftemplate-depth-512
     :
     :
     ;
@@ -35,6 +33,7 @@ build-project rexpr/rexpr_full ;
 exe x3_calc1 : calc/calc1.cpp ;
 exe x3_calc2 : calc/calc2.cpp ;
 exe x3_calc4 : calc/calc4.cpp ;
+exe x3_calc4b : calc/calc4b.cpp ;
 exe x3_calc5 : calc/calc5.cpp ;
 exe x3_calc6 : calc/calc6.cpp ;
 

@@ -5,15 +5,11 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
-//  File        : $RCSfile$
-//
-//  Version     : $Revision$
-//
-//  Description : single header usage variant with custom main test
+//  Description : header-only usage variant with custom main test
 // ***************************************************************************
 
 // Boost.Test
-#define BOOST_TEST_MODULE single header test
+#define BOOST_TEST_MODULE header only test
 #define BOOST_TEST_NO_MAIN
 #define BOOST_TEST_ALTERNATIVE_INIT_API
 #include <boost/test/included/unit_test.hpp>

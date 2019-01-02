@@ -9,41 +9,74 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/context/all.hpp>
+#include <boost/context/detail/fcontext.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/program_options.hpp>
 
-#include "../bind_processor.hpp"
 #include "../clock.hpp"
 #include "../cycle.hpp"
-#include "../../example/simple_stack_allocator.hpp"
 
-typedef boost::context::simple_stack_allocator<
+template< std::size_t Max, std::size_t Default, std::size_t Min >
+class simple_stack_allocator
+{
+public:
+    static std::size_t maximum_stacksize()
+    { return Max; }
+
+    static std::size_t default_stacksize()
+    { return Default; }
+
+    static std::size_t minimum_stacksize()
+    { return Min; }
+
+    void * allocate( std::size_t size) const
+    {
+        BOOST_ASSERT( minimum_stacksize() <= size);
+        BOOST_ASSERT( maximum_stacksize() >= size);
+
+        void * limit = std::malloc( size);
+        if ( ! limit) throw std::bad_alloc();
+
+        return static_cast< char * >( limit) + size;
+    }
+
+    void deallocate( void * vp, std::size_t size) const
+    {
+        BOOST_ASSERT( vp);
+        BOOST_ASSERT( minimum_stacksize() <= size);
+        BOOST_ASSERT( maximum_stacksize() >= size);
+
+        void * limit = static_cast< char * >( vp) - size;
+        std::free( limit);
+    }
+};
+
+typedef simple_stack_allocator<
             8 * 1024 * 1024, 64 * 1024, 8 * 1024
         >                                       stack_allocator;
 
-boost::uint64_t jobs = 1000;
+boost::uint64_t jobs = 1000000;
 
-static void foo( boost::context::transfer_t t_) {
-    boost::context::transfer_t t = t_;
+static void foo( boost::context::detail::transfer_t t_) {
+    boost::context::detail::transfer_t t = t_;
     while ( true) {
-        t = boost::context::jump_fcontext( t.fctx, 0);
+        t = boost::context::detail::jump_fcontext( t.fctx, 0);
     }
 }
 
 duration_type measure_time_fc() {
     stack_allocator stack_alloc;
-    boost::context::fcontext_t ctx = boost::context::make_fcontext(
+    boost::context::detail::fcontext_t ctx = boost::context::detail::make_fcontext(
             stack_alloc.allocate( stack_allocator::default_stacksize() ),
             stack_allocator::default_stacksize(),
             foo);
 
     // cache warum-up
-    boost::context::transfer_t t = boost::context::jump_fcontext( ctx, 0);
+    boost::context::detail::transfer_t t = boost::context::detail::jump_fcontext( ctx, 0);
 
     time_point_type start( clock_type::now() );
     for ( std::size_t i = 0; i < jobs; ++i) {
-        t = boost::context::jump_fcontext( t.fctx, 0);
+        t = boost::context::detail::jump_fcontext( t.fctx, 0);
     }
     duration_type total = clock_type::now() - start;
     total -= overhead_clock(); // overhead of measurement
@@ -56,17 +89,17 @@ duration_type measure_time_fc() {
 #ifdef BOOST_CONTEXT_CYCLE
 cycle_type measure_cycles_fc() {
     stack_allocator stack_alloc;
-    boost::context::fcontext_t ctx = boost::context::make_fcontext(
+    boost::context::detail::fcontext_t ctx = boost::context::detail::make_fcontext(
             stack_alloc.allocate( stack_allocator::default_stacksize() ),
             stack_allocator::default_stacksize(),
             foo);
 
     // cache warum-up
-    boost::context::transfer_t t = boost::context::jump_fcontext( ctx, 0);
+    boost::context::detail::transfer_t t = boost::context::detail::jump_fcontext( ctx, 0);
 
     cycle_type start( cycles() );
     for ( std::size_t i = 0; i < jobs; ++i) {
-        t = boost::context::jump_fcontext( t.fctx, 0);
+        t = boost::context::detail::jump_fcontext( t.fctx, 0);
     }
     cycle_type total = cycles() - start;
     total -= overhead_cycle(); // overhead of measurement
@@ -81,8 +114,6 @@ int main( int argc, char * argv[])
 {
     try
     {
-        bind_to_processor( 0);
-
         boost::program_options::options_description desc("allowed options");
         desc.add_options()
             ("help", "help message")

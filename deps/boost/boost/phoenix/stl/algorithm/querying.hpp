@@ -40,7 +40,7 @@ namespace boost { namespace phoenix {
             struct result;
 
             template <typename This, class R, class T>
-            struct result<This(R&, T const&)>
+            struct result<This(R&, T&)>
                 : range_iterator<R>
             {};
 
@@ -202,7 +202,7 @@ namespace boost { namespace phoenix {
             struct result;
 
             template <typename This, class R, class T>
-            struct result<This(R&, T const&)>
+            struct result<This(R&, T&)>
                 : range_difference<R>
             {};
 
@@ -314,12 +314,12 @@ namespace boost { namespace phoenix {
             struct result;
 
             template <typename This, class R, class T>
-            struct result<This(R&, T const&)>
+            struct result<This(R&, T&)>
                 : range_iterator<R>
             {};
 
             template <typename This, class R, class T, class C>
-            struct result<This(R&, T const&, C)>
+            struct result<This(R&, T&, C)>
                 : range_iterator<R>
             {};
 
@@ -358,12 +358,12 @@ namespace boost { namespace phoenix {
             struct result;
 
             template <typename This, class R, class T>
-            struct result<This(R&, T const&)>
+            struct result<This(R&, T&)>
                 : range_iterator<R>
             {};
 
             template <typename This, class R, class T, class C>
-            struct result<This(R&, T const&, C)>
+            struct result<This(R&, T&, C)>
                 : range_iterator<R>
             {};
 
@@ -414,12 +414,12 @@ namespace boost { namespace phoenix {
             struct result;
 
             template <typename This, class R, class T>
-            struct result<This(R&, T const&)>
+            struct result<This(R&, T&)>
                 : result_of::equal_range<R,T>
             {};
 
             template <typename This, class R, class T, class C>
-            struct result<This(R&, T const&, C)>
+            struct result<This(R&, T&, C)>
                 : result_of::equal_range<R,T, C>
             {};
 

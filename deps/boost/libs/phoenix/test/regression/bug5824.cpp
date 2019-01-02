@@ -12,7 +12,7 @@
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::phoenix::arg_names;
 
@@ -21,4 +21,5 @@ int main()
   int a = 0;
   (++arg1, ++arg1)(a);
   BOOST_TEST(a == 2);
+  return boost::report_errors();
 }

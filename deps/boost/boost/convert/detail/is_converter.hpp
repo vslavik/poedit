@@ -1,11 +1,11 @@
-// Copyright (c) 2009-2014 Vladimir Batov.
+// Copyright (c) 2009-2016 Vladimir Batov.
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. See http://www.boost.org/LICENSE_1_0.txt.
 
 #ifndef BOOST_CONVERT_IS_CONVERTER_HPP
 #define BOOST_CONVERT_IS_CONVERTER_HPP
 
-#include <boost/convert/detail/forward.hpp>
+#include <boost/convert/detail/config.hpp>
 #include <boost/convert/detail/is_callable.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits.hpp>

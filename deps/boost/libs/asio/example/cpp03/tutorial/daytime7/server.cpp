@@ -2,7 +2,7 @@
 // server.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -33,9 +33,9 @@ class tcp_connection
 public:
   typedef boost::shared_ptr<tcp_connection> pointer;
 
-  static pointer create(boost::asio::io_service& io_service)
+  static pointer create(boost::asio::io_context& io_context)
   {
-    return pointer(new tcp_connection(io_service));
+    return pointer(new tcp_connection(io_context));
   }
 
   tcp::socket& socket()
@@ -52,8 +52,8 @@ public:
   }
 
 private:
-  tcp_connection(boost::asio::io_service& io_service)
-    : socket_(io_service)
+  tcp_connection(boost::asio::io_context& io_context)
+    : socket_(io_context)
   {
   }
 
@@ -68,8 +68,8 @@ private:
 class tcp_server
 {
 public:
-  tcp_server(boost::asio::io_service& io_service)
-    : acceptor_(io_service, tcp::endpoint(tcp::v4(), 13))
+  tcp_server(boost::asio::io_context& io_context)
+    : acceptor_(io_context, tcp::endpoint(tcp::v4(), 13))
   {
     start_accept();
   }
@@ -78,7 +78,7 @@ private:
   void start_accept()
   {
     tcp_connection::pointer new_connection =
-      tcp_connection::create(acceptor_.get_io_service());
+      tcp_connection::create(acceptor_.get_executor().context());
 
     acceptor_.async_accept(new_connection->socket(),
         boost::bind(&tcp_server::handle_accept, this, new_connection,
@@ -102,8 +102,8 @@ private:
 class udp_server
 {
 public:
-  udp_server(boost::asio::io_service& io_service)
-    : socket_(io_service, udp::endpoint(udp::v4(), 13))
+  udp_server(boost::asio::io_context& io_context)
+    : socket_(io_context, udp::endpoint(udp::v4(), 13))
   {
     start_receive();
   }
@@ -119,7 +119,7 @@ private:
 
   void handle_receive(const boost::system::error_code& error)
   {
-    if (!error || error == boost::asio::error::message_size)
+    if (!error)
     {
       boost::shared_ptr<std::string> message(
           new std::string(make_daytime_string()));
@@ -144,10 +144,10 @@ int main()
 {
   try
   {
-    boost::asio::io_service io_service;
-    tcp_server server1(io_service);
-    udp_server server2(io_service);
-    io_service.run();
+    boost::asio::io_context io_context;
+    tcp_server server1(io_context);
+    udp_server server2(io_context);
+    io_context.run();
   }
   catch (std::exception& e)
   {

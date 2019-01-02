@@ -20,6 +20,7 @@ namespace boost {
 namespace compute {
 namespace detail {
 
+// Space complexity: O(1)
 template<class InputIterator, class OutputIterator, class BinaryFunction>
 inline void serial_reduce(InputIterator first,
                           InputIterator last,

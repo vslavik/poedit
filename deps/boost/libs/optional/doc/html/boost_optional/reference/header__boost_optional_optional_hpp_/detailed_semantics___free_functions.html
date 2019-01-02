@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Detailed Semantics - Free Functions</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Boost.Optional">
 <link rel="up" href="../../../optional/reference/header__boost_optional_optional_hpp_.html" title="Header &lt;boost/optional/optional.hpp&gt;">
 <link rel="prev" href="detailed_semantics___optional_references.html" title="Detailed Semantics - Optional References">
@@ -34,7 +34,7 @@
             <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">make_optional</span><span class="special">(</span>
             <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span> <span class="special">)</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">v</span><span class="special">)</span></code> for the <span class="emphasis"><em>deduced</em></span>
               type <code class="computeroutput"><span class="identifier">T</span></code> of <code class="computeroutput"><span class="identifier">v</span></code>.
@@ -50,11 +50,24 @@
 <p>
           <span class="inlinemediaobject"><img src="../../../images/space.png" alt="space"></span>
         </p>
+<a name="reference_make_optional_rvalue"></a><div class="blockquote"><blockquote class="blockquote"><p>
+            <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">decay_t</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;</span>
+            <span class="identifier">make_optional</span><span class="special">(</span>
+            <span class="identifier">T</span> <span class="special">&amp;&amp;</span>
+            <span class="identifier">v</span> <span class="special">)</span></code>
+          </p></blockquote></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">decay_t</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">v</span><span class="special">))</span></code> for the <span class="emphasis"><em>deduced</em></span>
+              type <code class="computeroutput"><span class="identifier">T</span></code> of <code class="computeroutput"><span class="identifier">v</span></code>.
+            </li></ul></div>
+<p>
+          <span class="inlinemediaobject"><img src="../../../images/space.png" alt="space"></span>
+        </p>
 <a name="reference_make_optional_bool_value"></a><div class="blockquote"><blockquote class="blockquote"><p>
             <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">make_optional</span><span class="special">(</span>
             <span class="keyword">bool</span> <span class="identifier">condition</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span> <span class="special">)</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">condition</span><span class="special">,</span> <span class="identifier">v</span><span class="special">)</span></code> for the <span class="emphasis"><em>deduced</em></span>
               type <code class="computeroutput"><span class="identifier">T</span></code> of <code class="computeroutput"><span class="identifier">v</span></code>.
@@ -76,12 +89,25 @@
 <p>
           <span class="inlinemediaobject"><img src="../../../images/space.png" alt="space"></span>
         </p>
+<a name="reference_make_optional_bool_rvalue"></a><div class="blockquote"><blockquote class="blockquote"><p>
+            <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">decay_t</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;</span>
+            <span class="identifier">make_optional</span><span class="special">(</span>
+            <span class="keyword">bool</span> <span class="identifier">condition</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;&amp;</span> <span class="identifier">v</span>
+            <span class="special">)</span></code>
+          </p></blockquote></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">decay_t</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;(</span><span class="identifier">condition</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">v</span><span class="special">))</span></code> for the <span class="emphasis"><em>deduced</em></span>
+              type <code class="computeroutput"><span class="identifier">T</span></code> of <code class="computeroutput"><span class="identifier">v</span></code>.
+            </li></ul></div>
+<p>
+          <span class="inlinemediaobject"><img src="../../../images/space.png" alt="space"></span>
+        </p>
 <a name="reference_operator_compare_equal_optional_optional"></a><div class="blockquote"><blockquote class="blockquote"><p>
             <code class="computeroutput"><span class="keyword">bool</span> <span class="keyword">operator</span>
             <span class="special">==</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Requires:</strong></span> <code class="computeroutput"><span class="identifier">T</span></code>
               shall meet requirements of <a href="http://www.sgi.com/tech/stl/EqualityComparable.html" target="_top"><code class="computeroutput"><span class="identifier">EqualityComparable</span></code></a>.
@@ -130,7 +156,7 @@
             <span class="special">&lt;</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Requires:</strong></span> Expression <code class="computeroutput"><span class="special">*</span><span class="identifier">x</span> <span class="special">&lt;</span> <span class="special">*</span><span class="identifier">y</span></code> shall be well-formed and its result
               shall be convertible to <code class="computeroutput"><span class="keyword">bool</span></code>.
@@ -184,7 +210,7 @@
             <span class="special">!=</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="special">!(</span>
               <span class="identifier">x</span> <span class="special">==</span>
               <span class="identifier">y</span> <span class="special">);</span></code>
@@ -197,7 +223,7 @@
             <span class="special">&gt;</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="special">(</span>
               <span class="identifier">y</span> <span class="special">&lt;</span>
               <span class="identifier">x</span> <span class="special">);</span></code>
@@ -210,7 +236,7 @@
             <span class="special">&lt;=</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="special">!(</span>
               <span class="identifier">y</span> <span class="special">&lt;</span>
               <span class="identifier">x</span> <span class="special">);</span></code>
@@ -223,7 +249,7 @@
             <span class="special">&gt;=</span> <span class="special">(</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">y</span> <span class="special">);</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="special">!(</span>
               <span class="identifier">x</span> <span class="special">&lt;</span>
               <span class="identifier">y</span> <span class="special">);</span></code>
@@ -243,7 +269,7 @@
             <span class="identifier">none_t</span><span class="special">,</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span> <span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Returns:</strong></span> <code class="computeroutput"><span class="special">!</span><span class="identifier">x</span></code>.
             </li>
@@ -267,10 +293,8 @@
             <span class="identifier">none_t</span><span class="special">,</span>
             <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x</span> <span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-              <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="special">!(</span>
-              <span class="identifier">x</span> <span class="special">==</span>
-              <span class="identifier">y</span> <span class="special">);</span></code>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <span class="bold"><strong>Returns: </strong></span> <code class="computeroutput"><span class="keyword">bool</span><span class="special">(</span><span class="identifier">x</span><span class="special">);</span></code>
             </li></ul></div>
 <p>
           <span class="inlinemediaobject"><img src="../../../images/space.png" alt="space"></span>
@@ -287,7 +311,7 @@
             <span class="special">(</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">o</span> <span class="special">)</span> <span class="special">-&gt;</span> <span class="keyword">typename</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">pointer_const_type</span>
             <span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Returns:</strong></span> <code class="computeroutput"><span class="identifier">o</span><span class="special">.</span><span class="identifier">get_ptr</span><span class="special">()</span></code>.
             </li>
@@ -312,7 +336,7 @@
             <span class="keyword">typename</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">reference_const_type</span>
             <span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Returns:</strong></span> <code class="computeroutput"><span class="identifier">o</span><span class="special">.</span><span class="identifier">get_value_or</span><span class="special">(</span><span class="identifier">def</span><span class="special">)</span></code>.
             </li>
@@ -331,7 +355,7 @@
             <span class="special">(</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&amp;</span> <span class="identifier">y</span>
             <span class="special">)</span> <span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Requires:</strong></span> Lvalues of type <code class="computeroutput"><span class="identifier">T</span></code> shall be swappable and <code class="computeroutput"><span class="identifier">T</span></code> shall be <code class="computeroutput"><span class="identifier">MoveConstructible</span></code>.
             </li>
@@ -452,7 +476,7 @@
             <span class="special">)</span> <span class="keyword">noexcept</span>
             <span class="special">;</span></code>
           </p></blockquote></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <span class="bold"><strong>Postconditions:</strong></span> <code class="computeroutput"><span class="identifier">x</span></code>
               refers to what <code class="computeroutput"><span class="identifier">y</span></code> refererred
@@ -483,7 +507,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2016 Andrzej Krzemie&#324;ski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2018 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

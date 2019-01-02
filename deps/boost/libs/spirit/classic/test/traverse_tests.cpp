@@ -44,7 +44,6 @@ std::string GETSTRING(std::ostrstream& ss)
 #include <boost/spirit/include/classic_assign_actor.hpp>
 #include <boost/spirit/include/classic_meta.hpp>
 
-using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef ref_value_actor<char, assign_action> assign_actor;
@@ -339,7 +338,7 @@ public:
         return this->base_t::generate_binary(binary_, left_, right_, env);
     }
 
-    std::vector<string> const &get_output() const { return traces; }
+    std::vector<std::string> const &get_output() const { return traces; }
 
 private:
     mutable std::vector<std::string> traces;
@@ -367,7 +366,7 @@ std::vector<std::string>::const_iterator end = trace_vector.get_output().end();
     for (/**/;  it != end; ++it)
     {
         if (std::find(first, first + cnt, *it) == first + cnt)
-            cerr << "node in question: " << *it << endl;
+            std::cerr << "node in question: " << *it << std::endl;
 
         BOOST_TEST(std::find(first, first + cnt, *it) != first + cnt);
     }
@@ -376,10 +375,10 @@ std::vector<std::string>::const_iterator end = trace_vector.get_output().end();
 std::vector<std::string>::const_iterator begin = trace_vector.get_output().begin();
 char const *expected = first[0];
 
-    for (size_t i = 0; i < cnt; expected = first[++i])
+    for (size_t i = 0; i < cnt - 1; expected = first[++i])
     {
         if (std::find(begin, end, std::string(expected)) == end)
-            cerr << "node in question: " << expected << endl;
+            std::cerr << "node in question: " << expected << std::endl;
 
         BOOST_TEST(std::find(begin, end, std::string(expected)) != end);
     }

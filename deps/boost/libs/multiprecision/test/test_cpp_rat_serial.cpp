@@ -151,7 +151,11 @@ void test()
       // Tests run on the compiler farm time out after 300 seconds,
       // so don't get too close to that:
       //
+#ifndef CI_SUPPRESS_KNOWN_ISSUES
       if(tim.elapsed() > 150)
+#else
+      if(tim.elapsed() > 25)
+#endif
       {
          std::cout << "Timeout reached, aborting tests now....\n";
          break;

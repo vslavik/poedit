@@ -29,10 +29,10 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
-//  Explicit instantiation of the expression_grammar_gen template with the 
-//  correct lexer iterator type. This instantiates the corresponding parse 
-//  function, which in turn instantiates the expression_grammar object (see 
+//
+//  Explicit instantiation of the expression_grammar_gen template with the
+//  correct lexer iterator type. This instantiates the corresponding parse
+//  function, which in turn instantiates the expression_grammar object (see
 //  wave/grammars/cpp_expression_grammar.hpp)
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@
 typedef boost::wave::cpplexer::lex_token<> token_type;
 
 // no need to change anything below
-template struct boost::wave::grammars::expression_grammar_gen<token_type>;
+template struct BOOST_SYMBOL_VISIBLE boost::wave::grammars::expression_grammar_gen<token_type>;
 
 // the suffix header occurs after all of the code
 #ifdef BOOST_HAS_ABI_HEADERS

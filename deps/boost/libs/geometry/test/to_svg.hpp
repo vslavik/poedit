@@ -299,7 +299,7 @@ inline void to_svg(G const& g, std::string const& filename, bool /*sort*/ = true
 
     bg::detail::self_get_turn_points::get_turns
         <
-            TurnPolicy
+            false, TurnPolicy
         >::apply(g, bg::detail::no_rescale_policy(), turns, interrupt_policy);
 
     turns_to_svg<G>(turns, mapper);

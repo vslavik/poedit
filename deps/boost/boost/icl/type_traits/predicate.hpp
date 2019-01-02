@@ -8,8 +8,6 @@ Copyright (c) 2010-2010: Joachim Faulhaber
 #ifndef BOOST_ICL_TYPE_TRAITS_PREDICATE_HPP_JOFA_101102
 #define BOOST_ICL_TYPE_TRAITS_PREDICATE_HPP_JOFA_101102
 
-#include <functional>
-
 namespace boost{namespace icl
 {
     // naming convention
@@ -20,7 +18,12 @@ namespace boost{namespace icl
     // Unary predicates
 
     template <class Type>
-    class property : public std::unary_function<Type,bool>{};
+    class property
+    {
+    public:
+        typedef Type argument_type;
+        typedef bool result_type;
+    };
 
     template <class Type>
     class member_property : public property<Type>
@@ -35,7 +38,13 @@ namespace boost{namespace icl
     // Binary predicates: relations
 
     template <class LeftT, class RightT>
-    class relation : public std::binary_function<LeftT,RightT,bool>{};
+    class relation
+    {
+    public:
+        typedef LeftT first_argument_type;
+        typedef RightT second_argument_type;
+        typedef bool result_type;
+    };
 
 
 }} // namespace icl boost

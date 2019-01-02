@@ -75,7 +75,7 @@
     #define BOOST_UNITS_CHECK_LAYOUT_COMPATIBILITY(a, b) BOOST_STATIC_ASSERT((sizeof(a) == sizeof(b)))
 #else
     ///INTERNAL ONLY
-    #define BOOST_UNITS_CHECK_LAYOUT_COMPATIBILITY(a, b) ((void)0)
+    #define BOOST_UNITS_CHECK_LAYOUT_COMPATIBILITY(a, b)
 #endif
 
 #ifdef BOOST_UNITS_DOXYGEN

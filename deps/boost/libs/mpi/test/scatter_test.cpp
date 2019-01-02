@@ -5,6 +5,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // A test of the scatter() and scatterv() collectives.
+#include <iterator>
 #include <boost/mpi/collectives/scatter.hpp>
 #include <boost/mpi/collectives/scatterv.hpp>
 #include <boost/mpi/communicator.hpp>
@@ -48,49 +49,6 @@ scatter_test(const communicator& comm, Generator generator,
     }
 
     BOOST_CHECK(value == generator(comm.rank()));
-  }
-
-  (comm.barrier)();
-}
-
-
-template<typename Generator>
-void
-scatterv_test(const communicator& comm, Generator generator,
-              const char* kind, int root = -1)
-{
-  typedef typename Generator::result_type value_type;
-
-  if (root == -1) {
-    for (root = 0; root < comm.size(); ++root)
-      scatterv_test(comm, generator, kind, root);
-  } else {
-    using boost::mpi::scatterv;
-
-    int mysize = comm.rank() + 1;
-    std::vector<value_type> myvalues(mysize);
-
-    if (comm.rank() == root) {
-      std::vector<value_type> values;
-      std::vector<int> sizes(comm.size());
-
-      // process p will receive p+1 identical generator(p) elements
-      for (int p = 0; p < comm.size(); ++p) {
-        for (int i = 0; i < p+1; ++i)
-          values.push_back(generator(p));
-        sizes[p] = p + 1;
-      }
-
-      std::cout << "Scatteringv " << kind << " from root "
-                << root << "..." << std::endl;
-
-      scatterv(comm, values, sizes, &myvalues[0], root);
-    } else {
-      scatterv(comm, &myvalues[0], mysize, root);
-    }
-
-    for (int i = 0; i < mysize; ++i)
-      BOOST_CHECK(myvalues[i] == generator(comm.rank()));
   }
 
   (comm.barrier)();
@@ -144,6 +102,57 @@ struct string_list_generator
     return result;
   }
 };
+
+std::ostream&
+operator<<(std::ostream& out, std::list<std::string> const& l) {
+  out << '[';
+  std::copy(l.begin(), l.end(), std::ostream_iterator<std::string>(out, " "));
+  out << ']';
+  return out;
+}
+
+template<typename Generator>
+void
+scatterv_test(const communicator& comm, Generator generator,
+              const char* kind, int root = -1)
+{
+  typedef typename Generator::result_type value_type;
+
+  if (root == -1) {
+    for (root = 0; root < comm.size(); ++root)
+      scatterv_test(comm, generator, kind, root);
+  } else {
+    using boost::mpi::scatterv;
+
+    int mysize = comm.rank() + 1;
+    std::vector<value_type> myvalues(mysize);
+
+    if (comm.rank() == root) {
+      std::vector<value_type> values;
+      std::vector<int> sizes(comm.size());
+
+      // process p will receive p+1 identical generator(p) elements
+      for (int p = 0; p < comm.size(); ++p) {
+        for (int i = 0; i < p+1; ++i)
+          values.push_back(generator(p));
+        sizes[p] = p + 1;
+      }
+
+      std::cout << "Scatteringv " << kind << " from root "
+                << root << "..." << std::endl;
+      assert(mysize == sizes[comm.rank()]);
+      scatterv(comm, values, sizes, &(myvalues[0]), root);
+    } else {
+      scatterv(comm, &(myvalues[0]), mysize, root);
+    }
+
+    for (int i = 0; i < mysize; ++i)
+      BOOST_CHECK(myvalues[i] == generator(comm.rank()));
+  }
+
+  (comm.barrier)();
+}
+
 
 int test_main(int argc, char* argv[])
 {

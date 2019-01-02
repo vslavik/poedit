@@ -24,6 +24,7 @@ test-suite graph_test :
     [ run test_graphs.cpp ]
     [ run index_graph.cpp ]     # TODO: Make this part of the test_graphs framework
     [ run labeled_graph.cpp ]
+    [ run finish_edge_bug.cpp ]
 
     [ run transitive_closure_test.cpp ]
     [ compile adj_list_cc.cpp ]
@@ -40,7 +41,7 @@ test-suite graph_test :
     [ run betweenness_centrality_test.cpp : 100 ]
     [ run bidir_remove_edge.cpp ]
     [ run bipartite_test.cpp ]
-    [ run csr_graph_test.cpp : : : : : <variant>release ]
+    # [ run csr_graph_test.cpp : : : : : <variant>release ]
     [ run dag_longest_paths.cpp ]
     [ run dfs.cpp ../../test/build//boost_test_exec_monitor ]
     [ run undirected_dfs.cpp ../../test/build//boost_test_exec_monitor ]
@@ -133,6 +134,9 @@ test-suite graph_test :
     [ run hawick_circuits.cpp ]
     [ run successive_shortest_path_nonnegative_weights_test.cpp ../../test/build//boost_unit_test_framework/<link>static ]
     [ run cycle_canceling_test.cpp ../../test/build//boost_unit_test_framework/<link>static ]
+    [ run strong_components_test.cpp ]
+    [ run find_flow_cost_bundled_properties_and_named_params_test.cpp ../../test/build//boost_unit_test_framework/<link>static ]
+    [ run max_flow_algorithms_bundled_properties_and_named_params.cpp ../../test/build//boost_unit_test_framework/<link>static ]
     ;
 
 # Run SDB tests only when -sSDB= is set.

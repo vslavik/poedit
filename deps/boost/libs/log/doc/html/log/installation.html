@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Installation and compatibility</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="how_to_read.html" title="How to read the documentation">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="log.installation"></a><a class="link" href="installation.html" title="Installation and compatibility">Installation and compatibility</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="installation.html#log.installation.supported_compilers">Supported compilers
       and platforms</a></span></dt>
 <dt><span class="section"><a href="installation/config.html">Configuring and building the
@@ -34,7 +34,7 @@
         The library should build and work with a reasonably compliant compiler. The
         library was successfully built and tested on the following platforms:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Windows XP, Windows Vista, Windows 7. MSVC 8.0 SP1, MSVC 9.0 and newer.
           </li>
@@ -53,7 +53,7 @@
         The following compilers/platforms are not supported and will likely fail
         to compile the library:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             C++11 compilers with non-C++11 standard libraries (like Clang with libstdc++
             from GCC 4.2). Please, use a C++11 standard library in C++11 mode.
@@ -81,21 +81,21 @@
       </p>
 <h5>
 <a name="log.installation.supported_compilers.h0"></a>
-        <span><a name="log.installation.supported_compilers.notes_for_gcc_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_gcc_users">Notes
+        <span class="phrase"><a name="log.installation.supported_compilers.notes_for_gcc_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_gcc_users">Notes
         for GCC users</a>
       </h5>
 <p>
         GCC versions since 4.5 support link time optimization (LTO), when most of
-        optimizations and binary code generation happens at linking stage. This allows
+        optimizations and binary code generation happen at linking stage. This allows
         to perform more advanced optimizations and produce faster code. Unfortunately,
         it does not play well with projects containing source files that need to
         be compiled with different compiler options. Boost.Log is one of such projects,
         some parts of its sources contain optimizations for modern CPUs and will
         not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible
-        with older CPUs (GCC <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043" target="_top">bug</a>),
-        which will likely result in crashes in run time. This problem is fixed in
-        GCC 5.1 and newer. For this reason LTO is not supported in Boost.Log until
-        GCC version 5.1.
+        with older CPUs (GCC bugs <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043" target="_top">61043</a>,
+        <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=77845" target="_top">77845</a>),
+        which will likely result in crashes at run time. For this reason LTO is not
+        supported in Boost.Log.
       </p>
 <p>
         There is a GCC <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=60607" target="_top">bug</a>
@@ -105,7 +105,7 @@
       </p>
 <h5>
 <a name="log.installation.supported_compilers.h1"></a>
-        <span><a name="log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users">Notes
+        <span class="phrase"><a name="log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users">Notes
         for MinGW, Cygwin and Visual Studio Express Edition users</a>
       </h5>
 <p>
@@ -153,7 +153,7 @@
       </p>
 <h5>
 <a name="log.installation.supported_compilers.h2"></a>
-        <span><a name="log.installation.supported_compilers.additional_notes_for_cygwin_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.additional_notes_for_cygwin_users">Additional
+        <span class="phrase"><a name="log.installation.supported_compilers.additional_notes_for_cygwin_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.additional_notes_for_cygwin_users">Additional
         notes for Cygwin users</a>
       </h5>
 <p>

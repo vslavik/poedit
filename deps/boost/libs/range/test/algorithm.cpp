@@ -457,7 +457,7 @@ void simple_compile_test()
 
     BOOST_RANGE_RETURNS_TEST2( find_end, v, std::less<int>() );
     BOOST_RANGE_RETURNS_TEST2( find_first_of, v, std::less<int>() );
-    BOOST_RANGE_RETURNS_TEST2( search, v, std::less<int>() );
+    BOOST_RANGE_RETURNS_TEST2( boost::search, v, std::less<int>() );
     BOOST_RANGE_RETURNS_TEST2( lower_bound, 0, std::less<int>() );
     BOOST_RANGE_RETURNS_TEST2( upper_bound, 0, std::less<int>() );
 

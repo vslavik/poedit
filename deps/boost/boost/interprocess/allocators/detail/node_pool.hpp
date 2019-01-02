@@ -45,10 +45,10 @@ namespace ipcdetail {
 template< class SegmentManager, std::size_t NodeSize, std::size_t NodesPerBlock >
 class private_node_pool
    //Inherit from the implementation to avoid template bloat
-   :  public boost::container::container_detail::
+   :  public boost::container::dtl::
          private_node_pool_impl<typename SegmentManager::segment_manager_base_type>
 {
-   typedef boost::container::container_detail::private_node_pool_impl
+   typedef boost::container::dtl::private_node_pool_impl
       <typename SegmentManager::segment_manager_base_type> base_t;
    //Non-copyable
    private_node_pool();

@@ -52,17 +52,6 @@ BOOST_STATIC_ASSERT((boost::is_same<boost::math::constants::construction_traits<
 BOOST_STATIC_ASSERT((boost::is_same<boost::math::constants::construction_traits<boost::math::concepts::real_concept, real_concept_policy_2 >::type, boost::mpl::int_<boost::math::constants::construct_from_string> >::value));
 BOOST_STATIC_ASSERT((boost::math::constants::construction_traits<boost::math::concepts::real_concept, real_concept_policy_3>::type::value >= 5));
 
-#ifndef BOOST_NO_CXX11_CONSTEXPR
-
-constexpr float fval = boost::math::constants::pi<float>();
-constexpr double dval = boost::math::constants::pi<double>();
-constexpr long double ldval = boost::math::constants::pi<long double>();
-
-constexpr float fval2 = boost::math::float_constants::pi;
-constexpr double dval2 = boost::math::double_constants::pi;
-constexpr long double ldval2 = boost::math::long_double_constants::pi;
-
-#endif
 
 // We need to declare a conceptual type whose precision is unknown at
 // compile time, and is so enormous when checked at runtime,
@@ -157,6 +146,8 @@ void test_spots(RealType)
    BOOST_CHECK_CLOSE_FRACTION(0.333333333333333333333333333333333333333L, third<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(0.666666666666666666666666666666666666667L, two_thirds<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(0.75L, three_quarters<RealType>(), tolerance);
+   BOOST_CHECK_CLOSE_FRACTION(0.1666666666666666666666666666666666666667L, sixth<RealType>(), tolerance);
+
    // Two and related.
    BOOST_CHECK_CLOSE_FRACTION(sqrt(2.L), root_two<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(sqrt(3.L), root_three<RealType>(), tolerance);
@@ -195,8 +186,8 @@ void test_spots(RealType)
 
    // Euler
    BOOST_CHECK_CLOSE_FRACTION(2.71828182845904523536028747135266249775724709369995L, e<RealType>(), tolerance);
-
    //BOOST_CHECK_CLOSE_FRACTION(exp(-0.5L), exp_minus_half<RealType>(), tolerance);  // See above.
+   BOOST_CHECK_CLOSE_FRACTION(exp(-1.L), exp_minus_one<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow(e<RealType>(), pi<RealType>()), e_pow_pi<RealType>(), tolerance); // See also above.
    BOOST_CHECK_CLOSE_FRACTION(sqrt(e<RealType>()), root_e<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(log10(e<RealType>()), log10_e<RealType>(), tolerance);
@@ -765,9 +756,15 @@ void test_constexpr()
    constexpr float f1 = boost::math::constants::pi<float>();
    constexpr double f2 = boost::math::constants::pi<double>();
    constexpr long double f3 = boost::math::constants::pi<long double>();
+   constexpr float fval2 = boost::math::float_constants::pi;
+   constexpr double dval2 = boost::math::double_constants::pi;
+   constexpr long double ldval2 = boost::math::long_double_constants::pi;
    (void)f1;
    (void)f2;
    (void)f3;
+   (void) fval2;
+   (void) dval2;
+   (void) ldval2;
 #ifdef BOOST_MATH_USE_FLOAT128
    constexpr __float128 f4 = boost::math::constants::pi<__float128>();
    (void)f4;
@@ -832,4 +829,3 @@ test_constants.cpp
   *** No errors detected
 
 */
-

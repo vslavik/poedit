@@ -10,7 +10,9 @@
 // trigger the corresponding operator overloads exposed by Fusion.
 
 #include <boost/fusion/tuple.hpp> 
-#include <boost/spirit/include/qi.hpp> 
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_eps.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
 #include <string>
 
 int main()

@@ -182,7 +182,7 @@
     #define BOOST_CSTDFLOAT_FLOAT128_ATANH  atanhq_patch
     #define BOOST_CSTDFLOAT_FLOAT128_TGAMMA tgammaq_patch
     #endif // BOOST_CSTDFLOAT_BROKEN_FLOAT128_MATH_FUNCTIONS
-  #endif 
+  #endif
 
   // Implement quadruple-precision <cmath> functions in the namespace
   // boost::math::cstdfloat::detail. Subsequently inject these into the
@@ -536,7 +536,11 @@
     using boost::math::cstdfloat::detail::ldexp;
     using boost::math::cstdfloat::detail::frexp;
     using boost::math::cstdfloat::detail::fabs;
+
+#if !(defined(_GLIBCXX_USE_FLOAT128) && defined(__GNUC__) && (__GNUC__ >= 7))
     using boost::math::cstdfloat::detail::abs;
+#endif
+
     using boost::math::cstdfloat::detail::floor;
     using boost::math::cstdfloat::detail::ceil;
     using boost::math::cstdfloat::detail::sqrt;

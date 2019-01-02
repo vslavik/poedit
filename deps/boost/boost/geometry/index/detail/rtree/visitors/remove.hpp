@@ -2,7 +2,7 @@
 //
 // R-tree removing visitor implementation
 //
-// Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -13,7 +13,7 @@
 
 #include <boost/geometry/index/detail/rtree/visitors/is_leaf.hpp>
 
-#include <boost/geometry/algorithms/covered_by.hpp>
+#include <boost/geometry/algorithms/detail/covered_by/interface.hpp>
 
 namespace boost { namespace geometry { namespace index {
 

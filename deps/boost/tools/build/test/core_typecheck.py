@@ -13,7 +13,7 @@ t = BoostBuild.Tester(["-ffile.jam"], pass_toolset=0)
 t.write("file.jam", """
 module .typecheck
 {
-    rule [path] ( x )
+    rule "[path]" ( x )
     {
         if ! [ MATCH "^(::)" : $(x) ]
         {

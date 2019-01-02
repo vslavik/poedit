@@ -20,10 +20,13 @@
 #ifndef BOOST_PHOENIX_IS_STD_UNORDERED_SET_OR_MAP
 #define BOOST_PHOENIX_IS_STD_UNORDERED_SET_OR_MAP
 
+#include <boost/phoenix/config.hpp>
 #include <boost/mpl/bool.hpp>
-#include "./std_unordered_set_or_map_fwd.hpp"
 
 #ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
+#include BOOST_PHOENIX_UNORDERED_SET_HEADER
+#include BOOST_PHOENIX_UNORDERED_MAP_HEADER
+#endif
 
 namespace boost
 {
@@ -46,6 +49,8 @@ namespace boost
     struct is_std_unordered_multimap
         : boost::mpl::false_
     {};
+
+#ifdef BOOST_PHOENIX_HAS_UNORDERED_SET_AND_MAP
 
     template<
         class Kty
@@ -89,56 +94,7 @@ namespace boost
         : boost::mpl::true_
     {};
 
-    template<
-        class Kty
-      , class Hash
-      , class Cmp
-      , class Alloc
-    >
-    struct has_find< std::unordered_set<Kty,Hash,Cmp,Alloc> >
-        : boost::mpl::true_
-    {
-    };
-
-    template<
-        class Kty
-      , class Hash
-      , class Cmp
-      , class Alloc
-    >
-    struct has_find< std::unordered_multiset<Kty,Hash,Cmp,Alloc> >
-        : boost::mpl::true_
-    {
-    };
-    
-    template<
-        class Kty
-      , class Ty
-      , class Hash
-      , class Cmp
-      , class Alloc
-    >
-    struct has_find< std::unordered_map<Kty,Ty,Hash,Cmp,Alloc> >
-        : boost::mpl::true_
-    {
-    };
- 
-    template<
-        class Kty
-      , class Ty
-      , class Hash
-      , class Cmp
-      , class Alloc
-    >
-    struct has_find< std::unordered_multimap<Kty,Ty,Hash,Cmp,Alloc> >
-        : boost::mpl::true_
-    {
-    };
-  
-   
-}
-
 #endif
-
+} // namespace boost
 
 #endif

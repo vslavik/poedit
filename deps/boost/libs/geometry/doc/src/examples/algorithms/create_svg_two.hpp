@@ -13,7 +13,7 @@
 
 #include <fstream>
 #include <boost/algorithm/string.hpp>
-
+#include <boost/core/ignore_unused.hpp>
 #if defined(HAVE_SVG)
 #  include <boost/geometry/io/svg/svg_mapper.hpp>
 #endif
@@ -41,9 +41,7 @@ void create_svg(std::string const& filename, Geometry1 const& a, Geometry2 const
         mapper.map(b, "opacity:0.8;fill:none;stroke:rgb(255,128,0);stroke-width:4;stroke-dasharray:1,7;stroke-linecap:round");
     }
 #else
-    boost::ignore_unused_variable_warning(filename);
-    boost::ignore_unused_variable_warning(a);
-    boost::ignore_unused_variable_warning(b);
+    boost::ignore_unused(filename, a, b);
 #endif
 }
 

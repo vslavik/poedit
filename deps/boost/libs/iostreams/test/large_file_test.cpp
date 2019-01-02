@@ -181,7 +181,7 @@ bool large_file_exists()
 
 // Initializes the large file by mapping it in small segments. This is an
 // optimization for Win32; the straightforward implementation using WriteFile 
-// and SetFilePointer (see the Borland workaropund below) is painfully slow.
+// and SetFilePointer (see the Borland workaround below) is painfully slow.
 bool map_large_file()
 {
     for (stream_offset z = 0; z <= 8; ++z) {
@@ -192,7 +192,7 @@ bool map_large_file()
             params.length = 1;
             params.mode = BOOST_IOS::out;
             mapped_file file(params);
-            file.begin()[0] = z + 1;
+            file.begin()[0] = static_cast<char>(z + 1);
         } catch (const std::exception&) {
             remove_large_file();
             return false;
@@ -376,8 +376,8 @@ private:
 // position
 bool check_character(file_descriptor_source& file, char value)
 {
-    char           buf[1];
-    int            amt;
+    char             buf[1];
+    std::streamsize  amt;
     BOOST_CHECK_NO_THROW(amt = file.read(buf, 1));
     BOOST_CHECK_MESSAGE(amt == 1, "failed reading character");
     BOOST_CHECK_NO_THROW(file.seek(-1, BOOST_IOS::cur));

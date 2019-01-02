@@ -13,7 +13,9 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/math/special_functions/math_fwd.hpp>
+#include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/constants/constants.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/array.hpp>
 #include "functor.hpp"
 
@@ -182,3 +184,184 @@ void test_spots(T, const char* t)
    BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_q(40, static_cast<T>(0.5L)), static_cast<T>(0.1493671665503550095010454949479907886011L), tolerance);
 }
 
+template <class T>
+void test_legendre_p_prime()
+{
+    T tolerance = 100*boost::math::tools::epsilon<T>();
+    T x = -1;
+    while (x <= 1)
+    {
+        // P_0'(x) = 0
+        BOOST_CHECK_SMALL(::boost::math::legendre_p_prime<T>(0,  x), tolerance);
+        // Reflection formula for P_{-1}(x) = P_{0}(x):
+        BOOST_CHECK_SMALL(::boost::math::legendre_p_prime<T>(-1,  x), tolerance);
+
+        // P_1(x) = x, so P_1'(x) = 1:
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(1,  x), static_cast<T>(1), tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-2,  x), static_cast<T>(1), tolerance);
+
+        // P_2(x) = 3x^2/2 + k => P_2'(x) = 3x
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(2,  x), 3*x, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-3,  x), 3*x, tolerance);
+
+        // P_3(x) = (5x^3 - 3x)/2 => P_3'(x) = (15x^2 - 3)/2:
+        T xsq = x*x;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(3,  x), (15*xsq - 3)/2, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-4,  x), (15*xsq -3)/2, tolerance);
+
+        // P_4(x) = (35x^4 - 30x^2 +3)/8 => P_4'(x) = (5x/2)*(7x^2 - 3)
+        T expected = 5*x*(7*xsq - 3)/2;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(4,  x), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-5,  x), expected, tolerance);
+
+        // P_5(x) = (63x^5 - 70x^3 + 15x)/8 => P_5'(x) = (315*x^4 - 210*x^2 + 15)/8
+        T x4 = xsq*xsq;
+        expected = (315*x4 - 210*xsq + 15)/8;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(5,  x), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-6,  x), expected, tolerance);
+
+        // P_6(x) = (231x^6 -315*x^4 +105x^2 -5)/16 => P_6'(x) = (6*231*x^5 - 4*315*x^3 + 105x)/16
+        expected = 21*x*(33*x4 - 30*xsq + 5)/8;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(6,  x), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-7,  x), expected, tolerance);
+
+        // Mathematica: D[LegendreP[7, x],x]
+        T x6 = x4*xsq;
+        expected = 7*(429*x6 -495*x4 + 135*xsq - 5)/16;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(7,  x), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-8,  x), expected, tolerance);
+
+        // Mathematica: D[LegendreP[8, x],x]
+        // The naive polynomial evaluation algorithm is going to get worse from here out, so this will be enough.
+        expected = 9*x*(715*x6 - 1001*x4 + 385*xsq - 35)/16;
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(8,  x), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-9,  x), expected, tolerance);
+
+        x += static_cast<T>(1)/static_cast<T>(pow(T(2), T(4)));
+    }
+
+    int n = 0;
+    while (n < 5000)
+    {
+        T expected = n*(n+1)*boost::math::constants::half<T>();
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(n, (T) 1), expected, tolerance);
+        BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-n - 1,  (T) 1), expected, tolerance);
+        if (n & 1)
+        {
+            BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(n, (T) -1), expected, tolerance);
+            BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-n - 1,  (T) -1), expected, tolerance);
+        }
+        else
+        {
+            BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(n, (T) -1), -expected, tolerance);
+            BOOST_CHECK_CLOSE_FRACTION(::boost::math::legendre_p_prime<T>(-n - 1,  (T) -1), -expected, tolerance);
+        }
+        ++n;
+    }
+}
+
+template<class Real>
+void test_legendre_p_zeros()
+{
+    std::cout << "Testing Legendre zeros on type " << boost::typeindex::type_id<Real>().pretty_name() << "\n";
+    using std::sqrt;
+    using std::abs;
+    using boost::math::legendre_p_zeros;
+    using boost::math::legendre_p;
+    using boost::math::constants::third;
+    Real tol = std::numeric_limits<Real>::epsilon();
+
+    // Check the trivial cases:
+    std::vector<Real> zeros = legendre_p_zeros<Real>(1);
+    BOOST_ASSERT(zeros.size() == 1);
+    BOOST_CHECK_SMALL(zeros[0], tol);
+
+    zeros = legendre_p_zeros<Real>(2);
+    BOOST_ASSERT(zeros.size() == 1);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[0], (Real) 1/ sqrt(static_cast<Real>(3)), tol);
+
+    zeros = legendre_p_zeros<Real>(3);
+    BOOST_ASSERT(zeros.size() == 2);
+    BOOST_CHECK_SMALL(zeros[0], tol);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[1], sqrt(static_cast<Real>(3)/static_cast<Real>(5)), tol);
+
+    zeros = legendre_p_zeros<Real>(4);
+    BOOST_ASSERT(zeros.size() == 2);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[0], sqrt( (15-2*sqrt(static_cast<Real>(30)))/static_cast<Real>(35) ), tol);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[1], sqrt( (15+2*sqrt(static_cast<Real>(30)))/static_cast<Real>(35) ), tol);
+
+
+    zeros = legendre_p_zeros<Real>(5);
+    BOOST_ASSERT(zeros.size() == 3);
+    BOOST_CHECK_SMALL(zeros[0], tol);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[1], third<Real>()*sqrt( (35 - 2*sqrt(static_cast<Real>(70)))/static_cast<Real>(7) ), 2*tol);
+    BOOST_CHECK_CLOSE_FRACTION(zeros[2], third<Real>()*sqrt( (35 + 2*sqrt(static_cast<Real>(70)))/static_cast<Real>(7) ), 2*tol);
+
+    // Don't take the tolerances too seriously.
+    // The other test shows that the zeros are estimated more accurately than the function!
+    for (unsigned n = 6; n < 130; ++n)
+    {
+        zeros = legendre_p_zeros<Real>(n);
+        if (n & 1)
+        {
+            BOOST_CHECK(zeros.size() == (n-1)/2 +1);
+            BOOST_CHECK_SMALL(zeros[0], tol);
+        }
+        else
+        {
+            // Zero is not a zero of the odd Legendre polynomials
+            BOOST_CHECK(zeros.size() == n/2);
+            BOOST_CHECK(zeros[0] > 0);
+            BOOST_CHECK_SMALL(legendre_p(n, zeros[0]), 550*tol);
+        }
+        Real previous_zero = zeros[0];
+        for (unsigned k = 1; k < zeros.size(); ++k)
+        {
+            Real next_zero = zeros[k];
+            BOOST_CHECK(next_zero > previous_zero);
+
+            std::string err = "Tolerance failed for (n, k) = (" + boost::lexical_cast<std::string>(n) + "," + boost::lexical_cast<std::string>(k) + ")\n";
+            if (n < 40)
+            {
+                BOOST_CHECK_MESSAGE( abs(legendre_p(n, next_zero)) < 100*tol,
+                                     err);
+            }
+            else
+            {
+              BOOST_CHECK_MESSAGE( abs(legendre_p(n, next_zero)) < 1000*tol,
+                                   err);
+            }
+            previous_zero = next_zero;
+        }
+        // The zeros of orthogonal polynomials are contained strictly in (a, b).
+        BOOST_CHECK(previous_zero < 1);
+    }
+    return;
+}
+
+int test_legendre_p_zeros_double_ulp(int min_x, int max_n)
+{
+    std::cout << "Testing ULP distance for Legendre zeros.\n";
+    using std::abs;
+    using boost::math::legendre_p_zeros;
+    using boost::math::float_distance;
+    using boost::multiprecision::cpp_bin_float_quad;
+
+    double max_float_distance = 0;
+    for (int n = min_x; n < max_n; ++n)
+    {
+        std::vector<double> double_zeros = legendre_p_zeros<double>(n);
+        std::vector<cpp_bin_float_quad> quad_zeros   = legendre_p_zeros<cpp_bin_float_quad>(n);
+        BOOST_ASSERT(quad_zeros.size() == double_zeros.size());
+        for (int k = 0; k < (int)double_zeros.size(); ++k)
+        {
+            double d = abs(float_distance(double_zeros[k], quad_zeros[k].convert_to<double>()));
+            if (d > max_float_distance)
+            {
+                max_float_distance = d;
+            }
+        }
+    }
+
+    return (int) max_float_distance;
+}

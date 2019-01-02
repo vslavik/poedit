@@ -27,7 +27,7 @@ local rule run-module-test ( m )
     local tested-modules = [ modules.peek modules : .tested ] ;
 
     if ( ! $(m) in $(tested-modules) )  # Avoid recursive test invocations.
-        && ( ( --debug in $(argv) ) || ( --debug-module=$(m) in $(argv) ) )
+        && ( ( --debug in $(argv) ) || ( "--debug-module=$(m)" in $(argv) ) )
     {
         modules.poke modules : .tested : $(tested-modules) $(m) ;
 
@@ -36,7 +36,7 @@ local rule run-module-test ( m )
             local argv = [ peek : ARGV ] ;
             if ! ( --quiet in $(argv) ) && ( --debug-tests in $(argv) )
             {
-                ECHO warning: no __test__ rule defined in module $(m) ;
+                ECHO "warning:" no __test__ rule defined in module $(m) ;
             }
         }
         else
@@ -201,7 +201,7 @@ rule load (
     {
         import errors ;
         errors.error loading \"$(module-name)\"
-            : circular module loading dependency:
+            : circular module loading "dependency:"
             : $(.loading)" ->" $(module-name) ;
     }
 }

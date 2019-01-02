@@ -1,6 +1,7 @@
 # Copyright Joel de Guzman 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+from __future__ import print_function
 '''
 
 #####################################################################
@@ -36,7 +37,7 @@ foo
 ...         s += repr(x)
 ...         s += ' ' 
 ...     s += ']'
-...     print s
+...     print(s)
 
 #####################################################################
 # Setting (adding entries)
@@ -198,7 +199,7 @@ kiwi
 >>> print_xmap(tm)
 [ (joel, aaa) (kimpo, bbb) ]
 >>> for el in tm: #doctest: +NORMALIZE_WHITESPACE
-...     print el.key(),
+...     print(el.key(), end='')
 ...     dom = el.data()
 joel kimpo
 
@@ -230,10 +231,10 @@ def run(args = None):
     return doctest.testmod(sys.modules.get(__name__))
 
 if __name__ == '__main__':
-    print 'running...'
+    print('running...')
     import sys
     status = run()[0]
-    if (status == 0): print "Done."
+    if (status == 0): print("Done.")
     sys.exit(status)
 
 

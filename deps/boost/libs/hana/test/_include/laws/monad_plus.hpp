@@ -1,17 +1,37 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_HANA_TEST_LAWS_MONAD_PLUS_HPP
 #define BOOST_HANA_TEST_LAWS_MONAD_PLUS_HPP
 
+#include <boost/hana/append.hpp>
 #include <boost/hana/assert.hpp>
 #include <boost/hana/bool.hpp>
+#include <boost/hana/chain.hpp>
+#include <boost/hana/concat.hpp>
 #include <boost/hana/concept/comparable.hpp>
+#include <boost/hana/concept/monad_plus.hpp>
+#include <boost/hana/concept/sequence.hpp>
+#include <boost/hana/core/make.hpp>
 #include <boost/hana/core/when.hpp>
+#include <boost/hana/cycle.hpp>
+#include <boost/hana/empty.hpp>
+#include <boost/hana/equal.hpp>
+#include <boost/hana/filter.hpp>
+#include <boost/hana/for_each.hpp>
 #include <boost/hana/functional/capture.hpp>
 #include <boost/hana/functional/compose.hpp>
-#include <boost/hana/concept/monad_plus.hpp>
+#include <boost/hana/integral_constant.hpp>
+#include <boost/hana/lift.hpp>
+#include <boost/hana/not.hpp>
+#include <boost/hana/not_equal.hpp>
+#include <boost/hana/prefix.hpp>
+#include <boost/hana/prepend.hpp>
+#include <boost/hana/remove.hpp>
+#include <boost/hana/remove_if.hpp>
+#include <boost/hana/replicate.hpp>
+#include <boost/hana/suffix.hpp>
 
 #include <laws/base.hpp>
 
@@ -27,30 +47,30 @@ namespace boost { namespace hana { namespace test {
         template <typename Xs, typename Predicates, typename Values>
         TestMonadPlus(Xs xs, Predicates predicates, Values values) {
             hana::for_each(xs, [](auto a) {
-                static_assert(MonadPlus<decltype(a)>::value, "");
+                static_assert(MonadPlus<decltype(a)>{}, "");
 
                 // left identity
                 BOOST_HANA_CHECK(hana::equal(
-                    hana::concat(empty<M>(), a),
+                    hana::concat(hana::empty<M>(), a),
                     a
                 ));
 
                 // right identity
                 BOOST_HANA_CHECK(hana::equal(
-                    hana::concat(a, empty<M>()),
+                    hana::concat(a, hana::empty<M>()),
                     a
                 ));
 
                 // absorption
                 auto f = hana::compose(lift<M>, test::_injection<0>{});
                 BOOST_HANA_CHECK(hana::equal(
-                    hana::chain(empty<M>(), f),
-                    empty<M>()
+                    hana::chain(hana::empty<M>(), f),
+                    hana::empty<M>()
                 ));
 
                 BOOST_HANA_CHECK(hana::equal(
-                    hana::chain(a, hana::always(empty<M>())),
-                    empty<M>()
+                    hana::chain(a, hana::always(hana::empty<M>())),
+                    hana::empty<M>()
                 ));
 
             });
@@ -106,7 +126,7 @@ namespace boost { namespace hana { namespace test {
             // empty
             //////////////////////////////////////////////////////////////////
             BOOST_HANA_CONSTANT_CHECK(equal(
-                empty<S>(), list()
+                hana::empty<S>(), list()
             ));
 
             //////////////////////////////////////////////////////////////////
@@ -435,64 +455,63 @@ namespace boost { namespace hana { namespace test {
             //////////////////////////////////////////////////////////////////
             // remove
             //////////////////////////////////////////////////////////////////
-            using hana::remove; // make sure we don't clash with ::remove in <stdio.h>
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(), undefined{}),
+                hana::remove(list(), undefined{}),
                 list()
             ));
 
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}), z),
+                hana::remove(list(eq<0>{}), z),
                 list(eq<0>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z), z),
+                hana::remove(list(z), z),
                 list()
             ));
 
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, eq<1>{}), z),
+                hana::remove(list(eq<0>{}, eq<1>{}), z),
                 list(eq<0>{}, eq<1>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z, eq<1>{}), z),
+                hana::remove(list(z, eq<1>{}), z),
                 list(eq<1>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, z), z),
+                hana::remove(list(eq<0>{}, z), z),
                 list(eq<0>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z, z), z),
+                hana::remove(list(z, z), z),
                 list()
             ));
 
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, eq<1>{}, eq<2>{}), z),
+                hana::remove(list(eq<0>{}, eq<1>{}, eq<2>{}), z),
                 list(eq<0>{}, eq<1>{}, eq<2>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, eq<1>{}, z), z),
+                hana::remove(list(eq<0>{}, eq<1>{}, z), z),
                 list(eq<0>{}, eq<1>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, z, eq<2>{}), z),
+                hana::remove(list(eq<0>{}, z, eq<2>{}), z),
                 list(eq<0>{}, eq<2>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z, eq<1>{}, eq<2>{}), z),
+                hana::remove(list(z, eq<1>{}, eq<2>{}), z),
                 list(eq<1>{}, eq<2>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z, z, eq<2>{}), z),
+                hana::remove(list(z, z, eq<2>{}), z),
                 list(eq<2>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(eq<0>{}, z, z), z),
+                hana::remove(list(eq<0>{}, z, z), z),
                 list(eq<0>{})
             ));
             BOOST_HANA_CONSTANT_CHECK(equal(
-                remove(list(z, z, z), z),
+                hana::remove(list(z, z, z), z),
                 list()
             ));
 

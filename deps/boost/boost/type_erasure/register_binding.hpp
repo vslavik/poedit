@@ -53,7 +53,11 @@ struct append_to_key_static {
     append_to_key_static(key_type* k) : key(k) {} 
     template<class P>
     void operator()(P) {
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         key->push_back(&typeid(typename ::boost::mpl::at<Map, P>::type));
+#else
+        key->push_back(&typeid(::boost::mp11::mp_second< ::boost::mp11::mp_map_find<Map, P> >));
+#endif
     }
     key_type* key;
 };
@@ -94,7 +98,11 @@ struct register_function {
     template<class F>
     void operator()(F) {
         key_type key;
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         typedef typename ::boost::type_erasure::detail::get_placeholders<F, ::boost::mpl::set0<> >::type placeholders;
+#else
+        typedef typename ::boost::type_erasure::detail::get_placeholders<F, ::boost::mp11::mp_list<> >::type placeholders;
+#endif
         typedef typename ::boost::mpl::fold<
             placeholders,
             ::boost::mpl::map0<>,
@@ -111,7 +119,7 @@ struct register_function {
 
 /**
  * Registers a model of a concept to allow downcasting @ref any
- * via @ref dynamic_any_cast.
+ * via \dynamic_any_cast.
  */
 template<class Concept, class Map>
 void register_binding(const static_binding<Map>&)
@@ -140,7 +148,11 @@ void register_binding()
     typedef typename normalized::first basic;
     typedef typename ::boost::mpl::fold<
         basic,
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         ::boost::mpl::set0<>,
+#else
+        ::boost::mp11::mp_list<>,
+#endif
         ::boost::type_erasure::detail::get_placeholders< ::boost::mpl::_2, ::boost::mpl::_1>
     >::type all_placeholders;
     // remove deduced placeholders

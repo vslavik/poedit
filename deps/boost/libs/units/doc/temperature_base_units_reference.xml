@@ -3,7 +3,7 @@
 <namespace name="boost">
 <namespace name="units">
 <namespace name="temperature">
-<struct name="celsius_base_unit"><method-group name="public static functions">
+<struct name="celsius_base_unit"><inherit access="public">base_unit&lt; celsius_base_unit, temperature_dimension,-1008 &gt;</inherit><method-group name="public static functions">
 <method name="name" specifiers="static"><type>std::string</type></method>
 <method name="symbol" specifiers="static"><type>std::string</type></method>
 </method-group>
@@ -15,7 +15,7 @@
 <namespace name="boost">
 <namespace name="units">
 <namespace name="temperature">
-<struct name="fahrenheit_base_unit"><method-group name="public static functions">
+<struct name="fahrenheit_base_unit"><inherit access="public">base_unit&lt; fahrenheit_base_unit, temperature_dimension,-1007 &gt;</inherit><method-group name="public static functions">
 <method name="name" specifiers="static"><type>std::string</type></method>
 <method name="symbol" specifiers="static"><type>std::string</type></method>
 </method-group>

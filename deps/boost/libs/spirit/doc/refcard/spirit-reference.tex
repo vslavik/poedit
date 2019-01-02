@@ -1,6 +1,7 @@
-% Reference Card for Boost.Spirit 2.5.2
+% Reference Card for Boost.Spirit 2.5.7
 % Copyright (c) 2014 Richard Thomson. May be freely distributed.
 % Created Friday, October 31, 2014
+% Updated Tuesday, July 12, 2016
 % Thanks to Joseph H. Silverman for his TeX reference card on which
 % this reference card is based.
 % Thanks to Stephen Gildea for the multicolumn macro package
@@ -53,10 +54,11 @@
 
 % History:
 %  Version 1.0 - October 2014
+%  Version 1.1 - July 2016
 
 \def\versionnumber{1.0}  % Version of this reference card
-\def\year{2014}
-\def\month{October}
+\def\year{2016}
+\def\month{July}
 \def\version{\month\ \year\ v\versionnumber}
 
 
@@ -219,7 +221,7 @@ are preserved on all copies.
  
 % ************  TEXT STARTS HERE **************************
 
-\title{Boost.Spirit 2.5.2 Reference Card}
+\title{Boost.Spirit 2.5.7 Reference Card}
  
 \section{Primitive Parsers}
 
@@ -335,6 +337,8 @@ are preserved on all copies.
 &#\hfil\SPC\tabskip=0pt plus 1 fil
 &#\hfil\cr
 \\|as<T>()[a]|&Atomic Assignment&\\|T|\cr
+\\|expect[a]|&Expectation&\\|A|\cr
+\\|expect[u]|&&\unused\cr
 \\|hold[a]|&Hold Attribute&\\|A|\cr
 \\|hold[u]|&&\unused\cr
 \\|lexeme[a]|&Lexeme&\\|A|\cr
@@ -437,6 +441,8 @@ $unspecified$\\| phrase_match<Exp, Skipper, A1, ..., An>(|\cr
 \\|    A1& a1, ..., An& an);|\cr
 }
 
+\shortcopyrightnotice
+
 \section{Binary Value Parsers}
 
 % ***** Three Column Format *****
@@ -461,8 +467,6 @@ $unspecified$\\| phrase_match<Exp, Skipper, A1, ..., An>(|\cr
 \\|big_|$item$&Big Endian $item$&as above\cr
 \\|big_|$item$\\|(w)|&&\unused\cr
 }
-
-\shortcopyrightnotice
 
 \section{Character Encodings}
 

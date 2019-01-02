@@ -297,6 +297,12 @@ int main()
   BOOST_STATIC_ASSERT((is_same<result_of<const no_result_type_or_result_template<void>(void)>::type, cv_overload_check<const int> >::value));
   BOOST_STATIC_ASSERT((is_same<result_of<volatile no_result_type_or_result_template<void>(void)>::type, cv_overload_check<volatile int> >::value));
   BOOST_STATIC_ASSERT((is_same<result_of<const volatile no_result_type_or_result_template<void>(void)>::type, cv_overload_check<const volatile int> >::value));
+
+  BOOST_STATIC_ASSERT((is_same<result_of<func_ptr&(char, float)>::type, int>::value));
+  BOOST_STATIC_ASSERT((is_same<result_of<func_ptr const&(char, float)>::type, int>::value));
+  BOOST_STATIC_ASSERT((is_same<result_of<int_result_of&(double)>::type, int>::value));
+  BOOST_STATIC_ASSERT((is_same<result_of<int_result_of const&(double)>::type, int>::value));
+
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
   BOOST_STATIC_ASSERT((is_same<result_of<no_result_type_or_result(int&&)>::type, short>::value));
   BOOST_STATIC_ASSERT((is_same<result_of<no_result_type_or_result(int&)>::type, int>::value));

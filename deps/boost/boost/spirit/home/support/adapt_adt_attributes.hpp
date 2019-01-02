@@ -193,14 +193,25 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute<
         fusion::extension::adt_attribute_proxy<T, N, Const>, Exposed>
     {
+        typedef
+            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+        get_return_type;
         typedef typename remove_const<
             typename remove_reference<
-                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+                get_return_type
             >::type
         >::type embedded_type;
         typedef 
             typename spirit::result_of::extract_from<Exposed, embedded_type>::type
-        type;
+        extracted_type;
+
+        // If adt_attribute_proxy returned a value we must pass the attribute
+        // by value, otherwise we will end up with a reference to a temporary
+        // that will expire out of scope of the function call.
+        typedef typename mpl::if_c<is_reference<get_return_type>::value
+          , extracted_type
+          , typename remove_reference<extracted_type>::type
+        >::type type;
 
         template <typename Context>
         static type 

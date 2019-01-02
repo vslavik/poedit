@@ -8,7 +8,6 @@
 
 #include <boost/config.hpp>
 #include <boost/cstdint.hpp>
-#include <boost/core/lightweight_test.hpp>
 
 #include "api_test_helpers.hpp"
 
@@ -45,6 +44,13 @@ int main(int, char *[])
     test_constexpr_ctor<int>();
     test_constexpr_ctor<long>();
     test_constexpr_ctor<int*>();
+
+    test_floating_point_api<float>();
+    test_floating_point_api<double>();
+    test_floating_point_api<long double>();
+#if defined(BOOST_HAS_FLOAT128)
+    test_floating_point_api<boost::float128_type>();
+#endif
 
     test_pointer_api<int>();
 

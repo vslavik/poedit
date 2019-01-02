@@ -14,7 +14,6 @@
 #ifndef BOOST_GEOMETRY_ITERATORS_BASE_HPP
 #define BOOST_GEOMETRY_ITERATORS_BASE_HPP
 
-#include <boost/iterator.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/mpl/if.hpp>

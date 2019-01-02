@@ -30,7 +30,7 @@ if $(xsltproc-exe)
 {
     if --debug-configuration in [ modules.peek : ARGV ]
     {
-        ECHO notice: using xsltproc ":" $(xsltproc-exe) ;
+        ECHO notice\: using xsltproc ":" $(xsltproc-exe) ;
     }
     using xsltproc : $(xsltproc-exe) ;
 }

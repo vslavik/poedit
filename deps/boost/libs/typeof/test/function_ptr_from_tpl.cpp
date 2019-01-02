@@ -6,15 +6,23 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
 
-void f()
-{}
+void f1() {}
+void f2(...) {}
 
 template<class T> 
-struct tpl
+struct tpl1
 {
-    typedef BOOST_TYPEOF_TPL(&f) type;
+    typedef BOOST_TYPEOF_TPL(&f1) type;
 };
 
-typedef void(*fun_type)();
+template<class T> 
+struct tpl2
+{
+    typedef BOOST_TYPEOF_TPL(&f2) type;
+};
+
+typedef void(*fun1_type)();
+typedef void(*fun2_type)(...);
  
-BOOST_STATIC_ASSERT((boost::is_same<tpl<void>::type, fun_type>::value));
+BOOST_STATIC_ASSERT((boost::is_same<tpl1<void>::type, fun1_type>::value));
+BOOST_STATIC_ASSERT((boost::is_same<tpl2<void>::type, fun2_type>::value));

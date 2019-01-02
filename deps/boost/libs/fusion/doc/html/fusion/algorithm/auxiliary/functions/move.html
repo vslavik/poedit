@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>move</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="copy.html" title="copy">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h0"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.description"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.description">Description</a>
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.description"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.description">Description</a>
           </h6>
 <p>
             move a sequence <code class="computeroutput"><span class="identifier">src</span></code> to
@@ -37,7 +37,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h1"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.synopsis"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.synopsis">Synopsis</a>
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.synopsis"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Seq1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Seq2</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <a class="link" href="../metafunctions/move.html" title="move"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">move</span></code></a><span class="special">&lt;</span><span class="identifier">Seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">move</span><span class="special">(</span><span class="identifier">Seq1</span><span class="special">&amp;&amp;</span> <span class="identifier">src</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&amp;</span> <span class="identifier">dest</span><span class="special">);</span>
@@ -115,7 +115,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h2"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.expression_semantics"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.expression_semantics">Expression
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.expression_semantics"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="move.html" title="move"><code class="computeroutput"><span class="identifier">move</span></code></a><span class="special">(</span><span class="identifier">src</span><span class="special">,</span> <span class="identifier">dest</span><span class="special">);</span>
@@ -130,21 +130,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h3"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.complexity"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.complexity">Complexity</a>
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.complexity"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.complexity">Complexity</a>
           </h6>
 <p>
             Linear, exactly <code class="computeroutput"><a class="link" href="../../../sequence/intrinsic/metafunctions/size.html" title="size"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">size</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">&gt;::</span><span class="identifier">value</span></code>.
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h4"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.header"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.header">Header</a>
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.header"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">auxiliary</span><span class="special">/</span><span class="identifier">move</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">move</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.move.h5"></a>
-            <span><a name="fusion.algorithm.auxiliary.functions.move.example"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.example">Example</a>
+            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.move.example"></a></span><a class="link" href="move.html#fusion.algorithm.auxiliary.functions.move.example">Example</a>
           </h6>
 <pre class="programlisting"><a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">);</span>
 <a class="link" href="../../../container/list.html" title="list"><code class="computeroutput"><span class="identifier">list</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">ls</span><span class="special">;</span>

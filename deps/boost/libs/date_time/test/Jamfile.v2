@@ -1,7 +1,8 @@
-
+import os ;
+import testing ;
 
 local DATE_TIME_DYNAMIC_PROPERTIES = <define>BOOST_ALL_DYN_LINK <runtime-link>shared <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <define>BOOST_ALL_NO_LIB ;
-local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <define>BOOST_DATE_TIME_STATIC_LINK
+local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG
   # FIXME 
   #std::locale-support 
   <define>BOOST_ALL_NO_LIB ;
@@ -74,6 +75,10 @@ test-suite date_time_gregorian_dll
    [ run posix_time/testduration.cpp
      ../build//boost_date_time/<link>static
     : : :  $(DATE_TIME_PROPERTIES) ]
+   [ compile-fail posix_time/compile_fail/hours_special_value.cpp ]
+   [ compile-fail posix_time/compile_fail/minutes_special_value.cpp ]
+   [ compile-fail posix_time/compile_fail/seconds_special_value.cpp ]
+   [ compile-fail posix_time/compile_fail/millisec_special_value.cpp ]
    [ run posix_time/testiterator.cpp
      ../build//boost_date_time/<link>static
     : : :  $(DATE_TIME_PROPERTIES) ]
@@ -126,7 +131,7 @@ test-suite date_time_gregorian_dll
    [ run posix_time/teststreams.cpp ../build//boost_date_time/<link>static : : : $(DATE_TIME_PROPERTIES)  <define>USE_DATE_TIME_PRE_1_33_FACET_IO ]
  ;
 
-local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <define>BOOST_DATE_TIME_STATIC_LINK 
+local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG
    # FIXME
    #std::locale-support 
    <define>BOOST_ALL_NO_LIB ;
@@ -150,7 +155,7 @@ local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <defi
     : : : $(DATE_TIME_PROPERTIES) ]
    [ run local_time/testtz_database.cpp
      ../build//boost_date_time/<link>static
-    : : : $(DATE_TIME_PROPERTIES) ]
+    : : ../data/date_time_zonespec.csv local_time/poorly_formed_zonespec.csv : $(DATE_TIME_PROPERTIES) ]
    [ run local_time/testlocal_time.cpp
      ../build//boost_date_time/<link>static
     : : : $(DATE_TIME_PROPERTIES) ]
@@ -163,7 +168,7 @@ local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <defi
 ### streaming
    [ run local_time/testlocal_time_facet.cpp
      ../build//boost_date_time/<link>static
-    : : : $(DATE_TIME_PROPERTIES) ]
+    : : ../data/date_time_zonespec.csv : $(DATE_TIME_PROPERTIES) ]
    [ run local_time/testlocal_time_input_facet.cpp
      ../build//boost_date_time/<link>static
     : : : $(DATE_TIME_PROPERTIES) ]
@@ -173,7 +178,9 @@ local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <defi
     : : : $(DATE_TIME_PROPERTIES) ]
  ;
 
- local DATE_TIME_PROPERTIES =  <define>BOOST_DATE_TIME_STATIC_LINK <define>BOOST_ALL_NO_LIB  <define>USE_DATE_TIME_PRE_1_33_FACET_IO
+if ! [ os.environ UBSAN_OPTIONS ]
+{
+ local DATE_TIME_PROPERTIES = <define>BOOST_ALL_NO_LIB  <define>USE_DATE_TIME_PRE_1_33_FACET_IO
    # FIXME
    # std::locale-support toolset::require-boost-spirit-support 
    ;
@@ -198,6 +205,17 @@ local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <defi
    ../../serialization/build//boost_serialization
    : : : $(DATE_TIME_PROPERTIES)  <define>DATE_TIME_XML_SERIALIZE
    : testtime_serialize_xml ]
+ [ run posix_time/testtime_serialize_versioning.cpp
+   ../build//boost_date_time/<link>static
+   ../../serialization/build//boost_serialization
+   : : : $(DATE_TIME_PROPERTIES)  <define>BOOST_DATE_TIME_POSIX_TIME_DURATION_VERSION=0
+   : testtime_serialize_versioning_prev ]
+ [ run posix_time/testtime_serialize_versioning.cpp
+   ../build//boost_date_time/<link>static
+   ../../serialization/build//boost_serialization
+   : : testtime_serialize_versioning_prev 
+   : $(DATE_TIME_PROPERTIES)
+   : testtime_serialize_versioning_curr ]
 
  # text archive tests
  [ run gregorian/testgreg_serialize.cpp
@@ -222,7 +240,7 @@ local DATE_TIME_PROPERTIES = <define>BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG <defi
    : : : $(DATE_TIME_PROPERTIES)
    : testtime_serialize ]
  ;
-
+}
 
 # Copyright (c) 2000-2005
 # CrystalClear Software, Inc.

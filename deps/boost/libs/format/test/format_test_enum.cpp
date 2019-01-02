@@ -12,10 +12,8 @@
 
 // ------------------------------------------------------------------------------
 
-#include "boost/format.hpp"
-
-#define BOOST_INCLUDE_MAIN 
-#include <boost/test/test_tools.hpp>
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/format.hpp>
 
 enum enum_plain { PLAIN };
 enum { ANONYMOUS };
@@ -32,14 +30,14 @@ std::ostream& operator<<(std::ostream& os, enum_overloaded_typedef) {
     return(os);
 }
 
-int test_main(int, char*[]) {
+int main(int, char*[]) {
     // in this case, we should implicitly convert to int
-    BOOST_CHECK_EQUAL((boost::format("%d") % PLAIN).str(), "0");
-    BOOST_CHECK_EQUAL((boost::format("%d") % ANONYMOUS).str(), "0");
+    BOOST_TEST_EQ((boost::format("%d") % PLAIN).str(), "0");
+    BOOST_TEST_EQ((boost::format("%d") % ANONYMOUS).str(), "0");
 
     // but here we need to use the overloaded operator
-    BOOST_CHECK_EQUAL((boost::format("%s") % OVERLOADED).str(), "overloaded");
-    BOOST_CHECK_EQUAL((boost::format("%s") % OVERLOADED_TYPEDEF).str(), "overloaded");
+    BOOST_TEST_EQ((boost::format("%s") % OVERLOADED).str(), "overloaded");
+    BOOST_TEST_EQ((boost::format("%s") % OVERLOADED_TYPEDEF).str(), "overloaded");
 
-    return 0;
+    return boost::report_errors();
 }

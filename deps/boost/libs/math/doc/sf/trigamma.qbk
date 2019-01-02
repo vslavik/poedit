@@ -43,6 +43,15 @@ As shown above, error rates are generally very low for built in types.
 For multiprecision types, error rates are typically in the order of a
 few epsilon.
 
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph trigamma__double]
+
+[graph trigamma__80_bit_long_double]
+
+[graph trigamma____float128]
+
 [h4 Testing]
 
 Testing is against Mathematica generated spot values to 35 digit precision.

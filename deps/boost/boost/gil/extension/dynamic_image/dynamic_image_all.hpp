@@ -1,32 +1,18 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_DYNAMIC_IMAGE_ALL_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_DYNAMIC_IMAGE_ALL_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_DYNAMICIMAGE_ALL_HPP
-#define GIL_DYNAMICIMAGE_ALL_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Includes all of the GIL dynamic image extension files, for convenience
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 8, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include "../../gil_all.hpp"
-#include "algorithm.hpp"
-#include "any_image.hpp"
-#include "apply_operation.hpp"
-#include "variant.hpp"
-#include "image_view_factory.hpp"
+#include <boost/gil/extension/dynamic_image/algorithm.hpp>
+#include <boost/gil/extension/dynamic_image/any_image.hpp>
+#include <boost/gil/extension/dynamic_image/apply_operation.hpp>
+#include <boost/gil/extension/dynamic_image/variant.hpp>
+#include <boost/gil/extension/dynamic_image/image_view_factory.hpp>
+#include <boost/gil.hpp> // FIXME: Include what you use!
 
 #endif

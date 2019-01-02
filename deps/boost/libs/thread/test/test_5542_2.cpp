@@ -12,7 +12,7 @@ void run_thread() {
 }
 
 int main() {
-        boost::thread t(run_thread);
+        boost::thread t(&run_thread);
         return 0;
 }
 

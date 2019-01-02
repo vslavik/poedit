@@ -47,7 +47,7 @@ namespace example_legacy_point1
     // The first way to check a concept at compile time: checking if the input is parameter
     // or return type is OK.
     template <typename P>
-    BOOST_CONCEPT_REQUIRES(((boost::geometry::concept::Point<P>)), (void))
+    BOOST_CONCEPT_REQUIRES(((boost::geometry::concepts::Point<P>)), (void))
     test1(P& p)
     {
     }
@@ -57,7 +57,7 @@ namespace example_legacy_point1
     template <typename P>
     void test2(P& p)
     {
-        BOOST_CONCEPT_ASSERT((boost::geometry::concept::Point<P>));
+        BOOST_CONCEPT_ASSERT((boost::geometry::concepts::Point<P>));
     }
 
 
@@ -90,7 +90,7 @@ namespace example_legacy_point2
     // test it using boost concept requires
 
     template <typename P>
-    BOOST_CONCEPT_REQUIRES(((boost::geometry::concept::ConstPoint<P>)), (double))
+    BOOST_CONCEPT_REQUIRES(((boost::geometry::concepts::ConstPoint<P>)), (double))
     test3(P& p)
     {
         return boost::geometry::get<0>(p);
@@ -123,7 +123,7 @@ namespace example_custom_linestring1
     void example()
     {
         typedef custom_linestring1<legacy_point1> L;
-        BOOST_CONCEPT_ASSERT((boost::geometry::concept::Linestring<L>));
+        BOOST_CONCEPT_ASSERT((boost::geometry::concepts::Linestring<L>));
 
     }
 }

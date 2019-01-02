@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct first</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">
-<link rel="prev" href="top/result_This_S_idp374448816.html" title="Struct template result&lt;This(Sequence)&gt;">
+<link rel="prev" href="top/resu_1_3_47_5_3_2_1_2_10_3.html" title="Struct template result&lt;This(Sequence)&gt;">
 <link rel="next" href="first/result.html" title="Struct template result">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="top/result_This_S_idp374448816.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="top/resu_1_3_47_5_3_2_1_2_10_3.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.xpressive.op.first"></a><div class="titlepage"></div>
@@ -39,31 +39,37 @@
   <span class="keyword">struct</span> <a class="link" href="first/result.html" title="Struct template result">result</a> <span class="special">{</span>
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> This<span class="special">,</span> <span class="keyword">typename</span> Pair<span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="first/result_This_P_idp374457584.html" title="Struct template result&lt;This(Pair)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Pair</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
+  <span class="keyword">struct</span> <a class="link" href="first/resu_1_3_47_5_3_2_1_2_11_3.html" title="Struct template result&lt;This(Pair)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Pair</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
     <span class="comment">// types</span>
-    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Pair</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">first_type</span> <a class="link" href="first/result_This_P_idp374457584.html#boost.xpressive.op.first.result_This(P_idp374457584.type"><span class="identifier">type</span></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Pair</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">first_type</span> <a class="link" href="first/resu_1_3_47_5_3_2_1_2_11_3.html#boost.xpressive.op.first.resu_1_3_47_5_3_2_1_2_11_3.type"><span class="identifier">type</span></a><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="first.html#idp374460688-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Pair<span class="special">&gt;</span> <span class="identifier">Pair</span><span class="special">::</span><span class="identifier">first_type</span> <a class="link" href="first.html#idp374461248-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Pair</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="first.html#id-1_3_47_5_3_2_1_2_11_4-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Pair<span class="special">&gt;</span> <span class="identifier">Pair</span><span class="special">::</span><span class="identifier">first_type</span> <a class="link" href="first.html#id-1_3_47_5_3_2_1_2_11_4_1-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Pair</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp504648448"></a><h2>Description</h2>
+<a name="id-1.3.47.5.4.14.4"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp504648864"></a><h3>
-<a name="idp374460688-bb"></a><code class="computeroutput">first</code> public member functions</h3>
+<a name="id-1.3.47.5.4.14.4.2"></a><h3>
+<a name="id-1_3_47_5_3_2_1_2_11_4-bb"></a><code class="computeroutput">first</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Pair<span class="special">&gt;</span> <span class="identifier">Pair</span><span class="special">::</span><span class="identifier">first_type</span> <a name="idp374461248-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Pair</span> <span class="keyword">const</span> <span class="special">&amp;</span> p<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Pair<span class="special">&gt;</span> <span class="identifier">Pair</span><span class="special">::</span><span class="identifier">first_type</span> <a name="id-1_3_47_5_3_2_1_2_11_4_1-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Pair</span> <span class="keyword">const</span> <span class="special">&amp;</span> p<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">p</code></span></p></td>
 <td><p>The pair from which to fetch the first element. </p></td>
@@ -90,7 +96,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="top/result_This_S_idp374448816.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="top/resu_1_3_47_5_3_2_1_2_10_3.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

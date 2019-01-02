@@ -43,6 +43,7 @@ double perf_saxpy(const compute::vector<T>& x,
     perf_timer t;
     for(size_t trial = 0; trial < trials; trial++){
         compute::fill(result.begin(), result.end(), T(0), queue);
+        queue.finish();
 
         t.start();
 

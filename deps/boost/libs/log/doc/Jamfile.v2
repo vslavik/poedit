@@ -15,6 +15,7 @@ import doxygen ;
 import xsltproc ;
 import notfile ;
 import path ;
+import project ;
 
 project boost/libs/log/doc ;
 
@@ -53,6 +54,7 @@ local doxygen_params =
                         BOOST_RV_REF(x)=\"x&&\" \\
                         BOOST_NESTED_TEMPLATE=template \\
                         BOOST_CONSTEXPR=constexpr \\
+                        BOOST_CXX14_CONSTEXPR=constexpr \\
                         BOOST_CONSTEXPR_OR_CONST=constexpr \\
                         BOOST_NOEXCEPT=noexcept \\
                         BOOST_NOEXCEPT_IF(x)=noexcept(x) \\
@@ -124,6 +126,7 @@ local sinks_includes =
 local utility_includes =
     [ glob
         ../../../boost/log/utility/*.hpp
+        ../../../boost/log/utility/ipc/*.hpp
         ../../../boost/log/utility/setup/*.hpp
         ../../../boost/log/utility/type_dispatch/*.hpp
         ../../../boost/log/utility/functional/*.hpp
@@ -141,7 +144,7 @@ rule gen-references ( target : source : properties * )
 {
     DEPENDS target : source ;
     local source-path = [ path.make [ on $(source) return $(LOCATE) ] ] ;
-    STYLESHEET on $(target) = [ path.native [ path.join $(source-path) gen_references.xsl ] ] ;
+    STYLESHEET on $(target) = [ path.native [ path.join [ path.parent $(source-path) ] gen_references.xsl ] ] ;
     local target-name = $(source:B) ;
     TARGET on $(target) = [ path.native [ path.join $(source-path) $(target-name:S=.qbk) ] ] ;
 }
@@ -158,6 +161,7 @@ doxygen top_level_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Top level headers"
+        <location>tmp
     ;
 
 notfile top_level_refs : @gen-references : top_level_reference.xml ;
@@ -168,6 +172,7 @@ doxygen core_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Core components"
+        <location>tmp
     ;
 
 notfile core_refs : @gen-references : core_reference.xml ;
@@ -178,6 +183,7 @@ doxygen attributes_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Attributes"
+        <location>tmp
     ;
 
 notfile attributes_refs : @gen-references : attributes_reference.xml ;
@@ -188,6 +194,7 @@ doxygen expressions_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Expressions"
+        <location>tmp
     ;
 
 notfile expressions_refs : @gen-references : expressions_reference.xml ;
@@ -198,6 +205,7 @@ doxygen sources_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Logging sources"
+        <location>tmp
     ;
 
 notfile sources_refs : @gen-references : sources_reference.xml ;
@@ -208,6 +216,7 @@ doxygen sinks_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Sinks"
+        <location>tmp
     ;
 
 notfile sinks_refs : @gen-references : sinks_reference.xml ;
@@ -218,6 +227,7 @@ doxygen utility_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Utilities"
+        <location>tmp
     ;
 
 notfile utility_refs : @gen-references : utility_reference.xml ;
@@ -228,6 +238,7 @@ doxygen support_reference
     :
         $(doxygen_params)
         <xsl:param>"boost.doxygen.reftitle=Other libraries support layer"
+        <location>tmp
     ;
 
 notfile support_refs : @gen-references : support_reference.xml ;
@@ -251,6 +262,7 @@ boostbook log
     :
         log_doc
     :
+        <dependency>html/images/log
         <xsl:param>boost.root=../../../..
         <xsl:param>boost.libraries=../../../libs/libraries.htm
         <xsl:param>nav.layout=none
@@ -263,3 +275,9 @@ boostbook log
     ;
 
 install html/images/log : [ glob *.png ] ;
+
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : log ;
+explicit boostrelease ;

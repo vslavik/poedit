@@ -24,6 +24,8 @@
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/type_traits/is_convertible.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 
 #include <boost/fusion/container/deque/deque_fwd.hpp>
 #include <boost/fusion/container/deque/detail/value_at_impl.hpp>
@@ -108,15 +110,6 @@ namespace boost { namespace fusion {
             : base(base::from_iterator(fusion::begin(seq)))
             {}
 
-        template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
-        deque&
-        operator=(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)> const& rhs)
-        {
-            base::operator=(rhs);
-            return *this;
-        }
-
         template <typename T>
         BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         deque&
@@ -135,6 +128,10 @@ FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         BOOST_FUSION_GPU_ENABLED
         explicit deque(T0_&& t0
           , typename enable_if<is_convertible<T0_, T0>, detail::enabler_>::type = detail::enabler
+          , typename disable_if_c<
+                boost::is_same<deque const, typename boost::remove_reference<T0_>::type const>::value
+              , detail::enabler_
+            >::type = detail::enabler
          )
             : base(BOOST_FUSION_FWD_ELEM(T0_, t0), detail::nil_keyed_element())
             {}
@@ -157,6 +154,14 @@ FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         operator=(T&& rhs)
         {
             base::operator=(BOOST_FUSION_FWD_ELEM(T, rhs));
+            return *this;
+        }
+        // This copy op= is required because move ctor deletes copy op=.
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        deque&
+        operator=(deque const& rhs)
+        {
+            base::operator=(static_cast<base const&>(rhs));
             return *this;
         }
 #endif

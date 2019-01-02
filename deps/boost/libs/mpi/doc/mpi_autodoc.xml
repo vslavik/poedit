@@ -4,14 +4,7 @@
 <header name="boost/mpi/allocator.hpp">
 <para>This header provides an STL-compliant allocator that uses the MPI-2 memory allocation facilities. </para><namespace name="boost">
 <namespace name="mpi">
-<class-specialization name="allocator"><template>
-    </template><specialization><template-arg>void</template-arg></specialization><purpose>Allocator specialization for <computeroutput>void</computeroutput> value types. </purpose><description><para>The <computeroutput>void</computeroutput> specialization of <computeroutput>allocator</computeroutput> is useful only for rebinding to another, different value type. </para></description><struct name="rebind"><template>
-      <template-type-parameter name="U"/>
-    </template><typedef name="other"><type><classname>allocator</classname>&lt; U &gt;</type></typedef>
-</struct><typedef name="pointer"><type>void *</type></typedef>
-<typedef name="const_pointer"><type>const void *</type></typedef>
-<typedef name="value_type"><type>void</type></typedef>
-</class-specialization><class name="allocator"><template>
+<class name="allocator"><template>
       <template-type-parameter name="T"/>
     </template><purpose>Standard Library-compliant allocator for the MPI-2 memory allocation routines. </purpose><description><para>This allocator provides a standard C++ interface to the <computeroutput>MPI_Alloc_mem</computeroutput> and <computeroutput>MPI_Free_mem</computeroutput> routines of MPI-2. It is intended to be used with the containers in the Standard Library (<computeroutput>vector</computeroutput>, in particular) in cases where the contents of the container will be directly transmitted via MPI. This allocator is also used internally by the library for character buffers that will be used in the transmission of data.</para><para>The <computeroutput>allocator</computeroutput> class template only provides MPI memory allocation when the underlying MPI implementation is either MPI-2 compliant or is known to provide <computeroutput>MPI_Alloc_mem</computeroutput> and <computeroutput>MPI_Free_mem</computeroutput> as extensions. When the MPI memory allocation routines are not available, <computeroutput>allocator</computeroutput> is brought in directly from namespace <computeroutput>std</computeroutput>, so that standard allocators are used throughout. The macro <computeroutput>BOOST_MPI_HAS_MEMORY_ALLOCATION</computeroutput> will be defined when the MPI-2 memory allocation facilities are available. </para></description><struct name="rebind"><template>
       <template-type-parameter name="U"/>
@@ -41,7 +34,14 @@
           <template-type-parameter name="U"/>
         </template><parameter name=""><paramtype>const <classname>allocator</classname>&lt; U &gt; &amp;</paramtype></parameter><description><para>Copy-construct an allocator from another allocator for a different value type. </para></description></constructor>
 <destructor><description><para>Destroy an allocator. </para></description></destructor>
-</class><function name="operator=="><type>bool</type><template>
+</class><class-specialization name="allocator"><template>
+    </template><specialization><template-arg>void</template-arg></specialization><purpose>Allocator specialization for <computeroutput>void</computeroutput> value types. </purpose><description><para>The <computeroutput>void</computeroutput> specialization of <computeroutput>allocator</computeroutput> is useful only for rebinding to another, different value type. </para></description><struct name="rebind"><template>
+      <template-type-parameter name="U"/>
+    </template><typedef name="other"><type><classname>allocator</classname>&lt; U &gt;</type></typedef>
+</struct><typedef name="pointer"><type>void *</type></typedef>
+<typedef name="const_pointer"><type>const void *</type></typedef>
+<typedef name="value_type"><type>void</type></typedef>
+</class-specialization><function name="operator=="><type>bool</type><template>
           <template-type-parameter name="T1"/>
           <template-type-parameter name="T2"/>
         </template><parameter name=""><paramtype>const <classname>allocator</classname>&lt; T1 &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>const <classname>allocator</classname>&lt; T2 &gt; &amp;</paramtype></parameter><purpose>Compare two allocators for equality. </purpose><description><para>Since MPI allocators have no state, all MPI allocators are equal.</para><para>
@@ -132,12 +132,183 @@
 
 
 
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/mpi/cartesian_communicator.hpp">
+<para>This header defines facilities to support MPI communicators with cartesian topologies. If known at compiled time, the dimension of the implied grid can be statically enforced, through the templatized communicator class. Otherwise, a non template, dynamic, base class is provided. </para><namespace name="boost">
+<namespace name="mpi">
+<struct name="cartesian_dimension"><purpose>Specify the size and periodicity of the grid in a single dimension. </purpose><description><para>POD lightweight object. </para></description><data-member name="size"><type>int</type><description><para>The size of the grid n this dimension. </para></description></data-member>
+<data-member name="periodic"><type>bool</type><description><para>Is the grid periodic in this dimension. </para></description></data-member>
+<method-group name="public member functions">
+</method-group>
+<constructor><parameter name="sz"><paramtype>int</paramtype><default>0</default></parameter><parameter name="p"><paramtype>bool</paramtype><default>false</default></parameter></constructor>
+<method-group name="private member functions">
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name="ar"><paramtype>Archive &amp;</paramtype></parameter><parameter name="version"><paramtype>const unsigned int</paramtype></parameter></method>
+</method-group>
+</struct><struct-specialization name="is_mpi_datatype"><template>
+    </template><specialization><template-arg>cartesian_dimension</template-arg></specialization><inherit access="public">true_</inherit></struct-specialization><class name="cartesian_topology"><inherit access="private">std::vector&lt; cartesian_dimension &gt;</inherit><purpose>Describe the topology of a cartesian grid. </purpose><description><para>Behave mostly like a sequence of <computeroutput><classname alt="boost::mpi::cartesian_dimension">cartesian_dimension</classname></computeroutput> with the notable exception that its size is fixed. This is a lightweight object, so that any constructor that could be considered missing could be replaced with a function (move constructor provided when supported). </para></description><method-group name="public member functions">
+<method name="stl"><type>std::vector&lt; <classname>cartesian_dimension</classname> &gt; &amp;</type><description><para>Export as an stl sequence. </para></description></method>
+<method name="stl" cv="const"><type>std::vector&lt; <classname>cartesian_dimension</classname> &gt; const &amp;</type><description><para>Export as an stl sequence. </para></description></method>
+<method name="split" cv="const"><type>void</type><parameter name="dims"><paramtype>std::vector&lt; int &gt; &amp;</paramtype></parameter><parameter name="periodics"><paramtype>std::vector&lt; bool &gt; &amp;</paramtype></parameter><description><para>Split the topology in two sequences of sizes and periodicities. </para></description></method>
+</method-group>
+<constructor cv="= delete"/>
+<constructor cv="= default"><parameter name=""><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>cartesian_topology</classname> &amp;</type><parameter name=""><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter></copy-assignment>
+<constructor><parameter name="other"><paramtype><classname>cartesian_topology</classname> &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment><type><classname>cartesian_topology</classname> &amp;</type><parameter name="other"><paramtype><classname>cartesian_topology</classname> &amp;&amp;</paramtype></parameter></copy-assignment>
+<destructor/>
+<constructor><parameter name="ndim"><paramtype>int</paramtype></parameter><purpose>Create a N dimension space. Each dimension is initialized as non periodic of size 0. </purpose></constructor>
+<constructor><parameter name="dims"><paramtype>std::vector&lt; <classname>cartesian_dimension</classname> &gt; const &amp;</paramtype></parameter><purpose>Use the provided dimensions specification as initial values. </purpose></constructor>
+<constructor specifiers="explicit"><template>
+          <template-type-parameter name="InitArr"/>
+        </template><parameter name="dims"><paramtype>InitArr</paramtype></parameter><purpose>Use dimensions specification provided in the sequence container as initial values. #param dims must be a sequence container. </purpose></constructor>
+<constructor specifiers="explicit"><parameter name="dims"><paramtype>std::initializer_list&lt; <classname>cartesian_dimension</classname> &gt;</paramtype></parameter><purpose>Use dimensions specification provided in the initialization list as initial values. #param dims can be of the form { dim_1, false}, .... {dim_n, true}. </purpose></constructor>
+<constructor specifiers="explicit"><template>
+          <template-nontype-parameter name="NDIM"><type>int</type></template-nontype-parameter>
+        </template><parameter name="dims"><paramtype><classname>cartesian_dimension</classname>(&amp;)</paramtype></parameter><purpose>Use dimensions specification provided in the array. #param dims can be of the form { dim_1, false}, .... {dim_n, true}. </purpose></constructor>
+<constructor><template>
+          <template-type-parameter name="DimRg"/>
+          <template-type-parameter name="PerRg"/>
+        </template><parameter name="dim_rg"><paramtype>DimRg const &amp;</paramtype><description><para>the dimensions, values must convert to integers. </para></description></parameter><parameter name="period_rg"><paramtype>PerRg const &amp;</paramtype><description><para>the periodicities, values must convert to booleans. #param dims can be of the form { dim_1, false}, .... {dim_n, true} </para></description></parameter><purpose>Use dimensions specification provided in the input ranges The ranges do not need to be the same size. If the sizes are different, the missing values will be complete with zeros of the dim and assumed non periodic. </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="DimIter"/>
+          <template-type-parameter name="PerIter"/>
+        </template><parameter name="dit"><paramtype>DimIter</paramtype><description><para>dimension iterator, value must convert to integer type. </para></description></parameter><parameter name="pit"><paramtype>PerIter</paramtype><description><para>periodicity iterator, value must convert to booleans.. </para></description></parameter><parameter name="n"><paramtype>int</paramtype></parameter><purpose>Iterator based initializer. Will use the first n iterated values. Both iterators can be single pass. </purpose><description><para>
+</para></description></constructor>
+</class><class name="cartesian_communicator"><inherit access="public">boost::mpi::communicator</inherit><purpose>An MPI communicator with a cartesian topology. </purpose><description><para>A <computeroutput><classname alt="boost::mpi::cartesian_communicator">cartesian_communicator</classname></computeroutput> is a communicator whose topology is expressed as a grid. Cartesian communicators have the same functionality as (intra)communicators, but also allow one to query the relationships among processes and the properties of the grid. </para></description><method-group name="public member functions">
+<method name="ndims" cv="const"><type>int</type><description><para>Retrive the number of dimension of the underlying toppology. </para></description></method>
+<method name="rank" cv="const"><type>int</type><parameter name="coords"><paramtype>const std::vector&lt; int &gt; &amp;</paramtype><description><para>the coordinates. the size must match the communicator's topology. </para></description></parameter><description><para>Return the rank of the process at the given coordinates. 
+</para></description></method>
+<method name="shifted_ranks" cv="const"><type>std::pair&lt; int, int &gt;</type><parameter name="dim"><paramtype>int</paramtype><description><para>the dimension in which the shift takes place. 0 &lt;= dim &lt;= ndim(). </para></description></parameter><parameter name="disp"><paramtype>int</paramtype><description><para>the shift displacement, can be positive (upward) or negative (downward). </para></description></parameter><description><para>Return the rank of the source and target destination process through a shift. 
+</para></description></method>
+<method name="coordinates" cv="const"><type>std::vector&lt; int &gt;</type><parameter name="rk"><paramtype>int</paramtype><description><para>the ranks in this communicator. </para></description></parameter><description><para>Provides the coordinates of the process with the given rank. 
+
+</para></description><returns><para>the coordinates. </para></returns></method>
+<method name="topology" cv="const"><type>void</type><parameter name="dims"><paramtype><classname>cartesian_topology</classname> &amp;</paramtype></parameter><parameter name="coords"><paramtype>std::vector&lt; int &gt; &amp;</paramtype></parameter><description><para>Retrieve the topology and coordinates of this process in the grid. </para></description></method>
+<method name="topology" cv="const"><type><classname>cartesian_topology</classname></type><description><para>Retrieve the topology of the grid. </para></description></method>
+</method-group>
+<constructor><parameter name="comm"><paramtype>const MPI_Comm &amp;</paramtype></parameter><parameter name="kind"><paramtype>comm_create_kind</paramtype></parameter><description><para>Build a new Boost.MPI cartesian communicator based on the MPI communicator <computeroutput>comm</computeroutput> with cartesian topology.</para><para><computeroutput>comm</computeroutput> may be any valid MPI communicator. If <computeroutput>comm</computeroutput> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <computeroutput>kind</computeroutput> parameter is ignored. Otherwise, the <computeroutput>kind</computeroutput> parameter determines how the Boost.MPI communicator will be related to <computeroutput>comm:</computeroutput> </para><para><itemizedlist>
+<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </para></listitem></itemizedlist>
+</para></description></constructor>
+<constructor><parameter name="comm"><paramtype>const <classname>communicator</classname> &amp;</paramtype><description><para>The communicator that the new, cartesian communicator will be based on.</para></description></parameter><parameter name="dims"><paramtype>const <classname>cartesian_topology</classname> &amp;</paramtype><description><para>the cartesian dimension of the new communicator. The size indicate the number of dimension. Some dimensions be set to zero, in which case the corresponding dimension value is left to the system.</para></description></parameter><parameter name="reorder"><paramtype>bool</paramtype><default>false</default><description><para>Whether MPI is permitted to re-order the process ranks within the returned communicator, to better optimize communication. If false, the ranks of each process in the returned process will match precisely the rank of that process within the original communicator. </para></description></parameter><description><para>Create a new communicator whose topology is described by the given cartesian. The indices of the vertices in the cartesian will be assumed to be the ranks of the processes within the communicator. There may be fewer vertices in the cartesian than there are processes in the communicator; in this case, the resulting communicator will be a NULL communicator.</para><para>
+</para></description></constructor>
+<constructor><parameter name="comm"><paramtype>const <classname>cartesian_communicator</classname> &amp;</paramtype><description><para>the original communicator. </para></description></parameter><parameter name="keep"><paramtype>const std::vector&lt; int &gt; &amp;</paramtype><description><para>and array containiing the dimension to keep from the existing communicator. </para></description></parameter><description><para>Create a new cartesian communicator whose topology is a subset of an existing cartesian cimmunicator. 
+</para></description></constructor>
+</class>
+
+<function name="operator=="><type>bool</type><parameter name="d1"><paramtype><classname>cartesian_dimension</classname> const &amp;</paramtype></parameter><parameter name="d2"><paramtype><classname>cartesian_dimension</classname> const &amp;</paramtype></parameter><purpose>Test if the dimensions values are identical. </purpose></function>
+<function name="operator!="><type>bool</type><parameter name="d1"><paramtype><classname>cartesian_dimension</classname> const &amp;</paramtype></parameter><parameter name="d2"><paramtype><classname>cartesian_dimension</classname> const &amp;</paramtype></parameter><purpose>Test if the dimension values are different. </purpose></function>
+<function name="operator&lt;&lt;"><type>std::ostream &amp;</type><parameter name="out"><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="d"><paramtype><classname>cartesian_dimension</classname> const &amp;</paramtype></parameter><purpose>Pretty printing of a cartesian dimension (size, periodic) </purpose></function>
+<function name="operator=="><type>bool</type><parameter name="t1"><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter><parameter name="t2"><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter></function>
+<function name="operator!="><type>bool</type><parameter name="t1"><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter><parameter name="t2"><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter></function>
+<function name="operator&lt;&lt;"><type>std::ostream &amp;</type><parameter name="out"><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="t"><paramtype><classname>cartesian_topology</classname> const &amp;</paramtype></parameter><purpose>Pretty printing of a cartesian topology. </purpose></function>
+<function name="cartesian_dimensions"><type>std::vector&lt; int &gt; &amp;</type><parameter name="nb_proc"><paramtype>int</paramtype><description><para>the numer of mpi processes.fill a sequence of dimension. </para></description></parameter><parameter name="dims"><paramtype>std::vector&lt; int &gt; &amp;</paramtype><description><para>a sequence of positive or null dimensions. Non zero dimension will be left untouched. </para></description></parameter><description><para>Given en number of processes, and a partially filled sequence of dimension, try to complete the dimension sequence. 
+</para></description></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
 <header name="boost/mpi/collectives.hpp">
 <para>This header contains MPI collective operations, which implement various parallel algorithms that require the coordination of all processes within a communicator. The header <computeroutput>collectives_fwd.hpp</computeroutput> provides forward declarations for each of these operations. To include only specific collective algorithms, use the headers <computeroutput>boost/mpi/collectives/algorithm_name.hpp</computeroutput>. </para><namespace name="boost">
 <namespace name="mpi">
+
+
+
+
+
+
+
 
 
 <overloaded-function name="all_gather"><signature><type>void</type><template>
@@ -357,18 +528,16 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <method name="send" cv="const"><type>void</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="dest"><paramtype>int</paramtype><description><para>The rank of the remote process to which the data will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="value"><paramtype>const T &amp;</paramtype><description><para>The value that will be transmitted to the receiver. The type <computeroutput>T</computeroutput> of this value must meet the aforementioned criteria for transmission. </para></description></parameter><purpose>Send data to another process. </purpose><description><para>This routine executes a potentially blocking send with tag <computeroutput>tag</computeroutput> to the process with rank <computeroutput>dest</computeroutput>. It can be received by the destination process with a matching <computeroutput>recv</computeroutput> call.</para><para>The given <computeroutput>value</computeroutput> must be suitable for transmission over MPI. There are several classes of types that meet these requirements:</para><para><itemizedlist>
-<listitem><para>Types with mappings to MPI data types: If <computeroutput>is_mpi_datatype&lt;T&gt;</computeroutput> is convertible to <computeroutput>mpl::true_</computeroutput>, then <computeroutput>value</computeroutput> will be transmitted using the MPI data type <computeroutput>get_mpi_datatype&lt;T&gt;()</computeroutput>. All primitive C++ data types that have MPI equivalents, e.g., <computeroutput>int</computeroutput>, <computeroutput>float</computeroutput>, <computeroutput>char</computeroutput>, <computeroutput>double</computeroutput>, etc., have built-in mappings to MPI data types. You may turn a Serializable type with fixed structure into an MPI data type by specializing <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> for your type.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>Serializable types: Any type that provides the <computeroutput>serialize()</computeroutput> functionality required by the Boost.Serialization library can be transmitted and received.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>Packed archives and skeletons: Data that has been packed into an <computeroutput><classname alt="boost::mpi::packed_oarchive">mpi::packed_oarchive</classname></computeroutput> or the skeletons of data that have been backed into an <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">mpi::packed_skeleton_oarchive</classname></computeroutput> can be transmitted, but will be received as <computeroutput><classname alt="boost::mpi::packed_iarchive">mpi::packed_iarchive</classname></computeroutput> and <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">mpi::packed_skeleton_iarchive</classname></computeroutput>, respectively, to allow the values (or skeletons) to be extracted by the destination process.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>Content: Content associated with a previously-transmitted skeleton can be transmitted by <computeroutput>send</computeroutput> and received by <computeroutput>recv</computeroutput>. The receiving process may only receive content into the content of a value that has been constructed with the matching skeleton.</para></listitem></itemizedlist>
-</para><para>For types that have mappings to an MPI data type (including the concent of a type), an invocation of this routine will result in a single MPI_Send call. For variable-length data, e.g., serialized types and packed archives, two messages will be sent via MPI_Send: one containing the length of the data and the second containing the data itself. Note that the transmission mode for variable-length data is an implementation detail that is subject to change.</para><para>
+<listitem><para>Types with mappings to MPI data types: If <computeroutput>is_mpi_datatype&lt;T&gt;</computeroutput> is convertible to <computeroutput>mpl::true_</computeroutput>, then <computeroutput>value</computeroutput> will be transmitted using the MPI data type <computeroutput>get_mpi_datatype&lt;T&gt;()</computeroutput>. All primitive C++ data types that have MPI equivalents, e.g., <computeroutput>int</computeroutput>, <computeroutput>float</computeroutput>, <computeroutput>char</computeroutput>, <computeroutput>double</computeroutput>, etc., have built-in mappings to MPI data types. You may turn a Serializable type with fixed structure into an MPI data type by specializing <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> for your type.</para></listitem><listitem><para>Serializable types: Any type that provides the <computeroutput>serialize()</computeroutput> functionality required by the Boost.Serialization library can be transmitted and received.</para></listitem><listitem><para>Packed archives and skeletons: Data that has been packed into an <computeroutput><classname alt="boost::mpi::packed_oarchive">mpi::packed_oarchive</classname></computeroutput> or the skeletons of data that have been backed into an <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">mpi::packed_skeleton_oarchive</classname></computeroutput> can be transmitted, but will be received as <computeroutput><classname alt="boost::mpi::packed_iarchive">mpi::packed_iarchive</classname></computeroutput> and <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">mpi::packed_skeleton_iarchive</classname></computeroutput>, respectively, to allow the values (or skeletons) to be extracted by the destination process.</para></listitem><listitem><para>Content: Content associated with a previously-transmitted skeleton can be transmitted by <computeroutput>send</computeroutput> and received by <computeroutput>recv</computeroutput>. The receiving process may only receive content into the content of a value that has been constructed with the matching skeleton.</para></listitem></itemizedlist>
+</para><para>For types that have mappings to an MPI data type (including the concent of a type), an invocation of this routine will result in a single MPI_Send call. For variable-length data, e.g., serialized types and packed archives, two messages will be sent via MPI_Send: one containing the length of the data and the second containing the data itself.</para><para>Std::vectors of MPI data type are considered variable size, e.g. their number of elements is unknown and must be transmited (although the serialization process is skipped). You can use the array specialized versions of communication methods is both sender and receiver know the vector size.</para><para>Note that the transmission mode for variable-length data is an implementation detail that is subject to change.</para><para>
 </para></description></method>
 <method name="send" cv="const"><type>void</type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name="dest"><paramtype>int</paramtype><description><para>The rank of the remote process to which the skeleton will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="proxy"><paramtype>const <classname>skeleton_proxy</classname>&lt; T &gt; &amp;</paramtype><description><para>The <computeroutput><classname alt="boost::mpi::skeleton_proxy">skeleton_proxy</classname></computeroutput> containing a reference to the object whose skeleton will be transmitted. </para></description></parameter><purpose>Send the skeleton of an object. </purpose><description><para>This routine executes a potentially blocking send with tag <computeroutput>tag</computeroutput> to the process with rank <computeroutput>dest</computeroutput>. It can be received by the destination process with a matching <computeroutput>recv</computeroutput> call. This variation on <computeroutput>send</computeroutput> will be used when a send of a skeleton is explicitly requested via code such as:</para><para><programlisting language="c++">    comm.send(dest, tag, skeleton(object));
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter></method>
+<method name="send" cv="const"><type>void</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="dest"><paramtype>int</paramtype><description><para>The rank of the remote process to which the skeleton will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="proxy"><paramtype>const <classname>skeleton_proxy</classname>&lt; T &gt; &amp;</paramtype><description><para>The <computeroutput><classname alt="boost::mpi::skeleton_proxy">skeleton_proxy</classname></computeroutput> containing a reference to the object whose skeleton will be transmitted. </para></description></parameter><purpose>Send the skeleton of an object. </purpose><description><para>This routine executes a potentially blocking send with tag <computeroutput>tag</computeroutput> to the process with rank <computeroutput>dest</computeroutput>. It can be received by the destination process with a matching <computeroutput>recv</computeroutput> call. This variation on <computeroutput>send</computeroutput> will be used when a send of a skeleton is explicitly requested via code such as:</para><para><programlisting language="c++">comm.send(dest, tag, skeleton(object));
 </programlisting></para><para>The semantics of this routine are equivalent to that of sending a <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> storing the skeleton of the <computeroutput>object</computeroutput>.</para><para>
 </para></description></method>
 <method name="send" cv="const"><type>void</type><template>
@@ -382,6 +551,10 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
         </template><parameter name="source"><paramtype>int</paramtype><description><para>The process that will be sending data. This will either be a process rank within the communicator or the constant <computeroutput>any_source</computeroutput>, indicating that we can receive the message from any process.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that matches a particular kind of message sent by the source process. This may be any tag value permitted by <computeroutput>send</computeroutput>. Alternatively, the argument may be the constant <computeroutput>any_tag</computeroutput>, indicating that this receive matches a message with any tag.</para></description></parameter><parameter name="value"><paramtype>T &amp;</paramtype><description><para>Will contain the value of the message after a successful receive. The type of this value must match the value transmitted by the sender, unless the sender transmitted a packed archive or skeleton: in these cases, the sender transmits a <computeroutput><classname alt="boost::mpi::packed_oarchive">packed_oarchive</classname></computeroutput> or <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> and the destination receives a <computeroutput><classname alt="boost::mpi::packed_iarchive">packed_iarchive</classname></computeroutput> or <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput>, respectively.</para></description></parameter><purpose>Receive data from a remote process. </purpose><description><para>This routine blocks until it receives a message from the process <computeroutput>source</computeroutput> with the given <computeroutput>tag</computeroutput>. The type <computeroutput>T</computeroutput> of the <computeroutput>value</computeroutput> must be suitable for transmission over MPI, which includes serializable types, types that can be mapped to MPI data types (including most built-in C++ types), packed MPI archives, skeletons, and content associated with skeletons; see the documentation of <computeroutput>send</computeroutput> for a complete description.</para><para>
 
 </para></description><returns><para>Information about the received message. </para></returns></method>
+<method name="recv" cv="const"><type><classname>status</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter></method>
 <method name="recv" cv="const"><type><classname>status</classname></type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="source"><paramtype>int</paramtype><description><para>The process that will be sending data. This will either be a process rank within the communicator or the constant <computeroutput>any_source</computeroutput>, indicating that we can receive the message from any process.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that matches a particular kind of message sent by the source process. This may be any tag value permitted by <computeroutput>send</computeroutput>. Alternatively, the argument may be the constant <computeroutput>any_tag</computeroutput>, indicating that this receive matches a message with any tag.</para></description></parameter><parameter name="proxy"><paramtype>const <classname>skeleton_proxy</classname>&lt; T &gt; &amp;</paramtype><description><para>The <computeroutput><classname alt="boost::mpi::skeleton_proxy">skeleton_proxy</classname></computeroutput> containing a reference to the object that will be reshaped to match the received skeleton.</para></description></parameter><purpose>Receive a skeleton from a remote process. </purpose><description><para>This routine blocks until it receives a message from the process <computeroutput>source</computeroutput> with the given <computeroutput>tag</computeroutput> containing a skeleton.</para><para>
@@ -406,7 +579,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
         </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="stag"><paramtype>int</paramtype></parameter><parameter name="sval"><paramtype>const T &amp;</paramtype></parameter><parameter name="src"><paramtype>int</paramtype></parameter><parameter name="rtag"><paramtype>int</paramtype></parameter><parameter name="rval"><paramtype>T &amp;</paramtype></parameter><purpose>Send a message to remote process nd receive another message from another process. </purpose></method>
 <method name="isend" cv="const"><type><classname>request</classname></type><template>
           <template-type-parameter name="T"/>
-        </template><parameter name="dest"><paramtype>int</paramtype><description><para>The rank of the remote process to which the data will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="value"><paramtype>const T &amp;</paramtype><description><para>The value that will be transmitted to the receiver. The type <computeroutput>T</computeroutput> of this value must meet the aforementioned criteria for transmission.</para></description></parameter><purpose>Send a message to a remote process without blocking. </purpose><description><para>The <computeroutput>isend</computeroutput> method is functionality identical to the <computeroutput>send</computeroutput> method and transmits data in the same way, except that <computeroutput>isend</computeroutput> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</para><para>
+        </template><parameter name="dest"><paramtype>int</paramtype><description><para>The rank of the remote process to which the data will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="value"><paramtype>const T &amp;</paramtype><description><para>The value that will be transmitted to the receiver. The type <computeroutput>T</computeroutput> of this value must meet the aforementioned criteria for transmission. If modified before transmited, the modification may or may not be transmited.</para></description></parameter><purpose>Send a message to a remote process without blocking. </purpose><description><para>The <computeroutput>isend</computeroutput> method is functionality identical to the <computeroutput>send</computeroutput> method and transmits data in the same way, except that <computeroutput>isend</computeroutput> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</para><para>
 
 </para></description><returns><para>a <computeroutput>request</computeroutput> object that describes this communication. </para></returns></method>
 <method name="isend" cv="const"><type><classname>request</classname></type><template>
@@ -419,6 +592,10 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
         </template><parameter name="dest"><paramtype>int</paramtype><description><para>The process rank of the remote process to which the data will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><parameter name="values"><paramtype>const T *</paramtype><description><para>The array of values that will be transmitted to the receiver. The type <computeroutput>T</computeroutput> of these values must be mapped to an MPI data type.</para></description></parameter><parameter name="n"><paramtype>int</paramtype><description><para>The number of values stored in the array. The destination process must call receive with at least this many elements to correctly receive the message.</para></description></parameter><purpose>Send an array of values to another process without blocking. </purpose><description><para>This routine is functionally identical to the <computeroutput>send</computeroutput> method for arrays except that <computeroutput>isend</computeroutput> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</para><para>
 
 </para></description><returns><para>a <computeroutput>request</computeroutput> object that describes this communication. </para></returns></method>
+<method name="isend" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter></method>
 <method name="isend" cv="const"><type><classname>request</classname></type><parameter name="dest"><paramtype>int</paramtype><description><para>The process rank of the remote process to which the message will be sent.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that will be associated with this message. Tags may be any integer between zero and an implementation-defined upper limit. This limit is accessible via <computeroutput>environment::max_tag()</computeroutput>.</para></description></parameter><purpose>Send a message to another process without any data without blocking. </purpose><description><para>This routine is functionally identical to the <computeroutput>send</computeroutput> method for sends with no data, except that <computeroutput>isend</computeroutput> will not block while waiting for the message to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</para><para>
 
 </para></description><returns><para>a <computeroutput>request</computeroutput> object that describes this communication. </para></returns></method>
@@ -432,6 +609,10 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
         </template><parameter name="source"><paramtype>int</paramtype><description><para>The process that will be sending data. This will either be a process rank within the communicator or the constant <computeroutput>any_source</computeroutput>, indicating that we can receive the message from any process.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that matches a particular kind of message sent by the source process. This may be any tag value permitted by <computeroutput>send</computeroutput>. Alternatively, the argument may be the constant <computeroutput>any_tag</computeroutput>, indicating that this receive matches a message with any tag.</para></description></parameter><parameter name="values"><paramtype>T *</paramtype><description><para>Will contain the values in the message after a successful receive. The type of these elements must match the type of the elements transmitted by the sender.</para></description></parameter><parameter name="n"><paramtype>int</paramtype><description><para>The number of values that can be stored into the <computeroutput>values</computeroutput> array. This shall not be smaller than the number of elements transmitted by the sender.</para></description></parameter><purpose>Initiate receipt of an array of values from a remote process. </purpose><description><para>This routine initiates a receive operation for an array of values transmitted by process <computeroutput>source</computeroutput> with the given <computeroutput>tag</computeroutput>.</para><para>
 
 </para></description><returns><para>a <computeroutput>request</computeroutput> object that describes this communication. </para></returns></method>
+<method name="irecv" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter></method>
 <method name="irecv" cv="const"><type><classname>request</classname></type><parameter name="source"><paramtype>int</paramtype><description><para>The process that will be sending the message. This will either be a process rank within the communicator or the constant <computeroutput>any_source</computeroutput>, indicating that we can receive the message from any process.</para></description></parameter><parameter name="tag"><paramtype>int</paramtype><description><para>The tag that matches a particular kind of message sent by the source process. This may be any tag value permitted by <computeroutput>send</computeroutput>. Alternatively, the argument may be the constant <computeroutput>any_tag</computeroutput>, indicating that this receive matches a message with any tag.</para></description></parameter><purpose>Initiate receipt of a message from a remote process that carries no data. </purpose><description><para>This routine initiates a receive operation for a message from process <computeroutput>source</computeroutput> with the given <computeroutput>tag</computeroutput> that carries no data.</para><para>
 
 </para></description><returns><para>a <computeroutput>request</computeroutput> object that describes this communication. </para></returns></method>
@@ -455,6 +636,9 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </para></description><returns><para>an <computeroutput>optional</computeroutput> containing the intercommunicator, if this communicator is in fact an intercommunicator. Otherwise, returns an empty <computeroutput>optional</computeroutput>. </para></returns></method>
 <method name="as_graph_communicator" cv="const"><type>optional&lt; <classname>graph_communicator</classname> &gt;</type><description><para>Determine if the communicator has a graph topology and, if so, return that <computeroutput><classname alt="boost::mpi::graph_communicator">graph_communicator</classname></computeroutput>. Even though the communicators have different types, they refer to the same underlying communication space and can be used interchangeably for communication.</para><para>
 </para></description><returns><para>an <computeroutput>optional</computeroutput> containing the graph communicator, if this communicator does in fact have a graph topology. Otherwise, returns an empty <computeroutput>optional</computeroutput>. </para></returns></method>
+<method name="has_graph_topology" cv="const"><type>bool</type><description><para>Determines whether this communicator has a Graph topology. </para></description></method>
+<method name="as_cartesian_communicator" cv="const"><type>optional&lt; <classname>cartesian_communicator</classname> &gt;</type><description><para>Determine if the communicator has a cartesian topology and, if so, return that <computeroutput><classname alt="boost::mpi::cartesian_communicator">cartesian_communicator</classname></computeroutput>. Even though the communicators have different types, they refer to the same underlying communication space and can be used interchangeably for communication.</para><para>
+</para></description><returns><para>an <computeroutput>optional</computeroutput> containing the cartesian communicator, if this communicator does in fact have a cartesian topology. Otherwise, returns an empty <computeroutput>optional</computeroutput>. </para></returns></method>
 <method name="has_cartesian_topology" cv="const"><type>bool</type><description><para>Determines whether this communicator has a Cartesian topology. </para></description></method>
 <method name="abort" cv="const"><type>void</type><parameter name="errcode"><paramtype>int</paramtype><description><para>The error code to return from aborted processes. </para></description></parameter><description><para>Abort all tasks in the group of this communicator.</para><para>Makes a "best attempt" to abort all of the tasks in the group of this communicator. Depending on the underlying MPI implementation, this may either abort the entire program (and possibly return <computeroutput>errcode</computeroutput> to the environment) or only abort some processes, allowing the others to continue. Consult the documentation for your MPI implementation. This is equivalent to a call to <computeroutput>MPI_Abort</computeroutput> </para><para>
 
@@ -462,25 +646,56 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </method-group>
 <constructor><description><para>Build a new Boost.MPI communicator for <computeroutput>MPI_COMM_WORLD</computeroutput>.</para><para>Constructs a Boost.MPI communicator that attaches to <computeroutput>MPI_COMM_WORLD</computeroutput>. This is the equivalent of constructing with <computeroutput/>(MPI_COMM_WORLD, comm_attach). </para></description></constructor>
 <constructor><parameter name="comm"><paramtype>const MPI_Comm &amp;</paramtype></parameter><parameter name="kind"><paramtype>comm_create_kind</paramtype></parameter><description><para>Build a new Boost.MPI communicator based on the MPI communicator <computeroutput>comm</computeroutput>.</para><para><computeroutput>comm</computeroutput> may be any valid MPI communicator. If <computeroutput>comm</computeroutput> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <computeroutput>kind</computeroutput> parameter is ignored. Otherwise, the <computeroutput>kind</computeroutput> parameters determines how the Boost.MPI communicator will be related to <computeroutput>comm:</computeroutput> </para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if <computeroutput>comm</computeroutput> is a valid MPI intracommunicator or if the underlying MPI implementation supports MPI 2.0 (which supports duplication of intercommunicators).</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used when <computeroutput>comm</computeroutput> is MPI_COMM_WORLD.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </para></listitem></itemizedlist>
+<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if <computeroutput>comm</computeroutput> is a valid MPI intracommunicator or if the underlying MPI implementation supports MPI 2.0 (which supports duplication of intercommunicators).</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used when <computeroutput>comm</computeroutput> is MPI_COMM_WORLD.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </para></listitem></itemizedlist>
 </para></description></constructor>
 <constructor><parameter name="comm"><paramtype>const <classname>communicator</classname> &amp;</paramtype><description><para>An MPI communicator.</para></description></parameter><parameter name="subgroup"><paramtype>const <classname>boost::mpi::group</classname> &amp;</paramtype><description><para>A subgroup of the MPI communicator, <computeroutput>comm</computeroutput>, for which we will construct a new communicator. </para></description></parameter><description><para>Build a new Boost.MPI communicator based on a subgroup of another MPI communicator.</para><para>This routine will construct a new communicator containing all of the processes from communicator <computeroutput>comm</computeroutput> that are listed within the group <computeroutput>subgroup</computeroutput>. Equivalent to <computeroutput>MPI_Comm_create</computeroutput>.</para><para>
 </para></description></constructor>
 <method-group name="protected member functions">
+<method name="irecv_vector" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::true_</paramtype></parameter></method>
+<method name="isend_vector" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::true_</paramtype></parameter></method>
+<method name="send_vector" cv="const"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::true_</paramtype></parameter></method>
+<method name="recv_vector" cv="const"><type><classname>status</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::true_</paramtype></parameter></method>
+<method name="irecv_vector" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
+<method name="isend_vector" cv="const"><type><classname>request</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="values"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
+<method name="send_vector" cv="const"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="dest"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>const std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
+<method name="recv_vector" cv="const"><type><classname>status</classname></type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="source"><paramtype>int</paramtype></parameter><parameter name="tag"><paramtype>int</paramtype></parameter><parameter name="value"><paramtype>std::vector&lt; T, A &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
 </method-group>
 </class><enum name="comm_create_kind"><enumvalue name="comm_duplicate"/><enumvalue name="comm_take_ownership"/><enumvalue name="comm_attach"/><purpose>Enumeration used to describe how to adopt a C <computeroutput>MPI_Comm</computeroutput> into a Boost.MPI communicator. </purpose><description><para>The values for this enumeration determine how a Boost.MPI communicator will behave when constructed with an MPI communicator. The options are:</para><para><itemizedlist>
-<listitem><para><computeroutput>comm_duplicate:</computeroutput> Duplicate the MPI_Comm communicator to create a new communicator (e.g., with MPI_Comm_dup). This new MPI_Comm communicator will be automatically freed when the Boost.MPI communicator (and all copies of it) is destroyed.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para><computeroutput>comm_take_ownership:</computeroutput> Take ownership of the communicator. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used with MPI_COMM_WORLD.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para><computeroutput>comm_attach:</computeroutput> The Boost.MPI communicator will reference the existing MPI communicator but will not free it when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </para></listitem></itemizedlist>
+<listitem><para><computeroutput>comm_duplicate:</computeroutput> Duplicate the MPI_Comm communicator to create a new communicator (e.g., with MPI_Comm_dup). This new MPI_Comm communicator will be automatically freed when the Boost.MPI communicator (and all copies of it) is destroyed.</para></listitem><listitem><para><computeroutput>comm_take_ownership:</computeroutput> Take ownership of the communicator. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used with MPI_COMM_WORLD.</para></listitem><listitem><para><computeroutput>comm_attach:</computeroutput> The Boost.MPI communicator will reference the existing MPI communicator but will not free it when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </para></listitem></itemizedlist>
 </para></description></enum>
 <data-member name="any_source"><type>const int</type><purpose>A constant representing "any process.". </purpose><description><para>This constant may be used for the <computeroutput>source</computeroutput> parameter of <computeroutput>receive</computeroutput> operations to indicate that a message may be received from any source. </para></description></data-member>
 <data-member name="any_tag"><type>const int</type><purpose>A constant representing "any tag.". </purpose><description><para>This constant may be used for the <computeroutput>tag</computeroutput> parameter of <computeroutput>receive</computeroutput> operations to indicate that a <computeroutput>send</computeroutput> with any tag will be matched by the receive. </para></description></data-member>
+
+
+
+
+
+
+
 
 
 
@@ -571,11 +786,11 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </header>
 <header name="boost/mpi/config.hpp">
 <para>This header provides MPI configuration details that expose the capabilities of the underlying MPI implementation, and provides auto-linking support on Windows. </para><macro name="MPICH_IGNORE_CXX_SEEK"/>
-<macro name="BOOST_MPI_HOMOGENEOUS"><purpose>Comment this macro is you are running in an heterogeneous environement. </purpose><description><para>When this flags is enabled, we assume some simple, POD like, type can be transmited without paying the cost of portable serialization.</para><para>Comment this if your platform is not homogeneous and that portable serialization/deserialization must be performed.</para><para>It you do so, check that you MPI implementation supports thats kind of environement. </para></description></macro>
+<macro name="BOOST_MPI_HOMOGENEOUS"><purpose>Comment this macro is you are running in an heterogeneous environment. </purpose><description><para>When this flag is enabled, we assume some simple, POD-like, type can be transmitted without paying the cost of portable serialization.</para><para>Comment this if your platform is not homogeneous and that portable serialization/deserialization must be performed.</para><para>It you do so, check that your MPI implementation supports thats kind of environment. </para></description></macro>
 <macro name="BOOST_MPI_HAS_MEMORY_ALLOCATION"><purpose>Determine if the MPI implementation has support for memory allocation. </purpose><description><para>This macro will be defined when the underlying MPI implementation has support for the MPI-2 memory allocation routines <computeroutput>MPI_Alloc_mem</computeroutput> and <computeroutput>MPI_Free_mem</computeroutput>. When defined, the <computeroutput>allocator</computeroutput> class template will provide Standard Library-compliant access to these memory-allocation routines. </para></description></macro>
 <macro name="BOOST_MPI_HAS_NOARG_INITIALIZATION"><purpose>Determine if the MPI implementation has supports initialization without command-line arguments. </purpose><description><para>This macro will be defined when the underlying implementation supports initialization of MPI without passing along command-line arguments, e.g., <computeroutput>MPI_Init(NULL, NULL)</computeroutput>. When defined, the <computeroutput>environment</computeroutput> class will provide a default constructor. This macro is always defined for MPI-2 implementations. </para></description></macro>
 <macro name="BOOST_MPI_CALLING_CONVENTION"><purpose>Specifies the calling convention that will be used for callbacks from the underlying C MPI. </purpose><description><para>This is a Windows-specific macro, which will be used internally to state the calling convention of any function that is to be used as a callback from MPI. For example, the internally-defined functions that are used in a call to <computeroutput>MPI_Op_create</computeroutput>. This macro is likely only to be useful to users that wish to bypass Boost.MPI, registering their own callbacks in certain cases, e.g., through <computeroutput>MPI_Op_create</computeroutput>. </para></description></macro>
-<macro name="BOOST_MPI_BCAST_BOTTOM_WORKS_FINE"><purpose>Indicates that MPI_Bcast supports MPI_BOTTOM. </purpose><description><para>Some implementations have a broken MPI_Bcast wrt to MPI_BOTTOM. BullX MPI and LAM seems to be among them, at least for some versions. The `broacast_test.cpp` test `test_skeleton_and_content` can be used to detect that. </para></description></macro>
+<macro name="BOOST_MPI_BCAST_BOTTOM_WORKS_FINE"><purpose>Indicates that MPI_Bcast supports MPI_BOTTOM. </purpose><description><para>Some implementations have a broken MPI_Bcast wrt to MPI_BOTTOM. BullX MPI and LAM seems to be among them, at least for some versions. The <computeroutput>broacast_test.cpp</computeroutput> test <computeroutput>test_skeleton_and_content</computeroutput> can be used to detect that. </para></description></macro>
 <macro name="BOOST_MPI_DECL"/>
 </header>
 <header name="boost/mpi/datatype.hpp">
@@ -583,23 +798,30 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <namespace name="mpi">
 <struct name="is_mpi_integer_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in integer MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an integer data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_floating_point_datatype"><template>
+    </template><inherit access="public">false_</inherit><purpose>Type trait that determines if there exists a built-in integer MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an integer data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_floating_point_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in floating point MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as a floating point data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_logical_datatype"><template>
+    </template><inherit access="public">false_</inherit><purpose>Type trait that determines if there exists a built-in floating point MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as a floating point data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_logical_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in logical MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an logical data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_complex_datatype"><template>
+    </template><inherit access="public">false_</inherit><purpose>Type trait that determines if there exists a built-in logical MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an logical data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_complex_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in complex MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an complex data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_byte_datatype"><template>
+    </template><inherit access="public">false_</inherit><purpose>Type trait that determines if there exists a built-in complex MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an complex data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_byte_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in byte MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an byte data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_builtin_datatype"><template>
+    </template><inherit access="public">false_</inherit><purpose>Type trait that determines if there exists a built-in byte MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI data type that is classified as an byte data type. See <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> for general information about built-in MPI data types. </para></description></struct><struct name="is_mpi_builtin_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Type trait that determines if there exists a built-in MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI type. For instance, the C++ <computeroutput>int</computeroutput> type maps directly to the MPI type <computeroutput>MPI_INT</computeroutput>. When there is a direct mapping from the type <computeroutput>T</computeroutput> to an MPI type, <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> will derive from <computeroutput>mpl::true_</computeroutput> and the MPI data type will be accessible via <computeroutput>get_mpi_datatype</computeroutput>.</para><para>In general, users should not need to specialize this trait. However, if you have an additional C++ type that can map directly to only of MPI's built-in types, specialize either this trait or one of the traits corresponding to categories of MPI data types (<computeroutput><classname alt="boost::mpi::is_mpi_integer_datatype">is_mpi_integer_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_floating_point_datatype">is_mpi_floating_point_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_logical_datatype">is_mpi_logical_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_complex_datatype">is_mpi_complex_datatype</classname></computeroutput>, or <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput>). <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> derives <computeroutput>mpl::true_</computeroutput> if any of the traits corresponding to MPI data type categories derived <computeroutput>mpl::true_</computeroutput>. </para></description></struct><struct name="is_mpi_datatype"><template>
+    </template><inherit access="public">boost::mpl::or_&lt; is_mpi_integer_datatype&lt; T &gt;, is_mpi_floating_point_datatype&lt; T &gt;, is_mpi_logical_datatype&lt; T &gt;, is_mpi_complex_datatype&lt; T &gt;, is_mpi_byte_datatype&lt; T &gt; &gt;</inherit><purpose>Type trait that determines if there exists a built-in MPI data type for a given C++ type. </purpose><description><para>This type trait determines when there is a direct mapping from a C++ type to an MPI type. For instance, the C++ <computeroutput>int</computeroutput> type maps directly to the MPI type <computeroutput>MPI_INT</computeroutput>. When there is a direct mapping from the type <computeroutput>T</computeroutput> to an MPI type, <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> will derive from <computeroutput>mpl::true_</computeroutput> and the MPI data type will be accessible via <computeroutput>get_mpi_datatype</computeroutput>.</para><para>In general, users should not need to specialize this trait. However, if you have an additional C++ type that can map directly to only of MPI's built-in types, specialize either this trait or one of the traits corresponding to categories of MPI data types (<computeroutput><classname alt="boost::mpi::is_mpi_integer_datatype">is_mpi_integer_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_floating_point_datatype">is_mpi_floating_point_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_logical_datatype">is_mpi_logical_datatype</classname></computeroutput>, <computeroutput><classname alt="boost::mpi::is_mpi_complex_datatype">is_mpi_complex_datatype</classname></computeroutput>, or <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput>). <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput> derives <computeroutput>mpl::true_</computeroutput> if any of the traits corresponding to MPI data type categories derived <computeroutput>mpl::true_</computeroutput>. </para></description></struct><struct name="is_mpi_datatype"><template>
       <template-type-parameter name="T"/>
-    </template><inherit access="public">boost::mpi::is_mpi_builtin_datatype&lt; T &gt;</inherit><purpose>Type trait that determines if a C++ type can be mapped to an MPI data type. </purpose><description><para>This type trait determines if it is possible to build an MPI data type that represents a C++ data type. When this is the case, <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> derives <computeroutput>mpl::true_</computeroutput> and the MPI data type will be accessible via <computeroutput>get_mpi_datatype</computeroutput>.</para><para>For any C++ type that maps to a built-in MPI data type (see <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput>), <computeroutput>is_mpi_data_type</computeroutput> is trivially true. However, any POD ("Plain Old Data") type containing types that themselves can be represented by MPI data types can itself be represented as an MPI data type. For instance, a <computeroutput>point3d</computeroutput> class containing three <computeroutput>double</computeroutput> values can be represented as an MPI data type. To do so, first make the data type Serializable (using the Boost.Serialization library); then, specialize the <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> trait for the point type so that it will derive <computeroutput>mpl::true_:</computeroutput> </para><para><programlisting language="c++">    namespace boost { namespace mpi {
-      template&lt;&gt; struct is_mpi_datatype&lt;point&gt;
-        : public mpl::true_ { };
-    } }
+    </template><inherit access="public">boost::mpi::is_mpi_builtin_datatype&lt; T &gt;</inherit><purpose>Type trait that determines if a C++ type can be mapped to an MPI data type. </purpose><description><para>This type trait determines if it is possible to build an MPI data type that represents a C++ data type. When this is the case, <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> derives <computeroutput>mpl::true_</computeroutput> and the MPI data type will be accessible via <computeroutput>get_mpi_datatype</computeroutput>.</para><para>For any C++ type that maps to a built-in MPI data type (see <computeroutput><classname alt="boost::mpi::is_mpi_builtin_datatype">is_mpi_builtin_datatype</classname></computeroutput>), <computeroutput>is_mpi_data_type</computeroutput> is trivially true. However, any POD ("Plain Old Data") type containing types that themselves can be represented by MPI data types can itself be represented as an MPI data type. For instance, a <computeroutput>point3d</computeroutput> class containing three <computeroutput>double</computeroutput> values can be represented as an MPI data type. To do so, first make the data type Serializable (using the Boost.Serialization library); then, specialize the <computeroutput><classname alt="boost::mpi::is_mpi_datatype">is_mpi_datatype</classname></computeroutput> trait for the point type so that it will derive <computeroutput>mpl::true_:</computeroutput> </para><para><programlisting language="c++">namespace boost { namespace mpi {
+  template&lt;&gt; struct is_mpi_datatype&lt;point&gt;
+    : public mpl::true_ { };
+} }
 </programlisting> </para></description></struct>
+
+
+
+
+
+
+
 
 
 
@@ -745,6 +967,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 <function name="get_mpi_datatype"><type>MPI_Datatype</type><template>
           <template-type-parameter name="T"/>
         </template></function>
@@ -784,10 +1013,10 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <header name="boost/mpi/environment.hpp">
 <para>This header provides the <computeroutput>environment</computeroutput> class, which provides routines to initialize, finalization, and query the status of the Boost MPI environment. </para><namespace name="boost">
 <namespace name="mpi">
-<class name="environment"><purpose>Initialize, finalize, and query the MPI environment. </purpose><description><para>The <computeroutput>environment</computeroutput> class is used to initialize, finalize, and query the MPI environment. It will typically be used in the <computeroutput>main()</computeroutput> function of a program, which will create a single instance of <computeroutput>environment</computeroutput> initialized with the arguments passed to the program:</para><para><programlisting language="c++">  int main(int argc, char* argv[])
-  {
-    mpi::environment env(argc, argv);
-  }
+<class name="environment"><inherit access="private">noncopyable</inherit><purpose>Initialize, finalize, and query the MPI environment. </purpose><description><para>The <computeroutput>environment</computeroutput> class is used to initialize, finalize, and query the MPI environment. It will typically be used in the <computeroutput>main()</computeroutput> function of a program, which will create a single instance of <computeroutput>environment</computeroutput> initialized with the arguments passed to the program:</para><para><programlisting language="c++">int main(int argc, char* argv[])
+{
+  mpi::environment env(argc, argv);
+}
 </programlisting></para><para>The instance of <computeroutput>environment</computeroutput> will initialize MPI (by calling <computeroutput>MPI_Init</computeroutput>) in its constructor and finalize MPI (by calling <computeroutput>MPI_Finalize</computeroutput> for normal termination or <computeroutput>MPI_Abort</computeroutput> for an uncaught exception) in its destructor.</para><para>The use of <computeroutput>environment</computeroutput> is not mandatory. Users may choose to invoke <computeroutput>MPI_Init</computeroutput> and <computeroutput>MPI_Finalize</computeroutput> manually. In this case, no <computeroutput>environment</computeroutput> object is needed. If one is created, however, it will do nothing on either construction or destruction. </para></description><method-group name="public member functions">
 </method-group>
 <constructor specifiers="explicit"><parameter name="abort_on_exception"><paramtype>bool</paramtype><default>true</default><description><para>When true, this object will abort the program if it is destructed due to an uncaught exception. </para></description></parameter><description><para>Initialize the MPI environment.</para><para>If the MPI environment has not already been initialized, initializes MPI with a call to <computeroutput>MPI_Init</computeroutput>. Since this constructor does not take command-line arguments (<computeroutput>argc</computeroutput> and <computeroutput>argv</computeroutput>), it is only available when the underlying MPI implementation supports calling <computeroutput>MPI_Init</computeroutput> with <computeroutput>NULL</computeroutput> arguments, indicated by the macro <computeroutput>BOOST_MPI_HAS_NOARG_INITIALIZATION</computeroutput>.</para><para>
@@ -819,12 +1048,20 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </para></description><returns><para>the name of this processor. </para></returns></method>
 <method name="thread_level" specifiers="static"><type>threading::level</type><description><para>Query the current level of thread support. </para></description></method>
 <method name="is_main_thread" specifiers="static"><type>bool</type><description><para>Are we in the main thread? </para></description></method>
+<method name="version" specifiers="static"><type>std::pair&lt; int, int &gt;</type><purpose>MPI version. </purpose><description><para>Returns a pair with the version and sub-version number. </para></description></method>
 </method-group>
 </class><namespace name="threading">
-<enum name="level"><enumvalue name="single"><default> MPI_THREAD_SINGLE</default><description><para>Only one thread will execute. </para></description></enumvalue><enumvalue name="funneled"><default> MPI_THREAD_FUNNELED</default><description><para>Only main thread will do MPI calls.</para><para>The process may be multi-threaded, but only the main thread will make MPI calls (all MPI calls are ``funneled'' to the main thread). </para></description></enumvalue><enumvalue name="serialized"><default> MPI_THREAD_SERIALIZED</default><description><para>Only one thread at the time do MPI calls.</para><para>The process may be multi-threaded, and multiple threads may make MPI calls, but only one at a time: MPI calls are not made concurrently from two distinct threads (all MPI calls are ``serialized''). </para></description></enumvalue><enumvalue name="multiple"><default> MPI_THREAD_MULTIPLE</default><description><para>Multiple thread may do MPI calls.</para><para>Multiple threads may call MPI, with no restrictions. </para></description></enumvalue><purpose>specify the supported threading level. </purpose><description><para>Based on MPI 2 standard/8.7.3 </para></description></enum>
+<enum name="level"><enumvalue name="single"><default>= MPI_THREAD_SINGLE</default><description><para>Only one thread will execute. </para></description></enumvalue><enumvalue name="funneled"><default>= MPI_THREAD_FUNNELED</default><description><para>Only main thread will do MPI calls.</para><para>The process may be multi-threaded, but only the main thread will make MPI calls (all MPI calls are ``funneled'' to the main thread). </para></description></enumvalue><enumvalue name="serialized"><default>= MPI_THREAD_SERIALIZED</default><description><para>Only one thread at the time do MPI calls.</para><para>The process may be multi-threaded, and multiple threads may make MPI calls, but only one at a time: MPI calls are not made concurrently from two distinct threads (all MPI calls are ``serialized''). </para></description></enumvalue><enumvalue name="multiple"><default>= MPI_THREAD_MULTIPLE</default><description><para>Multiple thread may do MPI calls.</para><para>Multiple threads may call MPI, with no restrictions. </para></description></enumvalue><purpose>specify the supported threading level. </purpose><description><para>Based on MPI 2 standard/8.7.3 </para></description></enum>
 <function name="operator&lt;&lt;"><type>std::ostream &amp;</type><parameter name="out"><paramtype>std::ostream &amp;</paramtype></parameter><parameter name="l"><paramtype>level</paramtype></parameter><description><para>Formated output for threading level. </para></description></function>
 <function name="operator&gt;&gt;"><type>std::istream &amp;</type><parameter name="in"><paramtype>std::istream &amp;</paramtype></parameter><parameter name="l"><paramtype>level &amp;</paramtype></parameter><description><para>Formated input for threading level. </para></description></function>
 </namespace>
+
+
+
+
+
+
+
 
 
 
@@ -914,7 +1151,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <header name="boost/mpi/exception.hpp">
 <para>This header provides exception classes that report MPI errors to the user and macros that translate MPI error codes into Boost.MPI exceptions. </para><namespace name="boost">
 <namespace name="mpi">
-<class name="exception"><purpose>Catch-all exception class for MPI errors. </purpose><description><para>Instances of this class will be thrown when an MPI error occurs. MPI failures that trigger these exceptions may or may not be recoverable, depending on the underlying MPI implementation. Consult the documentation for your MPI implementation to determine the effect of MPI errors. </para></description><method-group name="public member functions">
+<class name="exception"><inherit access="public">exception</inherit><purpose>Catch-all exception class for MPI errors. </purpose><description><para>Instances of this class will be thrown when an MPI error occurs. MPI failures that trigger these exceptions may or may not be recoverable, depending on the underlying MPI implementation. Consult the documentation for your MPI implementation to determine the effect of MPI errors. </para></description><method-group name="public member functions">
 <method name="what" cv="const" specifiers="virtual"><type>const char *</type><description><para>A description of the error that occurred. </para></description></method>
 <method name="routine" cv="const"><type>const char *</type><description><para>Retrieve the name of the MPI routine that reported the error. </para></description></method>
 <method name="result_code" cv="const"><type>int</type><purpose>Retrieve the result code returned from the MPI routine that reported the error. </purpose></method>
@@ -924,6 +1161,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </para></description></constructor>
 <destructor/>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -1031,11 +1275,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <class name="graph_communicator"><inherit access="public">boost::mpi::communicator</inherit><purpose>An MPI communicator with a graph topology. </purpose><description><para>A <computeroutput><classname alt="boost::mpi::graph_communicator">graph_communicator</classname></computeroutput> is a communicator whose topology is expressed as a graph. Graph communicators have the same functionality as (intra)communicators, but also allow one to query the relationships among processes. Those relationships are expressed via a graph, using the interface defined by the Boost Graph Library. The <computeroutput><classname alt="boost::mpi::graph_communicator">graph_communicator</classname></computeroutput> class meets the requirements of the BGL Graph, Incidence Graph, Adjacency Graph, Vertex List Graph, and Edge List Graph concepts. </para></description><method-group name="public member functions">
 </method-group>
 <constructor><parameter name="comm"><paramtype>const MPI_Comm &amp;</paramtype></parameter><parameter name="kind"><paramtype>comm_create_kind</paramtype></parameter><description><para>Build a new Boost.MPI graph communicator based on the MPI communicator <computeroutput>comm</computeroutput> with graph topology.</para><para><computeroutput>comm</computeroutput> may be any valid MPI communicator. If <computeroutput>comm</computeroutput> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <computeroutput>kind</computeroutput> parameter is ignored. Otherwise, the <computeroutput>kind</computeroutput> parameter determines how the Boost.MPI communicator will be related to <computeroutput>comm:</computeroutput> </para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </para></listitem></itemizedlist>
+<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </para></listitem></itemizedlist>
 </para></description></constructor>
 <constructor specifiers="explicit"><template>
           <template-type-parameter name="Graph"/>
@@ -1049,6 +1289,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <method-group name="protected member functions">
 </method-group>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -1165,6 +1412,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <constructor><parameter name="in_group"><paramtype>const MPI_Group &amp;</paramtype><description><para>The <computeroutput>MPI_Group</computeroutput> used to construct this <computeroutput>group</computeroutput>.</para></description></parameter><parameter name="adopt"><paramtype>bool</paramtype><description><para>Whether the <computeroutput>group</computeroutput> should adopt the <computeroutput>MPI_Group</computeroutput>. When true, the <computeroutput>group</computeroutput> object (or one of its copies) will free the group (via <computeroutput>MPI_Comm_free</computeroutput>) when the last copy is destroyed. Otherwise, the user is responsible for calling <computeroutput>MPI_Group_free</computeroutput>. </para></description></parameter><purpose>Constructs a group from an <computeroutput>MPI_Group</computeroutput>. </purpose><description><para>This routine allows one to construct a Boost.MPI <computeroutput>group</computeroutput> from a C <computeroutput>MPI_Group</computeroutput>. The <computeroutput>group</computeroutput> object can (optionally) adopt the <computeroutput>MPI_Group</computeroutput>, after which point the <computeroutput>group</computeroutput> object becomes responsible for freeing the <computeroutput>MPI_Group</computeroutput> when the last copy of <computeroutput>group</computeroutput> disappears.</para><para>
 </para></description></constructor>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -1348,6 +1602,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 <overloaded-function name="inplace"><signature><type><classname>inplace_t</classname>&lt; T &gt;</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="inout"><paramtype>T &amp;</paramtype><description><para>the contributing input value, it will be overriden with the output value where one is expected. If it is a pointer, the number of elements will be provided separatly. </para></description></parameter></signature><signature><type><classname>inplace_t</classname>&lt; T * &gt;</type><template>
@@ -1373,15 +1634,18 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </para></description><returns><para>the new, merged intracommunicator </para></returns></method>
 </method-group>
 <constructor><parameter name="comm"><paramtype>const MPI_Comm &amp;</paramtype></parameter><parameter name="kind"><paramtype>comm_create_kind</paramtype></parameter><description><para>Build a new Boost.MPI intercommunicator based on the MPI intercommunicator <computeroutput>comm</computeroutput>.</para><para><computeroutput>comm</computeroutput> may be any valid MPI intercommunicator. If <computeroutput>comm</computeroutput> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <computeroutput>kind</computeroutput> parameter is ignored. Otherwise, the <computeroutput>kind</computeroutput> parameter determines how the Boost.MPI communicator will be related to <computeroutput>comm:</computeroutput> </para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</para></listitem></itemizedlist>
-</para><para><itemizedlist>
-<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </para></listitem></itemizedlist>
+<listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_duplicate</computeroutput>, duplicate <computeroutput>comm</computeroutput> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_take_ownership</computeroutput>, take ownership of <computeroutput>comm</computeroutput>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</para></listitem><listitem><para>If <computeroutput>kind</computeroutput> is <computeroutput>comm_attach</computeroutput>, this Boost.MPI communicator will reference the existing MPI communicator <computeroutput>comm</computeroutput> but will not free <computeroutput>comm</computeroutput> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </para></listitem></itemizedlist>
 </para></description></constructor>
 <constructor><parameter name="local"><paramtype>const <classname>communicator</classname> &amp;</paramtype><description><para>The intracommunicator containing all of the processes that will go into the local group.</para></description></parameter><parameter name="local_leader"><paramtype>int</paramtype><description><para>The rank within the <computeroutput>local</computeroutput> intracommunicator that will serve as its leader.</para></description></parameter><parameter name="peer"><paramtype>const <classname>communicator</classname> &amp;</paramtype><description><para>The intracommunicator containing all of the processes that will go into the remote group.</para></description></parameter><parameter name="remote_leader"><paramtype>int</paramtype><description><para>The rank within the <computeroutput>peer</computeroutput> group that will serve as its leader. </para></description></parameter><description><para>Constructs a new intercommunicator whose local group is <computeroutput>local</computeroutput> and whose remote group is <computeroutput>peer</computeroutput>. The intercommunicator can then be used to communicate between processes in the two groups. This constructor is equivalent to a call to <computeroutput>MPI_Intercomm_create</computeroutput>.</para><para>
 </para></description></constructor>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -1539,6 +1803,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 <function name="wait_any"><type>std::pair&lt; <classname>status</classname>, ForwardIterator &gt;</type><template>
           <template-type-parameter name="ForwardIterator"/>
         </template><parameter name="first"><paramtype>ForwardIterator</paramtype><description><para>The iterator that denotes the beginning of the sequence of request objects.</para></description></parameter><parameter name="last"><paramtype>ForwardIterator</paramtype><description><para>The iterator that denotes the end of the sequence of request objects. This may not be equal to <computeroutput>first</computeroutput>.</para></description></parameter><purpose>Wait until any non-blocking request has completed. </purpose><description><para>This routine takes in a set of requests stored in the iterator range <computeroutput/>[first,last) and waits until any of these requests has been completed. It provides functionality equivalent to <computeroutput>MPI_Waitany</computeroutput>.</para><para>
@@ -1595,49 +1866,74 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <header name="boost/mpi/operations.hpp">
 <para>This header provides a mapping from function objects to <computeroutput>MPI_Op</computeroutput> constants used in MPI collective operations. It also provides several new function object types not present in the standard <computeroutput/> &lt;functional&gt; header that have direct mappings to <computeroutput>MPI_Op</computeroutput>. </para><namespace name="boost">
 <namespace name="mpi">
-<struct name="is_commutative"><template>
+<struct name="is_mpi_op"><template>
       <template-type-parameter name="Op"/>
       <template-type-parameter name="T"/>
-    </template><purpose>Determine if a function object type is commutative. </purpose><description><para>This trait determines if an operation <computeroutput>Op</computeroutput> is commutative when applied to values of type <computeroutput>T</computeroutput>. Parallel operations such as <computeroutput>reduce</computeroutput> and <computeroutput>prefix_sum</computeroutput> can be implemented more efficiently with commutative operations. To mark an operation as commutative, users should specialize <computeroutput><classname alt="boost::mpi::is_commutative">is_commutative</classname></computeroutput> and derive from the class <computeroutput>mpl::true_</computeroutput>. </para></description></struct><struct name="maximum"><template>
+    </template><inherit access="public">false_</inherit><purpose>Determine if a function object has an associated <computeroutput>MPI_Op</computeroutput>. </purpose><description><para>This trait determines if a function object type <computeroutput>Op</computeroutput>, when used with argument type <computeroutput>T</computeroutput>, has an associated <computeroutput>MPI_Op</computeroutput>. If so, <computeroutput>is_mpi_op&lt;Op,T&gt;</computeroutput> will derive from <computeroutput>mpl::false_</computeroutput> and will contain a static member function <computeroutput>op</computeroutput> that takes no arguments but returns the associated <computeroutput>MPI_Op</computeroutput> value. For instance, <computeroutput><classname alt="boost::mpi::is_mpi_op">is_mpi_op</classname>&lt;std::plus&lt;int&gt;</computeroutput>,int&gt;::op() returns <computeroutput>MPI_SUM</computeroutput>.</para><para>Users may specialize <computeroutput><classname alt="boost::mpi::is_mpi_op">is_mpi_op</classname></computeroutput> for any other class templates that map onto operations that have <computeroutput>MPI_Op</computeroutput> equivalences, such as bitwise OR, logical and, or maximum. However, users are encouraged to use the standard function objects in the <computeroutput>functional</computeroutput> and <computeroutput>boost/mpi/operations.hpp</computeroutput> headers whenever possible. For function objects that are class templates with a single template parameter, it may be easier to specialize <computeroutput>is_builtin_mpi_op</computeroutput>. </para></description></struct><struct name="is_commutative"><template>
+      <template-type-parameter name="Op"/>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the maximum of two values. </purpose><description><para>This binary function object computes the maximum of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_MAX</computeroutput>. </para></description><method-group name="public member functions">
+    </template><inherit access="public">false_</inherit><purpose>Determine if a function object type is commutative. </purpose><description><para>This trait determines if an operation <computeroutput>Op</computeroutput> is commutative when applied to values of type <computeroutput>T</computeroutput>. Parallel operations such as <computeroutput>reduce</computeroutput> and <computeroutput>prefix_sum</computeroutput> can be implemented more efficiently with commutative operations. To mark an operation as commutative, users should specialize <computeroutput><classname alt="boost::mpi::is_commutative">is_commutative</classname></computeroutput> and derive from the class <computeroutput>mpl::true_</computeroutput>. </para></description></struct><struct name="maximum"><template>
+      <template-type-parameter name="T"/>
+    </template><purpose>Compute the maximum of two values. </purpose><description><para>This binary function object computes the maximum of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_MAX</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>const T &amp;</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para>the maximum of x and y. </para></returns></method>
 </method-group>
 </struct><struct name="minimum"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the minimum of two values. </purpose><description><para>This binary function object computes the minimum of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_MIN</computeroutput>. </para></description><method-group name="public member functions">
+    </template><purpose>Compute the minimum of two values. </purpose><description><para>This binary function object computes the minimum of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_MIN</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>const T &amp;</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para>the minimum of x and y. </para></returns></method>
 </method-group>
 </struct><struct name="bitwise_and"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the bitwise AND of two integral values. </purpose><description><para>This binary function object computes the bitwise AND of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BAND</computeroutput>. </para></description><method-group name="public member functions">
+    </template><purpose>Compute the bitwise AND of two integral values. </purpose><description><para>This binary function object computes the bitwise AND of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BAND</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>T</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para><computeroutput>x</computeroutput> &amp; y. </para></returns></method>
 </method-group>
 </struct><struct name="bitwise_or"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the bitwise OR of two integral values. </purpose><description><para>This binary function object computes the bitwise OR of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BOR</computeroutput>. </para></description><method-group name="public member functions">
+    </template><purpose>Compute the bitwise OR of two integral values. </purpose><description><para>This binary function object computes the bitwise OR of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BOR</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>T</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para>the <computeroutput>x</computeroutput> | y. </para></returns></method>
 </method-group>
 </struct><struct name="logical_xor"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the logical exclusive OR of two integral values. </purpose><description><para>This binary function object computes the logical exclusive of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_LXOR</computeroutput>. </para></description><method-group name="public member functions">
+    </template><purpose>Compute the logical exclusive OR of two integral values. </purpose><description><para>This binary function object computes the logical exclusive of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_LXOR</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>T</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para>the logical exclusive OR of x and y. </para></returns></method>
 </method-group>
 </struct><struct name="bitwise_xor"><template>
       <template-type-parameter name="T"/>
-    </template><purpose>Compute the bitwise exclusive OR of two integral values. </purpose><description><para>This binary function object computes the bitwise exclusive OR of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BXOR</computeroutput>. </para></description><method-group name="public member functions">
+    </template><purpose>Compute the bitwise exclusive OR of two integral values. </purpose><description><para>This binary function object computes the bitwise exclusive OR of the two values it is given. When used with MPI and a type <computeroutput>T</computeroutput> that has an associated, built-in MPI data type, translates to <computeroutput>MPI_BXOR</computeroutput>. </para></description><typedef name="first_argument_type"><type>T</type></typedef>
+<typedef name="second_argument_type"><type>T</type></typedef>
+<typedef name="result_type"><type>T</type></typedef>
+<method-group name="public member functions">
 <method name="operator()" cv="const"><type>T</type><parameter name="x"><paramtype>const T &amp;</paramtype></parameter><parameter name="y"><paramtype>const T &amp;</paramtype></parameter><description><para>
 </para></description><returns><para><computeroutput>x</computeroutput> ^ y. </para></returns></method>
 </method-group>
-</struct><struct name="is_mpi_op"><template>
-      <template-type-parameter name="Op"/>
-      <template-type-parameter name="T"/>
-    </template><purpose>Determine if a function object has an associated <computeroutput>MPI_Op</computeroutput>. </purpose><description><para>This trait determines if a function object type <computeroutput>Op</computeroutput>, when used with argument type <computeroutput>T</computeroutput>, has an associated <computeroutput>MPI_Op</computeroutput>. If so, <computeroutput>is_mpi_op&lt;Op,T&gt;</computeroutput> will derive from <computeroutput>mpl::false_</computeroutput> and will contain a static member function <computeroutput>op</computeroutput> that takes no arguments but returns the associated <computeroutput>MPI_Op</computeroutput> value. For instance, <computeroutput><classname alt="boost::mpi::is_mpi_op">is_mpi_op</classname>&lt;std::plus&lt;int&gt;</computeroutput>,int&gt;::op() returns <computeroutput>MPI_SUM</computeroutput>.</para><para>Users may specialize <computeroutput><classname alt="boost::mpi::is_mpi_op">is_mpi_op</classname></computeroutput> for any other class templates that map onto operations that have <computeroutput>MPI_Op</computeroutput> equivalences, such as bitwise OR, logical and, or maximum. However, users are encouraged to use the standard function objects in the <computeroutput>functional</computeroutput> and <computeroutput>boost/mpi/operations.hpp</computeroutput> headers whenever possible. For function objects that are class templates with a single template parameter, it may be easier to specialize <computeroutput>is_builtin_mpi_op</computeroutput>. </para></description></struct>
+</struct>
+
+
+
+
+
+
+
 
 
 
@@ -1726,7 +2022,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <header name="boost/mpi/packed_iarchive.hpp">
 <para>This header provides the facilities for packing Serializable data types into a buffer using <computeroutput>MPI_Pack</computeroutput>. The buffers can then be transmitted via MPI and then be unpacked either via the facilities in <computeroutput>packed_oarchive.hpp</computeroutput> or <computeroutput>MPI_Unpack</computeroutput>. </para><namespace name="boost">
 <namespace name="mpi">
-<class name="packed_iarchive"><purpose>An archive that unpacks binary data from an MPI buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_oarchive">packed_oarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that unpacks binary data from a buffer received via MPI. It can operate on any Serializable data type and will use the <computeroutput>MPI_Unpack</computeroutput> function of the underlying MPI implementation to perform deserialization. </para></description><method-group name="public member functions">
+<class name="packed_iarchive"><inherit access="public">iprimitive</inherit><purpose>An archive that unpacks binary data from an MPI buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_oarchive">packed_oarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that unpacks binary data from a buffer received via MPI. It can operate on any Serializable data type and will use the <computeroutput>MPI_Unpack</computeroutput> function of the underlying MPI implementation to perform deserialization. </para></description><method-group name="public member functions">
 <method name="load_override"><type>void</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="x"><paramtype>T &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
@@ -1830,13 +2126,20 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
 <header name="boost/mpi/packed_oarchive.hpp">
 <para>This header provides the facilities for unpacking Serializable data types from a buffer using <computeroutput>MPI_Unpack</computeroutput>. The buffers are typically received via MPI and have been packed either by via the facilities in <computeroutput>packed_iarchive.hpp</computeroutput> or <computeroutput>MPI_Pack</computeroutput>. </para><namespace name="boost">
 <namespace name="mpi">
-<class name="packed_oarchive"><purpose>An archive that packs binary data into an MPI buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_iarchive">packed_iarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that packs binary data into a buffer for transmission via MPI. It can operate on any Serializable data type and will use the <computeroutput>MPI_Pack</computeroutput> function of the underlying MPI implementation to perform serialization. </para></description><method-group name="public member functions">
+<class name="packed_oarchive"><inherit access="public">oprimitive</inherit><purpose>An archive that packs binary data into an MPI buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_iarchive">packed_iarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that packs binary data into a buffer for transmission via MPI. It can operate on any Serializable data type and will use the <computeroutput>MPI_Pack</computeroutput> function of the underlying MPI implementation to perform serialization. </para></description><method-group name="public member functions">
 <method name="save_override"><type>void</type><template>
           <template-type-parameter name="T"/>
         </template><parameter name="x"><paramtype>T const &amp;</paramtype></parameter><parameter name=""><paramtype>mpl::false_</paramtype></parameter></method>
@@ -1856,6 +2159,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <constructor><parameter name="comm"><paramtype>MPI_Comm const &amp;</paramtype><description><para>The communicator over which this archive will be sent.</para></description></parameter><parameter name="flags"><paramtype>unsigned int</paramtype><default>boost::archive::no_header</default><description><para>Control the serialization of the data types. Refer to the Boost.Serialization documentation before changing the default flags. </para></description></parameter><description><para>Construct a <computeroutput><classname alt="boost::mpi::packed_oarchive">packed_oarchive</classname></computeroutput> for transmission over the given MPI communicator.</para><para>
 </para></description></constructor>
 </class><typedef name="oprimitive"><type>packed_oprimitive</type></typedef>
+
+
+
+
+
+
+
 
 
 
@@ -2038,6 +2348,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -2053,6 +2370,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <method-group name="private static functions">
 </method-group>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -2159,7 +2483,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <copy-assignment><type>const <classname>content</classname> &amp;</type><parameter name="d"><paramtype>MPI_Datatype</paramtype><description><para>the new MPI data type referring to the content of the object.</para></description></parameter><description><para>Replace the MPI data type referencing the content of an object.</para><para>
 
 </para></description><returns><para>*this </para></returns></copy-assignment>
-</class><class name="packed_skeleton_iarchive"><purpose>An archiver that reconstructs a data structure based on the binary skeleton stored in a buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that can construct the the shape of a data structure based on a binary skeleton stored in a buffer. The <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> is typically used by the receiver of a skeleton, to prepare a data structure that will eventually receive content separately.</para><para>Users will not generally need to use <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> directly. Instead, use <computeroutput>skeleton</computeroutput> or <computeroutput>get_skeleton</computeroutput>. </para></description><method-group name="public member functions">
+</class><class name="packed_skeleton_iarchive"><inherit access="public">ignore_iprimitive</inherit><purpose>An archiver that reconstructs a data structure based on the binary skeleton stored in a buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that can construct the the shape of a data structure based on a binary skeleton stored in a buffer. The <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> is typically used by the receiver of a skeleton, to prepare a data structure that will eventually receive content separately.</para><para>Users will not generally need to use <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> directly. Instead, use <computeroutput>skeleton</computeroutput> or <computeroutput>get_skeleton</computeroutput>. </para></description><method-group name="public member functions">
 <method name="get_skeleton" cv="const"><type>const <classname>packed_iarchive</classname> &amp;</type><description><para>Retrieve the archive corresponding to this skeleton. </para></description></method>
 <method name="get_skeleton"><type><classname>packed_iarchive</classname> &amp;</type><description><para>Retrieve the archive corresponding to this skeleton. </para></description></method>
 </method-group>
@@ -2167,7 +2491,7 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 </para></description></constructor>
 <constructor specifiers="explicit"><parameter name="archive"><paramtype><classname>packed_iarchive</classname> &amp;</paramtype><description><para>the archive from which the skeleton will be unpacked. </para></description></parameter><description><para>Construct a <computeroutput><classname alt="boost::mpi::packed_skeleton_iarchive">packed_skeleton_iarchive</classname></computeroutput> that unpacks a skeleton from the given <computeroutput>archive</computeroutput>.</para><para>
 </para></description></constructor>
-</class><class name="packed_skeleton_oarchive"><purpose>An archiver that records the binary skeleton of a data structure into a buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that can record the shape of a data structure (called the "skeleton") into a binary representation stored in a buffer. The <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> is typically used by the send of a skeleton, to pack the skeleton of a data structure for transmission separately from the content.</para><para>Users will not generally need to use <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> directly. Instead, use <computeroutput>skeleton</computeroutput> or <computeroutput>get_skeleton</computeroutput>. </para></description><method-group name="public member functions">
+</class><class name="packed_skeleton_oarchive"><inherit access="public">ignore_oprimitive</inherit><purpose>An archiver that records the binary skeleton of a data structure into a buffer. </purpose><description><para>The <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> class is an Archiver (as in the Boost.Serialization library) that can record the shape of a data structure (called the "skeleton") into a binary representation stored in a buffer. The <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> is typically used by the send of a skeleton, to pack the skeleton of a data structure for transmission separately from the content.</para><para>Users will not generally need to use <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> directly. Instead, use <computeroutput>skeleton</computeroutput> or <computeroutput>get_skeleton</computeroutput>. </para></description><method-group name="public member functions">
 <method name="get_skeleton" cv="const"><type>const <classname>packed_oarchive</classname> &amp;</type><description><para>Retrieve the archive corresponding to this skeleton. </para></description></method>
 </method-group>
 <constructor><parameter name="comm"><paramtype>MPI_Comm const &amp;</paramtype><description><para>The communicator over which this archive will be transmitted.</para></description></parameter><parameter name="flags"><paramtype>unsigned int</paramtype><default>boost::archive::no_header</default><description><para>Control the serialization of the skeleton. Refer to the Boost.Serialization documentation before changing the default flags. </para></description></parameter><description><para>Construct a <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> for the given communicator.</para><para>
@@ -2175,6 +2499,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <constructor specifiers="explicit"><parameter name="archive"><paramtype><classname>packed_oarchive</classname> &amp;</paramtype><description><para>the archive to which the skeleton will be packed. </para></description></parameter><description><para>Construct a <computeroutput><classname alt="boost::mpi::packed_skeleton_oarchive">packed_skeleton_oarchive</classname></computeroutput> that packs a skeleton into the given <computeroutput>archive</computeroutput>.</para><para>
 </para></description></constructor>
 </class>
+
+
+
+
+
+
+
 
 
 
@@ -2271,6 +2602,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <header name="boost/mpi/skeleton_and_content_fwd.hpp">
 <para>This header contains all of the forward declarations required to use transmit skeletons of data structures and the content of data structures separately. To actually transmit skeletons or content, include the header <computeroutput>boost/mpi/skeleton_and_content.hpp</computeroutput>. </para><namespace name="boost">
 <namespace name="mpi">
+
+
+
+
+
+
+
 
 
 
@@ -2458,6 +2796,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 
 
 
+
+
+
+
+
+
+
 </namespace>
 </namespace>
 </header>
@@ -2477,6 +2822,13 @@ If wrapped in a <computeroutput><classname alt="boost::mpi::inplace_t">inplace_t
 <method name="time_is_global" specifiers="static"><type>bool</type><description><para>Determines whether the elapsed time values are global times or local processor times. </para></description></method>
 </method-group>
 </class>
+
+
+
+
+
+
+
 
 
 

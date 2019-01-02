@@ -1,35 +1,22 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_DYNAMIC_AT_C_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_DYNAMIC_AT_C_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_DYNAMIC_AT_C_HPP
-#define GIL_DYNAMIC_AT_C_HPP
-
-#include "../../gil_config.hpp"
-#include <cassert>
-#include <stdexcept>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/size.hpp>
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Constructs for static-to-dynamic integer convesion
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on May 4, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <cassert>
+#include <stdexcept>
 
 namespace boost { namespace gil {
+
+// Constructs for static-to-dynamic integer convesion
 
 #define GIL_AT_C_VALUE(z, N, text)    mpl::at_c<IntTypes,S+N>::type::value,
 #define GIL_DYNAMIC_AT_C_LIMIT        226    // size of the maximum vector to handle
@@ -69,7 +56,7 @@ namespace detail {
                 const std::size_t REM = SIZE % GIL_DYNAMIC_AT_C_LIMIT;
                 switch (index / GIL_DYNAMIC_AT_C_LIMIT) {
                     case 0: return at_c_fn<0                   ,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index);
-                    case 1: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT  ,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT);                
+                    case 1: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT  ,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT);
                 };
                 throw;
             }
@@ -84,7 +71,7 @@ namespace detail {
                 switch (index / GIL_DYNAMIC_AT_C_LIMIT) {
                     case 0: return at_c_fn<0                   ,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index);
                     case 1: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT  ,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT);
-                    case 2: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*2,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*2);                
+                    case 2: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*2,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*2);
                 };
                 throw;
             }
@@ -99,8 +86,8 @@ namespace detail {
                 switch (index / GIL_DYNAMIC_AT_C_LIMIT) {
                     case 0: return at_c_fn<0                   ,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index);
                     case 1: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT  ,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT);
-                    case 2: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*2,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*2);                
-                    case 3: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*3,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*3);                
+                    case 2: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*2,GIL_DYNAMIC_AT_C_LIMIT-1>::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*2);
+                    case 3: return at_c_fn<GIL_DYNAMIC_AT_C_LIMIT*3,REM                 >::template apply<IntTypes,ValueType>(index - GIL_DYNAMIC_AT_C_LIMIT*3);
                 };
                 throw;
             }
@@ -115,16 +102,16 @@ namespace detail {
 ///
 ////////////////////////////////////////////////////////////////////////////////////
 
-template <typename IntTypes, typename ValueType> inline 
-ValueType at_c(std::size_t index) { 
+template <typename IntTypes, typename ValueType> inline
+ValueType at_c(std::size_t index) {
     const std::size_t Size=mpl::size<IntTypes>::value;
     return detail::at_c::at_c_impl<Size/GIL_DYNAMIC_AT_C_LIMIT>::template apply<IntTypes,ValueType>(index);
-}    
+}
 
 #undef GIL_AT_C_VALUE
 #undef GIL_DYNAMIC_AT_C_LIMIT
 #undef GIL_AT_C_LOOKUP
 
-} }  // namespace boost::gil
+}} // namespace boost::gil
 
 #endif

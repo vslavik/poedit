@@ -1,14 +1,17 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2015, Oracle and/or its affiliates.
+// Copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
 
 #ifndef BOOST_GEOMETRY_GEOMETRIES_HELPER_GEOMETRY_HPP
 #define BOOST_GEOMETRY_GEOMETRIES_HELPER_GEOMETRY_HPP
+
+#include <boost/mpl/assert.hpp>
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
@@ -53,6 +56,14 @@ struct default_units<Geometry, cartesian_tag>
 template <typename Units, typename CS_Tag>
 struct cs_tag_to_coordinate_system
 {
+    BOOST_MPL_ASSERT_MSG((false),
+                         NOT_IMPLEMENTED_FOR_THIS_COORDINATE_SYSTEM,
+                         (types<CS_Tag>));
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, cartesian_tag>
+{
     typedef cs::cartesian type;
 };
 
@@ -63,7 +74,7 @@ struct cs_tag_to_coordinate_system<Units, spherical_equatorial_tag>
 };
 
 template <typename Units>
-struct cs_tag_to_coordinate_system<Units, spherical_tag>
+struct cs_tag_to_coordinate_system<Units, spherical_polar_tag>
 {
     typedef cs::spherical<Units> type;
 };

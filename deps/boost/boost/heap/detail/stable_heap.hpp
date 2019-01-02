@@ -566,12 +566,22 @@ struct make_heap_base
 template <typename Alloc>
 struct extract_allocator_types
 {
+#ifdef BOOST_NO_CXX11_ALLOCATOR
     typedef typename Alloc::size_type size_type;
     typedef typename Alloc::difference_type difference_type;
     typedef typename Alloc::reference reference;
     typedef typename Alloc::const_reference const_reference;
     typedef typename Alloc::pointer pointer;
     typedef typename Alloc::const_pointer const_pointer;
+#else
+    typedef std::allocator_traits<Alloc> traits;
+    typedef typename traits::size_type size_type;
+    typedef typename traits::difference_type difference_type;
+    typedef typename Alloc::value_type& reference;
+    typedef typename Alloc::value_type const& const_reference;
+    typedef typename traits::pointer pointer;
+    typedef typename traits::const_pointer const_pointer;
+#endif
 };
 
 

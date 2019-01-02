@@ -6,7 +6,7 @@
 #ifndef BOOST_MP_MR_HPP
 #define BOOST_MP_MR_HPP
 
-#include <boost/multiprecision/random.hpp>
+#include <boost/random.hpp>
 #include <boost/multiprecision/integer.hpp>
 
 namespace boost{

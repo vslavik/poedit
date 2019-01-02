@@ -9,7 +9,7 @@ import numbers ;
 
 
 # The pattern that indirect rules must match: module%rule
-.pattern = ^([^%]*)%([^%]+)$ ;
+.pattern = "^([^%]*)%([^%]+)$" ;
 
 
 #
@@ -31,9 +31,16 @@ local rule indirect-rule ( x )
 #
 rule make ( rulename bound-args * : context ? )
 {
-    context ?= [ CALLER_MODULE ] ;
-    context ?= "" ;
-    return $(context)%$(rulename) $(bound-args) ;
+    if [ MATCH $(.pattern) : $(rulename) ]
+    {
+        return $(rulename) $(bound-args) ;
+    }
+    else
+    {
+        context ?= [ CALLER_MODULE ] ;
+        context ?= "" ;
+        return $(context)%$(rulename) $(bound-args) ;
+    }
 }
 
 
@@ -53,13 +60,13 @@ rule make-qualified ( rulename bound-args * : frames ? )
     {
         frames ?= 1 ;
         # If the rule name includes a Jamfile module, grab it.
-        local module-context = [ MATCH ^(Jamfile<[^>]*>)\\..* : $(rulename) ] ;
+        local module-context = [ MATCH "^(Jamfile<[^>]*>)\\..*" : $(rulename) ] ;
 
         if ! $(module-context)
         {
             # Take the first dot-separated element as module name. This disallows
             # module names with dots, but allows rule names with dots.
-            module-context = [ MATCH ^([^.]*)\\..* : $(rulename) ] ;
+            module-context = [ MATCH "^([^.]*)\\..*" : $(rulename) ] ;
         }
         module-context ?= [ CALLER_MODULE $(frames) ] ;
         return [ make $(rulename) $(bound-args) : $(module-context) ] ;

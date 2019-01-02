@@ -76,11 +76,11 @@ int main()
 
    //Now test lists
    List::const_iterator   list_it (my_list.cbegin());
-   identifier_t *it_val(&ids[NumElements-1]), *it_rbeg_val(&ids[0]-1);
+   identifier_t *it_val(&ids[NumElements]), *it_rbeg_val(&ids[0]);
 
    //Test the objects inserted in the base hook list
    for(; it_val != it_rbeg_val; --it_val, ++list_it)
-      if(&*list_it  != &*it_val)   return 1;
+      if(&*list_it  != &it_val[-1])   return 1;
 
    return 0;
 }

@@ -11,10 +11,13 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_REVERSE_HPP
 #define BOOST_COMPUTE_ALGORITHM_REVERSE_HPP
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -52,12 +55,15 @@ struct reverse_kernel : public meta_kernel
 
 /// Reverses the elements in the range [\p first, \p last).
 ///
+/// Space complexity: \Omega(1)
+///
 /// \see reverse_copy()
 template<class Iterator>
 inline void reverse(Iterator first,
                     Iterator last,
                     command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
     size_t count = detail::iterator_range_size(first, last);
     if(count < 2){
         return;

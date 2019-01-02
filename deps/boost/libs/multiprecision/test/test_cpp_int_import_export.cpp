@@ -51,6 +51,94 @@ T generate_random()
 }
 
 template <class T>
+void test_round_trip_neg(T val, const boost::mpl::true_&)
+{
+   // Try some negative values:
+   std::vector<unsigned char> cv;
+   T newval;
+   val = -val;
+   export_bits(val, std::back_inserter(cv), 8, false);
+   import_bits(newval, cv.begin(), cv.end(), 8, false);
+   BOOST_CHECK_EQUAL(-val, newval);
+}
+
+template <class T>
+void test_round_trip_neg(const T&, const boost::mpl::false_&)
+{
+}
+
+template <class T>
+void test_round_trip(T val)
+{
+   std::vector<unsigned char> cv;
+   export_bits(val, std::back_inserter(cv), 8);
+   T newval;
+   import_bits(newval, cv.begin(), cv.end());
+   BOOST_CHECK_EQUAL(val, newval);
+   // Should get the same value if we reverse the bytes:
+   std::reverse(cv.begin(), cv.end());
+   newval = 0;
+   import_bits(newval, cv.begin(), cv.end(), 8, false);
+   BOOST_CHECK_EQUAL(val, newval);
+   // Also try importing via pointers as these may memcpy:
+   newval = 0;
+   import_bits(newval, &cv[0], &cv[0] + cv.size(), 8, false);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   cv.clear();
+   export_bits(val, std::back_inserter(cv), 8, false);
+   import_bits(newval, cv.begin(), cv.end(), 8, false);
+   BOOST_CHECK_EQUAL(val, newval);
+   std::reverse(cv.begin(), cv.end());
+   newval = 0;
+   import_bits(newval, cv.begin(), cv.end(), 8, true);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   std::vector<boost::uintmax_t> bv;
+   export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits);
+   import_bits(newval, bv.begin(), bv.end());
+   BOOST_CHECK_EQUAL(val, newval);
+   // Should get the same value if we reverse the values:
+   std::reverse(bv.begin(), bv.end());
+   newval = 0;
+   import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits, false);
+   BOOST_CHECK_EQUAL(val, newval);
+   // Also try importing via pointers as these may memcpy:
+   newval = 0;
+   import_bits(newval, &bv[0], &bv[0] + bv.size(), std::numeric_limits<boost::uintmax_t>::digits, false);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   bv.clear();
+   export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits, false);
+   import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits, false);
+   BOOST_CHECK_EQUAL(val, newval);
+   //
+   // Try with an unconventional number of bits, to model some machine with guard bits:
+   //
+   bv.clear();
+   export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits - 3);
+   import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits - 3);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   bv.clear();
+   export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits - 3, false);
+   import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits - 3, false);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   cv.clear();
+   export_bits(val, std::back_inserter(cv), 6);
+   import_bits(newval, cv.begin(), cv.end(), 6);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   cv.clear();
+   export_bits(val, std::back_inserter(cv), 6, false);
+   import_bits(newval, cv.begin(), cv.end(), 6, false);
+   BOOST_CHECK_EQUAL(val, newval);
+
+   test_round_trip_neg(val, boost::mpl::bool_<std::numeric_limits<T>::is_signed>());
+}
+
+template <class T>
 void test_round_trip()
 {
    std::cout << std::hex;
@@ -58,71 +146,15 @@ void test_round_trip()
    for(unsigned i = 0; i < 1000; ++i)
    {
       T val = generate_random<T>();
-      std::vector<unsigned char> cv;
-      export_bits(val, std::back_inserter(cv), 8);
-      T newval;
-      import_bits(newval, cv.begin(), cv.end());
-      BOOST_CHECK_EQUAL(val, newval);
-      // Should get the same value if we reverse the bytes:
-      std::reverse(cv.begin(), cv.end());
-      newval = 0;
-      import_bits(newval, cv.begin(), cv.end(), 8, false);
-      BOOST_CHECK_EQUAL(val, newval);
-      // Also try importing via pointers as these may memcpy:
-      newval = 0;
-      import_bits(newval, &cv[0], &cv[0] + cv.size(), 8, false);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      cv.clear();
-      export_bits(val, std::back_inserter(cv), 8, false);
-      import_bits(newval, cv.begin(), cv.end(), 8, false);
-      BOOST_CHECK_EQUAL(val, newval);
-      std::reverse(cv.begin(), cv.end());
-      newval = 0;
-      import_bits(newval, cv.begin(), cv.end(), 8, true);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      std::vector<boost::uintmax_t> bv;
-      export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits);
-      import_bits(newval, bv.begin(), bv.end());
-      BOOST_CHECK_EQUAL(val, newval);
-      // Should get the same value if we reverse the values:
-      std::reverse(bv.begin(), bv.end());
-      newval = 0;
-      import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits, false);
-      BOOST_CHECK_EQUAL(val, newval);
-      // Also try importing via pointers as these may memcpy:
-      newval = 0;
-      import_bits(newval, &bv[0], &bv[0] + bv.size(), std::numeric_limits<boost::uintmax_t>::digits, false);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      bv.clear();
-      export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits, false);
-      import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits, false);
-      BOOST_CHECK_EQUAL(val, newval);
-      //
-      // Try with an unconventional number of bits, to model some machine with guard bits:
-      //
-      bv.clear();
-      export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits - 3);
-      import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits - 3);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      bv.clear();
-      export_bits(val, std::back_inserter(bv), std::numeric_limits<boost::uintmax_t>::digits - 3, false);
-      import_bits(newval, bv.begin(), bv.end(), std::numeric_limits<boost::uintmax_t>::digits - 3, false);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      cv.clear();
-      export_bits(val, std::back_inserter(cv), 6);
-      import_bits(newval, cv.begin(), cv.end(), 6);
-      BOOST_CHECK_EQUAL(val, newval);
-
-      cv.clear();
-      export_bits(val, std::back_inserter(cv), 6, false);
-      import_bits(newval, cv.begin(), cv.end(), 6, false);
-      BOOST_CHECK_EQUAL(val, newval);
+      test_round_trip(val);
    }
+   //
+   // Bug cases. 
+   // See https://github.com/boostorg/multiprecision/issues/21
+   T bug(1);
+   bug << std::numeric_limits<T>::digits - 1;
+   --bug;
+   test_round_trip(bug);
 }
 
 int main()

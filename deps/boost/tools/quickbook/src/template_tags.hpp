@@ -13,6 +13,8 @@
 
 namespace quickbook
 {
+    // clang-format off
+
     QUICKBOOK_VALUE_TAGS(template_tags, 0x100,
         (template_)
         (attribute_template)
@@ -22,6 +24,8 @@ namespace quickbook
         (phrase)
         (snippet)
     )
+
+    // clang-format on
 }
 
 #endif

@@ -71,6 +71,7 @@ indeterminate(tribool x,
  */
 class tribool
 {
+#if defined( BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS )
 private:
   /// INTERNAL ONLY
   struct dummy {
@@ -78,6 +79,7 @@ private:
   };
 
   typedef void (dummy::*safe_bool)();
+#endif
 
 public:
   /**
@@ -109,10 +111,21 @@ public:
    * \returns true if the 3-state boolean is true, false otherwise
    * \throws nothrow
    */
+#if !defined( BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS )
+
+  BOOST_CONSTEXPR explicit operator bool () const BOOST_NOEXCEPT
+  {
+    return value == true_value;
+  }
+
+#else
+
   BOOST_CONSTEXPR operator safe_bool() const BOOST_NOEXCEPT
   {
     return value == true_value? &dummy::nonnull : 0;
   }
+
+#endif
 
   /**
    * The actual stored value in this 3-state boolean, which may be false, true,
@@ -164,7 +177,7 @@ BOOST_CONSTEXPR inline tribool operator!(tribool x) BOOST_NOEXCEPT
 }
 
 /**
- * \brief Computes the logical conjuction of two tribools
+ * \brief Computes the logical conjunction of two tribools
  *
  * \returns the result of logically ANDing the two tribool values,
  * according to the following table:

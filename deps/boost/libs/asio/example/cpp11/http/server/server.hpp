@@ -2,7 +2,7 @@
 // server.hpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -32,7 +32,7 @@ public:
   explicit server(const std::string& address, const std::string& port,
       const std::string& doc_root);
 
-  /// Run the server's io_service loop.
+  /// Run the server's io_context loop.
   void run();
 
 private:
@@ -42,8 +42,8 @@ private:
   /// Wait for a request to stop the server.
   void do_await_stop();
 
-  /// The io_service used to perform asynchronous operations.
-  boost::asio::io_service io_service_;
+  /// The io_context used to perform asynchronous operations.
+  boost::asio::io_context io_context_;
 
   /// The signal_set is used to register for process termination notifications.
   boost::asio::signal_set signals_;
@@ -53,9 +53,6 @@ private:
 
   /// The connection manager which owns all live connections.
   connection_manager connection_manager_;
-
-  /// The next socket to be accepted.
-  boost::asio::ip::tcp::socket socket_;
 
   /// The handler for all incoming requests.
   request_handler request_handler_;

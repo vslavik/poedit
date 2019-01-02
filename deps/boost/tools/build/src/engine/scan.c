@@ -34,6 +34,8 @@ struct include
     include   * next;        /* next serial include file */
     char      * string;      /* pointer into current line */
     char    * * strings;     /* for yyfparse() -- text to parse */
+    LISTITER    pos;         /* for yysparse() -- text to parse */
+    LIST      * list;        /* for yysparse() -- text to parse */
     FILE      * file;        /* for yyfparse() -- file being read */
     OBJECT    * fname;       /* for yyfparse() -- file name */
     int         line;        /* line counter for error messages */
@@ -55,9 +57,11 @@ static char * symdump( YYSTYPE * );
  * Set parser mode: normal, string, or keyword.
  */
 
-void yymode( int n )
+int yymode( int n )
 {
+    int result = scanmode;
     scanmode = n;
+    return result;
 }
 
 
@@ -101,6 +105,13 @@ void yyfparse( OBJECT * s )
     /* If the filename is "+", it means use the internal jambase. */
     if ( !strcmp( object_str( s ), "+" ) )
         i->strings = jambase;
+}
+
+
+void yysparse( OBJECT * name, const char * * lines )
+{
+    yyfparse( name );
+    incp->strings = (char * *)lines;
 }
 
 
@@ -180,6 +191,35 @@ int yyline()
     return EOF;
 }
 
+/* This allows us to get an extra character of lookahead.
+ * There are a few places where we need to look ahead two
+ * characters and yyprev only guarantees a single character
+ * of putback.
+ */
+int yypeek()
+{
+    if ( *incp->string )
+    {
+        return *incp->string;
+    }
+    else if ( incp->strings )
+    {
+        if ( *incp->strings )
+            return **incp->strings;
+    }
+    else if ( incp->file )
+    {
+        /* Don't bother opening the file.  yypeek is
+         * only used in special cases and never at the
+         * beginning of a file.
+         */
+        int ch = fgetc( incp->file );
+        if ( ch != EOF )
+            ungetc( ch, incp->file );
+        return ch;
+    }
+    return EOF;
+}
 
 /*
  * yylex() - set yylval to current token; return its type.
@@ -195,6 +235,20 @@ int yyline()
 
 #define yychar() ( *incp->string ? *incp->string++ : yyline() )
 #define yyprev() ( incp->string-- )
+
+static int use_new_scanner = 0;
+static int expect_whitespace;
+
+#define yystartkeyword() if(use_new_scanner) break; else token_warning()
+#define yyendkeyword() if(use_new_scanner) break; else if ( 1 ) { expect_whitespace = 1; continue; } else (void)0
+
+void do_token_warning()
+{
+    out_printf( "%s:%d: %s %s\n", object_str( yylval.file ), yylval.line, "Unescaped special character in",
+            symdump( &yylval ) );
+}
+
+#define token_warning() has_token_warning = 1
 
 int yylex()
 {
@@ -262,6 +316,12 @@ int yylex()
         struct keyword * k;
         int inquote = 0;
         int notkeyword;
+        int hastoken = 0;
+        int hasquote = 0;
+        int ingrist = 0;
+        int invarexpand = 0;
+        int expect_whitespace = 0;
+        int has_token_warning = 0;
 
         /* Eat white space. */
         for ( ; ; )
@@ -274,8 +334,24 @@ int yylex()
             if ( c != '#' )
                 break;
 
-            /* Swallow up comment line. */
-            while ( ( ( c = yychar() ) != EOF ) && ( c != '\n' ) ) ;
+            c = yychar();
+            if ( ( c != EOF ) && c == '|' )
+            {
+                /* Swallow up block comment. */
+                int c0 = yychar();
+                int c1 = yychar();
+                while ( ! ( c0 == '|' && c1 == '#' ) && ( c0 != EOF && c1 != EOF ) )
+                {
+                    c0 = c1;
+                    c1 = yychar();
+                }
+                c = yychar();
+            }
+            else
+            {
+                /* Swallow up comment line. */
+                while ( ( c != EOF ) && ( c != '\n' ) ) c = yychar();
+            }
         }
 
         /* c now points to the first character of a token. */
@@ -297,17 +373,262 @@ int yylex()
         (
             ( c != EOF ) &&
             ( b < buf + sizeof( buf ) ) &&
-            ( inquote || !isspace( c ) )
+            ( inquote || invarexpand || !isspace( c ) )
         )
         {
+            if ( expect_whitespace || ( isspace( c ) && ! inquote ) )
+            {
+                token_warning();
+                expect_whitespace = 0;
+            }
+            if ( !inquote && !invarexpand )
+            {
+                if ( scanmode == SCAN_COND || scanmode == SCAN_CONDB )
+                {
+                    if ( hastoken && ( c == '=' || c == '<' || c == '>' || c == '!' || c == '(' || c == ')' || c == '&' || c == '|' ) )
+                    {
+                        /* Don't treat > as special if we started with a grist. */
+                        if ( ! ( scanmode == SCAN_CONDB && ingrist == 1 && c == '>' ) )
+                        {
+                            yystartkeyword();
+                        }
+                    }
+                    else if ( c == '=' || c == '(' || c == ')' )
+                    {
+                        *b++ = c;
+                        c = yychar();
+                        yyendkeyword();
+                    }
+                    else if ( c == '!' || ( scanmode == SCAN_COND && ( c == '<' || c == '>' ) ) )
+                    {
+                        *b++ = c;
+                        if ( ( c = yychar() ) == '=' )
+                        {
+                            *b++ = c;
+                            c = yychar();
+                        }
+                        yyendkeyword();
+                    }
+                    else if ( c == '&' || c == '|' )
+                    {
+                        *b++ = c;
+                        if ( yychar() == c )
+                        {
+                            *b++ = c;
+                            c = yychar();
+                        }
+                        yyendkeyword();
+                    }
+                }
+                else if ( scanmode == SCAN_PARAMS )
+                {
+                    if ( c == '*' || c == '+' || c == '?' || c == '(' || c == ')' )
+                    {
+                        if ( !hastoken )
+                        {
+                            *b++ = c;
+                            c = yychar();
+                            yyendkeyword();
+                        }
+                        else
+                        {
+                            yystartkeyword();
+                        }
+                    }
+                }
+                else if ( scanmode == SCAN_XASSIGN && ! hastoken )
+                {
+                    if ( c == '=' )
+                    {
+                        *b++ = c;
+                        c = yychar();
+                        yyendkeyword();
+                    }
+                    else if ( c == '+' || c == '?' )
+                    {
+                        if ( yypeek() == '=' )
+                        {
+                            *b++ = c;
+                            *b++ = yychar();
+                            c = yychar();
+                            yyendkeyword();
+                        }
+                    }
+                }
+                else if ( scanmode == SCAN_NORMAL || scanmode == SCAN_ASSIGN )
+                {
+                    if ( c == '=' )
+                    {
+                        if ( !hastoken )
+                        {
+                            *b++ = c;
+                            c = yychar();
+                            yyendkeyword();
+                        }
+                        else
+                        {
+                            yystartkeyword();
+                        }
+                    }
+                    else if ( c == '+' || c == '?' )
+                    {
+                        if ( yypeek() == '=' )
+                        {
+                            if ( hastoken )
+                            {
+                                yystartkeyword();
+                            }
+                            else
+                            {
+                                *b++ = c;
+                                *b++ = yychar();
+                                c = yychar();
+                                yyendkeyword();
+                            }
+                        }
+                    }
+                }
+                if ( scanmode != SCAN_CASE && ( c == ';' || c == '{' || c == '}' ||
+                    ( scanmode != SCAN_PARAMS && ( c == '[' || c == ']' ) ) ) )
+                {
+                    if ( ! hastoken )
+                    {
+                        *b++ = c;
+                        c = yychar();
+                        yyendkeyword();
+                    }
+                    else
+                    {
+                        yystartkeyword();
+                    }
+                }
+                else if ( c == ':' )
+                {
+                    if ( ! hastoken )
+                    {
+                        *b++ = c;
+                        c = yychar();
+                        yyendkeyword();
+                        break;
+                    }
+                    else if ( hasquote )
+                    {
+                        /* Special rules for ':' do not apply after we quote anything. */
+                        yystartkeyword();
+                    }
+                    else if ( ingrist == 0 )
+                    {
+                        int next = yychar();
+                        int is_win_path = 0;
+                        int is_conditional = 0;
+                        if ( next == '\\' )
+                        {
+                            if( yypeek() == '\\' )
+                            {
+                                is_win_path = 1;
+                            }
+                        }
+                        else if ( next == '/' )
+                        {
+                            is_win_path = 1;
+                        }
+                        yyprev();
+                        if ( is_win_path )
+                        {
+                            /* Accept windows paths iff they are at the start or immediately follow a grist. */
+                            if ( b > buf && isalpha( b[ -1 ] ) && ( b == buf + 1 || b[ -2 ] == '>' ) )
+                            {
+                                is_win_path = 1;
+                            }
+                            else
+                            {
+                                is_win_path = 0;
+                            }
+                        }
+                        if ( next == '<' )
+                        {
+                            /* Accept conditionals only for tokens that start with "<" or "!<" */
+                            if ( ( (b > buf) && (buf[ 0 ] == '<') ) ||
+                                ( (b > (buf + 1)) && (buf[ 0 ] == '!') && (buf[ 1 ] == '<') ))
+                            {
+                                is_conditional = 1;
+                            }
+                        }
+                        if ( !is_conditional && !is_win_path )
+                        {
+                            yystartkeyword();
+                        }
+                    }
+                }
+            }
+            hastoken = 1;
             if ( c == '"' )
             {
                 /* begin or end " */
                 inquote = !inquote;
+                hasquote = 1;
                 notkeyword = 1;
             }
             else if ( c != '\\' )
             {
+                if ( !invarexpand && c == '<' )
+                {
+                    if ( ingrist == 0 ) ingrist = 1;
+                    else ingrist = -1;
+                }
+                else if ( !invarexpand && c == '>' )
+                {
+                    if ( ingrist == 1 ) ingrist = 0;
+                    else ingrist = -1;
+                }
+                else if ( c == '$' )
+                {
+                    if ( ( c = yychar() ) == EOF )
+                    {
+                        *b++ = '$';
+                        break;
+                    }
+                    else if ( c == '(' )
+                    {
+                        /* inside $(), we only care about quotes */
+                        *b++ = '$';
+                        c = '(';
+                        ++invarexpand;
+                    }
+                    else
+                    {
+                        c = '$';
+                        yyprev();
+                    }
+                }
+                else if ( c == '@' )
+                {
+                    if ( ( c = yychar() ) == EOF )
+                    {
+                        *b++ = '@';
+                        break;
+                    }
+                    else if ( c == '(' )
+                    {
+                        /* inside @(), we only care about quotes */
+                        *b++ = '@';
+                        c = '(';
+                        ++invarexpand;
+                    }
+                    else
+                    {
+                        c = '@';
+                        yyprev();
+                    }
+                }
+                else if ( invarexpand && c == '(' )
+                {
+                    ++invarexpand;
+                }
+                else if ( invarexpand && c == ')' )
+                {
+                    --invarexpand;
+                }
                 /* normal char */
                 *b++ = c;
             }
@@ -331,6 +652,10 @@ int yylex()
 
             c = yychar();
         }
+
+        /* Automatically switch modes after reading the token. */
+        if ( scanmode == SCAN_CONDB )
+            scanmode = SCAN_COND;
 
         /* Check obvious errors. */
         if ( b == buf + sizeof( buf ) )
@@ -356,7 +681,7 @@ int yylex()
         *b = 0;
         yylval.type = ARG;
 
-        if ( !notkeyword && !( isalpha( *buf ) && ( scanmode == SCAN_PUNCT ) ) )
+        if ( !notkeyword && !( isalpha( *buf ) && ( scanmode == SCAN_PUNCT || scanmode == SCAN_PARAMS || scanmode == SCAN_ASSIGN ) ) )
             for ( k = keywords; k->word; ++k )
                 if ( ( *buf == *k->word ) && !strcmp( k->word, buf ) )
                 { 
@@ -367,6 +692,12 @@ int yylex()
 
         if ( yylval.type == ARG )
             yylval.string = object_new( buf );
+
+        if ( scanmode == SCAN_NORMAL && yylval.type == ARG )
+            scanmode = SCAN_XASSIGN;
+
+        if ( has_token_warning )
+            do_token_warning();
     }
 
     if ( DEBUG_SCAN )

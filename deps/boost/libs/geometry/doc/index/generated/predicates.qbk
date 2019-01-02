@@ -21,7 +21,7 @@
 Generate [^[link group__predicates_1gac52a6557110425d4ece53fbd6f9ff866 contains()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::within(Geometry, Indexable)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that contain passed Geometry. Value is returned by the query if [^`bg::within(Geometry, Indexable)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `contains``(``Geometry const &` `g``)`
@@ -41,7 +41,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::contains(box), std::back_inserter(result));
 ``
 
@@ -54,7 +53,7 @@ bgi::query(spatial_index, bgi::contains(box), std::back_inserter(result));
 Generate [^[link group__predicates_1ga02dbb7cca47de0b921ef96af464d9590 covered_by()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::covered_by(Indexable, Geometry)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that are covered by passed Geometry. Value is returned by the query if [^`bg::covered_by(Indexable, Geometry)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `covered_by``(``Geometry const &` `g``)`
@@ -74,7 +73,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::covered_by(box), std::back_inserter(result));
 ``
 
@@ -87,7 +85,7 @@ bgi::query(spatial_index, bgi::covered_by(box), std::back_inserter(result));
 Generate [^[link group__predicates_1ga0e92e4a20dd19185584fe85847439108 covers()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::covered_by(Geometry, Indexable)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that cover passed Geometry. Value is returned by the query if [^`bg::covered_by(Geometry, Indexable)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `covers``(``Geometry const &` `g``)`
@@ -107,7 +105,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::covers(box), std::back_inserter(result));
 ``
 
@@ -120,7 +117,7 @@ bgi::query(spatial_index, bgi::covers(box), std::back_inserter(result));
 Generate [^[link group__predicates_1ga0aa114ab16f40c8caeb3338adba5d6da disjoint()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::disjoint(Indexable, Geometry)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that are disjoint with passed Geometry. Value is returned by the query if [^`bg::disjoint(Indexable, Geometry)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `disjoint``(``Geometry const &` `g``)`
@@ -140,7 +137,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::disjoint(box), std::back_inserter(result));
 ``
 
@@ -153,7 +149,7 @@ bgi::query(spatial_index, bgi::disjoint(box), std::back_inserter(result));
 Generate [^[link group__predicates_1ga78cb2ef221b951867c591ffb51b7d8c5 intersects()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::intersects(Indexable, Geometry)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that intersect passed Geometry. Value is returned by the query if [^`bg::intersects(Indexable, Geometry)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `intersects``(``Geometry const &` `g``)`
@@ -173,7 +169,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::intersects(box), std::back_inserter(result));
 bgi::query(spatial_index, bgi::intersects(ring), std::back_inserter(result));
 bgi::query(spatial_index, bgi::intersects(polygon), std::back_inserter(result));
@@ -188,7 +183,7 @@ bgi::query(spatial_index, bgi::intersects(polygon), std::back_inserter(result));
 Generate [^[link group__predicates_1ga4a6d33e6f61ad5bff3bdee50a972d54b overlaps()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::overlaps(Indexable, Geometry)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that overlap passed Geometry. Value is returned by the query if [^`bg::overlaps(Indexable, Geometry)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `overlaps``(``Geometry const &` `g``)`
@@ -208,7 +203,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::overlaps(box), std::back_inserter(result));
 ``
 
@@ -221,7 +215,7 @@ bgi::query(spatial_index, bgi::overlaps(box), std::back_inserter(result));
 Generate [^[link group__predicates_1gaabce901b82af2aab10ebbd0dda12f4d5 within()]] predicate. 
 
 [heading Description]
-Generate a predicate defining Value and Geometry relationship. Value will be returned by the query if [^`bg::within(Indexable, Geometry)`] returns true.[heading Synopsis]
+Generate a predicate defining Value and Geometry relationship. With this predicate query returns indexed Values that are within passed Geometry. Value is returned by the query if [^`bg::within(Indexable, Geometry)`] returns [^`true`].[heading Synopsis]
 [pre
 `template<``typename Geometry``>`
 /unspecified/ `within``(``Geometry const &` `g``)`
@@ -241,7 +235,6 @@ Generate a predicate defining Value and Geometry relationship. Value will be ret
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::within(box), std::back_inserter(result));
 ``
 
@@ -274,7 +267,6 @@ A wrapper around user-defined UnaryPredicate checking if Value should be returne
 [heading Example]
 
 ``
-
 bool is_red(Value const& v) { return v.is_red(); }
 
 struct is_red_o {
@@ -319,7 +311,6 @@ When nearest predicate is passed to the query, k-nearest neighbour search will b
 [heading Example]
 
 ``
-
 bgi::query(spatial_index, bgi::nearest(pt, 5), std::back_inserter(result));
 bgi::query(spatial_index, bgi::nearest(pt, 5) && bgi::intersects(box), std::back_inserter(result));
 bgi::query(spatial_index, bgi::nearest(box, 5), std::back_inserter(result));

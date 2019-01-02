@@ -25,7 +25,13 @@ namespace boost { namespace fusion { namespace detail
 BOOST_FUSION_BARRIER_BEGIN
 
     template <int size, bool is_assoc>
-    struct as_map;
+    struct as_map
+    {
+        BOOST_STATIC_ASSERT_MSG(
+            size <= FUSION_MAX_MAP_SIZE
+          , "FUSION_MAX_MAP_SIZE limit is too low"
+        );
+    };
 
     template <bool is_assoc>
     struct as_map<0, is_assoc>

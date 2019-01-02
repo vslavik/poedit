@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_reference_t = typename remove_reference<T>::type; // C++11 and above
+
 __type The same type as `T`, but with any reference modifier removed.
 
 __std_ref 8.3.2.

@@ -63,31 +63,31 @@ void    test_SO3_spherical()
             {
                 theta = -pi+(idxtheta*(2*pi))/number_of_intervals;
                 
-                //::std::cout << "theta = " << theta << " ; ";
-                //::std::cout << "phi1 = " << phi1 << " ; ";
-                //::std::cout << "phi2 = " << phi2;
-                //::std::cout << ::std::endl;
+                ::std::cout << "theta = " << theta << " ; ";
+                ::std::cout << "phi1 = " << phi1 << " ; ";
+                ::std::cout << "phi2 = " << phi2;
+                ::std::cout << ::std::endl;
                 
                 ::boost::math::quaternion<float>    q = ::boost::math::spherical(rho, theta, phi1, phi2);
                 
-                //::std::cout << "q = " << q << ::std::endl;
+                ::std::cout << "q = " << q << ::std::endl;
                 
                 R3_matrix<float>                    rot = quaternion_to_R3_rotation(q);
                 
-                //::std::cout << "rot = ";
-                //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
+                ::std::cout << "rot = ";
+                ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
                 
                 ::boost::math::quaternion<float>    p = R3_rotation_to_quaternion(rot, &q);
                 
-                //::std::cout << "p = " << p << ::std::endl;
+                ::std::cout << "p = " << p << ::std::endl;
                 
-                //::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
+                ::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
                 
-                //::std::cout << ::std::endl;
+                ::std::cout << ::std::endl;
             }
         }
     }
@@ -119,31 +119,31 @@ void    test_SO3_semipolar()
             {
                 theta2 = -pi+(idxtheta2*(2*pi))/number_of_intervals;
                 
-                //::std::cout << "alpha = " << alpha << " ; ";
-                //::std::cout << "theta1 = " << theta1 << " ; ";
-                //::std::cout << "theta2 = " << theta2;
-                //::std::cout << ::std::endl;
+                ::std::cout << "alpha = " << alpha << " ; ";
+                ::std::cout << "theta1 = " << theta1 << " ; ";
+                ::std::cout << "theta2 = " << theta2;
+                ::std::cout << ::std::endl;
                 
                 ::boost::math::quaternion<float>    q = ::boost::math::semipolar(rho, alpha, theta1, theta2);
                 
-                //::std::cout << "q = " << q << ::std::endl;
+                ::std::cout << "q = " << q << ::std::endl;
                 
                 R3_matrix<float>                    rot = quaternion_to_R3_rotation(q);
                 
-                //::std::cout << "rot = ";
-                //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
+                ::std::cout << "rot = ";
+                ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
                 
                 ::boost::math::quaternion<float>    p = R3_rotation_to_quaternion(rot, &q);
                 
-                //::std::cout << "p = " << p << ::std::endl;
+                ::std::cout << "p = " << p << ::std::endl;
                 
-                //::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
+                ::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
                 
-                //::std::cout << ::std::endl;
+                ::std::cout << ::std::endl;
             }
         }
     }
@@ -176,31 +176,31 @@ void    test_SO3_multipolar()
             {
                 theta2 = -pi+(idxtheta2*(2*pi))/number_of_intervals;
                 
-                //::std::cout << "rho1 = " << rho1 << " ; ";
-                //::std::cout << "theta1 = " << theta1 << " ; ";
-                //::std::cout << "theta2 = " << theta2;
-                //::std::cout << ::std::endl;
+                ::std::cout << "rho1 = " << rho1 << " ; ";
+                ::std::cout << "theta1 = " << theta1 << " ; ";
+                ::std::cout << "theta2 = " << theta2;
+                ::std::cout << ::std::endl;
                 
                 ::boost::math::quaternion<float>    q = ::boost::math::multipolar(rho1, theta1, rho2, theta2);
                 
-                //::std::cout << "q = " << q << ::std::endl;
+                ::std::cout << "q = " << q << ::std::endl;
                 
                 R3_matrix<float>                    rot = quaternion_to_R3_rotation(q);
                 
-                //::std::cout << "rot = ";
-                //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
+                ::std::cout << "rot = ";
+                ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
                 
                 ::boost::math::quaternion<float>    p = R3_rotation_to_quaternion(rot, &q);
                 
-                //::std::cout << "p = " << p << ::std::endl;
+                ::std::cout << "p = " << p << ::std::endl;
                 
-                //::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
+                ::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
                 
-                //::std::cout << ::std::endl;
+                ::std::cout << ::std::endl;
             }
         }
     }
@@ -233,31 +233,31 @@ void    test_SO3_cylindrospherical()
             {
                 longitude = -pi+(idxlongitude*(2*pi))/number_of_intervals;
                 
-                //::std::cout << "t = " << t << " ; ";
-                //::std::cout << "longitude = " << longitude;
-                //::std::cout << "latitude = " << latitude;
-                //::std::cout << ::std::endl;
+                ::std::cout << "t = " << t << " ; ";
+                ::std::cout << "longitude = " << longitude;
+                ::std::cout << "latitude = " << latitude;
+                ::std::cout << ::std::endl;
                 
                 ::boost::math::quaternion<float>    q = ::boost::math::cylindrospherical(t, radius, longitude, latitude);
                 
-                //::std::cout << "q = " << q << ::std::endl;
+                ::std::cout << "q = " << q << ::std::endl;
                 
                 R3_matrix<float>                    rot = quaternion_to_R3_rotation(q);
                 
-                //::std::cout << "rot = ";
-                //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
+                ::std::cout << "rot = ";
+                ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
                 
                 ::boost::math::quaternion<float>    p = R3_rotation_to_quaternion(rot, &q);
                 
-                //::std::cout << "p = " << p << ::std::endl;
+                ::std::cout << "p = " << p << ::std::endl;
                 
-                //::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
+                ::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
                 
-                //::std::cout << ::std::endl;
+                ::std::cout << ::std::endl;
             }
         }
     }
@@ -290,31 +290,31 @@ void    test_SO3_cylindrical()
             {
                 angle = -pi+(idxangle*(2*pi))/number_of_intervals;
                 
-                //::std::cout << "angle = " << angle << " ; ";
-                //::std::cout << "h1 = " << h1;
-                //::std::cout << "h2 = " << h2;
-                //::std::cout << ::std::endl;
+                ::std::cout << "angle = " << angle << " ; ";
+                ::std::cout << "h1 = " << h1;
+                ::std::cout << "h2 = " << h2;
+                ::std::cout << ::std::endl;
                 
                 ::boost::math::quaternion<float>    q = ::boost::math::cylindrical(r, angle, h1, h2);
                 
-                //::std::cout << "q = " << q << ::std::endl;
+                ::std::cout << "q = " << q << ::std::endl;
                 
                 R3_matrix<float>                    rot = quaternion_to_R3_rotation(q);
                 
-                //::std::cout << "rot = ";
-                //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
-                //::std::cout << "\t";
-                //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
+                ::std::cout << "rot = ";
+                ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << ::std::endl;
+                ::std::cout << "\t";
+                ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << ::std::endl;
                 
                 ::boost::math::quaternion<float>    p = R3_rotation_to_quaternion(rot, &q);
                 
-                //::std::cout << "p = " << p << ::std::endl;
+                ::std::cout << "p = " << p << ::std::endl;
                 
-                //::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
+                ::std::cout << "round trip discrepancy: " << ::boost::math::abs(q-p) << ::std::endl;
                 
-                //::std::cout << ::std::endl;
+                ::std::cout << ::std::endl;
             }
         }
     }
@@ -384,45 +384,45 @@ void    test_SO4_spherical()
                         {
                             theta2 = -pi+(idxtheta2*(2*pi))/number_of_intervals;
                             
-                            //::std::cout << "theta1 = " << theta1 << " ; ";
-                            //::std::cout << "phi11 = " << phi11 << " ; ";
-                            //::std::cout << "phi21 = " << phi21;
-                            //::std::cout << "theta2 = " << theta2 << " ; ";
-                            //::std::cout << "phi12 = " << phi12 << " ; ";
-                            //::std::cout << "phi22 = " << phi22;
-                            //::std::cout << ::std::endl;
+                            ::std::cout << "theta1 = " << theta1 << " ; ";
+                            ::std::cout << "phi11 = " << phi11 << " ; ";
+                            ::std::cout << "phi21 = " << phi21;
+                            ::std::cout << "theta2 = " << theta2 << " ; ";
+                            ::std::cout << "phi12 = " << phi12 << " ; ";
+                            ::std::cout << "phi22 = " << phi22;
+                            ::std::cout << ::std::endl;
                             
                             ::boost::math::quaternion<float>    p1 = ::boost::math::spherical(rho1, theta1, phi11, phi21);
                             
-                            //::std::cout << "p1 = " << p1 << ::std::endl;
+                            ::std::cout << "p1 = " << p1 << ::std::endl;
                             
                             ::boost::math::quaternion<float>    q1 = ::boost::math::spherical(rho2, theta2, phi12, phi22);
                             
-                            //::std::cout << "q1 = " << q1 << ::std::endl;
+                            ::std::cout << "q1 = " << q1 << ::std::endl;
                             
                             ::std::pair< ::boost::math::quaternion<float> , ::boost::math::quaternion<float> >    pq1 =
                                 ::std::make_pair(p1,q1);
                             
                             R4_matrix<float>                    rot = quaternions_to_R4_rotation(pq1);
                             
-                            //::std::cout << "rot = ";
-                            //::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << "\t" << rot.a14 << ::std::endl;
-                            //::std::cout << "\t";
-                            //::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << "\t" << rot.a24 << ::std::endl;
-                            //::std::cout << "\t";
-                            //::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << "\t" << rot.a34 << ::std::endl;
-                            //::std::cout << "\t";
-                            //::std::cout << "\t" << rot.a41 << "\t" << rot.a42 << "\t" << rot.a43 << "\t" << rot.a44 << ::std::endl;
+                            ::std::cout << "rot = ";
+                            ::std::cout << "\t" << rot.a11 << "\t" << rot.a12 << "\t" << rot.a13 << "\t" << rot.a14 << ::std::endl;
+                            ::std::cout << "\t";
+                            ::std::cout << "\t" << rot.a21 << "\t" << rot.a22 << "\t" << rot.a23 << "\t" << rot.a24 << ::std::endl;
+                            ::std::cout << "\t";
+                            ::std::cout << "\t" << rot.a31 << "\t" << rot.a32 << "\t" << rot.a33 << "\t" << rot.a34 << ::std::endl;
+                            ::std::cout << "\t";
+                            ::std::cout << "\t" << rot.a41 << "\t" << rot.a42 << "\t" << rot.a43 << "\t" << rot.a44 << ::std::endl;
                             
                             ::std::pair< ::boost::math::quaternion<float> , ::boost::math::quaternion<float> >    pq2 =
                                 R4_rotation_to_quaternions(rot, &pq1);
                             
-                            //::std::cout << "p1 = " << pq.first << ::std::endl;
-                            //::std::cout << "p2 = " << pq.second << ::std::endl;
+                            ::std::cout << "p1 = " << pq2.first << ::std::endl;
+                            ::std::cout << "p2 = " << pq2.second << ::std::endl;
                             
-                            //::std::cout << "round trip discrepancy: " << ::std::sqrt(::boost::math::norm(pq1.first-pq2.first)+::boost::math::norm(pq1.second-pq2.second)) << ::std::endl;
+                            ::std::cout << "round trip discrepancy: " << ::std::sqrt(::boost::math::norm(pq1.first-pq2.first)+::boost::math::norm(pq1.second-pq2.second)) << ::std::endl;
                             
-                            //::std::cout << ::std::endl;
+                            ::std::cout << ::std::endl;
                         }
                     }
                 }

@@ -16,12 +16,12 @@
   *   DESCRIPTION: Search example using partial matches.
   */
 
+#include <boost/regex.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <cstring>
-#include <boost/regex.hpp>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std{ using ::memmove; }

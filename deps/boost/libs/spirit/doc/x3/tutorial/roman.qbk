@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Roman Numerals]
+[section:roman Roman Numerals]
 
 This example demonstrates:
 
@@ -120,34 +120,72 @@ various ways to declare rules. The simplest form is:
 
     rule<ID> const r = "some-name";
 
+[heading Rule ID]
+
 At the very least, the rule needs an identification tag. This ID can be any
 struct or class type and need not be defined. Forward declaration would suffice.
-The name is optional, but is useful for debugging and error handling, as we'll
-see later. Notice that rule `r` is declared `const`. Rules are immutable and are
-best declared as `const`.
+In subsequent tutorials, we will see that the rule ID can have additional
+functionalities for error handling and annotation.
+
+[heading Rule Name]
+
+The name is optional, but is useful for debugging and error handling, as
+we'll see later. Notice that rule `r` is declared `const`. Rules are
+immutable and are best declared as `const`. Rules are lightweight and can be
+passed around by value. Its only member variable is a `std::string`: its
+name.
 
 [note Unlike Qi (Spirit V2), X3 rules can be used with both `phrase_parse` and
 `parse` without having to specify the skip parser]
+
+[heading Rule Attributes]
 
 For our next example, there's one more rule form you should know about:
 
     rule<ID, Attribute> const r = "some-name";
 
-The Attribute specifies the attributes of the rule. You've seen that our parsers
-can have an attribute. Recall that the `double_` parser has an attribute of
-`double`. To be precise, these are /synthesized/ attributes. The parser
-"synthesizes" the attribute value. Think of them as function return values.
+The Attribute parameter specifies the attribute type of the rule. You've seen
+that our parsers can have an attribute. Recall that the `double_` parser has
+an attribute of `double`. To be precise, these are /synthesized/ attributes.
+The parser "synthesizes" the attribute value. If the parser is a function,
+think of them as function return values.
+
+[heading Rule Definition]
 
 After having declared a rule, you need a definition for the rule. Example:
 
     auto const r_def = double_ >> *(',' >> double_);
 
 By convention, rule definitions have a _def suffix. Like rules, rule definitions
-are immutable and are best declared as `const`. Now that we have a rule and its
-definition, we tie the rule with a rule definition using the
-`BOOST_SPIRIT_DEFINE` macro:
+are immutable and are best declared as `const`.
+
+[#__tutorial_spirit_define__]
+[heading BOOST_SPIRIT_DEFINE]
+
+Now that we have a rule and its definition, we tie the rule with a rule
+definition using the `BOOST_SPIRIT_DEFINE` macro:
 
     BOOST_SPIRIT_DEFINE(r);
+
+Behind the scenes, what's actually happening is that we are defining a `parse_rule`
+function in the client namespace that tells X3 how to invoke the rule. For example,
+given a rule named `my_rule` and a corresponding definition named `my_rule_def`,
+`BOOST_SPIRIT_DEFINE(my_rule)` expands to this code:
+
+    template <typename Iterator, typename Context, typename Attribute>
+    inline bool parse_rule(
+        decltype(my_rule)
+      , Iterator& first, Iterator const& last
+      , Context const& context, Attribute& attr)
+    {
+        using boost::spirit::x3::unused;
+        static auto const def_ = my_rule_def;
+        return def_.parse(first, last, context, unused, attr);
+    }
+
+And so for each rule defined using `BOOST_SPIRIT_DEFINE`, there is an
+overloaded `parse_rule` function. At parse time, Spirit X3 recursively calls
+the appropriate `parse_rule` function.
 
 [note `BOOST_SPIRIT_DEFINE` is variadic and may be used for one or more rules.
 Example: `BOOST_SPIRIT_DEFINE(r1, r2, r3);`]
@@ -204,6 +242,11 @@ Things to take notice of:
 
 * The rule `roman` and the definition `roman_def` are const objects.
 
+* The rule's ID is `class roman`. C++ allows you to declare the class
+  in the actual template declaration as you can see in the example:
+
+    x3::rule<class roman, unsigned> const roman = "roman";
+
 [heading Let's Parse!]
 
     bool r = parse(iter, end, roman, result);
@@ -229,6 +272,7 @@ no-skipping version of the parse functions. We do not want to skip any spaces!
 We are also passing in an attribute, `unsigned result`, which will receive the
 parsed value.
 
-The full cpp file for this example can be found here: [@../../../example/x3/roman.cpp]
+The full cpp file for this example can be found here:
+[@../../../example/x3/roman.cpp roman.cpp]
 
 [endsect]

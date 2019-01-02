@@ -15,10 +15,6 @@
 #include <boost/preprocessor/empty.hpp>
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/comparison/less.hpp>
-#include <boost/type_traits/add_reference.hpp>
-#include <boost/type_traits/is_const.hpp>
-#include <boost/type_traits/add_const.hpp>
-#include <boost/type_traits/remove_const.hpp>
 
 #include <boost/fusion/adapted/struct/detail/extension.hpp>
 #include <boost/fusion/adapted/struct/detail/adapt_base.hpp>

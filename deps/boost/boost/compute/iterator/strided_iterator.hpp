@@ -42,7 +42,9 @@ class strided_iterator_base
 public:
     typedef ::boost::iterator_adaptor<
         ::boost::compute::strided_iterator<Iterator>,
-        Iterator
+        Iterator,
+        typename std::iterator_traits<Iterator>::value_type,
+        typename std::iterator_traits<Iterator>::iterator_category
     > type;
 };
 
@@ -56,8 +58,8 @@ struct stride_expr
     {
     }
 
-    IndexExpr m_index_expr;
-    Stride m_stride;
+    const IndexExpr m_index_expr;
+    const Stride m_stride;
 };
 
 template<class IndexExpr, class Stride>
@@ -90,9 +92,9 @@ struct strided_iterator_index_expr
     {
     }
 
-    Iterator m_input_iter;
-    const Stride& m_stride;
-    IndexExpr m_index_expr;
+    const Iterator m_input_iter;
+    const Stride m_stride;
+    const IndexExpr m_index_expr;
 };
 
 template<class Iterator, class Stride, class IndexExpr>

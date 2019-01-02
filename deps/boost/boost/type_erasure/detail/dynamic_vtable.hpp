@@ -32,9 +32,15 @@ namespace detail {
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_CONSTEXPR) && !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS)
 
 template<class P>
-struct dynamic_binding_impl
-{
+struct dynamic_binding_impl {
     const std::type_info * type;
+    dynamic_binding_impl() = default;
+    constexpr dynamic_binding_impl(const std::type_info * t) : type(t) {}
+};
+
+template<class T>
+struct dynamic_binding_element {
+    typedef const std::type_info * type;
 };
 
 template<class Table>
@@ -50,12 +56,15 @@ struct append_to_key {
 template<class... P>
 struct dynamic_vtable : dynamic_binding_impl<P>... {
     dynamic_vtable() = default;
-    template<class... T>
-    constexpr dynamic_vtable(T* ...t) : dynamic_binding_impl<P>{t}... {}
+    constexpr dynamic_vtable(typename dynamic_binding_element<P>::type ...t) : dynamic_binding_impl<P>(t)... {}
     template<class F>
     typename F::type lookup(F*) const {
         key_type key;
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         typedef typename ::boost::type_erasure::detail::get_placeholders<F, ::boost::mpl::set0<> >::type placeholders;
+#else
+        typedef typename ::boost::type_erasure::detail::get_placeholders<F, ::boost::mp11::mp_list<> >::type placeholders;
+#endif
         typedef typename ::boost::mpl::fold<
             placeholders,
             ::boost::mpl::map0<>,
@@ -71,8 +80,13 @@ struct dynamic_vtable : dynamic_binding_impl<P>... {
     }
     template<class Bindings, class Src>
     void convert_from(const Src& src) {
+#ifndef BOOST_TYPE_ERASURE_USE_MP11
         *this = dynamic_vtable(
             (&src.lookup((::boost::type_erasure::typeid_<typename ::boost::mpl::at<Bindings, P>::type>*)0)())...);
+#else
+        *this = dynamic_vtable(
+            (&src.lookup((::boost::type_erasure::typeid_< ::boost::mp11::mp_second< ::boost::mp11::mp_map_find<Bindings, P> > >*)0)())...);
+#endif
     }
 };
 

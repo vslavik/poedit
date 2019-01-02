@@ -23,7 +23,7 @@ exe hello3 : hello.cpp ;
 t.write("p2/hello.cpp", "int main() {}\n")
 
 t.run_build_system(["p1", "p2//hello3"])
-t.expect_addition("p1/bin/$toolset/debug/hello.exe")
-t.expect_addition("p2/bin/$toolset/debug/hello3.exe")
+t.expect_addition("p1/bin/$toolset/debug*/hello.exe")
+t.expect_addition("p2/bin/$toolset/debug*/hello3.exe")
 
 t.cleanup()

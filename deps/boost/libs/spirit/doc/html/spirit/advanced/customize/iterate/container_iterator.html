@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Determine the Type of the Iterator of a Container</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5.7">
 <link rel="up" href="../iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
 <link rel="prev" href="../iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
 <link rel="next" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute">
@@ -29,7 +29,7 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h0"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.container_iterator"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.container_iterator">container_iterator</a>
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.container_iterator"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.container_iterator">container_iterator</a>
           </h6>
 <p>
             The template <code class="computeroutput"><span class="identifier">container_iterator</span></code>
@@ -42,7 +42,7 @@
           </p>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h1"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.module_headers"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.module_headers">Module
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.module_headers"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.module_headers">Module
             Headers</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -63,7 +63,7 @@
 </table></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h2"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.namespace"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.namespace">Namespace</a>
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.namespace"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -80,7 +80,7 @@
 </table></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h3"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.synopsis"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.synopsis">Synopsis</a>
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.synopsis"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">container_iterator</span>
@@ -90,7 +90,7 @@
 </pre>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h4"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.template_parameters"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.template_parameters">Template
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.template_parameters"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -159,7 +159,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term"><code class="computeroutput"><span class="identifier">C</span></code></span></dt>
 <dd><p>
                   A container type the iterator type needs to be evaluated for.
@@ -168,7 +168,7 @@
 </div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h5"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.expression_semantics"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.expression_semantics">Expression
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.expression_semantics"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.expression_semantics">Expression
             Semantics</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -213,7 +213,7 @@
             iterator interface required for a given type. The minimal requirements
             for a type to be exposed as an iterator in this context are:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
                 it needs to be comparable for equality (see <a class="link" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">compare_iterators</span></code></a>),
               </li>
@@ -226,7 +226,7 @@
 </ul></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h6"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.predefined_specializations"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.predefined_specializations">Predefined
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.predefined_specializations"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.predefined_specializations">Predefined
             Specializations</a>
           </h6>
 <p>
@@ -294,7 +294,7 @@
 </table></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h7"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.when_to_implement"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.when_to_implement">When
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.when_to_implement"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.when_to_implement">When
             to implement</a>
           </h6>
 <p>
@@ -309,7 +309,7 @@
           </p>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h8"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points">Related
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
 <p>
@@ -441,7 +441,7 @@
 </table></div>
 <h6>
 <a name="spirit.advanced.customize.iterate.container_iterator.h9"></a>
-            <span><a name="spirit.advanced.customize.iterate.container_iterator.example"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.example">Example</a>
+            <span class="phrase"><a name="spirit.advanced.customize.iterate.container_iterator.example"></a></span><a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.example">Example</a>
           </h6>
 <p>
             Here are the header files needed to make the example code below compile:

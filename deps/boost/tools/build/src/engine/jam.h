@@ -452,7 +452,6 @@
 #define MAXSYM   1024  /* longest symbol in the environment */
 #define MAXJPATH 1024  /* longest filename */
 
-#define MAXJOBS  256   /* internally enforced -j limit */
 #define MAXARGC  32    /* words in $(JAMSHELL) */
 
 /* Jam private definitions below. */

@@ -463,6 +463,7 @@ protected:
       index bound_adjustment = stride < 0 ? 1 : 0;
       BOOST_ASSERT(((index_bases[n] - bound_adjustment) <= finish) &&
         (finish <= (index_bases[n] + index(extents[n]) - bound_adjustment)));
+      ignore_unused_variable_warning(bound_adjustment);
 #endif // BOOST_DISABLE_ASSERTS
 
 

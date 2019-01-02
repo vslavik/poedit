@@ -2,7 +2,7 @@
 @file
 Forward declares `boost::hana::product`.
 
-@copyright Louis Dionne 2013-2016
+@copyright Louis Dionne 2013-2017
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
  */
@@ -53,14 +53,6 @@ BOOST_HANA_NAMESPACE_BEGIN
     //! Example
     //! -------
     //! @include example/product.cpp
-    //!
-    //!
-    //! Benchmarks
-    //! ----------
-    //! <div class="benchmark-chart"
-    //!      style="min-width: 310px; height: 400px; margin: 0 auto"
-    //!      data-dataset="benchmark.product.compile.json">
-    //! </div>
 #ifdef BOOST_HANA_DOXYGEN_INVOKED
     constexpr auto product = see documentation;
 #else
@@ -68,7 +60,10 @@ BOOST_HANA_NAMESPACE_BEGIN
     struct product_impl : product_impl<T, when<true>> { };
 
     template <typename R>
-    struct product_t;
+    struct product_t {
+        template <typename Xs>
+        constexpr decltype(auto) operator()(Xs&& xs) const;
+    };
 
     template <typename R = integral_constant_tag<int>>
     constexpr product_t<R> product{};

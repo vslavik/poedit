@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The design of the library</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../metaparse.html" title="Chapter&#160;20.&#160;Boost.Metaparse">
+<link rel="up" href="../metaparse.html" title="Chapter&#160;24.&#160;Boost.Metaparse">
 <link rel="prev" href="performance.html" title="Performance">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -28,7 +28,7 @@
 <a name="metaparse.the_design_of_the_library"></a><a class="link" href="the_design_of_the_library.html" title="The design of the library">The design of the
     library</a>
 </h2></div></div></div>
-<div class="toc"><dl><dt><span class="section"><a href="the_design_of_the_library.html#metaparse.the_design_of_the_library.design_rationale">Design
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="the_design_of_the_library.html#metaparse.the_design_of_the_library.design_rationale">Design
       rationale</a></span></dt></dl></div>
 <p>
       The purpose of the library is to provide tools to build template metaprograms
@@ -41,7 +41,7 @@
 <p>
       The key components of the library:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <a class="link" href="reference.html#ref-string">Compile-time string representation</a>. These
           are tools for representing the content of a string literal in a way that
@@ -68,7 +68,7 @@
 <a name="metaparse.the_design_of_the_library.design_rationale"></a><a class="link" href="the_design_of_the_library.html#metaparse.the_design_of_the_library.design_rationale" title="Design rationale">Design
       rationale</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <span class="bold"><strong>Why template metaprogramming?</strong></span>
           </li></ul></div>
 <p>
@@ -79,7 +79,7 @@
         on the parsed text (eg. parsing a JSON list), generating and validating types
         (eg. <code class="computeroutput"><span class="identifier">printf</span></code>).
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             <span class="bold"><strong>Why are there so many folding parsers?</strong></span>
           </li></ul></div>
 <p>
@@ -98,6 +98,28 @@
         can replace any of the folding parsers, however, for the cost of constructing
         intermediate containers, that are (usually) processed sequentially after
         that.
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            <span class="bold"><strong>Why external code generator for <code class="computeroutput"><span class="identifier">BOOST_METAPARSE_STRING</span></code>?</strong></span>
+          </li></ul></div>
+<p>
+        To be able to support longer strings. It generates code using macros to reduce
+        the size of the header files (the reducion is multiples of MBs).
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            <span class="bold"><strong>Why defining a custom version of Boost.Preprocessor
+            macros?</strong></span>
+          </li></ul></div>
+<p>
+        There are two reasons for the library defining its own set of preprocessor
+        metaprogramming macros: to have control over the upper limit of iteration
+        steps and to be able to clean the macros up once they have done their job
+        (and avoid polluting the macros of the users).
+      </p>
+<p>
+        Note that these macros live in the <code class="computeroutput"><span class="identifier">impl</span></code>
+        directory, which means that they are an implementation detail of the library
+        and should be used internally only.
       </p>
 </div>
 </div>

@@ -10,6 +10,7 @@
 
 #include <boost/fusion/support/config.hpp>
 #include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/fusion/sequence/intrinsic/begin.hpp>
 #include <boost/fusion/iterator/deref.hpp>
 #include <boost/fusion/iterator/next.hpp>
@@ -39,12 +40,62 @@
 #define BOOST_FUSION_DEFINE_STRUCT_FILLER_0_END
 #define BOOST_FUSION_DEFINE_STRUCT_FILLER_1_END
 
+#ifdef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
 #define BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR_FILLER_I(                          \
     R, ATTRIBUTE_TUPLE_SIZE, I, ATTRIBUTE)                                      \
                                                                                 \
     BOOST_PP_COMMA_IF(I)                                                        \
     BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE)(                      \
         other_self.BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE))
+
+#define BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR(                                   \
+    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                 \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED                                                    \
+    NAME(self_type const& other_self)                                           \
+      : BOOST_PP_SEQ_FOR_EACH_I_R(                                              \
+            1,                                                                  \
+            BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR_FILLER_I,                      \
+            ATTRIBUTE_TUPLE_SIZE,                                               \
+            ATTRIBUTES_SEQ)                                                     \
+    {}
+
+// Use templated version instead.
+#define BOOST_FUSION_DEFINE_STRUCT_COPY_ASSIGN_FILLER_I(                        \
+    R, ATTRIBUTE_TUPLE_SIZE, I_, ATTRIBUTE)                                     \
+                                                                                \
+    BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE)=                      \
+        other.BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE);
+
+#define BOOST_FUSION_DEFINE_STRUCT_COPY_ASSIGN_OP(                              \
+    ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                       \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED                                                    \
+    self_type& operator=(self_type const& other)                                \
+    {                                                                           \
+        BOOST_PP_SEQ_FOR_EACH_I_R(                                              \
+            1,                                                                  \
+            BOOST_FUSION_DEFINE_STRUCT_COPY_ASSIGN_FILLER_I,                    \
+            ATTRIBUTE_TUPLE_SIZE,                                               \
+            ATTRIBUTES_SEQ)                                                     \
+                                                                                \
+        return *this;                                                           \
+    }
+
+#else // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
+#define BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR(                                   \
+    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                 \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED NAME(self_type const&) = default;
+
+#define BOOST_FUSION_DEFINE_STRUCT_COPY_ASSIGN_OP(                              \
+    ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                       \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED self_type& operator=(self_type const&) = default;
+
+#endif // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
 
 #define BOOST_FUSION_DEFINE_STRUCT_ASSIGN_FILLER_I(                             \
     R, ATTRIBUTE_TUPLE_SIZE, I_, ATTRIBUTE)                                     \
@@ -84,6 +135,81 @@
                                                                                 \
         return *this;                                                           \
     }
+
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR(NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_OP(ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
+
+#else // BOOST_NO_CXX11_RVALUE_REFERENCES
+
+#if defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) \
+ || BOOST_WORKAROUND(BOOST_GCC, < 40500) \
+ || BOOST_WORKAROUND(BOOST_MSVC, == 1800)
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR_FILLER_I(                          \
+    R, ATTRIBUTE_TUPLE_SIZE, I, ATTRIBUTE)                                      \
+                                                                                \
+    BOOST_PP_COMMA_IF(I)                                                        \
+    BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE)(std::move(            \
+        other_self.BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE)))
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR(                                   \
+    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                 \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED                                                    \
+    NAME(self_type&& other_self)                                                \
+      : BOOST_PP_SEQ_FOR_EACH_I_R(                                              \
+            1,                                                                  \
+            BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR_FILLER_I,                      \
+            ATTRIBUTE_TUPLE_SIZE,                                               \
+            ATTRIBUTES_SEQ)                                                     \
+    {}
+
+#else // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR(                                   \
+    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                 \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED NAME(self_type&&) = default;
+
+#endif // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
+#if defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) \
+ || BOOST_WORKAROUND(BOOST_GCC, < 40600) \
+ || BOOST_WORKAROUND(BOOST_MSVC, == 1800)
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_FILLER_I(                        \
+    R, ATTRIBUTE_TUPLE_SIZE, I_, ATTRIBUTE)                                     \
+                                                                                \
+    BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE)=std::move(            \
+        other.BOOST_PP_TUPLE_ELEM(ATTRIBUTE_TUPLE_SIZE,1,ATTRIBUTE));
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_OP(                              \
+    ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                       \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED                                                    \
+    self_type& operator=(self_type&& other)                                     \
+    {                                                                           \
+        BOOST_PP_SEQ_FOR_EACH_I_R(                                              \
+            1,                                                                  \
+            BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_FILLER_I,                    \
+            ATTRIBUTE_TUPLE_SIZE,                                               \
+            ATTRIBUTES_SEQ)                                                     \
+                                                                                \
+        return *this;                                                           \
+    }
+
+#else // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
+#define BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_OP(                              \
+    ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                       \
+                                                                                \
+    BOOST_FUSION_GPU_ENABLED self_type& operator=(self_type&&) = default;
+
+#endif // BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+
+#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
 
 #define BOOST_FUSION_DEFINE_STRUCT_ATTR_I(R, ATTRIBUTE_TUPLE_SIZE, ATTRIBUTE)   \
                                                                                 \
@@ -135,14 +261,10 @@
             ATTRIBUTES_SEQ)                                                     \
     {}                                                                          \
                                                                                 \
-    BOOST_FUSION_GPU_ENABLED                                                    \
-    NAME(self_type const& other_self)                                           \
-      : BOOST_PP_SEQ_FOR_EACH_I_R(                                              \
-            1,                                                                  \
-            BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR_FILLER_I,                      \
-            ATTRIBUTE_TUPLE_SIZE,                                               \
-            ATTRIBUTES_SEQ)                                                     \
-    {}                                                                          \
+    BOOST_FUSION_DEFINE_STRUCT_COPY_CTOR(                                       \
+        NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)  \
+    BOOST_FUSION_DEFINE_STRUCT_MOVE_CTOR(                                       \
+        NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)  \
                                                                                 \
     template<typename Seq>                                                      \
     BOOST_FUSION_GPU_ENABLED                                                    \
@@ -160,6 +282,10 @@
             ATTRIBUTES_SEQ)                                                     \
     {}                                                                          \
                                                                                 \
+    BOOST_FUSION_DEFINE_STRUCT_COPY_ASSIGN_OP(                                  \
+        ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                   \
+    BOOST_FUSION_DEFINE_STRUCT_MOVE_ASSIGN_OP(                                  \
+        ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                   \
     BOOST_FUSION_DEFINE_STRUCT_ASSIGN_OP(ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
 
 #define BOOST_FUSION_DEFINE_STRUCT_CTOR_1(                                      \
@@ -282,20 +408,7 @@
             NAME, BOOST_PP_SEQ_TAIL(ATTRIBUTES_SEQ), ATTRIBUTE_TUPLE_SIZE)
 
 #define BOOST_FUSION_DEFINE_EMPTY_STRUCT_IMPL(                                  \
-    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                                 \
-                                                                                \
-        template<typename Seq>                                                  \
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED                                \
-        NAME(Seq const&)                                                        \
-        {}                                                                      \
-                                                                                \
-        template<typename Seq>                                                  \
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED                          \
-        self_type&                                                              \
-        operator=(Seq const& seq)                                               \
-        {                                                                       \
-            return *this;                                                       \
-        }
+    NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
 
 #define BOOST_FUSION_DEFINE_STRUCT_IMPL(                                        \
     NAMESPACE_SEQ, NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)                  \
@@ -327,10 +440,7 @@
             ATTRIBUTE_TUPLE_SIZE)
 
 #define BOOST_FUSION_DEFINE_EMPTY_TPL_STRUCT_IMPL(                              \
-    TEMPLATE_PARAMS_SEQ, NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)            \
-                                                                                \
-        BOOST_FUSION_DEFINE_EMPTY_STRUCT_IMPL(                                  \
-            NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
+    TEMPLATE_PARAMS_SEQ, NAME, ATTRIBUTES_SEQ, ATTRIBUTE_TUPLE_SIZE)
 
 #define BOOST_FUSION_DEFINE_TPL_STRUCT_IMPL(                                    \
     TEMPLATE_PARAMS_SEQ,                                                        \

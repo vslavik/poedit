@@ -87,7 +87,7 @@ int main()
 
    //Test the objects inserted in our lists
    for(; it1 != itend1; ++it1, ++bit1,  ++it2, ++bit2){
-      if(&*bit1 != &*it1 || &*bit2 != &*it2) return false;
+      if(&*bit1 != &*it1 || &*bit2 != &*it2) return 1;
    }
    return 0;
 }

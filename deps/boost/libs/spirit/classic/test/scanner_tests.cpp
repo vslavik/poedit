@@ -23,7 +23,7 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 struct to_upper_iter_policy : public iteration_policy {
 
     char filter(char ch) const
-    { return char(toupper(ch)); }
+    { using namespace std; return char(toupper(ch)); }
 };
 
 inline bool test_isspace(char c)

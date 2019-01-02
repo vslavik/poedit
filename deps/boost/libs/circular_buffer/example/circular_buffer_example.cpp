@@ -20,7 +20,7 @@
     // Create a circular buffer with a capacity for 3 integers.
     boost::circular_buffer<int> cb(3);
 
-    // Insert threee elements into the buffer.
+    // Insert three elements into the buffer.
     cb.push_back(1);
     cb.push_back(2);
     cb.push_back(3);

@@ -16,7 +16,7 @@
 #include <boost/test/unit_test.hpp>
 
 template <typename T>
-bool eq ( const T& a, const T& b ) { return a == b; }
+BOOST_CXX14_CONSTEXPR bool eq ( const T& a, const T& b ) { return a == b; }
 
 template <typename T>
 bool never_eq ( const T&, const T& ) { return false; }
@@ -123,7 +123,43 @@ void test_equal ()
 }
 
 
+BOOST_CXX14_CONSTEXPR bool test_constexpr_equal() {
+    int num[] = { 1, 1, 2, 3, 5};
+    const int sz = sizeof (num)/sizeof(num[0]);
+    bool res = true;
+//  Empty sequences are equal to each other
+    res = (   ba::equal ( input_iterator<int *>(num),     input_iterator<int *>(num), 
+                          input_iterator<int *>(num),     input_iterator<int *>(num))
+//  Identical long sequences are equal                         
+           && ba::equal ( input_iterator<int *>(num),     input_iterator<int *>(num + sz),
+                          input_iterator<int *>(num),     input_iterator<int *>(num + sz),
+                          eq<int> )
+//  Different sequences are different
+           && !ba::equal ( input_iterator<int *>(num + 1), input_iterator<int *>(num + sz),
+                           input_iterator<int *>(num),     input_iterator<int *>(num + sz))
+          );
+#ifdef __cpp_lib_array_constexpr // or cpp17 compiler
+//  Turn on tests for random_access_iterator, because std functions used in equal are marked constexpr_res
+    res = ( res 
+//  Empty sequences are equal to each other
+           && ba::equal ( random_access_iterator<int *>(num),     random_access_iterator<int *>(num), 
+                          random_access_iterator<int *>(num),     random_access_iterator<int *>(num))
+//  Identical long sequences are equal                         
+           && ba::equal ( random_access_iterator<int *>(num),     random_access_iterator<int *>(num + sz),
+                          random_access_iterator<int *>(num),     random_access_iterator<int *>(num + sz),
+                          eq<int> )
+//  Different sequences are different
+           && !ba::equal ( random_access_iterator<int *>(num + 1), random_access_iterator<int *>(num + sz),
+                           random_access_iterator<int *>(num),     random_access_iterator<int *>(num + sz))
+          );
+#endif
+    return res;
+  }
+
+
 BOOST_AUTO_TEST_CASE( test_main )
 {
   test_equal ();
+  BOOST_CXX14_CONSTEXPR bool constexpr_res = test_constexpr_equal ();
+  BOOST_CHECK (constexpr_res);
 }

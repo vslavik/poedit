@@ -27,11 +27,11 @@ Note: using `clamp` with floating point numbers may give unexpected results if o
 There is also a version that allows the caller to specify a comparison predicate to use instead of `operator <`.
 
 ``
-template<typename V> 
-V clamp ( V val, V lo, V hi );
+template<typename T> 
+const T& clamp ( const T& val, const T& lo, const T& hi );
 
-template<typename V, typename Pred> 
-V clamp ( V val, V lo, V hi, Pred p );
+template<typename T, typename Pred> 
+const T& clamp ( const T& val, const T& lo, const T& hi, Pred p );
 ``
 
 The following code: ``

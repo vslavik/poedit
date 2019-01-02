@@ -91,7 +91,8 @@ int main()
       folder.push_back(temporaryShoppingList);
       assert(pmr::get_default_resource() == folder.back().get_allocator());
       //temporaryShoppingList, buf_rsrc, and buffer go out of scope
-   }   return 0;
+   }
+   return 0;
 }
 
 //]

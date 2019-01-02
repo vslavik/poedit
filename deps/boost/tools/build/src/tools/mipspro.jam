@@ -71,8 +71,8 @@ flags mipspro.compile OPTIONS <warnings>on : -ansiW -diag_suppress 1429 ; # supp
 flags mipspro.compile OPTIONS <warnings>all : -fullwarn ;
 flags mipspro.compile OPTIONS <optimization>speed : -Ofast ;
 flags mipspro.compile OPTIONS <optimization>space : -O2 ;
-flags mipspro.compile OPTIONS <cflags> : -LANG:std ;
-flags mipspro.compile.c++ OPTIONS <inlining>off : -INLINE:none ;
+flags mipspro.compile OPTIONS <cflags> : "-LANG:std" ;
+flags mipspro.compile.c++ OPTIONS <inlining>off : "-INLINE:none" ;
 flags mipspro.compile.c++ OPTIONS <cxxflags> ;
 flags mipspro.compile DEFINES <define> ;
 flags mipspro.compile INCLUDES <include> ;

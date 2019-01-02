@@ -9,6 +9,10 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <boost/container/deque.hpp>
+#include <boost/container/allocator.hpp>
+#include "movable_int.hpp"
+#include "dummy_test_allocator.hpp"
+
 
 struct empty
 {
@@ -18,9 +22,25 @@ struct empty
 
 template class ::boost::container::deque<empty>;
 
+volatile ::boost::container::deque<empty> dummy;
+
+namespace boost {
+namespace container {
+
+//Explicit instantiation to detect compilation errors
+template class boost::container::deque
+ < test::movable_and_copyable_int
+ , test::simple_allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , allocator<test::movable_and_copyable_int> >;
+
+}  //namespace boost {
+}  //namespace container {
+
 int main()
 {
-   ::boost::container::deque<empty> dummy;
-   (void)dummy;
    return 0;
 }
+

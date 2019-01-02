@@ -37,11 +37,29 @@ inline void check_result_imp(bool, bool){}
 #  define BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE
 #endif
 
+template <class T, class U>
+struct local_is_same 
+{ 
+   enum{ value = false }; 
+};
+template <class T>
+struct local_is_same<T, T> 
+{ 
+   enum{ value = true }; 
+};
+
 template <class T1, class T2>
 inline void check_result_imp(T1, T2)
 {
    // This is a static assertion that should always fail to compile...
-   typedef BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE int static_assertion[sizeof(T1) == 0xFFFF];
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 8)))
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+#endif
+   typedef BOOST_MATH_ASSERT_UNUSED_ATTRIBUTE int static_assertion[local_is_same<T1, T2>::value ? 1 : 0];
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 8)))
+#pragma GCC diagnostic pop
+#endif
 }
 
 template <class T1, class T2>

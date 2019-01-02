@@ -220,8 +220,8 @@ int main() {
     // not dereference end() iterator for the format string in do_put_tm.
     {
       boost::gregorian::date date(2009, 1, 1);
-      boost::posix_time::time_duration td(0, 0, 0, 0);
-      boost::posix_time::ptime boost_time(date, td);
+      boost::posix_time::time_duration tdx(0, 0, 0, 0);
+      boost::posix_time::ptime boost_time(date, tdx);
       std::stringstream sstr;
     
       boost::posix_time::time_facet* pFacet = new boost::posix_time::time_facet("");

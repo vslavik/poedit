@@ -13,13 +13,6 @@
 
 int main()
 {
-  boost::chrono::nanoseconds nanosecs;
-  boost::chrono::microseconds microsecs;
-  boost::chrono::milliseconds millisecs;
-  boost::chrono::seconds secs;
-  boost::chrono::minutes mins;
-  boost::chrono::hours hrs;
-
   std::time_t sys_time
     = boost::chrono::system_clock::to_time_t(boost::chrono::system_clock::now());
 

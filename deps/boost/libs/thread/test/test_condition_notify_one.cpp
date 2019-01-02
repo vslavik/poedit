@@ -114,13 +114,13 @@ namespace
 
 void do_test_multiple_notify_one_calls_wakes_multiple_threads()
 {
-    boost::thread thread1(wait_for_condvar_and_increase_count);
-    boost::thread thread2(wait_for_condvar_and_increase_count);
+    boost::thread thread1(&wait_for_condvar_and_increase_count);
+    boost::thread thread2(&wait_for_condvar_and_increase_count);
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(200));
     multiple_wake_cond.notify_one();
 
-    boost::thread thread3(wait_for_condvar_and_increase_count);
+    boost::thread thread3(&wait_for_condvar_and_increase_count);
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(200));
     multiple_wake_cond.notify_one();

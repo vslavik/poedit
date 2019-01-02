@@ -386,14 +386,6 @@ deque(T_0 && t0 , T_1 && t1 , T_2 && t2 , T_3 && t3 , T_4 && t4 , T_5 && t5 , T_
             , typename enable_if<traits::is_sequence<Sequence>, detail::enabler_>::type = detail::enabler)
             : base(base::from_iterator(fusion::begin(seq)))
             {}
-        template <typename U0 , typename U1 , typename U2 , typename U3 , typename U4 , typename U5 , typename U6 , typename U7 , typename U8 , typename U9 , typename U10 , typename U11 , typename U12 , typename U13 , typename U14 , typename U15 , typename U16 , typename U17 , typename U18 , typename U19>
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
-        deque&
-        operator=(deque<U0 , U1 , U2 , U3 , U4 , U5 , U6 , U7 , U8 , U9 , U10 , U11 , U12 , U13 , U14 , U15 , U16 , U17 , U18 , U19> const& rhs)
-        {
-            base::operator=(rhs);
-            return *this;
-        }
         template <typename T>
         BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         deque&
@@ -407,6 +399,10 @@ deque(T_0 && t0 , T_1 && t1 , T_2 && t2 , T_3 && t3 , T_4 && t4 , T_5 && t5 , T_
         BOOST_FUSION_GPU_ENABLED
         explicit deque(T0_&& t0
           , typename enable_if<is_convertible<T0_, T0>, detail::enabler_>::type = detail::enabler
+          , typename disable_if_c<
+                boost::is_same<deque const, typename boost::remove_reference<T0_>::type const>::value
+              , detail::enabler_
+            >::type = detail::enabler
          )
             : base(std::forward<T0_>( t0), detail::nil_keyed_element())
             {}
@@ -429,6 +425,14 @@ deque(T_0 && t0 , T_1 && t1 , T_2 && t2 , T_3 && t3 , T_4 && t4 , T_5 && t5 , T_
         operator=(T&& rhs)
         {
             base::operator=(std::forward<T>( rhs));
+            return *this;
+        }
+        
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        deque&
+        operator=(deque const& rhs)
+        {
+            base::operator=(static_cast<base const&>(rhs));
             return *this;
         }
 # endif

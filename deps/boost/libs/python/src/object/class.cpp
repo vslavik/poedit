@@ -618,7 +618,7 @@ namespace objects
   {
       object property(
           (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("Osss"), fget.ptr(), 0, 0, docstr));
+          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("Osss"), fget.ptr(), (char*)NULL, (char*)NULL, docstr));
       
       this->setattr(name, property);
   }
@@ -628,7 +628,7 @@ namespace objects
   {
       object property(
           (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), 0, docstr));
+          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), (char*)NULL, docstr));
       
       this->setattr(name, property);
   }

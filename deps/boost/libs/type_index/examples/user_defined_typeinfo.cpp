@@ -64,6 +64,9 @@ int main() {
     assert(worldwide.pretty_name() == "my_classes");
     assert(worldwide == my_type_index::type_id<my_classes>());
 //][/type_index_my_type_index_worldwide_usage]
+//<-
+    return boost::report_errors();
+//->
 }
 
 

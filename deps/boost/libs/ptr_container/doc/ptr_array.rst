@@ -49,12 +49,12 @@ of dynamic expansion and when no overhead is tolerable.
                 explicit ptr_array( const ptr_array& r );
                 template< class U >
                 explicit ptr_array( const ptr_array<U,N>& r );                
-                explicit ptr_array( std::auto_ptr<ptr_array>& r );
+                explicit ptr_array( compatible-smart-ptr<ptr_array>& r );
                 
                 ptr_array& operator=( const ptr_array& r );
                 template< class U >
                 ptr_array& operator=( const ptr_array<U,N>& r );
-                ptr_array& operator=( std::auto_ptr<this_type> r );
+                ptr_array& operator=( compatible-smart-ptr<this_type> r );
 
             public: // `iterators`_
 
@@ -82,14 +82,14 @@ of dynamic expansion and when no overhead is tolerable.
                 template< size_t idx >
                 auto_type replace( T* r );
                 template< size_t idx, class U >
-                auto_type replace( std::auto_ptr<U> r );
+                auto_type replace( compatible-smart-ptr<U> r );
                 auto_type replace( size_t idx, T* r );
                 template< class U >
-                auto_type replace( size_t idx, std::auto_ptr<U> r );
+                auto_type replace( size_t idx, compatible-smart-ptr<U> r );
 
             public: // `pointer container requirements`_
-                std::auto_ptr<ptr_array>  clone() const;    
-                std::auto_ptr<ptr_array>  release();
+                compatible-smart-ptr<ptr_array>  clone() const;    
+                compatible-smart-ptr<ptr_array>  release();
                 template< size_t idx >
                 bool                      is_null() const;
                 bool                      is_null( size_t idx ) const;
@@ -122,7 +122,7 @@ Semantics: construct/copy/destroy
     
     - Effects: Constructs array by cloning ``r``                 
          
-- ``ptr_array( std::auto_ptr<ptr_array>& r );``
+- ``ptr_array( compatible-smart-ptr<ptr_array>& r );``
 
     - Effects: take ownership of the supplied pointers
 
@@ -134,7 +134,7 @@ Semantics: construct/copy/destroy
     
     - Exception safety: Strong guarantee
     
-- ``ptr_array& operator=( std::auto_ptr<this_type> r );``
+- ``ptr_array& operator=( compatible-smart-ptr<this_type> r );``
 
    - Effects: take ownership of the supplied pointers
 
@@ -220,7 +220,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
     
-- ``template< size_t idx, class U > auto_type replace( std::auto_ptr<U> r );``
+- ``template< size_t idx, class U > auto_type replace( compatible-smart-ptr<U> r );``
 
     - Effects: ``return replace<idx>( r.release() );``
 
@@ -234,7 +234,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
 
-- ``template< class U > auto_type replace( size_t idx, std::auto_ptr<U> r );``
+- ``template< class U > auto_type replace( size_t idx, compatible-smart-ptr<U> r );``
 
     - Effects: ``return replace( idx, r.release() );``
     
@@ -243,7 +243,7 @@ Semantics: modifiers
 Semantics: pointer container requirements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``std::auto_ptr<ptr_array>  clone() const;``
+- ``compatible-smart-ptr<ptr_array>  clone() const;``
 
     - Effects: Returns a deep copy of the container
 
@@ -252,7 +252,7 @@ Semantics: pointer container requirements
     - Complexity: Linear
 
     
-- ``std::auto_ptr<ptr_array>  release();``
+- ``compatible-smart-ptr<ptr_array>  release();``
      
     - Effects: Releases ownership of the container. This is a useful way of returning a container from a function.
 

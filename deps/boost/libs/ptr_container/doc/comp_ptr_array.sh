@@ -9,5 +9,6 @@
 #// For more information, see http://www.boost.org/libs/ptr_container/
 #//
 
-rst2html.py ptr_array.rst > ptr_array.html
+rst2html.py ptr_array.rst |
+    sed 's@compatible-smart-ptr@<a class="reference external" href="compatible_smart_ptr.html"><em>compatible-smart-ptr</em></a>@g' > ptr_array.html
 

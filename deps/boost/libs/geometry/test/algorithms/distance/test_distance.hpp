@@ -15,7 +15,6 @@
 #include <boost/geometry/io/wkt/read.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
-
 // Define a custom distance strategy
 // For this one, the "taxicab" distance,
 // see http://en.wikipedia.org/wiki/Taxicab_geometry

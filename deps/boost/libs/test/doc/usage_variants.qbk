@@ -9,7 +9,7 @@
 
 The __UTF__ supports three different usage variants:
 
-# [link boost_test.usage_variants.single_header The single-header variant]
+# [link boost_test.usage_variants.single_header The header-only variant]
 # [link boost_test.usage_variants.static_lib    The static library variant]
 # [link boost_test.usage_variants.shared_lib    The shared library variant]
 
@@ -17,25 +17,24 @@ In most cases you shouldn't have problems deciding which one to use, since there
 clear reasons why would you prefer each one. Following sections should help you with the decision.
 
 [/ ##################################################################### ]
-[h3:single_header Single-header usage variant]
+[h3:single_header Header-only usage variant]
 
 If you prefer to avoid the compilation of standalone library, you should use the 
-single-header variant of the __UTF__. This variant only requires you to include, 
-as it follows from its name, the single header: `#include <boost/test/included/unit_test.hpp>`
+header-only variant of the __UTF__. This variant only requires you to include 
+the unique header: `#include <boost/test/included/unit_test.hpp>`
 and there is no need to link with any library. There are several ways to perform 
-the initialization, but the simplest way is this:
+the initialization, but the simplest way is the following:
 ``
   #define __BOOST_TEST_MODULE__ test module name
   #include <boost/test/included/unit_test.hpp>
 ``
-__BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should be set to 
-test module name. This name can include spaces and does not need to be wrapped in quotes. 
+__BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should indicate 
+the name of the test module. This name can include spaces and does not need to be wrapped in quotes.
 
-The limitation of single header variant is that you can only implement this way 
-test modules with a single translation unit. 
-
-For more details on customization for this usage variant you can check [link 
-boost_test.adv_scenarios.single_header_customizations this section].
+[link boost_test.adv_scenarios.single_header_customizations This section]
+gives additional details on how to customize this usage variant. In particular, 
+it is possible to have several compilation units with this variant, as explained in the section
+[link boost_test.adv_scenarios.single_header_customizations.multiple_translation_units Header-only with multiple translation units].
 
 [/ ##################################################################### ]
 [h3:static_lib Static library usage variant]
@@ -44,23 +43,23 @@ with the packaging systems on Linux and OSX for instance] of the __UTF__ or can
 [link boost_test.adv_scenarios.build_utf build it] themselves, following usage can be most versatile
  and simple approach. This usage variant entails two steps. 
 
-# First you need to add following line to all translation units in a test module:
+# First, the following line needs to be added to all translation units in the test module:
   ``
     #include <boost/test/unit_test.hpp>
   ``
-  and *only one* translation unit should include following lines
+  One and *only one* translation unit should include following lines:
   ``
     #define __BOOST_TEST_MODULE__ test module name
     #include <boost/test/unit_test.hpp>
   ``
-  __BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should be set to 
-  test module name. This name can include spaces and does not need to be wrapped in quotes. 
-# The second step is to link with the __UTF__ static library.
+  __BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should indicate the 
+  name of the test module. This name can include spaces and does not need to be wrapped in quotes. 
+# The second step is to link with the __UTF__ *static* library.
 
-[note Header `<boost/test/unit_test.hpp>` is an 'aggregate' header: it includes most of the other headers that contains the Unit Test Framework definitions.]
+[note Header `<boost/test/unit_test.hpp>` is an /aggregate/ header: it includes most of the other headers that contains the Unit Test Framework definitions.]
 
 The flip side of this usage variant is that each test module following this usage variant is going 
-to be statically linked with __UTF__, which might be something you interested to avoid (to save space 
+to be statically linked with __UTF__, which might be something you want to avoid (to save space 
 for example). For more information about these configuration options check 
 [link boost_test.adv_scenarios.static_lib_customizations this section].
 
@@ -86,7 +85,7 @@ This usage variant entails two steps.
   `BOOST_TEST_MODULE` should be set to test module name. This name can include spaces and does 
   not need to be wrapped in quotes. 
 
-# The second step is to link with the __UTF__ shared library.
+# The second step is to link with the __UTF__ *shared* library.
 
 The flip side of this usage variant is that you will need to make sure the __UTF__ shared library
 is accessible at runtime to a test module.

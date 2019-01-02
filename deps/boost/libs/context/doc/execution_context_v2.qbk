@@ -8,7 +8,14 @@
 [#ecv2]
 [section:ecv2 Class execution_context (version 2)]
 
-[note This class is enabled per default.]
+[note __econtext__ (v2) is the reference implementation of C++ proposal
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0099r1.pdf P099R1: A
+low-level API for stackful context switching].]
+
+[note __econtext__ (v2) resides in the inlined sub-namespace `v2`.]
+
+[note Segmented stacks (['segmented-stacks=on]), e.g. on demand growing stacks,
+are not supported by __econtext__ (v2).]
 
 Class __econtext__ encapsulates context switching and manages the associated
 context' stack (allocation/deallocation).
@@ -59,7 +66,7 @@ passed/returned arguments.
 
         int n=35;
         ctx::execution_context<int> source(
-            [n](ctx::execution_context<int> sink, int) mutable {
+            [n](ctx::execution_context<int> && sink,int) mutable {
                 int a=0;
                 int b=1;
                 while(n-->0){
@@ -69,7 +76,7 @@ passed/returned arguments.
                     a=b;
                     b=next;
                 }
-                return sink;
+                return std::move(sink);
             });
         for(int i=0;i<10;++i){
             auto result=source(i);
@@ -104,7 +111,7 @@ and the stack is exchanged by each context switch.
 With `execution_context<void>` no data will be transferred, only the context
 switch is executed.
 
-    boost::context::execution_context<void> ctx1([](boost::context::execution_context<void> ctx2){
+    boost::context::execution_context<void> ctx1([](boost::context::execution_context<void> && ctx2){
                 std::printf("inside ctx1\n");
                 return ctx2();
             });
@@ -124,17 +131,18 @@ arguments of the __context_fn__ if the context is started for the first time.
 In all following invocations of __ec_op__ the arguments passed to __ec_op__, in
 one context, is returned by __ec_op__ in the other context.
 
-    boost::context::execution_context<int> ctx1([](boost::context::execution_context<int> ctx2, int j){
-                std::printf("inside ctx1, j == %d\n", j);
-                return ctx2(j+1);
+    boost::context::execution_context<int> ctx1([](boost::context::execution_context<int> && ctx2,int j){
+                std::printf("inside ctx1,j==%d\n",j);
+                std::tie(ctx2,j)=ctx2(j+1);
+                return std::move(ctx2);
             });
-    int i = 1;
-    std::tie(ctx1, i) = ctx1(i);
-    std::printf("i == %d\n", i);
+    int i=1;
+    std::tie(ctx1,i)=ctx1(i);
+    std::printf("i==%d\n",i);
 
     output:
-        inside ctx1, j == 1
-        i == 2
+        inside ctx1,j==1
+        i==2
 
 `ctx1(i)` enters the lambda in context `ctx1` with argument `j=1`. The
 expression `ctx2(j+1)` resumes the context represented by `ctx2` and transfers
@@ -144,17 +152,18 @@ value of `j+1`.
 If more than one argument has to be transferred, the signature of the
 context-function is simply extended.
 
-    boost::context::execution_context<int,int> ctx1([](boost::context::execution_context<int,int> ctx2, int i, int j){
-                std::printf("inside ctx1, i == %d j == %d\n", i, j);
-                return ctx2(i+j,i-j);
+    boost::context::execution_context<int,int> ctx1([](boost::context::execution_context<int,int> && ctx2,int i,int j){
+                std::printf("inside ctx1,i==%d,j==%d\n",i,j);
+                std::tie(ctx2,i,j)=ctx2(i+j,i-j);
+                return std::move(ctx2);
             });
-    int i = 2, j = 1;
-    std::tie(ctx1, i, j) = ctx1(i,j);
-    std::printf("i == %d j == %d\n", i, j);
+    int i=2,j=1;
+    std::tie(ctx1,i,j)=ctx1(i,j);
+    std::printf("i==%d,j==%d\n",i,j);
 
     output:
-        inside ctx1, i == 2 j == 1
-        i == 3 j == 1
+        inside ctx1,i==2,j==1
+        i==3,j==1
 
 For use-cases, that require to transfer data of different type in each
 direction, ['boost::variant<>] could be used.
@@ -167,27 +176,26 @@ direction, ['boost::variant<>] could be used.
         public:
             X():
                 excptr_(),
-                ctx_(
-                     [=](boost::context::execution_context<boost::variant<int,std::string>> ctx, boost::variant<int,std::string> data){
+                ctx_([=](boost::context::execution_context<boost::variant<int,std::string>> && ctx,boost::variant<int,std::string> data){
                         try {
                             for (;;) {
-                                int i = boost::get<int>(data);
-                                data = boost::lexical_cast<std::string>(i);
-                                auto result = ctx( data);
-                                ctx = std::move( std::get<0>( result) );
-                                data = std::get<1>( result);
+                                int i=boost::get<int>(data);
+                                data=boost::lexical_cast<std::string>(i);
+                                auto result=ctx(data);
+                                ctx=std::move(std::get<0>(result));
+                                data=std::get<1>(result);
                         } catch (std::bad_cast const&) {
                             excptr_=std::current_exception();
                         }
-                        return ctx;
+                        return std::move(ctx);
                      })
             {}
 
             std::string operator()(int i){
-                boost::variant<int,std::string> data = i;
-                auto result = ctx_( data);
-                ctx_ = std::move( std::get<0>( result) );
-                data = std::get<1>( result);
+                boost::variant<int,std::string> data=i;
+                auto result=ctx_(data);
+                ctx_=std::move(std::get<0>(result));
+                data=std::get<1>(result);
                 if(excptr_){
                     std::rethrow_exception(excptr_);
                 }
@@ -196,7 +204,7 @@ direction, ['boost::variant<>] could be used.
         };
 
         X x;
-        std::cout << x( 7) << std::endl;
+        std::cout << x(7) << std::endl;
 
         output:
         7
@@ -220,27 +228,27 @@ For this purpose __ec_op__ with first argument `exec_ontop_arg` has to be used.
 The function passed as argument must return a tuple of execution_context and
 arguments.
 
-    boost::context::execution_context<int> f1(boost::context::execution_context<int> ctx,int data) {
-        std::cout << "f1: entered first time: " << data  << std::endl;
-        std::tie(ctx,data) = ctx(data+1);
-        std::cout << "f1: entered second time: " << data  << std::endl;
-        std::tie(ctx,data) = ctx(data+1);
+    boost::context::execution_context<int> f1(boost::context::execution_context<int> && ctx,int data) {
+        std::cout << "f1: entered first time: " << data << std::endl;
+        std::tie(ctx,data)=ctx(data+1);
+        std::cout << "f1: entered second time: " << data << std::endl;
+        std::tie(ctx,data)=ctx(data+1);
         std::cout << "f1: entered third time: " << data << std::endl;
-        return ctx;
+        return std::move(ctx);
     }
 
-    std::tuple<boost::context::execution_context<int>,int> f2(boost::context::execution_context<int> ctx,int data) {
+    int f2(int data) {
         std::cout << "f2: entered: " << data << std::endl;
-        return std::make_tuple(std::move(ctx),-1);
+        return -1;
     }
 
-    int data = 0;
-    ctx::execution_context< int > ctx(f1);
-    std::tie(ctx,data) = ctx(data+1);
+    int data=0;
+    boost::context::execution_context< int > ctx(f1);
+    std::tie(ctx,data)=ctx(data+1);
     std::cout << "f1: returned first time: " << data << std::endl;
-    std::tie(ctx,data) = ctx(data+1);
+    std::tie(ctx,data)=ctx(data+1);
     std::cout << "f1: returned second time: " << data << std::endl;
-    std::tie(ctx,data) = ctx(ctx::exec_ontop_arg,f2,data+1);
+    std::tie(ctx,data)=ctx(ctx::exec_ontop_arg,f2,data+1);
 
     output:
         f1: entered first time: 1
@@ -254,55 +262,58 @@ The expression `ctx(ctx::exec_ontop_arg,f2,data+1)` executes `f2()` on top of
 context `ctx`, e.g. an additional stack frame is allocated on top of the context
 stack (in front of `f1()`). `f2()` returns argument `-1` that will returned by
 the second invocation of `ctx(data+1)` in `f1()`.
-
+[/
 Another option is to execute a function on top of the context that throws an
-exception.
+exception. The thrown exception is catched and re-thrown as nested exception of
+__ot_error__ from __ec_op__. __ot_error__ gives access to the context that has
+resumed the current context.
 
-    struct interrupt {
-        boost::context::execution_context< void >   ctx;
-
-        interrupt( boost::context::execution_context< void > && ctx_) :
-            ctx( std::forward< boost::context::execution_context< void > >( ctx_) ) {
+    struct my_exception : public std::runtime_error {
+        my_exception( std::string const& what) :
+            std::runtime_error{ what } {
         }
     };
 
-    boost::context::execution_context<void> f1(boost::context::execution_context<void> ctx) {
-        try {
-            for (;;) {
-                std::cout << "f1()" << std::endl;
-                ctx = ctx();
+    boost::context::execution_context<void> ctx([](boost::context::execution_context<void> && ctx) {
+        for (;;) {
+            try {
+                    std::cout << "entered" << std::endl;
+                    ctx = ctx();
+                }
+            } catch ( boost::context::ontop_error const& e) {
+                try {
+                    std::rethrow_if_nested( e);
+                } catch ( my_exception const& ex) {
+                    std::cerr << "my_exception: " << ex.what() << std::endl;
+                }
+                return e.get_context< void >();
             }
-        } catch (interrupt & e) {
-            std::cout << "f1(): interrupted" << std::endl;
-            ctx = std::move( e.ctx);
         }
-        return ctx;
-    }
-
-    boost::context::execution_context<void> f2(boost::context::execution_context<void> ctx) {
-        throw interrupt(std::move(ctx));
-        return ctx;
-    }
-
-    boost::context::execution_context< void > ctx(f1);
+        return std::move( ctx);
+    });
     ctx = ctx();
     ctx = ctx();
-    ctx = ctx(boost::context::exec_ontop_arg,f2);
+    ctx = ctx( boost::context::exec_ontop_arg,[](){ throw my_exception{ "abc" }; });
 
     output:
-        f1()
-        f1()
-        f1(): interrupted
+        entered
+        entered
+        my_exception: abc
 
-In this example `f2()` is used to interrupt the `for`-loop in `f1()`.
+In this exception `my_exception` is throw from a function invoked ontop of
+context `ctx` and catched inside the `for`-loop.
 
-
-[heading Stack destruction]
+[heading stack unwinding]
 On construction of __econtext__ a stack is allocated.
 If the __context_fn__ returns the stack will be destructed.
 If the __context_fn__ has not yet returned and the destructor of an valid
 __econtext__ instance (e.g. ['execution_context::operator bool()] returns
 `true`) is called, the stack will be destructed too.
+
+[important Code executed by __context_fn__ must not prevent the propagation of the
+__forced_unwind__ exception.  Absorbing that exception will cause stack
+unwinding to fail.  Thus, any code that catches all exceptions must re-throw any
+pending __forced_unwind__ exception.]
 
 
 [#ecv2_prealloc]
@@ -314,14 +325,14 @@ __econtext__ is created.
 of the stack.]
 
         // stack-allocator used for (de-)allocating stack
-        fixedsize_stack salloc( 4048);
+        fixedsize_stack salloc(4048);
         // allocate stack space
-        stack_context sctx( salloc.allocate() );
+        stack_context sctx(salloc.allocate());
         // reserve space for control structure on top of the stack
-        void * sp = static_cast< char * >( sctx.sp) - sizeof( my_control_structure);
-        std::size_t size = sctx.size - sizeof( my_control_structure);
+        void * sp=static_cast<char*>(sctx.sp)-sizeof(my_control_structure);
+        std::size_t size=sctx.size-sizeof(my_control_structure);
         // placement new creates control structure on reserved space
-        my_control_structure * cs = new ( sp) my_control_structure( sp, size, sctx, salloc);
+        my_control_structure * cs=new(sp)my_control_structure(sp,size,sctx,salloc);
         ...
         // destructing the control structure
         cs->~my_control_structure();
@@ -331,9 +342,9 @@ of the stack.]
             execution_context cctx;
 
             template< typename StackAllocator >
-            my_control_structure( void * sp, std::size_t size, stack_context sctx, StackAllocator salloc) :
+            my_control_structure(void * sp,std::size_t size,stack_context sctx,StackAllocator salloc) :
                 // create captured context
-                cctx( std::allocator_arg, preallocated( sp, size, sctx), salloc, entry_func) {
+                cctx(std::allocator_arg,preallocated(sp,size,sctx),salloc,entry_func) {
             }
             ...
         };
@@ -358,38 +369,38 @@ of the stack.]
 
         // execute parser in new execution context
         boost::context::execution_context<char> source(
-                [&is,&done,&except](ctx::execution_context<char> sink,char){
+                [&is,&done,&except](ctx::execution_context<char> && sink,char){
                 // create parser with callback function
                 Parser p( is,
                           [&sink](char ch){
                                 // resume main execution context
-                                auto result = sink(ch);
-                                sink = std::move(std::get<0>(result));
+                                auto result=sink(ch);
+                                sink=std::move(std::get<0>(result));
                         });
                     try {
                         // start recursive parsing
                         p.run();
                     } catch (...) {
                         // store other exceptions in exception-pointer
-                        except = std::current_exception();
+                        except=std::current_exception();
                     }
                     // set termination flag
                     done=true;
                     // resume main execution context
-                    return sink;
+                    return std::move(sink);
                 });
 
         // user-code pulls parsed data from parser
         // invert control flow
-        auto result = source('\0');
-        source = std::move(std::get<0>(result));
-        char c = std::get<1>(result);
-        if ( except) {
+        auto result=source('\0');
+        source=std::move(std::get<0>(result));
+        char c=std::get<1>(result);
+        if (except) {
             std::rethrow_exception(except);
         }
-        while( ! done) {
+        while(!done) {
             printf("Parsed: %c\n",c);
-            std::tie(source,c) = source('\0');
+            std::tie(source,c)=source('\0');
             if (except) {
                 std::rethrow_exception(except);
             }
@@ -420,6 +431,12 @@ pattern). The user is responsible for this task.
 
     struct exec_ontop_arg_t {};
     const exec_ontop_arg_t exec_ontop_arg{};
+
+    class ontop_error {
+    public:
+        template< typename ... Args >
+        execution_context< Args ... > get_context() const noexcept;
+    }
 
     template< typename ... Args >
     class execution_context {
@@ -490,6 +507,7 @@ pattern). The user is responsible for this task.
 The constructor with argument type `preallocated`, is used to create a user
 defined data [link ecv2_prealloc (for instance additional control structures)] on
 top of the stack.]]
+]
 ]
 [destructor_heading ecv2..destructor destructor]
 
@@ -577,8 +595,8 @@ execution_context representing the context that has been suspended .]]
 passed as arguments to the context-function of resumed context (if the context
 is entered the first time) or those arguments are returned from
 `execution_context::operator()` within the resumed context.]]
-[[Note:] [Function `fn` needs to return a tuple of execution_context and
-arguments ([link ecv2_ontop see description]).]]
+[[Note:] [Function `fn` needs to return a tuple of arguments
+([link ecv2_ontop see description]).]]
 [[Note:] [The context calling this function must not be destroyed before the
 arguments, that will be returned from `fn`, are preserved at least in the stack
 frame of the resumed context.]]

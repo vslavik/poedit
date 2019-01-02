@@ -7,6 +7,13 @@
 // See http://www.boost.org/libs/container for documentation.
 //
 //////////////////////////////////////////////////////////////////////////////
+
+// the tests trigger deprecation warnings when compiled with msvc in C++17 mode
+#if defined(_MSVC_LANG) && _MSVC_LANG > 201402
+// warning STL4009: std::allocator<void> is deprecated in C++17
+# define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
+#endif
+
 #include <memory>
 #include <iostream>
 
@@ -25,31 +32,6 @@
 #include "../../intrusive/test/iterator_test.hpp"
 
 using namespace boost::container;
-
-namespace boost {
-namespace container {
-
-//Explicit instantiation to detect compilation errors
-template class boost::container::vector
-   < test::movable_and_copyable_int
-   , test::simple_allocator<test::movable_and_copyable_int> >;
-
-template class boost::container::vector
-   < test::movable_and_copyable_int
-   , allocator<test::movable_and_copyable_int> >;
-
-namespace container_detail {
-
-#ifndef BOOST_CONTAINER_VECTOR_ITERATOR_IS_POINTER
-
-template class vec_iterator<int*, true >;
-template class vec_iterator<int*, false>;
-
-#endif   //BOOST_CONTAINER_VECTOR_ITERATOR_IS_POINTER
-
-}
-
-}}
 
 int test_expand_bwd()
 {
@@ -72,6 +54,29 @@ int test_expand_bwd()
       return 1;
 
    return 0;
+}
+
+struct X;
+
+template<typename T>
+struct XRef
+{
+   explicit XRef(T* ptr)  : ptr(ptr) {}
+   operator T*() const { return ptr; }
+   T* ptr;
+};
+
+struct X
+{
+   XRef<X const> operator&() const { return XRef<X const>(this); }
+   XRef<X>       operator&()       { return XRef<X>(this); }
+};
+
+
+bool test_smart_ref_type()
+{
+   boost::container::vector<X> x(5);
+   return x.empty();
 }
 
 class recursive_vector
@@ -202,6 +207,9 @@ int main()
       v.push_back(Test());
    }
 
+   if (test_smart_ref_type())
+      return 1;
+
    ////////////////////////////////////
    //    Backwards expansion test
    ////////////////////////////////////
@@ -251,5 +259,31 @@ int main()
          return 1;
       }
    }
+
+#ifndef BOOST_CONTAINER_NO_CXX17_CTAD
+   ////////////////////////////////////
+   //    Constructor Template Auto Deduction testing
+   ////////////////////////////////////
+   {
+      auto gold = std::vector{ 1, 2, 3 };
+      auto test = boost::container::vector(gold.begin(), gold.end());
+      if (test.size() != 3) {
+         return 1;
+      }
+      if (!(test[0] == 1 && test[1] == 2 && test[2] == 3)) {
+         return 1;
+      }
+   }
+   {
+      auto gold = std::vector{ 1, 2, 3 };
+      auto test = boost::container::vector(gold.begin(), gold.end(), boost::container::new_allocator<int>());
+      if (test.size() != 3) {
+         return 1;
+      }
+      if (!(test[0] == 1 && test[1] == 2 && test[2] == 3)) {
+         return 1;
+      }
+   }
+#endif
    return 0;
 }

@@ -18,8 +18,8 @@ where we must explicitly specify translation unit in which [macroref BOOST_DLL_A
 Unit that must hold an instance of [macroref BOOST_DLL_ALIAS] must define [macroref BOOST_DLL_FORCE_ALIAS_INSTANTIATION]
 before including any of the Boost.DLL library headers.
 
-You may explicitly disable export of weak symbols using [macroref BOOST_DLL_FORCE_NO_WEAK_EXPORTS]. This may be usefull for working
-around linker problems or to test your program for compatability with linkers that do not support exporting weak symbols.
+You may explicitly disable export of weak symbols using [macroref BOOST_DLL_FORCE_NO_WEAK_EXPORTS]. This may be useful for working
+around linker problems or to test your program for compatibility with linkers that do not support exporting weak symbols.
 [endsect]
 
 [section User defined section names (Fails on SunOS + Oracle Solaris Studio Compilers)]
@@ -39,6 +39,12 @@ you may run the `shared_library_concurrent_load_test` test to detect the issue:
 cd boost_folder/libs/dll/test
 ../../../b2 -a shared_library_concurrent_load_test
 ```
+[endsect]
+
+[section:nested Nested Function Definitions]
+
+If a function is defined inside the class-definition it may be interpreted as always-inline which can lead to the function not being exported at all. This does however differ between between compilers.
+
 [endsect]
 
 [endsect]

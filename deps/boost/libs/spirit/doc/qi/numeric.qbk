@@ -1014,9 +1014,9 @@ boolean value of the form `"true"` and `"false"`.
 For models of boolean `Policies` the following expressions must be valid:
 
 [table
-    [[Expression]                           [Semantics]]
-    [[`BP::parse_true(f, l, attr, ctx)`]    [Parse a `true` value.]]
-    [[`BP::parse_false(f, l, attr, ctx)`]   [Parse a `false` value.]]
+    [[Expression]                      [Semantics]]
+    [[`BP::parse_true(f, l, attr)`]    [Parse a `true` value.]]
+    [[`BP::parse_false(f, l, attr)`]   [Parse a `false` value.]]
 ]
 
 The functions should return true if the required representations of `true` or
@@ -1034,14 +1034,14 @@ implementation of a boolean parsing policy interpreting the string `"eurt"`
     struct backwards_bool_policies : qi::bool_policies<>
     {
         // we want to interpret a 'true' spelled backwards as 'false'
-        template <typename Iterator, typename Attribute, typename Context>
+        template <typename Iterator, typename Attribute>
         static bool
-        parse_false(Iterator& first, Iterator const& last, Attribute& attr, Context& ctx)
+        parse_false(Iterator& first, Iterator const& last, Attribute& attr)
         {
             namespace qi = boost::spirit::qi;
-            if (qi::detail::string_parse("eurt", first, last, qi::unused, qi::unused))
+            if (qi::detail::string_parse("eurt", first, last, qi::unused))
             {
-                spirit::traits::assign_to(false, attr, ctx);    // result is false
+                spirit::traits::assign_to(false, attr);    // result is false
                 return true;
             }
             return false;

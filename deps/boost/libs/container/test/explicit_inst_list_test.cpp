@@ -21,6 +21,5 @@ template class ::boost::container::list<empty>;
 int main()
 {
    ::boost::container::list<empty> dummy;
-   (void)dummy;
    return 0;
 }

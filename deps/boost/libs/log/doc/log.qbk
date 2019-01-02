@@ -52,16 +52,18 @@
 [def __boost_quickbook__ [@http://www.boost.org/doc/libs/release/doc/html/quickbook.html Boost.Quickbook]]
 
 [template ticket[key] '''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[key]'''">#'''[key]'''</ulink>''']
+[template github_issue[key] '''<ulink url="https://github.com/boostorg/log/issues/'''[key]'''">GH#'''[key]'''</ulink>''']
+[template pull_request[key] '''<ulink url="https://github.com/boostorg/log/pull/'''[key]'''">PR#'''[key]'''</ulink>''']
 
 [/ Auto-generated macros that refer to Reference sections /]
-[include top_level_reference.qbk]
-[include core_reference.qbk]
-[include attributes_reference.qbk]
-[include expressions_reference.qbk]
-[include sources_reference.qbk]
-[include sinks_reference.qbk]
-[include utility_reference.qbk]
-[include support_reference.qbk]
+[include tmp/top_level_reference.qbk]
+[include tmp/core_reference.qbk]
+[include tmp/attributes_reference.qbk]
+[include tmp/expressions_reference.qbk]
+[include tmp/sources_reference.qbk]
+[include tmp/sinks_reference.qbk]
+[include tmp/utility_reference.qbk]
+[include tmp/support_reference.qbk]
 
 [/ Code samples /]
 [import ../example/doc/tutorial_trivial.cpp]
@@ -102,9 +104,12 @@
 [import ../example/doc/sinks_syslog.cpp]
 [import ../example/doc/sinks_debugger.cpp]
 [import ../example/doc/sinks_simple_event_log.cpp]
+[import ../example/doc/sinks_ipc_logger.cpp]
+[import ../example/doc/sinks_ipc_receiver.cpp]
 [import ../example/doc/util_static_type_disp.cpp]
 [import ../example/doc/util_dynamic_type_disp.cpp]
 [import ../example/doc/util_manip_to_log.cpp]
+[import ../example/doc/util_ipc_reliable_mq_writer.cpp]
 [import ../example/doc/extension_stat_collector.cpp]
 [import ../example/doc/extension_app_launcher.cpp]
 [import ../example/doc/extension_record_tagger.cpp]
@@ -175,7 +180,7 @@ Boost.Log should be compatible with all hardware architectures supported by Boos
 
 [heading Notes for GCC users]
 
-GCC versions since 4.5 support link time optimization (LTO), when most of optimizations and binary code generation happens at linking stage. This allows to perform more advanced optimizations and produce faster code. Unfortunately, it does not play well with projects containing source files that need to be compiled with different compiler options. Boost.Log is one of such projects, some parts of its sources contain optimizations for modern CPUs and will not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible with older CPUs (GCC [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043 bug]), which will likely result in crashes in run time. This problem is fixed in GCC 5.1 and newer. For this reason LTO is not supported in Boost.Log until GCC version 5.1.
+GCC versions since 4.5 support link time optimization (LTO), when most of optimizations and binary code generation happen at linking stage. This allows to perform more advanced optimizations and produce faster code. Unfortunately, it does not play well with projects containing source files that need to be compiled with different compiler options. Boost.Log is one of such projects, some parts of its sources contain optimizations for modern CPUs and will not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible with older CPUs (GCC bugs [@https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043 61043], [@https://gcc.gnu.org/bugzilla/show_bug.cgi?id=77845 77845]), which will likely result in crashes at run time. For this reason LTO is not supported in Boost.Log.
 
 There is a GCC [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=60607 bug] which may cause compilation failures when `-march=native` command line argument is used. It is recommended to avoid using `-march=native` argument (or `instruction-set=native` bjam property) and instead explicitly specify the target CPU (e.g. `instruction-set=sandy-bridge`).
 
@@ -212,12 +217,13 @@ The library supports a number of configuration macros:
     [[`BOOST_LOG_WITHOUT_CHAR`]                 [If defined, disables support for narrow character logging. Affects the compilation of both the library and users' code.]]
     [[`BOOST_LOG_WITHOUT_WCHAR_T`]              [If defined, disables support for wide character logging. Affects the compilation of both the library and users' code.]]
     [[`BOOST_LOG_NO_QUERY_PERFORMANCE_COUNTER`] [This macro is only useful on Windows. It affects the compilation of both the library and users' code. If defined, disables support for the `QueryPerformanceCounter` API in the `timer` attribute. This will result in significantly less accurate time readings. The macro is intended to solve possible problems with earlier revisions of AMD Athlon CPU, described [@http://support.microsoft.com/?scid=kb;en-us;895980 here] and [@http://support.microsoft.com/?id=896256 here]. There are also known chipset hardware failures that may prevent this API from functioning properly (see [@http://support.microsoft.com/kb/274323 here]).]]
-    [[`BOOST_LOG_USE_NATIVE_SYSLOG`]            [Affects only compilation of the library. If for some reason support for the native SysLog API is not detected automatically, define this macro to forcibly enable it]]
+    [[`BOOST_LOG_USE_NATIVE_SYSLOG`]            [Affects only compilation of the library. If for some reason support for the native SysLog API is not detected automatically, define this macro to forcibly enable it.]]
     [[`BOOST_LOG_WITHOUT_DEFAULT_FACTORIES`]    [Affects only compilation of the library. If defined, the parsers for settings will be built without any default factories for filters and formatters. The user will have to register all attributes in the library before parsing any filters or formatters from strings. This can substantially reduce the binary size.]]
     [[`BOOST_LOG_WITHOUT_SETTINGS_PARSERS`]     [Affects only compilation of the library. If defined, none of the facilities related to the parsers for settings will be built. This can substantially reduce the binary size.]]
     [[`BOOST_LOG_WITHOUT_DEBUG_OUTPUT`]         [Affects only compilation of the library. If defined, the support for debugger output on Windows will not be built.]]
     [[`BOOST_LOG_WITHOUT_EVENT_LOG`]            [Affects only compilation of the library. If defined, the support for Windows event log will not be built. Defining the macro also makes Message Compiler toolset unnecessary.]]
     [[`BOOST_LOG_WITHOUT_SYSLOG`]               [Affects only compilation of the library. If defined, the support for syslog backend will not be built.]]
+    [[`BOOST_LOG_WITHOUT_IPC`]                  [Affects only compilation of the library. If defined, the support for interprocess queues will not be built.]]
     [[`BOOST_LOG_NO_SHORTHAND_NAMES`]           [Affects only compilation of users' code. If defined, some deprecated shorthand macro names will not be available.]]
     [[`BOOST_LOG_USE_COMPILER_TLS`]             [Affects only compilation of the library. This macro enables support for compiler intrinsics for thread-local storage. Defining it may improve performance of Boost.Log if certain usage limitations are acceptable. See below for more comments.]]
     [[`BOOST_LOG_USE_STD_REGEX`, `BOOST_LOG_USE_BOOST_REGEX` or `BOOST_LOG_USE_BOOST_XPRESSIVE`] [Affects only compilation of the library. By defining one of these macros the user can instruct Boost.Log to use `std::regex`, __boost_regex__ or __boost_xpressive__ internally for string matching filters parsed from strings and settings. If none of these macros is defined then Boost.Log uses __boost_regex__ by default. Using `std::regex` or __boost_regex__ typically produces smaller executables, __boost_regex__ usually also being the fastest in run time. Using __boost_xpressive__ allows to eliminate the dependency on __boost_regex__ compiled binary. Note that these macros do not affect [link log.detailed.expressions.predicates.advanced_string_matching filtering expressions] created by users.]]
@@ -308,14 +314,14 @@ Here are definitions of some terms that will be used widely throughout the docum
 
 [section:reference Reference]
 
-[xinclude top_level_reference.xml]
-[xinclude core_reference.xml]
-[xinclude attributes_reference.xml]
-[xinclude expressions_reference.xml]
-[xinclude sources_reference.xml]
-[xinclude sinks_reference.xml]
-[xinclude utility_reference.xml]
-[xinclude support_reference.xml]
+[xinclude tmp/top_level_reference.xml]
+[xinclude tmp/core_reference.xml]
+[xinclude tmp/attributes_reference.xml]
+[xinclude tmp/expressions_reference.xml]
+[xinclude tmp/sources_reference.xml]
+[xinclude tmp/sinks_reference.xml]
+[xinclude tmp/utility_reference.xml]
+[xinclude tmp/support_reference.xml]
 
 [endsect]
 

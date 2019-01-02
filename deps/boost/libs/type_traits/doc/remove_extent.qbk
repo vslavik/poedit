@@ -12,7 +12,9 @@
    {
       typedef __below type;
    };
-  
+   
+   template <class T> using remove_extent_t = typename remove_extent<T>::type; // C++11 and above
+
 __type If `T` is an array type, then removes the topmost array bound, 
 otherwise leaves `T` unchanged.
 

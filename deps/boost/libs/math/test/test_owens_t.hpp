@@ -52,7 +52,7 @@ void test_spots(RealType)
 
    //   BOOST_CHECK_CLOSE_FRACTION(owens_t(static_cast<RealType>(L), static_cast<RealType>(L)), static_cast<RealType>(L), tolerance);
 
-   // Spots values using Mathematica 
+   // Spots values using Mathematica
    BOOST_CHECK_CLOSE_FRACTION(owens_t(static_cast<RealType>(6.5L), static_cast<RealType>(0.4375L)), static_cast<RealType>(2.00057730485083154100907167684918851101649922551817956120806662022118024594547E-11L), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(owens_t(static_cast<RealType>(0.4375L), static_cast<RealType>(6.5L)), static_cast<RealType>(0.16540130125449396247498691826626273249659241838438244251206819782787761751256L), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(owens_t(static_cast<RealType>(7.L), static_cast<RealType>(0.96875L)), static_cast<RealType>(6.39906271938986853083219914428916013764797190941459233223182225724846022843930e-13L), tolerance);
@@ -117,7 +117,6 @@ template <class Real, class T>
 void do_test_owens_t(const T& data, const char* type_name, const char* test_name)
 {
 #if !(defined(ERROR_REPORTING_MODE) && !defined(OWENS_T_FUNCTION_TO_TEST))
-   typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type(*pg)(value_type, value_type);
@@ -155,7 +154,7 @@ void test_owens_t(T, const char* name)
    //
    // The contents are as follows, each row of data contains
    // three items, input value a, input value b and erf(a, b):
-   // 
+   //
 #  include "owens_t.ipp"
 
    do_test_owens_t<T>(owens_t, name, "Owens T (medium small values)");

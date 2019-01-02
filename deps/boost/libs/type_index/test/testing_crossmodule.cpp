@@ -1,5 +1,5 @@
 //
-// Copyright Antony Polukhin, 2012-2015.
+// Copyright Antony Polukhin, 2012-2018.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -41,7 +41,9 @@ void comparing_types_between_modules()
     BOOST_TEST_NE(t_int, test_lib::get_user_defined_class());
     BOOST_TEST_NE(t_const_int, test_lib::get_const_user_defined_class());
 
-    #ifndef BOOST_HAS_PRAGMA_DETECT_MISMATCH
+    // MSVC supports detect_missmatch pragma, but /GR- silently switch disable the link time check.
+    // /GR- undefies the _CPPRTTI macro. Using it to detect working detect_missmatch pragma.
+    #if !defined(BOOST_HAS_PRAGMA_DETECT_MISMATCH) || !defined(_CPPRTTI)
         test_lib::accept_typeindex(t_int);
     #endif
 }

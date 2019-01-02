@@ -35,7 +35,9 @@ package.install-data boost-build-core
     $(SELF)/boost-build.jam
     $(SELF)/src/build-system.jam
     [ path.glob-tree $(SELF)/src/build : *.jam *.py ]
+    [ path.glob-tree $(SELF)/src/contrib : *.jam *.py ]
     [ path.glob-tree $(SELF)/src/kernel : *.jam *.py ]
+    [ path.glob-tree $(SELF)/src/options : *.jam *.py ]
     [ path.glob-tree $(SELF)/src/util : *.jam *.py ]
     [ path.glob-tree $(SELF)/src/tools : *.jam *.py *.xml *.xsl *.doxyfile *.hpp ]
     $(e2)

@@ -384,25 +384,13 @@ void run_test()
     #endif
 }
 
+static char const * s_argv1;
+
 ///////////////////////////////////////////////////////////////////////////////
 // open_test
 bool open_test()
 {
-    // This test-file is usually run from either $BOOST_ROOT/status, or
-    // $BOOST_ROOT/libs/xpressive/test. Therefore, the relative path
-    // to the data file this test depends on will be one of two
-    // possible paths.
-
-    // first assume we are being run from boost_root/status
-    in.open("../libs/xpressive/test/regress.txt");
-
-    if(!in.good())
-    {
-        // couldn't find the data file so try to find the data file from the test dir
-        in.clear();
-        in.open("./regress.txt");
-    }
-
+    in.open( s_argv1? s_argv1: "regress.txt" );
     return in.good();
 }
 
@@ -432,6 +420,8 @@ void test_main()
 //
 test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
+    s_argv1 = argv[1];
+
     test_suite *test = BOOST_TEST_SUITE("basic regression test");
     test->add(BOOST_TEST_CASE(&test_main));
     return test;

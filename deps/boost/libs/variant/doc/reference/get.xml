@@ -16,13 +16,13 @@
       </inherit>
 
       <purpose>
-        <simpara>The exception thrown in	the	event	of a failed application of
-        <code><functionname>boost::get</functionname></code> on	the given
+        <simpara>The exception thrown in the event of a failed application of
+        <code><functionname>boost::get</functionname></code> on the given
         operand value.</simpara>
       </purpose>
 
-      <method	name="what"	specifiers="virtual" cv="const">
-        <type>const	char *</type>
+      <method name="what" specifiers="virtual" cv="const">
+        <type>const char *</type>
       </method>
     </class>
 
@@ -91,6 +91,22 @@
         </parameter>
       </signature>
 
+      <signature>
+        <template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name="T1"/>
+          <template-type-parameter name="T2"/>
+          <template-varargs/>
+          <template-type-parameter name="TN"/>
+        </template>
+
+        <type>U &amp;&amp;</type>
+
+        <parameter name="operand">
+          <paramtype><classname>variant</classname>&lt;T1, T2, ..., TN&gt; &amp;&amp;</paramtype>
+        </parameter>
+      </signature>
+
       <purpose>
         <simpara>Retrieves a value of a specified type from a given
           <code><classname>variant</classname></code>. </simpara>
@@ -107,7 +123,7 @@
         <simpara><emphasis role="bold">Recomendation</emphasis>: Use
           <functionname>get</functionname> or <functionname>strict_get</functionname> in new code.
           <functionname>strict_get</functionname>
-          provides more compile time checks and it's behavior is closer to <code>std::get</code>
+          provides more compile time checks and its behavior is closer to <code>std::get</code>
           from C++ Standard Library.</simpara>
         <simpara><emphasis role="bold">Warning</emphasis>: After either
           <code>operand</code> or its content is destroyed (e.g., when the
@@ -220,6 +236,22 @@
         </parameter>
       </signature>
 
+      <signature>
+        <template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name="T1"/>
+          <template-type-parameter name="T2"/>
+          <template-varargs/>
+          <template-type-parameter name="TN"/>
+        </template>
+
+        <type>U &amp;&amp;</type>
+
+        <parameter name="operand">
+          <paramtype><classname>variant</classname>&lt;T1, T2, ..., TN&gt; &amp;&amp;</paramtype>
+        </parameter>
+      </signature>
+
       <purpose>
         <simpara>Retrieves a value of a specified type from a given
           <code><classname>variant</classname></code>.</simpara>
@@ -296,6 +328,22 @@
         </parameter>
       </signature>
 
+      <signature>
+        <template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name="T1"/>
+          <template-type-parameter name="T2"/>
+          <template-varargs/>
+          <template-type-parameter name="TN"/>
+        </template>
+
+        <type>U &amp;&amp;</type>
+
+        <parameter name="operand">
+          <paramtype><classname>variant</classname>&lt;T1, T2, ..., TN&gt; &amp;&amp;</paramtype>
+        </parameter>
+      </signature>
+
       <purpose>
         <simpara>Retrieves a value of a specified type from a given
           <code><classname>variant</classname></code>.</simpara>
@@ -309,7 +357,7 @@
         <simpara><emphasis role="bold">Recomendation</emphasis>: Use
           <functionname>get</functionname> in new code without defining
           <code>BOOST_VARIANT_USE_RELAXED_GET_BY_DEFAULT</code>. In that way <functionname>get</functionname>
-          provides more compile time checks and it's behavior is closer to <code>std::get</code>
+          provides more compile time checks and its behavior is closer to <code>std::get</code>
           from C++ Standard Library.</simpara>
       </description>
     </overloaded-function>

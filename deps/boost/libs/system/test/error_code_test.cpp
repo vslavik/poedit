@@ -9,9 +9,6 @@
 
 //----------------------------------------------------------------------------//
 
-//  test without deprecated features
-#define BOOST_SYSTEM_NO_DEPRECATED
-
 #include <boost/config/warning_disable.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
@@ -30,14 +27,20 @@
 //  with a boost::system using directive increases use scenario coverage.
 using namespace boost::system;
 
-# if defined( BOOST_WINDOWS_API )
-#   include "winerror.h"
-#   define BOOST_ACCESS_ERROR_MACRO ERROR_ACCESS_DENIED
-# elif defined( BOOST_POSIX_API )
-#   define BOOST_ACCESS_ERROR_MACRO EACCES
-# else
-#   error "Only supported for POSIX and Windows"
-# endif
+#if defined( BOOST_WINDOWS_API )
+// Neither MinGW or Cygwin versions of winerror.h work if used alone, so on
+// either of those platforms include the full windows.h
+#  if defined(__MINGW32__) || defined(__CYGWIN__)
+#    include <windows.h>
+#  else
+#    include <winerror.h>
+#  endif
+#  define BOOST_ACCESS_ERROR_MACRO ERROR_ACCESS_DENIED
+#elif defined( BOOST_POSIX_API )
+#  define BOOST_ACCESS_ERROR_MACRO EACCES
+#else
+#  error "Only supported for POSIX and Windows"
+#endif
 
 namespace
 {
@@ -49,6 +52,53 @@ namespace
     ss << ec;
     ss >> s;
     BOOST_TEST( s == expected );
+  }
+
+  //  throws_function_test  ------------------------------------------------------------//
+
+  //  usage example
+
+  int divide(int dividend, int divisor, boost::system::error_code& ec = boost::throws())
+  {
+    if (divisor == 0)                            // is there an error?
+    {
+      if (&ec == &boost::throws())               // throw on error
+        throw "oops!";                           // whatever exception you prefer
+      ec = error_code(EDOM, generic_category()); // report error via error_code
+      return 0;
+    }
+    
+    if (&ec != &boost::throws())                 // error reporting via error_code
+      ec.clear();
+    return dividend / divisor;
+  }
+
+  //  test usage example
+
+  void test_throws_usage()
+  {
+    std::cout << "Test throws() example and usage...\n";
+    error_code ec;
+
+    // no error tests
+    BOOST_TEST_EQ((divide(10, 2)), 5);        // no error, report via exception
+    ec = make_error_code(errc::argument_out_of_domain);
+    BOOST_TEST_EQ((divide(10, 5, ec)), 2);    // no error, report via error_code
+    BOOST_TEST(!ec);
+
+    ec = make_error_code(errc::argument_out_of_domain);
+    BOOST_TEST_EQ((divide(10, 0, ec)), 0);    // error, report via error_code
+    BOOST_TEST(ec);
+
+    bool exception_thrown = false;            
+    try
+      { divide(10, 0); }                      // error, report via exception
+    catch (...)
+      { exception_thrown = true; }            
+    BOOST_TEST(exception_thrown);
+
+    //error_code should_fail(boost::throws());     // should fail at runtime
+    //boost::throws() = ec;                        // should fail at runtime
   }
 }
 
@@ -73,17 +123,7 @@ int main( int, char ** )
   BOOST_TEST( generic_category() != system_category() );
   BOOST_TEST( system_category() != generic_category() );
 
-  if ( std::less<const error_category*>()( &generic_category(), &system_category() ) )
-  {
-    BOOST_TEST( generic_category() < system_category() );
-    BOOST_TEST( !(system_category() < generic_category()) );
-  }
-  else
-  {
-    BOOST_TEST( system_category() < generic_category() );
-    BOOST_TEST( !(generic_category() < system_category()) );
-  }
-
+  BOOST_TEST_NE( generic_category() < system_category(), system_category() < generic_category() );
 
   error_code ec;
   error_condition econd;
@@ -195,6 +235,8 @@ int main( int, char ** )
   econd = error_condition( BOOST_ACCESS_ERROR_MACRO, generic_category() );
   BOOST_TEST( econd.message() != "" );
   BOOST_TEST( econd.message().substr( 0, 13) != "Unknown error" );
+
+  test_throws_usage();
 
 #ifdef BOOST_WINDOWS_API
   std::cout << "Windows tests...\n";

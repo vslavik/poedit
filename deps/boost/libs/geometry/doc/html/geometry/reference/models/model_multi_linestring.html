@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>model::multi_linestring</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../models.html" title="Models">
 <link rel="prev" href="model_multi_point.html" title="model::multi_point">
@@ -27,12 +27,12 @@
 <a name="geometry.reference.models.model_multi_linestring"></a><a class="link" href="model_multi_linestring.html" title="model::multi_linestring">model::multi_linestring</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp95190576"></a><a class="indexterm" name="idp95191264"></a>
+          <a class="indexterm" name="idp113792032"></a><a class="indexterm" name="idp113792720"></a>
 multi_line, a collection of linestring
         </p>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h0"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.description"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.description">Description</a>
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.description"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.description">Description</a>
         </h6>
 <p>
           Multi-linestring can be used to group lines belonging to each other, e.g.
@@ -40,7 +40,7 @@ multi_line, a collection of linestring
         </p>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h1"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.model_of"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.model_of">Model
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.model_of"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.model_of">Model
           of</a>
         </h6>
 <p>
@@ -49,12 +49,13 @@ multi_line, a collection of linestring
         </p>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h2"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.synopsis"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.synopsis">Synopsis</a>
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.synopsis"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">LineString</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">model</span><span class="special">::</span><span class="identifier">multi_linestring</span>
+      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Container</span><span class="special">&lt;</span> <span class="identifier">LineString</span><span class="special">,</span> <span class="identifier">Allocator</span><span class="special">&lt;</span> <span class="identifier">LineString</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -63,7 +64,7 @@ multi_line, a collection of linestring
         </p>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h3"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.template_parameter_s_"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.template_parameter_s_">Template
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.template_parameter_s_"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -133,7 +134,7 @@ multi_line, a collection of linestring
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h4"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.constructor_s_"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.constructor_s_">Constructor(s)</a>
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.constructor_s_"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -169,7 +170,7 @@ multi_line, a collection of linestring
                 </td>
 <td>
                   <p>
-                    Default constructor, creating an empty \1.
+                    Default constructor, creating an empty multi_linestring.
                   </p>
                 </td>
 <td>
@@ -185,7 +186,7 @@ multi_line, a collection of linestring
                 </td>
 <td>
                   <p>
-                    Constructor taking std::initializer_list, filling the \1.
+                    Constructor taking std::initializer_list, filling the multi_linestring.
                   </p>
                 </td>
 <td>
@@ -199,7 +200,7 @@ multi_line, a collection of linestring
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h5"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.header"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.header">Header</a>
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.header"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.header">Header</a>
         </h6>
 <p>
           Either
@@ -215,7 +216,7 @@ multi_line, a collection of linestring
         </p>
 <h6>
 <a name="geometry.reference.models.model_multi_linestring.h6"></a>
-          <span><a name="geometry.reference.models.model_multi_linestring.examples"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.examples">Examples</a>
+          <span class="phrase"><a name="geometry.reference.models.model_multi_linestring.examples"></a></span><a class="link" href="model_multi_linestring.html#geometry.reference.models.model_multi_linestring.examples">Examples</a>
         </h6>
 <p>
           Declaration and use of the Boost.Geometry model::multi_linestring, modelling
@@ -304,8 +305,8 @@ multi_line, a collection of linestring
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
-      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2018 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz, Oracle
+      and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

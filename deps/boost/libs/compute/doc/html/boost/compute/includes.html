@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template includes</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.algorithm.includes_hpp" title="Header &lt;boost/compute/algorithm/includes.hpp&gt;">
 <link rel="prev" href="generate_n.html" title="Function template generate_n">
@@ -37,18 +37,24 @@
                 <span class="identifier">InputIterator2</span> first2<span class="special">,</span> <span class="identifier">InputIterator2</span> last2<span class="special">,</span> 
                 <span class="identifier">command_queue</span> <span class="special">&amp;</span> queue <span class="special">=</span> <span class="identifier">system</span><span class="special">::</span><span class="identifier">default_queue</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp65936544"></a><h2>Description</h2>
+<a name="idp80316208"></a><h2>Description</h2>
 <p>Finds if the sorted range [first1, last1) includes the sorted range [first2, last2). In other words, it checks if [first1, last1) is a superset of [first2, last2).</p>
 <p>
 
-</p>
-<div class="variablelist"><table border="0">
+Space complexity: (distance(<code class="computeroutput">first1</code>, <code class="computeroutput">last1</code>) + distance(<code class="computeroutput">first2</code>, <code class="computeroutput">last2</code>)) </p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0">
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first1</code></span></p></td>
@@ -68,7 +74,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">queue</code></span></p></td>
-<td><p>Queue on which to execute </p></td>
+<td><p>Queue on which to execute</p></td>
 </tr>
 </tbody>
 </table></div></td>

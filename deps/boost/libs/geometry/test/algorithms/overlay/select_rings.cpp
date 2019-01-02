@@ -1,15 +1,23 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 //
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+//
+// This file was modified by Oracle on 2017.
+// Modifications copyright (c) 2017 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <geometry_test_common.hpp>
 
-#include <algorithms/test_overlay.hpp>
-
+#include <boost/foreach.hpp>
 #include <boost/range/algorithm/copy.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/typeof/typeof.hpp>
+
+#include <algorithms/test_overlay.hpp>
 
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/algorithms/detail/overlay/select_rings.hpp>
@@ -21,9 +29,6 @@
 #include <boost/geometry/io/wkt/read.hpp>
 
 #include <boost/assign/list_of.hpp>
-#include <boost/foreach.hpp>
-#include <boost/tuple/tuple.hpp>
-
 
 
 template
@@ -36,7 +41,11 @@ template
 void test_geometry(std::string const& wkt1, std::string const& wkt2,
     RingIdVector const& expected_ids)
 {
-    typedef bg::detail::overlay::ring_properties<typename bg::point_type<Geometry1>::type> properties;
+    typedef bg::detail::overlay::ring_properties
+        <
+            typename bg::point_type<Geometry1>::type,
+            double
+        > properties;
 
     Geometry1 geometry1;
     Geometry2 geometry2;
@@ -48,7 +57,12 @@ void test_geometry(std::string const& wkt1, std::string const& wkt2,
     map_type selected;
     std::map<bg::ring_identifier, bg::detail::overlay::ring_turn_info> empty;
 
-    bg::detail::overlay::select_rings<OverlayType>(geometry1, geometry2, empty, selected);
+    typedef typename bg::strategy::intersection::services::default_strategy
+        <
+            typename bg::cs_tag<Geometry1>::type
+        >::type strategy_type;
+
+    bg::detail::overlay::select_rings<OverlayType>(geometry1, geometry2, empty, selected, strategy_type());
 
     BOOST_CHECK_EQUAL(selected.size(), expected_ids.size());
 

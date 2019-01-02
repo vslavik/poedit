@@ -1,42 +1,30 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_COLOR_CONVERT_HPP
+#define BOOST_GIL_COLOR_CONVERT_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/channel_algorithm.hpp>
+#include <boost/gil/cmyk.hpp>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/rgb.hpp>
+#include <boost/gil/rgba.hpp>
+#include <boost/gil/utilities.hpp>
 
-#ifndef GIL_COLOR_CONVERT_HPP
-#define GIL_COLOR_CONVERT_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief GIL default color space conversions
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on January 30, 2007
-///
-/// Support for fast and simple color conversion. Accurate color conversion using color
-/// profiles can be supplied separately in a dedicated module
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
+#include <algorithm>
 #include <functional>
-#include "gil_config.hpp"
-#include "channel_algorithm.hpp"
-#include "pixel.hpp"
-#include "gray.hpp"
-#include "rgb.hpp"
-#include "rgba.hpp"
-#include "cmyk.hpp"
-#include "metafunctions.hpp"
-#include "utilities.hpp"
-#include "color_base_algorithm.hpp"
 
 namespace boost { namespace gil {
+
+/// Support for fast and simple color conversion.
+/// Accurate color conversion using color profiles can be supplied separately in a dedicated module.
 
 // Forward-declare
 template <typename P> struct channel_type;
@@ -70,10 +58,10 @@ namespace detail {
 template <typename RedChannel, typename GreenChannel, typename BlueChannel, typename GrayChannelValue>
 struct rgb_to_luminance_fn {
     GrayChannelValue operator()(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) const {
-        return channel_convert<GrayChannelValue>( bits32f(
-            channel_convert<bits32f>(red  )*0.30f + 
-            channel_convert<bits32f>(green)*0.59f + 
-            channel_convert<bits32f>(blue )*0.11f) );
+        return channel_convert<GrayChannelValue>(float32_t(
+            channel_convert<float32_t>(red  )*0.30f +
+            channel_convert<float32_t>(green)*0.59f +
+            channel_convert<float32_t>(blue )*0.11f) );
     }
 };
 
@@ -185,17 +173,17 @@ struct default_color_converter_impl<cmyk_t,rgb_t> {
             channel_convert<typename color_element_type<P2,red_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,cyan_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,cyan_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,green_t())=
             channel_convert<typename color_element_type<P2,green_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,magenta_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,magenta_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,blue_t()) =
             channel_convert<typename color_element_type<P2,blue_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,yellow_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,yellow_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
     }
 };
 

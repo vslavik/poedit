@@ -58,6 +58,7 @@ namespace {
         bool operator==(non_pod const& o) const { return value == o.value; }
     };
     
+    BOOST_ATTRIBUTE_UNUSED
     std::ostream&
     operator<<(std::ostream& out, non_pod const& x)
     {

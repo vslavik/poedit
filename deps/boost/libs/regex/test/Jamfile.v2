@@ -153,11 +153,12 @@ test-suite regex
       [ link concepts/concept_check.cpp ../build//boost_regex ]
       [ link concepts/icu_concept_check.cpp ../build//boost_regex ]
       [ link concepts/range_concept_check.cpp ../build//boost_regex ]
+      [ run concepts/test_bug_11988.cpp ../build//boost_regex ]
       
      [ run
     # sources
     captures/captures_test.cpp
-    captures//boost_regex_extra
+    captures//boost_regex_extra ../build//icu_options
  :  # additional args
  :  # test-files
  :  # requirements
@@ -193,4 +194,10 @@ compile test_consolidated.cpp ;
 
 build-project ../example ;
 
+# `quick` target (for CI)
+run quick.cpp ../build//boost_regex ;
 
+compile test_warnings.cpp 
+   :     <toolset>msvc:<warnings>all <toolset>msvc:<warnings-as-errors>on
+         <toolset>gcc:<warnings>all <toolset>gcc:<warnings-as-errors>on
+         <toolset>clang:<warnings>all <toolset>clang:<warnings-as-errors>on ;

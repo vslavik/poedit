@@ -5,7 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/fusion/adapted/adt/adapt_assoc_adt.hpp>
 #include <boost/fusion/sequence.hpp>
 #include <boost/mpl/assert.hpp>
@@ -185,4 +185,5 @@ int main()
         BOOST_TEST(fusion::front(ec).get()=="marshall mathers");
         BOOST_TEST(fusion::back(ec).get()==37);
     }
+    return boost::report_errors();
 }

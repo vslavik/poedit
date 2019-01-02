@@ -1,12 +1,14 @@
 /*=============================================================================
-    Copyright (c) 2015 Kohei Takahashi
+    Copyright (c) 2015,2018 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#   error "does not meet requirements"
+#endif
 
 #include <boost/fusion/support/detail/index_sequence.hpp>
 #include <boost/mpl/assert.hpp>
@@ -27,6 +29,4 @@ BOOST_MPL_ASSERT((boost::is_same<detail::make_index_sequence<8>::type, detail::i
 BOOST_MPL_ASSERT((boost::is_same<detail::make_index_sequence<15>::type, detail::index_sequence<0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14> >));
 BOOST_MPL_ASSERT((boost::is_same<detail::make_index_sequence<16>::type, detail::index_sequence<0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15> >));
 BOOST_MPL_ASSERT((boost::is_same<detail::make_index_sequence<17>::type, detail::index_sequence<0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16> >));
-
-#endif
 

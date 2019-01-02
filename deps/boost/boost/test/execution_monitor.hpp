@@ -66,6 +66,33 @@
 
 #endif
 
+#if defined(BOOST_SEH_BASED_SIGNAL_HANDLING) && !defined(UNDER_CE)
+  //! Indicates tha the floating point exception handling is supported
+  //! through SEH
+  #define BOOST_TEST_FPE_SUPPORT_WITH_SEH__
+#elif !defined(BOOST_SEH_BASED_SIGNAL_HANDLING) && !defined(UNDER_CE)
+  #if !defined(BOOST_NO_FENV_H) && !defined(BOOST_CLANG) && \
+      defined(__GLIBC__) && defined(__USE_GNU) && \
+      !(defined(__UCLIBC__) || defined(__nios2__) || defined(__microblaze__))
+  //! Indicates that floating point exception handling is supported for the
+  //! non SEH version of it, for the GLIBC extensions only
+  // see dicussions on the related topic: https://svn.boost.org/trac/boost/ticket/11756
+  #define BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__
+  #endif
+#endif
+
+
+// Additional macro documentations not being generated without this hack
+#ifdef BOOST_TEST_DOXYGEN_DOC__
+
+//! Disables the support of the alternative stack
+//! during the compilation of the Boost.test framework. This is especially useful
+//! in case it is not possible to detect the lack of alternative stack support for
+//! your compiler (for instance, ESXi).
+#define BOOST_TEST_DISABLE_ALT_STACK
+
+#endif
+
 //____________________________________________________________________________//
 
 namespace boost {
@@ -210,7 +237,7 @@ protected:
 /// this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory.
 // ************************************************************************** //
 
-class BOOST_TEST_DECL execution_exception {
+class BOOST_SYMBOL_VISIBLE execution_exception {
     typedef boost::unit_test::const_string const_string;
 public:
     /// These values are sometimes used as program return codes.
@@ -243,6 +270,7 @@ public:
     /// Simple model for the location of failure in a source code
     struct BOOST_TEST_DECL location {
         explicit    location( char const* file_name = 0, size_t line_num = 0, char const* func = 0 );
+        explicit    location( const_string file_name, size_t line_num = 0, char const* func = 0 );
 
         const_string    m_file_name;    ///< File name
         size_t          m_line_num;     ///< Line number
@@ -276,7 +304,7 @@ private:
 }; // execution_exception
 
 // ************************************************************************** //
-/// Function execution monitor
+/// @brief Function execution monitor
 
 /// This class is used to uniformly detect and report an occurrence of several types of signals and exceptions, reducing various
 /// errors to a uniform execution_exception that is returned to a caller.
@@ -465,6 +493,7 @@ public:
     char const* const   p_failed_exp;
 };
 
+//!@internal
 #define BOOST_TEST_SYS_ASSERT( cond ) BOOST_TEST_I_ASSRT( cond, ::boost::system_error( BOOST_STRINGIZE( exp ) ) )
 
 // ************************************************************************** //
@@ -476,7 +505,7 @@ namespace fpe {
 enum masks {
     BOOST_FPE_OFF       = 0,
 
-#ifdef BOOST_SEH_BASED_SIGNAL_HANDLING
+#if defined(BOOST_TEST_FPE_SUPPORT_WITH_SEH__) /* *** */
     BOOST_FPE_DIVBYZERO = EM_ZERODIVIDE,
     BOOST_FPE_INEXACT   = EM_INEXACT,
     BOOST_FPE_INVALID   = EM_INVALID,
@@ -484,17 +513,53 @@ enum masks {
     BOOST_FPE_UNDERFLOW = EM_UNDERFLOW|EM_DENORMAL,
 
     BOOST_FPE_ALL       = MCW_EM,
-#elif defined(BOOST_NO_FENV_H) || defined(BOOST_CLANG)
-    BOOST_FPE_ALL       = 1,
-#else
-    BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
-    BOOST_FPE_INEXACT   = FE_INEXACT,
-    BOOST_FPE_INVALID   = FE_INVALID,
-    BOOST_FPE_OVERFLOW  = FE_OVERFLOW,
-    BOOST_FPE_UNDERFLOW = FE_UNDERFLOW,
 
-    BOOST_FPE_ALL       = FE_ALL_EXCEPT,
+#elif !defined(BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__)/* *** */
+    BOOST_FPE_DIVBYZERO = BOOST_FPE_OFF,
+    BOOST_FPE_INEXACT   = BOOST_FPE_OFF,
+    BOOST_FPE_INVALID   = BOOST_FPE_OFF,
+    BOOST_FPE_OVERFLOW  = BOOST_FPE_OFF,
+    BOOST_FPE_UNDERFLOW = BOOST_FPE_OFF,
+    BOOST_FPE_ALL       = BOOST_FPE_OFF,
+#else /* *** */
+
+#if defined(FE_DIVBYZERO)
+    BOOST_FPE_DIVBYZERO = FE_DIVBYZERO,
+#else
+    BOOST_FPE_DIVBYZERO = BOOST_FPE_OFF,
 #endif
+
+#if defined(FE_INEXACT)
+    BOOST_FPE_INEXACT   = FE_INEXACT,
+#else
+    BOOST_FPE_INEXACT   = BOOST_FPE_OFF,
+#endif
+
+#if defined(FE_INVALID)
+    BOOST_FPE_INVALID   = FE_INVALID,
+#else
+    BOOST_FPE_INVALID   = BOOST_FPE_OFF,
+#endif
+
+#if defined(FE_OVERFLOW)
+    BOOST_FPE_OVERFLOW  = FE_OVERFLOW,
+#else
+    BOOST_FPE_OVERFLOW  = BOOST_FPE_OFF,
+#endif
+
+#if defined(FE_UNDERFLOW)
+    BOOST_FPE_UNDERFLOW = FE_UNDERFLOW,
+#else
+    BOOST_FPE_UNDERFLOW = BOOST_FPE_OFF,
+#endif
+
+#if defined(FE_ALL_EXCEPT)
+    BOOST_FPE_ALL       = FE_ALL_EXCEPT,
+#else
+    BOOST_FPE_ALL       = BOOST_FPE_OFF,
+#endif
+
+#endif /* *** */
     BOOST_FPE_INV       = BOOST_FPE_ALL+1
 };
 

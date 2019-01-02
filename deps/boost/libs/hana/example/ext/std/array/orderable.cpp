@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -17,7 +17,7 @@ constexpr std::array<int, 5> up_to_5 = {{1, 2, 3, 4, 5}};
 // arrays with same length
 static_assert(hana::less(odds, evens), "");
 
-// arrays with different lenghts
+// arrays with different lengths
 static_assert(hana::less(up_to_5, odds), "");
 
 int main() { }

@@ -37,6 +37,7 @@ Indicates whether `T` is move-constructible.
 
 __compat This trait requires the C++11 features `decltype` variadic templates and SFINAE-expression support for full support.
 While there is some fallback code for cases where this is not the case, the trait should really be considered broken in that case.
+The header will define the macro `BOOST_TT_IS_CONSTRUCTIBLE_CONFORMING` when the full implementation is available.
 
 __header ` #include <boost/type_traits/is_copy_constructible.hpp>` or ` #include <boost/type_traits.hpp>`
 

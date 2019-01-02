@@ -46,7 +46,7 @@ namespace distinct
         struct char_spec
           : spirit::result_of::terminal<spirit::tag::ascii::char_(String)>
         {};
-    };
+    }
 
     // Define a helper function allowing to create a distinct() construct from 
     // an arbitrary tail parser

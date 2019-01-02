@@ -12,7 +12,7 @@
 //                 compilers insist on it, while other issue a
 //                 bunch of warnings if it is in fact present.
 
-#if defined( BOOST_NO_EXCEPTIONS ) && !defined( _MSC_VER )
+#if defined( BOOST_NO_EXCEPTIONS )
 # include <stdlib.h>
 #endif
 
@@ -20,7 +20,7 @@ namespace boost_no_unreachable_return_detection{
 
 int checker()
 {
-#if defined( BOOST_NO_EXCEPTIONS ) && !defined( _MSC_VER )
+#if defined( BOOST_NO_EXCEPTIONS ) && (!defined( _MSC_VER ) || defined(__clang__))
    abort();
 #else
    throw 0;

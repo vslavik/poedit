@@ -13,6 +13,8 @@
 #include <numeric>
 #include <vector>
 
+#include <boost/compute/system.hpp>
+
 #include "perf.hpp"
 
 int rand_int()
@@ -22,18 +24,25 @@ int rand_int()
 
 int main(int argc, char *argv[])
 {
+    using boost::compute::int_;
+
     perf_parse_args(argc, argv);
 
     std::cout << "size: " << PERF_N << std::endl;
 
     // create vector of random numbers on the host
-    std::vector<int> v(PERF_N);
+    std::vector<int_> v(PERF_N);
+    std::vector<int_> r(PERF_N);
 
     perf_timer t;
     for(size_t trial = 0; trial < PERF_TRIALS; trial++){
         std::generate(v.begin(), v.end(), rand_int);
         t.start();
-        std::partial_sum(v.begin(), v.end(), v.begin());
+        std::partial_sum(
+            v.begin(),
+            v.end(),
+            r.begin()
+        );
         t.stop();
     }
     std::cout << "time: " << t.min_time() / 1e6 << " ms" << std::endl;

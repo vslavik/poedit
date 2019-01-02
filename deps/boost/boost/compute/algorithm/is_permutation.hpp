@@ -13,12 +13,15 @@
 
 #include <iterator>
 
+#include <boost/static_assert.hpp>
+
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/container/vector.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/algorithm/equal.hpp>
 #include <boost/compute/algorithm/sort.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
 
 namespace boost {
 namespace compute {
@@ -36,6 +39,7 @@ namespace compute {
 /// \param last2 Iterator pointing to end of second range
 /// \param queue Queue on which to execute
 ///
+/// Space complexity: \Omega(distance(\p first1, \p last1) + distance(\p first2, \p last2))
 template<class InputIterator1, class InputIterator2>
 inline bool is_permutation(InputIterator1 first1,
                            InputIterator1 last1,
@@ -43,6 +47,8 @@ inline bool is_permutation(InputIterator1 first1,
                            InputIterator2 last2,
                            command_queue &queue = system::default_queue())
 {
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type1;
     typedef typename std::iterator_traits<InputIterator2>::value_type value_type2;
 

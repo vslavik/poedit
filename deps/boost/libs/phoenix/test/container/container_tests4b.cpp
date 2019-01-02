@@ -30,6 +30,9 @@ std::vector<int> const build_vector()
 int
 main()
 {
+    BOOST_STATIC_ASSERT((!phx::stl::has_mapped_type<std::vector<int> >::value));
+    BOOST_STATIC_ASSERT((!phx::stl::has_key_type<std::vector<int> >::value));
+
     std::vector<int> const data = build_vector();
     test_get_allocator(data);
     test_insert(data);

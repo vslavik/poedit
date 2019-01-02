@@ -1,4 +1,4 @@
-// Copyright Louis Dionne 2013-2016
+// Copyright Louis Dionne 2013-2017
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -12,25 +12,25 @@
 #include <laws/monad.hpp>
 
 #include <boost/tuple/tuple.hpp>
-using namespace boost::hana;
+namespace hana = boost::hana;
 
 
 template <int i>
-using eq = test::ct_eq<i>;
+using eq = hana::test::ct_eq<i>;
 
 int main() {
     //////////////////////////////////////////////////////////////////////////
     // Setup for the laws below
     //////////////////////////////////////////////////////////////////////////
-    auto eq_tuples = make<tuple_tag>(
+    auto eq_tuples = hana::make_tuple(
           ::boost::make_tuple()
         , ::boost::make_tuple(eq<0>{})
         , ::boost::make_tuple(eq<0>{}, eq<1>{})
     );
 
-    auto eq_values = make<tuple_tag>(eq<0>{}, eq<2>{});
+    auto eq_values = hana::make_tuple(eq<0>{}, eq<2>{});
 
-    auto eq_tuples_tuples = make<tuple_tag>(
+    auto eq_tuples_tuples = hana::make_tuple(
           ::boost::make_tuple()
         , ::boost::make_tuple(
             ::boost::make_tuple(eq<0>{}))
@@ -46,7 +46,7 @@ int main() {
     //////////////////////////////////////////////////////////////////////////
     // Functor up to Monad
     //////////////////////////////////////////////////////////////////////////
-    test::TestFunctor<ext::boost::tuple_tag>{eq_tuples, eq_values};
-    test::TestApplicative<ext::boost::tuple_tag>{eq_tuples};
-    test::TestMonad<ext::boost::tuple_tag>{eq_tuples, eq_tuples_tuples};
+    hana::test::TestFunctor<hana::ext::boost::tuple_tag>{eq_tuples, eq_values};
+    hana::test::TestApplicative<hana::ext::boost::tuple_tag>{eq_tuples};
+    hana::test::TestMonad<hana::ext::boost::tuple_tag>{eq_tuples, eq_tuples_tuples};
 }

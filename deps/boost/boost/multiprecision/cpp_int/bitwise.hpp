@@ -326,7 +326,7 @@ inline void left_shift_byte(Int& result, double_limb_type s)
    if(rs != ors)
       pr[rs - 1] = 0u;
    std::size_t bytes = static_cast<std::size_t>(s / CHAR_BIT);
-   std::size_t len = std::min(ors * sizeof(limb_type), rs * sizeof(limb_type) - bytes);
+   std::size_t len = (std::min)(ors * sizeof(limb_type), rs * sizeof(limb_type) - bytes);
    if(bytes >= rs * sizeof(limb_type))
       result = static_cast<limb_type>(0u);
    else
@@ -351,7 +351,6 @@ inline void left_shift_limb(Int& result, double_limb_type s)
       ++rs; // Most significant limb will overflow when shifted
    rs += offset;
    result.resize(rs, rs);
-   bool truncated = result.size() != rs;
 
    typename Int::limb_pointer pr = result.limbs();
 
@@ -412,14 +411,14 @@ inline void left_shift_generic(Int& result, double_limb_type s)
          ++i;
       }
    }
-   for(; ors > 1 + i; ++i)
+   for(; rs - i >= 2 + offset; ++i)
    {
-      pr[rs - 1 - i] = pr[ors - 1 - i] << shift;
-      pr[rs - 1 - i] |= pr[ors - 2 - i] >> (Int::limb_bits - shift);
+      pr[rs - 1 - i] = pr[rs - 1 - i - offset] << shift;
+      pr[rs - 1 - i] |= pr[rs - 2 - i - offset] >> (Int::limb_bits - shift);
    }
-   if(ors >= 1 + i)
+   if(rs - i >= 1 + offset)
    {
-      pr[rs - 1 - i] = pr[ors - 1 - i] << shift;
+      pr[rs - 1 - i] = pr[rs - 1 - i - offset] << shift;
       ++i;
    }
    for(; i < rs; ++i)
@@ -436,7 +435,7 @@ inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBit
    if(!s)
       return;
 
-#if defined(BOOST_LITTLE_ENDIAN) && defined(BOOST_MP_USE_LIMB_SHIFT)
+#if BOOST_ENDIAN_LITTLE_BYTE && defined(BOOST_MP_USE_LIMB_SHIFT)
    static const limb_type limb_shift_mask = cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>::limb_bits - 1;
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & limb_shift_mask) == 0)
@@ -447,7 +446,7 @@ inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBit
    {
       left_shift_byte(result, s);
    }
-#elif defined(BOOST_LITTLE_ENDIAN)
+#elif BOOST_ENDIAN_LITTLE_BYTE
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & byte_shift_mask) == 0)
    {
@@ -563,14 +562,14 @@ inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBit
    if(!s)
       return;
 
-#if defined(BOOST_LITTLE_ENDIAN) && defined(BOOST_MP_USE_LIMB_SHIFT)
+#if BOOST_ENDIAN_LITTLE_BYTE && defined(BOOST_MP_USE_LIMB_SHIFT)
    static const limb_type limb_shift_mask = cpp_int_backend<MinBits1, MaxBits1, signed_magnitude, Checked1, Allocator1>::limb_bits - 1;
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & limb_shift_mask) == 0)
       right_shift_limb(result, s);
    else if((s & byte_shift_mask) == 0)
       right_shift_byte(result, s);
-#elif defined(BOOST_LITTLE_ENDIAN)
+#elif BOOST_ENDIAN_LITTLE_BYTE
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & byte_shift_mask) == 0)
       right_shift_byte(result, s);
@@ -596,14 +595,14 @@ inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBit
    if(is_neg)
       eval_increment(result);
 
-#if defined(BOOST_LITTLE_ENDIAN) && defined(BOOST_MP_USE_LIMB_SHIFT)
+#if BOOST_ENDIAN_LITTLE_BYTE && defined(BOOST_MP_USE_LIMB_SHIFT)
    static const limb_type limb_shift_mask = cpp_int_backend<MinBits1, MaxBits1, signed_magnitude, Checked1, Allocator1>::limb_bits - 1;
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & limb_shift_mask) == 0)
       right_shift_limb(result, s);
    else if((s & byte_shift_mask) == 0)
       right_shift_byte(result, s);
-#elif defined(BOOST_LITTLE_ENDIAN)
+#elif BOOST_ENDIAN_LITTLE_BYTE
    static const limb_type byte_shift_mask = CHAR_BIT - 1;
    if((s & byte_shift_mask) == 0)
       right_shift_byte(result, s);

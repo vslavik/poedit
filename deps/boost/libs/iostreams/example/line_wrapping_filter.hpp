@@ -49,7 +49,7 @@ private:
 class line_wrapping_input_filter : public input_filter {
 public:
     explicit line_wrapping_input_filter(int line_length = 80)
-        : line_length_(line_length), col_no_(0), has_next_(false)
+        : line_length_(line_length), col_no_(0), next_(0), has_next_(false)
         { }
 
     template<typename Source>
@@ -91,7 +91,7 @@ private:
     int  line_length_;
     int  col_no_;
     int  next_;
-    int  has_next_;
+    bool has_next_;
 };
 
 class line_wrapping_output_filter : public output_filter {

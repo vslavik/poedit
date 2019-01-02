@@ -236,7 +236,11 @@ void test_round_trip()
 
    stopwatch<boost::chrono::high_resolution_clock> w;
 
+#ifndef CI_SUPPRESS_KNOWN_ISSUES
    while(boost::chrono::duration_cast<boost::chrono::duration<double> >(w.elapsed()).count() < 200)
+#else
+   while(boost::chrono::duration_cast<boost::chrono::duration<double> >(w.elapsed()).count() < 50)
+#endif
    {
       T val = generate_random<T>();
       do_round_trip(val);

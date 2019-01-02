@@ -38,8 +38,8 @@ if $(is_unix)
 lib gsl ;
 lib gslcblas ;
 lib Rmath ;
-obj has_libstdcxx_tr1 : has_libstdcxx_tr1.cpp ;
-explicit has_libstdcxx_tr1 ;
+obj has_cxx17_cmath : has_cxx17_cmath.cpp ;
+explicit has_cxx17_cmath ;
 obj has_c99_cmath : has_c99_cmath.cpp ;
 explicit has_c99_cmath ;
 exe has_gsl : has_gsl.cpp gsl gslcblas ;
@@ -88,11 +88,11 @@ rule all-tests {
           <toolset>gcc:<linkflags>$(OTHERFLAGS) ]
          ;
          result += [ run $(source) /boost/regex//boost_regex /boost/system /boost/filesystem /boost/test//boost_unit_test_framework 
-         : : : [ check-target-builds has_libstdcxx_tr1 : <define>TEST_LIBSTDCXX : <build>no ] 
+         : : : [ check-target-builds has_cxx17_cmath : <define>TEST_CXX17_CMATH : <build>no ] 
           <target-os>linux:<linkflags>-lpthread
           <target-os>linux:<linkflags>-lrt
           <toolset>gcc:<linkflags>$(OTHERFLAGS)
-          : $(source:B)_libstdcxx_tr1 ] 
+          : $(source:B)_cxx17_cmath ] 
          ;
          result += [ run $(source) /boost/regex//boost_regex /boost/system /boost/filesystem /boost/test//boost_unit_test_framework 
          : : : [ check-target-builds has_c99_cmath : <define>TEST_C99 : <build>no ] 

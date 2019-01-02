@@ -2,7 +2,7 @@
 //
 // R-tree scoped deallocator
 //
-// Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2018 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -18,10 +18,13 @@ namespace detail { namespace rtree {
 template <typename Alloc>
 class scoped_deallocator
 {
+    typedef boost::container::allocator_traits<Alloc> alloc_traits;
+
     scoped_deallocator(scoped_deallocator const&);
     scoped_deallocator & operator=(scoped_deallocator const&);
 public:
-    typedef typename Alloc::pointer pointer;
+    typedef typename alloc_traits::pointer pointer;
+
     inline scoped_deallocator(pointer p, Alloc & a)
         : m_ptr(p), m_alloc(a)
     {}
@@ -29,7 +32,7 @@ public:
     {
         if ( m_ptr )
         {
-            boost::container::allocator_traits<Alloc>::deallocate(m_alloc, m_ptr, 1);
+            alloc_traits::deallocate(m_alloc, m_ptr, 1);
         }
     }
     inline void release()

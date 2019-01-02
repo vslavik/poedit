@@ -1,19 +1,85 @@
 [template history[]
 
 Currently open bug reports can be viewed
-[@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
+[@https://github.com/boostorg/math/issues here].
 
 All bug reports including closed ones can be viewed
-[@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
+[@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here]
+and [@https://github.com/boostorg/math/issues?utf8=%E2%9C%93&q=is%3Aissue here].
+
+[h4 Math-2.8.0 (Boost-1.69)]
+
+* Add LambertW functions.
+* Update integration routines to support complex valued integrands and contour integrals.
+* Added the derivative of the Barycentric rational approximation.
+* Updated continued fraction and series evaluation code to support complex types.
+* Minor fixes to better support variable precision floating point types.
+* Removed use of deprecated Boost.Endian in favour of Predef.
+* Prevent logic error leading to infinite loop in toms748_solve.  See [@https://github.com/boostorg/math/issues/138 #138].
+* Fix mean and standard_deviation for extreme_value_distribution.  See [@https://github.com/boostorg/math/issues/139 #139].
+* Improve heuristics used in newton_raphson_iterate.  See [@https://github.com/boostorg/math/issues/145 #145].
+* Fix result of `erf(NaN)`.  See [@https://github.com/boostorg/math/issues/141 #141].
+* Big push to reduce GCC warnings.  See [@https://github.com/boostorg/math/issues/136 #136].
+* Refactor polynomial addition.  See [@https://github.com/boostorg/math/pull/132 PR132].
+* Fix for vxWorks having a `real` function in the global namespace. See [@https://github.com/boostorg/math/pull/131 PR131].
+* Improve `sinc` approximations and add better tests.
+* Fix typo in Student's T hypothesis testing documentation, see [@https://github.com/boostorg/math/issues/143 #143].
+
+[h4 Math-2.7.1 (Boost-1.68)]
+
+* Continue to improve numerical integration routines, and in particular add support for contour integrals.
+* Improve accuracy of erfc function's rational approximations.
+
+[h4 Math-2.7.0 (Boost-1.66)]
+
+* Add Gauss and Gauss-Kronrod quadrature routines.
+* Add double-exponential (tanh-sinh, exp-sinh and sinh-sinh) quadrature routines.
+* Add Chebyshev polynomial evaluation, roots, integration, differentiation, and interpolation routines.
+
+[h4 Math-2.6.0 (Boost-1.65)]
+
+New Features:
+
+* Add [link math_toolkit.cubic_b cubic B-Spline interpolation functions], with thanks to Nick Thompson.
+* Add [link math_toolkit.barycentric barycentric rational interpolation functions], with thanks to Nick Thompson.
+* Add [link math_toolkit.trapezoidal adaptive trapezoidal quadrature], with thanks to Nick Thompson.
+* Add [link math_toolkit.sf_poly.legendre support for the zeros and derivatives of Legendre polynomials], with thanks to Nick Thompson.
+
+Patches:
+
+* Improve polynomial GCD algorithms, with thanks to Jeremy Murphy.
+* Removed gcd/lcm routines from Boost.Math - these are now in Boost.Integer.
+
+[h4 Math-2.5.2 (Boost-1.64)]
+
+Patches:
+
+* Big push to ensure all functions in also in C99 are compatible with Annex F.
+* Improved accuracy of the Bessel functions I0, I1, K0 and K1, see [@https://svn.boost.org/trac/boost/ticket/12066 12066].
+
+[h4 Math-2.5.1 (Boost-1.63)]
+
+Patches:
+
+* Fixed evaluation of zero polynomial in polynomial.hpp, see [@https://svn.boost.org/trac/boost/ticket/12532 12532].
+* Fixed missing header include in boost/math/tools/tuple.hpp, see [@https://svn.boost.org/trac/boost/ticket/12537 12537].
+
+[h4 Math-2.5.0 (Boost-1.62)]
+
+New Features:
+
+* Enabled all the special function code to work correctly with types whose precision can change at runtime: for example type `mpfr_float` from Boost.Multiprecision.
+
+Patches:
+
+* Fix tgamma_delta_ratio for cases where the delta is small compared to the base.
+* Fix misc GCC-4.4 test failures.
 
 [h4 Math-2.4.0 (Boost-1.61)]
 
 New Features:
 
 * Polynomial arithmetic added to tools.
-
-Patches:
-
 
 
 [h4 Math-2.3.0 (Boost-1.60)]
@@ -134,8 +200,9 @@ Random variate can now be infinite.
 * Improve consistency of argument reduction in the elliptic integrals [@https://svn.boost.org/trac/boost/ticket/9104 #9104].
 * Fix bug in inverse incomplete beta that results in cancellation errors when the beta function is really an arcsine or Student's T distribution.
 * Fix issue in Bessel I and K function continued fractions that causes spurious over/underflow.
-* Add improvement to non-central chi squared distribution quantile due to Thomas Luu.
-
+* Add improvement to non-central chi squared distribution quantile due to Thomas Luu,
+[@http://discovery.ucl.ac.uk/1482128/ Fast and accurate parallel computation of quantile functions for random number generation, Doctorial Thesis 2016].
+[@http://discovery.ucl.ac.uk/1463470/ Efficient and Accurate Parallel Inversion of the Gamma Distribution, Thomas Luu]
 [h4 Boost-1.54]
 
 * Major reorganization to incorporate other Boost.Math like Integer Utilities Integer Utilities (Greatest Common Divisor and Least Common Multiple), quaternions and octonions.

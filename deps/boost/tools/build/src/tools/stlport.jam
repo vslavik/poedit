@@ -89,6 +89,9 @@ class stlport-target-class : basic-target
 
         local requirements ;
         requirements += <stdlib-stlport:version>$(self.version) ;
+        requirements += <relevant>runtime-debugging ;
+        requirements += <relevant>toolset ;
+        requirements += <relevant>runtime-link ;
         self.requirements = [ property-set.create $(requirements) ] ;
     }
 

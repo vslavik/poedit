@@ -259,7 +259,7 @@ t.cleanup()
     <ul>
       <li><tt>set_tree</tt> -- sets the content of the working directory to be
       equal to the content of the specified directory. This method is
-      preferrable when directory tree for testing is large.</li>
+      preferable when directory tree for testing is large.</li>
 
       <li><tt>write</tt> -- sets the content of file in a working directory.
       This is optimal if you want to create a directory tree with 3-4 small
@@ -485,7 +485,7 @@ t.cleanup()
 
     <p><b>Rationale:</b></p>
 
-    <p>Althought this method is questionable, there are a lot of cases when jam
+    <p>Although this method is questionable, there are a lot of cases when jam
     or shells it uses insert spaces. It seems that introducing this method is
     much simpler than dealing with all those cases.</p>
 
@@ -498,7 +498,7 @@ t.cleanup()
     present there, it is removed. Otherwise, test fails.</p>
 
     <p>Each method accepts a list of names. Those names use <tt>/</tt> path
-    separator on all systems. Additionaly, the test system translates suffixes
+    separator on all systems. Additionally, the test system translates suffixes
     appropriately. For the test to be portable, suffixes should use Windows
     convention: <tt>exe</tt> for executables, <tt>dll</tt> for dynamic libraries
     and <tt>lib</tt> for static libraries. Lastly, the string "$toolset" in file
@@ -556,7 +556,7 @@ t.cleanup()
       <li>ignore_addition(self, wildcard)</li>
       <li>ignore_removal(self, wildcard)</li>
       <li>ignore_modification(self, wildcard)</li>
-      <li>ignore_touch(self, wilcard)</li>
+      <li>ignore_touch(self, wildcard)</li>
     </ul>
 
     <p>The method <tt>ignore(self, wildcard)</tt> ignores all the changes made

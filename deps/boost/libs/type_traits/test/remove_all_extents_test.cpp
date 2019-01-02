@@ -4,13 +4,13 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.tt.org/LICENSE_1_0.txt)
 
-#include "test.hpp"
-#include "check_type.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
 #else
 #  include <boost/type_traits/remove_all_extents.hpp>
 #endif
+#include "test.hpp"
+#include "check_type.hpp"
 
 BOOST_DECL_TRANSFORM_TEST(remove_all_extents_test_1, ::tt::remove_all_extents, const, const)
 BOOST_DECL_TRANSFORM_TEST(remove_all_extents_test_2, ::tt::remove_all_extents, volatile, volatile)

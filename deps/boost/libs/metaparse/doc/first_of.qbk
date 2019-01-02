@@ -3,21 +3,24 @@
 
 [h1 Synopsis]
 
-  template <class P1, /* ... */, class Pn>
+  template <class... Ps>
   struct first_of;
 
 This is a [link parser_combinator parser combinator].
 
 [table Arguments
-  [[Name]         [Type]]
-  [[`P1` .. `Pn`] [[link parser parser]]]
+  [[Name]       [Type]]
+  [[`Ps`]       [[link parser parser]s]]
 ]
 
 [h1 Description]
 
-`first_of` applies the `P1` ... `Pn` parsers in sequence. It accepts an input
-when all parsers accept it. The result of parsing is the result of the first
-parser.
+`first_of` applies the `Ps...` parsers in sequence. It accepts an input when all
+parsers accept it. The result of parsing is the result of the first parser.
+
+On compilers, which are not C++11-compliant, the maximum number of parsers
+`first_of` accepts can be specified with the
+`BOOST_METAPARSE_LIMIT_SEQUENCE_SIZE` macro. Its default value is `5`.
 
 [h1 Header]
 

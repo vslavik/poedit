@@ -17,9 +17,11 @@
 //------------------------------------------------------------------------------
 // this section is the main body of the test extension module
 
-#define BOOST_PYTHON_ENABLE_CDECL
-#define BOOST_PYTHON_ENABLE_STDCALL
-#define BOOST_PYTHON_ENABLE_FASTCALL
+#if defined(_WIN32) && !defined(_WIN64)
+# define BOOST_PYTHON_ENABLE_CDECL
+# define BOOST_PYTHON_ENABLE_STDCALL
+# define BOOST_PYTHON_ENABLE_FASTCALL
+#endif
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/python.hpp>

@@ -2,7 +2,7 @@
 //
 // n-dimensional box-linestring intersection
 //
-// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,7 +11,11 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_ALGORITHMS_PATH_INTERSECTION_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_ALGORITHMS_PATH_INTERSECTION_HPP
 
+
 #include <boost/geometry/index/detail/algorithms/segment_intersection.hpp>
+
+#include <boost/geometry/strategies/default_length_result.hpp>
+
 
 namespace boost { namespace geometry { namespace index { namespace detail {
 

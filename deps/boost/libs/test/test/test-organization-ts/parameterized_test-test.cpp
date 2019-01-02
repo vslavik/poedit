@@ -55,12 +55,26 @@ setup_tree( ut::test_suite* master_tu )
 
 //____________________________________________________________________________//
 
+struct logger_guard {
+    logger_guard(std::ostream& s_out) {
+        ut::unit_test_log.set_stream( s_out );
+    }
+    ~logger_guard() {
+        ut::unit_test_log.set_stream( std::cout );
+    }
+};
+
 BOOST_AUTO_TEST_CASE( test_case1 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    // if an exception is thrown in the test, this object is destructed when we reach the logger
+    // for logging the exception. This happens for instance if the test->add throws:
+    // - test case aborted, null_output destructed but still refered from the logger
+    // - exception caught by the framework, and exception content logged
+    // - reference to a non-existing log stream
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 2, 2, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -77,10 +91,10 @@ BOOST_AUTO_TEST_CASE( test_case1 )
 
 BOOST_AUTO_TEST_CASE( test_case2 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 1, 2, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -97,10 +111,10 @@ BOOST_AUTO_TEST_CASE( test_case2 )
 
 BOOST_AUTO_TEST_CASE( test_case3 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 1, 1, 2 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -117,10 +131,10 @@ BOOST_AUTO_TEST_CASE( test_case3 )
 
 BOOST_AUTO_TEST_CASE( test_case4 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 1, 1, 1 };
     test->add( BOOST_PARAM_TEST_CASE( &test0, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -137,10 +151,10 @@ BOOST_AUTO_TEST_CASE( test_case4 )
 
 BOOST_AUTO_TEST_CASE( test_case5 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 6, 6, 6 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -158,10 +172,10 @@ BOOST_AUTO_TEST_CASE( test_case5 )
 
 BOOST_AUTO_TEST_CASE( test_case6 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 0, 3, 9 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -178,10 +192,10 @@ BOOST_AUTO_TEST_CASE( test_case6 )
 
 BOOST_AUTO_TEST_CASE( test_case7 )
 {
-    onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    onullstream_type null_output;
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 2, 3, 9 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 
@@ -199,9 +213,9 @@ BOOST_AUTO_TEST_CASE( test_case7 )
 BOOST_AUTO_TEST_CASE( test_case8 )
 {
     onullstream_type    null_output;
-    ut::test_suite* test = BOOST_TEST_SUITE( "" );
+    logger_guard G( null_output );
 
-    ut::unit_test_log.set_stream( null_output );
+    ut::test_suite* test = BOOST_TEST_SUITE( "" );
     int test_data[] = { 3, 2, 6 };
     test->add( BOOST_PARAM_TEST_CASE( &test1, (int*)test_data, (int*)test_data + sizeof(test_data)/sizeof(int) ) );
 

@@ -20,8 +20,8 @@ namespace test
     template <typename P, typename CP>
     void function_asserting_a_point(P& p1, const CP& p2)
     {
-        BOOST_CONCEPT_ASSERT((bg::concept::Point<P>));
-        BOOST_CONCEPT_ASSERT((bg::concept::ConstPoint<P>));
+        BOOST_CONCEPT_ASSERT((bg::concepts::Point<P>));
+        BOOST_CONCEPT_ASSERT((bg::concepts::ConstPoint<P>));
 
         bg::get<0>(p1) = bg::get<0>(p2);
     }

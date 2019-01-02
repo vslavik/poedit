@@ -22,6 +22,29 @@
 namespace ba = boost::algorithm;
 // namespace ba = boost;
 
+BOOST_CXX14_CONSTEXPR bool is_true  ( int v ) { return true; }
+BOOST_CXX14_CONSTEXPR bool is_false ( int v ) { return false; }
+BOOST_CXX14_CONSTEXPR bool is_not_three ( int v ) { return v != 3; }
+
+BOOST_CXX14_CONSTEXPR bool check_constexpr() {
+    int in_data[] = {1, 2, 3, 4, 5};
+    bool res = true;
+
+    const int* from = in_data;
+    const int* to = in_data + 5;
+    
+    const int* start = ba::find_if_not (from, to, is_false); // stops on first
+    res = (res && start == from);
+    
+    const int* end = ba::find_if_not(from, to, is_true); // stops on the end
+    res = (res && end == to);
+    
+    const int* three = ba::find_if_not(from, to, is_not_three); // stops on third element
+    res = (res && three == in_data + 2);
+    
+    return res;
+}
+
 template <typename Container>
 typename Container::iterator offset_to_iter ( Container &v, int offset ) {
     typename Container::iterator retval;

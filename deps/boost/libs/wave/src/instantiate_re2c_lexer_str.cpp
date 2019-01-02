@@ -1,7 +1,7 @@
 /*=============================================================================
     Boost.Wave: A Standard compliant C++ preprocessor library
     Explicit instantiation of the lex_functor generation function
-    
+
     http://www.boost.org/
 
     Copyright (c) 2001-2012 Hartmut Kaiser. Distributed under the Boost
@@ -37,23 +37,23 @@
 //
 //  If you've used another iterator type as std::string::iterator, you have to
 //  instantiate the new_lexer_gen<> template for this iterator type too.
-//  The reason is, that the library internally uses the new_lexer_gen<> 
-//  template with a std::string::iterator. (You just have to undefine the 
+//  The reason is, that the library internally uses the new_lexer_gen<>
+//  template with a std::string::iterator. (You just have to undefine the
 //  following line.)
 //
 //  This is moved into a separate compilation unit to decouple the compilation
-//  of the C++ lexer from the compilation of the other modules, which helps to 
+//  of the C++ lexer from the compilation of the other modules, which helps to
 //  reduce compilation time.
 //
-//  The template parameter(s) supplied should be identical to the first 
-//  parameter supplied while instantiating the boost::wave::context<> template 
+//  The template parameter(s) supplied should be identical to the first
+//  parameter supplied while instantiating the boost::wave::context<> template
 //  (see the file cpp.cpp).
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 #if !defined(BOOST_WAVE_STRINGTYPE_USE_STDSTRING)
-template struct boost::wave::cpplexer::new_lexer_gen<std::string::iterator>;
-template struct boost::wave::cpplexer::new_lexer_gen<std::string::const_iterator>;
+template struct BOOST_SYMBOL_VISIBLE boost::wave::cpplexer::new_lexer_gen<std::string::iterator>;
+template struct BOOST_SYMBOL_VISIBLE boost::wave::cpplexer::new_lexer_gen<std::string::const_iterator>;
 #endif
 
 // the suffix header occurs after all of the code

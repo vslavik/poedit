@@ -17,6 +17,9 @@
 #include <boost/type_traits/is_signed.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
+
 #include <boost/compute/kernel.hpp>
 #include <boost/compute/program.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -92,6 +95,8 @@ const char radix_sort_source[] =
 "#define RADIX_MASK ((((T)(1)) << K_BITS) - 1)\n"
 "#define SIGN_BIT ((sizeof(T) * CHAR_BIT) - 1)\n"
 
+"#if defined(ASC)\n" // asc order
+
 "inline uint radix(const T x, const uint low_bit)\n"
 "{\n"
 "#if defined(IS_FLOATING_POINT)\n"
@@ -103,6 +108,25 @@ const char radix_sort_source[] =
 "    return (x >> low_bit) & RADIX_MASK;\n"
 "#endif\n"
 "}\n"
+
+"#else\n" // desc order
+
+// For signed types we just negate the x and for unsigned types we
+// subtract the x from max value of its type ((T)(-1) is a max value
+// of type T when T is an unsigned type).
+"inline uint radix(const T x, const uint low_bit)\n"
+"{\n"
+"#if defined(IS_FLOATING_POINT)\n"
+"    const T mask = -(x >> SIGN_BIT) | (((T)(1)) << SIGN_BIT);\n"
+"    return (((-x) ^ mask) >> low_bit) & RADIX_MASK;\n"
+"#elif defined(IS_SIGNED)\n"
+"    return (((-x) ^ (((T)(1)) << SIGN_BIT)) >> low_bit) & RADIX_MASK;\n"
+"#else\n"
+"    return (((T)(-1) - x) >> low_bit) & RADIX_MASK;\n"
+"#endif\n"
+"}\n"
+
+"#endif\n" // #if defined(ASC)
 
 "__kernel void count(__global const T *input,\n"
 "                    const uint input_offset,\n"
@@ -227,6 +251,7 @@ template<class T, class T2>
 inline void radix_sort_impl(const buffer_iterator<T> first,
                             const buffer_iterator<T> last,
                             const buffer_iterator<T2> values_first,
+                            const bool ascending,
                             command_queue &queue)
 {
 
@@ -279,9 +304,16 @@ inline void radix_sort_impl(const buffer_iterator<T> first,
         options << enable_double<T2>();
     }
 
+    if(ascending){
+        options << " -DASC";
+    }
+
+    // get type definition if it is a custom struct
+    std::string custom_type_def = boost::compute::type_definition<T2>() + "\n";
+
     // load radix sort program
     program radix_sort_program = cache->get_or_build(
-        cache_key, options.str(), radix_sort_source, context
+       cache_key, options.str(), custom_type_def + radix_sort_source, context
     );
 
     kernel count_kernel(radix_sort_program, "count");
@@ -396,7 +428,7 @@ inline void radix_sort(Iterator first,
                        Iterator last,
                        command_queue &queue)
 {
-    radix_sort_impl(first, last, buffer_iterator<int>(), queue);
+    radix_sort_impl(first, last, buffer_iterator<int>(), true, queue);
 }
 
 template<class KeyIterator, class ValueIterator>
@@ -405,8 +437,28 @@ inline void radix_sort_by_key(KeyIterator keys_first,
                               ValueIterator values_first,
                               command_queue &queue)
 {
-    radix_sort_impl(keys_first, keys_last, values_first, queue);
+    radix_sort_impl(keys_first, keys_last, values_first, true, queue);
 }
+
+template<class Iterator>
+inline void radix_sort(Iterator first,
+                       Iterator last,
+                       const bool ascending,
+                       command_queue &queue)
+{
+    radix_sort_impl(first, last, buffer_iterator<int>(), ascending, queue);
+}
+
+template<class KeyIterator, class ValueIterator>
+inline void radix_sort_by_key(KeyIterator keys_first,
+                              KeyIterator keys_last,
+                              ValueIterator values_first,
+                              const bool ascending,
+                              command_queue &queue)
+{
+    radix_sort_impl(keys_first, keys_last, values_first, ascending, queue);
+}
+
 
 } // end detail namespace
 } // end compute namespace

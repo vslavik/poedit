@@ -7,7 +7,8 @@
 ==============================================================================*/
 
 #include <boost/functional/factory.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
+#include <boost/none_t.hpp>
 
 #include <memory>
 
@@ -20,6 +21,12 @@ class sum
     operator int() const { return this->val_sum; }
 };
 
+// Suppress warnings about std::auto_ptr.
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 int main()
 {
     int one = 1, two = 2;
@@ -27,10 +34,23 @@ int main()
       sum* instance( boost::factory< sum*, boost::none_t >()(one,two) );
       BOOST_TEST(*instance == 3);
     }
+#if !defined(BOOST_NO_AUTO_PTR)
     {
       std::auto_ptr<sum> instance(
               boost::factory< std::auto_ptr<sum>, boost::none_t >()(one,two) );
       BOOST_TEST(*instance == 3);
     }
+#endif
+#if !defined(BOOST_NO_CXX11_SMART_PTR)
+    {
+      std::unique_ptr<sum> instance(
+              boost::factory< std::unique_ptr<sum>, boost::none_t >()(one,two) );
+      BOOST_TEST(*instance == 3);
+    }
+#endif
     return boost::report_errors();
 }
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif

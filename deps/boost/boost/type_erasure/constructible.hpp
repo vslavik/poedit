@@ -41,7 +41,7 @@ struct get_null_vtable_entry;
 template<class C, class Sig>
 struct vtable_adapter;
 
-};
+}
 
 #ifdef BOOST_TYPE_ERASURE_DOXYGEN
 
@@ -88,7 +88,7 @@ struct concept_interface<
     using Base::_boost_type_erasure_deduce_constructor;
     ::boost::type_erasure::constructible<Tag(T...)>*
     _boost_type_erasure_deduce_constructor(
-        typename ::boost::type_erasure::as_param<Base, T>::type...)
+        typename ::boost::type_erasure::as_param<Base, T>::type...) const
     {
         return 0;
     }
@@ -168,7 +168,7 @@ struct concept_interface<
     using Base::_boost_type_erasure_deduce_constructor;
     ::boost::type_erasure::constructible<Tag(BOOST_PP_ENUM_PARAMS(N, T))>*
     _boost_type_erasure_deduce_constructor(
-        BOOST_PP_ENUM(N, BOOST_TYPE_ERASURE_ARG_DECL, ~))
+        BOOST_PP_ENUM(N, BOOST_TYPE_ERASURE_ARG_DECL, ~)) const
     {
         return 0;
     }

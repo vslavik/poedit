@@ -27,7 +27,7 @@
 int main()
 {
   boost::shared_mutex m;
-  m.lock();
+  m.lock_upgrade();
   boost::upgrade_lock<boost::shared_mutex> lk(m, boost::adopt_lock);
   BOOST_TEST(lk.mutex() == &m);
   BOOST_TEST(lk.owns_lock() == true);

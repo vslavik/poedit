@@ -13,7 +13,11 @@
     template <class value_type, class my_allocator>
     struct rebind
     {
+#ifndef BOOST_NO_CXX11_ALLOCATOR
+       typedef typename std::allocator_traits<my_allocator>::template rebind_alloc<value_type> type;
+#else
        typedef typename my_allocator::template rebind<value_type>::other type;
+#endif
     };
   } } } } // namespace boost::multiprecision::backends::detail
 

@@ -53,9 +53,9 @@ bool CheckEqual(MyUserList *userlist, MyStdList *stdlist, MyHeapList *heaplist)
 int main ()
 {
    //Create the user memory who will store all objects
-   const int size_aligner  = sizeof(::boost::container::container_detail::max_align_t);
+   const int size_aligner  = sizeof(::boost::container::dtl::max_align_t);
    const int memsize       = 65536/size_aligner*size_aligner;
-   static ::boost::container::container_detail::max_align_t static_buffer[memsize/size_aligner];
+   static ::boost::container::dtl::max_align_t static_buffer[memsize/size_aligner];
 
    {
       //Now test move semantics

@@ -16,6 +16,9 @@ local compile_tests =
     mixed_headers_2.cpp
     ;
 
+local compile_fail_tests =
+    const_wrapper_fail.cpp ;
+
 local run_tests =
     primitive.cpp
     specialized_in_boost.cpp
@@ -47,6 +50,12 @@ rule test_all
     {
         local test_name = [ MATCH "([^.]*).cpp$" : $(file) ] ;
         all_rules += [ compile $(file) : : "swap-$(test_name)" ] ;
+    }
+
+    for file in $(compile_fail_tests)
+    {
+        local test_name = [ MATCH "([^.]*).cpp$" : $(file) ] ;
+        all_rules += [ compile-fail $(file) : : "swap-$(test_name)" ] ;
     }
 
     for file in $(run_tests)

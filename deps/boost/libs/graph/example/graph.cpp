@@ -46,7 +46,6 @@ std::size_t myrand(std::size_t N) {
 
 template <class Graph>
 bool check_edge(Graph& g, std::size_t a, std::size_t b) {
-  typedef typename Graph::vertex_descriptor Vertex;
   typename Graph::adjacency_iterator vi, viend, found;
   boost::tie(vi, viend) = adjacent_vertices(vertex(a,g), g);
 

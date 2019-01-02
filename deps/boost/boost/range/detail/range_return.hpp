@@ -12,6 +12,7 @@
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/next_prior.hpp>
 
 namespace boost
 {

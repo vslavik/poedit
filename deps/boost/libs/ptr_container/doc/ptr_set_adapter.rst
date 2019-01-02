@@ -55,7 +55,7 @@ of the interface from ``associative_ptr_container``.
             public: // `modifiers`_         
                 std::pair<iterator,bool>  insert( Key* x );   
 		template< class Key2 >
-		std::pair<iterator,bool>  insert( std::auto_ptr<Key2> x );   	                      
+		std::pair<iterator,bool>  insert( compatible-smart-ptr<Key2> x );   	                      
  
             public: // `pointer container requirements`_
                 bool      transfer( iterator object, ptr_set_adapter& from );
@@ -87,7 +87,7 @@ Semantics: modifiers
 
     - Exception safety: Strong guarantee
     
-- ``template< class Key2 > std::pair<iterator,bool>  insert( std::auto_ptr<Key2> x );``
+- ``template< class Key2 > std::pair<iterator,bool>  insert( compatible-smart-ptr<Key2> x );``
 
     - Effects: ``return insert( x.release() );``   	                      
 

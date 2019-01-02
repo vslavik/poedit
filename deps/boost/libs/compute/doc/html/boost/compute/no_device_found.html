@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class no_device_found</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Compute">
 <link rel="up" href="../../boost_compute/reference.html#header.boost.compute.exception.no_device_found_hpp" title="Header &lt;boost/compute/exception/no_device_found.hpp&gt;">
 <link rel="prev" href="context_error.html" title="Class context_error">
@@ -32,39 +32,39 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../boost_compute/reference.html#header.boost.compute.exception.no_device_found_hpp" title="Header &lt;boost/compute/exception/no_device_found.hpp&gt;">boost/compute/exception/no_device_found.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">exception</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="no_device_found.html#boost.compute.no_device_foundconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="no_device_found.html#idp11864048-bb"><span class="identifier">no_device_found</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="no_device_found.html#idp11865360-bb"><span class="special">~</span><span class="identifier">no_device_found</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="no_device_found.html#idp49675856-bb"><span class="identifier">no_device_found</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="no_device_found.html#idp49677168-bb"><span class="special">~</span><span class="identifier">no_device_found</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="no_device_found.html#idp11861872-bb">public member functions</a></span>
-  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="no_device_found.html#idp11862432-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="no_device_found.html#idp49673680-bb">public member functions</a></span>
+  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="no_device_found.html#idp49674240-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp75783472"></a><h2>Description</h2>
+<a name="idp90337120"></a><h2>Description</h2>
 <p>This exception is thrown when no valid OpenCL device can be found.</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
 <p><a class="link" href="opencl_error.html" title="Class opencl_error">opencl_error</a> </p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp75786176"></a><h3>
+<a name="idp90339824"></a><h3>
 <a name="boost.compute.no_device_foundconstruct-copy-destruct"></a><code class="computeroutput">no_device_found</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp11864048-bb"></a><span class="identifier">no_device_found</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a></code> exception object. </li>
+<pre class="literallayout"><a name="idp49675856-bb"></a><span class="identifier">no_device_found</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Creates a new <code class="computeroutput"><a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a></code> exception object. </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp11865360-bb"></a><span class="special">~</span><span class="identifier">no_device_found</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the <code class="computeroutput"><a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a></code> exception object. </li>
+<pre class="literallayout"><a name="idp49677168-bb"></a><span class="special">~</span><span class="identifier">no_device_found</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Destroys the <code class="computeroutput"><a class="link" href="no_device_found.html" title="Class no_device_found">no_device_found</a></code> exception object. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp75799040"></a><h3>
-<a name="idp11861872-bb"></a><code class="computeroutput">no_device_found</code> public member functions</h3>
+<a name="idp90352768"></a><h3>
+<a name="idp49673680-bb"></a><code class="computeroutput">no_device_found</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp11862432-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns a string containing a human-readable error message. </li></ol></div>
+<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp49674240-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns a string containing a human-readable error message. </li></ol></div>
 </div>
 </div>
 </div>

@@ -13,11 +13,10 @@ project
       <source>/boost//regex
       <source>/boost//filesystem
       <source>/boost//system
-      <toolset>gcc:<cxxflags>-ftemplate-depth=300
-      <toolset>darwin:<cxxflags>-ftemplate-depth=300
+      <c++-template-depth>300
    ;
 
 unit-test parse_rexpr_test
    : parse_rexpr_test.cpp
-   : <testing.arg>"test/test_files"
+   : <testing.arg>"test_files"
    ;

@@ -4,7 +4,7 @@
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// An example using Boost.MPI's gather()
+// An example using Boost.MPI's gather(): [main]
 
 #include <boost/mpi.hpp>
 #include <iostream>
@@ -27,6 +27,5 @@ int main(int argc, char* argv[])
   } else {
     gather(world, my_number, 0);
   }
-
   return 0;
 }

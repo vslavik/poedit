@@ -13,6 +13,56 @@
 
 #include <boost/multiprecision/cpp_int.hpp>
 #include "test.hpp"
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+
+template <class T>
+T generate_random(unsigned bits_wanted)
+{
+   static boost::random::mt19937 gen;
+   typedef boost::random::mt19937::result_type random_type;
+
+   T max_val;
+   unsigned digits;
+   if(std::numeric_limits<T>::is_bounded && (bits_wanted == (unsigned)std::numeric_limits<T>::digits))
+   {
+      max_val = (std::numeric_limits<T>::max)();
+      digits = std::numeric_limits<T>::digits;
+   }
+   else
+   {
+      max_val = T(1) << bits_wanted;
+      digits = bits_wanted;
+   }
+
+   unsigned bits_per_r_val = std::numeric_limits<random_type>::digits - 1;
+   while((random_type(1) << bits_per_r_val) > (gen.max)()) --bits_per_r_val;
+
+   unsigned terms_needed = digits / bits_per_r_val + 1;
+
+   T val = 0;
+   for(unsigned i = 0; i < terms_needed; ++i)
+   {
+      val *= (gen.max)();
+      val += gen();
+   }
+   val %= max_val;
+   return val;
+}
+
+
+template <class Number>
+void test_signed_overflow(Number a, Number b, const boost::mpl::true_&)
+{
+   a = -a;
+   BOOST_CHECK_THROW(Number(a * b), std::overflow_error);
+   ++a;
+   BOOST_CHECK(Number(a * b) >= (std::numeric_limits<Number>::min)());
+}
+template <class Number>
+void test_signed_overflow(Number a, Number b, const boost::mpl::false_&)
+{
+}
 
 template <class Number>
 void test()
@@ -52,6 +102,36 @@ void test()
          BOOST_CHECK_THROW(test_type(val - 1), std::range_error);
       }
 #endif
+      //
+      // Test overflow in random values:
+      //
+      for(unsigned bits = 30; bits < std::numeric_limits<test_type>::digits; bits += 30)
+      {
+         for(unsigned i = 0; i < 100; ++i)
+         {
+            val = static_cast<test_type>(generate_random<cpp_int>(bits));
+            test_type val2 = 1 + (std::numeric_limits<test_type>::max)() / val;
+            BOOST_CHECK_THROW(test_type(val2 * val), std::overflow_error);
+            test_signed_overflow(val2, val, boost::mpl::bool_<std::numeric_limits<test_type>::is_signed>());
+            --val2;
+            BOOST_CHECK(cpp_int(val2) * cpp_int(val) <= cpp_int((std::numeric_limits<test_type>::max)()));
+            BOOST_CHECK(val2 * val <= (std::numeric_limits<test_type>::max)());
+            val2 = (std::numeric_limits<test_type>::max)() - val;
+            ++val2;
+            BOOST_CHECK_THROW(test_type(val2 + val), std::overflow_error);
+            BOOST_CHECK((val2 - 1) + val == (std::numeric_limits<test_type>::max)());
+            if(std::numeric_limits<test_type>::is_signed)
+            {
+               val2 = (std::numeric_limits<test_type>::min)() + val;
+               --val2;
+               BOOST_CHECK_THROW(test_type(val2 - val), std::overflow_error);
+               ++val2;
+               BOOST_CHECK(val2 - val == (std::numeric_limits<test_type>::min)());
+            }
+            unsigned shift = std::numeric_limits<test_type>::digits - msb(val);
+            BOOST_CHECK_THROW((val << shift) > 0, std::overflow_error);
+         }
+      }
    }
 
 #ifndef BOOST_NO_EXCEPTIONS

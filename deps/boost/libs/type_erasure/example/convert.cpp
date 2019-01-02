@@ -11,6 +11,7 @@
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/builtin.hpp>
 #include <boost/type_erasure/operators.hpp>
+#include <ostream>
 
 namespace mpl = boost::mpl;
 using namespace boost::type_erasure;

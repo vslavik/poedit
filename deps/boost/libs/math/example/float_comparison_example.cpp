@@ -40,7 +40,7 @@ int main()
 
 //[compare_floats_example_1
 /*`The following examples display values with all possibly significant digits.
-Newer compilers should provide `std::numeric_limitsFPT>::max_digits10`
+Newer compilers should provide `std::numeric_limits<FPT>::max_digits10`
 for this purpose, and here we use `float` precision where `max_digits10` = 9
 to avoid displaying a distracting number of decimal digits.
 

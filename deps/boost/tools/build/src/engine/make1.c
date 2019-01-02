@@ -337,7 +337,7 @@ static void make1a( state * const pState )
      * anything from happening until we can notify all dependencies that they
      * are needed. This 1 is then accounted for when we enter MAKE1B ourselves,
      * below. Without this if a dependency gets built before we finish
-     * processing all of our other dependencies our build might be triggerred
+     * processing all of our other dependencies our build might be triggered
      * prematurely.
      */
     t->asynccnt = 1;
@@ -514,6 +514,7 @@ static void make1c( state const * const pState )
 {
     TARGET * const t = pState->t;
     CMD * const cmd = (CMD *)t->cmds;
+    int exec_flags = 0;
 
     if ( cmd )
     {
@@ -542,6 +543,35 @@ static void make1c( state const * const pState )
         /* Increment the jobs running counter. */
         ++cmdsrunning;
 
+        if ( ( globs.jobs == 1 ) && ( DEBUG_MAKEQ ||
+            ( DEBUG_MAKE && !( cmd->rule->actions->flags & RULE_QUIETLY ) ) ) )
+        {
+            OBJECT * action  = cmd->rule->name;
+            OBJECT * target = list_front( lol_get( (LOL *)&cmd->args, 0 ) );
+
+            out_printf( "%s %s\n", object_str( action ), object_str( target ) );
+
+            /* Print out the command executed if given -d+2. */
+            if ( DEBUG_EXEC )
+            {
+                out_puts( cmd->buf->value );
+                out_putc( '\n' );
+            }
+
+            /* We only need to flush the streams if there's likely to
+             * be a wait before it finishes.
+             */
+            if ( ! globs.noexec && ! cmd->noop )
+            {
+                out_flush();
+                err_flush();
+            }
+        }
+        else
+        {
+            exec_flags |= EXEC_CMD_QUIET;
+        }
+
         /* Execute the actual build command or fake it if no-op. */
         if ( globs.noexec || cmd->noop )
         {
@@ -552,7 +582,7 @@ static void make1c( state const * const pState )
         }
         else
         {
-            exec_cmd( cmd->buf, make1c_closure, t, cmd->shell );
+            exec_cmd( cmd->buf, exec_flags, make1c_closure, t, cmd->shell );
 
             /* Wait until under the concurrent command count limit. */
             /* FIXME: This wait could be skipped here and moved to just before
@@ -562,7 +592,6 @@ static void make1c( state const * const pState )
              * affected Boost Build tests be updated.
              */
             assert( 0 < globs.jobs );
-            assert( globs.jobs <= MAXJOBS );
             while ( cmdsrunning >= globs.jobs )
                 exec_wait();
         }
@@ -573,11 +602,42 @@ static void make1c( state const * const pState )
 
         /* Tally success/failure for those we tried to update. */
         if ( t->progress == T_MAKE_RUNNING )
+        {
+            /* Invert OK/FAIL target status when FAIL_EXPECTED has been applied. */
+            if ( t->flags & T_FLAG_FAIL_EXPECTED && !globs.noexec )
+            {
+                switch ( t->status )
+                {
+                    case EXEC_CMD_FAIL: t->status = EXEC_CMD_OK; break;
+                    case EXEC_CMD_OK: t->status = EXEC_CMD_FAIL; break;
+                }
+
+                /* Printing failure has to be delayed until the last
+                 * action is completed for FAIL_EXPECTED targets.
+                 * Do it here.
+                 */
+                if ( t->status == EXEC_CMD_FAIL )
+                {
+                    out_printf( "...failed %s ", object_str( t->actions->action->rule->name ) );
+                    out_printf( "%s", object_str( t->boundname ) );
+                    out_printf( "...\n" );
+                }
+
+                /* Handle -q */
+                if ( t->status == EXEC_CMD_FAIL && globs.quitquick )
+                    ++quit;
+
+                /* Delete the target on failure. */
+                if ( !( t->flags & ( T_FLAG_PRECIOUS | T_FLAG_NOTFILE ) ) &&
+                    !unlink( object_str( t->boundname ) ) )
+                    out_printf( "...removing %s\n", object_str( t->boundname ) );
+            }
             switch ( t->status )
             {
                 case EXEC_CMD_OK: ++counts->made; break;
                 case EXEC_CMD_FAIL: ++counts->failed; break;
             }
+        }
 
         /* Tell parents their dependency has been built. */
         {
@@ -689,7 +749,7 @@ static void call_timing_rule( TARGET * target, timing_info const * const time )
 
     if ( !list_empty( timing_rule ) )
     {
-        /* rule timing-rule ( args * : target : start end user system ) */
+        /* rule timing-rule ( args * : target : start end user system clock ) */
 
         /* Prepare the argument list. */
         FRAME frame[ 1 ];
@@ -703,12 +763,14 @@ static void call_timing_rule( TARGET * target, timing_info const * const time )
         /* target :: the name of the target */
         lol_add( frame->args, list_new( object_copy( target->name ) ) );
 
-        /* start end user system :: info about the action command */
-        lol_add( frame->args, list_push_back( list_push_back( list_push_back( list_new(
+        /* start end user system clock :: info about the action command */
+        lol_add( frame->args, list_push_back( list_push_back( list_push_back( list_push_back( list_new(
             outf_time( &time->start ) ),
             outf_time( &time->end ) ),
             outf_double( time->user ) ),
-            outf_double( time->system ) ) );
+            outf_double( time->system ) ),
+            outf_double( timestamp_delta_seconds(&time->start, &time->end) ) )
+            );
 
         /* Call the rule. */
         evaluate_rule( bindrule( rulename , root_module() ), rulename, frame );
@@ -773,7 +835,16 @@ static void call_action_rule
 
         /* output ? :: the output of the action command */
         if ( command_output )
-            lol_add( frame->args, list_new( object_new( command_output ) ) );
+        {
+            OBJECT * command_output_obj = object_new( command_output );
+            char * output_i = (char*)object_str(command_output_obj);
+            /* Clean the output of control characters. */
+            for (; *output_i; ++output_i)
+            {
+                if (iscntrl(*output_i) && !isspace(*output_i)) *output_i = '?';
+            }
+            lol_add( frame->args, list_new( command_output_obj ) );
+        }
         else
             lol_add( frame->args, L0 );
 
@@ -813,6 +884,7 @@ static void make1c_closure
     CMD * const cmd = (CMD *)t->cmds;
     char const * rule_name = 0;
     char const * target_name = 0;
+    int print_buffer = 0;
 
     assert( cmd );
 
@@ -822,16 +894,6 @@ static void make1c_closure
     {
         /* Store the target's status. */
         t->status = status_orig;
-
-        /* Invert OK/FAIL target status when FAIL_EXPECTED has been applied. */
-        if ( t->flags & T_FLAG_FAIL_EXPECTED && !globs.noexec )
-        {
-            switch ( t->status )
-            {
-                case EXEC_CMD_FAIL: t->status = EXEC_CMD_OK; break;
-                case EXEC_CMD_OK: t->status = EXEC_CMD_FAIL; break;
-            }
-        }
 
         /* Ignore failures for actions marked as 'ignore'. */
         if ( t->status == EXEC_CMD_FAIL && cmd->rule->actions->flags &
@@ -847,21 +909,34 @@ static void make1c_closure
             );
     }
 
-    out_action( rule_name, target_name, cmd->buf->value, cmd_stdout, cmd_stderr,
-        cmd_exit_reason );
+    if ( rule_name == NULL || globs.jobs > 1 )
+        out_action( rule_name, target_name, cmd->buf->value, cmd_stdout,
+            cmd_stderr, cmd_exit_reason );
+
+    /* If the process expired, make user aware with an explicit message, but do
+     * this only for non-quiet actions.
+     */
+    if ( cmd_exit_reason == EXIT_TIMEOUT && target_name )
+        out_printf( "%ld second time limit exceeded\n", globs.timeout );
+
+    out_flush();
+    err_flush();
 
     if ( !globs.noexec )
     {
         call_timing_rule( t, time );
         if ( DEBUG_EXECCMD )
-            out_printf( "%f sec system; %f sec user\n", time->system, time->user );
+            out_printf( "%f sec system; %f sec user; %f sec clock\n",
+                time->system, time->user,
+                timestamp_delta_seconds(&time->start, &time->end) );
 
         /* Assume -p0 is in effect, i.e. cmd_stdout contains merged output. */
         call_action_rule( t, status_orig, time, cmd->buf->value, cmd_stdout );
     }
 
     /* Print command text on failure. */
-    if ( t->status == EXEC_CMD_FAIL && DEBUG_MAKE )
+    if ( t->status == EXEC_CMD_FAIL && DEBUG_MAKE &&
+        ! ( t->flags & T_FLAG_FAIL_EXPECTED ) )
     {
         if ( !DEBUG_EXEC )
             out_printf( "%s\n", cmd->buf->value );
@@ -879,7 +954,8 @@ static void make1c_closure
         ++intr;
         ++quit;
     }
-    if ( t->status == EXEC_CMD_FAIL && globs.quitquick )
+    if ( t->status == EXEC_CMD_FAIL && globs.quitquick &&
+        ! ( t->flags & T_FLAG_FAIL_EXPECTED ) )
         ++quit;
 
     /* If the command was not successful remove all of its targets not marked as

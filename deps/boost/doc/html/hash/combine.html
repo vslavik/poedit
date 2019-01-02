@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Combining hash values</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../hash.html" title="Chapter&#160;13.&#160;Boost.Functional/Hash">
+<link rel="up" href="../hash.html" title="Chapter&#160;10.&#160;Boost.ContainerHash">
 <link rel="prev" href="custom.html" title="Extending boost::hash for a custom data type">
 <link rel="next" href="portability.html" title="Portability">
 </head>
@@ -70,11 +70,11 @@
 <p>
       Calls to hash_combine incrementally build the hash from the different members
       of point, it can be repeatedly called for any number of elements. It calls
-      <code class="computeroutput"><a class="link" href="reference.html#boost.hash_value_idp6284240">hash_value</a></code> on the supplied
+      <code class="computeroutput"><a class="link" href="reference.html#boost.hash_va_1_3_11_11_2_2_27_1">hash_value</a></code> on the supplied
       element, and combines it with the seed.
     </p>
 <p>
-      Full code for this example is at <a href="../../../libs/functional/hash/examples/point.cpp" target="_top">/libs/functional/hash/examples/point.cpp</a>.
+      Full code for this example is at <a href="../../../libs/container_hash/examples/point.cpp" target="_top">/libs/container_hash/examples/point.cpp</a>.
     </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -106,23 +106,23 @@ If you are calculating a hash value for data
 </td></tr>
 </table></div>
 <p>
-      To calculate the hash of an iterator range you can use <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range_idp67437456">boost::hash_range</a></code>:
+      To calculate the hash of an iterator range you can use <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range">boost::hash_range</a></code>:
     </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">some_strings</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">hash</span> <span class="special">=</span> <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range_idp67437456">boost::hash_range</a></code><span class="special">(</span><span class="identifier">some_strings</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">some_strings</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">hash</span> <span class="special">=</span> <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range">boost::hash_range</a></code><span class="special">(</span><span class="identifier">some_strings</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">some_strings</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
 </pre>
 <p>
       Note that when writing template classes, you might not want to include the
       main hash header as it's quite an expensive include that brings in a lot of
-      other headers, so instead you can include the <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">functional</span><span class="special">/</span><span class="identifier">hash_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+      other headers, so instead you can include the <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container_hash</span><span class="special">/</span><span class="identifier">hash_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
       header which forward declares <code class="computeroutput"><a class="link" href="../boost/hash.html" title="Struct template hash">boost::hash</a></code>,
-      <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range_idp67437456">boost::hash_range</a></code> and
+      <code class="computeroutput"><a class="link" href="reference.html#boost.hash_range">boost::hash_range</a></code> and
       <code class="computeroutput"><a class="link" href="reference.html#boost.hash_combine">boost::hash_combine</a></code>.
       You'll need to include the main header before instantiating <code class="computeroutput"><a class="link" href="../boost/hash.html" title="Struct template hash">boost::hash</a></code>.
       When using a container that uses <code class="computeroutput"><a class="link" href="../boost/hash.html" title="Struct template hash">boost::hash</a></code>
       it should do that for you, so your type will work fine with the boost hash
-      containers. There's an example of this in <a href="../../../libs/functional/hash/examples/template.hpp" target="_top">template.hpp</a>
-      and <a href="../../../libs/functional/hash/examples/template.cpp" target="_top">template.cpp</a>.
+      containers. There's an example of this in <a href="../../../libs/container_hash/examples/template.hpp" target="_top">template.hpp</a>
+      and <a href="../../../libs/container_hash/examples/template.cpp" target="_top">template.cpp</a>.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

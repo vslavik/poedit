@@ -1,13 +1,15 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2018 Kohei Takahashi
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/fusion/container/vector/vector.hpp>
 #include <boost/fusion/adapted/mpl.hpp>
 #include <boost/fusion/sequence/io/out.hpp>
+#include <boost/fusion/sequence/comparison/equal_to.hpp>
 #include <boost/fusion/algorithm/iteration/for_each.hpp>
 #include <boost/mpl/vector_c.hpp>
 
@@ -29,6 +31,15 @@ struct increment
     }
 };
 
+struct mutable_increment : increment
+{
+    template <typename T>
+    void operator()(T& v)
+    {
+        return increment::operator()(v);
+    }
+};
+
 int
 main()
 {
@@ -44,9 +55,20 @@ main()
     }
 
     {
+        char const ruby[] = "Ruby";
         typedef vector<int, char, double, char const*> vector_type;
-        vector_type v(1, 'x', 3.3, "Ruby");
+        vector_type v(1, 'x', 3.3, ruby);
         for_each(v, increment());
+        BOOST_TEST_EQ(v, vector_type(2, 'y', 4.3, ruby + 1));
+        std::cout << v << std::endl;
+    }
+
+    {
+        char const ruby[] = "Ruby";
+        typedef vector<int, char, double, char const*> vector_type;
+        vector_type v(1, 'x', 3.3, ruby);
+        for_each(v, mutable_increment());
+        BOOST_TEST_EQ(v, vector_type(2, 'y', 4.3, ruby + 1));
         std::cout << v << std::endl;
     }
 

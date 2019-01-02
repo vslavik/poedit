@@ -7,8 +7,12 @@
 // Note that this file contains quickbook mark-up as well as code
 // and comments, don't change any of the special comment mark-ups!
 
+#include <boost/config.hpp>
 #ifdef _MSC_VER
 #  pragma warning (disable : 4189) //  'd' : local variable is initialized but not referenced
+#endif
+#ifdef BOOST_GCC
+#  pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 #include <iostream>
@@ -51,6 +55,7 @@ void test_cauchy()
    try
    {
       double d = mean(myspace::cauchy());  // Cauchy does not have a mean!
+      (void) d;
    }
    catch(const std::domain_error& e)
    {

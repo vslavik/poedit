@@ -19,7 +19,7 @@ namespace units {
 
 namespace detail {
 
-struct no { no() {} char dummy; };
+struct no { BOOST_CONSTEXPR no() : dummy() {} char dummy; };
 struct yes { no dummy[2]; };
 
 template<bool> struct ordinal_has_already_been_defined;
@@ -37,15 +37,17 @@ struct ordinal_has_already_been_defined<false>  { typedef void type; };
 /// be found by ADL
 /// INTERNAL ONLY
 template<class T>
+BOOST_CONSTEXPR
 detail::no 
 boost_units_is_registered(const T&) 
-{ detail::no result; return(result); }
+{ return(detail::no()); }
 
 /// INTERNAL ONLY
 template<class T>
+BOOST_CONSTEXPR
 detail::no 
 boost_units_unit_is_registered(const T&) 
-{ detail::no result; return(result); }
+{ return(detail::no()); }
 
 } // namespace units
 

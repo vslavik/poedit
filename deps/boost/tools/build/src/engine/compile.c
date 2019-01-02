@@ -99,7 +99,7 @@ LIST * evaluate_rule( RULE * rule, OBJECT * rulename, FRAME * frame )
 
     /* Check traditional targets $(<) and sources $(>). */
     if ( !rule->actions && !rule->procedure )
-        unknown_rule( frame, NULL, frame->module, rule->name );
+        unknown_rule( frame, NULL, frame->module, rulename );
 
     /* If this rule will be executed for updating the targets then construct the
      * action for make().

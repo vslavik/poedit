@@ -58,7 +58,7 @@ int test_std_array(){
             BOOST_TRY {
                 ia >> boost::serialization::make_nvp("a_array", a_array1);
             }
-            BOOST_CATCH (boost::archive::archive_exception ae){
+            BOOST_CATCH (boost::archive::archive_exception const& ae){
                 BOOST_CHECK(
                     boost::archive::archive_exception::array_size_too_short
                     == ae.code

@@ -20,6 +20,19 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
+#if (__cplusplus >= 201103L) || defined(BOOST_NO_CXX98_RANDOM_SHUFFLE)
+#include <random>
+
+std::default_random_engine gen;
+template<typename RandomIt>
+void do_shuffle(RandomIt first, RandomIt last)
+{ std::shuffle(first, last, gen); }
+#else
+template<typename RandomIt>
+void do_shuffle(RandomIt first, RandomIt last)
+{ std::random_shuffle(first, last); }
+#endif
+
 class custom {
   int m_x;
   friend bool operator<(custom const& x, custom const& y);
@@ -117,7 +130,7 @@ void test_minmax(CIterator first, CIterator last, int n)
 
   CHECK_EQUAL_ITERATORS( min, std::min_element(first, last), first );
   CHECK_EQUAL_ITERATORS( max, std::max_element(first, last), first );
-  
+
   // second version, comp function object (keeps a counter!)
   lc.reset();
   tie( boost::minmax_element(first, last, lc), min, max );
@@ -183,7 +196,7 @@ void test_minmax(CIterator first, CIterator last, int n)
 
 template <class Container, class Iterator, class Value>
 void test_container(Iterator first, Iterator last, int n,
-                    Container* dummy = 0
+                    Container* /* dummy */ = 0
                     BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(Value) )
 {
   Container c(first, last);
@@ -223,7 +236,7 @@ void test(int n BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(Value))
   test_range(first, last, n);
 
   // Populate test vector with random values
-  std::random_shuffle(first, last);
+  do_shuffle(first, last);
   test_range(first, last, n);
 }
 

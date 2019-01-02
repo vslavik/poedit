@@ -29,6 +29,13 @@ void expected_results()
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
+      ".*RD: y = z",                 // test data group
+      ".*", 120, 30);                 // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*",                          // test type(s)
       ".*",                          // test data group
       ".*", 40, 20);                 // test function
    //
