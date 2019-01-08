@@ -611,7 +611,10 @@ class POLoadParser : public POCatalogParser
                 return lang;
 
             auto utf8 = m_allMsgidText.utf8_str();
-            return Language::TryDetectFromText(utf8.data(), utf8.length());
+            lang = Language::TryDetectFromText(utf8.data(), utf8.length());
+            if (!lang.IsValid())
+                lang = Language::English();  // gettext historically assumes English
+            return lang;
         }
 
     protected:
