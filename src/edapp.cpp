@@ -56,6 +56,10 @@
 #include <winsparkle.h>
 #endif
 
+#ifdef __WXGTK3__
+#include <glib.h>
+#endif
+
 #include <unicode/uclean.h>
 #include <unicode/putil.h>
 
@@ -332,6 +336,11 @@ bool PoeditApp::OnInit()
 #ifdef __WXMSW__
     // remove the current directory from the default DLL search order
     SetDllDirectory(L"");
+#endif
+
+#ifdef __WXGTK3__
+    // Wayland compatibility, see https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
+    g_set_prgname("net.poedit.Poedit");
 #endif
 
     SetVendorName("Vaclav Slavik");
