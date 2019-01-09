@@ -2375,7 +2375,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
         else // no error, check for warning-worthy stuff
         {
-            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr())
+            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !m_catalog->IsFromCrowdin())
             {
                 AttentionMessage msg
                     (
