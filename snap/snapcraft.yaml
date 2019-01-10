@@ -19,7 +19,7 @@ description: >
 
 grade: stable
 confinement: strict
-icon: artwork/linux/appicon/256x256/apps/poedit.png
+icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
 
 apps:
   poedit:
@@ -167,8 +167,6 @@ parts:
         - share/locale/*
       manpages:
         - share/man/*
-      pixmaps:
-        - share/pixmaps/*
       resources:
         - share/poedit/*
 
@@ -178,7 +176,6 @@ parts:
       - $freedesktop-desktop-entries
       - $manpages
       - $localizations
-      - $pixmaps
       - $resources
 
     prime:
@@ -187,7 +184,6 @@ parts:
       - $freedesktop-desktop-entries
       - $manpages
       - $localizations
-      - $pixmaps
       - $resources
 
     build-attributes:
