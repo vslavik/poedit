@@ -116,6 +116,21 @@ public:
         m_shrinkable = win ? GetItem(win) : nullptr;
     }
 
+#if wxCHECK_VERSION(3,1,3)
+    virtual void RepositionChildren(const wxSize& minSize) override
+    {
+        if (m_shrinkable)
+        {
+            const wxCoord totalSize = GetSizeInMajorDir(m_size);
+            const wxCoord minMSize = GetSizeInMajorDir(minSize);
+            // If there's not enough space, make shrinkable item proportional,
+            // it will be resized under its minimal size then.
+            m_shrinkable->SetProportion(totalSize < minMSize ? 10000 : 0);
+        }
+
+        wxBoxSizer::RepositionChildren(minSize);
+    }
+#else
     void RecalcSizes() override
     {
         if (m_shrinkable)
@@ -129,6 +144,7 @@ public:
 
         wxBoxSizer::RecalcSizes();
     }
+#endif
 
 private:
     wxSizerItem *m_shrinkable;
