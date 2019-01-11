@@ -709,7 +709,7 @@ bool POLoadParser::OnEntry(const wxString& msgid,
         d->SetTranslations(mtranslations);
         d->SetComment(comment);
         d->SetLineNumber(lineNumber);
-        d->SetReferences(references);
+        d->SetRawReferences(references);
 
         for (auto i: extractedComments)
         {
@@ -761,9 +761,40 @@ bool POLoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 }
 
 
+// ----------------------------------------------------------------------
+// POCatalogItem class
+// ----------------------------------------------------------------------
+
+wxArrayString POCatalogItem::GetReferences() const
+{
+    // A line may contain several references, separated by white-space.
+    // Each reference is in the form "path_name:line_number"
+    // (path_name may contain spaces)
+
+    wxArrayString refs;
+
+    for ( wxArrayString::const_iterator i = m_references.begin(); i != m_references.end(); ++i )
+    {
+        wxString line = *i;
+
+        line = line.Strip(wxString::both);
+        while (!line.empty())
+        {
+            size_t idx = 0;
+            while (idx < line.length() && line[idx] != _T(':')) { idx++; }
+            while (idx < line.length() && !wxIsspace(line[idx])) { idx++; }
+
+            refs.push_back(line.Left(idx));
+            line = line.Mid(idx).Strip(wxString::both);
+        }
+    }
+
+    return refs;
+}
+
 
 // ----------------------------------------------------------------------
-// Catalog class
+// POCatalog class
 // ----------------------------------------------------------------------
 
 POCatalog::POCatalog(Type type) : Catalog(type)

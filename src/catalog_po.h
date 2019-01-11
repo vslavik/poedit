@@ -40,11 +40,19 @@ public:
     POCatalogItem() {}
     POCatalogItem(const CatalogItem&) = delete;
 
+    wxArrayString GetReferences() const override;
+
 protected:
+    const wxArrayString& GetRawReferences() const { return m_references; }
+    void SetRawReferences(const wxArrayString& ref) { m_references = ref; }
+
     void UpdateInternalRepresentation() override {}
 
     friend class POLoadParser;
     friend class POCatalog;
+
+protected:
+    wxArrayString m_references;
 };
 
 

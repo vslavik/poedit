@@ -1004,33 +1004,6 @@ unsigned CatalogItem::GetPluralFormsCount() const
     return trans - 1;
 }
 
-wxArrayString CatalogItem::GetReferences() const
-{
-    // A line may contain several references, separated by white-space.
-    // Each reference is in the form "path_name:line_number"
-    // (path_name may contain spaces)
-
-    wxArrayString refs;
-
-    for ( wxArrayString::const_iterator i = m_references.begin(); i != m_references.end(); ++i )
-    {
-        wxString line = *i;
-
-        line = line.Strip(wxString::both);
-        while (!line.empty())
-        {
-            size_t idx = 0;
-            while (idx < line.length() && line[idx] != _T(':')) { idx++; }
-            while (idx < line.length() && !wxIsspace(line[idx])) { idx++; }
-
-            refs.push_back(line.Left(idx));
-            line = line.Mid(idx).Strip(wxString::both);
-        }
-    }
-
-    return refs;
-}
-
 wxString CatalogItem::GetOldMsgid() const
 {
     wxString s;

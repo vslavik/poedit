@@ -276,7 +276,25 @@ public:
             target.remove_attribute("state-qualifier");
             remove_all_children(target);
         }
+    }
 
+    wxArrayString GetReferences() const override
+    {
+        wxArrayString refs;
+        for (auto loc: m_node.select_nodes(".//context-group[@purpose='location']"))
+        {
+            wxString file, line;
+            for (auto ctxt: loc.node().children("context"))
+            {
+                auto type = ctxt.attribute("context-type").value();
+                if (strcmp(type, "sourcefile") == 0)
+                    file = str::to_wx(ctxt.text().get());
+                else if (strcmp(type, "linenumber") == 0)
+                    line = ":" + str::to_wx(ctxt.text().get());
+            }
+            refs.push_back(file + line);
+        }
+        return refs;
     }
 };
 
@@ -338,7 +356,7 @@ public:
         std::string state = node.attribute("subState").value();
         m_isFuzzy = (state == "poedit:fuzzy");
 
-        for (auto note: unit().select_nodes(".//note"))
+        for (auto note: unit().select_nodes(".//note[not(@category='location')]"))
         {
             std::string noteText = note.node().text().get();
 
@@ -384,11 +402,21 @@ public:
             m_node.remove_attribute("subState");
             remove_all_children(target);
         }
-
     }
 
+    wxArrayString GetReferences() const override
+    {
+        wxArrayString refs;
+        for (auto note: unit().select_nodes(".//note[@category='location']"))
+        {
+            refs.push_back(str::to_wx(note.node().text().get()));
+        }
+        return refs;
+    }
+
+
 protected:
-    xml_node unit() { return m_node.parent(); }
+    xml_node unit() const { return m_node.parent(); }
 };
 
 
