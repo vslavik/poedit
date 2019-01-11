@@ -166,6 +166,10 @@ std::wregex RE_PHP_FORMAT(LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeE
 std::wregex RE_C_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
                         std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
+// variables expansion for %foo% (Twig), {foo} and {{foo}}
+std::wregex RE_COMMON_PLACEHOLDERS(LR"((%[0-9a-zA-Z_.-]+%)|(\{[0-9a-zA-Z_.-]+\})|(\{\{[0-9a-zA-Z_.-]+\}\}))",
+                    std::regex_constants::ECMAScript | std::regex_constants::optimize);
+
 } // anonymous namespace
 
 
@@ -173,9 +177,10 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
 {
     auto formatFlag = item.GetFormatFlag();
     bool needsHTML = std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP);
+    bool needsPlaceholders = std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS);
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();
-    if (!needsHTML && formatFlag.empty())
+    if (!needsHTML && !needsPlaceholders && formatFlag.empty())
         return basic;
 
     auto all = std::make_shared<CompositeSyntaxHighlighter>();
@@ -185,6 +190,13 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
     {
         static auto html = std::make_shared<RegexSyntaxHighlighter>(RE_HTML_MARKUP, TextKind::Markup);
         all->Add(html);
+    }
+
+    if (needsPlaceholders)
+    {
+        // If no format specified, heuristically apply highlighting of common variable markers
+        static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(RE_COMMON_PLACEHOLDERS, TextKind::Format);
+        all->Add(placeholders);
     }
 
     // TODO: more/all languages
