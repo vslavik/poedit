@@ -23,8 +23,6 @@ icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
 
 apps:
   poedit:
-    # WORKAROUND: Fix icon loading problem
-    # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/121
     command: >
       desktop-launch poedit
     desktop: share/applications/net.poedit.Poedit.desktop
@@ -63,6 +61,11 @@ plugs:
   gsettings:
   mount-observe:
 
+  gnome-3-26-1604:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-3-26-1604:gnome-3-26-1604
+
 parts:
   poedit:
     after:
@@ -71,7 +74,6 @@ parts:
       - gtkspell
       - patches
       - wxwidgets
-      - desktop-gtk3
 
     source: .
 
@@ -133,6 +135,10 @@ parts:
         --file "${SNAPCRAFT_STAGE}"/patches/postprocess-desktop-entries.sed \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
+
     stage-packages:
       # Called by Poedit
       - gettext
@@ -188,6 +194,8 @@ parts:
 
     build-attributes:
       - no-system-libraries
+
+  desktop-gnome-platform:
 
   boostlib:
     after:
@@ -256,6 +264,9 @@ parts:
       - libtiff5-dev
       - libxtst-dev
       - zlib1g-dev
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
 
     plugin: autotools
     override-build: |
@@ -323,53 +334,17 @@ parts:
 
   # This pseudo part setups Compiler cache(ccache) to the stage dir.
   #
-  # To use it simply add a dependency to this part and prepend
-  # "$SNAPCRAFT_STAGE"/bin to the command search PATHs
+  # To use it simply add a dependency to this part for every part you'd
+  # prefer caching
   ccache:
     after:
       - gcc-6
-    override-pull: 'true'
-    build-packages:
-      - ccache
-    plugin: nil
-    override-build: |
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}"/bin
-      ln \
-        --force \
-        --symbolic \
-        "$(which ccache)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc-6
-      ln \
-        --force \
-        --symbolic \
-        "$(which ccache)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++-6
-      ln \
-        --force \
-        --symbolic \
-        ./gcc-6 \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc
-      ln \
-        --force \
-        --symbolic \
-        ./g++-6 \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++
-    filesets:
-      executables:
-        - bin/*
-    stage:
-      - $executables
-    override-prime: 'true'
 
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
   gcc-6:
+    source: snap/local/empty
     plugin: nil
-    # Poedit sources will be used when `source` is ommitted, avoid this
-    # behavior
-    override-pull: 'true'
     override-build: |
       sudo apt --yes install software-properties-common
 
@@ -410,10 +385,8 @@ parts:
     override-prime: 'true'
 
   spellcheck-dictionaries:
+    source: snap/local/empty
     plugin: nil
-    # Poedit sources will be used when `source` is ommitted, avoid this
-    # behavior
-    override-pull: 'true'
     override-build: |
       set -eu
 
@@ -446,7 +419,7 @@ parts:
       - $hunspell-dictionaries
 
   # Self-built GtkSpell Part #
-  # This part provides a patched old version of the GtkSpell library
+  # This part provides a patched recent version of the GtkSpell library
   # to fix the non-relocatable iso-codes data path.
   gtkspell:
     after:
@@ -500,6 +473,10 @@ parts:
       - $localization
     prime:
       - $localization
+
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
 
   # Self-built Enchant Part #
   # This part provides a patched recent version of the Enchant spell-
@@ -584,11 +561,10 @@ parts:
       - $shared-libraries
 
   # Patched Ubuntu iso-codes installation
-  # This patch slightly patches iso-codes's pkg-config so that non-
+  # This part slightly patches iso-codes's pkg-config so that non-
   # relocable GtkSpell part can locate its data
   iso-codes:
-    override-pull: 'true'
-
+    source: snap/local/empty
     plugin: nil
     override-build: |
       set -eu
@@ -631,7 +607,7 @@ parts:
   # This pseudo part installs the patches required for building other
   # parts into the stage tree
   patches:
-    source: snap/patches
+    source: snap/local/patches
     plugin: dump
 
     # DISABLED: `organize:{ /: another-dir/ }` causes the items under host
