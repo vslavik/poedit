@@ -111,7 +111,7 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
                          wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, PX(2)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
-        m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Expand());
+        m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Center());
         m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     }
     m_innerSizer = new wxBoxSizer(wxVERTICAL);
