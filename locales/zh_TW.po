@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
 "POT-Creation-Date: 2018-10-07 13:14+0200\n"
-"PO-Revision-Date: 2018-10-07 10:41\n"
+"PO-Revision-Date: 2019-01-14 16:33\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -30,39 +30,39 @@ msgid "(New: %i, obsolete: %i)"
 msgstr "(新增：%i，棄用：%i)"
 
 msgid "Updating catalog"
-msgstr "更新編目檔中"
+msgstr "正在更新編目檔"
 
 msgid "Collecting source files…"
-msgstr "正在收集來源檔…"
+msgstr "正在收集原始程式檔…"
 
 msgid "Extracting translatable strings…"
-msgstr "正在抽出可翻譯的字串…"
+msgstr "正在擷取可翻譯字串…"
 
 msgid "Failed to load extracted catalog."
-msgstr "無法載入抽出的編目檔。"
+msgstr "無法載入已擷取的編目檔。"
 
 msgid "Merging differences…"
 msgstr "正在合併差異…"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
-msgstr "「%s」不是有效的 POT 檔。"
+msgstr "「%s」是無效的 POT 檔。"
 
 #, c-format
 msgid "Malformed header: “%s”"
-msgstr "格式不良的檔頭：「%s」"
+msgstr "格式錯誤的檔案標頭：%s"
 
 msgid "PO Translation Files"
 msgstr "PO 翻譯檔"
 
 msgid "POT Translation Templates"
-msgstr "POT 翻譯模板"
+msgstr "POT 譯文模本"
 
 msgid "XLIFF Translation Files"
 msgstr "XLIFF 翻譯檔"
 
 msgid "All Translation Files"
-msgstr "所有翻譯檔"
+msgstr "全部譯文檔案"
 
 #, c-format
 msgid "File “%s” is in unsupported format."
@@ -71,11 +71,11 @@ msgstr "「%s」檔案是未支援格式。"
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "共有 %i 列 (檔案「%s」中) 未正確載入。"
+msgstr[0] "總計 %i 列  (檔案為 %s) 沒有正確載入。"
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr "第 %d 列 (檔案「%s」中) 已毀損 (不是有效的 %s 資料)。"
+msgstr "第 %d 列 (檔案為 %s) 已毀損 (無效的 %s 資料)。"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -87,23 +87,23 @@ msgstr "損毀的編目檔：雖使用複數形式的 msgstr 卻沒有 msgid_plu
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
-msgstr "載入編目檔時發生錯誤。結果可能某些資料闕漏或損毀。"
+msgstr "載入編目檔時發生錯誤，這可能會導致遺失或損毀某些資料。"
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "無法載入 %s 檔，可能已損毀。"
+msgstr "無法載入檔案 %s，檔案可能已損毀。"
 
 #, c-format
 msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"檔案「%s」因唯讀而無法儲存。\n"
+"檔案 %s 因設定為唯讀而無法儲存。\n"
 "請以不同檔名儲存檔案。"
 
 #, c-format
 msgid "Couldn’t save file %s."
-msgstr "無法儲存 %s 檔。"
+msgstr "無法儲存檔案 %s。"
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -116,9 +116,9 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"這個編目檔無法以編目檔設定中所指定的「%s」字集儲存。\n"
+"這個編目檔無法以編目檔設定中所指定的 %s 字元集進行儲存。\n"
 "\n"
-"它已改用 UTF-8 儲存，設定值也同時隨之修改。"
+"Poedit 已改用 UTF-8 完成儲存，同時也對這項設定進行對應的修改。"
 
 msgid "Error saving catalog"
 msgstr "儲存編目檔時發生錯誤"
@@ -263,7 +263,7 @@ msgid ""
 msgstr "請改開啟並編輯對應的 PO 檔。當您儲存時，MO 檔會同時更新。"
 
 msgid "don’t delete temporary files (for debugging)"
-msgstr "不要刪除暫存檔 (供除錯用)"
+msgstr "不要刪除暫存檔 (用於偵錯)"
 
 msgid "handle a poedit:// URI"
 msgstr "處理 poedit:// URI"
@@ -283,7 +283,7 @@ msgstr "開啟編目檔"
 
 #, c-format
 msgid "File “%s” doesn’t exist."
-msgstr "「%s」檔不存在。"
+msgstr "檔案 %s 不存在。"
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit 是個易用的翻譯編輯器。"
@@ -402,7 +402,7 @@ msgid ""
 msgstr "檔案可能損毀，或是採用 Poedit 無法辨認的格式。"
 
 msgid "You can’t drop more than one file on Poedit window."
-msgstr "您不能拖曳超過一個檔案進 Poedit 視窗裡。"
+msgstr "請不要拖放超過一個檔案至 Poedit 視窗中。"
 
 #, c-format
 msgid "File “%s” is not a translation file."
@@ -423,19 +423,19 @@ msgstr "前往(&G)"
 #, c-format
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "由於尚未安裝 %s 字典，已停用拼寫檢查。"
+msgstr "由於尚未安裝 %s 字典，因此拼字檢查已停用。"
 
 msgid "Install"
 msgstr "安裝"
 
 msgid "Catalog modified. Do you want to save changes?"
-msgstr "專案已修改，您確定要儲存這些修改嗎？"
+msgstr "編目檔已修改。請問您是否要儲存這些更動？"
 
 msgid "Save changes"
 msgstr "儲存變更"
 
 msgid "Your changes will be lost if you don’t save them."
-msgstr "如果不儲存，會失去您所做過的變更。"
+msgstr "如果不儲存，便會失去剛剛進行的變更。"
 
 msgid "Save"
 msgstr "儲存"
@@ -447,25 +447,25 @@ msgid "Don’t Save"
 msgstr "不要儲存"
 
 msgid "Save as…"
-msgstr "另存為…"
+msgstr "另存新檔…"
 
 msgid "Compile to…"
 msgstr "編譯成…"
 
 msgid "Compiled Translation Files"
-msgstr "編譯的翻譯檔"
+msgstr "已編譯的譯文檔案"
 
 msgid "Export as…"
-msgstr "匯出為…"
+msgstr "匯出成…"
 
 msgid "HTML Files"
 msgstr "HTML 檔案"
 
 msgid "Open catalog template"
-msgstr "開啟編目模板檔"
+msgstr "開啟編目模本檔"
 
 msgid "Source code not available."
-msgstr "原始碼無法使用。"
+msgstr "原始程式碼無法使用。"
 
 msgid "Updating failed"
 msgstr "更新失敗"
@@ -474,13 +474,14 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the catalog’s Properties."
 msgstr ""
-"由於在專案的屬性中所指定的位置找不到程式代碼，所以無法從原始碼更新翻譯。"
+"由於在「編目檔」的「屬性」中所指定的路徑找不到原始程式碼，所以無法從原始程式"
+"碼更新譯文。"
 
 msgid "Entries in the catalog are probably incorrect."
-msgstr "專案裡的項目可能有不正確。"
+msgstr "編目檔裡的條目可能有不正確。"
 
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "專案更新失敗。請按下 [Details >>] 查看詳細資訊。"
+msgstr "編目檔更新失敗。請點擊「詳細資料 >>」查看相關資訊。"
 
 #, c-format
 msgid "%d issue with the translation found."
@@ -501,20 +502,20 @@ msgstr "檔案已順利儲存。"
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
-msgstr "檔案已順利儲存，且成功編譯為 MO 格式，但仍可能無法正常運作。"
+msgstr "檔案已順利儲存，且成功編譯為 MO 格式的檔案，但有可能無法正確運作。"
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
-msgstr "檔案已順利儲存，但是無法編譯成 MO 格式所以也無法真的使用。"
+msgstr "檔案已順利儲存，但無法編譯成 MO 格式的檔案，所以無法使用。"
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
-msgstr "檔案已編譯成 MO 格式，但可能無法正常運作。"
+msgstr "已編譯成 MO 格式的檔案，但有可能無法正確運作。"
 
 msgid "The file cannot be compiled into the MO format and used."
-msgstr "檔案無法編譯成 MO 格式並使用。"
+msgstr "無法編譯成 MO 格式的檔案，所以無法使用。"
 
 msgid "No problems with the translation found."
 msgstr "找不到譯文的問題。"
@@ -523,24 +524,24 @@ msgstr "找不到譯文的問題。"
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "譯文已準備好可供使用，但還有 %d 項尚未翻譯。"
+msgstr[0] "譯文已準備就緒，但仍有 %d 個項目尚未翻譯。"
 
 msgid "The translation is ready for use."
-msgstr "譯文已準備好可供使用。"
+msgstr "譯文已準備就緒。"
 
 msgid "Warnings have been disabled."
-msgstr "已停用警告。"
+msgstr "警告訊息將會停用。"
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
-"若您是因過多誤報而停用警告，請考慮將樣本檔寄給 help@poedit.net 來協助改善情"
-"況。"
+"如果因為過多的誤判警告訊息導致導致必須予以停用警告訊息，建議將範例檔案傳送至 "
+"help@poedit.net 以協助我們加以改進。"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit 已自動修正「%s」檔中的無效內容。"
+msgstr "Poedit 已自動修正 %s 檔案中無效的內容。"
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -552,7 +553,7 @@ msgstr ""
 "個問題，但您應該校閱任何標記為需要處理的項目，如有需要也請校正其內容。"
 
 msgid "Language of the translation isn’t set."
-msgstr "尚未設定譯文的語言。"
+msgstr "尚未設定目標語言。"
 
 msgid "Set Language"
 msgstr "設定語言"
@@ -565,11 +566,11 @@ msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"如果未正確設定翻譯語言，則無法使用翻譯建議。其他功能，如複數型，也可能受到影"
-"響。"
+"如果沒有正確設定目標語言，便無法使用建議譯文；其他功能如複數型設定，也可能受"
+"到影響。"
 
 msgid "Language of the translation is the same as source language."
-msgstr "翻譯語言與來源語言相同。"
+msgstr "目標語言與來源語言相同。"
 
 msgid "Fix Language"
 msgstr "修正語言"
@@ -580,32 +581,32 @@ msgstr "修正語言"
 msgid ""
 "This catalog has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
-msgstr "這個編目檔內含有複數形式之條目，但卻尚未設定 Plural-Forms 檔頭。"
+msgstr "這個編目檔包含複數型項目，但卻沒有設定 Plural-Forms 標頭。"
 
 msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog’s Plural-Forms header says"
-msgstr "此編目檔中條目的複數形式數目，與編目檔 Plural-Forms 檔頭的記錄不符"
+msgstr "這個編目檔中項目的複數型，與資料目錄的 Plural-Forms 標頭設定值不符"
 
 msgid "Required header Plural-Forms is missing."
-msgstr "闕漏必要的 Plural-Forms 檔頭。"
+msgstr "遺失必要的 Plural-Forms 標頭。"
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Plural-Forms 檔頭中有語法錯誤 (\"%s\")。"
+msgstr "Plural-Forms 標頭中有語法錯誤 (%s)。"
 
 msgid "Fix the Header"
-msgstr "修正檔頭"
+msgstr "修正標頭"
 
 msgid "Fix the header"
-msgstr "修正檔頭"
+msgstr "修正標頭"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "這個專案所採用的複數形式表述式，對 %s 來說並不常見。"
+msgstr "這個編目檔所採用的複數形式表述式，對 %s 來說並不常見。"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
 msgid "Review"
@@ -617,11 +618,11 @@ msgstr "載入訊息編目檔「%s」時發生錯誤。"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
-msgstr "已譯：%d / %d (%d %%)"
+msgstr "已翻譯 %d 筆原文，總計 %d 筆 (完成進度為 %d%%)"
 
 #, c-format
 msgid "Remaining: %d"
-msgstr "剩餘：%d"
+msgstr "尚餘 %d 筆原文未翻譯"
 
 #, c-format
 msgid "%d error"
@@ -631,7 +632,7 @@ msgstr[0] "%d 項錯誤"
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
-msgstr[0] "%d 項"
+msgstr[0] "%d 個項目"
 
 msgid " (unsaved)"
 msgstr " (未儲存)"
@@ -641,33 +642,33 @@ msgstr " (已修改)"
 
 #, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "無法更新翻譯記憶：%s"
+msgstr "無法更新譯文記憶庫：%s"
 
 msgid "Purge deleted translations"
-msgstr "淨空已刪除的譯文"
+msgstr "清除已刪除的譯文"
 
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr "請問您是否想要移除所有不再用到的譯文？"
+msgstr "確定要移除全部不再使用的譯文？"
 
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"如果您繼續淨空，所有標示為已刪除之譯文將永遠移除。如果未來這些訊息重新加回"
-"來，您就得重新再翻譯一遍。"
+"如果繼續清除，全部標示為已刪除的譯文便會永久移除。如果未來這些訊息再次加入，"
+"就必須再重新翻譯一次。"
 
 msgid "Keep"
 msgstr "保留"
 
 msgid "Purge"
-msgstr "淨空"
+msgstr "清除"
 
 msgid "Copy from source text"
-msgstr "從來源文字複製"
+msgstr "從原文複製"
 
 msgid "Copy from Source Text"
-msgstr "從來源文字複製"
+msgstr "從原文複製"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
@@ -741,7 +742,7 @@ msgid "Pre-translated"
 msgstr "前置翻譯"
 
 msgid "Needs Work"
-msgstr "需要處理"
+msgstr "待校閱"
 
 #. TRANSLATORS: This indicates that the string's translation isn't final
 #. and has known problems.  For example, it might be machine translated or
@@ -752,23 +753,23 @@ msgstr "需要處理"
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
 msgid "Needs work"
-msgstr "需要處理"
+msgstr "待校閱"
 
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
-"POT 檔僅只是翻譯模板，檔案內並不包含任何翻譯。\n"
-"若要翻譯，請根據該模板建立新的 PO 檔。"
+"POT 檔案僅是譯文模本，檔案內不包含任何譯文。\n"
+"若要進行翻譯，請以這個模本建立新的 PO 譯文檔案。"
 
 msgid "Create New Translation"
-msgstr "建立新翻譯"
+msgstr "建立新譯文"
 
 msgid "Create new translation"
-msgstr "建立新翻譯"
+msgstr "建立新譯文"
 
 msgid "Everything"
-msgstr "每一項"
+msgstr "單複數合併譯文"
 
 #, c-format
 msgid "Form %i"
@@ -785,10 +786,10 @@ msgid "Zero"
 msgstr "零"
 
 msgid "One"
-msgstr "壹"
+msgstr "單數"
 
 msgid "Two"
-msgstr "貳"
+msgstr "複數"
 
 msgid "Plural"
 msgstr "複數"
@@ -806,7 +807,7 @@ msgid "%s format"
 msgstr "%s 格式"
 
 msgid "Source text"
-msgstr "來源文字"
+msgstr "原文"
 
 #, c-format
 msgid "Translation — %s"
@@ -817,10 +818,10 @@ msgstr "ID"
 
 #, c-format
 msgid "Source text — %s"
-msgstr "來源文字 — %s"
+msgstr "原文 — %s"
 
 msgid "unknown language"
-msgstr "未知語言"
+msgstr "未知的語言"
 
 #, c-format
 msgid "Failed command: %s"
@@ -830,23 +831,23 @@ msgid "Failed to merge gettext catalogs."
 msgstr "無法合併 gettext 編目檔。"
 
 msgid "Source file"
-msgstr "來源檔案"
+msgstr "原始程式檔"
 
 msgid "Source file occurrence:"
-msgstr "來源檔案出現處："
+msgstr "原始程式檔出現位置："
 
 msgid "Open in Editor"
-msgstr "以編輯器開啟"
+msgstr "在編輯器中開啟"
 
 msgid "Open in editor"
-msgstr "以編輯器開啟"
+msgstr "在編輯器中開啟"
 
 msgid "No references for the selected item."
 msgstr "選取的項目沒有參照。"
 
 #, c-format
 msgid "Error opening file %s!"
-msgstr "開啟 %s 檔時發生錯誤！"
+msgstr "開啟檔案 %s 時發生錯誤！"
 
 msgid "Find"
 msgstr "尋找"
@@ -862,19 +863,19 @@ msgid "Ignore case"
 msgstr "忽略字母大小寫"
 
 msgid "Wrap around"
-msgstr "前後循環"
+msgstr "循環尋找"
 
 msgid "Whole words only"
-msgstr "只針對整個單詞"
+msgstr "全字拼寫須相符"
 
 msgid "Find in source texts"
-msgstr "尋找來源文字"
+msgstr "在原文中尋找"
 
 msgid "Find in translations"
-msgstr "從譯文中尋找"
+msgstr "在譯文中尋找"
 
 msgid "Find in comments"
-msgstr "從註解中尋找"
+msgstr "在註解中尋找"
 
 msgid "Close"
 msgstr "關閉"
@@ -889,35 +890,35 @@ msgid "&Replace"
 msgstr "取代(&R)"
 
 msgid "< &Previous"
-msgstr "< 上一個(&P)"
+msgstr "< 前一筆(&P)"
 
 msgid "&Next >"
-msgstr "下一個(&N) >"
+msgstr "下一筆(&N) >"
 
 msgid "String to find"
-msgstr "要尋找的字串"
+msgstr "尋找字串"
 
 msgid "Replacement string"
-msgstr "取代用字串"
+msgstr "取代字串"
 
 #, c-format
 msgid "Cannot execute program: %s"
 msgstr "無法執行程式：%s"
 
 msgid "Language Code or Name (e.g. en_GB)"
-msgstr "語言代碼或名稱 (例：zh_TW)"
+msgstr "語言代碼或名稱 (例如 zh_TW)"
 
 msgid "Translation Language"
 msgstr "譯文語言"
 
 msgid "Language of the translation:"
-msgstr "譯文的語言："
+msgstr "譯文語言："
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - 專案管理員"
+msgstr "Poedit - 編目檔管理員"
 
 msgid "Catalog"
-msgstr "專案"
+msgstr "編目檔"
 
 msgid "Total"
 msgstr "總計"
@@ -929,7 +930,7 @@ msgid "Errors"
 msgstr "錯誤"
 
 msgid "Last modified"
-msgstr "上次修改於"
+msgstr "上次修改時間"
 
 msgid "Select directory"
 msgstr "選取目錄"
@@ -941,7 +942,7 @@ msgid "<unnamed>"
 msgstr "<未命名>"
 
 msgid "Do you want to delete the project?"
-msgstr "請問您是否想刪除這個專案？"
+msgstr "確定要刪除這個專案？"
 
 msgid "Confirmation"
 msgstr "確認"
@@ -951,7 +952,7 @@ msgid ""
 "all catalogs in this project?"
 msgstr ""
 "請問您是否真想要大規模更新\n"
-"這個專案中的所有專案？"
+"這個專案中的所有編目檔？"
 
 msgid "Information about the translator"
 msgstr "譯者資訊"
@@ -963,7 +964,7 @@ msgid "Your Name"
 msgstr "您的姓名"
 
 msgid "Email:"
-msgstr "電子郵件："
+msgstr "電子郵件地址："
 
 msgid "your_email@example.com"
 msgstr "your_email@example.com"
@@ -972,19 +973,19 @@ msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr ""
-"您的姓名與電子郵件位址僅用於設定 GNU gettext 檔的 Last-Translator 標頭部份。"
+"您的姓名與電子郵件位址僅用於設定 GNU gettext 檔案的 Last-Translator 標頭。"
 
 msgid "Editing"
 msgstr "編輯"
 
 msgid "Automatically compile MO file when saving"
-msgstr "儲存時自動編譯 MO 檔"
+msgstr "儲存時自動編譯 MO 檔案"
 
 msgid "Show summary after catalog update"
-msgstr "更新專案後顯示摘要"
+msgstr "更新編目檔後顯示摘要"
 
 msgid "Check spelling"
-msgstr "檢查拼寫"
+msgstr "拼字檢查"
 
 msgid "Always change focus to text input field"
 msgstr "永遠將焦點放在文字輸入欄位中"
@@ -1007,32 +1008,32 @@ msgid "Use custom text fields font:"
 msgstr "使用自訂文字欄位字型："
 
 msgid "Change UI language"
-msgstr "變更介面語言"
+msgstr "變更使用者介面語言"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
 msgid "(requires Windows 8 or newer)"
-msgstr "(需要 Windows 8 或更高版本)"
+msgstr "(需要 Windows 8 或更新版本)"
 
 msgid "General"
 msgstr "一般"
 
 msgid "Use translation memory"
-msgstr "使用翻譯記憶"
+msgstr "使用譯文記憶庫"
 
 msgid "Manage…"
 msgstr "管理…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
-msgstr "從來源更新時"
+msgstr "從原始程式碼進行更新時"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr "在檔案內部模糊比對"
+msgstr "在檔案內部進行模糊比對"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
-msgstr "用翻譯記憶作為前置翻譯"
+msgstr "使用譯文記憶庫進行前置翻譯"
 
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
@@ -1040,83 +1041,83 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
-"Poedit 可以試圖根據檔案中之前的譯文填入新項目，或採用您的整個翻譯記憶填入新項"
-"目。若翻譯記憶的量很少則用起來效果不會很好，不過隨著您加入越多譯文效果也會逐"
-"漸改善。"
+"Poedit 會嘗試將舊版檔案中的譯文或譯文記憶庫中的譯文代入新項目中。如果譯文記憶"
+"庫中累積的譯文量很少，這項功能的效果就不會很好，但是會隨著譯文量的增加逐漸改"
+"善效果。"
 
 msgid "Stored translations:"
-msgstr "儲存的翻譯："
+msgstr "已儲存的譯文:"
 
 msgid "Database size on disk:"
-msgstr "資料庫在磁碟上的大小："
+msgstr "譯文記憶庫使用的儲存空間:"
 
 msgid "Import Translation Files…"
-msgstr "匯入翻譯檔…"
+msgstr "匯入譯文檔案…"
 
 msgid "Import translation files…"
-msgstr "匯入翻譯檔…"
+msgstr "匯入譯文檔案…"
 
 msgid "Import From TMX…"
-msgstr "從 TMX 匯入…"
+msgstr "從 TMX 檔案匯入…"
 
 msgid "Import from TMX…"
-msgstr "從 TMX 匯入…"
+msgstr "從 TMX 檔案匯入…"
 
 msgid "Export To TMX…"
-msgstr "匯出為 TMX…"
+msgstr "匯出成 TMX 檔案…"
 
 msgid "Export to TMX…"
-msgstr "匯出為 TMX…"
+msgstr "匯出成 TMX 檔案…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
 msgstr "重設"
 
 msgid "Select translation files to import"
-msgstr "選取要匯入的翻譯檔"
+msgstr "選取要匯入的譯文檔案"
 
 msgid "Translation Memory"
-msgstr "翻譯記憶"
+msgstr "譯文記憶庫"
 
 msgid "Importing translations…"
-msgstr "正匯入譯文…"
+msgstr "正在匯入譯文…"
 
 msgid "Finalizing…"
-msgstr "正在收尾…"
+msgstr "正在完成…"
 
 msgid "Select TMX files to import"
-msgstr "選取要匯入的 TMX 檔"
+msgstr "選取要匯入的 TMX 檔案"
 
 msgid "TMX Files"
-msgstr "TMX 檔"
+msgstr "TMX 檔案"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr "從「%s」匯入翻譯記憶的操作失敗。"
+msgstr "無法從 %s 匯入譯文記憶庫。"
 
 msgid "Import error"
-msgstr "匯入發生錯誤"
+msgstr "匯入時發生錯誤"
 
 msgid "Exporting translations…"
-msgstr "匯出翻譯中…"
+msgstr "正在匯出譯文…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr "將翻譯記憶匯出成「%s」的操作失敗。"
+msgstr "無法將譯文記憶庫匯出至 %s。"
 
 msgid "Export error"
-msgstr "匯出發生錯誤"
+msgstr "匯出時發生錯誤"
 
 msgid "Reset translation memory"
-msgstr "重設翻譯記憶"
+msgstr "重設譯文記憶庫"
 
 msgid "Are you sure you want to reset the translation memory?"
-msgstr "您確定要重設翻譯記憶？"
+msgstr "確定要重設譯文記憶庫？"
 
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
-msgstr "重設翻譯記憶將刪除所有儲存過的翻譯，且不可回復。您將無法還原這項操作。"
+msgstr "重設譯文記憶庫將永久刪除全部已儲存的譯文。這項操作無法復原。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -1130,13 +1131,14 @@ msgstr "翻譯記憶"
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
-msgstr "原始碼抽取器用於尋找源瑪檔中的可譯字串，並將之抽取出來以便翻譯。"
+msgstr ""
+"原始程式碼擷取器用於尋找原始程式碼中的可翻譯字串，並將之擷取出來進行本地化。"
 
 msgid "Custom Extractors:"
-msgstr "自訂抽取器："
+msgstr "自訂擷取器："
 
 msgid "Custom extractors:"
-msgstr "自訂抽取器："
+msgstr "自訂擷取器："
 
 msgid "Edit…"
 msgstr "編輯…"
@@ -1148,18 +1150,18 @@ msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
-"支援所有 GNU gettext 工具能辨識的程式語言（PHP、C/C++、C#、Perl、Python、"
-"Java、JavaScript 與其他等）。"
+"支援全部 GNU gettext 工具能辨識的程式語言，包含 PHP、C/C++、C#、Perl、"
+"Python、Java、JavaScript 等程式語言。"
 
 msgid "Delete extractor"
-msgstr "刪除抽取器"
+msgstr "刪除擷取器"
 
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
-msgstr "您確定要刪除「%s」抽取器？"
+msgstr "確定要刪除「%s」擷取器？"
 
 msgid "Extractors"
-msgstr "抽取器"
+msgstr "擷取器"
 
 msgid "Accounts"
 msgstr "帳號"
@@ -1168,12 +1170,12 @@ msgid "Automatically check for updates"
 msgstr "自動檢查更新"
 
 msgid "Include beta versions"
-msgstr "包括 Beta 版"
+msgstr "包含 Beta 版"
 
 msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
-msgstr "Beta 版本包含最新功能和改善，但可能有點不穩定。"
+msgstr "Beta 版本包含最新功能和改進，但可能有點不穩定。"
 
 msgid "Updates"
 msgstr "更新"
@@ -1182,11 +1184,11 @@ msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
 msgstr ""
-"這些設定會影響 PO 檔案的內部格式化處理方式。如果您有特定需求再調整它們，例"
-"如：需要行版本控制。"
+"這些設定會影響 PO 檔案的內部格式化處理方式。如果有特定需求才需要調整它們，例"
+"如需要進行版本控制。"
 
 msgid "Line endings:"
-msgstr "列結尾："
+msgstr "行尾結束符號:"
 
 msgid "Unix (recommended)"
 msgstr "Unix (建議採用)"
@@ -1199,18 +1201,18 @@ msgid "Wrap at:"
 msgstr "換行位置："
 
 msgid "Preserve formatting of existing files"
-msgstr "保留既有檔案的格式化處理方式"
+msgstr "保留現有檔案的格式化處理方式"
 
 msgid "Advanced"
 msgstr "進階"
 
 msgid "Pre-translating…"
-msgstr "前置翻譯中…"
+msgstr "正在進行前置翻譯…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] "已前置翻譯 %u 項字串"
+msgstr[0] "已前置翻譯 %u 筆字串"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1226,51 +1228,52 @@ msgid "Pre-translate"
 msgstr "前置翻譯"
 
 msgid "Only fill in exact matches"
-msgstr "僅只填入完全相符項目"
+msgstr "僅代入完全相符的譯文"
 
 msgid ""
 "By default, inaccurate results are filled in as well and marked as needing "
 "work. Check this option to only include accurate matches."
 msgstr ""
-"預設情況下，也會同時填入不精確的項目，並將之標記為需要處理。勾選此選項以僅只"
-"納入精確符合的項目。"
+"依照預設，執行代入譯文的程序時，同時也會代入不準確的譯文，但會將這些不準確的"
+"譯文標記為 [待校閱]。啟用這項設定後，只會代入完全相符的譯文。"
 
 msgid "Don’t mark exact matches as needing work"
-msgstr "不要將完全符合的項目標記為需要處理"
+msgstr "不要將完全相符的譯文標示為 [待校閱]"
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
-"請您只有在信任翻譯記憶的品質時才啟用。預設情況下，所有翻譯記憶的符合項目都會"
-"標記為需要處理，並請在採用前先校閱。"
+"只有在信任譯文記憶庫的品質時才啟用這項設定。依照預設，與譯文記憶庫比對後，完"
+"全相符的項目代入的譯文都會標記為 [待校閱]，並請在採用前先行校閱。"
 
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
-"前置翻譯會從翻譯記憶中自動尋找完全相同、或相似的翻譯並填入未翻譯的項目中。"
+"前置翻譯會從譯文記憶庫中自動尋找完全相同或相似的譯文代入未翻譯的項目中。"
 
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
-msgstr[0] "%d 項已先前置翻譯。"
+msgstr[0] "%d 筆原文已完成前置翻譯。"
 
 msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
-msgstr "這些譯文被標記為需要處理，可能翻譯尚未明確。您應該校閱它們是否正確。"
+msgstr ""
+"這些譯文已標示為「需要處理」，可能翻譯尚未明確。您應該校閱它們是否正確。"
 
 msgid "No entries could be pre-translated."
-msgstr "沒有項目可以先前置翻譯。"
+msgstr "沒有任何原文可以完成前置翻譯。"
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
-"翻譯記憶尚未包含任何類似此檔案內容的字串。這僅在 Poedit 學習夠多您手動翻譯的"
-"檔案後，才會對半自動翻譯有效用。"
+"譯文記憶庫並未包含任何與這個檔案內容類似的字串。這項功能在 Poedit 儲存使用者"
+"夠多的手動翻譯結果後，對半自動翻譯才會產生效果。"
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1279,7 +1282,7 @@ msgid ""
 msgstr ""
 "<big>請將資料夾拖放到這裡</big>\n"
 "\n"
-"或是使用 + 鈕"
+"或是使用 + 按鈕"
 
 msgid ""
 "<big>Drag and drop folders here</big>\n"
@@ -1288,7 +1291,7 @@ msgid ""
 msgstr ""
 "<big>請將資料夾拖放到這裡</big>\n"
 "\n"
-"或是使用 + 鈕"
+"或是使用 + 按鈕"
 
 msgid "Add Folders…"
 msgstr "加入資料夾…"
@@ -1303,10 +1306,10 @@ msgid "Add files…"
 msgstr "加入檔案…"
 
 msgid "Add Wildcard…"
-msgstr "加入萬用字符…"
+msgstr "加入萬用字元…"
 
 msgid "Add wildcard…"
-msgstr "加入萬用字符…"
+msgstr "加入萬用字元…"
 
 msgid "Paths"
 msgstr "路徑"
@@ -1315,16 +1318,16 @@ msgid "Excluded paths"
 msgstr "排除的路徑"
 
 msgid "Advanced extraction settings"
-msgstr "進階抽取設定"
+msgstr "進階擷取設定"
 
 msgid "Extract notes for translators from:"
-msgstr "抽取翻譯者備註："
+msgstr "「譯者注意事項」擷取來源："
 
 msgid "Comments prefixed with:"
-msgstr "註解前綴字為："
+msgstr "註解前置詞："
 
 msgid "All comments"
-msgstr "所有註解"
+msgstr "全部註解"
 
 msgid "Additional xgettext flags:"
 msgstr "額外的 xgettext 旗標："
@@ -1333,58 +1336,58 @@ msgid "Additional keywords"
 msgstr "額外的關鍵字"
 
 msgid "Name of the project the translation is for"
-msgstr "翻譯的目標專案名稱"
+msgstr "本地化專案名稱"
 
 msgid "Team name and email address or URL"
-msgstr "團隊名稱和電子郵件位址或 URL"
+msgstr "團隊名稱和電子郵件位址或網址"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr "例：nplurals=2; plural=(n > 1);"
+msgstr "例如 nplurals=2; plural=(n > 1);"
 
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (建議採用)"
 
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr "請先儲存檔案。直到儲存之後，此區段才能編輯。"
+msgstr "請先儲存檔案。儲存完畢後，這個區段才能進行編輯。"
 
 msgid "Not all plural forms are translated."
-msgstr "尚未譯完所有的複數形。"
+msgstr "複數型內容並未全部翻譯。"
 
 msgid "The translation should start as a sentence."
-msgstr "譯文應該以句子起頭。"
+msgstr "譯文應該以句子開始。"
 
 msgid "The translation should start with a lowercase character."
-msgstr "譯文應該以小寫字元起頭。"
+msgstr "譯文應該以小寫字元開始。"
 
 msgid "The translation doesn’t start with a space."
-msgstr "譯文並非以空白字元起同。"
+msgstr "譯文應該以空白字元開始。"
 
 msgid "The translation starts with a space, but the source text doesn’t."
-msgstr "譯文以空白起頭，但源文並非如此。"
+msgstr "譯文以空白字元開始，但原文並未以空白字元開始。"
 
 msgid "The translation is missing a newline at the end."
-msgstr "譯文缺失結尾處的新列字元。"
+msgstr "譯文結束位置遺漏新行字元。"
 
 msgid "The translation ends with a newline, but the source text doesn’t."
-msgstr "譯文以新列字元結尾，但源文並非如此。"
+msgstr "譯文以新行字元結尾，但原文並未以新行字元結尾。"
 
 msgid "The translation is missing a space at the end."
-msgstr "譯文結尾缺失空白字元。"
+msgstr "譯文結束位置遺漏空白字元。"
 
 msgid "The translation ends with a space, but the source text doesn’t."
-msgstr "譯文以空白字元結尾，但源文並非如此。"
+msgstr "譯文以空白字元結尾，但原文並未以空白字元結尾。"
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr "譯文應該以「%s」結尾。"
+msgstr "譯文應該以「%s」結束。"
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr "譯文不應該以「%s」結尾。"
+msgstr "譯文不應該以「%s」結束。"
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr "譯文雖以「%s」結尾，但源文卻以「%s」結尾。"
+msgstr "譯文以「%s」結尾，但原文是以「%s」結尾。"
 
 msgid "Comment:"
 msgstr "註解："
@@ -1402,22 +1405,22 @@ msgid "New"
 msgstr "新增"
 
 msgid "Create new translations project"
-msgstr "建立新的翻譯專案"
+msgstr "建立譯文專案"
 
 msgid "Edit"
 msgstr "編輯"
 
 msgid "Edit the project"
-msgstr "編輯這個專案"
+msgstr "編輯專案"
 
 msgid "Delete the project"
-msgstr "刪除本專案"
+msgstr "刪除專案"
 
 msgid "Update all"
 msgstr "更新全部"
 
 msgid "Update all catalogs in the project"
-msgstr "更新專案中的所有專案"
+msgstr "更新專案中的所有編目檔"
 
 msgid "Edit project"
 msgstr "編輯專案"
@@ -1429,22 +1432,22 @@ msgid "Browse"
 msgstr "瀏覽"
 
 msgid "Add directory to the list"
-msgstr "把目錄加入清單中"
+msgstr "將目錄加入清單"
 
 msgid "&New…"
 msgstr "新增(&N)…"
 
 msgid "New from &POT/PO file…"
-msgstr "從 &POT/PO 檔新增…"
+msgstr "從 &POT/PO 檔案新增…"
 
 msgid "New From &POT/PO File…"
-msgstr "從 &POT/PO 檔新增…"
+msgstr "從 &POT/PO 檔案新增…"
 
 msgid "&Open…"
 msgstr "開啟(&O)…"
 
 msgid "Open Recent"
-msgstr "開啟最近檔案"
+msgstr "開啟最近使用的檔案"
 
 msgid "Open from Crowdin…"
 msgstr "從 Crowdin 開啟…"
@@ -1459,16 +1462,16 @@ msgid "&Save"
 msgstr "儲存(&S)"
 
 msgid "Save &as…"
-msgstr "另存為(&A)…"
+msgstr "另存新檔(&A)…"
 
 msgid "Save &As…"
-msgstr "另存為(&A)…"
+msgstr "另存新檔(&A)…"
 
 msgid "Compile to MO…"
-msgstr "編譯成 MO…"
+msgstr "編譯成 MO 檔案…"
 
 msgid "E&xport as HTML…"
-msgstr "匯出為 HTML(&X)…"
+msgstr "匯出成 HTML 檔案(&X)…"
 
 msgid "Check for updates…"
 msgstr "檢查更新…"
@@ -1477,28 +1480,28 @@ msgid "&Preferences…"
 msgstr "偏好設定(&P)…"
 
 msgid "Catalogs &manager"
-msgstr "專案管理員(&M)"
+msgstr "編目檔管理員(&M)"
 
 msgid "Catalogs &Manager"
-msgstr "專案管理員(&M)"
+msgstr "編目檔管理員(&M)"
 
 msgid "E&xit"
-msgstr "離開(&X)"
+msgstr "結束(&X)"
 
 msgid "Quit"
 msgstr "退出"
 
 msgid "Copy from singular"
-msgstr "從單數複製"
+msgstr "從單數型內容複製"
 
 msgid "Copy From Singular"
-msgstr "從單數複製"
+msgstr "從單數型內容複製"
 
 msgid "Translation needs &work"
-msgstr "翻譯需要處理(&W)"
+msgstr "譯文待校閱(&W)"
 
 msgid "Translation Needs &Work"
-msgstr "翻譯需要處理(&W)"
+msgstr "譯文待校閱(&W)"
 
 msgid "Edit &comment"
 msgstr "編輯註解(&C)"
@@ -1507,7 +1510,7 @@ msgid "Edit &Comment"
 msgstr "編輯註解(&C)"
 
 msgid "Suggestions"
-msgstr "建議"
+msgstr "譯文建議"
 
 msgid "&Find…"
 msgstr "尋找(&F)…"
@@ -1516,76 +1519,76 @@ msgid "Replace…"
 msgstr "取代…"
 
 msgid "Find next"
-msgstr "往後尋找"
+msgstr "尋找下一筆"
 
 msgid "Find previous"
-msgstr "往前尋找"
+msgstr "尋找上一筆"
 
 msgid "Find and Replace…"
-msgstr "尋找與取代…"
+msgstr "尋找及取代…"
 
 msgid "Find Next"
-msgstr "往後尋找"
+msgstr "尋找下一筆"
 
 msgid "Find Previous"
-msgstr "往前尋找"
+msgstr "尋找上一筆"
 
 msgid "&Preferences"
 msgstr "偏好設定(&P)"
 
 msgid "Show string &ID"
-msgstr "顯示字串 &ID"
+msgstr "顯示字串 ID(&I)"
 
 msgid "Show String &ID"
-msgstr "顯示字串 &ID"
+msgstr "顯示字串 ID(&I)"
 
 msgid "Show warnings"
-msgstr "顯示警告"
+msgstr "顯示警告訊息"
 
 msgid "Show Warnings"
-msgstr "顯示警告"
+msgstr "顯示警告訊息"
 
 msgid "Sort by &file order"
-msgstr "按照檔案順序排列(&F)"
+msgstr "依據檔案順序排序(&F)"
 
 msgid "Sort by &File Order"
-msgstr "按照檔案順序排列(&F)"
+msgstr "依據檔案順序排序(&F)"
 
 msgid "Sort by &source"
-msgstr "按照來源排列(&S)"
+msgstr "依據原文排序(&S)"
 
 msgid "Sort by &Source"
-msgstr "按照來源排列(&S)"
+msgstr "依據原文排序(&S)"
 
 msgid "Sort by &translation"
-msgstr "按照譯文排列(&T)"
+msgstr "依據譯文排序(&T)"
 
 msgid "Sort by &Translation"
-msgstr "按照譯文排列(&T)"
+msgstr "依據譯文排序(&T)"
 
 msgid "&Group by context"
-msgstr "依情境分組(&G)"
+msgstr "依據上下文分組(&G)"
 
 msgid "&Group By Context"
-msgstr "依情境分組(&)"
+msgstr "依據上下文分組(&G)"
 
 msgid "Entries with errors first"
-msgstr "錯誤項目優先"
+msgstr "包含錯誤的項目優先"
 
 msgid "Entries with Errors First"
-msgstr "錯誤項目優先"
+msgstr "包含錯誤的項目優先"
 
 msgid "&Untranslated entries first"
-msgstr "先顯示未翻譯項(&U)"
+msgstr "未翻譯項目優先(&U)"
 
 msgid "&Untranslated Entries First"
-msgstr "先顯示未翻譯項(&U)"
+msgstr "未翻譯項目優先(&U)"
 
 msgid "&Show references"
-msgstr "顯示參照(&S)"
+msgstr "顯示參照項目(&S)"
 
 msgid "&Show References"
-msgstr "顯示參照(&S)"
+msgstr "顯示參照項目(&S)"
 
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
@@ -1594,31 +1597,31 @@ msgid "Show status bar"
 msgstr "顯示狀態列"
 
 msgid "C&atalog"
-msgstr "專案(&A)"
+msgstr "編目檔(&A)"
 
 msgid "&Update from source code"
-msgstr "從源始碼更新(&U)"
+msgstr "從原始程式碼進行更新(&U)"
 
 msgid "&Update from Source Code"
-msgstr "從源始碼更新(&U)"
+msgstr "從原始程式碼進行更新(&U)"
 
 msgid "Update from &POT file…"
-msgstr "從 &POT 檔更新…"
+msgstr "從 POT 檔案進行更新(&P)…"
 
 msgid "Update from &POT File…"
-msgstr "從 &POT 檔更新…"
+msgstr "從 POT 檔案進行更新(&P)…"
 
 msgid "Sync with Crowdin"
-msgstr "與 Crowdin 同步"
+msgstr "與 Crowdin 進行同步"
 
 msgid "Pre-&translate…"
 msgstr "前置翻譯(&T)…"
 
 msgid "&Purge deleted translations"
-msgstr "淨空已刪除的譯文(&P)"
+msgstr "清除已刪除的譯文(&P)"
 
 msgid "&Purge Deleted Translations"
-msgstr "淨空已刪除的譯文(&P)"
+msgstr "清除已刪除的譯文(&P)"
 
 msgid "&Validate translations"
 msgstr "驗證譯文(&V)"
@@ -1630,46 +1633,46 @@ msgid "&Properties…"
 msgstr "屬性(&P)…"
 
 msgid "&Done and next"
-msgstr "完成並移至下一項(&D)"
+msgstr "完成並前往下一筆譯文(&D)"
 
 msgid "&Done and Next"
-msgstr "完成並移至下一項(&D)"
+msgstr "完成並前往下一筆譯文(&D)"
 
 msgid "&Previous translation"
-msgstr "前一項翻譯(&P)"
+msgstr "前一筆譯文(&P)"
 
 msgid "&Previous Translation"
-msgstr "前一項翻譯(&P)"
+msgstr "前一筆譯文(&P)"
 
 msgid "&Next translation"
-msgstr "下一項翻譯(&N)"
+msgstr "下一筆譯文(&N)"
 
 msgid "&Next Translation"
-msgstr "下一項翻譯(&N)"
+msgstr "下一筆譯文(&N)"
 
 msgid "P&revious unfinished"
-msgstr "前一項未完成(&R)"
+msgstr "前一筆未完成譯文(&R)"
 
 msgid "P&revious Unfinished"
-msgstr "前一項未完成(&R)"
+msgstr "前一筆未完成譯文(&R)"
 
 msgid "Ne&xt unfinished"
-msgstr "下一項未完成(&X)"
+msgstr "下一筆未完成譯文(&X)"
 
 msgid "Ne&xt Unfinished"
-msgstr "下一項未完成(&X)"
+msgstr "下一筆未完成譯文(&X)"
 
 msgid "Previous plural form"
-msgstr "上個複數形式"
+msgstr "前一筆複數型譯文"
 
 msgid "Previous Plural Form"
-msgstr "上個複數形式"
+msgstr "前一筆複數型譯文"
 
 msgid "Next plural form"
-msgstr "下個複數形式"
+msgstr "下一筆複數型譯文"
 
 msgid "Next Plural Form"
-msgstr "下個複數形式"
+msgstr "下一筆複數型譯文"
 
 msgid "&Online help"
 msgstr "線上說明(&O)"
@@ -1678,10 +1681,10 @@ msgid "&Online Help"
 msgstr "線上說明(&O)"
 
 msgid "&GNU gettext manual"
-msgstr "&GNU gettext 手冊"
+msgstr "GNU gettext 手冊(&G)"
 
 msgid "&GNU gettext Manual"
-msgstr "&GNU gettext 手冊"
+msgstr "GNU gettext 手冊(&G)"
 
 msgid "&About Poedit"
 msgstr "關於 Poedit(&A)"
@@ -1690,16 +1693,16 @@ msgid "&About"
 msgstr "關於(&A)"
 
 msgid "Extractor setup"
-msgstr "抽取器設置"
+msgstr "擷取器設定"
 
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "副檔名清單，請用半形分號隔開 (例：*.cpp; *.h)："
+msgstr "請以分號隔開副檔名清單 (例如 *.cpp; *.h)："
 
 msgid "Invocation:"
 msgstr "喚起："
 
 msgid "Command to extract translations:"
-msgstr "抽取翻譯用的指令："
+msgstr "擷取譯文的命令:"
 
 msgid ""
 "This is the command used to launch the extractor.\n"
@@ -1734,7 +1737,7 @@ msgstr ""
 "附到命令列中。%f 會展開成檔名。"
 
 msgid "Source code charset:"
-msgstr "原始碼字集："
+msgstr "原始程式碼字元集："
 
 #, c-format
 msgid ""
@@ -1745,7 +1748,7 @@ msgstr ""
 "才會附到命令列中。%c 會展開成字集的值。"
 
 msgid "Catalog properties"
-msgstr "專案屬性"
+msgstr "編目檔屬性"
 
 msgid "Project name and version:"
 msgstr "專案名稱及版本："
@@ -1754,25 +1757,25 @@ msgid "Language team:"
 msgstr "語言團隊："
 
 msgid "Plural forms:"
-msgstr "複數形式："
+msgstr "複數型："
 
 msgid "Use default rules for this language"
-msgstr "使用此語言的預設規則"
+msgstr "使用這個語言的預設規則"
 
 msgid "Use custom expression"
-msgstr "使用自訂表述式"
+msgstr "使用自訂運算式"
 
 msgid "Learn about plural forms"
-msgstr "瞭解複數型態"
+msgstr "深入瞭解複數型"
 
 msgid "Charset:"
 msgstr "字元集："
 
 msgid "Advanced Extraction Settings…"
-msgstr "進階抽取設定…"
+msgstr "進階擷取設定…"
 
 msgid "Advanced extraction settings…"
-msgstr "進階抽取設定…"
+msgstr "進階擷取設定…"
 
 msgid "Translation Properties"
 msgstr "譯文屬性"
@@ -1781,38 +1784,36 @@ msgid "Translation properties"
 msgstr "譯文屬性"
 
 msgid "Sources Paths"
-msgstr "來源路徑"
+msgstr "原始程式碼路徑"
 
 msgid "Sources paths"
-msgstr "來源路徑"
+msgstr "原始程式碼路徑"
 
 msgid "Extract text from source files in the following directories:"
-msgstr "從下列目錄中擷取源檔內的文字："
+msgstr "擷取下列目錄中的原始程式檔文字:"
 
 msgid "Base path:"
-msgstr "基礎路徑："
+msgstr "基底路徑:"
 
 msgid "Sources Keywords"
-msgstr "來源關鍵字"
+msgstr "原始程式碼關鍵字"
 
 msgid "Sources keywords"
-msgstr "來源關鍵字"
+msgstr "原始程式碼關鍵字"
 
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
-msgstr ""
-"在來源檔案中使用這些關鍵字 (函式名稱) 來\n"
-"識別可翻譯字串："
+msgstr "在原始程式碼中使用這些關鍵字 (函式名稱) 以辨識可翻譯字串："
 
 msgid "Also use default keywords for supported languages"
-msgstr "也為支援的語言使用預設關鍵字"
+msgstr "同時為支援的語言使用預設關鍵字"
 
 msgid "Learn About Gettext Keywords"
-msgstr "瞭解 Gettext 關鍵字"
+msgstr "深入瞭解 Gettext 關鍵字"
 
 msgid "Learn about gettext keywords"
-msgstr "學習 gettext 關鍵字"
+msgstr "深入瞭解 gettext 關鍵字"
 
 msgid "Update summary"
 msgstr "更新摘要"
@@ -1821,30 +1822,30 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
 msgstr ""
-"在來源中發現這些字串，但專案中卻沒有。\n"
-"Poedit 現在會將它們加入專案中。"
+"在原始程式碼中發現這個編目檔中沒有的字串。\n"
+"Poedit 會將它們新增至編目檔。"
 
 msgid "New strings"
-msgstr "新增字串"
+msgstr "新字串"
 
 msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
 msgstr ""
-"這些字串已不在來源之中。\n"
-"Poedit 現在會從專案中將之移除。"
+"這些字串已不存在於現有原始程式碼中。\n"
+"Poedit 會將他們從編目檔中移除。"
 
 msgid "Obsolete strings"
 msgstr "過時字串"
 
 msgid "(0 new, 0 obsolete)"
-msgstr "(沒有新的，也沒有過時的)"
+msgstr "(0 筆新增字串，0 筆過時字串)"
 
 msgid "Open"
 msgstr "開啟"
 
 msgid "Save catalog"
-msgstr "儲存專案"
+msgstr "儲存編目檔"
 
 msgid "Validate"
 msgstr "驗證"
@@ -1853,13 +1854,13 @@ msgid "Check for errors in the translation"
 msgstr "檢查譯文中是否有錯誤"
 
 msgid "Update from code"
-msgstr "從源碼更新"
+msgstr "從原始程式碼進行更新"
 
 msgid "Update from Code"
-msgstr "從源碼更新"
+msgstr "從原始程式碼進行更新"
 
 msgid "Update catalog - synchronize it with sources"
-msgstr "更新專案 - 與來源同步"
+msgstr "更新編目檔 - 與原始程式碼同步"
 
 msgid "Sidebar"
 msgstr "側邊欄"
@@ -1877,47 +1878,47 @@ msgid ""
 msgstr "現在的不精確譯文對應的是（在用模板檔更新之前）舊的源文。"
 
 msgid "Notes for translators:"
-msgstr "給譯者的備註："
+msgstr "譯者注意事項："
 
 msgid "Add comment"
-msgstr "加入註解"
+msgstr "新增註解"
 
 msgid "Add Comment"
-msgstr "加入註解"
+msgstr "新增註解"
 
 msgid "Delete From Translation Memory"
-msgstr "從翻譯記憶中刪除"
+msgstr "從譯文記憶庫中刪除"
 
 msgid "Delete from translation memory"
-msgstr "從翻譯記憶中刪除"
+msgstr "從譯文記憶庫中刪除"
 
 msgid "Translation suggestions:"
 msgstr "譯文建議："
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
-msgstr "找不到符合項目"
+msgstr "找不到符合條件的項目"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
 msgid "No Matches Found"
-msgstr "找不到符合項目"
+msgstr "找不到符合條件的項目"
 
 msgid "This string was found in Poedit’s translation memory."
-msgstr "此字串已在 Poedit 的翻譯記憶中找到。"
+msgstr "這個字串已儲存於 Poedit 的譯文記憶庫。"
 
 msgid "The TMX file is malformed."
-msgstr "TMX 檔格式不良。"
+msgstr "TMX 檔案格式錯誤。"
 
 msgid "No translations were found in the TMX file."
-msgstr "我們在 TMX 檔中找不到翻譯。"
+msgstr "在 TMX 檔案中找不到譯文。"
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr "翻譯記憶資料庫毀損：%s (%d)。"
+msgstr "譯文記憶庫已損毀：%s (%d)。"
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr "翻譯記憶錯誤：%s (%d)。"
+msgstr "譯文記憶庫錯誤：%s (%d)。"
 
 msgid "Cannot create temporary directory."
 msgstr "無法建立暫存目錄。"
@@ -1932,18 +1933,18 @@ msgid "Version %s"
 msgstr "版本 %s"
 
 msgid "Edit a Translation"
-msgstr "編輯翻譯"
+msgstr "編輯譯文"
 
 msgid "Edit a translation"
 msgstr "編輯譯文"
 
 msgid "Open an existing PO file and edit the translation."
-msgstr "開啟現有的 PO 檔並編輯譯文。"
+msgstr "開啟現有的 PO 檔案並編輯譯文。"
 
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
-msgstr "從既有的 PO 檔或 POT 模板檔建立新翻譯。"
+msgstr "開啟現有的 PO 檔案或 POT 譯文模本檔並建立新譯文。"
 
 msgid "Collaborate on a Translation with Others"
 msgstr "與其他人協作翻譯"
@@ -1953,7 +1954,7 @@ msgstr "與其他人協作翻譯"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
-msgstr "從 Crowdin 下載檔案，翻譯，再將更動同步回去。"
+msgstr "從 Crowdin 專案下載檔案並進行翻譯，再將變更同步至對應專案。"
 
 msgid "What is Crowdin?"
 msgstr "什麼是 Crowdin？"
@@ -1992,13 +1993,13 @@ msgid "Extract from sources"
 msgstr "從來源更新"
 
 msgid "Configure source code extraction in Properties."
-msgstr "在 [屬性] 中設定原始碼抽出項目。"
+msgstr "在「屬性」中設定原始碼抽出項目。"
 
 msgid "Sync"
 msgstr "同步"
 
 msgid "Synchronize the translation with Crowdin"
-msgstr "同步 Crowdin 翻譯"
+msgstr "與 Crowdin 同步譯文"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -2031,7 +2032,7 @@ msgstr "顯示全部"
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
 msgid "Quit %s"
-msgstr "退出 %s"
+msgstr "結束 %s"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Preferences…"
@@ -2124,7 +2125,7 @@ msgid "&Redo"
 msgstr "重做(&R)"
 
 msgid "Refresh"
-msgstr "重整"
+msgstr "重新整理"
 
 msgid "&Save as"
 msgstr "另存為(&S)"
@@ -2157,19 +2158,19 @@ msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr "上鍵"
+msgstr "向上鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr "下鍵"
+msgstr "向下鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"
-msgstr "左鍵"
+msgstr "向左鍵"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Right"
-msgstr "右鍵"
+msgstr "向右鍵"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
 msgid "ctrl"
