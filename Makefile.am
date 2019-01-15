@@ -6,8 +6,8 @@ SUBDIRS = src docs locales artwork
 desktopdir=$(datadir)/applications
 dist_desktop_DATA = net.poedit.Poedit.desktop net.poedit.PoeditURI.desktop
 
-appdatadir=$(datadir)/appdata
-dist_appdata_DATA = net.poedit.Poedit.appdata.xml
+metainfodir=$(datadir)/metainfo
+dist_metainfo_DATA = net.poedit.Poedit.appdata.xml
 
 EXTRA_DIST = \
 	deps/json/LICENSE.MIT \
