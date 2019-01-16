@@ -167,29 +167,28 @@ parts:
         - usr/*
       freedesktop-desktop-entries:
         - share/applications/*
-      icons:
-        - share/icons/*
       localizations:
         - share/locale/*
       manpages:
         - share/man/*
       resources:
+        - share/icons/*
         - share/poedit/*
 
     stage:
       - $executables
       - $files-in-stage-packages
       - $freedesktop-desktop-entries
-      - $manpages
       - $localizations
+      - $manpages
       - $resources
 
     prime:
       - $executables
       - $files-in-stage-packages
       - $freedesktop-desktop-entries
-      - $manpages
       - $localizations
+      - $manpages
       - $resources
 
     build-attributes:
