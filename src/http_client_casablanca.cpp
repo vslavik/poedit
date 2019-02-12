@@ -284,26 +284,6 @@ private:
     static http::client::http_client_config get_client_config()
     {
         http::client::http_client_config c;
-
-        // WinHttp doesn't share WinInet/MSIE's proxy settings and has its own,
-        // but many users don't have properly configured both. Adopting proxy
-        // settings like this in desktop software is recommended behavior, see
-        // https ://blogs.msdn.microsoft.com/ieinternals/2013/10/11/understanding-web-proxy-configuration/
-        WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieConfig = { 0 };
-        if (WinHttpGetIEProxyConfigForCurrentUser(&ieConfig))
-        {
-            if (ieConfig.fAutoDetect)
-            {
-                c.set_proxy(web_proxy::use_auto_discovery);
-            }
-            if (ieConfig.lpszProxy)
-            {
-                // Explicitly add // to the URL to work around a bug in C++ REST SDK's
-                // parsing of proxies with port number in their address
-                // (see https://github.com/Microsoft/cpprestsdk/issues/57)
-                c.set_proxy(uri(L"//" + std::wstring(ieConfig.lpszProxy)));
-            }
-        }
    
         c.set_nativesessionhandle_options([](http::client::native_handle handle){
             DWORD dwOption = WINHTTP_PROTOCOL_FLAG_HTTP2;
