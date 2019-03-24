@@ -70,6 +70,7 @@ parts:
   poedit:
     after:
       - boostlib
+      - cpprest
       - ccache
       - gtkspell
       - patches
@@ -106,7 +107,6 @@ parts:
       - automake
       - gettext
       - libcld2-dev
-      - libcpprest-dev
       - libicu-dev
       - libjpeg-dev
       - liblucene++-dev
@@ -123,6 +123,7 @@ parts:
       ./bootstrap
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
+        --with-boost-libdir="${SNAPCRAFT_STAGE}/lib" \
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
@@ -149,11 +150,7 @@ parts:
       # Required by Unity/GNOME?
       - libcanberra-gtk3-module
 
-      - libboost-iostreams1.58.0
-      - libboost-regex1.58.0
-      - libboost-thread1.58.0
       - libcld2-0
-      - libcpprest2.8
       - libice6
       - liblucene++0v5
       - libsecret-1-0
@@ -202,7 +199,7 @@ parts:
 
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
-        --with-libraries=iostreams,regex,system,thread \
+        --with-libraries=iostreams,regex,system,thread,random,filesystem,chrono,atomic,date_time \
         --with-icu=/usr
       ./b2 install \
         -j $(nproc) \
@@ -210,6 +207,44 @@ parts:
         --layout=system \
         link=static \
         threading=multi
+
+    filesets:
+      library-headers:
+        - include/*
+      libraries:
+        - lib/*
+    stage:
+      - $library-headers
+      - $libraries
+    override-prime: 'true'
+
+  cpprest:
+    after:
+      - ccache
+      - boostlib
+
+    source: deps/casablanca
+
+    build-packages:
+      # OPTIONAL: Use gcc installation from `gcc-6` part instead
+      #- gcc
+      #- g++
+      - libssl-dev
+      - cmake
+      - ninja-build
+
+    plugin: dump
+    override-build: |
+      set -eu
+
+      mkdir build.release
+      cd build.release
+      CC=gcc-6 CXX=g++-6 cmake -G Ninja .. \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DWERROR=OFF \
+            -DCMAKE_INSTALL_PREFIX:PATH="${SNAPCRAFT_PART_INSTALL}" \
+            -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
+      ninja -j4
+      ninja install
 
     filesets:
       library-headers:
