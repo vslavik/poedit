@@ -124,6 +124,7 @@ parts:
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
         --with-boost-libdir="${SNAPCRAFT_STAGE}/lib" \
+        CC=gcc-6 CPP=cpp-6 CXX=g++-6 \
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
