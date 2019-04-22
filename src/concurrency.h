@@ -358,7 +358,7 @@ public:
     T get() { return this->f_.get(); }
 
     template<typename F>
-    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
+    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(typename detail::argument_type<F>::arg0_type)>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
@@ -368,7 +368,7 @@ public:
     }
 
     template<typename F>
-    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
+    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(typename detail::argument_type<F>::arg0_type)>::type>::type>
     {
         typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
