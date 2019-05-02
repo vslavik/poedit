@@ -580,7 +580,7 @@ void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& t
 
 void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, dispatch::exception_ptr e)
 {
-    SetMessage("SuggestionError", DescribeException(e));
+    SetMessage("SuggestionErrorTemplate", DescribeException(e));
 }
 
 void SuggestionsSidebarBlock::ClearSuggestions()
