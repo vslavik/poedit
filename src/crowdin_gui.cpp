@@ -66,7 +66,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     SetSizer(sizer);
 
     sizer->AddSpacer(PX(10));
-    auto logo = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("CrowdinLogo"));
+    auto logo = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("CrowdinLogoTemplate"));
     logo->SetCursor(wxCURSOR_HAND);
     logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::WrapLink("/")); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
