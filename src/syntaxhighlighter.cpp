@@ -136,15 +136,32 @@ public:
 
     void Highlight(const std::wstring& s, const CallbackType& highlight) override
     {
-        std::wsregex_iterator next(s.begin(), s.end(), m_re);
-        std::wsregex_iterator end;
-        while (next != end)
+        try
         {
-            auto match = *next++;
-            if (match.empty())
-                continue;
-            int pos = static_cast<int>(match.position());
-            highlight(pos, pos + static_cast<int>(match.length()), m_kind);
+            std::wsregex_iterator next(s.begin(), s.end(), m_re);
+            std::wsregex_iterator end;
+            while (next != end)
+            {
+                auto match = *next++;
+                if (match.empty())
+                    continue;
+                int pos = static_cast<int>(match.position());
+                highlight(pos, pos + static_cast<int>(match.length()), m_kind);
+            }
+        }
+        catch (std::regex_error& e)
+        {
+            switch (e.code())
+            {
+                case std::regex_constants::error_complexity:
+                case std::regex_constants::error_stack:
+                    // MSVC version of std::regex in particular can fail to match
+                    // e.g. HTML regex with backreferences on insanely large strings;
+                    // in that case, don't highlight instead of failing outright.
+                    return;
+                default:
+                    throw;
+            }
         }
     }
 
