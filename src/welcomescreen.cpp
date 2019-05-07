@@ -286,8 +286,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     explain->SetForegroundColour(m_clrNorm);
     sizer->Add(explain, wxSizerFlags());
 
-    auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("(Learn more about GNU gettext)"), "http://www.gnu.org/software/gettext/manual/html_node/");
-    learnMore->SetFont(m_fntNorm);
+    auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
     sizer->Add(learnMore, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
 
     auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));

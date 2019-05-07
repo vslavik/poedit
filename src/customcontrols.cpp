@@ -315,9 +315,23 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
     }
 
     wxHyperlinkCtrl::Create(parent, winid, label, url);
-    SetNormalColour("#2F79BE");
-    SetVisitedColour("#2F79BE");
-    SetHoverColour("#3D8DD5");
+
+#ifdef __WXOSX__
+    if (@available(macOS 10.14, *))
+    {
+        wxColour normal(NSColor.linkColor);
+        wxColour hover([NSColor.linkColor colorWithSystemEffect:NSColorSystemEffectRollover]);
+        SetNormalColour(normal);
+        SetVisitedColour(normal);
+        SetHoverColour(hover);
+    }
+    else
+#endif
+    {
+        SetNormalColour("#2F79BE");
+        SetVisitedColour("#2F79BE");
+        SetHoverColour("#3D8DD5");
+    }
 
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
