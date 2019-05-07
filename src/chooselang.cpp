@@ -58,6 +58,7 @@ static bool ChooseLanguage(wxString *value)
     {
         wxBusyCursor bcur;
         langs = wxTranslations::Get()->GetAvailableTranslations("poedit");
+        langs.insert(langs.begin(), "en");
         langs.Sort();
 
         arr.push_back(_("(Use default language)"));
