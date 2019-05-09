@@ -911,6 +911,7 @@ void EditingArea::UpdateAuxiliaryInfo(CatalogItemPtr item)
         {
             ShowPart(m_issueLine, false);
         }
+        Layout();
     }
 }
 
