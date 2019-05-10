@@ -280,12 +280,15 @@ class PoeditListCtrl : public wxDataViewCtrl
             void Freeze() { m_frozen = true; }
             void Thaw() { m_frozen = false; }
 
+            void SetMaxVisibleWidth(int chars) { m_maxVisibleWidth = chars; }
+
         public:
             CatalogPtr m_catalog;
             SortOrder sortOrder;
 
         private:
             bool m_frozen;
+            int m_maxVisibleWidth;
             std::vector<int> m_mapListToCatalog;
             std::vector<int> m_mapCatalogToList;
 

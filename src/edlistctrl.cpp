@@ -190,12 +190,24 @@ private:
 
 #endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
 
+wxString TrimTextValue(const wxString& text, size_t maxChars)
+{
+    wxString s(text.Strip(wxString::both));
+    // FIXME: use syntax highlighting or typographic marks
+    s.Replace("\n", " ");
+    if (maxChars && s.length() > maxChars)
+        return s.substr(0, maxChars);
+    else
+        return s;
+}
+
 } // anonymous namespace
 
 
 
 PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualMode)
     : m_frozen(false),
+      m_maxVisibleWidth(0),
       m_sourceTextDir(TextDirection::LTR),
       m_transTextDir(TextDirection::LTR),
       m_appTextDir(appTextDir)
@@ -343,6 +355,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         case Col_Source:
         {
             wxString orig;
+            const auto orig_str = TrimTextValue(d->GetString(), m_maxVisibleWidth);
+
 #if wxCHECK_VERSION(3,1,1)
         #ifdef __WXMSW__
             // Temporary workaround for https://github.com/vslavik/poedit/issues/343 and
@@ -360,11 +374,11 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 #endif
                     orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
                         m_clrContextBg, m_clrContextFg,
-                        EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+                        EscapeMarkup(d->GetContext()), EscapeMarkup(orig_str));
                 }
                 else
                 {
-                    orig = EscapeMarkup(d->GetString());
+                    orig = EscapeMarkup(orig_str);
                 }
             }
         #ifdef __WXMSW__
@@ -375,16 +389,11 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
             // non-markup rendering of source column:
             {
                 if (d->HasContext())
-                    orig.Printf("[%s] %s", d->GetContext(), d->GetString());
+                    orig.Printf("[%s] %s", d->GetContext(), orig_str);
                 else
-                    orig = d->GetString();
+                    orig = orig_str;
             }
 #endif
-
-            // FIXME: use syntax highlighting or typographic marks
-            orig.Replace("\n", " ");
-            orig.Trim(true);
-            orig.Trim(false);
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appTextDir != m_sourceTextDir)
@@ -396,12 +405,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
         case Col_Translation:
         {
-            auto trans = d->GetTranslation();
-
-            // FIXME: use syntax highlighting or typographic marks
-            trans.Replace("\n", " ");
-            trans.Trim(true);
-            trans.Trim(false);
+            const auto trans = TrimTextValue(d->GetTranslation(), m_maxVisibleWidth);
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appTextDir != m_transTextDir)
@@ -723,6 +727,9 @@ void PoeditListCtrl::SizeColumns()
         w += 2;
 #endif
     }
+
+    // Tell the model to not bother with strings larger than twice available space:
+    m_model->SetMaxVisibleWidth(w / GetCharWidth());
 
     if (m_colTrans && m_colTrans->IsShown())
     {
