@@ -63,6 +63,8 @@ FileViewer *FileViewer::GetAndActivate()
     if (!ms_instance)
         ms_instance = new FileViewer(nullptr);
     ms_instance->Show();
+    if (ms_instance->IsIconized())
+        ms_instance->Iconize(false);
     ms_instance->Raise();
     return ms_instance;
 }
