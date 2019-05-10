@@ -769,6 +769,10 @@ PoeditFrame::~PoeditFrame()
 {
     ms_instances.erase(this);
 
+    // don't leave file references window as the only one open:
+    if (ms_instances.empty() && FileViewer::GetIfExists())
+        FileViewer::GetIfExists()->Close();
+
     DestroyContentView();
 
     wxConfigBase *cfg = wxConfig::Get();
