@@ -688,6 +688,12 @@ void PoeditListCtrl::UpdateColumns()
         m_colID->SetWidth(wxCOL_WIDTH_AUTOSIZE);
         m_colID->SetWidth(m_colID->GetWidth());
     }
+    else
+    {
+        // workaround a wx bug where it calculates width of hidden columns
+        // see https://github.com/wxWidgets/wxWidgets/commit/560a81b913f23800e286d297d8cd38e72a207641
+        m_colID->SetWidth(0);
+    }
 
     SizeColumns();
 
