@@ -296,11 +296,11 @@ class PoeditListCtrl : public wxDataViewCtrl
 
             wxColour m_clrID, m_clrInvalid, m_clrFuzzy;
             wxString m_clrContextFg, m_clrContextBg;
-            wxBitmap m_iconComment, m_iconBookmark, m_iconError, m_iconWarning;
+            wxIcon m_iconComment, m_iconBookmark, m_iconError, m_iconWarning;
 
         #if defined(__WXGTK__) && !wxCHECK_VERSION(3,0,3)
             #define HAS_BROKEN_NULL_BITMAPS
-            wxBitmap m_nullBitmap;
+            wxIcon m_nullBitmap;
         #endif
         };
 

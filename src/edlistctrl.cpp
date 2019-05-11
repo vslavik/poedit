@@ -152,10 +152,10 @@ class DataViewIconsAdjuster : public wxDataViewValueAdjuster
 public:
     DataViewIconsAdjuster()
     {
-        m_comment = wxArtProvider::GetBitmap("ItemCommentTemplate");
-        m_commentSel = wxArtProvider::GetBitmap("ItemCommentTemplate@inverted");
-        m_bookmark = wxArtProvider::GetBitmap("ItemBookmarkTemplate");
-        m_bookmarkSel = wxArtProvider::GetBitmap("ItemBookmarkTemplate@inverted");
+        m_comment = wxArtProvider::GetIcon("ItemCommentTemplate");
+        m_commentSel = wxArtProvider::GetIcon("ItemCommentTemplate@inverted");
+        m_bookmark = wxArtProvider::GetIcon("ItemBookmarkTemplate");
+        m_bookmarkSel = wxArtProvider::GetIcon("ItemBookmarkTemplate@inverted");
     }
 
     wxVariant MakeHighlighted(const wxVariant& value) const override
@@ -163,17 +163,17 @@ public:
         if (value.IsNull())
             return value;
 
-        wxBitmap bitmap;
-        bitmap << value;
+        wxIcon icon;
+        icon << value;
 
-        if (bitmap.IsSameAs(m_comment))
+        if (icon.IsSameAs(m_comment))
         {
             wxVariant vout;
             vout << m_commentSel;
             return vout;
         }
 
-        if (bitmap.IsSameAs(m_bookmark))
+        if (icon.IsSameAs(m_bookmark))
         {
             wxVariant vout;
             vout << m_bookmarkSel;
@@ -184,8 +184,8 @@ public:
     }
 
 private:
-    wxBitmap m_comment, m_commentSel;
-    wxBitmap m_bookmark, m_bookmarkSel;
+    wxIcon m_comment, m_commentSel;
+    wxIcon m_bookmark, m_bookmarkSel;
 };
 
 #endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
@@ -222,10 +222,10 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualM
     m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
     m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
 
-    m_iconComment = wxArtProvider::GetBitmap("ItemCommentTemplate");
-    m_iconBookmark = wxArtProvider::GetBitmap("ItemBookmarkTemplate");
-    m_iconError = wxArtProvider::GetBitmap("StatusError");
-    m_iconWarning = wxArtProvider::GetBitmap("StatusWarning");
+    m_iconComment = wxArtProvider::GetIcon("ItemCommentTemplate");
+    m_iconBookmark = wxArtProvider::GetIcon("ItemBookmarkTemplate");
+    m_iconError = wxArtProvider::GetIcon("StatusError");
+    m_iconWarning = wxArtProvider::GetIcon("StatusWarning");
 
 #ifdef HAS_BROKEN_NULL_BITMAPS
     wxImage nullimg(m_iconError.GetSize().x, m_iconError.GetSize().y);
@@ -610,7 +610,10 @@ void PoeditListCtrl::CreateColumns()
     int iconWidth = PX(16);
 #endif
 
-    m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, iconWidth, wxALIGN_CENTER, 0);
+    auto iconRenderer = new wxDataViewBitmapRenderer("wxIcon", wxDATAVIEW_CELL_INERT, wxALIGN_CENTER | wxALIGN_CENTRE_VERTICAL);
+    m_colIcon = new wxDataViewColumn(L"∙", iconRenderer, Model::Col_Icon, iconWidth, wxALIGN_CENTER, 0);
+    AppendColumn(m_colIcon);
+
 #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
     if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
         m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
