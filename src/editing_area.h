@@ -62,7 +62,9 @@ public:
         /// Change to textctrl should be undoable by the user
         UndoableEdit = 0x01,
         /// Change is due to item change, discard undo buffer
-        ItemChanged = 0x02
+        ItemChanged = 0x02,
+        /// Only update non-text information (auxiliary, fuzzy etc.)
+        DontTouchText = 0x04
     };
 
     /// Constructor

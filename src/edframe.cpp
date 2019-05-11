@@ -1983,7 +1983,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent&)
     }
     UpdateStatusBar();
 
-    UpdateToTextCtrl(EditingArea::UndoableEdit);
+    UpdateToTextCtrl(EditingArea::UndoableEdit | EditingArea::DontTouchText);
 
     if (m_list->HasSingleSelection())
     {

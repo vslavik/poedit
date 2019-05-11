@@ -828,41 +828,44 @@ void EditingArea::CopyFromSingular()
 
 void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
 {
-    auto syntax = SyntaxHighlighter::ForItem(*item);
-    m_textOrig->SetSyntaxHighlighter(syntax);
-    if (m_textTrans)
-        m_textTrans->SetSyntaxHighlighter(syntax);
-    if (item->HasPlural())
+    if (!(flags & DontTouchText))
     {
-        m_textOrigPlural->SetSyntaxHighlighter(syntax);
-        for (auto p : m_textTransPlural)
-            p->SetSyntaxHighlighter(syntax);
-    }
-
-    m_textOrig->SetPlainText(item->GetString());
-
-    if (item->HasPlural())
-    {
-        m_textOrigPlural->SetPlainText(item->GetPluralString());
-
-        unsigned formsCnt = (unsigned)m_textTransPlural.size();
-        for (unsigned j = 0; j < formsCnt; j++)
-            SetTranslationValue(m_textTransPlural[j], wxEmptyString, flags);
-
-        unsigned i = 0;
-        for (i = 0; i < std::min(formsCnt, item->GetNumberOfTranslations()); i++)
+        auto syntax = SyntaxHighlighter::ForItem(*item);
+        m_textOrig->SetSyntaxHighlighter(syntax);
+        if (m_textTrans)
+            m_textTrans->SetSyntaxHighlighter(syntax);
+        if (item->HasPlural())
         {
-            SetTranslationValue(m_textTransPlural[i], item->GetTranslation(i), flags);
+            m_textOrigPlural->SetSyntaxHighlighter(syntax);
+            for (auto p : m_textTransPlural)
+                p->SetSyntaxHighlighter(syntax);
         }
 
-        if ((flags & EditingArea::ItemChanged) && m_pluralNotebook && m_pluralNotebook->GetPageCount())
-            m_pluralNotebook->SetSelection(0);
-    }
-    else
-    {
-        if (m_textTrans)
-            SetTranslationValue(m_textTrans, item->GetTranslation(), flags);
-    }
+        m_textOrig->SetPlainText(item->GetString());
+
+        if (item->HasPlural())
+        {
+            m_textOrigPlural->SetPlainText(item->GetPluralString());
+
+            unsigned formsCnt = (unsigned)m_textTransPlural.size();
+            for (unsigned j = 0; j < formsCnt; j++)
+                SetTranslationValue(m_textTransPlural[j], wxEmptyString, flags);
+
+            unsigned i = 0;
+            for (i = 0; i < std::min(formsCnt, item->GetNumberOfTranslations()); i++)
+            {
+                SetTranslationValue(m_textTransPlural[i], item->GetTranslation(i), flags);
+            }
+
+            if ((flags & EditingArea::ItemChanged) && m_pluralNotebook && m_pluralNotebook->GetPageCount())
+                m_pluralNotebook->SetSelection(0);
+        }
+        else
+        {
+            if (m_textTrans)
+                SetTranslationValue(m_textTrans, item->GetTranslation(), flags);
+        }
+    } // !DontTouchText
 
     ShowPart(m_tagContext, item->HasContext());
     if (item->HasContext())
