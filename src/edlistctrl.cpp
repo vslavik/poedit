@@ -47,6 +47,10 @@
 #include <vssym32.h>
 #endif
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#endif
+
 #include <algorithm>
 
 
@@ -581,6 +585,9 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
     SetRowHeight(int(height) + PX(4));
 #elif defined(__WXMSW__)
     SetRowHeight(GetCharHeight() + PX(4));
+#elif defined(__WXGTK__)
+    // disable Ctrl+F in-control search:
+    gtk_tree_view_set_search_column(GTK_TREE_VIEW(GtkGetTreeView()), -1);
 #endif
 
     UpdateHeaderAttrs();
