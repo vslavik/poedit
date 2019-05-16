@@ -272,7 +272,7 @@ wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
             return "string";
 
         case Col_Icon:
-            return "wxBitmap";
+            return "wxIcon";
 
         case Col_Source:
         case Col_Translation:
@@ -287,9 +287,9 @@ wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
 void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
 #if defined(__WXGTK__) && !wxCHECK_VERSION(3,1,1)
-    #define NULL_BITMAP(variant)  variant << wxNullBitmap
+    #define NULL_ICON(variant)  variant << wxNullIcon
 #else
-    #define NULL_BITMAP(variant)  variant = wxNullVariant
+    #define NULL_ICON(variant)  variant = wxNullVariant
 #endif
 
     if (!m_catalog || m_frozen)
@@ -298,8 +298,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         auto type = GetColumnType(col);
         if (type == "string")
             variant = "";
-        else if (type == "wxBitmap")
-            NULL_BITMAP(variant);
+        else if (type == "wxIcon")
+            NULL_ICON(variant);
         else
 #else
         variant = wxNullVariant;
@@ -343,7 +343,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
             else if (d->HasComment())
                 variant << m_iconComment;
             else
-                NULL_BITMAP(variant);
+                NULL_ICON(variant);
             break;
         }
 
