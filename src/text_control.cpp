@@ -309,6 +309,17 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 
 #ifdef __WXMSW__
 
+bool CustomizedTextCtrl::SetFont(const wxFont &font)
+{
+    if (!wxTextCtrl::SetFont(font))
+        return false;
+
+    auto style = GetDefaultStyle();
+    style.SetFont(font);
+    SetDefaultStyle(style);
+    return true;
+}
+
 WXDWORD CustomizedTextCtrl::MSWGetStyle(long style, WXDWORD *exstyle) const
 {
     auto msStyle = wxTextCtrl::MSWGetStyle(style, exstyle);

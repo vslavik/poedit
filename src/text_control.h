@@ -61,6 +61,7 @@ public:
 #endif
 
 #ifdef __WXMSW__
+    bool SetFont(const wxFont &font) override;
     WXDWORD MSWGetStyle(long style, WXDWORD *exstyle) const override;
 #endif
 
