@@ -274,7 +274,7 @@ AS_IF([test "x$have_cld2" = "xyes"],
 
 
 
-if test "x$GXX" == "xyes"; then
+if test "x$GXX" = "xyes"; then
     AX_CXX_CHECK_FLAG([-Wall],[],[], [CXXFLAGS="$CXXFLAGS -Wall"])
     AX_CXX_CHECK_FLAG([-Wextra],[],[], [CXXFLAGS="$CXXFLAGS -Wextra"])
 fi
