@@ -26,6 +26,7 @@
 #include "welcomescreen.h"
 
 #include "colorscheme.h"
+#include "customcontrols.h"
 #include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
