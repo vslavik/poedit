@@ -136,8 +136,8 @@ void LanguageCtrl::Init(Language lang)
 {
     SetHint(_("Language Code or Name (e.g. en_GB)"));
 
-    // wxGTK must have the value set before autocompletion to avoid annoying
-    // popups in some (hard to determine) cases.
+    // wxGTK must have the value set before autocompletion (but also after it
+    // below) to avoid annoying popups in some (hard to determine) cases.
 #ifdef __WXGTK__
     if (lang.IsValid())
         SetValue(lang.FormatForRoundtrip());
@@ -163,11 +163,8 @@ void LanguageCtrl::Init(Language lang)
 
     m_inited = true;
 
-    // ...but wxMSW requires the opposite, otherwise the text wouldn't appear.
-#ifndef __WXGTK__
     if (lang.IsValid())
         SetValue(lang.FormatForRoundtrip());
-#endif
 }
 
 void LanguageCtrl::SetLang(const Language& lang)
