@@ -17,6 +17,7 @@ description: >
 
     $ snap connect poedit:password-manager-service
 
+base: core
 grade: stable
 confinement: strict
 icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
@@ -137,10 +138,6 @@ parts:
         --file "${SNAPCRAFT_STAGE}"/patches/postprocess-desktop-entries.sed \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
-    build-attributes:
-      # Gtk libraries provided by gnome-platform content shared snap
-      - no-system-libraries
-
     stage-packages:
       # Called by Poedit
       - gettext
@@ -176,10 +173,16 @@ parts:
       - $files-in-stage-packages
       - $resources
 
-    build-attributes:
-      - no-system-libraries
-
   desktop-gnome-platform:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-depth: 1
+    source-subdir: gtk
+    plugin: make
+    build-packages:
+    - gcc
+    override-build: |
+      snapcraftctl build
+      mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
 
   boostlib:
     after:
@@ -286,9 +289,6 @@ parts:
       - libtiff5-dev
       - libxtst-dev
       - zlib1g-dev
-    build-attributes:
-      # Gtk libraries provided by gnome-platform content shared snap
-      - no-system-libraries
 
     plugin: autotools
     override-build: |
@@ -361,11 +361,54 @@ parts:
   ccache:
     after:
       - gcc-6
+    source: https://github.com/ccache/ccache.git
+    source-branch: 3.5-maint
+    source-depth: 1
+
+    plugin: autotools
+    build-packages:
+    - asciidoc
+    - xsltproc
+    - gperf
+    - zlib1g-dev
+    override-build: |
+      set -eu
+
+      snapcraftctl build
+      install \
+        --directory \
+        --verbose \
+        "${SNAPCRAFT_PART_INSTALL}"/bin
+      for toolchain_command in \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/g++; do
+        ln \
+          --force \
+          --symbolic \
+          --verbose \
+          ./ccache \
+          "${toolchain_command}"
+      done
+      for gcc_release in $(seq 6 9); do
+        ln \
+          --force \
+          --symbolic \
+          --verbose \
+          ./ccache \
+          "${SNAPCRAFT_PART_INSTALL}"/bin/gcc-"${gcc_release}"
+        ln \
+          --force \
+          --symbolic \
+          --verbose \
+          ./ccache \
+          "${SNAPCRAFT_PART_INSTALL}"/bin/g++-"${gcc_release}"
+      done
+    prime:
+    - -*
 
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
   gcc-6:
-    source: snap/local/empty
     plugin: nil
     override-build: |
       sudo apt --yes install software-properties-common
@@ -407,7 +450,6 @@ parts:
     override-prime: 'true'
 
   spellcheck-dictionaries:
-    source: snap/local/empty
     plugin: nil
     override-build: |
       set -eu
@@ -496,10 +538,6 @@ parts:
     prime:
       - $localization
 
-    build-attributes:
-      # Gtk libraries provided by gnome-platform content shared snap
-      - no-system-libraries
-
   # Self-built Enchant Part #
   # This part provides a patched recent version of the Enchant spell-
   # checking library required by the GtkSpell library.  It workarounds
@@ -586,7 +624,6 @@ parts:
   # This part slightly patches iso-codes's pkg-config so that non-
   # relocable GtkSpell part can locate its data
   iso-codes:
-    source: snap/local/empty
     plugin: nil
     override-build: |
       set -eu
