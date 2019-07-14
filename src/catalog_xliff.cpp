@@ -309,7 +309,13 @@ void XLIFF12Catalog::Parse(pugi::xml_node root)
         m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
         m_language = Language::TryParse(file.attribute("target-language").value());
         for (auto unit: file.select_nodes(".//trans-unit"))
-            m_items.push_back(std::make_shared<XLIFF12CatalogItem>(++id, unit.node()));
+        {
+            auto node = unit.node();
+            if (strcmp(node.attribute("translate").value(), "no") == 0)
+                continue;
+
+            m_items.push_back(std::make_shared<XLIFF12CatalogItem>(++id, node));
+        }
     }
 }
 
@@ -430,7 +436,13 @@ void XLIFF2Catalog::Parse(pugi::xml_node root)
 
     int id = 0;
     for (auto segment: root.select_nodes(".//segment"))
-        m_items.push_back(std::make_shared<XLIFF2CatalogItem>(++id, segment.node()));
+    {
+        auto node = segment.node();
+        if (strcmp(node.parent().attribute("translate").value(), "no") == 0)
+            continue;
+
+        m_items.push_back(std::make_shared<XLIFF2CatalogItem>(++id, node));
+    }
 }
 
 
