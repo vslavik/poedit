@@ -226,6 +226,8 @@ public:
             std::string state = target.attribute("state").value();
             if (state == "needs-adaptation" || state == "needs-l10n")
                 m_isFuzzy = true;
+            else if (m_isTranslated && state == "new")
+                m_isFuzzy = true;
         }
         else
         {
@@ -353,8 +355,9 @@ public:
             m_translations.push_back("");
         }
 
-        std::string state = node.attribute("subState").value();
-        m_isFuzzy = (state == "poedit:fuzzy");
+        std::string state = node.attribute("state").value();
+        std::string substate = node.attribute("subState").value();
+        m_isFuzzy = (m_isTranslated && state == "initial") || (substate == "poedit:fuzzy");
 
         for (auto note: unit().select_nodes(".//note[not(@category='location')]"))
         {
