@@ -195,7 +195,7 @@ public:
     /// Updates the catalog from POT file.
     bool UpdateFromPOT(const wxString& pot_file, bool replace_header = false);
     bool UpdateFromPOT(POCatalogPtr pot, bool replace_header = false);
-    static POCatalogPtr CreateFromPOT(const wxString& pot_file);
+    static POCatalogPtr CreateFromPOT(POCatalogPtr pot);
 
 protected:
     /** Loads catalog from .po file.

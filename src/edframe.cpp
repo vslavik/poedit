@@ -1305,8 +1305,11 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
         {
             wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
             dlg->ShowWindowModalThenDo([=](int retcode){
-                if (retcode == wxID_OK)
-                    NewFromPOT(m_catalog->GetFileName(), dlg->GetLang());
+                if (retcode != wxID_OK)
+                    return;
+                auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+                wxASSERT_MSG(cat, "unexpected file type / catalog class for POT");
+                NewFromPOT(cat, dlg->GetLang());
             });
         }
         else
@@ -1330,13 +1333,21 @@ void PoeditFrame::NewFromPOT()
     if (!pot_file.empty())
     {
         wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-        NewFromPOT(pot_file);
+
+        auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+        if (!pot->IsOk())
+        {
+            wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
+            return;
+        }
+
+        NewFromPOT(pot);
     }
 }
 
-void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
+void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
 {
-    auto catalog = POCatalog::CreateFromPOT(pot_file);
+    auto catalog = POCatalog::CreateFromPOT(pot);
     if (!catalog)
         return;
 
@@ -1364,7 +1375,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
             // file (same directory, language-based name). This doesn't always
             // work, e.g. WordPress plugins use different naming, so don't actually
             // save the file just yet and let the user confirm the location when saving.
-            wxFileName pot_fn(pot_file);
+            wxFileName pot_fn(pot->GetFileName());
             pot_fn.SetFullName(lang.Code() + "." + catalog->GetPreferredExtension());
             m_catalog->SetFileName(pot_fn.GetFullPath());
         }

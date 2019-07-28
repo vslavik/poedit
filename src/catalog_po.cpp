@@ -1692,10 +1692,10 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
     return true;
 }
 
-POCatalogPtr POCatalog::CreateFromPOT(const wxString& pot_file)
+POCatalogPtr POCatalog::CreateFromPOT(POCatalogPtr pot)
 {
     POCatalogPtr c = std::make_shared<POCatalog>();
-    if (c->UpdateFromPOT(pot_file, /*replace_header=*/true))
+    if (c->UpdateFromPOT(pot, /*replace_header=*/true))
         return c;
     else
         return nullptr;

@@ -38,6 +38,7 @@ class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
 class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 
 #include "catalog.h"
+#include "catalog_po.h"
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
@@ -243,7 +244,7 @@ public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
         void NewFromScratch();
         void NewFromPOT();
-        void NewFromPOT(const wxString& pot_file, Language language = Language());
+        void NewFromPOT(POCatalogPtr pot, Language language = Language());
 
         void OnOpen(wxCommandEvent& event);
         void OnOpenFromCrowdin(wxCommandEvent& event);
