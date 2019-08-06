@@ -15,7 +15,7 @@ from tempfile import TemporaryDirectory
 import xml.etree.ElementTree as ET
 
 
-TABLE_URL = "https://www.unicode.org/repos/cldr/tags/latest/common/supplemental/plurals.xml"
+TABLE_URL = "https://github.com/unicode-org/cldr/raw/master/common/supplemental/plurals.xml"
 
 MARKER_BEGIN = "// Code generated with scripts/extract-plural-forms.py begins here"
 MARKER_END   = "// Code generated with scripts/extract-plural-forms.py ends here"
