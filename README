@@ -54,7 +54,14 @@ Do the usual thing:
     make install
 
 You must have the dependencies installed in a location where configure will find
-them, e.g. by setting CPPFLAGS and LDFLAGS appropriately.
+them, e.g. by setting CPPFLAGS and LDFLAGS appropriately. For example, to install
+and setup all required dependencies in Debian Buster, you can run the following:
+
+    apt install libboost-all-dev libwxgtk3.0-dev libgtkspell-dev liblucene++-dev
+    
+Other optional dependencies can also be installed using apt-get:
+
+    apt install libcpprest-dev libsecret-1-dev nlohmann-json3-dev libcanberra-gtk-module
 
 
  macOS
