@@ -26,6 +26,7 @@
 #include "catalog_po.h"
 
 #include "configuration.h"
+#include "errors.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
 #include "qa_checks.h"
@@ -1180,7 +1181,16 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         return false;
     }
 
-    validation_results = DoValidate(po_file_temp);
+    try
+    {
+        validation_results = DoValidate(po_file_temp);
+    }
+    catch (...)
+    {
+        // DoValidate may fail catastrophically if app bundle is damaged, but
+        // that shouldn't prevent Poedit from trying to save user's file.
+        wxLogError("%s", DescribeCurrentException());
+    }
 
     // Now that the file was written, run msgcat to re-format it according
     // to the usual format. This is a (barely) passable fix for #25 until
