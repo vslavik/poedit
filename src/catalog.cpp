@@ -887,10 +887,12 @@ wxString CatalogItem::GetFormatFlag() const
     if (pos == wxString::npos)
         return wxString();
     auto space = m_moreFlags.find_last_of(" \t", pos);
-    if (space == wxString::npos)
-        return m_moreFlags.substr(0, pos);
-    else
-        return m_moreFlags.substr(space+1, pos-space-1);
+    auto format = (space == wxString::npos)
+                    ? m_moreFlags.substr(0, pos)
+                    : m_moreFlags.substr(space+1, pos-space-1);
+    if (format.StartsWith("no-"))
+        return wxString();
+    return format;
 }
 
 void CatalogItem::SetFuzzy(bool fuzzy)
