@@ -26,6 +26,7 @@
 #include <wx/log.h>
 #include <wx/stdpaths.h>
 #include <wx/image.h>
+#include <wx/rawbmp.h>
 
 #include <set>
 
@@ -45,7 +46,7 @@
 namespace
 {
 
-#ifdef __WXGTK20__
+#if defined(__WXGTK20__) && !defined(__WXGTK3__)
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
 wxString GetGnomeStockId(const wxString& id)
 {
@@ -58,6 +59,10 @@ wxString GetGnomeStockId(const wxString& id)
     MAP("document-new",         "gtk-new");
     MAP("document-properties",  "stock_edit");
     MAP("edit-delete",          "gtk-delete");
+
+    MAP("folder-open@symbolic", "gtk-jump-to");
+    MAP("list-add@symbolic",    "list-add");
+    MAP("list-remove@symbolic", "list-remove");
 
     #undef MAP
 
@@ -114,6 +119,31 @@ void ProcessTemplateImage(wxImage& img, bool keepOpaque, bool inverted)
     }
 }
 
+#ifdef __WXGTK3__
+// FIXME: This is not correct, should use dedicated loading API instead
+void ProcessSymbolicImage(wxBitmap& bmp)
+{
+    wxAlphaPixelData data(bmp);
+    if (!data) { wxLogError("oh hell");
+        return;}
+
+    const char color = (ColorScheme::GetAppMode() == ColorScheme::Light) ? 0 : 255;
+
+    wxAlphaPixelData::Iterator p(data);
+    for (int y = 0; y < data.GetHeight(); ++y)
+    {
+        wxAlphaPixelData::Iterator rowStart = p;
+        for (int x = 0; x < data.GetWidth(); ++x, ++p)
+        {
+            if (p.Red() == 0xBE && p.Green() == 0xBE && p.Blue() == 0xBE)
+                p.Red() = p.Green() = p.Blue() = color;
+        }
+        p = rowStart;
+        p.OffsetY(data, 1);
+    }
+}
+#endif // __WXGTK3__
+
 } // anonymous namespace
 
 
@@ -159,7 +189,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     //       theme provider (that uses current icon theme and files from
     //       /usr/share/icons/<theme>) didn't find any matching icon.
 
-#ifdef __WXGTK20__
+#if defined(__WXGTK20__) && !defined(__WXGTK3__)
     // try legacy GNOME icons from standard theme:
     wxString gnomeId = GetGnomeStockId(id);
     if ( !gnomeId.empty() )
@@ -169,7 +199,20 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
         if ( gbmp.Ok() )
             return gbmp;
     }
-#endif // __WXGTK20__
+#endif // defined(__WXGTK20__) && !defined(__WXGTK3__)
+
+#ifdef __WXGTK3__
+    CHECK_FOR_VARIANT(symbolic);
+    if (symbolicVariant)
+    {
+        wxBitmap bmp(wxArtProvider::GetBitmap(id + "-symbolic", client, size));
+        if (bmp.Ok())
+        {
+            ProcessSymbolicImage(bmp);
+            return bmp;
+        }
+    }
+#endif
 
     auto iconsdir = GetIconsDir();
     if ( !wxDirExists(iconsdir) )

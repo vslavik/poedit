@@ -765,8 +765,8 @@ public:
         m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(PX(19),PX(19)));
         int editButtonStyle = wxBU_EXACTFIT;
 #elif defined(__WXGTK__)
-        m_new = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-        m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        m_new = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add@symbolic"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove@symbolic"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
         int editButtonStyle = wxBU_EXACTFIT | wxBORDER_NONE;
 #endif
         m_edit = new wxButton(this, wxID_ANY, _(L"Edit…"), wxDefaultPosition, wxSize(-1, MSW_OR_OTHER(PX(19), -1)), editButtonStyle);
