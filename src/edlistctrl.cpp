@@ -512,6 +512,12 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
 #ifdef __WXMSW__
     if (visualMode == ColorScheme::Dark)
         SetAlternateRowColour(GetBackgroundColour().ChangeLightness(108));
+
+    GetMainWindow()->Bind(wxEVT_MENU, [=](wxCommandEvent&) { 
+        SelectAll();
+        wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
+        ProcessWindowEvent(le); 
+    }, wxID_SELECTALL);
 #endif
 
     Bind(wxEVT_SIZE, &PoeditListCtrl::OnSize, this);
