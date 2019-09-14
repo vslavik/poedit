@@ -180,7 +180,7 @@ std::string XLIFFCatalog::SaveToBuffer()
 }
 
 
-Catalog::ValidationResults XLIFFCatalog::Validate()
+Catalog::ValidationResults XLIFFCatalog::Validate(bool)
 {
     // FIXME: move this elsewhere, remove #include "qa_checks.h", configuration.h
 

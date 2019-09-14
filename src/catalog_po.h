@@ -173,7 +173,7 @@ public:
 
     std::string SaveToBuffer() override;
 
-    ValidationResults Validate() override;
+    ValidationResults Validate(bool wasJustLoaded) override;
 
     /// Compiles the catalog into binary MO file.
     bool CompileToMO(const wxString& mo_file,

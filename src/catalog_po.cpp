@@ -1612,17 +1612,27 @@ bool POCatalog::FixDuplicateItems()
 }
 
 
-Catalog::ValidationResults POCatalog::Validate()
+Catalog::ValidationResults POCatalog::Validate(bool wasJustLoaded)
 {
-    TempDirectory tmpdir;
-    if ( !tmpdir.IsOk() )
-        return ValidationResults();
+    if (!HasCapability(Catalog::Cap::Translations))
+        return ValidationResults();  // no errors in POT files
 
-    wxString tmp_po = tmpdir.CreateFileName("validated.po");
-    if ( !DoSaveOnly(tmp_po, wxTextFileType_Unix) )
-        return ValidationResults();
+    if (wasJustLoaded)
+    {
+        return DoValidate(GetFileName());
+    }
+    else
+    {
+        TempDirectory tmpdir;
+        if ( !tmpdir.IsOk() )
+            return ValidationResults();
 
-    return DoValidate(tmp_po);
+        wxString tmp_po = tmpdir.CreateFileName("validated.po");
+        if ( !DoSaveOnly(tmp_po, wxTextFileType_Unix) )
+            return ValidationResults();
+
+        return DoValidate(tmp_po);
+    }
 }
 
 Catalog::ValidationResults POCatalog::DoValidate(const wxString& po_file)

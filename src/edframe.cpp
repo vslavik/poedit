@@ -2229,6 +2229,10 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 #ifdef __WXMSW__
         wxWindowUpdateLocker no_updates(this);
 #endif
+        {
+            wxLogNull null;  // don't report non-item warnings
+            cat->Validate(/*wasJustLoaded:*/true);
+        }
 
         m_catalog = cat;
         m_pendingHumanEditedItem.reset();
