@@ -3253,7 +3253,7 @@ void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 #ifdef __WXGTK__
     wxEventBlocker block(this, wxEVT_MENU);
 #endif
-    wxWindow *w = wxWindow::FindFocus();
+    wxWindow *w = FindFocusNoMenu();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Skip();
 }
@@ -3263,7 +3263,7 @@ void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 #ifdef __WXGTK__
     wxEventBlocker block(this, wxEVT_UPDATE_UI);
 #endif
-    wxWindow *w = wxWindow::FindFocus();
+    wxWindow *w = FindFocusNoMenu();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
         event.Enable(false);
 }

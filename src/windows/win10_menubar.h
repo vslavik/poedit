@@ -43,6 +43,8 @@ public:
 
     wxPoint GetClientAreaOrigin() const override;
 
+    wxWindow* FindFocusNoMenu();
+
     bool MSWTranslateMessage(WXMSG *msg) override;
     WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override;
 
