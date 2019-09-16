@@ -1341,6 +1341,10 @@ void PoeditFrame::NewFromPOT()
             return;
         }
 
+        // Silently fix duplicates because they are common in WP world:
+        if (pot->HasDuplicateItems())
+            pot->FixDuplicateItems();
+
         NewFromPOT(pot);
     }
 }
