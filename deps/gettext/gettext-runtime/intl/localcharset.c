@@ -395,12 +395,6 @@ locale_charset (void)
   const char *codeset;
   const char *aliases;
 
-  /* Force output encoding, particularly useful for redirected output on win32
-     where charset detection fails when no actual console is attached. */
-  const char *forced_encoding = getenv("GETTEXTIOENCODING");
-  if (forced_encoding)
-      return forced_encoding;
-
 #if !(defined WINDOWS_NATIVE || defined OS2)
 
 # if HAVE_LANGINFO_CODESET

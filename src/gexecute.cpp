@@ -133,7 +133,7 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
     wxGetEnvMap(&env.env);
-    env.env["GETTEXTIOENCODING"] = "UTF-8";
+    env.env["OUTPUT_CHARSET"] = "UTF-8";
 
     wxString lang = wxTranslations::Get()->GetBestTranslation("gettext-tools");
 	if ( !lang.empty() )
