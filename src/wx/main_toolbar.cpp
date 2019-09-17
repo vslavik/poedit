@@ -97,7 +97,7 @@ public:
         else
         {
             tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
-            tool->SetShortHelp(_("Update catalog - synchronize it with sources"));
+            tool->SetShortHelp(_("Update from source code"));
             #ifdef __WXGTK3__
             SetIcon(4 , "poedit-update-symbolic");
             #else
