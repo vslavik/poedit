@@ -118,6 +118,7 @@ with open('build.ninja', 'w') as buildfile:
                                      '--disable-rpath',
                                      '--disable-dependency-tracking',
                                      '--enable-silent-rules',
+                                     '--enable-relocatable',
                                      # Needed for the binaries to work on OS X 10.{7,8}:
                                      '--with-included-libxml',
                                  ],

@@ -317,12 +317,6 @@ set_binding_values (const char *domainname,
 char *
 BINDTEXTDOMAIN (const char *domainname, const char *dirname)
 {
-  /* HACK: Building relocatable binaries is rather broken on OS X,
-   *       so use this workaround instead: */
-  const char *poedit_localedir = getenv("POEDIT_LOCALEDIR");
-  if (poedit_localedir)
-    dirname = poedit_localedir;
-
 #ifdef __EMX__
   const char *saved_dirname = dirname;
   char dirname_with_drive[_MAX_PATH];

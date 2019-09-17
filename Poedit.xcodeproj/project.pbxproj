@@ -1409,7 +1409,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1423,7 +1423,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i.bin \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

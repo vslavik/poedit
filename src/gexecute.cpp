@@ -140,14 +140,6 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
         env.env["LANG"] = lang;
 #endif // __WXOSX__ || __WXMSW__
 
-#ifdef __WXOSX__
-    // Hack alert! On Windows, relocation works, but building with it is too
-    // messy/broken on macOS, so just use some custom hacks instead:
-    auto sharedir = GetGettextPackagePath() + "/share";
-    env.env["POEDIT_LOCALEDIR"] = sharedir + "/locale";
-    env.env["GETTEXTDATADIR"] = sharedir + "/gettext";
-#endif
-
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
     wxScopedPtr<wxProcess> process(new wxProcess);
