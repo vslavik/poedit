@@ -122,7 +122,7 @@
 
 
     //// Text Drawing
-    NSRect textRect = NSMakeRect(NSMinX(frame), NSMinY(frame) + floor((NSHeight(frame) - 8) * 0.50000 + 0.5), NSWidth(frame) - 32, 8);
+    NSRect textRect = NSMakeRect(NSMinX(frame), NSMinY(frame) + floor((NSHeight(frame) - 14) * 0.50000 + 0.5), NSWidth(frame) - 32, 14);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSRightTextAlignment;
 

@@ -79,7 +79,7 @@
 {
     [super sizeToFit];
     NSSize size = self.frame.size;
-    size.width += 32;
+    size.width += 36;
     [self setFrameSize:size];
 }
 
