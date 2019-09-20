@@ -47,7 +47,6 @@ OutputDir=win32\distrib-{#CONFIG}-{#VERSION}
 AppName=Poedit
 AppVerName=Poedit {#VERSION}
 
-PrivilegesRequired=none
 ChangesAssociations=true
 AlwaysShowComponentsList=false
 SourceDir=..
@@ -79,6 +78,7 @@ UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,6.1.7600
 WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
+WizardStyle=modern
 AppPublisherURL=https://poedit.net/
 DisableProgramGroupPage=true
 
@@ -172,9 +172,6 @@ Name: {app}\Docs
 Name: {app}\Resources
 Name: {app}\Translations
 
-[Messages]
-BeveledLabel=https://poedit.net
-
 [ThirdParty]
 CompileLogMethod=append
 
@@ -189,16 +186,13 @@ Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "finnish"; MessagesFile: "compiler:Languages\Finnish.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "hebrew"; MessagesFile: "compiler:Languages\Hebrew.isl"
-Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
-Name: "serbiancyrillic"; MessagesFile: "compiler:Languages\SerbianCyrillic.isl"
 Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
@@ -215,16 +209,13 @@ dutch.OpenAfterInstall=Poedit starten na installatie
 finnish.OpenAfterInstall=Avaa Poedit asentamisen jälkeen
 french.OpenAfterInstall=Ouvrir Poedit après l'installation
 german.OpenAfterInstall=Poedit nach Abschluss der Installation öffnen
-greek.OpenAfterInstall=Άνοιξε το Poedit μετά την εγκατάσταση
 hebrew.OpenAfterInstall=פתח את Poedit לאחר ההתקנה
-hungarian.OpenAfterInstall=Poedit megnyitása telepítés után
 italian.OpenAfterInstall=Apri Poedit dopo l'installazione
 japanese.OpenAfterInstall=インストール後 Poedit を開く
 norwegian.OpenAfterInstall=Åpne Poedit etter installasjon
 polish.OpenAfterInstall=Otwórz program Poedit po zakończeniu instalacji
 portuguese.OpenAfterInstall=Abrir Poedit após a instalação
 russian.OpenAfterInstall=Открыть Poedit после окончания установки
-serbiancyrillic.OpenAfterInstall=Отвори Poedit након инсталације
 slovenian.OpenAfterInstall=Po namestitvi odpri Poedit
 spanish.OpenAfterInstall=Abrir Poedit tras la instalación
 turkish.OpenAfterInstall=Kurulumdan sonra Poedit'i aç
