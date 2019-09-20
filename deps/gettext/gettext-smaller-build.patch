@@ -1,7 +1,7 @@
-diff -ru gettext-0.19.8.1/gettext-runtime/Makefile.am gettext/gettext-runtime/Makefile.am
---- gettext-0.19.8.1/gettext-runtime/Makefile.am	2016-03-20 08:37:53.000000000 +0100
-+++ gettext/gettext-runtime/Makefile.am	2019-09-17 14:28:41.000000000 +0200
-@@ -29,26 +29,11 @@
+diff -ru gettext-0.20.1.orig/gettext-runtime/Makefile.am gettext-0.20.1/gettext-runtime/Makefile.am
+--- gettext-0.20.1.orig/gettext-runtime/Makefile.am	2019-04-04 03:51:10.000000000 +0200
++++ gettext-0.20.1/gettext-runtime/Makefile.am	2019-09-21 17:48:17.000000000 +0200
+@@ -27,7 +27,7 @@
  else
  SUBDIR_libasprintf =
  endif
@@ -10,58 +10,15 @@ diff -ru gettext-0.19.8.1/gettext-runtime/Makefile.am gettext/gettext-runtime/Ma
  
  EXTRA_DIST = BUGS
  
- 
--# Files installed for the user and for use by gettextize.
--
--gettextsrcdir = $(datadir)/gettext
--gettextsrc_DATA = ABOUT-NLS
--
--
--all-local: ABOUT-NLS
--
--ABOUT-NLS: $(srcdir)/doc/nls.texi $(srcdir)/doc/matrix.texi
--	rm -f $(srcdir)/ABOUT-NLS \
--	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc \
--	     $(srcdir)/doc/nls.texi \
--	     | sed -e "s/\`\([^']*\)'/‘\1’/g" > $(srcdir)/ABOUT-NLS
--
--
- # Allow users to use "gnulib-tool --update".
- EXTRA_DIST += gnulib-m4/gnulib-cache.m4
- 
-diff -ru gettext-0.19.8.1/gettext-runtime/intl/Makefile.in gettext/gettext-runtime/intl/Makefile.in
---- gettext-0.19.8.1/gettext-runtime/intl/Makefile.in	2016-06-11 09:37:41.000000000 +0200
-+++ gettext/gettext-runtime/intl/Makefile.in	2019-09-17 14:28:41.000000000 +0200
-@@ -471,6 +471,7 @@
- 	if test "$(PACKAGE)" = "gettext-tools"; then \
- 	  $(mkdir_p) $(DESTDIR)$(gettextsrcdir); \
- 	  $(INSTALL_DATA) VERSION $(DESTDIR)$(gettextsrcdir)/VERSION; \
-+	  $(INSTALL_DATA) $(DESTDIR)$(gettextsrcdir)/ChangeLog; \
- 	  dists="COPYING.LIB $(DISTFILES.common)"; \
- 	  for file in $$dists; do \
- 	    $(INSTALL_DATA) $(srcdir)/$$file \
-diff -ru gettext-0.19.8.1/gettext-tools/Makefile.am gettext/gettext-tools/Makefile.am
---- gettext-0.19.8.1/gettext-tools/Makefile.am	2016-03-20 08:37:53.000000000 +0100
-+++ gettext/gettext-tools/Makefile.am	2019-09-17 14:28:41.000000000 +0200
+diff -ru gettext-0.20.1.orig/gettext-tools/Makefile.am gettext-0.20.1/gettext-tools/Makefile.am
+--- gettext-0.20.1.orig/gettext-tools/Makefile.am	2019-04-04 03:47:14.000000000 +0200
++++ gettext-0.20.1/gettext-tools/Makefile.am	2019-09-21 17:50:46.000000000 +0200
 @@ -19,7 +19,7 @@
  AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
  ACLOCAL_AMFLAGS = -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
  
--SUBDIRS = doc intl gnulib-lib libgrep src libgettextpo po projects styles misc man m4 tests gnulib-tests examples its
-+SUBDIRS = doc intl gnulib-lib libgrep src libgettextpo po projects styles misc m4 its
+-SUBDIRS = intl gnulib-lib libgrep src libgettextpo po its projects styles emacs misc man m4 tests system-tests gnulib-tests examples doc
++SUBDIRS = intl gnulib-lib libgrep src libgettextpo po its projects styles emacs misc m4
  
  EXTRA_DIST = misc/DISCLAIM
  MOSTLYCLEANFILES = core *.stackdump
-@@ -39,12 +39,6 @@
-   ../build-aux/csharpcomp.sh.in ../build-aux/csharpexec.sh.in
- 
- 
--# Files copied from other directories.
--
--all-local: $(srcdir)/ABOUT-NLS
--$(srcdir)/ABOUT-NLS: $(srcdir)/../gettext-runtime/ABOUT-NLS
--	cp $(srcdir)/../gettext-runtime/ABOUT-NLS $(srcdir)/ABOUT-NLS
--
- 
- # Allow users to use "gnulib-tool --update".
- EXTRA_DIST += gnulib-m4/gnulib-cache.m4

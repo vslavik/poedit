@@ -17,12 +17,12 @@ rule download
       $url...
   pool = console
 build $
-    tarballs/gettext-0.19.8.1.tar.gz: $
+    tarballs/gettext-0.20.1.tar.gz: $
     download
   url = $
-      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.19.8.1.tar.gz
+      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.20.1.tar.gz
   sha256 = $
-      ff942af0e438ced4a8b0ea4b0b6e0d6d657157c5e2364de57baa279c1c125c43
+      66415634c6e8c3fa8b71362879ec7575e27da43da562c798a8a2f223e6e47f5c
 rule gettext_build
   command = echo $
       'note: ⋯  $
@@ -55,7 +55,7 @@ rule gettext_build
       && echo $
       'note: ⋯  $
       tar -x -f $
-      "$top_srcdir/tarballs/gettext-0.19.8.1.tar.gz" $
+      "$top_srcdir/tarballs/gettext-0.20.1.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -63,7 +63,7 @@ rule gettext_build
       tmp=`mktemp` $
       && tar -x $
       -f $
-      "$top_srcdir/tarballs/gettext-0.19.8.1.tar.gz" $
+      "$top_srcdir/tarballs/gettext-0.20.1.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -381,7 +381,7 @@ build $
     $intdir/gettext.done: $
     gettext_build $
     gettext/gettext-smaller-build.patch $
-    tarballs/gettext-0.19.8.1.tar.gz
+    tarballs/gettext-0.20.1.tar.gz
   name = gettext
   configure = $
       ./configure
