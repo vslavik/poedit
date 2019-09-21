@@ -159,6 +159,22 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     return retcode;
 }
 
+void LogUnrecognizedError(const wxString& err)
+{
+#ifdef __WXOSX__
+    // gettext-0.20 started showing setlocale() warnings under what are
+    // normal circumstances when running from GUI; filter them out.
+    //
+    //   Warning: Failed to set locale category LC_NUMERIC to de.
+    //   Warning: Failed to set locale category LC_TIME to de.
+    //   ...etc...
+    if (err.StartsWith("Warning: Failed to set locale category"))
+        return;
+#endif // __WXOSX__
+
+    wxLogError("%s", err);
+}
+
 } // anonymous namespace
 
 
@@ -181,14 +197,14 @@ bool ExecuteGettext(const wxString& cmdline)
         else
         {
             if (!pending.empty())
-                wxLogError("%s", pending);
+                LogUnrecognizedError(pending);
 
             pending = ln;
         }
     }
 
     if (!pending.empty())
-        wxLogError("%s", pending);
+        LogUnrecognizedError(pending);
 
     return retcode == 0;
 }
