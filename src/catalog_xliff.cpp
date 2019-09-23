@@ -80,7 +80,16 @@ bool set_node_text(xml_node node, const std::string& text, bool isPlainText)
     {
         remove_all_children(node);
         auto result = node.append_buffer(text.c_str(), text.size(), parse_default, encoding_utf8);
-        return result.status == status_ok;
+        switch (result.status)
+        {
+            case status_no_document_element:
+                node.text() = s.c_str();
+                return true;
+            case status_ok:
+                return true;
+            default:
+                return false;
+        }
     }
 }
 
