@@ -33,7 +33,10 @@
 #include <wx/intl.h>
 #include <wx/log.h>
 
+#include <boost/algorithm/string.hpp>
+
 #include <memory>
+#include <set>
 #include <sstream>
 
 using namespace pugi;
@@ -45,6 +48,13 @@ namespace
 inline bool has_child_elements(xml_node node)
 {
     return node.find_child([](xml_node n){ return n.type() == node_element; });
+}
+
+inline std::string get_node_markup(xml_node node)
+{
+    std::ostringstream s;
+    node.print(s, "", format_raw);
+    return s.str();
 }
 
 std::string get_subtree_markup(xml_node node)
@@ -61,6 +71,12 @@ inline void remove_all_children(xml_node node)
         node.remove_child(last);
 }
 
+inline xml_attribute attribute(xml_node node, const char *name)
+{
+    auto a = node.attribute(name);
+    return a ? a : node.append_attribute(name);
+}
+
 inline std::string get_node_text(xml_node node, bool isPlainText)
 {
     if (isPlainText)
@@ -69,17 +85,35 @@ inline std::string get_node_text(xml_node node, bool isPlainText)
         return get_subtree_markup(node);
 }
 
-bool set_node_text(xml_node node, const std::string& text, bool isPlainText)
+inline void apply_placeholders(std::string& s, const XLIFFStringMetadata& metadata)
 {
-    if (isPlainText)
+    for (auto& ph: metadata.substitutions)
+        boost::replace_all(s, ph.markup, ph.placeholder);
+}
+
+inline std::string get_node_text_with_metadata(xml_node node, const XLIFFStringMetadata& metadata)
+{
+    auto s = get_node_text(node, metadata.isPlainText);
+    if (!metadata.isPlainText)
+        apply_placeholders(s, metadata);
+    return s;
+}
+
+bool set_node_text_with_metadata(xml_node node, std::string&& text, const XLIFFStringMetadata& metadata)
+{
+    if (metadata.isPlainText)
     {
         node.text() = text.c_str();
         return true;
     }
     else
     {
+        std::string s(std::move(text));
+        for (auto& ph: metadata.substitutions)
+            boost::replace_all(s, ph.placeholder, ph.markup);
+
         remove_all_children(node);
-        auto result = node.append_buffer(text.c_str(), text.size(), parse_default, encoding_utf8);
+        auto result = node.append_buffer(s.c_str(), s.size(), parse_default, encoding_utf8);
         switch (result.status)
         {
             case status_no_document_element:
@@ -93,11 +127,221 @@ bool set_node_text(xml_node node, const std::string& text, bool isPlainText)
     }
 }
 
-inline xml_attribute attribute(xml_node node, const char *name)
+
+
+class MetadataExtractor : public pugi::xml_tree_walker
 {
-    auto a = node.attribute(name);
-    return a ? a : node.append_attribute(name);
-}
+public:
+    XLIFFStringMetadata metadata;
+    std::string extractedText;
+
+    bool begin(xml_node& node) override
+    {
+        const bool has_children = has_child_elements(node);
+        metadata.isPlainText = !has_children;
+        extractedText = get_node_text(node, metadata.isPlainText);
+        return has_children;
+    }
+
+    bool for_each(pugi::xml_node& node) override
+    {
+        if (node.type() == node_element)
+            OnTag(node.name(), node);
+        return true;
+    }
+
+    bool end(xml_node&) override
+    {
+        if (!metadata.isPlainText)
+            FinalizeMetadata();
+        apply_placeholders(extractedText, metadata);
+        return true;
+    }
+
+protected:
+    virtual void OnTag(const std::string& name, pugi::xml_node node) = 0;
+    virtual std::string ExtractPlaceholderDisplay(pugi::xml_node node) = 0;
+
+    enum PlaceholderKind
+    {
+        SINGLE,
+        GROUP
+    };
+
+    void AddPlaceholder(pugi::xml_node node, PlaceholderKind kind)
+    {
+        std::string id = node.attribute("id").value();
+        if (id.empty())
+            return;  // malformed - no ID, can't do anything about it
+
+        PlaceholderInfo phi {kind, id};
+
+        phi.markup = get_node_markup(node);
+        if (m_foundMarkup.find(phi.markup) != m_foundMarkup.end())
+            return;
+        m_foundMarkup.insert(phi.markup);
+
+        std::string subst;
+        switch (kind)
+        {
+            case SINGLE:
+            {
+                subst = ExtractPlaceholderDisplay(node);
+                if (subst.empty() || boost::all(subst, boost::is_space()))
+                    subst = id;
+                subst = PrettifyPlaceholder(subst);
+                break;
+            }
+            case GROUP:
+            {
+                subst = "<g>";
+
+                auto inner = get_subtree_markup(node);
+                auto pos = phi.markup.find(inner);
+                if (pos == std::string::npos)
+                    return;  // something is very wrong, can't find inner content
+                phi.markupClosing = phi.markup.substr(pos + inner.length());
+                phi.markup = phi.markup.substr(0, pos);
+                break;
+            }
+        }
+
+        auto iexisting = m_placeholders.find(subst);
+        if (iexisting == m_placeholders.end())
+        {
+            m_placeholders.emplace(subst, phi);
+        }
+        else
+        {
+            // conflict between duplicate placeholders; use ID instead of equiv-text
+            auto existing = iexisting->second;
+            m_placeholders.erase(iexisting);
+            switch (kind)
+            {
+                case SINGLE:
+                {
+                    m_placeholders.emplace(PrettifyPlaceholder(existing.id), existing);
+                    m_placeholders.emplace(PrettifyPlaceholder(id), phi);
+                    break;
+                }
+                case GROUP:
+                {
+                    m_placeholders.emplace("<g id=\"" + existing.id + "\">", existing);
+                    m_placeholders.emplace("<g id=\"" + id + "\">", phi);
+                    break;
+                }
+            }
+        }
+    }
+
+    void FinalizeMetadata()
+    {
+        // Construct substitutions table for metadata. While doing so, verify
+        // that no placeholder conflicts with plain text, to ensure roundtripping
+        // is safe.
+
+        std::string removedPlaceholderMarkup = extractedText;
+        for (auto& ph: m_placeholders)
+        {
+            boost::erase_all(removedPlaceholderMarkup, ph.second.markup);
+            if (ph.second.kind == GROUP)
+                boost::erase_all(removedPlaceholderMarkup, ph.second.markupClosing);
+        }
+
+        for (auto& ph: m_placeholders)
+        {
+            auto phtext = ph.first;
+            switch (ph.second.kind)
+            {
+                case SINGLE:
+                {
+                    while (removedPlaceholderMarkup.find(phtext) != std::string::npos)
+                        phtext = phtext.front() + phtext + phtext.back();
+                    metadata.substitutions.push_back({phtext, ph.second.markup});
+                    break;
+                }
+                case GROUP:
+                {
+                    std::string phclose({'<', '/', phtext[1], '>'});
+                    while (removedPlaceholderMarkup.find(phtext) != std::string::npos || removedPlaceholderMarkup.find(phclose) != std::string::npos)
+                    {
+                        phtext.insert(1, 1, phtext[1]);
+                        phclose.insert(2, 1, phclose[2]);
+                    }
+                    metadata.substitutions.push_back({phtext, ph.second.markup});
+                    metadata.substitutions.push_back({phclose, ph.second.markupClosing});
+                    break;
+                }
+            }
+        }
+    }
+
+    inline std::string PrettifyPlaceholder(const std::string& s) const
+    {
+        if (s.empty())
+            return "{}";
+
+        const char f = s.front();
+        const char b = s.back();
+        if ((f == '{' && b == '}') || (f == '%' && b == '%') || (f == '<' && b == '>'))
+            return s;  // {foo} {{foo}} %foo% <foo> </foo>
+        else
+            return '{' + s + '}';
+    }
+
+private:
+    struct PlaceholderInfo
+    {
+        PlaceholderKind kind;
+        std::string id;
+        std::string markup, markupClosing;
+    };
+
+    std::map<std::string, PlaceholderInfo> m_placeholders;
+    std::set<std::string> m_foundMarkup;
+};
+
+
+class XLIFF12MetadataExtractor : public MetadataExtractor
+{
+protected:
+    void OnTag(const std::string& name, pugi::xml_node node) override
+    {
+        if (name == "x")
+            AddPlaceholder(node, SINGLE);
+        else if (name == "g")
+            AddPlaceholder(node, GROUP);
+    }
+
+    std::string ExtractPlaceholderDisplay(pugi::xml_node node) override
+    {
+        return node.attribute("equiv-text").value();
+    }
+};
+
+
+class XLIFF2MetadataExtractor : public MetadataExtractor
+{
+protected:
+    void OnTag(const std::string& name, pugi::xml_node node) override
+    {
+        if (name == "ph")
+            AddPlaceholder(node, SINGLE);
+        else if (name == "pc")
+            AddPlaceholder(node, GROUP);
+    }
+
+    std::string ExtractPlaceholderDisplay(pugi::xml_node node) override
+    {
+        auto disp = node.attribute("disp");
+        if (disp)
+            return disp.value();
+        else
+            return node.attribute("equiv").value();
+    }
+};
+
+
 
 } // anonymous namespace
 
@@ -217,8 +461,12 @@ public:
     XLIFF12CatalogItem(int itemId, xml_node node) : XLIFFCatalogItem(itemId, node)
     {
         auto source = node.child("source");
-        m_isPlainText = !has_child_elements(source);
-        m_string = str::to_wx(get_node_text(source, m_isPlainText));
+
+        XLIFF12MetadataExtractor extractor;
+        source.traverse(extractor);
+        m_metadata = std::move(extractor.metadata);
+
+        m_string = str::to_wx(extractor.extractedText);
 
         // TODO: switch to textual IDs in CatalogItem
         std::string id = node.attribute("id").value();
@@ -229,7 +477,7 @@ public:
         auto target = node.child("target");
         if (target)
         {
-            auto trans_text = str::to_wx(get_node_text(target, m_isPlainText));
+            auto trans_text = str::to_wx(get_node_text_with_metadata(target, m_metadata));
             m_translations.push_back(trans_text);
             m_isTranslated = !trans_text.empty();
             std::string state = target.attribute("state").value();
@@ -275,7 +523,7 @@ public:
         {
             target.remove_attribute("state-qualifier");
             attribute(target, "state") = m_isFuzzy ? "needs-adaptation" : "translated";
-            if (!set_node_text(target, str::to_utf8(trans), m_isPlainText))
+            if (!set_node_text_with_metadata(target, str::to_utf8(trans), m_metadata))
             {
                 // TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
                 SetIssue(Issue::Error, _("Broken markup in translation string."));
@@ -349,8 +597,12 @@ public:
     XLIFF2CatalogItem(int itemId, xml_node node) : XLIFFCatalogItem(itemId, node)
     {
         auto source = node.child("source");
-        m_isPlainText = !has_child_elements(source);
-        m_string = str::to_wx(get_node_text(source, m_isPlainText));
+
+        XLIFF2MetadataExtractor extractor;
+        source.traverse(extractor);
+        m_metadata = std::move(extractor.metadata);
+
+        m_string = str::to_wx(extractor.extractedText);
 
         // TODO: switch to textual IDs in CatalogItem
         std::string id = unit().attribute("id").value();
@@ -361,7 +613,7 @@ public:
         auto target = node.child("target");
         if (target)
         {
-            auto trans_text = str::to_wx(get_node_text(target, m_isPlainText));
+            auto trans_text = str::to_wx(get_node_text_with_metadata(target, m_metadata));
             m_translations.push_back(trans_text);
             m_isTranslated = !trans_text.empty();
         }
@@ -408,7 +660,7 @@ public:
             else
                 m_node.remove_attribute("subState");
 
-            if (!set_node_text(target, str::to_utf8(trans), m_isPlainText))
+            if (!set_node_text_with_metadata(target, str::to_utf8(trans), m_metadata))
             {
                 // TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
                 SetIssue(Issue::Error, _("Broken markup in translation string."));

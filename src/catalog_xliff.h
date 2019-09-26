@@ -31,6 +31,8 @@
 
 #include "pugixml.h"
 
+#include <vector>
+
 
 class XLIFFException : public Exception
 {
@@ -45,22 +47,42 @@ public:
 };
 
 
+// Metadata concerning XLIFF representation in Poedit, e.g. for placeholders
+struct XLIFFStringMetadata
+{
+    XLIFFStringMetadata() : isPlainText(true) {}
+    XLIFFStringMetadata(XLIFFStringMetadata&& other) = default;
+    XLIFFStringMetadata& operator=(XLIFFStringMetadata&&) = default;
+    XLIFFStringMetadata(const XLIFFStringMetadata&) = delete;
+    void operator=(const XLIFFStringMetadata&) = delete;
+
+    bool isPlainText;
+
+    struct Subst
+    {
+        std::string placeholder;
+        std::string markup;
+    };
+    std::vector<Subst> substitutions;
+};
+
+
 class XLIFFCatalogItem : public CatalogItem
 {
 public:
-    XLIFFCatalogItem(int id, pugi::xml_node node) : m_node(node), m_isPlainText(true)
+    XLIFFCatalogItem(int id, pugi::xml_node node) : m_node(node)
         { m_id = id; }
     XLIFFCatalogItem(const CatalogItem&) = delete;
 
 protected:
     pugi::xml_node m_node;
-    bool m_isPlainText;
+    XLIFFStringMetadata m_metadata;
 };
-
 
 
 class XLIFFCatalog : public Catalog
 {
+
 public:
     ~XLIFFCatalog() {}
 
