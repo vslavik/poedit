@@ -1,0 +1,132 @@
+From 4785289e45f4467bd484ae4249c58ad730966d1b Mon Sep 17 00:00:00 2001
+From: Bruno Haible <bruno@clisp.org>
+Date: Sun, 28 Jul 2019 19:21:32 +0200
+Subject: [PATCH] xgettext: Fix parsing of JavaScript template literals inside
+ functions.
+
+Reported by Dmitry Vinnik <vinnik.dmitry07@gmail.com>
+in <https://savannah.gnu.org/bugs/?56678>.
+
+* gettext-tools/src/x-javascript.c (brace_depths, brace_depths_alloc): New
+variables.
+(brace_depth): Remove variable.
+(new_brace_depth_level): New function.
+(phase5_get): Invoke it. Access the top of the brace_depths stack.
+(extract_javascript): Don't set brace_depth. Invoke new_brace_depth_level
+instead.
+* gettext-tools/tests/xgettext-javascript-7: Test template literals inside a
+function.
+---
+ gettext-tools/src/x-javascript.c          | 33 ++++++++++++++++++++++++-------
+ gettext-tools/tests/xgettext-javascript-7 | 13 ++++++++++++
+ 2 files changed, 39 insertions(+), 7 deletions(-)
+
+diff --git a/gettext-tools/src/x-javascript.c b/gettext-tools/src/x-javascript.c
+index dd19b37..7ac5b24 100644
+--- a/gettext-tools/src/x-javascript.c
++++ b/gettext-tools/src/x-javascript.c
+@@ -929,12 +929,30 @@ phase5_scan_regexp (void)
+       phase2_ungetc (c);
+ }
+ 
+-/* Number of open '{' tokens.  */
+-static int brace_depth;
+-
+ /* Number of open template literals `...${  */
+ static int template_literal_depth;
+ 
++/* Number of open '{' tokens, at each template literal level.
++   The "current" element is brace_depths[template_literal_depth].  */
++static int *brace_depths;
++/* Number of allocated elements in brace_depths.  */
++static size_t brace_depths_alloc;
++
++/* Adds a new brace_depths level after template_literal_depth was
++   incremented.  */
++static void
++new_brace_depth_level (void)
++{
++  if (template_literal_depth == brace_depths_alloc)
++    {
++      brace_depths_alloc = 2 * brace_depths_alloc + 1;
++      /* Now template_literal_depth < brace_depths_alloc.  */
++      brace_depths =
++        (int *) xrealloc (brace_depths, brace_depths_alloc * sizeof (int));
++    }
++  brace_depths[template_literal_depth] = 0;
++}
++
+ /* Number of open XML elements.  */
+ static int xml_element_depth;
+ static bool inside_embedded_js_in_xml;
+@@ -1227,6 +1245,7 @@ phase5_get (token_ty *tp)
+                     mixed_string_buffer_destroy (&msb);
+                     tp->type = last_token_type = token_type_ltemplate;
+                     template_literal_depth++;
++                    new_brace_depth_level ();
+                     break;
+                   }
+ 
+@@ -1357,15 +1376,15 @@ phase5_get (token_ty *tp)
+           if (xml_element_depth > 0 && !inside_embedded_js_in_xml)
+             inside_embedded_js_in_xml = true;
+           else
+-            brace_depth++;
++            brace_depths[template_literal_depth]++;
+           tp->type = last_token_type = token_type_other;
+           return;
+ 
+         case '}':
+           if (xml_element_depth > 0 && inside_embedded_js_in_xml)
+             inside_embedded_js_in_xml = false;
+-          else if (brace_depth > 0)
+-            brace_depth--;
++          else if (brace_depths[template_literal_depth] > 0)
++            brace_depths[template_literal_depth]--;
+           else if (template_literal_depth > 0)
+             {
+               /* Middle or right part of template literal.  */
+@@ -1695,8 +1714,8 @@ extract_javascript (FILE *f,
+   last_comment_line = -1;
+   last_non_comment_line = -1;
+ 
+-  brace_depth = 0;
+   template_literal_depth = 0;
++  new_brace_depth_level ();
+   xml_element_depth = 0;
+   inside_embedded_js_in_xml = false;
+ 
+diff --git a/gettext-tools/tests/xgettext-javascript-7 b/gettext-tools/tests/xgettext-javascript-7
+index c9516ec..2d612a9 100755
+--- a/gettext-tools/tests/xgettext-javascript-7
++++ b/gettext-tools/tests/xgettext-javascript-7
+@@ -17,6 +17,10 @@ var s7 = _(tag`A template literal with a tag`);
+ var s8 = `a${`b${`c`+d}`}e`;
+ var s9 = _("a normal string");
+ var s10 = `abc${foo({},_('should be extracted'))}xyz`;
++var f1 = function () {
++  return _("first normal string") + `${foo}` + _("second normal string");
++};
++var s11 = _("another normal string");
+ EOF
+ 
+ : ${XGETTEXT=xgettext}
+@@ -65,6 +69,15 @@ msgstr ""
+ 
+ msgid "should be extracted"
+ msgstr ""
++
++msgid "first normal string"
++msgstr ""
++
++msgid "second normal string"
++msgstr ""
++
++msgid "another normal string"
++msgstr ""
+ EOF
+ 
+ : ${DIFF=diff}
+-- 
+1.9.1
+
