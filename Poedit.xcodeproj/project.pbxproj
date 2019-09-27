@@ -190,8 +190,6 @@
 		B2EC60A41812D9D40059756A /* icudt57l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt57l.dat */; };
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
-		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
-		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
 /* End PBXBuildFile section */
 
@@ -586,8 +584,6 @@
 		B2EC60A31812D9D40059756A /* icudt57l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt57l.dat; path = deps/icu4c/source/data/in/icudt57l.dat; sourceTree = "<group>"; };
 		B2F25F0B199E23B300127FF9 /* spellchecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spellchecking.h; sourceTree = "<group>"; };
 		B2F25F0C199E327C00127FF9 /* spellchecking.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = spellchecking.cpp; sourceTree = "<group>"; };
-		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
-		B2F287C3170DCC92004C1F41 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYING; path = deps/gettext/COPYING; sourceTree = SOURCE_ROOT; };
 		B2F672D6197A83F900DBFDB0 /* da */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2F672D7197A83FE00DBFDB0 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2F672D8197A840400DBFDB0 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MoveApplication.strings; sourceTree = "<group>"; };
@@ -837,8 +833,6 @@
 			children = (
 				B248B2E3170D765100EBA58E /* GettextTools-Info.plist */,
 				B20960F219928C8500A2EB13 /* GettextToolsDummy.c */,
-				B2F287C2170DCC92004C1F41 /* AUTHORS */,
-				B2F287C3170DCC92004C1F41 /* COPYING */,
 			);
 			name = GettextTools;
 			sourceTree = SOURCE_ROOT;
@@ -1061,7 +1055,6 @@
 			buildPhases = (
 				B248B2DA170D765100EBA58E /* Sources */,
 				B248B2DB170D765100EBA58E /* Frameworks */,
-				B248B2DC170D765100EBA58E /* Resources */,
 				B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */,
 				B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */,
 			);
@@ -1211,15 +1204,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B248B2DC170D765100EBA58E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */,
-				B2F287C5170DCC92004C1F41 /* COPYING in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B24ACD5916F6201F00399242 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1409,7 +1393,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1423,7 +1407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\nfor i in ${GETTEXT_BINARIES}; do\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\n  cp -a ${DEPS_BUILD_DIR}/gettext/bin/$i.bin \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/bin\"\ndone\ncp -a ${DEPS_BUILD_DIR}/gettext/lib/lib*.*.dylib \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/lib\"\n\ncp -a ${DEPS_BUILD_DIR}/gettext/share/gettext-* \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gettext\"\ncp -a ${DEPS_BUILD_DIR}/gettext/share/locale \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\n\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f locale && ln -s ../../Resources/locale .)\n(cd \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/share\" && rm -f gettext && ln -s ../../Resources/gettext .)\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<schemalist>
+  <schema id="org.gnome.example" path="/org/gnome/example/">
+    <key name="foo" type="i">
+      <default>0</default>
+      <!-- This is the first line.
+           This is the second line. -->
+      <summary>Example Integer Key</summary>
+      <description>
+        The example integer key to test that the default value is not
+        translated.
+      </description>
+    </key>
+    <key name="bar" type="s">
+      <default l10n="messages" context="Foo">
+        ' foo   bar   baz'
+      </default>
+    </key>
+    <key name="baz" type="s">
+      <default l10n="messages" context="Baz"></default>
+      <summary context="Baz"></summary>
+    </key>
+  </schema>
+</schemalist>

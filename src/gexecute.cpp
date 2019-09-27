@@ -133,20 +133,12 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
     wxGetEnvMap(&env.env);
-    env.env["GETTEXTIOENCODING"] = "UTF-8";
+    env.env["OUTPUT_CHARSET"] = "UTF-8";
 
     wxString lang = wxTranslations::Get()->GetBestTranslation("gettext-tools");
 	if ( !lang.empty() )
         env.env["LANG"] = lang;
 #endif // __WXOSX__ || __WXMSW__
-
-#ifdef __WXOSX__
-    // Hack alert! On Windows, relocation works, but building with it is too
-    // messy/broken on macOS, so just use some custom hacks instead:
-    auto sharedir = GetGettextPackagePath() + "/share";
-    env.env["POEDIT_LOCALEDIR"] = sharedir + "/locale";
-    env.env["GETTEXTDATADIR"] = sharedir + "/gettext";
-#endif
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
@@ -165,6 +157,22 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     }
 
     return retcode;
+}
+
+void LogUnrecognizedError(const wxString& err)
+{
+#ifdef __WXOSX__
+    // gettext-0.20 started showing setlocale() warnings under what are
+    // normal circumstances when running from GUI; filter them out.
+    //
+    //   Warning: Failed to set locale category LC_NUMERIC to de.
+    //   Warning: Failed to set locale category LC_TIME to de.
+    //   ...etc...
+    if (err.StartsWith("Warning: Failed to set locale category"))
+        return;
+#endif // __WXOSX__
+
+    wxLogError("%s", err);
 }
 
 } // anonymous namespace
@@ -189,14 +197,14 @@ bool ExecuteGettext(const wxString& cmdline)
         else
         {
             if (!pending.empty())
-                wxLogError("%s", pending);
+                LogUnrecognizedError(pending);
 
             pending = ln;
         }
     }
 
     if (!pending.empty())
-        wxLogError("%s", pending);
+        LogUnrecognizedError(pending);
 
     return retcode == 0;
 }

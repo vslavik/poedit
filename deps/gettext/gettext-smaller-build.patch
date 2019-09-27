@@ -1,0 +1,24 @@
+diff -ru gettext-0.20.1.orig/gettext-runtime/Makefile.am gettext-0.20.1/gettext-runtime/Makefile.am
+--- gettext-0.20.1.orig/gettext-runtime/Makefile.am	2019-04-04 03:51:10.000000000 +0200
++++ gettext-0.20.1/gettext-runtime/Makefile.am	2019-09-21 17:48:17.000000000 +0200
+@@ -27,7 +27,7 @@
+ else
+ SUBDIR_libasprintf =
+ endif
+-SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po man m4 tests
++SUBDIRS = doc intl intl-java intl-csharp gnulib-lib $(SUBDIR_libasprintf) src po m4
+ 
+ EXTRA_DIST = BUGS
+ 
+diff -ru gettext-0.20.1.orig/gettext-tools/Makefile.am gettext-0.20.1/gettext-tools/Makefile.am
+--- gettext-0.20.1.orig/gettext-tools/Makefile.am	2019-04-04 03:47:14.000000000 +0200
++++ gettext-0.20.1/gettext-tools/Makefile.am	2019-09-21 17:50:46.000000000 +0200
+@@ -19,7 +19,7 @@
+ AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
+ ACLOCAL_AMFLAGS = -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
+ 
+-SUBDIRS = intl gnulib-lib libgrep src libgettextpo po its projects styles emacs misc man m4 tests system-tests gnulib-tests examples doc
++SUBDIRS = intl gnulib-lib libgrep src libgettextpo po its projects styles emacs misc m4
+ 
+ EXTRA_DIST = misc/DISCLAIM
+ MOSTLYCLEANFILES = core *.stackdump
