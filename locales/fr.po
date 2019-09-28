@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2019-05-14 19:19+0200\n"
-"PO-Revision-Date: 2019-05-14 16:53\n"
+"POT-Creation-Date: 2019-09-28 20:10+0200\n"
+"PO-Revision-Date: 2019-09-28 18:07\n"
 "Last-Translator: Václav Slavík (vslavik)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -134,7 +134,7 @@ msgstr "Erreur d'enregistrement du catalogue"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
-msgstr "Erreur de chargement du fichier «%s»: %s."
+msgstr "Erreur lors du chargement du fichier «%s» : %s."
 
 #, c-format
 msgid "unsupported XLIFF version (%s)"
@@ -422,7 +422,7 @@ msgstr ""
 
 #, c-format
 msgid "File “%s” is not a translation file."
-msgstr "Fichier «%s» n’est pas un fichier de traduction."
+msgstr "Le fichier « %s » n’est pas un fichier de traduction."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -566,15 +566,15 @@ msgid "The translation is ready for use."
 msgstr "La traduction est prête à être utilisée."
 
 msgid "Warnings have been disabled."
-msgstr "Les alertes ont été désactivées."
+msgstr "Les avertissements ont été désactivés."
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
-"Si vous avez désactivé les alertes en raison d'un trop grand nombre de faux "
-"positifs, faîtes nous parvenir un exemple de fichier à help@poedit.net pour "
-"aider à les améliorer."
+"Si vous avez désactivé les avertissements en raison de faux positifs "
+"excessifs, veuillez envisager d'envoyer un exemple de fichier à help@poedit."
+"net pour aider à les améliorer."
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -656,7 +656,7 @@ msgstr ""
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
 msgid "Review"
-msgstr "Vérifier"
+msgstr "Réviser"
 
 #, c-format
 msgid "Error loading message catalog file “%s”."
@@ -1107,7 +1107,7 @@ msgid "Database size on disk:"
 msgstr "Taille de la base de données sur le disque :"
 
 msgid "Import Translation Files…"
-msgstr "Importer Fichiers de Traduction…"
+msgstr "Importer les fichiers de traduction…"
 
 msgid "Import translation files…"
 msgstr "Importer les fichiers de traduction…"
@@ -1116,13 +1116,13 @@ msgid "Import From TMX…"
 msgstr "Importer un TMX…"
 
 msgid "Import from TMX…"
-msgstr "Importation depuis un TMX…"
+msgstr "Importer un TMX…"
 
 msgid "Export To TMX…"
 msgstr "Exporter en TMX…"
 
 msgid "Export to TMX…"
-msgstr "Exportation vers un TMX…"
+msgstr "Exporter en TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1158,7 +1158,7 @@ msgstr "Exportation des traductions…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr "L'exportation de la mémoire de traduction à partir de “%s“ a échoué."
+msgstr "L'exportation de la mémoire de traduction vers « %s » a échoué."
 
 msgid "Export error"
 msgstr "Erreur d'exportation"
@@ -1609,16 +1609,16 @@ msgid "&Preferences"
 msgstr "&Préférences"
 
 msgid "Show string &ID"
-msgstr "Afficher la chaîne de caractères et &ID"
+msgstr "Afficher la chaîne &ID"
 
 msgid "Show String &ID"
-msgstr "Afficher Chaîne &ID"
+msgstr "Afficher la chaîne &ID"
 
 msgid "Show warnings"
 msgstr "Afficher les alertes"
 
 msgid "Show Warnings"
-msgstr "Afficher Alertes"
+msgstr "Afficher les alertes"
 
 msgid "Sort by &file order"
 msgstr "Trier par &fichier"
@@ -1675,7 +1675,7 @@ msgid "&Update from source code"
 msgstr "&Mise à jour depuis le code source"
 
 msgid "&Update from Source Code"
-msgstr "&Mise à Jour Code Source"
+msgstr "&Mise à jour depuis le code source"
 
 msgid "Update from &POT file…"
 msgstr "Mettre à jour depuis un fichier &POT…"
@@ -1783,10 +1783,9 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Cette commande est utilisée pour lancer l’extracteur.\n"
-"%o pour étendre au nom du fichier de sortie,\n"
-"%K pour lister les mots-clés,\n"
-"%F pour lister les fichiers d’entrée,\n"
+"C'est la commande utilisée pour lancer l'extracteur.\n"
+"%o se développe au nom du fichier de sortie, %K pour lister\n"
+"les mots-clés, %F pour lister les fichiers d'entrée,\n"
 "%C pour le jeu de caractères (voir ci-dessous)."
 
 msgid "An item in keywords list:"
@@ -1796,9 +1795,8 @@ msgid ""
 "This will be attached to the command line once\n"
 "for each keyword. %k expands to the keyword."
 msgstr ""
-"Sera inséré dans la ligne de commande pour chaque\n"
-"mot-clé.\n"
-"%k s’étend au mot-clé."
+"Ce sera attaché à la ligne de commande une fois\n"
+"pour chaque mot-clé. %k se développe au mot-clé."
 
 msgid "An item in input files list:"
 msgstr "Un élément de la liste des fichiers d’entrée :"
@@ -1808,9 +1806,8 @@ msgid ""
 "This will be attached to the command line once\n"
 "for each input file. %f expands to the filename."
 msgstr ""
-"Sera inséré dans la ligne de commande pour chaque\n"
-"fichier d’entrée.\n"
-"%f s’étend au nom du fichier."
+"Ce sera attaché à la ligne de commande une fois\n"
+"pour chaque fichier d'entrée. %f se développe au nom de fichier."
 
 msgid "Source code charset:"
 msgstr "Jeu de caractères du code source :"
@@ -1820,9 +1817,9 @@ msgid ""
 "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
 msgstr ""
-"Sera inséré dans la ligne de commande uniquement\n"
-"si le code source du jeu de caractères est fourni.\n"
-"%c s’étend à la valeur du jeu de caractères."
+"Ce sera attaché à la ligne de commande\n"
+"seulement si le code source du jeu de caractères a été donné. %c se "
+"développe à la valeur du jeu de caractères."
 
 msgid "Catalog properties"
 msgstr "Propriétés du catalogue"
@@ -1887,7 +1884,7 @@ msgstr ""
 
 msgid "Also use default keywords for supported languages"
 msgstr ""
-"Utiliser également les mots-clés par défaut pour les langues supportées"
+"Utilisez également des mots-clés par défaut pour les langues prises en charge"
 
 msgid "Learn About Gettext Keywords"
 msgstr "En savoir plus sur les mots-clés de Gettext"
@@ -1938,10 +1935,10 @@ msgid "Update from code"
 msgstr "Mise à jour du code"
 
 msgid "Update from Code"
-msgstr "Mise à Jour Code"
+msgstr "Mise à jour du code"
 
-msgid "Update catalog - synchronize it with sources"
-msgstr "Mettre à jour le catalogue - Synchroniser avec les sources"
+msgid "Update from source code"
+msgstr "Mise à jour depuis le code source"
 
 msgid "Sidebar"
 msgstr "Panneau latéral"
@@ -1970,10 +1967,10 @@ msgid "Add Comment"
 msgstr "Ajouter un commentaire"
 
 msgid "Delete From Translation Memory"
-msgstr "Supprimer Depuis Mémoire de Traduction"
+msgstr "Supprimer de la mémoire de traduction"
 
 msgid "Delete from translation memory"
-msgstr "Suppression depuis la mémoire de traduction"
+msgstr "Supprimer de la mémoire de traduction"
 
 msgid "Translation suggestions:"
 msgstr "Suggestions de traduction :"
@@ -1993,11 +1990,12 @@ msgid "The TMX file is malformed."
 msgstr "Le fichier TMX est incorrect."
 
 msgid "No translations were found in the TMX file."
-msgstr "Aucune traduction trouvée dans le ficher TMX."
+msgstr "Aucune traduction n'a été trouvée dans le fichier TMX."
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr "Base de données de la mémoire de traduction corrompue : %s (%d)."
+msgstr ""
+"La base de données de la mémoire de traduction est corrompue : %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
