@@ -129,8 +129,7 @@ parts:
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
-      make \
-        --jobs=$(nproc)
+      make -j2
       make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
 
       sed \
@@ -207,8 +206,7 @@ parts:
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread,random,filesystem,chrono,atomic,date_time \
         --with-icu=/usr
-      ./b2 install \
-        -j $(nproc) \
+      ./b2 install -j4 \
         --build-type=minimal \
         --layout=system \
         link=static \
@@ -311,8 +309,7 @@ parts:
         CC=gcc-6 \
         CPP=cpp-6 \
         CXX=g++-6
-      make \
-        --jobs=$(nproc)
+      make -j4
       make prefix="${SNAPCRAFT_PART_INSTALL}" install
 
     stage-packages:
