@@ -72,7 +72,6 @@ parts:
     after:
       - boostlib
       - cpprest
-      - ccache
       - gtkspell
       - patches
       - wxwidgets
@@ -95,12 +94,6 @@ parts:
       # "JSON for Modern C++" is only provided by Ubuntu >= 17.10,
       # using embedded submodule's version instead
       #- nlohmann-json-dev
-
-      # GCC(`g++` to be specific) provided by Ubuntu 16.04 is too
-      # old for the embedded submodule "JSON for Modern C++", use
-      # installation from `gcc-6` part instead.
-      #- gcc
-      #- g++
 
       # Gtkspell3 requires patching to be relocatable
       #- libgtkspell3-3-dev
@@ -125,7 +118,6 @@ parts:
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
         --with-boost-libdir="${SNAPCRAFT_STAGE}/lib" \
-        CC=gcc-6 CPP=cpp-6 CXX=g++-6 \
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
@@ -186,15 +178,9 @@ parts:
       mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
 
   boostlib:
-    after:
-      - ccache
-
     source: deps/boost
 
     build-packages:
-      # OPTIONAL: Use gcc installation from `gcc-6` part instead
-      #- gcc
-      #- g++
       - libbz2-dev
       - libicu-dev
 
@@ -224,15 +210,11 @@ parts:
 
   cpprest:
     after:
-      - ccache
       - boostlib
 
     source: deps/casablanca
 
     build-packages:
-      # OPTIONAL: Use gcc installation from `gcc-6` part instead
-      #- gcc
-      #- g++
       - libssl-dev
       - cmake
       - ninja-build
@@ -243,7 +225,7 @@ parts:
 
       mkdir build.release
       cd build.release
-      CC=gcc-6 CXX=g++-6 cmake -G Ninja .. \
+      cmake -G Ninja .. \
             -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DWERROR=OFF \
             -DCMAKE_INSTALL_PREFIX:PATH="${SNAPCRAFT_PART_INSTALL}" \
             -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
@@ -262,16 +244,11 @@ parts:
 
   wxwidgets:
     after:
-      - ccache
       - desktop-gnome-platform
 
     source: deps/wx
 
     build-packages:
-      # OPTIONAL: Use gcc installation from `gcc-6` part instead
-      #- gcc
-      #- g++
-
       # Not used by Poedit
       #- libgl1-mesa-dev
       #- libglu1-mesa-dev
@@ -306,9 +283,6 @@ parts:
         --enable-debug \
         --with-cxx=14 \
         --enable-stl
-        CC=gcc-6 \
-        CPP=cpp-6 \
-        CXX=g++-6
       make -j4
       make prefix="${SNAPCRAFT_PART_INSTALL}" install
 
@@ -354,101 +328,6 @@ parts:
       - $files-from-stage-packages
       - $localizations
 
-  # This pseudo part setups Compiler cache(ccache) to the stage dir.
-  #
-  # To use it simply add a dependency to this part for every part you'd
-  # prefer caching
-  ccache:
-    after:
-      - gcc-6
-    source: https://github.com/ccache/ccache.git
-    source-branch: 3.5-maint
-    source-depth: 1
-
-    plugin: autotools
-    build-packages:
-    - asciidoc
-    - xsltproc
-    - gperf
-    - zlib1g-dev
-    override-build: |
-      set -eu
-
-      snapcraftctl build
-      install \
-        --directory \
-        --verbose \
-        "${SNAPCRAFT_PART_INSTALL}"/bin
-      for toolchain_command in \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++; do
-        ln \
-          --force \
-          --symbolic \
-          --verbose \
-          ./ccache \
-          "${toolchain_command}"
-      done
-      for gcc_release in $(seq 6 9); do
-        ln \
-          --force \
-          --symbolic \
-          --verbose \
-          ./ccache \
-          "${SNAPCRAFT_PART_INSTALL}"/bin/gcc-"${gcc_release}"
-        ln \
-          --force \
-          --symbolic \
-          --verbose \
-          ./ccache \
-          "${SNAPCRAFT_PART_INSTALL}"/bin/g++-"${gcc_release}"
-      done
-    prime:
-    - -*
-
-  # This pseudo part setups version 6 of GCC, which is not available
-  # in Ubuntu 16.04 software source.
-  gcc-6:
-    plugin: nil
-    override-build: |
-      sudo apt --yes install software-properties-common
-
-      # Install newer GCC from Toolchain test builds PPA
-      sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-      sudo apt update
-      sudo apt --yes install cpp-6 gcc-6 g++-6
-
-      # Make fake executable search path for build systems that don't
-      # respect CC and CXX environmental variables
-      # Snapcraft will give executable paths under SNAPCRAFT_STAGE priority
-      # in other parts' build step
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}"/bin
-      # DISABLED: Replaced by ccache-gcc-6
-      #ln \
-        #--force \
-        #--symbolic \
-        #"$(which gcc-6)" \
-        #"${SNAPCRAFT_PART_INSTALL}"/bin/gcc
-      #ln \
-        #--force \
-        #--symbolic \
-        #"$(which g++-6)" \
-        #"${SNAPCRAFT_PART_INSTALL}"/bin/g++
-      ln \
-        --force \
-        --symbolic \
-        "$(which cpp-6)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/cpp
-
-    filesets:
-      executables:
-        - bin/*
-    stage:
-      - $executables
-    override-prime: 'true'
-
   spellcheck-dictionaries:
     plugin: nil
     override-build: |
@@ -487,7 +366,6 @@ parts:
   # to fix the non-relocatable iso-codes data path.
   gtkspell:
     after:
-      - ccache
       - enchant
       - iso-codes
       - desktop-gnome-platform
@@ -554,7 +432,6 @@ parts:
   #    backends.
   enchant:
     after:
-      - ccache
       - patches
 
     source: https://github.com/AbiWord/enchant/releases/download/v2.2.3/enchant-2.2.3.tar.gz
