@@ -1,31 +1,4 @@
+This is the snap package definition to build a snap package of Poedit.
 
-  Introduction
-================
-
-This is the snap package definition to build a snap package of Poedit
-
-
-  Using
----------
-
-Docker doesn't work due to use of symlinks; you have to use LXD. Don't use VM
-shared folders or remote mounts either; the only reliable way to build is by
-doing it on native filesystem.
-
-1. Install LXD containers per https://docs.snapcraft.io/build-snaps/build-on-lxd-docker
-   (expect a few failures and repeating commands here, as well as having to manually get
-   apt into a sane state so that it doesn't ignore universe).
-
-   $ lxc launch ubuntu:16.04 snapcraft -c security.privileged=true
-   $ lxc config device add snapcraft homedir disk source=$PWD path=$PWD
-
-   $ lxc exec snapcraft -- snap install snapcraft --classic
-
-   $ lxc exec snapcraft -- sh -c "apt update"
-
-
-2. Run the build:
-
-   $ lxc exec snapcraft -- sh -c "cd $(pwd); snapcraft"
-
-
+To build it, use Snapcraft >= 3 and run the "snapcraft" command without
+arguments in Poedit's root directory.
