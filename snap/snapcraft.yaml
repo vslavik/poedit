@@ -70,8 +70,6 @@ plugs:
 parts:
   poedit:
     after:
-      - boostlib
-      - cpprest
       - gtkspell
       - patches
       - wxwidgets
@@ -79,14 +77,6 @@ parts:
     source: .
 
     build-packages:
-      # Boost libraries provided by Ubuntu 16.04 are too old, using
-      # installation from `boostlib` part instead
-      #- libboost-dev
-      #- libboost-iostreams-dev
-      #- libboost-regex-dev
-      #- libboost-system-dev
-      #- libboost-thread-dev
-
       # wxWidgets library provided by Ubuntu 16.04 is too old, using
       # installation from `wxwidgets` part instead
       #- libwxgtk3.0-dev
@@ -100,7 +90,9 @@ parts:
 
       - automake
       - gettext
+      - libboost-all-dev
       - libcld2-dev
+      - libcpprest-dev
       - libicu-dev
       - libjpeg-dev
       - liblucene++-dev
@@ -117,7 +109,6 @@ parts:
       ./bootstrap
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
-        --with-boost-libdir="${SNAPCRAFT_STAGE}/lib" \
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
@@ -140,6 +131,7 @@ parts:
       - libcanberra-gtk3-module
 
       - libcld2-0
+      - libcpprest2.10
       - libice6
       - liblucene++0v5
       - libsecret-1-0
@@ -176,71 +168,6 @@ parts:
     override-build: |
       snapcraftctl build
       mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
-
-  boostlib:
-    source: deps/boost
-
-    build-packages:
-      - libbz2-dev
-      - libicu-dev
-
-    plugin: dump
-    override-build: |
-      set -eu
-
-      ./bootstrap.sh \
-        --prefix="${SNAPCRAFT_PART_INSTALL}" \
-        --with-libraries=iostreams,regex,system,thread,random,filesystem,chrono,atomic,date_time \
-        --with-icu=/usr
-      ./b2 install -j4 \
-        --build-type=minimal \
-        --layout=system \
-        link=static \
-        threading=multi
-
-    filesets:
-      library-headers:
-        - include/*
-      libraries:
-        - lib/*
-    stage:
-      - $library-headers
-      - $libraries
-    override-prime: 'true'
-
-  cpprest:
-    after:
-      - boostlib
-
-    source: deps/casablanca
-
-    build-packages:
-      - libssl-dev
-      - cmake
-      - ninja-build
-
-    plugin: dump
-    override-build: |
-      set -eu
-
-      mkdir build.release
-      cd build.release
-      cmake -G Ninja .. \
-            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DWERROR=OFF \
-            -DCMAKE_INSTALL_PREFIX:PATH="${SNAPCRAFT_PART_INSTALL}" \
-            -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
-      ninja -j4
-      ninja install
-
-    filesets:
-      library-headers:
-        - include/*
-      libraries:
-        - lib/*
-    stage:
-      - $library-headers
-      - $libraries
-    override-prime: 'true'
 
   wxwidgets:
     after:
