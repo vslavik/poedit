@@ -24,30 +24,16 @@ icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
 
 apps:
   poedit:
-    command: >
-      desktop-launch poedit
+    command: bin/poedit
     desktop: share/applications/net.poedit.Poedit.desktop
+    extensions: [gnome-3-28]
 
   poedit-uri-handler:
-    command: >
-      desktop-launch poedit
+    command: bin/poedit
     desktop: share/applications/net.poedit.PoeditURI.desktop
+    extensions: [gnome-3-28]
 
 plugs:
-  # The desktop interfaces
-  # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
-  # + Basic graphical resources
-  desktop:
-  # + Input method/a11y support
-  desktop-legacy:
-  # + Access to the X server
-  x11:
-  wayland:
-  # + Access to Unity DE services(i.e. global menu support)
-  # FIXME: This breaks common menu options' localization
-  # https://forum.snapcraft.io/t/common-menu-option-localization-broken-after-connecting-to-unity7-interface/5792
-  unity7:
-
   # File access
   home:
   removable-media:
@@ -61,11 +47,6 @@ plugs:
   # Suggestions from snappy-debug
   gsettings:
   mount-observe:
-
-  gnome-3-28-1804:
-    interface: content
-    target: $SNAP/gnome-platform
-    default-provider: gnome-3-28-1804:gnome-3-28-1804
 
 parts:
   poedit:
@@ -156,23 +137,7 @@ parts:
       - $files-in-stage-packages
       - $resources
 
-  desktop-gnome-platform:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-depth: 1
-    source-subdir: gtk
-    plugin: make
-    make-parameters: ["FLAVOR=gtk3"]
-    build-packages:
-      - build-essential
-      - libgtk-3-dev
-    override-build: |
-      snapcraftctl build
-      mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
-
   wxwidgets:
-    after:
-      - desktop-gnome-platform
-
     source: deps/wx
 
     build-packages:
@@ -295,7 +260,6 @@ parts:
     after:
       - enchant
       - iso-codes
-      - desktop-gnome-platform
 
     source: https://git.code.sf.net/p/gtkspell/gtkspell
     source-type: git
