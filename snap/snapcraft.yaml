@@ -52,7 +52,6 @@ parts:
   poedit:
     after:
       - gtkspell
-      - patches
       - wxwidgets
 
     source: .
@@ -96,9 +95,8 @@ parts:
       make -j2
       make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
 
-      sed \
-        --in-place \
-        --file "${SNAPCRAFT_STAGE}"/patches/postprocess-desktop-entries.sed \
+      # Fix-up application icon lookup
+      sed --in-place -e 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
     stage-packages:
@@ -430,34 +428,3 @@ parts:
     prime:
       - $data
       - $localization
-
-  # Patches to be applied in build
-  # This pseudo part installs the patches required for building other
-  # parts into the stage tree
-  patches:
-    source: snap/local/patches
-    plugin: dump
-
-    # DISABLED: `organize:{ /: another-dir/ }` causes the items under host
-    # root directory to be copied in another-dir - snapcraft - snapcraft.io
-    # https://forum.snapcraft.io/t/organize-another-dir-causes-the-items-under-host-root-directory-to-be-copied-in-another-dir/5806
-    #organize:
-      #/: patches/
-    override-build: |
-      set -eu
-
-      snapcraftctl build
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}"/patches
-      find \
-        "${SNAPCRAFT_PART_INSTALL}" \
-        -type f \
-        -maxdepth 1 \
-        -mindepth 1 \
-        -exec \
-          mv \
-          {} \
-          "${SNAPCRAFT_PART_INSTALL}"/patches \
-          ';'
-    override-prime: 'true'
