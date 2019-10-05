@@ -219,29 +219,14 @@ parts:
       set -eu
 
       # Download all dictionary packages, and extract to install prefix
-      apt download $(
-        apt-cache search '^hunspell-.*$' \
-          | sort \
-          | grep \
-            --extended-regexp \
-            --invert-match \
-            '(myspell|dbgsym|tools|transitional|dependency)' \
-          | cut --fields=1 --delimiter=' ' \
-          | tr '\n' ' '
-      )
-      find -name '*.deb' \
-        | xargs \
-          --max-args=1 \
-          --replace={} \
-          --verbose \
-          dpkg-deb --extract {} ../install
+      apt download $(apt-cache showpkg hunspell-dictionary | awk '/Pa/, /Reverse P/ {next} {print $1 | "sort"}')
+      find -name '*.deb' | xargs --max-args=1 --replace={} --verbose dpkg-deb --extract {} ../install
 
     filesets:
-      hunspell-dictionaries:
+      dictionaries:
         - usr/share/hunspell/*
-      myspell-dictionaries:
         - usr/share/myspell/*
     stage:
-      - $hunspell-dictionaries
+      - $dictionaries
     prime:
-      - $hunspell-dictionaries
+      - $dictionaries
