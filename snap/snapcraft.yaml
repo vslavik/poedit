@@ -93,6 +93,8 @@ parts:
       make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
 
       # Fix-up application icon lookup
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/meta/gui/
+      cp artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png ${SNAPCRAFT_PART_INSTALL}/meta/gui/icon.png
       sed --in-place -e 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
