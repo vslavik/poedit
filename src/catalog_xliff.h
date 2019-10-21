@@ -122,16 +122,20 @@ protected:
 };
 
 
-class XLIFF12Catalog : public XLIFFCatalog
+class XLIFF1Catalog : public XLIFFCatalog
 {
 public:
-    XLIFF12Catalog(const wxString& filename, pugi::xml_document&& doc)
-        : XLIFFCatalog(filename, std::move(doc)) {}
+    XLIFF1Catalog(const wxString& filename, pugi::xml_document&& doc, int subversion)
+        : XLIFFCatalog(filename, std::move(doc)),
+          m_subversion(subversion)
+    {}
 
     void SetLanguage(Language lang) override;
 
 protected:
     void Parse(pugi::xml_node root) override;
+
+    int m_subversion;
 };
 
 

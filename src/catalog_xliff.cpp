@@ -386,8 +386,12 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
 
     auto xliff_root = doc.child("xliff");
     std::string xliff_version = xliff_root.attribute("version").value();
-    if (xliff_version == "1.2")
-        cat.reset(new XLIFF12Catalog(filename, std::move(doc)));
+    if (xliff_version == "1.0")
+        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 0));
+    else if (xliff_version == "1.1")
+        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 1));
+    else if (xliff_version == "1.2")
+        cat.reset(new XLIFF1Catalog(filename, std::move(doc), 2));
     else if (xliff_version == "2.0")
         cat.reset(new XLIFF2Catalog(filename, std::move(doc)));
     else
@@ -483,7 +487,7 @@ public:
             std::string state = target.attribute("state").value();
             if (state == "needs-adaptation" || state == "needs-l10n")
                 m_isFuzzy = true;
-            else if (m_isTranslated && state == "new")
+            else if (m_isTranslated && (state == "new" || state == "needs-translation"))
                 m_isFuzzy = true;
         }
         else
@@ -521,8 +525,6 @@ public:
         auto trans = GetTranslation();
         if (!trans.empty())
         {
-            target.remove_attribute("state-qualifier");
-            attribute(target, "state") = m_isFuzzy ? "needs-adaptation" : "translated";
             if (!set_node_text_with_metadata(target, str::to_utf8(trans), m_metadata))
             {
                 // TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
@@ -531,10 +533,21 @@ public:
         }
         else // no translation
         {
-            attribute(target, "state") = "needs-translation";
-            target.remove_attribute("state-qualifier");
             remove_all_children(target);
         }
+
+        Impl_UpdateTargetState(target, !trans.empty(), m_isFuzzy);
+    }
+
+    // overridable for XLIFF 1.x differences
+    virtual void Impl_UpdateTargetState(pugi::xml_node& target, bool isTranslated, bool isFuzzy)
+    {
+        target.remove_attribute("state-qualifier");
+
+        if (isTranslated)
+            attribute(target, "state") = isFuzzy ? "needs-adaptation" : "translated";
+        else
+            attribute(target, "state") = "needs-translation";
     }
 
     wxArrayString GetReferences() const override
@@ -551,14 +564,30 @@ public:
                 else if (strcmp(type, "linenumber") == 0)
                     line = ":" + str::to_wx(ctxt.text().get());
             }
-            refs.push_back(file + line);
+            if (!file.empty())
+                refs.push_back(file + line);
         }
         return refs;
     }
 };
 
 
-void XLIFF12Catalog::Parse(pugi::xml_node root)
+class XLIFF10CatalogItem : public XLIFF12CatalogItem
+{
+public:
+    using XLIFF12CatalogItem::XLIFF12CatalogItem;
+
+    void Impl_UpdateTargetState(pugi::xml_node& target, bool isTranslated, bool isFuzzy) override
+    {
+        if (isTranslated && !isFuzzy)
+            target.remove_attribute("state");
+        else
+            attribute(target, "state") = "needs-translation";
+    }
+};
+
+
+void XLIFF1Catalog::Parse(pugi::xml_node root)
 {
     int id = 0;
     for (auto file: root.children("file"))
@@ -571,13 +600,16 @@ void XLIFF12Catalog::Parse(pugi::xml_node root)
             if (strcmp(node.attribute("translate").value(), "no") == 0)
                 continue;
 
-            m_items.push_back(std::make_shared<XLIFF12CatalogItem>(++id, node));
+            if (m_subversion == 0)
+                m_items.push_back(std::make_shared<XLIFF10CatalogItem>(++id, node));
+            else
+                m_items.push_back(std::make_shared<XLIFF12CatalogItem>(++id, node));
         }
     }
 }
 
 
-void XLIFF12Catalog::SetLanguage(Language lang)
+void XLIFF1Catalog::SetLanguage(Language lang)
 {
     XLIFFCatalog::SetLanguage(lang);
 
