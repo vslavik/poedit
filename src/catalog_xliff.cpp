@@ -545,7 +545,7 @@ public:
         target.remove_attribute("state-qualifier");
 
         if (isTranslated)
-            attribute(target, "state") = isFuzzy ? "needs-adaptation" : "translated";
+            attribute(target, "state") = isFuzzy ? "needs-l10n" : "translated";
         else
             attribute(target, "state") = "needs-translation";
     }
