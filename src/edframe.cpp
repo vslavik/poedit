@@ -222,8 +222,17 @@ bool g_focusToText = false;
     else
     {
         // NB: duplicated in ReadCatalog()
-        auto cat = Catalog::Create(filename);
-        if (!cat || !cat->IsOk())
+        try
+        {
+            auto cat = Catalog::Create(filename);
+            if (!cat || !cat->IsOk())
+                throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
+
+            f = new PoeditFrame();
+            f->Show(true);
+            f->ReadCatalog(cat);
+        }
+        catch (...)
         {
             wxMessageDialog dlg
             (
@@ -232,16 +241,10 @@ bool g_focusToText = false;
                 _("Invalid file"),
                 wxOK | wxICON_ERROR
             );
-            dlg.SetExtendedMessage(
-                _("The file may be either corrupted or in a format not recognized by Poedit.")
-            );
+            dlg.SetExtendedMessage(DescribeCurrentException());
             dlg.ShowModal();
             return nullptr;
         }
-
-        f = new PoeditFrame();
-        f->Show(true);
-        f->ReadCatalog(cat);
     }
 
     f->Show(true);
@@ -2203,12 +2206,15 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     wxBusyCursor bcur;
 
     // NB: duplicated in PoeditFrame::Create()
-    auto cat = Catalog::Create(catalog);
-    if (cat && cat->IsOk())
+    try
     {
+        auto cat = Catalog::Create(catalog);
+        if (!cat || !cat->IsOk())
+            throw Exception(_("The file may be either corrupted or in a format not recognized by Poedit."));
+
         ReadCatalog(cat);
     }
-    else
+    catch (...)
     {
         wxMessageDialog dlg
         (
@@ -2217,9 +2223,7 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
             _("Invalid file"),
             wxOK | wxICON_ERROR
         );
-        dlg.SetExtendedMessage(
-            _("The file may be either corrupted or in a format not recognized by Poedit.")
-        );
+        dlg.SetExtendedMessage(DescribeCurrentException());
         dlg.ShowModal();
     }
 }
