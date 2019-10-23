@@ -154,6 +154,16 @@ public:
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
+        if (m_lang == "th")
+        {
+            // Thai punctuation rules are so different that these checks don't
+            // apply at all (with the possible exception of quote marks - TODO).
+            // It's better to skip them than to spam the user with bogus warnings
+            // on _everything_.
+            // See https://www.ccjk.com/punctuation-rule-for-bahasa-vietnamese-and-thai/
+            return false;
+        }
+
         const UChar32 s_last = source.Last();
         const UChar32 t_last = translation.Last();
         const bool s_punct = u_ispunct(s_last);
