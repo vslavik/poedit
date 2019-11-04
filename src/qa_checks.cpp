@@ -154,9 +154,10 @@ public:
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
-        if (m_lang == "th")
+        if (m_lang == "th" || m_lang == "lo" || m_lang == "km" || m_lang == "my")
         {
-            // Thai punctuation rules are so different that these checks don't
+            // For Thai, Lao, Khmer and Burmese,
+            // the punctuation rules are so different that these checks don't
             // apply at all (with the possible exception of quote marks - TODO).
             // It's better to skip them than to spam the user with bogus warnings
             // on _everything_.
