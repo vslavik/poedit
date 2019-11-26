@@ -219,6 +219,10 @@ bool PerformUpdateFromSources(wxWindow *parent,
                 pot.reset();
             }
         }
+        else
+        {
+            reason = UpdateResultReason::NoSourcesFound;
+        }
     }
     else
     {
