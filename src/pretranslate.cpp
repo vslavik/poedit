@@ -115,6 +115,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     progress.SetGaugeMax((int)operations.size());
 
     int matches = 0;
+    time_t last_refresh = 0;
     for (auto& op: operations)
     {
         if (!progress.UpdateGauge())
@@ -123,9 +124,17 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
         if (op.get())
         {
             matches++;
-            progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
+            // Don't update the UI too often, because it is slow due to UpdateMessage()
+            // forcing repaint:
+            time_t time_now = time(NULL);
+            if (time_now != last_refresh)
+            {
+                progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
+                last_refresh = time_now;
+            }
         }
     }
+    progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
 
     if (matchesCount)
         *matchesCount = matches;
