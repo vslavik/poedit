@@ -36,6 +36,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <memory>
+#include <mutex>
 #include <set>
 #include <sstream>
 
@@ -44,6 +45,11 @@ using namespace pugi;
 
 namespace
 {
+
+// FIXME: This should be per-document mutex in XLIFFCatalog, but that is
+//        currently not accessible from XLIFFCatalogItem, hence a global.
+std::mutex gs_documentMutex;
+
 
 inline bool has_child_elements(xml_node node)
 {
@@ -511,6 +517,9 @@ public:
     {
         wxASSERT( m_translations.size() == 1 ); // no plurals
 
+        // modifications in the pugixml tree can affect other nodes, we must lock the entire document
+        std::lock_guard<std::mutex> lock(gs_documentMutex);
+
         auto target = m_node.child("target");
         if (!target)
         {
@@ -671,6 +680,9 @@ public:
     void UpdateInternalRepresentation() override
     {
         wxASSERT( m_translations.size() == 1 ); // no plurals
+
+        // modifications in the pugixml tree can affect other nodes, we must lock the entire document
+        std::lock_guard<std::mutex> lock(gs_documentMutex);
 
         auto target = m_node.child("target");
         if (!target)
