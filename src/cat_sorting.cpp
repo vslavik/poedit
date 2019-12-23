@@ -118,14 +118,19 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 
     if ( m_order.errorsFirst )
     {
-        if ( a.HasIssue() && !b.HasIssue() )
-            return true;
-        else if ( !a.HasIssue() && b.HasIssue() )
-            return false;
-
+        // hard errors always go first:
         if ( a.HasError() && !b.HasError() )
             return true;
         else if ( !a.HasError() && b.HasError() )
+            return false;
+
+        // warnings are more nuanced and should only be considered on non-fuzzy
+        // entries (see https://github.com/vslavik/poedit/issues/611 for discussion):
+        auto const a_shouldWarn = a.HasIssue() && !a.IsFuzzy();
+        auto const b_shouldWarn = b.HasIssue() && !b.IsFuzzy();
+        if ( a_shouldWarn && !b_shouldWarn )
+            return true;
+        else if ( !a_shouldWarn && b_shouldWarn )
             return false;
     }
 
