@@ -957,7 +957,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #ifndef __WXOSX__
     about.SetName("Poedit");
     about.SetVersion(wxGetApp().GetAppVersion());
-    about.SetDescription(_("Poedit is an easy to use translations editor."));
+    about.SetDescription(_("Poedit is an easy to use translation editor."));
 #endif
     about.SetCopyright(L"Copyright \u00a9 1999-2019 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
