@@ -22,6 +22,16 @@ grade: stable
 confinement: strict
 icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
 
+layout:
+  /usr/share/aspell:
+    symlink: $SNAP/usr/share/aspell
+  /usr/share/hunspell:
+    symlink: $SNAP/usr/share/hunspell
+  /usr/share/myspell:
+    symlink: $SNAP/usr/share/myspell
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/enchant:
+    symlink: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/enchant
+
 apps:
   poedit:
     command: bin/poedit
