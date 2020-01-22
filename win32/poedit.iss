@@ -34,7 +34,7 @@
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x86\Microsoft.VC141.CRT"
+#define CRT_REDIST       GetEnv("VCToolsRedistDir") + "\x86\Microsoft.VC142.CRT"
 #endif
 #ifndef UCRT_REDIST
 #define UCRT_REDIST       GetEnv("UniversalCRTSdkDir") + "\Redist\" + GetEnv("UCRTVersion") + "\ucrt\DLLs\x86"
