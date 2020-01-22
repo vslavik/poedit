@@ -1295,7 +1295,7 @@ void PoeditApp::AssociateFileTypeIfNeeded()
     // registry record in this case.
 
     wchar_t buf[1000];
-    DWORD bufSize = sizeof(buf);
+    DWORD bufSize = WXSIZEOF(buf);
     HRESULT hr = AssocQueryString(ASSOCF_INIT_IGNOREUNKNOWN,
                                   ASSOCSTR_EXECUTABLE,
                                   L".po", NULL,
