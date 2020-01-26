@@ -94,6 +94,23 @@ rule gettext_build
       patch -d $
       "$workdir" $
       -p1 < $
+      "$top_srcdir/gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch"' $
+      && $
+      tmp=`mktemp` $
+      && patch -d $
+      "$workdir" $
+      -p1 < $
+      "$top_srcdir/gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ⋯  $
+      patch -d $
+      "$workdir" $
+      -p1 < $
       "$top_srcdir/gettext/gettext-0.20.1-fix-js-template-literals-parsing-in-fuctions.patch"' $
       && $
       tmp=`mktemp` $
@@ -398,6 +415,7 @@ build $
     $intdir/gettext.done: $
     gettext_build $
     gettext/gettext-0.20.1-fix-js-template-literals-parsing-in-fuctions.patch $
+    gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch $
     gettext/gettext-smaller-build.patch $
     tarballs/gettext-0.20.1.tar.gz
   name = gettext

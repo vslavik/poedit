@@ -359,6 +359,15 @@ bool PoeditApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
+#ifdef __WXOSX__
+    // macOS 10.15 Vista throws a fit and bombards the user with scary UAC prompt
+    // if a subprocess, shell or gettext, is launched with CWD within a "protected"
+    // folder like Downloads or Desktop. Avoid by changing CWD to something harmless.
+    // Note that this has to be done after wxApp::OnInit() above, which parser the
+    // command line, including possible relative filenames.
+    wxSetWorkingDirectory(wxGetHomeDir());
+#endif
+
 #ifndef __WXOSX__
     m_remoteServer.reset(new RemoteServer(this));
 #endif
