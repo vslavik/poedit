@@ -36,7 +36,8 @@ enum class UpdateResultReason
 {
     Unspecified,
     CancelledByUser,
-    NoSourcesFound
+    NoSourcesFound,
+    PermissionDenied
 };
 
 enum UpdateFlags

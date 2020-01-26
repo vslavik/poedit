@@ -1632,6 +1632,27 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                 dlg->ShowWindowModalThenDo([dlg](int){});
                 break;
             }
+            case UpdateResultReason::PermissionDenied:
+            {
+                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                    (
+                        this,
+                        _("Permission denied."),
+                        MSW_OR_OTHER(_("Updating failed"), ""),
+                        wxOK | wxICON_ERROR
+                    ));
+                wxString expl = _(L"You don’t have permission to read source code files from the location specified in the catalog’s Properties.");
+            #ifdef __WXOSX__
+                if (wxCheckOsVersion(10, 15))
+                {
+                    // TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+                    expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders.");
+                }
+            #endif
+                dlg->SetExtendedMessage(expl);
+                dlg->ShowWindowModalThenDo([dlg](int){});
+                break;
+            }
             case UpdateResultReason::Unspecified:
             {
                 wxLogWarning(_("Entries in the catalog are probably incorrect."));

@@ -28,6 +28,7 @@
 
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include <set>
 #include <vector>
 
@@ -48,6 +49,20 @@ struct SourceCodeSpec
 
     // additional keys from the headers
     std::map<wxString, wxString> XHeaders;
+};
+
+enum class ExtractionError
+{
+    PermissionDenied
+};
+
+class ExtractionException : public std::runtime_error
+{
+public:
+    ExtractionException(ExtractionError error_)
+        : std::runtime_error("extraction error"), error(error_) {}
+
+    ExtractionError error;
 };
 
 
@@ -77,6 +92,8 @@ public:
         don't contain translations.
 
         The returned list is guaranteed to be sorted by operator<
+
+        May throw ExtractionException.
      */
     static FilesList CollectAllFiles(const SourceCodeSpec& sources);
 

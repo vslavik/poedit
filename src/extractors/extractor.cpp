@@ -78,6 +78,13 @@ private:
     std::vector<PathToMatch> paths;
 };
 
+inline void CheckReadPermissions(const wxString& basepath, const wxString& path)
+{
+    if (!wxIsReadable(basepath + path))
+    {
+        throw ExtractionException(ExtractionError::PermissionDenied);
+    }
+}
 
 inline bool IsVCSDir(const wxString& d)
 {
@@ -92,7 +99,10 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         return 0;
 
     wxDir dir(basepath + dirname);
-    if (!dir.IsOpened()) 
+
+    CheckReadPermissions(basepath, dirname);
+
+    if (!dir.IsOpened())
         return 0;
 
     bool cont;
@@ -108,6 +118,7 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         if (excludedPaths.MatchesFile(f))
             continue;
 
+        CheckReadPermissions(basepath, f);
         wxLogTrace("poedit.extractor", "  - %s", f);
         output.push_back(f);
         found++;
@@ -125,6 +136,7 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         if (excludedPaths.MatchesFile(f))
             continue;
 
+        CheckReadPermissions(basepath, f);
         found += FindInDir(basepath, f, excludedPaths, output);
     }
 
@@ -154,12 +166,17 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
                 wxLogTrace("poedit.extractor", "no files found in '%s'", path);
                 continue;
             }
+            CheckReadPermissions(basepath, path);
             wxLogTrace("poedit.extractor", "  - %s", path);
             output.push_back(path);
         }
-        else if (!FindInDir(basepath, path, excludedPaths, output))
+        else if (wxFileName::DirExists(basepath + path))
         {
-            wxLogTrace("poedit.extractor", "no files found in '%s'", path);
+            if (!FindInDir(basepath, path, excludedPaths, output))
+            {
+                wxLogTrace("poedit.extractor", "no files found in '%s'", path);
+            }
+        }
         }
     }
 
