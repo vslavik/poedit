@@ -159,7 +159,7 @@ public:
             cmdline += " " + extraFlags;
 
         if (!ExecuteGettext(cmdline))
-            return "";
+            throw ExtractionException(ExtractionError::Unspecified);
 
         return outfile;
     }

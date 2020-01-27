@@ -177,6 +177,9 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
                 wxLogTrace("poedit.extractor", "no files found in '%s'", path);
             }
         }
+        else
+        {
+            throw ExtractionException(ExtractionError::NoSourcesFound);
         }
     }
 
@@ -233,7 +236,7 @@ wxString Extractor::ExtractWithAll(TempDirectory& tmpdir,
 
     if (subPots.empty())
     {
-        return "";
+        throw ExtractionException(ExtractionError::NoSourcesFound);
     }
     else if (subPots.size() == 1)
     {
@@ -332,7 +335,7 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
     {
         wxLogError(_("Failed command: %s"), cmd.c_str());
         wxLogError(_("Failed to merge gettext catalogs."));
-        return "";
+        throw ExtractionException(ExtractionError::Unspecified);
     }
 
     return outfile;

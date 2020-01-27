@@ -34,8 +34,8 @@ class WXDLLIMPEXP_FWD_CORE wxWindow;
 /// Result of PerformUpdateFromSources()
 enum class UpdateResultReason
 {
-    Unspecified,
     CancelledByUser,
+    Unspecified,
     NoSourcesFound,
     PermissionDenied
 };

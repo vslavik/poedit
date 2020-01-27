@@ -218,12 +218,9 @@ bool PerformUpdateFromSources(wxWindow *parent,
                 if (!pot->IsOk())
                 {
                     wxLogError(_("Failed to load extracted catalog."));
+                    reason = UpdateResultReason::Unspecified;
                     pot.reset();
                 }
-            }
-            else
-            {
-                reason = UpdateResultReason::NoSourcesFound;
             }
         }
         else
@@ -244,6 +241,12 @@ bool PerformUpdateFromSources(wxWindow *parent,
     {
         switch (e.error)
         {
+            case ExtractionError::Unspecified:
+                reason = UpdateResultReason::Unspecified;
+                break;
+            case ExtractionError::NoSourcesFound:
+                reason = UpdateResultReason::NoSourcesFound;
+                break;
             case ExtractionError::PermissionDenied:
                 reason = UpdateResultReason::PermissionDenied;
                 break;

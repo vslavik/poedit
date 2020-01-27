@@ -53,6 +53,8 @@ struct SourceCodeSpec
 
 enum class ExtractionError
 {
+    Unspecified,
+    NoSourcesFound,
     PermissionDenied
 };
 

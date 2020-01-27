@@ -326,7 +326,7 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
         CurrentWorkingDirectoryChanger cwd(sourceSpec.BasePath);
         if (!ExecuteGettext(m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset)))
         {
-            return "";
+            throw ExtractionException(ExtractionError::Unspecified);
         }
 
         tempfiles.push_back(tempfile);
