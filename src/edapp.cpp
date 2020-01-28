@@ -780,7 +780,6 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         auto fn = parser.GetParam(i);
         if (fn.StartsWith("poedit://"))
         {
-            puts("calling HandleCustomURI as file");
             CallAfter([=]{ HandleCustomURI(fn); });
         }
         else
