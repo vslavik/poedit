@@ -749,7 +749,7 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
                     if (fn.StartsWith("poedit://"))
                         client.HandleCustomURI(fn);
                     else
-                        client.OpenFile(parser.GetParam(i), (int)lineno);
+                        client.OpenFile(fn, (int)lineno);
                 }
             }
             return false; // terminate program
@@ -770,11 +770,8 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
 #ifdef __WXOSX__
     wxArrayString filesToOpen;
-    for (size_t i = 0; i < parser.GetParamCount(); i++)
-        filesToOpen.Add(parser.GetParam(i));
-    if (!filesToOpen.empty())
-        OSXStoreOpenFiles(filesToOpen);
-#else
+    #define gs_filesToOpen filesToOpen
+#endif
     for (size_t i = 0; i < parser.GetParamCount(); i++)
     {
         auto fn = parser.GetParam(i);
@@ -783,8 +780,15 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
             CallAfter([=]{ HandleCustomURI(fn); });
         }
         else
-            gs_filesToOpen.push_back(fn);
+        {
+            wxFileName fnFull(fn);
+            fnFull.MakeAbsolute();
+            gs_filesToOpen.push_back(fnFull.GetFullPath());
+        }
     }
+#ifdef __WXOSX__
+    if (!filesToOpen.empty())
+        OSXStoreOpenFiles(filesToOpen);
 #endif
 
     return true;
