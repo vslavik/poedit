@@ -120,7 +120,9 @@ private:
     void SaveAndSetToken(const std::string& token);
 
     class crowdin_http_client;
+    class crowdin_oauth_client;
     std::unique_ptr<crowdin_http_client> m_api;
+    std::unique_ptr<crowdin_oauth_client> m_oauth;
 
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
 

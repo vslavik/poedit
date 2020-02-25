@@ -182,7 +182,11 @@ public:
     dispatch::future<::json> get(const std::string& url)
     {
         http::http_request req(http::methods::GET);
-        req.headers().add(http::header_names::accept,     L"application/json");
+        //TODO: figure out why Crowdin API v2 GET method (at least `/user`)
+        //      returns below errors unless below line commented
+        //      HTTP error: 400 Bad Request
+        //      JSON error: Incorrect Accept Header. 'application/json' expected
+        //req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())

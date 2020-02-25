@@ -57,36 +57,30 @@
 namespace
 {
 
-#define OAUTH_CLIENT_ID     "poedit-y1aBMmDbm3s164dtJ4Ur150e2"
-#define OAUTH_AUTHORIZE_URL "/oauth2/authorize?response_type=token&client_id=" OAUTH_CLIENT_ID
+#define OAUTH_SCOPE         "project+tm"
+#define OAUTH_CLIENT_ID     "k0uFz5HYQh0VzWgZmOpA"
+//      any arbitrary unique unguessable string (e.g. UUID in hex)
+#define OAUTH_STATE         "948cf13ffffb47119d6cfa2b68898f67"
+//      The value of below macro should be set exactly as is (without quotes)
+//      to "Authorization Callback URL" of Crowdin application
+//      https://support.crowdin.com/enterprise/creating-oauth-app/
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
-
-// Recursive extract files from /api/project/*/info response
-void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const std::wstring& prefix)
-{
-    for (auto i : r["files"])
-    {
-        std::wstring name = prefix + str::to_wstring(i["name"]);
-        std::string node_type = i["node_type"];
-        if (node_type == "file")
-        {
-            out.push_back(name);
-        }
-        else if (node_type == "directory" || node_type == "branch")
-        {
-            ExtractFilesFromInfo(out, i, name + L"/");
-        }
-    }
-}
+#define OAUTH_AUTHORIZE_URL "/oauth/authorize" \
+    "?" "response_type" "=" "token" \
+    "&" "scope"         "=" OAUTH_SCOPE \
+    "&" "client_id"     "=" OAUTH_CLIENT_ID \
+    "&" "state"         "=" OAUTH_STATE \
+    "&" "redirect_uri"  "=" OAUTH_URI_PREFIX \
+    "&" "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit" // source tracking
 
 } // anonymous namespace
 
 
 std::string CrowdinClient::WrapLink(const std::string& page)
 {
-    std::string url("https://poedit.net/crowdin");
+    std::string url("https://accounts.crowdin.com");
     if (!page.empty() && page != "/")
-        url += "?u=" + http_client::url_encode(page);
+        url += page;
     return url;
 }
 
@@ -94,8 +88,8 @@ std::string CrowdinClient::WrapLink(const std::string& page)
 class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
-    crowdin_http_client(CrowdinClient& owner)
-        : http_client("https://api.crowdin.com"), m_owner(owner)
+    crowdin_http_client(CrowdinClient& owner, const std::string& url_prefix = "")
+        : http_client(url_prefix.empty() ? "https://berezins.crowdin.com/api/v2": url_prefix), m_owner(owner)
     {}
 
 protected:
@@ -106,7 +100,6 @@ protected:
         // Translate commonly encountered messages:
         if (msg == "Translations download is forbidden by project owner")
             msg = _("Downloading translations is disabled in this project.").utf8_str();
-
         return msg;
     }
 
@@ -123,8 +116,16 @@ protected:
     CrowdinClient& m_owner;
 };
 
+class CrowdinClient::crowdin_oauth_client : public crowdin_http_client
+{
+public:
+    crowdin_oauth_client(CrowdinClient& owner)
+        : crowdin_http_client(owner, "https://accounts.crowdin.com")
+    {}
+};
 
-CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client(*this))
+
+CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client(*this)), m_oauth(new crowdin_oauth_client(*this))
 {
     SignInIfAuthorized();
 }
@@ -143,16 +144,22 @@ dispatch::future<void> CrowdinClient::Authenticate()
 
 void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 {
+    wxLogTrace("poedit.crowdin", "Callback URI %s", uri.c_str());
+
+    smatch m;
+
+    if (!(regex_search(uri, m, regex("state=([^&]+)"))
+            && m.size() > 1
+            && m.str(1) == OAUTH_STATE))
+        return;
+
+    if (!(regex_search(uri, m, regex("access_token=([^&]+)"))
+            && m.size() > 1))
+        return;
+
     if (!m_authCallback)
         return;
-
-    const regex re("access_token=([^&]+)&");
-    smatch m;
-    if (!regex_search(uri, m, re))
-        return;
-
     SaveAndSetToken(m.str(1));
-
     m_authCallback->set_value();
     m_authCallback.reset();
 }
@@ -166,13 +173,16 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 
 dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 {
-    return m_api->get("/api/account/profile?json=")
+    return m_api->get("/user")
         .then([](json r)
         {
-            json profile = r["profile"];
+            const json& d = r["data"];
             UserInfo u;
-            u.login = str::to_wstring(profile["login"]);
-            u.name = !profile["name"].is_null() ? str::to_wstring(profile["name"]) : u.login;
+            u.login = str::to_wstring(d["username"]);
+            u.name =  str::to_wstring(d["firstName"]) + " " +  str::to_wstring(d["lastName"]);
+            if(u.name.empty()) {
+                u.name = u.login;
+            }
             return u;
         });
 }
