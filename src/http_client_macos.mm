@@ -123,7 +123,7 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<json> post(const std::string& url, const http_body_data& body_data)
+    dispatch::future<json> post(const std::string& url, const http_body_data& body_data, const http_client::headers& hdrs)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
@@ -132,6 +132,10 @@ public:
         [request setValue:str::to_NS(body_data.content_type()) forHTTPHeaderField:@"Content-Type"];
         [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
+        for(const auto& h : hdrs)
+        {
+            [request addValue:str::to_NS(h.second) forHTTPHeaderField:str::to_NS(h.first)];
+        }
 
         auto task = [m_session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             try
@@ -245,9 +249,9 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
     return m_impl->download(url, output_file);
 }
 
-dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
+dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
 {
-    return m_impl->post(url, data);
+    return m_impl->post(url, data, hdrs);
 }
 
 

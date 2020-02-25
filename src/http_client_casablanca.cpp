@@ -195,10 +195,14 @@ public:
         });
     }
 
-    dispatch::future<::json> post(const std::string& url, const http_body_data& data)
+    dispatch::future<::json> post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
     {
         http::http_request req(http::methods::POST);
         req.headers().add(http::header_names::accept,     L"application/json");
+        for (const auto& h: hdrs)
+        {
+            req.headers().add(to_string_t(h.first), to_string_t(h.second));
+        }
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
@@ -315,9 +319,9 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
     return m_impl->download(url, output_file);
 }
 
-dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data)
+dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data, const headers& hdrs)
 {
-    return m_impl->post(url, data);
+    return m_impl->post(url, data, hdrs);
 }
 
 
