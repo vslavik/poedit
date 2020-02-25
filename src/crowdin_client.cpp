@@ -57,8 +57,19 @@
 namespace
 {
 
-#define OAUTH_CLIENT_ID     "poedit-y1aBMmDbm3s164dtJ4Ur150e2"
-#define OAUTH_AUTHORIZE_URL "/oauth2/authorize?response_type=token&client_id=" OAUTH_CLIENT_ID
+#define OAUTH_SCOPE         "project+tm"
+#define OAUTH_CLIENT_ID     "k0uFz5HYQh0VzWgZmOpA"
+#define OAUTH_CLIENT_SECRET "p6Ko83cd4l4SD2TYeY8Fheffw8VuN3bML5jx7BeQ"
+//      any arbitrary unique unguessable string (e.g. UUID in hex)
+#define OAUTH_STATE         "948cf13ffffb47119d6cfa2b68898f67"
+#define OAUTH_AUTHORIZE_URL "/oauth/authorize" \
+	"?" "response_type" "=" "code" \
+	"&" "scope"		    "=" OAUTH_SCOPE \
+	"&" "client_id"		"=" OAUTH_CLIENT_ID \
+	"&" "state"		    "=" OAUTH_STATE
+//      The value of below macro should be set exactly as is (without quotes)
+//      to "Authorization Callback URL" of Crowdin application
+//      https://support.crowdin.com/enterprise/creating-oauth-app/
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
 
 // Recursive extract files from /api/project/*/info response
@@ -84,9 +95,9 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const s
 
 std::string CrowdinClient::WrapLink(const std::string& page)
 {
-    std::string url("https://poedit.net/crowdin");
+    std::string url("https://accounts.crowdin.com");
     if (!page.empty() && page != "/")
-        url += "?u=" + http_client::url_encode(page);
+        url += page;
     return url;
 }
 
@@ -146,9 +157,11 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
     if (!m_authCallback)
         return;
 
-    const regex re("access_token=([^&]+)&");
+    const regex re("code=([^&]+)&state=([^&]+)");
     smatch m;
     if (!regex_search(uri, m, re))
+        return;
+    if(m.size() < 3 || m.str(2) != OAUTH_STATE)
         return;
 
     SaveAndSetToken(m.str(1));
