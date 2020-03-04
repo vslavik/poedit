@@ -532,14 +532,16 @@ int Catalog::FindItemIndexByLine(int lineno)
 
 int Catalog::SetBookmark(int id, Bookmark bookmark)
 {
-    int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
+    int previous = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
+    if (previous >= m_items.size())
+        previous = -1;
 
     // unset previous bookmarks, if any
     Bookmark bk = m_items[id]->GetBookmark();
     if (bk != NO_BOOKMARK)
         m_header.Bookmarks[bk] = -1;
-    if (result > -1)
-        m_items[result]->SetBookmark(NO_BOOKMARK);
+    if (previous > -1)
+        m_items[previous]->SetBookmark(NO_BOOKMARK);
 
     // set new bookmark
     m_items[id]->SetBookmark(bookmark);
@@ -547,7 +549,7 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
         m_header.Bookmarks[bookmark] = id;
 
     // return id of previous item for that bookmark
-    return result;
+    return previous;
 }
 
 
