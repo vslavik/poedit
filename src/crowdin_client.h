@@ -111,6 +111,7 @@ public:
     /// Asynchronously download specific Crowdin file into @a output_file.
     dispatch::future<void> DownloadFile(const int project_id,
                                         const int file_id,
+                                        const std::wstring& lang_tag,
                                         const std::wstring& output_file);
 
     /// Asynchronously upload specific Crowdin file data.

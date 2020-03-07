@@ -66,15 +66,16 @@ namespace
 #define OAUTH_CLIENT_SECRET "p6Ko83cd4l4SD2TYeY8Fheffw8VuN3bML5jx7BeQ"
 //      any arbitrary unique unguessable string (e.g. UUID in hex)
 #define OAUTH_STATE         "948cf13ffffb47119d6cfa2b68898f67"
-#define OAUTH_AUTHORIZE_URL "/oauth/authorize" \
-	"?" "response_type" "=" "code" \
-	"&" "scope"		    "=" OAUTH_SCOPE \
-	"&" "client_id"		"=" OAUTH_CLIENT_ID \
-	"&" "state"		    "=" OAUTH_STATE
 //      The value of below macro should be set exactly as is (without quotes)
 //      to "Authorization Callback URL" of Crowdin application
 //      https://support.crowdin.com/enterprise/creating-oauth-app/
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
+#define OAUTH_AUTHORIZE_URL "/oauth/authorize" \
+	"?" "response_type" "=" "code" \
+	"&" "scope"         "=" OAUTH_SCOPE \
+	"&" "client_id"     "=" OAUTH_CLIENT_ID \
+	"&" "state"         "=" OAUTH_STATE \
+        "&" "redirect_uri"  "=" OAUTH_URI_PREFIX
 
 } // anonymous namespace
 
@@ -98,8 +99,8 @@ public:
 protected:
     std::string parse_json_error(const json& response) const override
     {
+        cout << "\n\nJSON error: " << response << "\n\n";
         std::string msg = response["error"]["message"];
-        printf("\n\nJSON error: %s\n\n", msg.c_str());
 
         // Translate commonly encountered messages:
         if (msg == "Translations download is forbidden by project owner")
@@ -122,9 +123,9 @@ protected:
 };
 
 CrowdinClient::CrowdinClient() :
-    m_api(new crowdin_http_client(*this, "https://berezins.crowdin.com/api/v2")),
+    m_api(new crowdin_http_client(*this, "https://serhiy.crowdin.com/api/v2")),
     m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com")),
-    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-importer.downloads.crowdin.com"/*"https://crowdin-importer.downloads.crowdin.com"*/)) 
+    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-tmp.downloads.crowdin.com"/*"https://crowdin-importer.downloads.crowdin.com"*/)) 
 {
     SignInIfAuthorized();
 }
@@ -148,11 +149,12 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 
     const regex re("code=([^&]+)&state=([^&]+)");
     smatch m;
-    if (!regex_search(uri, m, re))
+    if (!regex_search(uri, m, re)
+        || m.size() < 3
+        || m.str(2) != OAUTH_STATE) {
         return;
-    if(m.size() < 3 || m.str(2) != OAUTH_STATE)
-        return;
-
+    }
+    
     m_oauth->post("/oauth/token", json_data(json({
         { "grant_type", "authorization_code" },
         { "client_id", OAUTH_CLIENT_ID },
@@ -256,11 +258,16 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
 dispatch::future<void> CrowdinClient::DownloadFile(const int project_id,
                                                    const int file_id,
+                                                   const std::wstring& lang_tag,
                                                    const std::wstring& output_file)
 {
     cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
-    return m_api->get(
-        "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download")
+    return m_api->post(
+        "/projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
+        json_data(json({
+            { "targetLanguageId", str::to_utf8(lang_tag) },
+            { "exportAsXliff", true }
+        })))
         .then([this, output_file] (json r) {
             cout << "\n\nGotten file URL: "<< r << "\n\n";
             return m_downloader->download(r["data"]["url"], output_file);

@@ -471,7 +471,7 @@ private:
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                crowdin_prj, crowdin_file.id,
+                crowdin_prj, crowdin_file.id, str::to_wstring(crowdin_lang.LanguageTag()),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -500,9 +500,9 @@ private:
         if (!wxFileName::DirExists(cache))
             wxFileName::Mkdir(cache, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
-        auto basename = name.AfterLast('/').BeforeLast('.');
+        auto basename = name.AfterLast('/');
 
-        return wxString::Format("%s%c%s_%s_%s.po", cache, wxFILE_SEP_PATH, m_info.name, basename, lang.Code());
+        return wxString::Format("%s%c%s_%s_%s.xliff", cache, wxFILE_SEP_PATH, m_info.name, lang.Code(), basename);
     }
 
 private:
