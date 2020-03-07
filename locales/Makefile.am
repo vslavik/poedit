@@ -28,6 +28,7 @@ XARGS=xargs
 
 # common xgettext args: C++ syntax, use the specified macro names as markers
 XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F -j \
+              -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
               --package-name=Poedit --package-version=$(PACKAGE_VERSION) \

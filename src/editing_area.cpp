@@ -453,7 +453,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     // "needs review" implies that somebody else should review the string after
     // I am done with it (i.e. consider it good), while "needs work" implies I
     // need to return to it and finish the translation.
-    m_fuzzy = new SwitchButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs work"), _("Needs Work")));
+    m_fuzzy = new SwitchButton(this, wxID_ANY,
+        MSW_OR_OTHER(wxGETTEXT_IN_CONTEXT("editing_area", "Needs work"),
+        wxGETTEXT_IN_CONTEXT("editing_area", "Needs Work")));
 #ifdef __WXOSX__
     m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
