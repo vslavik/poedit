@@ -461,17 +461,16 @@ private:
 
     void OnOK(wxCommandEvent&)
     {
-        auto crowdin_prj = m_info.id;
         auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         LanguageDialog::SetLastChosen(crowdin_lang);
-        OutLocalFilename = CreateLocalFilename(crowdin_file.pathName, crowdin_lang);
+        OutLocalFilename = CreateLocalFilename(crowdin_file.pathName, crowdin_lang, m_info.id, m_info.name);
 
         m_activity->Start(_(L"Downloading latest translations…"));
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                crowdin_prj, crowdin_file.id, str::to_wstring(crowdin_lang.LanguageTag()),
+                m_info.id, crowdin_file.id, str::to_wstring(crowdin_lang.LanguageTag()),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -481,7 +480,7 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
-    wxString CreateLocalFilename(const wxString& name, const Language& lang)
+    wxString CreateLocalFilename(const wxString& name, const Language& lang, const int projectId, const wxString& projectName)
     {
         wxString cache;
     #if defined(__WXOSX__)
@@ -497,12 +496,19 @@ private:
         cache += wxFILE_SEP_PATH;
         cache += "Crowdin";
 
-        if (!wxFileName::DirExists(cache))
-            wxFileName::Mkdir(cache, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+        auto localName = name;
+        localName.Replace("/", wxFILE_SEP_PATH);
 
-        auto basename = name.AfterLast('/');
+        wxString localFileName;
+        localFileName << cache << wxFILE_SEP_PATH << projectId << ' ' << projectName
+                    << wxFILE_SEP_PATH << lang.Code()
+                    << wxFILE_SEP_PATH << localName + ".xliff";
+        auto localDirName = localFileName.BeforeLast(wxFILE_SEP_PATH);
+ 
+        if (!wxFileName::DirExists(localDirName))
+            wxFileName::Mkdir(localDirName, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
-        return wxString::Format("%s%c%s_%s_%s.xliff", cache, wxFILE_SEP_PATH, m_info.name, lang.Code(), basename);
+        return localFileName;
     }
 
 private:
