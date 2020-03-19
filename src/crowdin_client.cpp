@@ -283,7 +283,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const std::string& project_id,
     data.add_value("import_duplicates", "0");
     data.add_value("import_eq_suggestions", "0");
     data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
-    
+
     return m_api->post(url, data).then([](json){});
 }
 
