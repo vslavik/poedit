@@ -27,6 +27,7 @@
 #define Poedit_catalog_xliff_h
 
 #include "catalog.h"
+#include "cloud_sync.h"
 #include "errors.h"
 
 #include "pugixml.h"
@@ -101,9 +102,6 @@ public:
 
     ValidationResults Validate(bool wasJustLoaded) override;
 
-    Language GetLanguage() const override { return m_language; }
-    void SetLanguage(Language lang) override { m_language = lang; }
-
     // FIXME: PO specific
     bool HasDeletedItems() const override { return false;}
     void RemoveDeletedItems() override {}
@@ -118,7 +116,6 @@ protected:
 
 protected:
     pugi::xml_document m_doc;
-    Language m_language;
 };
 
 

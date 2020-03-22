@@ -37,6 +37,7 @@
 #include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
+#include "catalog_xliff.h"
 
 #include <wx/app.h>
 #include <wx/artprov.h>
@@ -464,13 +465,13 @@ private:
         auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         LanguageDialog::SetLastChosen(crowdin_lang);
-        OutLocalFilename = CreateLocalFilename(crowdin_file.pathName, crowdin_lang, m_info.id, m_info.name);
+        OutLocalFilename = CreateLocalFilename(crowdin_file.id, crowdin_file.pathName, crowdin_lang, m_info.id, m_info.name);
 
         m_activity->Start(_(L"Downloading latest translations…"));
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                m_info.id, crowdin_file.id, str::to_wstring(crowdin_lang.LanguageTag()),
+                m_info.id, crowdin_file.id, OutLocalFilename.ToStdWstring(), crowdin_lang.LanguageTag(),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -480,29 +481,17 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
-    wxString CreateLocalFilename(const wxString& name, const Language& lang, const int projectId, const wxString& projectName)
+    wxString CreateLocalFilename(const long fileId, const wxString& name, const Language& lang, const long projectId, const wxString& projectName)
     {
-        wxString cache;
-    #if defined(__WXOSX__)
-        cache = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
-    #elif defined(__UNIX__)
-        if (!wxGetEnv("XDG_CACHE_HOME", &cache))
-            cache = wxGetHomeDir() + "/.cache";
-        cache += "/poedit";
-    #else
-        cache = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
-    #endif
-
-        cache += wxFILE_SEP_PATH;
-        cache += "Crowdin";
-
         auto localName = name;
         localName.Replace("/", wxFILE_SEP_PATH);
 
         wxString localFileName;
-        localFileName << cache << wxFILE_SEP_PATH << projectId << ' ' << projectName
+        localFileName << CloudSyncDestination::GetCacheDir() << wxFILE_SEP_PATH << "Crowdin"
+                    << wxFILE_SEP_PATH << projectName
                     << wxFILE_SEP_PATH << lang.Code()
-                    << wxFILE_SEP_PATH << localName + ".xliff";
+                    << wxFILE_SEP_PATH << localName.BeforeLast(wxFILE_SEP_PATH) << wxFILE_SEP_PATH
+                    << projectId << '_' << fileId << '_' << localName.AfterLast(wxFILE_SEP_PATH) << ".xliff";
         auto localDirName = localFileName.BeforeLast(wxFILE_SEP_PATH);
  
         if (!wxFileName::DirExists(localDirName))
@@ -561,13 +550,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     std::cout << "Crowdin syncing file ..." << std::endl;
 
-    const auto& header = catalog->Header();
-    auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
-    auto crowdin_file = header.GetHeader("X-Crowdin-File");
-    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
-                        ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
-                        : catalog->GetLanguage();
-
     wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
 
     auto handle_error = [=](dispatch::exception_ptr e){
@@ -589,21 +571,22 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
-    /*dlg->CallAfter([=]{
+    dlg->CallAfter([=]{
+        const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(catalog.get());
+        
         CrowdinClient::Get().UploadFile(
-                str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), catalog->GetLanguage(),
                 catalog->SaveToBuffer()
             )
             .then([=]{
                 auto tmpdir = std::make_shared<TempDirectory>();
-                auto outfile = tmpdir->CreateFileName("crowdin.po");
+                auto outfile = tmpdir->CreateFileName("crowdin.xliff");
 
                 dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
-
                 return CrowdinClient::Get().DownloadFile(
-                        str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                        xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), xliff->GetFileName().ToStdWstring(), xliff->GetLanguage().LanguageTag(),
                         outfile.ToStdWstring()
                     )
                     .then_on_main([=]
@@ -619,7 +602,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     .catch_all(handle_error);
             })
             .catch_all(handle_error);
-    });ttt*/
+    });
 
     dlg->ShowWindowModal();
 }
@@ -627,16 +610,11 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
-    const auto& header = file->Header();
-    auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
-    auto crowdin_file = header.GetHeader("X-Crowdin-File");
-    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
-                        ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
-                        : file->GetLanguage();
-
-    std::cout << "Uploading file: " << crowdin_file << std::endl;
+    const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(file.get());
+  
+    std::cout << "Uploading file: " << xliff->GetFileName() << std::endl;
     return CrowdinClient::Get().UploadFile(
-                str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), file->GetLanguage(),
                 file->SaveToBuffer()
             );
 }

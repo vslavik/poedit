@@ -251,18 +251,20 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 }
 
 
-dispatch::future<void> CrowdinClient::DownloadFile(const int project_id,
-                                                   const int file_id,
-                                                   const std::wstring& lang_tag,
+dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
+                                                   const long file_id,
+                                                   const std::wstring& file_name,
+                                                   const std::string& lang_tag,
                                                    const std::wstring& output_file)
 {
     cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
     return m_api->post(
         "/projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
         json_data(json({
-            { "targetLanguageId", str::to_utf8(lang_tag) },
-            { "exportAsXliff", true }
-        })))
+            { "targetLanguageId", lang_tag },
+            // for XLIFF files should be exported "as is" so set to `false`
+            { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
+        }))
         .then([this, output_file] (json r) {
             cout << "\n\nGotten file URL: "<< r << "\n\n";
             return m_downloader->download(r["data"]["url"], output_file);
@@ -270,21 +272,31 @@ dispatch::future<void> CrowdinClient::DownloadFile(const int project_id,
 }
 
 
-dispatch::future<void> CrowdinClient::UploadFile(const std::string& project_id,
-                                                 const std::wstring& file,
+dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
+                                                 const long file_id,
                                                  const Language& lang,
                                                  const std::string& file_content)
 {
-    auto url = "/api/project/" + project_id + "/upload-translation";
-
-    multipart_form_data data;
-    data.add_value("json", "");
-    data.add_value("language", lang.LanguageTag());
-    data.add_value("import_duplicates", "0");
-    data.add_value("import_eq_suggestions", "0");
-    data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
-
-    return m_api->post(url, data).then([](json){});
+    return m_api->post(
+            "/storages",
+            octet_stream_data(file_content),
+            { { "Crowdin-API-FileName", "poedit.xliff"} }
+        )
+        .then([this, project_id, file_id, lang] (json r) {
+            cout << "File uploaded to temporary storage: " << r << "\n\n";
+            const auto storageId = r["data"]["id"].get<int>();
+            return m_api->post(
+                "/projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
+                json_data(json({
+                    { "storageId", storageId },
+                    { "fileId", file_id },
+                    { "importDuplicates", true },
+                    { "autoApproveImported", true }
+                })))
+                .then([](json r) {
+                    cout << "File uploaded: " << r << "\n\n";
+                });
+        });
 }
 
 

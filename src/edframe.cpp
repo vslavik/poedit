@@ -1098,8 +1098,8 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
-            if (m_catalog)
-                m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+            //if (m_catalog)
+            //    m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }
@@ -1764,6 +1764,7 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 #ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
+    m_syncing = true;
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
             m_catalog = cat;
@@ -1772,6 +1773,7 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
             RefreshControls();
         });
     });
+    m_syncing = false;
 }
 
 void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
@@ -2715,7 +2717,10 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    if (m_catalog->GetCloudSync())
+    if (!m_syncing // avoid redundant upload during same call of OnUpdateFromCrowdin()=>
+                   // 1. =>DoIfCanDiscardCurrentDoc()=>Upload()
+                   // 2. =>CrowdinSyncFile()=>UploadFile()
+        && m_catalog->GetCloudSync())
     {
         CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
     }

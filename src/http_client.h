@@ -52,6 +52,20 @@ public:
     virtual std::string body() const = 0;
 };
 
+class octet_stream_data : public http_body_data
+{
+public:
+    octet_stream_data(const std::string& body) : m_body(body) {};
+
+    /// Content-Type header to use with the data.
+    std::string content_type() const override { return "application/octet-stream"; };
+
+    /// Returns generated body of the request.
+    std::string body() const override { return m_body; };
+private:
+    std::string m_body;
+};
+
 /// Stores POSTed data (RFC 1867)
 class multipart_form_data : public http_body_data
 {
@@ -113,6 +127,8 @@ public:
         default_flags = 0
     };
 
+    using headers = std::vector<std::pair<std::string, std::string>>;
+
     /**
         Creates an instance of the client object.
         
@@ -148,7 +164,7 @@ public:
     /**
         Perform a POST request with multipart/form-data formatted @a params.
      */
-    dispatch::future<json> post(const std::string& url, const http_body_data& data);
+    dispatch::future<json> post(const std::string& url, const http_body_data& data, const headers& hdrs = headers());
 
 
     // Helper for encoding text as URL-encoded UTF-8
