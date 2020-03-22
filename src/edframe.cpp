@@ -1098,8 +1098,8 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
-            if (m_catalog)
-                m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+            //if (m_catalog)
+            //    m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }

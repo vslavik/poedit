@@ -469,7 +469,7 @@ class Catalog
         Type GetFileType() const { return m_fileType; }
 
         wxString GetFileName() const { return m_fileName; }
-        void SetFileName(const wxString& fn);
+        virtual void SetFileName(const wxString& fn);
 
         /**
             Return base path to source code for extraction, or empty string if not configured.
@@ -552,9 +552,10 @@ class Catalog
         virtual void SetLanguage(Language lang);
 
         /// Is the PO file from Crowdin, i.e. sync-able?
-        bool IsFromCrowdin() const
-            { return m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"); }
-
+        bool IsFromCrowdin() const { return m_crowdinFileId > 0 && m_crowdinProjectId > 0; }
+        long GetCrowdinFileId() const { return m_crowdinFileId; }
+        long GetCrowdinProjectId() const { return m_crowdinProjectId; }
+            
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
 
@@ -594,6 +595,7 @@ class Catalog
         bool m_isOk;
         Type m_fileType;
         wxString m_fileName;
+        long m_crowdinFileId = -1, m_crowdinProjectId = -1;
         HeaderData m_header;
         Language m_sourceLanguage;
 

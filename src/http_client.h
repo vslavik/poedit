@@ -52,6 +52,20 @@ public:
     virtual std::string body() const = 0;
 };
 
+class octet_stream_data : public http_body_data
+{
+public:
+    octet_stream_data(const std::string& body) : m_body(body) {};
+
+    /// Content-Type header to use with the data.
+    std::string content_type() const override { return "application/octet-stream"; };
+
+    /// Returns generated body of the request.
+    std::string body() const override { return m_body; };
+private:
+    std::string m_body;
+};
+
 /// Stores POSTed data (RFC 1867)
 class multipart_form_data : public http_body_data
 {

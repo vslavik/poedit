@@ -597,6 +597,9 @@ void Catalog::SetFileName(const wxString& fn)
 {
     wxFileName f(fn);
     f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
+    auto name = f.GetName();
+    name.ToLong(&m_crowdinProjectId);
+    name.AfterFirst('_').ToLong(&m_crowdinFileId);
     m_fileName = f.GetFullPath();
 }
 

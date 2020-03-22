@@ -109,15 +109,16 @@ public:
     dispatch::future<ProjectInfo> GetProjectInfo(const int project_id);
 
     /// Asynchronously download specific Crowdin file into @a output_file.
-    dispatch::future<void> DownloadFile(const int project_id,
-                                        const int file_id,
-                                        const std::wstring& lang_tag,
+    dispatch::future<void> DownloadFile(const long project_id,
+                                        const long file_id,
+                                        const std::wstring& file_name,
+                                        const std::string& lang_tag,
                                         const std::wstring& output_file);
 
     /// Asynchronously upload specific Crowdin file data.
-    dispatch::future<void> UploadFile(const std::string& project_id,
-                                      const std::wstring& file,
-                                      const Language& lang,
+    dispatch::future<void> UploadFile(const long project_id,
+                                      const long file_id,
+                                      const std::string& lang_tag,
                                       const std::string& file_content);
 
 private:
