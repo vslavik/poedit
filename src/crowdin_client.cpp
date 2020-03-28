@@ -33,6 +33,7 @@
 #include <functional>
 #include <mutex>
 #include <boost/algorithm/string.hpp>
+#include <jwt-cpp/jwt.h>
 
 #include <wx/translation.h>
 #include <wx/utils.h>
@@ -116,16 +117,14 @@ protected:
             message = _("Not authorized, please sign in again.").utf8_str();
             m_owner.SignOut();
         }
-        printf("\n\nJSON error: %s\n\n", message.c_str());
+        cout << endl << endl << "JSON error: " << message << endl << endl;
     }
 
     CrowdinClient& m_owner;
 };
 
 CrowdinClient::CrowdinClient() :
-    m_api(new crowdin_http_client(*this, "https://serhiy.crowdin.com/api/v2")),
-    m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com")),
-    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-tmp.downloads.crowdin.com"/*"https://crowdin-importer.downloads.crowdin.com"*/))
+    m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com"))
 {
     SignInIfAuthorized();
 }
@@ -323,7 +322,20 @@ void CrowdinClient::SignInIfAuthorized()
 
 void CrowdinClient::SetToken(const std::string& token)
 {
-    m_api->set_authorization(!token.empty() ? "Bearer " + token : "");
+    if(token.empty()) {
+        return;
+    }
+
+    auto domain = jwt::decode(token).get_payload_claim("domain");
+    if(domain.get_type() == jwt::claim::type::null) {
+        m_api = make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
+        m_downloader = make_unique<crowdin_http_client>(*this, "https://crowdin-importer.downloads.crowdin.com");
+    } else {
+        m_api = make_unique<crowdin_http_client>(*this, "https://" + domain.as_string() + ".crowdin.com/api/v2");
+        m_downloader = make_unique<crowdin_http_client>(*this, "https://production-enterprise-tmp.downloads.crowdin.com");
+    }
+
+    m_api->set_authorization("Bearer " + token);
 }
 
 

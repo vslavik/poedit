@@ -97,3 +97,5 @@ compiled_xrc.cpp: $(XRC_RESOURCES)
 DISTCLEANFILES = $(nodist_poedit_SOURCES)
 
 EXTRA_DIST = $(XRC_RESOURCES) pluralforms/COPYING
+
+AM_CPPFLAGS = -I../deps/jwt-cpp/include
