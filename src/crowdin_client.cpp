@@ -135,17 +135,15 @@ CrowdinClient::~CrowdinClient() {}
 dispatch::future<void> CrowdinClient::Authenticate()
 {
     auto url = WrapLink(OAUTH_AUTHORIZE_URL);
-    m_authCallback.reset(new dispatch::promise<void>);
     wxLaunchDefaultBrowser(url);
+    lock_guard<mutex> lck(m_authCallbackMutex);
+    m_authCallback.reset(new dispatch::promise<void>);
     return m_authCallback->get_future();
 }
 
 
 void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 {
-    if (!m_authCallback)
-        return;
-
     const regex re("code=([^&]+)&state=([^&]+)");
     smatch m;
     if (!regex_search(uri, m, re)
@@ -161,8 +159,10 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
         { "redirect_uri", OAUTH_URI_PREFIX },
         { "code", m.str(1) }
     }))).then([this](json r) {
+        lock_guard<mutex> lck(m_authCallbackMutex);
+        if (!m_authCallback)
+           return;
         SaveAndSetToken(r["access_token"]);
-
         m_authCallback->set_value();
         m_authCallback.reset();
     });
