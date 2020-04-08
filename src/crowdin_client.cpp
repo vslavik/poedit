@@ -189,7 +189,18 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             u.login = str::to_wstring(d["username"]);
             u.name = str::to_wstring(d.value("fullName", ""));
             if(u.name.empty()) {
-                u.name = str::to_wstring(d["firstName"]) + " " + str::to_wstring(d["lastName"]);
+                // Take care that both first and last name can be empty
+                auto name = d["firstName"];
+                if(name.is_string()) {
+                    u.name += str::to_wstring(name);
+                }
+                if(!u.name.empty()) {
+                    u.name += ' ';
+                }
+                name = d["lastName"];
+                if(name.is_string()) {
+                    u.name += str::to_wstring(name);
+                }
             }
             if(u.name.empty()) {
                 u.name = u.login;
