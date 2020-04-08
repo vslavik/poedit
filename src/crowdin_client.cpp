@@ -257,7 +257,9 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                     //TODO: files should be with full path
                     for(auto&& i : r["data"]) {
                         const json& d = i["data"];
-                        prj.files.push_back({L"/" + str::to_wstring(d["name"]), d["id"]});
+                        if(d["type"] != "assets") {
+                            prj.files.push_back({L"/" + str::to_wstring(d["name"]), d["id"]});
+                        }
                     }
                     //TODO: get more until all files gotten (if more than 500)
                     return prj;
