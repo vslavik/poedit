@@ -62,6 +62,7 @@ public:
 
     /// Asynchronously uploads the file. Returned future throws on error.
     virtual dispatch::future<void> Upload(CatalogPtr file) = 0;
+    virtual bool Auth(wxWindow* parent) = 0;
 
 
     /// Convenicence for creating a destination from a lambda.
@@ -136,6 +137,10 @@ public:
     /// Show the window while performing background sync action. Show error if 
     static void RunSync(wxWindow *parent, std::shared_ptr<CloudSyncDestination> dest, CatalogPtr file)
     {
+        if(!dest->Auth(parent)) {
+            return;
+        }
+
         wxWindowPtr<CloudSyncProgressWindow> progress(new CloudSyncProgressWindow(parent, dest));
 #ifdef __WXOSX__
         progress->ShowWindowModal();

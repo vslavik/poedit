@@ -83,7 +83,7 @@ class CrowdinSyncDestination : public CloudSyncDestination
 {
 public:
     wxString GetName() const override { return "Crowdin"; }
-
+    bool Auth(wxWindow* parent) override;
     dispatch::future<void> Upload(CatalogPtr file) override;
 };
 
