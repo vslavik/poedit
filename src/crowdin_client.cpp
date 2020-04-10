@@ -100,12 +100,24 @@ protected:
     std::string parse_json_error(const json& response) const override
     {
         cout << "\n\nJSON error: " << response << "\n\n";
-        std::string msg = response["error"]["message"];
 
-        // Translate commonly encountered messages:
-        if (msg == "Translations download is forbidden by project owner")
-            msg = _("Downloading translations is disabled in this project.").utf8_str();
-        return msg;
+        try
+        {
+            return response.at("errors").at(0).at("error").at("errors").at(0).at("message");
+        }
+        catch(...)
+        {
+            try
+            {
+                return response.at("error").at("message");
+            }
+            catch (...)
+            {
+                std::string msg;
+                msg = _("JSON request error").utf8_str();
+                return msg;
+            }
+        }
     }
 
     void on_error_response(int& statusCode, std::string& message) override
