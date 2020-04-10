@@ -52,11 +52,10 @@ Optional dependencies:
 
 Do the usual:
 
-    ```
     ./configure
     make
     make install
-    ```
+
 You must have the dependencies installed in a location where the configure script will find
 them, e.g. by setting CPPFLAGS and LDFLAGS appropriately.
 
@@ -72,10 +71,7 @@ Xcode to build Poedit.
 There are some additional dependencies on tools not included with macOS.
 They can be installed with Homebrew and macos/Brewfile:
 
-    ```
     brew bundle --file=macos/Brewfile
-    ```
-
 
  Windows, using Visual Studio 2017
 ----------------------------------
@@ -93,23 +89,23 @@ project.
 
 Get the sources from GitHub (https://github.com/vslavik/poedit):
 
-    ```
+
     git clone https://github.com/vslavik/poedit.git
-    ```
+
 
 If you are on Windows or macOS, you'll need all the dependencies too.
 After cloning the repository, run this command:
 
-    ```
+
     git submodule update --init --recursive
-    ```
+
 
 On Linux|GNU and other Unices, only a subset of submodules is necessary, so you can
 save some time and disk space by checking out only them:
 
-    ```
+
     git submodule update --init deps/json deps/pugixml
-    ```
+
 
 When building for Unix/Linux, if you get the sources directly from the Git
 repository, some generated files are not present. You have to run the
