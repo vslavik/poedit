@@ -88,7 +88,6 @@
 #include "spellchecking.h"
 #include "str_helpers.h"
 
-
 namespace
 {
 

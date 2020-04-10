@@ -607,6 +607,10 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     dlg->ShowWindowModal();
 }
 
+bool CrowdinSyncDestination::Auth(wxWindow* parent) {
+    return CrowdinClient::Get().IsSignedIn()
+            || CrowdinLoginDialog(parent).ShowModal() == wxID_OK;
+}
 
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
