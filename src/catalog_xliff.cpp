@@ -29,11 +29,11 @@
 #include "configuration.h"
 #include "str_helpers.h"
 #include "utility.h"
-#include "crowdin_gui.h"
 
 #include <wx/intl.h>
 #include <wx/log.h>
 #include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 #include <boost/algorithm/string.hpp>
 

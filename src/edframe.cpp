@@ -1097,8 +1097,6 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
-            //if (m_catalog)
-            //    m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }
@@ -2716,12 +2714,20 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    if (!m_syncing // avoid redundant upload during same call of OnUpdateFromCrowdin()=>
-                   // 1. =>DoIfCanDiscardCurrentDoc()=>Upload()
-                   // 2. =>CrowdinSyncFile()=>UploadFile()
-        && m_catalog->GetCloudSync())
-    {
-        CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+    if(!m_catalog->GetCloudSync()) {
+        if(m_catalog->IsFromCrowdin()) {
+            m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+        }
+    }
+    
+    if (m_catalog->GetCloudSync()) {
+        // Avoid redundant upload during same call of 
+        // OnUpdateFromCrowdin()=>
+        // 1. =>DoIfCanDiscardCurrentDoc()=>Upload()
+        // 2. =>CrowdinSyncFile()=>UploadFile()
+        if(!m_syncing) {
+            CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+        }
     }
 
     if (tmUpdateThread.valid())

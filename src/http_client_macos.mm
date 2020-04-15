@@ -139,13 +139,17 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<json> post(const std::string& url, const http_body_data& data)
+    dispatch::future<json> post(const std::string& url, const http_body_data& data, const http_client::hdrs_t& hdrs)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
         NSMutableURLRequest *request = [m_native requestWithMethod:@"POST"
                                                               path:str::to_NS(url)
                                                         parameters:nil];
+    
+        for(const auto& h : hdrs) {
+            [request addValue:str::to_NS(h.second) forHTTPHeaderField:str::to_NS(h.first)];
+        }
 
         auto body = data.body();
         [request setValue:str::to_NS(data.content_type()) forHTTPHeaderField:@"Content-Type"];
@@ -250,7 +254,7 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
     return m_impl->download(url, output_file);
 }
 
-dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
+dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const http_client::hdrs_t& hdrs)
 {
-    return m_impl->post(url, data);
+    return m_impl->post(url, data, hdrs);
 }
