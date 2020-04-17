@@ -36,6 +36,7 @@
 
 #include <wx/translation.h>
 #include <wx/utils.h>
+#include <wx/uri.h>
 
 #include <iostream>
 
@@ -135,8 +136,7 @@ protected:
 };
 
 CrowdinClient::CrowdinClient() :
-    m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com")),
-    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-tmp.downloads.crowdin.com")) 
+    m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com"))
 {
     SignInIfAuthorized();
 }
@@ -296,8 +296,17 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
         }))
         .then([this, output_file] (json r) {
+            std::string url(r["data"]["url"]);
+            wxURI uri(url);
+            // Per download (local) client must be created since different domain
+            // per request is not allowed by HTTP client backend on some platorms.
+            // (e.g. on Linux).
+            auto downloader = std::make_shared<crowdin_http_client>(*this, std::string((uri.GetScheme() + "://" + uri.GetServer()).mb_str()));
             cout << "\n\nGotten file URL: "<< r << "\n\n";
-            return m_downloader->download(r["data"]["url"], output_file);
+            // Below capturing of `[downloader]` is needed to preserve `downloader` object
+            // from being destroyed before `download(...)` completes asynchroneously
+            // (what happens already after current function returns)
+            return downloader->download(url, output_file).then([downloader]() {});
         });
 }
 

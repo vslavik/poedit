@@ -129,7 +129,7 @@ private:
     void SaveAndSetToken(const std::string& token);
 
     class crowdin_http_client;
-    std::unique_ptr<crowdin_http_client> m_api, m_oauth, m_downloader;
+    std::unique_ptr<crowdin_http_client> m_api, m_oauth;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
 
     static CrowdinClient *ms_instance;
