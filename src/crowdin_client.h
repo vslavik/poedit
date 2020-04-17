@@ -81,7 +81,6 @@ public:
     {
         std::wstring name;
         int id;
-        bool downloadable;
     };
 
     /// Retrieve listing of projects accessible to the user

@@ -229,15 +229,21 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
             for (auto&& d : r["data"])
             {
                 const json& i = d["data"];
-                all.push_back({
-                    str::to_wstring(i["name"]),
-                    i["id"].get<int>(),
-                    //TODO: should be tested with project not owning by
-                    //      currently authorized user as well (not only
-                    //      for owning) after it will be implemented in
-                    //      in API v2 (unimplemented yet)
-                    /*(bool)i["publicDownloads"].get<int>()*/true
+                auto itPublicDownloads = i.find("publicDownloads");
+                if(itPublicDownloads != i.end()
+                    // for some wierd reason `publicDownloads` can be in 3 states:
+                    // `null`, `true` and `false` and, as investigated experimentally,
+                    // only `null` means 'Forbidden' to work with project files (to get list etc)
+                    // so hide such projects. While `false` or `true` allows to work with 
+                    // such projects normally
+                    && !itPublicDownloads->is_null()) {
+
+                    all.push_back({
+                        str::to_wstring(i["name"]),
+                        i["id"].get<int>()
                 });
+
+                }
             }
             return all;
         });
