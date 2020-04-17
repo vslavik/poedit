@@ -133,7 +133,7 @@ private:
     dispatch::future<void> RefreshToken();
 
     class crowdin_http_client;
-    std::unique_ptr<crowdin_http_client> m_api, m_oauth, m_downloader;
+    std::unique_ptr<crowdin_http_client> m_api, m_oauth;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
     std::mutex m_authMutex;
     std::string m_authRefreshToken;

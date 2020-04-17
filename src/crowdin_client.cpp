@@ -325,8 +325,16 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
         }))
         .then([this, output_file] (json r) {
+            string url = r["data"]["url"],
+                   proto(wxString(url).BeforeFirst(':').mb_str()),
+                   host(wxString(url).AfterFirst('/').AfterFirst('/').BeforeFirst('/').mb_str());
+
+            auto downloader = make_shared<crowdin_http_client>(*this, proto + "://" + host);
             cout << "\n\nGotten file URL: "<< r << "\n\n";
-            return m_downloader->download(r["data"]["url"], output_file);
+            return downloader->download(url, output_file)
+                .then([downloader]() {
+                    return dispatch::make_ready_future();
+                });
         });
     });
 }
@@ -387,10 +395,8 @@ void CrowdinClient::SetAuth(const json& auth)
     auto domain = jwt::decode(access_token).get_payload_claim("domain");
     if(domain.get_type() == jwt::claim::type::null) {
         m_api = make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
-        m_downloader = make_unique<crowdin_http_client>(*this, "https://crowdin-importer.downloads.crowdin.com");
     } else {
         m_api = make_unique<crowdin_http_client>(*this, "https://" + domain.as_string() + ".crowdin.com/api/v2");
-        m_downloader = make_unique<crowdin_http_client>(*this, "https://production-enterprise-tmp.downloads.crowdin.com");
     }
 
     m_api->set_authorization("Bearer " + access_token);
