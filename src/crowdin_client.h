@@ -90,7 +90,7 @@ public:
     struct FileInfo
     {
         std::wstring pathName;
-        int id;
+        int id, dirId, branchId;
         
     };
 
