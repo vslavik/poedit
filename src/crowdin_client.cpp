@@ -251,7 +251,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
         {
             cout << "\n\nGot projects: " << r << endl<<endl;
             std::vector<ProjectListing> all;
-            for (auto&& d : r["data"])
+            for (const auto& d : r["data"])
             {
                 const json& i = d["data"];
                 auto itPublicDownloads = i.find("publicDownloads");
@@ -279,32 +279,97 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
 {
     auto url = "projects/" + std::to_string(project_id);
-    return RefreshToken().then([=] () {
-    return m_api->get(url)
-        .then([this, url](json r)
-        {
-            ProjectInfo prj;
-            const json& d = r["data"];
-            prj.name = str::to_wstring(d["name"]);
-            prj.id = d["id"];
-            for (auto&& langCode : d["targetLanguageIds"]) {
-                prj.languages.push_back(Language::TryParse(str::to_wstring(langCode)));
-            }
-            return m_api->get(url + "/files?limit=500")
-                .then([prj_ = prj](json r)
-                {
-                    auto prj = prj_;
-                    //TODO: files should be with full path
-                    for(auto&& i : r["data"]) {
-                        const json& d = i["data"];
-                        if(d["type"] != "assets") {
-                            prj.files.push_back({L"/" + str::to_wstring(d["name"]), d["id"]});
-                        }
-                    }
-                    //TODO: get more until all files gotten (if more than 500)
-                    return prj;
+    auto prj = make_shared<ProjectInfo>();
+    enum { NO_ID = -1 };
+
+    return RefreshToken().then([this, url, prj] () {
+        return m_api->get(url);
+    }).then([this, url, prj](json r)
+    {
+        // Handle project info
+        const json& d = r["data"];
+        prj->name = str::to_wstring(d["name"]);
+        prj->id = d["id"];
+        for (const auto& langCode : d["targetLanguageIds"]) {
+            prj->languages.push_back(Language::TryParse(str::to_wstring(langCode)));
+        }
+        //TODO: get more until all files gotten (if more than 500)
+        return m_api->get(url + "/files?limit=500");
+    }).then([this, url, prj](json r)
+    {   
+        // Handle project files
+        for(auto& i : r["data"]) {
+            const json& d = i["data"];
+            if(d["type"] != "assets") {
+                const json& dir = d["directoryId"],
+                            branch = d["branchId"];
+                prj->files.push_back({
+                    L"/" + str::to_wstring(d["name"]),
+                    d["id"],
+                    dir.is_null() ? NO_ID : dir.get<int>(),
+                    branch.is_null() ? NO_ID : branch.get<int>()
                 });
-        });
+            }
+        }
+        //TODO: get more until all dirs gotten (if more than 500)
+        return m_api->get(url + "/directories?limit=500");
+    }).then([this, url, prj](json r) {
+        // Handle directories
+        struct dir {
+            string name;
+            int parentId;
+        };
+        map<int, dir> dirs;
+
+        for(const auto& i : r["data"]) {
+            const json& d = i["data"],
+                  parent = d["directoryId"];
+            dirs.insert({
+                d["id"],
+                {
+                    d["name"],
+                    parent.is_null() ? NO_ID : parent.get<int>()
+                }
+            });
+        }
+
+        stack<string> path;
+        for(auto& i : prj->files) {
+            int dirId = i.dirId;
+            while(dirId != NO_ID) {
+                const auto& dir = dirs[dirId];
+                path.push(dir.name);
+                dirId = dir.parentId;
+            }
+            string pathStr;
+            while(path.size()) {
+                pathStr += '/';
+                pathStr += path.top();
+                path.pop();
+            }
+            if(!pathStr.empty()) {
+                i.pathName = str::to_wstring(pathStr) + i.pathName;
+            }
+        }
+
+        //TODO: get more until all branches gotten (if more than 500)    
+        return m_api->get(url + "/branches?limit=500");
+    }).then([this, url, prj](json r) {
+        // Handle branches
+        map<int, string> branches;
+
+        for(const auto& i : r["data"]) {
+            const json& d = i["data"];
+            branches[d["id"]] = d["name"];
+        }
+
+        for(auto& i : prj->files) {
+            if(i.branchId != NO_ID) {
+                i.pathName = "/" + str::to_wstring(branches[i.branchId]) + i.pathName;
+            }
+        }
+
+        return *prj;
     });
 }
 
