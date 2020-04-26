@@ -179,7 +179,6 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
     m_authCallback.reset();
 }
 
-
 bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 {
     return boost::starts_with(uri, OAUTH_URI_PREFIX);
@@ -362,7 +361,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
     cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
-        json_data(json({
+        json_data({
             { "targetLanguageId", lang_tag },
             // for XLIFF files should be exported "as is" so set to `false`
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
@@ -398,12 +397,12 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
             const auto storageId = r["data"]["id"].get<int>();
             return m_api->post(
                 "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
-                json_data(json({
+                json_data({
                     { "storageId", storageId },
                     { "fileId", file_id },
                     { "importDuplicates", true },
                     { "autoApproveImported", true }
-                })))
+                }))
                 .then([](json r) {
                     cout << "File uploaded: " << r << "\n\n";
                 });
