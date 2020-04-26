@@ -165,13 +165,13 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
         return;
     }
 
-    m_oauth->post("oauth/token", json_data(json({
+    m_oauth->post("oauth/token", json_data({
         { "grant_type", "authorization_code" },
         { "client_id", OAUTH_CLIENT_ID },
         { "client_secret", OAUTH_CLIENT_SECRET },
         { "redirect_uri", OAUTH_URI_PREFIX },
         { "code", m.str(1) }
-    }))).then([this](json r) {
+    })).then([this](json r) {
         lock_guard<mutex> lck(m_authMutex);
         if (!m_authCallback)
            return;
@@ -187,12 +187,12 @@ dispatch::future<void> CrowdinClient::RefreshToken()
         return dispatch::make_ready_future();
     }
 
-    return m_oauth->post("oauth/token", json_data(json({
+    return m_oauth->post("oauth/token", json_data({
         { "grant_type", "refresh_token" },
         { "client_id", OAUTH_CLIENT_ID },
         { "client_secret", OAUTH_CLIENT_SECRET },
         { "refresh_token", m_authRefreshToken }
-    }))).then([this](json r) {
+    })).then([this](json r) {
         lock_guard<mutex> lck(m_authMutex);
         SaveAndSetAuth(r);
     });
@@ -384,7 +384,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
     return RefreshToken().then([=] () {
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
-        json_data(json({
+        json_data({
             { "targetLanguageId", lang_tag },
             // for XLIFF files should be exported "as is" so set to `false`
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
@@ -421,12 +421,12 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
             const auto storageId = r["data"]["id"].get<int>();
             return m_api->post(
                 "projects/" + std::to_string(project_id) + "/translations/" + lang_tag,
-                json_data(json({
+                json_data({
                     { "storageId", storageId },
                     { "fileId", file_id },
                     { "importDuplicates", true },
                     { "autoApproveImported", true }
-                })))
+                }))
                 .then([](json r) {
                     cout << "File uploaded: " << r << "\n\n";
                 });
