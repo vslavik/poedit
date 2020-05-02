@@ -273,11 +273,25 @@ static const double QUALITY_THRESHOLD = 0.6;
 static const int MAX_ALLOWED_LENGTH_DIFFERENCE = 2;
 
 
-bool ContainsResult(const SuggestionsList& all, const std::wstring& r)
+void AddOrUpdateResult(SuggestionsList& all, Suggestion&& r)
 {
+    // Sometimes multiple hits may have the same translation, but different score
+    // because the source text may differ while the translation doesn't. E.g.
+    //   "Open File" (Mac) -> "Otevřít soubor"
+    //   "Open file" (Win) -> "Otevřít soubor"
+    // So we can't keep the first score, but need to update it if a better match
+    // with the same translation is found during the search.
     auto found = std::find_if(all.begin(), all.end(),
-                              [&r](const Suggestion& x){ return x.text == r; });
-    return found != all.end();
+                              [&r](const Suggestion& x){ return x.text == r.text; });
+    if (found == all.end())
+    {
+        all.push_back(std::move(r));
+    }
+    else
+    {
+        if (r.score > found->score)
+            *found = r;
+    }
 }
 
 // Return translation (or source) text field.
@@ -363,13 +377,10 @@ void PerformSearch(IndexSearcherPtr searcher,
         [&results](DocumentPtr doc, double score)
         {
             auto t = get_text_field(doc, L"trans");
-            if (!ContainsResult(results, t))
-            {
-                time_t ts = DateField::stringToTime(doc->get(L"created"));
-                Suggestion r {t, score, int(ts)};
-                r.id = StringUtils::toUTF8(doc->get(L"uuid"));
-                results.push_back(r);
-            }
+            time_t ts = DateField::stringToTime(doc->get(L"created"));
+            Suggestion r {t, score, int(ts)};
+            r.id = StringUtils::toUTF8(doc->get(L"uuid"));
+            AddOrUpdateResult(results, std::move(r));
         }
     );
 
@@ -458,13 +469,12 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
                 while (stream2->incrementToken())
                     tokensCount2++;
 
-                if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE &&
-                    !ContainsResult(results, t))
+                if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE)
                 {
                     time_t ts = DateField::stringToTime(doc->get(L"created"));
                     Suggestion r {t, score, int(ts)};
                     r.id = StringUtils::toUTF8(doc->get(L"uuid"));
-                    results.push_back(r);
+                    AddOrUpdateResult(results, std::move(r));
                 }
             }
         );
