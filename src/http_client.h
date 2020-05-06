@@ -127,7 +127,7 @@ public:
         default_flags = 0
     };
 
-    using hdrs_t = std::vector<std::pair<std::string, std::wstring>>;
+    using headers = std::vector<std::pair<std::string, std::wstring>>;
 
     /**
         Creates an instance of the client object.
@@ -164,7 +164,7 @@ public:
     /**
         Perform a POST request with multipart/form-data formatted @a params.
      */
-    dispatch::future<json> post(const std::string& url, const http_body_data& data, const hdrs_t& hdrs = hdrs_t());
+    dispatch::future<json> post(const std::string& url, const http_body_data& data, const headers& hdrs = headers());
 
 
     // Helper for encoding text as URL-encoded UTF-8

@@ -139,7 +139,7 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<json> post(const std::string& url, const http_body_data& data, const http_client::hdrs_t& hdrs)
+    dispatch::future<json> post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
@@ -254,7 +254,7 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
     return m_impl->download(url, output_file);
 }
 
-dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const http_client::hdrs_t& hdrs)
+dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
 {
     return m_impl->post(url, data, hdrs);
 }
