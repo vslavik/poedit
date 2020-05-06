@@ -33,6 +33,7 @@
 
 #include <wx/intl.h>
 #include <wx/log.h>
+#include <wx/stdpaths.h>
 
 #include <boost/algorithm/string.hpp>
 

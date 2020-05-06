@@ -232,7 +232,14 @@ public:
     {
         http::http_request req(http::methods::POST);
         for(const auto& h : hdrs) {
-            req.headers().add(h.first, h.second);
+            req.headers().add(
+                // Take care about conversion from std::string in case of
+                // std::wstring used in headers as well what is default
+                // for _WIN32 in cpprest for some reason
+                // (it's safe since we expect only ANSI in header names)
+                utility::string_t(h.first.begin(), h.first.end()),
+                h.second
+            );
         }
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);

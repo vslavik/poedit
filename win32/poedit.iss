@@ -25,12 +25,12 @@
 ;
 
 #ifndef CONFIG
-#define CONFIG           "Release"
+#define CONFIG           "Debug"
 #endif
 
 #include "../" + CONFIG + "/git_build_number.h"
 
-#define VERSION          "2.3"
+#define VERSION          "2.4.7"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
