@@ -124,7 +124,7 @@ protected:
 CrowdinClient::CrowdinClient() :
     m_api(new crowdin_http_client(*this, "https://berezins.crowdin.com/api/v2")),
     m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com")),
-    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-importer.downloads.crowdin.com")) 
+    m_downloader(new crowdin_http_client(*this, "https://production-enterprise-importer.downloads.crowdin.com"/*"https://crowdin-importer.downloads.crowdin.com"*/)) 
 {
     SignInIfAuthorized();
 }
@@ -182,10 +182,14 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
     return m_api->get("/user")
         .then([](json r)
         {
+            cout << "\n\nGot user info: " << r << "\n\n";
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
-            u.name =  str::to_wstring(d["firstName"]) + " " +  str::to_wstring(d["lastName"]);
+            u.name = str::to_wstring(d.value("fullName", ""));
+            if(u.name.empty()) {
+                u.name = str::to_wstring(d["firstName"]) + " " + str::to_wstring(d["lastName"]);
+            }
             if(u.name.empty()) {
                 u.name = u.login;
             }
@@ -213,7 +217,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
                     //      currently authorized user as well (not only
                     //      for owning) after it will be implemented in
                     //      in API v2 (unimplemented yet)
-                    (bool)i["publicDownloads"].get<int>()
+                    /*(bool)i["publicDownloads"].get<int>()*/true
                 });
             }
             return all;
@@ -235,7 +239,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 prj.languages.push_back(Language::TryParse(str::to_wstring(langCode)));
             }
             return m_api->get(url + "/files?limit=500")
-                .then([prj_=prj](json r)
+                .then([prj_ = prj](json r)
                 {
                     auto prj = prj_;
                     //TODO: files should be with full path
@@ -277,7 +281,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const std::string& project_id,
     data.add_value("import_duplicates", "0");
     data.add_value("import_eq_suggestions", "0");
     data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
-
+    
     return m_api->post(url, data).then([](json){});
 }
 
