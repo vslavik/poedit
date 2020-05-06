@@ -32,6 +32,10 @@
 
 #include <functional>
 #include <mutex>
+#include <stack>
+#include <iostream>
+#include <ctime>
+
 #include <boost/algorithm/string.hpp>
 #include <jwt-cpp/jwt.h>
 
@@ -360,7 +364,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
         for(const auto& i : r["data"]) {
             const json& d = i["data"];
-            branches[d["id"]] = d["name"];
+            branches[d["id"]] = d["name"].get<string>();
         }
 
         for(auto& i : prj->files) {
