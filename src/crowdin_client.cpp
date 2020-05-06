@@ -418,7 +418,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
     return m_api->post(
             "storages",
             octet_stream_data(file_content),
-            { { "Crowdin-API-FileName", L"poedit.xliff"} }
+            { { "Crowdin-API-FileName", "poedit.xliff"} }
         )
         .then([this, project_id, file_id, lang_tag] (json r) {
             cout << "File uploaded to temporary storage: " << r << "\n\n";

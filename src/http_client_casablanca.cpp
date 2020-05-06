@@ -238,7 +238,7 @@ public:
                 // for _WIN32 in cpprest for some reason
                 // (it's safe since we expect only ANSI in header names)
                 utility::string_t(h.first.begin(), h.first.end()),
-                h.second
+                utility::string_t(h.second.begin(), h.second.end())
             );
         }
         req.headers().add(http::header_names::user_agent, m_userAgent);

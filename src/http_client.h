@@ -127,7 +127,7 @@ public:
         default_flags = 0
     };
 
-    using headers = std::vector<std::pair<std::string, std::wstring>>;
+    using headers = std::vector<std::pair<std::string, std::string>>;
 
     /**
         Creates an instance of the client object.
