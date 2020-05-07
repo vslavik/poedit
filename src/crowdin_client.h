@@ -29,9 +29,11 @@
 #ifdef HAVE_HTTP_CLIENT
 
 #include <memory>
+#include <limits>
 
 #include "concurrency.h"
 #include "language.h"
+#include "json.h"
 
 
 /**
@@ -47,7 +49,7 @@ public:
     static void CleanUp();
 
     /// Is the user currently signed into Crowdin?
-    bool IsSignedIn() const;
+    bool IsSignedIn() const { return !LoadAuth().empty(); }
 
     /// Wrap relative Crowdin link to absolute URL
     static std::string WrapLink(const std::string& page);
@@ -125,14 +127,18 @@ private:
     CrowdinClient();
     ~CrowdinClient();
 
-    void SignInIfAuthorized();
-    void SetToken(const std::string& token);
-    void SaveAndSetToken(const std::string& token);
+    static json LoadAuth();
+    void SignInIfAuthorized() { SetAuth(LoadAuth()); }
+    void SetAuth(const json& auth);
+    void SaveAndSetAuth(json auth);
+    dispatch::future<void> RefreshToken();
 
     class crowdin_http_client;
     std::unique_ptr<crowdin_http_client> m_api, m_oauth, m_downloader;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
-    std::mutex m_authCallbackMutex;
+    std::mutex m_authMutex;
+    std::string m_authRefreshToken;
+    int64_t m_authExpireTime = std::numeric_limits<int64_t>::min();
 
     static CrowdinClient *ms_instance;
 };

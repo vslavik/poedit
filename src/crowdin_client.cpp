@@ -39,6 +39,7 @@
 #include <wx/utils.h>
 
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -148,7 +149,7 @@ dispatch::future<void> CrowdinClient::Authenticate()
 {
     auto url = WrapLink(OAUTH_AUTHORIZE_URL);
     wxLaunchDefaultBrowser(url);
-    lock_guard<mutex> lck(m_authCallbackMutex);
+    lock_guard<mutex> lck(m_authMutex);
     m_authCallback.reset(new dispatch::promise<void>);
     return m_authCallback->get_future();
 }
@@ -171,15 +172,31 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
         { "redirect_uri", OAUTH_URI_PREFIX },
         { "code", m.str(1) }
     }))).then([this](json r) {
-        lock_guard<mutex> lck(m_authCallbackMutex);
+        lock_guard<mutex> lck(m_authMutex);
         if (!m_authCallback)
            return;
-        SaveAndSetToken(r["access_token"]);
+        SaveAndSetAuth(r);
         m_authCallback->set_value();
         m_authCallback.reset();
     });
 }
 
+dispatch::future<void> CrowdinClient::RefreshToken()
+{
+    if(std::time(NULL) < m_authExpireTime) {
+        return dispatch::make_ready_future();
+    }
+
+    return m_oauth->post("oauth/token", json_data(json({
+        { "grant_type", "refresh_token" },
+        { "client_id", OAUTH_CLIENT_ID },
+        { "client_secret", OAUTH_CLIENT_SECRET },
+        { "refresh_token", m_authRefreshToken }
+    }))).then([this](json r) {
+        lock_guard<mutex> lck(m_authMutex);
+        SaveAndSetAuth(r);
+    });
+}
 
 bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 {
@@ -192,6 +209,7 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 
 dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 {
+    return RefreshToken().then([=] () {
     return m_api->get("user")
         .then([](json r)
         {
@@ -219,6 +237,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             }
             return u;
         });
+    });
 }
 
 
@@ -226,6 +245,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 {
     // TODO: handle pagination if projects more than 500
     //       (what is quite rare case I guess)
+    return RefreshToken().then([=] () {
     return m_api->get("projects?limit=500")
         .then([](json r)
         {
@@ -246,12 +266,14 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
             }
             return all;
         });
+    });
 }
 
 
 dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
 {
     auto url = "projects/" + std::to_string(project_id);
+    return RefreshToken().then([=] () {
     return m_api->get(url)
         .then([this, url](json r)
         {
@@ -277,6 +299,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                     return prj;
                 });
         });
+    });
 }
 
 
@@ -287,6 +310,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                                                    const std::wstring& output_file)
 {
     cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
+    return RefreshToken().then([=] () {
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
         json_data(json({
@@ -298,6 +322,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             cout << "\n\nGotten file URL: "<< r << "\n\n";
             return m_downloader->download(r["data"]["url"], output_file);
         });
+    });
 }
 
 
@@ -306,6 +331,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                                                  const std::string& lang_tag,
                                                  const std::string& file_content)
 {
+    return RefreshToken().then([=] () {
     return m_api->post(
             "storages",
             octet_stream_data(file_content),
@@ -326,32 +352,31 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                     cout << "File uploaded: " << r << "\n\n";
                 });
         });
+    });
 }
 
-
-bool CrowdinClient::IsSignedIn() const
+json CrowdinClient::LoadAuth()
 {
-    std::string token;
-    return keytar::GetPassword("Crowdin", "", &token);
+    std::string auth;
+    return keytar::GetPassword("Crowdin", "", &auth)
+            && !auth.empty()
+            // if not came from older (<2.4) version
+            && auth[0] == '{'
+                ? json::parse(auth)
+                : json();
 }
 
-
-void CrowdinClient::SignInIfAuthorized()
+void CrowdinClient::SetAuth(const json& auth)
 {
-    std::string token;
-    if (keytar::GetPassword("Crowdin", "", &token))
-        SetToken(token);
-    cout << "\n\nToken: "<<token<<"\n\n";
-}
-
-
-void CrowdinClient::SetToken(const std::string& token)
-{
-    if(token.empty()) {
+    if(auth.empty()) {
         return;
     }
 
-    auto domain = jwt::decode(token).get_payload_claim("domain");
+    std::string access_token = auth["access_token"];
+    m_authRefreshToken = auth["refresh_token"].get<string>();
+    m_authExpireTime = auth["expiration_time"].get<time_t>();
+    
+    auto domain = jwt::decode(access_token).get_payload_claim("domain");
     if(domain.get_type() == jwt::claim::type::null) {
         m_api = make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
         m_downloader = make_unique<crowdin_http_client>(*this, "https://crowdin-importer.downloads.crowdin.com");
@@ -360,16 +385,16 @@ void CrowdinClient::SetToken(const std::string& token)
         m_downloader = make_unique<crowdin_http_client>(*this, "https://production-enterprise-tmp.downloads.crowdin.com");
     }
 
-    m_api->set_authorization("Bearer " + token);
+    m_api->set_authorization("Bearer " + access_token);
 }
 
 
-void CrowdinClient::SaveAndSetToken(const std::string& token)
+void CrowdinClient::SaveAndSetAuth(json auth)
 {
-    SetToken(token);
-    keytar::AddPassword("Crowdin", "", token);
+    auth["expiration_time"] = std::time(NULL) + auth["expires_in"].get<int>() - 600;
+    SetAuth(auth);
+    keytar::AddPassword("Crowdin", "", auth.dump());
 }
-
 
 void CrowdinClient::SignOut()
 {
