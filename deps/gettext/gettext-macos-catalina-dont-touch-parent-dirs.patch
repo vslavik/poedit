@@ -3,10 +3,10 @@ executables, as done by gettext tools, triggers UAC prompts if the hosting app
 happens to be in e.g. ~/Desktop or ~/Downloads. As we don't care for these
 capabilities in gettext tools anyway, just disable them as the lesser evil.
 
-diff -ru gettext-0.20.1.orig/gettext-runtime/configure gettext-0.20.1/gettext-runtime/configure
---- gettext-0.20.1.orig/gettext-runtime/configure	2019-05-12 17:08:34.000000000 +0200
-+++ gettext-0.20.1/gettext-runtime/configure	2019-11-30 16:47:14.000000000 +0100
-@@ -20273,7 +20273,7 @@
+diff -ru gettext-0.20.2.orig/gettext-runtime/configure gettext-0.20.2/gettext-runtime/configure
+--- gettext-0.20.2.orig/gettext-runtime/configure	2020-04-14 06:45:37.000000000 +0200
++++ gettext-0.20.2/gettext-runtime/configure	2020-05-07 19:27:29.000000000 +0200
+@@ -20727,7 +20727,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -15,7 +15,7 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/configure gettext-0.20.1/gettext-ru
  int
  main ()
  {
-@@ -20307,7 +20307,7 @@
+@@ -20761,7 +20761,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -24,16 +24,7 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/configure gettext-0.20.1/gettext-ru
  int
  main ()
  {
-@@ -20341,7 +20341,7 @@
-      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
--#include <CoreFoundation/CFLocale.h>
-+#include <Disabled_CoreFoundation/CFLocale.h>
- int
- main ()
- {
-@@ -20765,7 +20765,7 @@
+@@ -21184,7 +21184,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -42,7 +33,7 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/configure gettext-0.20.1/gettext-ru
  int
  main ()
  {
-@@ -20799,7 +20799,7 @@
+@@ -21218,7 +21218,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -51,18 +42,9 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/configure gettext-0.20.1/gettext-ru
  int
  main ()
  {
-@@ -20833,7 +20833,7 @@
-      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
--#include <CoreFoundation/CFLocale.h>
-+#include <Disabled_CoreFoundation/CFLocale.h>
- int
- main ()
- {
-diff -ru gettext-0.20.1.orig/gettext-runtime/m4/intlmacosx.m4 gettext-0.20.1/gettext-runtime/m4/intlmacosx.m4
---- gettext-0.20.1.orig/gettext-runtime/m4/intlmacosx.m4	2019-04-14 04:01:00.000000000 +0200
-+++ gettext-0.20.1/gettext-runtime/m4/intlmacosx.m4	2019-11-30 16:47:14.000000000 +0100
+diff -ru gettext-0.20.2.orig/gettext-runtime/m4/intlmacosx.m4 gettext-0.20.2/gettext-runtime/m4/intlmacosx.m4
+--- gettext-0.20.2.orig/gettext-runtime/m4/intlmacosx.m4	2020-04-13 10:42:28.000000000 +0200
++++ gettext-0.20.2/gettext-runtime/m4/intlmacosx.m4	2020-05-07 19:27:29.000000000 +0200
 @@ -24,7 +24,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       AC_LINK_IFELSE(
@@ -72,16 +54,7 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/m4/intlmacosx.m4 gettext-0.20.1/get
            [[CFPreferencesCopyAppValue(NULL, NULL)]])],
         [gt_cv_func_CFPreferencesCopyAppValue=yes],
         [gt_cv_func_CFPreferencesCopyAppValue=no])
-@@ -39,7 +39,7 @@
-      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-      AC_LINK_IFELSE(
-        [AC_LANG_PROGRAM(
--          [[#include <CoreFoundation/CFLocale.h>]],
-+          [[#include <Disabled_CoreFoundation/CFLocale.h>]],
-           [[CFLocaleCopyCurrent();]])],
-        [gt_cv_func_CFLocaleCopyCurrent=yes],
-        [gt_cv_func_CFLocaleCopyCurrent=no])
-@@ -53,7 +53,7 @@
+@@ -47,7 +47,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       AC_LINK_IFELSE(
         [AC_LANG_PROGRAM(
@@ -90,10 +63,10 @@ diff -ru gettext-0.20.1.orig/gettext-runtime/m4/intlmacosx.m4 gettext-0.20.1/get
            [[CFLocaleCopyPreferredLanguages();]])],
         [gt_cv_func_CFLocaleCopyPreferredLanguages=yes],
         [gt_cv_func_CFLocaleCopyPreferredLanguages=no])
-diff -ru gettext-0.20.1.orig/gettext-tools/configure gettext-0.20.1/gettext-tools/configure
---- gettext-0.20.1.orig/gettext-tools/configure	2019-05-12 17:09:13.000000000 +0200
-+++ gettext-0.20.1/gettext-tools/configure	2019-11-30 16:47:14.000000000 +0100
-@@ -22507,7 +22507,7 @@
+diff -ru gettext-0.20.2.orig/gettext-tools/configure gettext-0.20.2/gettext-tools/configure
+--- gettext-0.20.2.orig/gettext-tools/configure	2020-04-14 03:34:46.000000000 +0200
++++ gettext-0.20.2/gettext-tools/configure	2020-05-07 19:27:29.000000000 +0200
+@@ -23270,7 +23270,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -102,7 +75,7 @@ diff -ru gettext-0.20.1.orig/gettext-tools/configure gettext-0.20.1/gettext-tool
  int
  main ()
  {
-@@ -22541,7 +22541,7 @@
+@@ -23304,7 +23304,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -111,16 +84,7 @@ diff -ru gettext-0.20.1.orig/gettext-tools/configure gettext-0.20.1/gettext-tool
  int
  main ()
  {
-@@ -22575,7 +22575,7 @@
-      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
--#include <CoreFoundation/CFLocale.h>
-+#include <Disabled_CoreFoundation/CFLocale.h>
- int
- main ()
- {
-@@ -22999,7 +22999,7 @@
+@@ -23727,7 +23727,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
@@ -129,16 +93,7 @@ diff -ru gettext-0.20.1.orig/gettext-tools/configure gettext-0.20.1/gettext-tool
  int
  main ()
  {
-@@ -23033,7 +23033,7 @@
-      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
--#include <CoreFoundation/CFLocale.h>
-+#include <Disabled_CoreFoundation/CFLocale.h>
- int
- main ()
- {
-@@ -23067,7 +23067,7 @@
+@@ -23761,7 +23761,7 @@
       LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */

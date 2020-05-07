@@ -5,8 +5,8 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_TARBALL = 'gettext-0.20.1.tar.gz'
-GETTEXT_SHA256 = '66415634c6e8c3fa8b71362879ec7575e27da43da562c798a8a2f223e6e47f5c'
+GETTEXT_TARBALL = 'gettext-0.20.2.tar.gz'
+GETTEXT_SHA256 = 'ecb9d0908ca41d5ca5fef974323b3bba6bec19eebba0b44f396de98cfcc089f1'
 
 _exclusion_list = [
     '.DS_Store',
