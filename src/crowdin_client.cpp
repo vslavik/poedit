@@ -45,8 +45,6 @@
 #include <iostream>
 #include <ctime>
 
-using namespace std;
-
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
@@ -105,7 +103,7 @@ public:
 protected:
     std::string parse_json_error(const json& response) const override
     {
-        cout << "\n\nJSON error: " << response << "\n\n";
+        std::cout << "\n\nJSON error: " << response << "\n\n";
 
         try
         {
@@ -134,7 +132,7 @@ protected:
             message = _("Not authorized, please sign in again.").utf8_str();
             m_owner.SignOut();
         }
-        cout << endl << endl << "JSON error: " << message << endl << endl;
+        std::cout << std::endl << std::endl << "JSON error: " << message << std::endl << std::endl;
     }
 
     CrowdinClient& m_owner;
@@ -153,7 +151,7 @@ dispatch::future<void> CrowdinClient::Authenticate()
 {
     auto url = WrapLink(OAUTH_AUTHORIZE_URL);
     wxLaunchDefaultBrowser(url);
-    lock_guard<mutex> lck(m_authMutex);
+    std::lock_guard<std::mutex> lck(m_authMutex);
     m_authCallback.reset(new dispatch::promise<void>);
     return m_authCallback->get_future();
 }
@@ -176,7 +174,7 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
         { "redirect_uri", OAUTH_URI_PREFIX },
         { "code", m.str(1) }
     })).then([this](json r) {
-        lock_guard<mutex> lck(m_authMutex);
+        std::lock_guard<std::mutex> lck(m_authMutex);
         if (!m_authCallback)
            return;
         SaveAndSetAuth(r);
@@ -197,7 +195,7 @@ dispatch::future<void> CrowdinClient::RefreshToken()
         { "client_secret", OAUTH_CLIENT_SECRET },
         { "refresh_token", m_authRefreshToken }
     })).then([this](json r) {
-        lock_guard<mutex> lck(m_authMutex);
+        std::lock_guard<std::mutex> lck(m_authMutex);
         SaveAndSetAuth(r);
     });
 }
@@ -217,7 +215,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
     return m_api->get("user")
         .then([](json r)
         {
-            cout << "\n\nGot user info: " << r << "\n\n";
+            std::cout << "\n\nGot user info: " << r << "\n\n";
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
@@ -253,7 +251,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
     return m_api->get("projects?limit=500")
         .then([](json r)
         {
-            cout << "\n\nGot projects: " << r << endl<<endl;
+            std::cout << "\n\nGot projects: " << r << std::endl<<std::endl;
             std::vector<ProjectListing> all;
             for (const auto& d : r["data"])
             {
@@ -283,7 +281,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
 {
     auto url = "projects/" + std::to_string(project_id);
-    auto prj = make_shared<ProjectInfo>();
+    auto prj = std::make_shared<ProjectInfo>();
     enum { NO_ID = -1 };
 
     return RefreshToken().then([this, url, prj] () {
@@ -320,10 +318,10 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
     }).then([this, url, prj](json r) {
         // Handle directories
         struct dir {
-            string name;
+            std::string name;
             int parentId;
         };
-        map<int, dir> dirs;
+        std::map<int, dir> dirs;
 
         for(const auto& i : r["data"]) {
             const json& d = i["data"],
@@ -337,7 +335,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
             });
         }
 
-        stack<string> path;
+        std::stack<std::string> path;
         for(auto& i : prj->files) {
             int dirId = i.dirId;
             while(dirId != NO_ID) {
@@ -345,7 +343,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 path.push(dir.name);
                 dirId = dir.parentId;
             }
-            string pathStr;
+            std::string pathStr;
             while(path.size()) {
                 pathStr += '/';
                 pathStr += path.top();
@@ -360,11 +358,11 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         return m_api->get(url + "/branches?limit=500");
     }).then([this, url, prj](json r) {
         // Handle branches
-        map<int, string> branches;
+        std::map<int, std::string> branches;
 
         for(const auto& i : r["data"]) {
             const json& d = i["data"];
-            branches[d["id"]] = d["name"].get<string>();
+            branches[d["id"]] = d["name"].get<std::string>();
         }
 
         for(auto& i : prj->files) {
@@ -384,7 +382,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                                                    const std::string& lang_tag,
                                                    const std::wstring& output_file)
 {
-    cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
+    std::cout << "\n\nGetting file URL: " << "/projects/" + std::to_string(project_id) + "/files/" + std::to_string(file_id) + "/download" << "\n\n";
     return RefreshToken().then([=] () {
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
@@ -394,12 +392,12 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
         }))
         .then([this, output_file] (json r) {
-            string url = r["data"]["url"],
+            std::string url = r["data"]["url"],
                    proto(wxString(url).BeforeFirst(':').mb_str()),
                    host(wxString(url).AfterFirst('/').AfterFirst('/').BeforeFirst('/').mb_str());
 
-            auto downloader = make_shared<crowdin_http_client>(*this, proto + "://" + host);
-            cout << "\n\nGotten file URL: "<< r << "\n\n";
+            auto downloader = std::make_shared<crowdin_http_client>(*this, proto + "://" + host);
+            std::cout << "\n\nGotten file URL: "<< r << "\n\n";
             return downloader->download(url, output_file)
                 .then([downloader]() {
                     return dispatch::make_ready_future();
@@ -421,7 +419,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
             { { "Crowdin-API-FileName", "poedit.xliff"} }
         )
         .then([this, project_id, file_id, lang_tag] (json r) {
-            cout << "File uploaded to temporary storage: " << r << "\n\n";
+            std::cout << "File uploaded to temporary storage: " << r << "\n\n";
             const auto storageId = r["data"]["id"].get<int>();
             return m_api->post(
                 "projects/" + std::to_string(project_id) + "/translations/" + lang_tag,
@@ -432,7 +430,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                     { "autoApproveImported", true }
                 }))
                 .then([](json r) {
-                    cout << "File uploaded: " << r << "\n\n";
+                    std::cout << "File uploaded: " << r << "\n\n";
                 });
         });
     });
@@ -451,21 +449,21 @@ json CrowdinClient::LoadAuth()
 
 void CrowdinClient::SetAuth(const json& auth)
 {
-    cout << endl << endl << "Authorization: " << auth << endl << endl;
+    std::cout << std::endl << std::endl << "Authorization: " << auth << std::endl << std::endl;
 
     if(auth.empty()) {
         return;
     }
 
     std::string access_token = auth["access_token"];
-    m_authRefreshToken = auth["refresh_token"].get<string>();
-    m_authExpireTime = auth["expiration_time"].get<time_t>();
+    m_authRefreshToken = auth["refresh_token"].get<std::string>();
+    m_authExpireTime = auth["expiration_time"].get<std::time_t>();
     
     auto domain = jwt::decode(access_token).get_payload_claim("domain");
     if(domain.get_type() == jwt::claim::type::null) {
-        m_api = make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
+        m_api = std::make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
     } else {
-        m_api = make_unique<crowdin_http_client>(*this, "https://" + domain.as_string() + ".crowdin.com/api/v2");
+        m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain.as_string() + ".crowdin.com/api/v2");
     }
 
     m_api->set_authorization("Bearer " + access_token);
