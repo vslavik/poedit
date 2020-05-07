@@ -44,7 +44,6 @@
 
 #include <iostream>
 
-
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
@@ -256,7 +255,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
 {
     auto url = "projects/" + std::to_string(project_id);
-    auto prj = make_shared<ProjectInfo>();
+    auto prj = std::make_shared<ProjectInfo>();
     enum { NO_ID = -1 };
         
     return m_api->get(url)
@@ -293,10 +292,10 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
     {
         // Handle directories
         struct dir {
-            string name;
+            std::string name;
             int parentId;
         };
-        map<int, dir> dirs;
+        std::map<int, dir> dirs;
 
         for(const auto& i : r["data"]) {
             const json& d = i["data"],
@@ -310,7 +309,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
             });
         }
 
-        stack<string> path;
+        std::stack<std::string> path;
         for(auto& i : prj->files) {
             int dirId = i.dirId;
             while(dirId != NO_ID) {
@@ -318,7 +317,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 path.push(dir.name);
                 dirId = dir.parentId;
             }
-            string pathStr;
+            std::string pathStr;
             while(path.size()) {
                 pathStr += '/';
                 pathStr += path.top();
@@ -334,11 +333,11 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
     }).then([this, url, prj](json r)
     {
         // Handle branches
-        map<int, string> branches;
+        std::map<int, std::string> branches;
 
         for(const auto& i : r["data"]) {
             const json& d = i["data"];
-            branches[d["id"]] = d["name"].get<string>();
+            branches[d["id"]] = d["name"].get<std::string>();
         }
 
         for(auto& i : prj->files) {
