@@ -86,10 +86,22 @@ fixup_windows_rc_files()
     done
 }
 
+# Remove some issues with Crowdin-generated files
+fixup_po_files()
+{
+    for i in locales/*.po ; do
+        # Crowdin started producing bad Last-Translator header leading to
+        # warning: header field 'Last-Translator' still has the initial default value
+        $SED --in-place -e "s/Last-Translator: FULL NAME <EMAIL@ADDRESS>/Last-Translator: /g" "$i"
+    done
+}
+
+
 remove_unsupported_languages
 
 remove_empty_lproj_string_files
 fixup_windows_rc_files
+fixup_po_files
 
 scripts/refresh-pot.sh
 scripts/do-update-translations-lists.sh
