@@ -282,7 +282,11 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                                                  const std::string& lang_tag,
                                                  const std::string& file_content)
 {
-    return m_api->post("/storages", octet_stream_data(file_content))
+    return m_api->post(
+            "/storages",
+            octet_stream_data(file_content),
+            { { "Crowdin-API-FileName", L"poedit.xliff"} }
+        )
         .then([this, project_id, file_id, lang_tag] (json r) {
             cout << "File uploaded to temporary storage: " << r << "\n\n";
             const auto storageId = r["data"]["id"].get<int>();
@@ -290,10 +294,12 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                 "/projects/" + std::to_string(project_id) + "/translations/" + lang_tag,
                 json_data(json({
                     { "storageId", storageId },
-                    { "fileId", file_id }
+                    { "fileId", file_id },
+                    { "importDuplicates", true },
+                    { "autoApproveImported", true }
                 })))
                 .then([](json r) {
-                    cout << "File uploaded" << r << "\n\n";
+                    cout << "File uploaded: " << r << "\n\n";
                 });
         });
 }

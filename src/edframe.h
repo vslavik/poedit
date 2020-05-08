@@ -379,6 +379,7 @@ private:
         bool m_hasObsoleteItems;
         bool m_displayIDs;
         bool m_setSashPositionsWhenMaximized;
+        bool m_syncing = false;
 };
 
 

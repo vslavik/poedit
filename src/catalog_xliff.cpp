@@ -403,6 +403,7 @@ std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
     else
         throw XLIFFReadException(filename, wxString::Format(_("unsupported XLIFF version (%s)"), xliff_version));
 
+    cat->SetFileName(filename);
     cat->Parse(xliff_root);
 
     return cat;
