@@ -375,7 +375,7 @@ private:
         {
             m_activity->Start();
             EnableAllChoices(false);
-            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].identifier)
+            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].id)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
                 .catch_all(m_activity->HandleError);
         }
@@ -385,20 +385,13 @@ private:
     {
         m_info = prj;
         // Put supported files first in the list:
-        std::vector<std::wstring> f_unsup;
+        std::vector<CrowdinClient::FileInfo> f_unsup;
         m_info.files.clear();
         m_supportedFilesCount = 0;
         for (auto& i: prj.files)
         {
-            if (IsFileSupported(i))
-            {
-                m_info.files.push_back(i);
-                m_supportedFilesCount++;
-            }
-            else
-            {
-                f_unsup.push_back(i);
-            }
+            m_info.files.push_back(i);
+            m_supportedFilesCount++;
         }
         std::move(f_unsup.begin(), f_unsup.end(), std::inserter(m_info.files, m_info.files.end()));
 
@@ -411,15 +404,7 @@ private:
         m_file->Append("");
         for (auto& i: m_info.files)
         {
-            if (IsFileSupported(i))
-            {
-                m_file->Append(i);
-            }
-            else
-            {
-                /// TRANSLATORS: This is a file selector list, %s is filename, and it is shown for Crowdin files not editable in Poedit
-                m_file->Append(wxString::Format(L"%s — not supported", i));
-            }
+            m_file->Append(i.pathName);
         }
 
         EnableAllChoices();
@@ -476,17 +461,17 @@ private:
 
     void OnOK(wxCommandEvent&)
     {
-        auto crowdin_prj = m_info.identifier;
+        auto crowdin_prj = m_info.id;
         auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         LanguageDialog::SetLastChosen(crowdin_lang);
-        OutLocalFilename = CreateLocalFilename(crowdin_file, crowdin_lang);
+        OutLocalFilename = CreateLocalFilename(crowdin_file.pathName, crowdin_lang);
 
         m_activity->Start(_(L"Downloading latest translations…"));
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                crowdin_prj, crowdin_file, crowdin_lang,
+                crowdin_prj, crowdin_file.id,
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -494,11 +479,6 @@ private:
                 AcceptAndClose();
             })
             .catch_all(m_activity->HandleError);
-    }
-
-    bool IsFileSupported(const wxString& name) const
-    {
-        return boost::ends_with(name, ".po") || boost::ends_with(name, ".pot");
     }
 
     wxString CreateLocalFilename(const wxString& name, const Language& lang)
@@ -573,6 +553,8 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         return;
     }
 
+    std::cout << "Crowdin syncing file ..." << std::endl;
+
     const auto& header = catalog->Header();
     auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
     auto crowdin_file = header.GetHeader("X-Crowdin-File");
@@ -601,7 +583,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
-    dlg->CallAfter([=]{
+    /*dlg->CallAfter([=]{
         CrowdinClient::Get().UploadFile(
                 str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
                 catalog->SaveToBuffer()
@@ -631,7 +613,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     .catch_all(handle_error);
             })
             .catch_all(handle_error);
-    });
+    });ttt*/
 
     dlg->ShowWindowModal();
 }
@@ -646,6 +628,7 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
                         ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
                         : file->GetLanguage();
 
+    std::cout << "Uploading file: " << crowdin_file << std::endl;
     return CrowdinClient::Get().UploadFile(
                 str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
                 file->SaveToBuffer()

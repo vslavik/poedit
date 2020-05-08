@@ -204,6 +204,7 @@ public:
 
     dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
     {
+        std::cout << "\n\nDowloading file: " << url << "\n\n";
         using namespace concurrency::streams;
         auto fileStream = std::make_shared<ostream>();
 
@@ -221,11 +222,13 @@ public:
         })
         .then([=](http::http_response response)
         {
+            std::cout << "\n\nDownloading file response: "<<response.status_code()<<", "<<response.headers().content_type()<<"\n\n";
             handle_error(response);
             return response.body().read_to_end(fileStream->streambuf());
         })
         .then([=](size_t)
         {
+            std::cout << "\n\nDownloading file: closing\n\n";
             return fileStream->close();
         });
     }
