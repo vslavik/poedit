@@ -182,11 +182,6 @@ public:
     dispatch::future<::json> get(const std::string& url)
     {
         http::http_request req(http::methods::GET);
-        //TODO: figure out why Crowdin API v2 GET method (at least `/user`)
-        //      returns below errors unless below line commented
-        //      HTTP error: 400 Bad Request
-        //      JSON error: Incorrect Accept Header. 'application/json' expected
-        //req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
@@ -204,6 +199,7 @@ public:
 
     dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
     {
+        std::cout << "\n\nDowloading file: " << url << "\n\n";
         using namespace concurrency::streams;
         auto fileStream = std::make_shared<ostream>();
 
@@ -221,11 +217,13 @@ public:
         })
         .then([=](http::http_response response)
         {
+            std::cout << "\n\nDownloading file response: "<<response.status_code()<<", "<<response.headers().content_type()<<"\n\n";
             handle_error(response);
             return response.body().read_to_end(fileStream->streambuf());
         })
         .then([=](size_t)
         {
+            std::cout << "\n\nDownloading file: closing\n\n";
             return fileStream->close();
         });
     }
@@ -233,7 +231,6 @@ public:
     dispatch::future<::json> post(const std::string& url, const http_body_data& data)
     {
         http::http_request req(http::methods::POST);
-        req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
