@@ -533,7 +533,7 @@ int Catalog::FindItemIndexByLine(int lineno)
 int Catalog::SetBookmark(int id, Bookmark bookmark)
 {
     int previous = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
-    if (previous >= m_items.size())
+    if (previous >= (int)m_items.size())
         previous = -1;
 
     // unset previous bookmarks, if any
