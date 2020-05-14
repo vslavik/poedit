@@ -548,7 +548,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         return;
     }
 
-    std::cout << "Crowdin syncing file ..." << std::endl;
+    wxLogTrace("poedit.crowdin", "Crowdin syncing file ...");
 
     wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
 
@@ -616,7 +616,7 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
     const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(file.get());
   
-    std::cout << "Uploading file: " << xliff->GetFileName() << std::endl;
+    wxLogTrace("Uploading file: %s", xliff->GetFileName().c_str());
     return CrowdinClient::Get().UploadFile(
                 xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), file->GetLanguage(),
                 file->SaveToBuffer()
