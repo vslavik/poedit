@@ -145,8 +145,8 @@ with open('build.ninja', 'w') as buildfile:
                                  ],
                                  build_commands=[
                                      # Prevent automake regeneration:
-                                     'touch `find . -name configure`',
                                      'touch `find . -name aclocal.m4`',
+                                     'touch `find . -name configure`',
                                      'touch `find . -name config.h.in`',
                                      'touch `find . -name Makefile.in`',
                                      'touch `find . -name *.1`',
