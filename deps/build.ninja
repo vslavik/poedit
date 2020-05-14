@@ -123,13 +123,13 @@ rule gettext_build
       'note: ⋯  $
       touch `find $
       . -name $
-      configure`' $
+      aclocal.m4`' $
       && $
       tmp=`mktemp` $
       && touch $
       `find . $
       -name $
-      configure` $
+      aclocal.m4` $
       >$$tmp 2>&1 $
       || (cat $
       $$tmp ; $
@@ -139,13 +139,13 @@ rule gettext_build
       'note: ⋯  $
       touch `find $
       . -name $
-      aclocal.m4`' $
+      configure`' $
       && $
       tmp=`mktemp` $
       && touch $
       `find . $
       -name $
-      aclocal.m4` $
+      configure` $
       >$$tmp 2>&1 $
       || (cat $
       $$tmp ; $
