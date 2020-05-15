@@ -70,11 +70,6 @@ public:
         m_native = nil;
     }
 
-    bool is_reachable() const
-    {
-        return m_native.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
-    }
-
     void set_authorization(const std::string& auth)
     {
         if (!auth.empty())
@@ -230,11 +225,6 @@ http_client::~http_client()
 {
 }
 
-bool http_client::is_reachable() const
-{
-    return m_impl->is_reachable();
-}
-
 void http_client::set_authorization(const std::string& auth)
 {
     m_impl->set_authorization(auth);
@@ -253,4 +243,43 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
 dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
 {
     return m_impl->post(url, data);
+}
+
+
+class http_reachability::impl
+{
+public:
+    impl(const std::string& url)
+    {
+        NSString *str = str::to_NS(url);
+        m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
+    }
+
+    ~impl()
+    {
+        m_native = nil;
+    }
+
+    bool is_reachable() const
+    {
+        return m_native.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+    }
+
+private:
+    AFHTTPClient *m_native;
+};
+
+
+http_reachability::http_reachability(const std::string& url)
+    : m_impl(new impl(url))
+{
+}
+
+http_reachability::~http_reachability()
+{
+}
+
+bool http_reachability::is_reachable() const
+{
+    return m_impl->is_reachable();
 }

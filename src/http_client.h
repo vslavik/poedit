@@ -129,9 +129,6 @@ public:
     static void set_ui_language(const std::string& lang);
 #endif
 
-    /// Return true if the server is reachable, i.e. client is online
-    bool is_reachable() const;
-
     /// Sets Authorization header to be used in all requests
     void set_authorization(const std::string& auth);
 
@@ -179,6 +176,22 @@ protected:
          or to modify the response.
      */
     virtual void on_error_response(int& /*statusCode*/, std::string& /*message*/) {};
+
+private:
+    class impl;
+    std::unique_ptr<impl> m_impl;
+};
+
+/// Monitor if networking is available
+class http_reachability
+{
+public:
+    /// Creates an instance of the monitor object.
+    http_reachability(const std::string& url);
+    ~http_reachability();
+
+    /// Return true if the host is reachable, i.e. client is online
+    bool is_reachable() const;
 
 private:
     class impl;
