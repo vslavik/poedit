@@ -493,6 +493,9 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     HeaderData &dt = Header();
     dt = pot_header;
 
+    if ( !dt.RevisionDate.empty() )
+        dt.RevisionDate = GetCurrentTimeString();
+
     // UTF-8 should be used by default no matter what the POT uses
     dt.Charset = "UTF-8";
 
