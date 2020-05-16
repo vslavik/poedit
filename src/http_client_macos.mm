@@ -251,22 +251,30 @@ class http_reachability::impl
 public:
     impl(const std::string& url)
     {
-        NSString *str = str::to_NS(url);
-        m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
+        NSString *host = [[NSURL URLWithString:str::to_NS(url)] host];
+        m_nr = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, [host UTF8String]);
     }
 
     ~impl()
     {
-        m_native = nil;
+        if (m_nr)
+        {
+            SCNetworkReachabilityUnscheduleFromRunLoop(m_nr, CFRunLoopGetMain(), kCFRunLoopCommonModes);
+            CFRelease(m_nr);
+        }
     }
 
     bool is_reachable() const
     {
-        return m_native.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+        SCNetworkReachabilityFlags flags;
+        if (m_nr && SCNetworkReachabilityGetFlags(m_nr, &flags))
+            return (flags & kSCNetworkReachabilityFlagsReachable) != 0;
+
+        return true;  // fallback assumption
     }
 
 private:
-    AFHTTPClient *m_native;
+    SCNetworkReachabilityRef m_nr;
 };
 
 
