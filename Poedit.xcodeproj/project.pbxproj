@@ -68,7 +68,6 @@
 		B22A5C86184E4B870034BEFD /* document-properties@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C7F184E4B870034BEFD /* document-properties@2x.png */; };
 		B22A5C87184E4B870034BEFD /* poedit-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C80184E4B870034BEFD /* poedit-update@2x.png */; };
 		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
-		B22E690F1A936294002C06C7 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E690E1A936294002C06C7 /* libAFNetworking.a */; };
 		B22E69111A93699E002C06C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E69101A93699E002C06C7 /* SystemConfiguration.framework */; };
 		B230E2281A73F81400FB1E57 /* hidpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230E2261A73F81400FB1E57 /* hidpi.cpp */; };
 		B2377A202159179B0085E9C4 /* catalog_xliff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2377A1E2159179B0085E9C4 /* catalog_xliff.cpp */; };
@@ -337,7 +336,6 @@
 		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		B22CC9CE1E7719E700709DEA /* cloud_sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cloud_sync.h; sourceTree = "<group>"; };
-		B22E690E1A936294002C06C7 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22E69101A93699E002C06C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B230E2261A73F81400FB1E57 /* hidpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hidpi.cpp; sourceTree = "<group>"; };
 		B230E2271A73F81400FB1E57 /* hidpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hidpi.h; sourceTree = "<group>"; };
@@ -628,7 +626,6 @@
 				B2D76A50181D028B0083C9D9 /* libboost_system.a in Frameworks */,
 				B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */,
 				B2083D131A87D17D00150BBF /* libcld2.a in Frameworks */,
-				B22E690F1A936294002C06C7 /* libAFNetworking.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,7 +859,6 @@
 			isa = PBXGroup;
 			children = (
 				B22E69101A93699E002C06C7 /* SystemConfiguration.framework */,
-				B22E690E1A936294002C06C7 /* libAFNetworking.a */,
 				B2083D121A87D17D00150BBF /* libcld2.a */,
 				B2284A54183BE68200E097C7 /* Security.framework */,
 				B2D76A46181D028B0083C9D9 /* libboost_date_time.a */,
@@ -1756,7 +1752,6 @@
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
-					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
@@ -1828,7 +1823,6 @@
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
 					deps/cld2,
-					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
