@@ -41,6 +41,7 @@
 
 #include <wx/translation.h>
 #include <wx/utils.h>
+#include <wx/uri.h>
 
 #include <iostream>
 #include <ctime>
@@ -382,8 +383,8 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                                                    const std::wstring& file_name,
                                                    const std::string& lang_tag,
                                                    const std::wstring& output_file)
-{
-     wxLogTrace("poedit.crowdin", "Getting file URL: projects/%ld/translations/builds/files/%ld", project_id, file_id);
+{    
+    wxLogTrace("poedit.crowdin", "Getting file URL: projects/%ld/translations/builds/files/%ld", project_id, file_id);
     return RefreshToken().then([=] () {
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
@@ -393,16 +394,17 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
         }))
         .then([this, output_file] (json r) {
-            std::string url = r["data"]["url"],
-                   proto(wxString(url).BeforeFirst(':').mb_str()),
-                   host(wxString(url).AfterFirst('/').AfterFirst('/').BeforeFirst('/').mb_str());
-
-            auto downloader = std::make_shared<crowdin_http_client>(*this, proto + "://" + host);
+            std::string url(r["data"]["url"]);
+            wxURI uri(url);
+            // Per download (local) client must be created since different domain
+            // per request is not allowed by HTTP client backend on some platorms.
+            // (e.g. on Linux).
+            auto downloader = std::make_shared<crowdin_http_client>(*this, std::string((uri.GetScheme() + "://" + uri.GetServer()).mb_str()));
             wxLogTrace("poedit.crowdin", "Gotten file URL: %s", r.dump().c_str());
-            return downloader->download(url, output_file)
-                .then([downloader]() {
-                    return dispatch::make_ready_future();
-                });
+            // Below capturing of `[downloader]` is needed to preserve `downloader` object
+            // from being destroyed before `download(...)` completes asynchroneously
+            // (what happens already after current function returns)
+            return downloader->download(url, output_file).then([downloader]() {});
         });
     });
 }
