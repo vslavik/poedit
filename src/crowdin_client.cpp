@@ -86,9 +86,6 @@ namespace
 
 } // anonymous namespace
 
-
-#define LOG(msg) wxLogTrace("crowdin_client", dynamic_cast<std::stringstream&>(std::stringstream()<<msg).str().c_str());
-
 std::string CrowdinClient::WrapLink(const std::string& page)
 {
     std::string url("https://accounts.crowdin.com");
@@ -108,8 +105,8 @@ public:
 protected:
     std::string parse_json_error(const json& response) const override
     {
-        LOG("JSON error: "<<response)
-
+        wxLogTrace("poedit.crowdin", "JSON error: %s", response.dump().c_str());
+        
         try
         {
             return response.at("errors").at(0).at("error").at("errors").at(0).at("message");
@@ -137,7 +134,7 @@ protected:
             message = _("Not authorized, please sign in again.").utf8_str();
             m_owner.SignOut();
         }
-        LOG("JSON error: " << message)
+         wxLogTrace("poedit.crowdin", "JSON error: %s", message.c_str());
     }
 
     CrowdinClient& m_owner;
@@ -220,7 +217,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
     return m_api->get("user")
         .then([](json r)
         {
-            LOG("Got user info: " << r)
+            wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
@@ -256,7 +253,7 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
     return m_api->get("projects?limit=500")
         .then([](json r)
         {
-            LOG("Got projects: "<<r)
+            wxLogTrace("poedit.crowdin", "Got projects: %s", r.dump().c_str());
             std::vector<ProjectListing> all;
             for (const auto& d : r["data"])
             {
@@ -387,7 +384,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                                                    const std::string& lang_tag,
                                                    const std::wstring& output_file)
 {
-    LOG("Getting file URL: "<<"projects/"<<project_id<<"/translations/builds/files/"<<file_id)
+     wxLogTrace("poedit.crowdin", "Getting file URL: projects/%ld/translations/builds/files/%ld", project_id, file_id);
     return RefreshToken().then([=] () {
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
@@ -402,7 +399,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                    host(wxString(url).AfterFirst('/').AfterFirst('/').BeforeFirst('/').mb_str());
 
             auto downloader = std::make_shared<crowdin_http_client>(*this, proto + "://" + host);
-            LOG("Gotten file URL: "<<r)
+            wxLogTrace("poedit.crowdin", "Gotten file URL: %s", r.dump().c_str());
             return downloader->download(url, output_file)
                 .then([downloader]() {
                     return dispatch::make_ready_future();
@@ -424,7 +421,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
             { { "Crowdin-API-FileName", "poedit.xliff"} }
         )
         .then([this, project_id, file_id, lang_tag] (json r) {
-            LOG("File uploaded to temporary storage: "<<r)
+            wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
             const auto storageId = r["data"]["id"].get<int>();
             return m_api->post(
                 "projects/" + std::to_string(project_id) + "/translations/" + lang_tag,
@@ -435,7 +432,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                     { "autoApproveImported", true }
                 }))
                 .then([](json r) {
-                    LOG("File uploaded: "<<r)
+                    wxLogTrace("poedit.crowdin", "File uploaded: %s", r.dump().c_str());
                 });
         });
     });
@@ -454,7 +451,7 @@ json CrowdinClient::LoadAuth()
 
 void CrowdinClient::SetAuth(const json& auth)
 {
-    LOG("Authorization: "<<auth)
+     wxLogTrace("poedit.crowdin", "Authorization: %s", auth.dump().c_str());
 
     if(auth.empty()) {
         return;
