@@ -28,9 +28,6 @@
 #include "str_helpers.h"
 #include "version.h"
 
-#import "AFHTTPClient.h"
-#import "AFHTTPRequestOperation.h"
-
 
 class http_exception : public std::runtime_error
 {
@@ -42,18 +39,9 @@ public:
 class http_client::impl
 {
 public:
-    impl(http_client& owner, const std::string& url_prefix, int /*flags*/) : m_owner(owner)
+    impl(http_client& owner, const std::string& url_prefix, int /*flags*/)
+        : m_owner(owner), m_authHeader(nil)
     {
-        NSString *str = str::to_NS(url_prefix);
-        m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
-
-        [m_native setDefaultHeader:@"Accept" value:@"application/json"];
-
-        // AFNetworking operations aren't CPU-bound, so shouldn't use the default queue
-        // size limits. This avoids request stalling at the cost of sending more requests
-        // to the server.
-        [m_native.operationQueue setMaxConcurrentOperationCount:NSIntegerMax];
-
         int majorVersion, minorVersion, patchVersion;
         NSOperatingSystemVersion macos = [[NSProcessInfo processInfo] operatingSystemVersion];
         majorVersion = (int)macos.majorVersion;
@@ -62,49 +50,48 @@ public:
         NSString *macos_str = (patchVersion == 0)
                             ? [NSString stringWithFormat:@"%d.%d", majorVersion, minorVersion]
                             : [NSString stringWithFormat:@"%d.%d.%d", majorVersion, minorVersion, patchVersion];
-        [m_native setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"Poedit/%s (Mac OS X %@)", POEDIT_VERSION, macos_str]];
+        NSString *user_agent = [NSString stringWithFormat:@"Poedit/%s (Mac OS X %@)", POEDIT_VERSION, macos_str];
+
+        auto config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        config.HTTPAdditionalHeaders = @{
+            @"User-Agent": user_agent,
+            @"Accept": @"application/json"
+        };
+
+        NSString *str = str::to_NS(url_prefix);
+
+        m_baseURL = [NSURL URLWithString:str];
+        m_session = [NSURLSession sessionWithConfiguration:config];
     }
 
     ~impl()
     {
-        m_native = nil;
-    }
-
-    bool is_reachable() const
-    {
-        return m_native.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+        m_session = nil;
     }
 
     void set_authorization(const std::string& auth)
     {
-        if (!auth.empty())
-            [m_native setDefaultHeader:@"Authorization" value:str::to_NS(auth)];
-        else
-            [m_native clearAuthorizationHeader];
+        m_authHeader = auth.empty() ? nil : str::to_NS(auth);
     }
 
     dispatch::future<json> get(const std::string& url)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
-        [m_native getPath:str::to_NS(url)
-               parameters:nil
-                  success:^(AFHTTPRequestOperation *op, NSData *responseData)
-        {
-            #pragma unused(op)
+        auto request = build_request(@"GET", url);
+        auto task = [m_session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             try
             {
-                promise->set_value(extract_json(responseData));
+                if (handle_error(data, response, error, *promise))
+                    return;
+                promise->set_value(extract_json(data));
             }
             catch (...)
             {
                 dispatch::set_current_exception(promise);
             }
-        }
-        failure:^(AFHTTPRequestOperation *op, NSError *e)
-        {
-            handle_error(op, e, *promise);
         }];
+        [task resume];
 
         return promise->get_future();
     }
@@ -113,76 +100,82 @@ public:
     {
         auto promise = std::make_shared<dispatch::promise<void>>();
 
-        NSString *outfile = str::to_NS(output_file);
-        NSURLRequest *request = [m_native requestWithMethod:@"GET"
-                                                       path:str::to_NS(url)
-                                                 parameters:nil];
-        // Read the entire file into memory, then save to file. This is done instead of
-        // setting operation.outputStream to stream directly to the file because it that
-        // case the failure handler wouldn't receive JSON data with the error.
-        //
-        // This doesn't matter much, because files downloaded by Poedit are very small.
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, NSData *data)
-        {
-            #pragma unused(op)
-            [data writeToFile:outfile atomically:YES];
-            promise->set_value();
-        }
-        failure:^(AFHTTPRequestOperation *op, NSError *e)
-        {
-            handle_error(op, e, *promise);
-        }];
-
-        [m_native enqueueHTTPRequestOperation:operation];
-
-        return promise->get_future();
-    }
-
-    dispatch::future<json> post(const std::string& url, const http_body_data& data)
-    {
-        auto promise = std::make_shared<dispatch::promise<json>>();
-
-        NSMutableURLRequest *request = [m_native requestWithMethod:@"POST"
-                                                              path:str::to_NS(url)
-                                                        parameters:nil];
-
-        auto body = data.body();
-        [request setValue:str::to_NS(data.content_type()) forHTTPHeaderField:@"Content-Type"];
-        [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
-        [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
-
-        AFHTTPRequestOperation *operation = [m_native HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *op, NSData *responseData)
-        {
-            #pragma unused(op)
+        NSString *outputPath = str::to_NS(output_file);
+        auto request = build_request(@"GET", url);
+        auto task = [m_session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
             try
             {
-                promise->set_value(extract_json(responseData));
+                if (handle_error(nil, response, error, *promise))
+                    return;
+
+                NSError *err = nil;
+                if (![[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:outputPath error:&err])
+                    throw std::runtime_error(str::to_utf8([err localizedDescription]));
+                promise->set_value();
             }
             catch (...)
             {
                 dispatch::set_current_exception(promise);
             }
-        }
-        failure:^(AFHTTPRequestOperation *op, NSError *e)
-        {
-            handle_error(op, e, *promise);
         }];
+        [task resume];
 
-        [m_native enqueueHTTPRequestOperation:operation];
+        return promise->get_future();
+    }
+
+    dispatch::future<json> post(const std::string& url, const http_body_data& body_data)
+    {
+        auto promise = std::make_shared<dispatch::promise<json>>();
+
+        auto request = build_request(@"POST", url);
+        auto body = body_data.body();
+        [request setValue:str::to_NS(body_data.content_type()) forHTTPHeaderField:@"Content-Type"];
+        [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
+
+        auto task = [m_session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            try
+            {
+                if (handle_error(data, response, error, *promise))
+                    return;
+                promise->set_value(extract_json(data));
+            }
+            catch (...)
+            {
+                dispatch::set_current_exception(promise);
+            }
+        }];
+        [task resume];
 
         return promise->get_future();
     }
 
 private:
-    template<typename T>
-    void handle_error(AFHTTPRequestOperation *op, NSError *e, dispatch::promise<T>& promise)
+    NSMutableURLRequest *build_request(NSString *method, const std::string& relative_url)
     {
-        int status_code = (int)op.response.statusCode;
+        auto url = [NSURL URLWithString:str::to_NS(relative_url) relativeToURL:m_baseURL];
+        auto request = [NSMutableURLRequest requestWithURL:url];
+        request.HTTPMethod = method;
+        if (m_authHeader)
+            [request setValue:m_authHeader forHTTPHeaderField:@"Authorization"];
+        return request;
+    }
+
+    template<typename T>
+    bool handle_error(NSData *data, NSURLResponse *response_, NSError *error, dispatch::promise<T>& promise)
+    {
+        NSHTTPURLResponse *response = (NSHTTPURLResponse*)response_;
+        int status_code = response ? (int)response.statusCode : 200;
+
+        if (error == nil && status_code >= 200 && status_code < 300)
+            return false;  // no error
+
         std::string desc;
-        if (op.responseData && [op.response.MIMEType isEqualToString:@"application/json"])
+
+        // try to parse error description if present:
+        if (data && [response.MIMEType isEqualToString:@"application/json"])
         {
-            NSData *reply = op.responseData;
+            NSData *reply = data;
             if (reply && reply.length > 0)
             {
                 try
@@ -192,12 +185,13 @@ private:
                 catch (...) {} // report original error if parsing broken
             }
         }
+
         if (desc.empty())
         {
-            desc = str::to_utf8([e localizedDescription]);
-            // Fixup some common cases to be more readable
-            if (status_code == 503 && desc == "Expected status code in (200-299), got 503")
-                desc = "Service Unavailable";
+            if (error)
+                desc = str::to_utf8([error localizedDescription]);
+            else
+                desc = str::to_utf8([NSHTTPURLResponse localizedStringForStatusCode:status_code]);
         }
 
         try
@@ -209,6 +203,8 @@ private:
         {
             dispatch::set_current_exception(promise);
         }
+
+        return true;
     }
 
     json extract_json(NSData *data)
@@ -216,8 +212,12 @@ private:
         return json::parse(std::string((char*)data.bytes, data.length));
     }
 
+private:
     http_client& m_owner;
-    AFHTTPClient *m_native;
+
+    NSURLSession *m_session;
+    NSURL *m_baseURL;
+    NSString *m_authHeader;
 };
 
 
@@ -228,11 +228,6 @@ http_client::http_client(const std::string& url_prefix, int flags)
 
 http_client::~http_client()
 {
-}
-
-bool http_client::is_reachable() const
-{
-    return m_impl->is_reachable();
 }
 
 void http_client::set_authorization(const std::string& auth)
@@ -253,4 +248,51 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
 dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
 {
     return m_impl->post(url, data);
+}
+
+
+class http_reachability::impl
+{
+public:
+    impl(const std::string& url)
+    {
+        NSString *host = [[NSURL URLWithString:str::to_NS(url)] host];
+        m_nr = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, [host UTF8String]);
+    }
+
+    ~impl()
+    {
+        if (m_nr)
+        {
+            SCNetworkReachabilityUnscheduleFromRunLoop(m_nr, CFRunLoopGetMain(), kCFRunLoopCommonModes);
+            CFRelease(m_nr);
+        }
+    }
+
+    bool is_reachable() const
+    {
+        SCNetworkReachabilityFlags flags;
+        if (m_nr && SCNetworkReachabilityGetFlags(m_nr, &flags))
+            return (flags & kSCNetworkReachabilityFlagsReachable) != 0;
+
+        return true;  // fallback assumption
+    }
+
+private:
+    SCNetworkReachabilityRef m_nr;
+};
+
+
+http_reachability::http_reachability(const std::string& url)
+    : m_impl(new impl(url))
+{
+}
+
+http_reachability::~http_reachability()
+{
+}
+
+bool http_reachability::is_reachable() const
+{
+    return m_impl->is_reachable();
 }

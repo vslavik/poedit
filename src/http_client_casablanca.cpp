@@ -139,40 +139,9 @@ public:
 
         std::shared_ptr<http::http_pipeline_stage> gzip_stage = std::make_shared<gzip_compression_support>();
         m_native.add_handler(gzip_stage);
-
-    #ifdef _WIN32
-        m_networkListManager = nullptr;
-        CoCreateInstance(CLSID_NetworkListManager, NULL, CLSCTX_ALL, IID_INetworkListManager, (LPVOID *)&m_networkListManager);
-    #endif
-    }
-
-    ~impl()
-    {
-    #ifdef _WIN32
-        if (m_networkListManager)
-            m_networkListManager->Release();
-    #endif
     }
 
     static string_t ui_language;
-
-    bool is_reachable() const
-    {
-    #ifdef _WIN32
-        if (m_networkListManager)
-        {
-            NLM_CONNECTIVITY result;
-            HRESULT hr = m_networkListManager->GetConnectivity(&result);
-            if (SUCCEEDED(hr))
-                return result & (NLM_CONNECTIVITY_IPV4_INTERNET|NLM_CONNECTIVITY_IPV6_INTERNET);
-        }
-        // manager fallback (IPv6 ignorant):
-        DWORD flags;
-        return ::InternetGetConnectedState(&flags, 0);
-    #else
-        return true; // TODO
-    #endif
-    }
 
     void set_authorization(const std::string& auth)
     {
@@ -305,8 +274,6 @@ private:
 
         return std::to_wstring(info.dwMajorVersion) + L"." + std::to_wstring(info.dwMinorVersion);
     }
-
-    INetworkListManager *m_networkListManager;
 #endif
 
     http_client& m_owner;
@@ -333,11 +300,6 @@ void http_client::set_ui_language(const std::string& lang)
     impl::ui_language = to_string_t(lang);
 }
 
-bool http_client::is_reachable() const
-{
-    return m_impl->is_reachable();
-}
-
 void http_client::set_authorization(const std::string& auth)
 {
     m_impl->set_authorization(auth);
@@ -356,4 +318,66 @@ dispatch::future<void> http_client::download(const std::string& url, const std::
 dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data)
 {
     return m_impl->post(url, data);
+}
+
+
+#ifdef _WIN32
+
+class http_reachability::impl
+{
+public:
+    impl()
+    {
+        m_networkListManager = nullptr;
+        CoCreateInstance(CLSID_NetworkListManager, NULL, CLSCTX_ALL, IID_INetworkListManager, (LPVOID *)&m_networkListManager);
+    }
+
+    ~impl()
+    {
+        if (m_networkListManager)
+            m_networkListManager->Release();
+    }
+
+    bool is_reachable() const
+    {
+        if (m_networkListManager)
+        {
+            NLM_CONNECTIVITY result;
+            HRESULT hr = m_networkListManager->GetConnectivity(&result);
+            if (SUCCEEDED(hr))
+                return result & (NLM_CONNECTIVITY_IPV4_INTERNET|NLM_CONNECTIVITY_IPV6_INTERNET);
+        }
+        // manager fallback (IPv6 ignorant):
+        DWORD flags;
+        return ::InternetGetConnectedState(&flags, 0);
+    }
+
+private:
+    INetworkListManager *m_networkListManager;
+};
+
+#else // !WIN32
+
+class http_reachability::impl
+{
+public:
+    impl() {}
+    bool is_reachable() const { return true; } // TODO
+};
+
+#endif
+
+
+http_reachability::http_reachability(const std::string& /*url*/)
+    : m_impl(new impl)
+{
+}
+
+http_reachability::~http_reachability()
+{
+}
+
+bool http_reachability::is_reachable() const
+{
+    return m_impl->is_reachable();
 }
