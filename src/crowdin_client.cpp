@@ -197,23 +197,20 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
             u.name = str::to_wstring(d.value("fullName", ""));
-            if(u.name.empty()) {
+            if(u.name.empty())
+            {
                 // Take care that both first and last name can be empty
                 auto name = d["firstName"];
-                if(name.is_string()) {
+                if(name.is_string())
                     u.name += str::to_wstring(name);
-                }
-                if(!u.name.empty()) {
+                if(!u.name.empty())
                     u.name += ' ';
-                }
                 name = d["lastName"];
-                if(name.is_string()) {
+                if(name.is_string())
                     u.name += str::to_wstring(name);
-                }
             }
-            if(u.name.empty()) {
+            if(u.name.empty())
                 u.name = u.login;
-            }
             return u;
         });
 }
@@ -265,17 +262,18 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         const json& d = r["data"];
         prj->name = str::to_wstring(d["name"]);
         prj->id = d["id"];
-        for (const auto& langCode : d["targetLanguageIds"]) {
+        for (const auto& langCode : d["targetLanguageIds"])
             prj->languages.push_back(Language::TryParse(str::to_wstring(langCode)));
-        }
         //TODO: get more until all files gotten (if more than 500)
         return m_api->get(url + "/files?limit=500");
     }).then([this, url, prj](json r)
     {   
         // Handle project files
-        for(auto& i : r["data"]) {
+        for(auto& i : r["data"])
+        {
             const json& d = i["data"];
-            if(d["type"] != "assets") {
+            if(d["type"] != "assets")
+            {
                 const json& dir = d["directoryId"],
                             branch = d["branchId"];
                 prj->files.push_back({
@@ -297,7 +295,8 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         };
         std::map<int, dir> dirs;
 
-        for(const auto& i : r["data"]) {
+        for(const auto& i : r["data"])
+        {
             const json& d = i["data"],
                   parent = d["directoryId"];
             dirs.insert({
@@ -310,22 +309,24 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         }
 
         std::stack<std::string> path;
-        for(auto& i : prj->files) {
+        for(auto& i : prj->files)
+        {
             int dirId = i.dirId;
-            while(dirId != NO_ID) {
+            while(dirId != NO_ID)
+            {
                 const auto& dir = dirs[dirId];
                 path.push(dir.name);
                 dirId = dir.parentId;
             }
             std::string pathStr;
-            while(path.size()) {
+            while(path.size())
+            {
                 pathStr += '/';
                 pathStr += path.top();
                 path.pop();
             }
-            if(!pathStr.empty()) {
+            if(!pathStr.empty())
                 i.pathName = str::to_wstring(pathStr) + i.pathName;
-            }
         }
 
         //TODO: get more until all branches gotten (if more than 500)    
@@ -335,16 +336,15 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         // Handle branches
         std::map<int, std::string> branches;
 
-        for(const auto& i : r["data"]) {
+        for(const auto& i : r["data"])
+        {
             const json& d = i["data"];
             branches[d["id"]] = d["name"].get<std::string>();
         }
 
-        for(auto& i : prj->files) {
-            if(i.branchId != NO_ID) {
+        for(auto& i : prj->files)
+            if(i.branchId != NO_ID)
                 i.pathName = "/" + str::to_wstring(branches[i.branchId]) + i.pathName;
-            }
-        }
 
         return *prj;
     });

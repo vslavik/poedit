@@ -231,7 +231,7 @@ public:
     dispatch::future<::json> post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
     {
         http::http_request req(http::methods::POST);
-        for(const auto& h : hdrs) {
+        for(const auto& h : hdrs)
             req.headers().add(
                 // Take care about conversion from std::string in case of
                 // std::wstring used in headers as well what is default
@@ -240,7 +240,6 @@ public:
                 utility::string_t(h.first.begin(), h.first.end()),
                 utility::string_t(h.second.begin(), h.second.end())
             );
-        }
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())

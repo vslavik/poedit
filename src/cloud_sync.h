@@ -89,7 +89,8 @@ public:
     {
         static wxString localBaseDir;
 
-        if(localBaseDir.empty()) {
+        if(localBaseDir.empty())
+        {
 
             #if defined(__WXOSX__)
                 localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
@@ -137,7 +138,8 @@ public:
     /// Show the window while performing background sync action. Show error if 
     static void RunSync(wxWindow *parent, std::shared_ptr<CloudSyncDestination> dest, CatalogPtr file)
     {
-        if(!dest->Auth(parent)) {
+        if(!dest->Auth(parent))
+        {
             return;
         }
 

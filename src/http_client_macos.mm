@@ -147,9 +147,8 @@ public:
                                                               path:str::to_NS(url)
                                                         parameters:nil];
     
-        for(const auto& h : hdrs) {
+        for(const auto& h : hdrs)
             [request addValue:str::to_NS(h.second) forHTTPHeaderField:str::to_NS(h.first)];
-        }
 
         auto body = data.body();
         [request setValue:str::to_NS(data.content_type()) forHTTPHeaderField:@"Content-Type"];
