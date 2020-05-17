@@ -2714,21 +2714,17 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    if(!m_catalog->GetCloudSync()) {
-        if(m_catalog->IsFromCrowdin()) {
+    if(!m_catalog->GetCloudSync())
+        if(m_catalog->IsFromCrowdin())
             m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
-        }
-    }
     
-    if (m_catalog->GetCloudSync()) {
+    if (m_catalog->GetCloudSync())
         // Avoid redundant upload during same call of 
         // OnUpdateFromCrowdin()=>
         // 1. =>DoIfCanDiscardCurrentDoc()=>Upload()
         // 2. =>CrowdinSyncFile()=>UploadFile()
-        if(!m_syncing) {
+        if(!m_syncing)
             CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
-        }
-    }
 
     if (tmUpdateThread.valid())
         tmUpdateThread.wait();
@@ -2815,7 +2811,8 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
     dlg->SetYesNoLabels(_("Purge"), _("Keep"));
 
     dlg->ShowWindowModalThenDo([this,dlg](int retcode){
-        if (retcode == wxID_YES) {
+        if (retcode == wxID_YES)
+        {
             m_catalog->RemoveDeletedItems();
             m_modified = true;
             UpdateTitle();

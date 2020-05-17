@@ -609,7 +609,8 @@ void XLIFF1Catalog::Parse(pugi::xml_node root)
         //       (what is always the only case for downloaded from Crowdin)
         //       But should be taken into account and improved for probable
         //       more wide varietty of cases in the future.
-        if(id == 0) {
+        if(id == 0)
+        {
             m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
             SetLanguage(Language::TryParse(file.attribute("target-language").value()));
         }

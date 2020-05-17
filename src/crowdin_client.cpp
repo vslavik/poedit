@@ -187,9 +187,8 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 
 dispatch::future<void> CrowdinClient::RefreshToken()
 {
-    if(std::time(NULL) < m_authExpireTime) {
+    if(std::time(NULL) < m_authExpireTime)
         return dispatch::make_ready_future();
-    }
 
     return m_oauth->post("oauth/token", json_data({
         { "grant_type", "refresh_token" },
@@ -222,23 +221,20 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
             u.name = str::to_wstring(d.value("fullName", ""));
-            if(u.name.empty()) {
+            if(u.name.empty())
+            {
                 // Take care that both first and last name can be empty
                 auto name = d["firstName"];
-                if(name.is_string()) {
+                if(name.is_string())
                     u.name += str::to_wstring(name);
-                }
-                if(!u.name.empty()) {
+                if(!u.name.empty())
                     u.name += ' ';
-                }
                 name = d["lastName"];
-                if(name.is_string()) {
+                if(name.is_string())
                     u.name += str::to_wstring(name);
-                }
             }
-            if(u.name.empty()) {
+            if(u.name.empty())
                 u.name = u.login;
-            }
             return u;
         });
     });
@@ -294,17 +290,18 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         const json& d = r["data"];
         prj->name = str::to_wstring(d["name"]);
         prj->id = d["id"];
-        for (const auto& langCode : d["targetLanguageIds"]) {
+        for (const auto& langCode : d["targetLanguageIds"])
             prj->languages.push_back(Language::TryParse(str::to_wstring(langCode)));
-        }
         //TODO: get more until all files gotten (if more than 500)
         return m_api->get(url + "/files?limit=500");
     }).then([this, url, prj](json r)
     {   
         // Handle project files
-        for(auto& i : r["data"]) {
+        for(auto& i : r["data"])
+        {
             const json& d = i["data"];
-            if(d["type"] != "assets") {
+            if(d["type"] != "assets")
+            {
                 const json& dir = d["directoryId"],
                             branch = d["branchId"];
                 prj->files.push_back({
@@ -325,7 +322,8 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         };
         std::map<int, dir> dirs;
 
-        for(const auto& i : r["data"]) {
+        for(const auto& i : r["data"])
+        {
             const json& d = i["data"],
                   parent = d["directoryId"];
             dirs.insert({
@@ -338,22 +336,24 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         }
 
         std::stack<std::string> path;
-        for(auto& i : prj->files) {
+        for(auto& i : prj->files)
+        {
             int dirId = i.dirId;
-            while(dirId != NO_ID) {
+            while(dirId != NO_ID)
+            {
                 const auto& dir = dirs[dirId];
                 path.push(dir.name);
                 dirId = dir.parentId;
             }
             std::string pathStr;
-            while(path.size()) {
+            while(path.size())
+            {
                 pathStr += '/';
                 pathStr += path.top();
                 path.pop();
             }
-            if(!pathStr.empty()) {
+            if(!pathStr.empty())
                 i.pathName = str::to_wstring(pathStr) + i.pathName;
-            }
         }
 
         //TODO: get more until all branches gotten (if more than 500)    
@@ -362,16 +362,15 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         // Handle branches
         std::map<int, std::string> branches;
 
-        for(const auto& i : r["data"]) {
+        for(const auto& i : r["data"])
+        {
             const json& d = i["data"];
             branches[d["id"]] = d["name"].get<std::string>();
         }
 
-        for(auto& i : prj->files) {
-            if(i.branchId != NO_ID) {
+        for(auto& i : prj->files)
+            if(i.branchId != NO_ID)
                 i.pathName = "/" + str::to_wstring(branches[i.branchId]) + i.pathName;
-            }
-        }
 
         return *prj;
     });
@@ -453,21 +452,18 @@ void CrowdinClient::SetAuth(const json& auth)
 {
      wxLogTrace("poedit.crowdin", "Authorization: %s", auth.dump().c_str());
 
-    if(auth.empty()) {
+    if(auth.empty())
         return;
-    }
 
     std::string access_token = auth["access_token"];
     m_authRefreshToken = auth["refresh_token"].get<std::string>();
     m_authExpireTime = auth["expiration_time"].get<std::time_t>();
     
     auto domain = jwt::decode(access_token).get_payload_claim("domain");
-    if(domain.get_type() == jwt::claim::type::null) {
+    if(domain.get_type() == jwt::claim::type::null)
         m_api = std::make_unique<crowdin_http_client>(*this, "https://crowdin.com/api/v2");
-    } else {
+    else
         m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain.as_string() + ".crowdin.com/api/v2");
-    }
-
     m_api->set_authorization("Bearer " + access_token);
 }
 
