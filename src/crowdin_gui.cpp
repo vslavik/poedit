@@ -575,7 +575,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(catalog.get());
         
         CrowdinClient::Get().UploadFile(
-                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), catalog->GetLanguage().LanguageTag(),
+                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), catalog->GetLanguage(),
                 catalog->SaveToBuffer()
             )
             .then([=]{
@@ -618,7 +618,7 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
   
     wxLogTrace("Uploading file: %s", xliff->GetFileName().c_str());
     return CrowdinClient::Get().UploadFile(
-                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), file->GetLanguage().LanguageTag(),
+                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), file->GetLanguage(),
                 file->SaveToBuffer()
             );
 }

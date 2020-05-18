@@ -119,7 +119,7 @@ public:
     /// Asynchronously upload specific Crowdin file data.
     dispatch::future<void> UploadFile(const long project_id,
                                       const long file_id,
-                                      const std::string& lang_tag,
+                                      const Language& lang,
                                       const std::string& file_content);
 
 private:

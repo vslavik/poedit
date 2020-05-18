@@ -412,7 +412,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
 
 dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                                                  const long file_id,
-                                                 const std::string& lang_tag,
+                                                 const Language& lang,
                                                  const std::string& file_content)
 {
     return RefreshToken().then([=] () {
@@ -421,11 +421,11 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
             octet_stream_data(file_content),
             { { "Crowdin-API-FileName", "poedit.xliff"} }
         )
-        .then([this, project_id, file_id, lang_tag] (json r) {
+        .then([this, project_id, file_id, lang] (json r) {
             wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
             const auto storageId = r["data"]["id"].get<int>();
             return m_api->post(
-                "projects/" + std::to_string(project_id) + "/translations/" + lang_tag,
+                "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
                 json_data({
                     { "storageId", storageId },
                     { "fileId", file_id },
