@@ -196,20 +196,15 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
-            u.name = str::to_wstring(d.value("fullName", ""));
-            if(u.name.empty())
+            try { u.name = str::to_wstring(d.at("fullName")); }
+            catch(...)
             {
-                // Take care that both first and last name can be empty
-                auto name = d["firstName"];
-                if(name.is_string())
-                    u.name += str::to_wstring(name);
-                if(!u.name.empty())
-                    u.name += ' ';
-                name = d["lastName"];
-                if(name.is_string())
-                    u.name += str::to_wstring(name);
+                std::string firstName, lastName;
+                try { firstName = d.at("firstName"); } catch(...) {}
+                try { lastName = d.at("lastName"); } catch(...) {}
+                u.name = str::to_wstring(firstName + ' ' + lastName);
             }
-            if(u.name.empty())
+            if(u.name.empty() || u.name == L" ")
                 u.name = u.login;
             return u;
         });
