@@ -861,7 +861,7 @@ bool POCatalog::Load(const wxString& po_file, int flags)
 
     Clear();
     m_isOk = false;
-    m_fileName = po_file;
+    SetFileName(po_file);
     m_header.BasePath = wxEmptyString;
 
     wxString ext;

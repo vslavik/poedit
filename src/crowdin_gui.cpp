@@ -471,7 +471,10 @@ private:
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                m_info.id, crowdin_file.id, OutLocalFilename.ToStdWstring(), crowdin_lang.LanguageTag(),
+                m_info.id,
+                crowdin_lang,
+                crowdin_file.id,
+                std::string(wxFileName(crowdin_file.pathName, wxPATH_UNIX).GetExt().utf8_str()),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -483,21 +486,21 @@ private:
 
     wxString CreateLocalFilename(const long fileId, const wxString& name, const Language& lang, const long projectId, const wxString& projectName)
     {
-        auto localName = name;
-        localName.Replace("/", wxFILE_SEP_PATH);
-
-        wxString localFileName;
-        localFileName << CloudSyncDestination::GetCacheDir() << wxFILE_SEP_PATH << "Crowdin"
-                    << wxFILE_SEP_PATH << projectName
-                    << wxFILE_SEP_PATH << lang.Code()
-                    << wxFILE_SEP_PATH << localName.BeforeLast(wxFILE_SEP_PATH) << wxFILE_SEP_PATH
-                    << projectId << '_' << fileId << '_' << localName.AfterLast(wxFILE_SEP_PATH) << ".xliff";
-        auto localDirName = localFileName.BeforeLast(wxFILE_SEP_PATH);
+        wxFileName crowdinFileName(name, wxPATH_UNIX),
+                   localFileName =
+            CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin"
+            + wxFILE_SEP_PATH + projectName
+            + wxFILE_SEP_PATH + lang.Code()
+            + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
+            << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
+       
+        if(localFileName.GetExt().CmpNoCase("po"))// if not PO
+            localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
  
-        if (!wxFileName::DirExists(localDirName))
-            wxFileName::Mkdir(localDirName, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+        if (!wxFileName::DirExists(localFileName.GetPath()))
+            wxFileName::Mkdir(localFileName.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
-        return localFileName;
+        return localFileName.GetFullPath();
     }
 
 private:
@@ -572,21 +575,32 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
-        const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(catalog.get());
-        
+        const auto& header = catalog->Header();
+        auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
+                            ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
+                            : catalog->GetLanguage();
         CrowdinClient::Get().UploadFile(
-                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), catalog->GetLanguage(),
+                catalog->GetCrowdinProjectId(),
+                crowdin_lang,
+                catalog->GetCrowdinFileId(),
+                std::string(wxFileName(catalog->GetFileName()).GetExt().utf8_str()),
                 catalog->SaveToBuffer()
             )
             .then([=]{
+                wxFileName filename = catalog->GetFileName();
                 auto tmpdir = std::make_shared<TempDirectory>();
-                auto outfile = tmpdir->CreateFileName("crowdin.xliff");
+                auto outfile = tmpdir->CreateFileName("crowdin." + filename.GetExt());
 
                 dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
+                if(filename.GetExt().CmpNoCase("po"))// if not PO
+                    filename.SetFullName(filename.GetName());// set original filename extension
                 return CrowdinClient::Get().DownloadFile(
-                        xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), xliff->GetFileName().ToStdWstring(), xliff->GetLanguage().LanguageTag(),
+                        catalog->GetCrowdinProjectId(),
+                        crowdin_lang,
+                        catalog->GetCrowdinFileId(),
+                        std::string(filename.GetExt().utf8_str()),
                         outfile.ToStdWstring()
                     )
                     .then_on_main([=]
@@ -613,12 +627,17 @@ bool CrowdinSyncDestination::Auth(wxWindow* parent) {
 }
 
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
-{
-    const XLIFF1Catalog* xliff = dynamic_cast<const XLIFF1Catalog*>(file.get());
-  
-    wxLogTrace("Uploading file: %s", xliff->GetFileName().c_str());
+{  
+    wxLogTrace("Uploading file: %s", file->GetFileName().c_str());
+    const auto& header = file->Header();
+    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
+                    ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
+                    : file->GetLanguage();
     return CrowdinClient::Get().UploadFile(
-                xliff->GetCrowdinProjectId(), xliff->GetCrowdinFileId(), file->GetLanguage(),
+                file->GetCrowdinProjectId(),
+                crowdin_lang,
+                file->GetCrowdinFileId(),
+                std::string(wxFileName(file->GetFileName()).GetExt().Lower().utf8_str()),
                 file->SaveToBuffer()
             );
 }

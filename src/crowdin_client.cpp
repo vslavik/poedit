@@ -347,18 +347,20 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
 
 dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
+                                                   const Language& lang,
                                                    const long file_id,
-                                                   const std::wstring& file_name,
-                                                   const std::string& lang_tag,
+                                                   const std::string& file_extension,
                                                    const std::wstring& output_file)
 {
     wxLogTrace("poedit.crowdin", "Getting file URL: projects/%ld/translations/builds/files/%ld", project_id, file_id);
+    wxString ext(file_extension);
+    ext.MakeLower();
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
         json_data({
-            { "targetLanguageId", lang_tag },
-            // for XLIFF files should be exported "as is" so set to `false`
-            { "exportAsXliff", !wxString(file_name).Lower().EndsWith(".xliff.xliff") }
+            { "targetLanguageId", lang.LanguageTag() },
+            // for XLIFF and PO files should be exported "as is" so set to `false`
+            { "exportAsXliff", !(ext == "xliff" || ext == "po") }
         }))
         .then([this, output_file] (json r) {
             std::string url(r["data"]["url"]);
@@ -377,14 +379,15 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
 
 
 dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
-                                                 const long file_id,
                                                  const Language& lang,
+                                                 const long file_id,
+                                                 const std::string& file_extension,
                                                  const std::string& file_content)
 {
     return m_api->post(
             "storages",
             octet_stream_data(file_content),
-            { { "Crowdin-API-FileName", "poedit.xliff"} }
+            { { "Crowdin-API-FileName", "crowdin." + file_extension } }
         )
         .then([this, project_id, file_id, lang] (json r) {
             wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
