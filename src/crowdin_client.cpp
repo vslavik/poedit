@@ -200,8 +200,8 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             catch(...)
             {
                 std::string firstName, lastName;
-                try { firstName = d.at("firstName"); } catch(...) {}
-                try { lastName = d.at("lastName"); } catch(...) {}
+                try { firstName = d.at("firstName").get<std::string>(); } catch(...) {}
+                try { lastName = d.at("lastName").get<std::string>(); } catch(...) {}
                 u.name = str::to_wstring(firstName + ' ' + lastName);
             }
             if(u.name.empty() || u.name == L" ")
@@ -363,7 +363,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             { "exportAsXliff", !(ext == "xliff" || ext == "po") }
         }))
         .then([this, output_file] (json r) {
-            std::string url(r["data"]["url"]);
+            std::string url = r["data"]["url"];
             wxURI uri(url);
             // Per download (local) client must be created since different domain
             // per request is not allowed by HTTP client backend on some platorms.
@@ -466,7 +466,7 @@ void CrowdinClient::SetToken(const std::string& token)
         domain = json::parse(
             base64_decode_json_part(std::string(
                 wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
-        ))).at("domain");
+        ))).at("domain").get<std::string>();
         domain += ".";
     }
     catch(...) {}

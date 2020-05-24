@@ -30,6 +30,7 @@
 #include "concurrency.h"
 
 #include <wx/string.h>
+#include <wx/stdpaths.h>
 
 #if wxUSE_GUI
     #include "customcontrols.h"

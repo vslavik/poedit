@@ -637,7 +637,7 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
                 file->GetCrowdinProjectId(),
                 crowdin_lang,
                 file->GetCrowdinFileId(),
-                std::string(wxFileName(file->GetFileName()).GetExt().Lower().utf8_str()),
+                std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
                 file->SaveToBuffer()
             );
 }
