@@ -31,6 +31,7 @@
 
 #include <wx/string.h>
 #include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 #if wxUSE_GUI
     #include "customcontrols.h"
