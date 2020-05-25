@@ -397,8 +397,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                 json_data({
                     { "storageId", storageId },
                     { "fileId", file_id },
-                    { "importDuplicates", true },
-                    { "autoApproveImported", true }
+                    { "importDuplicates", true }
                 }))
                 .then([](json r) {
                     wxLogTrace("poedit.crowdin", "File uploaded: %s", r.dump().c_str());
