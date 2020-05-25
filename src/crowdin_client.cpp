@@ -66,7 +66,7 @@
 namespace
 {
 
-#define OAUTH_SCOPE         "project+tm"
+#define OAUTH_SCOPE         "project"
 #define OAUTH_CLIENT_ID     "k0uFz5HYQh0VzWgZmOpA"
 //      any arbitrary unique unguessable string (e.g. UUID in hex)
 #define OAUTH_STATE         "948cf13ffffb47119d6cfa2b68898f67"
