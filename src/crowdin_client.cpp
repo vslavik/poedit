@@ -409,15 +409,20 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
 bool CrowdinClient::IsSignedIn() const
 {
     std::string token;
-    return keytar::GetPassword("Crowdin", "", &token);
+    return keytar::GetPassword("Crowdin", "", &token)
+        && token.substr(0, 2) == "2:";
 }
 
 
 void CrowdinClient::SignInIfAuthorized()
 {
     std::string token;
-    if (keytar::GetPassword("Crowdin", "", &token))
+    if (keytar::GetPassword("Crowdin", "", &token)
+        && token.length() > 2)
+    {
+        token = token.substr(2);
         SetToken(token);
+    }
     wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
 }
 
@@ -477,7 +482,7 @@ void CrowdinClient::SetToken(const std::string& token)
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
     SetToken(token);
-    keytar::AddPassword("Crowdin", "", token);
+    keytar::AddPassword("Crowdin", "", "2:" + token);
 }
 
 
