@@ -80,6 +80,7 @@ public:
     struct ProjectListing
     {
         std::wstring name;
+        std::string identifier;
         int id;
     };
 

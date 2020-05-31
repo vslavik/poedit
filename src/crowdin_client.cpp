@@ -234,9 +234,9 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 
                     all.push_back({
                         str::to_wstring(i["name"]),
+                        i["identifier"].get<std::string>(),
                         i["id"].get<int>()
-                });
-
+                    });
                 }
             }
             return all;

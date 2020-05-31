@@ -552,9 +552,11 @@ class Catalog
         virtual void SetLanguage(Language lang);
 
         /// Is the PO file from Crowdin, i.e. sync-able?
-        bool IsFromCrowdin() const { return m_crowdinFileId > 0 && m_crowdinProjectId > 0; }
+        bool IsFromCrowdin() const { return (m_crowdinFileId > 0 && m_crowdinProjectId > 0) 
+                                            || (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File")); }
         long GetCrowdinFileId() const { return m_crowdinFileId; }
         long GetCrowdinProjectId() const { return m_crowdinProjectId; }
+        void SetCrowdinProjectAndFileId(int projId, int fileId) { m_crowdinProjectId  = projId; m_crowdinFileId = fileId; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
