@@ -352,7 +352,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
                                                    const std::string& file_extension,
                                                    const std::wstring& output_file)
 {
-    wxLogTrace("poedit.crowdin", "Getting file URL: projects/%ld/translations/builds/files/%ld", project_id, file_id);
+    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%ld, lang=%s, file_id=%ld, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
     wxString ext(file_extension);
     ext.MakeLower();
     return m_api->post(
@@ -384,6 +384,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
                                                  const std::string& file_extension,
                                                  const std::string& file_content)
 {
+    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%ld, lang=%s, file_id=%ld, file_extension=%s)", project_id, lang.LanguageTag().c_str(), file_id, file_extension.c_str());
     return m_api->post(
             "storages",
             octet_stream_data(file_content),
