@@ -167,8 +167,8 @@ public:
 
         const UChar32 s_last = source.Last();
         const UChar32 t_last = translation.Last();
-        const bool s_punct = u_hasBinaryProperty(s_last, UCHAR_TERMINAL_PUNCTUATION) || u_hasBinaryProperty(s_last, UCHAR_QUOTATION_MARK);
-        const bool t_punct = u_hasBinaryProperty(t_last, UCHAR_TERMINAL_PUNCTUATION) || u_hasBinaryProperty(t_last, UCHAR_QUOTATION_MARK);
+        const bool s_punct = IsPunctuation(s_last);
+        const bool t_punct = IsPunctuation(t_last);
 
         if (u_getIntPropertyValue(s_last, UCHAR_BIDI_PAIRED_BRACKET_TYPE) == U_BPT_CLOSE ||
             u_getIntPropertyValue(t_last, UCHAR_BIDI_PAIRED_BRACKET_TYPE) == U_BPT_CLOSE)
@@ -238,6 +238,13 @@ public:
     }
 
 private:
+    bool IsPunctuation(UChar32 c) const
+    {
+        return u_hasBinaryProperty(c, UCHAR_TERMINAL_PUNCTUATION) ||
+               u_hasBinaryProperty(c, UCHAR_QUOTATION_MARK) ||
+               c == L'…'; // somehow U+2026 ellipsis is not terminal punctuation
+    }
+
     bool IsEquivalent(UChar32 src, UChar32 trans) const
     {
         if (src == trans)
