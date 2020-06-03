@@ -25,6 +25,7 @@
 
 #include "customcontrols.h"
 
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
@@ -436,7 +437,7 @@ void ActivityIndicator::StopWithError(const wxString& msg)
     m_running = false;
 
     m_spinner->Stop();
-    m_label->SetForegroundColour(*wxRED);
+    m_label->SetForegroundColour(ColorScheme::Get(Color::ErrorText));
     m_label->SetLabel(msg);
     m_label->SetToolTip(msg);
 

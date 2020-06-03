@@ -102,6 +102,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::ItemFuzzy:
             return mode == Dark ? sRGB(253, 178, 72) : sRGB(230, 134, 0);
         case Color::ItemError:
+        case Color::ErrorText:
             return sRGB(225, 77, 49);
         case Color::ItemContextFg:
             return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);

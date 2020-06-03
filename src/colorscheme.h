@@ -37,6 +37,8 @@ enum class Color : size_t
 {
     SecondaryLabel,
 
+    ErrorText,
+
     ItemID,
     ItemFuzzy,
     ItemError,

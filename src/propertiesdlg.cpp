@@ -56,6 +56,8 @@
 #include <memory>
 
 #include "propertiesdlg.h"
+
+#include "colorscheme.h"
 #include "hidpi.h"
 #include "language.h"
 #include "str_helpers.h"
@@ -880,7 +882,7 @@ void PropertiesDialog::DisableSourcesControls()
 
     auto label = XRCCTRL(*this, "sources_path_label", wxStaticText);
     label->SetLabel(_("Please save the file first. This section cannot be edited until then."));
-    label->SetForegroundColour(*wxRED);
+    label->SetForegroundColour(ColorScheme::Get(Color::ErrorText));
 }
 
 
