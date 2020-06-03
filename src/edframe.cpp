@@ -2063,10 +2063,15 @@ void PoeditFrame::OnToggleWarnings(wxCommandEvent& e)
                 this,
                 _("Warnings have been disabled."),
                 "Poedit",
-                wxOK
+                wxYES|wxNO
             ));
         err->SetExtendedMessage(_("If you disabled the warnings because of excessive false positives, please consider sending a sample file to help@poedit.net to help improve them."));
-        err->ShowWindowModalThenDo([err](int){});
+        // TRANSLATORS: This is a button to send email with feedback when clicked
+        err->SetYesNoLabels(wxID_OK, MSW_OR_OTHER(_("Send feedback"), _("Send Feedback")));
+        err->ShowWindowModalThenDo([err](int retcode){
+            if (retcode == wxID_NO) // "Send feedback"
+                wxLaunchDefaultBrowser("mailto:help@poedit.net?subject=Warnings");
+        });
     }
 }
 
