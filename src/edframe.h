@@ -229,7 +229,7 @@ class PoeditFrame : public PoeditFrameBase
         // navigation to another item in the list
         typedef bool (*NavigatePredicate)(const CatalogItemPtr& item);
         int NavigateGetNextItem(const int start, int step, NavigatePredicate predicate, bool wrap, CatalogItemPtr *out_item);
-        void Navigate(int step, NavigatePredicate predicate, bool wrap);
+        bool Navigate(int step, NavigatePredicate predicate, bool wrap);
         void OnDoneAndNext(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
         void OnNext(wxCommandEvent&);

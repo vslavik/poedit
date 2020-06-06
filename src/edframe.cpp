@@ -3370,15 +3370,17 @@ int PoeditFrame::NavigateGetNextItem(const int start,
     }
 }
 
-void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
+bool PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
 {
     if (!m_list)
-        return;
+        return false;
     auto i = NavigateGetNextItem(m_list->GetCurrentItemListIndex(), step, predicate, wrap, nullptr);
     if (i == -1)
-        return;
+        return false;
 
     m_list->SelectAndFocus(i);
+
+    return true;
 }
 
 void PoeditFrame::OnPrev(wxCommandEvent&)
@@ -3426,7 +3428,13 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
     }
 
     // like "next unfinished", but wraps
-    Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true);
+    if (!Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true))
+    {
+        // This was the last such item. Since the selection didn't change, we need to explicitly
+        // redraw the list & editing area to refect item changes made above:
+        UpdateToTextCtrl(EditingArea::UndoableEdit | EditingArea::DontTouchText);
+        m_list->RefreshItem(m_list->GetCurrentItem());
+    }
 }
 
 void PoeditFrame::OnPrevPage(wxCommandEvent&)
