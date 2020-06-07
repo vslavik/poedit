@@ -1014,3 +1014,9 @@ void EditingArea::ChangeFocusedPluralTab(int offset)
         prevFocus->SetFocus();
 #endif
 }
+
+
+int EditingArea::GetTopRowHeight() const
+{
+    return m_tagContext->GetContainingSizer()->GetSize().y;
+}

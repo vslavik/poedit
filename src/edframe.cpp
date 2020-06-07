@@ -92,20 +92,79 @@
 namespace
 {
 
-// Splitters with customized appearance to blend with EditingArea:
-
+/// Splitters with customized appearance to blend with EditingArea:
 class ThinSplitter : public wxSplitterWindow
 {
 public:
     ThinSplitter(wxWindow *parent, const wxColour& color)
         : wxSplitterWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER | wxSP_LIVE_UPDATE)
     {
+        m_extraDraggableSpace = 0;
+
 #ifdef __WXOSX__
         SetBackgroundColour(color);
 #else
         m_color = color;
 #endif
     }
+
+#ifndef __WXGTK__
+    /// Setup the 2nd child window to handle events used for dragging the sash,
+    /// so that the draggable area is larger and more accessible.
+    ///
+    /// Getting this hack to work with wxGTK proved difficult even with the bundled version,
+    /// let alone others, plus GTK+ sash is larger; therefore, this is for macOS and Windows only.
+    void SetupDraggingMarginInChild(wxWindow *win, int extraDraggableSpace)
+    {
+        m_extraDraggableSpace = extraDraggableSpace;
+
+        win->Bind(wxEVT_LEFT_DOWN, [=](wxMouseEvent& event)
+        {
+            event.Skip();
+            if (!this->IsWithinExtraDraggableSpace(event))
+                return;
+
+            auto p = event.GetPosition();
+            event.SetPosition(p + win->GetPosition());
+            this->ProcessWindowEvent(event);
+            event.SetPosition(p);
+        });
+
+        auto motionHandler = [=](wxMouseEvent& event)
+        {
+            event.Skip();
+            if (!event.Leaving() && this->IsWithinExtraDraggableSpace(event))
+            {
+                win->SetCursor(m_splitMode == wxSPLIT_VERTICAL ? m_sashCursorWE : m_sashCursorNS);
+            }
+            else
+            {
+                win->SetCursor(*wxSTANDARD_CURSOR);
+            }
+        };
+        win->Bind(wxEVT_MOTION, motionHandler);
+        win->Bind(wxEVT_ENTER_WINDOW, motionHandler);
+        win->Bind(wxEVT_LEAVE_WINDOW, motionHandler);
+    }
+
+    bool IsWithinExtraDraggableSpace(const wxMouseEvent& event) const
+    {
+        auto pos = event.GetPosition();
+        int z = m_splitMode == wxSPLIT_VERTICAL ? pos.x : pos.y;
+        return z < m_extraDraggableSpace;
+    }
+
+    bool SashHitTest(int x, int y) override
+    {
+        if ( m_windowTwo == NULL || m_sashPosition == 0)
+            return false; // No sash
+
+        int z = m_splitMode == wxSPLIT_VERTICAL ? x : y;
+        int hitMax = m_sashPosition + m_extraDraggableSpace;
+
+        return z >= m_sashPosition && z < hitMax;
+    }
+#endif // !__WXGTK__
 
 #ifndef __WXOSX__
     void DrawSash(wxDC& dc) override
@@ -148,6 +207,9 @@ public:
 private:
     wxColour m_color;
 #endif // !__WXOSX__
+
+private:
+    int m_extraDraggableSpace;
 };
 
 } // anonymous namespace
@@ -637,12 +699,14 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     main->Hide();
 #endif
 
-    m_sidebarSplitter = new ThinSplitter(main, ColorScheme::Get(Color::SidebarSeparator));
+    auto sidebarSplitter = new ThinSplitter(main, ColorScheme::Get(Color::SidebarSeparator));
+    m_sidebarSplitter = sidebarSplitter;
     m_sidebarSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSidebarSplitterSashMoving, this);
 
     mainSizer->Add(m_sidebarSplitter, wxSizerFlags(1).Expand());
 
-    m_splitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator));
+    auto editingSplitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator));
+    m_splitter = editingSplitter;
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
 
     // make only the upper part grow when resizing
@@ -722,6 +786,12 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
 
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
+
+#ifndef __WXGTK__
+        // Setup extended draggable areas around splitters to make them easier to resize
+        editingSplitter->SetupDraggingMarginInChild(m_editingArea, m_editingArea->GetTopRowHeight());
+        sidebarSplitter->SetupDraggingMarginInChild(m_sidebar, PX(8));
+#endif
     });
 
     return main;

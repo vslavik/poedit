@@ -104,6 +104,9 @@ public:
     /// Move focused tab to prev(-1) or next(+1)
     void ChangeFocusedPluralTab(int offset);
 
+    /// Returns height of the source line at the top with issues shown
+    int GetTopRowHeight() const;
+
     // Semi-private use (TODO: get rid of them)
     SourceTextCtrl *Ctrl_Original() const { return m_textOrig; }
     SourceTextCtrl *Ctrl_OriginalPlural() const { return m_textOrigPlural; }
