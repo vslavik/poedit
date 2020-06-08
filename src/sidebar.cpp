@@ -60,10 +60,7 @@
 class SidebarSeparator : public wxWindow
 {
 public:
-    SidebarSeparator(wxWindow *parent)
-        : wxWindow(parent, wxID_ANY),
-          m_sides(ColorScheme::Get(Color::SidebarBackground)),
-          m_center(ColorScheme::Get(Color::EditingSubtleSeparator))
+    SidebarSeparator(wxWindow *parent) : wxWindow(parent, wxID_ANY)
     {
         Bind(wxEVT_PAINT, &SidebarSeparator::OnPaint, this);
     }
@@ -79,21 +76,11 @@ private:
     void OnPaint(wxPaintEvent&)
     {
         wxPaintDC dc(this);
-        auto w = dc.GetSize().x;
-        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-        {
-            dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
-            dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
-        }
-        else
-        {
-            dc.SetBrush(m_center);
-            dc.SetPen(m_center);
-            dc.DrawRectangle(PX(2), 0, w - PX(4), PX(1));
-        }
+        auto clr = ColorScheme::Get(Color::SidebarBlockSeparator);
+        dc.SetBrush(clr);
+        dc.SetPen(clr);
+        dc.DrawRectangle(PX(2), 0, dc.GetSize().x - PX(4), PX(1) + 1);
     }
-
-    wxColour m_sides, m_center;
 };
 
 
@@ -108,7 +95,7 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         if (!(flags & NoUpperMargin))
         {
             m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, PX(2)));
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT|wxRIGHT, PX(4)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Center());

@@ -96,15 +96,17 @@ namespace
 class ThinSplitter : public wxSplitterWindow
 {
 public:
-    ThinSplitter(wxWindow *parent, const wxColour& color)
+    ThinSplitter(wxWindow *parent, const wxColour& color, const wxColour& childBackground = wxNullColour)
         : wxSplitterWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER | wxSP_LIVE_UPDATE)
     {
         m_extraDraggableSpace = 0;
 
 #ifdef __WXOSX__
         SetBackgroundColour(color);
+        (void)childBackground;
 #else
         m_color = color;
+        m_childBackgroundColor = childBackground;
 #endif
     }
 
@@ -197,7 +199,7 @@ public:
                 rect.width -= PX(1);
             }
 
-            auto bg = GetWindow2()->GetBackgroundColour();
+            auto bg = m_childBackgroundColor.IsOk() ? m_childBackgroundColor : GetWindow2()->GetBackgroundColour();
             dc.SetPen(bg);
             dc.SetBrush(bg);
             dc.DrawRectangle(rect);
@@ -205,7 +207,7 @@ public:
     }
 
 private:
-    wxColour m_color;
+    wxColour m_color, m_childBackgroundColor;
 #endif // !__WXOSX__
 
 private:
@@ -705,7 +707,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
 
     mainSizer->Add(m_sidebarSplitter, wxSizerFlags(1).Expand());
 
-    auto editingSplitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator));
+    auto editingSplitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator), ColorScheme::Get(Color::EditingThickSeparator));
     m_splitter = editingSplitter;
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
 

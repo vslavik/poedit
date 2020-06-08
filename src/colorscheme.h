@@ -57,8 +57,9 @@ enum class Color : size_t
 
     ToolbarSeparator,
     SidebarSeparator,
+    SidebarBlockSeparator,
     EditingSeparator,
-    EditingSubtleSeparator,
+    EditingThickSeparator,
 
     SidebarBackground,
     EditingBackground,

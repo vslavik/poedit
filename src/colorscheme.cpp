@@ -151,13 +151,15 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Dark ? *wxBLACK : "#cbcbcb";
         case Color::EditingSeparator:
             return mode == Dark ? sRGB(80, 80, 80) : sRGB(204, 204, 204);
-        case Color::EditingSubtleSeparator:
-            return mode == Dark ? sRGB(60, 60, 60) : sRGB(229, 229, 229);
+        case Color::SidebarBlockSeparator:
+            return mode == Dark ? sRGB(80, 80, 80, 0.8) : sRGB(204, 204, 204, 0.8);
+        case Color::EditingThickSeparator:
+            return mode == Dark ? sRGB(46, 47, 50) : sRGB(240, 240, 240);
 
         // Backgrounds:
 
         case Color::SidebarBackground:
-            return mode == Dark ? sRGB(43, 44, 47) : "#edf0f4";
+            return mode == Dark ? sRGB(45, 42, 41) : "#edf0f4";
 
         case Color::EditingBackground:
             #ifdef __WXOSX__

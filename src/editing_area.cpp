@@ -204,7 +204,7 @@ public:
 #endif
 
 #ifdef __WXMSW__
-        SetBackgroundColour(parent->GetBackgroundColour());
+        SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
 #endif
         SetColor(fg, bg);
 
@@ -368,6 +368,9 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     m_labelSource->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
     m_labelSource->SetFont(m_labelSource->GetFont().Bold());
+#ifdef __WXMSW__
+    m_labelSource->SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
+#endif
 
     m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
     m_tagFormat = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
@@ -493,6 +496,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     });
 
 #ifdef __WXMSW__
+    m_labelTrans->SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
+    m_fuzzy->SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
+
     m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
         e.Skip();
         auto focused = FindFocus();
@@ -565,19 +571,27 @@ void EditingArea::OnPaint(wxPaintEvent&)
     const int paddingTop = MACOS_OR_OTHER(dc.GetContentScaleFactor() > 1.0 ? PX(5) : PX(6), PX(6));
     const int paddingBottom = PX(5);
 
-    auto clr = ColorScheme::Get(Color::EditingSeparator);
-    dc.SetPen(clr);
-    dc.SetBrush(clr);
+    auto bg = ColorScheme::Get(Color::EditingThickSeparator);
+    dc.SetPen(bg);
+    dc.SetBrush(bg);
+    if (m_labelSource)
+    {
+        dc.DrawRectangle(0, 0, width, m_labelSource->GetPosition().y + m_labelSource->GetSize().y + paddingBottom);
+    }
+    if (m_labelTrans)
+    {
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, paddingTop + m_labelTrans->GetSize().y + paddingBottom);
+    }
 
     if (m_labelTrans)
     {
         dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, PX(1));
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y + m_labelTrans->GetSize().y + paddingBottom, width, PX(1));
     }
 
-    auto clrs = ColorScheme::Get(Color::EditingSubtleSeparator);
-    dc.SetPen(clrs);
-    dc.SetBrush(clrs);
-
+    auto clr = ColorScheme::Get(Color::EditingSeparator);
+    dc.SetPen(clr);
+    dc.SetBrush(clr);
     if (m_labelSource)
     {
         dc.DrawRectangle(0, m_labelSource->GetPosition().y + m_labelSource->GetSize().y + paddingBottom, width, PX(1));
@@ -585,6 +599,7 @@ void EditingArea::OnPaint(wxPaintEvent&)
 
     if (m_labelTrans)
     {
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, PX(1));
         dc.DrawRectangle(0, m_labelTrans->GetPosition().y + m_labelTrans->GetSize().y + paddingBottom, width, PX(1));
     }
 }
