@@ -281,7 +281,7 @@ public:
         top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
         right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
         auto infoSizer = new wxBoxSizer(wxHORIZONTAL);
-        infoSizer->Add(m_info);
+        infoSizer->Add(m_info, wxSizerFlags().Center());
         if (m_isPerfect)
             infoSizer->Add(m_isPerfect, wxSizerFlags().Center().Border(wxLEFT, PX(2)));
         right->Add(infoSizer, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
