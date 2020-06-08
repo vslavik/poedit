@@ -33,7 +33,6 @@
 #include "concurrency.h"
 #include "language.h"
 
-
 /**
     Client to the Crowdin platform.
  */
@@ -49,8 +48,8 @@ public:
     /// Is the user currently signed into Crowdin?
     bool IsSignedIn() const;
 
-    /// Wrap relative Crowdin link to absolute URL
-    static std::string WrapLink(const std::string& page);
+    static std::string GetOAuthBaseURL() { return "https://accounts.crowdin.com"; }
+    static std::string GetAboutURL() { return "https://crowdin.com"; }
 
     /**
         Authenticate with Crowdin.
@@ -133,6 +132,7 @@ private:
     class crowdin_http_client;
     std::unique_ptr<crowdin_http_client> m_api, m_oauth;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
+    std::string m_authStateRandomUUID;
 
     static CrowdinClient *ms_instance;
 };

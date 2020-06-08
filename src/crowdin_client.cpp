@@ -37,6 +37,9 @@
 #include <ctime>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include <wx/translation.h>
 #include <wx/utils.h>
@@ -66,32 +69,15 @@
 namespace
 {
 
-#define OAUTH_SCOPE         "project"
-#define OAUTH_CLIENT_ID     "k0uFz5HYQh0VzWgZmOpA"
-//      any arbitrary unique unguessable string (e.g. UUID in hex)
-#define OAUTH_STATE         "948cf13ffffb47119d6cfa2b68898f67"
-//      The value of below macro should be set exactly as is (without quotes)
-//      to "Authorization Callback URL" of Crowdin application
-//      https://support.crowdin.com/enterprise/creating-oauth-app/
-#define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
-#define OAUTH_AUTHORIZE_URL "/oauth/authorize" \
-    "?" "response_type" "=" "token" \
-    "&" "scope"         "=" OAUTH_SCOPE \
-    "&" "client_id"     "=" OAUTH_CLIENT_ID \
-    "&" "state"         "=" OAUTH_STATE \
-    "&" "redirect_uri"  "=" OAUTH_URI_PREFIX \
-    "&" "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit" // source tracking
+#define OAUTH_SCOPE                     "project"
+#define OAUTH_CLIENT_ID                 "k0uFz5HYQh0VzWgZmOpA"
+// Urchin Tracker Module (params for Web analytics package that served as the base for Google Analytics)
+#define UTM_PARAMS                      "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit"
+// "Authorization Callback URL" field/param set on creating of Crowdin application
+// accordingly to https://support.crowdin.com/enterprise/creating-oauth-app/ (should match exactly)
+#define OAUTH_CALLBACK_URL_PREFIX       "poedit://auth/crowdin/"
 
 } // anonymous namespace
-
-std::string CrowdinClient::WrapLink(const std::string& page)
-{
-    std::string url("https://accounts.crowdin.com");
-    if (!page.empty() && page != "/")
-        url += page;
-    return url;
-}
-
 
 class CrowdinClient::crowdin_http_client : public http_client
 {
@@ -139,7 +125,7 @@ protected:
 };
 
 CrowdinClient::CrowdinClient() :
-    m_oauth(new crowdin_http_client(*this, "https://accounts.crowdin.com"))
+    m_oauth(new crowdin_http_client(*this, GetOAuthBaseURL()))
 {
     SignInIfAuthorized();
 }
@@ -149,9 +135,17 @@ CrowdinClient::~CrowdinClient() {}
 
 dispatch::future<void> CrowdinClient::Authenticate()
 {
-    auto url = WrapLink(OAUTH_AUTHORIZE_URL);
     m_authCallback.reset(new dispatch::promise<void>);
-    wxLaunchDefaultBrowser(url);
+    m_authStateRandomUUID = boost::uuids::to_string(boost::uuids::random_generator()());
+    wxLaunchDefaultBrowser(
+        GetOAuthBaseURL() + "/oauth/authorize" \
+            "?" "utm_source"    "=" UTM_PARAMS \
+            "&" "response_type" "=" "token" \
+            "&" "scope"         "=" OAUTH_SCOPE \
+            "&" "client_id"     "=" OAUTH_CLIENT_ID \
+            "&" "redirect_uri"  "=" OAUTH_CALLBACK_URL_PREFIX \
+            "&" "state"         "=" + m_authStateRandomUUID
+        );
     return m_authCallback->get_future();
 }
 
@@ -164,7 +158,7 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 
     if (!(regex_search(uri, m, regex("state=([^&]+)"))
             && m.size() > 1
-            && m.str(1) == OAUTH_STATE))
+            && m.str(1) == m_authStateRandomUUID))
         return;
 
     if (!(regex_search(uri, m, regex("access_token=([^&]+)"))
@@ -180,7 +174,7 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 
 bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 {
-    return boost::starts_with(uri, OAUTH_URI_PREFIX);
+    return boost::starts_with(uri, OAUTH_CALLBACK_URL_PREFIX);
 }
 
 //TODO: validate JSON schema in all API responses

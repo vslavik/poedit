@@ -69,7 +69,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     sizer->AddSpacer(PX(10));
     auto logo = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("CrowdinLogoTemplate"));
     logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::WrapLink("/")); });
+    logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::GetAboutURL()); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
     auto explain = new ExplanationLabel(this, _("Crowdin is an online localization management platform and collaborative translation tool. Poedit can seamlessly sync PO files managed at Crowdin."));
     sizer->Add(explain, wxSizerFlags().Expand());
@@ -226,7 +226,7 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
 
 LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& text)
     : LearnMoreLink(parent,
-                    CrowdinClient::WrapLink("/"),
+                    CrowdinClient::GetAboutURL(),
                     text.empty() ? (MSW_OR_OTHER(_("Learn more about Crowdin"), _("Learn More About Crowdin"))) : text)
 {
 }
