@@ -144,6 +144,7 @@ protected:
 
     SuggestionsList m_suggestions;
     std::vector<SuggestionWidget*> m_suggestionsWidgets;
+    wxWindow *m_suggestionsSeparator;
     std::vector<wxMenuItem*> m_suggestionMenuItems;
     int m_pendingQueries;
     uint64_t m_latestQueryId;

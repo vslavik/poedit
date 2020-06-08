@@ -500,6 +500,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     : SidebarBlock(parent, _("Translation suggestions:"), NoUpperMargin),
       m_suggestionsMenu(menu),
       m_msgPresent(false),
+      m_suggestionsSeparator(nullptr),
       m_pendingQueries(0),
       m_latestQueryId(0),
       m_lastUpdateTime(0)
@@ -613,11 +614,35 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     m_innerSizer->Layout();
 
     // update shown suggestions:
+
+    if (m_suggestionsSeparator)
+    {
+        m_suggestionsSeparator->Hide();
+        m_suggestionsSizer->Detach(m_suggestionsSeparator);
+    }
+
     auto lang = m_parent->GetCurrentLanguage();
+    int perfectMatches = 0;
     for (size_t i = 0; i < m_suggestions.size(); ++i)
     {
         auto s = m_suggestions[i];
         m_suggestionsWidgets[i]->SetValue((int)i, s, lang, GetIconForSuggestion(s), GetTooltipForSuggestion(s));
+
+        if (s.IsExactMatch())
+        {
+            perfectMatches++;
+        }
+        else
+        {
+            if (perfectMatches > 1)
+            {
+                if (!m_suggestionsSeparator)
+                    m_suggestionsSeparator = new SidebarSeparator(m_parent);
+                m_suggestionsSeparator->Show();
+                m_suggestionsSizer->Insert(i, m_suggestionsSeparator, wxSizerFlags().Expand().Border(wxBOTTOM, MSW_OR_OTHER(PX(2), PX(4))));
+            }
+            perfectMatches = 0;
+        }
     }
 
     m_innerSizer->Layout();
