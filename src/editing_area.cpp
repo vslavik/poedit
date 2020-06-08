@@ -557,7 +557,10 @@ EditingArea::~EditingArea()
 void EditingArea::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-    auto width = GetClientSize().x;
+    auto width = dc.GetSize().x;
+#ifdef __WXOSX__
+    width += 1; // correct for half-pixel undrawn part on the right side
+#endif
 
     const int paddingTop = MACOS_OR_OTHER(dc.GetContentScaleFactor() > 1.0 ? PX(5) : PX(6), PX(6));
     const int paddingBottom = PX(5);
