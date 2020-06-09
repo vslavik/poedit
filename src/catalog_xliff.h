@@ -27,7 +27,6 @@
 #define Poedit_catalog_xliff_h
 
 #include "catalog.h"
-#include "cloud_sync.h"
 #include "errors.h"
 
 #include "pugixml.h"
