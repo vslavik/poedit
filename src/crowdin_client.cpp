@@ -266,7 +266,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 const json& dir = d["directoryId"],
                             branch = d["branchId"];
                 prj->files.push_back({
-                    L"/" + str::to_wstring(d["name"]),
+                    L'/' + str::to_wstring(d["name"]),
                     d["id"],
                     dir.is_null() ? NO_ID : dir,
                     branch.is_null() ? NO_ID : branch
@@ -333,7 +333,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 
         for(auto& i : prj->files)
             if(i.branchId != NO_ID)
-                i.pathName = "/" + str::to_wstring(branches[i.branchId]) + i.pathName;
+                i.pathName = L'/' + str::to_wstring(branches[i.branchId]) + i.pathName;
 
         return *prj;
     });
@@ -465,7 +465,7 @@ void CrowdinClient::SetToken(const std::string& token)
             base64_decode_json_part(std::string(
                 wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
         ))).at("domain");
-        domain += ".";
+        domain += '.';
     }
     catch(...) {}
     m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2");
