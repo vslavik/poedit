@@ -93,12 +93,17 @@ protected:
         
         try
         {
+            // Like e.g. on 400 here https://support.crowdin.com/api/v2/#operation/api.projects.getMany
+            // where "key" is usually "error" as figured out while looking in responses with above code
+            // on most API requests used here
             return response.at("errors").at(0).at("error").at("errors").at(0).at("message");
         }
         catch(...)
         {
             try
             {
+                // Like e.g. on 401 here https://support.crowdin.com/api/v2/#operation/api.user.get
+                // as well as in most other requests on above error code
                 return response.at("error").at("message");
             }
             catch (...)
