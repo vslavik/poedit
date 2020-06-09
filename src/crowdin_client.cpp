@@ -194,8 +194,8 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             catch(...)
             {
                 std::string firstName, lastName;
-                try { firstName = d.at("firstName").get<std::string>(); } catch(...) {}
-                try { lastName = d.at("lastName").get<std::string>(); } catch(...) {}
+                try { firstName = d.at("firstName"); } catch(...) {}
+                try { lastName = d.at("lastName"); } catch(...) {}
                 u.name = str::to_wstring(firstName + ' ' + lastName);
             }
             if(u.name.empty() || u.name == L" ")
@@ -228,8 +228,8 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
 
                     all.push_back({
                         str::to_wstring(i["name"]),
-                        i["identifier"].get<std::string>(),
-                        i["id"].get<int>()
+                        i["identifier"],
+                        i["id"]
                     });
                 }
             }
@@ -268,8 +268,8 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 prj->files.push_back({
                     L"/" + str::to_wstring(d["name"]),
                     d["id"],
-                    dir.is_null() ? NO_ID : dir.get<int>(),
-                    branch.is_null() ? NO_ID : branch.get<int>()
+                    dir.is_null() ? NO_ID : dir,
+                    branch.is_null() ? NO_ID : branch
                 });
             }
         }
@@ -292,7 +292,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 d["id"],
                 {
                     d["name"],
-                    parent.is_null() ? NO_ID : parent.get<int>()
+                    parent.is_null() ? NO_ID : parent
                 }
             });
         }
@@ -328,7 +328,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         for(const auto& i : r["data"])
         {
             const json& d = i["data"];
-            branches[d["id"]] = d["name"].get<std::string>();
+            branches[d["id"]] = d["name"];
         }
 
         for(auto& i : prj->files)
@@ -386,7 +386,7 @@ dispatch::future<void> CrowdinClient::UploadFile(const long project_id,
         )
         .then([this, project_id, file_id, lang] (json r) {
             wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
-            const auto storageId = r["data"]["id"].get<int>();
+            const auto storageId = r["data"]["id"];
             return m_api->post(
                 "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
                 json_data({
@@ -464,7 +464,7 @@ void CrowdinClient::SetToken(const std::string& token)
         domain = json::parse(
             base64_decode_json_part(std::string(
                 wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
-        ))).at("domain").get<std::string>();
+        ))).at("domain");
         domain += ".";
     }
     catch(...) {}
