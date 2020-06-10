@@ -101,7 +101,11 @@ FileViewer::FileViewer(wxWindow*)
     sizer->Add(m_text, 1, wxEXPAND);
 
     m_error = new wxStaticText(panel, wxID_ANY, "");
-    m_error->SetForegroundColour(ExplanationLabel::GetTextColor());
+    ColorScheme::SetupWindowColors(m_error, [=]
+    {
+        m_error->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
+
     m_error->SetFont(m_error->GetFont().Larger().Larger());
     sizer->Add(m_error, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM, PX(80)));
 

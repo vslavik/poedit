@@ -239,8 +239,11 @@ class PoeditListCtrl : public wxDataViewCtrl
                 Col_Max // invalid
             };
 
-            Model(TextDirection appTextDir, ColorScheme::Mode visualMode);
+            Model(TextDirection appTextDir);
             virtual ~Model() {}
+
+            /// Configure items colors & fonts; must be called after ctor.
+            void SetVisualMode(ColorScheme::Mode visualMode);
 
             void SetCatalog(CatalogPtr catalog);
             void UpdateSort();

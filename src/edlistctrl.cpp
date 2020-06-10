@@ -94,17 +94,24 @@ private:
 class DataViewMarkupRenderer : public wxDataViewTextRenderer
 {
 public:
-    DataViewMarkupRenderer(const wxColour& bgHighlight)
+    DataViewMarkupRenderer()
     {
         EnableMarkup();
-        SetValueAdjuster(new Adjuster(bgHighlight));
+        SetValueAdjuster(new Adjuster());
+    }
+
+    void SetHighlightedBgColor(const wxColour& bgHighlight)
+    {
+        static_cast<Adjuster*>(m_valueAdjuster)->SetHighlightedBgColor(bgHighlight);
     }
 
 private:
     class Adjuster : public wxDataViewValueAdjuster
     {
     public:
-        Adjuster(const wxColour& bgHighlight)
+        Adjuster() {}
+
+        void SetHighlightedBgColor(const wxColour& bgHighlight)
         {
             m_bgHighlight = bgHighlight.GetAsString(wxC2S_HTML_SYNTAX);
         }
@@ -143,7 +150,8 @@ private:
 class DataViewMarkupRenderer : public wxDataViewTextRenderer
 {
 public:
-    DataViewMarkupRenderer(const wxColour&) {}
+    DataViewMarkupRenderer() {}
+    void SetHighlightedBgColor(const wxColour&) {}
 };
 
 #endif
@@ -209,7 +217,7 @@ wxString TrimTextValue(const wxString& text, size_t maxChars)
 
 
 
-PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualMode)
+PoeditListCtrl::Model::Model(TextDirection appTextDir)
     : m_frozen(false),
       m_maxVisibleWidth(0),
       m_sourceTextDir(TextDirection::LTR),
@@ -217,9 +225,11 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualM
       m_appTextDir(appTextDir)
 {
     sortOrder = SortOrder::Default();
+}
 
-    // configure items colors & fonts:
 
+void PoeditListCtrl::Model::SetVisualMode(ColorScheme::Mode visualMode)
+{
     m_clrID = ColorScheme::Get(Color::ItemID, visualMode);
     m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visualMode);
     m_clrInvalid = ColorScheme::Get(Color::ItemError, visualMode);
@@ -496,12 +506,23 @@ void PoeditListCtrl::Model::CreateSortMap()
 PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
      : wxDataViewCtrl(parent, id, wxDefaultPosition, wxDefaultSize, wxDV_MULTIPLE | wxDV_ROW_LINES | wxNO_BORDER, wxDefaultValidator, "translations list")
 {
-    auto visualMode = ColorScheme::GetWindowMode(this);
     m_displayIDs = dispIDs;
-
     m_appTextDir = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft) ? TextDirection::RTL : TextDirection::LTR;
 
-    m_model.reset(new Model(m_appTextDir, visualMode));
+    m_model.reset(new Model(m_appTextDir));
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        auto visualMode = ColorScheme::GetWindowMode(this);
+        m_model->SetVisualMode(visualMode);
+    #ifdef __WXMSW__
+        if (visualMode == ColorScheme::Dark)
+            SetAlternateRowColour(GetBackgroundColour().ChangeLightness(108));
+        else
+            SetAlternateRowColour(wxNullColour);
+    #endif
+    });
+
     AssociateModel(m_model.get());
 
     CreateColumns();
@@ -510,10 +531,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
     UpdateHeaderAttrs();
 
 #ifdef __WXMSW__
-    if (visualMode == ColorScheme::Dark)
-        SetAlternateRowColour(GetBackgroundColour().ChangeLightness(108));
-
-    GetMainWindow()->Bind(wxEVT_MENU, [=](wxCommandEvent&) { 
+    GetMainWindow()->Bind(wxEVT_MENU, [=](wxCommandEvent&) {
         SelectAll();
         wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
         ProcessWindowEvent(le); 
@@ -618,12 +636,7 @@ void PoeditListCtrl::CreateColumns()
     m_colIcon = new wxDataViewColumn(L"∙", iconRenderer, Model::Col_Icon, iconWidth, wxALIGN_CENTER, 0);
     AppendColumn(m_colIcon);
 
-#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
-    if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-        m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
-#endif
-
-    auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
+    auto sourceRenderer = new DataViewMarkupRenderer();
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
     m_colSource = new wxDataViewColumn(_("Source text"), sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colSource);
@@ -644,6 +657,17 @@ void PoeditListCtrl::CreateColumns()
     if (m_appTextDir == TextDirection::RTL)
         m_colSource->SetAlignment(wxALIGN_RIGHT);
 #endif
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+    #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+            m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
+        else
+            m_colIcon->GetRenderer()->SetValueAdjuster(nullptr);
+    #endif
+        sourceRenderer->SetHighlightedBgColor(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
+    });
 }
 
 void PoeditListCtrl::UpdateColumns()

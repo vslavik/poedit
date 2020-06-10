@@ -98,8 +98,14 @@ public:
         [btn setBezelStyle:NSSmallSquareBezelStyle];
         [btn setButtonType:NSMomentaryPushInButton];
 
-        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-            SetBackgroundColour(wxColour("#F2FCE2"));
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+                SetBackgroundColour(wxColour("#F2FCE2"));
+            else
+                SetBackgroundColour(GetDefaultAttributes().colBg);
+        });
+
         Bind(wxEVT_PAINT, &ActionButton::OnPaint, this);
     }
 
@@ -168,15 +174,18 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
       m_clrNorm("#444444"),
       m_clrSub("#aaaaaa")
 {
-    switch (ColorScheme::GetWindowMode(this))
+    ColorScheme::SetupWindowColors(this, [=]
     {
-        case ColorScheme::Light:
-            SetBackgroundColour("#fffcf5");
-            break;
-        case ColorScheme::Dark:
-            SetBackgroundColour("#00030a");
-            break;
-    }
+        switch (ColorScheme::GetWindowMode(this))
+        {
+            case ColorScheme::Light:
+                SetBackgroundColour("#fffcf5");
+                break;
+            case ColorScheme::Dark:
+                SetBackgroundColour("#00030a");
+                break;
+        }
+    });
 
 #if defined(__WXOSX__)
     auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();

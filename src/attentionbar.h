@@ -141,11 +141,14 @@ public:
     void HideMessage();
 
 private:
+    void UpdateBgColor();
+
     void OnClose(wxCommandEvent& event);
     void OnAction(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);
 
 private:
+    AttentionMessage::Kind m_currentKind = AttentionMessage::Question;
 #ifdef __WXMSW__
     wxStaticBitmap *m_icon;
 #endif

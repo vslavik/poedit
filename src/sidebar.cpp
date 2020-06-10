@@ -292,11 +292,19 @@ public:
 
         SetSizerAndFit(top);
 
-        // setup mouse hover highlighting:
-        m_bg = parent->GetBackgroundColour();
-        m_bgHighlight = ColorScheme::GetWindowMode(parent) == ColorScheme::Dark
-                        ? m_bg.ChangeLightness(110)
-                        : m_bg.ChangeLightness(95);
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            // setup mouse hover highlighting:
+            m_bg = parent->GetBackgroundColour();
+            m_bgHighlight = ColorScheme::GetWindowMode(parent) == ColorScheme::Dark
+                            ? m_bg.ChangeLightness(110)
+                            : m_bg.ChangeLightness(95);
+            SetBackgroundColour(m_isHighlighted ? m_bgHighlight : m_bg);
+            #ifndef __WXOSX__
+            for (auto c: GetChildren())
+                c->SetBackgroundColour(m_isHighlighted ? m_bgHighlight : m_bg);
+            #endif
+        });
 
         wxWindow* parts [] = { this, m_icon, m_text, m_info, m_moreActions };
         for (auto w : parts)
@@ -368,12 +376,15 @@ private:
     public:
         InfoStaticText(wxWindow *parent) : wxStaticText(parent, wxID_ANY, "100%")
         {
-            SetForegroundColour(ExplanationLabel::GetTextColor());
         #ifdef __WXMSW__
             SetFont(SmallerFont(GetFont()));
         #else
             SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         #endif
+            ColorScheme::SetupWindowColors(this, [=]
+            {
+                SetForegroundColour(ExplanationLabel::GetTextColor());
+            });
         }
 
         void DoEnable(bool) override {} // wxOSX's disabling would break color
@@ -517,11 +528,14 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
                                      _("No Matches Found")
                                 #endif
                                      );
-    m_iGotNothing->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(150));
     m_iGotNothing->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
 #ifdef __WXMSW__
     m_iGotNothing->SetFont(m_iGotNothing->GetFont().Larger());
 #endif
+    ColorScheme::SetupWindowColors(m_iGotNothing, [=]
+    {
+        m_iGotNothing->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(150));
+    });
     m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
 
     BuildSuggestionsMenu();
@@ -857,7 +871,11 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
       m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
-    SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+    });
+
 #ifdef __WXMSW__
     SetDoubleBuffered(true);
 #endif

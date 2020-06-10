@@ -270,7 +270,10 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     #endif
 #endif
 #ifndef __WXGTK__
-    SetForegroundColour(GetTextColor());
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        SetForegroundColour(GetTextColor());
+    });
 #endif
 }
 
@@ -288,7 +291,10 @@ SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
     #endif
 #endif
 #ifndef __WXGTK__
-    SetForegroundColour(GetTextColor());
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        SetForegroundColour(GetTextColor());
+    });
 #endif
 }
 

@@ -82,6 +82,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
     {
         // Labels:
 
+        case Color::Label:
+            #ifdef __WXOSX__
+            return wxColour([NSColor labelColor]);
+            #else
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+            #endif
+
         case Color::SecondaryLabel:
             #ifdef __WXOSX__
             return wxColour([NSColor secondaryLabelColor]);

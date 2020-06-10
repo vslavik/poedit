@@ -35,6 +35,7 @@
 /// Symbolic color names
 enum class Color : size_t
 {
+    Label,
     SecondaryLabel,
 
     ErrorText,
