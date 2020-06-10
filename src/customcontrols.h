@@ -168,11 +168,27 @@ private:
 };
 
 
-// A bit nicer (macOS) and easier to use image button
+/// A bit nicer (macOS), color scheme aware, and easier to use image button
 class ImageButton : public wxBitmapButton
 {
 public:
-    ImageButton(wxWindow *parent, const wxBitmap& bmp);
+    ImageButton(wxWindow *parent, const wxString& bitmapName);
+
+private:
+    wxString m_bitmapName;
+};
+
+
+/// Color scheme aware static bitmap
+class StaticBitmap : public wxStaticBitmap
+{
+public:
+    StaticBitmap(wxWindow *parent, const wxString& bitmapName);
+
+    void SetBitmapName(const wxString& bitmapName);
+
+private:
+    wxString m_bitmapName;
 };
 
 #endif // Poedit_customcontrols_h

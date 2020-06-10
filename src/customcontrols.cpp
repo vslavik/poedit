@@ -31,6 +31,7 @@
 #include "utility.h"
 
 #include <wx/app.h>
+#include <wx/artprov.h>
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/settings.h>
@@ -445,12 +446,49 @@ void ActivityIndicator::StopWithError(const wxString& msg)
 
 
 
-ImageButton::ImageButton(wxWindow *parent, const wxBitmap& bmp)
-    : wxBitmapButton(parent, wxID_ANY, bmp, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT)
+ImageButton::ImageButton(wxWindow *parent, const wxString& bitmapName)
+    : wxBitmapButton(parent, wxID_ANY,
+                     bitmapName.empty() ? wxNullBitmap : wxArtProvider::GetBitmap(bitmapName),
+                     wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT),
+      m_bitmapName(bitmapName)
 {
 #ifdef __WXOSX__
     // don't light up the background when clicked:
     NSButton *view = (NSButton*)GetHandle();
     view.buttonType = NSMomentaryChangeButton;
+#else
+    // refresh template icons on theme change (macOS handles automatically):
+    if (bitmapName.EndsWith("Template"))
+    {
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
+        });
+    }
 #endif
+}
+
+
+StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
+    : wxStaticBitmap(parent, wxID_ANY,
+                     bitmapName.empty() ? wxNullBitmap : wxArtProvider::GetBitmap(bitmapName)),
+      m_bitmapName(bitmapName)
+{
+#ifndef __WXOSX__
+    // refresh template icons on theme change (macOS handles automatically):
+    if (bitmapName.EndsWith("Template"))
+    {
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
+        });
+    }
+#endif
+}
+
+
+void StaticBitmap::SetBitmapName(const wxString& bitmapName)
+{
+    m_bitmapName = bitmapName;
+    SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
 }

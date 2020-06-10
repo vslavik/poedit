@@ -265,10 +265,10 @@ public:
         m_sidebar = parent;
         m_parentBlock = block;
         m_isHighlighted = false;
-        m_icon = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
+        m_icon = new StaticBitmap(this, "SuggestionTMTemplate");
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
-        m_moreActions = new ImageButton(this, wxArtProvider::GetBitmap("DownvoteTemplate"));
+        m_moreActions = new ImageButton(this, "DownvoteTemplate");
 
         m_isPerfect = isFirst
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
@@ -319,7 +319,7 @@ public:
         Bind(wxEVT_PAINT, &SuggestionWidget::OnPaint, this);
     }
 
-    void SetValue(int index, const Suggestion& s, Language lang, const wxBitmap& icon, const wxString& tooltip)
+    void SetValue(int index, const Suggestion& s, Language lang, const wxString& icon, const wxString& tooltip)
     {
         m_value = s;
 
@@ -342,7 +342,7 @@ public:
             m_info->SetLabel(percentStr);
         }
 
-        m_icon->SetBitmap(icon);
+        m_icon->SetBitmapName(icon);
 
         if (m_isPerfect)
             m_isPerfect->GetContainingSizer()->Show(m_isPerfect, percent == 100);
@@ -485,7 +485,7 @@ private:
     SuggestionsSidebarBlock *m_parentBlock;
     Suggestion m_value;
     bool m_isHighlighted;
-    wxStaticBitmap *m_icon;
+    StaticBitmap *m_icon;
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
@@ -506,7 +506,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     m_provider.reset(new SuggestionsProvider);
 
     m_msgSizer = new wxBoxSizer(wxHORIZONTAL);
-    m_msgIcon = new wxStaticBitmap(parent, wxID_ANY, wxNullBitmap);
+    m_msgIcon = new StaticBitmap(parent, wxString());
     m_msgText = new ExplanationLabel(parent, "");
     m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().PXBorderAll());
     m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().PXBorder(wxTOP|wxBOTTOM));
@@ -553,9 +553,9 @@ SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
         delete i;
 }
 
-wxBitmap SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
+wxString SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
 {
-    return wxArtProvider::GetBitmap("SuggestionTMTemplate");
+    return "SuggestionTMTemplate";
 }
 
 wxString SuggestionsSidebarBlock::GetTooltipForSuggestion(const Suggestion&) const
@@ -574,7 +574,7 @@ void SuggestionsSidebarBlock::ClearMessage()
 void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& text)
 {
     m_msgPresent = true;
-    m_msgIcon->SetBitmap(wxArtProvider::GetBitmap(icon));
+    m_msgIcon->SetBitmapName(icon);
     m_msgText->SetAndWrapLabel(text);
     UpdateVisibility();
     m_parent->Layout();
@@ -705,7 +705,7 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
 
         auto label = wxControl::EscapeMnemonics(wxString::Format(formatMask, text, index+1));
         item->SetItemLabel(label);
-        item->SetBitmap(GetIconForSuggestion(s));
+        item->SetBitmap(wxArtProvider::GetBitmap(GetIconForSuggestion(s)));
 
         index++;
     }
