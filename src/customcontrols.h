@@ -26,6 +26,7 @@
 #ifndef Poedit_customcontrols_h
 #define Poedit_customcontrols_h
 
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "language.h"
 
@@ -95,7 +96,7 @@ public:
     static const int CHECKBOX_INDENT = 25;
 #endif
 
-    static wxColour GetTextColor();
+    static wxColour GetTextColor() { return ColorScheme::Get(Color::SecondaryLabel); }
 };
 
 /// Like ExplanationLabel, but nonwrapping

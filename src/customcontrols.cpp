@@ -25,7 +25,6 @@
 
 #include "customcontrols.h"
 
-#include "colorscheme.h"
 #include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
@@ -275,16 +274,6 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 #endif
 }
 
-wxColour ExplanationLabel::GetTextColor()
-{
-#if defined(__WXOSX__)
-    return wxColour("#777777");
-#elif defined(__WXGTK__)
-    return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
-#else
-    return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
-#endif
-}
 
 SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
     : wxStaticText(parent, wxID_ANY, label)
