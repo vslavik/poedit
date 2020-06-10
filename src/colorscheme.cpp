@@ -219,6 +219,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 }
 
 
+void ColorScheme::InvalidateCachesIfNeeded()
+{
+    // invalidate the cached mode:
+    s_appModeDetermined = false;
+}
+
+
 ColorScheme::Mode ColorScheme::GetAppMode()
 {
     if (!s_appModeDetermined)
