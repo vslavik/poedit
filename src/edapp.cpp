@@ -448,7 +448,7 @@ bool PoeditApp::OnInit()
 #endif
 
 #ifndef __WXOSX__
-    wxArtProvider::PushBack(new PoeditArtProvider);
+    wxArtProvider::Push(new PoeditArtProvider);
 #endif
 
     SetupLanguage();
