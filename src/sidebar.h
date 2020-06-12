@@ -42,9 +42,9 @@ class WXDLLIMPEXP_FWD_CORE wxMenu;
 class WXDLLIMPEXP_FWD_CORE wxMenuItem;
 class WXDLLIMPEXP_FWD_CORE wxSizer;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
-class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 
 class ExplanationLabel;
+class StaticBitmap;
 
 struct Suggestion;
 class SuggestionsProvider;
@@ -105,7 +105,7 @@ protected:
 
     virtual void UpdateVisibility();
 
-    virtual wxBitmap GetIconForSuggestion(const Suggestion& s) const;
+    virtual wxString GetIconForSuggestion(const Suggestion& s) const;
     virtual wxString GetTooltipForSuggestion(const Suggestion& s) const;
 
     void ClearMessage();
@@ -134,7 +134,7 @@ protected:
 
     wxSizer *m_msgSizer;
     bool m_msgPresent;
-    wxStaticBitmap *m_msgIcon;
+    StaticBitmap *m_msgIcon;
     ExplanationLabel *m_msgText;
     wxStaticText *m_iGotNothing;
 

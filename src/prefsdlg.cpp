@@ -722,20 +722,13 @@ public:
 
         // FIXME: Neither wxBORDER_ flag produces correct results on macOS or Windows, would need to paint manually
         auto listPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
-#ifdef __WXOSX__
-        // FIXME: In dark mode, listbox color is special and requires NSBox to be rendered correctly
-        if (ColorScheme::GetWindowMode(this) != ColorScheme::Dark)
-#endif
-        {
-            listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
-        }
+
         auto listSizer = new wxBoxSizer(wxVERTICAL);
         listPanel->SetSizer(listSizer);
 
         CreateBuiltinExtractorsUI(listPanel, listSizer);
 
         auto customExLabel = new wxStaticText(listPanel, wxID_ANY, MSW_OR_OTHER(_("Custom extractors:"), _("Custom Extractors:")));
-        customExLabel->SetForegroundColour(ExplanationLabel::GetTextColor());
 #ifdef __WXOSX__
         customExLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
@@ -785,6 +778,24 @@ public:
 
         sizer->AddSpacer(PX(1));
         sizer->Add(buttonSizer, wxSizerFlags().BORDER_MACOS(wxLEFT, PX(1)));
+
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            customExLabel->SetForegroundColour(ExplanationLabel::GetTextColor());
+
+#ifdef __WXOSX__
+            // FIXME: In dark mode, listbox color is special and requires NSBox to
+            //        be rendered correctly, so we just use normal background for now:
+            if (ColorScheme::GetWindowMode(this) == ColorScheme::Dark)
+            {
+                listPanel->SetBackgroundColour(listPanel->GetDefaultAttributes().colBg);
+            }
+            else
+#endif
+            {
+                listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
+            }
+        });
 
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
         m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);

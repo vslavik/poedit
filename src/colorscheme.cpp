@@ -25,6 +25,7 @@
 
 #include "colorscheme.h"
 
+#include <wx/artprov.h>
 #include <wx/settings.h>
 
 #ifdef __WXGTK__
@@ -81,6 +82,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
     switch (color)
     {
         // Labels:
+
+        case Color::Label:
+            #ifdef __WXOSX__
+            return wxColour([NSColor labelColor]);
+            #else
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+            #endif
 
         case Color::SecondaryLabel:
             #ifdef __WXOSX__
@@ -216,6 +224,29 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
     }
 
     return wxColour(); // Visual C++ being silly
+}
+
+
+void ColorScheme::InvalidateCachesIfNeeded()
+{
+    if (!s_appModeDetermined)
+        return; // nothing to do yet
+
+    // invalidate the mode and force re-checking:
+    auto prevMode = s_appMode;
+    s_appModeDetermined = false;
+    if (prevMode == GetAppMode())
+        return;  // mode didn't really check, nothing to invalidate
+
+#ifndef __WXOSX__
+    // Colors are cached for both variants, so don't need to be invalidated.
+    // s_appMode was refreshed above in any case.
+    // That leaves cached template icons in wxArtProvider on non-Mac platforms,
+    // which we can purge by adding a dummy provider:
+    auto dummy = new wxArtProvider();
+    wxArtProvider::Push(dummy);
+    wxArtProvider::Delete(dummy);
+#endif
 }
 
 

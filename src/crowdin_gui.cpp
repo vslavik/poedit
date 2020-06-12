@@ -30,6 +30,7 @@
 
 #include "catalog.h"
 #include "cloud_sync.h"
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "customcontrols.h"
 #include "errors.h"
@@ -66,7 +67,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     SetSizer(sizer);
 
     sizer->AddSpacer(PX(10));
-    auto logo = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("CrowdinLogoTemplate"));
+    auto logo = new StaticBitmap(this, "CrowdinLogoTemplate");
     logo->SetCursor(wxCURSOR_HAND);
     logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(CrowdinClient::WrapLink("/")); });
     sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
@@ -165,7 +166,11 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
         case State::SignedIn:
         {
             auto account = new wxStaticText(this, wxID_ANY, _("Signed in as:"));
-            account->SetForegroundColour(SecondaryLabel::GetTextColor());
+            ColorScheme::SetupWindowColors(account, [=]
+            {
+                account->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+            });
+
             auto name = new wxStaticText(this, wxID_ANY, m_userName);
 #ifdef __WXGTK3__
             // This is needed to avoid missizing text with bold font. See

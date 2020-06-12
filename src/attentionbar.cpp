@@ -73,20 +73,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
 #endif
     m_label = new AutoWrappingText(this, "");
-
-    m_explanation = new AutoWrappingText(this, "");
-    m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
-
-#ifndef __WXOSX__
-    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
-    {
-        m_label->SetForegroundColour(wxColour(0,0,0,180));
-        m_explanation->SetForegroundColour(wxColour(0,0,0,180));
-    }
-#endif
-
+    m_explanation = new ExplanationLabel(this, "");
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
-
     m_checkbox = new wxCheckBox(this, wxID_ANY, "");
 
     auto btnClose = new wxBitmapButton
@@ -97,9 +85,6 @@ AttentionBar::AttentionBar(wxWindow *parent)
                         wxNO_BORDER
                     );
     btnClose->SetToolTip(_("Hide this notification message"));
-#ifdef __WXMSW__
-    btnClose->SetBackgroundColour(GetBackgroundColour());
-#endif
 
 #if defined(__WXOSX__) || defined(__WXMSW__)
     wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
@@ -138,6 +123,29 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     // the bar should be initially hidden
     Show(false);
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        UpdateBgColor();
+
+    #ifndef __WXOSX__
+        // The background is light even in dark mode, so we can't use system label colors in it:
+        if (ColorScheme::GetAppMode() == ColorScheme::Light)
+        {
+            m_label->SetForegroundColour(ColorScheme::Get(Color::Label));
+            m_explanation->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        }
+        else
+        {
+            m_label->SetForegroundColour(*wxBLACK);
+            m_explanation->SetForegroundColour(*wxBLACK);
+        }
+    #endif
+
+    #ifdef __WXMSW__
+        btnClose->SetBackgroundColour(GetBackgroundColour());
+    #endif
+    });
 }
 
 
@@ -154,29 +162,39 @@ void AttentionBar::OnPaint(wxPaintEvent&)
 }
 
 
+void AttentionBar::UpdateBgColor()
+{
+    wxColour bg;
+
+    switch (m_currentKind)
+    {
+        case AttentionMessage::Warning:
+            bg = ColorScheme::Get(Color::AttentionWarningBackground);
+            break;
+        case AttentionMessage::Question:
+            bg = ColorScheme::Get(Color::AttentionQuestionBackground);
+            break;
+        case AttentionMessage::Error:
+            bg = ColorScheme::Get(Color::AttentionErrorBackground);
+            break;
+    }
+
+    SetBackgroundColour(bg);
+
+#ifdef __WXMSW__
+    for (auto w : GetChildren())
+        w->SetBackgroundColour(bg);
+#endif
+}
+
+
 void AttentionBar::ShowMessage(const AttentionMessage& msg)
 {
     if ( msg.IsBlacklisted() )
         return;
 
-    switch ( msg.m_kind )
-    {
-        case AttentionMessage::Warning:
-            SetBackgroundColour(ColorScheme::Get(Color::AttentionWarningBackground));
-            break;
-        case AttentionMessage::Question:
-            SetBackgroundColour(ColorScheme::Get(Color::AttentionQuestionBackground));
-            break;
-        case AttentionMessage::Error:
-            SetBackgroundColour(ColorScheme::Get(Color::AttentionErrorBackground));
-            break;
-    }
-
-#ifdef __WXMSW__
-    auto bg = GetBackgroundColour();
-    for (auto w : GetChildren())
-        w->SetBackgroundColour(bg);
-#endif
+    m_currentKind = msg.m_kind;
+    UpdateBgColor();
 
     wxString iconName;
     switch ( msg.m_kind )

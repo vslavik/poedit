@@ -124,8 +124,8 @@ void ProcessTemplateImage(wxImage& img, bool keepOpaque, bool inverted)
 void ProcessSymbolicImage(wxBitmap& bmp)
 {
     wxAlphaPixelData data(bmp);
-    if (!data) { wxLogError("oh hell");
-        return;}
+    if (!data)
+        return;
 
     const char color = (ColorScheme::GetAppMode() == ColorScheme::Light) ? 0 : 255;
 

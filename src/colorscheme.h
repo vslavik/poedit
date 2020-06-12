@@ -35,6 +35,7 @@
 /// Symbolic color names
 enum class Color : size_t
 {
+    Label,
     SecondaryLabel,
 
     ErrorText,
@@ -116,6 +117,47 @@ public:
 
     static wxColour GetBlendedOn(Color color, wxWindow *win, Color bgColor = Color::Max);
 
+    /**
+        Setup window for updating when color scheme changes.
+
+        Will execute @a update closure initially and then every time system
+        color scheme changes. This allows putting all color-configuration code
+        into the closure without duplication.
+
+        Should be called during window creation from ctor or Create().
+     */
+    template<typename Func>
+    static void SetupWindowColors(wxWindow *win, Func&& setup)
+    {
+        // Initial setup of the window:
+        setup();
+
+        // React to system color scheme changes:
+        win->Bind(wxEVT_SYS_COLOUR_CHANGED, [=](wxSysColourChangedEvent& e)
+        {
+            e.Skip();
+
+            // Do everything as deferred to the next event loop cycle so that
+            // macOS has a chance to update its information about current
+            // appearance that we rely on:
+            win->CallAfter([=]
+            {
+                // Invalidate global cached data. This is effecient if called
+                // repeatedly, so we can do it for every affected window without
+                // worrying about performance impact:
+                InvalidateCachesIfNeeded();
+
+                // Update and redraw the window:
+                setup();
+                win->Refresh();
+            });
+        });
+    }
+
+    /// Simpler version of SetupWindowColors() for when redrawing is enough
+    /// (e.g. native control or all colors fetched in OnPaint)
+    static void RefreshOnChange(wxWindow *win) { SetupWindowColors(win, []{}); }
+
     /// Returns app-wide mode (dark, light)
     static Mode GetAppMode();
     static Mode GetWindowMode(wxWindow *win);
@@ -129,6 +171,7 @@ private:
     };
 
     static wxColour DoGet(Color color, Mode type);
+    static void InvalidateCachesIfNeeded();
 
     static std::unique_ptr<Data> s_data;
     static bool s_appModeDetermined;

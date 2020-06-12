@@ -553,7 +553,12 @@ public:
 AnyTranslatableTextCtrl::AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style)
    : CustomizedTextCtrl(parent, winid, style)
 {
-    m_attrs.reset(new Attributes(this));
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        m_attrs.reset(new Attributes(this));
+        HighlightText();
+    });
+
     Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
         e.Skip();
         HighlightText();
