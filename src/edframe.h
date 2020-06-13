@@ -116,7 +116,7 @@ class PoeditFrame : public PoeditFrameBase
         void WriteCatalog(const wxString& catalog);
 
         template<typename TFunctor>
-        void WriteCatalog(const wxString& catalog, TFunctor completionHandler);
+        void WriteCatalog(const wxString& catalog, TFunctor completionHandler, bool bSkipUpload = false);
 
         void FixDuplicatesIfPresent();
         void WarnAboutLanguageIssues();
@@ -203,7 +203,7 @@ class PoeditFrame : public PoeditFrameBase
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
         template<typename TFunctor>
-        void DoIfCanDiscardCurrentDoc(TFunctor completionHandler);
+        void DoIfCanDiscardCurrentDoc(TFunctor completionHandler, bool bSkipUpload = false);
         bool NeedsToAskIfCanDiscardCurrentDoc() const;
         wxWindowPtr<wxMessageDialog> CreateAskAboutSavingDialog();
 
@@ -379,7 +379,6 @@ private:
         bool m_hasObsoleteItems;
         bool m_displayIDs;
         bool m_setSashPositionsWhenMaximized;
-        bool m_syncing = false;
 };
 
 

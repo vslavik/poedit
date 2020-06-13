@@ -962,7 +962,7 @@ bool PoeditFrame::NeedsToAskIfCanDiscardCurrentDoc() const
 }
 
 template<typename TFunctor>
-void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
+void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler, bool bSkipUpload)
 {
     if ( !NeedsToAskIfCanDiscardCurrentDoc() )
     {
@@ -972,7 +972,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
     wxWindowPtr<wxMessageDialog> dlg = CreateAskAboutSavingDialog();
 
-    dlg->ShowWindowModalThenDo([this,dlg,completionHandler](int retval) {
+    dlg->ShowWindowModalThenDo([this,dlg,completionHandler,bSkipUpload](int retval) {
         // hide the dialog asap, WriteCatalog() may show another modal sheet
         dlg->Hide();
 #ifdef __WXOSX__
@@ -990,7 +990,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
                 WriteCatalog(fn, [=](bool saved){
                     if (saved)
                         completionHandler();
-                });
+                }, bSkipUpload);
             };
             if (!m_fileExistsOnDisk || GetFileName().empty())
                 GetSaveAsFilenameThenDo(m_catalog, doSaveFile);
@@ -1761,16 +1761,17 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 #ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
-    m_syncing = true;
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
             m_catalog = cat;
             EnsureAppropriateContentView();
             NotifyCatalogChanged(m_catalog);
             RefreshControls();
-        });
-    });
-    m_syncing = false;
+        });  
+    }, true); // Set bSkipUpload to true to avoid twice upload of exactly same file with "Sync" button pressed once
+              // 1. DoIfCanDiscardCurrentDoc()=>WriteCatalog()=>CloudSyncProgressWindow::RunSync()=>CrowdinSyncDestination::Upload()=CrowdinClient::UploadFile()
+              // 2. <above lambda>=>CrowdinSyncFile()=>CrowdinClient::UploadFile()
+              // Otherwise reproducable with any file for which "Sync" (with Crowdin) button is active and pressed
 }
 
 void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
@@ -2655,7 +2656,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog)
 }
 
 template<typename TFunctor>
-void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandler)
+void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandler, bool bSkipUpload)
 {
     wxBusyCursor bcur;
 
@@ -2714,17 +2715,11 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    if(!m_catalog->GetCloudSync())
-        if(m_catalog->IsFromCrowdin())
-            m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+    if(!m_catalog->GetCloudSync() && m_catalog->IsFromCrowdin())
+        m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
     
-    if (m_catalog->GetCloudSync())
-        // Avoid redundant upload during same call of 
-        // OnUpdateFromCrowdin()=>
-        // 1. =>DoIfCanDiscardCurrentDoc()=>Upload()
-        // 2. =>CrowdinSyncFile()=>UploadFile()
-        if(!m_syncing)
-            CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+    if (!bSkipUpload && m_catalog->GetCloudSync())
+        CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
 
     if (tmUpdateThread.valid())
         tmUpdateThread.wait();
