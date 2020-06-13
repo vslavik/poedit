@@ -195,16 +195,26 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
-            try { u.name = str::to_wstring(d.at("fullName")); }
-            catch(...)
+            std::string fullName;
+            try { fullName = d.at("fullName"); } // if indvidual (not enterprise) account 
+            catch(...) // or enterpise otherwise
             {
-                std::string firstName, lastName;
-                try { firstName = d.at("firstName"); } catch(...) {}
-                try { lastName = d.at("lastName"); } catch(...) {}
-                u.name = str::to_wstring(firstName + ' ' + lastName);
+                try { fullName = d.at("firstName"); } catch(...) {}
+                try
+                {
+                    std::string lastName = d.at("lastName");
+                    if(!lastName.empty())
+                    {
+                        if(!fullName.empty())
+                            fullName += " ";
+                        fullName += lastName;
+                    }
+                } catch(...) {}
             }
-            if(u.name.empty() || u.name == L" ")
+            if(fullName.empty())
                 u.name = u.login;
+            else
+                u.name = str::to_wstring(fullName);
             return u;
         });
 }
