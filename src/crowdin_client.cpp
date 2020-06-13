@@ -247,7 +247,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 {
     auto url = "projects/" + std::to_string(project_id);
     auto prj = std::make_shared<ProjectInfo>();
-    enum { NO_ID = -1 };
+    enum : int { NO_ID = -1 };
         
     return m_api->get(url)
     .then([this, url, prj](json r)
@@ -273,8 +273,8 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 prj->files.push_back({
                     L'/' + str::to_wstring(d["name"]),
                     d["id"],
-                    dir.is_null() ? NO_ID : dir,
-                    branch.is_null() ? NO_ID : branch
+                    dir.is_null() ? NO_ID : int(dir),
+                    branch.is_null() ? NO_ID : int(branch)
                 });
             }
         }
@@ -297,7 +297,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
                 d["id"],
                 {
                     d["name"],
-                    parent.is_null() ? NO_ID : parent
+                    parent.is_null() ? NO_ID : int(parent)
                 }
             });
         }
