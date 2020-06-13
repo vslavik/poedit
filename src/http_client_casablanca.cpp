@@ -182,6 +182,12 @@ public:
     dispatch::future<::json> get(const std::string& url)
     {
         http::http_request req(http::methods::GET);
+        // For some very strange reason if to uncomment below line (i.e. to add "Accept: application/json" header)
+        // then GET /user API request in CrowdinClient::GetUserInfo() causes
+        // 406 "Incorrect Accept Header. 'application/json' expected" error response raised to CrowdinClient::on_error_response()
+        // And this happens only on Linux even with latest https://github.com/microsoft/cpprestsdk/commit/7fbb08c491f9c8888cc0f3d86962acb3af672772 (as of writting this comment)
+        // While no problem on Windows and Mac
+        // req.headers().add(http::header_names::accept, L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
@@ -231,6 +237,8 @@ public:
     dispatch::future<::json> post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
     {
         http::http_request req(http::methods::POST);
+        // Same reason of commenting below line as in http_client::impl::get() above
+        // req.headers().add(http::header_names::accept, L"application/json");
         for(const auto& h : hdrs)
             req.headers().add(
                 to_string_t(h.first),
