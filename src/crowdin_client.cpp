@@ -377,7 +377,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
             // Per download (local) client must be created since different domain
             // per request is not allowed by HTTP client backend on some platorms.
             // (e.g. on Linux).
-            auto downloader = std::make_shared<crowdin_http_client>(*this, std::string((uri.GetScheme() + "://" + uri.GetServer()).mb_str()));
+            auto downloader = std::make_shared<crowdin_http_client>(*this, str::to_utf8(uri.GetScheme() + "://" + uri.GetServer()));
             wxLogTrace("poedit.crowdin", "Gotten file URL: %s", r.dump().c_str());
             // Below capturing of `[downloader]` is needed to preserve `downloader` object
             // from being destroyed before `download(...)` completes asynchroneously
