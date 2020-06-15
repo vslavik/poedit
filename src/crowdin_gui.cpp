@@ -385,17 +385,6 @@ private:
     void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
     {
         m_info = prj;
-        // Put supported files first in the list:
-        std::vector<CrowdinClient::FileInfo> f_unsup;
-        m_info.files.clear();
-        m_supportedFilesCount = 0;
-        for (auto& i: prj.files)
-        {
-            m_info.files.push_back(i);
-            m_supportedFilesCount++;
-        }
-        std::move(f_unsup.begin(), f_unsup.end(), std::inserter(m_info.files, m_info.files.end()));
-
         m_language->Clear();
         m_language->Append("");
         for (auto& i: m_info.languages)
@@ -431,10 +420,10 @@ private:
             }
         }
 
-        if (m_supportedFilesCount == 1)
+        if (m_info.files.size() == 1)
             m_file->SetSelection(1);
 
-        if (m_supportedFilesCount == 0)
+        if (m_info.files.size() == 0)
         {
             m_activity->StopWithError(_("This project has no files that can be translated in Poedit."));
             m_file->Disable();
@@ -445,7 +434,7 @@ private:
     void OnFileSelected()
     {
         auto filesel = m_file->GetSelection();
-        if (filesel - 1 < m_supportedFilesCount)
+        if (filesel - 1 < (int)m_info.files.size())
             m_activity->Stop();
         else
             m_activity->StopWithError(_(L"This file can only be edited in Crowdin’s web interface."));
@@ -457,7 +446,7 @@ private:
         e.Enable(!m_activity->IsRunning() &&
                  m_project->GetSelection() > 0 &&
                  m_language->GetSelection() > 0 &&
-                 filesel > 0 && filesel - 1 < m_supportedFilesCount);
+                 filesel > 0 && filesel - 1 < (int)m_info.files.size());
     }
 
     void OnOK(wxCommandEvent&)
@@ -510,7 +499,6 @@ private:
 
     std::vector<CrowdinClient::ProjectListing> m_projects;
     CrowdinClient::ProjectInfo m_info;
-    int m_supportedFilesCount;
 };
 
 } // anonymous namespace
