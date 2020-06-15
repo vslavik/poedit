@@ -38,6 +38,9 @@
 #include <wx/msw/uxtheme.h>
 #endif
 
+#ifdef __WXGTK3__
+#include <gtk/gtk.h>
+#endif
 
 #ifdef __WXOSX__
 
@@ -203,6 +206,25 @@ void SwitchButton::SetColors(const wxColour& on, const wxColour& offLabel)
 #ifdef __WXMSW__
     m_clrOn = on;
     m_clrOffLabel = offLabel;
+#endif
+
+#ifdef __WXGTK3__
+    static const char *css_style = R"(
+        * {
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            font-size: 80%;
+            color: %s;
+        }
+
+        *:checked {
+            color: %s;
+        }
+    )";
+    auto css_on = on.GetAsString(wxC2S_CSS_SYNTAX);
+    auto css_off = offLabel.GetAsString(wxC2S_CSS_SYNTAX);
+    GTKApplyCssStyle(wxString::Format(css_style, css_off, css_on).utf8_str());
 #endif
 }
 
