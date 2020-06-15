@@ -483,7 +483,7 @@ private:
             + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
             << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
        
-        if(localFileName.GetExt().CmpNoCase("po"))// if not PO
+        if(localFileName.GetExt().CmpNoCase("po") != 0)// if not PO
             localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
  
         if (!wxFileName::DirExists(localFileName.GetPath()))
@@ -612,8 +612,8 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                 dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
-                if(filename.GetExt().CmpNoCase("po"))// if not PO
-                    filename.SetFullName(filename.GetName());// set original filename extension
+                if(filename.GetExt().CmpNoCase("po") != 0)// if not PO
+                    filename.SetFullName(filename.GetName());// set remote (Crowdin side) filename extension
                 return CrowdinClient::Get().DownloadFile(
                         catalog->GetCrowdinProjectId(),
                         crowdin_lang,
