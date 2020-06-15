@@ -45,6 +45,8 @@
 #ifdef __WXOSX__
 
 #import <AppKit/AppKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #include "StyleKit.h"
 
 // ---------------------------------------------------------------------
@@ -57,7 +59,7 @@
 @property NSColor* labelOffColor;
 @property BOOL isDarkMode;
 @property SwitchButton *parent;
-@property double animationPosition;
+@property (nonatomic) double animationPosition;
 
 @end
 
@@ -99,8 +101,24 @@
                              isDarkMode:self.isDarkMode];
 }
 
+- (void)setAnimationPosition:(double)animationPosition
+{
+    _animationPosition = animationPosition;
+    self.needsDisplay = YES;
+}
+
++ (id)defaultAnimationForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"animationPosition"])
+        return [CABasicAnimation animation];
+
+    return [super defaultAnimationForKey:key];
+}
+
 - (void)setState:(NSInteger)state
 {
+    if (state == self.state)
+        return;
     [super setState:state];
     self.animationPosition = (state == NSOnState) ? 1.0 : 0.0;
 }
@@ -108,7 +126,11 @@
 - (void)controlAction:(id)sender
 {
     #pragma unused(sender)
-    self.animationPosition = (self.state == NSOnState) ? 1.0 : 0.0;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
+    {
+        context.duration = 0.1;
+        self.animator.animationPosition = (self.state == NSOnState) ? 1.0 : 0.0;
+    }];
     _parent->SendToggleEvent();
 }
 
