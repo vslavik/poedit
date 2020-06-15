@@ -55,6 +55,7 @@
 
 @property NSColor* onColor;
 @property NSColor* labelOffColor;
+@property BOOL isDarkMode;
 @property SwitchButton *parent;
 @property double animationPosition;
 
@@ -83,6 +84,7 @@
     [super sizeToFit];
     NSSize size = self.frame.size;
     size.width += 36;
+    size.height += 2;
     [self setFrameSize:size];
 }
 
@@ -93,7 +95,8 @@
                                 onColor:self.onColor
                           labelOffColor:self.labelOffColor
                                   label:self.title
-                         togglePosition:self.animationPosition];
+                         togglePosition:self.animationPosition
+                             isDarkMode:self.isDarkMode];
 }
 
 - (void)setState:(NSInteger)state
@@ -123,10 +126,11 @@ public:
 
     NSView *View() const { return m_view; }
 
-    void SetColors(const wxColour& on, const wxColour& offLabel)
+    void SetColors(const wxColour& on, const wxColour& offLabel, bool isDarkMode)
     {
         m_view.onColor = on.OSXGetNSColor();
         m_view.labelOffColor = offLabel.OSXGetNSColor();
+        m_view.isDarkMode = isDarkMode;
     }
 
     void SetValue(bool value)
@@ -157,7 +161,7 @@ SwitchButton::~SwitchButton()
 
 void SwitchButton::SetColors(const wxColour& on, const wxColour& offLabel)
 {
-    m_impl->SetColors(on, offLabel);
+    m_impl->SetColors(on, offLabel, ColorScheme::GetWindowMode(this) == ColorScheme::Dark);
 }
 
 void SwitchButton::SetValue(bool value)
