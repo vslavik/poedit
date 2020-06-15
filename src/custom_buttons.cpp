@@ -404,6 +404,7 @@ TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const w
 TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const wxString& label)
 {
     wxButton::Create(parent, winid, label);
+
 #ifdef __WXMSW__
     if (IsWindows10OrGreater())
     {
@@ -415,6 +416,23 @@ TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const w
                 SetBackgroundColour(GetDefaultAttributes().colBg);
         });
     }
+#endif
+
+#ifdef __WXGTK3__
+    GTKApplyCssStyle(R"(
+        * {
+            background-image: none;
+            background-color: rgba(255,255,255,0.5);
+            color: rgba(0,0,0,0.7);
+            text-shadow: none;
+            border-color: rgba(0,0,0,0.3);
+            border-image: none;
+            border-radius: 2;
+        }
+        *:hover {
+            background-color: rgba(255,255,255,0.7);
+        }
+    )");
 #endif
 }
 
