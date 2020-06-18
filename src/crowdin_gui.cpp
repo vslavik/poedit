@@ -481,7 +481,7 @@ private:
             + wxFILE_SEP_PATH + projectName
             + wxFILE_SEP_PATH + lang.Code()
             + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
-            << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
+            + "CrowdinSync_" << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
        
         if(localFileName.GetExt().CmpNoCase("po") != 0)// if not PO
             localFileName.SetFullName(localFileName.GetFullName() + ".xliff");

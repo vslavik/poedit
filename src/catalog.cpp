@@ -597,12 +597,25 @@ void Catalog::SetFileName(const wxString& fn)
 {
     wxFileName f(fn);
     f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
-    auto name = f.GetName();
-    name.ToLong(&m_crowdinProjectId);
-    name.AfterFirst('_').ToLong(&m_crowdinFileId);
     m_fileName = f.GetFullPath();
 }
 
+bool Catalog::IsFromCrowdin() const
+{
+    if((m_crowdinFileId > 0 && m_crowdinProjectId) > 0
+        || (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File")))
+        return true;
+
+    auto name = wxFileName(m_fileName).GetName();
+    if(name.StartsWith("CrowdinSync_"))
+    {
+        name = name.AfterFirst('_');
+        name.ToLong(&m_crowdinProjectId);
+        name.AfterFirst('_').ToLong(&m_crowdinFileId);
+    }
+
+    return m_crowdinFileId > 0 && m_crowdinProjectId > 0;
+}
 
 namespace
 {
