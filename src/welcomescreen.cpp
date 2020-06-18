@@ -157,7 +157,7 @@ public:
     HeaderStaticText(wxWindow *parent, wxWindowID id, const wxString& text)
         : wxStaticText(parent, id, "")
     {
-        SetLabelMarkup("<big><b>" + text + "</b></big>");
+        SetLabelMarkup("<span size='xx-large' weight='500'>" + text + "</span>");
     }
 
     virtual bool SetFont(const wxFont&) { return true; }
@@ -172,40 +172,26 @@ typedef wxStaticText HeaderStaticText;
 } // anonymous namespace
 
 
-WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
-    : wxPanel(parent, wxID_ANY),
-      m_clrHeader("#555555"),
-      m_clrNorm("#444444"),
-      m_clrSub("#aaaaaa")
+WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
     ColorScheme::SetupWindowColors(this, [=]
     {
         switch (ColorScheme::GetWindowMode(this))
         {
             case ColorScheme::Light:
-                SetBackgroundColour("#fffcf5");
+                SetBackgroundColour("#fdfdfd");
                 break;
             case ColorScheme::Dark:
-                SetBackgroundColour("#00030a");
+                SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
                 break;
         }
     });
 
-#if defined(__WXOSX__)
     auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
-    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface).Light());
-    m_fntNorm = wxFont(wxFontInfo(13).FaceName(guiface).Light());
-    m_fntSub = wxFont(wxFontInfo(11).FaceName(guiface).Light());
-#elif defined(__WXMSW__)
-    #define HEADER_FACE "Segoe UI"
-    m_fntHeader = wxFont(wxFontInfo(20).FaceName("Segoe UI Light").AntiAliased());
-    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE));
-    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE));
+#if defined(__WXOSX__)
+    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface));//.Light());
 #else
-    #define HEADER_FACE "sans serif"
-    m_fntHeader = wxFont(wxFontInfo(16).FaceName(HEADER_FACE).Light());
-    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE).Light());
-    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE).Light());
+    m_fntHeader = wxFont(wxFontInfo(22).FaceName(guiface).AntiAliased());
 #endif
 
     // Translate all button events to wxEVT_MENU and send them to the frame.
@@ -234,12 +220,9 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
-    header->SetForegroundColour(m_clrHeader);
     headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
-    version->SetFont(m_fntSub);
-    version->SetForegroundColour(m_clrSub);
     headerSizer->Add(version, wxSizerFlags().Center());
 
     headerSizer->AddSpacer(PX(20));
@@ -269,6 +252,12 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     sizer->AddSpacer(PX(50));
 
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        header->SetForegroundColour(ColorScheme::Get(Color::Label));
+        version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
+
     // Hide the cosmetic logo part if the screen is too small:
     auto minFullSize = sizer->GetMinSize().y + PX(50);
     Bind(wxEVT_SIZE, [=](wxSizeEvent& e){
@@ -292,40 +281,45 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
 
     auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
-    header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
 
-    auto explain = new wxStaticText(this, wxID_ANY, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
-    explain->SetFont(m_fntNorm);
-    explain->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain, wxSizerFlags());
+    auto explain = new AutoWrappingText(this, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
+    sizer->Add(explain, wxSizerFlags().Expand().Border(wxTOP, PX(10)));
 
     auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
-    sizer->Add(learnMore, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
+    sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM, PX(15)).Align(wxALIGN_RIGHT));
 
     auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));
-    explain2->SetFont(m_fntNorm);
-    explain2->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain2, wxSizerFlags().PXDoubleBorder(wxTOP));
+    sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_update_from_pot"),
                        _("Update from POT"),
                        _("Take translatable strings from an existing POT template.")),
-               wxSizerFlags().PXBorderAll().Expand());
+               wxSizerFlags().Expand());
+    sizer->AddSpacer(PX(20));
 
     auto explain3 = new wxStaticText(this, wxID_ANY, _("You can also extract translatable strings directly from the source code:"));
-    explain3->SetFont(m_fntNorm);
-    explain3->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain3, wxSizerFlags().PXDoubleBorder(wxTOP));
+    sizer->Add(explain3, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
     auto btnSources = new ActionButton(
                        this, wxID_ANY,
                        _("Extract from sources"),
                        _("Configure source code extraction in Properties."));
-    sizer->Add(btnSources, wxSizerFlags().PXBorderAll().Expand());
+    sizer->Add(btnSources, wxSizerFlags().Expand());
+    sizer->AddSpacer(PX(20));
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        header->SetForegroundColour(ColorScheme::Get(Color::Label));
+        explain->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        explain2->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        explain3->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
 
     btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
         parent->EditCatalogPropertiesAndUpdateFromSources();
     });
+
+    Layout();
 }

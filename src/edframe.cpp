@@ -664,10 +664,10 @@ void PoeditFrame::EnsureContentView(Content type)
     m_contentType = type;
     m_contentWrappingSizer->Add(m_contentView, wxSizerFlags(1).Expand());
     Layout();
-#ifdef __WXMSW__
+
+    // force correct layout:
     m_contentView->Show();
     Layout();
-#endif
 }
 
 void PoeditFrame::EnsureAppropriateContentView()
