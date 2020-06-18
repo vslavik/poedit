@@ -611,7 +611,7 @@ void XLIFF1Catalog::Parse(pugi::xml_node root)
         if(id == 0)
         {
             m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
-            SetLanguage(Language::TryParse(file.attribute("target-language").value()));
+            m_language = Language::TryParse(file.attribute("target-language").value());
         }
         
         for (auto unit: file.select_nodes(".//trans-unit"))
@@ -748,7 +748,7 @@ protected:
 void XLIFF2Catalog::Parse(pugi::xml_node root)
 {
     m_sourceLanguage = Language::TryParse(root.attribute("srcLang").value());
-    SetLanguage(Language::TryParse(root.attribute("trgLang").value()));
+    m_language = Language::TryParse(root.attribute("trgLang").value());
 
     int id = 0;
     for (auto segment: root.select_nodes(".//segment"))
