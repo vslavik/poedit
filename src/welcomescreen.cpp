@@ -45,83 +45,87 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
-#ifndef __WXOSX__
-#include <wx/commandlinkbutton.h>
+#ifdef __WXOSX__
+    #include "StyleKit.h"
+    #include <wx/nativewin.h>
+    #if !wxCHECK_VERSION(3,1,0)
+        #include "wx_backports/nativewin.h"
+    #endif
+#else
+    #include <wx/commandlinkbutton.h>
 #endif
+
+#ifdef __WXOSX__
+
+@interface POWelcomeButton : NSButton
+
+@property wxWindow *parent;
+@property NSString *heading;
+
+@end
+
+@implementation POWelcomeButton
+
+- (id)initWithLabel:(NSString*)label heading:(NSString*)heading
+{
+    self = [super init];
+    if (self)
+    {
+        self.title = label;
+        self.heading = heading;
+    }
+    return self;
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    NSSize size = self.frame.size;
+    size.height = 64;
+    [self setFrameSize:size];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    #pragma unused(dirtyRect)
+    [StyleKit drawWelcomeButtonWithFrame:self.bounds
+                                    icon:self.image
+                                   label:self.heading
+                             description:self.title
+                              isDarkMode:(ColorScheme::GetWindowMode(self.parent) == ColorScheme::Dark)
+                                 pressed:[self isHighlighted]];
+}
+
+- (void)controlAction:(id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_BUTTON, _parent->GetId());
+    event.SetEventObject(_parent);
+    _parent->ProcessWindowEvent(event);
+}
+
+@end
+
+#endif // __WXOSX__
 
 namespace
 {
 
 #ifdef __WXOSX__
 
-class ActionButton : public wxWindow
+class ActionButton : public wxNativeWindow
 {
 public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxWindow(parent, wxID_ANY)
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString())
     {
-        SetMinSize(wxSize(500, 65));
+        SetMinSize(wxSize(510, -1));
 
-        m_button = new wxButton(this, winid, "");
-        auto sizer = new wxBoxSizer(wxHORIZONTAL);
-        sizer->Add(m_button, wxSizerFlags(1).Expand());
-        SetSizer(sizer);
-
-        NSButton *btn = (NSButton*)m_button->GetHandle();
-
-        NSString *str = str::to_NS(label + "\n" + note);
-        NSRange topLine = NSMakeRange(0, label.length() + 1);
-        NSRange bottomLine = NSMakeRange(label.length() + 1, note.length());
-
-        NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:str];
-        [s addAttribute:NSFontAttributeName
-                  value:[NSFont systemFontOfSize:[NSFont systemFontSize]+1]
-                  range:topLine];
-        [s addAttribute:NSFontAttributeName
-                  value:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]]
-                  range:bottomLine];
-        [s addAttribute:NSForegroundColorAttributeName
-                  value:[NSColor grayColor]
-                  range:bottomLine];
-
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.headIndent = 10.0;
-        paragraphStyle.firstLineHeadIndent = 10.0;
-        paragraphStyle.tailIndent = -10.0;
-        paragraphStyle.lineSpacing = 2.0;
-        [s addAttribute:NSParagraphStyleAttributeName
-                  value:paragraphStyle
-                  range:NSMakeRange(0, [s length])];
-
-        [btn setAttributedTitle:s];
-        [btn setShowsBorderOnlyWhileMouseInside:YES];
-        [btn setBezelStyle:NSSmallSquareBezelStyle];
-        [btn setButtonType:NSMomentaryPushInButton];
-
-        ColorScheme::SetupWindowColors(this, [=]
-        {
-            if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-                SetBackgroundColour(wxColour("#F2FCE2"));
-            else
-                SetBackgroundColour(GetDefaultAttributes().colBg);
-        });
-
-        Bind(wxEVT_PAINT, &ActionButton::OnPaint, this);
+        POWelcomeButton *view = [[POWelcomeButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
+        if (!image.empty())
+            view.image = [NSImage imageNamed:str::to_NS(image)];
+        view.parent = this;
+        wxNativeWindow::Create(parent, winid, view);
     }
-
-private:
-    void OnPaint(wxPaintEvent&)
-    {
-        wxPaintDC dc(this);
-        wxRect rect(dc.GetSize());
-        auto bg = GetBackgroundColour();
-        dc.SetBrush(bg);
-        dc.SetPen(bg.ChangeLightness(90));
-        dc.DrawRoundedRectangle(rect, 2);
-        dc.DrawRectangle(rect.x+1, rect.y+rect.height-2, rect.width-2, 2);
-    }
-
-    wxButton *m_button;
 };
 
 #elif defined(__WXGTK__)
