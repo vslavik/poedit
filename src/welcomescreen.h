@@ -35,8 +35,7 @@ class WelcomeScreenBase : public wxPanel
 protected:
     WelcomeScreenBase(wxWindow *parent);
 
-    wxFont m_fntHeader, m_fntNorm, m_fntSub;
-    wxColour m_clrHeader, m_clrNorm, m_clrSub;
+    wxFont m_fntHeader;
 };
 
 /// Content view for initially opened Poedit, without a file

@@ -32,7 +32,8 @@
 @interface StyleKit : NSObject
 
 // Drawing Methods
-+ (void)drawSwitchButtonWithFrame: (NSRect)frame onColor: (NSColor*)onColor labelOffColor: (NSColor*)labelOffColor label: (NSString*)label togglePosition: (CGFloat)togglePosition;
++ (void)drawSwitchButtonWithFrame: (NSRect)frame onColor: (NSColor*)onColor labelOffColor: (NSColor*)labelOffColor label: (NSString*)label togglePosition: (CGFloat)togglePosition isDarkMode: (BOOL)isDarkMode;
 + (void)drawTranslucentButtonWithFrame: (NSRect)frame label: (NSString*)label pressed: (BOOL)pressed;
++ (void)drawWelcomeButtonWithFrame: (NSRect)frame icon: (NSImage*)icon label: (NSString*)label description: (NSString*)description isDarkMode: (BOOL)isDarkMode pressed: (BOOL)pressed;
 
 @end

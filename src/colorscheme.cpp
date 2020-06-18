@@ -180,7 +180,11 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::FuzzySwitch:
             return mode == Dark ? sRGB(253, 178, 72) : sRGB(244, 143, 0);
         case Color::FuzzySwitchInactive:
+            #ifdef __WXGTK__
             return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
+            #else
+            return DoGet(Color::SecondaryLabel, mode);
+            #endif
 
         // Syntax highlighting:
 

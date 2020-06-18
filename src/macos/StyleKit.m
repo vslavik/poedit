@@ -38,29 +38,29 @@
 
 #pragma mark Drawing Methods
 
-+ (void)drawSwitchButtonWithFrame: (NSRect)frame onColor: (NSColor*)onColor labelOffColor: (NSColor*)labelOffColor label: (NSString*)label togglePosition: (CGFloat)togglePosition
++ (void)drawSwitchButtonWithFrame: (NSRect)frame onColor: (NSColor*)onColor labelOffColor: (NSColor*)labelOffColor label: (NSString*)label togglePosition: (CGFloat)togglePosition isDarkMode: (BOOL)isDarkMode
 {
     //// General Declarations
     CGContextRef context = NSGraphicsContext.currentContext.CGContext;
 
     //// Color Declarations
-    NSColor* offColor = [NSColor colorWithCalibratedRed: 0.682 green: 0.682 blue: 0.682 alpha: 1];
-
-    //// Shadow Declarations
-    NSShadow* shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.2]];
-    [shadow setShadowOffset: NSMakeSize(0.1, -2.1)];
-    [shadow setShadowBlurRadius: 2];
+    NSColor* offColorLight = [NSColor colorWithCalibratedRed: 0.784 green: 0.784 blue: 0.784 alpha: 1];
+    NSColor* offColorDark = [NSColor colorWithCalibratedRed: 0.222 green: 0.222 blue: 0.222 alpha: 1];
+    NSColor* white = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
 
     //// Variable Declarations
-    BOOL toggled = togglePosition > 0;
-    NSColor* backgroundColor = toggled ? onColor : offColor;
+    BOOL toggled = togglePosition > 0.5;
     NSColor* labelColor = toggled ? onColor : labelOffColor;
-    CGFloat toggleHorizOffset = -12 * (1 - togglePosition);
+    CGFloat toggleHorizOffset = -11 * (1 - togglePosition);
+    NSColor* offColor = isDarkMode ? offColorDark : offColorLight;
+    NSColor* backgroundColor = toggled ? onColor : offColor;
+    NSColor* toggleStrokeColor = isDarkMode && !toggled ? [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 0.2] : [NSColor colorWithCalibratedRed: 0.1 green: 0.1 blue: 0.1 alpha: 0.1];
+    NSColor* toggleInnerStrokeColor = isDarkMode && toggled ? [NSColor colorWithCalibratedRed: 0.1 green: 0.1 blue: 0.1 alpha: 0.3] : [NSColor colorWithCalibratedRed: 0.1 green: 0.1 blue: 0.1 alpha: 0.1];
+    NSColor* toggleColor = isDarkMode ? [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 0.8] : white;
 
 
     //// Subframes
-    NSRect toggle = NSMakeRect(NSMinX(frame) + NSWidth(frame) - 27, NSMinY(frame) + floor((NSHeight(frame) - 14) * 0.50000 + 0.5), 26, 14);
+    NSRect toggle = NSMakeRect(NSMinX(frame) + NSWidth(frame) - 30, NSMinY(frame) + floor((NSHeight(frame) - 16) * 0.50000 + 0.5), 28, 16);
 
 
     //// Toggle
@@ -70,15 +70,15 @@
 
         //// Clip BackgroundCopy
         NSBezierPath* backgroundCopyPath = [NSBezierPath bezierPath];
-        [backgroundCopyPath moveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7)];
-        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 7.71, NSMinY(toggle)) controlPoint1: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 3.13) controlPoint2: NSMakePoint(NSMinX(toggle) + 3.17, NSMinY(toggle))];
-        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 18.29, NSMinY(toggle))];
-        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 7) controlPoint1: NSMakePoint(NSMinX(toggle) + 22.82, NSMinY(toggle)) controlPoint2: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 3.13)];
-        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 7)];
-        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 18.29, NSMinY(toggle) + 14) controlPoint1: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 10.87) controlPoint2: NSMakePoint(NSMinX(toggle) + 22.83, NSMinY(toggle) + 14)];
-        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 7.71, NSMinY(toggle) + 14)];
-        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.18, NSMinY(toggle) + 14) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 10.87)];
-        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7)];
+        [backgroundCopyPath moveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
+        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 8, NSMinY(toggle)) controlPoint1: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 3.58) controlPoint2: NSMakePoint(NSMinX(toggle) + 3.11, NSMinY(toggle))];
+        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 20, NSMinY(toggle))];
+        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 24.88, NSMinY(toggle)) controlPoint2: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 3.58)];
+        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 8)];
+        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle) + 20, NSMinY(toggle) + 16) controlPoint1: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 12.42) controlPoint2: NSMakePoint(NSMinX(toggle) + 24.89, NSMinY(toggle) + 16)];
+        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle) + 8, NSMinY(toggle) + 16)];
+        [backgroundCopyPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.12, NSMinY(toggle) + 16) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 12.42)];
+        [backgroundCopyPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
         [backgroundCopyPath closePath];
         [backgroundCopyPath setWindingRule: NSEvenOddWindingRule];
         [backgroundCopyPath addClip];
@@ -86,32 +86,34 @@
 
         //// Background Drawing
         NSBezierPath* backgroundPath = [NSBezierPath bezierPath];
-        [backgroundPath moveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7)];
-        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 7.71, NSMinY(toggle)) controlPoint1: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 3.13) controlPoint2: NSMakePoint(NSMinX(toggle) + 3.17, NSMinY(toggle))];
-        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 18.29, NSMinY(toggle))];
-        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 7) controlPoint1: NSMakePoint(NSMinX(toggle) + 22.82, NSMinY(toggle)) controlPoint2: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 3.13)];
-        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 7)];
-        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 18.29, NSMinY(toggle) + 14) controlPoint1: NSMakePoint(NSMinX(toggle) + 26, NSMinY(toggle) + 10.87) controlPoint2: NSMakePoint(NSMinX(toggle) + 22.83, NSMinY(toggle) + 14)];
-        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 7.71, NSMinY(toggle) + 14)];
-        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.18, NSMinY(toggle) + 14) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 10.87)];
-        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 7)];
+        [backgroundPath moveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
+        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 8, NSMinY(toggle)) controlPoint1: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 3.58) controlPoint2: NSMakePoint(NSMinX(toggle) + 3.11, NSMinY(toggle))];
+        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 20, NSMinY(toggle))];
+        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 24.88, NSMinY(toggle)) controlPoint2: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 3.58)];
+        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 8)];
+        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle) + 20, NSMinY(toggle) + 16) controlPoint1: NSMakePoint(NSMinX(toggle) + 28, NSMinY(toggle) + 12.42) controlPoint2: NSMakePoint(NSMinX(toggle) + 24.89, NSMinY(toggle) + 16)];
+        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle) + 8, NSMinY(toggle) + 16)];
+        [backgroundPath curveToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8) controlPoint1: NSMakePoint(NSMinX(toggle) + 3.12, NSMinY(toggle) + 16) controlPoint2: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 12.42)];
+        [backgroundPath lineToPoint: NSMakePoint(NSMinX(toggle), NSMinY(toggle) + 8)];
         [backgroundPath closePath];
         [backgroundPath setWindingRule: NSEvenOddWindingRule];
         [backgroundColor setFill];
         [backgroundPath fill];
+        [toggleStrokeColor setStroke];
+        [backgroundPath setLineWidth: 1];
+        [backgroundPath stroke];
 
 
         //// Button Drawing
         [NSGraphicsContext saveGraphicsState];
-        CGContextTranslateCTM(context, NSMinX(toggle) + 13, NSMinY(toggle) + 1);
+        CGContextTranslateCTM(context, NSMinX(toggle) + 13, NSMinY(toggle) + 1.5);
 
-        NSBezierPath* buttonPath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(toggleHorizOffset, 0, 12, 12)];
-        [NSGraphicsContext saveGraphicsState];
-        [shadow set];
-        [NSColor.whiteColor setFill];
+        NSBezierPath* buttonPath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(toggleHorizOffset, 0, 13, 13)];
+        [toggleColor setFill];
         [buttonPath fill];
-        [NSGraphicsContext restoreGraphicsState];
-
+        [toggleInnerStrokeColor setStroke];
+        [buttonPath setLineWidth: 1];
+        [buttonPath stroke];
 
         [NSGraphicsContext restoreGraphicsState];
 
@@ -122,7 +124,10 @@
 
 
     //// Text Drawing
-    NSRect textRect = NSMakeRect(NSMinX(frame), NSMinY(frame) + floor((NSHeight(frame) - 14) * 0.50000 + 0.5), NSWidth(frame) - 32, 14);
+    [NSGraphicsContext saveGraphicsState];
+    CGContextTranslateCTM(context, NSMinX(frame) + 34, NSMinY(frame) + 0.50000 * NSHeight(frame));
+
+    NSRect textRect = NSMakeRect(-34, -9, 68, 18);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSRightTextAlignment;
 
@@ -133,6 +138,8 @@
     [NSGraphicsContext saveGraphicsState];
     NSRectClip(textRect);
     [label drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
+    [NSGraphicsContext restoreGraphicsState];
+
     [NSGraphicsContext restoreGraphicsState];
 }
 
@@ -213,6 +220,82 @@
     NSRectClip(textRect);
     [label drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
     [NSGraphicsContext restoreGraphicsState];
+}
+
++ (void)drawWelcomeButtonWithFrame: (NSRect)frame icon: (NSImage*)icon label: (NSString*)label description: (NSString*)description isDarkMode: (BOOL)isDarkMode pressed: (BOOL)pressed
+{
+    //// Color Declarations
+    NSColor* welcomeButtonBackground = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
+    NSColor* welcomeButtonPressed = [welcomeButtonBackground shadowWithLevel: 0.1];
+    NSColor* welcomeButtonDarkBackground = [NSColor colorWithCalibratedRed: 0.188 green: 0.188 blue: 0.188 alpha: 1];
+    NSColor* welcomeButtonDarkPressed = [welcomeButtonDarkBackground highlightWithLevel: 0.1];
+    NSColor* fancySecondaryOutlineStroke = [NSColor colorWithCalibratedRed: 0.7 green: 0.7 blue: 0.7 alpha: 0.4];
+    NSColor* osSecondaryLabelColor = [NSColor secondaryLabelColor]; // manually modified
+    NSColor* osLabelColor = [NSColor labelColor]; // manually modified
+
+    //// Shadow Declarations
+    NSShadow* fancyButtonShadow = [[NSShadow alloc] init];
+    [fancyButtonShadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.15]];
+    [fancyButtonShadow setShadowOffset: NSMakeSize(0.1, -1.1)];
+    [fancyButtonShadow setShadowBlurRadius: 3];
+
+    //// Variable Declarations
+    BOOL hasIcon = icon != nil; // manually modified
+    CGFloat textPosition = hasIcon ? 58 : 18;
+    NSColor* welcomeButtonColor = isDarkMode ? (pressed ? welcomeButtonDarkPressed : welcomeButtonDarkBackground) : (pressed ? welcomeButtonPressed : welcomeButtonBackground);
+
+    //// Rectangle Drawing
+    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 2, NSMinY(frame) + 2, NSWidth(frame) - 4, NSHeight(frame) - 5) xRadius: 2.5 yRadius: 2.5];
+    [NSGraphicsContext saveGraphicsState];
+    [fancyButtonShadow set];
+    [welcomeButtonColor setFill];
+    [rectanglePath fill];
+    [NSGraphicsContext restoreGraphicsState];
+
+
+
+    //// SecondaryOutline Drawing
+    NSBezierPath* secondaryOutlinePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 1.75, NSMinY(frame) + 1.75, NSWidth(frame) - 3.5, NSHeight(frame) - 4.5) xRadius: 2.5 yRadius: 2.5];
+    [fancySecondaryOutlineStroke setStroke];
+    [secondaryOutlinePath setLineWidth: 0.5];
+    [secondaryOutlinePath stroke];
+
+
+    //// Text Drawing
+    NSRect textRect = NSMakeRect(textPosition, 33, 468, 14);
+    NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
+    textStyle.alignment = NSLeftTextAlignment;
+
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: osSecondaryLabelColor, NSParagraphStyleAttributeName: textStyle};
+
+    CGFloat textTextHeight = NSHeight([description boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes]);
+    NSRect textTextRect = NSMakeRect(NSMinX(textRect), NSMinY(textRect) + NSHeight(textRect) - textTextHeight, NSWidth(textRect), textTextHeight);
+    [NSGraphicsContext saveGraphicsState];
+    NSRectClip(textRect);
+    [description drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
+    [NSGraphicsContext restoreGraphicsState];
+
+
+    if (hasIcon)
+    {
+        //// IconFrame Drawing
+        NSRect iconFrameRect = NSMakeRect(NSMinX(frame) + 16, NSMinY(frame) + 16, 32, NSHeight(frame) - 32);
+        NSBezierPath* iconFramePath = [NSBezierPath bezierPathWithRect: iconFrameRect];
+        [NSGraphicsContext saveGraphicsState];
+        [iconFramePath addClip];
+        [icon drawInRect: NSMakeRect(floor(NSMinX(iconFrameRect) + 0.5), floor(NSMinY(iconFrameRect) + 0.5), icon.size.width, icon.size.height) fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1 respectFlipped: YES hints: nil];
+        [NSGraphicsContext restoreGraphicsState];
+    }
+
+
+    //// Text 2 Drawing
+    NSRect text2Rect = NSMakeRect(textPosition, 16, 468, 18);
+    NSMutableParagraphStyle* text2Style = [NSMutableParagraphStyle new];
+    text2Style.alignment = NSLeftTextAlignment;
+
+    NSDictionary* text2FontAttributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize: NSFont.systemFontSize], NSForegroundColorAttributeName: osLabelColor, NSParagraphStyleAttributeName: text2Style};
+
+    [label drawInRect: NSOffsetRect(text2Rect, 0, -1) withAttributes: text2FontAttributes];
 }
 
 @end

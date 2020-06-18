@@ -477,7 +477,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 #ifdef __WXOSX__
     m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-    transLineSizer->Add(m_fuzzy, wxSizerFlags().Expand().Border(wxTOP, MSW_OR_OTHER(IsHiDPI() ? PX(1) : 0, 0)));
+    transLineSizer->Add(m_fuzzy, wxSizerFlags().Center().Border(wxTOP, MSW_OR_OTHER(IsHiDPI() ? PX(1) : 0, 0)));
     transLineSizer->AddSpacer(PX(4));
 
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);

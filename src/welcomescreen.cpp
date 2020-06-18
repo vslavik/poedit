@@ -45,83 +45,87 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
-#ifndef __WXOSX__
-#include <wx/commandlinkbutton.h>
+#ifdef __WXOSX__
+    #include "StyleKit.h"
+    #include <wx/nativewin.h>
+    #if !wxCHECK_VERSION(3,1,0)
+        #include "wx_backports/nativewin.h"
+    #endif
+#else
+    #include <wx/commandlinkbutton.h>
 #endif
+
+#ifdef __WXOSX__
+
+@interface POWelcomeButton : NSButton
+
+@property wxWindow *parent;
+@property NSString *heading;
+
+@end
+
+@implementation POWelcomeButton
+
+- (id)initWithLabel:(NSString*)label heading:(NSString*)heading
+{
+    self = [super init];
+    if (self)
+    {
+        self.title = label;
+        self.heading = heading;
+    }
+    return self;
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    NSSize size = self.frame.size;
+    size.height = 64;
+    [self setFrameSize:size];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    #pragma unused(dirtyRect)
+    [StyleKit drawWelcomeButtonWithFrame:self.bounds
+                                    icon:self.image
+                                   label:self.heading
+                             description:self.title
+                              isDarkMode:(ColorScheme::GetWindowMode(self.parent) == ColorScheme::Dark)
+                                 pressed:[self isHighlighted]];
+}
+
+- (void)controlAction:(id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_BUTTON, _parent->GetId());
+    event.SetEventObject(_parent);
+    _parent->ProcessWindowEvent(event);
+}
+
+@end
+
+#endif // __WXOSX__
 
 namespace
 {
 
 #ifdef __WXOSX__
 
-class ActionButton : public wxWindow
+class ActionButton : public wxNativeWindow
 {
 public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxWindow(parent, wxID_ANY)
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString())
     {
-        SetMinSize(wxSize(500, 65));
+        SetMinSize(wxSize(510, -1));
 
-        m_button = new wxButton(this, winid, "");
-        auto sizer = new wxBoxSizer(wxHORIZONTAL);
-        sizer->Add(m_button, wxSizerFlags(1).Expand());
-        SetSizer(sizer);
-
-        NSButton *btn = (NSButton*)m_button->GetHandle();
-
-        NSString *str = str::to_NS(label + "\n" + note);
-        NSRange topLine = NSMakeRange(0, label.length() + 1);
-        NSRange bottomLine = NSMakeRange(label.length() + 1, note.length());
-
-        NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:str];
-        [s addAttribute:NSFontAttributeName
-                  value:[NSFont systemFontOfSize:[NSFont systemFontSize]+1]
-                  range:topLine];
-        [s addAttribute:NSFontAttributeName
-                  value:[NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]]
-                  range:bottomLine];
-        [s addAttribute:NSForegroundColorAttributeName
-                  value:[NSColor grayColor]
-                  range:bottomLine];
-
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.headIndent = 10.0;
-        paragraphStyle.firstLineHeadIndent = 10.0;
-        paragraphStyle.tailIndent = -10.0;
-        paragraphStyle.lineSpacing = 2.0;
-        [s addAttribute:NSParagraphStyleAttributeName
-                  value:paragraphStyle
-                  range:NSMakeRange(0, [s length])];
-
-        [btn setAttributedTitle:s];
-        [btn setShowsBorderOnlyWhileMouseInside:YES];
-        [btn setBezelStyle:NSSmallSquareBezelStyle];
-        [btn setButtonType:NSMomentaryPushInButton];
-
-        ColorScheme::SetupWindowColors(this, [=]
-        {
-            if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
-                SetBackgroundColour(wxColour("#F2FCE2"));
-            else
-                SetBackgroundColour(GetDefaultAttributes().colBg);
-        });
-
-        Bind(wxEVT_PAINT, &ActionButton::OnPaint, this);
+        POWelcomeButton *view = [[POWelcomeButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
+        if (!image.empty())
+            view.image = [NSImage imageNamed:str::to_NS(image)];
+        view.parent = this;
+        wxNativeWindow::Create(parent, winid, view);
     }
-
-private:
-    void OnPaint(wxPaintEvent&)
-    {
-        wxPaintDC dc(this);
-        wxRect rect(dc.GetSize());
-        auto bg = GetBackgroundColour();
-        dc.SetBrush(bg);
-        dc.SetPen(bg.ChangeLightness(90));
-        dc.DrawRoundedRectangle(rect, 2);
-        dc.DrawRectangle(rect.x+1, rect.y+rect.height-2, rect.width-2, 2);
-    }
-
-    wxButton *m_button;
 };
 
 #elif defined(__WXGTK__)
@@ -153,7 +157,7 @@ public:
     HeaderStaticText(wxWindow *parent, wxWindowID id, const wxString& text)
         : wxStaticText(parent, id, "")
     {
-        SetLabelMarkup("<big><b>" + text + "</b></big>");
+        SetLabelMarkup("<span size='xx-large' weight='500'>" + text + "</span>");
     }
 
     virtual bool SetFont(const wxFont&) { return true; }
@@ -168,40 +172,26 @@ typedef wxStaticText HeaderStaticText;
 } // anonymous namespace
 
 
-WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
-    : wxPanel(parent, wxID_ANY),
-      m_clrHeader("#555555"),
-      m_clrNorm("#444444"),
-      m_clrSub("#aaaaaa")
+WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
     ColorScheme::SetupWindowColors(this, [=]
     {
         switch (ColorScheme::GetWindowMode(this))
         {
             case ColorScheme::Light:
-                SetBackgroundColour("#fffcf5");
+                SetBackgroundColour("#fdfdfd");
                 break;
             case ColorScheme::Dark:
-                SetBackgroundColour("#00030a");
+                SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
                 break;
         }
     });
 
-#if defined(__WXOSX__)
     auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
-    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface).Light());
-    m_fntNorm = wxFont(wxFontInfo(13).FaceName(guiface).Light());
-    m_fntSub = wxFont(wxFontInfo(11).FaceName(guiface).Light());
-#elif defined(__WXMSW__)
-    #define HEADER_FACE "Segoe UI"
-    m_fntHeader = wxFont(wxFontInfo(20).FaceName("Segoe UI Light").AntiAliased());
-    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE));
-    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE));
+#if defined(__WXOSX__)
+    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface));//.Light());
 #else
-    #define HEADER_FACE "sans serif"
-    m_fntHeader = wxFont(wxFontInfo(16).FaceName(HEADER_FACE).Light());
-    m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE).Light());
-    m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE).Light());
+    m_fntHeader = wxFont(wxFontInfo(22).FaceName(guiface).AntiAliased());
 #endif
 
     // Translate all button events to wxEVT_MENU and send them to the frame.
@@ -230,12 +220,9 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
-    header->SetForegroundColour(m_clrHeader);
     headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
-    version->SetFont(m_fntSub);
-    version->SetForegroundColour(m_clrSub);
     headerSizer->Add(version, wxSizerFlags().Center());
 
     headerSizer->AddSpacer(PX(20));
@@ -265,6 +252,12 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     sizer->AddSpacer(PX(50));
 
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        header->SetForegroundColour(ColorScheme::Get(Color::Label));
+        version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
+
     // Hide the cosmetic logo part if the screen is too small:
     auto minFullSize = sizer->GetMinSize().y + PX(50);
     Bind(wxEVT_SIZE, [=](wxSizeEvent& e){
@@ -288,40 +281,45 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
 
     auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
-    header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
 
-    auto explain = new wxStaticText(this, wxID_ANY, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
-    explain->SetFont(m_fntNorm);
-    explain->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain, wxSizerFlags());
+    auto explain = new AutoWrappingText(this, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
+    sizer->Add(explain, wxSizerFlags().Expand().Border(wxTOP, PX(10)));
 
     auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
-    sizer->Add(learnMore, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
+    sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM, PX(15)).Align(wxALIGN_RIGHT));
 
     auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));
-    explain2->SetFont(m_fntNorm);
-    explain2->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain2, wxSizerFlags().PXDoubleBorder(wxTOP));
+    sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_update_from_pot"),
                        _("Update from POT"),
                        _("Take translatable strings from an existing POT template.")),
-               wxSizerFlags().PXBorderAll().Expand());
+               wxSizerFlags().Expand());
+    sizer->AddSpacer(PX(20));
 
     auto explain3 = new wxStaticText(this, wxID_ANY, _("You can also extract translatable strings directly from the source code:"));
-    explain3->SetFont(m_fntNorm);
-    explain3->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain3, wxSizerFlags().PXDoubleBorder(wxTOP));
+    sizer->Add(explain3, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
     auto btnSources = new ActionButton(
                        this, wxID_ANY,
                        _("Extract from sources"),
                        _("Configure source code extraction in Properties."));
-    sizer->Add(btnSources, wxSizerFlags().PXBorderAll().Expand());
+    sizer->Add(btnSources, wxSizerFlags().Expand());
+    sizer->AddSpacer(PX(20));
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        header->SetForegroundColour(ColorScheme::Get(Color::Label));
+        explain->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        explain2->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        explain3->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
 
     btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
         parent->EditCatalogPropertiesAndUpdateFromSources();
     });
+
+    Layout();
 }
