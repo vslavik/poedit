@@ -981,7 +981,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler, bool bSki
         // from event loop (and not this functions' caller) at an unspecified
         // time anyway, we can just as well defer it into the next idle time
         // iteration.
-        CallAfter([this,retval,completionHandler]() {
+        CallAfter([this,retval,completionHandler,bSkipUpload]() {
 #endif
 
         if (retval == wxID_YES)
