@@ -148,15 +148,9 @@ public:
         m_auth = std::wstring(auth.begin(), auth.end());
     }
 
-    dispatch::future<::json> get(const std::string& url)
+    dispatch::future<::json> get(const std::string& url, const headers& hdrs)
     {
-        http::http_request req(http::methods::GET);
-        req.headers().add(http::header_names::accept,     L"application/json");
-        req.headers().add(http::header_names::user_agent, m_userAgent);
-        req.headers().add(http::header_names::accept_language, ui_language);
-        if (!m_auth.empty())
-            req.headers().add(http::header_names::authorization, m_auth);
-        req.set_request_uri(to_string_t(url));
+        auto req = build_request(http::methods::GET, url, hdrs);
 
         return
         m_native.request(req)
@@ -167,7 +161,7 @@ public:
         });
     }
 
-    dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
+    dispatch::future<void> download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
     {
         using namespace concurrency::streams;
         auto fileStream = std::make_shared<ostream>();
@@ -176,12 +170,7 @@ public:
         fstream::open_ostream(to_string_t(output_file)).then([=](ostream outFile)
         {
             *fileStream = outFile;
-            http::http_request req(http::methods::GET);
-            req.headers().add(http::header_names::user_agent, m_userAgent);
-            req.headers().add(http::header_names::accept_language, ui_language);
-            if (!m_auth.empty())
-                req.headers().add(http::header_names::authorization, m_auth);
-            req.set_request_uri(to_string_t(url));
+            auto req = build_request(http::methods::GET, url, hdrs);
             return m_native.request(req);
         })
         .then([=](http::http_response response)
@@ -195,19 +184,9 @@ public:
         });
     }
 
-    dispatch::future<::json> post(const std::string& url, const http_body_data& data, const http_client::headers& hdrs)
+    dispatch::future<::json> post(const std::string& url, const http_body_data& data, const headers& hdrs)
     {
-        http::http_request req(http::methods::POST);
-        req.headers().add(http::header_names::accept,     L"application/json");
-        for (const auto& h: hdrs)
-        {
-            req.headers().add(to_string_t(h.first), to_string_t(h.second));
-        }
-        req.headers().add(http::header_names::user_agent, m_userAgent);
-        req.headers().add(http::header_names::accept_language, ui_language);
-        if (!m_auth.empty())
-            req.headers().add(http::header_names::authorization, m_auth);
-        req.set_request_uri(to_string_t(url));
+        auto req = build_request(http::methods::POST, url, hdrs);
 
         auto body = data.body();
         req.set_body(body, data.content_type());
@@ -223,6 +202,24 @@ public:
     }
 
 private:
+    http::http_request build_request(http::method method, const std::string& relative_url, const headers& hdrs)
+    {
+        http::http_request req(method);
+        req.set_request_uri(to_string_t(relative_url));
+
+        req.headers().add(http::header_names::accept, L"application/json");
+        req.headers().add(http::header_names::user_agent, m_userAgent);
+        req.headers().add(http::header_names::accept_language, ui_language);
+        if (!m_auth.empty())
+            req.headers().add(http::header_names::authorization, m_auth);
+        for (const auto& h: hdrs)
+        {
+            req.headers().add(to_string_t(h.first), to_string_t(h.second));
+        }
+
+        return req;
+    }
+
     // handle non-OK responses:
     void handle_error(http::http_response r)
     {
@@ -309,14 +306,14 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-dispatch::future<::json> http_client::get(const std::string& url)
+dispatch::future<::json> http_client::get(const std::string& url, const headers& hdrs)
 {
-    return m_impl->get(url);
+    return m_impl->get(url, hdrs);
 }
 
-dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file)
+dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
 {
-    return m_impl->download(url, output_file);
+    return m_impl->download(url, output_file, hdrs);
 }
 
 dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data, const headers& hdrs)

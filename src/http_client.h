@@ -135,14 +135,14 @@ public:
     void set_authorization(const std::string& auth);
 
     /// Perform a GET request at the given URL
-    dispatch::future<json> get(const std::string& url);
+    dispatch::future<json> get(const std::string& url, const headers& hdrs = headers());
 
     /**
         Perform a GET request and store the body in a file.
         
         Returned response's body won't be accessible in any way from @a handler.
      */
-    dispatch::future<void> download(const std::string& url, const std::wstring& output_file);
+    dispatch::future<void> download(const std::string& url, const std::wstring& output_file, const headers& hdrs = headers());
 
     /**
         Perform a POST request with multipart/form-data formatted @a params.
