@@ -486,7 +486,7 @@ void CrowdinClient::SetToken(const std::string& token)
             domain += '.';
         }
         catch(...) { wxLogTrace("poedit.crowdin", "Assume below token is non-enterprise, fall through with empty domain\n%s", token_json.dump().c_str()); }
-        m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2");
+        m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2/");
         m_api->set_authorization("Bearer " + token);
     }
     catch(...) { wxLogTrace("poedit.crowdin", "Failed to decode token. Most probable invalid/corrupted or unknown/unsupported type", token.c_str()); }
