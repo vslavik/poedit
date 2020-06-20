@@ -602,8 +602,10 @@ void Catalog::SetFileName(const wxString& fn)
 
 bool Catalog::IsFromCrowdin() const
 {
-    if((m_crowdinFileId > 0 && m_crowdinProjectId) > 0
-        || (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File")))
+    if (m_crowdinFileId > 0 && m_crowdinProjectId > 0)
+        return true;
+
+    if (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"))
         return true;
 
     auto name = wxFileName(m_fileName).GetName();
