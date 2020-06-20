@@ -369,7 +369,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(const long project_id,
         json_data({
             { "targetLanguageId", lang.LanguageTag() },
             // for XLIFF and PO files should be exported "as is" so set to `false`
-            { "exportAsXliff", !(ext == "xliff" || ext == "xlf" || ext == "po") }
+            { "exportAsXliff", !(ext == "xliff" || ext == "xlf" || ext == "po" || ext == "pot") }
         }))
         .then([this, output_file] (json r) {
             std::string url = r["data"]["url"];

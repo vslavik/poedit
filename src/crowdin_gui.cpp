@@ -482,10 +482,23 @@ private:
             + wxFILE_SEP_PATH + lang.Code()
             + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
             + "CrowdinSync_" << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
-       
-        if(localFileName.GetExt().CmpNoCase("po") != 0)// if not PO
+
+        auto ext = localFileName.GetExt().Lower();
+        if (ext == "po")
+        {
+            // natively supported file format, will be opened as-is
+        }
+        else if (ext == "pot")
+        {
+            // POT files are natively supported, but need to be opened as PO to see translations
+            localFileName.SetFullName(localFileName.GetFullName() + ".po");
+        }
+        else
+        {
+            // Everything else is exported as XLIFF
             localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
- 
+        }
+
         if (!wxFileName::DirExists(localFileName.GetPath()))
             wxFileName::Mkdir(localFileName.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
