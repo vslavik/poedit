@@ -77,7 +77,7 @@ class gzip_compression_support : public http::http_pipeline_stage
 public:
     pplx::task<http::http_response> propagate(http::http_request request) override
     {
-        request.headers().add(http::header_names::accept_encoding, L"gzip");
+        request.headers().add(http::header_names::accept_encoding, _XPLATSTR("gzip"));
 
         return next_stage()->propagate(request).then([](http::http_response response) -> pplx::task<http::http_response>
         {
@@ -207,7 +207,7 @@ private:
         http::http_request req(method);
         req.set_request_uri(to_string_t(relative_url));
 
-        req.headers().add(http::header_names::accept, L"application/json");
+        req.headers().add(http::header_names::accept, _XPLATSTR("application/json"));
         req.headers().add(http::header_names::user_agent, m_userAgent);
         req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
@@ -228,7 +228,7 @@ private:
 
         int status_code = r.status_code();
         std::string msg;
-        if (r.headers().content_type() == L"application/json")
+        if (r.headers().content_type() == _XPLATSTR("application/json"))
         {
             try
             {
