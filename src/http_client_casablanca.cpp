@@ -28,6 +28,8 @@
 #include "version.h"
 #include "str_helpers.h"
 
+#include <cstdlib>
+
 #include <boost/algorithm/string/predicate.hpp>
 
 #include <boost/iostreams/copy.hpp>
@@ -117,13 +119,7 @@ class http_client::impl
 public:
     impl(http_client& owner, const std::string& url_prefix, int flags)
         : m_owner(owner),
-          m_native
-          (
-              sanitize_url(url_prefix, flags)
-            #ifdef _WIN32
-              , get_client_config()
-            #endif
-          )
+          m_native(sanitize_url(url_prefix, flags), get_client_config())
     {
         #define make_wide_str(x) make_wide_str_(x)
         #define make_wide_str_(x) L ## x
@@ -248,20 +244,29 @@ private:
         return to_string_t(url);
     }
 
-#ifdef _WIN32
-    // prepare WinHttp configuration
     static http::client::http_client_config get_client_config()
     {
         http::client::http_client_config c;
-   
+
+    #ifdef _WIN32
+        // prepare WinHttp configuration:
         c.set_nativesessionhandle_options([](http::client::native_handle handle){
             DWORD dwOption = WINHTTP_PROTOCOL_FLAG_HTTP2;
             WinHttpSetOption(handle, WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL, &dwOption, sizeof(dwOption));
         });
+    #else
+        // setup proxy on Unix platforms:
+        const char *proxy = std::getenv("https_proxy");
+        if (!proxy)
+            proxy = std::getenv("http_proxy");
+        if (proxy)
+            c.set_proxy(web::uri(to_string_t(proxy)));
+    #endif
 
         return c;
     }
 
+#ifdef _WIN32
     static std::wstring windows_version()
     {
         OSVERSIONINFOEX info = { 0 };
