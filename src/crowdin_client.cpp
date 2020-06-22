@@ -70,7 +70,7 @@ namespace
 {
 
 #define OAUTH_SCOPE                     "project"
-#define OAUTH_CLIENT_ID                 "k0uFz5HYQh0VzWgZmOpA"
+#define OAUTH_CLIENT_ID                 "6Xsr0OCnsRdALYSHQlvs"
 // Urchin Tracker Module (params for Web analytics package that served as the base for Google Analytics)
 #define UTM_PARAMS                      "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit"
 // "Authorization Callback URL" field/param set on creating of Crowdin application
