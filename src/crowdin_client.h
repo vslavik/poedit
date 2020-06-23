@@ -49,8 +49,8 @@ public:
     /// Is the user currently signed into Crowdin?
     bool IsSignedIn() const;
 
-    /// Wrap relative Crowdin link to absolute URL
-    static std::string WrapLink(const std::string& page);
+    /// Wrap relative Crowdin URL to absolute URL with attribution
+    static std::string AttributeLink(std::string page);
 
     /**
         Authenticate with Crowdin.

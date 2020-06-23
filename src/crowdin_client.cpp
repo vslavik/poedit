@@ -82,12 +82,18 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const s
 } // anonymous namespace
 
 
-std::string CrowdinClient::WrapLink(const std::string& page)
+std::string CrowdinClient::AttributeLink(std::string page)
 {
-    std::string url("https://poedit.net/crowdin");
-    if (!page.empty() && page != "/")
-        url += "?u=" + http_client::url_encode(page);
-    return url;
+    static const char *base_url = "https://crowdin.com";
+    static const char *utm = "utm_source=poedit.net&utm_medium=referral&utm_campaign=poedit";
+
+    if (!boost::starts_with(page, "http"))
+        page = base_url + page;
+
+    page += page.find('?') == std::string::npos ? '?' : '&';
+    page += utm;
+
+    return page;
 }
 
 
@@ -134,7 +140,7 @@ CrowdinClient::~CrowdinClient() {}
 
 dispatch::future<void> CrowdinClient::Authenticate()
 {
-    auto url = WrapLink(OAUTH_AUTHORIZE_URL);
+    auto url = AttributeLink(OAUTH_AUTHORIZE_URL);
     m_authCallback.reset(new dispatch::promise<void>);
     wxLaunchDefaultBrowser(url);
     return m_authCallback->get_future();
