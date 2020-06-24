@@ -129,6 +129,7 @@ private:
 
     void SignInIfAuthorized();
     void SaveAndSetToken(const std::string& token);
+    std::string GetValidToken() const;
 
     class crowdin_http_client;
 

@@ -445,27 +445,6 @@ dispatch::future<void> CrowdinClient::UploadFile(int project_id,
 }
 
 
-bool CrowdinClient::IsSignedIn() const
-{
-    std::string token;
-    return keytar::GetPassword("Crowdin", "", &token)
-           && token.substr(0, 2) == "2:";
-}
-
-
-void CrowdinClient::SignInIfAuthorized()
-{
-    std::string token;
-    if (keytar::GetPassword("Crowdin", "", &token)
-        && token.length() > 2)
-    {
-        token = token.substr(2);
-        InitWithAuthToken(token);
-    }
-    wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
-}
-
-
 static std::string base64_decode_json_part(const std::string &in) {
 
     std::string out;
@@ -525,6 +504,36 @@ void CrowdinClient::InitWithAuthToken(const std::string& token)
         wxLogTrace("poedit.crowdin", "Failed to decode token. Most probable invalid/corrupted or unknown/unsupported type", token.c_str());
     }
 
+}
+
+
+bool CrowdinClient::IsSignedIn() const
+{
+    return m_api || !GetValidToken().empty();
+}
+
+
+void CrowdinClient::SignInIfAuthorized()
+{
+    auto token = GetValidToken();
+    if (token.empty())
+        return;
+
+    InitWithAuthToken(token);
+    wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
+}
+
+
+std::string CrowdinClient::GetValidToken() const
+{
+    // Our tokens stored in keychain have the form of <version>:<token>, so not
+    // only do we have to check for token's existence but also that its version
+    // is current:
+    std::string token;
+    if (keytar::GetPassword("Crowdin", "", &token) && token.substr(0, 2) == "2:")
+        return token.substr(2);
+
+    return std::string();
 }
 
 
