@@ -124,8 +124,10 @@ private:
     CrowdinClient();
     ~CrowdinClient();
 
+    // Initialize m_api for use with given authorization; must be called before use
+    void InitWithAuthToken(const std::string& authToken);
+
     void SignInIfAuthorized();
-    void SetToken(const std::string& token);
     void SaveAndSetToken(const std::string& token);
 
     class crowdin_http_client;

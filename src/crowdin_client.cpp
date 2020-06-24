@@ -460,7 +460,7 @@ void CrowdinClient::SignInIfAuthorized()
         && token.length() > 2)
     {
         token = token.substr(2);
-        SetToken(token);
+        InitWithAuthToken(token);
     }
     wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
 }
@@ -496,7 +496,7 @@ static std::string base64_decode_json_part(const std::string &in) {
 }
 
 
-void CrowdinClient::SetToken(const std::string& token)
+void CrowdinClient::InitWithAuthToken(const std::string& token)
 {
     wxLogTrace("poedit.crowdin", "Authorization: %s", token.c_str());
 
@@ -530,14 +530,14 @@ void CrowdinClient::SetToken(const std::string& token)
 
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
-    SetToken(token);
     keytar::AddPassword("Crowdin", "", "2:" + token);
+    InitWithAuthToken(token);
 }
 
 
 void CrowdinClient::SignOut()
 {
-    m_api->set_authorization("");
+    m_api.reset();
     keytar::DeletePassword("Crowdin", "");
 }
 
