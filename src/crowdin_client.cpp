@@ -510,15 +510,13 @@ void CrowdinClient::SetToken(const std::string& token)
                 wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
         )));
         std::string domain;
-        try
+        auto i_domain = token_json.find("domain");
+        if (i_domain != token_json.end() && !i_domain->is_null())
         {
-            domain = token_json.at("domain");
+            domain = *i_domain;
             domain += '.';
         }
-        catch (...)
-        {
-            wxLogTrace("poedit.crowdin", "Assume below token is non-enterprise, fall through with empty domain\n%s", token_json.dump().c_str());
-        }
+
         m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2/");
         m_api->set_authorization("Bearer " + token);
     }
