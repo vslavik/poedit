@@ -380,7 +380,7 @@ private:
         {
             m_activity->Start();
             EnableAllChoices(false);
-            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].identifier)
+            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].id)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
                 .catch_all(m_activity->HandleError);
         }
@@ -389,24 +389,6 @@ private:
     void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
     {
         m_info = prj;
-        // Put supported files first in the list:
-        std::vector<std::wstring> f_unsup;
-        m_info.files.clear();
-        m_supportedFilesCount = 0;
-        for (auto& i: prj.files)
-        {
-            if (IsFileSupported(i))
-            {
-                m_info.files.push_back(i);
-                m_supportedFilesCount++;
-            }
-            else
-            {
-                f_unsup.push_back(i);
-            }
-        }
-        std::move(f_unsup.begin(), f_unsup.end(), std::inserter(m_info.files, m_info.files.end()));
-
         m_language->Clear();
         m_language->Append("");
         for (auto& i: m_info.languages)
@@ -416,15 +398,7 @@ private:
         m_file->Append("");
         for (auto& i: m_info.files)
         {
-            if (IsFileSupported(i))
-            {
-                m_file->Append(i);
-            }
-            else
-            {
-                /// TRANSLATORS: This is a file selector list, %s is filename, and it is shown for Crowdin files not editable in Poedit
-                m_file->Append(wxString::Format(L"%s — not supported", i));
-            }
+            m_file->Append(i.pathName);
         }
 
         EnableAllChoices();
@@ -450,10 +424,10 @@ private:
             }
         }
 
-        if (m_supportedFilesCount == 1)
+        if (m_info.files.size() == 1)
             m_file->SetSelection(1);
 
-        if (m_supportedFilesCount == 0)
+        if (m_info.files.size() == 0)
         {
             m_activity->StopWithError(_("This project has no files that can be translated in Poedit."));
             m_file->Disable();
@@ -464,7 +438,7 @@ private:
     void OnFileSelected()
     {
         auto filesel = m_file->GetSelection();
-        if (filesel - 1 < m_supportedFilesCount)
+        if (filesel - 1 < (int)m_info.files.size())
             m_activity->Stop();
         else
             m_activity->StopWithError(_(L"This file can only be edited in Crowdin’s web interface."));
@@ -476,22 +450,24 @@ private:
         e.Enable(!m_activity->IsRunning() &&
                  m_project->GetSelection() > 0 &&
                  m_language->GetSelection() > 0 &&
-                 filesel > 0 && filesel - 1 < m_supportedFilesCount);
+                 filesel > 0 && filesel - 1 < (int)m_info.files.size());
     }
 
     void OnOK(wxCommandEvent&)
     {
-        auto crowdin_prj = m_info.identifier;
         auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         LanguageDialog::SetLastChosen(crowdin_lang);
-        OutLocalFilename = CreateLocalFilename(crowdin_file, crowdin_lang);
+        OutLocalFilename = CreateLocalFilename(crowdin_file.id, crowdin_file.pathName, crowdin_lang, m_info.id, m_info.name);
 
         m_activity->Start(_(L"Downloading latest translations…"));
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-                crowdin_prj, crowdin_file, crowdin_lang,
+                m_info.id,
+                crowdin_lang,
+                crowdin_file.id,
+                std::string(wxFileName(crowdin_file.pathName, wxPATH_UNIX).GetExt().utf8_str()),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -501,33 +477,36 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
-    bool IsFileSupported(const wxString& name) const
+    wxString CreateLocalFilename(int fileId, const wxString& name, const Language& lang, int projectId, const wxString& projectName)
     {
-        return boost::ends_with(name, ".po") || boost::ends_with(name, ".pot");
-    }
+        wxFileName crowdinFileName(name, wxPATH_UNIX),
+                   localFileName =
+            CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin"
+            + wxFILE_SEP_PATH + projectName
+            + wxFILE_SEP_PATH + lang.Code()
+            + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
+            + "CrowdinSync_" << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName();
 
-    wxString CreateLocalFilename(const wxString& name, const Language& lang)
-    {
-        wxString cache;
-    #if defined(__WXOSX__)
-        cache = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
-    #elif defined(__UNIX__)
-        if (!wxGetEnv("XDG_CACHE_HOME", &cache))
-            cache = wxGetHomeDir() + "/.cache";
-        cache += "/poedit";
-    #else
-        cache = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
-    #endif
+        auto ext = localFileName.GetExt().Lower();
+        if (ext == "po")
+        {
+            // natively supported file format, will be opened as-is
+        }
+        else if (ext == "pot")
+        {
+            // POT files are natively supported, but need to be opened as PO to see translations
+            localFileName.SetFullName(localFileName.GetFullName() + ".po");
+        }
+        else
+        {
+            // Everything else is exported as XLIFF
+            localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
+        }
 
-        cache += wxFILE_SEP_PATH;
-        cache += "Crowdin";
+        if (!wxFileName::DirExists(localFileName.GetPath()))
+            wxFileName::Mkdir(localFileName.GetPath(), wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 
-        if (!wxFileName::DirExists(cache))
-            wxFileName::Mkdir(cache, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
-
-        auto basename = name.AfterLast('/').BeforeLast('.');
-
-        return wxString::Format("%s%c%s_%s_%s.po", cache, wxFILE_SEP_PATH, m_info.name, basename, lang.Code());
+        return localFileName.GetFullPath();
     }
 
 private:
@@ -537,11 +516,44 @@ private:
 
     std::vector<CrowdinClient::ProjectListing> m_projects;
     CrowdinClient::ProjectInfo m_info;
-    int m_supportedFilesCount;
 };
 
 } // anonymous namespace
 
+
+dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
+{
+    if (catalog->GetCrowdinProjectId() > 0 && catalog->GetCrowdinFileId() > 0)
+        return dispatch::make_ready_future();
+
+    wxString projIdentifier = catalog->Header().GetHeader("X-Crowdin-Project");
+    auto filePathName = catalog->Header().GetHeader("X-Crowdin-File");
+
+    if (!filePathName.StartsWith(L"/"))
+        filePathName.insert(0, L'/');
+
+    return CrowdinClient::Get().GetUserProjects().then([=](std::vector<CrowdinClient::ProjectListing> projects)
+    {
+        auto projIt = find_if(projects.begin(), projects.end(),
+                                [=](const auto& proj) { return projIdentifier == proj.identifier; });
+        if (projIt == projects.end())
+        {
+            throw Exception(_(L"This file belongs to a Crowdin project that you don’t have access to."));
+        }
+
+        return CrowdinClient::Get().GetProjectInfo(projIt->id).then([=](CrowdinClient::ProjectInfo proj)
+        {
+            auto fileIt = find_if(proj.files.begin(), proj.files.end(),
+                                [=](const auto& file) { return filePathName == file.pathName; });
+            if (fileIt == proj.files.end())
+            {
+                throw Exception(wxString::Format(_(L"File “%s” doesn’t exist in Crowdin project “%s”"), filePathName, projIdentifier));
+            }
+            catalog->SetCrowdinProjectAndFileId(projIt->id, fileIt->id);
+        });
+    });
+
+}
 
 void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
 {
@@ -578,12 +590,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         return;
     }
 
-    const auto& header = catalog->Header();
-    auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
-    auto crowdin_file = header.GetHeader("X-Crowdin-File");
-    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
-                        ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
-                        : catalog->GetLanguage();
+    wxLogTrace("poedit.crowdin", "Crowdin syncing file ...");
 
     wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
 
@@ -607,20 +614,38 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
+        const auto& header = catalog->Header();
+        auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
+                            ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
+                            : catalog->GetLanguage();
+        CrowdinUpdateCatalogIDsFromHeaders(catalog)
+        .then([=]()
+        {
         CrowdinClient::Get().UploadFile(
-                str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                catalog->GetCrowdinProjectId(),
+                crowdin_lang,
+                catalog->GetCrowdinFileId(),
+                std::string(wxFileName(catalog->GetFileName()).GetExt().utf8_str()),
                 catalog->SaveToBuffer()
             )
-            .then([=]{
+            .then([=]
+            {
+                wxFileName filename = catalog->GetFileName();
                 auto tmpdir = std::make_shared<TempDirectory>();
-                auto outfile = tmpdir->CreateFileName("crowdin.po");
+                auto outfile = tmpdir->CreateFileName("crowdin." + filename.GetExt());
 
                 dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
 
+                if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
+                    filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
+
                 return CrowdinClient::Get().DownloadFile(
-                        str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                        catalog->GetCrowdinProjectId(),
+                        crowdin_lang,
+                        catalog->GetCrowdinFileId(),
+                        std::string(filename.GetExt().utf8_str()),
                         outfile.ToStdWstring()
                     )
                     .then_on_main([=]
@@ -636,23 +661,35 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     .catch_all(handle_error);
             })
             .catch_all(handle_error);
+        });
     });
 
     dlg->ShowWindowModal();
 }
 
+bool CrowdinSyncDestination::AuthIfNeeded(wxWindow* parent) {
+    return CrowdinClient::Get().IsSignedIn()
+            || CrowdinLoginDialog(parent).ShowModal() == wxID_OK;
+}
 
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
+    wxLogTrace("poedit.crowdin", "Uploading file: %s", file->GetFileName().c_str());
     const auto& header = file->Header();
-    auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
-    auto crowdin_file = header.GetHeader("X-Crowdin-File");
     auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
                         ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
                         : file->GetLanguage();
 
-    return CrowdinClient::Get().UploadFile(
-                str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
-                file->SaveToBuffer()
-            );
+    return CrowdinUpdateCatalogIDsFromHeaders(file)
+    .then([=]()
+    {
+        return CrowdinClient::Get().UploadFile
+               (
+                   file->GetCrowdinProjectId(),
+                   crowdin_lang,
+                   file->GetCrowdinFileId(),
+                   std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
+                   file->SaveToBuffer()
+               );
+    });
 }

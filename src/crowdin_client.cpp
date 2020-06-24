@@ -32,10 +32,20 @@
 
 #include <functional>
 #include <mutex>
+#include <stack>
+#include <iostream>
+#include <ctime>
+
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include <wx/translation.h>
 #include <wx/utils.h>
+#include <wx/uri.h>
+
+#include <iostream>
 
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
@@ -57,27 +67,11 @@
 namespace
 {
 
-#define OAUTH_CLIENT_ID     "poedit-y1aBMmDbm3s164dtJ4Ur150e2"
-#define OAUTH_AUTHORIZE_URL "/oauth2/authorize?response_type=token&client_id=" OAUTH_CLIENT_ID
-#define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
-
-// Recursive extract files from /api/project/*/info response
-void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const std::wstring& prefix)
-{
-    for (auto i : r["files"])
-    {
-        std::wstring name = prefix + str::to_wstring(i["name"]);
-        std::string node_type = i["node_type"];
-        if (node_type == "file")
-        {
-            out.push_back(name);
-        }
-        else if (node_type == "directory" || node_type == "branch")
-        {
-            ExtractFilesFromInfo(out, i, name + L"/");
-        }
-    }
-}
+// see https://support.crowdin.com/enterprise/creating-oauth-app/
+#define OAUTH_BASE_URL                  "https://accounts.crowdin.com/oauth/authorize"
+#define OAUTH_CLIENT_ID                 "6Xsr0OCnsRdALYSHQlvs"
+#define OAUTH_SCOPE                     "project"
+#define OAUTH_CALLBACK_URL_PREFIX       "poedit://auth/crowdin/"
 
 } // anonymous namespace
 
@@ -100,20 +94,37 @@ std::string CrowdinClient::AttributeLink(std::string page)
 class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
-    crowdin_http_client(CrowdinClient& owner)
-        : http_client("https://api.crowdin.com"), m_owner(owner)
+    crowdin_http_client(CrowdinClient& owner, const std::string& url_prefix)
+        : http_client(url_prefix), m_owner(owner)
     {}
 
 protected:
     std::string parse_json_error(const json& response) const override
     {
-        std::string msg = response["error"]["message"];
+        wxLogTrace("poedit.crowdin", "JSON error: %s", response.dump().c_str());
 
-        // Translate commonly encountered messages:
-        if (msg == "Translations download is forbidden by project owner")
-            msg = _("Downloading translations is disabled in this project.").utf8_str();
-
-        return msg;
+        try
+        {
+            // Like e.g. on 400 here https://support.crowdin.com/api/v2/#operation/api.projects.getMany
+            // where "key" is usually "error" as figured out while looking in responses with above code
+            // on most API requests used here
+            return response.at("errors").at(0).at("error").at("errors").at(0).at("message");
+        }
+        catch (...)
+        {
+            try
+            {
+                // Like e.g. on 401 here https://support.crowdin.com/api/v2/#operation/api.user.get
+                // as well as in most other requests on above error code
+                return response.at("error").at("message");
+            }
+            catch (...)
+            {
+                std::string msg;
+                msg = _("JSON request error").utf8_str();
+                return msg;
+            }
+        }
     }
 
     void on_error_response(int& statusCode, std::string& message) override
@@ -124,13 +135,15 @@ protected:
             message = _("Not authorized, please sign in again.").utf8_str();
             m_owner.SignOut();
         }
+        wxLogTrace("poedit.crowdin", "JSON error: %s", message.c_str());
     }
 
     CrowdinClient& m_owner;
 };
 
 
-CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client(*this))
+CrowdinClient::CrowdinClient()
+    : m_oauth(new crowdin_http_client(*this, OAUTH_BASE_URL))
 {
     SignInIfAuthorized();
 }
@@ -140,45 +153,90 @@ CrowdinClient::~CrowdinClient() {}
 
 dispatch::future<void> CrowdinClient::Authenticate()
 {
-    auto url = AttributeLink(OAUTH_AUTHORIZE_URL);
     m_authCallback.reset(new dispatch::promise<void>);
-    wxLaunchDefaultBrowser(url);
+    m_authCallbackExpectedState = boost::uuids::to_string(boost::uuids::random_generator()());
+
+    auto url = OAUTH_BASE_URL
+               "?response_type=token"
+               "&scope=" OAUTH_SCOPE
+               "&client_id=" OAUTH_CLIENT_ID
+               "&redirect_uri=" OAUTH_CALLBACK_URL_PREFIX
+               "&state=" + m_authCallbackExpectedState;
+
+    wxLaunchDefaultBrowser(AttributeLink(url));
     return m_authCallback->get_future();
 }
 
 
 void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 {
+    wxLogTrace("poedit.crowdin", "Callback URI %s", uri.c_str());
+
+    smatch m;
+
+    if (!(regex_search(uri, m, regex("state=([^&]+)"))
+            && m.size() > 1
+            && m.str(1) == m_authCallbackExpectedState))
+        return;
+
+    if (!(regex_search(uri, m, regex("access_token=([^&]+)"))
+            && m.size() > 1))
+        return;
+
     if (!m_authCallback)
         return;
-
-    const regex re("access_token=([^&]+)&");
-    smatch m;
-    if (!regex_search(uri, m, re))
-        return;
-
     SaveAndSetToken(m.str(1));
-
     m_authCallback->set_value();
     m_authCallback.reset();
 }
 
-
 bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 {
-    return boost::starts_with(uri, OAUTH_URI_PREFIX);
+    return boost::starts_with(uri, OAUTH_CALLBACK_URL_PREFIX);
 }
 
+//TODO: validate JSON schema in all API responses
+//      and handle errors since now Poedit just crashes
+//      in case of some of expected keys missing
 
 dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 {
-    return m_api->get("/api/account/profile?json=")
+    return m_api->get("user")
         .then([](json r)
         {
-            json profile = r["profile"];
+            wxLogTrace("poedit.crowdin", "Got user info: %s", r.dump().c_str());
+            const json& d = r["data"];
             UserInfo u;
-            u.login = str::to_wstring(profile["login"]);
-            u.name = !profile["name"].is_null() ? str::to_wstring(profile["name"]) : u.login;
+            u.login = str::to_wstring(d["username"]);
+            std::string fullName;
+            try
+            {
+                fullName = d.at("fullName");
+                // if indvidual (not enterprise) account
+            }
+            catch (...) // or enterpise otherwise
+            {
+                try
+                {
+                    fullName = d.at("firstName");
+                }
+                catch (...) {}
+                try
+                {
+                    std::string lastName = d.at("lastName");
+                    if (!lastName.empty())
+                    {
+                        if (!fullName.empty())
+                            fullName += " ";
+                        fullName += lastName;
+                    }
+                }
+                catch (...) {}
+            }
+            if (fullName.empty())
+                u.name = u.login;
+            else
+                u.name = str::to_wstring(fullName);
             return u;
         });
 }
@@ -186,102 +244,297 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 
 dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetUserProjects()
 {
-    return m_api->get("/api/account/get-projects?json=&role=all")
+    // TODO: handle pagination if projects more than 500
+    //       (what is quite rare case I guess)
+    return m_api->get("projects?limit=500")
         .then([](json r)
         {
+            wxLogTrace("poedit.crowdin", "Got projects: %s", r.dump().c_str());
             std::vector<ProjectListing> all;
-            for (auto i : r["projects"])
+            for (const auto& d : r["data"])
             {
-                all.push_back({
-                    str::to_wstring(i["name"]),
-                    i["identifier"],
-                    (bool)i["downloadable"].get<int>()
-                });
+                const json& i = d["data"];
+                auto itPublicDownloads = i.find("publicDownloads");
+                if (itPublicDownloads != i.end()
+                    // for some wierd reason `publicDownloads` can be in 3 states:
+                    // `null`, `true` and `false` and, as investigated experimentally,
+                    // only `null` means 'Forbidden' to work with project files (to get list etc)
+                    // so hide such projects. While `false` or `true` allows to work with
+                    // such projects normally
+                    && !itPublicDownloads->is_null())
+                {
+                    all.push_back(
+                    {
+                        str::to_wstring(i["name"]),
+                        i["identifier"],
+                        i["id"]
+                    });
+                }
             }
             return all;
         });
 }
 
 
-dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const std::string& project_id)
+dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const int project_id)
 {
-    auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
+    auto url = "projects/" + std::to_string(project_id);
+    auto prj = std::make_shared<ProjectInfo>();
+    static const int NO_ID = -1;
+
     return m_api->get(url)
-        .then([](json r){
-            ProjectInfo prj;
-            auto details = r["details"];
-            prj.name = str::to_wstring(details["name"]);
-            prj.identifier = details["identifier"];
-            for (auto i : r["languages"])
+    .then([this, url, prj](json r)
+    {
+        // Handle project info
+        const json& d = r["data"];
+        prj->name = str::to_wstring(d["name"]);
+        prj->id = d["id"];
+        for (const auto& langCode : d["targetLanguageIds"])
+            prj->languages.push_back(Language::TryParse(str::to_wstring(langCode)));
+
+        //TODO: get more until all files gotten (if more than 500)
+        return m_api->get(url + "/files?limit=500");
+    })
+    .then([this, url, prj](json r)
+    {
+        // Handle project files
+        for (auto& i : r["data"])
+        {
+            const json& d = i["data"];
+            if (d["type"] != "assets")
             {
-                if (i["can_translate"].get<int>() != 0)
-                    prj.languages.push_back(Language::TryParse(str::to_wstring(i["code"])));
+                const json& dir = d["directoryId"],
+                            branch = d["branchId"];
+                prj->files.push_back(
+                {
+                    L'/' + str::to_wstring(d["name"]),
+                    d["id"],
+                    dir.is_null() ? NO_ID : int(dir),
+                    branch.is_null() ? NO_ID : int(branch)
+                });
             }
-            ExtractFilesFromInfo(prj.files, r, L"/");
-            return prj;
+        }
+        //TODO: get more until all dirs gotten (if more than 500)
+        return m_api->get(url + "/directories?limit=500");
+    })
+    .then([this, url, prj](json r)
+    {
+        // Handle directories
+        struct dir
+        {
+            std::string name;
+            int parentId;
+        };
+        std::map<int, dir> dirs;
+
+        for (const auto& i : r["data"])
+        {
+            const json& d = i["data"];
+            const json& parent = d["directoryId"];
+            dirs.insert(
+            {
+                d["id"],
+                {
+                    d["name"],
+                    parent.is_null() ? NO_ID : int(parent)
+                }
+            });
+        }
+
+        std::stack<std::string> path;
+        for (auto& i : prj->files)
+        {
+            int dirId = i.dirId;
+            while (dirId != NO_ID)
+            {
+                const auto& dir = dirs[dirId];
+                path.push(dir.name);
+                dirId = dir.parentId;
+            }
+            std::string pathStr;
+            while (path.size())
+            {
+                pathStr += '/';
+                pathStr += path.top();
+                path.pop();
+            }
+            if (!pathStr.empty())
+                i.pathName = str::to_wstring(pathStr) + i.pathName;
+        }
+
+        //TODO: get more until all branches gotten (if more than 500)
+        return m_api->get(url + "/branches?limit=500");
+    }).then([this, url, prj](json r)
+    {
+        // Handle branches
+        std::map<int, std::string> branches;
+
+        for (const auto& i : r["data"])
+        {
+            const json& d = i["data"];
+            branches[d["id"]] = d["name"];
+        }
+
+        for (auto& i : prj->files)
+        {
+            if (i.branchId != NO_ID)
+                i.pathName = L'/' + str::to_wstring(branches[i.branchId]) + i.pathName;
+        }
+
+        return *prj;
+    });
+}
+
+
+dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
+                                                   const Language& lang,
+                                                   int file_id,
+                                                   const std::string& file_extension,
+                                                   const std::wstring& output_file)
+{
+    wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
+    wxString ext(file_extension);
+    ext.MakeLower();
+    return m_api->post(
+        "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
+        json_data({
+            { "targetLanguageId", lang.LanguageTag() },
+            // for XLIFF and PO files should be exported "as is" so set to `false`
+            { "exportAsXliff", !(ext == "xliff" || ext == "xlf" || ext == "po" || ext == "pot") }
+        }))
+        .then([this, output_file] (json r) {
+            std::string url = r["data"]["url"];
+            wxURI uri(url);
+            // Per download (local) client must be created since different domain
+            // per request is not allowed by HTTP client backend on some platorms.
+            // (e.g. on Linux).
+            auto downloader = std::make_shared<crowdin_http_client>(*this, str::to_utf8(uri.GetScheme() + "://" + uri.GetServer()));
+            wxLogTrace("poedit.crowdin", "Gotten file URL: %s", r.dump().c_str());
+            // Below capturing of `[downloader]` is needed to preserve `downloader` object
+            // from being destroyed before `download(...)` completes asynchroneously
+            // (what happens already after current function returns)
+            return downloader->download(url, output_file).then([downloader]() {});
         });
 }
 
 
-dispatch::future<void> CrowdinClient::DownloadFile(const std::string& project_id,
-                                                   const std::wstring& file,
-                                                   const Language& lang,
-                                                   const std::wstring& output_file)
-{
-    // NB: "export_translated_only" means the translation is not filled with the source string
-    //     if there's no translation, i.e. what Poedit wants.
-    auto url = "/api/project/" + project_id + "/export-file"
-                   "?json="
-                   "&export_translated_only=1"
-                   "&language=" + lang.LanguageTag() +
-                   "&file=" + http_client::url_encode(file);
-    return m_api->download(url, output_file);
-}
-
-
-dispatch::future<void> CrowdinClient::UploadFile(const std::string& project_id,
-                                                 const std::wstring& file,
+dispatch::future<void> CrowdinClient::UploadFile(int project_id,
                                                  const Language& lang,
+                                                 int file_id,
+                                                 const std::string& file_extension,
                                                  const std::string& file_content)
 {
-    auto url = "/api/project/" + project_id + "/upload-translation";
-
-    multipart_form_data data;
-    data.add_value("json", "");
-    data.add_value("language", lang.LanguageTag());
-    data.add_value("import_duplicates", "0");
-    data.add_value("import_eq_suggestions", "0");
-    data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
-
-    return m_api->post(url, data).then([](json){});
+    wxLogTrace("poedit.crowdin", "UploadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s)", project_id, lang.LanguageTag().c_str(), file_id, file_extension.c_str());
+    return m_api->post(
+            "storages",
+            octet_stream_data(file_content),
+            { { "Crowdin-API-FileName", "crowdin." + file_extension } }
+        )
+        .then([this, project_id, file_id, lang] (json r) {
+            wxLogTrace("poedit.crowdin", "File uploaded to temporary storage: %s", r.dump().c_str());
+            const auto storageId = r["data"]["id"];
+            return m_api->post(
+                "projects/" + std::to_string(project_id) + "/translations/" + lang.LanguageTag(),
+                json_data({
+                    { "storageId", storageId },
+                    { "fileId", file_id }
+                }))
+                .then([](json r) {
+                    wxLogTrace("poedit.crowdin", "File uploaded: %s", r.dump().c_str());
+                });
+        });
 }
 
 
 bool CrowdinClient::IsSignedIn() const
 {
     std::string token;
-    return keytar::GetPassword("Crowdin", "", &token);
+    return keytar::GetPassword("Crowdin", "", &token)
+           && token.substr(0, 2) == "2:";
 }
 
 
 void CrowdinClient::SignInIfAuthorized()
 {
     std::string token;
-    if (keytar::GetPassword("Crowdin", "", &token))
+    if (keytar::GetPassword("Crowdin", "", &token)
+        && token.length() > 2)
+    {
+        token = token.substr(2);
         SetToken(token);
+    }
+    wxLogTrace("poedit.crowdin", "Token: %s", token.c_str());
+}
+
+
+static std::string base64_decode_json_part(const std::string &in) {
+
+    std::string out;
+    std::vector<int> t(256, -1);
+    {
+        static const char* b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        for (int i = 0; i < 64; i ++)
+            t[b[i]] = i;
+    }
+
+    int val = 0,
+        valb = -8;
+
+    for (uint8_t c : in)
+    {
+        if (t[c] == -1)
+            break;
+        val = (val << 6) + t[c];
+        valb += 6;
+        if (valb >= 0)
+        {
+            out.push_back(char(val >> valb & 0xFF));
+            valb -= 8;
+        }
+    }
+
+    return out;
 }
 
 
 void CrowdinClient::SetToken(const std::string& token)
 {
-    m_api->set_authorization(!token.empty() ? "Bearer " + token : "");
+    wxLogTrace("poedit.crowdin", "Authorization: %s", token.c_str());
+
+    if (token.empty())
+        return;
+
+    try
+    {
+        auto token_json = json::parse(
+            base64_decode_json_part(std::string(
+                wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
+        )));
+        std::string domain;
+        try
+        {
+            domain = token_json.at("domain");
+            domain += '.';
+        }
+        catch (...)
+        {
+            wxLogTrace("poedit.crowdin", "Assume below token is non-enterprise, fall through with empty domain\n%s", token_json.dump().c_str());
+        }
+        m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2/");
+        m_api->set_authorization("Bearer " + token);
+    }
+    catch (...)
+    {
+        wxLogTrace("poedit.crowdin", "Failed to decode token. Most probable invalid/corrupted or unknown/unsupported type", token.c_str());
+    }
+
 }
 
 
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
     SetToken(token);
-    keytar::AddPassword("Crowdin", "", token);
+    keytar::AddPassword("Crowdin", "", "2:" + token);
 }
 
 

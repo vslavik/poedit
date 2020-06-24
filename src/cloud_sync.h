@@ -30,6 +30,8 @@
 #include "concurrency.h"
 
 #include <wx/string.h>
+#include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 #if wxUSE_GUI
     #include "customcontrols.h"
@@ -63,6 +65,10 @@ public:
     /// Asynchronously uploads the file. Returned future throws on error.
     virtual dispatch::future<void> Upload(CatalogPtr file) = 0;
 
+    /// Ensures the user is authenticated with sync service, possibly showing
+    /// login UI in the process.
+    /// @return true if logged in, false if the user declined
+    virtual bool AuthIfNeeded(wxWindow *parent) = 0;
 
     /// Convenicence for creating a destination from a lambda.
     template<typename F>
@@ -82,6 +88,26 @@ public:
         };
 
         return std::make_shared<Dest>(name, std::move(func));
+    }
+
+    static const wxString& GetCacheDir()
+    {
+        static wxString localBaseDir;
+
+        if (localBaseDir.empty())
+        {
+        #if defined(__WXOSX__)
+            localBaseDir = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
+        #elif defined(__UNIX__)
+            if (!wxGetEnv("XDG_CACHE_HOME", &localBaseDir))
+                localBaseDir = wxGetHomeDir() + "/.cache";
+            localBaseDir += "/poedit";
+        #else
+            localBaseDir = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+        #endif
+        }
+
+        return localBaseDir;
     }
 };
 
@@ -116,6 +142,11 @@ public:
     /// Show the window while performing background sync action. Show error if 
     static void RunSync(wxWindow *parent, std::shared_ptr<CloudSyncDestination> dest, CatalogPtr file)
     {
+        if (!dest->AuthIfNeeded(parent))
+        {
+            return;
+        }
+
         wxWindowPtr<CloudSyncProgressWindow> progress(new CloudSyncProgressWindow(parent, dest));
 #ifdef __WXOSX__
         progress->ShowWindowModal();

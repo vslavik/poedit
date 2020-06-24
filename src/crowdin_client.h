@@ -81,34 +81,43 @@ public:
     {
         std::wstring name;
         std::string identifier;
-        bool downloadable;
+        int id;
     };
 
     /// Retrieve listing of projects accessible to the user
     dispatch::future<std::vector<ProjectListing>> GetUserProjects();
 
+    /// File information
+    struct FileInfo
+    {
+        std::wstring pathName;
+        int id, dirId, branchId;
+    };
+
     /// Project detailed information
     struct ProjectInfo
     {
         std::wstring name;
-        std::string identifier;
+        int id;
         std::vector<Language> languages;
-        std::vector<std::wstring> files;
+        std::vector<FileInfo> files;
     };
 
     /// Retrieve listing of projects accessible to the user
-    dispatch::future<ProjectInfo> GetProjectInfo(const std::string& project_id);
+    dispatch::future<ProjectInfo> GetProjectInfo(const int project_id);
 
     /// Asynchronously download specific Crowdin file into @a output_file.
-    dispatch::future<void> DownloadFile(const std::string& project_id,
-                                        const std::wstring& file,
+    dispatch::future<void> DownloadFile(int project_id,
                                         const Language& lang,
+                                        int file_id,
+                                        const std::string& file_extension,
                                         const std::wstring& output_file);
 
     /// Asynchronously upload specific Crowdin file data.
-    dispatch::future<void> UploadFile(const std::string& project_id,
-                                      const std::wstring& file,
+    dispatch::future<void> UploadFile(int project_id,
                                       const Language& lang,
+                                      int file_id,
+                                      const std::string& file_extension,
                                       const std::string& file_content);
 
 private:
@@ -120,9 +129,10 @@ private:
     void SaveAndSetToken(const std::string& token);
 
     class crowdin_http_client;
-    std::unique_ptr<crowdin_http_client> m_api;
 
+    std::unique_ptr<crowdin_http_client> m_api, m_oauth;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
+    std::string m_authCallbackExpectedState;
 
     static CrowdinClient *ms_instance;
 };
