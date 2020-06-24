@@ -143,7 +143,6 @@ protected:
 
 
 CrowdinClient::CrowdinClient()
-    : m_oauth(new crowdin_http_client(*this, OAUTH_BASE_URL))
 {
     SignInIfAuthorized();
 }

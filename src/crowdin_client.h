@@ -130,7 +130,7 @@ private:
 
     class crowdin_http_client;
 
-    std::unique_ptr<crowdin_http_client> m_api, m_oauth;
+    std::unique_ptr<crowdin_http_client> m_api;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
     std::string m_authCallbackExpectedState;
 
