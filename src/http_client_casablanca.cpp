@@ -43,6 +43,9 @@
 #include <cpprest/http_msg.h>
 #include <cpprest/filestream.h>
 
+#include <regex>
+
+
 #ifdef _WIN32
     #include <windows.h>
     #include <winhttp.h>
@@ -68,7 +71,10 @@ using namespace web;
 using utility::string_t;
 using utility::conversions::to_string_t;
 
-#ifndef _UTF16_STRINGS
+#ifdef _UTF16_STRINGS
+inline string_t to_string_t(const wxString& s) { return s.ToStdWstring(); }
+#else
+inline string_t to_string_t(const wxString& s) { return s.ToStdString(); }
 inline string_t to_string_t(const std::wstring& s) { return str::to_utf8(s); }
 #endif
 
@@ -161,26 +167,35 @@ public:
         });
     }
 
-    dispatch::future<void> download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
+    dispatch::future<downloaded_file> download(const std::string& url, const headers& hdrs)
     {
         using namespace concurrency::streams;
-        auto fileStream = std::make_shared<ostream>();
+
+        auto req = build_request(http::methods::GET, url, hdrs);
 
         return
-        fstream::open_ostream(to_string_t(output_file)).then([=](ostream outFile)
-        {
-            *fileStream = outFile;
-            auto req = build_request(http::methods::GET, url, hdrs);
-            return m_native.request(req);
-        })
+        m_native.request(req)
         .then([=](http::http_response response)
         {
             handle_error(response);
-            return response.body().read_to_end(fileStream->streambuf());
-        })
-        .then([=](size_t)
-        {
-            return fileStream->close();
+
+            downloaded_file file(extract_attachment_filename(req, response));
+
+            return
+            fstream::open_ostream(to_string_t(file.filename().GetFullPath()))
+            .then([=](ostream outFile)
+            {
+                return
+                response.body().read_to_end(outFile.streambuf())
+                .then([=](size_t)
+                {
+                    return outFile.close();
+                });
+            })
+            .then([file{std::move(file)}]()
+            {
+                return file;
+            });
         });
     }
 
@@ -249,6 +264,27 @@ private:
         return to_string_t(url);
     }
 
+    static std::string extract_attachment_filename(const http::http_request& request, const http::http_response& response)
+    {
+        // extract from Content-Disposition attachment filename:
+        auto hdr = response.headers().find(http::header_names::content_disposition);
+        if (hdr != response.headers().end())
+        {
+            static const std::basic_regex<utility::char_t> RE_FILENAME(_XPLATSTR("attachment; *filename=\"(.*)\""), std::regex_constants::icase);
+            std::match_results<string_t::const_iterator> match;
+            if (std::regex_search(hdr->second, match, RE_FILENAME))
+                return str::to_utf8(match.str(1));
+        }
+
+        // failing that, use the URL:
+        auto path = request.absolute_uri().path();
+        auto slash = path.find_last_of('/');
+        if (slash != string_t::npos)
+            path = path.substr(slash + 1);
+
+        return str::to_utf8(path);
+    }
+
 #ifdef _WIN32
     // prepare WinHttp configuration
     static http::client::http_client_config get_client_config()
@@ -311,9 +347,9 @@ dispatch::future<::json> http_client::get(const std::string& url, const headers&
     return m_impl->get(url, hdrs);
 }
 
-dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
+dispatch::future<downloaded_file> http_client::download(const std::string& url, const headers& hdrs)
 {
-    return m_impl->download(url, output_file, hdrs);
+    return m_impl->download(url, hdrs);
 }
 
 dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data, const headers& hdrs)

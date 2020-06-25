@@ -43,7 +43,6 @@
 
 #include <wx/translation.h>
 #include <wx/utils.h>
-#include <wx/uri.h>
 
 #include <iostream>
 
@@ -401,18 +400,15 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
             // for XLIFF and PO files should be exported "as is" so set to `false`
             { "exportAsXliff", !(ext == "xliff" || ext == "xlf" || ext == "po" || ext == "pot") }
         }))
-        .then([this, output_file] (json r) {
+        .then([](json r)
+        {
+            wxLogTrace("poedit.crowdin", "Got file URL: %s", r.dump().c_str());
             std::string url = r["data"]["url"];
-            wxURI uri(url);
-            // Per download (local) client must be created since different domain
-            // per request is not allowed by HTTP client backend on some platorms.
-            // (e.g. on Linux).
-            auto downloader = std::make_shared<crowdin_http_client>(*this, str::to_utf8(uri.GetScheme() + "://" + uri.GetServer()));
-            wxLogTrace("poedit.crowdin", "Gotten file URL: %s", r.dump().c_str());
-            // Below capturing of `[downloader]` is needed to preserve `downloader` object
-            // from being destroyed before `download(...)` completes asynchroneously
-            // (what happens already after current function returns)
-            return downloader->download(url, output_file).then([downloader]() {});
+            return http_client::download_from_anywhere(url);
+        })
+        .then([=](downloaded_file file)
+        {
+            file.move_to(wxString(output_file));
         });
 }
 

@@ -96,11 +96,10 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<void> download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
+    dispatch::future<downloaded_file> download(const std::string& url, const headers& hdrs)
     {
-        auto promise = std::make_shared<dispatch::promise<void>>();
+        auto promise = std::make_shared<dispatch::promise<downloaded_file>>();
 
-        NSString *outputPath = str::to_NS(output_file);
         auto request = build_request(@"GET", url, hdrs);
         auto task = [m_session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
             try
@@ -108,10 +107,14 @@ public:
                 if (handle_error(nil, response, error, *promise))
                     return;
 
+                downloaded_file file(str::to_utf8([response suggestedFilename]));
+                NSString *outputPath = str::to_NS(file.filename().GetFullPath());
+
                 NSError *err = nil;
                 if (![[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:outputPath error:&err])
                     throw std::runtime_error(str::to_utf8([err localizedDescription]));
-                promise->set_value();
+
+                promise->set_value(std::move(file));
             }
             catch (...)
             {
@@ -244,9 +247,9 @@ dispatch::future<json> http_client::get(const std::string& url, const headers& h
     return m_impl->get(url, hdrs);
 }
 
-dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file, const headers& hdrs)
+dispatch::future<downloaded_file> http_client::download(const std::string& url, const headers& hdrs)
 {
-    return m_impl->download(url, output_file, hdrs);
+    return m_impl->download(url, hdrs);
 }
 
 dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const headers& hdrs)
