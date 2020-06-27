@@ -554,12 +554,12 @@ dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
         return CrowdinClient::Get().GetProjectInfo(projIt->id).then([=](CrowdinClient::ProjectInfo proj)
         {
             auto fileIt = find_if(proj.files.begin(), proj.files.end(),
-                                [=](const auto& file) { return filePathName == file.pathName; });
+                                  [=](const auto& file) { return filePathName == file.pathName; });
             if (fileIt == proj.files.end())
             {
                 throw Exception(wxString::Format(_(L"File “%s” doesn’t exist in Crowdin project “%s”"), filePathName, projIdentifier));
             }
-            catalog->SetCrowdinProjectAndFileId(projIt->id, fileIt->id);
+            catalog->SetCrowdinProjectAndFileId(proj.id, fileIt->id);
         });
     });
 
