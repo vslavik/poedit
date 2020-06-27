@@ -76,6 +76,7 @@ protected:
     wxBoxSizer *m_loginInfo;
     wxButton *m_signIn, *m_signOut;
     wxString m_userName, m_userLogin;
+    std::string m_userAvatar;
 };
 
 

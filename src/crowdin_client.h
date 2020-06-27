@@ -71,6 +71,7 @@ public:
     {
         std::wstring name;
         std::wstring login;
+        std::string avatar;
     };
 
     /// Retrieve information about the current user asynchronously

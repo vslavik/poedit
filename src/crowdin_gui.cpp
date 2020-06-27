@@ -35,6 +35,7 @@
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "http_client.h"
 #include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
@@ -165,29 +166,37 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
 
         case State::SignedIn:
         {
-            auto account = new wxStaticText(this, wxID_ANY, _("Signed in as:"));
-            ColorScheme::SetupWindowColors(account, [=]
-            {
-                account->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-            });
-
+            auto profile = new AvatarIcon(this, wxSize(PX(48), PX(48)));
             auto name = new wxStaticText(this, wxID_ANY, m_userName);
-#ifdef __WXGTK3__
-            // This is needed to avoid missizing text with bold font. See
-            // https://github.com/vslavik/poedit/pull/411 and https://trac.wxwidgets.org/ticket/16088
-            name->SetLabelMarkup("<b>" + EscapeMarkup(m_userName) + "</b>");
-#else
-            name->SetFont(name->GetFont().Bold());
-#endif
-
             auto username = new SecondaryLabel(this, m_userLogin);
 
-            sizer->Add(account, wxSizerFlags().BORDER_MACOS(wxTOP, PX(3)));
-            sizer->AddSpacer(PX(2));
+            sizer->Add(profile, wxSizerFlags().Center());
+            sizer->AddSpacer(PX(6));
             auto box = new wxBoxSizer(wxVERTICAL);
             box->Add(name, wxSizerFlags().Left());
             box->Add(username, wxSizerFlags().Left());
-            sizer->Add(box);
+            sizer->Add(box, wxSizerFlags().Center());
+            sizer->AddSpacer(PX(6));
+
+            if (!m_userName.empty())
+            {
+                wxString initials;
+                for (auto& s: wxSplit(m_userName, ' '))
+                {
+                    if (!s.empty())
+                        initials += s[0];
+                }
+                profile->SetPlaceholder(initials);
+            }
+            if (!m_userAvatar.empty())
+            {
+                http_client::download_from_anywhere(m_userAvatar)
+                .then_on_window(profile, [=](downloaded_file f)
+                {
+                    profile->LoadIcon(f.filename());
+                });
+            }
+
             break;
         }
     }
@@ -203,6 +212,7 @@ void CrowdinLoginPanel::UpdateUserInfo()
         .then_on_window(this, [=](CrowdinClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
+            m_userAvatar = u.avatar;
             ChangeState(State::SignedIn);
         })
         .catch_all([](dispatch::exception_ptr){});

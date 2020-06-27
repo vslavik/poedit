@@ -206,6 +206,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             const json& d = r["data"];
             UserInfo u;
             u.login = str::to_wstring(d["username"]);
+            u.avatar = d.value("avatarUrl", "");
             std::string fullName;
             try
             {
