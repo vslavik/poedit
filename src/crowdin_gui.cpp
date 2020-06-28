@@ -392,7 +392,10 @@ private:
             EnableAllChoices(false);
             CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].id)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
-                .catch_all(m_activity->HandleError);
+                .catch_all([=](dispatch::exception_ptr e){
+                    m_activity->HandleError(e);
+                    EnableAllChoices(true);
+                });
         }
     }
 

@@ -26,6 +26,7 @@
 
 #include "crowdin_client.h"
 
+#include "errors.h"
 #include "http_client.h"
 #include "keychain/keytar.h"
 #include "str_helpers.h"
@@ -253,22 +254,12 @@ dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetU
             for (const auto& d : r["data"])
             {
                 const json& i = d["data"];
-                auto itPublicDownloads = i.find("publicDownloads");
-                if (itPublicDownloads != i.end()
-                    // for some wierd reason `publicDownloads` can be in 3 states:
-                    // `null`, `true` and `false` and, as investigated experimentally,
-                    // only `null` means 'Forbidden' to work with project files (to get list etc)
-                    // so hide such projects. While `false` or `true` allows to work with
-                    // such projects normally
-                    && !itPublicDownloads->is_null())
+                all.push_back(
                 {
-                    all.push_back(
-                    {
-                        str::to_wstring(i["name"]),
-                        i["identifier"],
-                        i["id"]
-                    });
-                }
+                    str::to_wstring(i["name"]),
+                    i["identifier"],
+                    i["id"]
+                });
             }
             return all;
         });
@@ -286,6 +277,10 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
     {
         // Handle project info
         const json& d = r["data"];
+
+        if (get_value(d, "publicDownloads", false) == false)
+            throw Exception(_("Downloading translations is disabled in this project."));
+
         prj->name = str::to_wstring(d["name"]);
         prj->id = d["id"];
         for (const auto& langCode : d["targetLanguageIds"])
