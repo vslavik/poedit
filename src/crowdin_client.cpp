@@ -485,13 +485,9 @@ void CrowdinClient::InitWithAuthToken(const std::string& token)
             base64_decode_json_part(std::string(
                 wxString(token).AfterFirst('.').BeforeFirst('.').utf8_str()
         )));
-        std::string domain;
-        auto i_domain = token_json.find("domain");
-        if (i_domain != token_json.end() && !i_domain->is_null())
-        {
-            domain = *i_domain;
+        std::string domain = get_value(token_json, "domain", "");
+        if (!domain.empty())
             domain += '.';
-        }
 
         m_api = std::make_unique<crowdin_http_client>(*this, "https://" + domain + "crowdin.com/api/v2/");
         m_api->set_authorization("Bearer " + token);
