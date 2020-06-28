@@ -297,15 +297,14 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
             const json& d = i["data"];
             if (d["type"] != "assets")
             {
-                const json& dir = d["directoryId"],
-                            branch = d["branchId"];
-                prj->files.push_back(
-                {
-                    L'/' + str::to_wstring(d["name"]),
-                    d["id"],
-                    dir.is_null() ? NO_ID : int(dir),
-                    branch.is_null() ? NO_ID : int(branch)
-                });
+                FileInfo f;
+                f.id = d["id"];
+                f.fullPath = '/' + std::string(d.at("name"));
+                f.dirId = get_value(d, "directoryId", NO_ID);
+                f.branchId = get_value(d, "branchId", NO_ID);
+                f.fileName = d.at("name");
+                f.title = get_value(d, "title", f.fileName);
+                prj->files.push_back(std::move(f));
             }
         }
         //TODO: get more until all dirs gotten (if more than 500)
@@ -314,65 +313,72 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
     .then([this, url, prj](json r)
     {
         // Handle directories
-        struct dir
+        struct dir_info
         {
-            std::string name;
+            std::string name, title;
             int parentId;
         };
-        std::map<int, dir> dirs;
+        std::map<int, dir_info> dirs;
 
         for (const auto& i : r["data"])
         {
             const json& d = i["data"];
             const json& parent = d["directoryId"];
+            std::string name = d.at("name");
             dirs.insert(
             {
-                d["id"],
+                d.at("id"),
                 {
-                    d["name"],
+                    name,
+                    get_value(d, "title", name),
                     parent.is_null() ? NO_ID : int(parent)
                 }
             });
         }
 
-        std::stack<std::string> path;
         for (auto& i : prj->files)
         {
+            std::list<std::string> path;
             int dirId = i.dirId;
             while (dirId != NO_ID)
             {
                 const auto& dir = dirs[dirId];
-                path.push(dir.name);
+                path.push_front(dir.title);
+                i.fullPath.insert(0, '/' + dir.name);
                 dirId = dir.parentId;
             }
-            std::string pathStr;
-            while (path.size())
-            {
-                pathStr += '/';
-                pathStr += path.top();
-                path.pop();
-            }
-            if (!pathStr.empty())
-                i.pathName = str::to_wstring(pathStr) + i.pathName;
+            i.dirName = boost::join(path, "/");
         }
-
+    })
+    .then([this, url]()
+    {
         //TODO: get more until all branches gotten (if more than 500)
         return m_api->get(url + "/branches?limit=500");
-    }).then([this, url, prj](json r)
+    })
+    .then([this, url, prj](json r)
     {
         // Handle branches
-        std::map<int, std::string> branches;
+        struct branch_info
+        {
+            std::string name, title;
+        };
+        std::map<int, branch_info> branches;
 
         for (const auto& i : r["data"])
         {
             const json& d = i["data"];
-            branches[d["id"]] = d["name"];
+            const std::string name = d.at("name");
+            const std::string title = get_value(d, "title", name);
+            branches.insert({d.at("id"), {name, title}});
         }
 
         for (auto& i : prj->files)
         {
             if (i.branchId != NO_ID)
-                i.pathName = L'/' + str::to_wstring(branches[i.branchId]) + i.pathName;
+            {
+                i.branchName = branches[i.branchId].title;
+                i.fullPath.insert(0, '/' + branches[i.branchId].name);
+            }
         }
 
         return *prj;

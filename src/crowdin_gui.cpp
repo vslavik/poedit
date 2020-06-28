@@ -45,13 +45,19 @@
 #include <wx/button.h>
 #include <wx/choice.h>
 #include <wx/config.h>
+#include <wx/dataview.h>
 #include <wx/dialog.h>
 #include <wx/msgdlg.h>
+#include <wx/renderer.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/stdpaths.h>
 #include <wx/weakref.h>
 #include <wx/windowptr.h>
+
+#ifdef __WXMSW__
+    #include <wx/generic/private/markuptext.h>
+#endif
 
 #if !wxCHECK_VERSION(3,1,0)
     #define CenterVertical() Center()
@@ -284,10 +290,123 @@ private:
 };
 
 
+class CrowdinFileList : public wxDataViewListCtrl
+{
+public:
+    using FileInfo = CrowdinClient::FileInfo;
+
+    CrowdinFileList(wxWindow *parent)
+        : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+                             wxDV_NO_HEADER | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN))
+    {
+    #if wxCHECK_VERSION(3,1,1)
+        SetRowHeight(PX(36));
+    #endif
+        SetMinSize(wxSize(PX(500), PX(200)));
+
+        auto renderer = new MultilineTextRenderer();
+        auto column = new wxDataViewColumn(_("File"), renderer, 0, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
+        AppendColumn(column, "string");
+
+        ColorScheme::SetupWindowColors(this, [=]{ RefreshFileList(); });
+    }
+
+    void ClearFiles()
+    {
+        m_files.clear();
+        DeleteAllItems();
+    }
+
+    void SetFiles(std::vector<FileInfo>& files)
+    {
+        m_files = files;
+        RefreshFileList();
+    }
+
+private:
+    void RefreshFileList()
+    {
+    #ifdef __WXGTK__
+        auto secondaryFormatting = "alpha='50%'";
+    #else
+        auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
+    #endif
+
+        DeleteAllItems();
+
+        for (auto& f : m_files)
+        {
+        #if wxCHECK_VERSION(3,1,1)
+            wxString details;
+            if (!f.branchName.empty())
+                details += str::to_wx(f.branchName) + L" → ";
+            details += str::to_wx(f.fullPath);
+
+            wxString text = wxString::Format
+            (
+                "%s\n<small><span %s>%s</span></small>",
+                EscapeCString(f.title),
+                secondaryFormatting,
+                EscapeCString(details)
+            );
+        #else
+            wxString text = str::to_wx(f.title);
+        #endif
+
+            wxVector<wxVariant> data;
+            data.push_back({text});
+            AppendItem(data);
+        }
+    }
+
+    class MultilineTextRenderer : public wxDataViewTextRenderer
+    {
+    public:
+        MultilineTextRenderer() : wxDataViewTextRenderer()
+        {
+    #if wxCHECK_VERSION(3,1,1)
+            EnableMarkup();
+    #endif
+        }
+
+    #ifdef __WXMSW__
+        bool Render(wxRect rect, wxDC *dc, int state)
+        {
+            int flags = 0;
+            if ( state & wxDATAVIEW_CELL_SELECTED )
+                flags |= wxCONTROL_SELECTED;
+            
+            for (auto& line: wxSplit(m_text, '\n'))
+            {
+                wxItemMarkupText markup(line);
+                markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
+                rect.y += rect.height / 2;
+            }
+            
+            return true;
+        }
+
+        wxSize GetSize() const
+        {
+            if (m_text.empty())
+                return wxSize(wxDVC_DEFAULT_RENDERER_SIZE,wxDVC_DEFAULT_RENDERER_SIZE);
+
+            auto size = wxDataViewTextRenderer::GetSize();
+            size.y *= 2; // approximation enough for our needs
+            return size;
+        }
+    #endif // __WXMSW__
+    };
+
+private:
+    std::vector<FileInfo> m_files;
+};
+
+
 class CrowdinOpenDialog : public wxDialog
 {
 public:
-    CrowdinOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open Crowdin translation"))
+    CrowdinOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open Crowdin translation"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     {
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->SetMinSize(PX(400), -1);
@@ -298,28 +417,20 @@ public:
         pickers->AddGrowableCol(1);
         topsizer->Add(pickers, wxSizerFlags().Expand().PXDoubleBorderAll());
 
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
+        pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")), wxSizerFlags().CenterVertical().Right());
         m_project = new wxChoice(this, wxID_ANY);
         pickers->Add(m_project, wxSizerFlags().Expand().CenterVertical());
 
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("Language:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
+        pickers->Add(new wxStaticText(this, wxID_ANY, _("Language:")), wxSizerFlags().CenterVertical().Right());
         m_language = new wxChoice(this, wxID_ANY);
         pickers->Add(m_language, wxSizerFlags().Expand().CenterVertical());
 
-        pickers->AddSpacer(PX(5));
-        pickers->AddSpacer(PX(5));
-
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("File:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
-        m_file = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_file, wxSizerFlags().Expand().CenterVertical());
+        m_files = new CrowdinFileList(this);
+        topsizer->Add(m_files, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
         m_activity = new ActivityIndicator(this);
-        topsizer->AddSpacer(PX(5));
         topsizer->Add(m_activity, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
-        topsizer->AddSpacer(PX(5));
+        topsizer->AddSpacer(MSW_OR_OTHER(PX(4), PX(2)));
 
         auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
         auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
@@ -335,7 +446,6 @@ public:
         CenterOnParent();
 
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
-        m_file->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnFileSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CrowdinOpenDialog::OnUpdateOK, this);
         ok->Bind(wxEVT_BUTTON, &CrowdinOpenDialog::OnOK, this);
 
@@ -351,8 +461,8 @@ private:
     void EnableAllChoices(bool enable = true)
     {
         m_project->Enable(enable);
-        m_file->Enable(enable);
         m_language->Enable(enable);
+        m_files->Enable(enable);
     }
 
     void FetchProjects()
@@ -390,6 +500,7 @@ private:
         {
             m_activity->Start();
             EnableAllChoices(false);
+            m_files->ClearFiles();
             CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].id)
                 .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
                 .catch_all([=](dispatch::exception_ptr e){
@@ -407,12 +518,7 @@ private:
         for (auto& i: m_info.languages)
             m_language->Append(i.DisplayName());
 
-        m_file->Clear();
-        m_file->Append("");
-        for (auto& i: m_info.files)
-        {
-            m_file->Append(i.pathName);
-        }
+        m_files->SetFiles(m_info.files);
 
         EnableAllChoices();
         m_activity->Stop();
@@ -438,40 +544,24 @@ private:
         }
 
         if (m_info.files.size() == 1)
-            m_file->SetSelection(1);
+            m_files->SelectRow(0);
 
-        if (m_info.files.size() == 0)
-        {
-            m_activity->StopWithError(_("This project has no files that can be translated in Poedit."));
-            m_file->Disable();
-            m_language->Disable();
-        }
-    }
-
-    void OnFileSelected()
-    {
-        auto filesel = m_file->GetSelection();
-        if (filesel - 1 < (int)m_info.files.size())
-            m_activity->Stop();
-        else
-            m_activity->StopWithError(_(L"This file can only be edited in Crowdin’s web interface."));
     }
 
     void OnUpdateOK(wxUpdateUIEvent& e)
     {
-        auto filesel = m_file->GetSelection();
         e.Enable(!m_activity->IsRunning() &&
                  m_project->GetSelection() > 0 &&
                  m_language->GetSelection() > 0 &&
-                 filesel > 0 && filesel - 1 < (int)m_info.files.size());
+                 m_files->GetSelectedRow() != wxNOT_FOUND);
     }
 
     void OnOK(wxCommandEvent&)
     {
-        auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
+        auto crowdin_file = m_info.files[m_files->GetSelectedRow()];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         LanguageDialog::SetLastChosen(crowdin_lang);
-        OutLocalFilename = CreateLocalFilename(crowdin_file.id, crowdin_file.pathName, crowdin_lang, m_info.id, m_info.name);
+        OutLocalFilename = CreateLocalFilename(crowdin_file.id, crowdin_file.fileName, crowdin_lang, m_info.id, m_info.name);
 
         m_activity->Start(_(L"Downloading latest translations…"));
 
@@ -480,7 +570,7 @@ private:
                 m_info.id,
                 crowdin_lang,
                 crowdin_file.id,
-                std::string(wxFileName(crowdin_file.pathName, wxPATH_UNIX).GetExt().utf8_str()),
+                std::string(wxFileName(crowdin_file.fileName, wxPATH_UNIX).GetExt().utf8_str()),
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -524,7 +614,8 @@ private:
 
 private:
     wxButton *m_ok;
-    wxChoice *m_project, *m_file, *m_language;
+    wxChoice *m_project, *m_language;
+    CrowdinFileList *m_files;
     ActivityIndicator *m_activity;
 
     std::vector<CrowdinClient::ProjectListing> m_projects;
@@ -557,10 +648,10 @@ dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
         return CrowdinClient::Get().GetProjectInfo(projIt->id).then([=](CrowdinClient::ProjectInfo proj)
         {
             auto fileIt = find_if(proj.files.begin(), proj.files.end(),
-                                  [=](const auto& file) { return filePathName == file.pathName; });
+                                  [=](const auto& file) { return filePathName == file.fullPath; });
             if (fileIt == proj.files.end())
             {
-                throw Exception(wxString::Format(_(L"File “%s” doesn’t exist in Crowdin project “%s”"), filePathName, projIdentifier));
+                throw Exception(wxString::Format(_(L"File “%s” doesn’t exist in Crowdin project “%s”."), filePathName, projIdentifier));
             }
             catalog->SetCrowdinProjectAndFileId(proj.id, fileIt->id);
         });

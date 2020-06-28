@@ -91,7 +91,9 @@ public:
     /// File information
     struct FileInfo
     {
-        std::wstring pathName;
+        std::string title;
+        std::string fileName, dirName, branchName;
+        std::string fullPath;
         int id, dirId, branchId;
     };
 
