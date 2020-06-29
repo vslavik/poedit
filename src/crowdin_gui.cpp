@@ -184,16 +184,7 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             sizer->Add(box, wxSizerFlags().Center());
             sizer->AddSpacer(PX(6));
 
-            if (!m_userName.empty())
-            {
-                wxString initials;
-                for (auto& s: wxSplit(m_userName, ' '))
-                {
-                    if (!s.empty())
-                        initials += s[0];
-                }
-                profile->SetPlaceholder(initials);
-            }
+            profile->SetUserName(m_userName);
             if (!m_userAvatar.empty())
             {
                 http_client::download_from_anywhere(m_userAvatar)
@@ -411,7 +402,14 @@ public:
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->SetMinSize(PX(400), -1);
 
-        topsizer->AddSpacer(PX(10));
+        auto loginSizer = new wxBoxSizer(wxHORIZONTAL);
+        topsizer->AddSpacer(PX(6));
+        topsizer->Add(loginSizer, wxSizerFlags().Right().PXDoubleBorder(wxLEFT|wxRIGHT));
+        auto loginText = new SecondaryLabel(this, "");
+        auto loginImage = new AvatarIcon(this, wxSize(PX(24), PX(24)));
+        loginSizer->Add(loginText, wxSizerFlags().ReserveSpaceEvenIfHidden().Center().Border(wxRIGHT, PX(5)));
+        loginSizer->Add(loginImage, wxSizerFlags().ReserveSpaceEvenIfHidden().Center());
+        FetchLoginInfo(loginText, loginImage);
 
         auto pickers = new wxFlexGridSizer(2, wxSize(PX(5),PX(6)));
         pickers->AddGrowableCol(1);
@@ -458,6 +456,35 @@ public:
     wxString OutLocalFilename;
 
 private:
+    void FetchLoginInfo(SecondaryLabel *label, AvatarIcon *icon)
+    {
+        label->Hide();
+        icon->Hide();
+
+        CrowdinClient::Get().GetUserInfo()
+        .then_on_window(this, [=](CrowdinClient::UserInfo u)
+        {
+            label->SetLabel(_("Signed in as:") + " " + u.name);
+            icon->SetUserName(u.name);
+            if (u.avatar.empty())
+            {
+                icon->Show();
+            }
+            else
+            {
+                http_client::download_from_anywhere(u.avatar)
+                .then_on_window(this, [=](downloaded_file f)
+                {
+                    icon->LoadIcon(f.filename());
+                    icon->Show();
+                });
+            }
+            Layout();
+            label->Show();
+        })
+        .catch_all([](dispatch::exception_ptr){});
+    }
+
     void EnableAllChoices(bool enable = true)
     {
         m_project->Enable(enable);

@@ -198,7 +198,8 @@ class AvatarIcon : public wxWindow
 public:
     AvatarIcon(wxWindow *parent, const wxSize& size);
 
-    void SetPlaceholder(const wxString& text);
+    /// Set name to be used if image can't be loaded
+    void SetUserName(const wxString& name);
     void LoadIcon(const wxFileName& f);
 
     bool HasTransparentBackground() override { return true; }

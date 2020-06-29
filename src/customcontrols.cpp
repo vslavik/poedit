@@ -504,9 +504,14 @@ AvatarIcon::AvatarIcon(wxWindow *parent, const wxSize& size) : wxWindow(parent, 
     Bind(wxEVT_PAINT, &AvatarIcon::OnPaint, this);
 }
 
-void AvatarIcon::SetPlaceholder(const wxString& text)
+void AvatarIcon::SetUserName(const wxString& name)
 {
-    m_placeholder = text;
+    m_placeholder.clear();
+    for (auto& s: wxSplit(name, ' '))
+    {
+        if (!s.empty())
+            m_placeholder += s[0];
+    }
     Refresh();
 }
 
