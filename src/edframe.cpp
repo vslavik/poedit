@@ -812,7 +812,8 @@ wxWindow* PoeditFrame::CreateContentViewWelcome()
 
 wxWindow* PoeditFrame::CreateContentViewEmptyPO()
 {
-    return new EmptyPOScreenPanel(this);
+    bool isGettext = m_catalog->GetFileType() == Catalog::Type::PO || m_catalog->GetFileType() == Catalog::Type::POT;
+    return new EmptyPOScreenPanel(this, isGettext);
 }
 
 

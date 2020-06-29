@@ -50,7 +50,7 @@ public:
 class EmptyPOScreenPanel : public WelcomeScreenBase
 {
 public:
-    EmptyPOScreenPanel(PoeditFrame *parent);
+    EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext);
 };
 
 

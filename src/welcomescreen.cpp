@@ -269,7 +269,7 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
 
 
-EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
+EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
     : WelcomeScreenBase(parent)
 {
     auto sizer = new wxBoxSizer(wxVERTICAL);
@@ -281,45 +281,51 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
 
     auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
-    sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
-
-    auto explain = new AutoWrappingText(this, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
-    sizer->Add(explain, wxSizerFlags().Expand().Border(wxTOP, PX(10)));
-
-    auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
-    sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM, PX(15)).Align(wxALIGN_RIGHT));
-
-    auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));
-    sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
-
-    sizer->Add(new ActionButton(
-                       this, XRCID("menu_update_from_pot"),
-                       _("Update from POT"),
-                       _("Take translatable strings from an existing POT template.")),
-               wxSizerFlags().Expand());
-    sizer->AddSpacer(PX(20));
-
-    auto explain3 = new wxStaticText(this, wxID_ANY, _("You can also extract translatable strings directly from the source code:"));
-    sizer->Add(explain3, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
-
-    auto btnSources = new ActionButton(
-                       this, wxID_ANY,
-                       _("Extract from sources"),
-                       _("Configure source code extraction in Properties."));
-    sizer->Add(btnSources, wxSizerFlags().Expand());
-    sizer->AddSpacer(PX(20));
-
     ColorScheme::SetupWindowColors(this, [=]
     {
         header->SetForegroundColour(ColorScheme::Get(Color::Label));
-        explain->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-        explain2->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-        explain3->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
     });
+    sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
 
-    btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
-        parent->EditCatalogPropertiesAndUpdateFromSources();
-    });
+    if (isGettext)
+    {
+        auto explain = new AutoWrappingText(this, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxTOP, PX(10)));
+
+        auto learnMore = new LearnMoreLink(this, "http://www.gnu.org/software/gettext/manual/html_node/", _("(Learn more about GNU gettext)"));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxBOTTOM, PX(15)).Align(wxALIGN_RIGHT));
+
+        auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));
+        sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
+
+        sizer->Add(new ActionButton(
+                           this, XRCID("menu_update_from_pot"),
+                           _("Update from POT"),
+                           _("Take translatable strings from an existing POT template.")),
+                   wxSizerFlags().Expand());
+        sizer->AddSpacer(PX(20));
+
+        auto explain3 = new wxStaticText(this, wxID_ANY, _("You can also extract translatable strings directly from the source code:"));
+        sizer->Add(explain3, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
+
+        auto btnSources = new ActionButton(
+                           this, wxID_ANY,
+                           _("Extract from sources"),
+                           _("Configure source code extraction in Properties."));
+        sizer->Add(btnSources, wxSizerFlags().Expand());
+        sizer->AddSpacer(PX(20));
+
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            explain->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+            explain2->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+            explain3->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+        });
+
+        btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+            parent->EditCatalogPropertiesAndUpdateFromSources();
+        });
+    }
 
     Layout();
 }
