@@ -31,6 +31,7 @@
 #include <iomanip>
 #include <sstream>
 
+#include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -42,8 +43,10 @@
 class downloaded_file::impl
 {
 public:
-    impl(const std::string& filename)
+    impl(std::string filename)
     {
+        // filter out invalid characters in filenames
+        std::replace_if(filename.begin(), filename.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
         m_fn = m_tmpdir.CreateFileName(!filename.empty() ? str::to_wx(filename) : "data");
     }
 
