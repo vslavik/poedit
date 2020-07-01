@@ -53,6 +53,7 @@
 
 #include <set>
 #include <algorithm>
+#include <regex>
 
 
 // ----------------------------------------------------------------------
@@ -613,18 +614,18 @@ bool Catalog::IsFromCrowdin() const
     if (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"))
         return true;
 
-    auto name = wxFileName(m_fileName).GetName();
-    if (name.StartsWith("CrowdinSync_"))
+    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+) .*");
+    auto name = wxFileName(m_fileName).GetName().ToStdWstring();
+
+    std::wsmatch m;
+    if (regex_match(name, m, RE_CROWDIN_FILE))
     {
-        name = name.AfterFirst('_');
-        long project_id = 0, file_id = 0;
-        if (name.ToLong(&project_id))
-            m_crowdinProjectId = (int)project_id;
-        if (name.AfterFirst('_').ToLong(&file_id))
-            m_crowdinFileId = (int)file_id;
+        m_crowdinProjectId = std::stoi(m.str(1));
+        m_crowdinFileId = std::stoi(m.str(2));
+        return m_crowdinFileId > 0 && m_crowdinProjectId > 0;
     }
 
-    return m_crowdinFileId > 0 && m_crowdinProjectId > 0;
+    return false;
 }
 
 namespace

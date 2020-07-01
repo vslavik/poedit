@@ -607,17 +607,14 @@ private:
             .catch_all(m_activity->HandleError);
     }
 
-    wxString CreateLocalFilename(int fileId, std::string fileName, const Language& lang, int projectId, const wxString& projectName)
+    wxString CreateLocalFilename(int fileId, std::string fileName, const Language& lang, int projectId, wxString projectName)
     {
+        // sanitize to be safe filenames:
         std::replace_if(fileName.begin(), fileName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+        std::replace_if(projectName.begin(), projectName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
-        wxFileName crowdinFileName(fileName, wxPATH_UNIX);
-        wxFileName localFileName(
-            CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin"
-            + wxFILE_SEP_PATH + projectName
-            + wxFILE_SEP_PATH + lang.Code()
-            + wxFILE_SEP_PATH + crowdinFileName.GetPath() + wxFILE_SEP_PATH
-            + "CrowdinSync_" << projectId << '_' << fileId << '_' << crowdinFileName.GetFullName());
+        const wxString dir = CloudSyncDestination::GetCacheDir() + "/Crowdin/" + projectName + " - " + lang.Code();
+        wxFileName localFileName(dir + "/Crowdin." << projectId << '.' << fileId << ' ' << fileName);
 
         auto ext = localFileName.GetExt().Lower();
         if (ext == "po")
