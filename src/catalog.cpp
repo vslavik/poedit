@@ -605,26 +605,26 @@ void Catalog::SetFileName(const wxString& fn)
     m_fileName = f.GetFullPath();
 }
 
-bool Catalog::IsFromCrowdin() const
+bool Catalog::IsFromCrowdin(int* pProjId, int* pFileId) const
 {
-    if (m_crowdinFileId > 0 && m_crowdinProjectId > 0)
-        return true;
-
-    if (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"))
-        return true;
-
-    auto name = wxFileName(m_fileName).GetName();
-    if (name.StartsWith("CrowdinSync_"))
+    if (!(m_crowdinFileId > 0 && m_crowdinProjectId > 0))
     {
-        name = name.AfterFirst('_');
-        long project_id = 0, file_id = 0;
-        if (name.ToLong(&project_id))
-            m_crowdinProjectId = (int)project_id;
-        if (name.AfterFirst('_').ToLong(&file_id))
-            m_crowdinFileId = (int)file_id;
+        auto name = wxFileName(m_fileName).GetName();
+        if (name.StartsWith("CrowdinSync_"))
+        {
+            name = name.AfterFirst('_');
+            name.ToLong(&m_crowdinProjectId);
+            name.AfterFirst('_').ToLong(&m_crowdinFileId);
+        }
     }
 
-    return m_crowdinFileId > 0 && m_crowdinProjectId > 0;
+    if (pFileId)
+        *pFileId = (int)m_crowdinFileId;
+    if (pProjId)
+        *pProjId = (int)m_crowdinProjectId;
+
+    return (m_crowdinFileId > 0 && m_crowdinProjectId > 0)
+        || (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"));
 }
 
 namespace

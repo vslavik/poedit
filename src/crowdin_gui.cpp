@@ -656,7 +656,9 @@ private:
 
 dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
 {
-    if (catalog->GetCrowdinProjectId() > 0 && catalog->GetCrowdinFileId() > 0)
+    int projId, fileId;
+    
+    if(!catalog->IsFromCrowdin(&projId, &fileId) || (projId > 0 && fileId > 0))
         return dispatch::make_ready_future();
 
     wxString projIdentifier = catalog->Header().GetHeader("X-Crowdin-Project");
@@ -754,10 +756,12 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         CrowdinUpdateCatalogIDsFromHeaders(catalog)
         .then([=]()
         {
+        int projId, fileId;
+        catalog->IsFromCrowdin(&projId, &fileId);
         CrowdinClient::Get().UploadFile(
-                catalog->GetCrowdinProjectId(),
+                projId,
                 crowdin_lang,
-                catalog->GetCrowdinFileId(),
+                fileId,
                 std::string(wxFileName(catalog->GetFileName()).GetExt().utf8_str()),
                 catalog->SaveToBuffer()
             )
@@ -775,9 +779,9 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
 
                 return CrowdinClient::Get().DownloadFile(
-                        catalog->GetCrowdinProjectId(),
+                        projId,
                         crowdin_lang,
-                        catalog->GetCrowdinFileId(),
+                        fileId,
                         std::string(filename.GetExt().utf8_str()),
                         outfile.ToStdWstring()
                     )
@@ -816,11 +820,13 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
     return CrowdinUpdateCatalogIDsFromHeaders(file)
     .then([=]()
     {
+        int projId, fileId;
+        file->IsFromCrowdin(&projId, &fileId);
         return CrowdinClient::Get().UploadFile
                (
-                   file->GetCrowdinProjectId(),
+                   projId,
                    crowdin_lang,
-                   file->GetCrowdinFileId(),
+                   fileId,
                    std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
                    file->SaveToBuffer()
                );
