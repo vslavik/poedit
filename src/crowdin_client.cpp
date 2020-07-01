@@ -26,6 +26,7 @@
 
 #include "crowdin_client.h"
 
+#include "catalog.h"
 #include "errors.h"
 #include "http_client.h"
 #include "keychain/keytar.h"
@@ -386,6 +387,33 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
 }
 
 
+static void PostprocessDownloadedXLIFF(const wxString& filename)
+{
+    // Crowdin XLIFF files have translations pre-filled with the source text if
+    // not yet translated. Undo this as it is undesirable to translators.
+    auto cat = Catalog::Create(filename);
+    if (!cat->IsOk())
+        return;
+
+    bool modified = false;
+    for (auto& item: cat->items())
+    {
+        if (item->IsFuzzy() && !item->HasPlural() && item->GetString() == item->GetTranslation())
+        {
+            item->ClearTranslation();
+            modified = true;
+        }
+    }
+
+    if (modified)
+    {
+        Catalog::ValidationResults dummy1;
+        Catalog::CompilationStatus dummy2;
+        cat->Save(filename, false, dummy1, dummy2);
+    }
+}
+
+
 dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
                                                    const Language& lang,
                                                    int file_id,
@@ -393,14 +421,18 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
                                                    const std::wstring& output_file)
 {
     wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
+
     wxString ext(file_extension);
     ext.MakeLower();
+    const bool isXLIFFNative = (ext == "xliff" || ext == "xlf");
+    const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot");
+
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
         json_data({
             { "targetLanguageId", lang.LanguageTag() },
             // for XLIFF and PO files should be exported "as is" so set to `false`
-            { "exportAsXliff", !(ext == "xliff" || ext == "xlf" || ext == "po" || ext == "pot") }
+            { "exportAsXliff", isXLIFFConverted }
         }))
         .then([](json r)
         {
@@ -410,7 +442,11 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
         })
         .then([=](downloaded_file file)
         {
-            file.move_to(wxString(output_file));
+            wxString outfile(output_file);
+            file.move_to(outfile);
+
+            if (isXLIFFNative || isXLIFFConverted)
+                PostprocessDownloadedXLIFF(outfile);
         });
 }
 
@@ -443,8 +479,8 @@ dispatch::future<void> CrowdinClient::UploadFile(int project_id,
 }
 
 
-static std::string base64_decode_json_part(const std::string &in) {
-
+static std::string base64_decode_json_part(const std::string &in)
+{
     std::string out;
     std::vector<int> t(256, -1);
     {
