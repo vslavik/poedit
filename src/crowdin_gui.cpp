@@ -624,11 +624,16 @@ private:
         else if (ext == "pot")
         {
             // POT files are natively supported, but need to be opened as PO to see translations
-            localFileName.SetFullName(localFileName.GetFullName() + ".po");
+            localFileName.SetExt("po");
+        }
+        else if (ext == "xliff" || ext == "xlf")
+        {
+            // Do nothing, we don't want to use double-extension like .xliff.xliff
         }
         else
         {
-            // Everything else is exported as XLIFF
+            // Everything else is exported as XLIFF and we do want, at least for now, to keep
+            // the old extension for clarity, e.g. *.strings.xliff or *.rc.xliff
             localFileName.SetFullName(localFileName.GetFullName() + ".xliff");
         }
 
