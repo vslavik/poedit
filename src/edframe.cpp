@@ -2796,6 +2796,9 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
+    if (!m_catalog->GetCloudSync() && m_catalog->IsFromCrowdin())
+        m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+
     if (m_catalog->GetCloudSync())
     {
         CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
