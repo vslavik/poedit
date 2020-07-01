@@ -656,10 +656,11 @@ private:
 
 dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
 {
-    int projId, fileId;
-    
-    if(!catalog->IsFromCrowdin(&projId, &fileId) || (projId > 0 && fileId > 0))
-        return dispatch::make_ready_future();
+    {
+        int projId, fileId;
+        if (!catalog->IsFromCrowdin(&projId, &fileId) || (projId > 0 && fileId > 0))
+            return dispatch::make_ready_future();
+    }
 
     wxString projIdentifier = catalog->Header().GetHeader("X-Crowdin-Project");
     auto filePathName = catalog->Header().GetHeader("X-Crowdin-File");
@@ -667,16 +668,16 @@ dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
     if (!filePathName.StartsWith(L"/"))
         filePathName.insert(0, L'/');
 
-    return CrowdinClient::Get().GetUserProjects().then([=](std::vector<CrowdinClient::ProjectListing> projects)
+    return CrowdinClient::Get().GetUserProjects().then([catalog, projIdentifier, filePathName](std::vector<CrowdinClient::ProjectListing> projects)
     {
         auto projIt = find_if(projects.begin(), projects.end(),
-                                [=](const auto& proj) { return projIdentifier == proj.identifier; });
+            [=](const auto& proj) { return projIdentifier == proj.identifier; });
         if (projIt == projects.end())
         {
             throw Exception(_(L"This file belongs to a Crowdin project that you don’t have access to."));
         }
 
-        return CrowdinClient::Get().GetProjectInfo(projIt->id).then([=](CrowdinClient::ProjectInfo proj)
+        return CrowdinClient::Get().GetProjectInfo(projIt->id).then([catalog, projIdentifier, filePathName](CrowdinClient::ProjectInfo proj)
         {
             auto fileIt = find_if(proj.files.begin(), proj.files.end(),
                                   [=](const auto& file) { return filePathName == file.fullPath; });
