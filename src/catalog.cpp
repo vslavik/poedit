@@ -611,9 +611,15 @@ bool Catalog::IsFromCrowdin() const
     if (m_crowdinFileId > 0 && m_crowdinProjectId > 0)
         return true;
 
-    if (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"))
+    if (m_header.HasHeader("X-Crowdin-Project-ID") && m_header.HasHeader("X-Crowdin-File-ID"))
+    {
+        if (!(m_crowdinFileId > 0 && m_crowdinProjectId > 0))
+        {
+            m_crowdinProjectId = std::stoi(m_header.GetHeader("X-Crowdin-Project-ID").ToStdString());
+            m_crowdinFileId = std::stoi(m_header.GetHeader("X-Crowdin-File-ID").ToStdString());
+        }
         return true;
-
+    }
     static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+) .*");
     auto name = wxFileName(m_fileName).GetName().ToStdWstring();
 

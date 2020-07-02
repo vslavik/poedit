@@ -655,41 +655,6 @@ private:
 
 } // anonymous namespace
 
-
-dispatch::future<void> CrowdinUpdateCatalogIDsFromHeaders(CatalogPtr catalog)
-{
-    if (catalog->GetCrowdinProjectId() > 0 && catalog->GetCrowdinFileId() > 0)
-        return dispatch::make_ready_future();
-
-    wxString projIdentifier = catalog->Header().GetHeader("X-Crowdin-Project");
-    auto filePathName = catalog->Header().GetHeader("X-Crowdin-File");
-
-    if (!filePathName.StartsWith(L"/"))
-        filePathName.insert(0, L'/');
-
-    return CrowdinClient::Get().GetUserProjects().then([=](std::vector<CrowdinClient::ProjectListing> projects)
-    {
-        auto projIt = find_if(projects.begin(), projects.end(),
-                                [=](const auto& proj) { return projIdentifier == proj.identifier; });
-        if (projIt == projects.end())
-        {
-            throw Exception(_(L"This file belongs to a Crowdin project that you don’t have access to."));
-        }
-
-        return CrowdinClient::Get().GetProjectInfo(projIt->id).then([=](CrowdinClient::ProjectInfo proj)
-        {
-            auto fileIt = find_if(proj.files.begin(), proj.files.end(),
-                                  [=](const auto& file) { return filePathName == file.fullPath; });
-            if (fileIt == proj.files.end())
-            {
-                throw Exception(wxString::Format(_(L"File “%s” doesn’t exist in Crowdin project “%s”."), filePathName, projIdentifier));
-            }
-            catalog->SetCrowdinProjectAndFileId(proj.id, fileIt->id);
-        });
-    });
-
-}
-
 void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
 {
     if (!CrowdinClient::Get().IsSignedIn())
@@ -753,9 +718,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
         auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
                             ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
                             : catalog->GetLanguage();
-        CrowdinUpdateCatalogIDsFromHeaders(catalog)
-        .then([=]()
-        {
         CrowdinClient::Get().UploadFile(
                 catalog->GetCrowdinProjectId(),
                 crowdin_lang,
@@ -796,7 +758,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     .catch_all(handle_error);
             })
             .catch_all(handle_error);
-        });
     });
 
     dlg->ShowWindowModal();
@@ -815,16 +776,12 @@ dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
                         ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
                         : file->GetLanguage();
 
-    return CrowdinUpdateCatalogIDsFromHeaders(file)
-    .then([=]()
-    {
-        return CrowdinClient::Get().UploadFile
-               (
-                   file->GetCrowdinProjectId(),
-                   crowdin_lang,
-                   file->GetCrowdinFileId(),
-                   std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
-                   file->SaveToBuffer()
-               );
-    });
+    return CrowdinClient::Get().UploadFile
+            (
+                file->GetCrowdinProjectId(),
+                crowdin_lang,
+                file->GetCrowdinFileId(),
+                std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
+                file->SaveToBuffer()
+            );
 }
