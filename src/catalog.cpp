@@ -616,6 +616,12 @@ bool Catalog::IsFromCrowdin(int* pProjId, int* pFileId) const
             name.ToLong(&m_crowdinProjectId);
             name.AfterFirst('_').ToLong(&m_crowdinFileId);
         }
+
+        if (!(m_crowdinFileId > 0 && m_crowdinProjectId > 0))
+        {
+            m_header.GetHeader("X-Crowdin-Project-ID").ToLong(&m_crowdinProjectId);
+            m_header.GetHeader("X-Crowdin-File-ID").ToLong(&m_crowdinFileId);
+        }
     }
 
     if (pFileId)
@@ -623,8 +629,7 @@ bool Catalog::IsFromCrowdin(int* pProjId, int* pFileId) const
     if (pProjId)
         *pProjId = (int)m_crowdinProjectId;
 
-    return (m_crowdinFileId > 0 && m_crowdinProjectId > 0)
-        || (m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"));
+    return m_crowdinFileId > 0 && m_crowdinProjectId > 0;
 }
 
 namespace
