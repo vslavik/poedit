@@ -604,6 +604,15 @@ void AnyTranslatableTextCtrl::SetLanguage(const Language& lang)
 
     ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, lang.IsRTL() ? SES_BIDI : 0, SES_BIDI);
 
+    CHARFORMAT2 cf;
+    ::ZeroMemory(&cf, sizeof(cf));
+    cf.cbSize = sizeof(cf);
+    cf.dwMask = CFM_LCID;
+    cf.lcid = LocaleNameToLCID(str::to_wstring(m_language.LanguageTag()).c_str(), 0);
+    if (cf.lcid == 0)
+        cf.lcid = LOCALE_USER_DEFAULT;
+    ::SendMessage((HWND)GetHWND(), EM_SETCHARFORMAT, SCF_ALL, (LPARAM)&cf);
+
     UpdateRTLStyle();
 #endif
 }
