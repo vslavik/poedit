@@ -1838,13 +1838,33 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 #ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
-    DoIfCanDiscardCurrentDoc([=]{
-        CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
-            m_catalog = cat;
-            EnsureAppropriateContentView();
-            NotifyCatalogChanged(m_catalog);
-            RefreshControls();
-        });
+    if (m_modified)
+    {
+        struct SupressCloudSync
+        {
+            SupressCloudSync(CatalogPtr c) : m_catalog(c)
+            {
+                m_supressed = m_catalog->GetCloudSync();
+                m_catalog->AttachCloudSync(nullptr);
+            }
+            ~SupressCloudSync()
+            {
+                m_catalog->AttachCloudSync(m_supressed);
+            }
+
+            CatalogPtr m_catalog;
+            std::shared_ptr<CloudSyncDestination> m_supressed;
+        } supress(m_catalog);
+
+        WriteCatalog(GetFileName());
+    }
+
+    CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat)
+    {
+        m_catalog = cat;
+        EnsureAppropriateContentView();
+        NotifyCatalogChanged(m_catalog);
+        RefreshControls();
     });
 }
 
