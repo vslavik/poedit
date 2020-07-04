@@ -1777,8 +1777,8 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog &&
-                 !m_catalog->IsFromCrowdin() &&
-                 m_catalog->HasSourcesConfigured());
+                 m_catalog->HasSourcesConfigured() &&
+                 !CanSyncWithCrowdin(m_catalog));
 }
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
@@ -1852,8 +1852,9 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 
 void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
 {
-    event.Enable(m_catalog && m_catalog->IsFromCrowdin() &&
-                 m_catalog->HasCapability(Catalog::Cap::Translations));
+    event.Enable(m_catalog &&
+                 m_catalog->HasCapability(Catalog::Cap::Translations) &&
+                 CanSyncWithCrowdin(m_catalog));
 }
 #endif
 
@@ -1862,7 +1863,7 @@ void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
     if (!m_catalog)
         return;
 #ifdef HAVE_HTTP_CLIENT
-    if (m_catalog->IsFromCrowdin())
+    if (CanSyncWithCrowdin(m_catalog))
         OnUpdateFromCrowdin(event);
     else
 #endif
@@ -1875,7 +1876,7 @@ void PoeditFrame::OnUpdateSmartUpdate(wxUpdateUIEvent& event)
     if (m_catalog)
     {
 #ifdef HAVE_HTTP_CLIENT
-       if (m_catalog->IsFromCrowdin())
+       if (CanSyncWithCrowdin(m_catalog))
             OnUpdateFromCrowdinUpdate(event);
         else
 #endif
@@ -2378,7 +2379,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     // Can't do this with the window being frozen, because positioning the toolbar
     // in presence of mCtrl menubar would not size & repaint properly:
 #ifdef HAVE_HTTP_CLIENT
-    m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
+    m_toolbar->EnableSyncWithCrowdin(CanSyncWithCrowdin(m_catalog));
 #endif
 
     FixDuplicatesIfPresent();
@@ -2504,7 +2505,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
         else // no error, check for warning-worthy stuff
         {
-            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !m_catalog->IsFromCrowdin())
+            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !CanSyncWithCrowdin(m_catalog))
             {
                 AttentionMessage msg
                     (

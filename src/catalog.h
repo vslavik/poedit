@@ -550,13 +550,6 @@ class Catalog
 
         /// Change the catalog's language and update headers accordingly
         virtual void SetLanguage(Language lang);
-
-        /// Is the PO file from Crowdin, i.e. sync-able?
-        bool IsFromCrowdin() const;
-        // FIXME: This shouldn't be here
-        int GetCrowdinFileId() const { return m_crowdinFileId; }
-        int GetCrowdinProjectId() const { return m_crowdinProjectId; }
-        void SetCrowdinProjectAndFileId(int projId, int fileId) { m_crowdinProjectId  = projId; m_crowdinFileId = fileId; }
             
         /// Returns true if the catalog contains obsolete entries (~.*)
         virtual bool HasDeletedItems() const = 0;
@@ -597,7 +590,6 @@ class Catalog
         bool m_isOk;
         Type m_fileType;
         wxString m_fileName;
-        mutable int m_crowdinFileId = -1, m_crowdinProjectId = -1;
         HeaderData m_header;
         Language m_sourceLanguage;
 

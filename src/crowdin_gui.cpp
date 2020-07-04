@@ -63,7 +63,10 @@
     #define CenterVertical() Center()
 #endif
 
+#include <regex>
+
 #include <boost/algorithm/string.hpp>
+
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     : wxPanel(parent, wxID_ANY),
@@ -653,7 +656,53 @@ private:
     CrowdinClient::ProjectInfo m_info;
 };
 
+
+bool ExtractCrowdinMetadata(CatalogPtr cat,
+                            Language *lang = nullptr,
+                            int *projectId = nullptr, int *fileId = nullptr)
+{
+    auto& hdr = cat->Header();
+
+    if (lang)
+    {
+        *lang = hdr.HasHeader("X-Crowdin-Language")
+                ? Language::TryParse(hdr.GetHeader("X-Crowdin-Language").ToStdWstring())
+                : cat->GetLanguage();
+    }
+
+    if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
+    {
+        if (projectId)
+            *projectId = std::stoi(hdr.GetHeader("X-Crowdin-Project-ID").ToStdString());
+        if (fileId)
+            *fileId = std::stoi(hdr.GetHeader("X-Crowdin-File-ID").ToStdString());
+        return true;
+    }
+
+    static const std::wregex RE_CROWDIN_FILE(L"^Crowdin\\.([0-9]+)\\.([0-9]+) .*");
+    auto name = wxFileName(cat->GetFileName()).GetName().ToStdWstring();
+
+    std::wsmatch m;
+    if (std::regex_match(name, m, RE_CROWDIN_FILE))
+    {
+        if (projectId)
+            *projectId = std::stoi(m.str(1));
+        if (fileId)
+            *fileId = std::stoi(m.str(2));
+        return true;
+    }
+
+    return false;
+}
+
 } // anonymous namespace
+
+
+bool CanSyncWithCrowdin(CatalogPtr cat)
+{
+    return ExtractCrowdinMetadata(cat, nullptr);
+}
+
 
 void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
 {
@@ -694,6 +743,10 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxWindowPtr<CloudSyncProgressWindow> dlg(new CloudSyncProgressWindow(parent));
 
+    Language crowdinLang;
+    int projectId, fileId;
+    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId);
+
     auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
             dlg->EndModal(wxID_CANCEL);
@@ -714,14 +767,10 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // TODO: nicer API for this.
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
-        const auto& header = catalog->Header();
-        auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
-                            ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
-                            : catalog->GetLanguage();
         CrowdinClient::Get().UploadFile(
-                catalog->GetCrowdinProjectId(),
-                crowdin_lang,
-                catalog->GetCrowdinFileId(),
+                projectId,
+                crowdinLang,
+                fileId,
                 std::string(wxFileName(catalog->GetFileName()).GetExt().utf8_str()),
                 catalog->SaveToBuffer()
             )
@@ -739,9 +788,9 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
 
                 return CrowdinClient::Get().DownloadFile(
-                        catalog->GetCrowdinProjectId(),
-                        crowdin_lang,
-                        catalog->GetCrowdinFileId(),
+                        projectId,
+                        crowdinLang,
+                        fileId,
                         std::string(filename.GetExt().utf8_str()),
                         outfile.ToStdWstring()
                     )
@@ -771,16 +820,16 @@ bool CrowdinSyncDestination::AuthIfNeeded(wxWindow* parent) {
 dispatch::future<void> CrowdinSyncDestination::Upload(CatalogPtr file)
 {
     wxLogTrace("poedit.crowdin", "Uploading file: %s", file->GetFileName().c_str());
-    const auto& header = file->Header();
-    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
-                        ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
-                        : file->GetLanguage();
+
+    Language crowdinLang;
+    int projectId, fileId;
+    ExtractCrowdinMetadata(file, &crowdinLang, &projectId, &fileId);
 
     return CrowdinClient::Get().UploadFile
             (
-                file->GetCrowdinProjectId(),
-                crowdin_lang,
-                file->GetCrowdinFileId(),
+                projectId,
+                crowdinLang,
+                fileId,
                 std::string(wxFileName(file->GetFileName()).GetExt().utf8_str()),
                 file->SaveToBuffer()
             );
