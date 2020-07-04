@@ -100,6 +100,9 @@ public:
 /// Can given file by synced to Crowdin, i.e. does it come from Crowdin and does it have required metadata?
 bool CanSyncWithCrowdin(CatalogPtr cat);
 
+/// Was the file opened directly from Crowdin and should be synced when the user saves it?
+bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat);
+
 /**
     Let the user choose a Crowdin file, download it and open in Poedit.
     

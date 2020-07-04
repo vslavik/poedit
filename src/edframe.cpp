@@ -1174,8 +1174,6 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
-            if (m_catalog)
-                m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }
@@ -2379,6 +2377,12 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     // Can't do this with the window being frozen, because positioning the toolbar
     // in presence of mCtrl menubar would not size & repaint properly:
 #ifdef HAVE_HTTP_CLIENT
+    if (!m_catalog->GetCloudSync())
+    {
+        if (ShouldSyncToCrowdinAutomatically(m_catalog))
+            m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+    }
+
     m_toolbar->EnableSyncWithCrowdin(CanSyncWithCrowdin(m_catalog));
 #endif
 

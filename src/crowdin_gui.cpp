@@ -250,6 +250,12 @@ LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& t
 namespace
 {
 
+inline wxString GetCrowdinCacheDir()
+{
+    return CloudSyncDestination::GetCacheDir() + "/Crowdin/";
+}
+
+
 class CrowdinLoginDialog : public wxDialog
 {
 public:
@@ -616,7 +622,7 @@ private:
         std::replace_if(fileName.begin(), fileName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
         std::replace_if(projectName.begin(), projectName.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
 
-        const wxString dir = CloudSyncDestination::GetCacheDir() + "/Crowdin/" + projectName + " - " + lang.Code();
+        const wxString dir = GetCrowdinCacheDir() + projectName + " - " + lang.Code();
         wxFileName localFileName(dir + "/Crowdin." << projectId << '.' << fileId << ' ' << fileName);
 
         auto ext = localFileName.GetExt().Lower();
@@ -701,6 +707,12 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
 bool CanSyncWithCrowdin(CatalogPtr cat)
 {
     return ExtractCrowdinMetadata(cat, nullptr);
+}
+
+
+bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat)
+{
+    return cat->GetFileName().StartsWith(GetCrowdinCacheDir());
 }
 
 
