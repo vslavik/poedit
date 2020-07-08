@@ -677,25 +677,16 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
                 : cat->GetLanguage();
     }
 
-    if (const auto xliff = dynamic_cast<XLIFFCatalog*>(cat.get()))
+    const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
+    if (xliff)
     {
-        auto xml = xliff->GetXMLRoot();
-        int projId = xml.attribute("project-id").as_int(-1);
-        if (projId > 0)
+        if (std::strcmp(xliff->GetXPathValue("file/header/tool//@tool-id"), "crowdin") == 0)
         {
-            auto files = xml.children("file");
-            if (files.begin() != files.end())
-            {
-                int _fileId = files.begin()->attribute("id").as_int(-1);
-                if (_fileId > 0)
-                {
-                    if (projectId)
-                        *projectId = projId;
-                    if (fileId)
-                        *fileId = _fileId;
-                    return true;
-                }
-            }
+            if (projectId)
+                *projectId = std::stoi(xliff->GetXPathValue("file//@project-id"));
+            if (fileId)
+                *fileId = std::stoi(xliff->GetXPathValue("file//@id"));
+            return true;
         }
     }
     
