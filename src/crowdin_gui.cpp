@@ -39,6 +39,7 @@
 #include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
+#include "catalog_xliff.h"
 
 #include <wx/app.h>
 #include <wx/artprov.h>
@@ -676,6 +677,28 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
                 : cat->GetLanguage();
     }
 
+    if (const auto xliff = dynamic_cast<XLIFFCatalog*>(cat.get()))
+    {
+        auto xml = xliff->GetXMLRoot();
+        int projId = xml.attribute("project-id").as_int(-1);
+        if (projId > 0)
+        {
+            auto files = xml.children("file");
+            if (files.begin() != files.end())
+            {
+                int _fileId = files.begin()->attribute("id").as_int(-1);
+                if (_fileId > 0)
+                {
+                    if (projectId)
+                        *projectId = projId;
+                    if (fileId)
+                        *fileId = _fileId;
+                    return true;
+                }
+            }
+        }
+    }
+    
     if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
     {
         if (projectId)
