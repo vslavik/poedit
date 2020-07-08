@@ -39,6 +39,7 @@
 #include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
+#include "catalog_xliff.h"
 
 #include <wx/app.h>
 #include <wx/artprov.h>
@@ -676,6 +677,19 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
                 : cat->GetLanguage();
     }
 
+    const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
+    if (xliff)
+    {
+        if (std::strcmp(xliff->GetXPathValue("file/header/tool//@tool-id"), "crowdin") == 0)
+        {
+            if (projectId) 
+                *projectId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+            if (fileId)
+                *fileId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+            return true;
+        }
+    }
+    
     if (hdr.HasHeader("X-Crowdin-Project-ID") && hdr.HasHeader("X-Crowdin-File-ID"))
     {
         if (projectId)
