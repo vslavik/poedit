@@ -460,7 +460,17 @@ Catalog::ValidationResults XLIFFCatalog::Validate(bool)
     return res;
 }
 
-
+std::string XLIFFCatalog::GetXPathValue(const char* xpath) const
+{
+    auto x = m_doc.child("xliff").select_node(xpath);
+    auto v = x.attribute().value();
+    if (v)
+        return v;
+     v = x.node().value();
+     if (v)
+         return v;
+     return "";
+}
 
 
 

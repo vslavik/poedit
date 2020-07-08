@@ -109,6 +109,7 @@ public:
     void RemoveDeletedItems() override {}
 
     pugi::xml_node GetXMLRoot() const { return m_doc.child("xliff"); }
+    std::string GetXPathValue(const char* xpath) const;
 
 protected:
     XLIFFCatalog(const wxString& filename, pugi::xml_document&& doc)
