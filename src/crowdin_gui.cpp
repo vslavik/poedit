@@ -666,7 +666,7 @@ private:
 
 bool ExtractCrowdinMetadata(CatalogPtr cat,
                             Language *lang = nullptr,
-                            int *projectId = nullptr, int *fileId = nullptr)
+                            int *projectId = nullptr, int *fileId = nullptr, std::string* xliffRemoteFilename = nullptr)
 {
     auto& hdr = cat->Header();
 
@@ -680,13 +680,22 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
     const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
     if (xliff)
     {
-        if (std::strcmp(xliff->GetXPathValue("file/header/tool//@tool-id"), "crowdin") == 0)
+        if (xliff->GetXPathValue("file/header/tool/@tool-id") == "crowdin")
         {
-            if (projectId) 
-                *projectId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
-            if (fileId)
-                *fileId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
-            return true;
+            try
+            {
+                if (projectId)
+                    *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+                if (fileId)
+                    *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                if (xliffRemoteFilename)
+                    *xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
+                return true;
+            }
+            catch (...)
+            {
+                wxLogTrace("poedit.crowdin", "Missing or malformatted Crowdin project and/or file ID");
+            }
         }
     }
     
@@ -771,7 +780,8 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     Language crowdinLang;
     int projectId, fileId;
-    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId);
+    std::string xliffRemoteFilename;
+    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId, &xliffRemoteFilename);
 
     auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
@@ -810,8 +820,13 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
 
-                if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
-                    filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
+                if (xliffRemoteFilename.empty())
+                {
+                    if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
+                        filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
+                }
+                else
+                    filename = xliffRemoteFilename;
 
                 return CrowdinClient::Get().DownloadFile(
                         projectId,
