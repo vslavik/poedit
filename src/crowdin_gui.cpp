@@ -252,7 +252,7 @@ namespace
 
 inline wxString GetCrowdinCacheDir()
 {
-    return CloudSyncDestination::GetCacheDir() + "/Crowdin/";
+    return CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin" + wxFILE_SEP_PATH;
 }
 
 
@@ -712,6 +712,9 @@ bool CanSyncWithCrowdin(CatalogPtr cat)
 
 bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat)
 {
+    // TODO: This check is fragile and breaks of the path is non-normalized,
+    //       e.g. uses different case or is relative or differently normalized.
+    //       Good for use with files from Recent Files, but not much else
     return cat->GetFileName().StartsWith(GetCrowdinCacheDir());
 }
 
