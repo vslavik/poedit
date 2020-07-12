@@ -666,7 +666,7 @@ private:
 
 bool ExtractCrowdinMetadata(CatalogPtr cat,
                             Language *lang = nullptr,
-                            int *projectId = nullptr, int *fileId = nullptr, std::string* xliffRemoteFilename = nullptr)
+                            int *projectId = nullptr, int *fileId = nullptr)
 {
     auto& hdr = cat->Header();
 
@@ -688,8 +688,6 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
                     *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
                 if (fileId)
                     *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
-                if (xliffRemoteFilename)
-                    *xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
                 return true;
             }
             catch (...)
@@ -780,8 +778,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     Language crowdinLang;
     int projectId, fileId;
-    std::string xliffRemoteFilename;
-    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId, &xliffRemoteFilename);
+    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId);
 
     auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
@@ -819,14 +816,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                 dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
-
-                if (xliffRemoteFilename.empty())
-                {
-                    if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
-                        filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
-                }
-                else
-                    filename = xliffRemoteFilename;
 
                 return CrowdinClient::Get().DownloadFile(
                         projectId,
