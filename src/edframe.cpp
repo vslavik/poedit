@@ -1865,6 +1865,7 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
         EnsureAppropriateContentView();
         NotifyCatalogChanged(m_catalog);
         RefreshControls();
+        WriteCatalog(GetFileName());
         m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
     });
 }
