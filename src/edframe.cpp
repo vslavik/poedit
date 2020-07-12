@@ -1861,12 +1861,15 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 
     CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat)
     {
+        auto cloudsync = m_catalog->GetCloudSync();
         m_catalog = cat;
         EnsureAppropriateContentView();
         NotifyCatalogChanged(m_catalog);
         RefreshControls();
         WriteCatalog(GetFileName());
-        m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+        // Make sure to attach it _after_ above line (`WriteCatalog`)
+        // to avoid redundant upload from there (it does if cloud sync attached)
+        m_catalog->AttachCloudSync(cloudsync);
     });
 }
 
