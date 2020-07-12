@@ -424,8 +424,8 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
 
     wxString ext(file_extension);
     ext.MakeLower();
-    const bool isXLIFFNative = (ext == "xliff" || ext == "xlf");
-    const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot");
+
+    const bool isXLIFFConverted = (ext != "po" && ext != "pot");
 
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
@@ -445,7 +445,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
             wxString outfile(output_file);
             file.move_to(outfile);
 
-            if (isXLIFFNative || isXLIFFConverted)
+            if (isXLIFFConverted)
                 PostprocessDownloadedXLIFF(outfile);
         });
 }

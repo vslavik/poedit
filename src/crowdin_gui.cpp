@@ -817,9 +817,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
 
-                if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
-                    filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
-
                 return CrowdinClient::Get().DownloadFile(
                         projectId,
                         crowdinLang,
