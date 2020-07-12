@@ -252,7 +252,7 @@ namespace
 
 inline wxString GetCrowdinCacheDir()
 {
-    return CloudSyncDestination::GetCacheDir() + "/Crowdin/";
+    return CloudSyncDestination::GetCacheDir() + wxFILE_SEP_PATH + "Crowdin" + wxFILE_SEP_PATH;
 }
 
 
