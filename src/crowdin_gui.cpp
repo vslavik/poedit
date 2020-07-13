@@ -680,12 +680,12 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
     const auto xliff = std::dynamic_pointer_cast<XLIFFCatalog>(cat);
     if (xliff)
     {
-        if (std::strcmp(xliff->GetXPathValue("file/header/tool//@tool-id"), "crowdin") == 0)
+        if (xliff->GetXPathValue("file/header/tool//@tool-id") == "crowdin")
         {
             if (projectId) 
-                *projectId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+                *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
             if (fileId)
-                *fileId = std::atoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
             return true;
         }
     }
