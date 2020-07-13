@@ -682,11 +682,18 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
     {
         if (xliff->GetXPathValue("file/header/tool//@tool-id") == "crowdin")
         {
-            if (projectId) 
-                *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
-            if (fileId)
-                *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
-            return true;
+            try
+            {
+                if (projectId) 
+                    *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
+                if (fileId)
+                    *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                return true;
+            }
+            catch(...)
+            {
+                wxLogTrace("poedit.crowdin", "Missing or malformatted Crowdin project and/or file ID");
+            }
         }
     }
     
