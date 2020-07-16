@@ -666,7 +666,8 @@ private:
 
 bool ExtractCrowdinMetadata(CatalogPtr cat,
                             Language *lang = nullptr,
-                            int *projectId = nullptr, int *fileId = nullptr)
+                            int *projectId = nullptr, int *fileId = nullptr,
+                            std::string *xliffRemoteFilename = nullptr)
 {
     auto& hdr = cat->Header();
 
@@ -684,10 +685,12 @@ bool ExtractCrowdinMetadata(CatalogPtr cat,
         {
             try
             {
-                if (projectId) 
+                if (projectId)
                     *projectId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='project-id']"));
                 if (fileId)
                     *fileId = std::stoi(xliff->GetXPathValue("file/@*[local-name()='id']"));
+                if (xliffRemoteFilename)
+                    *xliffRemoteFilename = xliff->GetXPathValue("file/@*[local-name()='original']");
                 return true;
             }
             catch(...)
@@ -781,7 +784,8 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     Language crowdinLang;
     int projectId, fileId;
-    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId);
+    std::string xliffRemoteFilename;
+    ExtractCrowdinMetadata(catalog, &crowdinLang, &projectId, &fileId, &xliffRemoteFilename);
 
     auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
@@ -820,8 +824,8 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
 
-                if (filename.GetExt().CmpNoCase("po") != 0)  // if not PO
-                    filename.SetFullName(filename.GetName());  // set remote (Crowdin side) filename extension
+                if (!xliffRemoteFilename.empty())
+                    filename.Assign(xliffRemoteFilename, wxPATH_UNIX);
 
                 return CrowdinClient::Get().DownloadFile(
                         projectId,
