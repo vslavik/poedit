@@ -1864,6 +1864,7 @@ void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
         m_catalog = cat;
         EnsureAppropriateContentView();
         NotifyCatalogChanged(m_catalog);
+        MarkAsModified();
         RefreshControls();
     });
 }
