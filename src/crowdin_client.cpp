@@ -418,14 +418,15 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
                                                    const Language& lang,
                                                    int file_id,
                                                    const std::string& file_extension,
+                                                   bool forceExportAsXliff,
                                                    const std::wstring& output_file)
 {
     wxLogTrace("poedit.crowdin", "DownloadFile(project_id=%d, lang=%s, file_id=%d, file_extension=%s, output_file=%S)", project_id, lang.LanguageTag(), file_id, file_extension.c_str(), output_file.c_str());
 
     wxString ext(file_extension);
     ext.MakeLower();
-    const bool isXLIFFNative = (ext == "xliff" || ext == "xlf");
-    const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot");
+    const bool isXLIFFNative = (ext == "xliff" || ext == "xlf") && !forceExportAsXliff;
+    const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot") || forceExportAsXliff;
 
     json options({
         { "targetLanguageId", lang.LanguageTag() },

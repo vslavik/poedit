@@ -608,6 +608,7 @@ private:
                 crowdin_lang,
                 crowdin_file.id,
                 std::string(wxFileName(crowdin_file.fileName, wxPATH_UNIX).GetExt().utf8_str()),
+                /*forceExportAsXliff=*/false,
                 outfile->FileName().ToStdWstring()
             )
             .then_on_window(this, [=]{
@@ -832,6 +833,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                         crowdinLang,
                         fileId,
                         std::string(filename.GetExt().utf8_str()),
+                        /*forceExportAsXliff=*/!xliffRemoteFilename.empty(),
                         outfile.ToStdWstring()
                     )
                     .then_on_main([=]

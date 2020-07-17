@@ -114,6 +114,7 @@ public:
                                         const Language& lang,
                                         int file_id,
                                         const std::string& file_extension,
+                                        bool forceExportAsXliff,
                                         const std::wstring& output_file);
 
     /// Asynchronously upload specific Crowdin file data.
