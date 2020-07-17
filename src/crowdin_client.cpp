@@ -427,13 +427,19 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
     const bool isXLIFFNative = (ext == "xliff" || ext == "xlf");
     const bool isXLIFFConverted = (!isXLIFFNative && ext != "po" && ext != "pot");
 
+    json options({
+        { "targetLanguageId", lang.LanguageTag() },
+        // for XLIFF and PO files should be exported "as is" so set to `false`
+        { "exportAsXliff", isXLIFFConverted }
+    });
+    // ensure that XLIFF files contain not-yet-translated entries, see https://github.com/vslavik/poedit/pull/648
+    if (isXLIFFNative)
+        options["skipUntranslatedStrings"] = false;
+
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
-        json_data({
-            { "targetLanguageId", lang.LanguageTag() },
-            // for XLIFF and PO files should be exported "as is" so set to `false`
-            { "exportAsXliff", isXLIFFConverted }
-        }))
+        json_data(options)
+        )
         .then([](json r)
         {
             wxLogTrace("poedit.crowdin", "Got file URL: %s", r.dump().c_str());
