@@ -431,6 +431,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
         json_data({
             { "targetLanguageId", lang.LanguageTag() },
+            { "skipUntranslatedStrings", false },
             // for XLIFF and PO files should be exported "as is" so set to `false`
             { "exportAsXliff", isXLIFFConverted }
         }))
