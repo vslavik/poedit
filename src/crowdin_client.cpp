@@ -425,7 +425,7 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
     wxString ext(file_extension);
     ext.MakeLower();
 
-    const bool isXLIFFConverted = (ext != "po" && ext != "pot");
+    const bool isXLIFFConverted = (ext != "po" && ext != "pot" && ext != "xliff" && ext != "xlf");
 
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),

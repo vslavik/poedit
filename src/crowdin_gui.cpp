@@ -825,7 +825,14 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                 });
 
                 if (!xliffRemoteFilename.empty())
-                    filename.Assign(xliffRemoteFilename, wxPATH_UNIX);
+                {
+                    auto ext = filename.GetExt();
+                    ext.MakeLower();
+                    if(ext == "xliff" || ext == "xlf")
+                        filename.SetExt(""); // none or any but just not XLIFF
+                    else
+                        filename.Assign(xliffRemoteFilename, wxPATH_UNIX);
+                }
 
                 return CrowdinClient::Get().DownloadFile(
                         projectId,
