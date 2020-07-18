@@ -76,6 +76,7 @@ protected:
     wxBoxSizer *m_loginInfo;
     wxButton *m_signIn, *m_signOut;
     wxString m_userName, m_userLogin;
+    std::string m_userAvatar;
 };
 
 
@@ -83,7 +84,7 @@ class CrowdinSyncDestination : public CloudSyncDestination
 {
 public:
     wxString GetName() const override { return "Crowdin"; }
-
+    bool AuthIfNeeded(wxWindow* parent) override;
     dispatch::future<void> Upload(CatalogPtr file) override;
 };
 
@@ -95,6 +96,12 @@ public:
     LearnAboutCrowdinLink(wxWindow *parent, const wxString& text = "");
 };
 
+
+/// Can given file by synced to Crowdin, i.e. does it come from Crowdin and does it have required metadata?
+bool CanSyncWithCrowdin(CatalogPtr cat);
+
+/// Was the file opened directly from Crowdin and should be synced when the user saves it?
+bool ShouldSyncToCrowdinAutomatically(CatalogPtr cat);
 
 /**
     Let the user choose a Crowdin file, download it and open in Poedit.

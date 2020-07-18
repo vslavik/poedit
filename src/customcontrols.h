@@ -191,4 +191,28 @@ private:
     wxString m_bitmapName;
 };
 
+
+/// Avatar icon
+class AvatarIcon : public wxWindow
+{
+public:
+    AvatarIcon(wxWindow *parent, const wxSize& size);
+
+    /// Set name to be used if image can't be loaded
+    void SetUserName(const wxString& name);
+    void LoadIcon(const wxFileName& f);
+
+    bool HasTransparentBackground() override { return true; }
+
+private:
+    void InitForSize();
+    void OnPaint(wxPaintEvent&);
+
+private:
+    wxRegion m_clipping;
+    wxBitmap m_bitmap;
+    wxString m_placeholder;
+};
+
+
 #endif // Poedit_customcontrols_h

@@ -1175,8 +1175,6 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
-            if (m_catalog)
-                m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }
@@ -1778,8 +1776,8 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog &&
-                 !m_catalog->IsFromCrowdin() &&
-                 m_catalog->HasSourcesConfigured());
+                 m_catalog->HasSourcesConfigured() &&
+                 !CanSyncWithCrowdin(m_catalog));
 }
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
@@ -1841,20 +1839,50 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 #ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
-    DoIfCanDiscardCurrentDoc([=]{
-        CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
-            m_catalog = cat;
-            EnsureAppropriateContentView();
-            NotifyCatalogChanged(m_catalog);
-            RefreshControls();
-        });
+    if (m_modified)
+    {
+        struct SupressCloudSync
+        {
+            SupressCloudSync(CatalogPtr c) : m_catalog(c)
+            {
+                m_supressed = m_catalog->GetCloudSync();
+                m_catalog->AttachCloudSync(nullptr);
+            }
+            ~SupressCloudSync()
+            {
+                m_catalog->AttachCloudSync(m_supressed);
+            }
+
+            CatalogPtr m_catalog;
+            std::shared_ptr<CloudSyncDestination> m_supressed;
+        } supress(m_catalog);
+
+        WriteCatalog(GetFileName());
+    }
+
+    CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat)
+    {
+        // preserve any syncing-on-save setup:
+        auto cloudsync = m_catalog->GetCloudSync();
+
+        m_catalog = cat;
+
+        EnsureAppropriateContentView();
+        NotifyCatalogChanged(m_catalog);
+        RefreshControls();
+
+        WriteCatalog(GetFileName());
+
+        // make sure to attach it only _after_ WriteCatalog() call to avoid redundant immediate upload:
+        m_catalog->AttachCloudSync(cloudsync);
     });
 }
 
 void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
 {
-    event.Enable(m_catalog && m_catalog->IsFromCrowdin() &&
-                 m_catalog->HasCapability(Catalog::Cap::Translations));
+    event.Enable(m_catalog &&
+                 m_catalog->HasCapability(Catalog::Cap::Translations) &&
+                 CanSyncWithCrowdin(m_catalog));
 }
 #endif
 
@@ -1863,7 +1891,7 @@ void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
     if (!m_catalog)
         return;
 #ifdef HAVE_HTTP_CLIENT
-    if (m_catalog->IsFromCrowdin())
+    if (CanSyncWithCrowdin(m_catalog))
         OnUpdateFromCrowdin(event);
     else
 #endif
@@ -1876,7 +1904,7 @@ void PoeditFrame::OnUpdateSmartUpdate(wxUpdateUIEvent& event)
     if (m_catalog)
     {
 #ifdef HAVE_HTTP_CLIENT
-       if (m_catalog->IsFromCrowdin())
+       if (CanSyncWithCrowdin(m_catalog))
             OnUpdateFromCrowdinUpdate(event);
         else
 #endif
@@ -2379,7 +2407,13 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     // Can't do this with the window being frozen, because positioning the toolbar
     // in presence of mCtrl menubar would not size & repaint properly:
 #ifdef HAVE_HTTP_CLIENT
-    m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
+    if (!m_catalog->GetCloudSync())
+    {
+        if (ShouldSyncToCrowdinAutomatically(m_catalog))
+            m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
+    }
+
+    m_toolbar->EnableSyncWithCrowdin(CanSyncWithCrowdin(m_catalog));
 #endif
 
     FixDuplicatesIfPresent();
@@ -2505,7 +2539,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
         else // no error, check for warning-worthy stuff
         {
-            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !m_catalog->IsFromCrowdin())
+            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !CanSyncWithCrowdin(m_catalog))
             {
                 AttentionMessage msg
                     (

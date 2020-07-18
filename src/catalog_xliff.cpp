@@ -460,7 +460,17 @@ Catalog::ValidationResults XLIFFCatalog::Validate(bool)
     return res;
 }
 
-
+std::string XLIFFCatalog::GetXPathValue(const char* xpath) const
+{
+    auto x = m_doc.child("xliff").select_node(xpath);
+    auto v = x.attribute().value();
+    if (v)
+        return v;
+     v = x.node().value();
+     if (v)
+         return v;
+     return "";
+}
 
 
 
@@ -599,10 +609,20 @@ public:
 void XLIFF1Catalog::Parse(pugi::xml_node root)
 {
     int id = 0;
+    bool extractedLanguage = false;
+
     for (auto file: root.children("file"))
     {
-        m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
-        m_language = Language::TryParse(file.attribute("target-language").value());
+        // In XLIFF, embedded sub-files may have different languages, although it is
+        // unclear how common this is practice. Poedit doesn't support this yet, so
+        // take the first file's language only.
+        if (!extractedLanguage)
+        {
+            m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
+            m_language = Language::TryParse(file.attribute("target-language").value());
+            extractedLanguage = true;
+        }
+
         for (auto unit: file.select_nodes(".//trans-unit"))
         {
             auto node = unit.node();

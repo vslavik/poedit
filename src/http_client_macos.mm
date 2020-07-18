@@ -74,11 +74,11 @@ public:
         m_authHeader = auth.empty() ? nil : str::to_NS(auth);
     }
 
-    dispatch::future<json> get(const std::string& url)
+    dispatch::future<json> get(const std::string& url, const headers& hdrs)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
-        auto request = build_request(@"GET", url);
+        auto request = build_request(@"GET", url, hdrs);
         auto task = [m_session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             try
             {
@@ -96,22 +96,25 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
+    dispatch::future<downloaded_file> download(const std::string& url, const headers& hdrs)
     {
-        auto promise = std::make_shared<dispatch::promise<void>>();
+        auto promise = std::make_shared<dispatch::promise<downloaded_file>>();
 
-        NSString *outputPath = str::to_NS(output_file);
-        auto request = build_request(@"GET", url);
+        auto request = build_request(@"GET", url, hdrs);
         auto task = [m_session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
             try
             {
                 if (handle_error(nil, response, error, *promise))
                     return;
 
+                downloaded_file file(str::to_utf8([response suggestedFilename]));
+                NSString *outputPath = str::to_NS(file.filename().GetFullPath());
+
                 NSError *err = nil;
                 if (![[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:outputPath error:&err])
                     throw std::runtime_error(str::to_utf8([err localizedDescription]));
-                promise->set_value();
+
+                promise->set_value(std::move(file));
             }
             catch (...)
             {
@@ -123,11 +126,11 @@ public:
         return promise->get_future();
     }
 
-    dispatch::future<json> post(const std::string& url, const http_body_data& body_data)
+    dispatch::future<json> post(const std::string& url, const http_body_data& body_data, const headers& hdrs)
     {
         auto promise = std::make_shared<dispatch::promise<json>>();
 
-        auto request = build_request(@"POST", url);
+        auto request = build_request(@"POST", url, hdrs);
         auto body = body_data.body();
         [request setValue:str::to_NS(body_data.content_type()) forHTTPHeaderField:@"Content-Type"];
         [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
@@ -151,13 +154,17 @@ public:
     }
 
 private:
-    NSMutableURLRequest *build_request(NSString *method, const std::string& relative_url)
+    NSMutableURLRequest *build_request(NSString *method, const std::string& relative_url, const headers& hdrs)
     {
         auto url = [NSURL URLWithString:str::to_NS(relative_url) relativeToURL:m_baseURL];
         auto request = [NSMutableURLRequest requestWithURL:url];
         request.HTTPMethod = method;
+
         if (m_authHeader)
             [request setValue:m_authHeader forHTTPHeaderField:@"Authorization"];
+        for(const auto& h: hdrs)
+            [request addValue:str::to_NS(h.second) forHTTPHeaderField:str::to_NS(h.first)];
+
         return request;
     }
 
@@ -235,19 +242,19 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-dispatch::future<json> http_client::get(const std::string& url)
+dispatch::future<json> http_client::get(const std::string& url, const headers& hdrs)
 {
-    return m_impl->get(url);
+    return m_impl->get(url, hdrs);
 }
 
-dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file)
+dispatch::future<downloaded_file> http_client::download(const std::string& url, const headers& hdrs)
 {
-    return m_impl->download(url, output_file);
+    return m_impl->download(url, hdrs);
 }
 
-dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
+dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data, const headers& hdrs)
 {
-    return m_impl->post(url, data);
+    return m_impl->post(url, data, hdrs);
 }
 
 

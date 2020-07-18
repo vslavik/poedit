@@ -25,14 +25,47 @@
 
 #include "http_client.h"
 
+#include "utility.h"
 #include "str_helpers.h"
 
 #include <iomanip>
 #include <sstream>
 
+#include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+
+#include <wx/filename.h>
+#include <wx/uri.h>
+
+
+class downloaded_file::impl
+{
+public:
+    impl(std::string filename)
+    {
+        // filter out invalid characters in filenames
+        std::replace_if(filename.begin(), filename.end(), boost::is_any_of("\\/:\"<>|?*"), '_');
+        m_fn = m_tmpdir.CreateFileName(!filename.empty() ? str::to_wx(filename) : "data");
+    }
+
+    wxFileName filename() const { return m_fn; }
+
+    void move_to(const wxFileName& target)
+    {
+        TempOutputFileFor::ReplaceFile(m_fn.GetFullPath(), target.GetFullPath());
+    }
+
+private:
+    TempDirectory m_tmpdir;
+    wxFileName m_fn;
+};
+
+downloaded_file::downloaded_file(const std::string& filename) : m_impl(new impl(filename)) {}
+wxFileName downloaded_file::filename() const { return m_impl->filename(); }
+void downloaded_file::move_to(const wxFileName& target) { return m_impl->move_to(target); }
+downloaded_file::~downloaded_file() {}
 
 
 multipart_form_data::multipart_form_data()
@@ -84,6 +117,30 @@ void urlencoded_data::add_value(const std::string& name, const std::string& valu
 json_data::json_data(const json& data)
 {
     m_body = data.dump();
+}
+
+
+dispatch::future<downloaded_file> http_client::download_from_anywhere(const std::string& url, const headers& hdrs)
+{
+    // http_client requires that all requests are relative to the provided prefix
+    // (this is a C++REST SDK limitation enforced on some platforms), so we need
+    // to determine the URL's prefix, create a transient http_client for it and
+    // use it to perform the request.
+
+    wxURI uri(url);
+    const std::string prefix = str::to_utf8(uri.GetScheme() + "://" + uri.GetServer());
+
+    auto transient = std::make_shared<http_client>(prefix);
+    return transient->download(url, hdrs)
+           .then([transient](downloaded_file file)
+           {
+               // The entire purpose of this otherwise-useless closure is to
+               // capture the `transient` http_client instance and ensure it won't
+               // be destroyed too early.
+               //
+               // It will only be released at this point.
+               return file;
+           });
 }
 
 

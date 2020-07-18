@@ -36,6 +36,26 @@
 
 using json = nlohmann::json;
 
+/**
+    Helper to get value from JSON key falling back to @a default.
+
+    This differs from json::value() in that it yields the default even
+    if the response contains that key, but has it set to null.
+ */
+template <class T>
+inline T get_value(const json& j, const char *key, const T& defaultValue)
+{
+    auto i = j.find(key);
+    if (i == j.end() || i->is_null())
+        return defaultValue;
+    return *i;
+}
+
+inline std::string get_value(const json& j, const char *key, const char *defaultValue)
+{
+    return get_value<std::string>(j, key, defaultValue);
+}
+
 
 namespace str
 {
@@ -50,5 +70,6 @@ inline std::wstring to_wstring(json&& x)
     return to_wstring(x.get<std::string>());
 }
 
-}
+} // namespace str
+
 #endif // Poedit_json_h

@@ -33,6 +33,9 @@
 #include <wx/app.h>
 #include <wx/artprov.h>
 #include <wx/clipbrd.h>
+#include <wx/dcmemory.h>
+#include <wx/dcclient.h>
+#include <wx/graphics.h>
 #include <wx/menu.h>
 #include <wx/settings.h>
 #include <wx/sizer.h>
@@ -486,9 +489,105 @@ StaticBitmap::StaticBitmap(wxWindow *parent, const wxString& bitmapName)
 #endif
 }
 
-
 void StaticBitmap::SetBitmapName(const wxString& bitmapName)
 {
     m_bitmapName = bitmapName;
     SetBitmap(wxArtProvider::GetBitmap(m_bitmapName));
+}
+
+
+AvatarIcon::AvatarIcon(wxWindow *parent, const wxSize& size) : wxWindow(parent, wxID_ANY, wxDefaultPosition, size)
+{
+    InitForSize();
+    ColorScheme::RefreshOnChange(this);
+
+    Bind(wxEVT_PAINT, &AvatarIcon::OnPaint, this);
+}
+
+void AvatarIcon::SetUserName(const wxString& name)
+{
+    m_placeholder.clear();
+    for (auto& s: wxSplit(name, ' '))
+    {
+        if (!s.empty())
+            m_placeholder += s[0];
+    }
+    Refresh();
+}
+
+void AvatarIcon::LoadIcon(const wxFileName& f)
+{
+#ifdef __WXOSX__
+    NSString *path = str::to_NS(f.GetFullPath());
+    NSImage *img = [[NSImage alloc] initWithContentsOfFile:path];
+    if (img != nil)
+        m_bitmap = wxBitmap(img);
+#else
+    wxLogNull null;
+    wxImage img(f.GetFullPath());
+    if (img.IsOk())
+        m_bitmap = wxBitmap(img);
+#endif
+
+    Refresh();
+}
+
+void AvatarIcon::InitForSize()
+{
+    auto size = GetSize();
+    wxBitmap bmp(size);
+    wxMemoryDC dc;
+    dc.SelectObject(bmp);
+    dc.SetBackground(*wxWHITE_BRUSH);
+    dc.Clear();
+    dc.SetBrush(*wxBLACK_BRUSH);
+    dc.SetPen(*wxBLACK_PEN);
+    wxRect r(wxPoint(0,0), size);
+    r.Deflate(PX(3));
+    dc.DrawEllipse(r);
+    dc.SelectObject(wxNullBitmap);
+    m_clipping = wxRegion(bmp, *wxWHITE);
+
+    wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    font.SetWeight(wxFONTWEIGHT_BOLD);
+    font.SetPixelSize(wxSize(0, size.y / 4));
+    SetFont(font);
+}
+
+void AvatarIcon::OnPaint(wxPaintEvent&)
+{
+    auto r = GetClientRect();
+    r.Deflate(PX(2));
+
+    wxPaintDC dc(this);
+    std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+    gc->SetAntialiasMode(wxANTIALIAS_DEFAULT);
+    gc->SetInterpolationQuality(wxINTERPOLATION_BEST);
+
+    gc->Clip(m_clipping);
+
+    if (m_bitmap.IsOk())
+    {
+        gc->DrawBitmap(m_bitmap, r.x, r.y, r.width, r.height);
+    }
+    else
+    {
+        gc->SetBrush(wxColour(128,128,128,50));
+        gc->SetPen(wxNullPen);
+        gc->SetFont(GetFont(), ColorScheme::Get(Color::SecondaryLabel));
+
+        gc->DrawEllipse(r.x, r.y, r.width, r.height);
+
+        wxDouble tw, th;
+        gc->GetTextExtent(m_placeholder, &tw, &th);
+        gc->DrawText(m_placeholder, r.x + (r.width - tw) / 2, r.y + (r.height - th) / 2);
+    }
+
+    gc->ResetClip();
+
+    // mark out jagged, pixelated clipping due to low-resolution wxRegion:
+    auto outline = GetBackgroundColour();
+    outline = outline.ChangeLightness(ColorScheme::GetAppMode() == ColorScheme::Light ? 98 : 110);
+    gc->SetPen(wxPen(outline, PX(2)));
+    gc->DrawEllipse(r.x + 0.5, r.y + 0.5, r.width, r.height);
 }
