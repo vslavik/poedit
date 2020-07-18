@@ -297,7 +297,7 @@ private:
         if (!proxy)
             proxy = std::getenv("http_proxy");
         if (proxy)
-            c.set_proxy(web::uri(to_string_t(proxy)));
+            c.set_proxy(web::uri(proxy));
     #endif
 
         return c;
