@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-02-03 14:13+0100\n"
-"PO-Revision-Date: 2020-05-08 16:03\n"
+"POT-Creation-Date: 2020-07-18 14:48+0200\n"
+"PO-Revision-Date: 2020-07-18 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: poedit\n"
+"X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: kk\n"
 "X-Crowdin-File: /locales/poedit.pot\n"
+"X-Crowdin-File-ID: 3\n"
 
 msgid "Hide this notification message"
 msgstr "Бұл хабарламаны жасыру"
@@ -65,12 +67,12 @@ msgstr "Барлық аудармалар файлдары"
 
 #, c-format
 msgid "File “%s” is in unsupported format."
-msgstr ""
+msgstr "\"%s\" файлы пішіміне қолдау жоқ."
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] ""
+msgstr[0] "%i жол \"%s\" файлынан дұрыс жүктелмеген."
 msgstr[1] "%i жол \"%s\" файлынан дұрыс жүктелмеген."
 
 #, c-format
@@ -132,15 +134,15 @@ msgstr "Каталогты сақтау қатесі"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
-msgstr ""
+msgstr "\"%s\" файлын жүктеу қатесі: %s."
 
 #, c-format
 msgid "unsupported XLIFF version (%s)"
-msgstr ""
+msgstr "қолдауы жоқ XLIFF нұсқасы (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
-msgstr ""
+msgstr "Аударма жолындағы жарамсыз белгілеу."
 
 msgid "(Use default language)"
 msgstr "(Негізгі тілді қолдану)"
@@ -170,11 +172,14 @@ msgstr "%s қызметімен синхрондау сәтсіз аяқталд
 msgid "Syncing error"
 msgstr "Синхрондау қатесі"
 
-msgid "Downloading translations is disabled in this project."
-msgstr "Бұл жобада аудармаларды жүктеп алу мүмкіндігі сөндірілген."
+msgid "JSON request error"
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Авторизацияланбаған, қайтадан кіріңіз."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "Бұл жобада аудармаларды жүктеп алу мүмкіндігі сөндірілген."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
@@ -202,9 +207,6 @@ msgstr "Аутентификацияны күту…"
 msgid "Updating user information…"
 msgstr "Пайдаланушы ақпаратын жаңарту…"
 
-msgid "Signed in as:"
-msgstr "Сіз:"
-
 msgid "Learn More About Crowdin"
 msgstr "Crowdin туралы"
 
@@ -213,6 +215,9 @@ msgstr "Crowdin туралы"
 
 msgid "Sign in to Crowdin"
 msgstr "Crowdin-ға кіру"
+
+msgid "File"
+msgstr "Файл"
 
 msgid "Open Crowdin translation"
 msgstr "Аударманы Crowdin-да ашу"
@@ -223,17 +228,11 @@ msgstr "Жоба:"
 msgid "Language:"
 msgstr "Тіл:"
 
-msgid "File:"
-msgstr "Файл:"
+msgid "Signed in as:"
+msgstr "Сіз:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr "Сіздің Crowdin тіркелгіңізде бірде-бір жоба тіркелмеген."
-
-msgid "This project has no files that can be translated in Poedit."
-msgstr "Бұл жобада Poedit ішінде аударуға болатын файлдар жоқ."
-
-msgid "This file can only be edited in Crowdin’s web interface."
-msgstr "Бұл файлды тек Crowdin веб интерфейсінде өңдеуге болады."
 
 msgid "Downloading latest translations…"
 msgstr "Соңғы аудармаларды жүктеп алу…"
@@ -279,7 +278,7 @@ msgid "handle a poedit:// URI"
 msgstr "poedit:// URI-ін талдау"
 
 msgid "go to item at given line number"
-msgstr ""
+msgstr "берілген жол нөмірі бар элементке өту"
 
 msgid "Failed to communicate with Poedit process."
 msgstr "Poedit үрдісімен байланысу қатесі."
@@ -416,7 +415,7 @@ msgstr "Сіз Poedit терезесіне бірден көп файлды та
 
 #, c-format
 msgid "File “%s” is not a translation file."
-msgstr ""
+msgstr "\"%s\" файлы аударма файлы емес."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -488,18 +487,23 @@ msgstr ""
 "баптауларында көрсетілген орында бастапқы кодтар табылмады."
 
 msgid "Permission denied."
-msgstr ""
+msgstr "Рұқсат етілмеген."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the catalog’s Properties."
 msgstr ""
+"Сізде каталог қасиеттерінде көрсетілген орналасудан бастапқы код файлдарын "
+"оқу рұқсаты жоқ."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"Егер сіз файлдарыңызға қатынауды бұрын тайдырсаңыз, оны Жүйелік баптаулар > "
+"Қауіпсіздік және жекелік > Жекелік > Файлдар және бумалар ішінен іске қоса "
+"аласыз."
 
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Каталогтағы жазбалар қате сияқты."
@@ -510,7 +514,7 @@ msgstr "Каталогты жаңарту сәтсіз аяқталды. Ақп�
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] ""
+msgstr[0] "Аударма ішінен %d мәселе табылды."
 msgstr[1] "Аударма ішінен %d мәселе табылды."
 
 msgid "Validation results"
@@ -556,19 +560,29 @@ msgstr "Аудармалар мәселелері табылмады."
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
+msgstr[0] "Аударма қолдануға дайын, бірақ, %d жазба әлі аударылмаған."
 msgstr[1] "Аударма қолдануға дайын, бірақ, %d жазба әлі аударылмаған."
 
 msgid "The translation is ready for use."
 msgstr "Аударма қолдануға дайын."
 
 msgid "Warnings have been disabled."
-msgstr ""
+msgstr "Ескертулер сөндірілген."
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
+"Егер сіз ескертулерді орын алған тым көп жалған сәйкестіктер салдарынан "
+"сөндірген болсаңыз, бұл мүмкіндікті жақсарту мақсатында мысал файлын "
+"help@poedit.net адресіне жіберуді қарастырыңыз."
+
+msgid "Send Feedback"
+msgstr "Кері байланыс жіберу"
+
+#. TRANSLATORS: This is a button to send email with feedback when clicked
+msgid "Send feedback"
+msgstr "Кері байланыс жіберу"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -816,7 +830,7 @@ msgstr "Пішім %i"
 
 #, c-format
 msgid "Form %i (unused)"
-msgstr ""
+msgstr "Форма %i (қолданылмайды)"
 
 msgid "Singular"
 msgstr "Жекеше"
@@ -1106,10 +1120,10 @@ msgid "Import from TMX…"
 msgstr "TMX-тан импорттау…"
 
 msgid "Export To TMX…"
-msgstr ""
+msgstr "TMX пішіміне экспорттау…"
 
 msgid "Export to TMX…"
-msgstr ""
+msgstr "TMX пішіміне экспорттау…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1128,24 +1142,24 @@ msgid "Finalizing…"
 msgstr "Аяқтау…"
 
 msgid "Select TMX files to import"
-msgstr ""
+msgstr "Импорттау үшін TMX файлдарын таңдаңыз"
 
 msgid "TMX Files"
 msgstr "TMX файлдары"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgstr "\"%s\" ішінен аудармалар жадысын импорттау сәтсіз аяқталды."
 
 msgid "Import error"
 msgstr "Импорттау қатесі"
 
 msgid "Exporting translations…"
-msgstr ""
+msgstr "Аудармаларды экспорттау…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr ""
+msgstr "\"%s\" ішіне аудармалар жадысын экспорттау сәтсіз аяқталды."
 
 msgid "Export error"
 msgstr "Экспорттау қатесі"
@@ -1260,7 +1274,7 @@ msgstr "Алдын-ала аудару…"
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] ""
+msgstr[0] "%u жол алдын-ала аударылған"
 msgstr[1] "%u жол алдын-ала аударылған"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
@@ -1308,7 +1322,7 @@ msgstr ""
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
-msgstr[0] ""
+msgstr[0] "%d жазба алдын-ала аударылды."
 msgstr[1] "%d жазба алдын-ала аударылды."
 
 msgid ""
@@ -1599,16 +1613,16 @@ msgid "&Preferences"
 msgstr "&Баптаулар"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "Жол &ID көрсету"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "Жол &ID көрсету"
 
 msgid "Show warnings"
-msgstr ""
+msgstr "Ескертулерді көрсету"
 
 msgid "Show Warnings"
-msgstr ""
+msgstr "Ескертулерді көрсету"
 
 msgid "Sort by &file order"
 msgstr "&Файлдар реті бойынша сұрыптау"
@@ -1662,10 +1676,10 @@ msgid "C&atalog"
 msgstr "К&аталог"
 
 msgid "&Update from source code"
-msgstr ""
+msgstr "&Бастапқы кодтан жаңарту"
 
 msgid "&Update from Source Code"
-msgstr ""
+msgstr "&Бастапқы кодтан жаңарту"
 
 msgid "Update from &POT file…"
 msgstr "POT &файлынан жаңарту…"
@@ -1920,13 +1934,13 @@ msgid "Check for errors in the translation"
 msgstr "Аударманы қателерге тексеру"
 
 msgid "Update from code"
-msgstr ""
+msgstr "Кодтан жаңарту"
 
 msgid "Update from Code"
-msgstr ""
+msgstr "Кодтан жаңарту"
 
 msgid "Update from source code"
-msgstr ""
+msgstr "Бастапқы кодтан жаңарту"
 
 msgid "Sidebar"
 msgstr "Бүйір панелі"
@@ -1955,10 +1969,10 @@ msgid "Add Comment"
 msgstr "Пікір қосу"
 
 msgid "Delete From Translation Memory"
-msgstr ""
+msgstr "Аудармалар жадысынан өшіру"
 
 msgid "Delete from translation memory"
-msgstr ""
+msgstr "Аудармалар жадысынан өшіру"
 
 msgid "Translation suggestions:"
 msgstr "Аудармаға ұсынылатын нұсқалар:"
@@ -1975,18 +1989,18 @@ msgid "This string was found in Poedit’s translation memory."
 msgstr "Бұл жол Poedit-тің аудармалар жадысы ішінен табылды."
 
 msgid "The TMX file is malformed."
-msgstr ""
+msgstr "TMX файлының пішімі жарамсыз."
 
 msgid "No translations were found in the TMX file."
-msgstr ""
+msgstr "TMX файлынан аудармалар табылмады."
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "Аудармалар жадысы дерекқоры зақымдалған: %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "Аударма жадысы қатесі: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Уақытша буманы жасау мүмкін емес."
@@ -2160,9 +2174,6 @@ msgstr "Ө&шіру"
 
 msgid "&Quit"
 msgstr "&Шығу"
-
-msgid "File"
-msgstr "Файл"
 
 msgid "Help"
 msgstr "Көмек"

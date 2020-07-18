@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-02-03 14:13+0100\n"
-"PO-Revision-Date: 2020-05-08 16:03\n"
+"POT-Creation-Date: 2020-07-18 14:48+0200\n"
+"PO-Revision-Date: 2020-07-18 12:46\n"
 "Last-Translator: \n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: poedit\n"
+"X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: et\n"
 "X-Crowdin-File: /locales/poedit.pot\n"
+"X-Crowdin-File-ID: 3\n"
 
 msgid "Hide this notification message"
 msgstr "Selle teate peitmine"
@@ -134,7 +136,7 @@ msgstr "Viga faili “%s” laadimisel:%s."
 
 #, c-format
 msgid "unsupported XLIFF version (%s)"
-msgstr ""
+msgstr "toetamata XLIFF versioon (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
@@ -168,11 +170,14 @@ msgstr "%s sünkrooniseerimine nurjus."
 msgid "Syncing error"
 msgstr "Sünkrooniseerimise tõrge"
 
-msgid "Downloading translations is disabled in this project."
-msgstr "Tõlgete allalaadimine on selles projektis keelatud."
+msgid "JSON request error"
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Pole lubatud, palun logi uuesti sisse."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "Tõlgete allalaadimine on selles projektis keelatud."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
@@ -199,9 +204,6 @@ msgstr "Autentimise ootamine…"
 msgid "Updating user information…"
 msgstr "Kasutaja info uuendamine…"
 
-msgid "Signed in as:"
-msgstr "Sisse logitud kasutajana:"
-
 msgid "Learn More About Crowdin"
 msgstr "Lisateave Crowdini kohta"
 
@@ -210,6 +212,9 @@ msgstr "Lisateave Crowdini kohta"
 
 msgid "Sign in to Crowdin"
 msgstr "Logi Crowdinisse sisse"
+
+msgid "File"
+msgstr "Fail"
 
 msgid "Open Crowdin translation"
 msgstr "Ava Crowdin tõlge"
@@ -220,17 +225,11 @@ msgstr "Projekt:"
 msgid "Language:"
 msgstr "Keel:"
 
-msgid "File:"
-msgstr "Fail:"
+msgid "Signed in as:"
+msgstr "Sisse logitud kasutajana:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr "Sinu Crowdin kasutajakontol pole ühtegi tõlkeprojekti."
-
-msgid "This project has no files that can be translated in Poedit."
-msgstr "Sellel projektil pole faile ja seda ei saa Poeditiga tõlkida."
-
-msgid "This file can only be edited in Crowdin’s web interface."
-msgstr "Seda faili saab muuta ainult Crowdini veebiliideses."
 
 msgid "Downloading latest translations…"
 msgstr "Viimaste tõlgete allalaadimine…"
@@ -283,7 +282,7 @@ msgstr "Poediti protsessiga suhtlemine ebaõnnestus."
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
-msgstr ""
+msgstr "Erand, millega ei osatud midagi peale hakata: %s"
 
 msgid "Open catalog"
 msgstr "Kataloogi avamine"
@@ -311,7 +310,7 @@ msgid "Redo"
 msgstr "Korda"
 
 msgid "Paste and Match Style"
-msgstr ""
+msgstr "Aseta ja sobita stiil"
 
 msgid "Delete"
 msgstr "Kustuta"
@@ -350,7 +349,7 @@ msgid "Smart Dashes"
 msgstr "Nutikad mõttekriipsud"
 
 msgid "Smart Links"
-msgstr "d li"
+msgstr "Nutikad lingid"
 
 msgid "Text Replacement"
 msgstr "Teksti asendamine"
@@ -400,7 +399,7 @@ msgstr "PO tõlge"
 
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
+msgstr "Fail võib olla vigane või vormingus, mida Poedit ei tunne."
 
 msgid "The file cannot be opened."
 msgstr "Faili ei saa avada."
@@ -485,18 +484,23 @@ msgstr ""
 "koodi."
 
 msgid "Permission denied."
-msgstr ""
+msgstr "Õigused puuduvad."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the catalog’s Properties."
 msgstr ""
+"Sul pole õiguseid lähtekoodi failide lugemiseks kataloogi omadustes määratud "
+"failide asukohas."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"Kui sa ei andnud eelnevalt ligipääsu oma failidele, siis saad selle sisse "
+"lülitada kohast System Preferences > Security & Privacy > Privacy > Files & "
+"Folders."
 
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Kirjed kataloogis on tõenäoliselt vigased."
@@ -568,6 +572,16 @@ msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
+"Kui oled need hoiatused välja lülitanud, kuna saad liiga palju vale-"
+"positiivseid tulemusi, siis palun kaalu, kas sul oleks võimalik saata "
+"näidisfail e-mailile help@poedit.net, et saaksime süsteemi parandada."
+
+msgid "Send Feedback"
+msgstr "Saada tagasisidet"
+
+#. TRANSLATORS: This is a button to send email with feedback when clicked
+msgid "Send feedback"
+msgstr "Saada tagasisidet"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -579,6 +593,10 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
+"Selles failis oli topelt sissekanne, mis pole PO failides lubatud ning see "
+"takistab selle faili kasutamist. Poedit parandas selle probleemi, aga sa "
+"peaksid vaatama üle tõlked, mille juures on märge, et 'Vajab tööd' ning "
+"vajaduse korral neid parandama."
 
 msgid "Language of the translation isn’t set."
 msgstr "Tõlke keel on määramata."
@@ -1126,7 +1144,7 @@ msgstr "TMX-failid"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgstr "“%s” tõlkemälust importimine ebaõnnestus."
 
 msgid "Import error"
 msgstr "Tõrge importimisel"
@@ -1136,7 +1154,7 @@ msgstr "Tõlgete eksportimine..."
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr ""
+msgstr "“%s” tõlkemälusse eksportimine ebaõnnestus."
 
 msgid "Export error"
 msgstr "Tõrge eksportimisel"
@@ -2128,9 +2146,6 @@ msgstr "K&ustuta"
 
 msgid "&Quit"
 msgstr "Lõpeta"
-
-msgid "File"
-msgstr "Fail"
 
 msgid "Help"
 msgstr "Abi"

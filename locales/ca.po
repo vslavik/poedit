@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-02-03 14:13+0100\n"
-"PO-Revision-Date: 2020-05-08 16:03\n"
+"POT-Creation-Date: 2020-07-18 14:48+0200\n"
+"PO-Revision-Date: 2020-07-18 12:46\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: poedit\n"
+"X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: ca\n"
 "X-Crowdin-File: /locales/poedit.pot\n"
+"X-Crowdin-File-ID: 3\n"
 
 msgid "Hide this notification message"
 msgstr "Amaga aquesta notificació"
@@ -172,11 +174,14 @@ msgstr "Ha fallat la sincronització amb el %s."
 msgid "Syncing error"
 msgstr "S’ha produït un error de sincronització"
 
-msgid "Downloading translations is disabled in this project."
-msgstr "Aquest projecte ha inhabilitat les baixades de traduccions."
+msgid "JSON request error"
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Acció no autoritzada. Inicieu una sessió de nou."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "Aquest projecte ha inhabilitat les baixades de traduccions."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
@@ -204,9 +209,6 @@ msgstr "S’està esperant l’autenticació…"
 msgid "Updating user information…"
 msgstr "S’està actualitzant la informació de l’usuari…"
 
-msgid "Signed in as:"
-msgstr "Sessió iniciada com a:"
-
 msgid "Learn More About Crowdin"
 msgstr "Més informació sobre el Crowdin"
 
@@ -215,6 +217,9 @@ msgstr "Més informació sobre el Crowdin"
 
 msgid "Sign in to Crowdin"
 msgstr "Inicia la sessió a Crowdin"
+
+msgid "File"
+msgstr "Fitxer"
 
 msgid "Open Crowdin translation"
 msgstr "Obre una traducció del Crowdin"
@@ -225,18 +230,12 @@ msgstr "Projecte:"
 msgid "Language:"
 msgstr "Llengua:"
 
-msgid "File:"
-msgstr "Fitxer:"
+msgid "Signed in as:"
+msgstr "Sessió iniciada com a:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr ""
 "No hi ha cap projecte de traducció llistat al vostre compte de Crowdin."
-
-msgid "This project has no files that can be translated in Poedit."
-msgstr "Aquest projecte no té cap fitxer que es pugui traduir al Poedit."
-
-msgid "This file can only be edited in Crowdin’s web interface."
-msgstr "Aquest fitxer només es pot editar en la interfície web del Crowdin."
 
 msgid "Downloading latest translations…"
 msgstr "S’estan baixant les traduccions més recents…"
@@ -374,13 +373,13 @@ msgid "Capitalize"
 msgstr "Majúscules inicials"
 
 msgid "Speech"
-msgstr "Vocalització"
+msgstr "Veu"
 
 msgid "Start Speaking"
-msgstr "Comença a parlar"
+msgstr "Inicia la veu"
 
 msgid "Stop Speaking"
-msgstr "Deixa de parlar"
+msgstr "Atura la veu"
 
 msgid "&View"
 msgstr "&Visualitza"
@@ -493,18 +492,23 @@ msgstr ""
 "trobat cap codi a la ubicació especificada a les propietats del catàleg."
 
 msgid "Permission denied."
-msgstr "Permís denegat."
+msgstr "S’hi ha denegat el permís."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the catalog’s Properties."
 msgstr ""
+"No teniu permís per a llegir els fitxers de codi font des de la ubicació "
+"especificada a les propietats del catàleg."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"Si heu denegat prèviament accès als vostres arxius podeu permetre-ho a les "
+"Preferències de Sistema > Seguretat i Privacitat > Privacitat > Carpetes i "
+"Arxius."
 
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Les entrades del catàleg són probablement incorrectes."
@@ -583,6 +587,13 @@ msgid ""
 msgstr ""
 "Si heu inhabilitat els advertiments a causa de massa falsos positius, "
 "considereu enviar un fitxer de mostra a help@poedit.net per a millorar-los."
+
+msgid "Send Feedback"
+msgstr "Envia comentaris"
+
+#. TRANSLATORS: This is a button to send email with feedback when clicked
+msgid "Send feedback"
+msgstr "Envia comentaris"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -1379,10 +1390,10 @@ msgid "Add files…"
 msgstr "Afegeix fitxers…"
 
 msgid "Add Wildcard…"
-msgstr ""
+msgstr "Afegeix un comodí…"
 
 msgid "Add wildcard…"
-msgstr ""
+msgstr "Afegeix un comodí…"
 
 msgid "Paths"
 msgstr "Camins"
@@ -1610,10 +1621,10 @@ msgid "&Preferences"
 msgstr "&Preferències"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "Mostra l’&identificador de la cadena"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "Mostra l’&identificador de la cadena"
 
 msgid "Show warnings"
 msgstr "Mostra els advertiments"
@@ -1706,10 +1717,10 @@ msgid "&Properties…"
 msgstr "&Propietats…"
 
 msgid "&Done and next"
-msgstr "&Fet, següent"
+msgstr "&Fet; següent"
 
 msgid "&Done and Next"
-msgstr "&Fet, següent"
+msgstr "&Fet; següent"
 
 msgid "&Previous translation"
 msgstr "Traducció &anterior"
@@ -1858,10 +1869,10 @@ msgid "Translation properties"
 msgstr "Propietats de la traducció"
 
 msgid "Sources Paths"
-msgstr "Rutes de les fonts"
+msgstr "Camins de les fonts"
 
 msgid "Sources paths"
-msgstr "Camins de fonts"
+msgstr "Camins de les fonts"
 
 msgid "Extract text from source files in the following directories:"
 msgstr "Extreu el text dels fitxers font dels següents directoris:"
@@ -2169,9 +2180,6 @@ msgstr "&Suprimeix"
 
 msgid "&Quit"
 msgstr "&Surt"
-
-msgid "File"
-msgstr "Fitxer"
 
 msgid "Help"
 msgstr "Ajuda"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-02-03 14:13+0100\n"
-"PO-Revision-Date: 2020-05-08 16:03\n"
+"POT-Creation-Date: 2020-07-18 14:48+0200\n"
+"PO-Revision-Date: 2020-07-18 12:46\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: poedit\n"
+"X-Crowdin-Project-ID: 53425\n"
 "X-Crowdin-Language: fi\n"
 "X-Crowdin-File: /locales/poedit.pot\n"
+"X-Crowdin-File-ID: 3\n"
 
 msgid "Hide this notification message"
 msgstr "Piilota tämä ilmoitus"
@@ -55,7 +57,7 @@ msgid "PO Translation Files"
 msgstr "PO-käännöstiedostot"
 
 msgid "POT Translation Templates"
-msgstr "POT-käännöspohjat"
+msgstr "POT-käännösmallit"
 
 msgid "XLIFF Translation Files"
 msgstr "XLIFF-käännöstiedostot"
@@ -71,17 +73,17 @@ msgstr "Tiedosto ”%s” on muodossa, jota ei tueta."
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i riviä tiedostosta ”%s” ei ladattu oikein."
-msgstr[1] "%i riviä tiedostosta ”%s” ei ladattu oikein."
+msgstr[1] "%i riviä tiedostosta ”%s” ei latautunut oikein."
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr "Rivi %d tiedostossa ”%s” on vioittunut (ei kelvollista %s-dataa)."
+msgstr "Rivi %d tiedostossa ”%s” on vioittunut (%s-data ei ole kelvollista)."
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Rikkinäinen katalogitiedosto: yksikkömuotoista msgstr käytetty yhdessä "
-"msgid_plural kanssa"
+"Vahingoittunut luettelotiedosto: yksikkömuotoista msgstr:ää käytetty yhdessä "
+"msgid_plural:in kanssa"
 
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
@@ -92,8 +94,8 @@ msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Katalogia ladattaessa kohdattiin virheitä. Osa tiedoista saattaa sen "
-"seurauksena puuttua tai olla vioittunutta."
+"Luettelon lataamisessa tapahtui virheitä. Jotkin tiedot saattavat puuttua "
+"tai olla vioittuneita."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -104,8 +106,8 @@ msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Tiedosto ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
-"Tallenna toisella nimellä."
+"Tiedostoa ”%s” voidaan vain lukea, mutta ei tallentaa.\n"
+"Tallenna se toisella nimellä."
 
 #, c-format
 msgid "Couldn’t save file %s."
@@ -171,11 +173,14 @@ msgstr "Synkronointi epäonnistui: %s."
 msgid "Syncing error"
 msgstr "Synkronointivirhe"
 
-msgid "Downloading translations is disabled in this project."
-msgstr "Käännösten lataus on poistettu käytöstä tässä projektissa."
+msgid "JSON request error"
+msgstr ""
 
 msgid "Not authorized, please sign in again."
 msgstr "Ei valtuutusta; kirjaudu uudelleen."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "Käännösten lataus on poistettu käytöstä tässä projektissa."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
@@ -203,9 +208,6 @@ msgstr "Odotetaan todennusta…"
 msgid "Updating user information…"
 msgstr "Päivitetään käyttäjätietoja…"
 
-msgid "Signed in as:"
-msgstr "Kirjautuneena käyttäjänä:"
-
 msgid "Learn More About Crowdin"
 msgstr "Lisätietoja Crowdinista"
 
@@ -214,6 +216,9 @@ msgstr "Lisätietoja Crowdinista"
 
 msgid "Sign in to Crowdin"
 msgstr "Kirjaudu Crowdiniin"
+
+msgid "File"
+msgstr "Tiedosto"
 
 msgid "Open Crowdin translation"
 msgstr "Avaa Crowdin-käännös"
@@ -224,17 +229,11 @@ msgstr "Projekti:"
 msgid "Language:"
 msgstr "Kieli:"
 
-msgid "File:"
-msgstr "Tiedosto:"
+msgid "Signed in as:"
+msgstr "Kirjautuneena käyttäjänä:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr "Crowdin-tiliisi ei liity käännösprojekteja."
-
-msgid "This project has no files that can be translated in Poedit."
-msgstr "Tässä projektissa ei ole Poeditillä käännettävissä olevia tiedostoja."
-
-msgid "This file can only be edited in Crowdin’s web interface."
-msgstr "Tätä tiedostoa voi muokata vain Crowdinin web-käyttöliittymässä."
 
 msgid "Downloading latest translations…"
 msgstr "Ladataan uusimmat käännökset…"
@@ -581,6 +580,13 @@ msgstr ""
 "Jos olet poistanut varoitukset käytöstä liiallisten väärien positiivisten "
 "virheiden takia, harkitse mallitiedoston lähettämistä osoitteeseen "
 "help@poedit.net niiden parantamiseksi."
+
+msgid "Send Feedback"
+msgstr ""
+
+#. TRANSLATORS: This is a button to send email with feedback when clicked
+msgid "Send feedback"
+msgstr ""
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -2164,9 +2170,6 @@ msgstr "&Poista"
 
 msgid "&Quit"
 msgstr "&Lopeta"
-
-msgid "File"
-msgstr "Tiedosto"
 
 msgid "Help"
 msgstr "Ohje"
