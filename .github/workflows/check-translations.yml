@@ -21,7 +21,7 @@ jobs:
 
     - name: Check PO files with msgfmt -v -c
       run: |
-        for i in translations/*.po ; do
+        for i in locales/*.po ; do
           echo "checking $i..."
           msgfmt -v -c -o /dev/null $i
         done
