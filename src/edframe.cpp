@@ -1775,9 +1775,14 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 
 void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 {
+#if HAVE_HTTP_CLIENT
     event.Enable(m_catalog &&
                  m_catalog->HasSourcesConfigured() &&
                  !CanSyncWithCrowdin(m_catalog));
+#else
+    event.Enable(m_catalog &&
+                 m_catalog->HasSourcesConfigured());
+#endif
 }
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
@@ -2539,8 +2544,13 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
         else // no error, check for warning-worthy stuff
         {
-            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr() && !CanSyncWithCrowdin(m_catalog))
+            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr())
             {
+#ifdef HAVE_HTTP_CLIENT
+                if (!CanSyncWithCrowdin(m_catalog))
+                    return;
+#endif
+
                 AttentionMessage msg
                     (
                         "unusual-plural-forms",
