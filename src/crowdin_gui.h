@@ -121,6 +121,12 @@ void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded);
 void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                      std::function<void(std::shared_ptr<Catalog>)> onDone);
 
-#endif // HAVE_HTTP_CLIENT
+#else // !HAVE_HTTP_CLIENT
+
+// convenience stubs to avoid additional checks all over other code:
+inline bool CanSyncWithCrowdin(CatalogPtr) { return false; }
+inline bool ShouldSyncToCrowdinAutomatically(CatalogPtr) { return false; }
+
+#endif // !HAVE_HTTP_CLIENT
 
 #endif // Poedit_crowdin_gui_h
