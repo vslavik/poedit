@@ -26,9 +26,10 @@
 #ifndef Poedit_crowdin_gui_h
 #define Poedit_crowdin_gui_h
 
+#include "catalog.h"
+
 #ifdef HAVE_HTTP_CLIENT
 
-#include "catalog.h"
 #include "cloud_sync.h"
 #include "customcontrols.h"
 
