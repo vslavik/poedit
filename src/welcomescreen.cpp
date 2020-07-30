@@ -27,12 +27,15 @@
 
 #include "colorscheme.h"
 #include "customcontrols.h"
-#include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
 #include "str_helpers.h"
 #include "utility.h"
+
+#ifdef HAVE_HTTP_CLIENT
+    #include "crowdin_gui.h"
+#endif
 
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
