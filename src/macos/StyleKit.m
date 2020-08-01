@@ -124,10 +124,7 @@
 
 
     //// Text Drawing
-    [NSGraphicsContext saveGraphicsState];
-    CGContextTranslateCTM(context, NSMinX(frame) + 34, NSMinY(frame) + 0.50000 * NSHeight(frame));
-
-    NSRect textRect = NSMakeRect(-34, -9, 68, 18);
+    NSRect textRect = NSMakeRect(NSMinX(frame), NSMinY(frame) + floor((NSHeight(frame) - 18) / 2 + 0.5), NSWidth(frame) - 36, 18);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSRightTextAlignment;
 
@@ -138,8 +135,6 @@
     [NSGraphicsContext saveGraphicsState];
     NSRectClip(textRect);
     [label drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
-    [NSGraphicsContext restoreGraphicsState];
-
     [NSGraphicsContext restoreGraphicsState];
 }
 
