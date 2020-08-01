@@ -126,11 +126,19 @@
 - (void)controlAction:(id)sender
 {
     #pragma unused(sender)
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
+    double target = (self.state == NSOnState) ? 1.0 : 0.0;
+    if (@available(macOS 10.12, *))
     {
-        context.duration = 0.1;
-        self.animator.animationPosition = (self.state == NSOnState) ? 1.0 : 0.0;
-    }];
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
+        {
+            context.duration = 0.1;
+            self.animator.animationPosition = target;
+        }];
+    }
+    else
+    {
+        self.animationPosition = target;
+    }
     _parent->SendToggleEvent();
 }
 
