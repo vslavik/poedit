@@ -17,12 +17,12 @@ rule download
       $url...
   pool = console
 build $
-    tarballs/gettext-0.20.2.tar.gz: $
+    tarballs/gettext-0.21.tar.gz: $
     download
   url = $
-      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.20.2.tar.gz
+      https://ftp.gnu.org/pub/gnu/gettext/gettext-0.21.tar.gz
   sha256 = $
-      ecb9d0908ca41d5ca5fef974323b3bba6bec19eebba0b44f396de98cfcc089f1
+      c77d0da3102aec9c07f43671e60611ebff89a996ef159497ce8e59d075786b12
 rule gettext_build
   command = echo $
       'note: ⋯  $
@@ -55,7 +55,7 @@ rule gettext_build
       && echo $
       'note: ⋯  $
       tar -x -f $
-      "$top_srcdir/tarballs/gettext-0.20.2.tar.gz" $
+      "$top_srcdir/tarballs/gettext-0.21.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -63,7 +63,7 @@ rule gettext_build
       tmp=`mktemp` $
       && tar -x $
       -f $
-      "$top_srcdir/tarballs/gettext-0.20.2.tar.gz" $
+      "$top_srcdir/tarballs/gettext-0.21.tar.gz" $
       -C $
       "$workdir" $
       --strip-components $
@@ -399,7 +399,7 @@ build $
     gettext_build $
     gettext/gettext-macos-catalina-dont-touch-parent-dirs.patch $
     gettext/gettext-smaller-build.patch $
-    tarballs/gettext-0.20.2.tar.gz
+    tarballs/gettext-0.21.tar.gz
   name = gettext
   configure = $
       ./configure

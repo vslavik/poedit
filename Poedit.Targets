@@ -13,9 +13,8 @@
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
     <GettextOutDir>$(OutDir)GettextTools\</GettextOutDir>
-    <GettextNugetDir>$(SolutionDir)\packages\Gettext.Tools.0.20.2\tools\</GettextNugetDir>
-    <GettextBinDir>$(GettextNugetDir)bin\</GettextBinDir>
-    <Msgfmt>$(GettextBinDir)msgfmt.exe -c</Msgfmt>
+    <GettextNugetDir>$(GettextToolsDir)..\</GettextNugetDir>
+    <Msgfmt>$(GettextToolsDir)msgfmt.exe -c</Msgfmt>
 
     <PoDirPoedit>locales</PoDirPoedit>
     <PoDirWX>deps\wx\locale</PoDirWX>
@@ -44,13 +43,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <GettextBinFiles Include="$(GettextBinDir)\msgcat.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\msgfmt.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\msgunfmt.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\msguniq.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\msgmerge.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\xgettext.exe" />
-    <GettextBinFiles Include="$(GettextBinDir)\*.dll" />
+    <GettextBinFiles Include="$(GettextToolsDir)\msgcat.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\msgfmt.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\msgunfmt.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\msguniq.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\msgmerge.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\xgettext.exe" />
+    <GettextBinFiles Include="$(GettextToolsDir)\*.dll" />
     <GettextDataFiles Include="$(GettextNugetDir)\share\**\*.*" />
   </ItemGroup>
 
