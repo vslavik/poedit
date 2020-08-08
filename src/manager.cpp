@@ -110,8 +110,9 @@ ManagerFrame::ManagerFrame() :
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
     m_splitter = XRCCTRL(*panel, "manager_splitter", wxSplitterWindow);
 
-    wxImageList *list = new wxImageList(PX(16), PX(16));
-    list->Add(wxArtProvider::GetBitmap("poedit-status-cat-no"));
+    auto bmp_no = wxArtProvider::GetBitmap("poedit-status-cat-no");
+    wxImageList *list = new wxImageList(bmp_no.GetScaledWidth(), bmp_no.GetScaledHeight());
+    list->Add(bmp_no);
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-mid"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
