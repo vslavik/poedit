@@ -183,8 +183,12 @@ std::wregex RE_PHP_FORMAT(LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeE
 std::wregex RE_C_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
                         std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
-// variables expansion for %foo% (Twig), {foo} and {{foo}}
-std::wregex RE_COMMON_PLACEHOLDERS(LR"((%[0-9a-zA-Z_.-]+%)|(\{[0-9a-zA-Z_.-]+\})|(\{\{[0-9a-zA-Z_.-]+\}\}))",
+// ruby-format per https://ruby-doc.org/core-2.7.1/Kernel.html#method-i-sprintf
+std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
+                           std::regex_constants::ECMAScript | std::regex_constants::optimize);
+
+// variables expansion for %foo% (Twig), %{foo} (Ruby), {foo} and {{foo}}
+std::wregex RE_COMMON_PLACEHOLDERS(LR"((%[0-9a-zA-Z_.-]+%)|(%?\{[0-9a-zA-Z_.-]+\})|(\{\{[0-9a-zA-Z_.-]+\}\}))",
                     std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
 } // anonymous namespace
@@ -226,6 +230,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
     {
         static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Format);
         all->Add(c_format);
+    }
+    else if (formatFlag == "ruby")
+    {
+        static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Format);
+        all->Add(ruby_format);
     }
 
     // basic higlighting has highest priority, so should come last in the order:
