@@ -50,6 +50,10 @@
 #include <wx/msw/uxtheme.h>
 #endif
 
+#if !wxCHECK_VERSION(3,1,1)
+    #define wxGETTEXT_IN_CONTEXT(ctxt, s) wxGetTranslation((s))
+#endif
+
 #include "catalog.h"
 #include "cat_update.h"
 #include "edapp.h"
@@ -272,7 +276,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->InsertColumn(0, _("Catalog"));
     m_listCat->InsertColumn(1, _("Total"));
     m_listCat->InsertColumn(2, _("Untrans"));
-    m_listCat->InsertColumn(3, _("Needs Work"));
+    m_listCat->InsertColumn(3, wxGETTEXT_IN_CONTEXT("column/row header", "Needs Work"));
     m_listCat->InsertColumn(4, _("Errors"));
     m_listCat->InsertColumn(5, _("Last modified"));
 
