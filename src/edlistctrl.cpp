@@ -536,6 +536,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
         wxDataViewEvent le(wxEVT_DATAVIEW_SELECTION_CHANGED, this, GetSelection());
         ProcessWindowEvent(le); 
     }, wxID_SELECTALL);
+    GetMainWindow()->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) {
+        e.Enable(GetItemCount() > 0);
+    }, wxID_SELECTALL);
 #endif
 
     Bind(wxEVT_SIZE, &PoeditListCtrl::OnSize, this);
