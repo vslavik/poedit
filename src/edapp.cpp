@@ -523,8 +523,10 @@ int PoeditApp::OnExit()
     m_remoteServer.reset();
 #endif
 
+#ifdef __WXMSW__
     // Keep any clipboard data available on Windows after the app terminates:
     wxTheClipboard->Flush();
+#endif
 
     // Make sure PoeditFrame instances schedules for deletion are deleted
     // early -- e.g. before wxConfig is destroyed, so they can save changes
