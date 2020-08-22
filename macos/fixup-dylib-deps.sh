@@ -13,18 +13,18 @@
 #   $ otool -L deps/bin-macos/Debug/gettext/bin/xgettext
 #   deps/bin-macos/Debug/gettext/bin/xgettext:
 #   	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 744.18.0)
-#   	//lib/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
-#   	//lib/libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
+#   	/lib/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
+#   	/lib/libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
 #   	/usr/lib/libxml2.2.dylib (compatibility version 10.0.0, current version 10.8.0)
 #   	/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)
-#   	//lib/libintl.8.dylib (compatibility version 10.0.0, current version 10.2.0)
+#   	/lib/libintl.8.dylib (compatibility version 10.0.0, current version 10.2.0)
 #   	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 169.3.0)
 #   	/usr/lib/libexpat.1.dylib (compatibility version 7.0.0, current version 7.2.0)
 #   	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
 #
 # To fix this, run this script as follow:
 #
-#   fixup-dylib-deps.sh "//lib" "@executable_path/../lib" \
+#   fixup-dylib-deps.sh "/lib" "@rpath" \
 #                       deps/bin-macos/Debug/gettext/lib \
 #                       deps/bin-macos/Debug/gettext/bin/*
 #
@@ -33,11 +33,11 @@
 #   $ otool -L deps/bin-macos/Debug/gettext/bin/xgettext
 #   deps/bin-macos/Debug/gettext/bin/xgettext:
 #   	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 744.18.0)
-#   	@executable_path/../lib/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
-#   	@executable_path/../libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
+#   	@rpath/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
+#   	@rpath/libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
 #   	/usr/lib/libxml2.2.dylib (compatibility version 10.0.0, current version 10.8.0)
 #   	/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)
-#   	@executable_path/../libintl.8.dylib (compatibility version 10.0.0, current version 10.2.0)
+#   	@rpath/libintl.8.dylib (compatibility version 10.0.0, current version 10.2.0)
 #   	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 169.3.0)
 #   	/usr/lib/libexpat.1.dylib (compatibility version 7.0.0, current version 7.2.0)
 #   	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
@@ -57,6 +57,9 @@ for binary in $binaries $dylibs ; do
     echo "fixing dylib references in $binary..."
     for dylib in $dylibs ; do
         libname=`basename $dylib`
-        install_name_tool -change "$OLD_PREFIX/$libname" "$NEW_PREFIX/$libname" $binary
+        # change the prefix both as-is and with an extra / in front; different SDKs result in differences
+        install_name_tool -change "/$OLD_PREFIX/$libname" "$NEW_PREFIX/$libname" \
+                          -change "$OLD_PREFIX/$libname" "$NEW_PREFIX/$libname" \
+                          $binary
     done
 done
