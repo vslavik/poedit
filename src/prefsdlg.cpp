@@ -103,11 +103,11 @@ inline wxBitmap MacPageIcon(const char*, const char*) { return wxNullBitmap; }
 namespace
 {
 
-class PrefsPanel : public wxPanel
+class PrefsPanel : public WindowWith2DSizingConstraints<wxPanel>
 {
 public:
     PrefsPanel(wxWindow *parent)
-        : wxPanel(parent), m_suppressDataTransfer(0)
+        : WindowWith2DSizingConstraints<wxPanel>(parent), m_suppressDataTransfer(0)
     {
 #ifdef __WXOSX__
         // Refresh the content of prefs panels when re-opening it.
