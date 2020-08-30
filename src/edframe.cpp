@@ -2666,45 +2666,47 @@ void PoeditFrame::UpdateTitle()
 
     m_fileNamePartOfTitle.clear();
 
-    wxString title;
     auto fileName = GetFileName();
-    if ( !fileName.empty() )
+    
+    if (fileName.empty())
     {
-        wxFileName fn(GetFileName());
-        wxString fpath = fn.GetFullName();
+        SetTitle("Poedit");
+        return;
+    }
 
-        if (m_fileExistsOnDisk)
-            SetRepresentedFilename(fileName);
-        else
-            fpath += _(" (unsaved)");
+    wxString fpath = wxFileName(fileName).GetFullName();
 
-        if ( !m_catalog->Header().Project.empty() )
-        {
-            title.Printf(
+    if (m_fileExistsOnDisk)
+        SetRepresentedFilename(fileName);
+    else
+        fpath += _(" (unsaved)");
+
+    wxString title = fpath;
+    wxString subtitle = m_catalog->Header().Project;
+
 #ifdef __WXOSX__
-                L"%s — %s",
-#else
-                L"%s • %s",
-#endif
-                fpath, m_catalog->Header().Project);
-        }
-        else
-        {
-            title = fn.GetFullName();
-        }
-
-        m_fileNamePartOfTitle = title;
-
-#ifndef __WXOSX__
-        if ( IsModified() )
-            title += _(" (modified)");
-        title += " - Poedit";
-#endif
+  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
+    if (@available(macOS 11.0, *))
+    {
+        NSWindow *win = GetWXWindow();
+        win.subtitle = subtitle.empty() ? @"" : str::to_NS(subtitle);
     }
     else
+  #endif
+    if (!subtitle.empty())
     {
-        title = "Poedit";
+        title << MACOS_OR_OTHER(L" — ", L" • ");
+        title << subtitle;
     }
+#endif // __WXOSX__
+
+    m_fileNamePartOfTitle = title;
+
+#ifndef __WXOSX__
+    if ( IsModified() )
+        title += _(" (modified)");
+    title += " - Poedit";
+#endif
 
     SetTitle(title);
 }
