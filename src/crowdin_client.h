@@ -137,6 +137,7 @@ private:
 
     class crowdin_http_client;
 
+    mutable std::unique_ptr<std::string> m_cachedAuthToken;
     std::unique_ptr<crowdin_http_client> m_api;
     std::shared_ptr<dispatch::promise<void>> m_authCallback;
     std::string m_authCallbackExpectedState;

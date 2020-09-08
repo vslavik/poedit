@@ -1004,8 +1004,12 @@ public:
         SetSizer(topsizer);
 
     #ifdef __WXOSX__
-        // This window was created on demand, init immediately:
-        m_login->EnsureInitialized();
+        // This window was possible created on demand (pre-macOS 11), possibly
+        // hidden. Initialize as soon as it is shown:
+        Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+            if (e.IsShown())
+                CallAfter([=]{ m_login->EnsureInitialized(); });
+        });
     #else
         // On other platforms, notebook pages are all created at once. Don't do
         // the expensive initialization until shown for the first time. This code
@@ -1017,7 +1021,7 @@ public:
             notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
                 e.Skip();
                 if (notebook->GetPage(e.GetSelection()) == this)
-                    m_login->EnsureInitialized();
+                    CallAfter([=]{ m_login->EnsureInitialized(); });
             });
         }
     #endif

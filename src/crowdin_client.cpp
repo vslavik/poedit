@@ -562,19 +562,27 @@ void CrowdinClient::SignInIfAuthorized()
 
 std::string CrowdinClient::GetValidToken() const
 {
+    if (m_cachedAuthToken)
+        return *m_cachedAuthToken;
+
     // Our tokens stored in keychain have the form of <version>:<token>, so not
     // only do we have to check for token's existence but also that its version
     // is current:
     std::string token;
     if (keytar::GetPassword("Crowdin", "", &token) && token.substr(0, 2) == "2:")
-        return token.substr(2);
+    {
+        token = token.substr(2);
+    }
+    // else: 'token' is empty string
 
-    return std::string();
+    m_cachedAuthToken = std::make_unique<std::string>(token);
+    return token;
 }
 
 
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
+    m_cachedAuthToken = std::make_unique<std::string>(token);
     keytar::AddPassword("Crowdin", "", "2:" + token);
     InitWithAuthToken(token);
 }
@@ -583,6 +591,7 @@ void CrowdinClient::SaveAndSetToken(const std::string& token)
 void CrowdinClient::SignOut()
 {
     m_api.reset();
+    m_cachedAuthToken.reset();
     keytar::DeletePassword("Crowdin", "");
 }
 
