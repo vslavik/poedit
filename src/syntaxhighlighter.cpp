@@ -45,6 +45,7 @@ public:
 
         const int length = int(s.length());
 
+        // Leading whitespace:
         for (auto i = s.begin(); i != s.end(); ++i)
         {
             if (!u_isblank(*i))
@@ -56,6 +57,7 @@ public:
             }
         }
 
+        // Trailing whitespace:
         for (auto i = s.rbegin(); i != s.rend(); ++i)
         {
             if (!u_isblank(*i))
@@ -71,7 +73,15 @@ public:
 
         for (auto i = s.begin(); i != s.end(); ++i)
         {
-            if (u_isblank(*i))
+            // Some special whitespace characters should always be highlighted:
+            if (*i == 0x00A0 /*non-breakable space*/)
+            {
+                int pos = int(i - s.begin());
+                highlight(pos, pos + 1, LeadingWhitespace);
+            }
+
+            // Duplicate whitespace (2+ spaces etc.):
+            else if (u_isblank(*i))
             {
                 if (blank_block_pos == -1)
                     blank_block_pos = int(i - s.begin());
@@ -84,6 +94,7 @@ public:
                 blank_block_pos = -1;
             }
 
+            // Escape sequences:
             if (*i == '\\')
             {
                 int pos = int(i - s.begin());
