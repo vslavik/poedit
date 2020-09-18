@@ -546,16 +546,7 @@ PoeditFrame::PoeditFrame() :
     m_displayIDs = (bool)cfg->Read("display_lines", (long)false);
     g_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
 
-#if defined(__WXGTK__)
-    wxIconBundle appicons;
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(16,16)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(24,24)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(32,32)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(48,48)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(256,256)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(512,512)));
-    SetIcons(appicons);
-#elif defined(__WXMSW__)
+#ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 

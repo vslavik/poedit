@@ -56,8 +56,9 @@
 #include <winsparkle.h>
 #endif
 
-#ifdef __WXGTK3__
+#ifdef __WXGTK__
 #include <glib.h>
+#include <gtk/gtk.h>
 #endif
 
 #include <unicode/uclean.h>
@@ -337,7 +338,9 @@ bool PoeditApp::OnInit()
     SetDllDirectory(L"");
 #endif
 
-#ifdef __WXGTK3__
+#ifdef __WXGTK__
+    gtk_window_set_default_icon_name("net.poedit.Poedit");
+    g_set_application_name("Poedit");
     // Wayland compatibility, see https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
     g_set_prgname("net.poedit.Poedit");
 #endif

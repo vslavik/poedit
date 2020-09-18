@@ -82,13 +82,7 @@ ManagerFrame::ManagerFrame() :
             wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
             "manager")
 {
-#if defined(__WXGTK__)
-    wxIconBundle appicons;
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(16,16)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(32,32)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(48,48)));
-    SetIcons(appicons);
-#elif defined(__WXMSW__)
+#ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 

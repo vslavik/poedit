@@ -50,3 +50,6 @@ dist_uiicons_DATA = \
 		StatusWarning.png \
 		StatusWarningBlack.png \
 		window-close.png
+
+install-data-hook:
+	gtk-update-icon-cache -f -t $(DESTDIR)$(iconsdir)
