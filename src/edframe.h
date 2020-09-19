@@ -343,9 +343,6 @@ private:
                                     bool from_save, bool other_file_saved,
                                     TFunctor completionHandler);
 
-#ifndef __WXOSX__
-        wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
-#endif
         void NoteAsRecentFile();
 
         void OnNewTranslationEntered(const CatalogItemPtr& item);
