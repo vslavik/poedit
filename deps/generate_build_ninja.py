@@ -5,7 +5,8 @@ from collections import OrderedDict
 from glob import glob
 from ninja_syntax import Writer
 
-GETTEXT_TARBALL = 'gettext-0.21.tar.gz'
+GETTEXT_VERSION = "0.21"  # use of " important for Xcode build!
+GETTEXT_TARBALL = 'gettext-%s.tar.gz' % GETTEXT_VERSION
 GETTEXT_SHA256 = 'c77d0da3102aec9c07f43671e60611ebff89a996ef159497ce8e59d075786b12'
 
 _exclusion_list = [
