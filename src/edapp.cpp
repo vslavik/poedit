@@ -454,6 +454,7 @@ bool PoeditApp::OnInit()
 
 #ifdef __WXOSX__
     wxMenuBar *bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global");
+    RecentFiles::Get().UseMenu(bar->FindItem(XRCID("open_recent")));
     TweakOSXMenuBar(bar);
     wxMenuBar::MacSetCommonMenuBar(bar);
     // so that help menu is correctly merged with system-provided menu

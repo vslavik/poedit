@@ -32,6 +32,7 @@
 
 class WXDLLIMPEXP_FWD_BASE wxFileName;
 class WXDLLIMPEXP_FWD_CORE wxMenuBar;
+class WXDLLIMPEXP_FWD_CORE wxMenuItem;
 
 
 /// Event for opening recent files
@@ -49,10 +50,7 @@ public:
     static void CleanUp();
 
     /// Use this menu to show recent items.
-    void UseMenu(wxMenu *menu);
-
-    /// No longer use this menu to show recent items.
-    void RemoveMenu(wxMenu *menu);
+    void UseMenu(wxMenuItem *menu);
 
     /// Record a file as being recently edited.
     void NoteRecentFile(const wxFileName& fn);

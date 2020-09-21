@@ -364,9 +364,6 @@ private:
         wxSplitterWindow *m_splitter;
         wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
-#ifndef __WXOSX__
-        wxMenu *m_menuForHistory;
-#endif
 
         AttentionBar *m_attentionBar;
         Sidebar *m_sidebar;

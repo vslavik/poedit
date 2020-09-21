@@ -26,6 +26,7 @@
 #include "recent_files.h"
 
 #include "str_helpers.h"
+#include "utility.h"
 
 #ifdef __WXOSX__
 #import <AppKit/NSDocumentController.h>
@@ -40,19 +41,83 @@
 #include <wx/xrc/xmlres.h>
 
 #include <mutex>
-#include <vector>
+#include <map>
 
 wxDEFINE_EVENT(EVT_OPEN_RECENT_FILE, wxCommandEvent);
 
+namespace
+{
+
+// Track lifetime of menus, removes no longer existing menus automatically
+template<typename Payload>
+class menus_tracker
+{
+public:
+    void add(wxMenuItem *menuItem, Payload *payload)
+    {
+        cleanup_destroyed();
+        m_menus[menuItem->GetMenu()] = payload;
+    }
+
+    template<typename Fn>
+    Payload* find_if(Fn&& predicate)
+    {
+        cleanup_destroyed();
+        for (auto& m: m_menus)
+        {
+            if (predicate(m.first))
+                return m.second;
+        }
+        return nullptr;
+    }
+
+    template<typename Fn>
+    void for_all(Fn&& func)
+    {
+        cleanup_destroyed();
+        for (auto& m: m_menus)
+            func(m.second);
+    }
+
+    virtual ~menus_tracker() {}
+
+protected:
+    void cleanup_destroyed()
+    {
+        auto i = m_menus.begin();
+        while (i != m_menus.end())
+        {
+            if (i->first)
+                ++i;
+            else
+                i = m_menus.erase(i);
+        }
+    }
+
+    std::map<wxWeakRef<wxMenu>, Payload*> m_menus;
+};
+
+} // anonymous namespace
+
+
 #ifdef __WXOSX__
 
+// Implementation for macOS uses native recent documents functionality with native UI.
+// Some gross hacks are however required to make it work with wx's menubar and mostly
+// with the way wx handles switching per-window menus on macOS where only one per-app
+// menu exists.
 class RecentFiles::impl
 {
 public:
     impl() {}
 
-    void UseMenu(wxMenu*) {}
-    void RemoveMenu(wxMenu*) {}
+    void UseMenu(wxMenuItem *menuItem)
+    {
+        NSMenu *native = menuItem->GetMenu()->GetHMenu();
+        NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(menuItem->GetItemLabelText())];
+        wxCHECK_RET( nativeItem, "couldn't find NSMenuItem for a menu item" );
+        m_menus.add(menuItem, nativeItem);
+    }
 
     void NoteRecentFile(wxFileName fn)
     {
@@ -94,27 +159,25 @@ public:
         if (!bar)
             return;
 
-        wxMenu *fileMenu;
-        wxMenuItem *item = bar->FindItem(XRCID("open_recent"), &fileMenu);
-        if (item)
+        NSMenuItem *nativeItem = m_menus.find_if([=](wxMenu *menu){ return menu->GetMenuBar() == bar; });
+        if (nativeItem)
         {
-            NSMenu *native = fileMenu->GetHMenu();
-            NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
-            if (nativeItem)
-            {
-                [nativeItem setSubmenu:m_recentMenu];
-                m_recentMenuItem = nativeItem;
-            }
+            [nativeItem setSubmenu:m_recentMenu];
+            m_recentMenuItem = nativeItem;
         }
     }
 
 private:
+    menus_tracker<NSMenuItem> m_menus;
     NSMenu *m_recentMenu = nullptr;
     NSMenuItem *m_recentMenuItem = nullptr;
 };
 
 #else // !__WXOSX__
 
+// Generic implementation use wxFileHistory (mainly for Windows). Doesn't use
+// wxFileHistory's menus management, because it requires explicit RemoveMenu()
+// and because we want to add "Clear menu" items as well.
 class RecentFiles::impl
 {
 public:
@@ -125,10 +188,12 @@ public:
         m_history.Load(*cfg);
     }
 
-    void UseMenu(wxMenu *menu)
+    void UseMenu(wxMenuItem *menuItem)
     {
-        m_history.UseMenu(menu);
-        m_history.AddFilesToMenu(menu);
+        auto menu = menuItem->GetSubMenu();
+        m_menus.add(menuItem, menu);
+
+        RebuildMenu(menu);
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
         {
@@ -145,11 +210,12 @@ public:
             menu->GetWindow()->ProcessWindowEvent(event);
         },
         wxID_FILE1, wxID_FILE9);
-    }
 
-    void RemoveMenu(wxMenu *menu)
-    {
-        m_history.RemoveMenu(menu);
+        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&)
+        {
+            ClearHistory();
+        },
+        m_idClear);
     }
 
     void NoteRecentFile(wxFileName fn)
@@ -157,13 +223,50 @@ public:
         fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
         m_history.AddFileToHistory(fn.GetFullPath());
 
+        UpdateAfterChange();
+    }
+
+    void ClearHistory()
+    {
+        while (m_history.GetCount())
+            m_history.RemoveFileFromHistory(0);
+
+        UpdateAfterChange();
+    }
+
+    void RebuildMenu(wxMenu *menu)
+    {
+        // clear the menu entirely:
+        while (menu->GetMenuItemCount())
+            menu->Destroy(menu->FindItemByPosition(0));
+
+        // add wxFileHistory files:
+        m_history.AddFilesToMenu(menu);
+
+        // and an item for clearning the menu:
+        const bool hasItems = menu->GetMenuItemCount() > 0;
+        if (hasItems)
+            menu->AppendSeparator();
+        auto clearItem = menu->Append(m_idClear, MSW_OR_OTHER(_("Clear menu"), _("Clear Menu")));
+        clearItem->Enable(hasItems);
+
+    }
+
+    void UpdateAfterChange()
+    {
+        // Update all menus with visible history:
+        m_menus.for_all([=](wxMenu *menu){ RebuildMenu(menu); });
+
+        // Save the changes to persistent storage:
         wxConfigBase *cfg = wxConfig::Get();
         cfg->SetPath("/");
         m_history.Save(*cfg);
     }
 
 private:
+    const wxWindowID m_idClear = wxNewId();
     wxFileHistory m_history;
+    menus_tracker<wxMenu> m_menus;
 };
 
 #endif // !__WXOSX__
@@ -199,14 +302,9 @@ void RecentFiles::CleanUp()
 RecentFiles::RecentFiles() : m_impl(new impl) {}
 RecentFiles::~RecentFiles() {}
 
-void RecentFiles::UseMenu(wxMenu *menu)
+void RecentFiles::UseMenu(wxMenuItem *menu)
 {
     m_impl->UseMenu(menu);
-}
-
-void RecentFiles::RemoveMenu(wxMenu *menu)
-{
-    m_impl->RemoveMenu(menu);
 }
 
 void RecentFiles::NoteRecentFile(const wxFileName& fn)

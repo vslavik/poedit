@@ -560,10 +560,7 @@ PoeditFrame::PoeditFrame() :
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar("mainmenu");
     if (MenuBar)
     {
-#ifndef __WXOSX__
-        m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(_("&File")));
-        RecentFiles::Get().UseMenu(m_menuForHistory);
-#endif
+        RecentFiles::Get().UseMenu(MenuBar->FindItem(XRCID("open_recent")));
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
@@ -861,10 +858,6 @@ PoeditFrame::~PoeditFrame()
     cfg->Write("display_lines", m_displayIDs);
 
     SaveWindowState(this);
-
-#ifndef __WXOSX__
-    RecentFiles::Get().RemoveMenu(m_menuForHistory);
-#endif
 
     // write all changes:
     cfg->Flush();
