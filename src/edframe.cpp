@@ -355,9 +355,11 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
   #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
   #endif
+  #ifndef __WXOSX__
+   EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditFrame::OnOpenHist)
+  #endif
 #endif // __WXMSW__
 #ifndef __WXOSX__
-   EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditFrame::OnOpenHist)
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
 #endif
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
