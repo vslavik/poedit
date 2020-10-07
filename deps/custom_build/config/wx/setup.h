@@ -774,7 +774,7 @@
 // Default is 1
 //
 // Recommended setting: 1
-#define wxUSE_STC 1
+#define wxUSE_STC 0
 
 // Use wxWidget's web viewing classes
 //
