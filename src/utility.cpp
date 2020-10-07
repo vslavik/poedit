@@ -49,9 +49,34 @@
 wxString EscapeMarkup(const wxString& str)
 {
     wxString s(str);
-    s.Replace("&", "&amp;");
-    s.Replace("<", "&lt;");
-    s.Replace(">", "&gt;");
+
+    size_t pos = 0;
+    while (true)
+    {
+        pos = s.find_first_of(L"&<>", pos);
+        if (pos == wxString::npos)
+            break;
+
+        std::string replacement;
+        switch ((wchar_t)s[pos])
+        {
+            case '&':
+                s.replace(pos, 1, L"&amp;");
+                pos += 5;
+                break;
+            case '<':
+                s.replace(pos, 1, L"&lt;");
+                pos += 4;
+                break;
+            case '>':
+                s.replace(pos, 1, L"&gt;");
+                pos += 4;
+                break;
+            default: // can't happen
+                break;
+        }
+    };
+
     return s;
 }
 
