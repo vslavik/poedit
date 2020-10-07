@@ -2,6 +2,7 @@
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 1999-2021 Vaclav Slavik
+ *  Copyright (C) 2015 PrismJS (CSS parts)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -37,15 +38,12 @@
 #include <wx/listctrl.h>
 #include <wx/fontenum.h>
 #include <wx/ffile.h>
+#include <wx/stdpaths.h>
 #include <wx/utils.h>
+#include <wx/webview.h>
 
-#if defined(__clang__)
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#endif
-#include <wx/stc/stc.h>
-#if defined(__clang__)
-    #pragma clang diagnostic pop
+#ifdef __WXMSW__
+#include <wx/msw/webview_ie.h>
 #endif
 
 #include "customcontrols.h"
@@ -62,7 +60,10 @@ const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW;
 const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE;
 #endif
 
+wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno);
+
 } // anonymous namespace
+
 
 FileViewer *FileViewer::ms_instance = nullptr;
 
@@ -102,11 +103,9 @@ FileViewer::FileViewer(wxWindow*)
     m_openInEditor = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
     barsizer->Add(m_openInEditor, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
 
-    m_text = new wxStyledTextCtrl(panel, wxID_ANY,
-                                  wxDefaultPosition, wxDefaultSize,
-                                  wxBORDER_THEME);
-    SetupTextCtrl();
-    sizer->Add(m_text, 1, wxEXPAND);
+    m_content = wxWebView::New(panel, wxID_ANY);
+
+    sizer->Add(m_content, 1, wxEXPAND);
 
     m_error = new wxStaticText(panel, wxID_ANY, "");
     ColorScheme::SetupWindowColors(m_error, [=]
@@ -126,7 +125,7 @@ FileViewer::FileViewer(wxWindow*)
     // avoid flicker with these initial settings:
     m_file->Disable();
     sizer->Hide(m_error);
-    sizer->Hide(m_text);
+    sizer->Hide(m_content);
 
     Layout();
 
@@ -149,134 +148,6 @@ FileViewer::~FileViewer()
 {
     ms_instance = nullptr;
     SaveWindowState(this);
-}
-
-
-void FileViewer::SetupTextCtrl()
-{
-    wxStyledTextCtrl& t = *m_text;
-
-    wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
-
-#ifdef __WXGTK__
-    font.SetFaceName("monospace");
-#else
-    static const char *s_monospaced_fonts[] = {
-#ifdef __WXMSW__
-        "Consolas",
-        "Lucida Console",
-#endif
-#ifdef __WXOSX__
-        "Menlo",
-        "Monaco",
-#endif
-        NULL
-    };
-
-    for ( const char **f = s_monospaced_fonts; *f; ++f )
-    {
-        if ( wxFontEnumerator::IsValidFacename(*f) )
-        {
-            font.SetFaceName(*f);
-            break;
-        }
-    }
-#endif
-
-    // style used:
-    wxString fontspec = wxString::Format("face:%s,size:%d",
-                                         font.GetFaceName().c_str(),
-                                      #ifdef __WXOSX__
-                                         font.GetPointSize() - 1
-                                      #else
-                                         font.GetPointSize()
-                                      #endif
-                                         );
-    const wxString DEFAULT     = fontspec + ",fore:black,back:white";
-    const wxString STRING      = fontspec + ",bold,fore:#882d21";
-    const wxString COMMENT     = fontspec + ",fore:#487e18";
-    const wxString KEYWORD     = fontspec + ",fore:#2f00f9";
-    const wxString LINENUMBERS = fontspec + ",fore:#5d8bab";
-
-
-    // current line marker
-    t.MarkerDefine(1, wxSTC_MARK_BACKGROUND, wxNullColour, wxColour(255,255,0));
-
-    // set fonts
-    t.StyleSetSpec(wxSTC_STYLE_DEFAULT, DEFAULT);
-    t.StyleSetSpec(wxSTC_STYLE_LINENUMBER, LINENUMBERS);
-
-    // line numbers margin size:
-    t.SetMarginType(0, wxSTC_MARGIN_NUMBER);
-    t.SetMarginWidth(0,
-                     t.TextWidth(wxSTC_STYLE_LINENUMBER, "9999 "));
-    t.SetMarginWidth(1, 0);
-    t.SetMarginWidth(2, 3);
-
-    // set syntax highlighting styling
-    t.StyleSetSpec(wxSTC_C_STRING, STRING);
-    t.StyleSetSpec(wxSTC_C_COMMENT, COMMENT);
-    t.StyleSetSpec(wxSTC_C_COMMENTLINE, COMMENT);
-
-    t.StyleSetSpec(wxSTC_P_STRING, STRING);
-    t.StyleSetSpec(wxSTC_P_COMMENTLINE, COMMENT);
-    t.StyleSetSpec(wxSTC_P_COMMENTBLOCK, COMMENT);
-
-    t.StyleSetSpec(wxSTC_LUA_STRING, STRING);
-    t.StyleSetSpec(wxSTC_LUA_LITERALSTRING, STRING);
-    t.StyleSetSpec(wxSTC_LUA_COMMENT, COMMENT);
-    t.StyleSetSpec(wxSTC_LUA_COMMENTLINE, COMMENT);
-
-    t.StyleSetSpec(wxSTC_HPHP_HSTRING, STRING);
-    t.StyleSetSpec(wxSTC_HPHP_SIMPLESTRING, STRING);
-    t.StyleSetSpec(wxSTC_HPHP_COMMENT, COMMENT);
-    t.StyleSetSpec(wxSTC_HPHP_COMMENTLINE, COMMENT);
-
-    t.StyleSetSpec(wxSTC_TCL_COMMENT, COMMENT);
-    t.StyleSetSpec(wxSTC_TCL_COMMENTLINE, COMMENT);
-    t.StyleSetSpec(wxSTC_TCL_BLOCK_COMMENT, COMMENT);
-
-    t.StyleSetSpec(wxSTC_PAS_STRING, STRING);
-    t.StyleSetSpec(wxSTC_PAS_COMMENT, COMMENT);
-    t.StyleSetSpec(wxSTC_PAS_COMMENT2, COMMENT);
-    t.StyleSetSpec(wxSTC_PAS_COMMENTLINE, COMMENT);
-}
-
-
-int FileViewer::GetLexer(const wxString& ext)
-{
-    struct LexerInfo
-    {
-        const char *ext;
-        int lexer;
-    };
-
-    static const LexerInfo s_lexer[] = {
-        { "c", wxSTC_LEX_CPP },
-        { "cpp", wxSTC_LEX_CPP },
-        { "cc", wxSTC_LEX_CPP },
-        { "cxx", wxSTC_LEX_CPP },
-        { "h", wxSTC_LEX_CPP },
-        { "hxx", wxSTC_LEX_CPP },
-        { "hpp", wxSTC_LEX_CPP },
-        { "py", wxSTC_LEX_PYTHON },
-        { "htm", wxSTC_LEX_HTML },
-        { "html", wxSTC_LEX_HTML },
-        { "php", wxSTC_LEX_PHPSCRIPT },
-        { "xml", wxSTC_LEX_XML },
-        { "pas", wxSTC_LEX_PASCAL },
-        { NULL, -1 }
-    };
-
-    wxString e = ext.Lower();
-
-    for ( const LexerInfo *i = s_lexer; i->ext; ++i )
-    {
-        if ( e == wxString::FromAscii(i->ext) )
-            return i->lexer;
-    }
-
-    return wxSTC_LEX_NULL;
 }
 
 
@@ -367,12 +238,12 @@ void FileViewer::SelectReference(const wxString& ref)
         return;
     }
 
-    wxFFile file;
+    const wxString fullpath = filename.GetFullPath();
+
+    wxTextFile file;
     wxString data;
 
-    if ( !filename.IsFileReadable() ||
-         !file.Open(filename.GetFullPath()) ||
-         !file.ReadAll(&data, wxConvAuto()) )
+    if ( !filename.IsFileReadable() || !file.Open(fullpath) )
     {
         ShowError(wxString::Format(_("Error opening file %s!"), ref.BeforeLast(':')));
         m_openInEditor->Disable();
@@ -382,7 +253,7 @@ void FileViewer::SelectReference(const wxString& ref)
     m_openInEditor->Enable();
 
     m_error->GetContainingSizer()->Hide(m_error);
-    m_text->GetContainingSizer()->Show(m_text);
+    m_content->GetContainingSizer()->Show(m_content);
     Layout();
 
     // support GNOME's xml2po's extension to references in the form of
@@ -393,24 +264,15 @@ void FileViewer::SelectReference(const wxString& ref)
     if (!linenumStr.ToLong(&linenum))
         linenum = 0;
 
-    m_text->SetReadOnly(false);
-    m_text->SetValue(data);
-    m_text->SetReadOnly(true);
-
-    m_text->MarkerDeleteAll(1);
-    m_text->MarkerAdd((int)linenum - 1, 1);
-
-    // Center the highlighted line:
-    int lineHeight = m_text->TextHeight((int)linenum);
-    int linesInWnd = m_text->GetSize().y / lineHeight;
-    m_text->ScrollToLine(wxMax(0, (int)linenum - linesInWnd/2));
+    auto markup = FileToHTMLMarkup(file, (size_t)linenum);
+    m_content->SetPage(markup, "file:///");
 }
 
 void FileViewer::ShowError(const wxString& msg)
 {
     m_error->SetLabel(msg);
     m_error->GetContainingSizer()->Show(m_error);
-    m_text->GetContainingSizer()->Hide(m_text);
+    m_content->GetContainingSizer()->Hide(m_content);
     Layout();
 }
 
@@ -426,3 +288,169 @@ void FileViewer::OnEditFile(wxCommandEvent&)
     if (filename.IsOk())
         wxLaunchDefaultApplication(filename.GetFullPath());
 }
+
+
+namespace
+{
+
+extern const char *HTML_POEDIT_CSS;
+
+inline void OutputBlock(wxString& html, const wxTextFile& file, size_t lfrom, size_t lto)
+{
+    for (size_t i = lfrom; i < lto; i++)
+    {
+        html += EscapeMarkup(file[i]);
+        html += '\n';
+    }
+}
+
+wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
+{
+    wxString html = wxString::Format(
+        R"(<!DOCTYPE html>
+        <html>
+            <head>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <style>%s</style>
+            </head>
+            <body>
+        )",
+        HTML_POEDIT_CSS);
+
+    html += "<pre class=\"line-numbers\"><code>";
+
+    const size_t count = file.GetLineCount();
+    if (lineno && lineno <= count)
+    {
+        OutputBlock(html, file, 0, lineno-1);
+        html += "<mark>";
+        OutputBlock(html, file, lineno-1, lineno);
+        html += "</mark>";
+        OutputBlock(html, file, lineno, count);
+    }
+    else
+    {
+        OutputBlock(html, file, 0, count);
+    }
+
+    // add line numbers:
+    html += "<span aria-hidden=\"true\" class=\"line-numbers-rows\">";
+    for (size_t i = 0; i < count; i++)
+    {
+        if (i == lineno-1)
+            html += "<span id=\"mark\"></span>";
+        else
+            html += "<span></span>";
+    }
+
+    html += "</span></code></pre>";
+
+    if (lineno)
+        html += R"(<script>
+                document.getElementById('mark').scrollIntoView({behavior: 'instant', block: 'center'});
+                if (document.documentMode) window.scrollBy(0, -100); // MSIE
+                </script>)";
+
+    html += R"(
+            </body>
+        </html>
+        )";
+
+    return html;
+}
+
+
+const char *HTML_POEDIT_CSS = R"(
+
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    color: #393A34;
+    background-color: white;
+}
+
+code, pre {
+	font-family: "ui-monospace", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+	font-size: 9pt;
+    line-height: 1.2em;
+    tab-size: 4;
+    padding: 0;
+    margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #c5c8c6;
+        background-color: #1d1f21;
+    }
+}
+
+
+/* Line numbers: */
+
+pre.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em;
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* Highlighting of selected line: */
+
+.line-numbers-rows > #mark:before {
+    background-color: rgb(253, 235, 176);
+}
+mark {
+    background-color: rgb(253, 235, 176);
+}
+
+@media (prefers-color-scheme: dark) {
+    .line-numbers-rows > #mark:before {
+        background-color: rgb(198, 171, 113);
+        color: #393A34;
+    }
+    mark {
+        background-color: rgb(198, 171, 113);
+        color: #393A34;
+    }
+}
+
+)";
+
+} // anonymous namespace

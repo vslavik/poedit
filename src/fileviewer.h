@@ -34,7 +34,7 @@ class WXDLLIMPEXP_FWD_CORE wxButton;
 class WXDLLIMPEXP_FWD_CORE wxChoice;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxFileName;
-class WXDLLIMPEXP_FWD_STC wxStyledTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxWebView;
 
 
 /** This class implements frame that shows part of file
@@ -54,8 +54,6 @@ public:
     void ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int defaultReference = 0);
 
 private:
-    void SetupTextCtrl();
-    int GetLexer(const wxString& extension);
     wxFileName GetFilename(wxString ref) const;
 
     void SelectReference(const wxString& ref);
@@ -67,7 +65,7 @@ private:
 
     wxChoice *m_file;
     wxButton *m_openInEditor;
-    wxStyledTextCtrl *m_text;
+    wxWebView *m_content;
     wxStaticText *m_error;
 
     void OnChoice(wxCommandEvent &event);

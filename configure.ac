@@ -48,11 +48,11 @@ AC_PROG_CXXCPP
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX([14], [], [mandatory])
 
-WXLIBS_USED="xrc,stc,html,xml,adv,core,net"
+WXLIBS_USED="xrc,stc,xml,webview,adv,core,net"
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"
-    ;;    
+    ;;
 esac
 
 

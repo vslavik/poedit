@@ -459,6 +459,10 @@
 		B294A12A2165FD4000135D5D /* icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B294A1292165FD4000135D5D /* icon.cpp */; };
 		B294A12C2165FDF500135D5D /* statbmp_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B294A12B2165FDF400135D5D /* statbmp_osx.cpp */; };
 		B294A12E2165FE1800135D5D /* statbmp.mm in Sources */ = {isa = PBXBuildFile; fileRef = B294A12D2165FE1800135D5D /* statbmp.mm */; };
+		B2ACD231251FAD5F009ADFAB /* webviewarchivehandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2ACD22E251FAD5F009ADFAB /* webviewarchivehandler.cpp */; };
+		B2ACD232251FAD5F009ADFAB /* webview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2ACD22F251FAD5F009ADFAB /* webview.cpp */; };
+		B2ACD233251FAD5F009ADFAB /* webviewfshandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2ACD230251FAD5F009ADFAB /* webviewfshandler.cpp */; };
+		B2ACD235251FAD6C009ADFAB /* webview_webkit.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2ACD234251FAD6C009ADFAB /* webview_webkit.mm */; };
 		B2B7E7A71AD9416C007FC4EB /* fswatcherg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47783A330B2A3B4EBB1CD95D /* fswatcherg.cpp */; };
 		B2B7E7A81AD9416F007FC4EB /* mimetype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C97C1F26B5A38C49543060C /* mimetype.cpp */; };
 		B2B7E7A91AD9416F007FC4EB /* cfstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5168ADF7BE39351F8F24E1E6 /* cfstring.cpp */; };
@@ -1314,6 +1318,10 @@
 		B294A1292165FD4000135D5D /* icon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = icon.cpp; path = ../wx/src/generic/icon.cpp; sourceTree = "<group>"; };
 		B294A12B2165FDF400135D5D /* statbmp_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = statbmp_osx.cpp; path = ../wx/src/osx/statbmp_osx.cpp; sourceTree = "<group>"; };
 		B294A12D2165FE1800135D5D /* statbmp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = statbmp.mm; path = ../wx/src/osx/cocoa/statbmp.mm; sourceTree = "<group>"; };
+		B2ACD22E251FAD5F009ADFAB /* webviewarchivehandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webviewarchivehandler.cpp; path = ../wx/src/common/webviewarchivehandler.cpp; sourceTree = "<group>"; };
+		B2ACD22F251FAD5F009ADFAB /* webview.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webview.cpp; path = ../wx/src/common/webview.cpp; sourceTree = "<group>"; };
+		B2ACD230251FAD5F009ADFAB /* webviewfshandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webviewfshandler.cpp; path = ../wx/src/common/webviewfshandler.cpp; sourceTree = "<group>"; };
+		B2ACD234251FAD6C009ADFAB /* webview_webkit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = webview_webkit.mm; path = ../wx/src/osx/webview_webkit.mm; sourceTree = "<group>"; };
 		B2B7E7A61AD93FD3007FC4EB /* libwx_osx_base_static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwx_osx_base_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D390E5D5BF32D4AAA1E15A /* jdmainct.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = jdmainct.c; path = ../wx/src/jpeg/jdmainct.c; sourceTree = "<group>"; };
 		B2EEC1C217ED88E8001FB292 /* threadinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadinfo.cpp; path = ../wx/src/common/threadinfo.cpp; sourceTree = "<group>"; };
@@ -2323,6 +2331,7 @@
 				B8F95052522B37AB86DA8917 /* propgrid */,
 				64B126D857113F24BA8C4758 /* richtext */,
 				E96566B813153B4295AD767B /* stc */,
+				B2ACD22D251FAD3E009ADFAB /* webview */,
 				EB288BE7E74B3328B762A461 /* libtiff */,
 				7650A73F7FC9305EA62DAE86 /* libjpeg */,
 				6E2C8858F68E3FB0BEFFFCE5 /* libpng */,
@@ -2330,6 +2339,17 @@
 				2BE6C101F29D318895158F98 /* libscintilla */,
 			);
 			name = Sources;
+			sourceTree = "<group>";
+		};
+		B2ACD22D251FAD3E009ADFAB /* webview */ = {
+			isa = PBXGroup;
+			children = (
+				B2ACD22F251FAD5F009ADFAB /* webview.cpp */,
+				B2ACD22E251FAD5F009ADFAB /* webviewarchivehandler.cpp */,
+				B2ACD230251FAD5F009ADFAB /* webviewfshandler.cpp */,
+				B2ACD234251FAD6C009ADFAB /* webview_webkit.mm */,
+			);
+			name = webview;
 			sourceTree = "<group>";
 		};
 		B402B38DB4CF3883AF4743C0 /* src/ribbon */ = {
@@ -3171,6 +3191,7 @@
 				45AB45C6B24A3983B22E56A6 /* dataobj.cpp in Sources */,
 				D088E7DDE38C31DC9C9B3418 /* dcclient.cpp in Sources */,
 				182DFDBB58653FD9863D4177 /* dcprint.cpp in Sources */,
+				B2ACD231251FAD5F009ADFAB /* webviewarchivehandler.cpp in Sources */,
 				AAC2CB4D851230008AE4ABA2 /* dcscreen.cpp in Sources */,
 				774EB9F3F7E93A379E1F7552 /* graphics.cpp in Sources */,
 				5792675690843C6AA4125A73 /* font.cpp in Sources */,
@@ -3454,6 +3475,7 @@
 				B25F3ADF1CAAEC630062F008 /* LexECL.cxx in Sources */,
 				2FAE979E6FE23D088C768B7E /* gridcmn.cpp in Sources */,
 				7B4DA2F5F25B3E188CBAFE39 /* hyperlnkcmn.cpp in Sources */,
+				B2ACD232251FAD5F009ADFAB /* webview.cpp in Sources */,
 				E6D18B2EDE353F67883085A0 /* odcombocmn.cpp in Sources */,
 				2FE10EA678C73523836FCC1D /* richtooltipcmn.cpp in Sources */,
 				FEA741A9B6663A4C929893C3 /* aboutdlgg.cpp in Sources */,
@@ -3586,6 +3608,7 @@
 				C5A8DF376BB13A2A8290C2E6 /* xh_unkwn.cpp in Sources */,
 				37DD17F479A1371ABF3589BA /* xh_wizrd.cpp in Sources */,
 				1710A4BB0E6339558A187F8E /* xmlres.cpp in Sources */,
+				B2ACD235251FAD6C009ADFAB /* webview_webkit.mm in Sources */,
 				135DFCE48FC03D8294D01A8A /* xmlrsall.cpp in Sources */,
 				61FD5E0E28F732E8AB1729F9 /* xml.cpp in Sources */,
 				42ED9BAFD6E936849F1D36CC /* xtixml.cpp in Sources */,
@@ -3631,6 +3654,7 @@
 				B25F3AFE1CAAEC630062F008 /* LexPerl.cxx in Sources */,
 				B026621DE50A3921B6598EF7 /* regerror.c in Sources */,
 				B25F3B171CAAEC630062F008 /* LexVB.cxx in Sources */,
+				B2ACD233251FAD5F009ADFAB /* webviewfshandler.cpp in Sources */,
 				05021BAB2C9B3C4CAD0A7C2D /* regfree.c in Sources */,
 				91364FDD73053139BBAA313C /* Accessor.cxx in Sources */,
 				13A71672A59233D3A9B2D5EA /* CharacterSet.cxx in Sources */,

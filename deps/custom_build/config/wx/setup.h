@@ -790,6 +790,7 @@
 // Recommended setting: 1
 #ifdef __WXMSW__
 #define wxUSE_WEBVIEW_IE 1
+#define wxUSE_WEBVIEW_EDGE 0
 #else
 #define wxUSE_WEBVIEW_IE 0
 #endif
