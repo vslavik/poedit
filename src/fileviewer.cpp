@@ -89,6 +89,9 @@ FileViewer::FileViewer(wxWindow*)
 #ifdef __WXOSX__
     panel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
+#ifdef __WXMSW__
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
+#endif
 
     wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(barsizer, wxSizerFlags().Expand().PXBorderAll());
