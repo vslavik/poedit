@@ -20,7 +20,7 @@ description: >
 base: core18
 grade: stable
 confinement: strict
-icon: artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png
+icon: artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg
 
 layout:
   /usr/share/aspell:
@@ -101,8 +101,8 @@ parts:
 
       # Fix-up application icon lookup
       mkdir -p ${SNAPCRAFT_PART_INSTALL}/meta/gui/
-      cp artwork/linux/appicon/256x256/apps/net.poedit.Poedit.png ${SNAPCRAFT_PART_INSTALL}/meta/gui/icon.png
-      sed --in-place -e 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
+      cp artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg ${SNAPCRAFT_PART_INSTALL}/meta/gui/icon.svg
+      sed --in-place -e 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.svg|' \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
 
     stage-packages:
