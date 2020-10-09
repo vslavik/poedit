@@ -36,27 +36,24 @@ apps:
   poedit:
     command: bin/poedit
     desktop: share/applications/net.poedit.Poedit.desktop
-    extensions: [gnome-3-28]
+    extensions: [gnome-3-34]
 
   poedit-uri-handler:
     command: bin/poedit
     desktop: share/applications/net.poedit.PoeditURI.desktop
-    extensions: [gnome-3-28]
+    extensions: [gnome-3-34]
 
 plugs:
   # File access
   home:
   removable-media:
+  mount-observe:
 
   # Crowdin access
   network:
 
   # Secret Service access
   password-manager-service:
-
-  # Suggestions from snappy-debug
-  gsettings:
-  mount-observe:
 
 parts:
   poedit:
@@ -146,17 +143,8 @@ parts:
     source: deps/wx
 
     build-packages:
-      # Not used by Poedit
-      #- libgl1-mesa-dev
-      #- libglu1-mesa-dev
-      #- libgstreamer1.0-dev
-      #- libgstreamer-plugins-base1.0-dev
-      #- libwebkit2gtk-4.0-dev
-
       - gettext
-      - libcairo2-dev
       - libexpat1-dev
-      - libgtk-3-dev
       - libjpeg-dev
       - libnotify-dev
       - libpng-dev
