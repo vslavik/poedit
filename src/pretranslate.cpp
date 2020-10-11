@@ -65,6 +65,8 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     ProgressInfo progress(window, _(L"Pre-translating…"));
     progress.UpdateMessage(_(L"Pre-translating…"));
 
+    auto cancellation_token = std::make_shared<dispatch::cancellation_token>();
+
     // Function to apply fetched suggestions to a catalog item:
     auto process_results = [=](CatalogItemPtr dt, unsigned index, const SuggestionsList& results) -> bool
         {
@@ -90,6 +92,9 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
             continue;
 
         operations.push_back(dispatch::async([=,&tm]{
+            if (cancellation_token->is_cancelled())
+                return false;
+
             auto results = tm.Search(srclang, lang, str::to_wstring(dt->GetString()));
             bool ok = process_results(dt, 0, results);
 
@@ -119,7 +124,10 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     for (auto& op: operations)
     {
         if (!progress.UpdateGauge())
-            break; // TODO: cancel pending 'operations' futures
+        {
+            cancellation_token->cancel();  // don't perform any more async work
+            break;
+        }
 
         if (op.get())
         {
