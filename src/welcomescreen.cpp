@@ -147,27 +147,32 @@ typedef wxCommandLinkButton ActionButton;
 #endif
 
 
-#ifdef __WXGTK__
-
-// Workaround sizing bug of wxStaticText with custom font by using markup instead.
-// See http://trac.wxwidgets.org/ticket/14374
 class HeaderStaticText : public wxStaticText
 {
 public:
-    HeaderStaticText(wxWindow *parent, wxWindowID id, const wxString& text)
-        : wxStaticText(parent, id, "")
+    HeaderStaticText(wxWindow *parent, wxWindowID id, const wxString& text) : wxStaticText(parent, id, "")
     {
+#ifdef __WXGTK__
+        // Workaround sizing bug of wxStaticText with custom font by using markup instead.
+        // See http://trac.wxwidgets.org/ticket/14374
         SetLabelMarkup("<span size='xx-large' weight='500'>" + text + "</span>");
-    }
-
-    virtual bool SetFont(const wxFont&) { return true; }
-};
-
 #else
-
-typedef wxStaticText HeaderStaticText;
-
+        SetLabel(text);
+    #ifdef __WXOSX__
+        if (@available(macOS 10.11, *))
+        {
+            SetFont([NSFont systemFontOfSize:30 weight:NSFontWeightRegular]);
+        }
+        else
+    #endif
+        {
+            auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
+            wxFont f(wxFontInfo(22).FaceName(guiface).AntiAliased());
+            SetFont(f);
+        }
 #endif
+    }
+};
 
 } // anonymous namespace
 
@@ -186,13 +191,6 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_AN
                 break;
         }
     });
-
-    auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
-#if defined(__WXOSX__)
-    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface));//.Light());
-#else
-    m_fntHeader = wxFont(wxFontInfo(22).FaceName(guiface).AntiAliased());
-#endif
 
     // Translate all button events to wxEVT_MENU and send them to the frame.
     Bind(wxEVT_BUTTON, [=](wxCommandEvent& e){
@@ -219,7 +217,6 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     headerSizer->Add(hdr, wxSizerFlags().Center());
 
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
-    header->SetFont(m_fntHeader);
     headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
@@ -280,7 +277,6 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
     SetSizer(uberSizer);
 
     auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
-    header->SetFont(m_fntHeader);
     ColorScheme::SetupWindowColors(this, [=]
     {
         header->SetForegroundColour(ColorScheme::Get(Color::Label));
