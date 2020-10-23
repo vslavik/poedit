@@ -134,7 +134,6 @@ protected:
         {
             // message is e.g. "The access token provided is invalid"
             message = _("Not authorized, please sign in again.").utf8_str();
-            m_owner.SignOut();
         }
         wxLogTrace("poedit.crowdin", "JSON error: %s", message.c_str());
     }
