@@ -228,20 +228,20 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     sizer->Add(new ActionButton(
                        this, wxID_OPEN,
-                       MSW_OR_OTHER(_("Edit a translation"), _("Edit a Translation")),
+                       _("Edit a translation"),
                        _("Open an existing PO file and edit the translation.")),
                wxSizerFlags().PXBorderAll().Expand());
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_new_from_pot"),
-                       MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")),
+                       _("Create new translation"),
                        _("Take an existing PO file or POT template and create a new translation from it.")),
                wxSizerFlags().PXBorderAll().Expand());
 
 #ifdef HAVE_HTTP_CLIENT
     sizer->Add(new ActionButton(
                        this, XRCID("menu_open_crowdin"),
-                       MSW_OR_OTHER(_("Collaborate on a translation with others"), _("Collaborate on a Translation with Others")),
+                       _("Collaborate on a translation with others"),
                        _("Download a file from Crowdin project, translate and sync your changes back.")),
                wxSizerFlags().PXBorderAll().Expand());
     sizer->Add(new LearnAboutCrowdinLink(this, _("What is Crowdin?")), wxSizerFlags().Right().Border(wxRIGHT, PX(8)));
