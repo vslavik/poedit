@@ -67,6 +67,16 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
 } // anonymous namespace
 
 
+#ifdef __WXMSW__
+struct FileViewer::TempFile
+{
+    TempFile() { file.Assign(dir.CreateFileName(".src.html")); }
+    wxFileName file;
+    TempDirectory dir;
+};
+#endif
+
+
 FileViewer *FileViewer::ms_instance = nullptr;
 
 FileViewer *FileViewer::GetAndActivate()
@@ -270,7 +280,33 @@ void FileViewer::SelectReference(const wxString& ref)
         linenum = 0;
 
     auto markup = FileToHTMLMarkup(file, filename.GetExt(), (size_t)linenum);
+
+#ifdef __WXMSW__
+    // On Windows, we use embedded MSIE browser (Edge embedding is still a bit
+    // experimental). Streaming document content to it via SetPage() behaves
+    // a bit differently from loading a file or HTTP document and in particular,
+    // we're hit by two issues:
+    //
+    // 1. X-UA-Compatible is ignored; this could be fixed by an explicit call
+    //    to wxWebViewIE::MSWSetEmulationLevel(wxWEBVIEWIE_EMU_IE11) somewhere
+    // 2. It then reports "unknown script code" instead of file URIs for
+    //    externally loaded JS files, which breaks PrismJS's autoloader
+    //
+    // So we instead put the content into a temporary file and load that. This
+    // sidesteps both issues at a negligible performance cost.
+    {
+        if (!m_tmpFile)
+            m_tmpFile = std::make_shared<TempFile>();
+
+        wxFFile f_html(m_tmpFile->file.GetFullPath(), "wb");
+        f_html.Write(markup, wxConvUTF8);
+        f_html.Close();
+
+        m_content->LoadURL(wxFileName::FileNameToURL(m_tmpFile->file));
+    }
+#else
     m_content->SetPage(markup, "file:///");
+#endif
 }
 
 void FileViewer::ShowError(const wxString& msg)
@@ -329,6 +365,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
         <html>
             <head>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <style>%s</style>
             </head>
             <body>

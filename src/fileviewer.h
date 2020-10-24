@@ -30,6 +30,8 @@
 
 #include <wx/frame.h>
 
+#include <memory>
+
 class WXDLLIMPEXP_FWD_CORE wxButton;
 class WXDLLIMPEXP_FWD_CORE wxChoice;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
@@ -72,6 +74,11 @@ private:
     void OnEditFile(wxCommandEvent &event);
 
     static FileViewer *ms_instance;
+
+#ifdef __WXMSW__
+    struct TempFile;
+    std::shared_ptr<TempFile> m_tmpFile;
+#endif
 };
 
 #endif // _FILEVIEWER_H_
