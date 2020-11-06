@@ -59,13 +59,17 @@
     using boost::regex;
     using boost::wregex;
     using boost::regex_match;
+    using boost::regex_search;
     using boost::smatch;
+    using boost::cmatch;
 #else
     #include <regex>
     using std::regex;
     using std::wregex;
     using std::regex_match;
+    using std::regex_search;
     using std::smatch;
+    using std::cmatch;
 #endif
 
 namespace
@@ -234,13 +238,29 @@ std::string DoGetLanguageTag(const Language& lang)
     auto c = lang.Country();
     auto v = lang.Variant();
 
-    auto tag = l;
+    std::string tag = l;
+
     if (v == "latin")
+    {
         tag += "-Latn";
+        v.clear();
+    }
     else if (v == "cyrillic")
+    {
         tag += "-Cyrl";
+        v.clear();
+    }
+
     if (!c.empty())
         tag += "-" + c;
+
+    if (!v.empty())
+    {
+        // Encode variant that wasn't special-handled as a private use subtag, see
+        // https://tools.ietf.org/html/rfc5646#section-2.2.7 (e.g. "de-DE-x-formal")
+        tag += "-x-" + v;
+    }
+
     return tag;
 }
 
@@ -392,6 +412,12 @@ Language Language::FromLanguageTag(const std::string& tag)
         lang.m_code = buf;
     if (uloc_getCountry(locale, buf, 512, &status))
         lang.m_code += "_" + std::string(buf);
+
+    // ICU converts private use subtag into 'x' keyword, e.g. de-DE-x-formal => de_DE@x=formal
+    static const regex re_private_subtag("@x=([^@]+)$");
+    cmatch m;
+    if (regex_search(locale, m, re_private_subtag))
+        lang.m_code += "@" + m.str(1);
 
     return lang;
 }
