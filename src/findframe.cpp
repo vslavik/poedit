@@ -466,7 +466,6 @@ bool FindFrame::DoFind(int dir)
     bool ignoreCase = (mode == Mode_Find) && m_ignoreCase->GetValue();
     bool wholeWords = m_wholeWords->GetValue();
     bool wrapAround = m_wrapAround->GetValue();
-    int posOrig = m_position;
     size_t trans;
 
     FoundState found = Found_Not;
@@ -485,8 +484,9 @@ bool FindFrame::DoFind(int dir)
     const bool ignoreAmp = (mode == Mode_Find) && (text.Find(_T('&')) == wxNOT_FOUND);
     const bool ignoreUnderscore = (mode == Mode_Find) && (text.Find(_T('_')) == wxNOT_FOUND);
 
-    int oldPosition = m_position;
-    m_position = oldPosition + dir;
+    const int posOrig = std::max(0, std::min(m_position, cnt-1));
+    m_position = posOrig + dir;
+
     for (int tested = 0; tested < cnt; ++tested, m_position += dir)
     {
         if (m_position < 0)
