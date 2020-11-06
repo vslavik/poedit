@@ -1079,8 +1079,10 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     return cat;
 }
 
-bool Catalog::CanLoadFile(const wxString& extension)
+bool Catalog::CanLoadFile(const wxString& extension_)
 {
+    auto extension = extension_.Lower();
+
     return POCatalog::CanLoadFile(extension) ||
            XLIFFCatalog::CanLoadFile(extension);
 }
