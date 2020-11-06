@@ -349,6 +349,11 @@ Language Language::TryParse(const std::wstring& s)
     if (i != names.namesEng.end())
         return Language(i->second);
 
+    // Maybe it was a BCP 47 language tag?
+    auto fromTag = FromLanguageTag(str::to_utf8(s));
+    if (fromTag.IsValid())
+        return fromTag;
+
     return Language(); // invalid
 }
 
