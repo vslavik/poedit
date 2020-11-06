@@ -67,7 +67,7 @@ public:
     std::string LanguageTag() const { return m_tag; }
 
     /// Returns name of the locale suitable for ICU
-    std::string IcuLocaleName() const { return LanguageTag(); }
+    std::string IcuLocaleName() const { return m_icuLocale; }
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
@@ -140,6 +140,13 @@ public:
     static Language TryParseWithValidation(const std::wstring& s);
 
     /**
+        Returns language object corresponding to given BCP 47 tag.
+
+        Returned language instance is invalid if @a tag is invalid.
+     */
+    static Language FromLanguageTag(const std::string& tag);
+
+    /**
         Tries to create the language from Poedit's legacy X-Poedit-Language and
         X-Poedit-Country headers.
      */
@@ -180,6 +187,7 @@ private:
 private:
     std::string m_code;
     std::string m_tag;
+    std::string m_icuLocale;
     TextDirection m_direction;
 };
 

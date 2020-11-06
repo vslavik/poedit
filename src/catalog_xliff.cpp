@@ -661,8 +661,8 @@ void XLIFF1Catalog::Parse(pugi::xml_node root)
         // take the first file's language only.
         if (!extractedLanguage)
         {
-            m_sourceLanguage = Language::TryParse(file.attribute("source-language").value());
-            m_language = Language::TryParse(file.attribute("target-language").value());
+            m_sourceLanguage = Language::FromLanguageTag(file.attribute("source-language").value());
+            m_language = Language::FromLanguageTag(file.attribute("target-language").value());
             extractedLanguage = true;
         }
 
@@ -799,8 +799,8 @@ protected:
 
 void XLIFF2Catalog::Parse(pugi::xml_node root)
 {
-    m_sourceLanguage = Language::TryParse(root.attribute("srcLang").value());
-    m_language = Language::TryParse(root.attribute("trgLang").value());
+    m_sourceLanguage = Language::FromLanguageTag(root.attribute("srcLang").value());
+    m_language = Language::FromLanguageTag(root.attribute("trgLang").value());
 
     int id = 0;
     for (auto segment: root.select_nodes(".//segment"))

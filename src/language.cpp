@@ -268,11 +268,13 @@ void Language::Init(const std::string& code)
     if (IsValid())
     {
         m_tag = DoGetLanguageTag(*this);
+        m_icuLocale = m_tag;
         m_direction = DoIsRTL(*this) ? TextDirection::RTL : TextDirection::LTR;
     }
     else
     {
         m_tag.clear();
+        m_icuLocale.clear();
         m_direction = TextDirection::LTR;
     }
 }
@@ -363,6 +365,28 @@ Language Language::TryParseWithValidation(const std::wstring& s)
     auto country = lang.Country();
     if (!country.empty() && !IsISOCountry(country))
         return Language(); // invalid
+
+    return lang;
+}
+
+
+Language Language::FromLanguageTag(const std::string& tag)
+{
+    char locale[512];
+    UErrorCode status = U_ZERO_ERROR;
+    uloc_forLanguageTag(tag.c_str(), locale, 512, NULL, &status);
+    if (U_FAILURE(status))
+        return Language();
+
+    Language lang;
+    lang.m_tag = tag;
+    lang.m_icuLocale = locale;
+
+    char buf[512];
+    if (uloc_getLanguage(locale, buf, 512, &status))
+        lang.m_code = buf;
+    if (uloc_getCountry(locale, buf, 512, &status))
+        lang.m_code += "_" + std::string(buf);
 
     return lang;
 }
