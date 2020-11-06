@@ -51,9 +51,39 @@ namespace
 std::mutex gs_documentMutex;
 
 
+// Skip over a tag, starting at its '<' with forward iterator or '>' with reverse;
+// return iterator right after the tag or end if malformed
+template<typename Iter>
+inline Iter skip_over_tag(Iter begin, Iter end)
+{
+    const char closing = (*begin == '<') ? '>' : '<';
+    Iter i = begin;
+    for (++i; i != end && *i != closing; ++i)
+    {
+        const char c = *i;
+        if (c == '\'' || c == '"')
+        {
+            ++i;
+            while (i != end && *i != c)
+                ++i;
+            if (i == end)
+                return end;
+        }
+    }
+
+    return (i == end) ? end : ++i;
+}
+
+
+// does the node have any <elements> as children?
 inline bool has_child_elements(xml_node node)
 {
     return node.find_child([](xml_node n){ return n.type() == node_element; });
+}
+
+inline bool is_self_closing(xml_node node)
+{
+    return node.type() == node_element && !node.first_child();
 }
 
 inline std::string get_node_markup(xml_node node)
@@ -180,18 +210,22 @@ protected:
         if (id.empty())
             return;  // malformed - no ID, can't do anything about it
 
-        PlaceholderInfo phi {kind, id};
+        if (kind == GROUP && is_self_closing(node))
+            kind = SINGLE;
 
-        phi.markup = get_node_markup(node);
-        if (m_foundMarkup.find(phi.markup) != m_foundMarkup.end())
+        auto markup = get_node_markup(node);
+        if (m_foundMarkup.find(markup) != m_foundMarkup.end())
             return;
-        m_foundMarkup.insert(phi.markup);
+        m_foundMarkup.insert(markup);
 
+        PlaceholderInfo phi {kind, id};
         std::string subst;
+
         switch (kind)
         {
             case SINGLE:
             {
+                phi.markup = markup;
                 subst = ExtractPlaceholderDisplay(node);
                 if (subst.empty() || boost::all(subst, boost::is_space()))
                     subst = id;
@@ -202,12 +236,17 @@ protected:
             {
                 subst = "<g>";
 
-                auto inner = get_subtree_markup(node);
-                auto pos = phi.markup.find(inner);
-                if (pos == std::string::npos)
-                    return;  // something is very wrong, can't find inner content
-                phi.markupClosing = phi.markup.substr(pos + inner.length());
-                phi.markup = phi.markup.substr(0, pos);
+                // Locate closing tag. Since we know this is a well-formed XML node,
+                // it ends with </name> and searching for the last '<' gives us the position.
+                auto opening_tag_end = skip_over_tag(markup.begin(), markup.end());
+                auto closing_tag_start = skip_over_tag(markup.rbegin(), markup.rend());
+
+                wxASSERT( closing_tag_start != markup.rend() );
+                wxASSERT( closing_tag_start.base() > opening_tag_end );
+
+                phi.markup.assign(markup.begin(), opening_tag_end);
+                phi.markupClosing.assign(closing_tag_start.base(), markup.end());
+
                 break;
             }
         }
@@ -250,7 +289,7 @@ protected:
         for (auto& ph: m_placeholders)
         {
             boost::erase_all(removedPlaceholderMarkup, ph.second.markup);
-            if (ph.second.kind == GROUP)
+            if (!ph.second.markupClosing.empty())
                 boost::erase_all(removedPlaceholderMarkup, ph.second.markupClosing);
         }
 
@@ -268,14 +307,18 @@ protected:
                 }
                 case GROUP:
                 {
+                    const bool hasClosingMarkup = !ph.second.markupClosing.empty();
                     std::string phclose({'<', '/', phtext[1], '>'});
-                    while (removedPlaceholderMarkup.find(phtext) != std::string::npos || removedPlaceholderMarkup.find(phclose) != std::string::npos)
+                    while (removedPlaceholderMarkup.find(phtext) != std::string::npos ||
+                           (hasClosingMarkup && removedPlaceholderMarkup.find(phclose) != std::string::npos))
                     {
                         phtext.insert(1, 1, phtext[1]);
-                        phclose.insert(2, 1, phclose[2]);
+                        if (hasClosingMarkup)
+                            phclose.insert(2, 1, phclose[2]);
                     }
                     metadata.substitutions.push_back({phtext, ph.second.markup});
-                    metadata.substitutions.push_back({phclose, ph.second.markupClosing});
+                    if (hasClosingMarkup)
+                        metadata.substitutions.push_back({phclose, ph.second.markupClosing});
                     break;
                 }
             }
