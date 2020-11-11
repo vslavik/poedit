@@ -113,10 +113,53 @@ inline xml_attribute attribute(xml_node node, const char *name)
     return a ? a : node.append_attribute(name);
 }
 
-inline std::string get_node_text(xml_node node, bool isPlainText)
+inline bool has_multiple_text_children(xml_node node)
+{
+    bool alreadyFoundOne = false;
+    for (auto child = node.first_child(); child; child = child.next_sibling())
+    {
+        if (child.type() == node_pcdata || child.type() == node_cdata)
+        {
+            if (alreadyFoundOne)
+                return true;
+            else
+                alreadyFoundOne = true;
+        }
+    }
+    return false;
+}
+
+inline std::string get_node_text(xml_node node)
+{
+    // xml_node::text() returns the first text child, but that's not enough,
+    // because some (weird) files in the wild mix text and CDATA content
+    if (has_multiple_text_children(node))
+    {
+        std::string s;
+        for (auto child = node.first_child(); child; child = child.next_sibling())
+            if (child.type() == node_pcdata || child.type() == node_cdata)
+                s.append(child.text().get());
+        return s;
+    }
+    else
+    {
+        return node.text().get();
+    }
+}
+
+inline void set_node_text(xml_node node, const std::string& text)
+{
+    // see get_node_text() for explanation
+    if (has_multiple_text_children(node))
+        remove_all_children(node);
+
+    node.text() = text.c_str();
+}
+
+inline std::string get_node_text_or_markup(xml_node node, bool isPlainText)
 {
     if (isPlainText)
-        return node.text().get();
+        return get_node_text(node);
     else
         return get_subtree_markup(node);
 }
@@ -129,7 +172,7 @@ inline void apply_placeholders(std::string& s, const XLIFFStringMetadata& metada
 
 inline std::string get_node_text_with_metadata(xml_node node, const XLIFFStringMetadata& metadata)
 {
-    auto s = get_node_text(node, metadata.isPlainText);
+    auto s = get_node_text_or_markup(node, metadata.isPlainText);
     if (!metadata.isPlainText)
         apply_placeholders(s, metadata);
     return s;
@@ -139,7 +182,7 @@ bool set_node_text_with_metadata(xml_node node, std::string&& text, const XLIFFS
 {
     if (metadata.isPlainText)
     {
-        node.text() = text.c_str();
+        set_node_text(node, text);
         return true;
     }
     else
@@ -175,7 +218,7 @@ public:
     {
         const bool has_children = has_child_elements(node);
         metadata.isPlainText = !has_children;
-        extractedText = get_node_text(node, metadata.isPlainText);
+        extractedText = get_node_text_or_markup(node, metadata.isPlainText);
         return has_children;
     }
 
@@ -579,7 +622,7 @@ public:
             auto ws_after = m_node.first_child();
             auto source = m_node.child("source");
             target = m_node.insert_child_after("target", source);
-            // add appropriate padding:
+            // indent the <target> tag in the same way <source> is indented under its parent:
             if (ws_after.type() == node_pcdata)
                 m_node.insert_child_after(node_pcdata, source).text() = ws_after.text().get();
         }
@@ -753,7 +796,7 @@ public:
             auto ws_after = m_node.first_child();
             auto source = m_node.child("source");
             target = m_node.insert_child_after("target", source);
-            // add appropriate padding:
+            // indent the <target> tag in the same way <source> is indented under its parent:
             if (ws_after.type() == node_pcdata)
                 m_node.insert_child_after(node_pcdata, source).text() = ws_after.text().get();
         }
