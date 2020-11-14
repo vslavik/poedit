@@ -1659,7 +1659,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
 
-    UpdateResultReason reason = UpdateResultReason::Unspecified;
+    UpdateResultReason reason;
     bool succ;
 
     if (pot_file.empty())
@@ -1692,7 +1692,12 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
     if (!succ)
     {
-        switch (reason)
+        // FIXME: nicer UI than this
+        wxString msgSuffix;
+        if (!reason.file.empty() && reason.file != ".")
+            msgSuffix += "\n\n" + wxString::Format(_("In: %s"), reason.file);
+
+        switch (reason.code)
         {
             case UpdateResultReason::NoSourcesFound:
             {
@@ -1703,7 +1708,9 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                         MSW_OR_OTHER(_("Updating failed"), ""),
                         wxOK | wxICON_ERROR
                     ));
-                dlg->SetExtendedMessage(_(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties."));
+                wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties.");
+                expl += msgSuffix;
+                dlg->SetExtendedMessage(expl);
                 dlg->ShowWindowModalThenDo([dlg](int){});
                 break;
             }
@@ -1724,6 +1731,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                     expl += "\n\n" + _("If you previously denied access to your files, you can allow it in System Preferences > Security & Privacy > Privacy > Files & Folders.");
                 }
             #endif
+                expl += msgSuffix;
                 dlg->SetExtendedMessage(expl);
                 dlg->ShowWindowModalThenDo([dlg](int){});
                 break;

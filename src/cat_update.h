@@ -32,12 +32,20 @@ class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 
 /// Result of PerformUpdateFromSources()
-enum class UpdateResultReason
+struct UpdateResultReason
 {
-    CancelledByUser,
-    Unspecified,
-    NoSourcesFound,
-    PermissionDenied
+    enum Code
+    {
+        CancelledByUser,
+        Unspecified,
+        NoSourcesFound,
+        PermissionDenied
+    };
+
+    UpdateResultReason(Code c = Unspecified) : code(c) {}
+
+    Code code;
+    wxString file;
 };
 
 enum UpdateFlags

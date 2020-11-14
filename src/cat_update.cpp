@@ -251,6 +251,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
                 reason = UpdateResultReason::PermissionDenied;
                 break;
         }
+        reason.file = e.file;
         return false;
     }
 

@@ -179,7 +179,7 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
         }
         else
         {
-            throw ExtractionException(ExtractionError::NoSourcesFound);
+            throw ExtractionException(ExtractionError::NoSourcesFound, path);
         }
     }
 

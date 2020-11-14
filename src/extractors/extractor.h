@@ -61,10 +61,11 @@ enum class ExtractionError
 class ExtractionException : public std::runtime_error
 {
 public:
-    ExtractionException(ExtractionError error_)
-        : std::runtime_error("extraction error"), error(error_) {}
+    ExtractionException(ExtractionError error_, const wxString& file_ = wxString())
+        : std::runtime_error("extraction error"), error(error_), file(file_) {}
 
     ExtractionError error;
+    wxString file;
 };
 
 
