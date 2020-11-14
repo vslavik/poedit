@@ -242,7 +242,7 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
 LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& text)
     : LearnMoreLink(parent,
                     CrowdinClient::AttributeLink("/"),
-                    text.empty() ? (MSW_OR_OTHER(_("Learn more about Crowdin"), _("Learn More About Crowdin"))) : text)
+                    text.empty() ? (_("Learn more about Crowdin")) : text)
 {
 }
 

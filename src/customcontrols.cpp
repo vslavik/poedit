@@ -306,13 +306,7 @@ SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
 LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString label, wxWindowID winid)
 {
     if (label.empty())
-    {
-#ifdef __WXMSW__
         label = _("Learn more");
-#else
-        label = _("Learn More");
-#endif
-    }
 
     wxHyperlinkCtrl::Create(parent, winid, label, url);
 
