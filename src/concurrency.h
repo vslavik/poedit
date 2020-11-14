@@ -67,6 +67,7 @@
     #endif
 #endif
 
+#include <atomic>
 #include <memory>
 #include <mutex>
 
