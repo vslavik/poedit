@@ -30,6 +30,7 @@
 #include <unordered_map>
 #include <mutex>
 #include <memory>
+#include <regex>
 
 #include <boost/algorithm/string.hpp>
 
@@ -53,34 +54,15 @@
     #endif
 #endif
 
-// GCC's libstdc++ didn't have functional std::regex implementation until 4.9
-#if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
-    #include <boost/regex.hpp>
-    using boost::regex;
-    using boost::wregex;
-    using boost::regex_match;
-    using boost::regex_search;
-    using boost::smatch;
-    using boost::cmatch;
-#else
-    #include <regex>
-    using std::regex;
-    using std::wregex;
-    using std::regex_match;
-    using std::regex_search;
-    using std::smatch;
-    using std::cmatch;
-#endif
-
 namespace
 {
 
 // see http://www.gnu.org/software/gettext/manual/html_node/Header-Entry.html
 // for description of permitted formats
-const wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?");
+const std::wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?");
 
 // a more permissive variant of the same that TryNormalize() would fix
-const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
+const std::wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
 
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
@@ -301,7 +283,7 @@ void Language::Init(const std::string& code)
 
 bool Language::IsValidCode(const std::wstring& s)
 {
-    return regex_match(s, RE_LANG_CODE);
+    return std::regex_match(s, RE_LANG_CODE);
 }
 
 std::string Language::Lang() const
@@ -347,7 +329,7 @@ Language Language::TryParse(const std::wstring& s)
         return Language("zh_TW");
 
     // Is it a standard language code?
-    if (regex_match(s, RE_LANG_CODE_PERMISSIVE))
+    if (std::regex_match(s, RE_LANG_CODE_PERMISSIVE))
     {
         std::wstring s2(s);
         TryNormalize(s2);
@@ -414,9 +396,9 @@ Language Language::FromLanguageTag(const std::string& tag)
         lang.m_code += "_" + std::string(buf);
 
     // ICU converts private use subtag into 'x' keyword, e.g. de-DE-x-formal => de_DE@x=formal
-    static const regex re_private_subtag("@x=([^@]+)$");
-    cmatch m;
-    if (regex_search(locale, m, re_private_subtag))
+    static const std::regex re_private_subtag("@x=([^@]+)$");
+    std::cmatch m;
+    if (std::regex_search(locale, m, re_private_subtag))
         lang.m_code += "@" + m.str(1);
 
     return lang;
@@ -652,9 +634,9 @@ int PluralFormsExpr::nplurals() const
     if (m_calc)
         return m_calc->nplurals();
 
-    const regex re("^nplurals=([0-9]+)");
-    smatch m;
-    if (regex_match(m_expr, m, re))
+    const std::regex re("^nplurals=([0-9]+)");
+    std::smatch m;
+    if (std::regex_match(m_expr, m, re))
         return std::stoi(m.str(1));
     else
         return -1;

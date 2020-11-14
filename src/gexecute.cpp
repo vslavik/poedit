@@ -33,23 +33,11 @@
 #include <wx/translation.h>
 #include <wx/filename.h>
 
+#include <regex>
 #include <boost/throw_exception.hpp>
 
 #include "gexecute.h"
 #include "errors.h"
-
-// GCC's libstdc++ didn't have functional std::regex implementation until 4.9
-#if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
-    #include <boost/regex.hpp>
-    using boost::wregex;
-    using boost::wsmatch;
-    using boost::regex_match;
-#else
-    #include <regex>
-    using std::wregex;
-    using std::wsmatch;
-    using std::regex_match;
-#endif
 
 namespace
 {
@@ -219,7 +207,7 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     long retcode = DoExecuteGettext(cmdline, gstderr);
 
-    static const wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
+    static const std::wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 
     for (const auto& ewx: gstderr)
     {
@@ -230,8 +218,8 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
 
         GettextError rec;
 
-        wsmatch match;
-        if (regex_match(e, match, RE_ERROR))
+        std::wsmatch match;
+        if (std::regex_match(e, match, RE_ERROR))
         {
             rec.line = std::stoi(match.str(1));
             rec.text = match.str(3);
