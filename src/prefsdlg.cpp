@@ -180,7 +180,7 @@ public:
         auto emailLabel = new wxStaticText(this, wxID_ANY, _("Email:"));
         translator->Add(emailLabel, wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_userEmail = new wxTextCtrl(this, wxID_ANY);
-        m_userEmail->SetHint(_("your_email@example.com"));
+        m_userEmail->SetHint(_("you@example.com"));
         translator->Add(m_userEmail, wxSizerFlags(1).Expand().CenterVertical());
         translator->AddSpacer(PX(1));
         translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
