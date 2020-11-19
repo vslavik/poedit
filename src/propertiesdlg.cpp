@@ -309,6 +309,8 @@ public:
         _("<big>Drag and Drop Folders Here</big>\n\nor use the + button")
         _("<big>Drag and drop folders here</big>\n\nor use the + button")
 #endif
+
+        m_list->Bind(wxEVT_CONTEXT_MENU, &PathsList::OnRightClick, this);
     }
 
     void UpdateFromData()
@@ -431,6 +433,58 @@ protected:
         win->PopupMenu(menu, 0, win->GetSize().y);
 #endif
     }
+
+    void OnRightClick(wxContextMenuEvent& event)
+    {
+        event.Skip();
+
+        auto pos = event.GetPosition();
+        if (!pos.IsFullySpecified())
+            pos = wxGetMousePosition();
+        auto item = m_list->HitTest(m_list->ScreenToClient(pos));
+        if (item == wxNOT_FOUND)
+            return;
+
+        m_list->DeselectAll();
+        m_list->Select(item);
+
+        wxString file = Array()[item];
+        if (wxIsWild(file))
+            return;
+
+        event.Skip(false);
+
+        static wxWindowID idShowInFolder = wxNewId();
+        auto menu = new wxMenu();
+        auto menuItem = menu->Append(idShowInFolder,
+#if defined(__WXOSX__)
+            // TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+            _("Reveal in Finder")
+#elif defined(__WXMSW__)
+            // TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+            _("Show in Explorer")
+#else
+            _("Show in Folder")
+#endif
+            );
+        if (!wxFileExists(file) && !wxDirExists(file))
+            menuItem->Enable(false);
+        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
+        PopupMenu(menu);
+    }
+
+    void ShowInFolder(const wxString& path)
+    {
+#if defined(__WXOSX__)
+        NSURL *url = [NSURL fileURLWithPath:str::to_NS(path)];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[url]];
+#elif defined(__WXMSW__)
+        wxExecute(wxString::Format("explorer.exe /select,\"%s\"", path));
+#else
+        wxLaunchDefaultApplication(wxFileName(path).GetPath());
+#endif
+    }
+
 
     std::shared_ptr<PathsData> m_data;
     wxListBox *m_list;
