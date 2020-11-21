@@ -58,6 +58,7 @@
 #include "propertiesdlg.h"
 
 #include "colorscheme.h"
+#include "customcontrols.h"
 #include "hidpi.h"
 #include "language.h"
 #include "str_helpers.h"
@@ -304,19 +305,28 @@ public:
             Remove(s);
         });
 
-#if 0
-        // TODO: Add background overlay with instructions:
-        _("<big>Drag and Drop Folders Here</big>\n\nor use the + button")
-        _("<big>Drag and drop folders here</big>\n\nor use the + button")
+        m_placeholder = new wxStaticText(this, wxID_ANY, MSW_OR_OTHER(_("Drag folders or files here"), _("Drag Folders or Files Here")));
+        m_placeholder->SetForegroundColour(ExplanationLabel::GetTextColor());
+#ifdef __WXOSX__
+        m_placeholder->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
 #endif
 
+        m_list->Bind(wxEVT_SIZE, &PathsList::OnListResized, this);
         m_list->Bind(wxEVT_CONTEXT_MENU, &PathsList::OnRightClick, this);
+
+#ifdef __WXMSW__
+        m_list->Bind(wxEVT_SET_FOCUS, [=](wxFocusEvent& e){
+            e.Skip();
+            m_placeholder->Lower(); // move to the top in Z-order, above the list (yeah, really)
+        });
+#endif
     }
 
     void UpdateFromData()
     {
+        auto& array = Array();
         m_list->Clear();
-        for (auto& p: Array())
+        for (auto& p: array)
         {
             wxString s;
             if (wxIsWild(p))
@@ -325,6 +335,8 @@ public:
                 s = RelativePath(p, m_data->basepath, wxPATH_NATIVE);
             m_list->Append(bidi::platform_mark_direction(s));
         }
+
+        m_placeholder->Show(array.empty());
     }
 
     void Add(const wxArrayString& files)
@@ -377,6 +389,14 @@ protected:
 
         PathsList *m_parent;
     };
+
+    void OnListResized(wxSizeEvent& e)
+    {
+        e.Skip();
+        wxSize size = m_list->GetSize();
+        size -= m_placeholder->GetSize();
+        m_placeholder->SetPosition(m_list->GetPosition() + size / 2);
+    }
 
     void OnAddMenu(wxCommandEvent& e)
     {
@@ -488,6 +508,7 @@ protected:
 
     std::shared_ptr<PathsData> m_data;
     wxListBox *m_list;
+    wxStaticText *m_placeholder;
 };
 
 class PropertiesDialog::SourcePathsList : public PropertiesDialog::PathsList
