@@ -175,6 +175,8 @@ void LanguageCtrl::SetLang(const Language& lang)
         Init(lang);
     else
         SetValue(lang.FormatForRoundtrip());
+
+    SetToolTip(lang.DisplayName() + "\n" + lang.LanguageTag());
 }
 
 Language LanguageCtrl::GetLang() const
