@@ -165,6 +165,8 @@ void LanguageCtrl::Init(Language lang)
 
     if (lang.IsValid())
         SetValue(lang.FormatForRoundtrip());
+
+    Bind(wxEVT_KILL_FOCUS, [=](wxFocusEvent&){ NormalizeValue(); });
 }
 
 void LanguageCtrl::SetLang(const Language& lang)
@@ -178,6 +180,13 @@ void LanguageCtrl::SetLang(const Language& lang)
 Language LanguageCtrl::GetLang() const
 {
     return Language::TryParse(GetValue().Strip(wxString::both).ToStdWstring());
+}
+
+void LanguageCtrl::NormalizeValue()
+{
+    auto lang = GetLang();
+    if (lang.IsValid())
+        SetLang(lang);
 }
 
 #ifdef __WXMSW__
