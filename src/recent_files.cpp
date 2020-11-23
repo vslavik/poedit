@@ -26,6 +26,7 @@
 #include "recent_files.h"
 
 #include "str_helpers.h"
+#include "unicode_helpers.h"
 #include "utility.h"
 
 #ifdef __WXOSX__
@@ -42,6 +43,8 @@
 
 #include <mutex>
 #include <map>
+#include <set>
+#include <vector>
 
 wxDEFINE_EVENT(EVT_OPEN_RECENT_FILE, wxCommandEvent);
 
@@ -234,6 +237,7 @@ public:
         UpdateAfterChange();
     }
 
+protected:
     void RebuildMenu(wxMenu *menu)
     {
         // clear the menu entirely:
@@ -263,9 +267,49 @@ public:
         m_history.Save(*cfg);
     }
 
+    // customized implementation of storage that makes nicer menus
+    class MyHistory : public wxFileHistory
+    {
+    public:
+        void AddFilesToMenu(wxMenu *menu) override
+        {
+            std::vector<wxFileName> files;
+            files.reserve(m_fileHistory.size());
+            for (auto& f : m_fileHistory)
+                files.emplace_back(f);
+
+            std::map<wxString, int> nameUses;
+            for (auto& f : files)
+            {
+                auto name = f.GetFullName();
+                nameUses[name] += 1;
+            }
+
+            for (size_t i = 0; i < files.size(); ++i)
+                DoAddFile(menu, i, files[i], nameUses[files[i].GetFullName()] > 1);
+        }
+
+    protected:
+        void DoAddFile(wxMenu* menu, int n, const wxFileName& fn, bool showFullPath)
+        {
+            auto menuEntry = bidi::platform_mark_direction(
+                                 showFullPath
+                                 ? wxString::Format(L"%s — %s", fn.GetFullName(), fn.GetPath())
+                                 : fn.GetFullName());
+
+            // we need to quote '&' characters which are used for mnemonics
+            menuEntry.Replace("&", "&&");
+
+            auto item = menu->Append(wxID_FILE1 + n, wxString::Format("&%d %s", n + 1, menuEntry));
+            item->SetHelp(fn.GetFullPath());
+        }
+
+        file_icons m_icons;
+    };
+
 private:
     const wxWindowID m_idClear = wxNewId();
-    wxFileHistory m_history;
+    MyHistory m_history;
     menus_tracker<wxMenu> m_menus;
 };
 
