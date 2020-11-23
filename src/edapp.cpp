@@ -82,6 +82,7 @@
 #include "http_client.h"
 #include "icons.h"
 #include "version.h"
+#include "recent_files.h"
 #include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
@@ -93,8 +94,6 @@
 #ifdef __WXOSX__
 struct PoeditApp::NativeMacAppData
 {
-    NSMenu *recentMenu = nullptr;
-    NSMenuItem *recentMenuItem = nullptr;
     NSMenu *windowMenu = nullptr;
     NSMenuItem *windowMenuItem = nullptr;
     wxMenuBar *menuBar = nullptr;
@@ -455,15 +454,12 @@ bool PoeditApp::OnInit()
 
 #ifdef __WXOSX__
     wxMenuBar *bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global");
+    RecentFiles::Get().UseMenu(bar->FindItem(XRCID("open_recent")));
     TweakOSXMenuBar(bar);
     wxMenuBar::MacSetCommonMenuBar(bar);
     // so that help menu is correctly merged with system-provided menu
     // (see http://sourceforge.net/tracker/index.php?func=detail&aid=1600747&group_id=9863&atid=309863)
     s_macHelpMenuTitleName = _("&Help");
-#endif
-
-#ifndef __WXOSX__
-    FileHistory().Load(*wxConfig::Get());
 #endif
 
 #ifdef __WXMSW__
@@ -535,7 +531,7 @@ int PoeditApp::OnExit()
     DeletePendingObjects();
 
     ColorScheme::CleanUp();
-
+    RecentFiles::CleanUp();
     TranslationMemory::CleanUp();
 
 #ifdef HAVE_HTTP_CLIENT
@@ -859,7 +855,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
  #endif
  #ifndef __WXOSX__
-   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
+   EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
  #endif
 #endif // !__WXMSW__
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
@@ -948,13 +944,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenHist(event) );
 
-    wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
-    if ( !wxFileExists(f) )
-    {
-        wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
-        return;
-    }
-
+    wxString f = event.GetString();
     OpenFiles(wxArrayString(1, &f));
 }
 #endif // !__WXOSX__
@@ -1204,55 +1194,17 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     }
 }
 
-void PoeditApp::CreateFakeOpenRecentMenu()
-{
-    // Populate the menu with a hack that will be replaced.
-    NSMenu *mainMenu = [NSApp mainMenu];
- 
-    NSMenuItem *item = [mainMenu addItemWithTitle:@"File" action:NULL keyEquivalent:@""];
-    NSMenu *menu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"File", nil)];
- 
-    item = [menu addItemWithTitle:NSLocalizedString(@"Open Recent", nil)
-            action:NULL
-            keyEquivalent:@""];
-    NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wundeclared-selector"
-    [openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
-    #pragma clang diagnostic pop
-    [menu setSubmenu:openRecentMenu forItem:item];
-    m_nativeMacAppData->recentMenuItem = item;
-    m_nativeMacAppData->recentMenu = openRecentMenu;
- 
-    item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
-            action:@selector(clearRecentDocuments:)
-            keyEquivalent:@""];
-}
-
 void PoeditApp::FixupMenusForMac(wxMenuBar *bar)
 {
     m_nativeMacAppData->menuBar = nullptr;
 
-    if (m_nativeMacAppData->recentMenuItem)
-        [m_nativeMacAppData->recentMenuItem setSubmenu:nil];
+    RecentFiles::Get().MacTransferMenuTo(bar);
+
     if (m_nativeMacAppData->windowMenuItem)
         [m_nativeMacAppData->windowMenuItem setSubmenu:nil];
 
     if (!bar)
         return;
-
-    wxMenu *fileMenu;
-    wxMenuItem *item = bar->FindItem(XRCID("open_recent"), &fileMenu);
-    if (item)
-    {
-        NSMenu *native = fileMenu->GetHMenu();
-        NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
-        if (nativeItem)
-        {
-            [nativeItem setSubmenu:m_nativeMacAppData->recentMenu];
-            m_nativeMacAppData->recentMenuItem = nativeItem;
-        }
-    }
 
     NSMenuItem *windowItem = [[NSApp mainMenu] itemWithTitle:str::to_NS(_("Window"))];
     if (windowItem)
@@ -1275,7 +1227,7 @@ void PoeditApp::OnIdleFixupMenusForMac(wxIdleEvent& event)
 void PoeditApp::OSXOnWillFinishLaunching()
 {
     wxApp::OSXOnWillFinishLaunching();
-    CreateFakeOpenRecentMenu();
+    RecentFiles::Get().MacCreateFakeOpenRecentMenu();
     // We already create the menu item, this would cause duplicates "thanks" to the weird
     // way wx's menubar works on macOS:
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSFullScreenMenuItemEverywhere"];

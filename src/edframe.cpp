@@ -84,6 +84,7 @@
 #include "languagectrl.h"
 #include "welcomescreen.h"
 #include "errors.h"
+#include "recent_files.h"
 #include "sidebar.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
@@ -354,9 +355,11 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
   #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
   #endif
+  #ifndef __WXOSX__
+   EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditFrame::OnOpenHist)
+  #endif
 #endif // __WXMSW__
 #ifndef __WXOSX__
-   EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
 #endif
    EVT_MENU           (wxID_SAVE,                 PoeditFrame::OnSave)
@@ -559,11 +562,7 @@ PoeditFrame::PoeditFrame() :
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar("mainmenu");
     if (MenuBar)
     {
-#ifndef __WXOSX__
-        m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(_("&File")));
-        FileHistory().UseMenu(m_menuForHistory);
-        FileHistory().AddFilesToMenu(m_menuForHistory);
-#endif
+        RecentFiles::Get().UseMenu(MenuBar->FindItem(XRCID("open_recent")));
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
@@ -861,11 +860,6 @@ PoeditFrame::~PoeditFrame()
     cfg->Write("display_lines", m_displayIDs);
 
     SaveWindowState(this);
-
-#ifndef __WXOSX__
-    FileHistory().RemoveMenu(m_menuForHistory);
-    FileHistory().Save(*cfg);
-#endif
 
     // write all changes:
     cfg->Flush();
@@ -1184,14 +1178,7 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
 #ifndef __WXOSX__
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
 {
-    wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
-    if ( !wxFileExists(f) )
-    {
-        wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
-        return;
-    }
-
-    OpenFile(f);
+    OpenFile(event.GetString());
 }
 #endif // !__WXOSX__
 
@@ -2579,13 +2566,7 @@ void PoeditFrame::NoteAsRecentFile()
     if (!filename)
         return;
 
-    wxFileName fn(filename);
-    fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
-#ifdef __WXOSX__
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];
-#else
-    FileHistory().AddFileToHistory(fn.GetFullPath());
-#endif
+    RecentFiles::Get().NoteRecentFile(filename);
 }
 
 
@@ -2825,10 +2806,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_catalog->SetFileName(catalog);
     m_modified = false;
     m_fileExistsOnDisk = true;
-
-#ifndef __WXOSX__
-    FileHistory().AddFileToHistory(GetFileName());
-#endif
 
     UpdateTitle();
 

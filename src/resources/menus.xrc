@@ -17,8 +17,9 @@
         <label>_Open…</label>
         <accel>Ctrl+O</accel>
       </object>
-      <object class="wxMenuItem" name="open_recent" platform="mac">
-        <label>Open Recent</label>
+      <object class="wxMenu" name="open_recent">
+        <label platform="unix|mac">Open Recent</label>
+        <label platform="win">Open recent</label>
       </object>
       <object class="wxMenuItem" name="menu_open_crowdin">
         <label platform="win">Open from Crowdin…</label>
@@ -338,8 +339,9 @@
         <label>_Open…</label>
         <accel>Ctrl+O</accel>
       </object>
-      <object class="wxMenuItem" name="open_recent" platform="mac">
-        <label>Open Recent</label>
+      <object class="wxMenu" name="open_recent">
+        <label platform="unix|mac">Open Recent</label>
+        <label platform="win">Open recent</label>
       </object>
       <object class="wxMenuItem" name="menu_open_crowdin">
         <label platform="win">Open from Crowdin…</label>

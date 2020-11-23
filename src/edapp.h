@@ -65,10 +65,6 @@ class PoeditApp : public wxApp
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
-#ifndef __WXOSX__
-        wxFileHistory& FileHistory() { return m_history; }
-#endif
-
 #ifdef __WXOSX__
         virtual void MacOpenFiles(const wxArrayString& names);
         virtual void MacNewFile() { OpenNewFile(); }
@@ -86,7 +82,6 @@ class PoeditApp : public wxApp
         // Make OSX-specific modifications to the menus, e.g. adding items into
         // the apple menu etc. Call on every newly created menubar
         void TweakOSXMenuBar(wxMenuBar *bar);
-        void CreateFakeOpenRecentMenu();
         void FixupMenusForMac(wxMenuBar *bar);
         void OnIdleFixupMenusForMac(wxIdleEvent& event);
         virtual void OSXOnWillFinishLaunching();
@@ -134,8 +129,6 @@ class PoeditApp : public wxApp
 #ifdef __WXOSX__
         class NativeMacAppData;
         std::unique_ptr<NativeMacAppData> m_nativeMacAppData;
-#else
-        wxFileHistory m_history;
 #endif
 
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;

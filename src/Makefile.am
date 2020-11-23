@@ -61,6 +61,7 @@ poedit_SOURCES = \
                  progressinfo.h progressinfo.cpp \
                  propertiesdlg.cpp propertiesdlg.h \
                  qa_checks.cpp qa_checks.h \
+                 recent_files.cpp recent_files.h \
                  sidebar.cpp sidebar.h \
                  spellchecking.h spellchecking.cpp \
                  str_helpers.h \

@@ -343,9 +343,6 @@ private:
                                     bool from_save, bool other_file_saved,
                                     TFunctor completionHandler);
 
-#ifndef __WXOSX__
-        wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
-#endif
         void NoteAsRecentFile();
 
         void OnNewTranslationEntered(const CatalogItemPtr& item);
@@ -367,9 +364,6 @@ private:
         wxSplitterWindow *m_splitter;
         wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
-#ifndef __WXOSX__
-        wxMenu *m_menuForHistory;
-#endif
 
         AttentionBar *m_attentionBar;
         Sidebar *m_sidebar;
