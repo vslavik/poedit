@@ -25,6 +25,7 @@
 
 #include "recent_files.h"
 
+#include "hidpi.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
 #include "utility.h"
@@ -38,9 +39,12 @@
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/menu.h>
+#include <wx/mimetype.h>
+#include <wx/settings.h>
 #include <wx/weakref.h>
 #include <wx/xrc/xmlres.h>
 
+#include <memory>
 #include <mutex>
 #include <map>
 #include <set>
@@ -99,6 +103,54 @@ protected:
 
     std::map<wxWeakRef<wxMenu>, Payload*> m_menus;
 };
+
+
+#ifndef __WXOSX__
+class file_icons
+{
+public:
+    file_icons() {}
+
+    wxBitmap get(const wxString& ext)
+    {
+        auto i = m_cache.find(ext);
+        if (i != m_cache.end())
+            return i->second;
+
+        std::unique_ptr<wxFileType> ft(wxTheMimeTypesManager->GetFileTypeFromExtension(ext));
+        if (ft)
+        {
+            wxIconLocation icon;
+            if (ft->GetIcon(&icon))
+                return m_cache.emplace(ext, create_bitmap(icon)).first->second;
+        }
+
+        m_cache.emplace(ext, wxNullBitmap);
+        return wxNullBitmap;
+    }
+
+private:
+    wxBitmap create_bitmap(const wxIconLocation& loc)
+    {
+        const int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+        wxString fullname = loc.GetFileName();
+#ifdef __WXMSW__
+        if (loc.GetIndex())
+        {
+            // wxICOFileHandler accepts names in the format "filename;index"
+            fullname << ';' << loc.GetIndex();
+        }
+#endif
+        wxIcon icon(fullname, wxBITMAP_TYPE_ICO, size, size);
+        if (!icon.IsOk())
+            icon.LoadFile(fullname, wxBITMAP_TYPE_ICO);
+
+        return icon;
+    }
+
+    std::map<wxString, wxBitmap> m_cache;
+};
+#endif // !__WXOSX__
 
 } // anonymous namespace
 
@@ -302,6 +354,7 @@ protected:
 
             auto item = menu->Append(wxID_FILE1 + n, wxString::Format("&%d %s", n + 1, menuEntry));
             item->SetHelp(fn.GetFullPath());
+            item->SetBitmap(m_icons.get(fn.GetExt()));
         }
 
         file_icons m_icons;
