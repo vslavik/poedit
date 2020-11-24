@@ -46,6 +46,8 @@
 #include <wx/msw/webview_ie.h>
 #endif
 
+#include <unordered_map>
+
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "utility.h"
@@ -60,7 +62,7 @@ const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW;
 const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE;
 #endif
 
-wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno);
+wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t lineno);
 
 } // anonymous namespace
 
@@ -267,7 +269,7 @@ void FileViewer::SelectReference(const wxString& ref)
     if (!linenumStr.ToLong(&linenum))
         linenum = 0;
 
-    auto markup = FileToHTMLMarkup(file, (size_t)linenum);
+    auto markup = FileToHTMLMarkup(file, filename.GetExt(), (size_t)linenum);
     m_content->SetPage(markup, "file:///");
 }
 
@@ -298,6 +300,19 @@ namespace
 
 extern const char *HTML_POEDIT_CSS;
 
+inline wxString FilenameToLanguage(const wxString& ext)
+{
+    static const std::unordered_map<wxString, wxString> mapping = {
+        #include "fileviewer.extensions.h"
+    };
+
+    auto i = mapping.find(ext);
+    if (i != mapping.end())
+        return i->second;
+
+    return ext;
+}
+
 inline void OutputBlock(wxString& html, const wxTextFile& file, size_t lfrom, size_t lto)
 {
     for (size_t i = lfrom; i < lto; i++)
@@ -307,7 +322,7 @@ inline void OutputBlock(wxString& html, const wxTextFile& file, size_t lfrom, si
     }
 }
 
-wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
+wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t lineno)
 {
     wxString html = wxString::Format(
         R"(<!DOCTYPE html>
@@ -320,7 +335,10 @@ wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
         )",
         HTML_POEDIT_CSS);
 
-    html += "<pre class=\"line-numbers\"><code>";
+    html += wxString::Format("<pre class=\"line-numbers\">"
+                                 "<code>"
+                                     "<code class=\"language-%s\">",
+                             FilenameToLanguage(ext.Lower()));
 
     const size_t count = file.GetLineCount();
     if (lineno && lineno <= count)
@@ -337,7 +355,8 @@ wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
     }
 
     // add line numbers:
-    html += "<span aria-hidden=\"true\" class=\"line-numbers-rows\">";
+    html += "</code>"
+            "<span aria-hidden=\"true\" class=\"line-numbers-rows\">";
     for (size_t i = 0; i < count; i++)
     {
         if (i == lineno-1)
@@ -354,7 +373,12 @@ wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
                 if (document.documentMode) window.scrollBy(0, -100); // MSIE
                 </script>)";
 
+    // PrismJS is added after everything else so that basic rendering works even
+    // when offline.
     html += R"(
+            <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/components/prism-core.min.js"></script>
+            <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/keep-markup/prism-keep-markup.min.js"></script>
+            <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/autoloader/prism-autoloader.min.js"></script>
             </body>
         </html>
         )";
@@ -362,6 +386,43 @@ wxString FileToHTMLMarkup(const wxTextFile& file, size_t lineno)
     return html;
 }
 
+
+/*
+
+The MIT License (MIT)
+
+Copyright (c) 2015 PrismJS
+Copyright (c) 2020 Vaclav Slavik <vaclav@slavik.io>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+Based on the following PrismJS themes:
+  https://github.com/PrismJS/prism-themes/blob/master/themes/prism-ghcolors.css
+  * GHColors theme by Avi Aryan (http://aviaryan.in)
+  * Inspired by Github syntax coloring
+  https://github.com/PrismJS/prism-themes/blob/master/themes/prism-atom-dark.css
+  * atom-dark theme for `prism.js`
+  * Based on Atom's `atom-dark` theme: https://github.com/atom/atom-dark-syntax
+  * @author Joe Gibson (@gibsjose)
+
+ */
 
 const char *HTML_POEDIT_CSS = R"(
 
@@ -383,10 +444,152 @@ code, pre {
     margin: 0;
 }
 
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #999988;
+    font-style: italic;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.string,
+.token.attr-value {
+    color: #e3116c;
+}
+
+.token.punctuation,
+.token.operator {
+    color: #393A34; /* no highlight */
+}
+
+.token.entity,
+.token.url,
+.token.symbol,
+.token.number,
+.token.boolean,
+.token.variable,
+.token.constant,
+.token.property,
+.token.regex,
+.token.inserted {
+    color: #36acaa;
+}
+
+.token.atrule,
+.token.keyword,
+.token.attr-name,
+.language-autohotkey .token.selector {
+    color: #00a4db;
+}
+
+.token.function,
+.token.deleted,
+.language-autohotkey .token.tag {
+    color: #9a050f;
+}
+
+.token.tag,
+.token.selector,
+.language-autohotkey .token.keyword {
+    color: #00009f;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+
 @media (prefers-color-scheme: dark) {
     body {
         color: #c5c8c6;
         background-color: #1d1f21;
+    }
+
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #7C7C7C;
+    }
+
+    .token.punctuation {
+        color: #c5c8c6;
+    }
+
+    .token.property,
+    .token.keyword,
+    .token.tag {
+        color: #96CBFE;
+    }
+
+    .token.boolean,
+    .token.constant {
+        color: #99CC99;
+    }
+
+    .token.symbol,
+    .token.deleted {
+        color: #f92672;
+    }
+
+    .token.number {
+        color: #FF73FD;
+    }
+
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #A8FF60;
+    }
+
+    .token.variable {
+        color: #C6C5FE;
+    }
+
+    .token.operator {
+        color: #EDEDED;
+    }
+
+    .token.entity {
+        color: #FFFFB6;
+    }
+
+    .token.url {
+        color: #96CBFE;
+    }
+
+    .language-css .token.string,
+    .style .token.string {
+        color: #87C38A;
+    }
+
+    .token.atrule,
+    .token.attr-value {
+        color: #F9EE98;
+    }
+
+    .token.function {
+        color: #DAD085;
+    }
+
+    .token.regex {
+        color: #E9C062;
+    }
+
+    .token.important {
+        color: #fd971f;
     }
 }
 
