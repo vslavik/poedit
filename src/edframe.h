@@ -202,8 +202,15 @@ class PoeditFrame : public PoeditFrameBase
 
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
-        template<typename TFunctor>
-        void DoIfCanDiscardCurrentDoc(TFunctor completionHandler);
+        template<typename TFunctor1, typename TFunctor2>
+        void DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, const TFunctor2& failureHandler);
+        template<typename TFunctor1>
+        void DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler)
+            { DoIfCanDiscardCurrentDoc(completionHandler, []{}); }
+#ifndef __WXOSX__
+        // synchronous version of the above
+        bool AskIfCanDiscardCurrentDoc() const;
+#endif
         bool NeedsToAskIfCanDiscardCurrentDoc() const;
         wxWindowPtr<wxMessageDialog> CreateAskAboutSavingDialog();
 

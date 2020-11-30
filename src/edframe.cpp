@@ -1024,8 +1024,9 @@ bool PoeditFrame::NeedsToAskIfCanDiscardCurrentDoc() const
     return m_catalog && m_modified;
 }
 
-template<typename TFunctor>
-void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
+template<typename TFunctor1, typename TFunctor2>
+void PoeditFrame::DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, const TFunctor2
+& failureHandler)
 {
     if ( !NeedsToAskIfCanDiscardCurrentDoc() )
     {
@@ -1035,7 +1036,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
     wxWindowPtr<wxMessageDialog> dlg = CreateAskAboutSavingDialog();
 
-    dlg->ShowWindowModalThenDo([this,dlg,completionHandler](int retval) {
+    dlg->ShowWindowModalThenDo([this,dlg,completionHandler,failureHandler](int retval) {
         // hide the dialog asap, WriteCatalog() may show another modal sheet
         dlg->Hide();
 #ifdef __WXOSX__
@@ -1044,7 +1045,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
         // from event loop (and not this functions' caller) at an unspecified
         // time anyway, we can just as well defer it into the next idle time
         // iteration.
-        CallAfter([this,retval,completionHandler]() {
+        CallAfter([this,retval,completionHandler,failureHandler]() {
 #endif
 
         if (retval == wxID_YES)
@@ -1053,6 +1054,8 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
                 WriteCatalog(fn, [=](bool saved){
                     if (saved)
                         completionHandler();
+                    else
+                        failureHandler();
                 });
             };
             if (!m_fileExistsOnDisk || GetFileName().empty())
@@ -1068,6 +1071,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
         else if (retval == wxID_CANCEL)
         {
             // do not call -- not OK
+            failureHandler();
         }
 
 #ifdef __WXOSX__
@@ -1075,6 +1079,18 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 #endif
     });
 }
+
+#ifndef __WXOSX__
+bool PoeditFrame::AskIfCanDiscardCurrentDoc() const
+{
+    // On non-Mac platforms, we can check synchronously, because all UI is modal, not window-modal
+    int status == -1;
+    DoIfCanDiscardCurrentDoc([&status]{ status = 1; }, [&status]{ status = 0; });
+    wxASSERT( status != -1 ); // i.e. was executed synchronously
+    return status != 0;
+}
+#endif
+
 
 wxWindowPtr<wxMessageDialog> PoeditFrame::CreateAskAboutSavingDialog()
 {
