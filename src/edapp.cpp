@@ -659,6 +659,7 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
             continue;
         }
 
+        WelcomeWindow::HideActive();
         PoeditFrame::Create(name, lineno);
     }
 }
@@ -945,6 +946,7 @@ void PoeditApp::OnNewFromScratch(wxCommandEvent& event)
     if (!win.IsPerformingActionAllowed())
         return;
 
+    win.NotifyIsStarting();
     win.GetActionTarget()->NewFromScratch();
 }
 
