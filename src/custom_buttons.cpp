@@ -59,6 +59,7 @@
 
 @property wxWindow *parent;
 @property NSString *heading;
+@property BOOL mouseHover;
 
 @end
 
@@ -71,6 +72,10 @@
     {
         self.title = label;
         self.heading = heading;
+        self.buttonType = NSMomentaryPushInButton;
+        self.bezelStyle = NSTexturedRoundedBezelStyle;
+        self.showsBorderOnlyWhileMouseInside = YES;
+        self.mouseHover = NO;
     }
     return self;
 }
@@ -79,19 +84,50 @@
 {
     [super sizeToFit];
     NSSize size = self.frame.size;
-    size.height = 64;
+    size.height = 48;
+    if (self.image)
+        size.width += 32;
     [self setFrameSize:size];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     #pragma unused(dirtyRect)
-    [StyleKit drawWelcomeButtonWithFrame:self.bounds
-                                    icon:self.image
-                                   label:self.heading
-                             description:self.title
-                              isDarkMode:(ColorScheme::GetWindowMode(self.parent) == ColorScheme::Dark)
-                                 pressed:[self isHighlighted]];
+    NSColor *bg = self.window.backgroundColor;
+    if (self.mouseHover)
+    {
+        NSColor *highlight;
+        if (@available(macOS 10.14, *)) {
+            highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+        } else {
+            highlight = [NSColor colorWithWhite:0.72 alpha:1.0];
+        }
+        // use only lighter version of the highlight by blending with the background
+        bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
+    }
+    [StyleKit drawActionButtonWithFrame:self.bounds
+                            buttonColor:bg
+                                hasIcon:self.image != nil
+                                  label:self.heading
+                            description:self.title];
+
+    // unlike normal drawing methods, NSButtonCell's drawImage supports template images
+    if (self.image)
+        [self.cell drawImage:self.image withFrame:NSMakeRect(NSMinX(self.bounds) + 18, NSMinY(self.bounds) + 8, 32, 32) inView:self];
+}
+
+- (void)mouseEntered:(NSEvent *)event
+{
+    [super mouseEntered:event];
+    self.mouseHover = YES;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+    [super mouseExited:event];
+    self.mouseHover = NO;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)controlAction:(id)sender
@@ -106,11 +142,9 @@
 
 ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note)
 {
-    SetMinSize(wxSize(510, -1));
-
     POActionButton *view = [[POActionButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
     if (!symbolicName.empty())
-        view.image = [NSImage imageNamed:str::to_NS("Welcome_" + symbolicName)];
+        view.image = [NSImage imageNamed:str::to_NS("AB_" + symbolicName + "Template")];
     view.parent = this;
     wxNativeWindow::Create(parent, winid, view);
 }
@@ -284,7 +318,7 @@ void SwitchButton::SendToggleEvent()
 
 #ifdef __WXGTK__
 ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& /*symbolicName*/, const wxString& label, const wxString& note)
-    : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
+    : wxButton(parent, winid, label, wxDefaultPosition, wxSize(-1, 50), wxBU_LEFT)
 {
     SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
     Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);

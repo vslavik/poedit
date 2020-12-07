@@ -34,6 +34,6 @@
 // Drawing Methods
 + (void)drawSwitchButtonWithFrame: (NSRect)frame onColor: (NSColor*)onColor labelOffColor: (NSColor*)labelOffColor label: (NSString*)label togglePosition: (CGFloat)togglePosition isDarkMode: (BOOL)isDarkMode;
 + (void)drawTranslucentButtonWithFrame: (NSRect)frame label: (NSString*)label pressed: (BOOL)pressed;
-+ (void)drawWelcomeButtonWithFrame: (NSRect)frame icon: (NSImage*)icon label: (NSString*)label description: (NSString*)description isDarkMode: (BOOL)isDarkMode pressed: (BOOL)pressed;
++ (void)drawActionButtonWithFrame: (NSRect)frame buttonColor: (NSColor*)buttonColor hasIcon: (BOOL)hasIcon label: (NSString*)label description: (NSString*)description;
 
 @end

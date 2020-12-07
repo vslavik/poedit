@@ -217,47 +217,23 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
-+ (void)drawWelcomeButtonWithFrame: (NSRect)frame icon: (NSImage*)icon label: (NSString*)label description: (NSString*)description isDarkMode: (BOOL)isDarkMode pressed: (BOOL)pressed
++ (void)drawActionButtonWithFrame: (NSRect)frame buttonColor: (NSColor*)buttonColor hasIcon: (BOOL)hasIcon label: (NSString*)label description: (NSString*)description
 {
     //// Color Declarations
-    NSColor* welcomeButtonBackground = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
-    NSColor* welcomeButtonPressed = [welcomeButtonBackground shadowWithLevel: 0.1];
-    NSColor* welcomeButtonDarkBackground = [NSColor colorWithCalibratedRed: 0.188 green: 0.188 blue: 0.188 alpha: 1];
-    NSColor* welcomeButtonDarkPressed = [welcomeButtonDarkBackground highlightWithLevel: 0.1];
-    NSColor* fancySecondaryOutlineStroke = [NSColor colorWithCalibratedRed: 0.7 green: 0.7 blue: 0.7 alpha: 0.4];
     NSColor* osSecondaryLabelColor = [NSColor secondaryLabelColor]; // manually modified
     NSColor* osLabelColor = [NSColor labelColor]; // manually modified
 
-    //// Shadow Declarations
-    NSShadow* fancyButtonShadow = [[NSShadow alloc] init];
-    [fancyButtonShadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.15]];
-    [fancyButtonShadow setShadowOffset: NSMakeSize(0.1, -1.1)];
-    [fancyButtonShadow setShadowBlurRadius: 3];
-
     //// Variable Declarations
-    BOOL hasIcon = icon != nil; // manually modified
     CGFloat textPosition = hasIcon ? 58 : 18;
-    NSColor* welcomeButtonColor = isDarkMode ? (pressed ? welcomeButtonDarkPressed : welcomeButtonDarkBackground) : (pressed ? welcomeButtonPressed : welcomeButtonBackground);
 
     //// Rectangle Drawing
-    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 2, NSMinY(frame) + 2, NSWidth(frame) - 4, NSHeight(frame) - 5) xRadius: 2.5 yRadius: 2.5];
-    [NSGraphicsContext saveGraphicsState];
-    [fancyButtonShadow set];
-    [welcomeButtonColor setFill];
+    NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 2, NSMinY(frame) + 2, NSWidth(frame) - 4, NSHeight(frame) - 4) xRadius: 5 yRadius: 5];
+    [buttonColor setFill];
     [rectanglePath fill];
-    [NSGraphicsContext restoreGraphicsState];
-
-
-
-    //// SecondaryOutline Drawing
-    NSBezierPath* secondaryOutlinePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(frame) + 1.75, NSMinY(frame) + 1.75, NSWidth(frame) - 3.5, NSHeight(frame) - 4.5) xRadius: 2.5 yRadius: 2.5];
-    [fancySecondaryOutlineStroke setStroke];
-    [secondaryOutlinePath setLineWidth: 0.5];
-    [secondaryOutlinePath stroke];
 
 
     //// Text Drawing
-    NSRect textRect = NSMakeRect(textPosition, 33, 468, 14);
+    NSRect textRect = NSMakeRect(textPosition, 25, 468, 14);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
     textStyle.alignment = NSLeftTextAlignment;
 
@@ -274,17 +250,11 @@
     if (hasIcon)
     {
         //// IconFrame Drawing
-        NSRect iconFrameRect = NSMakeRect(NSMinX(frame) + 16, NSMinY(frame) + 16, 32, NSHeight(frame) - 32);
-        NSBezierPath* iconFramePath = [NSBezierPath bezierPathWithRect: iconFrameRect];
-        [NSGraphicsContext saveGraphicsState];
-        [iconFramePath addClip];
-        [icon drawInRect: NSMakeRect(floor(NSMinX(iconFrameRect) + 0.5), floor(NSMinY(iconFrameRect) + 0.5), icon.size.width, icon.size.height) fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1 respectFlipped: YES hints: nil];
-        [NSGraphicsContext restoreGraphicsState];
     }
 
 
     //// Text 2 Drawing
-    NSRect text2Rect = NSMakeRect(textPosition, 16, 468, 18);
+    NSRect text2Rect = NSMakeRect(textPosition, 8, 468, 18);
     NSMutableParagraphStyle* text2Style = [NSMutableParagraphStyle new];
     text2Style.alignment = NSLeftTextAlignment;
 
