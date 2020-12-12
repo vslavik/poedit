@@ -532,19 +532,20 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
 {
     auto win = new wxPanel(this, wxID_ANY);
-    auto sizer = new wxBoxSizer(wxVERTICAL);
+    auto sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    auto explain = new wxStaticText(win, wxID_ANY, _(L"POT files are only templates and don’t contain any translations themselves.\nTo make a translation, create a new PO file based on the template."), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL);
+    auto explain = new wxStaticText(win, wxID_ANY, _(L"POT files are only templates and don’t contain any translations themselves.\nTo make a translation, create a new PO file based on the template."));
 #ifdef __WXOSX__
     explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
-    auto button = new wxButton(win, XRCID("button_new_from_this_pot"), MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")));
+    auto button = new ActionButton(
+                       win, XRCID("button_new_from_this_pot"), "CreateTranslation",
+                       _("Create new translation"),
+                       _("Make a new translation from this POT file."));
 
-    sizer->AddStretchSpacer();
-    sizer->Add(explain, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, PX(100)));
-    sizer->Add(button, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(10)));
-    sizer->AddStretchSpacer();
+    sizer->Add(button, wxSizerFlags().CenterVertical().Border(wxLEFT, PX(30)));
+    sizer->Add(explain, wxSizerFlags(1).CenterVertical().Border(wxLEFT|wxRIGHT, PX(20)));
 
     win->SetSizerAndFit(sizer);
 

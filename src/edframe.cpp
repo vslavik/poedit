@@ -325,7 +325,7 @@ bool g_focusToText = false;
 
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
-   EVT_BUTTON         (XRCID("button_new_from_this_pot"),PoeditFrame::OnTranslationFromThisPot)
+   EVT_MENU           (XRCID("button_new_from_this_pot"),PoeditFrame::OnTranslationFromThisPot)
 #ifndef __WXOSX__
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
 #endif
