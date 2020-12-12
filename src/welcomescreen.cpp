@@ -180,10 +180,12 @@ WelcomeWindow *WelcomeWindow::GetAndActivate()
     return ms_instance;
 }
 
-void WelcomeWindow::HideActive()
+bool WelcomeWindow::HideActive()
 {
+    bool retval = ms_instance && ms_instance->IsShown();
     if (ms_instance)
         ms_instance->Hide();
+    return retval;
 }
 
 

@@ -52,7 +52,9 @@ public:
     static WelcomeWindow *GetAndActivate();
     static WelcomeWindow *GetIfActive()
         { return ms_instance && ms_instance->IsShown() ? ms_instance : nullptr; }
-    static void HideActive();
+
+    /// Hides the welcome window if it is active, and returns true iff it was previously visible
+    static bool HideActive();
 
     bool ShouldPreventAppExit() const override
     {

@@ -887,7 +887,13 @@ struct InvokingWindowProxy
         if (win)
             win = wxGetTopLevelParent(win);
 
+        m_shouldReactivateWelcomeWindow = false;
         m_isFromWelcomeWindow = dynamic_cast<WelcomeWindow*>(win) != nullptr;
+#ifdef __WXOSX__
+        // we can't detect the window from global menu, so always assume welcome window must be hidden:
+        if (!win && menu)
+            m_isFromWelcomeWindow = true;
+#endif
 
         m_invokingWindow = win;
 #ifdef __WXMSW__
@@ -905,16 +911,16 @@ struct InvokingWindowProxy
             return true;
     }
 
-    void NotifyIsStarting() const
+    void NotifyIsStarting()
     {
         if (m_isFromWelcomeWindow)
-            WelcomeWindow::HideActive();
+            m_shouldReactivateWelcomeWindow = WelcomeWindow::HideActive();
     }
 
     void NotifyWasAborted() const
     {
         // restore welcome window if that's where the aborted action came from
-        if (m_isFromWelcomeWindow)
+        if (m_shouldReactivateWelcomeWindow)
             WelcomeWindow::GetAndActivate();
     }
 
@@ -931,6 +937,7 @@ struct InvokingWindowProxy
     wxWindow *GetInvokingWindow() const { return m_invokingWindow; }
 
 private:
+    bool m_shouldReactivateWelcomeWindow;
     bool m_isFromWelcomeWindow;
     wxWindow *m_invokingWindow;
     PoeditFrame *m_actionTarget;
