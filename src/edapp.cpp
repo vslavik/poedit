@@ -967,24 +967,27 @@ void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
 
     win.NotifyIsStarting();
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-    wxString pot_file =
-        wxFileSelector(MACOS_OR_OTHER("", _("Select translation template")),
-             path, wxEmptyString, wxEmptyString,
-             Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
-             wxFD_OPEN | wxFD_FILE_MUST_EXIST, win.GetParentWindowIfAny());
-    if (pot_file.empty())
+
+    wxFileDialog dlg(win.GetParentWindowIfAny(),
+        MACOS_OR_OTHER("", _("Select translation template")),
+        path,
+        wxEmptyString,
+        Catalog::GetTypesFileMask({ Catalog::Type::POT, Catalog::Type::PO }),
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+    if (dlg.ShowModal() != wxID_OK)
     {
         win.NotifyWasAborted();
         return;
     }
 
-    wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+    wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
 
-    auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+    auto pot = std::make_shared<POCatalog>(dlg.GetPath(), Catalog::CreationFlag_IgnoreTranslations);
     if (!pot->IsOk())
     {
         win.NotifyWasAborted();
-        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
+        wxLogError(_(L"“%s” is not a valid POT file."), dlg.GetPath());
         return;
     }
 
