@@ -968,7 +968,7 @@ void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
     win.NotifyIsStarting();
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
     wxString pot_file =
-        wxFileSelector(MACOS_OR_OTHER("", _("Open catalog template")),
+        wxFileSelector(MACOS_OR_OTHER("", _("Select translation template")),
              path, wxEmptyString, wxEmptyString,
              Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, win.GetParentWindowIfAny());
@@ -1007,7 +1007,7 @@ void PoeditApp::OnOpen(wxCommandEvent& event)
 
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
     wxFileDialog dlg(win.GetParentWindowIfAny(),
-                     MACOS_OR_OTHER("", _("Open catalog")),
+                     MACOS_OR_OTHER("", _("Select translation file")),
                      path,
                      wxEmptyString,
                      Catalog::GetAllTypesFileMask(),
