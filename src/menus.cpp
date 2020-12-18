@@ -62,7 +62,12 @@ wxMenuBar *MenusManager::CreateMenu(Menu purpose)
     {
         case Menu::Global:
 #ifdef __WXOSX__
-            bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_mac_global");
+            bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_global");
+#endif
+            break;
+        case Menu::WelcomeWindow:
+#ifndef __WXOSX__
+            bar = wxXmlResource::Get()->LoadMenuBar("mainmenu_global");
 #endif
             break;
         case Menu::Editor:

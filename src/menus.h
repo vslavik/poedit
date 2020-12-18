@@ -35,7 +35,8 @@
 enum class Menu
 {
     Global, // app-global menu used on macOS
-    Editor  // for PoeditFrame, editor window
+    Editor, // for PoeditFrame, editor window
+    WelcomeWindow
 };
 
 

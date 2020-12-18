@@ -32,6 +32,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
+#include "menus.h"
 #include "str_helpers.h"
 #include "utility.h"
 
@@ -209,6 +210,10 @@ WelcomeWindow::WelcomeWindow()
 
 #ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
+#endif
+
+#ifndef __WXOSX__
+    SetMenuBar(wxGetApp().CreateMenu(Menu::WelcomeWindow));
 #endif
 
     auto topsizer = new wxBoxSizer(wxHORIZONTAL);
