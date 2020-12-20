@@ -52,4 +52,4 @@ dist_uiicons_DATA = \
 		window-close.png
 
 install-data-hook:
-	gtk-update-icon-cache -f -t $(DESTDIR)$(iconsdir)
+	which gtk-update-icon-cache >/dev/null && gtk-update-icon-cache -f -t $(DESTDIR)$(iconsdir) || true
