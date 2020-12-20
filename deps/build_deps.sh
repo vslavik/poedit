@@ -12,6 +12,9 @@ fi
 # Include Homebrew binaries on PATH if not there yet:
 PATH="$PATH:/usr/local/bin"
 
+# Include Macports binaries on PATH if not there yet:
+PATH="$PATH:/opt/local/bin"
+
 # Fake Java binaries so that gettext configure script doesn't invoke the system ones:
 mkdir -p "$DEPS_BUILD_DIR/helpers"
 touch "$DEPS_BUILD_DIR"/helpers/{java,javac}

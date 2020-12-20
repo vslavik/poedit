@@ -162,6 +162,7 @@ with open('build.ninja', 'w') as buildfile:
                                      'rm -f $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin}',
                                      # fix dylib references to work
                                      '$top_srcdir/../macos/fixup-dylib-deps.sh //lib @executable_path/../lib $destdir/lib $destdir/bin/*',
+                                     '$top_srcdir/../macos/fixup-dylib-deps.sh /lib @rpath $destdir/lib $destdir/bin/*',
                                      # strip executables
                                      'strip -S -u -r $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext}',
                                      'strip -S -x $destdir/lib/lib*.*.dylib',

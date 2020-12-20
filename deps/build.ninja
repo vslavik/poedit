@@ -337,6 +337,24 @@ rule gettext_build
       rm -f $$tmp $
       && echo $
       'note: ⋯  $
+      $top_srcdir/../macos/fixup-dylib-deps.sh $
+      /lib @rpath $
+      $destdir/lib $
+      $destdir/bin/*' $
+      && $
+      tmp=`mktemp` $
+      && $
+      $top_srcdir/../macos/fixup-dylib-deps.sh $
+      /lib @rpath $
+      $destdir/lib $
+      $destdir/bin/* $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ⋯  $
       strip -S -u $
       -r $
       $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext}' $
