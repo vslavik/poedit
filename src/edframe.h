@@ -45,7 +45,7 @@ class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 
 #ifdef __WXMSW__
   #include "windows/win10_menubar.h"
-  typedef wxFrameWithWindows10Menubar PoeditFrameBase;
+  typedef WithWindows10Menubar<wxFrame> PoeditFrameBase;
 #else
   typedef wxFrame PoeditFrameBase;
   #define FindFocusNoMenu() wxWindow::FindFocus()

@@ -32,7 +32,6 @@
 #include <wx/msw/uxtheme.h>
 #include <wx/nativewin.h>
 #include <wx/recguard.h>
-#include <wx/weakref.h>
 
 #include <mCtrl/menubar.h>
 
@@ -46,147 +45,123 @@ const int MENUBAR_OFFSET = -2;
 } // anonymous namespace
 
 
-class wxFrameWithWindows10Menubar::MenuBarWindow : public wxWindow
+class Windows10MenubarMixin::MenuWindow::mCtrlWrapper : public wxNativeWindow
 {
 public:
-    MenuBarWindow(wxWindow *parent)
-        : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE),
-          m_mctrlWin(nullptr), m_mctrlHandle(0)
+    mCtrlWrapper(wxWindow* parent, WXHWND wnd) : wxNativeWindow(parent, wxID_ANY, wnd), m_flagReenterMctrl(0) {}
+
+    WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
     {
-        if (g_mctrlInitialized++ == 0)
-            mcMenubar_Initialize();
-
-        m_mctrlHandle = CreateWindowEx
-        (
-            WS_EX_COMPOSITED,
-            MC_WC_MENUBAR,
-            _T(""),
-            WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | CCS_NORESIZE | CCS_NOPARENTALIGN,
-            0, 0, 1000, 2 * PX(23),
-            (HWND)this->GetHWND(),
-            (HMENU) -1,
-            wxGetInstance(),
-            NULL
-        );
-        SendMessage(m_mctrlHandle, TB_SETEXTENDEDSTYLE, 0, TBSTYLE_EX_HIDECLIPPEDBUTTONS);
-        SendMessage(m_mctrlHandle, CCM_SETNOTIFYWINDOW, (WPARAM)parent->GetHWND(), 0);
-
-        m_mctrlWin = new mCtrlWrapper(this, m_mctrlHandle);
-
+        switch (nMsg)
         {
-            wxUxThemeHandle hTheme(this, L"ExplorerMenu::Toolbar");
-            SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
+            case WM_COMMAND:
+            case WM_NOTIFY:
+            {
+                wxRecursionGuard guard(m_flagReenterMctrl);
+
+                if (!guard.IsInside())
+                {
+                    return MSWDefWindowProc(nMsg, wParam, lParam);
+                }
+                else
+                {
+                    return ::DefWindowProc(GetHwnd(), nMsg, wParam, lParam);
+                }
+            }
         }
 
-        // mCtrl menus get focus, which is not compatible with PoeditFrame::OnTextEditingCommandUpdate().
-        // Remember previous focus for it.
-        m_mctrlWin->Bind(wxEVT_SET_FOCUS,  [=](wxFocusEvent& e) { e.Skip(); m_previousFocus = e.GetWindow(); });
-        m_mctrlWin->Bind(wxEVT_KILL_FOCUS, [=](wxFocusEvent& e) { e.Skip(); m_previousFocus = nullptr; });
-    }
-
-    ~MenuBarWindow()
-    {
-        m_mctrlWin->Destroy();
-        ::DestroyWindow(m_mctrlHandle);
-
-        if (--g_mctrlInitialized == 0)
-            mcMenubar_Terminate();
-    }
-
-    void SetHMENU(WXHMENU menu)
-    {
-        SendMessage(m_mctrlHandle, MC_MBM_SETMENU, 0, (LPARAM) menu);
-        SendMessage(m_mctrlHandle, MC_MBM_REFRESH, 0, 0);
-    }
-
-    bool TranslateMenubarMessage(WXMSG *pMsg)
-    {
-        MSG *msg = (MSG *) pMsg;
-        if (mcIsMenubarMessage(m_mctrlHandle, msg))
-            return true;
-
-        return false;
-    }
-
-    void DoSetSize(int x, int y, int width, int height, int sizeFlags) override
-    {
-        wxWindow::DoSetSize(x, y, width, height, sizeFlags);
-        SendMessage(m_mctrlHandle, MC_MBM_REFRESH, 0, 0);
-    }
-
-    wxSize DoGetBestSize() const override
-    {
-        wxSize sizeBest = wxDefaultSize;
-        SIZE size;
-        if (::SendMessage(m_mctrlHandle, TB_GETMAXSIZE, 0, (LPARAM) &size))
-        {
-            sizeBest.x = size.cx;
-            sizeBest.y = size.cy + 1;
-            CacheBestSize(sizeBest);
-        }
-        return sizeBest;
-    }
-
-    wxWindow* AdjustEffectiveFocus(wxWindow* focus) const
-    {
-        return (focus == m_mctrlWin) ? m_previousFocus.get() : focus;
+        return wxNativeWindow::MSWWindowProc(nMsg, wParam, lParam);
     }
 
 private:
-    class mCtrlWrapper : public wxNativeWindow
-    {
-    public:
-        mCtrlWrapper(wxWindow *parent, WXHWND wnd) : wxNativeWindow(parent, wxID_ANY, wnd), m_flagReenterMctrl(0) {}
-
-        WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
-        {
-            switch (nMsg)
-            {
-                case WM_COMMAND:
-                case WM_NOTIFY:
-                {
-                    wxRecursionGuard guard(m_flagReenterMctrl);
-
-                    if (!guard.IsInside())
-                    {
-                        return MSWDefWindowProc(nMsg, wParam, lParam);
-                    }
-                    else
-                    {
-                        return ::DefWindowProc(GetHwnd(), nMsg, wParam, lParam);
-                    }
-                }
-            }
-
-            return wxNativeWindow::MSWWindowProc(nMsg, wParam, lParam);
-        }
-
-    private:
-        wxRecursionGuardFlag m_flagReenterMctrl;
-    };
-
-    mCtrlWrapper *m_mctrlWin;
-    WXHWND m_mctrlHandle;
-    wxWeakRef<wxWindow> m_previousFocus;
+    wxRecursionGuardFlag m_flagReenterMctrl;
 };
 
-
-wxFrameWithWindows10Menubar::wxFrameWithWindows10Menubar(wxWindow *parent,
-                                                         wxWindowID id,
-                                                         const wxString& title,
-                                                         const wxPoint& pos,
-                                                         const wxSize& size,
-                                                         long style,
-                                                         const wxString& name)
-    : wxFrame(parent, id, title, pos, size, style, name), m_menuBar(nullptr)
+Windows10MenubarMixin::MenuWindow::MenuWindow(wxWindow *parent)
+    : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE),
+      m_mctrlWin(nullptr), m_mctrlHandle(0)
 {
-    if (ShouldUse())
+    if (g_mctrlInitialized++ == 0)
+        mcMenubar_Initialize();
+
+    m_mctrlHandle = CreateWindowEx
+    (
+        WS_EX_COMPOSITED,
+        MC_WC_MENUBAR,
+        _T(""),
+        WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | CCS_NORESIZE | CCS_NOPARENTALIGN,
+        0, 0, 1000, 2 * PX(23),
+        (HWND)this->GetHWND(),
+        (HMENU) -1,
+        wxGetInstance(),
+        NULL
+    );
+    SendMessage(m_mctrlHandle, TB_SETEXTENDEDSTYLE, 0, TBSTYLE_EX_HIDECLIPPEDBUTTONS);
+    SendMessage(m_mctrlHandle, CCM_SETNOTIFYWINDOW, (WPARAM)parent->GetHWND(), 0);
+
+    m_mctrlWin = new mCtrlWrapper(this, m_mctrlHandle);
+
     {
-        m_menuBar = new MenuBarWindow(this);
+        wxUxThemeHandle hTheme(this, L"ExplorerMenu::Toolbar");
+        SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
     }
+
+    // mCtrl menus get focus, which is not compatible with PoeditFrame::OnTextEditingCommandUpdate().
+    // Remember previous focus for it.
+    m_mctrlWin->Bind(wxEVT_SET_FOCUS,  [=](wxFocusEvent& e) { e.Skip(); m_previousFocus = e.GetWindow(); });
+    m_mctrlWin->Bind(wxEVT_KILL_FOCUS, [=](wxFocusEvent& e) { e.Skip(); m_previousFocus = nullptr; });
 }
 
-bool wxFrameWithWindows10Menubar::ShouldUse() const
+Windows10MenubarMixin::MenuWindow::~MenuWindow()
+{
+    m_mctrlWin->Destroy();
+    ::DestroyWindow(m_mctrlHandle);
+
+    if (--g_mctrlInitialized == 0)
+        mcMenubar_Terminate();
+}
+
+void Windows10MenubarMixin::MenuWindow::SetHMENU(WXHMENU menu)
+{
+    SendMessage(m_mctrlHandle, MC_MBM_SETMENU, 0, (LPARAM) menu);
+    SendMessage(m_mctrlHandle, MC_MBM_REFRESH, 0, 0);
+}
+
+bool Windows10MenubarMixin::MenuWindow::TranslateMenubarMessage(WXMSG *pMsg)
+{
+    MSG *msg = (MSG *) pMsg;
+    if (mcIsMenubarMessage(m_mctrlHandle, msg))
+        return true;
+
+    return false;
+}
+
+wxWindow* Windows10MenubarMixin::MenuWindow::AdjustEffectiveFocus(wxWindow* focus) const
+{
+    return (focus == m_mctrlWin) ? m_previousFocus.get() : focus;
+}
+
+void Windows10MenubarMixin::MenuWindow::DoSetSize(int x, int y, int width, int height, int sizeFlags)
+{
+    wxWindow::DoSetSize(x, y, width, height, sizeFlags);
+    SendMessage(m_mctrlHandle, MC_MBM_REFRESH, 0, 0);
+}
+
+wxSize Windows10MenubarMixin::MenuWindow::DoGetBestSize() const
+{
+    wxSize sizeBest = wxDefaultSize;
+    SIZE size;
+    if (::SendMessage(m_mctrlHandle, TB_GETMAXSIZE, 0, (LPARAM) &size))
+    {
+        sizeBest.x = size.cx;
+        sizeBest.y = size.cy + 1;
+        CacheBestSize(sizeBest);
+    }
+    return sizeBest;
+}
+
+
+bool Windows10MenubarMixin::ShouldUseCustomMenu() const
 {
     if (!IsWindows10OrGreater())
         return false;
@@ -207,30 +182,52 @@ bool wxFrameWithWindows10Menubar::ShouldUse() const
     return true;
 }
 
-wxPoint wxFrameWithWindows10Menubar::GetClientAreaOrigin() const
+void Windows10MenubarMixin::CreateCustomMenu(wxWindow* parent)
 {
-    wxPoint pt = wxFrame::GetClientAreaOrigin();
-    if (IsUsed())
+    m_menuBar = new MenuWindow(parent);
+}
+
+template<typename T>
+WithWindows10Menubar<T>::WithWindows10Menubar(wxWindow* parent,
+    wxWindowID id,
+    const wxString& title,
+    const wxPoint& pos,
+    const wxSize& size,
+    long style,
+    const wxString& name)
+    : BaseClass(parent, id, title, pos, size, style, name)
+{
+    if (ShouldUseCustomMenu())
+        CreateCustomMenu(this);
+}
+
+template<typename T>
+wxPoint WithWindows10Menubar<T>::GetClientAreaOrigin() const
+{
+    wxPoint pt = BaseClass::GetClientAreaOrigin();
+    if (IsCustomMenuUsed()
     {
-        pt.y += m_menuBar->GetBestSize().y + MENUBAR_OFFSET;
+        pt.y += GetMenuWindow()->GetBestSize().y + MENUBAR_OFFSET;
     }
     return pt;
 }
 
-wxWindow* wxFrameWithWindows10Menubar::FindFocusNoMenu()
+template<typename T>
+wxWindow* WithWindows10Menubar<T>::FindFocusNoMenu()
 {
     auto focus = wxWindow::FindFocus();
-    if (focus && IsUsed())
-        focus = m_menuBar->AdjustEffectiveFocus(focus);
+    if (focus && IsCustomMenuUsed())
+        focus = GetMenuWindow()->AdjustEffectiveFocus(focus);
     return focus;
 }
 
-void wxFrameWithWindows10Menubar::PositionToolBar()
+template<typename T>
+void WithWindows10Menubar<T>::PositionToolBar()
 {
     // Position both the toolbar and our menu bar (which is really another toolbar) here.
-    if (!IsUsed())
+    if (!IsCustomMenuUsed())
     {
-        wxFrame::PositionToolBar();
+        BaseClass::PositionToolBar();
         return;
     }
 
@@ -243,8 +240,8 @@ void wxFrameWithWindows10Menubar::PositionToolBar()
 
     // use the 'real' MSW position here, don't offset relatively to the
     // client area origin
-    int mch = m_menuBar->GetBestSize().y;
-    m_menuBar->SetSize(0, y, width, mch, wxSIZE_NO_ADJUSTMENTS);
+    int mch = GetMenuWindow()->GetBestSize().y;
+    GetMenuWindow()->SetSize(0, y, width, mch, wxSIZE_NO_ADJUSTMENTS);
     y += mch;
 
     wxToolBar *toolbar = GetToolBar();
@@ -255,20 +252,22 @@ void wxFrameWithWindows10Menubar::PositionToolBar()
     }
 }
 
-bool wxFrameWithWindows10Menubar::MSWTranslateMessage(WXMSG *msg)
+template<typename T>
+bool WithWindows10Menubar<T>::MSWTranslateMessage(WXMSG *msg)
 {
-    if (wxFrame::MSWTranslateMessage(msg))
+    if (BaseClass::MSWTranslateMessage(msg))
         return true;
 
-    if (IsUsed() && m_menuBar->TranslateMenubarMessage(msg))
+    if (IsCustomMenuUsed() && GetMenuWindow()->TranslateMenubarMessage(msg))
         return true;
 
     return false;
 }
 
-WXLRESULT wxFrameWithWindows10Menubar::MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam)
+template<typename T>
+WXLRESULT WithWindows10Menubar<T>::MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam)
 {
-    if (IsUsed())
+    if (IsCustomMenuUsed())
     {
         // mCtrl doesn't play nice with the wxMSW's menus interaction where accelerators are updated
         // when a menu is opened (which works because TranslateAccelerators() normally sends a fake
@@ -278,17 +277,22 @@ WXLRESULT wxFrameWithWindows10Menubar::MSWWindowProc(WXUINT message, WXWPARAM wP
             GetMenuBar()->UpdateMenus();
     }
 
-    return wxFrame::MSWWindowProc(message, wParam, lParam);
+    return BaseClass::MSWWindowProc(message, wParam, lParam);
 }
 
-void wxFrameWithWindows10Menubar::InternalSetMenuBar()
+template<typename T>
+void WithWindows10Menubar<T>::InternalSetMenuBar()
 {
-    if (IsUsed())
+    if (IsCustomMenuUsed())
     {
-        m_menuBar->SetHMENU(m_hMenu);
+        GetMenuWindow()->SetHMENU(m_hMenu);
     }
     else
     {
-        wxFrame::InternalSetMenuBar();
+        BaseClass::InternalSetMenuBar();
     }
 }
+
+
+// We need to explicitly instantiate the template for all uses within Poedit because of all the code in .cpp file:
+template class WithWindows10Menubar<wxFrame>;
