@@ -33,11 +33,28 @@
 
 
 #ifdef __WXOSX__
+
+// TODO: move this to app delegate, once we have it (proxying to wx's one)
+@interface POMenuActions : NSObject
+@end
+
+@implementation POMenuActions
+
+- (void)showWelcomeWindow: (id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_MENU, XRCID("menu_welcome"));
+    wxTheApp->ProcessEvent(event);
+}
+
+@end
+
 struct MenusManager::NativeMacData
 {
     NSMenu *windowMenu = nullptr;
     NSMenuItem *windowMenuItem = nullptr;
     wxMenuBar *menuBar = nullptr;
+    POMenuActions *actions = nullptr;
 };
 #endif
 
@@ -45,6 +62,7 @@ MenusManager::MenusManager()
 {
 #ifdef __WXOSX__
     m_nativeMacData.reset(new NativeMacData);
+    m_nativeMacData->actions = [POMenuActions new];
     wxMenuBar::SetAutoWindowMenu(false);
 #endif
 }
@@ -235,6 +253,11 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         NSMenu *windowMenu = [[NSMenu alloc] initWithTitle:str::to_NS(_("Window"))];
         AddNativeItem(windowMenu, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
         AddNativeItem(windowMenu, -1, _("Zoom"), @selector(performZoom:), @"");
+        [windowMenu addItem:[NSMenuItem separatorItem]];
+        item = AddNativeItem(windowMenu, -1, _("Welcome to Poedit"), @selector(showWelcomeWindow:), @"1");
+        item.target = m_nativeMacData->actions;
+        [item setKeyEquivalentModifierMask: NSShiftKeyMask | NSCommandKeyMask];
+
         [windowMenu addItem:[NSMenuItem separatorItem]];
         AddNativeItem(windowMenu, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
         [NSApp setWindowsMenu:windowMenu];

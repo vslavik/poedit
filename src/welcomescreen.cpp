@@ -208,6 +208,11 @@ WelcomeWindow::WelcomeWindow()
             SetBackgroundColour(GetDefaultAttributes().colBg);
     });
 
+#ifdef __WXOSX__
+    NSWindow *wnd = (NSWindow*)GetWXWindow();
+    wnd.excludedFromWindowsMenu = YES;
+#endif
+
 #ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif

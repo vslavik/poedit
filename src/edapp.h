@@ -109,6 +109,7 @@ class PoeditApp : public wxApp, public MenusManager
         void OnOpenHist(wxCommandEvent& event);
 #endif
         void OnAbout(wxCommandEvent& event);
+        void OnWelcomeWindow(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);

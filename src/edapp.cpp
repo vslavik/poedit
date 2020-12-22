@@ -845,6 +845,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
  #endif
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
+   EVT_MENU           (XRCID("menu_welcome"),     PoeditApp::OnWelcomeWindow)
    EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
    EVT_MENU           (wxID_EXIT,                 PoeditApp::OnQuit)
    EVT_MENU           (wxID_PREFERENCES,          PoeditApp::OnPreferences)
@@ -1077,6 +1078,12 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #endif
 
     wxAboutBox(about);
+}
+
+
+void PoeditApp::OnWelcomeWindow(wxCommandEvent&)
+{
+    WelcomeWindow::GetAndActivate();
 }
 
 
