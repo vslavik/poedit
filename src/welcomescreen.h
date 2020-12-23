@@ -26,8 +26,13 @@
 #ifndef Poedit_welcomescreen_h
 #define Poedit_welcomescreen_h
 
+#include "titleless_window.h"
+
 #include <wx/panel.h>
 #include <wx/frame.h>
+
+typedef TitlelessWindow WelcomeWindowBase;
+
 
 class PoeditFrame;
 
@@ -46,7 +51,7 @@ public:
 
 
 /// Window for initially opened Poedit, without a file
-class WelcomeWindow : public wxFrame
+class WelcomeWindow : public WelcomeWindowBase
 {
 public:
     static WelcomeWindow *GetAndActivate();

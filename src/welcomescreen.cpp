@@ -196,9 +196,9 @@ WelcomeWindow::~WelcomeWindow()
 }
 
 WelcomeWindow::WelcomeWindow()
-    : wxFrame(nullptr, wxID_ANY, _("Welcome to Poedit"),
-              wxDefaultPosition, wxDefaultSize,
-              wxSYSTEM_MENU | wxMINIMIZE_BOX | wxCLOSE_BOX | wxCAPTION | wxCLIP_CHILDREN)
+    : WelcomeWindowBase(nullptr, wxID_ANY, _("Welcome to Poedit"),
+                        wxDefaultPosition, wxDefaultSize,
+                        wxSYSTEM_MENU | wxCLOSE_BOX | wxCAPTION | wxCLIP_CHILDREN)
 {
     ColorScheme::SetupWindowColors(this, [=]
     {
@@ -296,13 +296,4 @@ WelcomeWindow::WelcomeWindow()
         }
 #endif
     });
-
-#ifdef __WXOSX__
-    // Pretify the window:
-    NSWindow *wnd = (NSWindow*)GetWXWindow();
-    wnd.styleMask |= NSFullSizeContentViewWindowMask;
-    wnd.titleVisibility = NSWindowTitleHidden;
-    wnd.titlebarAppearsTransparent = YES;
-    wnd.movableByWindowBackground = YES;
-#endif
 }
