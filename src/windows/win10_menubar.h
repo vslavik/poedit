@@ -37,13 +37,16 @@ protected:
     class MenuWindow : public wxWindow
     {
     public:
-        MenuWindow(wxWindow* parent);
+        MenuWindow();
         ~MenuWindow();
+
+        void Create(wxWindow *parent);
 
         void SetHMENU(WXHMENU menu);
         bool TranslateMenubarMessage(WXMSG* pMsg);
         wxWindow* AdjustEffectiveFocus(wxWindow* focus) const;
 
+        WXDWORD MSWGetStyle(long flags, WXDWORD* exstyle) const override;
         void DoSetSize(int x, int y, int width, int height, int sizeFlags) override;
         wxSize DoGetBestSize() const override;
 
@@ -92,6 +95,9 @@ public:
     WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override;
 
 protected:
+    /// Can be overriden to return false if derived class wants to place GetMenuWindow() itself
+    virtual bool ShouldPlaceMenuInNCArea() const { return true;  }
+
     void PositionToolBar() override;
     void InternalSetMenuBar() override;
 

@@ -217,7 +217,15 @@ WelcomeWindow::WelcomeWindow()
 #endif
 
     auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    auto leftoutersizer = new wxBoxSizer(wxVERTICAL);
     auto leftsizer = new wxBoxSizer(wxVERTICAL);
+
+#ifdef __WXMSW__
+    if (GetMenuWindow())
+    {
+        leftoutersizer->Add(GetMenuWindow(), wxSizerFlags().Left());
+    }
+#endif
 
 #if defined(__WXMSW__)
     wxIcon logo;
@@ -271,7 +279,8 @@ WelcomeWindow::WelcomeWindow()
                wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
 #endif // HAVE_HTTP_CLIENT
 
-    topsizer->Add(leftsizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
+    leftoutersizer->Add(leftsizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
+    topsizer->Add(leftoutersizer, wxSizerFlags(1).Expand());
 
     auto recentFilesPlaceholder = new wxWindow(this, wxID_ANY);
     recentFilesPlaceholder->SetMinSize(wxSize(PX(320), -1));

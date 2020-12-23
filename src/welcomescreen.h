@@ -31,7 +31,12 @@
 #include <wx/panel.h>
 #include <wx/frame.h>
 
+#ifdef __WXMSW__
+#include "windows/win10_menubar.h"
+typedef WithWindows10Menubar<TitlelessWindow> WelcomeWindowBase;
+#else
 typedef TitlelessWindow WelcomeWindowBase;
+#endif
 
 
 class PoeditFrame;
@@ -69,6 +74,10 @@ public:
 protected:
     WelcomeWindow();
     ~WelcomeWindow();
+
+#ifdef __WXMSW__
+    bool ShouldPlaceMenuInNCArea() const override { return false; }
+#endif
 
 private:
     static WelcomeWindow *ms_instance;

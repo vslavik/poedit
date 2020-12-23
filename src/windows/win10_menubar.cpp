@@ -77,10 +77,14 @@ private:
     wxRecursionGuardFlag m_flagReenterMctrl;
 };
 
-Windows10MenubarMixin::MenuWindow::MenuWindow(wxWindow *parent)
-    : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE),
-      m_mctrlWin(nullptr), m_mctrlHandle(0)
+Windows10MenubarMixin::MenuWindow::MenuWindow() : m_mctrlWin(nullptr), m_mctrlHandle(0)
 {
+}
+
+void Windows10MenubarMixin::MenuWindow::Create(wxWindow *parent)
+{
+    wxWindow::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE);
+
     if (g_mctrlInitialized++ == 0)
         mcMenubar_Initialize();
 
@@ -141,6 +145,14 @@ wxWindow* Windows10MenubarMixin::MenuWindow::AdjustEffectiveFocus(wxWindow* focu
     return (focus == m_mctrlWin) ? m_previousFocus.get() : focus;
 }
 
+WXDWORD Windows10MenubarMixin::MenuWindow::MSWGetStyle(long flags, WXDWORD* exstyle) const
+{
+    // The toolbar control used by mCtrl doesn't fully paint its area, so we need to do it
+    // in this wrapper window. Because wx clips childen unconditionally these days, it is
+    // necessary to remove WS_CLIPCHILDREN here.
+    return wxWindow::MSWGetStyle(flags, exstyle) & ~WS_CLIPCHILDREN;
+}
+
 void Windows10MenubarMixin::MenuWindow::DoSetSize(int x, int y, int width, int height, int sizeFlags)
 {
     wxWindow::DoSetSize(x, y, width, height, sizeFlags);
@@ -184,7 +196,8 @@ bool Windows10MenubarMixin::ShouldUseCustomMenu() const
 
 void Windows10MenubarMixin::CreateCustomMenu(wxWindow* parent)
 {
-    m_menuBar = new MenuWindow(parent);
+    m_menuBar = new MenuWindow;
+    m_menuBar->Create(parent);
 }
 
 template<typename T>
@@ -205,7 +218,7 @@ template<typename T>
 wxPoint WithWindows10Menubar<T>::GetClientAreaOrigin() const
 {
     wxPoint pt = BaseClass::GetClientAreaOrigin();
-    if (IsCustomMenuUsed()
+    if (IsCustomMenuUsed() && ShouldPlaceMenuInNCArea())
     {
         pt.y += GetMenuWindow()->GetBestSize().y + MENUBAR_OFFSET;
     }
@@ -225,7 +238,7 @@ template<typename T>
 void WithWindows10Menubar<T>::PositionToolBar()
 {
     // Position both the toolbar and our menu bar (which is really another toolbar) here.
-    if (!IsCustomMenuUsed())
+    if (!IsCustomMenuUsed() || !ShouldPlaceMenuInNCArea())
     {
         BaseClass::PositionToolBar();
         return;
@@ -296,3 +309,6 @@ void WithWindows10Menubar<T>::InternalSetMenuBar()
 
 // We need to explicitly instantiate the template for all uses within Poedit because of all the code in .cpp file:
 template class WithWindows10Menubar<wxFrame>;
+
+#include "titleless_window.h"
+template class WithWindows10Menubar<TitlelessWindow>;
