@@ -111,6 +111,22 @@ private:
 
 #endif // __WXMSW__
 
+#ifdef __WXOSX__
+
+class TitlelessWindow::CloseButton : public wxBitmapButton
+{
+public:
+    CloseButton(wxWindow* parent, wxWindowID id)
+    {
+        wxBitmap normal([NSImage imageNamed:@"CloseButtonTemplate"]);
+        wxBitmap hover([NSImage imageNamed:@"CloseButtonHoverTemplate"]);
+        wxBitmapButton::Create(parent, id, normal, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+        SetBitmapHover(hover);
+    }
+};
+
+#endif // __WXOSX__
+
 
 TitlelessWindow::TitlelessWindow(wxWindow* parent,
                                  wxWindowID id,
@@ -130,6 +146,10 @@ TitlelessWindow::TitlelessWindow(wxWindow* parent,
     wnd.movableByWindowBackground = YES;
     [wnd standardWindowButton:NSWindowMiniaturizeButton].hidden = YES;
     [wnd standardWindowButton:NSWindowZoomButton].hidden = YES;
+    [wnd standardWindowButton:NSWindowCloseButton].hidden = YES;
+
+    if (style & wxCLOSE_BOX)
+        m_closeButton = new CloseButton(this, wxID_CLOSE);
 #endif
 
 #ifdef __WXMSW__
@@ -253,8 +273,12 @@ bool TitlelessWindow::Layout()
 
     if (m_closeButton)
     {
+#ifdef __WXOSX__
+        m_closeButton->Move(2, 4);
+#else
         auto size = GetClientSize();
         m_closeButton->Move(size.x - m_closeButton->GetSize().x, 0);
+#endif
     }
 
     return true;
