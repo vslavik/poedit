@@ -288,7 +288,7 @@ public:
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
         {
-            wxString f(m_history.GetHistoryFile(e.GetId() - wxID_FILE1));
+            auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
             if (!wxFileExists(f))
             {
                 wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
@@ -373,7 +373,10 @@ protected:
             std::vector<wxFileName> files;
             files.reserve(m_fileHistory.size());
             for (auto& f : m_fileHistory)
-                files.emplace_back(f);
+            {
+                if (wxFileName::FileExists(f))
+                    files.emplace_back(f);
+            }
             return files;
         }
 
