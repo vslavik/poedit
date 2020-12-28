@@ -26,9 +26,11 @@
 #ifndef Poedit_recent_files_h
 #define Poedit_recent_files_h
 
+#include <wx/dataview.h>
 #include <wx/event.h>
 
 #include <memory>
+#include <vector>
 
 class WXDLLIMPEXP_FWD_BASE wxFileName;
 class WXDLLIMPEXP_FWD_CORE wxMenuBar;
@@ -55,6 +57,8 @@ public:
     /// Record a file as being recently edited.
     void NoteRecentFile(const wxFileName& fn);
 
+    std::vector<wxFileName> GetRecentFiles();
+
 #ifdef __WXOSX__
     /// Hack to make macOS' hack for Open Recent work correctly; must be called from applicationWillFinishLaunching:
     void MacCreateFakeOpenRecentMenu();
@@ -67,6 +71,27 @@ private:
 
     class impl;
     std::unique_ptr<impl> m_impl;
+
+    friend class RecentFilesCtrl;
 };
+
+
+/// Control with a list of recently opened files
+class RecentFilesCtrl : public wxDataViewListCtrl
+{
+public:
+    RecentFilesCtrl(wxWindow *parent);
+
+private:
+    void RefreshContent();
+    void OnActivate(wxDataViewEvent& event);
+
+    class MultilineTextRenderer;
+
+    struct data;
+    std::unique_ptr<data> m_data;
+};
+
+
 
 #endif // Poedit_recent_files_h

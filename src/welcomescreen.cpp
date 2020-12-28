@@ -33,6 +33,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "menus.h"
+#include "recent_files.h"
 #include "str_helpers.h"
 #include "utility.h"
 
@@ -287,13 +288,15 @@ WelcomeWindow::WelcomeWindow()
     leftoutersizer->Add(leftsizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
     topsizer->Add(leftoutersizer, wxSizerFlags(1).Expand());
 
-    auto recentFilesPlaceholder = new wxWindow(this, wxID_ANY);
-    recentFilesPlaceholder->SetMinSize(wxSize(PX(320), -1));
+#ifndef __WXGTK__
+    auto recentFiles = new RecentFilesCtrl(this);
+    recentFiles->SetMinSize(wxSize(PX(320), -1));
     ColorScheme::SetupWindowColors(this, [=]
     {
-        recentFilesPlaceholder->SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+        recentFiles->SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
     });
-    topsizer->Add(recentFilesPlaceholder, wxSizerFlags().Expand());
+    topsizer->Add(recentFiles, wxSizerFlags().Expand());
+#endif
 
     SetSizerAndFit(topsizer);
 

@@ -841,9 +841,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
  #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
  #endif
- #ifndef __WXOSX__
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
- #endif
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
    EVT_MENU           (XRCID("menu_welcome"),     PoeditApp::OnWelcomeWindow)
    EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
@@ -1048,7 +1046,6 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
 #endif
 
 
-#ifndef __WXOSX__
 void PoeditApp::OnOpenHist(wxCommandEvent& event)
 {
     InvokingWindowProxy win(event);
@@ -1059,8 +1056,6 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
     win.NotifyIsStarting();
     win.GetActionTarget()->DoOpenFile(event.GetString());
 }
-#endif // !__WXOSX__
-
 
 
 void PoeditApp::OnAbout(wxCommandEvent&)
