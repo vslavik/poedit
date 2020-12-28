@@ -593,6 +593,15 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
                         &text_bytes,
                         &is_reliable);
 
+    if (!is_reliable &&
+        language3[0] == lang &&
+        language3[1] == UNKNOWN_LANGUAGE && language3[2] == UNKNOWN_LANGUAGE &&
+        percent3[1] == 0 && percent3[2] == 0)
+    {
+        // supposedly unreliable, but no other alternatives detected, so use it
+        is_reliable = true;
+    }
+
     if (lang == UNKNOWN_LANGUAGE || !is_reliable)
         return Language();
 
