@@ -346,9 +346,9 @@ private:
             wxString text = wxString::Format
             (
                 "%s\n<small><span %s>%s</span></small>",
-                EscapeCString(f.title),
+                EscapeMarkup(f.title),
                 secondaryFormatting,
-                EscapeCString(details)
+                EscapeMarkup(details)
             );
         #else
             wxString text = str::to_wx(f.title);
