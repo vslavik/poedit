@@ -543,7 +543,10 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
 #endif
 
 #ifdef __WXOSX__
-    NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
+    NSScrollView *scrollView = (NSScrollView*)GetHandle();
+    scrollView.automaticallyAdjustsContentInsets = NO;
+    
+    NSTableView *tableView = (NSTableView*)[scrollView documentView];
     [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
     const int icon_column_width = PX(32 + 12);
 #else
