@@ -68,6 +68,7 @@
 #include "errors.h"
 #include "extractors/extractor_legacy.h"
 #include "spellchecking.h"
+#include "str_helpers.h"
 #include "utility.h"
 #include "customcontrols.h"
 #include "unicode_helpers.h"
@@ -1127,7 +1128,7 @@ class UpdatesPage : public wxPreferencesPage
 {
 public:
     wxString GetName() const override { return _("Updates"); }
-    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Updates", "arrow.triangle.2.circlepath.circle"); }
+    wxBitmap GetLargeIcon() const override { return MacPageIcon("Prefs-Updates", "arrow.down.circle"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new UpdatesPageWindow(parent); }
 };
 #endif // HAS_UPDATES_CHECK
