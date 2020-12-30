@@ -291,10 +291,6 @@ WelcomeWindow::WelcomeWindow()
 #ifndef __WXGTK__
     auto recentFiles = new RecentFilesCtrl(this);
     recentFiles->SetMinSize(wxSize(PX(320), -1));
-    ColorScheme::SetupWindowColors(this, [=]
-    {
-        recentFiles->SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
-    });
     topsizer->Add(recentFiles, wxSizerFlags().Expand());
 #endif
 

@@ -538,20 +538,26 @@ RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
     : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | wxBORDER_NONE),
       m_data(new data)
 {
-#if wxCHECK_VERSION(3,1,1)
-    SetRowHeight(PX(46));
-#endif
-
 #ifdef __WXOSX__
     NSScrollView *scrollView = (NSScrollView*)GetHandle();
     scrollView.automaticallyAdjustsContentInsets = NO;
-    
+
     NSTableView *tableView = (NSTableView*)[scrollView documentView];
+    tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
     [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
     const int icon_column_width = PX(32 + 12);
-#else
+#else // !__WXOSX__
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+    });
+
     m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
     const int icon_column_width = wxSystemSettings::GetMetric(wxSYS_ICON_X) + PX(12);
+#endif
+
+#if wxCHECK_VERSION(3,1,1)
+    SetRowHeight(PX(46));
 #endif
 
     AppendBitmapColumn("", 0, wxDATAVIEW_CELL_INERT, icon_column_width);
