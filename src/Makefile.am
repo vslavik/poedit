@@ -68,6 +68,7 @@ poedit_SOURCES = \
                  str_helpers.h \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \
+                 titleless_window.h titleless_window.cpp \
                  tm/suggestions.cpp tm/suggestions.h \
                  tm/transmem.cpp tm/transmem.h \
                  tm/tmx_io.cpp tm/tmx_io.h \
