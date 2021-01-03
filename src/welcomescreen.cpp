@@ -282,6 +282,14 @@ WelcomeWindow::WelcomeWindow()
     {
         header->SetForegroundColour(ColorScheme::Get(Color::Label));
         version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+
+#ifdef __WXMSW__
+        for (auto& w : GetChildren())
+        {
+            if (dynamic_cast<ActionButton*>(w))
+                w->SetBackgroundColour(GetBackgroundColour());
+        }
+#endif
     });
 
 #ifdef __WXOSX__

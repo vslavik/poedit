@@ -36,6 +36,7 @@
 #include <wx/dc.h>
 #include <wx/graphics.h>
 #include <wx/scopedptr.h>
+#include <wx/msw/dcclient.h>
 #include <wx/msw/wrapgdip.h>
 #include <wx/msw/uxtheme.h>
 #endif
@@ -323,18 +324,77 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& /
     SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
     Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
 }
-#else
-ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note)
-    : wxCommandLinkButton(parent, winid, label, note)
+#endif // __WXGTK__
+
+#ifdef __WXMSW__
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note) 
+    : wxCommandLinkButton(parent, winid, label, note, wxDefaultPosition, wxSize(-1, PX(48)))
 {
+    m_title = label;
+    m_note = note;
+    m_titleFont = GetFont().MakeLarger();
+
+    MakeOwnerDrawn();
+
     if (!symbolicName.empty())
     {
-        auto bmp = wxArtProvider::GetBitmap("Welcome_" + symbolicName);
+        auto bmp = wxArtProvider::GetBitmap("AB_" + symbolicName + "Template@opaque");
         SetBitmap(bmp);
     }
+
     Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
 }
-#endif
+
+bool ActionButton::MSWOnDraw(WXDRAWITEMSTRUCT* wxdis)
+{
+    LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)wxdis;
+    HDC hdc = lpDIS->hDC;
+
+    UINT state = lpDIS->itemState;
+    const bool highlighted = IsMouseInWindow();
+    const bool isRtl = ::GetLayout(hdc)& LAYOUT_RTL;
+
+    wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
+    wxRect textRect(rect);
+    textRect.SetLeft(rect.GetLeft() + PX(8));
+
+    wxPaintDCEx dc(this, hdc);
+
+    if (highlighted)
+    {
+        dc.SetPen(*wxTRANSPARENT_PEN);
+        dc.SetBrush(GetBackgroundColour().ChangeLightness(95));
+        dc.DrawRectangle(rect);
+    }
+
+    auto bmp = GetBitmap();
+    if (bmp.IsOk())
+    {
+        dc.DrawBitmap(bmp, PX(16), PX(8));
+        textRect.SetLeft(textRect.GetLeft() + PX(48));
+        textRect.SetRight(rect.GetRight());
+    };
+
+    dc.SetFont(m_titleFont);
+    dc.SetTextForeground(ColorScheme::Get(::Color::Label, this));
+    int theight;
+    dc.GetTextExtent(m_title, nullptr, &theight);
+    dc.DrawText(m_title, textRect.x, PX(24) - theight);
+    dc.SetFont(GetFont());
+    dc.SetTextForeground(ColorScheme::Get(::Color::SecondaryLabel, this));
+    dc.DrawText(m_note, textRect.x, PX(24));
+
+    // draw the focus rectangle if we need it
+    if ((state & ODS_FOCUS) && !(state & ODS_NOFOCUSRECT))
+    {
+        RECT r = { rect.x, rect.y, rect.width, rect.height };
+        DrawFocusRect(hdc, &r);
+    }
+
+    return true;
+}
+
+#endif // __WXMSW__
 
 void ActionButton::OnPressed(wxCommandEvent&)
 {

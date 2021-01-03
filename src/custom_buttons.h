@@ -57,6 +57,13 @@ private:
 #ifndef __WXOSX__
     void OnPressed(wxCommandEvent& e);
 #endif
+
+#ifdef __WXMSW__
+    bool MSWOnDraw(WXDRAWITEMSTRUCT* wxdis) override;
+
+    wxString m_title, m_note;
+    wxFont m_titleFont;
+#endif
 };
 
 
