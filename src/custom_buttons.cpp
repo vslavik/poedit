@@ -104,13 +104,13 @@
 
 @end
 
-ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image)
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note)
 {
     SetMinSize(wxSize(510, -1));
 
     POActionButton *view = [[POActionButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
-    if (!image.empty())
-        view.image = [NSImage imageNamed:str::to_NS(image)];
+    if (!symbolicName.empty())
+        view.image = [NSImage imageNamed:str::to_NS("Welcome_" + symbolicName)];
     view.parent = this;
     wxNativeWindow::Create(parent, winid, view);
 }
@@ -283,19 +283,19 @@ void SwitchButton::SendToggleEvent()
 #else // !__WXOSX__
 
 #ifdef __WXGTK__
-ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& /*image*/)
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& /*symbolicName*/, const wxString& label, const wxString& note)
     : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
 {
     SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
     Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
 }
 #else
-ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image)
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note)
     : wxCommandLinkButton(parent, winid, label, note)
 {
-    if (!image.empty())
+    if (!symbolicName.empty())
     {
-        auto bmp = wxArtProvider::GetBitmap(image);
+        auto bmp = wxArtProvider::GetBitmap("Welcome_" + symbolicName);
         SetBitmap(bmp);
     }
     Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);

@@ -51,7 +51,7 @@ typedef wxCommandLinkButton ActionButtonBase;
 class ActionButton : public ActionButtonBase
 {
 public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString());
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note);
 
 private:
 #ifndef __WXOSX__

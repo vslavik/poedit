@@ -134,7 +134,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
         sizer->Add(explain2, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
         sizer->Add(new ActionButton(
-                           this, XRCID("menu_update_from_pot"),
+                           this, XRCID("menu_update_from_pot"), "UpdateFromPOT",
                            _("Update from POT"),
                            _("Take translatable strings from an existing POT template.")),
                    wxSizerFlags().Expand());
@@ -144,7 +144,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
         sizer->Add(explain3, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(10)));
 
         auto btnSources = new ActionButton(
-                           this, wxID_ANY,
+                           this, wxID_ANY, "ExtractFromSources",
                            _("Extract from sources"),
                            _("Configure source code extraction in Properties."));
         sizer->Add(btnSources, wxSizerFlags().Expand());
@@ -245,25 +245,22 @@ WelcomeWindow::WelcomeWindow()
     leftsizer->AddSpacer(PX(30));
 
     leftsizer->Add(new ActionButton(
-                       this, wxID_OPEN,
+                       this, wxID_OPEN, "EditTranslation",
                        _("Edit a translation"),
-                       _("Open an existing PO file and edit the translation."),
-                       "Welcome_EditTranslation"),
+                       _("Open an existing PO file and edit the translation.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
 
     leftsizer->Add(new ActionButton(
-                       this, XRCID("menu_new_from_pot"),
+                       this, XRCID("menu_new_from_pot"), "CreateTranslation",
                        _("Create new translation"),
-                       _("Take an existing PO file or POT template and create a new translation from it."),
-                        "Welcome_CreateTranslation"),
+                       _("Take an existing PO file or POT template and create a new translation from it.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
 
 #ifdef HAVE_HTTP_CLIENT
     leftsizer->Add(new ActionButton(
-                       this, XRCID("menu_open_crowdin"),
+                       this, XRCID("menu_open_crowdin"), "Collaborate",
                        _("Collaborate on a translation with others"),
-                       _("Download a file from Crowdin project, translate and sync your changes back."),
-                       "Welcome_Collaborate"),
+                       _("Download a file from Crowdin project, translate and sync your changes back.")),
                wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
 #endif // HAVE_HTTP_CLIENT
 
