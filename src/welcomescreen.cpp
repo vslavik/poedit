@@ -247,22 +247,22 @@ WelcomeWindow::WelcomeWindow()
     leftsizer->AddSpacer(PX(30));
 
     leftsizer->Add(new ActionButton(
-                       this, wxID_OPEN, "EditTranslation",
-                       _("Edit a translation"),
-                       _("Open an existing PO file and edit the translation.")),
+                       this, XRCID("menu_new_from_pot"), "CreateTranslation",
+                       _(L"Create new…"),
+                       _("Create new translation from POT template.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
 
     leftsizer->Add(new ActionButton(
-                       this, XRCID("menu_new_from_pot"), "CreateTranslation",
-                       _("Create new translation"),
-                       _("Take an existing PO file or POT template and create a new translation from it.")),
+                       this, wxID_OPEN, "EditTranslation",
+                       _("Browse files"),
+                       _("Open and edit translation files.")),
                wxSizerFlags().Border(wxTOP, PX(2)).Expand());
 
 #ifdef HAVE_HTTP_CLIENT
     leftsizer->Add(new ActionButton(
                        this, XRCID("menu_open_crowdin"), "Collaborate",
-                       _("Collaborate on a translation with others"),
-                       _("Download a file from Crowdin project, translate and sync your changes back.")),
+                       _("Translate Crowdin project"),
+                       _("Collaborate with others in a Crowdin project.")),
                wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
 #endif // HAVE_HTTP_CLIENT
 
