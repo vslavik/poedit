@@ -276,7 +276,7 @@ public:
 
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
-        top->AddSpacer(PX(2));
+        top->AddSpacer(PX(6));
         top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP|wxBOTTOM, PX(6)));
         top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
         right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
@@ -295,15 +295,16 @@ public:
         ColorScheme::SetupWindowColors(this, [=]
         {
             // setup mouse hover highlighting:
-            m_bg = parent->GetBackgroundColour();
+            auto bg = parent->GetBackgroundColour();
+            SetBackgroundColour(bg);
+#ifndef __WXOSX__
+            m_bg = bg;
             m_bgHighlight = ColorScheme::GetWindowMode(parent) == ColorScheme::Dark
                             ? m_bg.ChangeLightness(110)
                             : m_bg.ChangeLightness(95);
-            SetBackgroundColour(m_isHighlighted ? m_bgHighlight : m_bg);
-            #ifndef __WXOSX__
             for (auto c: GetChildren())
                 c->SetBackgroundColour(m_isHighlighted ? m_bgHighlight : m_bg);
-            #endif
+#endif
         });
 
         wxWindow* parts [] = { this, m_icon, m_text, m_info, m_moreActions };
@@ -360,14 +361,16 @@ public:
 #endif
         (void)tooltip;
 
+#ifndef __WXOSX__
         SetBackgroundColour(m_bg);
+#endif
 
         Layout();
         InvalidateBestSize();
         SetMinSize(wxDefaultSize);
         SetMinSize(GetBestSize());
     }
-    
+
     bool AcceptsFocus() const override { return false; }
 
 private:
@@ -395,14 +398,33 @@ private:
         wxPaintDC dc(this);
         if (m_isHighlighted)
         {
+#ifdef __WXOSX__
+            auto winbg = GetBackgroundColour();
+            wxColour highlight;
+            if (@available(macOS 10.14, *))
+            {
+                NSColor *bg = winbg.OSXGetNSColor();
+                NSColor *osHighlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+                // use only lighter version of the highlight by blending with the background
+                highlight = wxColour([bg blendedColorWithFraction:0.2 ofColor:osHighlight]);
+            }
+            else
+            {
+                highlight = winbg.ChangeLightness(95);
+            }
+#else
+            auto highlight = m_bgHighlight;
+#endif
             std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
-            gc->SetBrush(m_bgHighlight);
+            gc->SetBrush(highlight);
             gc->SetPen(*wxTRANSPARENT_PEN);
 
             auto rect = GetClientRect();
             if (!rect.IsEmpty())
             {
-#if wxCHECK_VERSION(3,1,1)
+#if defined(__WXOSX__)
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(5));
+#elif wxCHECK_VERSION(3,1,1)
                 gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
 #else
                 gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
@@ -490,7 +512,9 @@ private:
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
     ImageButton *m_moreActions;
+#ifndef __WXOSX__
     wxColour m_bg, m_bgHighlight;
+#endif
 };
 
 
