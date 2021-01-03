@@ -119,10 +119,7 @@
     <ClCompile Include="src\crowdin_gui.cpp" />
     <ClCompile Include="src\customcontrols.cpp" />
     <ClCompile Include="src\custom_buttons.cpp" />
-    <ClCompile Include="src\edapp.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\edapp.cpp" />
     <ClCompile Include="src\edframe.cpp" />
     <ClCompile Include="src\editing_area.cpp" />
     <ClCompile Include="src\edlistctrl.cpp" />
@@ -311,6 +308,11 @@
     <None Include="Poedit.Targets">
       <SubType>Designer</SubType>
     </None>
+    <ClCompile Include="src\Poedit-Prefix.pch">
+      <FileType>Document</FileType>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <None Include="src\resources\comment.xrc" />
     <None Include="src\resources\manager.xrc" />
     <None Include="src\resources\menus.xrc" />
