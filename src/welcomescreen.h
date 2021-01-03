@@ -27,6 +27,7 @@
 #define Poedit_welcomescreen_h
 
 #include <wx/panel.h>
+#include <wx/frame.h>
 
 class PoeditFrame;
 
@@ -36,19 +37,34 @@ protected:
     WelcomeScreenBase(wxWindow *parent);
 };
 
-/// Content view for initially opened Poedit, without a file
-class WelcomeScreenPanel : public WelcomeScreenBase
-{
-public:
-    WelcomeScreenPanel(wxWindow *parent);
-};
-
-
 /// Content view for an empty file (File->New)
 class EmptyPOScreenPanel : public WelcomeScreenBase
 {
 public:
     EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext);
+};
+
+
+/// Window for initially opened Poedit, without a file
+class WelcomeWindow : public wxFrame
+{
+public:
+    static WelcomeWindow *GetAndActivate();
+    static WelcomeWindow *GetIfActive()
+        { return ms_instance && ms_instance->IsShown() ? ms_instance : nullptr; }
+    static void HideActive();
+
+    bool ShouldPreventAppExit() const override
+    {
+        return IsShownOnScreen();
+    }
+
+protected:
+    WelcomeWindow();
+    ~WelcomeWindow();
+
+private:
+    static WelcomeWindow *ms_instance;
 };
 
 

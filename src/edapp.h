@@ -104,7 +104,8 @@ class PoeditApp : public wxApp
         void SetupLanguage();
 
         // App-global menu commands:
-        void OnNew(wxCommandEvent& event);
+        void OnNewFromScratch(wxCommandEvent& event);
+        void OnNewFromPOT(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
         void OnOpenFromCrowdin(wxCommandEvent& event);
 #ifndef __WXOSX__

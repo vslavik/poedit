@@ -260,16 +260,6 @@ bool g_focusToText = false;
     return NULL;
 }
 
-/*static*/ PoeditFrame *PoeditFrame::UnusedWindow(bool active)
-{
-    for (auto win: ms_instances)
-    {
-        if ((!active || win->IsActive()) && win->m_catalog == nullptr)
-            return win;
-    }
-    return nullptr;
-}
-
 /*static*/ bool PoeditFrame::AnyWindowIsModified()
 {
     for (PoeditFramesList::const_iterator n = ms_instances.begin();
@@ -333,32 +323,9 @@ bool g_focusToText = false;
     return f;
 }
 
-/*static*/ PoeditFrame *PoeditFrame::CreateWelcome()
-{
-    PoeditFrame *f = new PoeditFrame;
-    f->EnsureContentView(Content::Welcome);
-    f->Show(true);
-
-    return f;
-}
-
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
-// macOS and GNOME apps should open new documents in a new window. On Windows,
-// however, the usual thing to do is to open the new document in the already
-// open window and replace the current document.
-   EVT_BUTTON         (XRCID("button_new_from_this_pot"),PoeditFrame::OnNew)
-#ifdef __WXMSW__
-   EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
-   EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
-   EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
-  #ifdef HAVE_HTTP_CLIENT
-   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
-  #endif
-  #ifndef __WXOSX__
-   EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditFrame::OnOpenHist)
-  #endif
-#endif // __WXMSW__
+   EVT_BUTTON         (XRCID("button_new_from_this_pot"),PoeditFrame::OnTranslationFromThisPot)
 #ifndef __WXOSX__
    EVT_MENU           (wxID_CLOSE,                PoeditFrame::OnCloseCmd)
 #endif
@@ -637,10 +604,6 @@ void PoeditFrame::EnsureContentView(Content type)
             m_contentType = Content::Invalid;
             return; // nothing to do
 
-        case Content::Welcome:
-            m_contentView = CreateContentViewWelcome();
-            break;
-
         case Content::Empty_PO:
             m_contentView = CreateContentViewEmptyPO();
             break;
@@ -791,12 +754,6 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     });
 
     return main;
-}
-
-
-wxWindow* PoeditFrame::CreateContentViewWelcome()
-{
-    return new WelcomeScreenPanel(this);
 }
 
 
@@ -1081,10 +1038,10 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(const TFunctor1& completionHandler, c
 }
 
 #ifndef __WXOSX__
-bool PoeditFrame::AskIfCanDiscardCurrentDoc() const
+bool PoeditFrame::AskIfCanDiscardCurrentDoc()
 {
     // On non-Mac platforms, we can check synchronously, because all UI is modal, not window-modal
-    int status == -1;
+    int status = -1;
     DoIfCanDiscardCurrentDoc([&status]{ status = 1; }, [&status]{ status = 0; });
     wxASSERT( status != -1 ); // i.e. was executed synchronously
     return status != 0;
@@ -1147,47 +1104,12 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
 }
 
 
-void PoeditFrame::OnOpen(wxCommandEvent&)
-{
-    DoIfCanDiscardCurrentDoc([=]{
-
-        wxString path = wxPathOnly(GetFileName());
-        if (path.empty())
-            path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-
-        wxString name = wxFileSelector(MACOS_OR_OTHER("", _("Open catalog")),
-                        path, wxEmptyString, wxEmptyString,
-                        Catalog::GetAllTypesFileMask(),
-                        wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-
-        if (!name.empty())
-        {
-            wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
-
-            DoOpenFile(name);
-        }
-    });
-}
-
-
 #ifdef HAVE_HTTP_CLIENT
-void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
+void PoeditFrame::NewFromCrowdin(const wxString& filename)
 {
-    DoIfCanDiscardCurrentDoc([=]{
-        CrowdinOpenFile(this, [=](wxString name){
-            DoOpenFile(name);
-        });
-    });
+    DoOpenFile(filename);
 }
 #endif
-
-
-#ifndef __WXOSX__
-void PoeditFrame::OnOpenHist(wxCommandEvent& event)
-{
-    OpenFile(event.GetString());
-}
-#endif // !__WXOSX__
 
 
 void PoeditFrame::OnSave(wxCommandEvent& event)
@@ -1365,61 +1287,20 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 }
 
 
-
-void PoeditFrame::OnNew(wxCommandEvent& event)
+void PoeditFrame::OnTranslationFromThisPot(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        if (event.GetId() == XRCID("menu_new_from_pot"))
-        {
-            NewFromPOT();
-        }
-        else if (event.GetId() == XRCID("button_new_from_this_pot"))
-        {
-            wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
-            dlg->ShowWindowModalThenDo([=](int retcode){
-                if (retcode != wxID_OK)
-                    return;
-                auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
-                wxASSERT_MSG(cat, "unexpected file type / catalog class for POT");
-                NewFromPOT(cat, dlg->GetLang());
-            });
-        }
-        else
-        {
-            NewFromScratch();
-        }
+        wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode != wxID_OK)
+                return;
+            auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+            wxASSERT_MSG(cat, "unexpected file type / catalog class for POT");
+            NewFromPOT(cat, dlg->GetLang());
+        });
     });
 }
 
-
-void PoeditFrame::NewFromPOT()
-{
-    wxString path = wxPathOnly(GetFileName());
-    if (path.empty())
-        path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-    wxString pot_file =
-        wxFileSelector(_("Open catalog template"),
-             path, wxEmptyString, wxEmptyString,
-             Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
-             wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-    if (!pot_file.empty())
-    {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-
-        auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
-        if (!pot->IsOk())
-        {
-            wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
-            return;
-        }
-
-        // Silently fix duplicates because they are common in WP world:
-        if (pot->HasDuplicateItems())
-            pot->FixDuplicateItems();
-
-        NewFromPOT(pot);
-    }
-}
 
 void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
 {

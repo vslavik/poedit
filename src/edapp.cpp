@@ -26,6 +26,8 @@
 #include <wx/wx.h>
 #include <wx/clipbrd.h>
 #include <wx/config.h>
+#include <wx/cpp.h>
+#include <wx/filedlg.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
 #include <wx/cmdline.h>
@@ -71,6 +73,7 @@
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
+#include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "extractors/extractor_legacy.h"
@@ -91,6 +94,7 @@
 #include "errors.h"
 #include "language.h"
 #include "crowdin_client.h"
+#include "welcomescreen.h"
 
 #ifdef __WXOSX__
 struct PoeditApp::NativeMacAppData
@@ -512,7 +516,7 @@ bool PoeditApp::OnInit()
     // attempted to open MO files), shut the app down. Don't do this on macOS
     // where a) the initialization is finished after OnInit() and b) apps
     // without windows are OK.
-    if (!PoeditFrame::HasAnyWindow())
+    if (!PoeditFrame::HasAnyWindow() && !WelcomeWindow::GetIfActive())
         return false;
 #endif
 
@@ -633,17 +637,11 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
 
 void PoeditApp::OpenNewFile()
 {
-    PoeditFrame *unused = PoeditFrame::UnusedWindow(/*active=*/false);
-    if (unused)
-        unused->Raise();
-    else
-        PoeditFrame::CreateWelcome();
+    WelcomeWindow::GetAndActivate();
 }
 
 void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
 {
-    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
-
     for ( auto name: names )
     {
         // MO files cannot be opened directly in Poedit (yet), but they are
@@ -661,16 +659,7 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
             continue;
         }
 
-        if (active)
-        {
-            active->OpenFile(name, lineno);
-            active->Raise();
-            active = nullptr;
-        }
-        else
-        {
-            PoeditFrame::Create(name, lineno);
-        }
+        PoeditFrame::Create(name, lineno);
     }
 }
 
@@ -852,9 +841,8 @@ bool PoeditApp::OnExceptionInMainLoop()
 // ---------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(PoeditApp, wxApp)
-#ifndef __WXMSW__
-   EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
-   EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
+   EVT_MENU           (wxID_NEW,                  PoeditApp::OnNewFromScratch)
+   EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNewFromPOT)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
  #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
@@ -862,7 +850,6 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
  #ifndef __WXOSX__
    EVT_COMMAND        (wxID_ANY, EVT_OPEN_RECENT_FILE, PoeditApp::OnOpenHist)
  #endif
-#endif // !__WXMSW__
    EVT_MENU           (wxID_ABOUT,                PoeditApp::OnAbout)
    EVT_MENU           (XRCID("menu_manager"),     PoeditApp::OnManager)
    EVT_MENU           (wxID_EXIT,                 PoeditApp::OnQuit)
@@ -878,68 +865,179 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
 #endif
 END_EVENT_TABLE()
 
+namespace
+{
 
-// macOS and GNOME apps should open new documents in a new window. On Windows,
-// however, the usual thing to do is to open the new document in the already
-// open window and replace the current document.
-#ifndef __WXMSW__
+/// Information about the window invoking an event. Handles the difference between
+/// Windows (where opening a new file is done in the same file as the existing one,
+/// and so the action must not destroy data) and elsewhere (where new window is created).
+struct InvokingWindowProxy
+{
+    InvokingWindowProxy(const wxCommandEvent& e) : m_actionTarget(nullptr)
+    {
+        auto obj = e.GetEventObject();
+        wxWindow* win = nullptr;
+        auto menu = dynamic_cast<wxMenu*>(obj);
+        if (menu)
+            win = menu->GetWindow();
+        else
+            win = dynamic_cast<wxWindow*>(obj);
 
-#define TRY_FORWARD_TO_ACTIVE_WINDOW(funcCall)                          \
-    {                                                                   \
-        PoeditFrame *active = PoeditFrame::UnusedActiveWindow();        \
-        if ( active )                                                   \
-        {                                                               \
-            active->funcCall;                                           \
-            return;                                                     \
-        }                                                               \
+        if (win)
+            win = wxGetTopLevelParent(win);
+
+        m_isFromWelcomeWindow = dynamic_cast<WelcomeWindow*>(win) != nullptr;
+
+        m_invokingWindow = win;
+#ifdef __WXMSW__
+        m_actionTarget = dynamic_cast<PoeditFrame*>(win);
+#endif
     }
 
-void PoeditApp::OnNew(wxCommandEvent& event)
-{
-    TRY_FORWARD_TO_ACTIVE_WINDOW( OnNew(event) );
+    bool IsPerformingActionAllowed()
+    {
+#ifdef __WXMSW__
+        if (m_actionTarget)
+            return m_actionTarget->AskIfCanDiscardCurrentDoc();
+        else
+#endif
+            return true;
+    }
 
-    PoeditFrame *f = PoeditFrame::CreateEmpty();
-    f->OnNew(event);
+    void NotifyIsStarting() const
+    {
+        if (m_isFromWelcomeWindow)
+            WelcomeWindow::HideActive();
+    }
+
+    void NotifyWasAborted() const
+    {
+        // restore welcome window if that's where the aborted action came from
+        if (m_isFromWelcomeWindow)
+            WelcomeWindow::GetAndActivate();
+    }
+
+    /// Window to perform actions (e.g. open files) in, or nullptr for new one
+    PoeditFrame *GetActionTarget() const
+    {
+        return m_actionTarget ? m_actionTarget : PoeditFrame::CreateEmpty();
+    }
+
+    /// Gets PoeditFrame that the action was invoken from; useful for e.g. file open window's parent
+    PoeditFrame *GetParentWindowIfAny() const { return m_actionTarget; }
+
+    /// Gets any invoking window; useful e.g. for parent of Upgrade-to-Pro prompt
+    wxWindow *GetInvokingWindow() const { return m_invokingWindow; }
+
+private:
+    bool m_isFromWelcomeWindow;
+    wxWindow *m_invokingWindow;
+    PoeditFrame *m_actionTarget;
+};
+
+} // anonymous namespace
+
+
+void PoeditApp::OnNewFromScratch(wxCommandEvent& event)
+{
+    InvokingWindowProxy win(event);
+
+    if (!win.IsPerformingActionAllowed())
+        return;
+
+    win.GetActionTarget()->NewFromScratch();
 }
 
 
-void PoeditApp::OnOpen(wxCommandEvent&)
+void PoeditApp::OnNewFromPOT(wxCommandEvent& event)
 {
-    PoeditFrame *active = PoeditFrame::UnusedActiveWindow();
+    InvokingWindowProxy win(event);
+
+    if (!win.IsPerformingActionAllowed())
+        return;
+
+    win.NotifyIsStarting();
+    wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
+    wxString pot_file =
+        wxFileSelector(MACOS_OR_OTHER("", _("Open catalog template")),
+             path, wxEmptyString, wxEmptyString,
+             Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
+             wxFD_OPEN | wxFD_FILE_MUST_EXIST, win.GetParentWindowIfAny());
+    if (pot_file.empty())
+    {
+        win.NotifyWasAborted();
+        return;
+    }
+
+    wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+
+    auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+    if (!pot->IsOk())
+    {
+        win.NotifyWasAborted();
+        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
+        return;
+    }
+
+    // Silently fix duplicates because they are common in WP world:
+    if (pot->HasDuplicateItems())
+        pot->FixDuplicateItems();
+
+    win.GetActionTarget()->NewFromPOT(pot);
+}
+
+
+void PoeditApp::OnOpen(wxCommandEvent& event)
+{
+    InvokingWindowProxy win(event);
+
+    if (!win.IsPerformingActionAllowed())
+        return;
+
+    win.NotifyIsStarting();
 
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-
-    wxFileDialog dlg(nullptr,
+    wxFileDialog dlg(win.GetParentWindowIfAny(),
                      MACOS_OR_OTHER("", _("Open catalog")),
                      path,
                      wxEmptyString,
                      Catalog::GetAllTypesFileMask(),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 
-    if (dlg.ShowModal() == wxID_OK)
+    if (dlg.ShowModal() != wxID_OK)
     {
-        wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
-        wxArrayString paths;
-        dlg.GetPaths(paths);
-
-        if (paths.size() == 1 && active)
-        {
-            active->OpenFile(paths[0]);
-            return;
-        }
-
-        OpenFiles(paths);
+        win.NotifyWasAborted();
+        return;
     }
+
+    wxConfig::Get()->Write("last_file_path", dlg.GetDirectory());
+    wxArrayString paths;
+    dlg.GetPaths(paths);
+
+    win.GetActionTarget()->DoOpenFile(paths.front());
+    paths.erase(paths.begin());
+
+    if (!paths.empty())
+        OpenFiles(paths);
 }
 
 
 #ifdef HAVE_HTTP_CLIENT
 void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
 {
-    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenFromCrowdin(event) );
+    InvokingWindowProxy win(event);
 
-    PoeditFrame *f = PoeditFrame::CreateEmpty();
-    f->OnOpenFromCrowdin(event);
+    if (!win.IsPerformingActionAllowed())
+        return;
+
+    win.NotifyIsStarting();
+    CrowdinOpenFile(win.GetParentWindowIfAny(), [=](int retval, wxString filename)
+    {
+        if (retval == wxID_OK)
+            win.GetActionTarget()->NewFromCrowdin(filename);
+        else
+            win.NotifyWasAborted();
+    });
 }
 #endif
 
@@ -947,14 +1045,16 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
 #ifndef __WXOSX__
 void PoeditApp::OnOpenHist(wxCommandEvent& event)
 {
-    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenHist(event) );
+    InvokingWindowProxy win(event);
 
-    wxString f = event.GetString();
-    OpenFiles(wxArrayString(1, &f));
+    if (!win.IsPerformingActionAllowed())
+        return;
+
+    win.NotifyIsStarting();
+    win.GetActionTarget()->DoOpenFile(event.GetString());
 }
 #endif // !__WXOSX__
 
-#endif // !__WXMSW__
 
 
 void PoeditApp::OnAbout(wxCommandEvent&)

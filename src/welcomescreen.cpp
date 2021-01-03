@@ -99,7 +99,7 @@
 - (void)controlAction:(id)sender
 {
     #pragma unused(sender)
-    wxCommandEvent event(wxEVT_BUTTON, _parent->GetId());
+    wxCommandEvent event(wxEVT_MENU, _parent->GetId());
     event.SetEventObject(_parent);
     _parent->ProcessWindowEvent(event);
 }
@@ -137,12 +137,42 @@ public:
         : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
     {
         SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
+        Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+    }
+
+    void OnPressed(wxCommandEvent& e)
+    {
+        wxCommandEvent event(wxEVT_MENU, GetId());
+        event.SetEventObject(this);
+        ProcessWindowEvent(event);
     }
 };
 
 #else
 
-typedef wxCommandLinkButton ActionButton;
+class ActionButton : public wxCommandLinkButton
+{
+public:
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString())
+        : wxCommandLinkButton(parent, winid, label, note)
+    {
+        if (!image.empty())
+        {
+            auto bmp = wxArtProvider::GetBitmap(image);
+            SetBitmap(bmp);
+        }
+
+        Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+    }
+
+private:
+    void OnPressed(wxCommandEvent& e)
+    {
+        wxCommandEvent event(wxEVT_MENU, GetId());
+        event.SetEventObject(this);
+        ProcessWindowEvent(event);
+    }
+};
 
 #endif
 
@@ -199,68 +229,6 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent) : wxPanel(parent, wxID_AN
         GetParent()->GetEventHandler()->AddPendingEvent(event);
     });
 }
-
-
-WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
-    : WelcomeScreenBase(parent)
-{
-    auto sizer = new wxBoxSizer(wxVERTICAL);
-    auto uberSizer = new wxBoxSizer(wxHORIZONTAL);
-    uberSizer->AddStretchSpacer();
-    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
-    uberSizer->AddStretchSpacer();
-    SetSizer(uberSizer);
-
-    auto headerSizer = new wxBoxSizer(wxVERTICAL);
-
-    auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
-    headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
-
-    auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
-    headerSizer->Add(version, wxSizerFlags().Center());
-
-    headerSizer->AddSpacer(PX(20));
-
-    sizer->Add(headerSizer, wxSizerFlags().Expand());
-
-    sizer->Add(new ActionButton(
-                       this, wxID_OPEN,
-                       _("Edit a translation"),
-                       _("Open an existing PO file and edit the translation.")),
-               wxSizerFlags().PXBorderAll().Expand());
-
-    sizer->Add(new ActionButton(
-                       this, XRCID("menu_new_from_pot"),
-                       _("Create new translation"),
-                       _("Take an existing PO file or POT template and create a new translation from it.")),
-               wxSizerFlags().PXBorderAll().Expand());
-
-#ifdef HAVE_HTTP_CLIENT
-    sizer->Add(new ActionButton(
-                       this, XRCID("menu_open_crowdin"),
-                       _("Collaborate on a translation with others"),
-                       _("Download a file from Crowdin project, translate and sync your changes back.")),
-               wxSizerFlags().PXBorderAll().Expand());
-    sizer->Add(new LearnAboutCrowdinLink(this, _("What is Crowdin?")), wxSizerFlags().Right().Border(wxRIGHT, PX(8)));
-#endif // HAVE_HTTP_CLIENT
-
-    sizer->AddSpacer(PX(50));
-
-    ColorScheme::SetupWindowColors(this, [=]
-    {
-        header->SetForegroundColour(ColorScheme::Get(Color::Label));
-        version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-    });
-
-    // Hide the cosmetic logo part if the screen is too small:
-    auto minFullSize = sizer->GetMinSize().y + PX(50);
-    Bind(wxEVT_SIZE, [=](wxSizeEvent& e){
-        sizer->Show((size_t)0, e.GetSize().y >= minFullSize);
-        e.Skip();
-    });
-}
-
-
 
 
 EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
@@ -321,4 +289,134 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
     }
 
     Layout();
+}
+
+
+
+WelcomeWindow *WelcomeWindow::ms_instance = nullptr;
+
+WelcomeWindow *WelcomeWindow::GetAndActivate()
+{
+    if (!ms_instance)
+        ms_instance = new WelcomeWindow();
+    ms_instance->Show();
+    if (ms_instance->IsIconized())
+        ms_instance->Iconize(false);
+    ms_instance->Raise();
+    return ms_instance;
+}
+
+void WelcomeWindow::HideActive()
+{
+    if (ms_instance)
+        ms_instance->Hide();
+}
+
+
+WelcomeWindow::~WelcomeWindow()
+{
+    ms_instance = nullptr;
+}
+
+WelcomeWindow::WelcomeWindow()
+    : wxFrame(nullptr, wxID_ANY, _("Welcome to Poedit"),
+              wxDefaultPosition, wxDefaultSize,
+              wxSYSTEM_MENU | wxMINIMIZE_BOX | wxCLOSE_BOX | wxCAPTION | wxCLIP_CHILDREN)
+{
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+            SetBackgroundColour(*wxWHITE);
+        else
+            SetBackgroundColour(GetDefaultAttributes().colBg);
+    });
+
+#ifdef __WXMSW__
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
+#endif
+
+    auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    auto leftsizer = new wxBoxSizer(wxVERTICAL);
+
+#if defined(__WXMSW__)
+    wxIcon logo;
+    if (HiDPIScalingFactor() == 1.0)
+    {
+        logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 128, 128);
+    }
+    else
+    {
+        logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 256, 256);
+        if (HiDPIScalingFactor() != 2.0)
+        {
+            wxBitmap bmp;
+            bmp.CopyFromIcon(logo);
+            logo.CopyFromBitmap(wxBitmap(bmp.ConvertToImage().Scale(PX(128), PX(128), wxIMAGE_QUALITY_BICUBIC)));
+        }
+    }
+#elif defined(__WXGTK__)
+    auto logo = wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(128, 128));
+#else
+    auto logo = wxArtProvider::GetBitmap("Poedit");
+#endif
+    auto logoWindow = new wxStaticBitmap(this, wxID_ANY, logo, wxDefaultPosition, wxSize(PX(128),PX(128)));
+    leftsizer->Add(logoWindow, wxSizerFlags().Center().Border(wxALL, PX(5)));
+
+    auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
+    leftsizer->Add(header, wxSizerFlags().Center());
+
+    auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
+    leftsizer->Add(version, wxSizerFlags().Center().Border(wxTOP, PX(5)));
+
+    leftsizer->AddSpacer(PX(30));
+
+    leftsizer->Add(new ActionButton(
+                       this, wxID_OPEN,
+                       _("Edit a translation"),
+                       _("Open an existing PO file and edit the translation."),
+                       "Welcome_EditTranslation"),
+               wxSizerFlags().Border(wxTOP, PX(2)).Expand());
+
+    leftsizer->Add(new ActionButton(
+                       this, XRCID("menu_new_from_pot"),
+                       _("Create new translation"),
+                       _("Take an existing PO file or POT template and create a new translation from it."),
+                        "Welcome_CreateTranslation"),
+               wxSizerFlags().Border(wxTOP, PX(2)).Expand());
+
+#ifdef HAVE_HTTP_CLIENT
+    leftsizer->Add(new ActionButton(
+                       this, XRCID("menu_open_crowdin"),
+                       _("Collaborate on a translation with others"),
+                       _("Download a file from Crowdin project, translate and sync your changes back."),
+                       "Welcome_Collaborate"),
+               wxSizerFlags().Border(wxTOP|wxBOTTOM, PX(2)).Expand());
+#endif // HAVE_HTTP_CLIENT
+
+    topsizer->Add(leftsizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
+
+    auto recentFilesPlaceholder = new wxWindow(this, wxID_ANY);
+    recentFilesPlaceholder->SetMinSize(wxSize(PX(320), -1));
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        recentFilesPlaceholder->SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+    });
+    topsizer->Add(recentFilesPlaceholder, wxSizerFlags().Expand());
+
+    SetSizerAndFit(topsizer);
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        header->SetForegroundColour(ColorScheme::Get(Color::Label));
+        version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
+    });
+
+#ifdef __WXOSX__
+    // Pretify the window:
+    NSWindow *wnd = (NSWindow*)GetWXWindow();
+    wnd.styleMask |= NSFullSizeContentViewWindowMask;
+    wnd.titleVisibility = NSWindowTitleHidden;
+    wnd.titlebarAppearsTransparent = YES;
+    wnd.movableByWindowBackground = YES;
+#endif
 }
