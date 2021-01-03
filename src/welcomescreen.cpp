@@ -26,6 +26,7 @@
 #include "welcomescreen.h"
 
 #include "colorscheme.h"
+#include "custom_buttons.h"
 #include "customcontrols.h"
 #include "crowdin_gui.h"
 #include "edapp.h"
@@ -34,6 +35,7 @@
 #include "str_helpers.h"
 #include "utility.h"
 
+#include <wx/config.h>
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
@@ -41,141 +43,13 @@
 #include <wx/artprov.h>
 #include <wx/font.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/settings.h>
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
-#ifdef __WXOSX__
-    #include "StyleKit.h"
-    #include <wx/nativewin.h>
-    #if !wxCHECK_VERSION(3,1,0)
-        #include "wx_backports/nativewin.h"
-    #endif
-#else
-    #include <wx/commandlinkbutton.h>
-#endif
-
-#ifdef __WXOSX__
-
-@interface POWelcomeButton : NSButton
-
-@property wxWindow *parent;
-@property NSString *heading;
-
-@end
-
-@implementation POWelcomeButton
-
-- (id)initWithLabel:(NSString*)label heading:(NSString*)heading
-{
-    self = [super init];
-    if (self)
-    {
-        self.title = label;
-        self.heading = heading;
-    }
-    return self;
-}
-
-- (void)sizeToFit
-{
-    [super sizeToFit];
-    NSSize size = self.frame.size;
-    size.height = 64;
-    [self setFrameSize:size];
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    #pragma unused(dirtyRect)
-    [StyleKit drawWelcomeButtonWithFrame:self.bounds
-                                    icon:self.image
-                                   label:self.heading
-                             description:self.title
-                              isDarkMode:(ColorScheme::GetWindowMode(self.parent) == ColorScheme::Dark)
-                                 pressed:[self isHighlighted]];
-}
-
-- (void)controlAction:(id)sender
-{
-    #pragma unused(sender)
-    wxCommandEvent event(wxEVT_MENU, _parent->GetId());
-    event.SetEventObject(_parent);
-    _parent->ProcessWindowEvent(event);
-}
-
-@end
-
-#endif // __WXOSX__
-
 namespace
 {
-
-#ifdef __WXOSX__
-
-class ActionButton : public wxNativeWindow
-{
-public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString())
-    {
-        SetMinSize(wxSize(510, -1));
-
-        POWelcomeButton *view = [[POWelcomeButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
-        if (!image.empty())
-            view.image = [NSImage imageNamed:str::to_NS(image)];
-        view.parent = this;
-        wxNativeWindow::Create(parent, winid, view);
-    }
-};
-
-#elif defined(__WXGTK__)
-
-class ActionButton : public wxButton
-{
-public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
-    {
-        SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
-        Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
-    }
-
-    void OnPressed(wxCommandEvent& e)
-    {
-        wxCommandEvent event(wxEVT_MENU, GetId());
-        event.SetEventObject(this);
-        ProcessWindowEvent(event);
-    }
-};
-
-#else
-
-class ActionButton : public wxCommandLinkButton
-{
-public:
-    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString())
-        : wxCommandLinkButton(parent, winid, label, note)
-    {
-        if (!image.empty())
-        {
-            auto bmp = wxArtProvider::GetBitmap(image);
-            SetBitmap(bmp);
-        }
-
-        Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
-    }
-
-private:
-    void OnPressed(wxCommandEvent& e)
-    {
-        wxCommandEvent event(wxEVT_MENU, GetId());
-        event.SetEventObject(this);
-        ProcessWindowEvent(event);
-    }
-};
-
-#endif
-
 
 class HeaderStaticText : public wxStaticText
 {
@@ -283,7 +157,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext)
             explain3->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
         });
 
-        btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+        btnSources->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             parent->EditCatalogPropertiesAndUpdateFromSources();
         });
     }

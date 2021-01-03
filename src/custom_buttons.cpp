@@ -30,6 +30,8 @@
 #include "str_helpers.h"
 #include "utility.h"
 
+#include <wx/artprov.h>
+
 #ifdef __WXMSW__
 #include <wx/dc.h>
 #include <wx/graphics.h>
@@ -48,6 +50,71 @@
 #import <QuartzCore/QuartzCore.h>
 
 #include "StyleKit.h"
+
+// ---------------------------------------------------------------------
+// ActionButton
+// ---------------------------------------------------------------------
+
+@interface POActionButton : NSButton
+
+@property wxWindow *parent;
+@property NSString *heading;
+
+@end
+
+@implementation POActionButton
+
+- (id)initWithLabel:(NSString*)label heading:(NSString*)heading
+{
+    self = [super init];
+    if (self)
+    {
+        self.title = label;
+        self.heading = heading;
+    }
+    return self;
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    NSSize size = self.frame.size;
+    size.height = 64;
+    [self setFrameSize:size];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    #pragma unused(dirtyRect)
+    [StyleKit drawWelcomeButtonWithFrame:self.bounds
+                                    icon:self.image
+                                   label:self.heading
+                             description:self.title
+                              isDarkMode:(ColorScheme::GetWindowMode(self.parent) == ColorScheme::Dark)
+                                 pressed:[self isHighlighted]];
+}
+
+- (void)controlAction:(id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_MENU, _parent->GetId());
+    event.SetEventObject(_parent);
+    _parent->ProcessWindowEvent(event);
+}
+
+@end
+
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image)
+{
+    SetMinSize(wxSize(510, -1));
+
+    POActionButton *view = [[POActionButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
+    if (!image.empty())
+        view.image = [NSImage imageNamed:str::to_NS(image)];
+    view.parent = this;
+    wxNativeWindow::Create(parent, winid, view);
+}
+
 
 // ---------------------------------------------------------------------
 // SwitchButton
@@ -214,6 +281,33 @@ void SwitchButton::SendToggleEvent()
 
 
 #else // !__WXOSX__
+
+#ifdef __WXGTK__
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& /*image*/)
+    : wxButton(parent, winid, label, wxDefaultPosition, wxSize(500, 50), wxBU_LEFT)
+{
+    SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
+    Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+}
+#else
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image)
+    : wxCommandLinkButton(parent, winid, label, note)
+{
+    if (!image.empty())
+    {
+        auto bmp = wxArtProvider::GetBitmap(image);
+        SetBitmap(bmp);
+    }
+    Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+}
+#endif
+
+void ActionButton::OnPressed(wxCommandEvent&)
+{
+    wxCommandEvent event(wxEVT_MENU, GetId());
+    event.SetEventObject(this);
+    ProcessWindowEvent(event);
+}
 
 
 SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& label)

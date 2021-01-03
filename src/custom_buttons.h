@@ -31,12 +31,33 @@
 
 #ifdef __WXOSX__
     #include <wx/nativewin.h>
-    #if !wxCHECK_VERSION(3,1,0)
-        #include "wx_backports/nativewin.h"
-    #endif
+#endif
+
+#ifdef __WXMSW__
+    #include <wx/commandlinkbutton.h>
 #endif
 
 #include <memory>
+
+#if defined(__WXOSX__)
+typedef wxNativeWindow ActionButtonBase;
+#elif defined(__WXGTK__)
+typedef wxButton ActionButtonBase;
+#elif defined(__WXMSW__)
+typedef wxCommandLinkButton ActionButtonBase;
+#endif
+
+/// Larger button generating wxEVT_MENU, e.g. for welcome screen
+class ActionButton : public ActionButtonBase
+{
+public:
+    ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note, const wxString& image = wxString());
+
+private:
+#ifndef __WXOSX__
+    void OnPressed(wxCommandEvent& e);
+#endif
+};
 
 
 #ifdef __WXOSX__
