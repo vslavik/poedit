@@ -55,6 +55,7 @@ poedit_SOURCES = \
                  logcapture.h \
                  main_toolbar.h wx/main_toolbar.cpp \
                  manager.h manager.cpp \
+                 menus.h menus.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  prefsdlg.cpp prefsdlg.h \
                  pretranslate.cpp pretranslate.h \

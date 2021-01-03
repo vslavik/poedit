@@ -24,8 +24,10 @@
  */
 
 
-#ifndef _EDAPP_H_
-#define _EDAPP_H_
+#ifndef Poedit_edapp_h
+#define Poedit_edapp_h
+
+#include "menus.h"
 
 #include <wx/app.h>
 #include <wx/string.h>
@@ -36,11 +38,10 @@
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
-class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 
 
-/// wxApp for use with 
-class PoeditApp : public wxApp
+/// wxApp for use with
+class PoeditApp : public wxApp, public MenusManager
 {
     public:
         PoeditApp();
@@ -79,10 +80,6 @@ class PoeditApp : public wxApp
         void OpenPoeditWeb(const wxString& path);
 
 #ifdef __WXOSX__
-        // Make OSX-specific modifications to the menus, e.g. adding items into
-        // the apple menu etc. Call on every newly created menubar
-        void TweakOSXMenuBar(wxMenuBar *bar);
-        void FixupMenusForMac(wxMenuBar *bar);
         void OnIdleFixupMenusForMac(wxIdleEvent& event);
         virtual void OSXOnWillFinishLaunching();
         void OnCloseWindowCommand(wxCommandEvent& event);
@@ -147,4 +144,4 @@ class PoeditApp : public wxApp
 DECLARE_APP(PoeditApp);
 
 
-#endif // _EDAPP_H_
+#endif // Poedit_edapp_h

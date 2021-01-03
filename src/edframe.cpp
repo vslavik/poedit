@@ -517,22 +517,10 @@ PoeditFrame::PoeditFrame() :
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
-    wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar("mainmenu");
+    wxMenuBar *MenuBar = wxGetApp().CreateMenu(Menu::Editor);
     if (MenuBar)
     {
-        RecentFiles::Get().UseMenu(MenuBar->FindItem(XRCID("open_recent")));
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
-#ifdef __WXOSX__
-        wxGetApp().TweakOSXMenuBar(MenuBar);
-#endif
-#ifndef HAVE_HTTP_CLIENT
-        wxMenu *menu;
-        wxMenuItem *item;
-        item = MenuBar->FindItem(XRCID("menu_update_from_crowdin"), &menu);
-        menu->Destroy(item);
-        item = MenuBar->FindItem(XRCID("menu_open_crowdin"), &menu);
-        menu->Destroy(item);
-#endif
         SetMenuBar(MenuBar);
     }
     else
