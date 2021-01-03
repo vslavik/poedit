@@ -213,9 +213,6 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     auto headerSizer = new wxBoxSizer(wxVERTICAL);
 
-    auto hdr = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("PoeditWelcome"));
-    headerSizer->Add(hdr, wxSizerFlags().Center());
-
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 

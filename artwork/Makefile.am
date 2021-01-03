@@ -38,7 +38,6 @@ dist_uiicons_DATA = \
 		ExtractorsGNUgettext.png \
 		ItemBookmarkTemplate.png \
 		ItemCommentTemplate.png \
-		PoeditWelcome.png \
 		SuggestionErrorTemplate.png \
 		SuggestionPerfectMatch.png \
 		SuggestionTMTemplate.png \
