@@ -77,14 +77,9 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
     (void)client;
 
     static std::set<wxString> s_directional = {
-        "ContributeOn",
         "poedit-status-comment",
         "follow-link",
-        "sidebar",
-        "Welcome_EditTranslation",
-        "Welcome_CreateTranslation",
-        "Welcome_WordPress",
-        "Welcome_Collaborate"
+        "sidebar"
     };
 
     bool mirror = s_directional.find(id) != s_directional.end();
