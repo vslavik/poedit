@@ -623,8 +623,8 @@ public:
         if (item->HasError())
             return;
 
-        // ignore untranslated or unfinished translations
-        if (item->IsFuzzy() || !item->IsTranslated())
+        // ignore untranslated, pre-translated and non-revised or unfinished translations
+        if (item->IsFuzzy() || item->IsPreTranslated() || !item->IsTranslated())
             return;
 
         // always store at least the singular translation
