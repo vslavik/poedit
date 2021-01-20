@@ -762,7 +762,7 @@ wxString AnyTranslatableTextCtrl::DoCopyText(long from, long to)
 
 void AnyTranslatableTextCtrl::DoPasteText(long from, long to, const wxString& s)
 {
-    Replace(from, to, EscapePlainText(s));
+    Replace(from, to, EscapePlainText(bidi::strip_pointless_control_chars(s, m_language.Direction())));
 }
 
 void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
