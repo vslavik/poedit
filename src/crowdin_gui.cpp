@@ -71,7 +71,8 @@
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     : wxPanel(parent, wxID_ANY),
-      m_state(State::Uninitialized)
+      m_state(State::Uninitialized),
+      m_activity(nullptr)
 {
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     sizer->SetMinSize(PX(400), -1);
@@ -161,9 +162,9 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             auto text = (state == State::Authenticating)
                       ? _(L"Waiting for authentication…")
                       : _(L"Updating user information…");
-            auto waitingLabel = new ActivityIndicator(this);
-            sizer->Add(waitingLabel, wxSizerFlags().Center());
-            waitingLabel->Start(text);
+            m_activity = new ActivityIndicator(this, ActivityIndicator::Centered);
+            sizer->Add(m_activity, wxSizerFlags().Expand());
+            m_activity->Start(text);
             break;
         }
 
@@ -216,7 +217,7 @@ void CrowdinLoginPanel::UpdateUserInfo()
             m_userAvatar = u.avatar;
             ChangeState(State::SignedIn);
         })
-        .catch_all([](dispatch::exception_ptr){});
+        .catch_all(m_activity->HandleError);
 }
 
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
@@ -492,7 +493,7 @@ private:
             Layout();
             label->Show();
         })
-        .catch_all([](dispatch::exception_ptr){});
+        .catch_all(m_activity->HandleError);
     }
 
     void EnableAllChoices(bool enable = true)

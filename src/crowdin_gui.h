@@ -74,6 +74,7 @@ protected:
     virtual void OnUserSignedIn();
 
     State m_state;
+    ActivityIndicator *m_activity;
     wxBoxSizer *m_loginInfo;
     wxButton *m_signIn, *m_signOut;
     wxString m_userName, m_userLogin;
