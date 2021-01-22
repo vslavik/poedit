@@ -26,7 +26,18 @@
 #ifndef Poedit_welcomescreen_h
 #define Poedit_welcomescreen_h
 
+#include "titleless_window.h"
+
 #include <wx/panel.h>
+#include <wx/frame.h>
+
+#ifdef __WXMSW__
+#include "windows/win10_menubar.h"
+typedef WithWindows10Menubar<TitlelessWindow> WelcomeWindowBase;
+#else
+typedef TitlelessWindow WelcomeWindowBase;
+#endif
+
 
 class PoeditFrame;
 
@@ -36,19 +47,40 @@ protected:
     WelcomeScreenBase(wxWindow *parent);
 };
 
-/// Content view for initially opened Poedit, without a file
-class WelcomeScreenPanel : public WelcomeScreenBase
-{
-public:
-    WelcomeScreenPanel(wxWindow *parent);
-};
-
-
 /// Content view for an empty file (File->New)
 class EmptyPOScreenPanel : public WelcomeScreenBase
 {
 public:
     EmptyPOScreenPanel(PoeditFrame *parent, bool isGettext);
+};
+
+
+/// Window for initially opened Poedit, without a file
+class WelcomeWindow : public WelcomeWindowBase
+{
+public:
+    static WelcomeWindow *GetAndActivate();
+    static WelcomeWindow *GetIfActive()
+        { return ms_instance && ms_instance->IsShown() ? ms_instance : nullptr; }
+
+    /// Hides the welcome window if it is active, and returns true iff it was previously visible
+    static bool HideActive();
+
+    bool ShouldPreventAppExit() const override
+    {
+        return IsShownOnScreen();
+    }
+
+protected:
+    WelcomeWindow();
+    ~WelcomeWindow();
+
+#ifdef __WXMSW__
+    bool ShouldPlaceMenuInNCArea() const override { return false; }
+#endif
+
+private:
+    static WelcomeWindow *ms_instance;
 };
 
 

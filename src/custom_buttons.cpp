@@ -30,10 +30,13 @@
 #include "str_helpers.h"
 #include "utility.h"
 
+#include <wx/artprov.h>
+
 #ifdef __WXMSW__
 #include <wx/dc.h>
 #include <wx/graphics.h>
 #include <wx/scopedptr.h>
+#include <wx/msw/dcclient.h>
 #include <wx/msw/wrapgdip.h>
 #include <wx/msw/uxtheme.h>
 #endif
@@ -48,6 +51,105 @@
 #import <QuartzCore/QuartzCore.h>
 
 #include "StyleKit.h"
+
+// ---------------------------------------------------------------------
+// ActionButton
+// ---------------------------------------------------------------------
+
+@interface POActionButton : NSButton
+
+@property wxWindow *parent;
+@property NSString *heading;
+@property BOOL mouseHover;
+
+@end
+
+@implementation POActionButton
+
+- (id)initWithLabel:(NSString*)label heading:(NSString*)heading
+{
+    self = [super init];
+    if (self)
+    {
+        self.title = label;
+        self.heading = heading;
+        self.buttonType = NSMomentaryPushInButton;
+        self.bezelStyle = NSTexturedRoundedBezelStyle;
+        self.showsBorderOnlyWhileMouseInside = YES;
+        self.mouseHover = NO;
+    }
+    return self;
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    NSSize size = self.frame.size;
+    size.height = 48;
+    if (self.image)
+        size.width += 32;
+    [self setFrameSize:size];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    #pragma unused(dirtyRect)
+    NSColor *bg = self.window.backgroundColor;
+    if (self.mouseHover)
+    {
+        NSColor *highlight;
+        if (@available(macOS 10.14, *)) {
+            highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+        } else {
+            highlight = [NSColor colorWithWhite:0.72 alpha:1.0];
+        }
+        // use only lighter version of the highlight by blending with the background
+        bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
+    }
+    [StyleKit drawActionButtonWithFrame:self.bounds
+                            buttonColor:bg
+                                hasIcon:self.image != nil
+                                  label:self.heading
+                            description:self.title];
+
+    // unlike normal drawing methods, NSButtonCell's drawImage supports template images
+    if (self.image)
+        [self.cell drawImage:self.image withFrame:NSMakeRect(NSMinX(self.bounds) + 18, NSMinY(self.bounds) + 8, 32, 32) inView:self];
+}
+
+- (void)mouseEntered:(NSEvent *)event
+{
+    [super mouseEntered:event];
+    self.mouseHover = YES;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+    [super mouseExited:event];
+    self.mouseHover = NO;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)controlAction:(id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_MENU, _parent->GetId());
+    event.SetEventObject(_parent);
+    _parent->ProcessWindowEvent(event);
+}
+
+@end
+
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note)
+{
+    POActionButton *view = [[POActionButton alloc] initWithLabel:str::to_NS(note) heading:str::to_NS(label)];
+    if (!symbolicName.empty())
+        view.image = [NSImage imageNamed:str::to_NS("AB_" + symbolicName + "Template")];
+    view.parent = this;
+    wxNativeWindow::Create(parent, winid, view);
+}
+
 
 // ---------------------------------------------------------------------
 // SwitchButton
@@ -214,6 +316,92 @@ void SwitchButton::SendToggleEvent()
 
 
 #else // !__WXOSX__
+
+#ifdef __WXGTK__
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& /*symbolicName*/, const wxString& label, const wxString& note)
+    : wxButton(parent, winid, label, wxDefaultPosition, wxSize(-1, 50), wxBU_LEFT)
+{
+    SetLabelMarkup(wxString::Format("<b>%s</b>\n<small>%s</small>", label, note));
+    Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+}
+#endif // __WXGTK__
+
+#ifdef __WXMSW__
+ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& symbolicName, const wxString& label, const wxString& note) 
+    : wxCommandLinkButton(parent, winid, label, note, wxDefaultPosition, wxSize(-1, PX(48)))
+{
+    m_title = label;
+    m_note = note;
+    m_titleFont = GetFont().MakeLarger();
+
+    MakeOwnerDrawn();
+
+    if (!symbolicName.empty())
+    {
+        auto bmp = wxArtProvider::GetBitmap("AB_" + symbolicName + "Template@opaque");
+        SetBitmap(bmp);
+    }
+
+    Bind(wxEVT_BUTTON, &ActionButton::OnPressed, this);
+}
+
+bool ActionButton::MSWOnDraw(WXDRAWITEMSTRUCT* wxdis)
+{
+    LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)wxdis;
+    HDC hdc = lpDIS->hDC;
+
+    UINT state = lpDIS->itemState;
+    const bool highlighted = IsMouseInWindow();
+    const bool isRtl = ::GetLayout(hdc)& LAYOUT_RTL;
+
+    wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
+    wxRect textRect(rect);
+    textRect.SetLeft(rect.GetLeft() + PX(8));
+
+    wxPaintDCEx dc(this, hdc);
+
+    if (highlighted)
+    {
+        dc.SetPen(*wxTRANSPARENT_PEN);
+        dc.SetBrush(GetBackgroundColour().ChangeLightness(95));
+        dc.DrawRectangle(rect);
+    }
+
+    auto bmp = GetBitmap();
+    if (bmp.IsOk())
+    {
+        dc.DrawBitmap(bmp, PX(16), PX(8));
+        textRect.SetLeft(textRect.GetLeft() + PX(48));
+        textRect.SetRight(rect.GetRight());
+    };
+
+    dc.SetFont(m_titleFont);
+    dc.SetTextForeground(ColorScheme::Get(::Color::Label, this));
+    int theight;
+    dc.GetTextExtent(m_title, nullptr, &theight);
+    dc.DrawText(m_title, textRect.x, PX(24) - theight);
+    dc.SetFont(GetFont());
+    dc.SetTextForeground(ColorScheme::Get(::Color::SecondaryLabel, this));
+    dc.DrawText(m_note, textRect.x, PX(24));
+
+    // draw the focus rectangle if we need it
+    if ((state & ODS_FOCUS) && !(state & ODS_NOFOCUSRECT))
+    {
+        RECT r = { rect.x, rect.y, rect.width, rect.height };
+        DrawFocusRect(hdc, &r);
+    }
+
+    return true;
+}
+
+#endif // __WXMSW__
+
+void ActionButton::OnPressed(wxCommandEvent&)
+{
+    wxCommandEvent event(wxEVT_MENU, GetId());
+    event.SetEventObject(this);
+    ProcessWindowEvent(event);
+}
 
 
 SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& label)

@@ -362,6 +362,7 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent, int flags)
     SetSizer(sizer);
 
     m_spinner = new wxActivityIndicator(this, wxID_ANY);
+    m_spinner->Hide();
     m_spinner->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     m_label = new wxStaticText(this, wxID_ANY, "");
 #ifdef __WXOSX__

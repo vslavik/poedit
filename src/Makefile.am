@@ -55,6 +55,7 @@ poedit_SOURCES = \
                  logcapture.h \
                  main_toolbar.h wx/main_toolbar.cpp \
                  manager.h manager.cpp \
+                 menus.h menus.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  prefsdlg.cpp prefsdlg.h \
                  pretranslate.cpp pretranslate.h \
@@ -67,6 +68,7 @@ poedit_SOURCES = \
                  str_helpers.h \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \
+                 titleless_window.h titleless_window.cpp \
                  tm/suggestions.cpp tm/suggestions.h \
                  tm/transmem.cpp tm/transmem.h \
                  tm/tmx_io.cpp tm/tmx_io.h \

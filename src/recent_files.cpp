@@ -25,6 +25,7 @@
 
 #include "recent_files.h"
 
+#include "colorscheme.h"
 #include "hidpi.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
@@ -40,9 +41,14 @@
 #include <wx/log.h>
 #include <wx/menu.h>
 #include <wx/mimetype.h>
+#include <wx/renderer.h>
 #include <wx/settings.h>
 #include <wx/weakref.h>
 #include <wx/xrc/xmlres.h>
+
+#ifdef __WXMSW__
+#include <wx/generic/private/markuptext.h>
+#endif
 
 #include <memory>
 #include <mutex>
@@ -106,15 +112,32 @@ protected:
 
 
 #ifndef __WXOSX__
+
 class file_icons
 {
 public:
-    file_icons() {}
-
-    wxBitmap get(const wxString& ext)
+    file_icons()
     {
-        auto i = m_cache.find(ext);
-        if (i != m_cache.end())
+        m_iconSize[icon_small] = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+        m_iconSize[icon_large] = wxSystemSettings::GetMetric(wxSYS_ICON_X);
+    }
+
+    wxBitmap get_small(const wxString& ext) { return do_get(ext, icon_small);  }
+    wxBitmap get_large(const wxString& ext) { return do_get(ext, icon_large); }
+
+private:
+    enum icon_size
+    {
+        icon_small = 0,
+        icon_large = 1,
+        icon_max
+    };
+
+    wxBitmap do_get(const wxString& ext, icon_size size)
+    {
+        auto& cache = m_cache[size];
+        auto i = cache.find(ext);
+        if (i != cache.end())
             return i->second;
 
         std::unique_ptr<wxFileType> ft(wxTheMimeTypesManager->GetFileTypeFromExtension(ext));
@@ -122,17 +145,15 @@ public:
         {
             wxIconLocation icon;
             if (ft->GetIcon(&icon))
-                return m_cache.emplace(ext, create_bitmap(icon)).first->second;
+                return cache.emplace(ext, create_bitmap(icon, size)).first->second;
         }
 
-        m_cache.emplace(ext, wxNullBitmap);
+        cache.emplace(ext, wxNullBitmap);
         return wxNullBitmap;
     }
 
-private:
-    wxBitmap create_bitmap(const wxIconLocation& loc)
+    wxBitmap create_bitmap(const wxIconLocation& loc, icon_size size)
     {
-        const int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
         wxString fullname = loc.GetFileName();
 #ifdef __WXMSW__
         if (loc.GetIndex())
@@ -141,15 +162,19 @@ private:
             fullname << ';' << loc.GetIndex();
         }
 #endif
-        wxIcon icon(fullname, wxBITMAP_TYPE_ICO, size, size);
+        wxIcon icon(fullname, wxBITMAP_TYPE_ICO, m_iconSize[size], m_iconSize[size]);
         if (!icon.IsOk())
             icon.LoadFile(fullname, wxBITMAP_TYPE_ICO);
 
         return icon;
     }
 
-    std::map<wxString, wxBitmap> m_cache;
+    int m_iconSize[icon_max];
+    std::map<wxString, wxBitmap> m_cache[icon_max];
 };
+
+typedef std::shared_ptr<file_icons> file_icons_ptr;
+
 #endif // !__WXOSX__
 
 } // anonymous namespace
@@ -179,6 +204,15 @@ public:
         fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
         NSURL *url = [NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())];
         [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:url];
+    }
+
+    std::vector<wxFileName> GetRecentFiles()
+    {
+        std::vector<wxFileName> f;
+        NSArray<NSURL*> *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
+        for (NSURL *url in urls)
+            f.emplace_back(str::to_wx(url.path));
+        return f;
     }
 
     void MacCreateFakeOpenRecentMenu()
@@ -237,6 +271,8 @@ class RecentFiles::impl
 {
 public:
     impl()
+        : m_icons_cache(new file_icons),
+          m_history(m_icons_cache)
     {
         wxConfigBase *cfg = wxConfig::Get();
         cfg->SetPath("/");
@@ -252,7 +288,7 @@ public:
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent& e)
         {
-            wxString f(m_history.GetHistoryFile(e.GetId() - wxID_FILE1));
+            auto f = GetRecentFiles()[e.GetId() - wxID_FILE1].GetFullPath();
             if (!wxFileExists(f))
             {
                 wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
@@ -281,6 +317,11 @@ public:
         UpdateAfterChange();
     }
 
+    std::vector<wxFileName> GetRecentFiles()
+    {
+        return m_history.GetRecentFiles();
+    }
+
     void ClearHistory()
     {
         while (m_history.GetCount())
@@ -288,6 +329,8 @@ public:
 
         UpdateAfterChange();
     }
+
+    file_icons_ptr GetIconsCache() const { return m_icons_cache; }
 
 protected:
     void RebuildMenu(wxMenu *menu)
@@ -323,12 +366,23 @@ protected:
     class MyHistory : public wxFileHistory
     {
     public:
-        void AddFilesToMenu(wxMenu *menu) override
+        MyHistory(file_icons_ptr icons_cache) : m_icons_cache(icons_cache) {}
+
+        std::vector<wxFileName> GetRecentFiles()
         {
             std::vector<wxFileName> files;
             files.reserve(m_fileHistory.size());
             for (auto& f : m_fileHistory)
-                files.emplace_back(f);
+            {
+                if (wxFileName::FileExists(f))
+                    files.emplace_back(f);
+            }
+            return files;
+        }
+
+        void AddFilesToMenu(wxMenu *menu) override
+        {
+            auto files = GetRecentFiles();
 
             std::map<wxString, int> nameUses;
             for (auto& f : files)
@@ -354,14 +408,16 @@ protected:
 
             auto item = menu->Append(wxID_FILE1 + n, wxString::Format("&%d %s", n + 1, menuEntry));
             item->SetHelp(fn.GetFullPath());
-            item->SetBitmap(m_icons.get(fn.GetExt()));
+            item->SetBitmap(m_icons_cache->get_small(fn.GetExt()));
         }
 
-        file_icons m_icons;
+        file_icons_ptr m_icons_cache;
     };
 
 private:
     const wxWindowID m_idClear = wxNewId();
+
+    file_icons_ptr m_icons_cache;
     MyHistory m_history;
     menus_tracker<wxMenu> m_menus;
 };
@@ -409,6 +465,12 @@ void RecentFiles::NoteRecentFile(const wxFileName& fn)
     m_impl->NoteRecentFile(fn);
 }
 
+std::vector<wxFileName> RecentFiles::GetRecentFiles()
+{
+    return m_impl->GetRecentFiles();
+}
+
+
 #ifdef __WXOSX__
 void RecentFiles::MacCreateFakeOpenRecentMenu()
 {
@@ -420,3 +482,148 @@ void RecentFiles::MacTransferMenuTo(wxMenuBar *bar)
     m_impl->MacTransferMenuTo(bar);
 }
 #endif // __WXOSX__
+
+
+
+class RecentFilesCtrl::MultilineTextRenderer : public wxDataViewTextRenderer
+{
+public:
+    MultilineTextRenderer() : wxDataViewTextRenderer()
+    {
+#if wxCHECK_VERSION(3,1,1)
+        EnableMarkup();
+#endif
+    }
+
+#ifdef __WXMSW__
+    bool Render(wxRect rect, wxDC *dc, int state)
+    {
+        int flags = 0;
+        if ( state & wxDATAVIEW_CELL_SELECTED )
+            flags |= wxCONTROL_SELECTED;
+
+        for (auto& line: wxSplit(m_text, '\n'))
+        {
+            wxItemMarkupText markup(line);
+            markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
+            rect.y += rect.height / 2;
+        }
+
+        return true;
+    }
+
+    wxSize GetSize() const
+    {
+        if (m_text.empty())
+            return wxSize(wxDVC_DEFAULT_RENDERER_SIZE,wxDVC_DEFAULT_RENDERER_SIZE);
+
+        auto size = wxDataViewTextRenderer::GetSize();
+        size.y *= 2; // approximation enough for our needs
+        return size;
+    }
+#endif // __WXMSW__
+};
+
+struct RecentFilesCtrl::data
+{
+    std::vector<wxFileName> files;
+#ifndef __WXOSX__
+    file_icons_ptr icons_cache;
+#endif
+};
+
+
+// TODO: merge with CrowdinFileList which is very similar and has lot of duplicated code
+RecentFilesCtrl::RecentFilesCtrl(wxWindow *parent)
+    : wxDataViewListCtrl(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_NO_HEADER | wxBORDER_NONE),
+      m_data(new data)
+{
+#ifdef __WXOSX__
+    NSScrollView *scrollView = (NSScrollView*)GetHandle();
+    scrollView.automaticallyAdjustsContentInsets = NO;
+
+    NSTableView *tableView = (NSTableView*)[scrollView documentView];
+    tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
+    [tableView setIntercellSpacing:NSMakeSize(0.0, 0.0)];
+    const int icon_column_width = PX(32 + 12);
+#else // !__WXOSX__
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+    });
+
+    m_data->icons_cache = RecentFiles::Get().m_impl->GetIconsCache();
+    const int icon_column_width = wxSystemSettings::GetMetric(wxSYS_ICON_X) + PX(12);
+#endif
+
+#if wxCHECK_VERSION(3,1,1)
+    SetRowHeight(PX(46));
+#endif
+
+    AppendBitmapColumn("", 0, wxDATAVIEW_CELL_INERT, icon_column_width);
+    auto renderer = new MultilineTextRenderer();
+    auto column = new wxDataViewColumn(_("File"), renderer, 1, -1, wxALIGN_NOT, wxDATAVIEW_COL_RESIZABLE);
+    AppendColumn(column, "string");
+
+    ColorScheme::SetupWindowColors(this, [=]{ RefreshContent(); });
+
+    Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &RecentFilesCtrl::OnActivate, this);
+
+    wxGetTopLevelParent(parent)->Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+        e.Skip();
+        RefreshContent();
+    });
+}
+
+void RecentFilesCtrl::RefreshContent()
+{
+#ifdef __WXGTK__
+    auto secondaryFormatting = "alpha='50%'";
+#else
+    auto secondaryFormatting = wxString::Format("foreground='%s'", ColorScheme::Get(Color::SecondaryLabel).GetAsString(wxC2S_HTML_SYNTAX));
+#endif
+
+    DeleteAllItems();
+
+    m_data->files = RecentFiles::Get().GetRecentFiles();
+    for (auto f : m_data->files)
+    {
+#ifndef __WXMSW__
+        f.ReplaceHomeDir();
+#endif
+
+#if wxCHECK_VERSION(3,1,1)
+        wxString text = wxString::Format
+        (
+            "%s\n<small><span %s>%s</span></small>",
+            EscapeMarkup(f.GetFullName()),
+            secondaryFormatting,
+            EscapeMarkup(f.GetPath())
+        );
+#else
+        wxString text = f.GetFullPath();
+#endif
+
+#ifdef __WXOSX__
+        wxBitmap icon([[NSWorkspace sharedWorkspace] iconForFileType:str::to_NS(f.GetExt())]);
+#else
+        wxBitmap icon(m_data->icons_cache->get_large(f.GetExt()));
+#endif
+        wxVector<wxVariant> data{wxVariant(icon), text};
+        AppendItem(data);
+    }
+}
+
+void RecentFilesCtrl::OnActivate(wxDataViewEvent& event)
+{
+    auto index = ItemToRow(event.GetItem());
+    if (index == wxNOT_FOUND || index >= (int)m_data->files.size())
+        return;
+
+    auto fn = m_data->files[index].GetFullPath();
+
+    wxCommandEvent cevent(EVT_OPEN_RECENT_FILE);
+    cevent.SetEventObject(this);
+    cevent.SetString(fn);
+    ProcessWindowEvent(cevent);
+}

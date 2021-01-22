@@ -25,6 +25,16 @@
         <label platform="win">Open from Crowdin…</label>
         <label platform="unix|mac">Open From Crowdin…</label>
       </object>
+      <object class="separator" platform="win|unix"/>
+      <object class="wxMenuItem" name="menu_welcome" platform="win|unix">
+        <label platform="win">_Start window</label>
+        <label platform="unix">_Start Window</label>
+        <accel>Ctrl+Shift+1</accel>
+      </object>
+      <object class="wxMenuItem" name="menu_manager" platform="win|unix">
+        <label platform="win">Catalogs _manager</label>
+        <label platform="unix">Catalogs _Manager</label>
+      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
         <label>_Close</label>
@@ -54,11 +64,6 @@
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences…</label>
         <accel platform="mac">Ctrl+,</accel>
-      </object>
-      <object class="separator" platform="win|unix"/>
-      <object class="wxMenuItem" name="menu_manager" platform="win|unix">
-        <label platform="win">Catalogs _manager</label>
-        <label platform="unix">Catalogs _Manager</label>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="unix">
@@ -322,7 +327,7 @@
     </object>
   </object>
 
-  <object class="wxMenuBar" name="mainmenu_mac_global">
+  <object class="wxMenuBar" name="mainmenu_global">
     <object class="wxMenu" name="menu_file">
       <label>_File</label>
       <style>wxMENU_TEAROFF</style>
@@ -347,16 +352,34 @@
         <label platform="win">Open from Crowdin…</label>
         <label platform="unix|mac">Open From Crowdin…</label>
       </object>
+      <object class="separator" platform="win|unix"/>
+      <object class="wxMenuItem" name="menu_welcome" platform="win|unix">
+        <label platform="win">_Start window</label>
+        <label platform="unix">_Start Window</label>
+        <accel>Ctrl+Shift+1</accel>
+        <enabled>0</enabled>
+      </object>
+      <object class="wxMenuItem" name="menu_manager" platform="win|unix">
+        <label platform="win">Catalogs _manager</label>
+        <label platform="unix">Catalogs _Manager</label>
+      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
         <label>_Close</label>
         <accel>Ctrl+W</accel>
       </object>
+      <object class="wxMenuItem" name="menu_check_for_updates" platform="win">
+        <label>Check for updates…</label>
+      </object>
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences…</label>
         <accel platform="mac">Ctrl+,</accel>
       </object>
+      <object class="separator" platform="win|unix"/>
+      <object class="wxMenuItem" name="wxID_CLOSE" platform="unix">
+      </object>
       <object class="wxMenuItem" name="wxID_EXIT">
+        <label platform="win">E_xit</label>
         <label platform="mac">Quit</label>
       </object>
     </object>
@@ -370,13 +393,13 @@
           <accel>Ctrl+A</accel>
       </object>
     </object>
-    <object class="wxMenu" name="menu_view">
+    <object class="wxMenu" name="menu_view" platform="mac">
       <label>_View</label>
     </object>
-    <object class="wxMenu" name="menu_catalog">
+    <object class="wxMenu" name="menu_catalog" platform="mac">
       <label>C_atalog</label>
     </object>
-    <object class="wxMenu" name="menu_go">
+    <object class="wxMenu" name="menu_go" platform="mac">
       <label>_Go</label>
     </object>
     <object class="wxMenu" name="menu_window" platform="mac">
