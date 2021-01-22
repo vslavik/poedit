@@ -175,7 +175,7 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
 {
     m_text.Replace("\n", " ");
 
-    SetInitialSize(wxSize(10,10));
+    SetMinSize(wxDefaultSize);
     Bind(wxEVT_SIZE, &AutoWrappingText::OnSize, this);
 }
 
@@ -205,34 +205,41 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
     if (!m_language.IsValid())
         SetAlignment(bidi::get_base_direction(m_text));
 
-    wxWindowUpdateLocker lock(this);
-    m_wrapWidth = GetSize().x;
-    SetLabelText(WrapTextAtWidth(label, m_wrapWidth, m_language, this));
+    m_wrapWidth = -1; // force rewrap
 
-    InvalidateBestSize();
-    SetMinSize(wxDefaultSize);
-    SetMinSize(GetBestSize());
+    RewrapForWidth(GetSize().x);
+}
+
+bool AutoWrappingText::InformFirstDirection(int direction, int size, int /*availableOtherDir*/)
+{
+    if (direction == wxVERTICAL)
+        return RewrapForWidth(size);
+    return false;
 }
 
 void AutoWrappingText::OnSize(wxSizeEvent& e)
 {
     e.Skip();
-    int w = wxMax(0, e.GetSize().x - PX(4));
-    if (w == m_wrapWidth)
-        return;
+    RewrapForWidth(e.GetSize().x);
+}
+
+bool AutoWrappingText::RewrapForWidth(int width)
+{
+    if (width == m_wrapWidth)
+        return false;
 
     // refuse to participate in crazy-small sizes sizing (will be undone anyway):
-    if (w < 50)
-        return;
+    if (width < 50)
+        return false;
 
+    m_wrapWidth = width;
+
+    const int wrapAt = wxMax(0, width - PX(4));
     wxWindowUpdateLocker lock(this);
-
-    m_wrapWidth = w;
-    SetLabel(WrapTextAtWidth(m_text, w, m_language, this));
+    SetLabel(WrapTextAtWidth(m_text, wrapAt, m_language, this));
 
     InvalidateBestSize();
-    SetMinSize(wxDefaultSize);
-    SetMinSize(GetBestSize());
+    return true;
 }
 
 

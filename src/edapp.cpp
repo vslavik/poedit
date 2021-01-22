@@ -56,8 +56,9 @@
 #include <winsparkle.h>
 #endif
 
-#ifdef __WXGTK3__
+#ifdef __WXGTK__
 #include <glib.h>
+#include <gtk/gtk.h>
 #endif
 
 #include <unicode/uclean.h>
@@ -337,7 +338,9 @@ bool PoeditApp::OnInit()
     SetDllDirectory(L"");
 #endif
 
-#ifdef __WXGTK3__
+#ifdef __WXGTK__
+    gtk_window_set_default_icon_name("net.poedit.Poedit");
+    g_set_application_name("Poedit");
     // Wayland compatibility, see https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
     g_set_prgname("net.poedit.Poedit");
 #endif
@@ -523,8 +526,10 @@ int PoeditApp::OnExit()
     m_remoteServer.reset();
 #endif
 
+#ifdef __WXMSW__
     // Keep any clipboard data available on Windows after the app terminates:
     wxTheClipboard->Flush();
+#endif
 
     // Make sure PoeditFrame instances schedules for deletion are deleted
     // early -- e.g. before wxConfig is destroyed, so they can save changes

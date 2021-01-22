@@ -38,7 +38,15 @@
 #include <wx/fontenum.h>
 #include <wx/ffile.h>
 #include <wx/utils.h>
+
+#if defined(__clang__)
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#endif
 #include <wx/stc/stc.h>
+#if defined(__clang__)
+    #pragma clang diagnostic pop
+#endif
 
 #include "customcontrols.h"
 #include "hidpi.h"

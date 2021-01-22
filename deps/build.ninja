@@ -318,16 +318,14 @@ rule gettext_build
       && echo $
       'note: ⋯  $
       $top_srcdir/../macos/fixup-dylib-deps.sh $
-      //lib $
-      @executable_path/../lib $
+      /lib @rpath $
       $destdir/lib $
       $destdir/bin/*' $
       && $
       tmp=`mktemp` $
       && $
       $top_srcdir/../macos/fixup-dylib-deps.sh $
-      //lib $
-      @executable_path/../lib $
+      /lib @rpath $
       $destdir/lib $
       $destdir/bin/* $
       >$$tmp 2>&1 $

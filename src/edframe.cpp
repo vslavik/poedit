@@ -546,16 +546,7 @@ PoeditFrame::PoeditFrame() :
     m_displayIDs = (bool)cfg->Read("display_lines", (long)false);
     g_focusToText = (bool)cfg->Read("focus_to_text", (long)false);
 
-#if defined(__WXGTK__)
-    wxIconBundle appicons;
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(16,16)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(24,24)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(32,32)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(48,48)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(256,256)));
-    appicons.AddIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(512,512)));
-    SetIcons(appicons);
-#elif defined(__WXMSW__)
+#ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
@@ -2666,45 +2657,47 @@ void PoeditFrame::UpdateTitle()
 
     m_fileNamePartOfTitle.clear();
 
-    wxString title;
     auto fileName = GetFileName();
-    if ( !fileName.empty() )
+    
+    if (fileName.empty())
     {
-        wxFileName fn(GetFileName());
-        wxString fpath = fn.GetFullName();
+        SetTitle("Poedit");
+        return;
+    }
 
-        if (m_fileExistsOnDisk)
-            SetRepresentedFilename(fileName);
-        else
-            fpath += _(" (unsaved)");
+    wxString fpath = wxFileName(fileName).GetFullName();
 
-        if ( !m_catalog->Header().Project.empty() )
-        {
-            title.Printf(
+    if (m_fileExistsOnDisk)
+        SetRepresentedFilename(fileName);
+    else
+        fpath += _(" (unsaved)");
+
+    wxString title = fpath;
+    wxString subtitle = m_catalog->Header().Project;
+
 #ifdef __WXOSX__
-                L"%s — %s",
-#else
-                L"%s • %s",
-#endif
-                fpath, m_catalog->Header().Project);
-        }
-        else
-        {
-            title = fn.GetFullName();
-        }
-
-        m_fileNamePartOfTitle = title;
-
-#ifndef __WXOSX__
-        if ( IsModified() )
-            title += _(" (modified)");
-        title += " - Poedit";
-#endif
+  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
+    if (@available(macOS 11.0, *))
+    {
+        NSWindow *win = GetWXWindow();
+        win.subtitle = subtitle.empty() ? @"" : str::to_NS(subtitle);
     }
     else
+  #endif
+    if (!subtitle.empty())
     {
-        title = "Poedit";
+        title << MACOS_OR_OTHER(L" — ", L" • ");
+        title << subtitle;
     }
+#endif // __WXOSX__
+
+    m_fileNamePartOfTitle = title;
+
+#ifndef __WXOSX__
+    if ( IsModified() )
+        title += _(" (modified)");
+    title += " - Poedit";
+#endif
 
     SetTitle(title);
 }

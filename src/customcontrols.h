@@ -42,14 +42,14 @@ class WXDLLIMPEXP_ADV wxActivityIndicator;
 #include <functional>
 
 
-// Label marking a subsection of a dialog:
+/// Label marking a subsection of a dialog:
 class HeadingLabel : public wxStaticText
 {
 public:
     HeadingLabel(wxWindow *parent, const wxString& label);
 };
 
-// Label that auto-wraps itself to fit surrounding control's width.
+/// Label that auto-wraps itself to fit surrounding control's width.
 class AutoWrappingText : public wxStaticText
 {
 public:
@@ -60,13 +60,40 @@ public:
 
     void SetAndWrapLabel(const wxString& label);
 
+    bool InformFirstDirection(int direction, int size, int availableOtherDir) override;
+
 protected:
     void OnSize(wxSizeEvent& e);
+    bool RewrapForWidth(int width);
 
     wxString m_text;
     int m_wrapWidth;
     Language m_language;
 };
+
+/// A helper class that implements better sizer behavior for a window that contains AutoWrappingText
+template<typename Base>
+class WindowWith2DSizingConstraints : public Base
+{
+public:
+    using Base::Base;
+
+    void Fit() override
+    {
+        // iterate sizing because performing layout may invalidate some best
+        // sizes (AutoWrappingText) and may need to be redone.
+        wxSize best = this->GetBestSize();
+        while ( true )
+        {
+            this->SetSize(best);
+            wxSize updatedBest = this->GetBestSize();
+            if ( best == updatedBest )
+                break;
+            best = updatedBest;
+        }
+    }
+};
+
 
 /// Like AutoWrappingText, but allows selecting (macOS) or at least copying (Windows)
 /// the text too.
