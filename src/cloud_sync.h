@@ -59,7 +59,7 @@ class CloudSyncDestination
 public:
     virtual ~CloudSyncDestination() {}
 
-    /// Name of the destionation (e.g. Crowding or hostname)
+    /// Name of the destination (e.g. Crowding or hostname)
     virtual wxString GetName() const = 0;
 
     /// Asynchronously uploads the file. Returned future throws on error.

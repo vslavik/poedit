@@ -920,7 +920,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
 
         if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
         {
-            // make sure we don't overwite catalog's expression if the user didn't modify and
+            // make sure we don't overwrite catalog's expression if the user didn't modify and
             // it differs only cosmetically from the default
             PluralFormsExpr pf_def(cat->Header().Lang.DefaultPluralFormsExpr());
             PluralFormsExpr pf_cat(cat->Header().GetHeader("Plural-Forms").ToStdString());

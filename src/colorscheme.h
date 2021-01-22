@@ -142,7 +142,7 @@ public:
             // appearance that we rely on:
             win->CallAfter([=]
             {
-                // Invalidate global cached data. This is effecient if called
+                // Invalidate global cached data. This is efficient if called
                 // repeatedly, so we can do it for every affected window without
                 // worrying about performance impact:
                 InvalidateCachesIfNeeded();
