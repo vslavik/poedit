@@ -200,7 +200,7 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
             try
             {
                 fullName = d.at("fullName");
-                // if indvidual (not enterprise) account
+                // if individual (not enterprise) account
             }
             catch (...) // or enterpise otherwise
             {

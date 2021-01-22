@@ -354,7 +354,7 @@ WXDWORD CustomizedTextCtrl::MSWGetStyle(long style, WXDWORD *exstyle) const
 // override copy/cut/paste commands. Plus, the richedit control
 // (or wx's use of it) has a bug in it that causes it to copy wrong
 // data when copying from the same text control to itself after its
-// content was programatically changed:
+// content was programmatically changed:
 // https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
 
 // Note that GTK has a very similar problem with pasting rich text,

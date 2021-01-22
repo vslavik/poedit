@@ -266,7 +266,7 @@ namespace
 static const int DEFAULT_MAXHITS = 10;
 
 // Normalized score that must be met for a suggestion to be shown. This is
-// an empirical guess of what constitues good matches.
+// an empirical guess of what constitutes good matches.
 static const double QUALITY_THRESHOLD = 0.6;
 
 // Maximum allowed difference in phrase length, in #terms.

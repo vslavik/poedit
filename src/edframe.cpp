@@ -3527,7 +3527,7 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
     if (!Navigate(+1, Pred_UnfinishedItem, /*wrap=*/true))
     {
         // This was the last such item. Since the selection didn't change, we need to explicitly
-        // redraw the list & editing area to refect item changes made above:
+        // redraw the list & editing area to reflect item changes made above:
         UpdateToTextCtrl(EditingArea::UndoableEdit | EditingArea::DontTouchText);
         m_list->RefreshItem(m_list->GetCurrentItem());
     }

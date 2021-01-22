@@ -248,7 +248,7 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
         all->Add(ruby_format);
     }
 
-    // basic higlighting has highest priority, so should come last in the order:
+    // basic highlighting has highest priority, so should come last in the order:
     all->Add(basic);
 
     return all;
