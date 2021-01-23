@@ -609,7 +609,9 @@ void RecentFilesCtrl::RefreshContent()
 #else
         wxBitmap icon(m_data->icons_cache->get_large(f.GetExt()));
 #endif
-        wxVector<wxVariant> data{wxVariant(icon), text};
+        wxVector<wxVariant> data;
+        data.push_back(wxVariant(icon));
+        data.push_back(text);
         AppendItem(data);
     }
 }

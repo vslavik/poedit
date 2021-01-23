@@ -25,7 +25,10 @@
 
 #include "menus.h"
 
+#ifdef __WXOSX__
 #include "macos_helpers.h"
+#endif
+
 #include "recent_files.h"
 #include "str_helpers.h"
 

@@ -42,6 +42,10 @@
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 
+#if !wxCHECK_VERSION(3,1,0)
+    #define CenterVertical() Center()
+#endif
+
 #include <algorithm>
 
 
