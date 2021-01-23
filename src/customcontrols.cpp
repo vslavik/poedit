@@ -256,9 +256,9 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const w
     // at least allow copying
     static wxWindowID idCopy = wxNewId();
     Bind(wxEVT_CONTEXT_MENU, [=](wxContextMenuEvent&){
-        wxMenu *menu = new wxMenu();
-        menu->Append(idCopy, _("&Copy"));
-        PopupMenu(menu);
+        wxMenu menu;
+        menu.Append(idCopy, _("&Copy"));
+        PopupMenu(&menu);
     });
     Bind(wxEVT_MENU, [=](wxCommandEvent&){
         wxClipboardLocker lock;

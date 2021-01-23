@@ -475,8 +475,8 @@ protected:
         event.Skip(false);
 
         static wxWindowID idShowInFolder = wxNewId();
-        auto menu = new wxMenu();
-        auto menuItem = menu->Append(idShowInFolder,
+        wxMenu menu;
+        auto menuItem = menu.Append(idShowInFolder,
 #if defined(__WXOSX__)
             // TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
             _("Reveal in Finder")
@@ -489,8 +489,8 @@ protected:
             );
         if (!wxFileExists(file) && !wxDirExists(file))
             menuItem->Enable(false);
-        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
-        PopupMenu(menu);
+        menu.Bind(wxEVT_MENU, [=](wxCommandEvent&){ ShowInFolder(file); }, idShowInFolder);
+        PopupMenu(&menu);
     }
 
     void ShowInFolder(const wxString& path)

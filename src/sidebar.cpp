@@ -464,18 +464,18 @@ private:
         auto suggestion = m_value;
         static const auto idDelete = wxNewId();
 
-        wxMenu *menu = new wxMenu();
+        wxMenu menu;
 #ifdef __WXOSX__
-        [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
+        [menu.GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu->Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
-        menu->Bind(wxEVT_MENU, [sidebar,suggestion](wxCommandEvent&)
+        menu.Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+        menu.Bind(wxEVT_MENU, [sidebar,suggestion](wxCommandEvent&)
         {
             SuggestionsProvider::Delete(suggestion);
             sidebar->RefreshContent();
         }, idDelete);
 
-        PopupMenu(menu);
+        PopupMenu(&menu);
     }
 
     void Highlight(bool highlight)

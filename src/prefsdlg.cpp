@@ -507,28 +507,28 @@ private:
         static const auto idExportTMX = wxNewId();
         static const auto idReset = wxNewId();
 
-        wxMenu *menu = new wxMenu();
+        wxMenu menu;
 #ifdef __WXOSX__
-        [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
+        [menu.GetHMenu() setFont:[NSFont systemFontOfSize:13]];
 #endif
-        menu->Append(idLearn, MSW_OR_OTHER(_(L"Import translation files…"), _(L"Import Translation Files…")));
-        menu->AppendSeparator();
-        menu->Append(idImportTMX, MSW_OR_OTHER(_(L"Import from TMX…"), _(L"Import From TMX…")));
-        menu->Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
-        menu->AppendSeparator();
+        menu.Append(idLearn, MSW_OR_OTHER(_(L"Import translation files…"), _(L"Import Translation Files…")));
+        menu.AppendSeparator();
+        menu.Append(idImportTMX, MSW_OR_OTHER(_(L"Import from TMX…"), _(L"Import From TMX…")));
+        menu.Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
+        menu.AppendSeparator();
         // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-        menu->Append(idReset, _("Reset"));
+        menu.Append(idReset, _("Reset"));
 
-        menu->Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
-        menu->Bind(wxEVT_MENU, &TMPageWindow::OnImportTMX, this, idImportTMX);
-        menu->Bind(wxEVT_MENU, &TMPageWindow::OnExportTMX, this, idExportTMX);
-        menu->Bind(wxEVT_MENU, &TMPageWindow::OnResetTM, this, idReset);
+        menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
+        menu.Bind(wxEVT_MENU, &TMPageWindow::OnImportTMX, this, idImportTMX);
+        menu.Bind(wxEVT_MENU, &TMPageWindow::OnExportTMX, this, idExportTMX);
+        menu.Bind(wxEVT_MENU, &TMPageWindow::OnResetTM, this, idReset);
 
         auto win = dynamic_cast<wxButton*>(e.GetEventObject());
 #ifdef __WXOSX__
-        win->PopupMenu(menu, 5, 26);
+        win->PopupMenu(&menu, 5, 26);
 #else
-        win->PopupMenu(menu, 0, win->GetSize().y);
+        win->PopupMenu(&menu, 0, win->GetSize().y);
 #endif
     }
 

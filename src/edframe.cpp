@@ -2827,7 +2827,7 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
 }
 
 
-wxMenu *PoeditFrame::GetPopupMenu(int item)
+wxMenu *PoeditFrame::CreatePopupMenu(int item)
 {
     if (!m_catalog) return NULL;
     if (item < 0 || item >= (int)m_list->GetItemCount()) return NULL;
@@ -2983,11 +2983,10 @@ void PoeditFrame::OnListRightClick(wxDataViewEvent& event)
 
     m_list->SelectAndFocus(item);
 
-    wxMenu *menu = GetPopupMenu(m_list->ListItemToCatalogIndex(item));
+    std::shared_ptr<wxMenu> menu(CreatePopupMenu(m_list->ListItemToCatalogIndex(item)));
     if (menu)
     {
-        m_list->PopupMenu(menu, event.GetPosition());
-        delete menu;
+        m_list->PopupMenu(menu.get(), event.GetPosition());
     }
     else
     {

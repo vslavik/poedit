@@ -222,7 +222,7 @@ class PoeditFrame : public PoeditFrameBase
         void UpdateTextLanguage();
 
         /// Returns popup menu for given catalog entry.
-        wxMenu *GetPopupMenu(int item);
+        wxMenu *CreatePopupMenu(int item);
 
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
