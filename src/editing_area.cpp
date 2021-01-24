@@ -354,6 +354,41 @@ private:
 };
 
 
+class EditingArea::CharCounter : public SecondaryLabel
+{
+public:
+    CharCounter(wxWindow *parent, Mode mode) : SecondaryLabel(parent, "MMMM | MMMM"), m_mode(mode)
+    {
+        SetWindowStyleFlag(wxALIGN_RIGHT | wxST_NO_AUTORESIZE);
+
+        switch (mode)
+        {
+            case Editing:
+                SetToolTip(_("String length in characters: translation | source"));
+                break;
+            case POT:
+                SetToolTip(_("String length in characters"));
+                break;
+        }
+    }
+
+    void UpdateSourceLength(int i) { m_source = i; UpdateText(); }
+    void UpdateTranslationLength(int i) { m_translation = i; UpdateText(); }
+
+private:
+    void UpdateText()
+    {
+        if (m_mode == Editing)
+            SetLabel(wxString::Format("%d | %d", m_translation, m_source));
+        else
+            SetLabel(wxString::Format("%d", m_source));
+    }
+
+    Mode m_mode;
+    int m_source = 0, m_translation = 0;
+};
+
+
 EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode mode)
     : m_associatedList(associatedList),
       m_dontAutoclearFuzzyStatus(false),
@@ -388,11 +423,16 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
     m_tagFormat = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
 
+    m_charCounter = new CharCounter(this, mode);
+
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center());
     sourceLineSizer->AddSpacer(PX(4));
     sourceLineSizer->Add(m_tagContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
+    sourceLineSizer->AddStretchSpacer(1);
+    sourceLineSizer->Add(m_charCounter, wxSizerFlags().Center());
+    sourceLineSizer->AddSpacer(PX(4));
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
     sourceLineSizer->SetMinSize(-1, m_tagContext->GetBestSize().y);
 
@@ -436,6 +476,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
         SetBackgroundColour(ColorScheme::Get(Color::EditingBackground));
     #ifdef __WXMSW__
         m_labelSource->SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
+        m_charCounter->SetBackgroundColour(ColorScheme::Get(Color::EditingThickSeparator));
     #endif
         m_labelSingular->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
         m_labelPlural->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
@@ -522,14 +563,15 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
         e.Skip();
     });
 
-#ifdef __WXMSW__
     m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
         e.Skip();
+        UpdateCharCounter(m_associatedList->GetCurrentCatalogItem());
+    #ifdef __WXMSW__
         auto focused = FindFocus();
         if (focused && (focused == m_pluralNotebook || focused->GetParent() == m_pluralNotebook))
             m_pluralNotebook->GetPage(e.GetSelection())->SetFocus();
+    #endif
     });
-#endif
 }
 
 
@@ -963,6 +1005,29 @@ void EditingArea::UpdateAuxiliaryInfo(CatalogItemPtr item)
             ShowPart(m_issueLine, false);
         }
         Layout();
+    }
+
+    UpdateCharCounter(item);
+}
+
+void EditingArea::UpdateCharCounter(CatalogItemPtr item)
+{
+    if (!m_charCounter || !item)
+        return;
+
+    if (item->HasPlural())
+    {
+        int index = m_pluralNotebook->GetSelection();
+        if (index == 0)
+            m_charCounter->UpdateSourceLength((int)item->GetString().length());
+        else
+            m_charCounter->UpdateSourceLength((int)item->GetPluralString().length());
+        m_charCounter->UpdateTranslationLength((int)item->GetTranslation(index).length());
+    }
+    else
+    {
+        m_charCounter->UpdateSourceLength((int)item->GetString().length());
+        m_charCounter->UpdateTranslationLength((int)item->GetTranslation().length());
     }
 }
 

@@ -116,6 +116,7 @@ public:
 
 private:
     void UpdateAuxiliaryInfo(CatalogItemPtr item);
+    void UpdateCharCounter(CatalogItemPtr item);
 
     void CreateEditControls(wxBoxSizer *sizer);
     void CreateTemplateControls(wxBoxSizer *sizer);
@@ -130,6 +131,7 @@ private:
 private:
     class TagLabel;
     class IssueLabel;
+    class CharCounter;
 
     PoeditListCtrl *m_associatedList;
 
@@ -151,6 +153,8 @@ private:
     TagLabel *m_tagPretranslated;
 
     IssueLabel *m_issueLine;
+
+    CharCounter *m_charCounter;
 };
 
 #endif // Poedit_editing_area_h
