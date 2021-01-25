@@ -55,7 +55,7 @@ class CommentDialog : public wxDialog
     private:
         wxTextCtrl *m_text;
 
-        void OnClear(wxCommandEvent& event);
+        void OnDelete(wxCommandEvent& event);
         DECLARE_EVENT_TABLE()
 };
 

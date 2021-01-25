@@ -42,6 +42,13 @@ CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDial
 
     m_text->SetValue(RemoveStartHash(comment));
 
+    if (comment.empty())
+    {
+        XRCCTRL(*this, "delete", wxWindow)->Disable();
+        FindWindow(wxID_OK)->SetLabel(_("Add"));
+    }
+    // else: button is labeled "Update" in XRC
+
     wxAcceleratorEntry entries[] = {
         { wxACCEL_CMD, WXK_RETURN, wxID_OK }
     };
@@ -56,12 +63,13 @@ wxString CommentDialog::GetComment() const
 }
 
 BEGIN_EVENT_TABLE(CommentDialog, wxDialog)
-   EVT_BUTTON(XRCID("clear"), CommentDialog::OnClear)
+   EVT_BUTTON(XRCID("delete"), CommentDialog::OnDelete)
 END_EVENT_TABLE()
 
-void CommentDialog::OnClear(wxCommandEvent&)
+void CommentDialog::OnDelete(wxCommandEvent&)
 {
     m_text->Clear();
+    EndModal(wxID_OK);
 }
 
 
