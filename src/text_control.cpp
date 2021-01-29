@@ -275,7 +275,8 @@ wxString CustomizedTextCtrl::DoGetValueForRange(long from, long to) const
                              NSDocumentTypeDocumentAttribute: NSPlainTextDocumentType,
                              NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
                            };
-    NSData *data = [text dataFromRange:NSMakeRange(from, to == -1 ? [text length] : to) documentAttributes:attrs error:nil];
+    const long length = (to == -1) ? [text length] : (to - from);
+    NSData *data = [text dataFromRange:NSMakeRange(from, length) documentAttributes:attrs error:nil];
     if (data && [data length] > 0)
         return wxString::FromUTF8((const char*)[data bytes], [data length]);
     else
