@@ -85,6 +85,9 @@ class PoeditFrame : public PoeditFrameBase
         // Opens given file in this frame, without asking user
         void DoOpenFile(const wxString& filename, int lineno = 0);
 
+        // Re-read the file from disk if it changed externally
+        void ReloadFileIfChanged();
+
         /** Returns pointer to existing instance of PoeditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
          */
@@ -344,7 +347,8 @@ private:
 
     private:
         CatalogPtr m_catalog;
-
+        class FileMonitor;
+        std::unique_ptr<FileMonitor> m_fileMonitor;
         bool m_fileExistsOnDisk;
 
         wxString m_fileNamePartOfTitle;

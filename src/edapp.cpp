@@ -628,6 +628,25 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
 }
 
 
+wxFileSystemWatcher& PoeditApp::FileWatcher()
+{
+    if (!m_fsWatcher)
+    {
+        m_fsWatcher.reset(new wxFileSystemWatcher());
+        m_fsWatcher->Bind(wxEVT_FSWATCHER, [=](wxFileSystemWatcherEvent& event){
+            event.Skip();
+            if (!event.GetPath().IsOk())
+                return;
+            auto fn = event.GetPath().GetFullPath();
+            auto window = PoeditFrame::Find(fn);
+            if (window)
+                window->ReloadFileIfChanged();
+        });
+    }
+    return *m_fsWatcher;
+}
+
+
 void PoeditApp::OpenNewFile()
 {
     WelcomeWindow::GetAndActivate();

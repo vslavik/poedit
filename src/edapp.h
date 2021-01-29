@@ -30,6 +30,7 @@
 #include "menus.h"
 
 #include <wx/app.h>
+#include <wx/fswatcher.h>
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/docview.h>
@@ -54,6 +55,8 @@ class PoeditApp : public wxApp, public MenusManager
         virtual int OnExit();
 
         virtual wxLayoutDirection GetLayoutDirection() const;
+
+        wxFileSystemWatcher& FileWatcher();
 
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
@@ -131,6 +134,7 @@ class PoeditApp : public wxApp, public MenusManager
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
 
         std::unique_ptr<wxLocale> m_locale;
+        std::unique_ptr<wxFileSystemWatcher> m_fsWatcher;
 
 #ifndef __WXOSX__
         class RemoteServer;

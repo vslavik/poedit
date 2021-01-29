@@ -546,7 +546,7 @@
 // Default is 1
 //
 // Recommended setting: 1
-#define wxUSE_FSWATCHER     0
+#define wxUSE_FSWATCHER     1
 
 // Setting wxUSE_CONFIG to 1 enables the use of wxConfig and related classes
 // which allow the application to store its settings in the persistent
