@@ -224,6 +224,8 @@ private:
 
 class PoeditFrame::FileMonitor
 {
+    static const int MONITORING_FLASG = wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVENT_MODIFY;
+
 public:
     FileMonitor() : m_isRespondingGuard(false) {}
     ~FileMonitor() { Reset(); }
@@ -232,14 +234,23 @@ public:
 
     void SetFile(wxFileName file)
     {
-        // unmonitor first (needed even if the filename didn't change)
+        // unmonitor first (needed even if the filename didn't change)xx
+        if (file == m_file)
+            return;
+
         Reset();
 
         m_file = file;
         if (!m_file.IsOk())
             return;
+        m_dir = wxFileName::DirName(m_file.GetPath());
 
-        wxGetApp().FileWatcher().Add(m_file, wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVENT_MODIFY);
+#ifdef __WXOSX__
+        // kqueue-based monitoring is unreliable on macOS, we need to use AddTree() to force FSEvents usage
+        wxGetApp().FileWatcher().AddTree(m_dir, MONITORING_FLASG);
+#else
+        wxGetApp().FileWatcher().Add(m_dir, MONITORING_FLASG);
+#endif
         m_loadTime = m_file.GetModificationTime();
     }
 
@@ -250,6 +261,7 @@ public:
         return m_loadTime != m_file.GetModificationTime();
     }
 
+    // if true is returned, _must_ call StopRespondingToEvent() afterwards
     bool ShouldRespondToFileChange()
     {
         if (!m_file.IsOk() || m_isRespondingGuard)
@@ -262,14 +274,11 @@ public:
         return true;
     }
 
+    // logic for preventing multiple FS events from causing duplicate reloads
     void StopRespondingToEvent()
     {
         wxASSERT( m_isRespondingGuard );
         m_isRespondingGuard = false;
-
-        // re-subscribing is necessary if the file was replaced by moving another to its place for example:
-        wxGetApp().FileWatcher().Remove(m_file);
-        wxGetApp().FileWatcher().Add(m_file, wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVENT_MODIFY);
     }
 
 private:
@@ -277,14 +286,19 @@ private:
     {
         if (m_file.IsOk())
         {
-            wxGetApp().FileWatcher().Remove(m_file);
+#ifdef __WXOSX__
+            wxGetApp().FileWatcher().RemoveTree(m_dir);
+#else
+            wxGetApp().FileWatcher().Remove(m_dir);
+#endif
             m_file.Clear();
         }
     }
 
 private:
     bool m_isRespondingGuard;
-    wxFileName m_file;
+    wxString m_monitoredPath;
+    wxFileName m_file, m_dir;
     wxDateTime m_loadTime;
 };
 

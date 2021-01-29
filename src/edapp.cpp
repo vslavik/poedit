@@ -635,10 +635,10 @@ wxFileSystemWatcher& PoeditApp::FileWatcher()
         m_fsWatcher.reset(new wxFileSystemWatcher());
         m_fsWatcher->Bind(wxEVT_FSWATCHER, [=](wxFileSystemWatcherEvent& event){
             event.Skip();
-            if (!event.GetPath().IsOk())
+            auto fn = event.GetNewPath();
+            if (!fn.IsOk())
                 return;
-            auto fn = event.GetPath().GetFullPath();
-            auto window = PoeditFrame::Find(fn);
+            auto window = PoeditFrame::Find(fn.GetFullPath());
             if (window)
                 window->ReloadFileIfChanged();
         });
