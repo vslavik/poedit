@@ -27,6 +27,7 @@
 #define Poedit_titleless_window_h
 
 #include <wx/frame.h>
+#include <wx/dialog.h>
 
 class WXDLLIMPEXP_CORE wxButton;
 
@@ -38,16 +39,13 @@ class WXDLLIMPEXP_CORE wxButton;
     On Windows, only shown on modern versions (Windows 10) and when no
     accessibility reader is present, to avoid degrading usability.
  */
-class TitlelessWindow : public wxFrame
+template<typename T>
+class TitlelessWindowBase : public T
 {
 public:
-    TitlelessWindow(wxWindow* parent,
-                    wxWindowID id,
-                    const wxString& title,
-                    const wxPoint& pos = wxDefaultPosition,
-                    const wxSize& size = wxDefaultSize,
-                    long style = wxDEFAULT_FRAME_STYLE,
-                    const wxString& name = wxFrameNameStr);
+    TitlelessWindowBase(wxWindow* parent, wxWindowID id, const wxString& title,
+                        const wxPoint& pos, const wxSize& size,
+                        long style, const wxString& name);
 
 protected:
     bool Layout() override;
@@ -64,9 +62,39 @@ private:
 #endif // __WXMSW__
 
 private:
-    class CloseButton;
     wxButton* m_closeButton = nullptr;
+
+    typedef T BaseClass;
 };
 
+
+class TitlelessWindow : public TitlelessWindowBase<wxFrame>
+{
+public:
+    TitlelessWindow(wxWindow* parent,
+                    wxWindowID id,
+                    const wxString& title,
+                    const wxPoint& pos = wxDefaultPosition,
+                    const wxSize& size = wxDefaultSize,
+                    long style = wxDEFAULT_FRAME_STYLE,
+                    const wxString& name = wxFrameNameStr)
+        : TitlelessWindowBase(parent, id, title, pos, size, style, name)
+    {}
+};
+
+
+class TitlelessDialog : public TitlelessWindowBase<wxDialog>
+{
+public:
+    TitlelessDialog(wxWindow* parent,
+                    wxWindowID id,
+                    const wxString& title,
+                    const wxPoint& pos = wxDefaultPosition,
+                    const wxSize& size = wxDefaultSize,
+                    long style = wxDEFAULT_DIALOG_STYLE,
+                    const wxString& name = wxDialogNameStr)
+        : TitlelessWindowBase(parent, id, title, pos, size, style, name)
+    {}
+};
 
 #endif // Poedit_titleless_window_h
