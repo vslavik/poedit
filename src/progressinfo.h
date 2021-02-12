@@ -32,6 +32,8 @@ class WXDLLIMPEXP_FWD_CORE wxWindow;
 class WXDLLIMPEXP_FWD_CORE wxDialog;
 class WXDLLIMPEXP_FWD_CORE wxWindowDisabler;
 
+class ProgressWindow;
+
 /// This class displays fancy progress dialog.
 class ProgressInfo
 {
@@ -70,7 +72,7 @@ class ProgressInfo
             bool Cancelled() const { return m_cancelled; }
             
     private:
-            wxDialog *m_dlg;
+            ProgressWindow *m_dlg;
             bool m_cancelled;
             wxWindowDisabler *m_disabler;
 };

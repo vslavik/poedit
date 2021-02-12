@@ -25,44 +25,114 @@
 
 #include "progressinfo.h"
 
+#include "customcontrols.h"
+#include "hidpi.h"
+#include "titleless_window.h"
+#include "utility.h"
+
 #include <wx/app.h>
 #include <wx/dialog.h>
 #include <wx/evtloop.h>
 #include <wx/log.h>
-#include <wx/xrc/xmlres.h>
 #include <wx/gauge.h>
 #include <wx/stattext.h>
 #include <wx/dialog.h>
+#include <wx/sizer.h>
 #include <wx/button.h>
 #include <wx/config.h>
 
-class ProgressDlg : public wxDialog
-{
-    public:
-        ProgressDlg(bool *cancel) : wxDialog(), m_cancelFlag(cancel) {}
-        
-    private:
-        bool *m_cancelFlag;
-    
-        DECLARE_EVENT_TABLE()
 
-        void OnCancel(wxCommandEvent&)
-        {
-            ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
-            *m_cancelFlag = true;
-        }
+class ProgressWindow : public TitlelessDialog
+{
+public:
+    ProgressWindow(wxWindow *parent, const wxString& title, bool *cancel);
+    void UpdateMessage(const wxString& text);
+    void OnCancel(wxCommandEvent&);
+
+    wxStaticBitmap *m_image;
+    wxStaticText *m_title;
+    SecondaryLabel *m_message;
+    wxGauge *m_gauge;
+
+    bool *m_cancelFlag;
 };
 
-BEGIN_EVENT_TABLE(ProgressDlg, wxDialog)
-   EVT_BUTTON(wxID_CANCEL, ProgressDlg::OnCancel)
-END_EVENT_TABLE()
+
+ProgressWindow::ProgressWindow(wxWindow *parent, const wxString& title, bool *cancel)
+    : TitlelessDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE & ~wxCLOSE_BOX)
+{
+    m_cancelFlag = cancel;
+
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+    auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(topsizer, wxSizerFlags(1).Expand().Border(wxALL, PX(20)));
+
+    wxSize logoSize(PX(64), PX(64));
+#if defined(__WXMSW__)
+    wxIcon logo;
+    logo.LoadFile("appicon", wxBITMAP_TYPE_ICO_RESOURCE, 256, 256);
+    {
+        wxBitmap bmp;
+        bmp.CopyFromIcon(logo);
+        logo.CopyFromBitmap(wxBitmap(bmp.ConvertToImage().Scale(logoSize.x, logoSize.y, wxIMAGE_QUALITY_BICUBIC)));
+    }
+#elif defined(__WXGTK__)
+    auto logo = wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, logoSize);
+#else
+    auto logo = wxArtProvider::GetBitmap("Poedit");
+#endif
+    m_image = new wxStaticBitmap(this, wxID_ANY, logo, wxDefaultPosition, logoSize);
+    m_image->SetMinSize(logoSize);
+    topsizer->Add(m_image, wxSizerFlags().Center().Border(wxTOP, MSW_OR_OTHER(PX(10), 0)));
+
+    auto infosizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(infosizer, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
+
+    m_title = new wxStaticText(this, wxID_ANY, title);
+#ifdef __WXMSW__
+    auto titleFont = m_title->GetFont().Scaled(1.3f);
+#else
+    auto titleFont = m_title->GetFont().Bold();
+#endif
+    m_title->SetFont(titleFont);
+    infosizer->Add(m_title, wxSizerFlags().Left().Border(wxBOTTOM, PX(3)));
+    m_message = new SecondaryLabel(this, "");
+    infosizer->Add(m_message, wxSizerFlags().Left().Border(wxBOTTOM, PX(2)));
+    m_gauge = new wxGauge(this, wxID_ANY, 100, wxDefaultPosition, wxSize(PX(350), -1), wxGA_SMOOTH);
+    m_gauge->Pulse();
+    infosizer->Add(m_gauge, wxSizerFlags().Expand());
+
+    auto cancelButton = new wxButton(this, wxID_CANCEL);
+    cancelButton->Bind(wxEVT_BUTTON, &ProgressWindow::OnCancel, this);
+    sizer->Add(cancelButton, wxSizerFlags().Right().Border(wxRIGHT|wxBOTTOM, PX(20)));
+
+    SetSizerAndFit(sizer);
+    if (parent)
+        CenterOnParent();
+}
+
+void ProgressWindow::UpdateMessage(const wxString& text)
+{
+    if (*m_cancelFlag)
+        return;
+
+    m_message->SetLabel(text);
+    m_message->Refresh();
+    m_message->Update();
+}
+
+void ProgressWindow::OnCancel(wxCommandEvent&)
+{
+    ((wxButton*)FindWindow(wxID_CANCEL))->Enable(false);
+    UpdateMessage(_(L"Cancelling…"));
+    *m_cancelFlag = true;
+}
+
 
 ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
 {
     m_cancelled = false;
-    m_dlg = new ProgressDlg(&m_cancelled);
-    wxXmlResource::Get()->LoadDialog(m_dlg, parent, "extractor_progress");
-    m_dlg->SetTitle(title);
+    m_dlg = new ProgressWindow(parent, title, &m_cancelled);
     m_dlg->Show(true);
     m_disabler = new wxWindowDisabler(m_dlg);
 }
@@ -103,17 +173,17 @@ void ProgressInfo::Done()
 
 void ProgressInfo::SetGaugeMax(int limit)
 {
-    XRCCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);
+    m_dlg->m_gauge->SetRange(limit);
 }
 
 bool ProgressInfo::UpdateGauge(int increment)
 {
-    wxGauge *g = XRCCTRL(*m_dlg, "progress", wxGauge);
+    wxGauge *g = m_dlg->m_gauge;
     g->SetValue(g->GetValue() + increment);
 
 #ifdef __WXOSX__
     // Set again the message to workaround a wxOSX bug
-    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
+    auto txt = m_dlg->m_message;
     txt->SetLabel(txt->GetLabel());
     txt->Update();
 #endif
@@ -123,20 +193,17 @@ bool ProgressInfo::UpdateGauge(int increment)
 
 void ProgressInfo::ResetGauge(int value)
 {
-    XRCCTRL(*m_dlg, "progress", wxGauge)->SetValue(value);
+    m_dlg->m_gauge->SetValue(value);
 }
 
 void ProgressInfo::PulseGauge()
 {
-    XRCCTRL(*m_dlg, "progress", wxGauge)->Pulse();
+    m_dlg->m_gauge->Pulse();
 }
 
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
-    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
-    txt->SetLabel(text);
-    txt->Refresh();
-    txt->Update();
+    m_dlg->UpdateMessage(text);
     m_dlg->Refresh();
     wxEventLoop::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
 }
