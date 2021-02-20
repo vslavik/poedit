@@ -664,7 +664,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
                 if (!m_suggestionsSeparator)
                     m_suggestionsSeparator = new SidebarSeparator(m_parent);
                 m_suggestionsSeparator->Show();
-                m_suggestionsSizer->Insert(i, m_suggestionsSeparator, wxSizerFlags().Expand().Border(wxBOTTOM, MSW_OR_OTHER(PX(2), PX(4))));
+                m_suggestionsSizer->Insert(i, m_suggestionsSeparator, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, MSW_OR_OTHER(PX(2), PX(4))));
             }
             perfectMatches = 0;
         }
