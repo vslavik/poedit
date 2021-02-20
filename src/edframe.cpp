@@ -1529,7 +1529,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     {
         if (cat->HasSourcesAvailable())
         {
-            succ = PerformUpdateFromSources(this, cat, reason);
+            succ = PerformUpdateFromSourcesWithUI(this, cat, reason);
 
             locker.reset();
             EnsureAppropriateContentView();
@@ -1543,7 +1543,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     }
     else
     {
-        succ = PerformUpdateFromPOT(this, cat, pot_file, reason);
+        succ = PerformUpdateFromPOTWithUI(this, cat, pot_file, reason);
 
         locker.reset();
         EnsureAppropriateContentView();
@@ -1623,7 +1623,7 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
             {
                 if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                 {
-                    if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality, nullptr))
+                    if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality))
                     {
                         if (!m_modified)
                         {
@@ -1677,7 +1677,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                 {
                     if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                     {
-                        if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality, nullptr))
+                        if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality))
                         {
                             if (!m_modified)
                             {

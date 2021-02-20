@@ -57,18 +57,20 @@ enum UpdateFlags
     Update catalog from source code, if configured, and provide UI
     during the operation.
  */
-bool PerformUpdateFromSources(wxWindow *parent,
-                              POCatalogPtr catalog,
-                              UpdateResultReason& reason,
-                              int flags = 0);
+bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason);
+
+bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
+                                    POCatalogPtr catalog,
+                                    UpdateResultReason& reason,
+                                    int flags = 0);
 
 /**
     Similarly for updating from a POT file.
  */
-bool PerformUpdateFromPOT(wxWindow *parent,
-                          POCatalogPtr catalog,
-                          const wxString& pot_file,
-                          UpdateResultReason& reason);
+bool PerformUpdateFromPOTWithUI(wxWindow *parent,
+                                POCatalogPtr catalog,
+                                const wxString& pot_file,
+                                UpdateResultReason& reason);
 
 
 #endif // Poedit_cat_update_h
