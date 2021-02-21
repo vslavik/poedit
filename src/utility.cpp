@@ -44,6 +44,8 @@
     #include <unistd.h>
 #endif
 
+#include <dtl/dtl.hpp>
+
 #include "str_helpers.h"
 
 wxString EscapeMarkup(const wxString& str)
@@ -115,6 +117,67 @@ wxFileName MakeFileName(const wxString& path)
         fn.Assign(path);
     fn.MakeAbsolute();
     return fn;
+}
+
+/// A convertor from dtl's to 
+Diff::Action dtl2DiffAction(dtl::edit_t lastType) {
+    switch (lastType) {
+        case dtl::SES_DELETE: return Diff::Action::Delete;
+        case dtl::SES_COMMON: return Diff::Action::Common;
+        case dtl::SES_ADD:    return Diff::Action::Add;
+    }
+    // Shouldn't happend
+    throw std::invalid_argument("Unexpected dtl::edit_t value");
+}
+
+Diff::Diff(const wxString& from, const wxString& to) {
+    // Do the diff
+    dtl::Diff<wxUniChar, wxString> d(from, to);
+    d.compose();
+    auto dtlSeq = d.getSes().getSequence();
+
+    // collapes per-symbol diff into string-size chunks
+    if (!dtlSeq.empty()) {
+        dtl::edit_t lastType = dtlSeq.front().second.type;
+        wxString curStr = dtlSeq.front().first;
+
+        for ( auto it = std::next(dtlSeq.cbegin()); it != dtlSeq.cend(); ++it ) {
+
+            if ( it->second.type != lastType ) {
+                ses.emplace_back( dtl2DiffAction(lastType), std::move(curStr) );
+                curStr.Empty();
+                lastType = it->second.type;
+            }
+            curStr.Append(it->first);
+        }
+
+        ses.emplace_back( dtl2DiffAction(lastType), std::move(curStr) );
+        curStr.Empty();
+    }
+}
+
+wxString Diff::getMarkup(const wxString &addColor, const wxString &deleteColor) {
+    wxString rv;
+
+    for (const auto& el: ses) {
+        switch (el.first) {
+            case Diff::Action::Common:
+                rv.Append(EscapeMarkup(el.second));
+                break;
+            case Diff::Action::Add:
+                rv.Append("<span bgcolor=\"").Append(addColor).Append("\">");
+                rv.Append(EscapeMarkup(el.second));
+                rv.Append("</span>");
+                break;
+            case Diff::Action::Delete:
+                rv.Append("<s><span bgcolor=\"").Append(deleteColor).Append("\">");
+                rv.Append(EscapeMarkup(el.second));
+                rv.Append("</span></s>");
+                break;
+        }
+    }
+
+    return rv;
 }
 
 #if wxUSE_GUI && defined(__WXMSW__)
