@@ -50,6 +50,9 @@ public:
                     const wxString& name = wxFrameNameStr);
 
 protected:
+    /// Returns close button if it is presnet; may be null
+    wxButton* GetCloseButton() const { return m_closeButton; }
+
     bool Layout() override;
 
 #ifdef __WXMSW__

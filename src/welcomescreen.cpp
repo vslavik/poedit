@@ -80,6 +80,30 @@ public:
     }
 };
 
+#ifdef __WXMSW__
+
+class SidebarHeader : public wxWindow
+{
+public:
+    SidebarHeader(wxWindow* parent, const wxString& title) : wxWindow(parent, wxID_ANY)
+    {
+        ColorScheme::SetupWindowColors(this, [=]
+        {
+            SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
+        });
+
+        auto label = new SecondaryLabel(this, title);
+        auto sizer = new wxBoxSizer(wxVERTICAL);
+        sizer->AddStretchSpacer();
+        sizer->Add(label, wxSizerFlags().Left().Border(wxLEFT, PX(10)));
+        //sizer->AddSpacer(PX(4));
+        sizer->AddStretchSpacer();
+        SetSizer(sizer);
+    }
+};
+
+#endif // __WXMSW__
+
 } // anonymous namespace
 
 
@@ -289,9 +313,24 @@ WelcomeWindow::WelcomeWindow()
     topsizer->Add(leftoutersizer, wxSizerFlags(1).Expand());
 
 #ifndef __WXGTK__
+    auto rightsizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(rightsizer, wxSizerFlags().Expand());
+
+#ifdef __WXMSW__
+    // wx doesn't like close button overlapping the recents list (or any overlapping at all),
+    // so add some space at the top of the list to improve the situation
+    auto closeButton = GetCloseButton();
+    if (closeButton)
+    {
+        auto label = new SidebarHeader(this, _("Recent files"));
+        label->SetMinSize(wxSize(-1, closeButton->GetSize().y));
+        rightsizer->Add(label, wxSizerFlags().Expand().Border(wxRIGHT, closeButton->GetSize().x));
+    }
+#endif // __WXMSW__
+
     auto recentFiles = new RecentFilesCtrl(this);
     recentFiles->SetMinSize(wxSize(PX(320), -1));
-    topsizer->Add(recentFiles, wxSizerFlags().Expand());
+    rightsizer->Add(recentFiles, wxSizerFlags(1).Expand());
 #endif
 
     SetSizerAndFit(topsizer);
@@ -302,6 +341,8 @@ WelcomeWindow::WelcomeWindow()
         version->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
 
 #ifdef __WXMSW__
+        if (GetCloseButton())
+            GetCloseButton()->SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
         for (auto& w : GetChildren())
         {
             if (dynamic_cast<ActionButton*>(w))
