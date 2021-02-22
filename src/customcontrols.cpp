@@ -179,6 +179,16 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
     Bind(wxEVT_SIZE, &AutoWrappingText::OnSize, this);
 }
 
+void AutoWrappingText::SetLabel(const wxString& label) {
+    wxString escapedLabel(label);
+
+    // Escape '&' to avoid wxStaticText treating it
+    // as if to mark an accelerator key (Windows),
+    // or not showing it at all (Mac).
+    escapedLabel.Replace("&", "&&");
+    wxStaticText::SetLabel(escapedLabel);
+}
+
 void AutoWrappingText::SetLanguage(Language lang)
 {
     m_language = lang;
