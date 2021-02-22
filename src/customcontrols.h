@@ -60,6 +60,8 @@ public:
 
     void SetAndWrapLabel(const wxString& label);
 
+    void SetLabel(const wxString& label) override;
+
 protected:
     void OnSize(wxSizeEvent& e);
 
