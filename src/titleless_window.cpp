@@ -38,10 +38,10 @@
 #endif
 
 
-#ifdef __WXMSW__
-
 namespace
 {
+
+#ifdef __WXMSW__
 
 // See https://docs.microsoft.com/en-us/windows/uwp/design/style/segoe-ui-symbol-font
 
@@ -70,10 +70,8 @@ wxBitmap RenderButton(const wxSize& size, const wxFont& font, const wxColour& bg
     return bmp;
 }
 
-} // anonymous namespace
 
-
-class TitlelessWindow::CloseButton : public wxBitmapButton
+class CloseButton : public wxBitmapButton
 {
 public:
     CloseButton(wxWindow* parent, wxWindowID id)
@@ -113,7 +111,7 @@ private:
 
 #ifdef __WXOSX__
 
-class TitlelessWindow::CloseButton : public wxBitmapButton
+class CloseButton : public wxBitmapButton
 {
 public:
     CloseButton(wxWindow* parent, wxWindowID id)
@@ -127,19 +125,22 @@ public:
 
 #endif // __WXOSX__
 
+} // anonymous namespace
 
-TitlelessWindow::TitlelessWindow(wxWindow* parent,
-                                 wxWindowID id,
-                                 const wxString& title,
-                                 const wxPoint& pos,
-                                 const wxSize& size,
-                                 long style,
-                                 const wxString& name)
-    : wxFrame(parent, id, title, pos, size, style, name)
+
+template<typename T>
+TitlelessWindowBase<T>::TitlelessWindowBase(wxWindow* parent,
+                                            wxWindowID id,
+                                            const wxString& title,
+                                            const wxPoint& pos,
+                                            const wxSize& size,
+                                            long style,
+                                            const wxString& name)
+    : BaseClass(parent, id, title, pos, size, style, name)
 {
 #ifdef __WXOSX__
     // Pretify the window:
-    NSWindow* wnd = (NSWindow*)GetWXWindow();
+    NSWindow* wnd = (NSWindow*)this->GetWXWindow();
     wnd.styleMask |= NSFullSizeContentViewWindowMask;
     wnd.titleVisibility = NSWindowTitleHidden;
     wnd.titlebarAppearsTransparent = YES;
@@ -162,7 +163,7 @@ TitlelessWindow::TitlelessWindow(wxWindow* parent,
         DwmExtendFrameIntoClientArea(handle, &margins);
 
         SetBackgroundStyle(wxBG_STYLE_PAINT);
-        Bind(wxEVT_PAINT, &TitlelessWindow::OnPaintBackground, this);
+        Bind(wxEVT_PAINT, &TitlelessWindowBase::OnPaintBackground, this);
 
         if (style & wxCLOSE_BOX)
             m_closeButton = new CloseButton(this, wxID_CLOSE);
@@ -175,11 +176,12 @@ TitlelessWindow::TitlelessWindow(wxWindow* parent,
 #endif
 
     if (m_closeButton)
-        m_closeButton->Bind(wxEVT_BUTTON, [=](wxCommandEvent&) { Close(); });
+        m_closeButton->Bind(wxEVT_BUTTON, [=](wxCommandEvent&) { this->Close(); });
 }
 
 #ifdef __WXMSW__
-bool TitlelessWindow::ShouldRemoveChrome()
+template<typename T>
+bool TitlelessWindowBase<T>::ShouldRemoveChrome()
 {
     if (!IsWindows10OrGreater())
         return false;
@@ -196,15 +198,17 @@ bool TitlelessWindow::ShouldRemoveChrome()
     return true;
 }
 
-wxPoint TitlelessWindow::GetClientAreaOrigin() const
+template<typename T>
+wxPoint TitlelessWindowBase<T>::GetClientAreaOrigin() const
 {
     if (m_isTitleless)
         return wxPoint(PX(1), PX(1));
     else
-        return wxFrame::GetClientAreaOrigin();
+        return BaseClass::GetClientAreaOrigin();
 }
 
-void TitlelessWindow::DoGetClientSize(int *width, int *height) const
+template<typename T>
+void TitlelessWindowBase<T>::DoGetClientSize(int *width, int *height) const
 {
     if (m_isTitleless)
     {
@@ -216,11 +220,12 @@ void TitlelessWindow::DoGetClientSize(int *width, int *height) const
     }
     else
     {
-        return wxFrame::DoGetClientSize(width, height);
+        return BaseClass::DoGetClientSize(width, height);
     }
 }
 
-WXLRESULT TitlelessWindow::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
+template<typename T>
+WXLRESULT TitlelessWindowBase<T>::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
 {
     if (m_isTitleless)
     {
@@ -243,10 +248,11 @@ WXLRESULT TitlelessWindow::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM 
         }
     }
 
-    return wxFrame::MSWWindowProc(nMsg, wParam, lParam);
+    return BaseClass::MSWWindowProc(nMsg, wParam, lParam);
 }
 
-void TitlelessWindow::OnPaintBackground(wxPaintEvent&)
+template<typename T>
+void TitlelessWindowBase<T>::OnPaintBackground(wxPaintEvent&)
 {
     wxPaintDC dc(this);
 
@@ -266,9 +272,10 @@ void TitlelessWindow::OnPaintBackground(wxPaintEvent&)
 #endif // __WXMSW__
 
 
-bool TitlelessWindow::Layout()
+template<typename T>
+bool TitlelessWindowBase<T>::Layout()
 {
-    if (!wxFrame::Layout())
+    if (!BaseClass::Layout())
         return false;
 
     if (m_closeButton)
@@ -276,10 +283,15 @@ bool TitlelessWindow::Layout()
 #ifdef __WXOSX__
         m_closeButton->Move(2, 4);
 #else
-        auto size = GetClientSize();
+        auto size = this->GetClientSize();
         m_closeButton->Move(size.x - m_closeButton->GetSize().x, 0);
 #endif
     }
 
     return true;
 }
+
+
+// We need to explicitly instantiate the template for all uses within Poedit because of all the code in .cpp file:
+template class TitlelessWindowBase<wxFrame>;
+template class TitlelessWindowBase<wxDialog>;

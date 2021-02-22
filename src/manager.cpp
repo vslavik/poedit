@@ -459,34 +459,41 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
     if (wxMessageBox(_("Do you really want to do mass update of\nall catalogs in this project?"),
                _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
     {
-        wxBusyCursor bcur;
-
-        for (size_t i = 0; i < m_catalogs.GetCount(); i++)
+        ProgressWindow::RunCancellableTaskThenDo(this, ("Updating project catalogs"),
+        [=](dispatch::cancellation_token_ptr cancellationToken)
         {
-            // FIXME: there should be only one progress bar for _all_
-            //        catalogs, it shouldn't restart on next catalog
-            //ProgressInfo pinfo(this, _("Updating catalog"));
+            Progress progress((int)m_catalogs.GetCount());
 
-            wxString f = m_catalogs[i];
-            PoeditFrame *fr = PoeditFrame::Find(f);
-            if (fr)
+            for (size_t i = 0; i < m_catalogs.GetCount(); i++)
             {
-                fr->UpdateCatalog();
-            }
-            else
-            {
-                auto cat = std::make_shared<POCatalog>(f);
-                UpdateResultReason reason;
-                if (PerformUpdateFromSources(this, cat, reason, Update_DontShowSummary))
+                if (cancellationToken->is_cancelled())
+                    return;
+
+                wxString f = m_catalogs[i];
+                PoeditFrame *fr = PoeditFrame::Find(f);
+                if (fr)
                 {
-                    Catalog::ValidationResults validation_results;
-                    Catalog::CompilationStatus mo_status;
-                    cat->Save(f, false, validation_results, mo_status);
+                    fr->UpdateCatalog();
                 }
-            }
-         }
+                else
+                {
+                    Progress subtask(1, progress, 1);
 
-        UpdateListCat();
+                    auto cat = std::make_shared<POCatalog>(f);
+                    UpdateResultReason reason;
+                    if (PerformUpdateFromSources(cat, reason))
+                    {
+                        Catalog::ValidationResults validation_results;
+                        Catalog::CompilationStatus mo_status;
+                        cat->Save(f, false, validation_results, mo_status);
+                    }
+                }
+             }
+        },
+        [=](bool /*finished*/)
+        {
+            UpdateListCat();
+        });
     }
 }
 

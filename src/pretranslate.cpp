@@ -43,29 +43,20 @@
 
 
 template<typename T>
-bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, int flags, int *matchesCount)
+int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, int flags, dispatch::cancellation_token_ptr cancellation_token)
 {
-    if (matchesCount)
-        *matchesCount = 0;
-
     if (range.empty())
-        return false;
+        return 0;
 
     if (!Config::UseTM())
-        return false;
-
-    wxBusyCursor bcur;
+        return 0;
 
     TranslationMemory& tm = TranslationMemory::Get();
     auto srclang = catalog->GetSourceLanguage();
     auto lang = catalog->GetLanguage();
 
-    // FIXME: make this window-modal
-    // FIXME: and don't create it here, reuse upstream progress data
-    ProgressInfo progress(window, _(L"Pre-translating…"));
-    progress.UpdateMessage(_(L"Pre-translating…"));
-
-    auto cancellation_token = std::make_shared<dispatch::cancellation_token>();
+    Progress top_progress(1);
+    top_progress.message(_(L"Preparing strings…"));
 
     // Function to apply fetched suggestions to a catalog item:
     auto process_results = [=](CatalogItemPtr dt, unsigned index, const SuggestionsList& results) -> bool
@@ -117,43 +108,43 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
         }));
     }
 
-    progress.SetGaugeMax((int)operations.size());
+    Progress progress((int)operations.size());
+    progress.message(_(L"Pre-translating from translation memory…"));
 
     int matches = 0;
-    time_t last_refresh = 0;
     for (auto& op: operations)
     {
-        if (!progress.UpdateGauge())
-        {
-            cancellation_token->cancel();  // don't perform any more async work
+        if (cancellation_token->is_cancelled())
             break;
-        }
 
         if (op.get())
         {
             matches++;
-            // Don't update the UI too often, because it is slow due to UpdateMessage()
-            // forcing repaint:
-            time_t time_now = time(NULL);
-            if (time_now != last_refresh)
-            {
-                progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
-                last_refresh = time_now;
-            }
+            progress.message(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
         }
+
+        progress.increment();
     }
-    progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
 
-    if (matchesCount)
-        *matchesCount = matches;
-
-    return matches > 0;
+    return matches;
 }
 
-
-bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags, int *matchesCount)
+template<typename T>
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, int flags)
 {
-    return PreTranslateCatalog(window, catalog, catalog->items(), flags, matchesCount);
+    int matches = 0;
+    ProgressWindow::RunCancellableTask(window, _(L"Pre-translating…"),
+    [=,&matches](dispatch::cancellation_token_ptr cancellationToken)
+    {
+        matches = PreTranslateCatalogImpl(catalog, range, flags, cancellationToken);
+    });
+
+    return matches;
+}
+
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags)
+{
+    return PreTranslateCatalog(window, catalog, catalog->items(), flags);
 }
 
 
@@ -235,12 +226,14 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
 
         if (list->HasMultipleSelection())
         {
-            if (!PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), flags, &matches))
+            matches = PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), flags);
+            if (matches == 0)
                 return;
         }
         else
         {
-            if (!PreTranslateCatalog(window, catalog, flags, &matches))
+            matches = PreTranslateCatalog(window, catalog, flags);
+            if (matches == 0)
                 return;
         }
 

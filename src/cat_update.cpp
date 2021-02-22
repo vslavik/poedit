@@ -148,7 +148,7 @@ void GetMergeSummary(CatalogPtr po, CatalogPtr refcat,
 
     \return true if the merge was OK'ed by the user, false otherwise
  */
-bool ShowMergeSummary(wxWindow *parent, ProgressInfo *progress, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
+bool ShowMergeSummary(wxWindow *parent, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
 {
     if (cancelledByUser)
         *cancelledByUser = false;
@@ -159,11 +159,7 @@ bool ShowMergeSummary(wxWindow *parent, ProgressInfo *progress, CatalogPtr po, C
         MergeSummaryDialog sdlg(parent);
         sdlg.TransferTo(snew, sobsolete);
 
-        if (progress)
-            progress->Hide();
         bool ok = (sdlg.ShowModal() == wxID_OK);
-        if (progress)
-            progress->Show();
 
         if (cancelledByUser)
             *cancelledByUser = !ok;
@@ -173,40 +169,28 @@ bool ShowMergeSummary(wxWindow *parent, ProgressInfo *progress, CatalogPtr po, C
         return true;
 }
 
-} // anonymous namespace
-
-
-bool PerformUpdateFromSources(wxWindow *parent,
-                              POCatalogPtr catalog,
-                              UpdateResultReason& reason,
-                              int flags)
+POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& reason)
 {
-    const bool skipSummary = (flags & Update_DontShowSummary);
-
-    ProgressInfo progress(parent, _("Updating catalog"));
+    Progress progress(1);
 
     reason = UpdateResultReason::Unspecified;
     if (!catalog->IsOk())
-        return false;
+        return nullptr;
 
     auto spec = catalog->GetSourceCodeSpec();
     if (!spec)
     {
         reason = UpdateResultReason::NoSourcesFound;
-        return false;
+        return nullptr;
     }
 
-    POCatalogPtr pot = nullptr;
-
-    progress.PulseGauge();
-    progress.UpdateMessage(_(L"Collecting source files…"));
+    progress.message(_(L"Collecting source files…"));
 
     try
     {
         auto files = Extractor::CollectAllFiles(*spec);
 
-        progress.PulseGauge();
-        progress.UpdateMessage(_(L"Extracting translatable strings…"));
+        progress.message(_(L"Extracting translatable strings…"));
 
         if (!files.empty())
         {
@@ -214,28 +198,24 @@ bool PerformUpdateFromSources(wxWindow *parent,
             auto potFile = Extractor::ExtractWithAll(tmpdir, *spec, files);
             if (!potFile.empty())
             {
-                pot = std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
-                if (!pot->IsOk())
+                auto pot = std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
+                if (pot->IsOk())
+                {
+                    return pot;
+                }
+                else
                 {
                     wxLogError(_("Failed to load extracted catalog."));
                     reason = UpdateResultReason::Unspecified;
-                    pot.reset();
+                    return nullptr;
                 }
             }
         }
         else
         {
             reason = UpdateResultReason::NoSourcesFound;
+            return nullptr;
         }
-
-        if (progress.Cancelled())
-        {
-            reason = UpdateResultReason::CancelledByUser;
-            return false;
-        }
-
-        if (!pot)
-            return false;
     }
     catch (ExtractionException& e)
     {
@@ -252,14 +232,55 @@ bool PerformUpdateFromSources(wxWindow *parent,
                 break;
         }
         reason.file = e.file;
+        return nullptr;
+    }
+
+    return nullptr;
+}
+
+} // anonymous namespace
+
+bool PerformUpdateFromSources(POCatalogPtr catalog, UpdateResultReason& reason)
+{
+    Progress p(100);
+
+    POCatalogPtr pot;
+    {
+        Progress subtask(1, p, 90);
+        pot = ExtractPOTFromSources(catalog, reason);
+        if (!pot || !pot->IsOk())
+            return false;
+    }
+    {
+        Progress subtask(1, p, 10);
+        subtask.message(_(L"Merging differences…"));
+        return catalog->UpdateFromPOT(pot);
+    }
+}
+
+bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
+                                    POCatalogPtr catalog,
+                                    UpdateResultReason& reason,
+                                    int flags)
+{
+    const bool skipSummary = (flags & Update_DontShowSummary);
+
+    POCatalogPtr pot;
+
+    bool succ = ProgressWindow::RunCancellableTask(parent, _("Updating catalog"),
+    [&reason,&pot,catalog](dispatch::cancellation_token_ptr /*cancellationToken*/)
+    {
+        pot = ExtractPOTFromSources(catalog, reason);
+    });
+
+    if (!succ)
+    {
+        reason = UpdateResultReason::CancelledByUser;
         return false;
     }
 
-    progress.UpdateMessage(_(L"Merging differences…"));
-
-    bool succ = false;
     bool cancelledByUser = false;
-    if (skipSummary || ShowMergeSummary(parent, &progress, catalog, pot, &cancelledByUser))
+    if (skipSummary || ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
         succ = catalog->UpdateFromPOT(pot);
     }
@@ -271,10 +292,10 @@ bool PerformUpdateFromSources(wxWindow *parent,
 }
 
 
-bool PerformUpdateFromPOT(wxWindow *parent,
-                          POCatalogPtr catalog,
-                          const wxString& pot_file,
-                          UpdateResultReason& reason)
+bool PerformUpdateFromPOTWithUI(wxWindow *parent,
+                                POCatalogPtr catalog,
+                                const wxString& pot_file,
+                                UpdateResultReason& reason)
 {
     reason = UpdateResultReason::Unspecified;
     if (!catalog->IsOk())
@@ -289,7 +310,7 @@ bool PerformUpdateFromPOT(wxWindow *parent,
     }
 
     bool cancelledByUser = false;
-    if (ShowMergeSummary(parent, nullptr, catalog, pot, &cancelledByUser))
+    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
         return catalog->UpdateFromPOT(pot);
     }
