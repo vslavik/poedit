@@ -62,6 +62,8 @@ public:
 
     bool InformFirstDirection(int direction, int size, int availableOtherDir) override;
 
+    void SetLabel(const wxString& label) override;
+
 protected:
     void OnSize(wxSizeEvent& e);
     bool RewrapForWidth(int width);
