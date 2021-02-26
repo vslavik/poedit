@@ -55,7 +55,7 @@ public:
         : m_parent(parent),
           m_observer(nullptr),
           m_totalCount(totalCount), m_parentCountTaken(parentCountTaken), m_completedCount(0),
-          m_dirty(true), m_completedFraction(0), m_lastReportedFraction(0)
+          m_dirty(true), m_completedFraction(0), m_lastReportedFraction(-1)
     {
     }
 
@@ -75,9 +75,15 @@ public:
             p->message(text);
     }
 
-    void increment()
+    void increment(int count)
     {
-        ++m_completedCount;
+        m_completedCount += count;
+        notify_changed();
+    }
+
+    void set(int count)
+    {
+        m_completedCount = count;
         notify_changed();
     }
 
@@ -92,6 +98,7 @@ public:
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             m_children.erase(c);
+            m_completedCount += c->m_parentCountTaken;
         }
         notify_changed();
     }
@@ -130,7 +137,7 @@ protected:
             double completed = m_completedCount;
             for (auto c: m_children)
                 completed += c->m_parentCountTaken * c->completed_fraction();
-            m_completedFraction = completed / m_totalCount;
+            m_completedFraction = std::min(completed / m_totalCount, 1.0);
         }
 
         return m_completedFraction;
@@ -188,9 +195,14 @@ void Progress::message(const wxString& text)
     m_impl->message(text);
 }
 
-void Progress::increment()
+void Progress::increment(int count)
 {
-    m_impl->increment();
+    m_impl->increment(count);
+}
+
+void Progress::set(int count)
+{
+    m_impl->set(count);
 }
 
 void ProgressObserver::attach(Progress& observedProgress)

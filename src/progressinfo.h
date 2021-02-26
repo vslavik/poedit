@@ -55,7 +55,8 @@ public:
     ~Progress();
 
     void message(const wxString& text);
-    void increment();
+    void increment(int count = 1);
+    void set(int count);
 
 private:
     struct impl;
@@ -111,8 +112,13 @@ protected:
         })
         .then_on_main([=]
         {
-            EndModal(wxID_OK);
+            // make sure EndModal() is only called within event loop, i.e. not before
+            // Show*Modal() was called (which could happen if `bg` finished instantly):
+            CallAfter([=]{
+                EndModal(wxID_OK);
+            });
         });
+        // TODO: handle exceptions (can't just rethrow on main thread)
 
         if (forceModal || !GetParent())
         {
