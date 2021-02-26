@@ -26,18 +26,24 @@
 #ifndef Poedit_logcapture_h
 #define Poedit_logcapture_h
 
-#include <wx/string.h>
 #include <wx/log.h>
+#include <wx/string.h>
+#include <wx/thread.h>
 
 // Capture all wx log output into a text buffer and suppress normal output:
-class LogCapture : public wxLogInterposer
+class LogCapture : public wxLog
 {
 public:
     LogCapture(wxLogLevel level = wxLOG_Info)
     {
-        PassMessages(false);
+        m_active = true;
         m_oldLevel = wxLog::GetLogLevel();
         m_verbose = wxLog::GetVerbose();
+
+        if (wxThread::IsMain())
+            m_oldLogger = wxLog::SetActiveTarget(this);
+        else
+            m_oldLogger = wxLog::SetThreadActiveTarget(this);
 
         wxLog::SetLogLevel(level);
         wxLog::SetVerbose();
@@ -45,13 +51,28 @@ public:
 
     ~LogCapture()
     {
+        Stop();
+    }
+
+    void Stop()
+    {
+        if (!m_active)
+            return;
+        m_active = false;
+
+        if (wxThread::IsMain())
+            wxLog::SetActiveTarget(m_oldLogger);
+        else
+            wxLog::SetThreadActiveTarget(m_oldLogger);
+
         wxLog::SetLogLevel(m_oldLevel);
         wxLog::SetVerbose(m_verbose);
     }
 
-    virtual void DoLogTextAtLevel(wxLogLevel, const wxString& msg)
+    void DoLogTextAtLevel(wxLogLevel, const wxString& msg) override
     {
-        Append(msg);
+        if (m_active)
+            Append(msg);
     }
 
     void Append(const wxString& msg)
@@ -62,6 +83,8 @@ public:
     wxString text;
 
 private:
+    bool m_active;
+    wxLog *m_oldLogger;
     wxLogLevel m_oldLevel;
     bool m_verbose;
 };
