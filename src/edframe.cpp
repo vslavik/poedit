@@ -222,6 +222,87 @@ private:
 } // anonymous namespace
 
 
+class PoeditFrame::FileMonitor
+{
+    static const int MONITORING_FLASG = wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVENT_MODIFY;
+
+public:
+    FileMonitor() : m_isRespondingGuard(false) {}
+    ~FileMonitor() { Reset(); }
+
+    void SetFile(CatalogPtr cat) { SetFile(cat->GetFileName()); }
+
+    void SetFile(wxFileName file)
+    {
+        // unmonitor first (needed even if the filename didn't change)xx
+        if (file == m_file)
+            return;
+
+        Reset();
+
+        m_file = file;
+        if (!m_file.IsOk())
+            return;
+        m_dir = wxFileName::DirName(m_file.GetPath());
+
+#ifdef __WXOSX__
+        // kqueue-based monitoring is unreliable on macOS, we need to use AddTree() to force FSEvents usage
+        wxGetApp().FileWatcher().AddTree(m_dir, MONITORING_FLASG);
+#else
+        wxGetApp().FileWatcher().Add(m_dir, MONITORING_FLASG);
+#endif
+        m_loadTime = m_file.GetModificationTime();
+    }
+
+    bool WasModifiedOnDisk() const
+    {
+        if (!m_file.IsOk())
+            return false;
+        return m_loadTime != m_file.GetModificationTime();
+    }
+
+    // if true is returned, _must_ call StopRespondingToEvent() afterwards
+    bool ShouldRespondToFileChange()
+    {
+        if (!m_file.IsOk() || m_isRespondingGuard)
+            return false;
+
+        if (!WasModifiedOnDisk())
+            return false;
+
+        m_isRespondingGuard = true;
+        return true;
+    }
+
+    // logic for preventing multiple FS events from causing duplicate reloads
+    void StopRespondingToEvent()
+    {
+        wxASSERT( m_isRespondingGuard );
+        m_isRespondingGuard = false;
+    }
+
+private:
+    void Reset()
+    {
+        if (m_file.IsOk())
+        {
+#ifdef __WXOSX__
+            wxGetApp().FileWatcher().RemoveTree(m_dir);
+#else
+            wxGetApp().FileWatcher().Remove(m_dir);
+#endif
+            m_file.Clear();
+        }
+    }
+
+private:
+    bool m_isRespondingGuard;
+    wxString m_monitoredPath;
+    wxFileName m_file, m_dir;
+    wxDateTime m_loadTime;
+};
+
+
 // this should be high enough to not conflict with any wxNewId-allocated value,
 PoeditFrame::PoeditFramesList PoeditFrame::ms_instances;
 
@@ -489,6 +570,7 @@ PoeditFrame::PoeditFrame() :
     m_contentType(Content::Invalid),
     m_contentView(nullptr),
     m_catalog(nullptr),
+    m_fileMonitor(new FileMonitor),
     m_fileExistsOnDisk(false),
     m_list(nullptr),
     m_modified(false),
@@ -964,6 +1046,42 @@ void PoeditFrame::DoOpenFile(const wxString& filename, int lineno)
 }
 
 
+void PoeditFrame::ReloadFileIfChanged()
+{
+    if (!m_fileExistsOnDisk || !m_fileMonitor || !m_catalog)
+        return;
+
+    if (m_fileMonitor->ShouldRespondToFileChange())
+    {
+        if (NeedsToAskIfCanDiscardCurrentDoc())
+        {
+            auto filename = wxFileName(m_catalog->GetFileName()).GetFullName();
+            wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                             (
+                                 this,
+                                 wxString::Format(_(L"The file “%s” has been changed by another application."), filename),
+                                 _("Reload file"),
+                                 wxYES_NO | wxNO_DEFAULT | wxICON_WARNING
+                             ));
+            dlg->SetExtendedMessage(_(L"Do you want to reload the file from disk? Your unsaved edits in Poedit will be lost if you do."));
+            dlg->SetYesNoLabels(MSW_OR_OTHER(_("Reload file"), _("Reload File")), _("Ignore"));
+            dlg->ShowWindowModalThenDo([this,dlg](int retval)
+            {
+                if (retval == wxID_YES)
+                    ReadCatalog(m_catalog->GetFileName());
+                m_fileMonitor->StopRespondingToEvent();
+            });
+        }
+        else
+        {
+            // file not modified in Poedit yet, so just reload it from the disk
+            ReadCatalog(m_catalog->GetFileName());
+            m_fileMonitor->StopRespondingToEvent();
+        }
+    }
+}
+
+
 bool PoeditFrame::NeedsToAskIfCanDiscardCurrentDoc() const
 {
     return m_catalog && m_modified;
@@ -1105,9 +1223,34 @@ void PoeditFrame::OnSave(wxCommandEvent& event)
     try
     {
         if (!m_fileExistsOnDisk || GetFileName().empty())
+        {
             OnSaveAs(event);
+        }
         else
-            WriteCatalog(GetFileName());
+        {
+            if (m_fileMonitor && m_fileMonitor->WasModifiedOnDisk())
+            {
+                auto filename = wxFileName(m_catalog->GetFileName()).GetFullName();
+                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                                 (
+                                     this,
+                                     wxString::Format(_(L"The file “%s” has been changed by another application."), filename),
+                                     _("Save"),
+                                     wxYES_NO | wxYES_DEFAULT | wxICON_WARNING
+                                 ));
+                dlg->SetExtendedMessage(_("The changes made by the other application will be lost if you save."));
+                dlg->SetYesNoLabels(MSW_OR_OTHER(_("Save anyway"), _("Save Anyway")), _("Cancel"));
+                dlg->ShowWindowModalThenDo([this,dlg](int retval)
+                {
+                    if (retval == wxID_YES)
+                        WriteCatalog(GetFileName());
+                });
+            }
+            else
+            {
+                WriteCatalog(GetFileName());
+            }
+        }
     }
     catch (Exception& e)
     {
@@ -2245,6 +2388,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         }
 
         m_catalog = cat;
+        m_fileMonitor->SetFile(m_catalog);
         m_pendingHumanEditedItem.reset();
 
         if (m_catalog->empty())
@@ -2684,6 +2828,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_catalog->SetFileName(catalog);
     m_modified = false;
     m_fileExistsOnDisk = true;
+    m_fileMonitor->SetFile(m_catalog);
 
     UpdateTitle();
 
