@@ -30,6 +30,7 @@
 #include <wx/log.h>
 #include <wx/button.h>
 #include <wx/panel.h>
+#include <wx/statline.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
 #include <wx/config.h>
@@ -91,9 +92,17 @@ FileViewer *FileViewer::GetAndActivate()
 }
 
 FileViewer::FileViewer(wxWindow*)
-        : wxFrame(nullptr, wxID_ANY, _("Source file"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE)
+        : wxFrame(nullptr, wxID_ANY, _("String Occurences"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE)
 {
     SetName("fileviewer");
+
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+            SetBackgroundColour(*wxWHITE);
+        else
+            SetBackgroundColour(GetDefaultAttributes().colBg);
+    });
 
     wxPanel *panel = new wxPanel(this, -1);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -105,21 +114,27 @@ FileViewer::FileViewer(wxWindow*)
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
+    m_topBarSizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(m_topBarSizer, wxSizerFlags().Expand());
+
     wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(barsizer, wxSizerFlags().Expand().PXBorderAll());
+    m_topBarSizer->Add(barsizer, wxSizerFlags(1).Expand().Border(wxALL, PX(10)));
 
-    barsizer->Add(new wxStaticText(panel, wxID_ANY,
-                                   _("Source file occurrence:")),
-                  wxSizerFlags().Center().PXBorder(wxRIGHT));
+    m_file = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(300), -1));
+    barsizer->Add(m_file, wxSizerFlags().Center());
 
-    m_file = new wxChoice(panel, wxID_ANY);
-    barsizer->Add(m_file, wxSizerFlags(1).Center());
+    m_description = new SecondaryLabel(panel, "");
+    barsizer->Add(m_description, wxSizerFlags(1).Center().PXBorder(wxLEFT|wxRIGHT));
 
     m_openInEditor = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
+#ifdef __WXOSX__
+    static_cast<NSButton*>(m_openInEditor->GetHandle()).bezelStyle = NSRoundRectBezelStyle;
+#endif
     barsizer->Add(m_openInEditor, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
 
-    m_content = wxWebView::New(panel, wxID_ANY);
+    m_topBarSizer->Add(new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
+    m_content = wxWebView::New(panel, wxID_ANY);
     sizer->Add(m_content, 1, wxEXPAND);
 
     m_error = new wxStaticText(panel, wxID_ANY, "");
@@ -138,7 +153,6 @@ FileViewer::FileViewer(wxWindow*)
     SetSizer(topsizer);
 
     // avoid flicker with these initial settings:
-    m_file->Disable();
     sizer->Hide(m_error);
     sizer->Hide(m_content);
 
@@ -228,14 +242,20 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
         m_references = item->GetReferences();
 
     m_file->Clear();
-    m_file->Enable(m_references.size() > 1);
+    m_topBarSizer->Show(!m_references.empty());
 
     if (m_references.empty())
     {
+        m_description->SetLabel(_(""));
         ShowError(_("No references for the selected item."));
     }
     else
     {
+        m_description->SetLabel
+        (
+            wxString::Format(wxPLURAL(L"%d source code occurence", L"%d source code occurences", (int)m_references.size()),
+                             (int)m_references.size())
+        );
         for (auto& r: m_references)
             m_file->Append(bidi::platform_mark_direction(r));
         m_file->SetSelection(defaultReference);

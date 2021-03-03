@@ -37,6 +37,7 @@ class WXDLLIMPEXP_FWD_CORE wxChoice;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxFileName;
 class WXDLLIMPEXP_FWD_CORE wxWebView;
+class WXDLLIMPEXP_FWD_CORE wxSizer;
 
 
 /** This class implements frame that shows part of file
@@ -66,9 +67,11 @@ private:
     wxArrayString m_references;
 
     wxChoice *m_file;
+    wxStaticText *m_description;
     wxButton *m_openInEditor;
     wxWebView *m_content;
     wxStaticText *m_error;
+    wxSizer *m_topBarSizer;
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);
