@@ -119,25 +119,22 @@ FileViewer::FileViewer(wxWindow*)
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
-    m_topBarSizer = new wxBoxSizer(wxVERTICAL);
-    sizer->Add(m_topBarSizer, wxSizerFlags().Expand());
-
-    wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
-    m_topBarSizer->Add(barsizer, wxSizerFlags(1).Expand().Border(wxALL, PX(10)));
+    m_topBarSizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(m_topBarSizer, wxSizerFlags().ReserveSpaceEvenIfHidden().Expand().Border(wxALL, PX(10)));
 
     m_file = new wxChoice(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(300), -1));
-    barsizer->Add(m_file, wxSizerFlags().Center());
+    m_topBarSizer->Add(m_file, wxSizerFlags().Center().ReserveSpaceEvenIfHidden());
 
     m_description = new SecondaryLabel(panel, "");
-    barsizer->Add(m_description, wxSizerFlags(1).Center().PXBorder(wxLEFT|wxRIGHT));
+    m_topBarSizer->Add(m_description, wxSizerFlags(1).Center().PXBorder(wxLEFT|wxRIGHT));
 
     m_openInEditor = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
 #ifdef __WXOSX__
     static_cast<NSButton*>(m_openInEditor->GetHandle()).bezelStyle = NSRoundRectBezelStyle;
 #endif
-    barsizer->Add(m_openInEditor, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
+    m_topBarSizer->Add(m_openInEditor, wxSizerFlags().Center().ReserveSpaceEvenIfHidden().Border(wxLEFT, PX(10)));
 
-    m_topBarSizer->Add(new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
+    sizer->Add(new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
     m_content = wxWebView::New(panel, wxID_ANY);
     sizer->Add(m_content, 1, wxEXPAND);
