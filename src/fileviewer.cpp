@@ -758,8 +758,9 @@ mark {
 
 .message pre {
     text-align: left;
-    width: fit-content;
-    margin: 0 auto;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 )";
