@@ -356,9 +356,9 @@ namespace
 
 extern const char *HTML_POEDIT_CSS;
 
-inline wxString FilenameToLanguage(const wxString& ext)
+inline std::string FilenameToLanguage(const std::string& ext)
 {
-    static const std::unordered_map<wxString, wxString> mapping = {
+    static const std::unordered_map<std::string, std::string> mapping = {
         #include "fileviewer.extensions.h"
     };
 
@@ -395,7 +395,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     html += wxString::Format("<pre class=\"line-numbers\">"
                                  "<code>"
                                      "<code class=\"language-%s\">",
-                             FilenameToLanguage(ext.Lower()));
+                             FilenameToLanguage(ext.Lower().ToStdString()));
 
     const size_t count = file.GetLineCount();
     if (lineno && lineno <= count)
