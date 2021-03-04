@@ -3,6 +3,7 @@
  *
  *  Copyright (C) 1999-2021 Vaclav Slavik
  *  Copyright (C) 2015 PrismJS (CSS parts)
+ *  Copyright (c) 2013-2017 Cole Bemis (Feather Icons)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -64,6 +65,10 @@ const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE;
 #endif
 
 wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t lineno);
+
+extern const char *HTML_POEDIT_CSS;
+extern const char *SVG_NOTHING;
+extern const char *SVG_WARNING;
 
 } // anonymous namespace
 
@@ -137,15 +142,6 @@ FileViewer::FileViewer(wxWindow*)
     m_content = wxWebView::New(panel, wxID_ANY);
     sizer->Add(m_content, 1, wxEXPAND);
 
-    m_error = new wxStaticText(panel, wxID_ANY, "");
-    ColorScheme::SetupWindowColors(m_error, [=]
-    {
-        m_error->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
-    });
-
-    m_error->SetFont(m_error->GetFont().Larger().Larger());
-    sizer->Add(m_error, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM, PX(80)));
-
     RestoreWindowState(this, wxSize(PX(600), PX(400)));
 
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
@@ -153,9 +149,7 @@ FileViewer::FileViewer(wxWindow*)
     SetSizer(topsizer);
 
     // avoid flicker with these initial settings:
-    sizer->Hide(m_error);
     sizer->Hide(m_content);
-
     Layout();
 
     m_file->Bind(wxEVT_CHOICE, &FileViewer::OnChoice, this);
@@ -247,7 +241,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
     if (m_references.empty())
     {
         m_description->SetLabel(_(""));
-        ShowError(_("No references for the selected item."));
+        ShowError(SVG_NOTHING, _("No usage information"), _(L"No information about this string’s occurences in the source code is provided in the file."));
     }
     else
     {
@@ -268,7 +262,10 @@ void FileViewer::SelectReference(const wxString& ref)
     const wxFileName filename = GetFilename(ref);
     if (!filename.IsOk())
     {
-        ShowError(wxString::Format(_("Error opening file %s!"), ref.BeforeLast(':')));
+        ShowError(SVG_WARNING, _("Source code not found"),
+                  _(L"Poedit cannot show source code where the string is used, because the file is either not available in the referenced location or it is a symbolic reference that doesn’t point to a real file."),
+                  wxJoin(m_references, '\n')
+                  );
         m_openInEditor->Disable();
         return;
     }
@@ -280,16 +277,13 @@ void FileViewer::SelectReference(const wxString& ref)
 
     if ( !filename.IsFileReadable() || !file.Open(fullpath) )
     {
-        ShowError(wxString::Format(_("Error opening file %s!"), ref.BeforeLast(':')));
+        ShowError(SVG_WARNING, _("File cannot be opened"),
+                  wxString::Format(_(L"Poedit was unable to open the “%s” file."), fullpath));
         m_openInEditor->Disable();
         return;
     }
 
     m_openInEditor->Enable();
-
-    m_error->GetContainingSizer()->Hide(m_error);
-    m_content->GetContainingSizer()->Show(m_content);
-    Layout();
 
     // support GNOME's xml2po's extension to references in the form of
     // filename:line(xml_node):
@@ -300,6 +294,14 @@ void FileViewer::SelectReference(const wxString& ref)
         linenum = 0;
 
     auto markup = FileToHTMLMarkup(file, filename.GetExt(), (size_t)linenum);
+    ShowHTMLContent(markup);
+}
+
+
+void FileViewer::ShowHTMLContent(const wxString& markup)
+{
+    m_content->GetContainingSizer()->Show(m_content);
+    Layout();
 
 #ifdef __WXMSW__
     // On Windows, we use embedded MSIE browser (Edge embedding is still a bit
@@ -329,12 +331,41 @@ void FileViewer::SelectReference(const wxString& ref)
 #endif
 }
 
-void FileViewer::ShowError(const wxString& msg)
+
+void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString& description, const wxString& references)
 {
-    m_error->SetLabel(msg);
-    m_error->GetContainingSizer()->Show(m_error);
-    m_content->GetContainingSizer()->Hide(m_content);
-    Layout();
+    wxString html = wxString::Format
+    (
+        R"(<!DOCTYPE html>
+        <html>
+            <head>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <style>%s</style>
+            </head>
+            <body>
+                <div class="message">
+                    <h1>%s</h1>
+                    <h2>%s</h2>
+        )",
+        HTML_POEDIT_CSS,
+        icon,
+        EscapeMarkup(msg)
+    );
+
+    if (!references.empty())
+        html += "<pre>" + EscapeMarkup(references) + "</pre>";
+
+    if (!description.empty())
+        html += wxString::Format("<div class=\"explanation\">%s</div>", EscapeMarkup(description));
+
+    html += R"(
+                </div>
+            </body>
+        </html>
+        )";
+
+    ShowHTMLContent(html);
 }
 
 
@@ -353,8 +384,6 @@ void FileViewer::OnEditFile(wxCommandEvent&)
 
 namespace
 {
-
-extern const char *HTML_POEDIT_CSS;
 
 inline std::string FilenameToLanguage(const std::string& ext)
 {
@@ -488,6 +517,8 @@ const char *HTML_POEDIT_CSS = R"(
 }
 
 body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
+    font-size: 10pt;
     color: #393A34;
     background-color: white;
 }
@@ -714,6 +745,61 @@ mark {
     }
 }
 
+/* Error messages: */
+
+.message {
+    text-align: center;
+    opacity: 0.8;
+    padding-top: 1em;
+}
+
+.explanation {
+    width: 80%;
+    margin: 1em auto;
+    opacity: 0.6;
+}
+
+.message pre {
+    text-align: left;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+)";
+
+
+/*
+
+The MIT License (MIT)
+
+Copyright (c) 2013-2017 Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+ */
+
+const char *SVG_NOTHING = R"(
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+)";
+
+const char *SVG_WARNING = R"(
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
 )";
 
 } // anonymous namespace

@@ -60,7 +60,8 @@ private:
     wxFileName GetFilename(wxString ref) const;
 
     void SelectReference(const wxString& ref);
-    void ShowError(const wxString& msg);
+    void ShowHTMLContent(const wxString& markup);
+    void ShowError(const char *icon, const wxString& msg, const wxString& description = "", const wxString& references = "");
 
 private:
     wxString m_basePath;
@@ -70,7 +71,6 @@ private:
     wxStaticText *m_description;
     wxButton *m_openInEditor;
     wxWebView *m_content;
-    wxStaticText *m_error;
     wxSizer *m_topBarSizer;
 
     void OnChoice(wxCommandEvent &event);
