@@ -274,11 +274,6 @@ AS_IF([test "x$have_cld2" = "xyes"],
 
 
 
-if test "x$GXX" = "xyes"; then
-    AX_CXX_CHECK_FLAG([-Wall],[],[], [CXXFLAGS="$CXXFLAGS -Wall"])
-    AX_CXX_CHECK_FLAG([-Wextra],[],[], [CXXFLAGS="$CXXFLAGS -Wextra"])
-fi
-
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS -DwxNO_UNSAFE_WXSTRING_CONV=1 \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 
 
