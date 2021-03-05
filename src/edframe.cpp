@@ -3008,8 +3008,8 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     if ( !refs.empty() )
     {
         menu->AppendSeparator();
-
-        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
+        // TRANSLATORS: Meaning occurrences of the string in source code
+        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, MSW_OR_OTHER(_("Code occurrences:"), _("Code Occurrences:")));
 #ifdef __WXMSW__
         it1->SetFont(it1->GetFont().Bold());
         menu->Append(it1);

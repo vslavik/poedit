@@ -97,7 +97,8 @@ FileViewer *FileViewer::GetAndActivate()
 }
 
 FileViewer::FileViewer(wxWindow*)
-        : wxFrame(nullptr, wxID_ANY, _("String Occurences"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE)
+        // TRANSLATORS: Meaning occurrences of the string in source code
+        : wxFrame(nullptr, wxID_ANY, _("Code Occurrences"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE)
 {
     SetName("fileviewer");
 
@@ -239,13 +240,13 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
     if (m_references.empty())
     {
         m_description->SetLabel(_(""));
-        ShowError(SVG_NOTHING, _("No usage information"), _(L"No information about this string’s occurences in the source code is provided in the file."));
+        ShowError(SVG_NOTHING, _("No usage information"), _(L"No information about this string’s occurrences in the source code is provided in the file."));
     }
     else
     {
         m_description->SetLabel
         (
-            wxString::Format(wxPLURAL(L"%d source code occurence", L"%d source code occurences", (int)m_references.size()),
+            wxString::Format(wxPLURAL("%d code occurrence", "%d code occurrences", (int)m_references.size()),
                              (int)m_references.size())
         );
         for (auto& r: m_references)
