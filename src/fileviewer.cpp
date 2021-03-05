@@ -103,10 +103,11 @@ FileViewer::FileViewer(wxWindow*)
 
     ColorScheme::SetupWindowColors(this, [=]
     {
+        // match CSS background color:
         if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
             SetBackgroundColour(*wxWHITE);
         else
-            SetBackgroundColour(GetDefaultAttributes().colBg);
+            SetBackgroundColour("#1d1f21");
     });
 
     wxPanel *panel = new wxPanel(this, -1);
@@ -748,6 +749,10 @@ mark {
     text-align: center;
     opacity: 0.8;
     padding-top: 1em;
+}
+
+.message h2 {
+    font-weight: 600;
 }
 
 .explanation {
