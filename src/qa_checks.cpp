@@ -37,9 +37,27 @@
 namespace QA
 {
 
+#define QA_ENUM_ALL_CHECKS(m)       \
+    m(QA::NotAllPlurals);           \
+    m(QA::CaseMismatch);            \
+    m(QA::WhitespaceMismatch);      \
+    m(QA::PunctuationMismatch);     \
+    /* end */
+
+
+#define QA_METADATA(symbolicName, description)                      \
+    static const char *GetId() { return symbolicName; }             \
+    static wxString GetDescription() { return description; }        \
+    const char *GetCheckId() const override { return GetId(); }
+
+
 class NotAllPlurals : public QACheck
 {
 public:
+    QA_METADATA("allplurals", _("Plural form translations"))
+
+    NotAllPlurals(Language /*lang*/) {}
+
     bool CheckItem(CatalogItemPtr item) override
     {
         if (!item->HasPlural())
@@ -69,6 +87,8 @@ public:
 class CaseMismatch : public QACheck
 {
 public:
+    QA_METADATA("case", _("Inconsistent upper/lower case"))
+
     CaseMismatch(Language lang) : m_lang(lang.Lang())
     {
     }
@@ -102,6 +122,10 @@ private:
 class WhitespaceMismatch : public QACheck
 {
 public:
+    QA_METADATA("whitespace", _("Inconsistent whitespace"))
+
+    WhitespaceMismatch(Language /*lang*/) {}
+
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
         if (u_isspace(source[0]) && !u_isspace(translation[0]))
@@ -148,6 +172,8 @@ public:
 class PunctuationMismatch : public QACheck
 {
 public:
+    QA_METADATA("punctuation", _("Punctuation checks"));
+
     PunctuationMismatch(Language lang) : m_lang(lang.Lang())
     {
     }
@@ -341,6 +367,38 @@ bool QACheck::CheckString(CatalogItemPtr /*item*/, const wxString& /*source*/, c
 // QAChecker
 // -------------------------------------------------------------
 
+QAChecker::QAChecker()
+{
+}
+
+QAChecker::~QAChecker()
+{
+}
+
+
+std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& catalog)
+{
+    auto lang = catalog.GetLanguage();
+    auto c = std::make_shared<QAChecker>();
+
+    #define qa_instantiate(klass) c->AddCheck<klass>(lang);
+    QA_ENUM_ALL_CHECKS(qa_instantiate);
+
+    return c;
+}
+
+std::vector<std::pair<std::string, wxString>> QAChecker::GetMetadata()
+{
+    std::vector<std::pair<std::string, wxString>> m;
+
+    #define qa_metadata(klass) m.emplace_back(klass::GetId(), klass::GetDescription())
+    QA_ENUM_ALL_CHECKS(qa_metadata);
+
+    return m;
+}
+
+
+
 int QAChecker::Check(Catalog& catalog)
 {
     // TODO: parallelize this (make async tasks for chunks of the catalog)
@@ -369,16 +427,4 @@ int QAChecker::Check(CatalogItemPtr item)
     }
 
     return issues;
-}
-
-
-std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& catalog)
-{
-    auto lang = catalog.GetLanguage();
-    auto c = std::make_shared<QAChecker>();
-    c->AddCheck<QA::NotAllPlurals>();
-    c->AddCheck<QA::CaseMismatch>(lang);
-    c->AddCheck<QA::WhitespaceMismatch>();
-    c->AddCheck<QA::PunctuationMismatch>(lang);
-    return c;
 }

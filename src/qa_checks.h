@@ -38,6 +38,11 @@ class QACheck
 public:
     virtual ~QACheck() {}
 
+    // Informal protocol for metadata:
+    // static const char *GetId();
+    // static wxString GetDescription();
+    virtual const char *GetCheckId() const = 0; // same as GetId()
+
     // Implementation has to implement one of the CheckXXX() methods,
     // it doesn't have to implement all of them.
 
@@ -59,6 +64,9 @@ public:
     /// Returns checker suitable for given file
     static std::shared_ptr<QAChecker> GetFor(Catalog& catalog);
 
+    /// Returns metadata for the available checkers, as (id,description) pairs
+    static std::vector<std::pair<std::string, wxString>> GetMetadata();
+
     /// Checks all items. Returns # of issues found.
     int Check(Catalog& catalog);
 
@@ -67,15 +75,21 @@ public:
 
     // Low-level creation and setup:
 
-    QAChecker() {}
+    QAChecker();
+    ~QAChecker();
 
-    template<typename TCheck>
-    void AddCheck() { AddCheck(std::make_shared<TCheck>()); }
-
-    template<typename TCheck>
-    void AddCheck(const Language& lang) { AddCheck(std::make_shared<TCheck>(lang)); }
+    template<typename TCheck, typename... Args>
+    void AddCheck(Args&&... args)
+    {
+        if (IsCheckEnabled<TCheck>())
+            AddCheck(std::make_shared<TCheck>(args...));
+    }
 
     void AddCheck(std::shared_ptr<QACheck> c) { m_checks.push_back(c); }
+
+private:
+    template<typename TCheck>
+    bool IsCheckEnabled() const { return true; }
 
 protected:
     std::vector<std::shared_ptr<QACheck>> m_checks;
