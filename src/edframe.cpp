@@ -2192,24 +2192,6 @@ void PoeditFrame::OnToggleWarnings(wxCommandEvent& e)
         if (m_list && m_list->sortOrder().errorsFirst)
             m_list->Sort();
     }
-
-    if (!enable)
-    {
-        wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
-        (
-                this,
-                _("Warnings have been disabled."),
-                "Poedit",
-                wxYES|wxNO
-            ));
-        err->SetExtendedMessage(_("If you disabled the warnings because of excessive false positives, please consider sending a sample file to help@poedit.net to help improve them."));
-        // TRANSLATORS: This is a button to send email with feedback when clicked
-        err->SetYesNoLabels(wxID_OK, MSW_OR_OTHER(_("Send feedback"), _("Send Feedback")));
-        err->ShowWindowModalThenDo([err](int retcode){
-            if (retcode == wxID_NO) // "Send feedback"
-                wxLaunchDefaultBrowser("mailto:help@poedit.net?subject=Warnings");
-        });
-    }
 }
 
 void PoeditFrame::OnCopyFromSingular(wxCommandEvent&)
