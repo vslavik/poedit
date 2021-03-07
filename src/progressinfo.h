@@ -59,7 +59,7 @@ public:
     void set(int count);
 
 private:
-    struct impl;
+    class impl;
     std::shared_ptr<impl> m_impl;
 
     static thread_local std::weak_ptr<impl> ms_threadImplicitParent;
