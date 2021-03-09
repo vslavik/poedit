@@ -236,7 +236,10 @@ public:
     {
         // unmonitor first (needed even if the filename didn't change)xx
         if (file == m_file)
+        {
+            m_loadTime = m_file.GetModificationTime();
             return;
+        }
 
         Reset();
 
