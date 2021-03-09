@@ -50,6 +50,11 @@ namespace
 //        currently not accessible from XLIFFCatalogItem, hence a global.
 std::mutex gs_documentMutex;
 
+// Flags required for correct parsing of XML files with no loss of information
+// FIXME: This includes parse_eol, which is undesirable: it converts files to Unix
+//        line endings on save. OTOH without it, we'd have to do the conversion
+//        manually both ways when extracting _and_ editing text.
+constexpr auto PUGI_PARSE_FLAGS = parse_full | parse_ws_pcdata | parse_fragment;
 
 // Skip over a tag, starting at its '<' with forward iterator or '>' with reverse;
 // return iterator right after the tag or end if malformed
@@ -192,7 +197,7 @@ bool set_node_text_with_metadata(xml_node node, std::string&& text, const XLIFFS
             boost::replace_all(s, ph.placeholder, ph.markup);
 
         remove_all_children(node);
-        auto result = node.append_buffer(s.c_str(), s.size(), parse_default, encoding_utf8);
+        auto result = node.append_buffer(s.c_str(), s.size(), PUGI_PARSE_FLAGS, encoding_utf8);
         switch (result.status)
         {
             case status_no_document_element:
@@ -467,10 +472,8 @@ bool XLIFFCatalog::CanLoadFile(const wxString& extension)
 
 std::shared_ptr<XLIFFCatalog> XLIFFCatalog::Open(const wxString& filename)
 {
-    constexpr auto parse_flags = parse_full | parse_ws_pcdata | parse_fragment;
-
     xml_document doc;
-    auto result = doc.load_file(filename.fn_str(), parse_flags);
+    auto result = doc.load_file(filename.fn_str(), PUGI_PARSE_FLAGS);
     if (!result)
         throw XLIFFReadException(filename, result.description());
 
