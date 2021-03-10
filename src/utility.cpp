@@ -237,10 +237,19 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
         else
 #endif // __WXOSX__
         {
+            auto tempPath = path;
+#ifdef __WXMSW__
+            // On Windows, Dropbox clients opens files and prevents their deletion while syncing
+            // is in progress; this causes problems for short-lived files like this. If detected,
+            // use TMPDIR instead, resulting in slower performance, but no errors.
+            if (tempPath.Contains("\\Dropbox\\"))
+                tempPath = wxFileName::GetTempDir();
+#endif
+
             // Temp filenames may be ugly, nobody cares. Make them safe for
             // Unicode-unfriendly uses on Windows, i.e. 8.3 without non-ASCII
             // characters:
-            auto base = CliSafeFileName(path) + wxFILE_SEP_PATH;
+            auto base = CliSafeFileName(tempPath) + wxFILE_SEP_PATH;
 #ifdef __WXMSW__
             // this is OK, ToAscii() replaces non-ASCII with '_':
             base += name.substr(0,5).ToAscii();
