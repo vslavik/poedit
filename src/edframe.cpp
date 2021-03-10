@@ -284,6 +284,21 @@ public:
         m_isRespondingGuard = false;
     }
 
+    struct WritingGuard
+    {
+        WritingGuard(FileMonitor& monitor) : m_monitor(monitor)
+        {
+            m_monitor.m_isRespondingGuard = true;
+        }
+
+        ~WritingGuard()
+        {
+            m_monitor.StopRespondingToEvent();
+        }
+
+        FileMonitor& m_monitor;
+    };
+
 private:
     void Reset()
     {
@@ -2817,6 +2832,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         dt.Translator = wxConfig::Get()->Read("translator_name", dt.Translator);
         dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", dt.TranslatorEmail);
     }
+
+    FileMonitor::WritingGuard guard(*m_fileMonitor);
 
     Catalog::ValidationResults validation_results;
     Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
