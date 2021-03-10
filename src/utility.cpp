@@ -226,13 +226,13 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
         m_tempDir = str::to_wx([tempdirUrl path]);
 #endif
 
-    wxString counter;
+    wxString random(wchar_t('a' + rand() % 26));
     for (;;)
     {
 #ifdef __WXOSX__
         if (!m_tempDir.empty())
         {
-            m_filenameTmp = m_tempDir + wxFILE_SEP_PATH + name + counter + ext;
+            m_filenameTmp = m_tempDir + wxFILE_SEP_PATH + name + random + ext;
         }
         else
 #endif // __WXOSX__
@@ -243,17 +243,17 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
             auto base = CliSafeFileName(path) + wxFILE_SEP_PATH;
 #ifdef __WXMSW__
             // this is OK, ToAscii() replaces non-ASCII with '_':
-            base += name.ToAscii();
+            base += name.substr(0,5).ToAscii();
 #else
-            base += name;
+            base += name.substr(0, 5);
 #endif
-            m_filenameTmp = base + ".temp" + counter + ext;
+            m_filenameTmp = base + "tmp" + random + ext;
         }
 
         if (!wxFileExists(m_filenameTmp))
             break; // good!
 
-        counter += wchar_t('a' + rand() % 26);
+        random += wchar_t('a' + rand() % 26);
     }
 }
 
