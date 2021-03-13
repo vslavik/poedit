@@ -272,9 +272,8 @@ protected:
 
         m_label->SetForegroundColour(m_fg);
 #ifdef __WXMSW__
-        m_label->SetBackgroundColour(m_bg);
-        if (m_icon)
-            m_icon->SetBackgroundColour(m_bg);
+        for (auto c : GetChildren())
+            c->SetBackgroundColour(m_bg);
 #endif
     }
 
