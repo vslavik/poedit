@@ -337,7 +337,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         {
             if (d->HasIssue())
             {
-                switch (d->GetIssue().severity)
+                switch (d->GetIssue()->severity)
                 {
                     case CatalogItem::Issue::Error:
                         variant << m_iconError;

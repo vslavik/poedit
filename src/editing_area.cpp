@@ -295,7 +295,7 @@ protected:
     }
 #endif
 
-private:
+protected:
     void OnPaint(wxPaintEvent&)
     {
         wxPaintDC dc(this);
@@ -332,9 +332,12 @@ public:
         SetIcon(m_iconError);
     }
 
-    void SetIssue(const CatalogItem::Issue& issue)
+    std::shared_ptr<CatalogItem::Issue> GetIssue() const { return m_issue; }
+
+    void SetIssue(const std::shared_ptr<CatalogItem::Issue>& issue)
     {
-        switch (issue.severity)
+        m_issue = issue;
+        switch (issue->severity)
         {
             case CatalogItem::Issue::Error:
                 SetIcon(m_iconError);
@@ -345,11 +348,13 @@ public:
                 SetColor(Color::TagWarningLineFg, Color::TagWarningLineBg);
                 break;
         }
-        SetLabel(issue.message);
-        SetToolTip(issue.message);
+        SetLabel(issue->message);
+        SetToolTip(issue->message);
     }
 
-private:
+protected:
+
+    std::shared_ptr<CatalogItem::Issue> m_issue;
     wxBitmap m_iconError, m_iconWarning;
 };
 

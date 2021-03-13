@@ -228,7 +228,7 @@ class CatalogItem
 
         bool HasIssue() const { return m_issue != nullptr; }
         bool HasError() const { return m_issue && m_issue->severity == Issue::Error; }
-        const Issue& GetIssue() const { return *m_issue; }
+        const std::shared_ptr<Issue>& GetIssue() const { return m_issue; }
 
         void ClearIssue() { m_issue.reset(); }
         void SetIssue(std::shared_ptr<Issue> issue) { m_issue = issue; }
