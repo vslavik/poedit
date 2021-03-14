@@ -1657,8 +1657,10 @@ Catalog::ValidationResults POCatalog::DoValidate(const wxString& po_file)
 
     res.errors = (int)err.size();
 
+#if wxUSE_GUI
     if (Config::ShowWarnings())
         res.warnings = QAChecker::GetFor(*this)->Check(*this);
+#endif
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {

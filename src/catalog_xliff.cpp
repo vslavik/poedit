@@ -543,8 +543,10 @@ Catalog::ValidationResults XLIFFCatalog::Validate(bool)
 
     res.errors = 0;
 
+#if wxUSE_GUI
     if (Config::ShowWarnings())
         res.warnings = QAChecker::GetFor(*this)->Check(*this);
+#endif
 
     return res;
 }
