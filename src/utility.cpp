@@ -132,7 +132,7 @@ Diff::Action dtl2DiffAction(dtl::edit_t lastType) {
 
 Diff::Diff(const wxString& from, const wxString& to) {
     // Do the diff
-    dtl::Diff<wxUniChar, wxString> d(from, to);
+    dtl::Diff<wchar_t, wxString> d(from, to);
     d.compose();
     auto dtlSeq = d.getSes().getSequence();
 
