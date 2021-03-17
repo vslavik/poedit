@@ -424,9 +424,9 @@ build $
   srcdir = $
       $top_srcdir/gettext
   destdir = $
-      $builddir/gettext
+      $builddir/gettext.$arch
   workdir = $
-      $intdir/gettext
+      $intdir/gettext.$arch
 build gettext: $
     phony $
     $intdir/gettext.done
@@ -2246,9 +2246,9 @@ build $
   srcdir = $
       $top_srcdir/icu4c
   destdir = $
-      $builddir/icu
+      $builddir/icu.$arch
   workdir = $
-      $intdir/icu
+      $intdir/icu.$arch
 build icu: phony $
     $intdir/icu.done
 default $

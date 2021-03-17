@@ -87,8 +87,8 @@ def gen_configure(n, prj, tarball=None, patches=[], srcdir=None, configure='conf
                 ('configure', configure),
                 ('configure_flags', all_flags),
                 ('srcdir', '$top_srcdir/%s' % (srcdir if srcdir else prj)),
-                ('destdir', '$builddir/%s' % prj),
-                ('workdir', '$intdir/%s' % prj),
+                ('destdir', '$builddir/%s.$arch' % prj),
+                ('workdir', '$intdir/%s.$arch' % prj),
             ]))
     n.build([prj], 'phony', target)
     return target

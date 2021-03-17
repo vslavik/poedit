@@ -71,4 +71,8 @@ EOT
 # don't produce error if the build is stopped for other reasons
 trap 'exit 0' INT
 
-ninja $1
+for ARCH in $ARCHS; do
+    ninja -f build.$ARCH.ninja $1
+done
+
+../macos/merge-archs.sh "$DEPS_BUILD_DIR/$1"
