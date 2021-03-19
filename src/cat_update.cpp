@@ -279,6 +279,9 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
         return false;
     }
 
+    if (!pot)
+        return false;
+
     bool cancelledByUser = false;
     if (skipSummary || ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
