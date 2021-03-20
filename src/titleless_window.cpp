@@ -281,7 +281,7 @@ bool TitlelessWindowBase<T>::Layout()
     if (m_closeButton)
     {
 #ifdef __WXOSX__
-        m_closeButton->Move(2, 4);
+        m_closeButton->Move(4, 4);
 #else
         auto size = this->GetClientSize();
         m_closeButton->Move(size.x - m_closeButton->GetSize().x, 0);
