@@ -105,6 +105,10 @@ protected:
         m_progress = std::make_shared<Progress>(1);
         attach(*m_progress);
 
+        // don't show any flushed log output until the modal progress window closes:
+        // FIXME: proper UI for showing logged errors directly within
+        wxLog::Suspend();
+
         auto bg = dispatch::async([=]
         {
             Progress progress(1, *m_progress, 1);
@@ -116,6 +120,7 @@ protected:
             // Show*Modal() was called (which could happen if `bg` finished instantly):
             CallAfter([=]{
                 EndModal(wxID_OK);
+                wxLog::Resume();
             });
         });
         // TODO: handle exceptions (can't just rethrow on main thread)
