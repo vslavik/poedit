@@ -10,7 +10,7 @@ if [ "$2" = clean ] ; then
 fi
 
 # Include Homebrew binaries on PATH if not there yet:
-PATH="$PATH:/usr/local/bin"
+PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
 
 # Fake Java binaries so that gettext configure script doesn't invoke the system ones:
 mkdir -p "$DEPS_BUILD_DIR/helpers"
@@ -18,7 +18,22 @@ touch "$DEPS_BUILD_DIR"/helpers/{java,javac}
 chmod +x "$DEPS_BUILD_DIR"/helpers/{java,javac}
 PATH="$DEPS_BUILD_DIR/helpers:$PATH"
 
-if [ -d /usr/local/opt/ccache/libexec ] ; then
+if [ -f /opt/homebrew/bin/gsed ] ; then
+    GSED=/opt/homebrew/bin/gsed
+else
+    GSED=/usr/local/bin/gsed
+fi
+
+if [ -f /opt/homebrew/opt/bison/bin/yacc ] ; then
+    YACC=/opt/homebrew/opt/bison/bin/yacc
+else
+    YACC=/usr/local/opt/bison/bin/yacc
+fi
+
+if [ -d /opt/homebrew/opt/ccache/libexec ] ; then
+    CC=/opt/homebrew/opt/ccache/libexec/clang
+    CXX=/opt/homebrew/opt/ccache/libexec/clang++
+elif [ -d /usr/local/opt/ccache/libexec ] ; then
     CC=/usr/local/opt/ccache/libexec/clang
     CXX=/usr/local/opt/ccache/libexec/clang++
 else
@@ -40,6 +55,9 @@ SDKROOT = $SDKROOT
 MACOSX_DEPLOYMENT_TARGET = $MACOSX_DEPLOYMENT_TARGET
 CONFIGURATION = $CONFIGURATION
 
+sed = $GSED
+yacc = $YACC
+
 top_srcdir = `pwd`
 builddir = $DEPS_BUILD_DIR
 
@@ -53,4 +71,8 @@ EOT
 # don't produce error if the build is stopped for other reasons
 trap 'exit 0' INT
 
-ninja $1
+for ARCH in $ARCHS; do
+    ninja -f build.$ARCH.ninja $1
+done
+
+../macos/merge-archs.sh "$DEPS_BUILD_DIR/$1"
