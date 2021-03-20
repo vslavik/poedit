@@ -87,12 +87,22 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
     size_t i;
     
     listbox = XRCCTRL(*this, "new_strings", wxListBox);
+#ifdef __WXOSX__
+    if (@available(macOS 11.0, *))
+        ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+#endif
+
     for (i = 0; i < snew.GetCount(); i++)
     {
         listbox->Append(snew[i]);
     }
 
     listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
+#ifdef __WXOSX__
+    if (@available(macOS 11.0, *))
+        ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+#endif
+
     for (i = 0; i < sobsolete.GetCount(); i++)
     {
         listbox->Append(sobsolete[i]);
