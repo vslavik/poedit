@@ -88,8 +88,10 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
     
     listbox = XRCCTRL(*this, "new_strings", wxListBox);
 #ifdef __WXOSX__
+  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
     if (@available(macOS 11.0, *))
         ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+  #endif
 #endif
 
     for (i = 0; i < snew.GetCount(); i++)
@@ -99,8 +101,10 @@ void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayStri
 
     listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
 #ifdef __WXOSX__
+  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
     if (@available(macOS 11.0, *))
         ((NSTableView*)[((NSScrollView*)listbox->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+  #endif
 #endif
 
     for (i = 0; i < sobsolete.GetCount(); i++)
