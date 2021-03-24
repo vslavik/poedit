@@ -48,11 +48,11 @@ AC_PROG_CXXCPP
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX([14], [], [mandatory])
 
-WXLIBS_USED="xrc,stc,html,xml,adv,core,net"
+WXLIBS_USED="xrc,xml,webview,adv,core,net"
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"
-    ;;    
+    ;;
 esac
 
 
@@ -273,11 +273,6 @@ AS_IF([test "x$have_cld2" = "xyes"],
 
 
 
-
-if test "x$GXX" = "xyes"; then
-    AX_CXX_CHECK_FLAG([-Wall],[],[], [CXXFLAGS="$CXXFLAGS -Wall"])
-    AX_CXX_CHECK_FLAG([-Wextra],[],[], [CXXFLAGS="$CXXFLAGS -Wextra"])
-fi
 
 CXXFLAGS="$CXXFLAGS $DEBUG_FLAGS -DwxNO_UNSAFE_WXSTRING_CONV=1 \"-DPOEDIT_PREFIX=\\\"$prefix\\\"\""
 

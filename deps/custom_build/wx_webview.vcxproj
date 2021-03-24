@@ -17,13 +17,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -134,6 +134,7 @@
     <ClCompile Include="..\wx\src\common\webview.cpp" />
     <ClCompile Include="..\wx\src\common\webviewarchivehandler.cpp" />
     <ClCompile Include="..\wx\src\common\webviewfshandler.cpp" />
+    <ClCompile Include="..\wx\src\msw\webview_edge.cpp" />
     <ClCompile Include="..\wx\src\msw\webview_ie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl /EP /nologo "%(FullPath)" &gt; "..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\wx\lib\vc_lib\mswu\wx\msw\rcdefs.h;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\wx\include\wx\msw\webview_edge.h" />
     <ClInclude Include="..\wx\include\wx\msw\webview_ie.h" />
     <ClInclude Include="..\wx\include\wx\msw\webview_missing.h" />
     <ClInclude Include="..\wx\include\wx\msw\webviewhistoryitem_ie.h" />

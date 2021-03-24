@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: focal
 
 language: cpp
 
@@ -8,12 +8,7 @@ compiler: gcc
 # dependencies for building Poedit on old Ubuntu:
 addons:
     apt:
-        sources:
-            - ubuntu-toolchain-r-test
-            - sourceline: 'ppa:vslavik/poedit'
         packages:
-            - gcc-6
-            - g++-6
             - libexpat1-dev
             - libdb++-dev
             - libboost-dev
@@ -23,26 +18,25 @@ addons:
             - libboost-iostreams-dev
             - liblucene++-dev
             - libicu-dev
-            - libwxgtk3.0-dev
-            - libgtk2.0-dev
-            - libgtkspell-dev
+            - libwxgtk3.0-gtk3-dev
+            - libwxgtk-webview3.0-gtk3-dev
+            - libgtk-3-dev
+            - libgtkspell3-3-dev
             - libcld2-dev
             - libcpprest-dev
             - libsecret-1-dev
 
-env:
-    - REAL_CC='ccache gcc-6' REAL_CXX='ccache g++-6'
-
 before_install:
-    # work around Travis being difficult, see https://github.com/travis-ci/travis-ci/issues/6633
-    - export CC="$REAL_CC" CXX="$REAL_CXX"
     # git submodules needed for Linux:
     - git submodule update --init deps/json deps/pugixml
 
 script:
     - scripts/travis-check-translations.sh
     # don't build directly, create a tarball first and try building from that
-    - ./bootstrap && ./configure && make dist && make distcheck
+    - ./bootstrap
+    - ./configure
+    - make dist
+    - make distcheck
 
 after_failure:
     - test -f Makefile || cat config.log

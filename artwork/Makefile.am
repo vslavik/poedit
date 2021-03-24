@@ -50,5 +50,8 @@ dist_uiicons_DATA = \
 		StatusWarningBlack.png \
 		window-close.png
 
-install-data-hook:
+update-icon-cache:
 	which gtk-update-icon-cache >/dev/null && gtk-update-icon-cache -f -t $(DESTDIR)$(iconsdir) || true
+
+install-data-hook: update-icon-cache
+uninstall-hook: update-icon-cache

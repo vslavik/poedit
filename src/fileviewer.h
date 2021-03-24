@@ -30,11 +30,14 @@
 
 #include <wx/frame.h>
 
+#include <memory>
+
 class WXDLLIMPEXP_FWD_CORE wxButton;
 class WXDLLIMPEXP_FWD_CORE wxChoice;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxFileName;
-class WXDLLIMPEXP_FWD_STC wxStyledTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxWebView;
+class WXDLLIMPEXP_FWD_CORE wxSizer;
 
 
 /** This class implements frame that shows part of file
@@ -54,26 +57,31 @@ public:
     void ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int defaultReference = 0);
 
 private:
-    void SetupTextCtrl();
-    int GetLexer(const wxString& extension);
     wxFileName GetFilename(wxString ref) const;
 
     void SelectReference(const wxString& ref);
-    void ShowError(const wxString& msg);
+    void ShowHTMLContent(const wxString& markup);
+    void ShowError(const char *icon, const wxString& msg, const wxString& description = "", const wxString& references = "");
 
 private:
     wxString m_basePath;
     wxArrayString m_references;
 
     wxChoice *m_file;
+    wxStaticText *m_description;
     wxButton *m_openInEditor;
-    wxStyledTextCtrl *m_text;
-    wxStaticText *m_error;
+    wxWebView *m_content;
+    wxSizer *m_topBarSizer;
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);
 
     static FileViewer *ms_instance;
+
+#ifdef __WXMSW__
+    struct TempFile;
+    std::shared_ptr<TempFile> m_tmpFile;
+#endif
 };
 
 #endif // _FILEVIEWER_H_

@@ -774,7 +774,7 @@
 // Default is 1
 //
 // Recommended setting: 1
-#define wxUSE_STC 1
+#define wxUSE_STC 0
 
 // Use wxWidget's web viewing classes
 //
@@ -790,6 +790,7 @@
 // Recommended setting: 1
 #ifdef __WXMSW__
 #define wxUSE_WEBVIEW_IE 1
+#define wxUSE_WEBVIEW_EDGE 0
 #else
 #define wxUSE_WEBVIEW_IE 0
 #endif
