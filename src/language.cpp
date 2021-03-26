@@ -216,6 +216,11 @@ const DisplayNamesData& GetDisplayNamesData()
 
 std::string DoGetLanguageTag(const Language& lang)
 {
+    if (lang.Code() == "zh_CN")
+         return "zh-Hans";
+    else if (lang.Code() == "zh_TW")
+         return "zh-Hant";
+
     auto l = lang.Lang();
     auto c = lang.Country();
     auto v = lang.Variant();
