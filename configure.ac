@@ -170,7 +170,6 @@ PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
             AC_MSG_ERROR([missing ICU library])
         ])
 
-
 dnl we need GtkSpell and GTK+ >= 2 for this, check if we're compatible
 AC_MSG_CHECKING([if wxWidgets toolkit uses GTK+ 3])
 AC_TRY_COMPILE([#include <wx/defs.h>],
@@ -229,6 +228,12 @@ PKG_CHECK_MODULES([PUGIXML], [pugixml >= 1.9],
         ],
         [
             dnl use bundled copy
+        ])
+
+AC_CHECK_HEADERS([dtl/dtl.hpp],
+        [ ],
+        [
+            AC_MSG_ERROR([missing dtl c++ header-only library])
         ])
 
 

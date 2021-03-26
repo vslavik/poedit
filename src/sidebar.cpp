@@ -130,13 +130,14 @@ class OldMsgidSidebarBlock : public SidebarBlock
 public:
     OldMsgidSidebarBlock(Sidebar *parent)
           /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-        : SidebarBlock(parent, _("Previous source text:"))
+        : SidebarBlock(parent, _("Diff to previous source:"))
     {
         m_innerSizer->AddSpacer(PX(2));
-        m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the now-inaccurate translation corresponds to.")),
+        m_innerSizer->Add(new ExplanationLabel(parent, _("The difference to old source text (before it changed during an update) that the now-inaccurate translation corresponds to.")),
                      wxSizerFlags().Expand());
         m_innerSizer->AddSpacer(PX(5));
-        m_text = new SelectableAutoWrappingText(parent, "");
+        //m_text = new SelectableAutoWrappingText(parent, "");
+        m_text = new wxStaticText(parent, wxID_ANY, "");
         m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
 
@@ -147,11 +148,15 @@ public:
 
     void Update(const CatalogItemPtr& item) override
     {
-        m_text->SetAndWrapLabel(item->GetOldMsgid());
+        //m_text->SetAndWrapLabel(item->GetOldMsgid());
+        m_text->SetLabelMarkup(Diff(item->GetOldMsgid(), item->GetString()).getMarkup());
+        m_text->SetMinSize(wxSize(-1, 50));
+
     }
 
 private:
-    SelectableAutoWrappingText *m_text;
+    //SelectableAutoWrappingText *m_text;
+    wxStaticText *m_text;
 };
 
 
