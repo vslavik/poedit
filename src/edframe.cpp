@@ -3011,7 +3011,7 @@ wxMenu *PoeditFrame::CreatePopupMenu(int item)
     {
         menu->AppendSeparator();
         // TRANSLATORS: Meaning occurrences of the string in source code
-        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, MSW_OR_OTHER(_("Code occurrences:"), _("Code Occurrences:")));
+        wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, MSW_OR_OTHER(_("Code occurrences"), _("Code Occurrences")));
 #ifdef __WXMSW__
         it1->SetFont(it1->GetFont().Bold());
         menu->Append(it1);

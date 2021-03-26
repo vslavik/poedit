@@ -418,7 +418,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 
     Bind(wxEVT_PAINT, &EditingArea::OnPaint, this);
 
-    m_labelSource = new wxStaticText(this, -1, _("Source text:"));
+    m_labelSource = new wxStaticText(this, -1, _("Source text"));
 #ifdef __WXOSX__
     m_labelSource->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
@@ -440,12 +440,12 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
     sourceLineSizer->SetMinSize(-1, m_tagContext->GetBestSize().y);
 
-    m_labelSingular = new wxStaticText(this, -1, _("Singular:"));
+    m_labelSingular = new wxStaticText(this, -1, _("Singular"));
     m_labelSingular->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     m_labelSingular->SetFont(m_labelSingular->GetFont().Bold());
     m_textOrig = new SourceTextCtrl(this, wxID_ANY);
 
-    m_labelPlural = new wxStaticText(this, -1, _("Plural:"));
+    m_labelPlural = new wxStaticText(this, -1, _("Plural"));
     m_labelPlural->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
     m_labelPlural->SetFont(m_labelPlural->GetFont().Bold());
     m_textOrigPlural = new SourceTextCtrl(this, wxID_ANY);
@@ -490,7 +490,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
 
 void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 {
-    m_labelTrans = new wxStaticText(this, -1, _("Translation:"));
+    m_labelTrans = new wxStaticText(this, -1, _("Translation"));
 #ifdef __WXOSX__
     m_labelTrans->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif

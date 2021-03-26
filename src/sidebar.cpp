@@ -130,7 +130,7 @@ class OldMsgidSidebarBlock : public SidebarBlock
 public:
     OldMsgidSidebarBlock(Sidebar *parent)
           /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-        : SidebarBlock(parent, _("Previous source text:"))
+        : SidebarBlock(parent, _("Previous source text"))
     {
         m_innerSizer->AddSpacer(PX(2));
         m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the now-inaccurate translation corresponds to.")),
@@ -159,7 +159,7 @@ class ExtractedCommentSidebarBlock : public SidebarBlock
 {
 public:
     ExtractedCommentSidebarBlock(Sidebar *parent)
-        : SidebarBlock(parent, _("Notes for translators:"))
+        : SidebarBlock(parent, _("Notes for translators"))
     {
         m_innerSizer->AddSpacer(PX(5));
         m_comment = new SelectableAutoWrappingText(parent, "");
@@ -192,7 +192,7 @@ class CommentSidebarBlock : public SidebarBlock
 {
 public:
     CommentSidebarBlock(Sidebar *parent)
-        : SidebarBlock(parent, _("Comment:"))
+        : SidebarBlock(parent, _("Comment"))
     {
         m_innerSizer->AddSpacer(PX(5));
         m_comment = new SelectableAutoWrappingText(parent, "");
@@ -519,7 +519,13 @@ private:
 
 
 SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
-    : SidebarBlock(parent, _("Translation suggestions:"), NoUpperMargin),
+    : SidebarBlock(parent,
+                   // TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+                   _("Suggestions"),
+                   #if 0
+                   _("Translation suggestions"),
+                   #endif
+                   NoUpperMargin),
       m_suggestionsMenu(menu),
       m_msgPresent(false),
       m_suggestionsSeparator(nullptr),
