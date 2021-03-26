@@ -57,6 +57,7 @@ public:
 
 private:
     void Init(Language lang);
+    void NormalizeValue();
 
     bool m_inited;
 
