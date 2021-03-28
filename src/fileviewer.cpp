@@ -239,7 +239,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
 
     if (m_references.empty())
     {
-        m_description->SetLabel(_(""));
+        m_description->SetLabel("");
         ShowError(SVG_NOTHING, _("No usage information"), _(L"No information about this string’s occurrences in the source code is provided in the file."));
     }
     else
