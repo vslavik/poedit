@@ -1178,7 +1178,7 @@ wxWindowPtr<wxMessageDialog> PoeditFrame::CreateAskAboutSavingDialog()
     wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
                     (
                         this,
-                        _("Catalog modified. Do you want to save changes?"),
+                        _("The file has been modified. Do you want to save changes?"),
                         _("Save changes"),
                         wxYES_NO | wxCANCEL | wxICON_QUESTION
                     ));
@@ -1732,7 +1732,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                         MSW_OR_OTHER(_("Updating failed"), ""),
                         wxOK | wxICON_ERROR
                     ));
-                wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties.");
+                wxString expl = _(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the file’s Properties.");
                 expl += msgSuffix;
                 dlg->SetExtendedMessage(expl);
                 dlg->ShowWindowModalThenDo([dlg](int){});
@@ -1747,7 +1747,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                         MSW_OR_OTHER(_("Updating failed"), ""),
                         wxOK | wxICON_ERROR
                     ));
-                wxString expl = _(L"You don’t have permission to read source code files from the location specified in the catalog’s Properties.");
+                wxString expl = _(L"You don’t have permission to read source code files from the location specified in the file’s Properties.");
             #ifdef __WXOSX__
                 if (@available(macOS 10.15, *))
                 {
@@ -1762,9 +1762,9 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
             }
             case UpdateResultReason::Unspecified:
             {
-                wxLogWarning(_("Entries in the catalog are probably incorrect."));
+                wxLogWarning(_("Translation entries in the file are probably incorrect."));
                 wxLogError(
-                   _("Updating the catalog failed. Click on 'Details >>' for details."));
+                   _("Updating the file failed. Click on 'Details >>' for details."));
                 break;
             }
             case UpdateResultReason::CancelledByUser:
@@ -1821,7 +1821,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
 
         wxWindowPtr<wxFileDialog> dlg(
             new wxFileDialog(this,
-                             _("Open catalog template"),
+                             _("Open translation template"),
                              path,
                              wxEmptyString,
                              Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
@@ -2518,11 +2518,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
         if ( m_catalog->Header().GetHeader("Plural-Forms").empty() )
         {
-            err = _(L"This catalog has entries with plural forms, but doesn’t have Plural-Forms header configured.");
+            err = _(L"This file has entries with plural forms, but doesn’t have Plural-Forms header configured.");
         }
         else if ( m_catalog->HasWrongPluralFormsCount() )
         {
-            err = _(L"Entries in this catalog have different plural forms count from what catalog’s Plural-Forms header says");
+            err = _(L"Entries in this file have different plural forms count from what the file’s Plural-Forms header says");
         }
 
         // FIXME: make this part of global error checking
@@ -2565,11 +2565,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
                             // TRANSLATORS: %s is language name in its basic form (as you
                             // would see e.g. in a list of supported languages). You may need
                             // to rephrase it, e.g. to an equivalent of "for language %s".
-                            _("Plural forms expression used by the catalog is unusual for %s."),
+                            _("Plural forms expression used by the file is unusual for %s."),
                             lang.DisplayName()
                         )
                     );
-                // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
+                // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
                 msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
                 msg.AddDontShowAgain();
 
@@ -2605,7 +2605,7 @@ void PoeditFrame::RefreshControls(int flags)
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
-        wxLogError(_(L"Error loading message catalog file “%s”."), m_catalog->GetFileName());
+        wxLogError(_(L"Error loading translation file “%s”."), m_catalog->GetFileName());
         m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();

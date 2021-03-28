@@ -219,7 +219,7 @@ POCatalogPtr ExtractPOTFromSources(POCatalogPtr catalog, UpdateResultReason& rea
                 }
                 else
                 {
-                    wxLogError(_("Failed to load extracted catalog."));
+                    wxLogError(_("Failed to load file with extracted translations."));
                     reason = UpdateResultReason::Unspecified;
                     return nullptr;
                 }
@@ -281,7 +281,7 @@ bool PerformUpdateFromSourcesWithUI(wxWindow *parent,
 
     POCatalogPtr pot;
 
-    bool succ = ProgressWindow::RunCancellableTask(parent, _("Updating catalog"),
+    bool succ = ProgressWindow::RunCancellableTask(parent, _("Updating translations"),
     [&reason,&pot,catalog](dispatch::cancellation_token_ptr /*cancellationToken*/)
     {
         pot = ExtractPOTFromSources(catalog, reason);

@@ -715,7 +715,7 @@ void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
                      _("handle a poedit:// URI"), wxCMD_LINE_VAL_STRING);
     parser.AddLongOption(CL_LINE,
                      _("go to item at given line number"), wxCMD_LINE_VAL_NUMBER);
-    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING,
+    parser.AddParam("translation.po", wxCMD_LINE_VAL_STRING,
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
 

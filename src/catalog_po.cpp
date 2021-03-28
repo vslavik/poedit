@@ -324,7 +324,7 @@ bool POCatalogParser::Parse()
         {
             if (has_plural)
             {
-                wxLogError(_("Broken catalog file: singular form msgstr used together with msgid_plural"));
+                wxLogError(_("Broken PO file: singular form msgstr used together with msgid_plural"));
                 return false;
             }
 
@@ -376,7 +376,7 @@ bool POCatalogParser::Parse()
         {
             if (!has_plural)
             {
-                wxLogError(_("Broken catalog file: plural form msgstr used without msgid_plural"));
+                wxLogError(_("Broken PO file: plural form msgstr used without msgid_plural"));
                 return false;
             }
 
@@ -890,7 +890,7 @@ bool POCatalog::Load(const wxString& po_file, int flags)
 
     if (!VerifyFileCharset(f, po_file, m_header.Charset))
     {
-        wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
+        wxLogError(_("There were errors when loading the file. Some data may be missing or corrupted as the result."));
     }
 
     POLoadParser parser(*this, &f);
@@ -984,7 +984,7 @@ void POCatalog::FixupCommonIssues()
         }
     }
 
-    wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
+    wxLogTrace("poedit", "translation language is '%s'", GetLanguage().Code());
 
     if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
     {
@@ -1557,9 +1557,9 @@ bool POCatalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     {
 #if wxUSE_GUI
         wxString msg;
-        msg.Printf(_(L"The catalog couldn’t be saved in “%s” charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
+        msg.Printf(_(L"The file couldn’t be saved in “%s” charset as specified in translation settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
                    m_header.Charset.c_str());
-        wxMessageBox(msg, _("Error saving catalog"),
+        wxMessageBox(msg, _("Error saving file"),
                      wxOK | wxICON_EXCLAMATION);
 #endif
         m_header.Charset = "UTF-8";

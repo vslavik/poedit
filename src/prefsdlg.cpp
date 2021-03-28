@@ -214,7 +214,7 @@ public:
 
         m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
         sizer->Add(m_compileMo);
-        m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after catalog update"));
+        m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after updating files"));
         sizer->Add(m_showSummary, wxSizerFlags().PXBorder(wxTOP));
 
         sizer->AddSpacer(PX(10));

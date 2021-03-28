@@ -267,7 +267,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->Freeze();
 
     m_listCat->ClearAll();
-    m_listCat->InsertColumn(0, _("Catalog"));
+    m_listCat->InsertColumn(0, _("File"));
     m_listCat->InsertColumn(1, _("Total"));
     m_listCat->InsertColumn(2, _("Untrans"));
     m_listCat->InsertColumn(3, wxGETTEXT_IN_CONTEXT("column/row header", "Needs Work"));
