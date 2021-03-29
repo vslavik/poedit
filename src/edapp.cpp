@@ -77,6 +77,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "extractors/extractor_legacy.h"
+#include "filemonitor.h"
 #include "manager.h"
 #include "prefsdlg.h"
 #include "chooselang.h"
@@ -516,6 +517,12 @@ bool PoeditApp::OnInit()
     return true;
 }
 
+void PoeditApp::OnEventLoopEnter(wxEventLoopBase *loop)
+{
+    wxApp::OnEventLoopEnter(loop);
+    FileMonitor::EventLoopStarted();
+}
+
 int PoeditApp::OnExit()
 {
 #ifndef __WXOSX__
@@ -532,6 +539,7 @@ int PoeditApp::OnExit()
     // early -- e.g. before wxConfig is destroyed, so they can save changes
     DeletePendingObjects();
 
+    FileMonitor::CleanUp();
     ColorScheme::CleanUp();
     RecentFiles::CleanUp();
     TranslationMemory::CleanUp();
@@ -625,25 +633,6 @@ void PoeditApp::SetupLanguage()
 wxLayoutDirection PoeditApp::GetLayoutDirection() const
 {
     return g_layoutDirection;
-}
-
-
-wxFileSystemWatcher& PoeditApp::FileWatcher()
-{
-    if (!m_fsWatcher)
-    {
-        m_fsWatcher.reset(new wxFileSystemWatcher());
-        m_fsWatcher->Bind(wxEVT_FSWATCHER, [=](wxFileSystemWatcherEvent& event){
-            event.Skip();
-            auto fn = event.GetNewPath();
-            if (!fn.IsOk())
-                return;
-            auto window = PoeditFrame::Find(fn.GetFullPath());
-            if (window)
-                window->ReloadFileIfChanged();
-        });
-    }
-    return *m_fsWatcher;
 }
 
 

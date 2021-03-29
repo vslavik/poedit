@@ -30,7 +30,6 @@
 #include "menus.h"
 
 #include <wx/app.h>
-#include <wx/fswatcher.h>
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/docview.h>
@@ -51,12 +50,11 @@ class PoeditApp : public wxApp, public MenusManager
         /** wxWin initialization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
-        virtual bool OnInit();
-        virtual int OnExit();
+        bool OnInit() override;
+        void OnEventLoopEnter(wxEventLoopBase *loop) override;
+        int OnExit() override;
 
-        virtual wxLayoutDirection GetLayoutDirection() const;
-
-        wxFileSystemWatcher& FileWatcher();
+        wxLayoutDirection GetLayoutDirection() const override;
 
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
@@ -70,21 +68,21 @@ class PoeditApp : public wxApp, public MenusManager
         void OpenNewFile();
 
 #ifdef __WXOSX__
-        virtual void MacOpenFiles(const wxArrayString& names);
-        virtual void MacNewFile() { OpenNewFile(); }
-        virtual void MacOpenURL(const wxString &url) { HandleCustomURI(url); }
+        void MacOpenFiles(const wxArrayString& names) override;
+        void MacNewFile() override { OpenNewFile(); }
+        void MacOpenURL(const wxString &url) override { HandleCustomURI(url); }
 #endif
 
         void EditPreferences();
 
-        virtual bool OnExceptionInMainLoop();
+        bool OnExceptionInMainLoop() override;
 
         // Open page on poedit.net in the browser
         void OpenPoeditWeb(const wxString& path);
 
 #ifdef __WXOSX__
         void OnIdleFixupMenusForMac(wxIdleEvent& event);
-        virtual void OSXOnWillFinishLaunching();
+        void OSXOnWillFinishLaunching() override;
         void OnCloseWindowCommand(wxCommandEvent& event);
 #endif
 
@@ -95,8 +93,8 @@ class PoeditApp : public wxApp, public MenusManager
          */
         void SetDefaultCfg(wxConfigBase *cfg);
         
-        void OnInitCmdLine(wxCmdLineParser& parser);
-        bool OnCmdLineParsed(wxCmdLineParser& parser);
+        void OnInitCmdLine(wxCmdLineParser& parser) override;
+        bool OnCmdLineParsed(wxCmdLineParser& parser) override;
         
     private:
         void HandleCustomURI(const wxString& uri);
@@ -134,7 +132,6 @@ class PoeditApp : public wxApp, public MenusManager
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
 
         std::unique_ptr<wxLocale> m_locale;
-        std::unique_ptr<wxFileSystemWatcher> m_fsWatcher;
 
 #ifndef __WXOSX__
         class RemoteServer;

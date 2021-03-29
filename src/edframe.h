@@ -42,6 +42,7 @@ class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
+#include "filemonitor.h"
 
 #ifdef __WXMSW__
   #include "windows/win10_menubar.h"
@@ -347,7 +348,6 @@ private:
 
     private:
         CatalogPtr m_catalog;
-        class FileMonitor;
         std::unique_ptr<FileMonitor> m_fileMonitor;
         bool m_fileExistsOnDisk;
 

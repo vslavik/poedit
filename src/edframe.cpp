@@ -221,106 +221,6 @@ private:
 
 } // anonymous namespace
 
-
-class PoeditFrame::FileMonitor
-{
-    static const int MONITORING_FLASG = wxFSW_EVENT_CREATE | wxFSW_EVENT_RENAME | wxFSW_EVENT_MODIFY;
-
-public:
-    FileMonitor() : m_isRespondingGuard(false) {}
-    ~FileMonitor() { Reset(); }
-
-    void SetFile(CatalogPtr cat) { SetFile(cat->GetFileName()); }
-
-    void SetFile(wxFileName file)
-    {
-        // unmonitor first (needed even if the filename didn't change)xx
-        if (file == m_file)
-        {
-            m_loadTime = m_file.GetModificationTime();
-            return;
-        }
-
-        Reset();
-
-        m_file = file;
-        if (!m_file.IsOk())
-            return;
-        m_dir = wxFileName::DirName(m_file.GetPath());
-
-#ifdef __WXOSX__
-        // kqueue-based monitoring is unreliable on macOS, we need to use AddTree() to force FSEvents usage
-        wxGetApp().FileWatcher().AddTree(m_dir, MONITORING_FLASG);
-#else
-        wxGetApp().FileWatcher().Add(m_dir, MONITORING_FLASG);
-#endif
-        m_loadTime = m_file.GetModificationTime();
-    }
-
-    bool WasModifiedOnDisk() const
-    {
-        if (!m_file.IsOk())
-            return false;
-        return m_loadTime != m_file.GetModificationTime();
-    }
-
-    // if true is returned, _must_ call StopRespondingToEvent() afterwards
-    bool ShouldRespondToFileChange()
-    {
-        if (!m_file.IsOk() || m_isRespondingGuard)
-            return false;
-
-        if (!WasModifiedOnDisk())
-            return false;
-
-        m_isRespondingGuard = true;
-        return true;
-    }
-
-    // logic for preventing multiple FS events from causing duplicate reloads
-    void StopRespondingToEvent()
-    {
-        wxASSERT( m_isRespondingGuard );
-        m_isRespondingGuard = false;
-    }
-
-    struct WritingGuard
-    {
-        WritingGuard(FileMonitor& monitor) : m_monitor(monitor)
-        {
-            m_monitor.m_isRespondingGuard = true;
-        }
-
-        ~WritingGuard()
-        {
-            m_monitor.StopRespondingToEvent();
-        }
-
-        FileMonitor& m_monitor;
-    };
-
-private:
-    void Reset()
-    {
-        if (m_file.IsOk())
-        {
-#ifdef __WXOSX__
-            wxGetApp().FileWatcher().RemoveTree(m_dir);
-#else
-            wxGetApp().FileWatcher().Remove(m_dir);
-#endif
-            m_file.Clear();
-        }
-    }
-
-private:
-    bool m_isRespondingGuard;
-    wxString m_monitoredPath;
-    wxFileName m_file, m_dir;
-    wxDateTime m_loadTime;
-};
-
-
 // this should be high enough to not conflict with any wxNewId-allocated value,
 PoeditFrame::PoeditFramesList PoeditFrame::ms_instances;
 
@@ -2388,7 +2288,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         }
 
         m_catalog = cat;
-        m_fileMonitor->SetFile(m_catalog);
+        m_fileMonitor->SetFile(m_catalog->GetFileName());
         m_pendingHumanEditedItem.reset();
 
         if (m_catalog->empty())
@@ -2830,7 +2730,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_catalog->SetFileName(catalog);
     m_modified = false;
     m_fileExistsOnDisk = true;
-    m_fileMonitor->SetFile(m_catalog);
+    m_fileMonitor->SetFile(m_catalog->GetFileName());
 
     UpdateTitle();
 

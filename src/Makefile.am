@@ -44,6 +44,7 @@ poedit_SOURCES = \
                  extractors/extractor.cpp extractors/extractor.h \
                  extractors/extractor_gettext.cpp \
                  extractors/extractor_legacy.cpp extractors/extractor_legacy.h \
+                 filemonitor.cpp filemonitor.h \
                  fileviewer.cpp fileviewer.extensions.h fileviewer.h \
                  findframe.cpp findframe.h \
                  gexecute.h gexecute.cpp \
