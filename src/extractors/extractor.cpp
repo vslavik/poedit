@@ -205,7 +205,7 @@ wxString Extractor::ExtractWithAll(TempDirectory& tmpdir,
 
     std::vector<wxString> subPots;
 
-    for (auto ex: CreateAllExtractors())
+    for (auto ex: CreateAllExtractors(sourceSpec))
     {
         const auto ex_files = ex->FilterFiles(files);
         if (ex_files.empty())
@@ -361,16 +361,15 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
 }
 
 
-Extractor::ExtractorsList Extractor::CreateAllExtractors()
+Extractor::ExtractorsList Extractor::CreateAllExtractors(const SourceCodeSpec& sources)
 {
     ExtractorsList all;
 
-    // User-defined "legacy" extractors take precedence over anything else,
-    // to allow customization of the behavior:
-    CreateAllLegacyExtractors(all);
+    // User-defined "legacy" extractors customizing the behavior:
+    CreateAllLegacyExtractors(all, sources);
 
     // Standard builtin extractors follow
-    CreateGettextExtractors(all);
+    CreateGettextExtractors(all, sources);
 
     std::stable_sort(all.begin(), all.end(), [](const auto& a, const auto& b)
     {

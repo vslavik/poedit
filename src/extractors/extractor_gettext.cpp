@@ -187,25 +187,49 @@ protected:
 
 
 /// Dedicated extractor for non-standard PHP extensions (*.phtml etc.)
-class NonstandardPHPGettextExtractor : public GettextExtractorBase
+class CustomGettextExtractor : public GettextExtractorBase
 {
 public:
-    NonstandardPHPGettextExtractor()
+    CustomGettextExtractor(const wxString& language) : m_language(language) {}
+    wxString GetId() const override { return "gettext-" + m_language; }
+
+protected:
+    wxString GetAdditionalFlags() const override { return "-L " + m_language; }
+
+    wxString m_language;
+};
+
+
+/// Dedicated extractor for non-standard PHP extensions (*.phtml etc.)
+class NonstandardPHPGettextExtractor : public CustomGettextExtractor
+{
+public:
+    NonstandardPHPGettextExtractor() : CustomGettextExtractor("php")
     {
         RegisterExtension("phtml");  // Zend Framework
         RegisterExtension("ctp");    // CakePHP
     }
-
-    wxString GetId() const override { return "gettext-php"; }
-
-protected:
-    wxString GetAdditionalFlags() const override { return "-L php"; }
 };
 
 
 
-void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into)
+void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into, const SourceCodeSpec& sources)
 {
     into.push_back(std::make_shared<GettextExtractor>());
     into.push_back(std::make_shared<NonstandardPHPGettextExtractor>());
+
+    for (auto& m : sources.TypeMapping)
+    {
+        if (m.second.StartsWith("gettext:"))  // e.g. gettext:php
+        {
+            auto e = std::make_shared<CustomGettextExtractor>(m.second.AfterFirst(':'));
+            if (wxIsWild(m.first))
+                e->RegisterWildcard(m.first);
+            else
+                e->RegisterExtension(m.first);
+
+            e->SetPriority(Priority::Highest);  // user-overriden extension
+            into.push_back(e);
+        }
+    }
 }

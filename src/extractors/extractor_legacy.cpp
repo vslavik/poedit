@@ -340,7 +340,7 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
 }
 
 
-void Extractor::CreateAllLegacyExtractors(Extractor::ExtractorsList& into)
+void Extractor::CreateAllLegacyExtractors(Extractor::ExtractorsList& into, const SourceCodeSpec& /*sources*/)
 {
     // Extractors must be created anew to pick up any changes in definitions
 

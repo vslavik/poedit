@@ -47,6 +47,8 @@ struct SourceCodeSpec
     wxArrayString Keywords;
     wxString Charset;
 
+    std::vector<std::pair<wxString, wxString>> TypeMapping;
+
     // additional keys from the headers
     std::map<wxString, wxString> XHeaders;
 };
@@ -88,7 +90,7 @@ public:
         order, i.e. subsequent extractors should only be used to process files
         not yet handled by previous extractors.
      */
-    static ExtractorsList CreateAllExtractors();
+    static ExtractorsList CreateAllExtractors(const SourceCodeSpec& sources);
 
     /**
         Collects all files from source code, possibly including files that
@@ -144,6 +146,11 @@ public:
       */
     virtual bool IsFileSupported(const wxString& file) const;
 
+    /// Add a known extension or wildcard to be used by default IsFileSupported
+    /// (called from ctors)
+    void RegisterExtension(const wxString& ext);
+    void RegisterWildcard(const wxString& wildcard);
+
     /**
         Extracts translations from given source files using all
         available extractors.
@@ -162,11 +169,6 @@ protected:
     /// Check if file is supported based on its extension
     bool HasKnownExtension(const wxString& file) const;
 
-    /// Add a known extension or wildcard to be used by default IsFileSupported
-    /// (called from ctors)
-    void RegisterExtension(const wxString& ext);
-    void RegisterWildcard(const wxString& wildcard);
-
     /// Concatenates catalogs using msgcat
     static wxString ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxString>& files);
 
@@ -177,8 +179,8 @@ private:
 
 protected:
     // private factories:
-    static void CreateAllLegacyExtractors(ExtractorsList& into);
-    static void CreateGettextExtractors(ExtractorsList& into);
+    static void CreateAllLegacyExtractors(ExtractorsList& into, const SourceCodeSpec& sources);
+    static void CreateGettextExtractors(ExtractorsList& into, const SourceCodeSpec& sources);
 };
 
 #endif // Poedit_extractor_h

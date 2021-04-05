@@ -735,6 +735,14 @@ std::shared_ptr<SourceCodeSpec> Catalog::GetSourceCodeSpec() const
     for (auto& kv: m_header.GetAllHeaders())
         spec->XHeaders[kv.Key] = kv.Value;
 
+    // parse file type mapping (e.g. "h=gettext:c++")
+    wxStringTokenizer mapping(m_header.GetHeader("X-Poedit-Mapping"), ";");
+    while (mapping.HasMoreTokens())
+    {
+        auto m = mapping.GetNextToken();
+        spec->TypeMapping.emplace_back(m.BeforeFirst('='), m.AfterFirst('='));
+    }
+
     return spec;
 }
 
