@@ -286,6 +286,10 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
 LegacyExtractor::LegacyExtractor(const LegacyExtractorSpec& spec)
     : m_spec(spec)
 {
+    // User-defined "legacy" extractors take precedence over standard extractors
+    // to allow customization of the behavior:
+    SetPriority(Priority::High);
+
     m_id = "legacy_";
     for (auto c: spec.Name)
     {

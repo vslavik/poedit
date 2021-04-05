@@ -122,6 +122,20 @@ public:
     /// Returns extractor's symbolic name
     virtual wxString GetId() const = 0;
 
+    /// Priority value for GetPriority()
+    enum class Priority
+    {
+        Highest = 1,
+        High    = 10,
+        Default = 100
+    };
+
+    /// Returns priority of the extractor
+    Priority GetPriority() const { return m_priority; }
+
+    /// Sets extractor's priority
+    void SetPriority(Priority p) { m_priority = p; }
+
     /**
         Returns whether the file is recognized.
         
@@ -142,7 +156,7 @@ public:
                              const std::vector<wxString>& files) const = 0;
 
 protected:
-    Extractor() {}
+    Extractor() : m_priority(Priority::Default) {}
     virtual ~Extractor() {}
 
     /// Check if file is supported based on its extension
@@ -157,6 +171,7 @@ protected:
     static wxString ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxString>& files);
 
 private:
+    Priority m_priority;
     std::set<wxString> m_extensions;
     std::vector<wxString> m_wildcards;
 

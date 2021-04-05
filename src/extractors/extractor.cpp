@@ -372,5 +372,10 @@ Extractor::ExtractorsList Extractor::CreateAllExtractors()
     // Standard builtin extractors follow
     CreateGettextExtractors(all);
 
+    std::stable_sort(all.begin(), all.end(), [](const auto& a, const auto& b)
+    {
+        return a->GetPriority() < b->GetPriority();
+    });
+
     return all;
 }
