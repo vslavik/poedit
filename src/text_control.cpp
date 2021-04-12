@@ -801,9 +801,13 @@ void AnyTranslatableTextCtrl::UpdateRTLStyle()
 
 void AnyTranslatableTextCtrl::HighlightText()
 {
-    auto text = GetValue().ToStdWstring();
-
 #ifdef __WXOSX__
+
+    // See the comment in DoGetValueForRange() for why GetValue() returns subtly
+    // different thing in RTL.
+    // For highlighting, where we index into the string, we need to operate on the
+    // exact same string addTemporaryAttributes:forCharacterRange: is expecting.
+    auto text = str::to_wstring([TextView(this) string]);
 
     NSRange fullRange = NSMakeRange(0, text.length());
     NSLayoutManager *layout = [TextView(this) layoutManager];
@@ -818,6 +822,8 @@ void AnyTranslatableTextCtrl::HighlightText()
     }
 
 #else // !__WXOSX__
+
+    auto text = GetValue().ToStdWstring();
 
     wxEventBlocker block(this, wxEVT_TEXT);
 
