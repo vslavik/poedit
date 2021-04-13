@@ -1,54 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
-  <object class="wxPanel" name="manager_panel">
-    <object class="wxBoxSizer">
-      <orient>wxHORIZONTAL</orient>
-      <object class="sizeritem">
-          <object class="wxSplitterWindow" name="manager_splitter">
-            <minsize>100</minsize>
-            <orientation>vertical</orientation>
-            <object class="wxListBox" name="prj_list">
-            </object>
-            <object class="wxListCtrl" name="prj_files">
-              <style>wxLC_REPORT|wxLC_SINGLE_SEL|wxSUNKEN_BORDER</style>
-              <variant platform="mac">small</variant>
-            </object>
-          </object>
-        <option>1</option>
-        <flag>wxEXPAND|wxALL</flag>
-        <border>2d</border>
-      </object>
-      <minsize>200,200d</minsize>
-    </object>
-  </object>
-  <object class="wxToolBar" name="manager_toolbar">
-    <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <style platform="win">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT|wxTB_NODIVIDER</style>
-    <style platform="unix">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
-    <margins platform="win">4,4</margins>
-    <bitmapsize platform="win">32,32</bitmapsize>
-    <object class="tool" name="prj_new">
-      <bitmap stock_id="document-new"/>
-      <label>New</label>
-      <tooltip>Create new translations project</tooltip>
-    </object>
-    <object class="tool" name="prj_edit">
-      <bitmap stock_id="document-properties"/>
-      <label>Edit</label>
-      <tooltip>Edit the project</tooltip>
-    </object>
-    <object class="tool" name="prj_delete">
-      <bitmap stock_id="edit-delete"/>
-      <label>Delete</label>
-      <tooltip>Delete the project</tooltip>
-    </object>
-    <object class="separator"/>
-    <object class="tool" name="prj_update">
-      <bitmap stock_id="poedit-update"/>
-      <label>Update all</label>
-      <tooltip>Update all catalogs in the project</tooltip>
-    </object>
-  </object>
   <object class="wxDialog" name="manager_prj_dlg">
     <title>Edit project</title>
     <object class="wxBoxSizer">
@@ -60,6 +11,9 @@
         <border>5d</border>
         <flag>wxLEFT|wxRIGHT|wxTOP</flag>
       </object>
+      <object class="spacer">
+        <size>-1,2d</size>
+      </object>
       <object class="sizeritem">
         <object class="wxTextCtrl" name="prj_name">
           <focused>1</focused>
@@ -67,16 +21,23 @@
         <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
         <border>5d</border>
       </object>
+      <object class="spacer">
+        <size>-1,8d</size>
+      </object>
       <object class="sizeritem">
         <object class="unknown" name="prj_dirs"/>
         <option>1</option>
-        <flag>wxEXPAND|wxALL</flag>
+        <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
         <border>5d</border>
-        <minsize>140,100d</minsize>
+        <minsize>200,100d</minsize>
+      </object>
+      <object class="spacer">
+        <size>-1,2d</size>
       </object>
       <object class="sizeritem">
         <object class="wxButton" name="adddir">
           <label>Browse</label>
+          <variant platform="mac">small</variant>
           <tooltip>Add directory to the list</tooltip>
         </object>
         <flag>wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>

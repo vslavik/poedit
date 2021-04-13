@@ -23,23 +23,31 @@
  *
  */
 
-#ifndef _MANAGER_H_
-#define _MANAGER_H_
+#ifndef Poedit_manager_h
+#define Poedit_manager_h
 
+#include <wx/listctrl.h>
 #include <wx/frame.h>
+#include <wx/stattext.h>
 #include <wx/string.h>
 
-class WXDLLIMPEXP_FWD_CORE wxListCtrl;
 class WXDLLIMPEXP_FWD_CORE wxListBox;
-class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
 
 class Catalog;
+
+#ifdef __WXMSW__
+#include "windows/win10_menubar.h"
+typedef WithWindows10Menubar<wxFrame> ManagerFrameBase;
+#else
+typedef wxFrame ManagerFrameBase;
+#endif
+
 
 /** ManagerFrame provides a convenient way to manage PO catalogs.
     The frame contains two lists: a list of projects and list of catalogs
     in active project, together with their statistics.
  */
-class ManagerFrame : public wxFrame
+class ManagerFrame : public ManagerFrameBase
 {
     public:
         /// Creates instance of manager or returns pointer to existing one.
@@ -72,18 +80,17 @@ class ManagerFrame : public wxFrame
         /// Updates catalogs list for given project
         void UpdateListCat(int id = -1);
         
-        DECLARE_EVENT_TABLE()
         void OnNewProject(wxCommandEvent& event);
         void OnEditProject(wxCommandEvent& event);
         void OnDeleteProject(wxCommandEvent& event);
         void OnUpdateProject(wxCommandEvent& event);
         void OnSelectProject(wxCommandEvent& event);
         void OnOpenCatalog(wxListEvent& event);
-        void OnCloseCmd(wxCommandEvent& event);
 
+        wxWindow *m_details;
         wxListCtrl *m_listCat;
         wxListBox  *m_listPrj;
-        wxSplitterWindow *m_splitter;
+        wxStaticText *m_projectName;
         wxArrayString m_catalogs;
         int m_curPrj;
 
@@ -91,4 +98,4 @@ class ManagerFrame : public wxFrame
 };
 
 
-#endif // _EDFRAME_H_
+#endif // Poedit_manager_h

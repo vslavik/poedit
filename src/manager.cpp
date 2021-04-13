@@ -23,6 +23,8 @@
  *
  */
 
+#include "manager.h"
+
 #include <wx/imaglist.h>
 #include <wx/config.h>
 #include <wx/textctrl.h>
@@ -37,6 +39,7 @@
 #include <wx/tokenzr.h>
 #include <wx/msgdlg.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/dir.h>
 #include <wx/imaglist.h>
 #include <wx/dirdlg.h>
@@ -44,11 +47,7 @@
 #include <wx/artprov.h>
 #include <wx/iconbndl.h>
 #include <wx/windowptr.h>
-#include <wx/splitter.h>
-
-#ifdef __WXMSW__
-#include <wx/msw/uxtheme.h>
-#endif
+#include <wx/sizer.h>
 
 #if !wxCHECK_VERSION(3,1,1)
     #define wxGETTEXT_IN_CONTEXT(ctxt, s) wxGetTranslation((s))
@@ -59,9 +58,28 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
-#include "manager.h"
+#include "menus.h"
 #include "progressinfo.h"
 #include "utility.h"
+
+
+namespace
+{
+
+class PseudoToolbarButton : public wxButton
+{
+public:
+    PseudoToolbarButton(wxWindow *parent, wxString bitmap, const wxString& label)
+    {
+    #ifdef __WXGTK3__
+        bitmap += "-symbolic";
+    #endif
+        wxButton::Create(parent, wxID_ANY, label, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+        SetBitmap(wxArtProvider::GetBitmap(bitmap, wxART_TOOLBAR));
+    }
+};
+
+} // anonymous namespace
 
 
 ManagerFrame *ManagerFrame::ms_instance = NULL;
@@ -77,36 +95,93 @@ ManagerFrame *ManagerFrame::ms_instance = NULL;
 }
 
 ManagerFrame::ManagerFrame() :
-    wxFrame(NULL, -1, _("Poedit - Catalogs manager"),
-            wxDefaultPosition, wxDefaultSize,
-            wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
-            "manager")
+    ManagerFrameBase(NULL, -1, _("Poedit - Catalogs manager"),
+                     wxDefaultPosition, wxDefaultSize,
+                     wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE,
+                     "manager")
 {
 #ifdef __WXMSW__
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
+#ifndef __WXOSX__
+    SetMenuBar(wxGetApp().CreateMenu(Menu::WelcomeWindow));
+#endif
 
     ms_instance = this;
 
-    auto tb = wxXmlResource::Get()->LoadToolBar(this, "manager_toolbar");
-    (void)tb;
-#ifdef __WXMSW__
-    // De-uglify the toolbar a bit on Windows 10:
-    if (IsWindows10OrGreater())
-    {
-        if (wxUxThemeIsActive())
-        {
-            wxUxThemeHandle hTheme(tb, L"ExplorerMenu::Toolbar");
-            tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
-        }
-    }
+    auto panel = new wxPanel(this, wxID_ANY);
+    auto supertopsizer = new wxBoxSizer(wxHORIZONTAL);
+    supertopsizer->Add(panel, wxSizerFlags(1).Expand());
+    SetSizer(supertopsizer);
+
+    auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    panel->SetSizer(topsizer);
+
+    auto sidebarSizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(sidebarSizer, wxSizerFlags().Expand().Border(wxALL, PX(10)));
+
+    m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    sidebarSizer->Add(m_listPrj, wxSizerFlags(1).Expand());
+
+#if defined(__WXOSX__)
+    auto btn_new = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("NSAddTemplate"), wxDefaultPosition, wxSize(18, 18), wxBORDER_SIMPLE);
+    auto btn_delete = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("NSRemoveTemplate"), wxDefaultPosition, wxSize(18,18), wxBORDER_SIMPLE);
+    int editButtonStyle = wxBU_EXACTFIT | wxBORDER_SIMPLE;
+#elif defined(__WXMSW__)
+    auto btn_new = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxSize(PX(19),PX(19)));
+    auto btn_delete = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(PX(19),PX(19)));
+    int editButtonStyle = wxBU_EXACTFIT;
+#elif defined(__WXGTK__)
+    auto btn_new = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("list-add@symbolic"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+    auto btn_delete = new wxBitmapButton(panel, wxID_ANY, wxArtProvider::GetBitmap("list-remove@symbolic"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+    int editButtonStyle = wxBU_EXACTFIT | wxBORDER_NONE;
+#endif
+    auto btn_edit = new wxButton(panel, wxID_ANY, _(L"Edit…"), wxDefaultPosition, wxSize(-1, MSW_OR_OTHER(PX(19), -1)), editButtonStyle);
+#ifndef __WXGTK__
+    btn_edit->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
-    wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, "manager_panel");
+    btn_new->SetToolTip(_("Create new translations project"));
+    btn_delete->SetToolTip(_("Delete the project"));
+    btn_edit->SetToolTip(_("Edit the project"));
 
-    m_listPrj = XRCCTRL(*panel, "prj_list", wxListBox);
-    m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
-    m_splitter = XRCCTRL(*panel, "manager_splitter", wxSplitterWindow);
+    auto buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    buttonSizer->Add(btn_new);
+#ifdef __WXOSX__
+    buttonSizer->AddSpacer(PX(1));
+#endif
+    buttonSizer->Add(btn_delete);
+#ifdef __WXOSX__
+    buttonSizer->AddSpacer(PX(1));
+#endif
+    buttonSizer->Add(btn_edit);
+
+    sidebarSizer->AddSpacer(PX(1));
+    sidebarSizer->Add(buttonSizer, wxSizerFlags().Expand().BORDER_MACOS(wxLEFT, PX(1)));
+
+    m_details = new wxPanel(panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+    topsizer->Add(m_details, wxSizerFlags(1).ReserveSpaceEvenIfHidden().Expand().Border(wxTOP|wxBOTTOM|wxRIGHT, PX(10)));
+
+    auto detailsSizer = new wxBoxSizer(wxVERTICAL);
+    m_details->SetSizer(detailsSizer);
+
+    auto topbar = new wxBoxSizer(wxHORIZONTAL);
+    detailsSizer->AddSpacer(PX(5));
+    detailsSizer->Add(topbar, wxSizerFlags().Expand().Border(wxALL, PX(5)));
+    detailsSizer->AddSpacer(PX(5));
+    m_projectName = new wxStaticText(m_details, wxID_ANY, "");
+    m_projectName->SetFont(m_projectName->GetFont().Larger().Bold());
+    topbar->Add(m_projectName, wxSizerFlags().Center().Border(wxRIGHT, PX(10)));
+    topbar->AddStretchSpacer();
+    auto btn_update = new PseudoToolbarButton(m_details, "poedit-update", _("Update all"));
+    btn_update->SetToolTip(_("Update all catalogs in the project"));
+    topbar->Add(btn_update, wxSizerFlags().Border(wxLEFT, PX(5)));
+
+    m_listCat = new wxListCtrl(m_details, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxLC_REPORT | wxLC_SINGLE_SEL);
+#ifdef __WXOSX__
+    m_listCat->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+    detailsSizer->Add(m_listCat, wxSizerFlags(1).Expand());
 
     auto bmp_no = wxArtProvider::GetBitmap("poedit-status-cat-no");
     wxImageList *list = new wxImageList(bmp_no.GetScaledWidth(), bmp_no.GetScaledHeight());
@@ -115,6 +190,21 @@ ManagerFrame::ManagerFrame() :
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
     m_listCat->AssignImageList(list, wxIMAGE_LIST_SMALL);
 
+    ColorScheme::SetupWindowColors(this, [=]
+    {
+        wxColour col;
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+            col = *wxWHITE;
+        else
+            col = GetDefaultAttributes().colBg;
+        m_details->SetBackgroundColour(col);
+#ifdef __WXMSW__
+        SetBackgroundColour(col);
+        btn_update->SetBackgroundColour(col);
+#endif
+    });
+
+    m_details->Hide();
     m_curPrj = -1;
 
     int last = (int)wxConfig::Get()->Read("manager_last_selected", (long)0);
@@ -124,9 +214,15 @@ ManagerFrame::ManagerFrame() :
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
 
-    RestoreWindowState(this, wxSize(PX(400), PX(300)));
+    RestoreWindowState(this, wxSize(PX(900), PX(600)));
 
-    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", PX(200)));
+    m_listPrj->Bind(wxEVT_LISTBOX, &ManagerFrame::OnSelectProject, this);
+    m_listCat->Bind(wxEVT_LIST_ITEM_ACTIVATED, &ManagerFrame::OnOpenCatalog, this);
+    btn_new->Bind(wxEVT_BUTTON, &ManagerFrame::OnNewProject, this);
+    btn_delete->Bind(wxEVT_BUTTON, &ManagerFrame::OnDeleteProject, this);
+    btn_delete->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_listPrj->GetSelection() != wxNOT_FOUND); });
+    btn_edit->Bind(wxEVT_BUTTON, &ManagerFrame::OnEditProject, this);
+    btn_update->Bind(wxEVT_BUTTON, &ManagerFrame::OnUpdateProject, this);
 }
 
 
@@ -143,8 +239,6 @@ ManagerFrame::~ManagerFrame()
         cfg->Write("manager_last_selected",
                    (long)m_listPrj->GetClientData(sel));
     }
-
-    wxConfig::Get()->Write("manager_splitter", (long)m_splitter->GetSashPosition());
 
     ms_instance = NULL;
 }
@@ -249,6 +343,10 @@ void ManagerFrame::UpdateListCat(int id)
     wxBusyCursor bcur;
 
     if (id == -1) id = m_curPrj;
+
+    m_details->Show();
+    m_projectName->SetLabel(m_listPrj->GetStringSelection());
+    m_details->Layout();
 
     wxConfigBase *cfg = wxConfig::Get();
     wxString key;
@@ -383,18 +481,6 @@ void ManagerFrame::NotifyFileChanged(const wxString& /*catalog*/)
    UpdateListCat();
 }
 
-
-BEGIN_EVENT_TABLE(ManagerFrame, wxFrame)
-   EVT_MENU                 (XRCID("prj_new"),    ManagerFrame::OnNewProject)
-   EVT_MENU                 (XRCID("prj_edit"),   ManagerFrame::OnEditProject)
-   EVT_MENU                 (XRCID("prj_delete"), ManagerFrame::OnDeleteProject)
-   EVT_MENU                 (XRCID("prj_update"), ManagerFrame::OnUpdateProject)
-   EVT_LISTBOX              (XRCID("prj_list"),   ManagerFrame::OnSelectProject)
-   EVT_LIST_ITEM_ACTIVATED  (XRCID("prj_files"),  ManagerFrame::OnOpenCatalog)
-   EVT_MENU                 (wxID_CLOSE,          ManagerFrame::OnCloseCmd)
-END_EVENT_TABLE()
-
-
 void ManagerFrame::OnNewProject(wxCommandEvent&)
 {
     wxConfigBase *cfg = wxConfig::Get();
@@ -436,17 +522,34 @@ void ManagerFrame::OnDeleteProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
-    if (wxMessageBox(_("Do you want to delete the project?"),
-               _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
-        DeleteProject((int)(wxIntPtr)m_listPrj->GetClientData(sel));
+
+    auto prjname = m_listPrj->GetStringSelection();
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                     (
+                         this,
+                         wxString::Format(_(L"Do you want to delete project “%s”?"), prjname),
+                         MSW_OR_OTHER(_("Delete project"), ""),
+                         wxYES_NO | wxNO_DEFAULT | wxICON_WARNING
+                     ));
+    dlg->SetExtendedMessage(_("Deleting the project will not delete any translation files."));
+    dlg->ShowWindowModalThenDo([this,dlg,sel](int retval)
+    {
+        if (retval == wxID_YES)
+            DeleteProject((int)(wxIntPtr)m_listPrj->GetClientData(sel));
+    });
 }
 
 
 void ManagerFrame::OnSelectProject(wxCommandEvent&)
 {
     int sel = m_listPrj->GetSelection();
-    if (sel == -1) return;
+    if (sel == -1)
+    {
+        m_details->Hide();
+        return;
+    }
     m_curPrj = (int)(wxIntPtr)m_listPrj->GetClientData(sel);
+
     UpdateListCat(m_curPrj);
 }
 
@@ -456,9 +559,13 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
     int sel = m_listPrj->GetSelection();
     if (sel == -1) return;
 
-    if (wxMessageBox(_("Do you really want to do mass update of\nall catalogs in this project?"),
-               _("Confirmation"), wxYES_NO | wxICON_QUESTION, this) == wxYES)
+    wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, _("Update all catalogs in this project?"), MSW_OR_OTHER(_("Confirmation"), ""), wxYES_NO | wxICON_QUESTION));
+    dlg->SetExtendedMessage(_("Performs update from source code on all files in the project."));
+    dlg->ShowWindowModalThenDo([this,dlg,sel](int retval)
     {
+         if (retval != wxID_YES)
+            return;
+
         ProgressWindow::RunCancellableTaskThenDo(this, ("Updating project catalogs"),
         [=](dispatch::cancellation_token_ptr cancellationToken)
         {
@@ -494,7 +601,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
         {
             UpdateListCat();
         });
-    }
+    });
 }
 
 
@@ -503,10 +610,4 @@ void ManagerFrame::OnOpenCatalog(wxListEvent& event)
     PoeditFrame *f = PoeditFrame::Create(m_catalogs[event.GetIndex()]);
     if (f)
         f->Raise();
-}
-
-
-void ManagerFrame::OnCloseCmd(wxCommandEvent&)
-{
-    Close();
 }

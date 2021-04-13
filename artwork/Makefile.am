@@ -24,11 +24,8 @@ dist_uiiconssymbolic_DATA = \
 		linux/sidebar-symbolic.svg
 
 dist_uiicons_DATA = \
-		linux/document-new.png \
 		linux/document-open.png \
-		linux/document-properties.png \
 		linux/document-save.png \
-		linux/edit-delete.png \
 		linux/poedit-sync.png \
 		linux/poedit-update.png \
 		linux/poedit-validate.png \
