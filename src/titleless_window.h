@@ -47,6 +47,10 @@ public:
                         const wxPoint& pos, const wxSize& size,
                         long style, const wxString& name);
 
+#ifdef __WXMSW__
+    bool SetBackgroundColour(const wxColour& clr) override;
+#endif
+
 protected:
     /// Returns close button if it is presnet; may be null
     wxButton* GetCloseButton() const { return m_closeButton; }

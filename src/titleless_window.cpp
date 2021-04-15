@@ -181,6 +181,18 @@ TitlelessWindowBase<T>::TitlelessWindowBase(wxWindow* parent,
 
 #ifdef __WXMSW__
 template<typename T>
+bool TitlelessWindowBase<T>::SetBackgroundColour(const wxColour& clr)
+{
+    if (!BaseClass::SetBackgroundColour(clr))
+        return false;
+
+    auto close = GetCloseButton();
+    if (close)
+        close->SetBackgroundColour(clr);
+    return true;
+}
+
+template<typename T>
 bool TitlelessWindowBase<T>::ShouldRemoveChrome()
 {
     if (!IsWindows10OrGreater())
