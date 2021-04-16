@@ -274,12 +274,34 @@ public:
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
                       : nullptr;
 
+        // Calculate the correct DPI-dependent offset of m_icon vs m_text - we want the icon centered
+        // on the first line of text.
+        const int textPadding = PX(6);
+#if defined(__WXOSX__)
+        const int iconPadding = PX(7);
+#elif defined(__WXMSW__)
+        int iconPadding = 0;
+        const auto hidpiFactor = HiDPIScalingFactor();
+        if (hidpiFactor < 1.25)
+            iconPadding = PX(7);
+        else if (hidpiFactor < 1.5)
+            iconPadding = PX(9)+1;
+        else if (hidpiFactor < 1.75)
+            iconPadding = PX(8)+1;
+        else if (hidpiFactor < 2.0)
+            iconPadding = PX(10);
+        else
+            iconPadding = PX(8)+1;
+#else
+        const int iconPadding = PX(7);
+#endif
+
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
         top->AddSpacer(PX(6));
-        top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP|wxBOTTOM, PX(6)));
-        top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
-        right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
+        top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP, iconPadding));
+        top->Add(right, wxSizerFlags(1).Expand().Border(wxLEFT, PX(8)));
+        right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, textPadding));
         auto infoSizer = new wxBoxSizer(wxHORIZONTAL);
         infoSizer->Add(m_info, wxSizerFlags().Center());
         if (m_isPerfect)
