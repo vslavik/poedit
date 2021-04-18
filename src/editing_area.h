@@ -39,7 +39,7 @@ class TranslationTextCtrl;
 class SwitchButton;
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
-class WXDLLIMPEXP_FWD_CORE wxNotebook;
+class WXDLLIMPEXP_FWD_CORE wxBookCtrlBase;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 
 
@@ -111,7 +111,7 @@ public:
     SourceTextCtrl *Ctrl_Original() const { return m_textOrig; }
     SourceTextCtrl *Ctrl_OriginalPlural() const { return m_textOrigPlural; }
     TranslationTextCtrl *Ctrl_Translation() const { return m_textTrans; }
-    wxNotebook *Ctrl_PluralNotebook() const { return m_pluralNotebook; }
+    wxBookCtrlBase *Ctrl_PluralNotebook() const { return m_pluralNotebook; }
     TranslationTextCtrl *Ctrl_PluralTranslation(size_t index) const { return m_textTransPlural[index]; }
 
 private:
@@ -144,7 +144,7 @@ private:
     std::vector<TranslationTextCtrl*> m_textTransPlural;
     TranslationTextCtrl *m_textTransSingularForm;
 
-    wxNotebook *m_pluralNotebook;
+    wxBookCtrlBase *m_pluralNotebook;
     wxStaticText *m_labelSingular, *m_labelPlural;
     wxStaticText *m_labelSource, *m_labelTrans;
 

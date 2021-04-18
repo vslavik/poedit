@@ -24,6 +24,7 @@
  */
 
 #include <wx/accel.h>
+#include <wx/bookctrl.h>
 #include <wx/choice.h>
 #include <wx/collpane.h>
 #include <wx/config.h>
@@ -32,7 +33,6 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
-#include <wx/notebook.h>
 
 #ifdef __WXOSX__
 #include <AppKit/AppKit.h>
