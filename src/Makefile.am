@@ -35,6 +35,7 @@ poedit_SOURCES = \
                  configuration.cpp configuration.h \
                  custom_buttons.cpp custom_buttons.h \
                  customcontrols.cpp customcontrols.h \
+                 custom_notebook.cpp custom_notebook.h \
                  edapp.cpp edapp.h \
                  edframe.cpp edframe.h \
                  editing_area.cpp editing_area.h \

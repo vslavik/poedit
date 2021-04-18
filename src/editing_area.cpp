@@ -28,6 +28,7 @@
 #include "colorscheme.h"
 #include "custom_buttons.h"
 #include "customcontrols.h"
+#include "custom_notebook.h"
 #include "edlistctrl.h"
 #include "hidpi.h"
 #include "spellchecking.h"
@@ -37,7 +38,6 @@
 #include <wx/button.h>
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
-#include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
@@ -534,13 +534,12 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
 
-    m_pluralNotebook = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME);
-    m_pluralNotebook->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    m_pluralNotebook = new SegmentedNotebook(this, SegmentStyle::SmallInline);
 
     sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
     sizer->AddSpacer(PX(6));
     sizer->Add(m_textTrans, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(4)));
-    sizer->Add(m_pluralNotebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(4)));
+    sizer->Add(m_pluralNotebook, wxSizerFlags(1).Expand());
 
     ShowPluralFormUI(false);
 
@@ -570,11 +569,6 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
         e.Skip();
         UpdateCharCounter(m_associatedList->GetCurrentCatalogItem());
-    #ifdef __WXMSW__
-        auto focused = FindFocus();
-        if (focused && (focused == m_pluralNotebook || focused->GetParent() == m_pluralNotebook))
-            m_pluralNotebook->GetPage(e.GetSelection())->SetFocus();
-    #endif
     });
 }
 
@@ -814,7 +808,6 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 
         // create text control and notebook page for it:
         auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
-        txt->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
 #ifndef __WXOSX__
         txt->SetFont(m_textTrans->GetFont());
 #endif
