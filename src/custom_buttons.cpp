@@ -352,7 +352,6 @@ bool ActionButton::MSWOnDraw(WXDRAWITEMSTRUCT* wxdis)
 
     UINT state = lpDIS->itemState;
     const bool highlighted = IsMouseInWindow();
-    const bool isRtl = ::GetLayout(hdc)& LAYOUT_RTL;
 
     wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
     wxRect textRect(rect);
