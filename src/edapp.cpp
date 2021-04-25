@@ -1075,7 +1075,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     about.SetVersion(wxGetApp().GetAppVersion());
     about.SetDescription(_("Poedit is an easy to use translation editor."));
 #endif
-    about.SetCopyright(L"Copyright \u00a9 1999-2020 Václav Slavík");
+    about.SetCopyright(L"Copyright \u00a9 1999-2021 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
     about.SetWebSite("https://poedit.net");
 #endif
