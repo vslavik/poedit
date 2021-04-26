@@ -102,7 +102,11 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     }
     m_innerSizer = new wxBoxSizer(wxVERTICAL);
-    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+
+    auto innerFlags = wxSizerFlags(1).Expand();
+    if (!(flags & NoSideMargins))
+        innerFlags.PXDoubleBorder(wxLEFT|wxRIGHT);
+    m_sizer->Add(m_innerSizer, innerFlags);
 }
 
 void SidebarBlock::Show(bool show)
@@ -260,9 +264,9 @@ wxDEFINE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 class SuggestionWidget : public wxWindow
 {
 public:
-    SuggestionWidget(Sidebar *parent, SuggestionsSidebarBlock *block, bool isFirst) : wxWindow(parent, wxID_ANY)
+    SuggestionWidget(Sidebar *sidebar, wxWindow *parent, SuggestionsSidebarBlock *block, bool isFirst) : wxWindow(parent, wxID_ANY)
     {
-        m_sidebar = parent;
+        m_sidebar = sidebar;
         m_parentBlock = block;
         m_isHighlighted = false;
         m_icon = new StaticBitmap(this, "SuggestionTMTemplate");
@@ -547,7 +551,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
                    #if 0
                    _("Translation suggestions"),
                    #endif
-                   NoUpperMargin),
+                   NoUpperMargin | NoSideMargins),
       m_suggestionsMenu(menu),
       m_msgPresent(false),
       m_suggestionsSeparator(nullptr),
@@ -556,22 +560,34 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
       m_lastUpdateTime(0)
 {
     m_provider.reset(new SuggestionsProvider);
+}
+
+void SuggestionsSidebarBlock::InitMainPanel()
+{
+    m_suggestionsPanel = new wxPanel(m_parent, wxID_ANY);
+    m_panelSizer = new wxBoxSizer(wxVERTICAL);
+    m_suggestionsPanel->SetSizer(m_panelSizer);
+
+    m_innerSizer->Add(m_suggestionsPanel, wxSizerFlags(1).Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+}
+
+void SuggestionsSidebarBlock::InitControls()
+{
+    InitMainPanel();
 
     m_msgSizer = new wxBoxSizer(wxHORIZONTAL);
-    m_msgIcon = new StaticBitmap(parent, wxString());
-    m_msgText = new ExplanationLabel(parent, "");
+    m_msgIcon = new StaticBitmap(m_suggestionsPanel, wxString());
+    m_msgText = new ExplanationLabel(m_suggestionsPanel, "");
     m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().PXBorderAll());
     m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().PXBorder(wxTOP|wxBOTTOM));
-    m_innerSizer->Add(m_msgSizer, wxSizerFlags().Expand());
-
-    m_innerSizer->AddSpacer(PX(10));
+    m_panelSizer->Add(m_msgSizer, wxSizerFlags().Expand().Border(wxBOTTOM, PX(10)));
 
     m_suggestionsSizer = new wxBoxSizer(wxVERTICAL);
     m_extrasSizer = new wxBoxSizer(wxVERTICAL);
-    m_innerSizer->Add(m_suggestionsSizer, wxSizerFlags().Expand());
-    m_innerSizer->Add(m_extrasSizer, wxSizerFlags().Expand());
+    m_panelSizer->Add(m_suggestionsSizer, wxSizerFlags().Expand());
+    m_panelSizer->Add(m_extrasSizer, wxSizerFlags().Expand());
 
-    m_iGotNothing = new wxStaticText(parent, wxID_ANY,
+    m_iGotNothing = new wxStaticText(m_suggestionsPanel, wxID_ANY,
                                 #ifdef __WXMSW__
                                      // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
                                      _("No matches found")
@@ -586,14 +602,15 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 #endif
     ColorScheme::SetupWindowColors(m_iGotNothing, [=]
     {
+        m_suggestionsPanel->SetBackgroundColour(m_parent->GetBackgroundColour());
         m_iGotNothing->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(150));
     });
-    m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
+    m_panelSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
 
     BuildSuggestionsMenu();
 
-    m_suggestionsTimer.SetOwner(parent);
-    parent->Bind(wxEVT_TIMER,
+    m_suggestionsTimer.SetOwner(m_parent);
+    m_parent->Bind(wxEVT_TIMER,
                  &SuggestionsSidebarBlock::OnDelayedShowSuggestionsForItem, this,
                  m_suggestionsTimer.GetId());
 }
@@ -620,7 +637,7 @@ void SuggestionsSidebarBlock::ClearMessage()
     m_msgPresent = false;
     m_msgText->SetAndWrapLabel("");
     UpdateVisibility();
-    m_parent->Layout();
+    m_suggestionsPanel->Layout();
 }
 
 void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& text)
@@ -629,7 +646,7 @@ void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& t
     m_msgIcon->SetBitmapName(icon);
     m_msgText->SetAndWrapLabel(text);
     UpdateVisibility();
-    m_parent->Layout();
+    m_suggestionsPanel->Layout();
 }
 
 void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, dispatch::exception_ptr e)
@@ -646,7 +663,7 @@ void SuggestionsSidebarBlock::ClearSuggestions()
 
 void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
 {
-    wxWindowUpdateLocker lock(m_parent);
+    wxWindowUpdateLocker lock(m_suggestionsPanel);
 
     for (auto& h: hits)
     {
@@ -660,11 +677,11 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     // create any necessary controls:
     while (m_suggestions.size() > m_suggestionsWidgets.size())
     {
-        auto w = new SuggestionWidget(m_parent, this, /*isFirst=*/m_suggestionsWidgets.empty());
+        auto w = new SuggestionWidget(m_parent, m_suggestionsPanel, this, /*isFirst=*/m_suggestionsWidgets.empty());
         m_suggestionsSizer->Add(w, wxSizerFlags().Expand());
         m_suggestionsWidgets.push_back(w);
     }
-    m_innerSizer->Layout();
+    m_panelSizer->Layout();
 
     // update shown suggestions:
 
@@ -690,7 +707,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
             if (perfectMatches > 1)
             {
                 if (!m_suggestionsSeparator)
-                    m_suggestionsSeparator = new SidebarSeparator(m_parent);
+                    m_suggestionsSeparator = new SidebarSeparator(m_suggestionsPanel);
                 m_suggestionsSeparator->Show();
                 m_suggestionsSizer->Insert(i, m_suggestionsSeparator, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, MSW_OR_OTHER(PX(2), PX(4))));
             }
@@ -698,9 +715,9 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
         }
     }
 
-    m_innerSizer->Layout();
+    m_panelSizer->Layout();
     UpdateVisibility();
-    m_parent->Layout();
+    m_suggestionsPanel->Layout();
 
     UpdateSuggestionsMenu();
 }
@@ -780,17 +797,17 @@ void SuggestionsSidebarBlock::OnQueriesFinished()
 {
     if (m_suggestions.empty())
     {
-        m_innerSizer->Show(m_iGotNothing);
-        m_parent->Layout();
+        m_panelSizer->Show(m_iGotNothing);
+        m_suggestionsPanel->Layout();
     }
 }
 
 void SuggestionsSidebarBlock::UpdateVisibility()
 {
     m_msgSizer->ShowItems(m_msgPresent);
-    m_innerSizer->Show(m_iGotNothing, m_suggestions.empty() && !m_pendingQueries);
+    m_panelSizer->Show(m_iGotNothing, m_suggestions.empty() && !m_pendingQueries);
 
-    int heightRemaining = m_innerSizer->GetSize().y;
+    int heightRemaining = m_panelSizer->GetSize().y;
     size_t w = 0;
     for (w = 0; w < m_suggestions.size(); w++)
     {
@@ -951,7 +968,8 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     m_blocksSizer->Add(m_bottomBlocksSizer, wxSizerFlags().Expand());
 
     m_topBlocksSizer->AddSpacer(PXDefaultBorder);
-    AddBlock(new SuggestionsSidebarBlock(this, suggestionsMenu), Top);
+
+    AddBlock(SuggestionsSidebarBlock::Create(this, suggestionsMenu), Top);
     AddBlock(new OldMsgidSidebarBlock(this), Bottom);
     AddBlock(new ExtractedCommentSidebarBlock(this), Bottom);
     AddBlock(new CommentSidebarBlock(this), Bottom);

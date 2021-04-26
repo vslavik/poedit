@@ -73,7 +73,8 @@ public:
 protected:
     enum Flags
     {
-        NoUpperMargin = 1
+        NoUpperMargin = 1,
+        NoSideMargins = 2
     };
 
     SidebarBlock(Sidebar *parent, const wxString& label, int flags = 0);
@@ -91,7 +92,13 @@ wxDECLARE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 class SuggestionsSidebarBlock : public SidebarBlock
 {
 public:
-    SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu);
+    static SuggestionsSidebarBlock* Create(Sidebar *parent, wxMenu *menu)
+    {
+        auto s = new SuggestionsSidebarBlock(parent, menu);
+        s->InitControls();
+        return s;
+    }
+
     ~SuggestionsSidebarBlock();
 
     void Show(bool show) override;
@@ -100,6 +107,10 @@ public:
     void Update(const CatalogItemPtr& item) override;
 
 protected:
+    SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu);
+    virtual void InitControls();
+    virtual void InitMainPanel();
+
     // How many entries can have shortcuts?
     static const int SUGGESTIONS_MENU_ENTRIES = 9;
 
@@ -130,6 +141,8 @@ protected:
 protected:
     std::unique_ptr<SuggestionsProvider> m_provider;
 
+    wxWindow *m_suggestionsPanel;
+    wxSizer *m_panelSizer;
     wxMenu *m_suggestionsMenu;
 
     wxSizer *m_msgSizer;
