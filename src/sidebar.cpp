@@ -941,7 +941,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     topSizer->SetMinSize(wxSize(PX(300), -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXBorder(wxTOP|wxBOTTOM));
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXBorder(wxBOTTOM));
     topSizer->AddSpacer(PXDefaultBorder);
 
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
