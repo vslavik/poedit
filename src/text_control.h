@@ -69,8 +69,6 @@ protected:
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;
     wxString DoGetValue() const override;
-    wxString GetRange(long from, long to) const override;
-    wxString DoGetValueForRange(long from, long to) const;
 #endif
 
     bool DoCopy();

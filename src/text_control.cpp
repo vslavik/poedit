@@ -257,11 +257,11 @@ void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
     SendTextUpdatedEventIfAllowed();
 }
 
-wxString CustomizedTextCtrl::DoGetValueForRange(long from, long to) const
+wxString CustomizedTextCtrl::DoGetValue() const
 {
     // wx's implementation is not sufficient and neither is [NSTextView string]
     // (which wx uses): they ignore formatting, which would be desirable, but
-    // they also ignore embedded Unicode marks such as U+202A (Left-to-Right Embedding)
+    // they also include embedded Unicode marks such as U+202A (Left-to-Right Embedding)
     // or U+202C (Pop Directional Format) that are essential for correct
     // handling of BiDi text.
     //
@@ -275,27 +275,11 @@ wxString CustomizedTextCtrl::DoGetValueForRange(long from, long to) const
                              NSDocumentTypeDocumentAttribute: NSPlainTextDocumentType,
                              NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
                            };
-    NSData *data = [text dataFromRange:NSMakeRange(from, to == -1 ? [text length] : to) documentAttributes:attrs error:nil];
+    NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
     if (data && [data length] > 0)
         return wxString::FromUTF8((const char*)[data bytes], [data length]);
     else
-        return wxString();
-}
-
-wxString CustomizedTextCtrl::DoGetValue() const
-{
-    auto s = DoGetValueForRange(0, -1);
-    if (s.empty())
         return wxTextCtrl::DoGetValue();
-    return s;
-}
-
-wxString CustomizedTextCtrl::GetRange(long from, long to) const
-{
-    auto s = DoGetValueForRange(from, to);
-    if (s.empty())
-        return wxTextCtrl::GetRange(from, to);
-    return s;
 }
 
 #else // !__WXOSX__
