@@ -51,6 +51,7 @@ class SuggestionsProvider;
 class SuggestionWidget;
 class Sidebar;
 
+#define SIDEBAR_PADDING PX(8)
 
 /// Implements part of the sidebar.
 class SidebarBlock : public std::enable_shared_from_this<SidebarBlock>

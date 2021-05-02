@@ -99,13 +99,13 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Center());
-        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, SIDEBAR_PADDING));
     }
     m_innerSizer = new wxBoxSizer(wxVERTICAL);
 
     auto innerFlags = wxSizerFlags(1).Expand();
     if (!(flags & NoSideMargins))
-        innerFlags.PXDoubleBorder(wxLEFT|wxRIGHT);
+        innerFlags.Border(wxLEFT|wxRIGHT, SIDEBAR_PADDING);
     m_sizer->Add(m_innerSizer, innerFlags);
 }
 
@@ -568,7 +568,7 @@ void SuggestionsSidebarBlock::InitMainPanel()
     m_panelSizer = new wxBoxSizer(wxVERTICAL);
     m_suggestionsPanel->SetSizer(m_panelSizer);
 
-    m_innerSizer->Add(m_suggestionsPanel, wxSizerFlags(1).Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+    m_innerSizer->Add(m_suggestionsPanel, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, SIDEBAR_PADDING));
 }
 
 void SuggestionsSidebarBlock::InitControls()
@@ -958,8 +958,8 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     topSizer->SetMinSize(wxSize(PX(300), -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXBorder(wxBOTTOM));
-    topSizer->AddSpacer(PXDefaultBorder);
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand());
+    topSizer->AddSpacer(SIDEBAR_PADDING);
 
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);
@@ -1057,7 +1057,8 @@ void Sidebar::SetUpperHeight(int size)
         pos = pos / 2 - PX(1);
     }
 
-    pos += PX(5);
+    pos -= SIDEBAR_PADDING;
+    pos += PX(15) ; // SidebarSeparator spacing
 
     m_bottomBlocksSizer->SetMinSize(wxSize(-1, pos));
     Layout();
