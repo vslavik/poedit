@@ -82,12 +82,25 @@ public:
 
     void Fit() override
     {
+        IterateUntilConvergence([=]{ this->SetSize(this->GetBestSize()); });
+    }
+
+    bool Layout() override
+    {
+        IterateUntilConvergence([=]{ Base::Layout(); });
+        return true;
+    }
+
+private:
+    template<typename T>
+    void IterateUntilConvergence(T&& action)
+    {
         // iterate sizing because performing layout may invalidate some best
         // sizes (AutoWrappingText) and may need to be redone.
         wxSize best = this->GetBestSize();
         while ( true )
         {
-            this->SetSize(best);
+            action();
             wxSize updatedBest = this->GetBestSize();
             if ( best == updatedBest )
                 break;
