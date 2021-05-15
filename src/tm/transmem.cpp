@@ -192,6 +192,42 @@ private:
 };
 
 
+struct SearchArguments
+{
+    QueryPtr srclang, lang;
+    QueryPtr query;
+    std::wstring exactSourceText;
+
+    void set_lang(const Language& srclang_, const Language& lang_)
+    {
+        // TODO: query by srclang too!
+        this->srclang = newLucene<TermQuery>(newLucene<Term>(L"srclang", srclang_.WCode()));
+
+        const Lucene::String fullLang = lang_.WCode();
+        const Lucene::String shortLang = StringUtils::toUnicode(lang_.Lang());
+
+        QueryPtr langPrimary = newLucene<TermQuery>(newLucene<Term>(L"lang", fullLang));
+        QueryPtr langSecondary;
+        if (fullLang == shortLang)
+        {
+            // for e.g. 'cs', search also 'cs_*' (e.g. 'cs_CZ')
+            langSecondary = newLucene<PrefixQuery>(newLucene<Term>(L"lang", shortLang + L"_"));
+        }
+        else
+        {
+            // search short variants of the language too
+            langSecondary = newLucene<TermQuery>(newLucene<Term>(L"lang", shortLang));
+        }
+        langSecondary->setBoost(0.85);
+        auto langQ = newLucene<BooleanQuery>();
+        langQ->add(langPrimary, BooleanClause::SHOULD);
+        langQ->add(langSecondary, BooleanClause::SHOULD);
+
+        this->lang = langQ;
+    }
+};
+
+
 } // anonymous namespace
 
 // ----------------------------------------------------------------
@@ -315,17 +351,15 @@ std::wstring get_text_field(DocumentPtr doc, const std::wstring& field)
 
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
-                            QueryPtr srclang, QueryPtr lang,
-                            const std::wstring& exactSourceText,
-                            QueryPtr query,
+                            const SearchArguments& sa,
                             double scoreThreshold,
                             double scoreScaling,
                             T callback)
 {
     auto fullQuery = newLucene<BooleanQuery>();
-    fullQuery->add(srclang, BooleanClause::MUST);
-    fullQuery->add(lang, BooleanClause::MUST);
-    fullQuery->add(query, BooleanClause::MUST);
+    fullQuery->add(sa.srclang, BooleanClause::MUST);
+    fullQuery->add(sa.lang, BooleanClause::MUST);
+    fullQuery->add(sa.query, BooleanClause::MUST);
 
     auto hits = searcher->search(fullQuery, DEFAULT_MAXHITS);
 
@@ -338,7 +372,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 
         auto doc = searcher->doc(scoreDoc->doc);
         auto src = get_text_field(doc, L"source");
-        if (src == exactSourceText)
+        if (src == sa.exactSourceText)
         {
             score = 1.0;
         }
@@ -350,7 +384,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 
                 // Check against too small queries having perfect hit in a large stored text.
                 // Do this by penalizing too large difference in lengths of the source strings.
-                double len1 = exactSourceText.size();
+                double len1 = sa.exactSourceText.size();
                 double len2 = src.size();
                 score *= 1.0 - 0.4 * (std::abs(len1 - len2) / std::max(len1, len2));
             }
@@ -363,17 +397,14 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 }
 
 void PerformSearch(IndexSearcherPtr searcher,
-                   QueryPtr srclang, QueryPtr lang,
-                   const std::wstring& exactSourceText,
-                   QueryPtr query,
+                   const SearchArguments& sa,
                    SuggestionsList& results,
                    double scoreThreshold,
                    double scoreScaling)
 {
     PerformSearchWithBlock
     (
-        searcher, srclang, lang, exactSourceText, query,
-        scoreThreshold, scoreScaling,
+        searcher, sa, scoreThreshold, scoreScaling,
         [&results](DocumentPtr doc, double score)
         {
             auto t = get_text_field(doc, L"trans");
@@ -395,29 +426,6 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
 {
     try
     {
-        // TODO: query by srclang too!
-        auto srclangQ = newLucene<TermQuery>(newLucene<Term>(L"srclang", srclang.WCode()));
-
-        const Lucene::String fullLang = lang.WCode();
-        const Lucene::String shortLang = StringUtils::toUnicode(lang.Lang());
-
-        QueryPtr langPrimary = newLucene<TermQuery>(newLucene<Term>(L"lang", fullLang));
-        QueryPtr langSecondary;
-        if (fullLang == shortLang)
-        {
-            // for e.g. 'cs', search also 'cs_*' (e.g. 'cs_CZ')
-            langSecondary = newLucene<PrefixQuery>(newLucene<Term>(L"lang", shortLang + L"_"));
-        }
-        else
-        {
-            // search short variants of the language too
-            langSecondary = newLucene<TermQuery>(newLucene<Term>(L"lang", shortLang));
-        }
-        langSecondary->setBoost(0.85);
-        auto langQ = newLucene<BooleanQuery>();
-        langQ->add(langPrimary, BooleanClause::SHOULD);
-        langQ->add(langSecondary, BooleanClause::SHOULD);
-
         SuggestionsList results;
 
         const Lucene::String sourceField(L"source");
@@ -437,18 +445,22 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
             phraseQ->add(term, sourceTokenPosition);
         }
 
+        SearchArguments sa;
+        sa.set_lang(srclang, lang);
+        sa.exactSourceText = source;
+        sa.query = phraseQ;
+
         auto searcher = m_mng->Searcher();
 
         // Try exact phrase first:
-        PerformSearch(searcher.ptr(), srclangQ, langQ, source, phraseQ, results,
-                      QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
+        PerformSearch(searcher.ptr(), sa, results, QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher.ptr(), srclangQ, langQ, source, phraseQ, results,
-                      QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
+        sa.query = phraseQ;
+        PerformSearch(searcher.ptr(), sa, results, QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
 
         if (!results.empty())
             return results;
@@ -456,10 +468,10 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
         // As the last resort, try terms search. This will almost certainly
         // produce low-quality results, but hopefully better than nothing.
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
+        sa.query = boolQ;
         PerformSearchWithBlock
         (
-            searcher.ptr(), srclangQ, langQ, source, boolQ,
-            QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
+            searcher.ptr(), sa, QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
                 auto s = get_text_field(doc, sourceField);
