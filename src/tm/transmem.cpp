@@ -39,6 +39,7 @@
 #include <time.h>
 #include <mutex>
 
+#include <boost/algorithm/string/find.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/name_generator.hpp>
@@ -256,6 +257,9 @@ public:
 
     void ExportData(TranslationMemory::IOInterface& destination);
     void ImportData(std::function<void(TranslationMemory::IOInterface&)> source);
+
+    void SearchSubstring(TranslationMemory::IOInterface& destination,
+                        const Language& srclang, const Language& lang, const std::wstring& sourcePhrase);
 
     std::shared_ptr<TranslationMemory::Writer> GetWriter() { return m_writerAPI; }
 
@@ -498,6 +502,55 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
     {
         return SuggestionsList();
     }
+}
+
+
+void TranslationMemoryImpl::SearchSubstring(TranslationMemory::IOInterface& destination,
+                                            const Language& srclang, const Language& lang, const std::wstring& sourcePhrase)
+{
+    try
+    {
+        const Lucene::String sourceField(L"source");
+        auto phraseQ = newLucene<PhraseQuery>();
+
+        auto stream = m_analyzer->tokenStream(sourceField, newLucene<StringReader>(sourcePhrase));
+        int sourceTokenPosition = -1;
+        while (stream->incrementToken())
+        {
+            auto word = stream->getAttribute<TermAttribute>()->term();
+            sourceTokenPosition += stream->getAttribute<PositionIncrementAttribute>()->getPositionIncrement();
+            auto term = newLucene<Term>(sourceField, word);
+            phraseQ->add(term, sourceTokenPosition);
+        }
+
+        SearchArguments sa;
+        sa.set_lang(srclang, lang);
+        sa.exactSourceText = sourcePhrase;
+        sa.query = phraseQ;
+
+        auto searcher = m_mng->Searcher();
+
+        PerformSearchWithBlock
+        (
+            searcher.ptr(), sa, /*qualityThreshold=*/0.0, /*scoreScaling=*/1.0,
+            [&](DocumentPtr doc, double /*score*/)
+            {
+                auto sourceText = get_text_field(doc, sourceField);
+                if (boost::algorithm::ifind_first(sourceText, sourcePhrase))
+                {
+                    destination.Insert
+                    (
+                        srclang,
+                        lang,
+                        sourceText,
+                        get_text_field(doc, L"trans"),
+                        DateField::stringToTime(doc->get(L"created"))
+                    );
+                }
+            }
+        );
+    }
+    CATCH_AND_RETHROW_EXCEPTION
 }
 
 
@@ -839,4 +892,12 @@ void TranslationMemory::GetStats(long& numDocs, long& fileSize)
     if (!m_impl)
         std::rethrow_exception(m_error);
     m_impl->GetStats(numDocs, fileSize);
+}
+
+void TranslationMemory::SearchSubstring(IOInterface& destination,
+                                        const Language& srclang, const Language& lang, const std::wstring& sourcePhrase)
+{
+    if (!m_impl)
+        std::rethrow_exception(m_error);
+    m_impl->SearchSubstring(destination, srclang, lang, sourcePhrase);
 }

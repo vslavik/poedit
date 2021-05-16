@@ -97,6 +97,8 @@ public:
      */
     void ImportData(std::function<void(IOInterface&)> source);
 
+    void SearchSubstring(IOInterface& destination,
+                         const Language& srclang, const Language& lang, const std::wstring& sourcePhrase);
 
     /**
         Performs updates to the translation memory.
