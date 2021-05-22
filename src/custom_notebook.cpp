@@ -63,6 +63,8 @@ public:
     virtual void RemoveAllPages() = 0;
 
     virtual void ChangeSelection(size_t n) = 0;
+
+    virtual void UpdateBackgroundColour() = 0;
 };
 
 
@@ -136,6 +138,9 @@ public:
 
     void ChangeSelection(size_t n) override
         { m_control.selectedSegment = n; }
+
+    void UpdateBackgroundColour() override
+        { /* no action needed with native NSSegmentedControl */ }
 
 private:
     void UpdateLabels()
@@ -362,6 +367,11 @@ public:
         }
     }
 
+    void UpdateBackgroundColour() override
+    {
+        SetBackgroundColour(m_book->GetBackgroundColour());
+    }
+
 private:
     wxSimplebook *m_book;
     SegmentStyle m_style;
@@ -413,6 +423,14 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
         m_tabs->ChangeSelection(e.GetSelection());
         e.Skip();
     });
+}
+
+bool SegmentedNotebook::SetBackgroundColour(const wxColour& clr)
+{
+    if (!wxSimplebook::SetBackgroundColour(clr))
+        return false;
+    m_tabs->UpdateBackgroundColour();
+    return true;
 }
 
 wxSizer *SegmentedNotebook::GetTabsExtensibleArea() const

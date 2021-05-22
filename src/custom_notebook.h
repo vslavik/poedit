@@ -65,6 +65,8 @@ public:
     bool InsertPage(size_t n, wxWindow *page, const wxString& text, bool bSelect = false, int imageId = NO_IMAGE) override;
     bool DeleteAllPages() override;
 
+    bool SetBackgroundColour(const wxColour& clr) override;
+
     /// Returns sizer in the tabs portions of the control where custom controls can be added or NULL
     wxSizer *GetTabsExtensibleArea() const;
 
