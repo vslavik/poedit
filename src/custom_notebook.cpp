@@ -465,6 +465,7 @@ int SegmentedNotebook::DoSetSelection(size_t n, int flags)
 SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
     : wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME)
 {
+#if wxCHECK_VERSION(3,1,0)
     wxFont font = GetFont();
     double size = font.GetFractionalPointSize();
 
@@ -480,6 +481,7 @@ SegmentedNotebook::SegmentedNotebook(wxWindow *parent, SegmentStyle style)
 
     font.SetFractionalPointSize(size);
     SetOwnFont(font);
+#endif
 }
 
 #endif // !HAS_SEGMENTED_NOTEBOOK
