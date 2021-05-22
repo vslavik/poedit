@@ -249,6 +249,13 @@ public:
         auto topsizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(m_wrappingSizer, wxSizerFlags(1).Expand());
         topsizer->AddSpacer(PX(5));
+#ifdef __WXOSX__
+        if (@available(macOS 11.0, *))
+        {
+            topsizer->InsertSpacer(0, PX(2));
+            topsizer->AddSpacer(PX(1));
+        }
+#endif
         SetSizer(topsizer);
 
         Bind(wxEVT_PAINT, &ButtonTabs::OnPaint, this);

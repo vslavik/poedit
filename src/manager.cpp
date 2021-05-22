@@ -121,6 +121,12 @@ ManagerFrame::ManagerFrame() :
     topsizer->Add(sidebarSizer, wxSizerFlags().Expand().Border(wxALL, PX(10)));
 
     m_listPrj = new wxListBox(panel, wxID_ANY, wxDefaultPosition, wxSize(PX(200), -1), 0, nullptr, MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+#ifdef __WXOSX__
+  #if __MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_16
+    if (@available(macOS 11.0, *))
+        ((NSTableView*)[((NSScrollView*)m_listPrj->GetHandle()) documentView]).style = NSTableViewStyleFullWidth;
+  #endif
+#endif
     sidebarSizer->Add(m_listPrj, wxSizerFlags(1).Expand());
 
 #if defined(__WXOSX__)
