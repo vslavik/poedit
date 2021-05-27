@@ -430,11 +430,10 @@ dispatch::future<void> CrowdinClient::DownloadFile(int project_id,
     json options({
         { "targetLanguageId", lang.LanguageTag() },
         // for XLIFF and PO files should be exported "as is" so set to `false`
-        { "exportAsXliff", isXLIFFConverted }
+        { "exportAsXliff", isXLIFFConverted },
+        // ensure that XLIFF files contain not-yet-translated entries, see https://github.com/vslavik/poedit/pull/648
+        { "skipUntranslatedStrings", false }
     });
-    // ensure that XLIFF files contain not-yet-translated entries, see https://github.com/vslavik/poedit/pull/648
-    if (isXLIFFNative)
-        options["skipUntranslatedStrings"] = false;
 
     return m_api->post(
         "projects/" + std::to_string(project_id) + "/translations/builds/files/" + std::to_string(file_id),
