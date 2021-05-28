@@ -107,38 +107,40 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         return 0;
 
     bool cont;
-    wxString filename;
+    wxString iter;
     int found = 0;
     
-    cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
+    cont = dir.GetFirst(&iter, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
-        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
-        cont = dir.GetNext(&filename);
+        const wxString filename = iter;
+        const wxString fullpath = (dirname == ".") ? filename : dirname + "/" + filename;
+        cont = dir.GetNext(&iter);
 
-        if (excludedPaths.MatchesFile(f))
+        if (excludedPaths.MatchesFile(fullpath))
             continue;
 
-        CheckReadPermissions(basepath, f);
-        wxLogTrace("poedit.extractor", "  - %s", f);
-        output.push_back(f);
+        CheckReadPermissions(basepath, fullpath);
+        wxLogTrace("poedit.extractor", "  - %s", fullpath);
+        output.push_back(fullpath);
         found++;
     }
 
-    cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
+    cont = dir.GetFirst(&iter, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
-        cont = dir.GetNext(&filename);
+        const wxString filename = iter;
+        const wxString fullpath = (dirname == ".") ? filename : dirname + "/" + filename;
+        cont = dir.GetNext(&iter);
 
         if (IsVCSDir(filename))
             continue;
 
-        if (excludedPaths.MatchesFile(f))
+        if (excludedPaths.MatchesFile(fullpath))
             continue;
 
-        CheckReadPermissions(basepath, f);
-        found += FindInDir(basepath, f, excludedPaths, output);
+        CheckReadPermissions(basepath, fullpath);
+        found += FindInDir(basepath, fullpath, excludedPaths, output);
     }
 
     return found;
