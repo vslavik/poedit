@@ -194,6 +194,13 @@ std::wregex RE_PHP_FORMAT(LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeE
 std::wregex RE_C_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
                         std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
+// python-format old style https://docs.python.org/2/library/stdtypes.html#string-formatting
+//               new style https://docs.python.org/3/library/string.html#format-string-syntax
+std::wregex RE_PYTHON_FORMAT(LR"((%(\(\w+\))?[-+ #0]?(\d+|\*)?(\.(\d+|\*))?[hlL]?[diouxXeEfFgGcrs%]))" // old style
+                             "|"
+                             LR"((\{([^{}])*\}))", // new style, being permissive
+                             std::regex_constants::ECMAScript | std::regex_constants::optimize);
+
 // ruby-format per https://ruby-doc.org/core-2.7.1/Kernel.html#method-i-sprintf
 std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
                            std::regex_constants::ECMAScript | std::regex_constants::optimize);
@@ -241,6 +248,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
     {
         static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Format);
         all->Add(c_format);
+    }
+    else if (formatFlag == "python")
+    {
+        static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Format);
+        all->Add(python_format);
     }
     else if (formatFlag == "ruby")
     {
