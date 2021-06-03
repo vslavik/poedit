@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -30,20 +30,20 @@ msgstr "Ez erakutsi berriro"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Berria: %i, zaharkitua: %i)"
 
-msgid "Updating catalog"
-msgstr "Katalogoa eguneratzen"
-
 msgid "Collecting source files…"
 msgstr "Iturburu-fitxategiak biltzen…"
 
 msgid "Extracting translatable strings…"
 msgstr "Kate itzulgarriak erauzten…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Erauzitako katalogoa kargatzean huts egin du."
+msgid "Failed to load file with extracted translations."
+msgstr ""
 
 msgid "Merging differences…"
 msgstr "Ezberdintasunak batzen…"
+
+msgid "Updating translations"
+msgstr ""
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,23 +79,16 @@ msgstr[1] "'%2$s' fitxategiko %1$i kate ez dira ongi kargatu."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d lerroa hondatuta dago \"%s\" fitxategian (%s datu baliogabea)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Hautsitako katalogo-fitxategia: msgstr singular forma msgid_plural "
-"formarekin batera erabili da"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Hautsitako katalogo-fitxategia: msgstr plural forma msgid_plural gabe "
-"erabili da"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Erroreak egon dira katalogoa kargatzean. Ondorioz, datu batzuk falta "
-"daitezke edo hondatuta egon daitezke."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -120,18 +113,14 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalogoa ezin izan da \"%s\" karaktere-jokoan gorde katalogo ezarpenetan "
-"adierazi bezala.\n"
-"\n"
-"UTF-8 erabiliz gorde da eta ezarpenak ere era berean aldatu dira."
 
-msgid "Error saving catalog"
-msgstr "Errorea katalogoa gordetzean"
+msgid "Error saving file"
+msgstr ""
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -173,8 +162,11 @@ msgstr "Hutsegitea %s-rekin sinkronizatzean."
 msgid "Syncing error"
 msgstr "Sinkronizazio errorea"
 
-msgid "JSON request error"
+msgid "Add"
 msgstr ""
+
+msgid "JSON request error"
+msgstr "JSON eskaeraren errorea"
 
 msgid "Not authorized, please sign in again."
 msgstr "Ez autorizatua, mesedez hasi saioa berriro."
@@ -207,9 +199,6 @@ msgstr "Autentifikazioaren zain…"
 
 msgid "Updating user information…"
 msgstr "Erabiltzailearen informazioa eguneratzen…"
-
-msgid "Learn More About Crowdin"
-msgstr "Ikasi gehiago Crowdin-i buruz"
 
 msgid "Learn more about Crowdin"
 msgstr "Ikasi gehiago Crowdin buruz"
@@ -253,9 +242,6 @@ msgstr "&Kopiatu"
 msgid "Learn more"
 msgstr "Ikasi gehiago"
 
-msgid "Learn More"
-msgstr "Ikasi gehiago"
-
 msgid "&Help"
 msgstr "&Laguntza"
 
@@ -288,15 +274,687 @@ msgstr "Komunikazioak huts egin du Poedit prozesuarekin."
 msgid "Unhandled exception occurred: %s"
 msgstr "Kontrolatu gabeko salbuespen bat gertatu da: %s"
 
-msgid "Open catalog"
-msgstr "Ireki katalogoa"
+msgid "Select translation template"
+msgstr ""
+
+msgid "Select translation file"
+msgstr ""
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit itzulpen editore erabilerraz bat da."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO itzulpena"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"Fitxategia hondatuta edo Poedit-ek ezagutzen ez duen formatu batean egon "
+"daiteke."
+
+msgid "The file cannot be opened."
+msgstr "Fitxategia ezin da ireki."
+
+msgid "Invalid file"
+msgstr "Fitxategi baliogabea"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Ezin duzu fitxategi bat baino gehiago jaregin Poedit leihoan."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "“%s” fitxategia ez da itzulpen fitxategia."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "“%s” fitxategia ez dago."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit itzulpen editore erabilerraz bat da."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Joan"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Ortografia egiaztaketa desgaituta dago, %s hiztegia ez dagoelako instalatuta."
+
+msgid "Install"
+msgstr "Instalatu"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr ""
+
+msgid "Reload file"
+msgstr ""
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+
+msgid "Ignore"
+msgstr ""
+
+msgid "Reload File"
+msgstr ""
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr ""
+
+msgid "Save changes"
+msgstr "Gorde aldaketak"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Zure aldaketak galdu egingo dira ez badituzu gordetzen."
+
+msgid "Save"
+msgstr "Gorde"
+
+msgid "Do&n’t save"
+msgstr "Ez gorde"
+
+msgid "Don’t Save"
+msgstr "Ez gorde"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+
+msgid "Cancel"
+msgstr "Utzi"
+
+msgid "Save Anyway"
+msgstr ""
+
+msgid "Save anyway"
+msgstr ""
+
+msgid "Save as…"
+msgstr "Gorde honela…"
+
+msgid "Compile to…"
+msgstr "Konpilatu hona…"
+
+msgid "Compiled Translation Files"
+msgstr "Konpilatutako itzulpen-fitxategiak"
+
+msgid "Export as…"
+msgstr "Esportatu honela…"
+
+msgid "HTML Files"
+msgstr "HTML fitxategiak"
+
+#, c-format
+msgid "In: %s"
+msgstr ""
+
+msgid "Source code not available."
+msgstr "Iturburu-kodea ez dago eskuragarri."
+
+msgid "Updating failed"
+msgstr "Eguneraketak huts egin du"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+
+msgid "Permission denied."
+msgstr "Baimena ukatuta."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Aurretik zure fitxategietarako sarbidea debekatu baduzu, baimendu dezakezu "
+"Sistemaren hobespenetan> Segurtasuna eta pribatutasuna> Pribatutasuna> "
+"Fitxategiak eta karpetak."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr ""
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+
+msgid "Open translation template"
+msgstr ""
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d arazo aurkitu da itzulpenarekin. "
+msgstr[1] "%d arazo aurkitu dira itzulpenarekin."
+
+msgid "Validation results"
+msgstr "Balioztapenaren emaitzak"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Erroreak dituzten sarrerak gorriz markatu dira zerrendan. Errorearen "
+"xehetasunak sarrera hautatzen duzunean erakutsiko dira."
+
+msgid "The file was saved safely."
+msgstr "Fitxategia seguru gorde da."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Fitxategia ongi gorde eta MO formatuan konpilatu da, baina ziurrenik ez du "
+"ongi funtzionatuko."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Fitxategia ongi gorde da, baina ezin da MO formatuan konpilatu eta erabili."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Fitxategia MO formatuan konpilatu da, baina ziurrenik ez du ongi "
+"funtzionatuko."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Fitxategia ezin da MO formatuan konpilatu eta erabili."
+
+msgid "No problems with the translation found."
+msgstr "Ez da arazorik aurkitu itzulpenean."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Itzulpena erabiltzeko gertu dago, baina sarrera %d ez dago itzulita oraindik."
+msgstr[1] ""
+"Itzulpena erabiltzeko gertu dago, baina %d sarrera ez daude itzulita "
+"oraindik."
+
+msgid "The translation is ready for use."
+msgstr "Itzulpena erabiltzeko prest dago."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poeditek automatikoki konpondu du \"%s\" fitxategiko eduki baliogabea."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Fitxategiak bikoiztutako elementuak zituen, eta hau ez da onartzen PO "
+"fitxategietan, ezin izango litzateke fitxategia erabili. Poedit-ek arazoa "
+"konpondu du, baina 'lana behar du'. gisa markatutako itzulpenak gainbegiratu "
+"beharko zenituzte eta behar bada zuzendu."
+
+msgid "Language of the translation isn’t set."
+msgstr "Itzulpenaren hizkuntza ez dago ezarrita."
+
+msgid "Set Language"
+msgstr "Ezarri hizkuntza"
+
+msgid "Set language"
+msgstr "Ezarri hizkuntza"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Iradokizunak ez daude eskuragarri itzulpen hizkuntza ez badago zuzen "
+"ezarrita. Beste ezaugarri batzuetan izan dezake eragina ere, plural formak "
+"esaterako."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Itzulpen hizkuntza eta iturburuko hizkuntza bera da."
+
+msgid "Fix Language"
+msgstr "Zuzendu hizkuntza"
+
+msgid "Fix language"
+msgstr "Konpondu hizkuntzarena"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Beharrezkoa den Plural-Forms goiburua falta da."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Sintaxi errorea Plural-Forms goiburuan (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Konpondu goiburua"
+
+msgid "Fix the header"
+msgstr "Konpondu goiburua"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Berrikusi"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr ""
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Itzulita: %d / %d (%%%d)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Gelditzen dira: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "errore %d"
+msgstr[1] "%d errore"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "Sarrera %d"
+msgstr[1] "%d sarrera"
+
+msgid " (unsaved)"
+msgstr " (gorde gabe)"
+
+msgid " (modified)"
+msgstr "(aldatuta)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Hutsegitea itzulpen memoria eguneratzerakoan: %s"
+
+msgid "Purge deleted translations"
+msgstr "Purgatu ezabatutako itzulpenak"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Luzaroan erabili ez diren itzulpen guztiak kentzea nahi duzu?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Purgarekin jarraitzen baduzu, ezabaturik bezala markaturiko itzulpen guztiak "
+"betiko kenduko dira. Berriro itzuli beharko dituzu etorkizunean atzera "
+"gehitzen badira."
+
+msgid "Keep"
+msgstr "Mantendu"
+
+msgid "Purge"
+msgstr "Purgatu"
+
+msgid "Copy from source text"
+msgstr "Kopiatu jatorrizko testutik"
+
+msgid "Copy from Source Text"
+msgstr "Kopiatu jatorrizko testutik"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Garbitu itzulpena"
+
+msgid "Clear Translation"
+msgstr "Garbitu itzulpena"
+
+msgid "Edit comment"
+msgstr "Editatu iruzkina"
+
+msgid "Edit Comment"
+msgstr "Editatu iruzkina"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr ""
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr ""
+
+msgid "&Bookmarks"
+msgstr "&Laster-markak"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Ezarri %i laster-marka"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Joan %i laster-markara"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Ezarri %i laster-marka"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Joan %i laster-markara"
+
+msgid "Hide Sidebar"
+msgstr "Ezkutatu alboko barra"
+
+msgid "Show Sidebar"
+msgstr "Erakutsi alboko barra"
+
+msgid "Hide Status Bar"
+msgstr "Ezkutatu egoera-barra"
+
+msgid "Show Status Bar"
+msgstr "Erakutsi egoera-barra"
+
+msgid "String length in characters: translation | source"
+msgstr ""
+
+msgid "String length in characters"
+msgstr ""
+
+msgid "Source text"
+msgstr "Jatorrizko testua"
+
+msgid "Singular"
+msgstr "Singularra"
+
+msgid "Plural"
+msgstr "Plurala"
+
+msgid "Translation"
+msgstr "Itzulpena"
+
+msgid "Pre-translated"
+msgstr "Aurre-itzulita"
+
+msgid "Needs Work"
+msgstr "Lana behar du"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Lana behar du"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT fitxategiak txantiloiak besterik ez dira eta ez dute inolako itzulpenik "
+"berez.\n"
+"Itzulpena egiteko, sortu PO fitxategi berri bat txantiloian oinarrituz."
+
+msgid "Create new translation"
+msgstr "Sortu itzulpen berria"
+
+msgid "Make a new translation from this POT file."
+msgstr ""
+
+msgid "Everything"
+msgstr "Dena"
+
+#, c-format
+msgid "Form %i"
+msgstr "%i forma"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "%i forma (ez da erabiltzen)"
+
+msgid "Zero"
+msgstr "Zero"
+
+msgid "One"
+msgstr "Bat"
+
+msgid "Two"
+msgstr "Bi"
+
+msgid "Other"
+msgstr "Beste bat"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s Formatua"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s formatua"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Itzulpena — %s"
+
+msgid "ID"
+msgstr "IDa"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Jatorrizko testua — %s"
+
+msgid "unknown language"
+msgstr "hizkuntza ezezaguna"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Komando hutsegitea: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Huts egin du gettext katalogoak batzerakoan."
+
+msgid "Open in Editor"
+msgstr "Ireki editorean"
+
+msgid "Open in editor"
+msgstr "Ireki editorean"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+
+msgid "No usage information"
+msgstr ""
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Source code not found"
+msgstr ""
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+
+msgid "File cannot be opened"
+msgstr ""
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr ""
+
+msgid "Find"
+msgstr "Bilatu"
+
+msgid "Replace"
+msgstr "Ordeztu"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Aukerak"
+
+msgid "Ignore case"
+msgstr "Ezikusi maiuskulak/minuskulak"
+
+msgid "Wrap around"
+msgstr "Itzulbiratu"
+
+msgid "Whole words only"
+msgstr "Hitz osoak bakarrik"
+
+msgid "Find in source texts"
+msgstr "Bilatu jatorrizko testuetan"
+
+msgid "Find in translations"
+msgstr "Bilatu itzulpenetan"
+
+msgid "Find in comments"
+msgstr "Bilatu iruzkinetan"
+
+msgid "Close"
+msgstr "Itxi"
+
+msgid "Replace &All"
+msgstr "Ordeztu &denak"
+
+msgid "Replace &all"
+msgstr "Ordeztu &denak"
+
+msgid "&Replace"
+msgstr "&Ordeztu"
+
+msgid "< &Previous"
+msgstr "< &Aurrekoa"
+
+msgid "&Next >"
+msgstr "&Hurrengoa >"
+
+msgid "String to find"
+msgstr "Bilatzeko katea"
+
+msgid "Replacement string"
+msgstr "Ordezpen-katea"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Ezin da programa abiarazi: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Hizkuntza kodea edo izena (adib. en_GB)"
+
+msgid "Translation Language"
+msgstr "Itzulpen hizkuntza"
+
+msgid "Language of the translation:"
+msgstr "Itzulpenaren hizkuntza:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Katalogoen kudeatzailea"
+
+msgid "Edit…"
+msgstr "Editatu…"
+
+msgid "Create new translations project"
+msgstr "Sortu itzulpen proiektu berria"
+
+msgid "Delete the project"
+msgstr "Ezabatu proiektua"
+
+msgid "Edit the project"
+msgstr "Editatu proiektua"
+
+msgid "Update all"
+msgstr "Eguneratu denak"
+
+msgid "Update all catalogs in the project"
+msgstr "Eguneratu proiektuko katalogo guztiak"
+
+msgid "Total"
+msgstr "Guztira"
+
+msgid "Untrans"
+msgstr "Itzuli gabe"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Lana behar du"
+
+msgid "Errors"
+msgstr "Erroreak"
+
+msgid "Last modified"
+msgstr "Azken aldaketa"
+
+msgid "Select directory"
+msgstr "Hautatu direktorioa"
+
+msgid "Directories:"
+msgstr "Direktorioak:"
+
+msgid "<unnamed>"
+msgstr "<izengabea>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr ""
+
+msgid "Delete project"
+msgstr ""
+
+msgid "Deleting the project will not delete any translation files."
+msgstr ""
+
+msgid "Confirmation"
+msgstr "Berrespena"
+
+msgid "Update all catalogs in this project?"
+msgstr ""
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
 
 msgid "Catalogs Manager"
 msgstr "Katalogoen kudeatzailea"
@@ -382,6 +1040,15 @@ msgstr "Gelditu hitz egitea"
 msgid "&View"
 msgstr "&Ikusi"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Erakutsi tresna-barra"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Pertsonalizatu tresna-barra…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Sartu pantaila osoan"
 
@@ -394,633 +1061,11 @@ msgstr "Minimizatu"
 msgid "Zoom"
 msgstr "Zooma"
 
+msgid "Welcome to Poedit"
+msgstr "Ongi etorri Poedit-era"
+
 msgid "Bring All to Front"
 msgstr "Ekarri denak aurrera"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO itzulpena"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Fitxategia hondatuta edo Poedit-ek ezagutzen ez duen formatu batean egon "
-"daiteke."
-
-msgid "The file cannot be opened."
-msgstr "Fitxategia ezin da ireki."
-
-msgid "Invalid file"
-msgstr "Fitxategi baliogabea"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Ezin duzu fitxategi bat baino gehiago jaregin Poedit leihoan."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "“%s” fitxategia ez da itzulpen fitxategia."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Fitxategia"
-
-msgid "&Go"
-msgstr "&Joan"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Ortografia egiaztaketa desgaituta dago, %s hiztegia ez dagoelako instalatuta."
-
-msgid "Install"
-msgstr "Instalatu"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalogoa aldatu egin da. Aldaketak gordetzea nahi duzu?"
-
-msgid "Save changes"
-msgstr "Gorde aldaketak"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Zure aldaketak galdu egingo dira ez badituzu gordetzen."
-
-msgid "Save"
-msgstr "Gorde"
-
-msgid "Do&n’t save"
-msgstr "Ez gorde"
-
-msgid "Don’t Save"
-msgstr "Ez gorde"
-
-msgid "Save as…"
-msgstr "Gorde honela…"
-
-msgid "Compile to…"
-msgstr "Konpilatu hona…"
-
-msgid "Compiled Translation Files"
-msgstr "Konpilatutako itzulpen-fitxategiak"
-
-msgid "Export as…"
-msgstr "Esportatu honela…"
-
-msgid "HTML Files"
-msgstr "HTML fitxategiak"
-
-msgid "Open catalog template"
-msgstr "Ireki katalogo-txantiloia"
-
-msgid "Source code not available."
-msgstr "Iturburu-kodea ez dago eskuragarri."
-
-msgid "Updating failed"
-msgstr "Eguneraketak huts egin du"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Itzulpenak ezin izan dira eguneratu iturburu kodetik, ez delako koderik "
-"aurkitu katalogoaren propietateetan adierazitako kokalekuan."
-
-msgid "Permission denied."
-msgstr "Baimena ukatuta."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Ez duzu baimenik iturburu kodeko fitxategiak irakurtzeko katalogoko "
-"propietateetan zehaztutako kokapenetik."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Aurretik zure fitxategietarako sarbidea debekatu baduzu, baimendu dezakezu "
-"Sistemaren hobespenetan> Segurtasuna eta pribatutasuna> Pribatutasuna> "
-"Fitxategiak eta karpetak."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Katalogoko sarrerak ziurrenik oker egongo dira."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Huts egin du katalogoa eguneratzerakoan. Klikatu 'Xehetasunak >>' "
-"xehetasunak ikusteko."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d arazo aurkitu da itzulpenarekin. "
-msgstr[1] "%d arazo aurkitu dira itzulpenarekin."
-
-msgid "Validation results"
-msgstr "Balioztapenaren emaitzak"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Erroreak dituzten sarrerak gorriz markatu dira zerrendan. Errorearen "
-"xehetasunak sarrera hautatzen duzunean erakutsiko dira."
-
-msgid "The file was saved safely."
-msgstr "Fitxategia seguru gorde da."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Fitxategia ongi gorde eta MO formatuan konpilatu da, baina ziurrenik ez du "
-"ongi funtzionatuko."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Fitxategia ongi gorde da, baina ezin da MO formatuan konpilatu eta erabili."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Fitxategia MO formatuan konpilatu da, baina ziurrenik ez du ongi "
-"funtzionatuko."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Fitxategia ezin da MO formatuan konpilatu eta erabili."
-
-msgid "No problems with the translation found."
-msgstr "Ez da arazorik aurkitu itzulpenean."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Itzulpena erabiltzeko gertu dago, baina sarrera %d ez dago itzulita oraindik."
-msgstr[1] ""
-"Itzulpena erabiltzeko gertu dago, baina %d sarrera ez daude itzulita "
-"oraindik."
-
-msgid "The translation is ready for use."
-msgstr "Itzulpena erabiltzeko prest dago."
-
-msgid "Warnings have been disabled."
-msgstr "Oharrak desaktibatu egin dira."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Oharrak positibo faltsu gehiegigatik desgaitu badituzu, bidali mesedez "
-"fitxategia help@poedit.net helbidera zer gertatzen den argitzeko."
-
-msgid "Send Feedback"
-msgstr "Bidali iritzia"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Bidali iritzia"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poeditek automatikoki konpondu du \"%s\" fitxategiko eduki baliogabea."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Fitxategiak bikoiztutako elementuak zituen, eta hau ez da onartzen PO "
-"fitxategietan, ezin izango litzateke fitxategia erabili. Poedit-ek arazoa "
-"konpondu du, baina 'lana behar du'. gisa markatutako itzulpenak gainbegiratu "
-"beharko zenituzte eta behar bada zuzendu."
-
-msgid "Language of the translation isn’t set."
-msgstr "Itzulpenaren hizkuntza ez dago ezarrita."
-
-msgid "Set Language"
-msgstr "Ezarri hizkuntza"
-
-msgid "Set language"
-msgstr "Ezarri hizkuntza"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Iradokizunak ez daude eskuragarri itzulpen hizkuntza ez badago zuzen "
-"ezarrita. Beste ezaugarri batzuetan izan dezake eragina ere, plural formak "
-"esaterako."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Itzulpen hizkuntza eta iturburuko hizkuntza bera da."
-
-msgid "Fix Language"
-msgstr "Zuzendu hizkuntza"
-
-msgid "Fix language"
-msgstr "Konpondu hizkuntzarena"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Katalogo honek plural forma duten sarrerak ditu, baina ez du Plural-Forms "
-"goiburua konfiguratuta."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Katalogo honetako sarrerek katalogoaren Plural-Forms goiburuak "
-"zehaztutakoaren desberdina den forma plural kopurua du"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Beharrezkoa den Plural-Forms goiburua falta da."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Sintaxi errorea Plural-Forms goiburuan (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Konpondu goiburua"
-
-msgid "Fix the header"
-msgstr "Konpondu goiburua"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Katalogoak erabiltzen dituen plural-formak ezohikoak dira %s-rako."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Berrikusi"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Errorea \"%s\" mezu-katalogo fitxategia kargatzean."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Itzulita: %d / %d (%%%d)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Gelditzen dira: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "errore %d"
-msgstr[1] "%d errore"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "Sarrera %d"
-msgstr[1] "%d sarrera"
-
-msgid " (unsaved)"
-msgstr " (gorde gabe)"
-
-msgid " (modified)"
-msgstr "(aldatuta)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Hutsegitea itzulpen memoria eguneratzerakoan: %s"
-
-msgid "Purge deleted translations"
-msgstr "Purgatu ezabatutako itzulpenak"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Luzaroan erabili ez diren itzulpen guztiak kentzea nahi duzu?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Purgarekin jarraitzen baduzu, ezabaturik bezala markaturiko itzulpen guztiak "
-"betiko kenduko dira. Berriro itzuli beharko dituzu etorkizunean atzera "
-"gehitzen badira."
-
-msgid "Keep"
-msgstr "Mantendu"
-
-msgid "Purge"
-msgstr "Purgatu"
-
-msgid "Copy from source text"
-msgstr "Kopiatu jatorrizko testutik"
-
-msgid "Copy from Source Text"
-msgstr "Kopiatu jatorrizko testutik"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Garbitu itzulpena"
-
-msgid "Clear Translation"
-msgstr "Garbitu itzulpena"
-
-msgid "Edit comment"
-msgstr "Editatu iruzkina"
-
-msgid "Edit Comment"
-msgstr "Editatu iruzkina"
-
-msgid "References:"
-msgstr "Erreferentziak:"
-
-msgid "&Bookmarks"
-msgstr "&Laster-markak"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Ezarri %i laster-marka"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Joan %i laster-markara"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Ezarri %i laster-marka"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Joan %i laster-markara"
-
-msgid "Hide Sidebar"
-msgstr "Ezkutatu alboko barra"
-
-msgid "Show Sidebar"
-msgstr "Erakutsi alboko barra"
-
-msgid "Hide Status Bar"
-msgstr "Ezkutatu egoera-barra"
-
-msgid "Show Status Bar"
-msgstr "Erakutsi egoera-barra"
-
-msgid "Source text:"
-msgstr "Jatorrizko testua:"
-
-msgid "Singular:"
-msgstr "Singularra:"
-
-msgid "Plural:"
-msgstr "Plurala:"
-
-msgid "Translation:"
-msgstr "Itzulpena:"
-
-msgid "Pre-translated"
-msgstr "Aurre-itzulita"
-
-msgid "Needs Work"
-msgstr "Lana behar du"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Lana behar du"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT fitxategiak txantiloiak besterik ez dira eta ez dute inolako itzulpenik "
-"berez.\n"
-"Itzulpena egiteko, sortu PO fitxategi berri bat txantiloian oinarrituz."
-
-msgid "Create New Translation"
-msgstr "Sortu itzulpen berria"
-
-msgid "Create new translation"
-msgstr "Sortu itzulpen berria"
-
-msgid "Everything"
-msgstr "Dena"
-
-#, c-format
-msgid "Form %i"
-msgstr "%i forma"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "%i forma (ez da erabiltzen)"
-
-msgid "Singular"
-msgstr "Singularra"
-
-msgid "Zero"
-msgstr "Zero"
-
-msgid "One"
-msgstr "Bat"
-
-msgid "Two"
-msgstr "Bi"
-
-msgid "Plural"
-msgstr "Plurala"
-
-msgid "Other"
-msgstr "Beste bat"
-
-#, c-format
-msgid "%s Format"
-msgstr "%s Formatua"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "%s formatua"
-
-msgid "Source text"
-msgstr "Jatorrizko testua"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Itzulpena — %s"
-
-msgid "ID"
-msgstr "IDa"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Jatorrizko testua — %s"
-
-msgid "unknown language"
-msgstr "hizkuntza ezezaguna"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Komando hutsegitea: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Huts egin du gettext katalogoak batzerakoan."
-
-msgid "Source file"
-msgstr "Iturburu-fitxategia"
-
-msgid "Source file occurrence:"
-msgstr "Iturburu-fitxategiko gertaera:"
-
-msgid "Open in Editor"
-msgstr "Ireki editorean"
-
-msgid "Open in editor"
-msgstr "Ireki editorean"
-
-msgid "No references for the selected item."
-msgstr "Ez da erreferentziarik aurkitu hautatutako elementuarentzat."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Errorea %s fitxategia irekitzean!"
-
-msgid "Find"
-msgstr "Bilatu"
-
-msgid "Replace"
-msgstr "Ordeztu"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Aukerak"
-
-msgid "Ignore case"
-msgstr "Ezikusi maiuskulak/minuskulak"
-
-msgid "Wrap around"
-msgstr "Itzulbiratu"
-
-msgid "Whole words only"
-msgstr "Hitz osoak bakarrik"
-
-msgid "Find in source texts"
-msgstr "Bilatu jatorrizko testuetan"
-
-msgid "Find in translations"
-msgstr "Bilatu itzulpenetan"
-
-msgid "Find in comments"
-msgstr "Bilatu iruzkinetan"
-
-msgid "Close"
-msgstr "Itxi"
-
-msgid "Replace &All"
-msgstr "Ordeztu &denak"
-
-msgid "Replace &all"
-msgstr "Ordeztu &denak"
-
-msgid "&Replace"
-msgstr "&Ordeztu"
-
-msgid "< &Previous"
-msgstr "< &Aurrekoa"
-
-msgid "&Next >"
-msgstr "&Hurrengoa >"
-
-msgid "String to find"
-msgstr "Bilatzeko katea"
-
-msgid "Replacement string"
-msgstr "Ordezpen-katea"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Ezin da programa abiarazi: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Hizkuntza kodea edo izena (adib. en_GB)"
-
-msgid "Translation Language"
-msgstr "Itzulpen hizkuntza"
-
-msgid "Language of the translation:"
-msgstr "Itzulpenaren hizkuntza:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Katalogoen kudeatzailea"
-
-msgid "Catalog"
-msgstr "Katalogoa"
-
-msgid "Total"
-msgstr "Guztira"
-
-msgid "Untrans"
-msgstr "Itzuli gabe"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Lana behar du"
-
-msgid "Errors"
-msgstr "Erroreak"
-
-msgid "Last modified"
-msgstr "Azken aldaketa"
-
-msgid "Select directory"
-msgstr "Hautatu direktorioa"
-
-msgid "Directories:"
-msgstr "Direktorioak:"
-
-msgid "<unnamed>"
-msgstr "<izengabea>"
-
-msgid "Do you want to delete the project?"
-msgstr "Proiektu hau ezabatu nahi duzu?"
-
-msgid "Confirmation"
-msgstr "Berrespena"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Ziur proiektu honetako\n"
-"katalogo guztiak eguneratu nahi dituzula?"
 
 msgid "Information about the translator"
 msgstr "Itzultzaileari buruzko informazioa"
@@ -1034,8 +1079,8 @@ msgstr "Zure izena"
 msgid "Email:"
 msgstr "E-maila:"
 
-msgid "your_email@example.com"
-msgstr "zure-posta-helbidea@adibidea.com"
+msgid "you@example.com"
+msgstr ""
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1050,8 +1095,8 @@ msgstr "Edizioa"
 msgid "Automatically compile MO file when saving"
 msgstr "Konpilatu MO fitxategia automatikoki gordetzean"
 
-msgid "Show summary after catalog update"
-msgstr "Erakutsi laburpena katalogoa eguneratu ondoren"
+msgid "Show summary after updating files"
+msgstr ""
 
 msgid "Check spelling"
 msgstr "Egiaztatu ortografia"
@@ -1191,9 +1236,6 @@ msgstr ""
 "Itzulpen memoria berrezartzeak atzerabiderik gabe ezabatuko ditu bertan "
 "biltegiratutako itzulpen guztiak. Ezin duzu eragiketa hau desegin."
 
-msgid "Cancel"
-msgstr "Utzi"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1212,9 +1254,6 @@ msgstr "Erauzle pertsonalizatuak:"
 
 msgid "Custom extractors:"
 msgstr "Erauzle pertsonalizatuak:"
-
-msgid "Edit…"
-msgstr "Editatu…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1281,14 +1320,20 @@ msgstr "Mantendu dauden fitxategien formatua"
 msgid "Advanced"
 msgstr "Aurreratua"
 
-msgid "Pre-translating…"
-msgstr "Aurre-itzultzen..."
+msgid "Preparing strings…"
+msgstr ""
+
+msgid "Pre-translating from translation memory…"
+msgstr ""
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Kate %u aurre-itzulita"
 msgstr[1] "%u kate aurre-itzulita"
+
+msgid "Pre-translating…"
+msgstr "Aurre-itzultzen..."
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1358,23 +1403,14 @@ msgstr ""
 "eskuz itzulitako fitxategietatik ikasi ahala eraginkorragoa da Poedit "
 "Itzulpen erdi-automatikoentzat."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
+msgid "Cancelling…"
 msgstr ""
-"<big>Arrastatu eta jaregin fitxategiak hona</big>\n"
-"\n"
-"edo erabili + botoia"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
+msgid "Drag Folders or Files Here"
 msgstr ""
-"<big>Arrastatu eta jaregin fitxategiak hona</big>\n"
-"\n"
-"edo erabili + botoia"
+
+msgid "Drag folders or files here"
+msgstr ""
 
 msgid "Add Folders…"
 msgstr "Gehitu karpetak…"
@@ -1393,6 +1429,17 @@ msgstr "Gehitu komodina…"
 
 msgid "Add wildcard…"
 msgstr "Gehitu komodina…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr ""
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr ""
+
+msgid "Show in Folder"
+msgstr ""
 
 msgid "Paths"
 msgstr "Bideak"
@@ -1433,14 +1480,23 @@ msgstr "UTF-8 (gomendatua)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Mesedez gorde fitxategia lehenik. Atal hau ezin ordura arte editatu."
 
+msgid "Plural form translations"
+msgstr ""
+
 msgid "Not all plural forms are translated."
 msgstr "Ez dira forma plural guztiak itzuli."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr "Itzulpena esaldi gisa hasi behar da."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Itzulpena minuskula batez hasi behar da."
+
+msgid "Inconsistent whitespace"
+msgstr ""
 
 msgid "The translation doesn’t start with a space."
 msgstr "Itzulpena ez da zuriune batekin hasten."
@@ -1460,6 +1516,9 @@ msgstr "Itzulpenak zuriune bat falta du amaieran."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Itzulpena zuriune batekin amaitzen da, baina jatorrizko testua ez."
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Itzulpenak “%s”-rekin amaitu behar du."
@@ -1473,38 +1532,23 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 "Itzulpena \"%s\"-rekin amaitzen da, baina jatorrizko testua \"%s\"-rekin."
 
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
 msgid "Comment:"
 msgstr "Iruzkina:"
 
-msgid "OK"
-msgstr "Ados"
+msgid "Update"
+msgstr ""
 
-msgid "C&lear"
-msgstr "&Garbitu"
+msgid "&Delete"
+msgstr "E&zabatu"
 
-msgid "Clear the comment"
-msgstr "Garbitu iruzkina"
-
-msgid "New"
-msgstr "Berria"
-
-msgid "Create new translations project"
-msgstr "Sortu itzulpen proiektu berria"
-
-msgid "Edit"
-msgstr "Editatu"
-
-msgid "Edit the project"
-msgstr "Editatu proiektua"
-
-msgid "Delete the project"
-msgstr "Ezabatu proiektua"
-
-msgid "Update all"
-msgstr "Eguneratu denak"
-
-msgid "Update all catalogs in the project"
-msgstr "Eguneratu proiektuko katalogo guztiak"
+msgid "Delete the comment"
+msgstr ""
 
 msgid "Edit project"
 msgstr "Editatu proiektua"
@@ -1517,6 +1561,12 @@ msgstr "Arakatu"
 
 msgid "Add directory to the list"
 msgstr "Gehitu direktorioa zerrendara"
+
+msgid "OK"
+msgstr "Ados"
+
+msgid "&File"
+msgstr "&Fitxategia"
 
 msgid "&New…"
 msgstr "&Berria…"
@@ -1533,11 +1583,26 @@ msgstr "&Ireki…"
 msgid "Open Recent"
 msgstr "Ireki erabili berria"
 
+msgid "Open recent"
+msgstr ""
+
 msgid "Open from Crowdin…"
 msgstr "Ireki Crowdin-etik…"
 
 msgid "Open From Crowdin…"
 msgstr "Ireki Crowdin-etik…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "Katalogoen &kudeatzailea"
+
+msgid "Catalogs &Manager"
+msgstr "Katalogoen &kudeatzailea"
 
 msgid "&Close"
 msgstr "&Itxi"
@@ -1563,12 +1628,6 @@ msgstr "Egiaztatu eguneraketarik dagoen…"
 msgid "&Preferences…"
 msgstr "&Hobespenak…"
 
-msgid "Catalogs &manager"
-msgstr "Katalogoen &kudeatzailea"
-
-msgid "Catalogs &Manager"
-msgstr "Katalogoen &kudeatzailea"
-
 msgid "E&xit"
 msgstr "I&rten"
 
@@ -1593,6 +1652,7 @@ msgstr "Editatu &iruzkina"
 msgid "Edit &Comment"
 msgstr "Editatu &iruzkina"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Iradokizunak"
 
@@ -1668,11 +1728,11 @@ msgstr "Itzuli gabeko &sarrerak lehenik"
 msgid "&Untranslated Entries First"
 msgstr "Itzuli gabeko &sarrerak lehenik"
 
-msgid "&Show references"
-msgstr "Erakut&si erreferentziak"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "Erakut&si erreferentziak"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Erakutsi alboko barra"
@@ -1680,8 +1740,8 @@ msgstr "Erakutsi alboko barra"
 msgid "Show status bar"
 msgstr "Erakutsi egoera-barra"
 
-msgid "C&atalog"
-msgstr "&Katalogoa"
+msgid "&Translation"
+msgstr ""
 
 msgid "&Update from source code"
 msgstr "&Eguneratu iturburuetatik"
@@ -1832,8 +1892,8 @@ msgstr ""
 " jatorrizko karaktere kodeketa ematen bada besterik ez. %c karaktere "
 "kodeketa da."
 
-msgid "Catalog properties"
-msgstr "Katalogoaren propietateak"
+msgid "Translation Properties"
+msgstr "Itzulpenaren propietateak"
 
 msgid "Project name and version:"
 msgstr "Proiektuaren izena eta bertsioa:"
@@ -1861,9 +1921,6 @@ msgstr "Erauzte ezarpen aurreratuak…"
 
 msgid "Advanced extraction settings…"
 msgstr "Erauzte ezarpen aurreratuak…"
-
-msgid "Translation Properties"
-msgstr "Itzulpenaren propietateak"
 
 msgid "Translation properties"
 msgstr "Itzulpenaren propietateak"
@@ -1896,9 +1953,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Erabili lehenetsitako gako-hitzak onartutako hizkuntzetan ere bai"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Ikasi Gettext gako-hitzei buruz"
-
 msgid "Learn about gettext keywords"
 msgstr "Ikasi gettext gako-hitzei buruz"
 
@@ -1906,21 +1960,17 @@ msgid "Update summary"
 msgstr "Eguneratu laburpena"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Kate hauek iturburuetan aurkitu dira, baina ez katalogoan.\n"
-"Poedit-ek orain katalogora gehituko ditu."
 
 msgid "New strings"
 msgstr "Kate berriak"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Kate hauek ez daude jadanik iturburuetan.\n"
-"Poedit-ek orain katalogotik ezabatuko ditu."
 
 msgid "Obsolete strings"
 msgstr "Kate zaharkituak"
@@ -1931,8 +1981,11 @@ msgstr "(0 berri, 0 zaharkitu)"
 msgid "Open"
 msgstr "Ireki"
 
-msgid "Save catalog"
-msgstr "Gorde katalogoa"
+msgid "Open file"
+msgstr ""
+
+msgid "Save file"
+msgstr ""
 
 msgid "Validate"
 msgstr "Balioztatu"
@@ -1956,8 +2009,8 @@ msgid "Show or hide the sidebar"
 msgstr "Erakutsi edo ezkutatu alboko barra"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Aurreko jatorrizko testua:"
+msgid "Previous source text"
+msgstr ""
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1966,8 +2019,11 @@ msgstr ""
 "Orain desegokia den itzulpena dagokion jatorrizko testua (eguneraketan "
 "aldatu aurrekoa)."
 
-msgid "Notes for translators:"
-msgstr "Itzultzaileentzako oharrak:"
+msgid "Notes for translators"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
 
 msgid "Add comment"
 msgstr "Gehitu iruzkina"
@@ -1981,8 +2037,8 @@ msgstr "Itzulpen memoriatik ezabatu"
 msgid "Delete from translation memory"
 msgstr "Itzulpen memoriatik ezabatu"
 
-msgid "Translation suggestions:"
-msgstr "Itzulpen-iradokizunak:"
+msgid "Translation suggestions"
+msgstr ""
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2012,40 +2068,6 @@ msgstr "Itzulpen memoriaren errorea: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Ezin izan da direktorio tenporala sortu."
 
-msgid "Welcome to Poedit"
-msgstr "Ongi etorri Poedit-era"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "%s bertsioa"
-
-msgid "Edit a translation"
-msgstr "Editatu itzulpen bat"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Ireki badagoen PO fitxategi bat eta editatu itzulpena."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Hartu badagoen PO fitxategi bat edo POT txantiloi bat eta sortu itzulpen "
-"berri bat bertatik."
-
-msgid "Collaborate on a translation with others"
-msgstr "Parte hartu itzulpen batean besteekin"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Deskargatu fitxategi bat Crowdin proiektutik, itzuli eta sinkronizatu zure "
-"aldaketak berriro."
-
-msgid "What is Crowdin?"
-msgstr "Zer da Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Ez dago itzulpenik. Hori ezohikoa da."
 
@@ -2065,8 +2087,10 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Ikasi gehiago GNU gettext buruz)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Katalogo hau betetzeko bide arruntena POT batetik eguneratzea da:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr ""
 
 msgid "Update from POT"
 msgstr "Eguneratu POT fitxategitik"
@@ -2083,6 +2107,33 @@ msgstr "&Erauzi iturburuetatik"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Konfiguratu iturburu kodearen erauzketa propietateetan."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "%s bertsioa"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
+msgstr ""
 
 msgid "Sync"
 msgstr "Sinkronizatu"
@@ -2168,8 +2219,8 @@ msgstr "&Ebaki"
 msgid "Cut"
 msgstr "Ebaki"
 
-msgid "&Delete"
-msgstr "E&zabatu"
+msgid "Edit"
+msgstr "Editatu"
 
 msgid "&Quit"
 msgstr "&Irten"
@@ -2179,6 +2230,9 @@ msgstr "Laguntza"
 
 msgid "&New"
 msgstr "&Berria"
+
+msgid "New"
+msgstr "Berria"
 
 msgid "&No"
 msgstr "&Ez"

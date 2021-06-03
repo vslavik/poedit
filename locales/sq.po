@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -30,20 +30,20 @@ msgstr "Mos e shfaq sërish"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Të rinj: %i, të vjetruar: %i)"
 
-msgid "Updating catalog"
-msgstr "Po përditësohet katalogu"
-
 msgid "Collecting source files…"
 msgstr "Po grumbullohen kartela burim…"
 
 msgid "Extracting translatable strings…"
 msgstr "Po përftohen vargje të përkthyeshëm…"
 
-msgid "Failed to load extracted catalog."
-msgstr "S’u arrit të ngarkohej katalogu i përftuar."
+msgid "Failed to load file with extracted translations."
+msgstr "S’u arrit të ngarkohej kartela me përkthimet e përftuara."
 
 msgid "Merging differences…"
 msgstr "Po përzihen dallimet…"
+
+msgid "Updating translations"
+msgstr "Përditësim kartelash përkthimi"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -80,23 +80,21 @@ msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr ""
 "Rreshti %d i kartelës “%s” është i dëmtuar (pa të dhëna %s të vlefshme)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Kartelë katalogu e dëmtuar: vargje mesazhesh në njëjës përdorur bashkë me "
+"Kartelë PO e dëmtuar: vargje mesazhesh në njëjës përdorur bashkë me "
 "msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Kartelë katalogu e dëmtuar: vargje mesazhesh në shumës përdorur pa "
-"msgid_plural"
+"Kartelë PO e dëmtuar: vargje mesazhesh në shumës përdorur pa msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Pati gabime gjatë ngarkimit të katalogut. Për pasojë, disa nga të dhënat "
-"mund të kenë humbur ose të jenë dëmtuar."
+"Pati gabime gjatë ngarkimit të kartelës. Për pasojë, disa nga të dhënat mund "
+"të kenë humbur ose të jenë dëmtuar."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -121,18 +119,18 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalogu s’u ruajt dot nën shkronjat “%s” e treguara në rregullime "
-"katalogu.\n"
+"Kartela s’u ruajt dot nën shkronjat “%s” e treguara në rregullime "
+"përkthimi.\n"
 "\n"
 "U ruajt nën UTF-8 dhe rregullimi u ndryshua për përputhje."
 
-msgid "Error saving catalog"
-msgstr "Gabim në ruajtje katalogu"
+msgid "Error saving file"
+msgstr "Gabim në ruajtje kartele"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -174,6 +172,9 @@ msgstr "Njëkohësimi me %s dështoi."
 msgid "Syncing error"
 msgstr "Gabim njëkohësimi"
 
+msgid "Add"
+msgstr "Shtoje"
+
 msgid "JSON request error"
 msgstr "Gabim kërkese JSON"
 
@@ -208,9 +209,6 @@ msgstr "Po pritet për mirëfilltësim…"
 
 msgid "Updating user information…"
 msgstr "Po përditësohen të dhëna mbi përdoruesin…"
-
-msgid "Learn More About Crowdin"
-msgstr "Mësoni Më Tepër Mbi Crowdin-in"
 
 msgid "Learn more about Crowdin"
 msgstr "Mësoni më tepër mbi Crowdin-in"
@@ -254,9 +252,6 @@ msgstr "&Kopjoje"
 msgid "Learn more"
 msgstr "Mësoni më tepër"
 
-msgid "Learn More"
-msgstr "Mësoni Më Tepër"
-
 msgid "&Help"
 msgstr "&Ndihmë"
 
@@ -289,15 +284,698 @@ msgstr "S’u arrit të komunikohej me procesin Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Ndodhi një përjashtim i patrajtuar: %s"
 
-msgid "Open catalog"
-msgstr "Hap katalog"
+msgid "Select translation template"
+msgstr "Përzgjidhni gjedhe përkthimi"
+
+msgid "Select translation file"
+msgstr "Përzgjidhni kartelë përkthimi"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit është një përpunues përkthimesh i lehtë për t’u përdorur."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Përkthimi në trajtë PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"Kartela mund të jetë ose e dëmtuar, ose në një format të panjohur nga Poedit."
+
+msgid "The file cannot be opened."
+msgstr "Kartela s’hapet dot."
+
+msgid "Invalid file"
+msgstr "Kartelë e pavlefshme"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "S’mund të jepni më tepër se një kartelë te dritarja Poedit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Kartela “%s” s’është kartelë përkthimesh."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Kartela “%s” s’ekziston."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit është një përpunues përkthimesh i lehtë për t’u përdorur."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Lëvizje"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Kontrolli i drejtshkrimit është i çaktivizuar, ngaqë fjalori për %s s’është "
+"i instaluar."
+
+msgid "Install"
+msgstr "Instaloje"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Kartela “%s” është ndryshuar nga një tjetër aplikacion."
+
+msgid "Reload file"
+msgstr "Ringarkoje kartelën"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Doni të ringarkohet kartela prej disku? Nëse e bëni, përpunimet tuaja të "
+"paruajtura në Poedit do të humbin."
+
+msgid "Ignore"
+msgstr "Shpërfille"
+
+msgid "Reload File"
+msgstr "Ringarkoje Kartelën"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Kartela është ndryshuar. Doni të ruhen ndryshimet?"
+
+msgid "Save changes"
+msgstr "Ruaji ndryshimet"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Ndryshimet tuaja do të humbasin, nëse s’i ruani."
+
+msgid "Save"
+msgstr "Ruaje"
+
+msgid "Do&n’t save"
+msgstr "&Mos e ruaj"
+
+msgid "Don’t Save"
+msgstr "Mos e Ruaj"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "Ndryshimet e bëra nga aplikacioni tjetër do të humbin, nëse e ruani."
+
+msgid "Cancel"
+msgstr "Anuloje"
+
+msgid "Save Anyway"
+msgstr "Ruaje, Sido Qoftë"
+
+msgid "Save anyway"
+msgstr "Ruaje, sido qoftë"
+
+msgid "Save as…"
+msgstr "Ruajeni si…"
+
+msgid "Compile to…"
+msgstr "Përpiloje te…"
+
+msgid "Compiled Translation Files"
+msgstr "Kartela Përkthimi të Përpiluara"
+
+msgid "Export as…"
+msgstr "Eksportojeni si…"
+
+msgid "HTML Files"
+msgstr "Kartela HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "Te: %s"
+
+msgid "Source code not available."
+msgstr "Pa kod burim të gatshëm."
+
+msgid "Updating failed"
+msgstr "Përditësimi dështoi"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"S’u përditësuan dot përkthimet që prej kodit burim, ngaqë s’u gjet kod në "
+"vendin e treguar te Vetitë e kartelës."
+
+msgid "Permission denied."
+msgstr "Leje e mohuar."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"S’keni leje të lexoni kartela burim prej vendndodhjes së treguar te Vetitë e "
+"kartelës."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Nëse ju është mohuar më herët hyrje te kartelat tuaja, mund ta lejoni që nga "
+"Parapëlqime Sistemi > Siguri & Privatësi > Privatësi > Kartela & Dosje."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Ka mundësi të ketë zëra të pasaktë përkthimi te kartela."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr "Përditësimi i katalogut dështoi. Për hollësi, klikoni te 'Hollësi >>'."
+
+msgid "Open translation template"
+msgstr "Hapni gjedhe përkthimi"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "U gjet %d problem te përkthimi."
+msgstr[1] "U gjetën %d probleme te përkthimi."
+
+msgid "Validation results"
+msgstr "Përfundime vleftësimi"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Zërat me gabime janë shënuar me të kuqe te lista. Hollësitë e gabimit do të "
+"shfaqen pasi të keni përzgjedhur një zë të tillë."
+
+msgid "The file was saved safely."
+msgstr "Kartela u ruajt pa cen."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Kartela u ruajt pa cen dhe u përpilua nën formatin MO, por sipas gjasash "
+"s’do të funksionojë si duhet."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Kartela u ruajt pa cen, por s’përpilohet dot në formatin MO dhe të përdoret."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Kartela u përpilua nën formatin MO, por sipas gjasash s’do të funksionojë si "
+"duhet."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Kartela s’përpilohet dot në formatin MO dhe të përdoret."
+
+msgid "No problems with the translation found."
+msgstr "S’u gjetën probleme me përkthimin."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Përkthimi është gati për përdorim, por %d zë është ende i papërkthyer."
+msgstr[1] ""
+"Përkthimi është gati për përdorim, por %d zëra janë ende të papërkthyer."
+
+msgid "The translation is ready for use."
+msgstr "Përkthimi është gati për përdorim."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit-i ndreqi vetvetiu lëndë të pavlefshme te kartela “%s”."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Kartela përmbante zëra të përsëdytur, çka në kartelat PO s’lejohet dhe mund "
+"të pengojë përdorimin e kartelës. Poedit e ndreqi problemin, por do të duhej "
+"që të shqyrtonit përkthimet e cilitdo zë të shënuar si i turbullt dhe t’i "
+"ndreqni ato, në qoftë e nevojshme."
+
+msgid "Language of the translation isn’t set."
+msgstr "S’është caktuar gjuha e përkthimit."
+
+msgid "Set Language"
+msgstr "Caktoni Gjuhën"
+
+msgid "Set language"
+msgstr "Caktoni gjuhën"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"S’jepen sugjerime, në rast se gjuha e përkthimi s’është caktuar saktë. Kjo "
+"mund të prekë edhe veçori të tjera, format e shumësit, për shembull."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Gjuha e përkthimit është e njëjtë me gjuhën burim."
+
+msgid "Fix Language"
+msgstr "Ndreqeni Gjuhën"
+
+msgid "Fix language"
+msgstr "Ndreqeni gjuhën"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"Kjo kartelë ka zëra me forma shumësi, por s’ka të formësuar fushën Plural-"
+"Forms."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Zërat në këtë kartelë kanë forma shumësi të ndryshme nga çka tregohet te "
+"fusha Plural-Forms e katalogut"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "I mungon krye e domosdoshme Plural-Forms."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Gabim sintakse te kryet Plural-Forms (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Ndreqni Kryet"
+
+msgid "Fix the header"
+msgstr "Ndreqni kryet"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+"Shprehja për forma shumësi e përdorur nga kartela është e pazakontë për %s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Shqyrtojeni"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Gabim gjatë ngarkimit të kartelës së përkthimit “%s”."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Të përkthyera: %d nga %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Të mbetura: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d gabim"
+msgstr[1] "%d gabime"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d zë"
+msgstr[1] "%d zëra"
+
+msgid " (unsaved)"
+msgstr " (i paruajtur)"
+
+msgid " (modified)"
+msgstr " (i ndryshuar)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "S’u arrit të përditësohej kujtesë përkthimesh: %s"
+
+msgid "Purge deleted translations"
+msgstr "Spastroji përkthimet e fshira"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Doni të hiqen krejt përkthimet që s’përdoren më?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Nëse vazhdoni me spastrimin, krejt përkthimet e shënuara si të fshira do të "
+"hiqen përgjithmonë. Do t’ju duhet t’i ripërktheni, nëse shtohen sërish në të "
+"ardhmen."
+
+msgid "Keep"
+msgstr "Mbaji"
+
+msgid "Purge"
+msgstr "Spastroji"
+
+msgid "Copy from source text"
+msgstr "Kopjoje prej teksti burim"
+
+msgid "Copy from Source Text"
+msgstr "Kopjoje prej Teksti Burim"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Spastroje përkthimin"
+
+msgid "Clear Translation"
+msgstr "Spastroje Përkthimin"
+
+msgid "Edit comment"
+msgstr "Përpunoni koment"
+
+msgid "Edit Comment"
+msgstr "Përpunoni Komentin"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Hasje Në Kod"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Hasje në kod"
+
+msgid "&Bookmarks"
+msgstr "&Faqerojtës"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Caktoni faqerojtës %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Shko te faqerojtësi %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Caktoni Faqerojtës %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Shko te Faqerojtësi %i"
+
+msgid "Hide Sidebar"
+msgstr "Fshihe Anështyllën"
+
+msgid "Show Sidebar"
+msgstr "Shfaqe Anështyllën"
+
+msgid "Hide Status Bar"
+msgstr "Fshihe Shtyllën e Gjendjeve"
+
+msgid "Show Status Bar"
+msgstr "Shfaqe Shtyllën e Gjendjeve"
+
+msgid "String length in characters: translation | source"
+msgstr "Gjatësi vargu në shenja: përkthim | burim"
+
+msgid "String length in characters"
+msgstr "Gjatësi vargu në shenja"
+
+msgid "Source text"
+msgstr "Teksti burim"
+
+msgid "Singular"
+msgstr "Njëjës"
+
+msgid "Plural"
+msgstr "Shumës"
+
+msgid "Translation"
+msgstr "Përkthim"
+
+msgid "Pre-translated"
+msgstr "Përkthyer paraprakisht"
+
+msgid "Needs Work"
+msgstr "Lyp Punë"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Lyp punë"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Kartelat POT janë thjesht gjedhe dhe s’përmbajnë ndonjë përkthim.\n"
+"Që të bëni një përkthim, krijoni një kartelë të re PO të bazuar te gjedhja."
+
+msgid "Create new translation"
+msgstr "Krijoni përkthim të ri"
+
+msgid "Make a new translation from this POT file."
+msgstr "Krijoni një përkthim të ri nga kjo kartelë POT."
+
+msgid "Everything"
+msgstr "Gjithçka"
+
+#, c-format
+msgid "Form %i"
+msgstr "Forma %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Formular %i (i papërdorur)"
+
+msgid "Zero"
+msgstr "Zero"
+
+msgid "One"
+msgstr "Një"
+
+msgid "Two"
+msgstr "Dy"
+
+msgid "Other"
+msgstr "Tjetër"
+
+#, c-format
+msgid "%s Format"
+msgstr "Format %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Format %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Përkthim — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Teksti burim — %s"
+
+msgid "unknown language"
+msgstr "gjuhë e panjohur"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Urdhri që dështoi: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "S’u arrit të përziheshin katalogë gettext."
+
+msgid "Open in Editor"
+msgstr "Hape në Përpunues"
+
+msgid "Open in editor"
+msgstr "Hape në përpunues"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"Te kartela s’është dhënë informacion mbi hasjet e këtij vargu te kodi burim."
+
+msgid "No usage information"
+msgstr "S’ka të dhëna përdorimi"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d hasje në kod"
+msgstr[1] "%d hasje në kod\t"
+
+msgid "Source code not found"
+msgstr "S’u gjet kod burim"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit-i s’mund të shfaqë kod burim ku është përdorur vargu, ngaqë kartela "
+"ose s’gjendet në vendin e treguar, ose është një lidhje simbolike që nuk "
+"shpie te një kartelë reale."
+
+msgid "File cannot be opened"
+msgstr "Kartela s’hapet dot"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit-i s’qe në gjendje të hapë kartelën “%s”."
+
+msgid "Find"
+msgstr "Gjej"
+
+msgid "Replace"
+msgstr "Zëvendësoje"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Mundësi"
+
+msgid "Ignore case"
+msgstr "Shpërfille shkrimin me të madhe/me të vogël"
+
+msgid "Wrap around"
+msgstr "Mbështille"
+
+msgid "Whole words only"
+msgstr "Vetëm fjalë të plota"
+
+msgid "Find in source texts"
+msgstr "Gjej në tekste burim"
+
+msgid "Find in translations"
+msgstr "Gjej në përkthime"
+
+msgid "Find in comments"
+msgstr "Gjej në komente"
+
+msgid "Close"
+msgstr "Mbylle"
+
+msgid "Replace &All"
+msgstr "Zëvendësoji &Krejt"
+
+msgid "Replace &all"
+msgstr "Zëvendësoji &krejt"
+
+msgid "&Replace"
+msgstr "&Zëvendësoje"
+
+msgid "< &Previous"
+msgstr "< I &mëparshmi"
+
+msgid "&Next >"
+msgstr "&Pasuesi >"
+
+msgid "String to find"
+msgstr "Varg për t’u gjetur"
+
+msgid "Replacement string"
+msgstr "Varg zëvendësimi"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "S’përmbushet dot programi: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Kod ose Emër Gjuhe (p.sh. sq)"
+
+msgid "Translation Language"
+msgstr "Gjuhë Përkthimi"
+
+msgid "Language of the translation:"
+msgstr "Gjuha e përkthimit:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Përgjegjës katalogësh"
+
+msgid "Edit…"
+msgstr "Përpunoni…"
+
+msgid "Create new translations project"
+msgstr "Krijoni projekt të ri përkthimi"
+
+msgid "Delete the project"
+msgstr "Fshije projektin"
+
+msgid "Edit the project"
+msgstr "Përpunoni projektin"
+
+msgid "Update all"
+msgstr "Përditësoji krejt"
+
+msgid "Update all catalogs in the project"
+msgstr "Përditëso tërë katalogët në projekt"
+
+msgid "Total"
+msgstr "Gjithsej"
+
+msgid "Untrans"
+msgstr "Papërkth"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Lyp Punë"
+
+msgid "Errors"
+msgstr "Gabime"
+
+msgid "Last modified"
+msgstr "Ndryshuar së fundi"
+
+msgid "Select directory"
+msgstr "Përzgjidhni drejtori"
+
+msgid "Directories:"
+msgstr "Drejtori:"
+
+msgid "<unnamed>"
+msgstr "<pa emër>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Doni të fshihet projekti “%s”?"
+
+msgid "Delete project"
+msgstr "Fshije projektin"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Fshirja e projektit s’do të fshijë ndonjë kartelë përkthimi."
+
+msgid "Confirmation"
+msgstr "Ripohim"
+
+msgid "Update all catalogs in this project?"
+msgstr "Të përditësohen krejt katalogët në këtë projekt?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Kryen përditësim që nga kodi burim mbi krejt kartelat te projekti."
 
 msgid "Catalogs Manager"
 msgstr "Përgjegjës Katalogësh"
@@ -383,6 +1061,15 @@ msgstr "Ndalni të Folurën"
 msgid "&View"
 msgstr "&Parje"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Shfaq Panelin"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Përshtateni Panelin…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Kaloni Në Gjendjen Sa Krejt Ekrani"
 
@@ -395,629 +1082,11 @@ msgstr "Minimizoje"
 msgid "Zoom"
 msgstr "Zoom"
 
+msgid "Welcome to Poedit"
+msgstr "Mirë se vini te Poedit"
+
 msgid "Bring All to Front"
 msgstr "Sill Gjithçka Përpara"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Përkthimi në trajtë PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Kartela mund të jetë ose e dëmtuar, ose në një format të panjohur nga Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Kartela s’hapet dot."
-
-msgid "Invalid file"
-msgstr "Kartelë e pavlefshme"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "S’mund të jepni më tepër se një kartelë te dritarja Poedit."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Kartela “%s” s’është kartelë përkthimesh."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Kartelë"
-
-msgid "&Go"
-msgstr "&Lëvizje"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Kontrolli i drejtshkrimit është i çaktivizuar, ngaqë fjalori për %s s’është "
-"i instaluar."
-
-msgid "Install"
-msgstr "Instaloje"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalogu u ndryshua. Doni të ruhen ndryshimet?"
-
-msgid "Save changes"
-msgstr "Ruaji ndryshimet"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Ndryshimet tuaja do të humbasin, nëse s’i ruani."
-
-msgid "Save"
-msgstr "Ruaje"
-
-msgid "Do&n’t save"
-msgstr "&Mos e ruaj"
-
-msgid "Don’t Save"
-msgstr "Mos e Ruaj"
-
-msgid "Save as…"
-msgstr "Ruajeni si…"
-
-msgid "Compile to…"
-msgstr "Përpiloje te…"
-
-msgid "Compiled Translation Files"
-msgstr "Kartela Përkthimi të Përpiluara"
-
-msgid "Export as…"
-msgstr "Eksportojeni si…"
-
-msgid "HTML Files"
-msgstr "Kartela HTML"
-
-msgid "Open catalog template"
-msgstr "Hap gjedhe katalogu"
-
-msgid "Source code not available."
-msgstr "Pa kod burim të gatshëm."
-
-msgid "Updating failed"
-msgstr "Përditësimi dështoi"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"S’u përditësuan dot përkthimet që prej kodit burim, ngaqë s’u gjet kod në "
-"vendin e treguar te Vetitë e katalogut."
-
-msgid "Permission denied."
-msgstr "Leje e mohuar."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"S’keni leje të lexoni kartela kodi burim prej vendit të dhënë te Vetitë e "
-"katalogut."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Nëse ju është mohuar më herët hyrje te kartelat tuaja, mund ta lejoni që nga "
-"Parapëlqime Sistemi > Siguri & Privatësi > Privatësi > Kartela & Dosje."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Ka mundësi të ketë zëra të pasaktë në katalog."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Përditësimi i katalogut dështoi. Për hollësi, klikoni te 'Hollësi >>'."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "U gjet %d problem te përkthimi."
-msgstr[1] "U gjetën %d probleme te përkthimi."
-
-msgid "Validation results"
-msgstr "Përfundime vleftësimi"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Zërat me gabime janë shënuar me të kuqe te lista. Hollësitë e gabimit do të "
-"shfaqen pasi të keni përzgjedhur një zë të tillë."
-
-msgid "The file was saved safely."
-msgstr "Kartela u ruajt pa cen."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Kartela u ruajt pa cen dhe u përpilua nën formatin MO, por sipas gjasash "
-"s’do të funksionojë si duhet."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Kartela u ruajt pa cen, por s’përpilohet dot në formatin MO dhe të përdoret."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Kartela u përpilua nën formatin MO, por sipas gjasash s’do të funksionojë si "
-"duhet."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Kartela s’përpilohet dot në formatin MO dhe të përdoret."
-
-msgid "No problems with the translation found."
-msgstr "S’u gjetën probleme me përkthimin."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Përkthimi është gati për përdorim, por %d zë është ende i papërkthyer."
-msgstr[1] ""
-"Përkthimi është gati për përdorim, por %d zëra janë ende të papërkthyer."
-
-msgid "The translation is ready for use."
-msgstr "Përkthimi është gati për përdorim."
-
-msgid "Warnings have been disabled."
-msgstr "Sinjalizimet janë çaktivizuar."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Nëse i keni çaktivizuar sinjalizimet për shkak teprie mesazhesh të rreme "
-"gabimi, ju lutemi, shihni mundësinë e dërgimit të një kartele shembull te "
-"help@poedit.net për të ndihmuar në përmirësimin e tyre."
-
-msgid "Send Feedback"
-msgstr "Dërgoni Mendime"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Dërgoni mendime"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit-i ndreqi vetvetiu lëndë të pavlefshme te kartela “%s”."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Kartela përmbante zëra të përsëdytur, çka në kartelat PO s’lejohet dhe mund "
-"të pengojë përdorimin e kartelës. Poedit e ndreqi problemin, por do të duhej "
-"që të shqyrtonit përkthimet e cilitdo zë të shënuar si i turbullt dhe t’i "
-"ndreqni ato, në qoftë e nevojshme."
-
-msgid "Language of the translation isn’t set."
-msgstr "S’është caktuar gjuha e përkthimit."
-
-msgid "Set Language"
-msgstr "Caktoni Gjuhën"
-
-msgid "Set language"
-msgstr "Caktoni gjuhën"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"S’jepen sugjerime, në rast se gjuha e përkthimi s’është caktuar saktë. Kjo "
-"mund të prekë edhe veçori të tjera, format e shumësit, për shembull."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Gjuha e përkthimit është e njëjtë me gjuhën burim."
-
-msgid "Fix Language"
-msgstr "Ndreqeni Gjuhën"
-
-msgid "Fix language"
-msgstr "Ndreqeni gjuhën"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Ky katalog ka zëra me forma shumësi, por s’ka të formësuar fushën Plural-"
-"Forms."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Zërat në këtë katalog kanë forma shumësi të ndryshme nga çka tregohet te "
-"fusha Plural-Forms e katalogut"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "I mungon krye e domosdoshme Plural-Forms."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Gabim sintakse te kryet Plural-Forms (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Ndreqni Kryet"
-
-msgid "Fix the header"
-msgstr "Ndreqni kryet"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
-"Shprehja për forma shumësi e përdorur nga katalogu është e pazakontë për %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Shqyrtojeni"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Gabim në ngarkimin e kartelës katalog mesazhesh “%s”."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Të përkthyera: %d nga %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Të mbetura: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d gabim"
-msgstr[1] "%d gabime"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d zë"
-msgstr[1] "%d zëra"
-
-msgid " (unsaved)"
-msgstr " (i paruajtur)"
-
-msgid " (modified)"
-msgstr " (i ndryshuar)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "S’u arrit të përditësohej kujtesë përkthimesh: %s"
-
-msgid "Purge deleted translations"
-msgstr "Spastroji përkthimet e fshira"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Doni të hiqen krejt përkthimet që s’përdoren më?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Nëse vazhdoni me spastrimin, krejt përkthimet e shënuara si të fshira do të "
-"hiqen përgjithmonë. Do t’ju duhet t’i ripërktheni, nëse shtohen sërish në të "
-"ardhmen."
-
-msgid "Keep"
-msgstr "Mbaji"
-
-msgid "Purge"
-msgstr "Spastroji"
-
-msgid "Copy from source text"
-msgstr "Kopjoje prej teksti burim"
-
-msgid "Copy from Source Text"
-msgstr "Kopjoje prej Teksti Burim"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Spastroje përkthimin"
-
-msgid "Clear Translation"
-msgstr "Spastroje Përkthimin"
-
-msgid "Edit comment"
-msgstr "Përpunoni koment"
-
-msgid "Edit Comment"
-msgstr "Përpunoni Komentin"
-
-msgid "References:"
-msgstr "Referenca:"
-
-msgid "&Bookmarks"
-msgstr "&Faqerojtës"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Caktoni faqerojtës %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Shko te faqerojtësi %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Caktoni Faqerojtës %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Shko te Faqerojtësi %i"
-
-msgid "Hide Sidebar"
-msgstr "Fshihe Anështyllën"
-
-msgid "Show Sidebar"
-msgstr "Shfaqe Anështyllën"
-
-msgid "Hide Status Bar"
-msgstr "Fshihe Shtyllën e Gjendjeve"
-
-msgid "Show Status Bar"
-msgstr "Shfaqe Shtyllën e Gjendjeve"
-
-msgid "Source text:"
-msgstr "Teksti burim:"
-
-msgid "Singular:"
-msgstr "Njëjës:"
-
-msgid "Plural:"
-msgstr "Shumës:"
-
-msgid "Translation:"
-msgstr "Përkthim:"
-
-msgid "Pre-translated"
-msgstr "Përkthyer paraprakisht"
-
-msgid "Needs Work"
-msgstr "Lyp Punë"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Lyp punë"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Kartelat POT janë thjesht gjedhe dhe s’përmbajnë ndonjë përkthim.\n"
-"Që të bëni një përkthim, krijoni një kartelë të re PO të bazuar te gjedhja."
-
-msgid "Create New Translation"
-msgstr "Krijoni Përkthim të Ri"
-
-msgid "Create new translation"
-msgstr "Krijoni përkthim të ri"
-
-msgid "Everything"
-msgstr "Gjithçka"
-
-#, c-format
-msgid "Form %i"
-msgstr "Forma %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Formular %i (i papërdorur)"
-
-msgid "Singular"
-msgstr "Njëjës"
-
-msgid "Zero"
-msgstr "Zero"
-
-msgid "One"
-msgstr "Një"
-
-msgid "Two"
-msgstr "Dy"
-
-msgid "Plural"
-msgstr "Shumës"
-
-msgid "Other"
-msgstr "Tjetër"
-
-#, c-format
-msgid "%s Format"
-msgstr "Format %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "Format %s"
-
-msgid "Source text"
-msgstr "Teksti burim"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Përkthim — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Teksti burim — %s"
-
-msgid "unknown language"
-msgstr "gjuhë e panjohur"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Urdhri që dështoi: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "S’u arrit të përziheshin katalogë gettext."
-
-msgid "Source file"
-msgstr "Kartelë burim"
-
-msgid "Source file occurrence:"
-msgstr "Hasje në kartelë burim:"
-
-msgid "Open in Editor"
-msgstr "Hape në Përpunues"
-
-msgid "Open in editor"
-msgstr "Hape në përpunues"
-
-msgid "No references for the selected item."
-msgstr "Pa referenca për objektin e përzgjedhur."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Gabim gjatë hapjes së kartelës %s!"
-
-msgid "Find"
-msgstr "Gjej"
-
-msgid "Replace"
-msgstr "Zëvendësoje"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Mundësi"
-
-msgid "Ignore case"
-msgstr "Shpërfille shkrimin me të madhe/me të vogël"
-
-msgid "Wrap around"
-msgstr "Mbështille"
-
-msgid "Whole words only"
-msgstr "Vetëm fjalë të plota"
-
-msgid "Find in source texts"
-msgstr "Gjej në tekste burim"
-
-msgid "Find in translations"
-msgstr "Gjej në përkthime"
-
-msgid "Find in comments"
-msgstr "Gjej në komente"
-
-msgid "Close"
-msgstr "Mbylle"
-
-msgid "Replace &All"
-msgstr "Zëvendësoji &Krejt"
-
-msgid "Replace &all"
-msgstr "Zëvendësoji &krejt"
-
-msgid "&Replace"
-msgstr "&Zëvendësoje"
-
-msgid "< &Previous"
-msgstr "< I &mëparshmi"
-
-msgid "&Next >"
-msgstr "&Pasuesi >"
-
-msgid "String to find"
-msgstr "Varg për t’u gjetur"
-
-msgid "Replacement string"
-msgstr "Varg zëvendësimi"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "S’përmbushet dot programi: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kod ose Emër Gjuhe (p.sh. sq)"
-
-msgid "Translation Language"
-msgstr "Gjuhë Përkthimi"
-
-msgid "Language of the translation:"
-msgstr "Gjuha e përkthimit:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Përgjegjës katalogësh"
-
-msgid "Catalog"
-msgstr "Katalog"
-
-msgid "Total"
-msgstr "Gjithsej"
-
-msgid "Untrans"
-msgstr "Papërkth"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Lyp Punë"
-
-msgid "Errors"
-msgstr "Gabime"
-
-msgid "Last modified"
-msgstr "Ndryshuar së fundi"
-
-msgid "Select directory"
-msgstr "Përzgjidhni drejtori"
-
-msgid "Directories:"
-msgstr "Drejtori:"
-
-msgid "<unnamed>"
-msgstr "<pa emër>"
-
-msgid "Do you want to delete the project?"
-msgstr "Doni të fshihet projekti?"
-
-msgid "Confirmation"
-msgstr "Ripohim"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Vërtet doni të bëhet përditësim masiv\n"
-"i krejt katalogëve në këtë projekt?"
 
 msgid "Information about the translator"
 msgstr "Të dhëna rreth përkthyesit"
@@ -1031,8 +1100,8 @@ msgstr "Emri Juaj"
 msgid "Email:"
 msgstr "Email:"
 
-msgid "your_email@example.com"
-msgstr "your_email@example.com"
+msgid "you@example.com"
+msgstr "ju@example.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1047,8 +1116,8 @@ msgstr "Përpunim"
 msgid "Automatically compile MO file when saving"
 msgstr "Gjatë daljes, përpilo vetvetiu kartelën MO"
 
-msgid "Show summary after catalog update"
-msgstr "Pas përditësimesh katalogu, shfaq përmbledhjen"
+msgid "Show summary after updating files"
+msgstr "Pas përditësimesh kartelash, shfaq përmbledhje"
 
 msgid "Check spelling"
 msgstr "Kontrolloji drejtshkrimin"
@@ -1191,9 +1260,6 @@ msgstr ""
 "Zerimi i kujtesës së përkthimit do të shkaktojë fshirjen, pa prapakthim, të "
 "krejt përkthimeve të depozituara në të. Këtë veprim s’mund ta zhbëni."
 
-msgid "Cancel"
-msgstr "Anuloje"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1212,9 +1278,6 @@ msgstr "Përftues të Përshtatur:"
 
 msgid "Custom extractors:"
 msgstr "Përftues të përshtatur:"
-
-msgid "Edit…"
-msgstr "Përpunoni…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1282,14 +1345,20 @@ msgstr "Ruaje formatimin e kartelave ekzistuese"
 msgid "Advanced"
 msgstr "Të mëtejshme"
 
-msgid "Pre-translating…"
-msgstr "Parapërkthim…"
+msgid "Preparing strings…"
+msgstr "Po përgatiten vargjet…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Po bëhet përkthim paraprak prej kujtesës së përkthimeve…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u varg i përkthyer paraprakisht"
 msgstr[1] "%u vargje të përkthyer paraprakisht"
+
+msgid "Pre-translating…"
+msgstr "Parapërkthim…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1358,23 +1427,14 @@ msgstr ""
 "vetëm për përkthime gjysmë të vetvetishme, pasi Poedit të grumbullojë "
 "mjaftueshëm lëndë prej kartelave që përktheni dorazi."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Tërhiqni dhe Lini Këtu Dosje</big>\n"
-"\n"
-"ose përdorni butonin +"
+msgid "Cancelling…"
+msgstr "Po anulohet…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Tërhiqni dhe lini këtu dosje</big>\n"
-"\n"
-"ose përdorni butonin +"
+msgid "Drag Folders or Files Here"
+msgstr "Tërhiqni Këtu Dosje ose Kartela"
+
+msgid "Drag folders or files here"
+msgstr "Tërhiqni këtu dosje ose kartela"
 
 msgid "Add Folders…"
 msgstr "Shtoni Dosje…"
@@ -1393,6 +1453,17 @@ msgstr "Shtoni Shenja të Gjithëpushtetshme…"
 
 msgid "Add wildcard…"
 msgstr "Shtoni shenja të gjithëpushtetshme…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Shfaqe në Finder"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Shfaqe në Explorer"
+
+msgid "Show in Folder"
+msgstr "Shfaqe në Dosje"
 
 msgid "Paths"
 msgstr "Shtigje"
@@ -1435,14 +1506,23 @@ msgstr ""
 "Ju lutemi, së pari ruajeni kartelën. Kjo pjesë s’mund të përpunohet para "
 "ruajtjes."
 
+msgid "Plural form translations"
+msgstr "Përkthime formash shumësi"
+
 msgid "Not all plural forms are translated."
 msgstr "S’janë përkthyer krejt format e shumësit."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Shkronja të mëdha/të vogla jo njësoj"
 
 msgid "The translation should start as a sentence."
 msgstr "Përkthimi duhet të fillojë me një togfjalësh."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Përkthimi duhet të fillojë me një shkronjë të vogël."
+
+msgid "Inconsistent whitespace"
+msgstr "Hapësira të zbrazëta jo njësoj"
 
 msgid "The translation doesn’t start with a space."
 msgstr "Përkthimi nuk fillon me një hapësirë."
@@ -1462,6 +1542,9 @@ msgstr "Përkthimit i mungon një hapësirë në fund."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Përkthimi përfundon me një hapësirë, por jo burimi."
 
+msgid "Punctuation checks"
+msgstr "Kontrolle pikësimi"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Përkthimi duhet të mbarojë me një “%s”."
@@ -1474,38 +1557,23 @@ msgstr "Përkthimi s’duhet të mbarojë me një “%s”."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Përkthimi përfundon me “%s”, por teksti burim përfundon me “%s”."
 
+msgid "Clear Menu"
+msgstr "Spastroje Menunë"
+
+msgid "Clear menu"
+msgstr "Spastroje menunë"
+
 msgid "Comment:"
 msgstr "Koment:"
 
-msgid "OK"
-msgstr "OK"
+msgid "Update"
+msgstr "Përditësoje"
 
-msgid "C&lear"
-msgstr "&Spastroje"
+msgid "&Delete"
+msgstr "&Fshije"
 
-msgid "Clear the comment"
-msgstr "Spastroje komentin"
-
-msgid "New"
-msgstr "E re"
-
-msgid "Create new translations project"
-msgstr "Krijoni projekt të ri përkthimi"
-
-msgid "Edit"
-msgstr "Përpunoni"
-
-msgid "Edit the project"
-msgstr "Përpunoni projektin"
-
-msgid "Delete the project"
-msgstr "Fshije projektin"
-
-msgid "Update all"
-msgstr "Përditësoji krejt"
-
-msgid "Update all catalogs in the project"
-msgstr "Përditëso tërë katalogët në projekt"
+msgid "Delete the comment"
+msgstr "Fshije komentin"
 
 msgid "Edit project"
 msgstr "Përpunoni projekt"
@@ -1518,6 +1586,12 @@ msgstr "Shfletoni"
 
 msgid "Add directory to the list"
 msgstr "Shtoni drejtori te lista"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "&File"
+msgstr "&Kartelë"
 
 msgid "&New…"
 msgstr "E &re…"
@@ -1534,11 +1608,26 @@ msgstr "&Hapni…"
 msgid "Open Recent"
 msgstr "Hap Një Nga të Rejat"
 
+msgid "Open recent"
+msgstr "Hap një nga të rejat"
+
 msgid "Open from Crowdin…"
 msgstr "Hapeni prej Crowdin-i…"
 
 msgid "Open From Crowdin…"
 msgstr "Hapeni Prej Crowdin-i…"
+
+msgid "&Start window"
+msgstr "Dritare &nisjeje"
+
+msgid "&Start Window"
+msgstr "Dritare &Nisjeje"
+
+msgid "Catalogs &manager"
+msgstr "&Përgjegjës katalogësh"
+
+msgid "Catalogs &Manager"
+msgstr "&Përgjegjës Katalogësh"
 
 msgid "&Close"
 msgstr "&Mbylle"
@@ -1564,12 +1653,6 @@ msgstr "Kontrollo për përditësime…"
 msgid "&Preferences…"
 msgstr "&Parapëlqime…"
 
-msgid "Catalogs &manager"
-msgstr "&Përgjegjës katalogësh"
-
-msgid "Catalogs &Manager"
-msgstr "&Përgjegjës Katalogësh"
-
 msgid "E&xit"
 msgstr "&Dil"
 
@@ -1594,6 +1677,7 @@ msgstr "Përpunoni &koment"
 msgid "Edit &Comment"
 msgstr "Përpunoni &Komentin"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Sugjerime"
 
@@ -1669,11 +1753,11 @@ msgstr "Së pari zërat e &papërkthyer"
 msgid "&Untranslated Entries First"
 msgstr "Së Pari Zërat e &Papërkthyer"
 
-msgid "&Show references"
-msgstr "&Shfaq referenca"
+msgid "&Show code occurrences"
+msgstr "&Shfaq hasje në kod"
 
-msgid "&Show References"
-msgstr "&Shfaq Referenca"
+msgid "&Show Code Occurrences"
+msgstr "&Shfaq Hasje Në Kod"
 
 msgid "Show sidebar"
 msgstr "Shfaq anështyllë"
@@ -1681,8 +1765,8 @@ msgstr "Shfaq anështyllë"
 msgid "Show status bar"
 msgstr "Shfaq shtyllë gjendjesh"
 
-msgid "C&atalog"
-msgstr "&Katalog"
+msgid "&Translation"
+msgstr "&Përkthim"
 
 msgid "&Update from source code"
 msgstr "&Përditësoje prej kodi burim"
@@ -1832,8 +1916,8 @@ msgstr ""
 "Kjo do t’i bashkëngjitet rreshtit të urdhrave\n"
 "vetëm nëse janë dhënë shkronja kodi burim. %c bëhet emri i shkronjave."
 
-msgid "Catalog properties"
-msgstr "Veti katalogu"
+msgid "Translation Properties"
+msgstr "Veti Përkthimesh"
 
 msgid "Project name and version:"
 msgstr "Emër dhe version projekti:"
@@ -1861,9 +1945,6 @@ msgstr "Rregullime të Thelluara Përftimesh…"
 
 msgid "Advanced extraction settings…"
 msgstr "Rregullime të thelluara përftimesh…"
-
-msgid "Translation Properties"
-msgstr "Veti Përkthimesh"
 
 msgid "Translation properties"
 msgstr "Veti përkthimesh"
@@ -1897,9 +1978,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Veç kësaj, përdor fjalëkyçe parazgjedhje për gjuhët e mbuluara"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Mësoni Rreth Fjalëkyçesh Gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Mësoni rreth fjalëkyçesh gettext"
 
@@ -1907,21 +1985,21 @@ msgid "Update summary"
 msgstr "Përditëso përmbledhjen"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Këto vargje u gjetën në burime, por s’qenë te katalogu.\n"
-"Poedit do t’i shtojë te katalogu tani."
+"Këto vargje u gjetën në burime, por s’qenë te kartela.\n"
+"Poedit do t’i shtojë te kartela tani."
 
 msgid "New strings"
 msgstr "Vargje të rinj"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Këto vargje s’janë më në burime.\n"
-"Poedit do t’i heqë prej katalogut tani."
+"Këto vargje s’janë më te kodi burim.\n"
+"Poedit-i do t’i heqë nga kartela tani."
 
 msgid "Obsolete strings"
 msgstr "Vargje të vjetruar"
@@ -1932,8 +2010,11 @@ msgstr "(0 të rinj, 0 të vjetruar)"
 msgid "Open"
 msgstr "Hap"
 
-msgid "Save catalog"
-msgstr "Ruaje katalogun"
+msgid "Open file"
+msgstr "Hap kartelë"
+
+msgid "Save file"
+msgstr "Ruaje kartelën"
 
 msgid "Validate"
 msgstr "Vleftësoje"
@@ -1957,8 +2038,8 @@ msgid "Show or hide the sidebar"
 msgstr "Shfaqni ose fshihni anështyllën"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Teksti burim i dikurshëm:"
+msgid "Previous source text"
+msgstr "Teksti burim i dikurshëm"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1967,8 +2048,11 @@ msgstr ""
 "Teksti burim i dikurshëm (përpara se të ndryshohej gjatë një përditësimi) të "
 "cilit i takon përkthimi tanimë jo i saktë."
 
-msgid "Notes for translators:"
-msgstr "Shënime për përkthyesit:"
+msgid "Notes for translators"
+msgstr "Shënime për përkthyesit"
+
+msgid "Comment"
+msgstr "Koment"
 
 msgid "Add comment"
 msgstr "Shto koment"
@@ -1982,8 +2066,8 @@ msgstr "Fshije Prej Kujtesës së Përkthimeve"
 msgid "Delete from translation memory"
 msgstr "Fshije prej kujtesës së përkthimeve"
 
-msgid "Translation suggestions:"
-msgstr "Sugjerime përkthimi:"
+msgid "Translation suggestions"
+msgstr "Sugjerime përkthimi"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2013,40 +2097,6 @@ msgstr "Gabim kujtese përkthimesh: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "S’krijohet dot drejtori e përkohshme."
 
-msgid "Welcome to Poedit"
-msgstr "Mirë se vini te Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versioni %s"
-
-msgid "Edit a translation"
-msgstr "Përpunoni një përkthim"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Hapni një kartelë PO ekzistuese dhe përpunoni përkthimin."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Merrni një kartelë ekzistuese PO ose një gjedhe POT dhe krijoni prej saj një "
-"përkthim të ri."
-
-msgid "Collaborate on a translation with others"
-msgstr "Bashkëpunoni me të tjerë për një përkthim"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Shkarkoni një kartelë prej një projekti në Crowdin, përkthejeni dhe "
-"parashtroni ndryshimet tuaja."
-
-msgid "What is Crowdin?"
-msgstr "Ç’është Crowdin-i?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "S’ka përkthime. Kjo është e pazakontë."
 
@@ -2066,10 +2116,12 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Mësoni më tepër mbi GNU gettext-in)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Rruga më e lehtë për të plotësuar këtë katalog është përditësimi i tij prej "
-"një POT-i:"
+"Rruga më e lehtë për të plotësuar këtë kartelë me vargje për përkthim është "
+"të përditësohet prej një POT-i:"
 
 msgid "Update from POT"
 msgstr "Përditësojeni prej POT-i"
@@ -2086,6 +2138,33 @@ msgstr "Përftoji prej burimesh"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Formësoni përftim nga kodi burim, te Vetitë."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Versioni %s"
+
+msgid "Create new…"
+msgstr "Krijoni të ri…"
+
+msgid "Create new translation from POT template."
+msgstr "Krijoni përkthim të ri nga një gjedhe POT."
+
+msgid "Browse files"
+msgstr "Shfletoni kartela"
+
+msgid "Open and edit translation files."
+msgstr "Hapni dhe përpunoni kartela përkthimi."
+
+msgid "Translate Crowdin project"
+msgstr "Përktheni projekt Crowdin"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Bashkëpunoni me të tjerë në një projekt Crowdin."
+
+msgid "Recent files"
+msgstr "Kartela së fundi"
 
 msgid "Sync"
 msgstr "Njëkohësoje"
@@ -2171,8 +2250,8 @@ msgstr "&Prije"
 msgid "Cut"
 msgstr "Prijeni"
 
-msgid "&Delete"
-msgstr "&Fshije"
+msgid "Edit"
+msgstr "Përpunoni"
 
 msgid "&Quit"
 msgstr "&Mbylle"
@@ -2182,6 +2261,9 @@ msgstr "Ndihmë"
 
 msgid "&New"
 msgstr "E &re"
+
+msgid "New"
+msgstr "E re"
 
 msgid "&No"
 msgstr "&Jo"

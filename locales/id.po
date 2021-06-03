@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -30,20 +30,20 @@ msgstr "Jangan tampilkan lagi"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Baru: %i, usang: %i)"
 
-msgid "Updating catalog"
-msgstr "Memperbarui katalog"
-
 msgid "Collecting source files…"
 msgstr "Mengumpulkan berkas sumber…"
 
 msgid "Extracting translatable strings…"
 msgstr "Mengekstrak string yang dapat diterjemahkan…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Gagal memuat katalog terekstrak."
+msgid "Failed to load file with extracted translations."
+msgstr "Gagal memuat berkas dengan terjemahan yang terekstrak."
 
 msgid "Merging differences…"
 msgstr "Menggabungkan perbedaan…"
+
+msgid "Updating translations"
+msgstr "Memperbarui terjemahan"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -78,21 +78,19 @@ msgstr[0] "%i baris dari berkas \"%s\" tidak dimuat dengan benar."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Baris %d dari berkas \"%s\" rusak (data %s tak valid)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Berkas katalog rusak: msgstr bentuk tunggal dipakai bersama dengan "
-"msgid_plural"
+"Berkas PO rusak: msgstr bentuk tunggal dipakai bersama dengan msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Berkas katalog rusak: bentuk msgstr jamak digunakan tanpa msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "Berkas PO rusak: msgstr bentuk jamak dipakai tanpa msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Terdapat kesalahan ketika memuat katalog. Beberapa data hilang atau rusak "
-"sebagai hasilnya."
+"Ada kesalahan ketika memuat berkas. Akibatnya sebagian data mungkin hilang "
+"atau rusak."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -119,18 +117,18 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalog tak bisa disimpan dalam set karakter \"%s\" sebagaimana dinyatakan "
-"dalam pengaturan katalog.\n"
+"Berkas tak bisa disimpan dalam set karakter \"%s\" sebagaimana dinyatakan "
+"dalam pengaturan terjemahan.\n"
 "\n"
 "Sebagai gantinya itu disimpan dalam UTF-8 dan pengaturan disesuaikan."
 
-msgid "Error saving catalog"
-msgstr "Gagal menyimpan katalog"
+msgid "Error saving file"
+msgstr "Kesalahan saat menyimpan berkas"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -172,6 +170,9 @@ msgstr "Penyelarasan dengan %s gagal."
 msgid "Syncing error"
 msgstr "Galat penyelarasan"
 
+msgid "Add"
+msgstr "Tambah"
+
 msgid "JSON request error"
 msgstr "Kesalahan permintaan JSON"
 
@@ -206,9 +207,6 @@ msgstr "Menunggu otentikasi…"
 
 msgid "Updating user information…"
 msgstr "Memutakhirkan informasi pengguna…"
-
-msgid "Learn More About Crowdin"
-msgstr "Pelajari Lebih Lanjut Tentang Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Pelajari lebih lanjut tentang Crowdin"
@@ -252,9 +250,6 @@ msgstr "&Salin"
 msgid "Learn more"
 msgstr "Belajar lagi"
 
-msgid "Learn More"
-msgstr "Pelajari Lebih Lanjut"
-
 msgid "&Help"
 msgstr "&Bantuan"
 
@@ -287,15 +282,694 @@ msgstr "Gagal berkomunikasi dengan proses Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Eksepsi tidak tertangani terjadi: %s"
 
-msgid "Open catalog"
-msgstr "Buka katalog"
+msgid "Select translation template"
+msgstr "Pilih templat terjemahan"
+
+msgid "Select translation file"
+msgstr "Pilih berkas terjemahan"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit adalah penyunting terjemahan yang mudah dipakai."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Terjemahan PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Berkas mungkin rusak atau dalam format yang tak dikenal oleh Poedit."
+
+msgid "The file cannot be opened."
+msgstr "Berkas tidak dapat dibuka."
+
+msgid "Invalid file"
+msgstr "Berkas tak valid"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Anda tak bisa menjatuhkan lebih dari satu berkas pada jendela Poedit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Berkas \"%s\" bukan sebuah berkas terjemahan."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Berkas \"%s\" tidak ada."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit adalah penyunting terjemahan yang mudah dipakai."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Lompat"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Pemeriksaan ejaan dinonaktifkan, karena kamus untuk %s tidak diinstal."
+
+msgid "Install"
+msgstr "Instal"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Berkas \"%s\" telah diubah oleh aplikasi lain."
+
+msgid "Reload file"
+msgstr "Muat ulang berkas"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Apakah Anda ingin memuat ulang berkas dari diska? Suntingan Anda dalam "
+"Poedit yang belum tersimpan akan hilang."
+
+msgid "Ignore"
+msgstr "Abaikan"
+
+msgid "Reload File"
+msgstr "Muat Ulang Berkas"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Berkas telah diubah. Apakah Anda ingin menyimpan perubahan?"
+
+msgid "Save changes"
+msgstr "Simpan perubahan"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Perubahan yang Anda buat akan hilang bila tidak Anda simpan."
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Do&n’t save"
+msgstr "Jangan simpan"
+
+msgid "Don’t Save"
+msgstr "Jangan Simpan"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+"Perubahan yang dibuat oleh aplikasi lain akan hilang bila Anda menyimpan."
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Save Anyway"
+msgstr "Simpan Saja"
+
+msgid "Save anyway"
+msgstr "Simpan saja"
+
+msgid "Save as…"
+msgstr "Simpan sebagai…"
+
+msgid "Compile to…"
+msgstr "Kompail ke…"
+
+msgid "Compiled Translation Files"
+msgstr "Berkas Terjemahan Dikompilasi"
+
+msgid "Export as…"
+msgstr "Ekspor sebagai…"
+
+msgid "HTML Files"
+msgstr "Berkas HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "Pada: %s"
+
+msgid "Source code not available."
+msgstr "Kode sumber tidak tersedia."
+
+msgid "Updating failed"
+msgstr "Gagal Memperbarui"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Terjemahan tidak dapat diperbarui dari kode sumber, karena kode tidak "
+"ditemukan di lokasi yang dinyatakan dalam Properti berkas."
+
+msgid "Permission denied."
+msgstr "Izin ditolak."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"Anda tidak punya izin untuk membaca berkas-berkas kode sumber dari lokasi "
+"yang dinyatakan dalam Properti berkas."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Bila Anda sebelumnya ditolak mengakses berkas-berkas Anda, Anda dapat "
+"mengizinkannya dalam Preferensi Sistem > Keamanan & Privasi > Privasi > "
+"Berkas & Folder."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Entri-entri terjemahan dalam berkas mungkin tidak benar."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr "Memutakhirkan berkas gagal. Klik pada 'Rincian >>' untuk rinciannya."
+
+msgid "Open translation template"
+msgstr "Buka templat terjemahan"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d masalah pada terjemahan ditemukan."
+
+msgid "Validation results"
+msgstr "Hasil validasi"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Entri dengan kesalahan ditandai dengan warna merah dalam daftar. Rincian "
+"kesalahan akan ditampilkan ketika Anda memilih entri tersebut."
+
+msgid "The file was saved safely."
+msgstr "Berkas disimpan dengan aman."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"File disimpan dengan aman dan dikompail ke format MO, tapi itu mungkin tidak "
+"akan bekerja dengan benar."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Berkas disimpan secara aman, tapi tak bisa dikompail ke dalam format MO dan "
+"dipakai."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Berkas telah dikompail ke format MO, tapi mungkin tak akan bekerja dengan "
+"benar."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Berkas tak dapat dikompail ke dalam format MO dan digunakan."
+
+msgid "No problems with the translation found."
+msgstr "Tidak ditemukan masalah dengan terjemahan."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Terjemahan siap untuk digunakan, tetapi %d entri belum diterjemahkan."
+
+msgid "The translation is ready for use."
+msgstr "Terjemahan siap digunakan."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+"Poedit secara otomatis memperbaiki isi yang tak valid dalam berkas \"%s\"."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Berkas memuat butir-butir duplikat, yang tak diijinkan dalam berkas PO dan "
+"akan mencegah berkas dipakai. Poedit memperbaiki masalah ini, tapi Anda "
+"mesti meninjau terjemahan yang ditandai sebagai perlu tindak lanjut dan "
+"memperbaiki mereka bila perlu."
+
+msgid "Language of the translation isn’t set."
+msgstr "Bahasa terjemahan belum dipilih."
+
+msgid "Set Language"
+msgstr "Atur bahasa"
+
+msgid "Set language"
+msgstr "Atur bahasa"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Saran tidak tersedia jika bahasa terjemahan tidak diatur dengan benar. Fitur "
+"lainnya, seperti bentuk jamak, mungkin akan terpengaruh juga."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Bahasa terjemahan sama dengan bahasa sumber."
+
+msgid "Fix Language"
+msgstr "Perbaiki Bahasa"
+
+msgid "Fix language"
+msgstr "Perbaiki bahasa"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"Berkas punya entri dengan bentuk jamak, tapi tak punya header Plural-Forms "
+"yang terkonfigurasi."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Entri dalam berkas ini memilik cacah bentuk jamak yang berbeda dengan apa "
+"kata header Plural-Forms"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Kurang tajuk Plural-Forms yang diperlukan."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Kesalahan sintaks di header Plural-Forms (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Perbaiki Header"
+
+msgid "Fix the header"
+msgstr "Perbaiki header"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "Ekspresi bentuk jamak yang dipakai oleh berkas tidak umum bagi %s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Tinjau"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Kesalahan saat memuat berkas terjemahan \"%s\"."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Diterjemahkan: %d dari %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Sisa: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d kesalahan"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d entri"
+
+msgid " (unsaved)"
+msgstr " (belum disimpan)"
+
+msgid " (modified)"
+msgstr " (telah diubah)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Gagal memperbarui ingatan terjemahan: %s"
+
+msgid "Purge deleted translations"
+msgstr "Buang terjemahan yang dihapus"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Apakah Anda ingin menghapus semua terjemahan yang tak dipakai lagi?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Bila Anda meneruskan pembersihan, semua terjemahan yang ditandai sebagai "
+"terhapus akan dibuang secara permanen. Anda mesti menerjemahkan ulang bila "
+"mereka ditambahkan kembali di masa mendatang."
+
+msgid "Keep"
+msgstr "Pertahankan"
+
+msgid "Purge"
+msgstr "Buang"
+
+msgid "Copy from source text"
+msgstr "Salin dari teks sumber"
+
+msgid "Copy from Source Text"
+msgstr "Salin dari Teks Sumber"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Bersihkan terjemahan"
+
+msgid "Clear Translation"
+msgstr "Bersihkan Terjemahan"
+
+msgid "Edit comment"
+msgstr "Sunting komentar"
+
+msgid "Edit Comment"
+msgstr "Sunting Komentar"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Kemunculan Kode"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Kemunculan kode"
+
+msgid "&Bookmarks"
+msgstr "&Markah"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Atur markah %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Ke markah %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Atur Markah %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Ke Markah %i"
+
+msgid "Hide Sidebar"
+msgstr "Sembunyikan Bilah Sisi"
+
+msgid "Show Sidebar"
+msgstr "Tampilkan Bilah Sisi"
+
+msgid "Hide Status Bar"
+msgstr "Sembunyikan Bilah Status"
+
+msgid "Show Status Bar"
+msgstr "Tampilkan Bilah Status"
+
+msgid "String length in characters: translation | source"
+msgstr "Panjang string dalam karakter: terjemahan | sumber"
+
+msgid "String length in characters"
+msgstr "Panjang string dalam karakter"
+
+msgid "Source text"
+msgstr "Teks sumber"
+
+msgid "Singular"
+msgstr "Tunggal"
+
+msgid "Plural"
+msgstr "Jamak"
+
+msgid "Translation"
+msgstr "Terjemahan"
+
+msgid "Pre-translated"
+msgstr "Dipraterjemahkan"
+
+msgid "Needs Work"
+msgstr "Perlu Tindak Lanjut"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Perlu tindak lanjut"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Berkas POT hanya templat dan tidak memuat terjemahan apapun.\n"
+"Untuk membuat suatu terjemahan, buatlah sebuah berkas PO baru berbasis "
+"templat itu."
+
+msgid "Create new translation"
+msgstr "Buat terjemahan baru"
+
+msgid "Make a new translation from this POT file."
+msgstr "Membuat suatu terjemahan baru dari berkas POT ini."
+
+msgid "Everything"
+msgstr "Segalanya"
+
+#, c-format
+msgid "Form %i"
+msgstr "Formulir %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Bentuk %i (tidak terpakai)"
+
+msgid "Zero"
+msgstr "Nol"
+
+msgid "One"
+msgstr "Satu"
+
+msgid "Two"
+msgstr "Dua"
+
+msgid "Other"
+msgstr "Lainnya"
+
+#, c-format
+msgid "%s Format"
+msgstr "Format %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Format %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Terjemahan — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Teks sumber — %s"
+
+msgid "unknown language"
+msgstr "bahasa tak dikenal"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Perintah gagal: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Gagal menggabung katalog-katalog gettext."
+
+msgid "Open in Editor"
+msgstr "Buka Dalam Penyunting"
+
+msgid "Open in editor"
+msgstr "Buka dalam penyunting"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"Tidak ada informasi tentang kemunculan string ini dalam kode sumber yang "
+"disediakan dalam berkas."
+
+msgid "No usage information"
+msgstr "Tidak ada informasi penggunaan"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d kemunculan kode"
+
+msgid "Source code not found"
+msgstr "Kode sumber tidak ditemukan"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit tidak dapat menampilkan kode sumber dimana string dipakai, karena "
+"berkas mungkin tidak tersedia dalam lokasi yang dirujuk atau itu adalah "
+"suatu acuan simbolik yang tidak menunjuk ke suatu berkas nyata."
+
+msgid "File cannot be opened"
+msgstr "Berkas tidak dapat dibuka"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit tidak bisa membuka berkas \"%s\"."
+
+msgid "Find"
+msgstr "Cari"
+
+msgid "Replace"
+msgstr "Ganti"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Opsi"
+
+msgid "Ignore case"
+msgstr "Abaikan besar kecil huruf"
+
+msgid "Wrap around"
+msgstr "Ulang dari awal"
+
+msgid "Whole words only"
+msgstr "Hanya kata lengkap"
+
+msgid "Find in source texts"
+msgstr "Cari dalam teks sumber"
+
+msgid "Find in translations"
+msgstr "Cari dalam terjemahan"
+
+msgid "Find in comments"
+msgstr "Cari dalam komentar"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Replace &All"
+msgstr "Ganti Semu&a"
+
+msgid "Replace &all"
+msgstr "Ganti semu&a"
+
+msgid "&Replace"
+msgstr "&Gantikan"
+
+msgid "< &Previous"
+msgstr "< Se&belumnya"
+
+msgid "&Next >"
+msgstr "Berikut&nya >"
+
+msgid "String to find"
+msgstr "Kalimat yang dicari"
+
+msgid "Replacement string"
+msgstr "Kalimat pengganti"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Tak bisa menjalankan program: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Kode atau Nama Bahasa (mis. en_GB)"
+
+msgid "Translation Language"
+msgstr "Bahasa Terjemahan"
+
+msgid "Language of the translation:"
+msgstr "Bahasa terjemahan:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Manajer katalog"
+
+msgid "Edit…"
+msgstr "Sunting…"
+
+msgid "Create new translations project"
+msgstr "Buat projek terjemahan baru"
+
+msgid "Delete the project"
+msgstr "Hapus projek"
+
+msgid "Edit the project"
+msgstr "Menyunting projek"
+
+msgid "Update all"
+msgstr "Perbarui semua"
+
+msgid "Update all catalogs in the project"
+msgstr "Perbarui semua katalog dalam projek"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Untrans"
+msgstr "Belum"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Perlu Tindak Lanjut"
+
+msgid "Errors"
+msgstr "Kesalahan"
+
+msgid "Last modified"
+msgstr "Terakhir berubah"
+
+msgid "Select directory"
+msgstr "Pilih direktori"
+
+msgid "Directories:"
+msgstr "Direktori:"
+
+msgid "<unnamed>"
+msgstr "<tanpa nama>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr ""
+
+msgid "Delete project"
+msgstr "Hapus proyek"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Menghapus proyek tidak akan menghapus sebarang berkas terjemahan."
+
+msgid "Confirmation"
+msgstr "Konfirmasi"
+
+msgid "Update all catalogs in this project?"
+msgstr "Perbarui semua katalog dalam proyek ini?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
 
 msgid "Catalogs Manager"
 msgstr "Manajer Katalog"
@@ -381,6 +1055,15 @@ msgstr "Berhenti Bicara"
 msgid "&View"
 msgstr "&Lihat"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Tampilkan Bilah Alat"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Menyesuaikan Bilah Alat…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Masuk Layar Penuh"
 
@@ -393,623 +1076,11 @@ msgstr "Minimalkan"
 msgid "Zoom"
 msgstr "Zum"
 
+msgid "Welcome to Poedit"
+msgstr "Selamat Datang di Poedit"
+
 msgid "Bring All to Front"
 msgstr "Bawa Semua ke Depan"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Terjemahan PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Berkas mungkin rusak atau dalam format yang tak dikenal oleh Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Berkas tidak dapat dibuka."
-
-msgid "Invalid file"
-msgstr "Berkas tak valid"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Anda tak bisa menjatuhkan lebih dari satu berkas pada jendela Poedit."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Berkas \"%s\" bukan sebuah berkas terjemahan."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Berkas"
-
-msgid "&Go"
-msgstr "&Lompat"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "Pemeriksaan ejaan dinonaktifkan, karena kamus untuk %s tidak diinstal."
-
-msgid "Install"
-msgstr "Instal"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalog berubah. Apakah ingin menyimpan perubahan?"
-
-msgid "Save changes"
-msgstr "Simpan perubahan"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Perubahan yang Anda buat akan hilang bila tidak Anda simpan."
-
-msgid "Save"
-msgstr "Simpan"
-
-msgid "Do&n’t save"
-msgstr "Jangan simpan"
-
-msgid "Don’t Save"
-msgstr "Jangan Simpan"
-
-msgid "Save as…"
-msgstr "Simpan sebagai…"
-
-msgid "Compile to…"
-msgstr "Kompail ke…"
-
-msgid "Compiled Translation Files"
-msgstr "Berkas Terjemahan Dikompilasi"
-
-msgid "Export as…"
-msgstr "Ekspor sebagai…"
-
-msgid "HTML Files"
-msgstr "Berkas HTML"
-
-msgid "Open catalog template"
-msgstr "Buka templat katalog"
-
-msgid "Source code not available."
-msgstr "Kode sumber tidak tersedia."
-
-msgid "Updating failed"
-msgstr "Gagal Memperbarui"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Terjemahan tidak diperbarui dari kode sumber, karena kode tidak ditemukan di "
-"lokasi yang ditentukan dalam katalog properti."
-
-msgid "Permission denied."
-msgstr "Izin ditolak."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Anda tidak punya izin untuk membaca berkas-berkas kode sumber dari lokasi "
-"yang dinyatakan dalam Properti katalog."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Bila Anda sebelumnya ditolak mengakses berkas-berkas Anda, Anda dapat "
-"mengizinkannya dalam Preferensi Sistem > Keamanan & Privasi > Privasi > "
-"Berkas & Folder."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Entri di katalog mungkin salah."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Proses memperbarui katalog gagal. Klik 'Rincian>>' untuk detilnya."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d masalah pada terjemahan ditemukan."
-
-msgid "Validation results"
-msgstr "Hasil validasi"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Entri dengan kesalahan ditandai dengan warna merah dalam daftar. Rincian "
-"kesalahan akan ditampilkan ketika Anda memilih entri tersebut."
-
-msgid "The file was saved safely."
-msgstr "Berkas disimpan dengan aman."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"File disimpan dengan aman dan dikompail ke format MO, tapi itu mungkin tidak "
-"akan bekerja dengan benar."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Berkas disimpan secara aman, tapi tak bisa dikompail ke dalam format MO dan "
-"dipakai."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Berkas telah dikompail ke format MO, tapi mungkin tak akan bekerja dengan "
-"benar."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Berkas tak dapat dikompail ke dalam format MO dan digunakan."
-
-msgid "No problems with the translation found."
-msgstr "Tidak ditemukan masalah dengan terjemahan."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Terjemahan siap untuk digunakan, tetapi %d entri belum diterjemahkan."
-
-msgid "The translation is ready for use."
-msgstr "Terjemahan siap digunakan."
-
-msgid "Warnings have been disabled."
-msgstr "Peringatan telah dinonaktifkan."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Jika Anda menonaktifkan peringatan karena upaya yang berlebihan, silakan "
-"mengirim sampel file ke help@poedit.net untuk membantu memperbaikinya."
-
-msgid "Send Feedback"
-msgstr "Kirim Masukan"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Kirim masukan"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
-"Poedit secara otomatis memperbaiki isi yang tak valid dalam berkas \"%s\"."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Berkas memuat butir-butir duplikat, yang tak diijinkan dalam berkas PO dan "
-"akan mencegah berkas dipakai. Poedit memperbaiki masalah ini, tapi Anda "
-"mesti meninjau terjemahan yang ditandai sebagai perlu tindak lanjut dan "
-"memperbaiki mereka bila perlu."
-
-msgid "Language of the translation isn’t set."
-msgstr "Bahasa terjemahan belum dipilih."
-
-msgid "Set Language"
-msgstr "Atur bahasa"
-
-msgid "Set language"
-msgstr "Atur bahasa"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Saran tidak tersedia jika bahasa terjemahan tidak diatur dengan benar. Fitur "
-"lainnya, seperti bentuk jamak, mungkin akan terpengaruh juga."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Bahasa terjemahan sama dengan bahasa sumber."
-
-msgid "Fix Language"
-msgstr "Perbaiki Bahasa"
-
-msgid "Fix language"
-msgstr "Perbaiki bahasa"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Katalog ini memiliki entri dengan bentuk jamak, tapi Plural-Forms tak "
-"tertata di header."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Entri pada katalog ini memiliki cacah bentuk jamak yang berbeda dengan isi "
-"header Plural-Forms"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Kurang tajuk Plural-Forms yang diperlukan."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Kesalahan sintaks di header Plural-Forms (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Perbaiki Header"
-
-msgid "Fix the header"
-msgstr "Perbaiki header"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Ekspresi bentuk jamak yang dipakai oleh katalog tak umum bagi %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Tinjau"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Kesalahan saat memuat berkas katalog pesan \"%s\"."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Diterjemahkan: %d dari %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Sisa: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d kesalahan"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d entri"
-
-msgid " (unsaved)"
-msgstr " (belum disimpan)"
-
-msgid " (modified)"
-msgstr " (telah diubah)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Gagal memperbarui ingatan terjemahan: %s"
-
-msgid "Purge deleted translations"
-msgstr "Buang terjemahan yang dihapus"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Apakah Anda ingin menghapus semua terjemahan yang tak dipakai lagi?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Bila Anda meneruskan pembersihan, semua terjemahan yang ditandai sebagai "
-"terhapus akan dibuang secara permanen. Anda mesti menerjemahkan ulang bila "
-"mereka ditambahkan kembali di masa mendatang."
-
-msgid "Keep"
-msgstr "Pertahankan"
-
-msgid "Purge"
-msgstr "Buang"
-
-msgid "Copy from source text"
-msgstr "Salin dari teks sumber"
-
-msgid "Copy from Source Text"
-msgstr "Salin dari Teks Sumber"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Bersihkan terjemahan"
-
-msgid "Clear Translation"
-msgstr "Bersihkan Terjemahan"
-
-msgid "Edit comment"
-msgstr "Sunting komentar"
-
-msgid "Edit Comment"
-msgstr "Sunting Komentar"
-
-msgid "References:"
-msgstr "Referensi:"
-
-msgid "&Bookmarks"
-msgstr "&Markah"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Atur markah %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Ke markah %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Atur Markah %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Ke Markah %i"
-
-msgid "Hide Sidebar"
-msgstr "Sembunyikan Bilah Sisi"
-
-msgid "Show Sidebar"
-msgstr "Tampilkan Bilah Sisi"
-
-msgid "Hide Status Bar"
-msgstr "Sembunyikan Bilah Status"
-
-msgid "Show Status Bar"
-msgstr "Tampilkan Bilah Status"
-
-msgid "Source text:"
-msgstr "Teks sumber:"
-
-msgid "Singular:"
-msgstr "Tunggal:"
-
-msgid "Plural:"
-msgstr "Jamak:"
-
-msgid "Translation:"
-msgstr "Terjemahan:"
-
-msgid "Pre-translated"
-msgstr "Dipraterjemahkan"
-
-msgid "Needs Work"
-msgstr "Perlu Tindak Lanjut"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Perlu tindak lanjut"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Berkas POT hanya templat dan tidak memuat terjemahan apapun.\n"
-"Untuk membuat suatu terjemahan, buatlah sebuah berkas PO baru berbasis "
-"templat itu."
-
-msgid "Create New Translation"
-msgstr "Buat Terjemahan Baru"
-
-msgid "Create new translation"
-msgstr "Buat terjemahan baru"
-
-msgid "Everything"
-msgstr "Segalanya"
-
-#, c-format
-msgid "Form %i"
-msgstr "Formulir %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Bentuk %i (tidak terpakai)"
-
-msgid "Singular"
-msgstr "Tunggal"
-
-msgid "Zero"
-msgstr "Nol"
-
-msgid "One"
-msgstr "Satu"
-
-msgid "Two"
-msgstr "Dua"
-
-msgid "Plural"
-msgstr "Jamak"
-
-msgid "Other"
-msgstr "Lainnya"
-
-#, c-format
-msgid "%s Format"
-msgstr "Format %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "Format %s"
-
-msgid "Source text"
-msgstr "Teks sumber"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Terjemahan — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Teks sumber — %s"
-
-msgid "unknown language"
-msgstr "bahasa tak dikenal"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Perintah gagal: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Gagal menggabung katalog-katalog gettext."
-
-msgid "Source file"
-msgstr "Berkas sumber"
-
-msgid "Source file occurrence:"
-msgstr "Kemunculan berkas sumber:"
-
-msgid "Open in Editor"
-msgstr "Buka Dalam Penyunting"
-
-msgid "Open in editor"
-msgstr "Buka dalam penyunting"
-
-msgid "No references for the selected item."
-msgstr "Tidak ada acuan untuk butir yang dipilih."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Gagal membuka berkas %s!"
-
-msgid "Find"
-msgstr "Cari"
-
-msgid "Replace"
-msgstr "Ganti"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Opsi"
-
-msgid "Ignore case"
-msgstr "Abaikan besar kecil huruf"
-
-msgid "Wrap around"
-msgstr "Ulang dari awal"
-
-msgid "Whole words only"
-msgstr "Hanya kata lengkap"
-
-msgid "Find in source texts"
-msgstr "Cari dalam teks sumber"
-
-msgid "Find in translations"
-msgstr "Cari dalam terjemahan"
-
-msgid "Find in comments"
-msgstr "Cari dalam komentar"
-
-msgid "Close"
-msgstr "Tutup"
-
-msgid "Replace &All"
-msgstr "Ganti Semu&a"
-
-msgid "Replace &all"
-msgstr "Ganti semu&a"
-
-msgid "&Replace"
-msgstr "&Gantikan"
-
-msgid "< &Previous"
-msgstr "< Se&belumnya"
-
-msgid "&Next >"
-msgstr "Berikut&nya >"
-
-msgid "String to find"
-msgstr "Kalimat yang dicari"
-
-msgid "Replacement string"
-msgstr "Kalimat pengganti"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Tak bisa menjalankan program: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kode atau Nama Bahasa (mis. en_GB)"
-
-msgid "Translation Language"
-msgstr "Bahasa Terjemahan"
-
-msgid "Language of the translation:"
-msgstr "Bahasa terjemahan:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Manajer katalog"
-
-msgid "Catalog"
-msgstr "Katalog"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Untrans"
-msgstr "Belum"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Perlu Tindak Lanjut"
-
-msgid "Errors"
-msgstr "Kesalahan"
-
-msgid "Last modified"
-msgstr "Terakhir berubah"
-
-msgid "Select directory"
-msgstr "Pilih direktori"
-
-msgid "Directories:"
-msgstr "Direktori:"
-
-msgid "<unnamed>"
-msgstr "<tanpa nama>"
-
-msgid "Do you want to delete the project?"
-msgstr "Apakah Anda ingin menghapus projek?"
-
-msgid "Confirmation"
-msgstr "Konfirmasi"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Apakah Anda ingin melakukan pembaruan masal\n"
-"atas semua katalog di projek ini?"
 
 msgid "Information about the translator"
 msgstr "Informasi tentang penerjemah"
@@ -1023,8 +1094,8 @@ msgstr "Nama Anda"
 msgid "Email:"
 msgstr "Surel:"
 
-msgid "your_email@example.com"
-msgstr "your_email@example.com"
+msgid "you@example.com"
+msgstr ""
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1039,8 +1110,8 @@ msgstr "Penyuntingan"
 msgid "Automatically compile MO file when saving"
 msgstr "Otomatis mengkompilasi berkas MO saat menyimpan"
 
-msgid "Show summary after catalog update"
-msgstr "Perlihatkan rangkuman sesudah katalog diperbarui"
+msgid "Show summary after updating files"
+msgstr "Tampilkan ringkasan setelah memutakhirkan berkas"
 
 msgid "Check spelling"
 msgstr "Periksa ejaan"
@@ -1181,9 +1252,6 @@ msgstr ""
 "Me-reset memori terjemahan akan menghapus seterusnya semua terjemahan yang "
 "disimpan darinya. Anda tidak dapat membatalkan operasian ini."
 
-msgid "Cancel"
-msgstr "Batal"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1203,9 +1271,6 @@ msgstr "Pengekstraksi Ubahan:"
 
 msgid "Custom extractors:"
 msgstr "Pengekstraksi ubahan:"
-
-msgid "Edit…"
-msgstr "Sunting…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1272,13 +1337,19 @@ msgstr "Pertahankan format berkas yang sudah ada"
 msgid "Advanced"
 msgstr "Tingkat lanjut"
 
-msgid "Pre-translating…"
-msgstr "Memraterjemahkan…"
+msgid "Preparing strings…"
+msgstr "Menyiapkan string…"
+
+msgid "Pre-translating from translation memory…"
+msgstr ""
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Dipraterjemahkan %u string"
+
+msgid "Pre-translating…"
+msgstr "Memraterjemahkan…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1347,23 +1418,14 @@ msgstr ""
 "hanya efektif untuk penerjemahan semi otomatis setelah Poedit belajar cukup "
 "dari berkas yang Anda terjemahkan secara manual."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Seret dan Jatuhkan Folder Di Sini</big>\n"
-"\n"
-"atau gunakan tombol +"
+msgid "Cancelling…"
+msgstr "Membatalkan…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Folder Seret dan jatuhkan folder di sini</big>\n"
-"\n"
-"atau gunakan tombol +"
+msgid "Drag Folders or Files Here"
+msgstr "Seret Folder atau Berkas Ke Sini"
+
+msgid "Drag folders or files here"
+msgstr "Seret folder atau berkas ke sini"
 
 msgid "Add Folders…"
 msgstr "Tambah Folder…"
@@ -1382,6 +1444,17 @@ msgstr "Tambah Wildcard…"
 
 msgid "Add wildcard…"
 msgstr "Tambah wildcard…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Ungkapkan dalam Finder"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Tampilkan dalam Explorer"
+
+msgid "Show in Folder"
+msgstr "Tampilkan dalam Folder"
 
 msgid "Paths"
 msgstr "Path"
@@ -1422,14 +1495,23 @@ msgstr "UTF-8 (disarankan)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Harap simpan dulu. Seksi ini tak bisa disunting sebelum itu."
 
+msgid "Plural form translations"
+msgstr ""
+
 msgid "Not all plural forms are translated."
 msgstr "Tidak semua bentuk jamak diterjemahkan."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr "Terjemahan harus mulai sebagai satu kalimat."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Terjemahan harus mulai dengan karakter huruf kecil."
+
+msgid "Inconsistent whitespace"
+msgstr ""
 
 msgid "The translation doesn’t start with a space."
 msgstr "Terjemahan tidak diawali dengan sebuah spasi."
@@ -1449,6 +1531,9 @@ msgstr "Terjemahan kekurangan spasi di akhir."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Terjemahan berakhir dengan spasi, tapi teks sumber tidak."
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Terjemahan harus berakhir dengan \"%s\"."
@@ -1462,38 +1547,23 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 "Terjemahan berakhir dengan \"%s\", tapi teks sumber berakhir dengan \"%s\"."
 
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
 msgid "Comment:"
 msgstr "Komentar:"
 
-msgid "OK"
-msgstr "OK"
+msgid "Update"
+msgstr ""
 
-msgid "C&lear"
-msgstr "&Bersihkan"
+msgid "&Delete"
+msgstr "&Hapus"
 
-msgid "Clear the comment"
-msgstr "Hapus komentar"
-
-msgid "New"
-msgstr "Baru"
-
-msgid "Create new translations project"
-msgstr "Buat projek terjemahan baru"
-
-msgid "Edit"
-msgstr "Sunting"
-
-msgid "Edit the project"
-msgstr "Menyunting projek"
-
-msgid "Delete the project"
-msgstr "Hapus projek"
-
-msgid "Update all"
-msgstr "Perbarui semua"
-
-msgid "Update all catalogs in the project"
-msgstr "Perbarui semua katalog dalam projek"
+msgid "Delete the comment"
+msgstr ""
 
 msgid "Edit project"
 msgstr "Sunting projek"
@@ -1506,6 +1576,12 @@ msgstr "Ramban"
 
 msgid "Add directory to the list"
 msgstr "Tambahkan direktori ke daftar"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "&File"
+msgstr "&Berkas"
 
 msgid "&New…"
 msgstr "&Baru…"
@@ -1522,11 +1598,26 @@ msgstr "&Buka…"
 msgid "Open Recent"
 msgstr "Buka Yang Baru-baru Ini"
 
+msgid "Open recent"
+msgstr ""
+
 msgid "Open from Crowdin…"
 msgstr "Buka dari Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Buka Dari Crowdin…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "&Manajer katalog"
+
+msgid "Catalogs &Manager"
+msgstr "&Manajer Katalog"
 
 msgid "&Close"
 msgstr "&Tutup"
@@ -1552,12 +1643,6 @@ msgstr "Periksa pemutakhiran…"
 msgid "&Preferences…"
 msgstr "&Preferensi…"
 
-msgid "Catalogs &manager"
-msgstr "&Manajer katalog"
-
-msgid "Catalogs &Manager"
-msgstr "&Manajer Katalog"
-
 msgid "E&xit"
 msgstr "&Keluar"
 
@@ -1582,6 +1667,7 @@ msgstr "Sunting &komentar"
 msgid "Edit &Comment"
 msgstr "Sunting &Komentar"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Saran"
 
@@ -1657,11 +1743,11 @@ msgstr "Entri bel&um diterjemahkan di awal"
 msgid "&Untranslated Entries First"
 msgstr "Entri Bel&um Diterjemahkan Di Awal"
 
-msgid "&Show references"
-msgstr "Perlihatkan referen&si"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "Perlihatkan Referen&si"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Tampilkan bilah sisi"
@@ -1669,8 +1755,8 @@ msgstr "Tampilkan bilah sisi"
 msgid "Show status bar"
 msgstr "Tampilkan bilah status"
 
-msgid "C&atalog"
-msgstr "K&atalog"
+msgid "&Translation"
+msgstr ""
 
 msgid "&Update from source code"
 msgstr "Perbar&ui dari kode sumber"
@@ -1821,8 +1907,8 @@ msgstr ""
 "hanya jika sumber kode set karakter telah diberikan. %c diubah ke nilai set "
 "karakter."
 
-msgid "Catalog properties"
-msgstr "Properti katalog"
+msgid "Translation Properties"
+msgstr "Properti Terjemahan"
 
 msgid "Project name and version:"
 msgstr "Nama dan versi projek:"
@@ -1850,9 +1936,6 @@ msgstr "Pengaturan Ekstraksi Tingkat Lanjut…"
 
 msgid "Advanced extraction settings…"
 msgstr "Pengaturan ekstraksi tingkat lanjut…"
-
-msgid "Translation Properties"
-msgstr "Properti Terjemahan"
 
 msgid "Translation properties"
 msgstr "Properti terjemahan"
@@ -1885,9 +1968,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Juga menggunakan kata kunci default untuk bahasa yang didukung"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Pelajari tentang kata kunci gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Belajar tentang kata kunci gettext"
 
@@ -1895,21 +1975,17 @@ msgid "Update summary"
 msgstr "Perbarui rangkuman"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Kalimat ini ditemukan dalam sumber tapi tidak di katalog.\n"
-"Sekarang Poedit akan menambahkan ke katalog."
 
 msgid "New strings"
 msgstr "Kalimat baru"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Kalimat ini sudah tidak ada di sumber.\n"
-"Sekarang Poedit akan menghapus dari katalog."
 
 msgid "Obsolete strings"
 msgstr "Kalimat usang"
@@ -1920,8 +1996,11 @@ msgstr "(0 baru, 0 usang)"
 msgid "Open"
 msgstr "Buka"
 
-msgid "Save catalog"
-msgstr "Simpan katalog"
+msgid "Open file"
+msgstr "Buka berkas"
+
+msgid "Save file"
+msgstr "Simpan berkas"
 
 msgid "Validate"
 msgstr "Validasikan"
@@ -1945,8 +2024,8 @@ msgid "Show or hide the sidebar"
 msgstr "Tampilkan atau sembunyikan bilah sisi"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Teks sumber sebelumnya:"
+msgid "Previous source text"
+msgstr "Teks sumber sebelumnya"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1955,8 +2034,11 @@ msgstr ""
 "Teks sumber lama (sebelum berubah selama pemutakhiran) yang berkaitan dengan "
 "terjemahan kurang tepat."
 
-msgid "Notes for translators:"
-msgstr "Catatan bagi para penerjemah:"
+msgid "Notes for translators"
+msgstr "Catatan bagi para penerjemah"
+
+msgid "Comment"
+msgstr "Komentar"
 
 msgid "Add comment"
 msgstr "Tambah komentar"
@@ -1970,8 +2052,8 @@ msgstr "Hapus Dari Memori Terjemahan"
 msgid "Delete from translation memory"
 msgstr "Menghapus dari memori terjemahan"
 
-msgid "Translation suggestions:"
-msgstr "Saran terjemahan:"
+msgid "Translation suggestions"
+msgstr "Saran terjemahan"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2001,39 +2083,6 @@ msgstr "Kesalahan memori terjemahan: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Tak bisa membuat direktori sementara."
 
-msgid "Welcome to Poedit"
-msgstr "Selamat Datang di Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versi %s"
-
-msgid "Edit a translation"
-msgstr "Sunting suatu terjemahan"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Buka berkas PO yang ada dan sunting terjemahan tersebut."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Ambil berkas PO atau templat POT yang ada dan buat terjemahan baru darinya."
-
-msgid "Collaborate on a translation with others"
-msgstr "Bekerja sama pada suatu terjemahan dengan orang lain"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Unduh suatu berkas dari proyek Crowdin, terjemahkan, dan selaraskan balik "
-"perubahan Anda."
-
-msgid "What is Crowdin?"
-msgstr "Apa itu Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Tidak ada terjemahan. Itu tidak biasa."
 
@@ -2054,10 +2103,10 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Belajar lebih banyak tentang gettext GNU)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Cara termudah untuk memenuhi katalog ini adalah dengan memutakhirkannya dari "
-"suatu POT:"
 
 msgid "Update from POT"
 msgstr "Perbarui dari POT"
@@ -2077,6 +2126,33 @@ msgstr "Ekstrak dari sumber"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Atur konfigurasi ekstraksi kode sumber dalam Properti."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Versi %s"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
+msgstr ""
 
 msgid "Sync"
 msgstr "Selaraskan"
@@ -2162,8 +2238,8 @@ msgstr "Po&tong"
 msgid "Cut"
 msgstr "Memotong"
 
-msgid "&Delete"
-msgstr "&Hapus"
+msgid "Edit"
+msgstr "Sunting"
 
 msgid "&Quit"
 msgstr "&Keluar"
@@ -2173,6 +2249,9 @@ msgstr "Bantuan"
 
 msgid "&New"
 msgstr "&Baru"
+
+msgid "New"
+msgstr "Baru"
 
 msgid "&No"
 msgstr "&Tidak"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: English, United Kingdom\n"
 "Language: en_GB\n"
@@ -30,20 +30,20 @@ msgstr "Don’t show again"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(New: %i, obsolete: %i)"
 
-msgid "Updating catalog"
-msgstr "Updating catalogue"
-
 msgid "Collecting source files…"
 msgstr "Collecting source files…"
 
 msgid "Extracting translatable strings…"
 msgstr "Extracting translatable strings…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Failed to load extracted catalogue."
+msgid "Failed to load file with extracted translations."
+msgstr "Failed to load file with extracted translations."
 
 msgid "Merging differences…"
 msgstr "Merging differences…"
+
+msgid "Updating translations"
+msgstr "Updating translations"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,19 +79,17 @@ msgstr[1] "%i lines of file “%s” were not loaded correctly."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Line %d of file “%s” is corrupted (not valid %s data)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr ""
-"Broken catalogue file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
+msgstr "Broken PO file: singular form msgstr used together with msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Broken catalogue file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "Broken PO file: plural form msgstr used without msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"There were errors when loading the catalogue. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 
 #, c-format
@@ -117,18 +115,18 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"The catalogue couldn’t be saved in “%s” charset as specified in catalogue "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 
-msgid "Error saving catalog"
-msgstr "Error saving catalogue"
+msgid "Error saving file"
+msgstr "Error saving file"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -170,6 +168,9 @@ msgstr "Syncing with %s failed."
 msgid "Syncing error"
 msgstr "Syncing error"
 
+msgid "Add"
+msgstr "Add"
+
 msgid "JSON request error"
 msgstr "JSON request error"
 
@@ -203,9 +204,6 @@ msgstr "Waiting for authentication…"
 
 msgid "Updating user information…"
 msgstr "Updating user information…"
-
-msgid "Learn More About Crowdin"
-msgstr "Learn More About Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Learn more about Crowdin"
@@ -249,9 +247,6 @@ msgstr "&Copy"
 msgid "Learn more"
 msgstr "Learn more"
 
-msgid "Learn More"
-msgstr "Learn More"
-
 msgid "&Help"
 msgstr "&Help"
 
@@ -284,15 +279,698 @@ msgstr "Failed to communicate with Poedit process."
 msgid "Unhandled exception occurred: %s"
 msgstr "Unhandled exception occurred: %s"
 
-msgid "Open catalog"
-msgstr "Open catalogue"
+msgid "Select translation template"
+msgstr "Select translation template"
+
+msgid "Select translation file"
+msgstr "Select translation file"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit is an easy to use translation editor."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO Translation"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"The file may be either corrupted or in a format not recognised by Poedit."
+
+msgid "The file cannot be opened."
+msgstr "The file cannot be opened."
+
+msgid "Invalid file"
+msgstr "Invalid file"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "You can’t drop more than one file on Poedit window."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "File “%s” is not a translation file."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "File “%s” doesn’t exist."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit is an easy to use translation editor."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Go"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+
+msgid "Install"
+msgstr "Install"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "The file “%s” has been changed by another application."
+
+msgid "Reload file"
+msgstr "Reload file"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+
+msgid "Ignore"
+msgstr "Ignore"
+
+msgid "Reload File"
+msgstr "Reload File"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "The file has been modified. Do you want to save changes?"
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Your changes will be lost if you don’t save them."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Do&n’t save"
+msgstr "Don’t save"
+
+msgid "Don’t Save"
+msgstr "Don’t Save"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "The changes made by the other application will be lost if you save."
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Save Anyway"
+msgstr "Save Anyway"
+
+msgid "Save anyway"
+msgstr "Save anyway"
+
+msgid "Save as…"
+msgstr "Save as…"
+
+msgid "Compile to…"
+msgstr "Compile to…"
+
+msgid "Compiled Translation Files"
+msgstr "Compiled Translation Files"
+
+msgid "Export as…"
+msgstr "Export as…"
+
+msgid "HTML Files"
+msgstr "HTML Files"
+
+#, c-format
+msgid "In: %s"
+msgstr "In: %s"
+
+msgid "Source code not available."
+msgstr "Source code not available."
+
+msgid "Updating failed"
+msgstr "Updating failed"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+
+msgid "Permission denied."
+msgstr "Permission denied."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Translation entries in the file are probably incorrect."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr "Updating the file failed. Click on 'Details >>' for details."
+
+msgid "Open translation template"
+msgstr "Open translation template"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d issue with the translation found."
+msgstr[1] "%d issues with the translation found."
+
+msgid "Validation results"
+msgstr "Validation results"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+
+msgid "The file was saved safely."
+msgstr "The file was saved safely."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "The file cannot be compiled into the MO format and used."
+
+msgid "No problems with the translation found."
+msgstr "No problems with the translation found."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"The translation is ready for use, but %d entry is not translated yet."
+msgstr[1] ""
+"The translation is ready for use, but %d entries are not translated yet."
+
+msgid "The translation is ready for use."
+msgstr "The translation is ready for use."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit automatically fixed invalid content in the file “%s”."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+
+msgid "Language of the translation isn’t set."
+msgstr "Language of the translation isn’t set."
+
+msgid "Set Language"
+msgstr "Set Language"
+
+msgid "Set language"
+msgstr "Set language"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Language of the translation is the same as source language."
+
+msgid "Fix Language"
+msgstr "Fix Language"
+
+msgid "Fix language"
+msgstr "Fix language"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Required header Plural-Forms is missing."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Syntax error in Plural-Forms header (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Fix the Header"
+
+msgid "Fix the header"
+msgstr "Fix the header"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "Plural forms expression used by the file is unusual for %s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Review"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Error loading translation file “%s”."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Translated: %d of %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Remaining: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d error"
+msgstr[1] "%d errors"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d entry"
+msgstr[1] "%d entries"
+
+msgid " (unsaved)"
+msgstr " (unsaved)"
+
+msgid " (modified)"
+msgstr " (modified)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Failed to update translation memory: %s"
+
+msgid "Purge deleted translations"
+msgstr "Purge deleted translations"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Do you want to remove all translations that are no longer used?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+
+msgid "Keep"
+msgstr "Keep"
+
+msgid "Purge"
+msgstr "Purge"
+
+msgid "Copy from source text"
+msgstr "Copy from source text"
+
+msgid "Copy from Source Text"
+msgstr "Copy from Source Text"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Clear translation"
+
+msgid "Clear Translation"
+msgstr "Clear Translation"
+
+msgid "Edit comment"
+msgstr "Edit comment"
+
+msgid "Edit Comment"
+msgstr "Edit Comment"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Code Occurrences"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Code occurrences"
+
+msgid "&Bookmarks"
+msgstr "&Bookmarks"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Set bookmark %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Go to bookmark %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Set Bookmark %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Go to Bookmark %i"
+
+msgid "Hide Sidebar"
+msgstr "Hide Sidebar"
+
+msgid "Show Sidebar"
+msgstr "Show Sidebar"
+
+msgid "Hide Status Bar"
+msgstr "Hide Status Bar"
+
+msgid "Show Status Bar"
+msgstr "Show Status Bar"
+
+msgid "String length in characters: translation | source"
+msgstr "String length in characters: translation | source"
+
+msgid "String length in characters"
+msgstr "String length in characters"
+
+msgid "Source text"
+msgstr "Source text"
+
+msgid "Singular"
+msgstr "Singular"
+
+msgid "Plural"
+msgstr "Plural"
+
+msgid "Translation"
+msgstr "Translation"
+
+msgid "Pre-translated"
+msgstr "Pre-translated"
+
+msgid "Needs Work"
+msgstr "Needs Work"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Needs work"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+
+msgid "Create new translation"
+msgstr "Create new translation"
+
+msgid "Make a new translation from this POT file."
+msgstr "Make a new translation from this POT file."
+
+msgid "Everything"
+msgstr "Everything"
+
+#, c-format
+msgid "Form %i"
+msgstr "Form %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Form %i (unused)"
+
+msgid "Zero"
+msgstr "Zero"
+
+msgid "One"
+msgstr "One"
+
+msgid "Two"
+msgstr "Two"
+
+msgid "Other"
+msgstr "Other"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s Format"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s format"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Translation — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Source text — %s"
+
+msgid "unknown language"
+msgstr "unknown language"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Failed command: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Failed to merge gettext catalogues."
+
+msgid "Open in Editor"
+msgstr "Open in Editor"
+
+msgid "Open in editor"
+msgstr "Open in editor"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+
+msgid "No usage information"
+msgstr "No usage information"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d code occurrence"
+msgstr[1] "%d code occurrences"
+
+msgid "Source code not found"
+msgstr "Source code not found"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+
+msgid "File cannot be opened"
+msgstr "File cannot be opened"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit was unable to open the “%s” file."
+
+msgid "Find"
+msgstr "Find"
+
+msgid "Replace"
+msgstr "Replace"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Options"
+
+msgid "Ignore case"
+msgstr "Ignore case"
+
+msgid "Wrap around"
+msgstr "Wrap around"
+
+msgid "Whole words only"
+msgstr "Whole words only"
+
+msgid "Find in source texts"
+msgstr "Find in source texts"
+
+msgid "Find in translations"
+msgstr "Find in translations"
+
+msgid "Find in comments"
+msgstr "Find in comments"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Replace &All"
+msgstr "Replace &All"
+
+msgid "Replace &all"
+msgstr "Replace &all"
+
+msgid "&Replace"
+msgstr "&Replace"
+
+msgid "< &Previous"
+msgstr "< &Previous"
+
+msgid "&Next >"
+msgstr "&Next >"
+
+msgid "String to find"
+msgstr "String to find"
+
+msgid "Replacement string"
+msgstr "Replacement string"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Cannot execute program: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Language Code or Name (e.g. en_GB)"
+
+msgid "Translation Language"
+msgstr "Translation Language"
+
+msgid "Language of the translation:"
+msgstr "Language of the translation:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Catalogues manager"
+
+msgid "Edit…"
+msgstr "Edit…"
+
+msgid "Create new translations project"
+msgstr "Create new translations project"
+
+msgid "Delete the project"
+msgstr "Delete the project"
+
+msgid "Edit the project"
+msgstr "Edit the project"
+
+msgid "Update all"
+msgstr "Update all"
+
+msgid "Update all catalogs in the project"
+msgstr "Update all catalogues in the project"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Untrans"
+msgstr "Untrans"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Needs Work"
+
+msgid "Errors"
+msgstr "Errors"
+
+msgid "Last modified"
+msgstr "Last modified"
+
+msgid "Select directory"
+msgstr "Select directory"
+
+msgid "Directories:"
+msgstr "Directories:"
+
+msgid "<unnamed>"
+msgstr "<unnamed>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Do you want to delete project “%s”?"
+
+msgid "Delete project"
+msgstr "Delete project"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Deleting the project will not delete any translation files."
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "Update all catalogs in this project?"
+msgstr "Update all catalogs in this project?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Performs update from source code on all files in the project."
 
 msgid "Catalogs Manager"
 msgstr "Catalogs Manager"
@@ -378,6 +1056,15 @@ msgstr "Stop Speaking"
 msgid "&View"
 msgstr "&View"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Show Toolbar"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Customise Toolbar…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Enter Full Screen"
 
@@ -390,627 +1077,11 @@ msgstr "Minimise"
 msgid "Zoom"
 msgstr "Zoom"
 
+msgid "Welcome to Poedit"
+msgstr "Welcome to Poedit"
+
 msgid "Bring All to Front"
 msgstr "Bring All to Front"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO Translation"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"The file may be either corrupted or in a format not recognised by Poedit."
-
-msgid "The file cannot be opened."
-msgstr "The file cannot be opened."
-
-msgid "Invalid file"
-msgstr "Invalid file"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "You can’t drop more than one file on Poedit window."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "File “%s” is not a translation file."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&File"
-
-msgid "&Go"
-msgstr "&Go"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-
-msgid "Install"
-msgstr "Install"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Catalogue modified. Do you want to save changes?"
-
-msgid "Save changes"
-msgstr "Save changes"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Your changes will be lost if you don’t save them."
-
-msgid "Save"
-msgstr "Save"
-
-msgid "Do&n’t save"
-msgstr "Don’t save"
-
-msgid "Don’t Save"
-msgstr "Don’t Save"
-
-msgid "Save as…"
-msgstr "Save as…"
-
-msgid "Compile to…"
-msgstr "Compile to…"
-
-msgid "Compiled Translation Files"
-msgstr "Compiled Translation Files"
-
-msgid "Export as…"
-msgstr "Export as…"
-
-msgid "HTML Files"
-msgstr "HTML Files"
-
-msgid "Open catalog template"
-msgstr "Open catalogue template"
-
-msgid "Source code not available."
-msgstr "Source code not available."
-
-msgid "Updating failed"
-msgstr "Updating failed"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalogue’s Properties."
-
-msgid "Permission denied."
-msgstr "Permission denied."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalogue’s Properties."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Entries in the catalogue are probably incorrect."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Updating the catalogue failed. Click on 'Details >>' for details."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d issue with the translation found."
-msgstr[1] "%d issues with the translation found."
-
-msgid "Validation results"
-msgstr "Validation results"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-
-msgid "The file was saved safely."
-msgstr "The file was saved safely."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "The file cannot be compiled into the MO format and used."
-
-msgid "No problems with the translation found."
-msgstr "No problems with the translation found."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"The translation is ready for use, but %d entry is not translated yet."
-msgstr[1] ""
-"The translation is ready for use, but %d entries are not translated yet."
-
-msgid "The translation is ready for use."
-msgstr "The translation is ready for use."
-
-msgid "Warnings have been disabled."
-msgstr "Warnings have been disabled."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-
-msgid "Send Feedback"
-msgstr "Send Feedback"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Send feedback"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit automatically fixed invalid content in the file “%s”."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-
-msgid "Language of the translation isn’t set."
-msgstr "Language of the translation isn’t set."
-
-msgid "Set Language"
-msgstr "Set Language"
-
-msgid "Set language"
-msgstr "Set language"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Language of the translation is the same as source language."
-
-msgid "Fix Language"
-msgstr "Fix Language"
-
-msgid "Fix language"
-msgstr "Fix language"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"This catalogue has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Entries in this catalogue have different plural forms count from what "
-"catalogue’s Plural-Forms header says"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Required header Plural-Forms is missing."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Syntax error in Plural-Forms header (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Fix the Header"
-
-msgid "Fix the header"
-msgstr "Fix the header"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Plural forms expression used by the catalogue is unusual for %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Review"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Error loading message catalogue file “%s”."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Translated: %d of %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Remaining: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d error"
-msgstr[1] "%d errors"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d entry"
-msgstr[1] "%d entries"
-
-msgid " (unsaved)"
-msgstr " (unsaved)"
-
-msgid " (modified)"
-msgstr " (modified)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Failed to update translation memory: %s"
-
-msgid "Purge deleted translations"
-msgstr "Purge deleted translations"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Do you want to remove all translations that are no longer used?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-
-msgid "Keep"
-msgstr "Keep"
-
-msgid "Purge"
-msgstr "Purge"
-
-msgid "Copy from source text"
-msgstr "Copy from source text"
-
-msgid "Copy from Source Text"
-msgstr "Copy from Source Text"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Clear translation"
-
-msgid "Clear Translation"
-msgstr "Clear Translation"
-
-msgid "Edit comment"
-msgstr "Edit comment"
-
-msgid "Edit Comment"
-msgstr "Edit Comment"
-
-msgid "References:"
-msgstr "References:"
-
-msgid "&Bookmarks"
-msgstr "&Bookmarks"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Set bookmark %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Go to bookmark %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Set Bookmark %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Go to Bookmark %i"
-
-msgid "Hide Sidebar"
-msgstr "Hide Sidebar"
-
-msgid "Show Sidebar"
-msgstr "Show Sidebar"
-
-msgid "Hide Status Bar"
-msgstr "Hide Status Bar"
-
-msgid "Show Status Bar"
-msgstr "Show Status Bar"
-
-msgid "Source text:"
-msgstr "Source text:"
-
-msgid "Singular:"
-msgstr "Singular:"
-
-msgid "Plural:"
-msgstr "Plural:"
-
-msgid "Translation:"
-msgstr "Translation:"
-
-msgid "Pre-translated"
-msgstr "Pre-translated"
-
-msgid "Needs Work"
-msgstr "Needs Work"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Needs work"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-
-msgid "Create New Translation"
-msgstr "Create New Translation"
-
-msgid "Create new translation"
-msgstr "Create new translation"
-
-msgid "Everything"
-msgstr "Everything"
-
-#, c-format
-msgid "Form %i"
-msgstr "Form %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Form %i (unused)"
-
-msgid "Singular"
-msgstr "Singular"
-
-msgid "Zero"
-msgstr "Zero"
-
-msgid "One"
-msgstr "One"
-
-msgid "Two"
-msgstr "Two"
-
-msgid "Plural"
-msgstr "Plural"
-
-msgid "Other"
-msgstr "Other"
-
-#, c-format
-msgid "%s Format"
-msgstr "%s Format"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "%s format"
-
-msgid "Source text"
-msgstr "Source text"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Translation — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Source text — %s"
-
-msgid "unknown language"
-msgstr "unknown language"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Failed command: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Failed to merge gettext catalogues."
-
-msgid "Source file"
-msgstr "Source file"
-
-msgid "Source file occurrence:"
-msgstr "Source file occurrence:"
-
-msgid "Open in Editor"
-msgstr "Open in Editor"
-
-msgid "Open in editor"
-msgstr "Open in editor"
-
-msgid "No references for the selected item."
-msgstr "No references for the selected item."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Error opening file %s!"
-
-msgid "Find"
-msgstr "Find"
-
-msgid "Replace"
-msgstr "Replace"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Options"
-
-msgid "Ignore case"
-msgstr "Ignore case"
-
-msgid "Wrap around"
-msgstr "Wrap around"
-
-msgid "Whole words only"
-msgstr "Whole words only"
-
-msgid "Find in source texts"
-msgstr "Find in source texts"
-
-msgid "Find in translations"
-msgstr "Find in translations"
-
-msgid "Find in comments"
-msgstr "Find in comments"
-
-msgid "Close"
-msgstr "Close"
-
-msgid "Replace &All"
-msgstr "Replace &All"
-
-msgid "Replace &all"
-msgstr "Replace &all"
-
-msgid "&Replace"
-msgstr "&Replace"
-
-msgid "< &Previous"
-msgstr "< &Previous"
-
-msgid "&Next >"
-msgstr "&Next >"
-
-msgid "String to find"
-msgstr "String to find"
-
-msgid "Replacement string"
-msgstr "Replacement string"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Cannot execute program: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Language Code or Name (e.g. en_GB)"
-
-msgid "Translation Language"
-msgstr "Translation Language"
-
-msgid "Language of the translation:"
-msgstr "Language of the translation:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Catalogues manager"
-
-msgid "Catalog"
-msgstr "Catalogue"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Untrans"
-msgstr "Untrans"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Needs Work"
-
-msgid "Errors"
-msgstr "Errors"
-
-msgid "Last modified"
-msgstr "Last modified"
-
-msgid "Select directory"
-msgstr "Select directory"
-
-msgid "Directories:"
-msgstr "Directories:"
-
-msgid "<unnamed>"
-msgstr "<unnamed>"
-
-msgid "Do you want to delete the project?"
-msgstr "Do you want to delete the project?"
-
-msgid "Confirmation"
-msgstr "Confirmation"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Do you really want to do mass update of\n"
-"all catalogues in this project?"
 
 msgid "Information about the translator"
 msgstr "Information about the translator"
@@ -1024,8 +1095,8 @@ msgstr "Your Name"
 msgid "Email:"
 msgstr "E-mail:"
 
-msgid "your_email@example.com"
-msgstr "your_e-mail@example.com"
+msgid "you@example.com"
+msgstr "you@example.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1040,8 +1111,8 @@ msgstr "Editing"
 msgid "Automatically compile MO file when saving"
 msgstr "Automatically compile MO file when saving"
 
-msgid "Show summary after catalog update"
-msgstr "Show summary after catalogue update"
+msgid "Show summary after updating files"
+msgstr "Show summary after updating files"
 
 msgid "Check spelling"
 msgstr "Check spelling"
@@ -1182,9 +1253,6 @@ msgstr ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 
-msgid "Cancel"
-msgstr "Cancel"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1203,9 +1271,6 @@ msgstr "Custom Extractors:"
 
 msgid "Custom extractors:"
 msgstr "Custom extractors:"
-
-msgid "Edit…"
-msgstr "Edit…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1272,14 +1337,20 @@ msgstr "Preserve formatting of existing files"
 msgid "Advanced"
 msgstr "Advanced"
 
-msgid "Pre-translating…"
-msgstr "Pre-translating…"
+msgid "Preparing strings…"
+msgstr "Preparing strings…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Pre-translating from translation memory…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Pre-translated %u string"
 msgstr[1] "Pre-translated %u strings"
+
+msgid "Pre-translating…"
+msgstr "Pre-translating…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1346,23 +1417,14 @@ msgstr ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
+msgid "Cancelling…"
+msgstr "Cancelling…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
+msgid "Drag Folders or Files Here"
+msgstr "Drag Folders or Files Here"
+
+msgid "Drag folders or files here"
+msgstr "Drag folders or files here"
 
 msgid "Add Folders…"
 msgstr "Add Folders…"
@@ -1381,6 +1443,17 @@ msgstr "Add Wildcard…"
 
 msgid "Add wildcard…"
 msgstr "Add wildcard…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Reveal in Finder"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Show in Explorer"
+
+msgid "Show in Folder"
+msgstr "Show in Folder"
 
 msgid "Paths"
 msgstr "Paths"
@@ -1421,14 +1494,23 @@ msgstr "UTF-8 (recommended)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Please save the file first. This section cannot be edited until then."
 
+msgid "Plural form translations"
+msgstr "Plural form translations"
+
 msgid "Not all plural forms are translated."
 msgstr "Not all plural forms are translated."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Inconsistent upper/lower case"
 
 msgid "The translation should start as a sentence."
 msgstr "The translation should start as a sentence."
 
 msgid "The translation should start with a lowercase character."
 msgstr "The translation should start with a lowercase character."
+
+msgid "Inconsistent whitespace"
+msgstr "Inconsistent whitespace"
 
 msgid "The translation doesn’t start with a space."
 msgstr "The translation doesn’t start with a space."
@@ -1448,6 +1530,9 @@ msgstr "The translation is missing a space at the end."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "The translation ends with a space, but the source text doesn’t."
 
+msgid "Punctuation checks"
+msgstr "Punctuation checks"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "The translation should end with “%s”."
@@ -1460,38 +1545,23 @@ msgstr "The translation should not end with “%s”."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "The translation ends with “%s”, but the source text ends with “%s”."
 
+msgid "Clear Menu"
+msgstr "Clear Menu"
+
+msgid "Clear menu"
+msgstr "Clear menu"
+
 msgid "Comment:"
 msgstr "Comment:"
 
-msgid "OK"
-msgstr "OK"
+msgid "Update"
+msgstr "Update"
 
-msgid "C&lear"
-msgstr "C&lear"
+msgid "&Delete"
+msgstr "&Delete"
 
-msgid "Clear the comment"
-msgstr "Clear the comment"
-
-msgid "New"
-msgstr "New"
-
-msgid "Create new translations project"
-msgstr "Create new translations project"
-
-msgid "Edit"
-msgstr "Edit"
-
-msgid "Edit the project"
-msgstr "Edit the project"
-
-msgid "Delete the project"
-msgstr "Delete the project"
-
-msgid "Update all"
-msgstr "Update all"
-
-msgid "Update all catalogs in the project"
-msgstr "Update all catalogues in the project"
+msgid "Delete the comment"
+msgstr "Delete the comment"
 
 msgid "Edit project"
 msgstr "Edit project"
@@ -1504,6 +1574,12 @@ msgstr "Browse"
 
 msgid "Add directory to the list"
 msgstr "Add directory to the list"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "&File"
+msgstr "&File"
 
 msgid "&New…"
 msgstr "&New…"
@@ -1520,11 +1596,26 @@ msgstr "&Open…"
 msgid "Open Recent"
 msgstr "Open Recent"
 
+msgid "Open recent"
+msgstr "Open Recent"
+
 msgid "Open from Crowdin…"
 msgstr "Open from Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Open From Crowdin…"
+
+msgid "&Start window"
+msgstr "&Start window"
+
+msgid "&Start Window"
+msgstr "&Start Window"
+
+msgid "Catalogs &manager"
+msgstr "Catalogues &manager"
+
+msgid "Catalogs &Manager"
+msgstr "Catalogues &Manager"
 
 msgid "&Close"
 msgstr "&Close"
@@ -1550,12 +1641,6 @@ msgstr "Check for updates…"
 msgid "&Preferences…"
 msgstr "&Preferences…"
 
-msgid "Catalogs &manager"
-msgstr "Catalogues &manager"
-
-msgid "Catalogs &Manager"
-msgstr "Catalogues &Manager"
-
 msgid "E&xit"
 msgstr "E&xit"
 
@@ -1580,6 +1665,7 @@ msgstr "Edit &comment"
 msgid "Edit &Comment"
 msgstr "Edit &Comment"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Suggestions"
 
@@ -1655,11 +1741,11 @@ msgstr "&Untranslated entries first"
 msgid "&Untranslated Entries First"
 msgstr "&Untranslated Entries First"
 
-msgid "&Show references"
-msgstr "&Show references"
+msgid "&Show code occurrences"
+msgstr "&Show code occurrences"
 
-msgid "&Show References"
-msgstr "&Show References"
+msgid "&Show Code Occurrences"
+msgstr "&Show Code Occurrences"
 
 msgid "Show sidebar"
 msgstr "Show sidebar"
@@ -1667,8 +1753,8 @@ msgstr "Show sidebar"
 msgid "Show status bar"
 msgstr "Show status bar"
 
-msgid "C&atalog"
-msgstr "C&atalogue"
+msgid "&Translation"
+msgstr "&Translation"
 
 msgid "&Update from source code"
 msgstr "&Update from source code"
@@ -1818,8 +1904,8 @@ msgstr ""
 "This will be attached to the command line\n"
 "only if source code charset was given. %c expands to charset value."
 
-msgid "Catalog properties"
-msgstr "Catalogue properties"
+msgid "Translation Properties"
+msgstr "Translation Properties"
 
 msgid "Project name and version:"
 msgstr "Project name and version:"
@@ -1847,9 +1933,6 @@ msgstr "Advanced Extraction Settings…"
 
 msgid "Advanced extraction settings…"
 msgstr "Advanced extraction settings…"
-
-msgid "Translation Properties"
-msgstr "Translation Properties"
 
 msgid "Translation properties"
 msgstr "Translation properties"
@@ -1882,9 +1965,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Also use default keywords for supported languages"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Learn About Gettext Keywords"
-
 msgid "Learn about gettext keywords"
 msgstr "Learn about gettext keywords"
 
@@ -1892,21 +1972,21 @@ msgid "Update summary"
 msgstr "Update summary"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"These strings were found in the sources but were not in the catalogue.\n"
-"Poedit will add them to the catalogue now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 
 msgid "New strings"
 msgstr "New strings"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalogue now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 
 msgid "Obsolete strings"
 msgstr "Obsolete strings"
@@ -1917,8 +1997,11 @@ msgstr "(0 new, 0 obsolete)"
 msgid "Open"
 msgstr "Open"
 
-msgid "Save catalog"
-msgstr "Save catalogue"
+msgid "Open file"
+msgstr "Open file"
+
+msgid "Save file"
+msgstr "Save file"
 
 msgid "Validate"
 msgstr "Validate"
@@ -1942,8 +2025,8 @@ msgid "Show or hide the sidebar"
 msgstr "Show or hide the sidebar"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Previous source text:"
+msgid "Previous source text"
+msgstr "Previous source text"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1952,8 +2035,11 @@ msgstr ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 
-msgid "Notes for translators:"
-msgstr "Notes for translators:"
+msgid "Notes for translators"
+msgstr "Notes for translators"
+
+msgid "Comment"
+msgstr "Comment"
 
 msgid "Add comment"
 msgstr "Add comment"
@@ -1967,8 +2053,8 @@ msgstr "Delete From Translation Memory"
 msgid "Delete from translation memory"
 msgstr "Delete from translation memory"
 
-msgid "Translation suggestions:"
-msgstr "Translation suggestions:"
+msgid "Translation suggestions"
+msgstr "Translation suggestions"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -1998,39 +2084,6 @@ msgstr "Translation memory error: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Cannot create temporary directory."
 
-msgid "Welcome to Poedit"
-msgstr "Welcome to Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Version %s"
-
-msgid "Edit a translation"
-msgstr "Edit a translation"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Open an existing PO file and edit the translation."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-
-msgid "Collaborate on a translation with others"
-msgstr "Collaborate on a translation with others"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Download a file from Crowdin project, translate and sync your changes back."
-
-msgid "What is Crowdin?"
-msgstr "What is Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "There are no translations. That’s unusual."
 
@@ -2050,8 +2103,12 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Learn more about GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "The simplest way to fill this catalogue is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 
 msgid "Update from POT"
 msgstr "Update from POT"
@@ -2069,6 +2126,33 @@ msgstr "Extract from sources"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Configure source code extraction in Properties."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Version %s"
+
+msgid "Create new…"
+msgstr "Create new…"
+
+msgid "Create new translation from POT template."
+msgstr "Create new translation from POT template."
+
+msgid "Browse files"
+msgstr "Browse files"
+
+msgid "Open and edit translation files."
+msgstr "Open and edit translation files."
+
+msgid "Translate Crowdin project"
+msgstr "Translate Crowdin project"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Collaborate with others in a Crowdin project."
+
+msgid "Recent files"
+msgstr "Recent files"
 
 msgid "Sync"
 msgstr "Sync"
@@ -2154,8 +2238,8 @@ msgstr "Cu&t"
 msgid "Cut"
 msgstr "Cut"
 
-msgid "&Delete"
-msgstr "&Delete"
+msgid "Edit"
+msgstr "Edit"
 
 msgid "&Quit"
 msgstr "&Quit"
@@ -2165,6 +2249,9 @@ msgstr "Help"
 
 msgid "&New"
 msgstr "&New"
+
+msgid "New"
+msgstr "New"
 
 msgid "&No"
 msgstr "&No"

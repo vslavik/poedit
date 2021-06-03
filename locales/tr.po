@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -30,20 +30,20 @@ msgstr "Bir daha gösterme"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Yeni: %i, eski: %i)"
 
-msgid "Updating catalog"
-msgstr "Katalog güncelleniyor"
-
 msgid "Collecting source files…"
 msgstr "Kaynak dosyalar toplanıyor…"
 
 msgid "Extracting translatable strings…"
-msgstr "Çevrilebilir dizgeler çıkartılıyor…"
+msgstr "Çevrilebilir dizgeler çıkarılıyor…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Çıkartılan kataloğu yükleme başarısız."
+msgid "Failed to load file with extracted translations."
+msgstr "Çıkarılan çevirilerle dosyayı yükleme başarısız."
 
 msgid "Merging differences…"
 msgstr "Farklılıklar birleştiriliyor…"
+
+msgid "Updating translations"
+msgstr "Çeviriler güncelleniyor"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,22 +79,19 @@ msgstr[1] "%i satır “%s” dosyasından doğru olarak yüklenmedi."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Satır %d, “%s” dosyasında bozulmuş (%s verisi geçerli değil)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Bozuk katalog dosyası: tekil biçim msgstr, msgid_plural ile birlikte "
-"kullanılmış"
+"Bozuk PO dosyası: tekil biçim msgstr, msgid_plural ile birlikte kullanılmış"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Bozuk katalog dosyası: çoğul msgstr biçimi, msgid_plural olmadan kullanılmış"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "Bozuk PO dosyası: çoğul biçim msgstr, msgid_plural olmadan kullanılmış"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Katalog yüklenirken hatalar oldu. Bazı veriler sonuçta kayıp veya bozuk "
-"olabilir."
+"Dosya yüklenirken hatalar oldu. Sonuç olarak bazı veriler eksik veya "
+"bozulmuş olabilir."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -119,18 +116,18 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalog, katalog ayarlarında belirtildiği gibi “%s” karakter kümesine "
+"Dosya, çeviri ayarlarında belirtildiği gibi “%s” karakter kümesine "
 "kaydedilemedi.\n"
 "\n"
 "Bunun yerine UTF-8 olarak kaydedildi ve ayar buna göre değiştirildi."
 
-msgid "Error saving catalog"
-msgstr "Katalog kaydedilirken hata"
+msgid "Error saving file"
+msgstr "Dosya kaydedilirken hata oldu"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -142,7 +139,7 @@ msgstr "desteklenmeyen XLIFF sürümü (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
-msgstr "Çeviri dizesinde bozuk biçimlendirme."
+msgstr "Çeviri dizgesinde bozuk işaretleme."
 
 msgid "(Use default language)"
 msgstr "(Varsayılan dili kullan)"
@@ -172,6 +169,9 @@ msgstr "%s ile eşitleme başarısız oldu."
 
 msgid "Syncing error"
 msgstr "Eşitleme hatası"
+
+msgid "Add"
+msgstr "Ekle"
 
 msgid "JSON request error"
 msgstr "JSON istek hatası"
@@ -207,9 +207,6 @@ msgstr "Kimlik doğrulaması için bekleniyor…"
 
 msgid "Updating user information…"
 msgstr "Kullanıcı bilgileri güncelleniyor…"
-
-msgid "Learn More About Crowdin"
-msgstr "Crowdin Hakkında Bilgi Edinin"
 
 msgid "Learn more about Crowdin"
 msgstr "Crowdin hakkında daha fazla bilgi edinin"
@@ -253,9 +250,6 @@ msgstr "&Kopyala"
 msgid "Learn more"
 msgstr "Daha fazla bilgi edinin"
 
-msgid "Learn More"
-msgstr "Daha Fazla Bilgi Edinin"
-
 msgid "&Help"
 msgstr "&Yardım"
 
@@ -288,15 +282,701 @@ msgstr "Poedit işlemi ile iletişim kurma başarısız."
 msgid "Unhandled exception occurred: %s"
 msgstr "Beklenmeyen bir hata oluştu: %s"
 
-msgid "Open catalog"
-msgstr "Kataloğu aç"
+msgid "Select translation template"
+msgstr "Çeviri şablonunu seçin"
+
+msgid "Select translation file"
+msgstr "Çeviri dosyasını seçin"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit kullanımı kolay bir çeviri düzenleyicisidir."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO Çevirisi"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Dosya ya bozulmuş ya da biçimi Poedit tarafından tanınamıyor."
+
+msgid "The file cannot be opened."
+msgstr "Dosya açılamadı."
+
+msgid "Invalid file"
+msgstr "Dosya geçersiz"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Poedit penceresine birden fazla dosyayı sürükleyip bırakamazsınız."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "“%s” dosyası bir çeviri dosyası değil."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "“%s” dosyası yok."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit kullanımı kolay bir çeviri düzenleyicisidir."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Git"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"%s için sözlük kurulmamış olduğundan yazım denetimi devre dışı bırakıldı."
+
+msgid "Install"
+msgstr "Yükle"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "“%s” dosyası başka bir uygulama tarafından değiştirildi."
+
+msgid "Reload file"
+msgstr "Dosyayı yeniden yükle"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Dosyayı diskten yeniden yüklemek istiyor musunuz? Bunu yaparsanız "
+"Poedit’teki kaydedilmemiş düzenlemeleriniz kaybolacaktır."
+
+msgid "Ignore"
+msgstr "Yoksay"
+
+msgid "Reload File"
+msgstr "Dosyayı Yeniden Yükle"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Dosya değiştirildi. Değişiklikleri kaydetmek istiyor musunuz?"
+
+msgid "Save changes"
+msgstr "Değişiklikleri kaydet"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Eğer kaydetmezseniz yaptığınız değişiklikler kaybolacaktır."
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Do&n’t save"
+msgstr "Kaydet&me"
+
+msgid "Don’t Save"
+msgstr "Kaydetme"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+"Kaydederseniz diğer uygulama tarafından yapılan değişiklikler kaybolacaktır."
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Save Anyway"
+msgstr "Yine de Kaydet"
+
+msgid "Save anyway"
+msgstr "Yine de kaydet"
+
+msgid "Save as…"
+msgstr "Farklı kaydet…"
+
+msgid "Compile to…"
+msgstr "Şuna derle…"
+
+msgid "Compiled Translation Files"
+msgstr "Derlenmiş Çeviri Dosyaları"
+
+msgid "Export as…"
+msgstr "Dışa farklı aktar…"
+
+msgid "HTML Files"
+msgstr "HTML Dosyaları"
+
+#, c-format
+msgid "In: %s"
+msgstr "İçinde: %s"
+
+msgid "Source code not available."
+msgstr "Kaynak kodu mevcut değil."
+
+msgid "Updating failed"
+msgstr "Güncelleme başarısız oldu"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Çeviriler kaynak kodundan güncellenemedi, çünkü dosyanın Özelliklerinde "
+"belirtilen konumda hiç kod bulunamadı."
+
+msgid "Permission denied."
+msgstr "İzin reddedildi."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"Dosyanın Özelliklerinde belirtilen konumdan kaynak kod dosyalarını okuma "
+"izniniz yok."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Dosyalarınıza erişimi daha önce reddettiyseniz, Sistem Tercihleri > Güvenlik "
+"ve Gizlilik > Gizlilik > Dosyalar ve Klasörler’de bu dosyaya izin "
+"verebilirsiniz."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Dosyadaki çeviri girişleri muhtemelen yanlıştır."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+"Dosyayı güncelleme başarısız oldu. Ayrıntılar için 'Ayrıntılar >>' üzerine "
+"tıklayın."
+
+msgid "Open translation template"
+msgstr "Çeviri şablonunu aç"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "Çeviride %d sorun bulundu."
+msgstr[1] "Çeviride %d sorun bulundu."
+
+msgid "Validation results"
+msgstr "Doğrulama sonuçları"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Hatalı girişler listede kırmızı renkle işaretlendi. Hatanın ayrıntıları "
+"böyle bir girişi seçtiğinizde gösterilecektir."
+
+msgid "The file was saved safely."
+msgstr "Dosya güvenli bir şekilde kaydedildi."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Dosya güvenli bir şekilde kaydedildi ve MO biçiminde derlendi, ancak büyük "
+"olasılıkla doğru olarak çalışmayacak."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Dosya güvenli bir şekilde kaydedildi, ancak MO biçiminde derlenemez ve "
+"kullanılamaz."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Dosya, MO biçiminde derlendi, ancak büyük olasılıkla doğru olarak "
+"çalışmayacak."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Dosya, MO biçiminde derlenemez ve kullanılamaz."
+
+msgid "No problems with the translation found."
+msgstr "Çeviri ile ilgili hiç sorun bulunmadı."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Çeviri kullanıma hazır, ancak henüz %d dizge çevrilmemiş."
+msgstr[1] "Çeviri kullanıma hazır, ancak henüz %d dizge çevrilmemiş."
+
+msgid "The translation is ready for use."
+msgstr "Çeviri kullanıma hazır."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit, “%s” dosyasındaki geçersiz içeriği otomatik olarak düzeltti."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Dosyada, PO dosyalarında izin verilmeyen ve dosyanın kullanılmasını "
+"engelleyen birbirinin kopyası olan ögeler var. Poedit sorunu düzeltti, ancak "
+"çalışma gerekli olarak işaretlenen her bir ögenin çevirisini gözden "
+"geçirmeli ve gerekirse düzeltmelisiniz."
+
+msgid "Language of the translation isn’t set."
+msgstr "Çeviri dili ayarlı değil."
+
+msgid "Set Language"
+msgstr "Dili ayarla"
+
+msgid "Set language"
+msgstr "Dili ayarla"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Çeviri dili doğru olarak ayarlanmazsa, öneriler kullanılabilir olmaz. Çoğul "
+"biçimler gibi, diğer özellikler de etkilenebilir."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Çeviri dili kaynak dil ile aynı."
+
+msgid "Fix Language"
+msgstr "Dili Düzelt"
+
+msgid "Fix language"
+msgstr "Dili düzelt"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"Bu dosya çoğul biçimleri olan girişlere sahip, ancak Çoğul-Biçimli başlık "
+"yapılandırılmamış."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Bu dosyadaki girişler, dosyanın Çoğul-Biçim başlığında belirtilen sayıdan "
+"farklı çoğul biçimlere sahip"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Gereken Çoğul-Biçin başlık bilgisi eksik."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Çoğul-Biçim başlığında sözdizimi hatası (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Başlığı Düzelt"
+
+msgid "Fix the header"
+msgstr "Başlığı düzelt"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "Dosya tarafından %s için kullanılan çoğul biçim ifadesi alışılmadık."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Gözden geçir"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Çeviri dosyası “%s” yüklenirken hata oldu."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Çevrilen: %d / %d (%% %d)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Kalan: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d hata"
+msgstr[1] "%d hata"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d dizge"
+msgstr[1] "%d dizge"
+
+msgid " (unsaved)"
+msgstr " (kaydedilmedi)"
+
+msgid " (modified)"
+msgstr " (değiştirildi)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Başarısız olan çeviri belleği güncellemesi: %s"
+
+msgid "Purge deleted translations"
+msgstr "Silinmiş çevirileri temizle"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+"Artık kullanılmayan tüm çevirileri kaldırmak istediğinize emin misiniz?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Temizleyerek devam ederseniz, silinmek üzere işaretlenmiş tüm çeviriler "
+"kalıcı olarak kaldırılacaktır. Gelecekte bunlar geri eklenirse, tekrar "
+"çevirmek zorunda kalacaksınız."
+
+msgid "Keep"
+msgstr "Tut"
+
+msgid "Purge"
+msgstr "Temizle"
+
+msgid "Copy from source text"
+msgstr "Kaynak metinden kopyala"
+
+msgid "Copy from Source Text"
+msgstr "Kaynak Metinden Kopyala"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Çeviriyi temizle"
+
+msgid "Clear Translation"
+msgstr "Çeviriyi Temizle"
+
+msgid "Edit comment"
+msgstr "Açıklamayı düzenle"
+
+msgid "Edit Comment"
+msgstr "Açıklamayı Düzenle"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Kod Oluşumları"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Kod oluşumları"
+
+msgid "&Bookmarks"
+msgstr "Ye&r İmleri"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "%i yer imini ayarla"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "%i yer imine git"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "%i Yer İmini Ayarla"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "%i Yer İmine Git"
+
+msgid "Hide Sidebar"
+msgstr "Kenar Çubuğunu Gizle"
+
+msgid "Show Sidebar"
+msgstr "Kenar Çubuğunu Göster"
+
+msgid "Hide Status Bar"
+msgstr "Durum Çubuğunu Gizle"
+
+msgid "Show Status Bar"
+msgstr "Durum Çubuğunu Göster"
+
+msgid "String length in characters: translation | source"
+msgstr "Karakter olarak dizge uzunluğu: çeviri | kaynak"
+
+msgid "String length in characters"
+msgstr "Karakter olarak dizge uzunluğu"
+
+msgid "Source text"
+msgstr "Kaynak metin"
+
+msgid "Singular"
+msgstr "Tekil"
+
+msgid "Plural"
+msgstr "Çoğul"
+
+msgid "Translation"
+msgstr "Çeviri"
+
+msgid "Pre-translated"
+msgstr "Ön çeviri yapılmış"
+
+msgid "Needs Work"
+msgstr "Çalışma Gerekli"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Çalışma gerekli"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT dosyaları sadece şablonlardır ve kendi başlarına herhangi bir çeviri "
+"içermezler.\n"
+"Bir çeviri yapmak için şablonu temel alan yeni bir PO dosyası oluşturun."
+
+msgid "Create new translation"
+msgstr "Yeni çeviri oluştur"
+
+msgid "Make a new translation from this POT file."
+msgstr "Bu POT dosyasından yeni bir çeviri yapın."
+
+msgid "Everything"
+msgstr "Herşey"
+
+#, c-format
+msgid "Form %i"
+msgstr "Biçim %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Form %i (kullanılmamış)"
+
+msgid "Zero"
+msgstr "Sıfır"
+
+msgid "One"
+msgstr "Bir"
+
+msgid "Two"
+msgstr "İki"
+
+msgid "Other"
+msgstr "Diğer"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s Biçimi"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s biçimi"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Çeviri — %s"
+
+msgid "ID"
+msgstr "Kod"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Kaynak metin — %s"
+
+msgid "unknown language"
+msgstr "bilinmeyen dil"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Başarısız komut: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Gettext kataloglarını birleştirme başarısız."
+
+msgid "Open in Editor"
+msgstr "Düzenleyicide Aç"
+
+msgid "Open in editor"
+msgstr "Düzenleyicide aç"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"Dosyada bu dizgenin kaynak kodundaki oluşumları hakkında sağlanan hiç bilgi "
+"yok."
+
+msgid "No usage information"
+msgstr "Kullanım bilgisi yok"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d kod oluşumu"
+msgstr[1] "%d kod oluşumu"
+
+msgid "Source code not found"
+msgstr "Kaynak kodu bulunamadı"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit, dizgenin kullanıldığı kaynak kodu gösteremiyor, çünkü dosya ya "
+"başvurulan konumda mevcut değil ya da gerçek bir dosyayı göstermeyen "
+"sembolik bir referans."
+
+msgid "File cannot be opened"
+msgstr "Dosya açılamadı"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit “%s” dosyasını açamadı."
+
+msgid "Find"
+msgstr "Bul"
+
+msgid "Replace"
+msgstr "Değiştir"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Seçenekler"
+
+msgid "Ignore case"
+msgstr "Büyük küçük harfi yoksay"
+
+msgid "Wrap around"
+msgstr "Sona gelince baştan devam et"
+
+msgid "Whole words only"
+msgstr "Kelimelere aynen uyanları bul"
+
+msgid "Find in source texts"
+msgstr "Kaynak metinlerde bul"
+
+msgid "Find in translations"
+msgstr "Çevirilerde bul"
+
+msgid "Find in comments"
+msgstr "Açıklamalarda bul"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Replace &All"
+msgstr "&Tümünü Değiştir"
+
+msgid "Replace &all"
+msgstr "&Tümünü değiştir"
+
+msgid "&Replace"
+msgstr "&Değiştir"
+
+msgid "< &Previous"
+msgstr "< Ön&ceki"
+
+msgid "&Next >"
+msgstr "So&nraki >"
+
+msgid "String to find"
+msgstr "Bulunacak dizge"
+
+msgid "Replacement string"
+msgstr "Değiştirilecek dizge"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Program çalıştırılamıyor: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Dil Kodu ya da Adı (örn. tr_TR)"
+
+msgid "Translation Language"
+msgstr "Çeviri Dili"
+
+msgid "Language of the translation:"
+msgstr "Çeviri dili:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Katalog yöneticisi"
+
+msgid "Edit…"
+msgstr "Düzenle…"
+
+msgid "Create new translations project"
+msgstr "Yeni çeviri projesi oluştur"
+
+msgid "Delete the project"
+msgstr "Projeyi sil"
+
+msgid "Edit the project"
+msgstr "Projeyi düzenle"
+
+msgid "Update all"
+msgstr "Tümünü güncelle"
+
+msgid "Update all catalogs in the project"
+msgstr "Projedeki tüm katalogları güncelle"
+
+msgid "Total"
+msgstr "Toplam"
+
+msgid "Untrans"
+msgstr "Çevrilmemiş"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Çalışma Gerekli"
+
+msgid "Errors"
+msgstr "Hatalar"
+
+msgid "Last modified"
+msgstr "Son değişiklik"
+
+msgid "Select directory"
+msgstr "Dizin seçin"
+
+msgid "Directories:"
+msgstr "Dizinler:"
+
+msgid "<unnamed>"
+msgstr "<adsız>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "“%s” projesini silmek istiyor musunuz?"
+
+msgid "Delete project"
+msgstr "Projeyi sil"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Projeyi silmek herhangi bir çeviri dosyasını silmeyecek."
+
+msgid "Confirmation"
+msgstr "Onaylama"
+
+msgid "Update all catalogs in this project?"
+msgstr "Bu projedeki tüm kataloglar güncellensin mi?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Projedeki tüm dosyalarda kaynak kodundan güncelleme gerçekleştirir."
 
 msgid "Catalogs Manager"
 msgstr "Katalog Yöneticisi"
@@ -382,6 +1062,15 @@ msgstr "Konuşmayı Durdur"
 msgid "&View"
 msgstr "&Görünüm"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Araç Çubuğunu Göster"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Araç Çubuğunu Özelleştir…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Tam Ekrana Geç"
 
@@ -394,630 +1083,11 @@ msgstr "Simge Durumuna Küçült"
 msgid "Zoom"
 msgstr "Yakınlaştır"
 
+msgid "Welcome to Poedit"
+msgstr "Poedit Uygulamasına Hoş Geldiniz"
+
 msgid "Bring All to Front"
 msgstr "Tümünü Öne Getir"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO Çevirisi"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Dosya ya bozulmuş ya da biçimi Poedit tarafından tanınamıyor."
-
-msgid "The file cannot be opened."
-msgstr "Dosya açılamadı."
-
-msgid "Invalid file"
-msgstr "Dosya geçersiz"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Poedit penceresine birden fazla dosyayı sürükleyip bırakamazsınız."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "“%s” dosyası bir çeviri dosyası değil."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Dosya"
-
-msgid "&Go"
-msgstr "&Git"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"%s için sözlük kurulmamış olduğundan yazım denetimi devre dışı bırakıldı."
-
-msgid "Install"
-msgstr "Yükle"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalog değiştirildi. Değişiklikleri kaydetmek istiyor musunuz?"
-
-msgid "Save changes"
-msgstr "Değişiklikleri kaydet"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Eğer kaydetmezseniz yaptığınız değişiklikler kaybolacaktır."
-
-msgid "Save"
-msgstr "Kaydet"
-
-msgid "Do&n’t save"
-msgstr "Kaydet&me"
-
-msgid "Don’t Save"
-msgstr "Kaydetme"
-
-msgid "Save as…"
-msgstr "Farklı kaydet…"
-
-msgid "Compile to…"
-msgstr "Şuna derle…"
-
-msgid "Compiled Translation Files"
-msgstr "Derlenmiş Çeviri Dosyaları"
-
-msgid "Export as…"
-msgstr "Dışa farklı aktar…"
-
-msgid "HTML Files"
-msgstr "HTML Dosyaları"
-
-msgid "Open catalog template"
-msgstr "Katalog şablonu aç"
-
-msgid "Source code not available."
-msgstr "Kaynak kodu mevcut değil."
-
-msgid "Updating failed"
-msgstr "Güncelleme başarısız oldu"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Çeviriler kaynak kodundan güncellenemedi, çünkü kataloğun Özelliklerinde "
-"belirtilen konumda hiç kod bulunamadı."
-
-msgid "Permission denied."
-msgstr "İzin reddedildi."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Kataloğun Özellikleri’nde belirtilen konumdan kaynak kod dosyalarını okuma "
-"izniniz yok."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Dosyalarınıza erişimi daha önce reddettiyseniz, Sistem Tercihleri > Güvenlik "
-"ve Gizlilik > Gizlilik > Dosyalar ve Klasörler’de bu dosyaya izin "
-"verebilirsiniz."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Katalogdaki dizgeler büyük olasılıkla yanlış."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Katalog güncellenemedi. Ayrıntıları görüntülemek için 'Ayrıntılar >>' "
-"üzerine tıklayın."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "Çeviride %d sorun bulundu."
-msgstr[1] "Çeviride %d sorun bulundu."
-
-msgid "Validation results"
-msgstr "Doğrulama sonuçları"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Sorunlu dizgeler listede kırmızı renk ile işaretlendi. Sorunlu bir dizgeyi "
-"seçerek sorunun ayrıntılarını görebilirsiniz."
-
-msgid "The file was saved safely."
-msgstr "Dosya güvenli bir şekilde kaydedildi."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Dosya güvenli bir şekilde kaydedildi ve MO biçiminde derlendi, ancak büyük "
-"olasılıkla doğru olarak çalışmayacak."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Dosya güvenli bir şekilde kaydedildi, ancak MO biçiminde derlenemez ve "
-"kullanılamaz."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Dosya, MO biçiminde derlendi, ancak büyük olasılıkla doğru olarak "
-"çalışmayacak."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Dosya, MO biçiminde derlenemez ve kullanılamaz."
-
-msgid "No problems with the translation found."
-msgstr "Çeviri ile ilgili hiç sorun bulunmadı."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Çeviri kullanıma hazır, ancak henüz %d dizge çevrilmemiş."
-msgstr[1] "Çeviri kullanıma hazır, ancak henüz %d dizge çevrilmemiş."
-
-msgid "The translation is ready for use."
-msgstr "Çeviri kullanıma hazır."
-
-msgid "Warnings have been disabled."
-msgstr "Uyarılar etkisizleştirildi."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Aşırı yanlış pozitifler nedeniyle uyarıları etkisizleştirirseniz, lütfen "
-"bunları iyileştirmek için help@poedit.net adresine bir örnek dosya "
-"göndermeyi düşünün."
-
-msgid "Send Feedback"
-msgstr "Geri Bildirim Gönder"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Geri bildirim gönder"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit, “%s” dosyasındaki geçersiz içeriği otomatik olarak düzeltti."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Dosyada, PO dosyalarında izin verilmeyen ve dosyanın kullanılmasını "
-"engelleyen birbirinin kopyası olan ögeler var. Poedit sorunu düzeltti, ancak "
-"çalışma gerekli olarak işaretlenen her bir ögenin çevirisini gözden "
-"geçirmeli ve gerekirse düzeltmelisiniz."
-
-msgid "Language of the translation isn’t set."
-msgstr "Çeviri dili ayarlı değil."
-
-msgid "Set Language"
-msgstr "Dili ayarla"
-
-msgid "Set language"
-msgstr "Dili ayarla"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Çeviri dili doğru olarak ayarlanmazsa, öneriler kullanılabilir olmaz. Çoğul "
-"biçimler gibi, diğer özellikler de etkilenebilir."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Çeviri dili kaynak dil ile aynı."
-
-msgid "Fix Language"
-msgstr "Dili Düzelt"
-
-msgid "Fix language"
-msgstr "Dili düzelt"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Bu katalogda çoğul biçimleri olan dizgeler var, ancak Çoğul-Biçimli başlık "
-"yapılandırılmamış."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Bu katalogdaki dizgelerde, kataloğun Çoğul-Biçim başlığında belirtilen "
-"sayıdan farklı çoğul biçimler var"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Gereken Çoğul-Biçin başlık bilgisi eksik."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Çoğul-Biçim başlığında sözdizimi hatası (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Başlığı Düzelt"
-
-msgid "Fix the header"
-msgstr "Başlığı düzelt"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Katalog tarafından %s için kullanılan çoğul biçim ifadesi alışılmadık."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Gözden geçir"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "İleti katalog dosyası “%s” yüklenirken bir hata oluştu."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Çevrilen: %d / %d (%% %d)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Kalan: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d sorun"
-msgstr[1] "%d sorun"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d dizge"
-msgstr[1] "%d dizge"
-
-msgid " (unsaved)"
-msgstr " (kaydedilmedi)"
-
-msgid " (modified)"
-msgstr " (değiştirildi)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Çeviri belleği güncellenemedi: %s"
-
-msgid "Purge deleted translations"
-msgstr "Silinmiş çevirileri temizle"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
-"Artık kullanılmayan tüm çevirileri kaldırmak istediğinize emin misiniz?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Temizleyerek devam ederseniz, silinmek üzere işaretlenmiş tüm çeviriler "
-"kalıcı olarak kaldırılacaktır. Gelecekte bunlar geri eklenirse, tekrar "
-"çevirmek zorunda kalacaksınız."
-
-msgid "Keep"
-msgstr "Tut"
-
-msgid "Purge"
-msgstr "Temizle"
-
-msgid "Copy from source text"
-msgstr "Kaynak metinden kopyala"
-
-msgid "Copy from Source Text"
-msgstr "Kaynak Metinden Kopyala"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Çeviriyi temizle"
-
-msgid "Clear Translation"
-msgstr "Çeviriyi Temizle"
-
-msgid "Edit comment"
-msgstr "Açıklamayı düzenle"
-
-msgid "Edit Comment"
-msgstr "Açıklamayı Düzenle"
-
-msgid "References:"
-msgstr "Kaynaklar:"
-
-msgid "&Bookmarks"
-msgstr "Ye&r İmleri"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "%i yer imini ayarla"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "%i yer imine git"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "%i Yer İmini Ayarla"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "%i Yer İmine Git"
-
-msgid "Hide Sidebar"
-msgstr "Kenar Çubuğunu Gizle"
-
-msgid "Show Sidebar"
-msgstr "Kenar Çubuğunu Göster"
-
-msgid "Hide Status Bar"
-msgstr "Durum Çubuğunu Gizle"
-
-msgid "Show Status Bar"
-msgstr "Durum Çubuğunu Göster"
-
-msgid "Source text:"
-msgstr "Kaynak metin:"
-
-msgid "Singular:"
-msgstr "Tekil:"
-
-msgid "Plural:"
-msgstr "Çoğul:"
-
-msgid "Translation:"
-msgstr "Çeviri:"
-
-msgid "Pre-translated"
-msgstr "Ön çeviri yapılmış"
-
-msgid "Needs Work"
-msgstr "Çalışma Gerekli"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Çalışma gerekli"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT dosyaları sadece şablonlardır ve kendi başlarına herhangi bir çeviri "
-"içermezler.\n"
-"Bir çeviri yapmak için şablonu temel alan yeni bir PO dosyası oluşturun."
-
-msgid "Create New Translation"
-msgstr "Yeni Çeviri Oluştur"
-
-msgid "Create new translation"
-msgstr "Yeni çeviri oluştur"
-
-msgid "Everything"
-msgstr "Herşey"
-
-#, c-format
-msgid "Form %i"
-msgstr "Biçim %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Form %i (kullanılmamış)"
-
-msgid "Singular"
-msgstr "Tekil"
-
-msgid "Zero"
-msgstr "Sıfır"
-
-msgid "One"
-msgstr "Bir"
-
-msgid "Two"
-msgstr "İki"
-
-msgid "Plural"
-msgstr "Çoğul"
-
-msgid "Other"
-msgstr "Diğer"
-
-#, c-format
-msgid "%s Format"
-msgstr "%s Biçimi"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "%s biçimi"
-
-msgid "Source text"
-msgstr "Kaynak metin"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Çeviri — %s"
-
-msgid "ID"
-msgstr "Kod"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Kaynak metin — %s"
-
-msgid "unknown language"
-msgstr "bilinmeyen dil"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Başarısız komut: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Gettext kataloglarını birleştirme başarısız."
-
-msgid "Source file"
-msgstr "Kaynak dosyası"
-
-msgid "Source file occurrence:"
-msgstr "Kaynak dosya oluşumu:"
-
-msgid "Open in Editor"
-msgstr "Düzenleyicide Aç"
-
-msgid "Open in editor"
-msgstr "Düzenleyicide aç"
-
-msgid "No references for the selected item."
-msgstr "Seçilen öğe için hiç kaynak yok."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "%s dosyası açılırken hata!"
-
-msgid "Find"
-msgstr "Bul"
-
-msgid "Replace"
-msgstr "Değiştir"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Seçenekler"
-
-msgid "Ignore case"
-msgstr "Büyük küçük harfi yoksay"
-
-msgid "Wrap around"
-msgstr "Sona gelince baştan devam et"
-
-msgid "Whole words only"
-msgstr "Kelimelere aynen uyanları bul"
-
-msgid "Find in source texts"
-msgstr "Kaynak metinlerde bul"
-
-msgid "Find in translations"
-msgstr "Çevirilerde bul"
-
-msgid "Find in comments"
-msgstr "Açıklamalarda bul"
-
-msgid "Close"
-msgstr "Kapat"
-
-msgid "Replace &All"
-msgstr "&Tümünü Değiştir"
-
-msgid "Replace &all"
-msgstr "&Tümünü değiştir"
-
-msgid "&Replace"
-msgstr "&Değiştir"
-
-msgid "< &Previous"
-msgstr "< Ön&ceki"
-
-msgid "&Next >"
-msgstr "So&nraki >"
-
-msgid "String to find"
-msgstr "Bulunacak dizge"
-
-msgid "Replacement string"
-msgstr "Değiştirilecek dizge"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Program çalıştırılamıyor: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Dil Kodu ya da Adı (örn. tr_TR)"
-
-msgid "Translation Language"
-msgstr "Çeviri Dili"
-
-msgid "Language of the translation:"
-msgstr "Çeviri dili:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Katalog yöneticisi"
-
-msgid "Catalog"
-msgstr "Katalog"
-
-msgid "Total"
-msgstr "Toplam"
-
-msgid "Untrans"
-msgstr "Çevrilmemiş"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Çalışma Gerekli"
-
-msgid "Errors"
-msgstr "Hatalar"
-
-msgid "Last modified"
-msgstr "Son değişiklik"
-
-msgid "Select directory"
-msgstr "Dizin seçin"
-
-msgid "Directories:"
-msgstr "Dizinler:"
-
-msgid "<unnamed>"
-msgstr "<adsız>"
-
-msgid "Do you want to delete the project?"
-msgstr "Projeyi silmek istiyor musunuz?"
-
-msgid "Confirmation"
-msgstr "Onaylama"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Bu projedeki tüm katalogları toplu güncellemeyi\n"
-"gerçekten istiyor musunuz?"
 
 msgid "Information about the translator"
 msgstr "Çevirmen hakkında bilgi"
@@ -1031,8 +1101,8 @@ msgstr "Adınız"
 msgid "Email:"
 msgstr "E-posta:"
 
-msgid "your_email@example.com"
-msgstr "epostaniz@ornek.com"
+msgid "you@example.com"
+msgstr "siz@ornek.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1047,8 +1117,8 @@ msgstr "Düzenleme"
 msgid "Automatically compile MO file when saving"
 msgstr "Kaydederken MO dosyasını otomatik olarak derle"
 
-msgid "Show summary after catalog update"
-msgstr "Katalog güncellemesinden sonra özeti göster"
+msgid "Show summary after updating files"
+msgstr "Dosyalar güncellendikten sonra özet göster"
 
 msgid "Check spelling"
 msgstr "Yazım denetimi yap"
@@ -1189,9 +1259,6 @@ msgstr ""
 "Çeviri belleğini sıfırlama tüm saklanan çevirileri geri dönülmez bir şekilde "
 "bundan silecek. Bu işlemi geri alamazsınız."
 
-msgid "Cancel"
-msgstr "İptal"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1202,17 +1269,14 @@ msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
 msgstr ""
-"Kaynak kodu çıkartıcıları kaynak kodu dosyalarında çevrilebilir dizgeleri "
-"bulmak ve onları çıkarmak için kullanılır böylece çevrilebilirler."
+"Kaynak kodu çıkarıcıları kaynak kodu dosyalarında çevrilebilir dizgeleri "
+"bulmak ve onları çıkarmak için kullanılır böylece bunlar çevrilebilir."
 
 msgid "Custom Extractors:"
-msgstr "Özel Ayıklayıcılar:"
+msgstr "Özel Çıkarıcılar:"
 
 msgid "Custom extractors:"
-msgstr "Özel ayıklayıcılar:"
-
-msgid "Edit…"
-msgstr "Düzenle…"
+msgstr "Özel çıkarıcılar:"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1225,14 +1289,14 @@ msgstr ""
 "diğerleri) tarafından tanınan tüm programlama dillerini destekler."
 
 msgid "Delete extractor"
-msgstr "Çıkartıcıyı sil"
+msgstr "Çıkarıcıyı sil"
 
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
-msgstr "\"%s\" çıkartıcısını silmek istediğinize emin misiniz?"
+msgstr "“%s” çıkarıcısını silmek istediğinize emin misiniz?"
 
 msgid "Extractors"
-msgstr "Ayıklayıcılar"
+msgstr "Çıkarıcılar"
 
 msgid "Accounts"
 msgstr "Hesaplar"
@@ -1279,14 +1343,20 @@ msgstr "Var olan dosyaların biçimini koru"
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-msgid "Pre-translating…"
-msgstr "Ön çeviri yapılıyor…"
+msgid "Preparing strings…"
+msgstr "Dizgeler hazırlanıyor…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Çeviri belleğinden ön çeviri…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u dizgenin ön çevirisi yapıldı"
 msgstr[1] "%u dizgenin ön çevirisi yapıldı"
+
+msgid "Pre-translating…"
+msgstr "Ön çeviri yapılıyor…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1356,23 +1426,14 @@ msgstr ""
 "ile yaptığınız çeviriler Poedit tarafından yeterince öğrenildikten sonra "
 "yarı otomatik çeviriler etkili olur."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Klasörleri Buraya Sürükleyin ve Bırakın</big>\n"
-"\n"
-"ya da + düğmesini kullanın"
+msgid "Cancelling…"
+msgstr "İptal ediliyor…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Klasörleri buraya sürükleyin ve bırakın</big>\n"
-"\n"
-"ya da + düğmesini kullanın"
+msgid "Drag Folders or Files Here"
+msgstr "Klasörleri veya Dosyaları Buraya Sürükleyin"
+
+msgid "Drag folders or files here"
+msgstr "Klasörleri veya dosyaları buraya sürükleyin"
 
 msgid "Add Folders…"
 msgstr "Klasörleri Ekle…"
@@ -1392,6 +1453,17 @@ msgstr "Joker Karakter Ekle…"
 msgid "Add wildcard…"
 msgstr "Joker karakter ekle…"
 
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Finder’da Göster"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Gezgin’de Göster"
+
+msgid "Show in Folder"
+msgstr "Klasörde Göster"
+
 msgid "Paths"
 msgstr "Yollar"
 
@@ -1399,10 +1471,10 @@ msgid "Excluded paths"
 msgstr "Hariç tutulan yollar"
 
 msgid "Advanced extraction settings"
-msgstr "Gelişmiş çıkartma ayarları"
+msgstr "Gelişmiş çıkarma ayarları"
 
 msgid "Extract notes for translators from:"
-msgstr "Çevirmenler için çıkartma notlarının yeri:"
+msgstr "Çevirmenler için çıkarma notlarının yeri:"
 
 msgid "Comments prefixed with:"
 msgstr "Yorumların ön eki:"
@@ -1431,14 +1503,23 @@ msgstr "UTF-8 (önerilir)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Lütfen önce dosyayı kaydedin. O zamana kadar bu bölüm düzenlenemez."
 
+msgid "Plural form translations"
+msgstr "Çoğul biçim çevirileri"
+
 msgid "Not all plural forms are translated."
 msgstr "Tüm çoğul biçimler çevrilmedi."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Tutarsız büyük/küçük harf"
 
 msgid "The translation should start as a sentence."
 msgstr "Çeviri bir cümle olarak başlamalı."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Çeviri bir küçük harf karakteri ile başlamalı."
+
+msgid "Inconsistent whitespace"
+msgstr "Tutarsız boşluk"
 
 msgid "The translation doesn’t start with a space."
 msgstr "Çeviri bir boşluk ile başlamıyor."
@@ -1459,6 +1540,9 @@ msgstr "Çevirinin sonunda bir boşluk eksik."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Çeviri bir boşluk ile bitiyor, ancak kaynak metin bitmiyor."
 
+msgid "Punctuation checks"
+msgstr "Noktalama denetimleri"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Çeviri “%s” ile bitmeli."
@@ -1471,38 +1555,23 @@ msgstr "Çeviri “%s” ile bitmemeli."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Çeviri “%s” ile bitiyor, ancak kaynak metin “%s” ile bitiyor."
 
+msgid "Clear Menu"
+msgstr "Menüyü Temizle"
+
+msgid "Clear menu"
+msgstr "Menüyü temizle"
+
 msgid "Comment:"
 msgstr "Açıklama:"
 
-msgid "OK"
-msgstr "Tamam"
+msgid "Update"
+msgstr "Güncelle"
 
-msgid "C&lear"
-msgstr "&Temizle"
+msgid "&Delete"
+msgstr "&Sil"
 
-msgid "Clear the comment"
-msgstr "Açıklamayı temizle"
-
-msgid "New"
-msgstr "Yeni"
-
-msgid "Create new translations project"
-msgstr "Yeni çeviri projesi oluştur"
-
-msgid "Edit"
-msgstr "Düzenle"
-
-msgid "Edit the project"
-msgstr "Projeyi düzenle"
-
-msgid "Delete the project"
-msgstr "Projeyi sil"
-
-msgid "Update all"
-msgstr "Tümünü güncelle"
-
-msgid "Update all catalogs in the project"
-msgstr "Projedeki tüm katalogları güncelle"
+msgid "Delete the comment"
+msgstr "Açıklamayı sil"
 
 msgid "Edit project"
 msgstr "Projeyi düzenle"
@@ -1515,6 +1584,12 @@ msgstr "Gözat"
 
 msgid "Add directory to the list"
 msgstr "Klasörü listeye ekle"
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "&File"
+msgstr "&Dosya"
 
 msgid "&New…"
 msgstr "&Yeni…"
@@ -1531,11 +1606,26 @@ msgstr "&Aç…"
 msgid "Open Recent"
 msgstr "Son Kullanılanları Aç"
 
+msgid "Open recent"
+msgstr "En sonunucuyu aç"
+
 msgid "Open from Crowdin…"
 msgstr "Crowdin’den aç…"
 
 msgid "Open From Crowdin…"
 msgstr "Crowdin’den Aç…"
+
+msgid "&Start window"
+msgstr "Pencereyi &başlat"
+
+msgid "&Start Window"
+msgstr "Pencereyi &Başlat"
+
+msgid "Catalogs &manager"
+msgstr "&Katalog yöneticisi"
+
+msgid "Catalogs &Manager"
+msgstr "&Katalog Yöneticisi"
 
 msgid "&Close"
 msgstr "&Kapat"
@@ -1561,12 +1651,6 @@ msgstr "Güncellemeleri denetle…"
 msgid "&Preferences…"
 msgstr "&Tercihler…"
 
-msgid "Catalogs &manager"
-msgstr "&Katalog yöneticisi"
-
-msgid "Catalogs &Manager"
-msgstr "&Katalog Yöneticisi"
-
 msgid "E&xit"
 msgstr "Çı&kış"
 
@@ -1591,6 +1675,7 @@ msgstr "Açıklamayı dü&zenle"
 msgid "Edit &Comment"
 msgstr "Açıklamayı Dü&zenle"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Öneriler"
 
@@ -1655,10 +1740,10 @@ msgid "&Group By Context"
 msgstr "Bağlama Göre &Grupla"
 
 msgid "Entries with errors first"
-msgstr "Sorunlu dizgeler en üstte"
+msgstr "Hataları olan dizgeler en üstte"
 
 msgid "Entries with Errors First"
-msgstr "Sorunlu Dizgeler En Üstte"
+msgstr "Hataları Olan Dizgeler En Üstte"
 
 msgid "&Untranslated entries first"
 msgstr "Ç&evrilmemiş dizgeler en üstte"
@@ -1666,11 +1751,11 @@ msgstr "Ç&evrilmemiş dizgeler en üstte"
 msgid "&Untranslated Entries First"
 msgstr "Ç&evrilmemiş Dizgeler En Üstte"
 
-msgid "&Show references"
-msgstr "Kaynakları gö&ster"
+msgid "&Show code occurrences"
+msgstr "Kod oluşumlarını &göster"
 
-msgid "&Show References"
-msgstr "Kaynakları Gö&ster"
+msgid "&Show Code Occurrences"
+msgstr "Kod Oluşumlarını &Göster"
 
 msgid "Show sidebar"
 msgstr "Kenar çubuğunu göster"
@@ -1678,8 +1763,8 @@ msgstr "Kenar çubuğunu göster"
 msgid "Show status bar"
 msgstr "Durum çubuğunu göster"
 
-msgid "C&atalog"
-msgstr "&Katalog"
+msgid "&Translation"
+msgstr "Ç&eviri"
 
 msgid "&Update from source code"
 msgstr "Kaynak kodundan gü&ncelle"
@@ -1775,7 +1860,7 @@ msgid "&About"
 msgstr "H&akkında"
 
 msgid "Extractor setup"
-msgstr "Çıkartıcı kurulumu"
+msgstr "Çıkarıcı kurulumu"
 
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Noktalı virgülle ayrılmış uzantılar listesi (örn. *.cpp;*.h):"
@@ -1784,7 +1869,7 @@ msgid "Invocation:"
 msgstr "Çağrı:"
 
 msgid "Command to extract translations:"
-msgstr "Çevirileri çıkartmak için komut:"
+msgstr "Çevirileri çıkarmak için komut:"
 
 msgid ""
 "This is the command used to launch the extractor.\n"
@@ -1792,7 +1877,7 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Bu, çıkartıcıyı çalıştırmak için kullanılan komuttur.\n"
+"Bu, çıkarıcıyı çalıştırmak için kullanılan komuttur.\n"
 "%o çıktı dosyası adına, %K anahtar kelimelerin listesine,\n"
 "%F girdi dosyalarının listesine, %C karakter kümesi\n"
 "işaretine dönüşür (aşağıya bakınız)."
@@ -1830,8 +1915,8 @@ msgstr ""
 "bu komut satırına eklenecektir.\n"
 "%c karakter kümesi değerini yazar."
 
-msgid "Catalog properties"
-msgstr "Katalog özellikleri"
+msgid "Translation Properties"
+msgstr "Çeviri Özellikleri"
 
 msgid "Project name and version:"
 msgstr "Proje adı ve sürümü:"
@@ -1855,13 +1940,10 @@ msgid "Charset:"
 msgstr "Karakter kümesi:"
 
 msgid "Advanced Extraction Settings…"
-msgstr "Gelişmiş Çıkartma Ayarları…"
+msgstr "Gelişmiş Çıkarma Ayarları…"
 
 msgid "Advanced extraction settings…"
-msgstr "Gelişmiş çıkartma ayarları…"
-
-msgid "Translation Properties"
-msgstr "Çeviri Özellikleri"
+msgstr "Gelişmiş çıkarma ayarları…"
 
 msgid "Translation properties"
 msgstr "Çeviri özellikleri"
@@ -1873,7 +1955,7 @@ msgid "Sources paths"
 msgstr "Kaynak yolları"
 
 msgid "Extract text from source files in the following directories:"
-msgstr "Kaynak dosyalardan metinleri şurada belirtilen dizinlere çıkart:"
+msgstr "Kaynak dosyalardan metinleri şurada belirtilen dizinlere çıkar:"
 
 msgid "Base path:"
 msgstr "Temel yol:"
@@ -1894,9 +1976,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Desteklenen diller için varsayılan anahtar kelimeleri de kullan"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Gettext Anahtar Kelimeleri Hakkında Bilgi Edinin"
-
 msgid "Learn about gettext keywords"
 msgstr "Gettext anahtar kelimeleri hakkında bilgi edinin"
 
@@ -1904,21 +1983,21 @@ msgid "Update summary"
 msgstr "Güncelleme özeti"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Bu dizgeler kaynaklarda bulundu ancak katalogda bulunamadı.\n"
-"Poedit bunları şimdi kataloğa ekleyecek."
+"Bu dizgeler kaynaklarda bulundu ancak dosyada bulunamadı.\n"
+"Poedit bunları şimdi dosyaya ekleyecek."
 
 msgid "New strings"
 msgstr "Yeni dizgeler"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Bu dizgeler artık kaynaklarda yok.\n"
-"Poedit bunları şimdi katalogdan kaldıracak."
+"Bu dizgeler artık kaynak kodda yok.\n"
+"Poedit bunları şimdi dosyadan kaldıracak."
 
 msgid "Obsolete strings"
 msgstr "Eski dizgeler"
@@ -1929,8 +2008,11 @@ msgstr "(0 yeni, 0 eski)"
 msgid "Open"
 msgstr "Aç"
 
-msgid "Save catalog"
-msgstr "Kataloğu kaydet"
+msgid "Open file"
+msgstr "Dosya aç"
+
+msgid "Save file"
+msgstr "Dosyayı kaydet"
 
 msgid "Validate"
 msgstr "Doğrula"
@@ -1954,8 +2036,8 @@ msgid "Show or hide the sidebar"
 msgstr "Kenar çubuğunu göster veya gizle"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Önceki kaynak metin:"
+msgid "Previous source text"
+msgstr "Önceki kaynak metin"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1964,8 +2046,11 @@ msgstr ""
 "Belirsiz çevirinin karşılık geldiği eski kaynak metin (bir güncelleme "
 "sırasında değiştirilmeden önce)."
 
-msgid "Notes for translators:"
-msgstr "Çevirmenler için notlar:"
+msgid "Notes for translators"
+msgstr "Çevirmenler için notlar"
+
+msgid "Comment"
+msgstr "Açıklama"
 
 msgid "Add comment"
 msgstr "Yorum ekle"
@@ -1979,8 +2064,8 @@ msgstr "Çeviri Belleğinden Sil"
 msgid "Delete from translation memory"
 msgstr "Çeviri belleğinden sil"
 
-msgid "Translation suggestions:"
-msgstr "Çeviri önerileri:"
+msgid "Translation suggestions"
+msgstr "Çeviri önerileri"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2010,40 +2095,6 @@ msgstr "Çeviri belleği hatası: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Geçici dizin oluşturulamıyor."
 
-msgid "Welcome to Poedit"
-msgstr "Poedit Uygulamasına Hoş Geldiniz"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Sürüm %s"
-
-msgid "Edit a translation"
-msgstr "Bir çeviriyi düzenle"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Varolan bir PO dosyasını açın ve çeviriyi düzenleyin."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Varolan bir PO dosyası ya da POT şablonu alın ve bundan yeni bir çeviri "
-"oluşturun."
-
-msgid "Collaborate on a translation with others"
-msgstr "Bir çeviride diğerlerine katkıda bulun"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Crowdin projesinden bir dosya indirin, çevirin ve tekrar değişikliklerinizi "
-"eşitleyin."
-
-msgid "What is Crowdin?"
-msgstr "Crowdin nedir?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Herhangi bir çeviri bulunamadı. Bu durum normal değil."
 
@@ -2056,16 +2107,19 @@ msgid ""
 msgstr ""
 "Çevrilebilir dizgeler Gettext sistemine el ile eklenmez ancak kaynak "
 "kodundan otomatik olarak\n"
-"ayıklanır. Böylece güncel ve doğru kalırlar.\n"
+"çıkarılır. Böylece güncel ve doğru kalırlar.\n"
 "Çevirmenler genellikle geliştirici tarafından hazırlanan PO şablon "
-"dosyalarını (POT'ları) kullanır."
+"dosyalarını (POT’ları) kullanır."
 
 msgid "(Learn more about GNU gettext)"
 msgstr "(GNU gettext hakkında daha fazla bilgi edinin)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Bu kataloğu doldurmanın en kolay yolu bir POT dosyasından güncellemektir:"
+"Bu dosyayı çevirilerle doldurmanın en kolay yolu bir POT dosyasından "
+"güncellemektir:"
 
 msgid "Update from POT"
 msgstr "POT dosyasından güncelle"
@@ -2075,13 +2129,40 @@ msgstr "Çevrilebilir dizgeleri var olan bir POT şablonundan alın."
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
-msgstr "Çevrilebilir dizgeleri doğrudan kaynak kodundan çıkartabilirsiniz:"
+msgstr "Çevrilebilir dizgeleri doğrudan kaynak kodundan çıkarabilirsiniz:"
 
 msgid "Extract from sources"
-msgstr "Kaynaklardan çıkart"
+msgstr "Kaynaklardan çıkar"
 
 msgid "Configure source code extraction in Properties."
-msgstr "Özellikler'de kaynak kod çıkartmayı yapılandırın."
+msgstr "Özellikler’de kaynak kod çıkarmayı yapılandırın."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Sürüm %s"
+
+msgid "Create new…"
+msgstr "Yeni oluştur…"
+
+msgid "Create new translation from POT template."
+msgstr "POT şablonundan yeni çeviri oluşturun."
+
+msgid "Browse files"
+msgstr "Dosyalara gözat"
+
+msgid "Open and edit translation files."
+msgstr "Çeviri dosyalarını açın ve düzenleyin."
+
+msgid "Translate Crowdin project"
+msgstr "Crowdin projesini çevir"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Bir Crowdin projesinde başkalarıyla işbirliği yapın."
+
+msgid "Recent files"
+msgstr "Son dosyalar"
 
 msgid "Sync"
 msgstr "Eşitle"
@@ -2167,8 +2248,8 @@ msgstr "&Kes"
 msgid "Cut"
 msgstr "Kes"
 
-msgid "&Delete"
-msgstr "&Sil"
+msgid "Edit"
+msgstr "Düzenle"
 
 msgid "&Quit"
 msgstr "Çı&k"
@@ -2178,6 +2259,9 @@ msgstr "Yardım"
 
 msgid "&New"
 msgstr "&Yeni"
+
+msgid "New"
+msgstr "Yeni"
 
 msgid "&No"
 msgstr "&Hayır"

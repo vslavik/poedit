@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Tajik\n"
 "Language: tg_TJ\n"
@@ -30,20 +30,20 @@ msgstr "Аз нав намоиш надодан"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Нав: %i, куҳна: %i)"
 
-msgid "Updating catalog"
-msgstr "Навсозии каталог"
-
 msgid "Collecting source files…"
 msgstr "Ҷамъкунии файлҳои манбаъ…"
 
 msgid "Extracting translatable strings…"
 msgstr "Баровардани сатрҳои тарҷумашаванда…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Боркунии файлҳои баровардашуда баргузор нагашт."
+msgid "Failed to load file with extracted translations."
+msgstr ""
 
 msgid "Merging differences…"
 msgstr "Муттаҳидшавии фарқиятҳо…"
+
+msgid "Updating translations"
+msgstr ""
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,23 +79,16 @@ msgstr[1] "%i сатри файли “%s” ба таври дуруст бор
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Сатри %d дар файли “%s” вайрон шудааст (санаи %s беэътибор аст)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Файли тарҷума вайрон шудааст: шакли ҷамъи msgstr бо шакли ҷамъи msgid "
-"истифода шудааст"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Файли тарҷума вайрон шудааст: шакли ҷамъи msgstr бе шакли ҷамъи msgid "
-"истифода шудааст"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Ҳангоми боркунии каталог хато пайдо шуд. Эҳтимол баъзе маълумотҳо гум "
-"шудаанд ё ҳамчун натиҷа вайрон шудаанд."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -121,19 +114,14 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Файл дар маҷмӯи аломатҳои “%s”, ки дар танзимоти файл татбиқ шудааст, нигоҳ "
-"дошта намешавад.\n"
-"\n"
-"Файл ба ивази рамзгузории интихобшуда дар формати UTF-8 нигоҳ дошта шудааст "
-"ва танзими файл мувофиқи ин шакл тағйир ёфт."
 
-msgid "Error saving catalog"
-msgstr "Захиракунии файл қатъ карда шуд"
+msgid "Error saving file"
+msgstr ""
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -175,6 +163,9 @@ msgstr "Ҳамоҳангсозӣ бо %s иҷро нашуд."
 msgid "Syncing error"
 msgstr "Хатои ҳамоҳангсозӣ"
 
+msgid "Add"
+msgstr ""
+
 msgid "JSON request error"
 msgstr "Хатои дархости JSON"
 
@@ -209,9 +200,6 @@ msgstr "Дар ҳоли интизори санҷиши ҳаққоният…"
 
 msgid "Updating user information…"
 msgstr "Дар ҳоли навсозии маълумоти корбар…"
-
-msgid "Learn More About Crowdin"
-msgstr "Маълумоти бештар дар бораи Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Маълумоти бештар дар бораи Crowdin"
@@ -256,9 +244,6 @@ msgstr "&Нусха бардоштан"
 msgid "Learn more"
 msgstr "Маълумоти бештар"
 
-msgid "Learn More"
-msgstr "Маълумоти бештар"
-
 msgid "&Help"
 msgstr "&Кумак"
 
@@ -291,15 +276,686 @@ msgstr "Алоқа бо раванди Poedit қатъ шуд."
 msgid "Unhandled exception occurred: %s"
 msgstr "Истиснои иҷронашуда ба амал омад: %s"
 
-msgid "Open catalog"
-msgstr "Кушодани файл"
+msgid "Select translation template"
+msgstr ""
+
+msgid "Select translation file"
+msgstr ""
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Барномаи Poedit барои тарҷумаи файлҳо хеле осон аст."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Тарҷумаи PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"Эҳтимол аст, ки файл вайрон шудааст ё дар формате мебошад, ки бо Poedit "
+"дастгирӣ намешавад."
+
+msgid "The file cannot be opened."
+msgstr "Файл кушода намешавад."
+
+msgid "Invalid file"
+msgstr "Файли нодуруст"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Шумо зиёда аз як файл ба равзанаи Poedit гузошта наметавонед."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Файли “%s” файли тарҷумавӣ намебошад."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Файли “%s” вуҷуд надорад."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Барномаи Poedit барои тарҷумаи файлҳо хеле осон аст."
+msgid "Poedit"
+msgstr "Барномаи Poedit"
+
+msgid "&Go"
+msgstr "&Гузаштан"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Тафтиши имло ғайрифаъол аст, зеро ки луғат барои %s насб нашудааст."
+
+msgid "Install"
+msgstr "Насб кардан"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr ""
+
+msgid "Reload file"
+msgstr ""
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+
+msgid "Ignore"
+msgstr ""
+
+msgid "Reload File"
+msgstr ""
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr ""
+
+msgid "Save changes"
+msgstr "Нигоҳ доштани тағйирот"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Тағйироти шумо гум мешаванд, агар онҳоро нигоҳ надоред."
+
+msgid "Save"
+msgstr "Нигоҳ доштан"
+
+msgid "Do&n’t save"
+msgstr "&Нигоҳ надоштан"
+
+msgid "Don’t Save"
+msgstr "Нигоҳ надоштан"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+
+msgid "Cancel"
+msgstr "Бекор кардан"
+
+msgid "Save Anyway"
+msgstr ""
+
+msgid "Save anyway"
+msgstr ""
+
+msgid "Save as…"
+msgstr "Нигоҳ доштан ҳамчун…"
+
+msgid "Compile to…"
+msgstr "Таҳия кардан…"
+
+msgid "Compiled Translation Files"
+msgstr "Файлҳои тарҷумавии таҳияшуда"
+
+msgid "Export as…"
+msgstr "Содир кардан ҳамчун…"
+
+msgid "HTML Files"
+msgstr "Файлҳои HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr ""
+
+msgid "Source code not available."
+msgstr "Рамзи барнома дастнорас аст."
+
+msgid "Updating failed"
+msgstr "Навсозӣ иҷро нашуд"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+
+msgid "Permission denied."
+msgstr "Дастрасӣ манъ аст."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Агар шумо қаблан ба файлҳои худ дастрасиро манъ кардед, шумо метавонед ба "
+"онҳо дар Хусусиятҳои низом > Амният ва махфият > Махфият > Файлҳо ва "
+"ҷузвадонҳо иҷозат диҳед."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr ""
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+
+msgid "Open translation template"
+msgstr ""
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d масъалаи тарҷума пайдо шудааст."
+msgstr[1] "%d масъалаи тарҷума пайдо шудааст."
+
+msgid "Validation results"
+msgstr "Натиҷаҳои санҷиш"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Тарҷумаҳои хато бо ранги сурх дар рӯйхат қайд карда шудаанд. Тафсилоти "
+"хатоҳо бо интихоби сатри тарҷумаи хато намоиш дода мешаванд."
+
+msgid "The file was saved safely."
+msgstr "Файл бо муваффақият нигоҳ дошта шуд."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Файли тарҷумашуда бо муваффақият нигоҳ дошта шуд ва ба шакли МО табдил ёфт, "
+"вале мумкин он дуруст кор намекунад."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Файли шумо бехатар захира шудааст, аммо ба формати МО барои истифода сохта "
+"намешавад."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Ин файл ба формати MO табдил шудааст, вале метавонад дуруст кор накунад."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Файл ба формати MO табдил дода намешавад ва истифода намешавад."
+
+msgid "No problems with the translation found."
+msgstr "Ягон хато дар тарҷума ёфт нашудааст."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Тарҷума барои истифода тайёр аст, вале %d сатр то ҳол тарҷума нашудааст."
+msgstr[1] ""
+"Тарҷума барои истифода тайёр аст, вале %d сатр то ҳол тарҷума нашудаанд."
+
+msgid "The translation is ready for use."
+msgstr "Тарҷума барои истифода тайёр аст."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit муҳтавои беэътиборро дар файли “%s” ислоҳ кард."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Файл дорои объктҳои якхела мебошад, ки барои файлҳои PO мутобиқат намекунанд "
+"ва истифодабарии файлро қатъ мекунанд. Poedit мушкилиро ислоҳ кард, вале "
+"шумо бояд тарҷумаҳои қайдшударо аз назар гузаронед ва дар ҳолати лозимӣ "
+"онҳоро ислоҳ намоед."
+
+msgid "Language of the translation isn’t set."
+msgstr "Забони тарҷума танзим карда нашуд."
+
+msgid "Set Language"
+msgstr "Танзими забон"
+
+msgid "Set language"
+msgstr "Интихоби забон"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Агар забони тарҷумаҳо нодуруст танзим карда бошад, пешниҳодҳо дастнорас "
+"мешаванд. Хусусиятҳои дигар, монанди шакли ҷамъ, метавонанд таъсир расонанд."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Забони тарҷума ва забони манбаъ баробаранд."
+
+msgid "Fix Language"
+msgstr "Ислоҳ кадани забон"
+
+msgid "Fix language"
+msgstr "Ислоҳ кадани забон"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Сарлавҳаи шакли ҷамъ лозим аст."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Хатои синтаксисӣ дар шакли ҷамъи сарлавҳа (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Сарварақро ислоҳ кунед"
+
+msgid "Fix the header"
+msgstr "Сарварақро ислоҳ кунед"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Тафтиш"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr ""
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "%d аз %d (%d %%) тарҷума шуд"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Дар ҳоли ивази номи: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d хато"
+msgstr[1] "%d хато"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d вуруд"
+msgstr[1] "%d вуруд"
+
+msgid " (unsaved)"
+msgstr " (нигоҳ дошта нашуд)"
+
+msgid " (modified)"
+msgstr " (тағйирёфта)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Ҳофизаи тарҷума навсозӣ нашуд: %s"
+
+msgid "Purge deleted translations"
+msgstr "Пок кардани тарҷумаҳои нестшуда"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+"Оё шумо мехоҳед, ки ҳамаи тарҷумаҳоеро, ки дигар истифода намешаванд, нест "
+"кунед?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Агар тоза карданро идома диҳед, ҳама тарҷумаҳои ҳамчун нест карда, бе "
+"бозгашт нест мешаванд. Агар онҳо дар оянда баргашта илова шаванд, шумо "
+"онҳоро дигар тарҷума карда наметавонед."
+
+msgid "Keep"
+msgstr "Нигоҳ доштан"
+
+msgid "Purge"
+msgstr "Поксозӣ"
+
+msgid "Copy from source text"
+msgstr "Нусха бардоштан аз матни сатри аслӣ"
+
+msgid "Copy from Source Text"
+msgstr "Нусха бардоштан аз матни сатри аслӣ"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Тоза кардани тарҷума"
+
+msgid "Clear Translation"
+msgstr "Тоза кардани тарҷума"
+
+msgid "Edit comment"
+msgstr "Таҳрир кардани шарҳ"
+
+msgid "Edit Comment"
+msgstr "Таҳрир кардани шарҳ"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr ""
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr ""
+
+msgid "&Bookmarks"
+msgstr "&Хатбаракҳо"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Танзими хатбараки %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Гузариш ба хатбараки %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Танзими хатбараки %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Гузариш ба хатбараки %i"
+
+msgid "Hide Sidebar"
+msgstr "Пинҳон кардани навори ҷонибӣ"
+
+msgid "Show Sidebar"
+msgstr "Намоиш додани навори ҷонибӣ"
+
+msgid "Hide Status Bar"
+msgstr "Пинҳон кардани навори вазъият"
+
+msgid "Show Status Bar"
+msgstr "Намоиш додани навори вазъият"
+
+msgid "String length in characters: translation | source"
+msgstr ""
+
+msgid "String length in characters"
+msgstr ""
+
+msgid "Source text"
+msgstr "Матни сатри аслӣ"
+
+msgid "Singular"
+msgstr "Шумораи танҳо"
+
+msgid "Plural"
+msgstr "Шумораи ҷамъ"
+
+msgid "Translation"
+msgstr "Тарҷума"
+
+msgid "Pre-translated"
+msgstr "Тарҷумаи пешакӣ"
+
+msgid "Needs Work"
+msgstr "Бозбинӣ лозим аст"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Бозбинӣ лозим аст"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Файлҳои POT танҳо ҳамчун қолибҳо истифода мешаванд ва худаш тарҷумаҳоро дар "
+"бар намегиранд.\n"
+"Барои тарҷума кардан, файли PO-и наверо дар асоси қолиб эҷод кунед."
+
+msgid "Create new translation"
+msgstr "Аз нав тарҷума кардан"
+
+msgid "Make a new translation from this POT file."
+msgstr ""
+
+msgid "Everything"
+msgstr "Ҳама"
+
+#, c-format
+msgid "Form %i"
+msgstr "Шакли %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Шакли %i (истифоданашуда)"
+
+msgid "Zero"
+msgstr "Сифр"
+
+msgid "One"
+msgstr "Як"
+
+msgid "Two"
+msgstr "Ду"
+
+msgid "Other"
+msgstr "Дигар"
+
+#, c-format
+msgid "%s Format"
+msgstr "Формати %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Формати %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Тарҷума — %s"
+
+msgid "ID"
+msgstr "Рақам"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Матни манбаъ — %s"
+
+msgid "unknown language"
+msgstr "забони номаълум"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Фармони қатъшуда: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Муттаҳид кардани файлҳои gettext баргузор нагашт."
+
+msgid "Open in Editor"
+msgstr "Кушодан дар муҳаррир"
+
+msgid "Open in editor"
+msgstr "Кушодан дар муҳаррир"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+
+msgid "No usage information"
+msgstr ""
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Source code not found"
+msgstr ""
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+
+msgid "File cannot be opened"
+msgstr ""
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr ""
+
+msgid "Find"
+msgstr "Ҷустуҷӯ"
+
+msgid "Replace"
+msgstr "Ҷойгузин кардан"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Имконот"
+
+msgid "Ignore case"
+msgstr "Рад кардани ҳарфҳои хурду калон"
+
+msgid "Wrap around"
+msgstr "Ҷустуҷӯи даврӣ"
+
+msgid "Whole words only"
+msgstr "Танҳо калимаҳои пурра"
+
+msgid "Find in source texts"
+msgstr "Ёфтан дар матнҳои манбаъ"
+
+msgid "Find in translations"
+msgstr "Ҷустуҷӯ дар тарҷумаҳо"
+
+msgid "Find in comments"
+msgstr "Ҷустуҷӯ дар шарҳҳо"
+
+msgid "Close"
+msgstr "Пӯшидан"
+
+msgid "Replace &All"
+msgstr "Ҳамаро ҷойгузин &кардан"
+
+msgid "Replace &all"
+msgstr "Ҳамаро ҷойгузин &кардан"
+
+msgid "&Replace"
+msgstr "&Ҷойгузин кардан"
+
+msgid "< &Previous"
+msgstr "< &Қаблӣ"
+
+msgid "&Next >"
+msgstr "&Навбатӣ >"
+
+msgid "String to find"
+msgstr "Сатр барои ёфтан"
+
+msgid "Replacement string"
+msgstr "Сатри ҷойгузорӣ"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Барнома иҷро карда намешавад: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Рамзи забон ё номи забон (масалан, \"tg\" барои забони тоҷикӣ)"
+
+msgid "Translation Language"
+msgstr "Забони тарҷума"
+
+msgid "Language of the translation:"
+msgstr "Забони тарҷума:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Мудири файлҳо - Poedit"
+
+msgid "Edit…"
+msgstr "Таҳрир кардан…"
+
+msgid "Create new translations project"
+msgstr "Эҷод кардани лоиҳаи тарҷумаи нав"
+
+msgid "Delete the project"
+msgstr "Нест кардани лоиҳа"
+
+msgid "Edit the project"
+msgstr "Таҳрири лоиҳа"
+
+msgid "Update all"
+msgstr "Ҷадидсозии ҳама"
+
+msgid "Update all catalogs in the project"
+msgstr "Ҳамаи файлҳоро дар ин лоиҳа навсозӣ кунед"
+
+msgid "Total"
+msgstr "Ҳамагӣ"
+
+msgid "Untrans"
+msgstr "Тарҷуманашуда"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Бозбинӣ лозим аст"
+
+msgid "Errors"
+msgstr "Хатоҳо"
+
+msgid "Last modified"
+msgstr "Санаи тағйири охирин"
+
+msgid "Select directory"
+msgstr "Интихоби ҷузвдон"
+
+msgid "Directories:"
+msgstr "Феҳристҳо"
+
+msgid "<unnamed>"
+msgstr "<беном>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr ""
+
+msgid "Delete project"
+msgstr ""
+
+msgid "Deleting the project will not delete any translation files."
+msgstr ""
+
+msgid "Confirmation"
+msgstr "Тасдиқ"
+
+msgid "Update all catalogs in this project?"
+msgstr ""
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
 
 msgid "Catalogs Manager"
 msgstr "Мудири файлҳои тарҷума"
@@ -385,6 +1041,15 @@ msgstr "Манъ кардани нутқ"
 msgid "&View"
 msgstr "&Намоиш"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Намоиш додани навори абзор"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Фармоиш додани навори абзор…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Кушодан дар экрани пурра"
 
@@ -397,633 +1062,11 @@ msgstr "Ҳадди ақал сохтан"
 msgid "Zoom"
 msgstr "Интихоби андоза"
 
+msgid "Welcome to Poedit"
+msgstr "Хуш омадед ба Poedit"
+
 msgid "Bring All to Front"
 msgstr "Ҳамаро ба пеш гузоред"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Тарҷумаи PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Эҳтимол аст, ки файл вайрон шудааст ё дар формате мебошад, ки бо Poedit "
-"дастгирӣ намешавад."
-
-msgid "The file cannot be opened."
-msgstr "Файл кушода намешавад."
-
-msgid "Invalid file"
-msgstr "Файли нодуруст"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Шумо зиёда аз як файл ба равзанаи Poedit гузошта наметавонед."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Файли “%s” файли тарҷумавӣ намебошад."
-
-msgid "Poedit"
-msgstr "Барномаи Poedit"
-
-msgid "&File"
-msgstr "&Файл"
-
-msgid "&Go"
-msgstr "&Гузаштан"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "Тафтиши имло ғайрифаъол аст, зеро ки луғат барои %s насб нашудааст."
-
-msgid "Install"
-msgstr "Насб кардан"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Файли тарҷума тағйир ёфт. Шумо мехоҳед, ки тағйиротро нигоҳ доред?"
-
-msgid "Save changes"
-msgstr "Нигоҳ доштани тағйирот"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Тағйироти шумо гум мешаванд, агар онҳоро нигоҳ надоред."
-
-msgid "Save"
-msgstr "Нигоҳ доштан"
-
-msgid "Do&n’t save"
-msgstr "&Нигоҳ надоштан"
-
-msgid "Don’t Save"
-msgstr "Нигоҳ надоштан"
-
-msgid "Save as…"
-msgstr "Нигоҳ доштан ҳамчун…"
-
-msgid "Compile to…"
-msgstr "Таҳия кардан…"
-
-msgid "Compiled Translation Files"
-msgstr "Файлҳои тарҷумавии таҳияшуда"
-
-msgid "Export as…"
-msgstr "Содир кардан ҳамчун…"
-
-msgid "HTML Files"
-msgstr "Файлҳои HTML"
-
-msgid "Open catalog template"
-msgstr "Кушодани қолиби файл"
-
-msgid "Source code not available."
-msgstr "Рамзи барнома дастнорас аст."
-
-msgid "Updating failed"
-msgstr "Навсозӣ иҷро нашуд"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Тарҷумаҳо аз рамзи манбаъ навсозӣ карда намешаванд, зеро ки ягон рамз дар "
-"макони муайяншуда дар хусусиятҳои файл ёфт нашуд."
-
-msgid "Permission denied."
-msgstr "Дастрасӣ манъ аст."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Шумо барои хониши рамзи манбаъ аз ҷойгиршавии муайяншуда дар хусусиятҳои "
-"феҳрист иҷозат надоред."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Агар шумо қаблан ба файлҳои худ дастрасиро манъ кардед, шумо метавонед ба "
-"онҳо дар Хусусиятҳои низом > Амният ва махфият > Махфият > Файлҳо ва "
-"ҷузвадонҳо иҷозат диҳед."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Вурудҳои файл эҳтимол нодуруст ҳастанд."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Навсозии файл қатъ карда шуд. Барои маълумот, тугмаи 'Тафсилот >>' -ро пашх "
-"кунед."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d масъалаи тарҷума пайдо шудааст."
-msgstr[1] "%d масъалаи тарҷума пайдо шудааст."
-
-msgid "Validation results"
-msgstr "Натиҷаҳои санҷиш"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Тарҷумаҳои хато бо ранги сурх дар рӯйхат қайд карда шудаанд. Тафсилоти "
-"хатоҳо бо интихоби сатри тарҷумаи хато намоиш дода мешаванд."
-
-msgid "The file was saved safely."
-msgstr "Файл бо муваффақият нигоҳ дошта шуд."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Файли тарҷумашуда бо муваффақият нигоҳ дошта шуд ва ба шакли МО табдил ёфт, "
-"вале мумкин он дуруст кор намекунад."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Файли шумо бехатар захира шудааст, аммо ба формати МО барои истифода сохта "
-"намешавад."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Ин файл ба формати MO табдил шудааст, вале метавонад дуруст кор накунад."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Файл ба формати MO табдил дода намешавад ва истифода намешавад."
-
-msgid "No problems with the translation found."
-msgstr "Ягон хато дар тарҷума ёфт нашудааст."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Тарҷума барои истифода тайёр аст, вале %d сатр то ҳол тарҷума нашудааст."
-msgstr[1] ""
-"Тарҷума барои истифода тайёр аст, вале %d сатр то ҳол тарҷума нашудаанд."
-
-msgid "The translation is ready for use."
-msgstr "Тарҷума барои истифода тайёр аст."
-
-msgid "Warnings have been disabled."
-msgstr "Огоҳиҳо ғайрифаъоланд."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Агар шумо огоҳиоро ба сабаби пайдоиши зиёд хатоҳои эҳтимолӣ ғайрифаъол "
-"созед, лутфан, барои такмили низом файли намунавиро ба help@poedit.net "
-"фиристонед."
-
-msgid "Send Feedback"
-msgstr "Ирсоли изҳори назар"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Ирсоли изҳори назар"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit муҳтавои беэътиборро дар файли “%s” ислоҳ кард."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Файл дорои объктҳои якхела мебошад, ки барои файлҳои PO мутобиқат намекунанд "
-"ва истифодабарии файлро қатъ мекунанд. Poedit мушкилиро ислоҳ кард, вале "
-"шумо бояд тарҷумаҳои қайдшударо аз назар гузаронед ва дар ҳолати лозимӣ "
-"онҳоро ислоҳ намоед."
-
-msgid "Language of the translation isn’t set."
-msgstr "Забони тарҷума танзим карда нашуд."
-
-msgid "Set Language"
-msgstr "Танзими забон"
-
-msgid "Set language"
-msgstr "Интихоби забон"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Агар забони тарҷумаҳо нодуруст танзим карда бошад, пешниҳодҳо дастнорас "
-"мешаванд. Хусусиятҳои дигар, монанди шакли ҷамъ, метавонанд таъсир расонанд."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Забони тарҷума ва забони манбаъ баробаранд."
-
-msgid "Fix Language"
-msgstr "Ислоҳ кадани забон"
-
-msgid "Fix language"
-msgstr "Ислоҳ кадани забон"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Файли зерин дорои сатрҳо дар шакли ҷамъ мебошад, аммо шакли ҷамъ дар "
-"сарлавҳа танзим нашудааст."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Вурудҳои файли тарҷумаи зерин шаклҳои ҷамъи гуногунро дар бар мегиранд ва "
-"сарлавҳаи шаклҳои ҷамъ маълумоти мазкур нишон медиҳад"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Сарлавҳаи шакли ҷамъ лозим аст."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Хатои синтаксисӣ дар шакли ҷамъи сарлавҳа (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Сарварақро ислоҳ кунед"
-
-msgid "Fix the header"
-msgstr "Сарварақро ислоҳ кунед"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Шакли ҷамъ барои ибораи истифодашуда бо файл барои %s ғайриоддӣ аст."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Тафтиш"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Ҳангоми боркунии сатрҳои файли “%s” хато пайдо шуд."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "%d аз %d (%d %%) тарҷума шуд"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Дар ҳоли ивази номи: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d хато"
-msgstr[1] "%d хато"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d вуруд"
-msgstr[1] "%d вуруд"
-
-msgid " (unsaved)"
-msgstr " (нигоҳ дошта нашуд)"
-
-msgid " (modified)"
-msgstr " (тағйирёфта)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Ҳофизаи тарҷума навсозӣ нашуд: %s"
-
-msgid "Purge deleted translations"
-msgstr "Пок кардани тарҷумаҳои нестшуда"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
-"Оё шумо мехоҳед, ки ҳамаи тарҷумаҳоеро, ки дигар истифода намешаванд, нест "
-"кунед?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Агар тоза карданро идома диҳед, ҳама тарҷумаҳои ҳамчун нест карда, бе "
-"бозгашт нест мешаванд. Агар онҳо дар оянда баргашта илова шаванд, шумо "
-"онҳоро дигар тарҷума карда наметавонед."
-
-msgid "Keep"
-msgstr "Нигоҳ доштан"
-
-msgid "Purge"
-msgstr "Поксозӣ"
-
-msgid "Copy from source text"
-msgstr "Нусха бардоштан аз матни сатри аслӣ"
-
-msgid "Copy from Source Text"
-msgstr "Нусха бардоштан аз матни сатри аслӣ"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Тоза кардани тарҷума"
-
-msgid "Clear Translation"
-msgstr "Тоза кардани тарҷума"
-
-msgid "Edit comment"
-msgstr "Таҳрир кардани шарҳ"
-
-msgid "Edit Comment"
-msgstr "Таҳрир кардани шарҳ"
-
-msgid "References:"
-msgstr "Маълумотнома:"
-
-msgid "&Bookmarks"
-msgstr "&Хатбаракҳо"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Танзими хатбараки %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Гузариш ба хатбараки %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Танзими хатбараки %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Гузариш ба хатбараки %i"
-
-msgid "Hide Sidebar"
-msgstr "Пинҳон кардани навори ҷонибӣ"
-
-msgid "Show Sidebar"
-msgstr "Намоиш додани навори ҷонибӣ"
-
-msgid "Hide Status Bar"
-msgstr "Пинҳон кардани навори вазъият"
-
-msgid "Show Status Bar"
-msgstr "Намоиш додани навори вазъият"
-
-msgid "Source text:"
-msgstr "Матни сатри аслӣ:"
-
-msgid "Singular:"
-msgstr "Шакли танҳо:"
-
-msgid "Plural:"
-msgstr "Шакли ҷамъ:"
-
-msgid "Translation:"
-msgstr "Тарҷума:"
-
-msgid "Pre-translated"
-msgstr "Тарҷумаи пешакӣ"
-
-msgid "Needs Work"
-msgstr "Бозбинӣ лозим аст"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Бозбинӣ лозим аст"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Файлҳои POT танҳо ҳамчун қолибҳо истифода мешаванд ва худаш тарҷумаҳоро дар "
-"бар намегиранд.\n"
-"Барои тарҷума кардан, файли PO-и наверо дар асоси қолиб эҷод кунед."
-
-msgid "Create New Translation"
-msgstr "Эҷоди тарҷумаи нав"
-
-msgid "Create new translation"
-msgstr "Аз нав тарҷума кардан"
-
-msgid "Everything"
-msgstr "Ҳама"
-
-#, c-format
-msgid "Form %i"
-msgstr "Шакли %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Шакли %i (истифоданашуда)"
-
-msgid "Singular"
-msgstr "Шумораи танҳо"
-
-msgid "Zero"
-msgstr "Сифр"
-
-msgid "One"
-msgstr "Як"
-
-msgid "Two"
-msgstr "Ду"
-
-msgid "Plural"
-msgstr "Шумораи ҷамъ"
-
-msgid "Other"
-msgstr "Дигар"
-
-#, c-format
-msgid "%s Format"
-msgstr "Формати %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "Формати %s"
-
-msgid "Source text"
-msgstr "Матни сатри аслӣ"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Тарҷума — %s"
-
-msgid "ID"
-msgstr "Рақам"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Матни манбаъ — %s"
-
-msgid "unknown language"
-msgstr "забони номаълум"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Фармони қатъшуда: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Муттаҳид кардани файлҳои gettext баргузор нагашт."
-
-msgid "Source file"
-msgstr "Файли аслӣ"
-
-msgid "Source file occurrence:"
-msgstr "Рӯйдодҳои файли аслӣ:"
-
-msgid "Open in Editor"
-msgstr "Кушодан дар муҳаррир"
-
-msgid "Open in editor"
-msgstr "Кушодан дар муҳаррир"
-
-msgid "No references for the selected item."
-msgstr "Ягон иқтибос барои объекти интихобшуда нест."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Хато ҳангоми кушодани файли %s!"
-
-msgid "Find"
-msgstr "Ҷустуҷӯ"
-
-msgid "Replace"
-msgstr "Ҷойгузин кардан"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Имконот"
-
-msgid "Ignore case"
-msgstr "Рад кардани ҳарфҳои хурду калон"
-
-msgid "Wrap around"
-msgstr "Ҷустуҷӯи даврӣ"
-
-msgid "Whole words only"
-msgstr "Танҳо калимаҳои пурра"
-
-msgid "Find in source texts"
-msgstr "Ёфтан дар матнҳои манбаъ"
-
-msgid "Find in translations"
-msgstr "Ҷустуҷӯ дар тарҷумаҳо"
-
-msgid "Find in comments"
-msgstr "Ҷустуҷӯ дар шарҳҳо"
-
-msgid "Close"
-msgstr "Пӯшидан"
-
-msgid "Replace &All"
-msgstr "Ҳамаро ҷойгузин &кардан"
-
-msgid "Replace &all"
-msgstr "Ҳамаро ҷойгузин &кардан"
-
-msgid "&Replace"
-msgstr "&Ҷойгузин кардан"
-
-msgid "< &Previous"
-msgstr "< &Қаблӣ"
-
-msgid "&Next >"
-msgstr "&Навбатӣ >"
-
-msgid "String to find"
-msgstr "Сатр барои ёфтан"
-
-msgid "Replacement string"
-msgstr "Сатри ҷойгузорӣ"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Барнома иҷро карда намешавад: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Рамзи забон ё номи забон (масалан, \"tg\" барои забони тоҷикӣ)"
-
-msgid "Translation Language"
-msgstr "Забони тарҷума"
-
-msgid "Language of the translation:"
-msgstr "Забони тарҷума:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Мудири файлҳо - Poedit"
-
-msgid "Catalog"
-msgstr "Файли тарҷума"
-
-msgid "Total"
-msgstr "Ҳамагӣ"
-
-msgid "Untrans"
-msgstr "Тарҷуманашуда"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Бозбинӣ лозим аст"
-
-msgid "Errors"
-msgstr "Хатоҳо"
-
-msgid "Last modified"
-msgstr "Санаи тағйири охирин"
-
-msgid "Select directory"
-msgstr "Интихоби ҷузвдон"
-
-msgid "Directories:"
-msgstr "Феҳристҳо"
-
-msgid "<unnamed>"
-msgstr "<беном>"
-
-msgid "Do you want to delete the project?"
-msgstr "Оё шумо мехоҳед, ки лоиҳаи зеринро нест кунед?"
-
-msgid "Confirmation"
-msgstr "Тасдиқ"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Шумо дар ҳақиқат мехоҳед, ки ҳама файлҳои тарҷумаи лоиҳаи зеринро ба якбора "
-"навсозӣ кунед?"
 
 msgid "Information about the translator"
 msgstr "Маълумот дар бораи тарҷумон"
@@ -1037,8 +1080,8 @@ msgstr "Номи шумо"
 msgid "Email:"
 msgstr "Почтаи электронӣ:"
 
-msgid "your_email@example.com"
-msgstr "your_email@example.com"
+msgid "you@example.com"
+msgstr ""
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1053,8 +1096,8 @@ msgstr "Таҳриркунӣ"
 msgid "Automatically compile MO file when saving"
 msgstr "Омодасозии файли MO ба таври худкор ҳангоми захиракунӣ"
 
-msgid "Show summary after catalog update"
-msgstr "Намоиш додани хулоса баъд аз навсозии файл"
+msgid "Show summary after updating files"
+msgstr ""
 
 msgid "Check spelling"
 msgstr "Санҷиши имло"
@@ -1197,9 +1240,6 @@ msgstr ""
 "Поксозии тарҷумаҳо аз ҳофизаи тарҷумаҳо ҳамаи тарҷумаҳоро бебозгашт нест "
 "мекунад. Ин амал ботил сохта намешавад."
 
-msgid "Cancel"
-msgstr "Бекор кардан"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1218,9 +1258,6 @@ msgstr "Интихоби тарзи барориш:"
 
 msgid "Custom extractors:"
 msgstr "Интихоби тарзи барориш:"
-
-msgid "Edit…"
-msgstr "Таҳрир кардан…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1289,14 +1326,20 @@ msgstr "Истифодаи қолаббандӣ аз файлҳои мавҷуд
 msgid "Advanced"
 msgstr "Иловагӣ"
 
-msgid "Pre-translating…"
-msgstr "Дар ҳоли тарҷумаи пешакӣ…"
+msgid "Preparing strings…"
+msgstr ""
+
+msgid "Pre-translating from translation memory…"
+msgstr ""
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Тарҷумаи пешакии %u сатр"
 msgstr[1] "Тарҷумаи пешакии %u сатр"
+
+msgid "Pre-translating…"
+msgstr "Дар ҳоли тарҷумаи пешакӣ…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1366,23 +1409,14 @@ msgstr ""
 "бар намегирад. TM-и ҷорӣ танҳо тарҷумаҳои ҷузъӣ ба таври худкор пешниҳод "
 "мекунад, баъд аз оне ки Poedit тарҷумаҳоро аз файлҳои қаблӣ ҷамъ кунад."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
+msgid "Cancelling…"
 msgstr ""
-"<big>Ҷузвдонҳоро ба ин ҷо кашида гузоред</big>\n"
-"\n"
-"ё тугмаи \"+\" -ро зер кунед"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
+msgid "Drag Folders or Files Here"
 msgstr ""
-"<big>Ҷузвдонҳоро ба ин ҷо кашида гузоред</big>\n"
-"\n"
-"ё тугмаи \"+\" -ро зер кунед"
+
+msgid "Drag folders or files here"
+msgstr ""
 
 msgid "Add Folders…"
 msgstr "Илова кардани ҷузвдонҳо…"
@@ -1401,6 +1435,17 @@ msgstr "Илова кардани аломатҳо…"
 
 msgid "Add wildcard…"
 msgstr "Илова кардани аломатҳо…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr ""
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr ""
+
+msgid "Show in Folder"
+msgstr ""
 
 msgid "Paths"
 msgstr "Масирҳо"
@@ -1442,14 +1487,23 @@ msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 "Лутфан, аввал файлро нигоҳ доред. То он гоҳ ин қисмат таҳрир карда намешавад."
 
+msgid "Plural form translations"
+msgstr ""
+
 msgid "Not all plural forms are translated."
 msgstr "На ҳамаи сатрҳои шакли ҷамъ тарҷума шудаанд."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr "Тарҷума бояд ҳамчун ҷумла сар шавад."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Тарҷума бояд бо ҳарфи хурд сар шавад."
+
+msgid "Inconsistent whitespace"
+msgstr ""
 
 msgid "The translation doesn’t start with a space."
 msgstr "Тарҷума бо фосила сар нашуд."
@@ -1470,6 +1524,9 @@ msgstr "Тарҷума дар охири матн фосила надорад."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Тарҷума дар охири матн фосила дорад, вале матни аслӣ фосила надорад."
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Тарҷума бояд бо “%s” ба анҷом расад."
@@ -1482,38 +1539,23 @@ msgstr "Тарҷума бояд бо “%s” ба анҷом нарасад."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Тарҷума бо “%s” ба анҷом мерасад, вале матни аслӣ “%s” надорад."
 
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
 msgid "Comment:"
 msgstr "Шарҳ:"
 
-msgid "OK"
-msgstr "Хуб"
+msgid "Update"
+msgstr ""
 
-msgid "C&lear"
-msgstr "&Тоза кардан"
+msgid "&Delete"
+msgstr "&Нест кардан"
 
-msgid "Clear the comment"
-msgstr "Тоза кардани шарҳ"
-
-msgid "New"
-msgstr "Нав"
-
-msgid "Create new translations project"
-msgstr "Эҷод кардани лоиҳаи тарҷумаи нав"
-
-msgid "Edit"
-msgstr "Таҳрир"
-
-msgid "Edit the project"
-msgstr "Таҳрири лоиҳа"
-
-msgid "Delete the project"
-msgstr "Нест кардани лоиҳа"
-
-msgid "Update all"
-msgstr "Ҷадидсозии ҳама"
-
-msgid "Update all catalogs in the project"
-msgstr "Ҳамаи файлҳоро дар ин лоиҳа навсозӣ кунед"
+msgid "Delete the comment"
+msgstr ""
 
 msgid "Edit project"
 msgstr "Таҳрир кардани лоиҳа"
@@ -1526,6 +1568,12 @@ msgstr "Тамошо кардан"
 
 msgid "Add directory to the list"
 msgstr "Илова кардани директория ба рӯйхат"
+
+msgid "OK"
+msgstr "Хуб"
+
+msgid "&File"
+msgstr "&Файл"
 
 msgid "&New…"
 msgstr "&Нав…"
@@ -1542,11 +1590,26 @@ msgstr "&Кушодан…"
 msgid "Open Recent"
 msgstr "Кушодани файлҳои охирин"
 
+msgid "Open recent"
+msgstr ""
+
 msgid "Open from Crowdin…"
 msgstr "Open from Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Open from Crowdin…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "Мудири &файлҳои тарҷума"
+
+msgid "Catalogs &Manager"
+msgstr "Мудири &файлҳои тарҷума"
 
 msgid "&Close"
 msgstr "&Пӯшидан"
@@ -1572,12 +1635,6 @@ msgstr "Санҷидани навсозиҳо…"
 msgid "&Preferences…"
 msgstr "&Танзимот…"
 
-msgid "Catalogs &manager"
-msgstr "Мудири &файлҳои тарҷума"
-
-msgid "Catalogs &Manager"
-msgstr "Мудири &файлҳои тарҷума"
-
 msgid "E&xit"
 msgstr "&Баромад"
 
@@ -1602,6 +1659,7 @@ msgstr "&Таҳрир кардани шарҳ"
 msgid "Edit &Comment"
 msgstr "&Таҳрир кардани шарҳ"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Пешниҳодҳо"
 
@@ -1677,11 +1735,11 @@ msgstr "&Аввал сатрҳои тарҷуманашуда"
 msgid "&Untranslated Entries First"
 msgstr "&Аввал сатрҳои тарҷуманашуда"
 
-msgid "&Show references"
-msgstr "&Намоиши бартариҳо"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "&Намоиши бартариҳо"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Намоиш додани навори ҷонибӣ"
@@ -1689,8 +1747,8 @@ msgstr "Намоиш додани навори ҷонибӣ"
 msgid "Show status bar"
 msgstr "Намоиш додани навори вазъият"
 
-msgid "C&atalog"
-msgstr "&Файли тарҷума"
+msgid "&Translation"
+msgstr ""
 
 msgid "&Update from source code"
 msgstr "&Навсозӣ аз манбаи рамз"
@@ -1845,8 +1903,8 @@ msgstr ""
 "бо шарте, ки агар рамзгузории сатри аслӣ дода шуда бошад.\n"
 "%c бо воҳиди рамзгузорӣ иваз карда мешавад."
 
-msgid "Catalog properties"
-msgstr "Хусусиятҳои файли тарҷума"
+msgid "Translation Properties"
+msgstr "Хусусиятҳои тарҷума"
 
 msgid "Project name and version:"
 msgstr "Номи лоиҳа ва версия:"
@@ -1874,9 +1932,6 @@ msgstr "Танзимоти иловагии барориш…"
 
 msgid "Advanced extraction settings…"
 msgstr "Танзимоти иловагии барориш…"
-
-msgid "Translation Properties"
-msgstr "Хусусиятҳои тарҷума"
 
 msgid "Translation properties"
 msgstr "Хусусиятҳои тарҷума"
@@ -1909,9 +1964,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Инчунин аз калидвожаҳои пешфарз барои забонҳои дастрас истифода баред"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Маълумот дар бораи калидвожаҳои Gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Маълумоти бештар дар бораи калидвожаҳои gettext"
 
@@ -1919,22 +1971,17 @@ msgid "Update summary"
 msgstr "Хулосаи навсозӣ"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Сатрҳои зерин дар сатрҳои аслӣ дарёфт шудаанд, аммо дар файл вуҷуд "
-"надоранд.\n"
-"Poedit онҳоро ҳоло ба файл илова мекунад."
 
 msgid "New strings"
 msgstr "Сатрҳои нав"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Сатрҳои зерин дигар дар сатрҳои асосӣ мавҷуд нестанд.\n"
-"Poedit онҳоро ҳоло аз файл нест мекунад."
 
 msgid "Obsolete strings"
 msgstr "Сатри кӯҳнашуда"
@@ -1945,8 +1992,11 @@ msgstr "(0 нав, 0 кӯҳнашуда)"
 msgid "Open"
 msgstr "Кушодан"
 
-msgid "Save catalog"
-msgstr "Нигоҳ доштани файл"
+msgid "Open file"
+msgstr ""
+
+msgid "Save file"
+msgstr ""
 
 msgid "Validate"
 msgstr "Санҷиш"
@@ -1970,8 +2020,8 @@ msgid "Show or hide the sidebar"
 msgstr "Намоиш додан ё пинҳон кардани навори ҷонибӣ"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Матни манбаи қаблӣ:"
+msgid "Previous source text"
+msgstr ""
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1980,8 +2030,11 @@ msgstr ""
 "Матни манбаи куҳна (пеш аз тағйир ҳангоми навсозӣ), ки ба тарҷумаҳои носаҳеҳ "
 "тааллуқ дорад."
 
-msgid "Notes for translators:"
-msgstr "Қайдҳои тарҷумон:"
+msgid "Notes for translators"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
 
 msgid "Add comment"
 msgstr "Илова кардани шарҳ"
@@ -1995,8 +2048,8 @@ msgstr "Нест кардан аз ҳофизаи тарҷума"
 msgid "Delete from translation memory"
 msgstr "Нест кардан аз ҳофизаи тарҷума"
 
-msgid "Translation suggestions:"
-msgstr "Пешниҳодҳои тарҷума:"
+msgid "Translation suggestions"
+msgstr ""
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2026,39 +2079,6 @@ msgstr "Хатои ҳофизаи тарҷумаҳо: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Директорияи муваққатӣ эҷод карда нашуд."
 
-msgid "Welcome to Poedit"
-msgstr "Хуш омадед ба Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Барориши %s"
-
-msgid "Edit a translation"
-msgstr "Таҳрир кардани тарҷума"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Файли PO-и мавҷудбударо кушоед ва тарҷумаро таҳрир намоед."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Файли PO ё қолиби POT-и мавҷудбударо истифода баред ва тарҷумаи навро дар "
-"асоси он таҳия кунед."
-
-msgid "Collaborate on a translation with others"
-msgstr "Бо дигарон якҷоя тарҷума кунед"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Файлеро аз лоиҳаи Crowdin боргирӣ кунед, тарҷума намоед ва ҳамоҳанг созед."
-
-msgid "What is Crowdin?"
-msgstr "Crowdin чист?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Ягон тарҷума вуҷуд надорад. Ин ғайриоддӣ аст."
 
@@ -2079,8 +2099,10 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Маълумоти муфассал дар бораи GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Осонтар аст, ки агар шумо ин файлро аз файли POT навсозӣ кунед:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr ""
 
 msgid "Update from POT"
 msgstr "Навсозӣ кардан аз POT"
@@ -2099,6 +2121,33 @@ msgstr "Баровардан аз манбаҳо"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Баровардани рамзи манбаро дар Танзимот танзим кунед."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Барориши %s"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
+msgstr ""
 
 msgid "Sync"
 msgstr "Ҳамоҳангсозӣ"
@@ -2184,8 +2233,8 @@ msgstr "&Буридан"
 msgid "Cut"
 msgstr "Буридан"
 
-msgid "&Delete"
-msgstr "&Нест кардан"
+msgid "Edit"
+msgstr "Таҳрир"
 
 msgid "&Quit"
 msgstr "&Баромад"
@@ -2195,6 +2244,9 @@ msgstr "Кумак"
 
 msgid "&New"
 msgstr "&Нав"
+
+msgid "New"
+msgstr "Нав"
 
 msgid "&No"
 msgstr "&Не"

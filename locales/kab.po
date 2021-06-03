@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Language: kab_KAB\n"
@@ -30,20 +30,20 @@ msgstr "Ur d-skan ara tikelt-nniḍen"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Amaynut : %i, yezri : %i)"
 
-msgid "Updating catalog"
-msgstr "Aleqqem n ukaram"
-
 msgid "Collecting source files…"
 msgstr "Alqaḍ n ifuyla iɣbula…"
 
 msgid "Extracting translatable strings…"
 msgstr "Tussfa n yizraren ara yettwasuqqelen…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Tuccḍa deg usali n ukaram yettwassefen."
+msgid "Failed to load file with extracted translations."
+msgstr "Ulamek asali n ufaylu s tsuqilin yettwassfen."
 
 msgid "Merging differences…"
 msgstr "Asdukkel n wayen yimgaraden…"
+
+msgid "Updating translations"
+msgstr "Aleqqem n tsuqilin"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,22 +79,19 @@ msgstr[1] "%i n yizirigen n ufaylu “%s” ur d-ulin ara akken iwata."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Izirig %d n ufaylu '%s'  yerreẓ (isefka n %s mačči d imeɣta)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Afaylu n ukaram yerreẓ: talɣa n wasuf msgstr tettwaseqdec lwaḥid akked "
-"msgid_plural"
+"Afaylu PO yerreẓ: talɣa n usuf msgstr tettwaseqdec lwaḥid akked msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Afaylu n ukaram yerreẓ: talɣa n wesget msgstr tettwaseqdec war msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "Afaylu PO yerreẓ: talɣa n usget msgstr tettwaseqdec war msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Llant-d tuccḍiwin deg usali n ukaram. Kra n yisefka ad ilin xuṣṣen neɣ "
-"errẓen."
+"Tella-d tuccḍa deg usali n ufaylu. Kra n yisefka zemren ad xaṣṣen neɣ ad "
+"rreẓen."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -118,18 +115,18 @@ msgstr "Yella wugur deg umsal n ufaylu (maca yettwasekles akken iwata)."
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Akaram yeggumma ad yettwasekles s tegrumma n yisekkilen “%s” am wakken "
-"yettwamel deg yiɣewwaren n ukaram. \n"
+"Afaylu ulamek ara yettwasekles s tegrumma n yisekkilen “%s” am wakken "
+"yettwamla deg yiɣewwaren n tsuqilt.\n"
 "\n"
-"Yettwasekles s tegrumma n yisekkilen UTF-8, yerna tettwabeddel twila."
+"yettwasekles UTF-8 deg umḍiq yerna iɣewwaren ttwabeddelen."
 
-msgid "Error saving catalog"
-msgstr "Tuccḍa deg usekles n ukaram"
+msgid "Error saving file"
+msgstr "Tuccḍa deg usekles n ufaylu"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -171,6 +168,9 @@ msgstr "Amtawi akked %s ur yeddi ara."
 msgid "Syncing error"
 msgstr "Tuccḍa n umtawi"
 
+msgid "Add"
+msgstr "Rnu"
+
 msgid "JSON request error"
 msgstr "Tuccḍa n tuttra JSON"
 
@@ -205,9 +205,6 @@ msgstr "Araǧu n usesteb…"
 
 msgid "Updating user information…"
 msgstr "Aleqqem n telɣut n useqdac…"
-
-msgid "Learn More About Crowdin"
-msgstr "Issin ugar ɣef Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Issin ugar ɣef Crowdin"
@@ -251,9 +248,6 @@ msgstr "&Nɣel"
 msgid "Learn more"
 msgstr "Issin ugar"
 
-msgid "Learn More"
-msgstr "Issin ugar"
-
 msgid "&Help"
 msgstr "&Tallelt"
 
@@ -286,15 +280,694 @@ msgstr "Tuccḍa di teɣwalt akked usekker Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Teḍra-d tsureft ur nettwassefrak ara: %s"
 
-msgid "Open catalog"
-msgstr "Ldi akaram"
+msgid "Select translation template"
+msgstr "Fren taneɣruft n tsuqilt"
+
+msgid "Select translation file"
+msgstr "Fren afaylu n tsuqilt"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit d amaẓrag n tsuqilin yeshel i weseqdec."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Tasuqilt PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Afaylu izmer ad yili yerreẓ neɣ amasal-ines ur t-yeɛqil ara Poedit."
+
+msgid "The file cannot be opened."
+msgstr "Afaylu ulamek ara yeldi."
+
+msgid "Invalid file"
+msgstr "Afaylu d armeɣtu"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Ur tezmireḍ ar ad tserseḍ ugar n yiwen n ufaylu deg wesfaylu n Poedit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Afaylu “%s” mačči d afaylu n tsuqilt."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Afaylu “%s” ulac-it."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit d amaẓrag n tsuqilin yeshel i weseqdec."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Ddu"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Aseɣti n teɣdirawt yensa, acku amawal i %s ur yettwasbedd ara."
+
+msgid "Install"
+msgstr "Sbedd"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Afaylu “%s” ibeddel-it usna-nniḍen."
+
+msgid "Reload file"
+msgstr "Ales asali n ufaylu"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Tebɣiḍ ad talseḍ asali n ufaylu seg uḍebsi? Tiẓrigin-inek·inem ur "
+"nettwaskels ara di Poedit ad ṛuḥent ma tkemmeleḍ."
+
+msgid "Ignore"
+msgstr "Ttu"
+
+msgid "Reload File"
+msgstr "Ales asali n ufaylu"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Afaylu yettwabeddel. Tebɣiḍ ad teskelseḍ ibeddilen?"
+
+msgid "Save changes"
+msgstr "Sekles ibeddilen"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Ibeddilen-ik (im) ad ruḥen ma yella ur ten-teskelseḍ ara."
+
+msgid "Save"
+msgstr "Sekles"
+
+msgid "Do&n’t save"
+msgstr "Ur sseklas a&ra"
+
+msgid "Don’t Save"
+msgstr "Ur sseklas ara"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "Ibeddilen ixdem usnas-nniḍen ad ṛuḥen ma teskelseḍ."
+
+msgid "Cancel"
+msgstr "Sefsex"
+
+msgid "Save Anyway"
+msgstr "Sekles akken ibɣu"
+
+msgid "Save anyway"
+msgstr "Sekles akken ibɣu"
+
+msgid "Save as…"
+msgstr "Sekles am…"
+
+msgid "Compile to…"
+msgstr "Sefsu ɣer…"
+
+msgid "Compiled Translation Files"
+msgstr "Afaylu n tsuqilt yefsa"
+
+msgid "Export as…"
+msgstr "Sifeḍ am…"
+
+msgid "HTML Files"
+msgstr "Ifuyla HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "Di: %s"
+
+msgid "Source code not available."
+msgstr "Tangalt taɣbalut ur tewjid ara."
+
+msgid "Updating failed"
+msgstr "Aleqqem yecceḍ"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Tisuqilin ulamek ara ttwaleqqement si tengalt taɣbalut, acku ur nufi ara "
+"tangalt deg wadig i d-yettunefken deg yiraten n ufaylu."
+
+msgid "Permission denied."
+msgstr "Tasiregt tettwagi."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"Ur tesɛiḍ ara tisirag akken ad teɣreḍ ifuyla n tengalt taɣbalut deg wadig i "
+"d-yettunefken deg yiraten n ufaylu."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Ma tugiḍ yakan anekcum ɣer yifuyla-inek, tzemreḍ ad t-tsirgeḍ di Tinefrunin "
+"n unagraw > Taɣellist akked tbaḍnit > Tabaḍnit > Ifuyla akked yikaramen."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Inekcumen n tsuqilt deg ufaylu zemren ad ilin d irmeɣta."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr "Aleqqem n ufaylu ur yeddi ara. Ssit ɣef 'Talqayt >>' i telqayt."
+
+msgid "Open translation template"
+msgstr "Ldi taneɣruft n tsuqilt"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d n wugur i d-nufa di tsuqilt."
+msgstr[1] "%d n wuguren i d-nufa di tsuqilt."
+
+msgid "Validation results"
+msgstr "Igmaḍ n usentem"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Inekcumen yesɛan tuccḍiwin ttucerḍen s uzeggaɣ di tebdart. Isalan ɣef ɣef "
+"tuccḍa ad d-baben mi ara tferneḍ anekcum."
+
+msgid "The file was saved safely."
+msgstr "Afaylu yettwasekles s tɣellist."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Afaylu yettwasekles s tɣellist u yefsa ɣer umasal MO, maca wissen ma ad iddu "
+"akken ilaq."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Afaylu yettwasekles s tɣellist, ur yezmir ara yefsu ɣer umasal MO neɣ ad "
+"yettwaseqdec."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr "Afaylu yefsa ɣer umasal MO, maca wissen ma ad yeddu akken ilaq."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Afaylu ur yezmir ara ad yefsu ɣer umasal MO neɣ ad yettwaseqdec."
+
+msgid "No problems with the translation found."
+msgstr "Ulac uguren di tsuqilt."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Tasuqilt tewjed i wseqdec, maca %d n unekcum ur yettwasuqqel ara."
+msgstr[1] ""
+"Tasuqilt tewjed i wseqdec, maca, %d n yinekcumen ur ttwasuqqelen ara."
+
+msgid "The translation is ready for use."
+msgstr "Tasuqilt tewjed i wseqdec."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit yeseɣti i yiman-is agbur armeɣtu deg ufaylu “%s”."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Afaylu yesɛa iferdisen usligen, ayen i yegedlen deg yifuyla PO u yettqerriɛ "
+"asqedc n ufaylu. Poedit yefra ugur, maca ilaq ad tselkeneḍ tisuqilin i "
+"yettwacerḍen d timewẓiyin u ad tent-teseɣtiḍ ma yelaq."
+
+msgid "Language of the translation isn’t set."
+msgstr "Tutlayt n tsuqilt ur tettusbadu ara."
+
+msgid "Set Language"
+msgstr "Sbadu tutlayt"
+
+msgid "Set language"
+msgstr "Sbadu tutlayt"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Isumar ur ttawjaden ara ma yella tutlayt n tsuqilt ur tettusbadu ara akken "
+"iwata. Ayagi, yezmer ad iḥaz timeẓliyin-nniḍen, am talɣiwin n wesget."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Tutlayt n tsuqilt kifkif-itt akked tutlayt taɣbalut."
+
+msgid "Fix Language"
+msgstr "Sɣti tutlayt"
+
+msgid "Fix language"
+msgstr "Seɣti tutlayt"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"Afaylu-agi yesɛa inekcumen s talɣiwin n usget, maca ur yesɛi ara inixef "
+"Plural-Forms ittusewlen."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Inekcumen deg ukaram-agi sɛan amḍan n talɣiwin n wesget i yemgarraden ɣef "
+"wayen i d-yeqqar inixf Plural-Forms"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Inixf Plural-Forms i yettwasran ixuṣṣ."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Tuccḍa n tseddast deg yinixf Plural-Forms (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Seɣti inixf"
+
+msgid "Fix the header"
+msgstr "Seɣti inixf"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+"Tinfaliyin n talɣiwin n wesget i yesseqdec ufaylu-agi ulac-itent di tnumi n "
+"%s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Cegger"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Tuccḍa deg usali n ufaylu n tsuqilt “%s”."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Tasuqilt n: %d seg %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Yeggra-d: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d n tuccḍa"
+msgstr[1] "%d n tuccḍiwin"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d n unekcum"
+msgstr[1] "%d n yinekcumen"
+
+msgid " (unsaved)"
+msgstr " (ur yettwasekles ara)"
+
+msgid " (modified)"
+msgstr " (yettwabeddel)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Aleqqem n tkatut n tsuqilt ur yeddi ara: %s"
+
+msgid "Purge deleted translations"
+msgstr "Sfeḍ tisuqilin yettwakksen"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Tebɣiḍ ad tekkseḍ tisuqilin merra ur nettwaseqdac ara?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Ma tkemmeleḍ asizdeg, tisuqilin merra i yettwacerḍen amzun ttwakksent ad "
+"ttwakksent i lebda. Asmi ara tebɣuḍ ad tent-ternuḍ ilaq ak ad tent-"
+"tesuqqeleḍ tikkelt-nniḍen."
+
+msgid "Keep"
+msgstr "Eǧǧ"
+
+msgid "Purge"
+msgstr "Sfeḍ"
+
+msgid "Copy from source text"
+msgstr "Nɣel seg weḍris aɣbalu"
+
+msgid "Copy from Source Text"
+msgstr "Nɣel seg weḍris aɣbalu"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Sfeḍ tasuqilt"
+
+msgid "Clear Translation"
+msgstr "Sfeḍ tasuqilt"
+
+msgid "Edit comment"
+msgstr "Ẓreg awennit"
+
+msgid "Edit Comment"
+msgstr "Ẓreg awennit"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Tummanin n tengalt"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Tummanin n tengalt"
+
+msgid "&Bookmarks"
+msgstr "Ti&craḍ n yisebtar"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Sbadu asɣal %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Ddu ɣer tecreḍt n usebtar %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Sbadu ticreḍt n usebtar %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Ddu ɣer tecreḍt n usebtar %i"
+
+msgid "Hide Sidebar"
+msgstr "Ffer afeggag n yidis"
+
+msgid "Show Sidebar"
+msgstr "Sken afeggag n yidis"
+
+msgid "Hide Status Bar"
+msgstr "Ffer afeggag n waddad"
+
+msgid "Show Status Bar"
+msgstr "Sken afeggag n waddad"
+
+msgid "String length in characters: translation | source"
+msgstr "Teɣzi n uzrar s yisekkilen: tasuqilt | aɣbalu"
+
+msgid "String length in characters"
+msgstr "Teɣzi n uzrar s yisekkilen"
+
+msgid "Source text"
+msgstr "Aḍris aɣbalu"
+
+msgid "Singular"
+msgstr "Asuf"
+
+msgid "Plural"
+msgstr "Asget"
+
+msgid "Translation"
+msgstr "Tasuqilt"
+
+msgid "Pre-translated"
+msgstr "Yettwasuqqel s uzwer"
+
+msgid "Needs Work"
+msgstr "Yesra amahil"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Yesra amahil"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Ifuyla POT d tineɣrufin kan ur sɛin ara kra n tsuqilin. \n"
+"Iwakken ad tgeḍ tasuqilt, snulfu-d afaylu amaynut PO yebnan ɣef tneɣruft."
+
+msgid "Create new translation"
+msgstr "Snulfu-d tasuqilt tamaynutt"
+
+msgid "Make a new translation from this POT file."
+msgstr "Eg tasuqilt tamaynutt seg ufaylu-agi POT."
+
+msgid "Everything"
+msgstr "Akk"
+
+#, c-format
+msgid "Form %i"
+msgstr "Talɣa %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Seg %i (ur tettwaseqdac ara)"
+
+msgid "Zero"
+msgstr "Ilem"
+
+msgid "One"
+msgstr "Yiwen"
+
+msgid "Two"
+msgstr "Sin"
+
+msgid "Other"
+msgstr "Wayeḍ"
+
+#, c-format
+msgid "%s Format"
+msgstr "Amasal %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Amasal %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Tasuqilt — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Aḍris aɣbalu — %s"
+
+msgid "unknown language"
+msgstr "tutlayt tarussint"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Taladna terreẓ: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Tuccḍa deg wesmezdi n yikaramen gettext."
+
+msgid "Open in Editor"
+msgstr "Ldi deg wemaẓrag"
+
+msgid "Open in editor"
+msgstr "Ldi deg wemaẓrag"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"Ulac talɣut ɣef tummanin n uzrar-agi di tengalt taɣbalut i d-yettunefken deg "
+"ufaylu."
+
+msgid "No usage information"
+msgstr "Ulac talɣut n useqdec"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d n tummant n tengalt"
+msgstr[1] "%d n tummanin n tengalt"
+
+msgid "Source code not found"
+msgstr "Tangalt taɣbalut ur tettwaf ara"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit ur yezmir ara ad d-isken tangalt taɣbalut anida yettwaseqdec uzrar, "
+"acku afaylu yezmer ur yewjid ara deg wadig yettwamlen neɣ d tamselɣut "
+"tazamulant ur nettawi ara s afaylu ilaw."
+
+msgid "File cannot be opened"
+msgstr "Afaylu ulamek ara yeldi"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit igguma ad ildi afaylu “%s”."
+
+msgid "Find"
+msgstr "Nadi"
+
+msgid "Replace"
+msgstr "Semselsi"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Tinefrunin"
+
+msgid "Ignore case"
+msgstr "Ttu tajṛut n usekkil"
+
+msgid "Wrap around"
+msgstr "Qfel"
+
+msgid "Whole words only"
+msgstr "Awalen ummiden kan"
+
+msgid "Find in source texts"
+msgstr "Nadi deg yiḍrisen iɣbula"
+
+msgid "Find in translations"
+msgstr "Nadi di tsuqilin"
+
+msgid "Find in comments"
+msgstr "Nadi deg yiwenniten"
+
+msgid "Close"
+msgstr "Mdel"
+
+msgid "Replace &All"
+msgstr "Semselsi &akk"
+
+msgid "Replace &all"
+msgstr "Semselsi i &meṛṛa"
+
+msgid "&Replace"
+msgstr "Se&mselsi"
+
+msgid "< &Previous"
+msgstr "< &Ɣer deffir"
+
+msgid "&Next >"
+msgstr "Ɣer &sdat >"
+
+msgid "String to find"
+msgstr "Azrar ara tnadiḍ"
+
+msgid "Replacement string"
+msgstr "Izraren n usemselsi"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Ulamek aselkem n wahil: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Tangalt neɣ isem n tutlayt (amedya. kab_DZ)"
+
+msgid "Translation Language"
+msgstr "Tutlayt n tsuqilt"
+
+msgid "Language of the translation:"
+msgstr "Tutlayt n tsuqilt:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Amsefrak n yikaramen"
+
+msgid "Edit…"
+msgstr "Ẓreg…"
+
+msgid "Create new translations project"
+msgstr "Snulfu-d asenfar amaynut n tsuqilin"
+
+msgid "Delete the project"
+msgstr "Kkes asenfar"
+
+msgid "Edit the project"
+msgstr "Ẓreg asenfar"
+
+msgid "Update all"
+msgstr "Leqqem Akk"
+
+msgid "Update all catalogs in the project"
+msgstr "Leqqem ikaramen merra n usenfar"
+
+msgid "Total"
+msgstr "Aɣrud"
+
+msgid "Untrans"
+msgstr "Ur yettwasuqqel ara"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Yesra amahil"
+
+msgid "Errors"
+msgstr "Tuccḍiwin"
+
+msgid "Last modified"
+msgstr "Abeddel aneggaru"
+
+msgid "Select directory"
+msgstr "Fren akaram"
+
+msgid "Directories:"
+msgstr "Ikaramen:"
+
+msgid "<unnamed>"
+msgstr "<warisem>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Tebɣiḍ ad tekseḍ asenfar “%s”?"
+
+msgid "Delete project"
+msgstr "Kkes asenfaṛ"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Tukksa n usenfaṛ ur tettekkes ara ifuyla n tsuqilt."
+
+msgid "Confirmation"
+msgstr "Asentem"
+
+msgid "Update all catalogs in this project?"
+msgstr "Leqqem ikaramen merra n usenfar-a?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Ad yeg aleqqem si tengalt taɣbalut i yifuyla meṛṛa n usenfaṛ."
 
 msgid "Catalogs Manager"
 msgstr "Amsefrak n yikaramen"
@@ -380,6 +1053,15 @@ msgstr "Ḥbes ameslay"
 msgid "&View"
 msgstr "Ta&muɣli"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Sken afeggag n yifecka"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Sagen afeggag n yifecka…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Ɛeddi s agdil aččuran"
 
@@ -392,621 +1074,11 @@ msgstr "Simẓi"
 msgid "Zoom"
 msgstr "Simɣur"
 
+msgid "Welcome to Poedit"
+msgstr "Ansuf ɣer Poedit"
+
 msgid "Bring All to Front"
 msgstr "Sɛeddi kulec ɣer uɣawas amezwaru"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Tasuqilt PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Afaylu izmer ad yili yerreẓ neɣ amasal-ines ur t-yeɛqil ara Poedit."
-
-msgid "The file cannot be opened."
-msgstr "Afaylu ulamek ara yeldi."
-
-msgid "Invalid file"
-msgstr "Afaylu d armeɣtu"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Ur tezmireḍ ar ad tserseḍ ugar n yiwen n ufaylu deg wesfaylu n Poedit."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Afaylu “%s” mačči d afaylu n tsuqilt."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "Afa&ylu"
-
-msgid "&Go"
-msgstr "&Ddu"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "Aseɣti n teɣdirawt yensa, acku amawal i %s ur yettwasbedd ara."
-
-msgid "Install"
-msgstr "Sbedd"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Akaram yettwabeddel. Tebɣiḍ ad teskelseḍ ibeddilen ?"
-
-msgid "Save changes"
-msgstr "Sekles ibeddilen"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Ibeddilen-ik (im) ad ruḥen ma yella ur ten-teskelseḍ ara."
-
-msgid "Save"
-msgstr "Sekles"
-
-msgid "Do&n’t save"
-msgstr "Ur sseklas a&ra"
-
-msgid "Don’t Save"
-msgstr "Ur sseklas ara"
-
-msgid "Save as…"
-msgstr "Sekles am…"
-
-msgid "Compile to…"
-msgstr "Sefsu ɣer…"
-
-msgid "Compiled Translation Files"
-msgstr "Afaylu n tsuqilt yefsa"
-
-msgid "Export as…"
-msgstr "Sifeḍ am…"
-
-msgid "HTML Files"
-msgstr "Ifuyla HTML"
-
-msgid "Open catalog template"
-msgstr "Ldi taneɣruft n ukaram"
-
-msgid "Source code not available."
-msgstr "Tangalt taɣbalut ur tewjid ara."
-
-msgid "Updating failed"
-msgstr "Aleqqem yecceḍ"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Tisuqilin ugint ad muccḍent seg tengalt taɣbalut, acku ur d-nufi ara tangalt "
-"deg yideg i d-yettunefken deg iraten n ukaram."
-
-msgid "Permission denied."
-msgstr "Tasiregt tettwagi."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Ur tesɛiḍ ara tasiregt iwakken ad teɣreḍ ifuyla n tengalt taɣbalut deg yideg "
-"i d-yettunefken deg yiraten n ukatalug."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Ma tugiḍ yakan anekcum ɣer yifuyla-inek, tzemreḍ ad t-tsirgeḍ di Tinefrunin "
-"n unagraw > Taɣellist akked tbaḍnit > Tabaḍnit > Ifuyla akked yikaramen."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Inekcumen deg ukaram zemren ad ilin d irmeɣta."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Aleqqem n ukaram yecceḍ. Ssit ɣef 'Talqayt>>' akken ad teẓreḍ ugar."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d n wugur i d-nufa di tsuqilt."
-msgstr[1] "%d n wuguren i d-nufa di tsuqilt."
-
-msgid "Validation results"
-msgstr "Igmaḍ n usentem"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Inekcumen yesɛan tuccḍiwin ttucerḍen s uzeggaɣ di tebdart. Isalan ɣef ɣef "
-"tuccḍa ad d-baben mi ara tferneḍ anekcum."
-
-msgid "The file was saved safely."
-msgstr "Afaylu yettwasekles s tɣellist."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Afaylu yettwasekles s tɣellist u yefsa ɣer umasal MO, maca wissen ma ad iddu "
-"akken ilaq."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Afaylu yettwasekles s tɣellist, ur yezmir ara yefsu ɣer umasal MO neɣ ad "
-"yettwaseqdec."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr "Afaylu yefsa ɣer umasal MO, maca wissen ma ad yeddu akken ilaq."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Afaylu ur yezmir ara ad yefsu ɣer umasal MO neɣ ad yettwaseqdec."
-
-msgid "No problems with the translation found."
-msgstr "Ulac uguren di tsuqilt."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Tasuqilt tewjed i wseqdec, maca %d n unekcum ur yettwasuqqel ara."
-msgstr[1] ""
-"Tasuqilt tewjed i wseqdec, maca, %d n yinekcumen ur ttwasuqqelen ara."
-
-msgid "The translation is ready for use."
-msgstr "Tasuqilt tewjed i wseqdec."
-
-msgid "Warnings have been disabled."
-msgstr "Ilɣa nsan."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Ma yella tsenseḍ ilɣa ɣef sebba n ddeqs n yir tummla, azen-aɣ-d amedya n "
-"ufaylu ar help@poedit.net akken ad tmuddeḍ afus deg usnerni."
-
-msgid "Send Feedback"
-msgstr "Azen iwenniten-ik"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Azen iwenniten-ik"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit yeseɣti i yiman-is agbur armeɣtu deg ufaylu “%s”."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Afaylu yesɛa iferdisen usligen, ayen i yegedlen deg yifuyla PO u yettqerriɛ "
-"asqedc n ufaylu. Poedit yefra ugur, maca ilaq ad tselkeneḍ tisuqilin i "
-"yettwacerḍen d timewẓiyin u ad tent-teseɣtiḍ ma yelaq."
-
-msgid "Language of the translation isn’t set."
-msgstr "Tutlayt n tsuqilt ur tettusbadu ara."
-
-msgid "Set Language"
-msgstr "Sbadu tutlayt"
-
-msgid "Set language"
-msgstr "Sbadu tutlayt"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Isumar ur ttawjaden ara ma yella tutlayt n tsuqilt ur tettusbadu ara akken "
-"iwata. Ayagi, yezmer ad iḥaz timeẓliyin-nniḍen, am talɣiwin n wesget."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Tutlayt n tsuqilt kifkif-itt akked tutlayt taɣbalut."
-
-msgid "Fix Language"
-msgstr "Sɣti tutlayt"
-
-msgid "Fix language"
-msgstr "Seɣti tutlayt"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Akaram-agi yesɛa inekcumen s talɣiwin n wesget, maca ulac inixf Plural-Forms "
-"yettusewlen."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Inekcumen deg ukaram-agi sɛan amḍan n talɣiwin n wesget i yemgarraden ɣef "
-"wayen i d-yeqqar inixf Plural-Forms"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Inixf Plural-Forms i yettwasran ixuṣṣ."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Tuccḍa n tseddast deg yinixf Plural-Forms (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Seɣti inixf"
-
-msgid "Fix the header"
-msgstr "Seɣti inixf"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Talɣiwin n wesget i yesseqdec ukaram-agi ulac-itent di tnumi n %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Cegger"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Tuccḍa deg usali n ufaylu akaram “%s”."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Tasuqilt n: %d seg %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Yeggra-d: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d n tuccḍa"
-msgstr[1] "%d n tuccḍiwin"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d n unekcum"
-msgstr[1] "%d n yinekcumen"
-
-msgid " (unsaved)"
-msgstr " (ur yettwasekles ara)"
-
-msgid " (modified)"
-msgstr " (yettwabeddel)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Aleqqem n tkatut n tsuqilt ur yeddi ara: %s"
-
-msgid "Purge deleted translations"
-msgstr "Sfeḍ tisuqilin yettwakksen"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Tebɣiḍ ad tekkseḍ tisuqilin merra ur nettwaseqdac ara?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Ma tkemmeleḍ asizdeg, tisuqilin merra i yettwacerḍen amzun ttwakksent ad "
-"ttwakksent i lebda. Asmi ara tebɣuḍ ad tent-ternuḍ ilaq ak ad tent-"
-"tesuqqeleḍ tikkelt-nniḍen."
-
-msgid "Keep"
-msgstr "Eǧǧ"
-
-msgid "Purge"
-msgstr "Sfeḍ"
-
-msgid "Copy from source text"
-msgstr "Nɣel seg weḍris aɣbalu"
-
-msgid "Copy from Source Text"
-msgstr "Nɣel seg weḍris aɣbalu"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Sfeḍ tasuqilt"
-
-msgid "Clear Translation"
-msgstr "Sfeḍ tasuqilt"
-
-msgid "Edit comment"
-msgstr "Ẓreg awennit"
-
-msgid "Edit Comment"
-msgstr "Ẓreg awennit"
-
-msgid "References:"
-msgstr "Timsisɣal:"
-
-msgid "&Bookmarks"
-msgstr "Ti&craḍ n yisebtar"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Sbadu asɣal %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Ddu ɣer tecreḍt n usebtar %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Sbadu ticreḍt n usebtar %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Ddu ɣer tecreḍt n usebtar %i"
-
-msgid "Hide Sidebar"
-msgstr "Ffer afeggag n yidis"
-
-msgid "Show Sidebar"
-msgstr "Sken afeggag n yidis"
-
-msgid "Hide Status Bar"
-msgstr "Ffer afeggag n waddad"
-
-msgid "Show Status Bar"
-msgstr "Sken afeggag n waddad"
-
-msgid "Source text:"
-msgstr "Aḍris aɣbalu:"
-
-msgid "Singular:"
-msgstr "Asuf:"
-
-msgid "Plural:"
-msgstr "Asget:"
-
-msgid "Translation:"
-msgstr "Tasuqilt:"
-
-msgid "Pre-translated"
-msgstr "Yettwasuqqel s uzwer"
-
-msgid "Needs Work"
-msgstr "Yesra amahil"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Yesra amahil"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Ifuyla POT d tineɣrufin kan ur sɛin ara kra n tsuqilin. \n"
-"Iwakken ad tgeḍ tasuqilt, snulfu-d afaylu amaynut PO yebnan ɣef tneɣruft."
-
-msgid "Create New Translation"
-msgstr "Snulfu-d tasuqilt tamaynutt"
-
-msgid "Create new translation"
-msgstr "Snulfu-d tasuqilt tamaynutt"
-
-msgid "Everything"
-msgstr "Akk"
-
-#, c-format
-msgid "Form %i"
-msgstr "Talɣa %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Seg %i (ur tettwaseqdac ara)"
-
-msgid "Singular"
-msgstr "Asuf"
-
-msgid "Zero"
-msgstr "Ilem"
-
-msgid "One"
-msgstr "Yiwen"
-
-msgid "Two"
-msgstr "Sin"
-
-msgid "Plural"
-msgstr "Asget"
-
-msgid "Other"
-msgstr "Wayeḍ"
-
-#, c-format
-msgid "%s Format"
-msgstr "Amasal %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "Amasal %s"
-
-msgid "Source text"
-msgstr "Aḍris aɣbalu"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Tasuqilt — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Aḍris aɣbalu — %s"
-
-msgid "unknown language"
-msgstr "tutlayt tarussint"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Taladna terreẓ: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Tuccḍa deg wesmezdi n yikaramen gettext."
-
-msgid "Source file"
-msgstr "Afaylu aɣbalu"
-
-msgid "Source file occurrence:"
-msgstr "Tummant n ufaylu aɣbalu:"
-
-msgid "Open in Editor"
-msgstr "Ldi deg wemaẓrag"
-
-msgid "Open in editor"
-msgstr "Ldi deg wemaẓrag"
-
-msgid "No references for the selected item."
-msgstr "Ulac tiwelhiwin i weferdis yettwafernen."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Tuccḍa deg ulday n ufaylu %s!"
-
-msgid "Find"
-msgstr "Nadi"
-
-msgid "Replace"
-msgstr "Semselsi"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Tinefrunin"
-
-msgid "Ignore case"
-msgstr "Ttu tajṛut n usekkil"
-
-msgid "Wrap around"
-msgstr "Qfel"
-
-msgid "Whole words only"
-msgstr "Awalen ummiden kan"
-
-msgid "Find in source texts"
-msgstr "Nadi deg yiḍrisen iɣbula"
-
-msgid "Find in translations"
-msgstr "Nadi di tsuqilin"
-
-msgid "Find in comments"
-msgstr "Nadi deg yiwenniten"
-
-msgid "Close"
-msgstr "Mdel"
-
-msgid "Replace &All"
-msgstr "Semselsi &akk"
-
-msgid "Replace &all"
-msgstr "Semselsi i &meṛṛa"
-
-msgid "&Replace"
-msgstr "Se&mselsi"
-
-msgid "< &Previous"
-msgstr "< &Ɣer deffir"
-
-msgid "&Next >"
-msgstr "Ɣer &sdat >"
-
-msgid "String to find"
-msgstr "Azrar ara tnadiḍ"
-
-msgid "Replacement string"
-msgstr "Izraren n usemselsi"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Ulamek aselkem n wahil: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Tangalt neɣ isem n tutlayt (amedya. kab_DZ)"
-
-msgid "Translation Language"
-msgstr "Tutlayt n tsuqilt"
-
-msgid "Language of the translation:"
-msgstr "Tutlayt n tsuqilt:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Amsefrak n yikaramen"
-
-msgid "Catalog"
-msgstr "Akaram"
-
-msgid "Total"
-msgstr "Aɣrud"
-
-msgid "Untrans"
-msgstr "Ur yettwasuqqel ara"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Yesra amahil"
-
-msgid "Errors"
-msgstr "Tuccḍiwin"
-
-msgid "Last modified"
-msgstr "Abeddel aneggaru"
-
-msgid "Select directory"
-msgstr "Fren akaram"
-
-msgid "Directories:"
-msgstr "Ikaramen:"
-
-msgid "<unnamed>"
-msgstr "<warisem>"
-
-msgid "Do you want to delete the project?"
-msgstr "Tebɣiḍ ad tekkeseḍ asenfar-agi?"
-
-msgid "Confirmation"
-msgstr "Asentem"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"D tidett tebɣiḍ ad tgeḍ aleqqem\n"
-"n yikaramen merra n usenfar-agi?"
 
 msgid "Information about the translator"
 msgstr "Isalan ɣef umsuqqel"
@@ -1020,8 +1092,8 @@ msgstr "Isem n tmagit-inek"
 msgid "Email:"
 msgstr "Imayl:"
 
-msgid "your_email@example.com"
-msgstr "imayl-inek@amedya.com"
+msgid "you@example.com"
+msgstr "kečč·kem@amedya.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1036,8 +1108,8 @@ msgstr "Asiẓreg"
 msgid "Automatically compile MO file when saving"
 msgstr "Asefsu awurman n ufaylu MO deg wesekles"
 
-msgid "Show summary after catalog update"
-msgstr "Sken agzul mbaɛd aleqqem n ukaram"
+msgid "Show summary after updating files"
+msgstr "Sken agzul ticki ttwaleqqemen yifuyla"
 
 msgid "Check spelling"
 msgstr "Senqed taɣdirawt"
@@ -1179,9 +1251,6 @@ msgstr ""
 "Alus n uwennez n tkatut n tsuqilt ad yesfeḍ i lebda tisuqilin i yettwaḥerzen "
 "degs. Tamhelt-agi ur tesɛi ara tuɣalin ɣer deffir."
 
-msgid "Cancel"
-msgstr "Sefsex"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1200,9 +1269,6 @@ msgstr "Imassafen yugnen:"
 
 msgid "Custom extractors:"
 msgstr "Imassafen yugnen:"
-
-msgid "Edit…"
-msgstr "Ẓreg…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1269,14 +1335,20 @@ msgstr "Ḥrez amsal n yifuyla yellan"
 msgid "Advanced"
 msgstr "Anaẓi"
 
-msgid "Pre-translating…"
-msgstr "Tasuqilt tuzwirt…"
+msgid "Preparing strings…"
+msgstr "Aheggi n yizraren…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Tasuqilt tuzwirt si tkatut n tsuqilt…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "%u n uzrar yettwasuqqel s uzwer"
 msgstr[1] "%u n yizraren ttwasuqqlen s uzwer"
+
+msgid "Pre-translating…"
+msgstr "Tasuqilt tuzwirt…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1344,23 +1416,14 @@ msgstr ""
 "yettili-d i tsuqilin tizgen-aymaniyin mi ara yelmed Poedit seg yifuyla "
 "yettwasuqqlen s ufus."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Zuɣer-sers ikaramen dagi</big>\n"
-"\n"
-"neɣ seqdec taqeffalt +"
+msgid "Cancelling…"
+msgstr "Asefsex…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Zuɣer-sers ikaramen dagi</big>\n"
-"\n"
-"neɣ seqdec taqeffalt +"
+msgid "Drag Folders or Files Here"
+msgstr "Zuɣer ikaramen neɣ ifuyla ɣer dagi"
+
+msgid "Drag folders or files here"
+msgstr "Zuɣer ikaramen neɣ ifuyla ɣer dagi"
 
 msgid "Add Folders…"
 msgstr "Rnu ikaramen…"
@@ -1379,6 +1442,17 @@ msgstr "Rnu asekkil awsiyan…"
 
 msgid "Add wildcard…"
 msgstr "Rnu asekkil awsiyan…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Askan deg unaram"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Sken deg wenaram"
+
+msgid "Show in Folder"
+msgstr "Beqqeḍ deg ukaram"
 
 msgid "Paths"
 msgstr "Iberdan"
@@ -1420,14 +1494,23 @@ msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 "Ttxil-k sekles qbel afaylu. Ur tezmireḍ ara ad tẓergeḍ tanegzumt-agi uqbel."
 
+msgid "Plural form translations"
+msgstr "Tisuqilin n talɣiwin n usget"
+
 msgid "Not all plural forms are translated."
 msgstr "Talɣiwin n usget ur ttwasuqqelent ara merra."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Asekkil ameqran/asekkil amecṭuḥ ur mtawan ara"
 
 msgid "The translation should start as a sentence."
 msgstr "Tasuqilt isefk ad tebdu am tefyirt."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Tasuqilt isefk ad tebdu s usekkil amecṭuḥ."
+
+msgid "Inconsistent whitespace"
+msgstr "Tallunt ur teǧhid ara"
 
 msgid "The translation doesn’t start with a space."
 msgstr "Tasuqilt ur tebdi ara s tallunt."
@@ -1447,6 +1530,9 @@ msgstr "Txuṣṣ tallunt di taggara n tsuqilt."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Tasuqilt tfukk s tallunt, ma d aḍris aɣbalu xaṭi."
 
+msgid "Punctuation checks"
+msgstr "Asenqed n usenqeḍ"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Tasuqilt ilaq ad tfakk s “%s”."
@@ -1459,38 +1545,23 @@ msgstr "Tasuqilt ur ilaq ara ad tfakk s “%s”."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Tasuqilt tfukk s “%s”, maca aḍris aɣbalu ifukk s “%s”."
 
+msgid "Clear Menu"
+msgstr "Sfeḍ umuɣ"
+
+msgid "Clear menu"
+msgstr "Sfeḍ umuɣ"
+
 msgid "Comment:"
 msgstr "Awennit:"
 
-msgid "OK"
-msgstr "Ih"
+msgid "Update"
+msgstr "Leqqem"
 
-msgid "C&lear"
-msgstr "Sf&eḍ"
+msgid "&Delete"
+msgstr "&Kkes"
 
-msgid "Clear the comment"
-msgstr "Sfeḍ awennit"
-
-msgid "New"
-msgstr "Amaynut"
-
-msgid "Create new translations project"
-msgstr "Snulfu-d asenfar amaynut n tsuqilin"
-
-msgid "Edit"
-msgstr "Ẓreg"
-
-msgid "Edit the project"
-msgstr "Ẓreg asenfar"
-
-msgid "Delete the project"
-msgstr "Kkes asenfar"
-
-msgid "Update all"
-msgstr "Leqqem Akk"
-
-msgid "Update all catalogs in the project"
-msgstr "Leqqem ikaramen merra n usenfar"
+msgid "Delete the comment"
+msgstr "Kkes awennit"
 
 msgid "Edit project"
 msgstr "Ẓreg asenfar"
@@ -1503,6 +1574,12 @@ msgstr "Snirem"
 
 msgid "Add directory to the list"
 msgstr "Rnu akaram ɣer tebdart"
+
+msgid "OK"
+msgstr "Ih"
+
+msgid "&File"
+msgstr "Afa&ylu"
 
 msgid "&New…"
 msgstr "Amaynut…"
@@ -1519,11 +1596,26 @@ msgstr "&Ldi…"
 msgid "Open Recent"
 msgstr "Ldin melmi kan"
 
+msgid "Open recent"
+msgstr "Ldin melmi kan"
+
 msgid "Open from Crowdin…"
 msgstr "Ldi si Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Ldi si Crowdin…"
+
+msgid "&Start window"
+msgstr "Asfaylu n tazwara"
+
+msgid "&Start Window"
+msgstr "Asfaylu n tazwara"
+
+msgid "Catalogs &manager"
+msgstr "Amsefrak n yikaramen"
+
+msgid "Catalogs &Manager"
+msgstr "Amsefrak n yikaramen"
 
 msgid "&Close"
 msgstr "&Mdel"
@@ -1549,12 +1641,6 @@ msgstr "Nadi ileqman…"
 msgid "&Preferences…"
 msgstr "Ismenyifen…"
 
-msgid "Catalogs &manager"
-msgstr "Amsefrak n yikaramen"
-
-msgid "Catalogs &Manager"
-msgstr "Amsefrak n yikaramen"
-
 msgid "E&xit"
 msgstr "Ff&eɣ"
 
@@ -1579,6 +1665,7 @@ msgstr "Ẓreg awennit"
 msgid "Edit &Comment"
 msgstr "&Ẓreg awennit"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Isumar"
 
@@ -1654,11 +1741,11 @@ msgstr "Zwir inekcumen ur nettwasuqqel ara"
 msgid "&Untranslated Entries First"
 msgstr "Zwir inekcumen ur nettwasuqqel ara"
 
-msgid "&Show references"
-msgstr "Sken timselɣa"
+msgid "&Show code occurrences"
+msgstr "&Sken tummanin n tengalt"
 
-msgid "&Show References"
-msgstr "Sken timselɣa"
+msgid "&Show Code Occurrences"
+msgstr "&Sken tummanin n tengalt"
 
 msgid "Show sidebar"
 msgstr "Sken afeggag n yidis"
@@ -1666,8 +1753,8 @@ msgstr "Sken afeggag n yidis"
 msgid "Show status bar"
 msgstr "Sken afeggag n waddad"
 
-msgid "C&atalog"
-msgstr "Akaram"
+msgid "&Translation"
+msgstr "&Tasuqilt"
 
 msgid "&Update from source code"
 msgstr "&Leqqem seg tengalt taɣbalut"
@@ -1818,8 +1905,8 @@ msgstr ""
 "ma yella kan tangalt taɣbalut tettunefk-d. %c ad yeẓel ɣer wazal n tegrumma "
 "n yisekkilen."
 
-msgid "Catalog properties"
-msgstr "Iraten n ukaram"
+msgid "Translation Properties"
+msgstr "Iraten n tsuqilt"
 
 msgid "Project name and version:"
 msgstr "Isem akked lqem n usenfar:"
@@ -1847,9 +1934,6 @@ msgstr "Iɣewwaṛen inaẓiyen n tussfa…"
 
 msgid "Advanced extraction settings…"
 msgstr "Iɣewwaṛen inaẓiyen n tussfa…"
-
-msgid "Translation Properties"
-msgstr "Iraten n tsuqilt"
 
 msgid "Translation properties"
 msgstr "Iraten n tsuqilt"
@@ -1883,9 +1967,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Seqdec daɣen awalen yufraren n lexṣas i tutlayin yettwadehlen"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Issin ugar ɣef wawalen yufraren n Gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Issin ugar ɣef wawalen yufraren n gettext"
 
@@ -1893,21 +1974,21 @@ msgid "Update summary"
 msgstr "Leqqem agzul"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Izraren-agi nufa-ten-id deg yiɣbula maca ulac-iten deg ukaram.\n"
-"Poedit ad ten-yernu ɣer ukaram tura."
+"Izraren-agi ttwafen deg uɣbalu maca ulac-iten deg ufaylu.\n"
+"Poedit ad ten-yernu ɣer ufaylu tura."
 
 msgid "New strings"
 msgstr "Izraren imaynuten"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Izraren-agi ulac-iten tura deg yiɣbula.\n"
-"Poedit ad ten-yekkes seg ukaram."
+"Izraren-agi dayen ur llin ara di tengalt taɣbalut.\n"
+"Poedit ad ten-yekkes seg ufaylu tura."
 
 msgid "Obsolete strings"
 msgstr "Izraren yezrin"
@@ -1918,8 +1999,11 @@ msgstr "(0 amaynut, 0 yezri)"
 msgid "Open"
 msgstr "Ldi"
 
-msgid "Save catalog"
-msgstr "Sekles akaram"
+msgid "Open file"
+msgstr "Ldi afaylu"
+
+msgid "Save file"
+msgstr "Sekles afaylu"
 
 msgid "Validate"
 msgstr "Seɣbel"
@@ -1943,8 +2027,8 @@ msgid "Show or hide the sidebar"
 msgstr "Sken neɣ ffer afeggag n yidis"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Aḍris aɣbalu uzwir:"
+msgid "Previous source text"
+msgstr "Aḍris aɣbalu uzwir"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1953,8 +2037,11 @@ msgstr ""
 "Aɣbalu n uḍris aqbuṛ (send ad yettwabeddel deg uleqqem) ukud tenmeɣra "
 "tsuqilt tamewẓit."
 
-msgid "Notes for translators:"
-msgstr "Tamawt i yemsuqqlen:"
+msgid "Notes for translators"
+msgstr "Tamawt i yemsuqqlen"
+
+msgid "Comment"
+msgstr "Awennit"
 
 msgid "Add comment"
 msgstr "Rnu awennit"
@@ -1968,8 +2055,8 @@ msgstr "Kkes seg tkatut n tsuqilt"
 msgid "Delete from translation memory"
 msgstr "Kkes seg tkatut n tsuqilt"
 
-msgid "Translation suggestions:"
-msgstr "Isumar n tsuqilt:"
+msgid "Translation suggestions"
+msgstr "Isumar n tsuqilt"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -1999,36 +2086,6 @@ msgstr "Tuccḍa di tkatut n tsuqilt: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "D awezɣi asnulfu n ukaram akudan."
 
-msgid "Welcome to Poedit"
-msgstr "Ansuf ɣer Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Lqem %s"
-
-msgid "Edit a translation"
-msgstr "Ẓreg tasuqilt"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Ldi afaylu PO yellan daɣen ẓreg tasuqilt."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr "Ṭṭef afaylu PO neɣ taneɣruft POT tesuffɣeḍ-d segs tasuqilt tamaynutt."
-
-msgid "Collaborate on a translation with others"
-msgstr "Mɛawan di tsuqilt akked wiyaḍ"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr "Sider afaylu seg usenfar n Crowdin, suqqel u semtawi ibeddilen-ik."
-
-msgid "What is Crowdin?"
-msgstr "Acu-t Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Ulac tisuqilin. Ayagi ulac-it di tnumi."
 
@@ -2047,8 +2104,10 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Issin ugar ɣef GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Ma tebɣiḍ ad taččareḍ akaram-agi s sshala leqqem-it seg ufaylu POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr "Ma tebɣiḍ ad taččareḍ afaylu-agi s sshala leqqem-it seg ufaylu POT:"
 
 msgid "Update from POT"
 msgstr "Leqqem seg POT"
@@ -2067,6 +2126,33 @@ msgstr "Ssef seg yiɣbula"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Swel tussfa n tengalt taɣbalut deg yiraten."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Lqem %s"
+
+msgid "Create new…"
+msgstr "Snulfu-d amaynut…"
+
+msgid "Create new translation from POT template."
+msgstr "Snulfu-d tasuqilt tamaynutt si tneɣruft POT."
+
+msgid "Browse files"
+msgstr "Snirem ifuyla"
+
+msgid "Open and edit translation files."
+msgstr "Ldi yerna siẓreg ifuyla n tsuqilt."
+
+msgid "Translate Crowdin project"
+msgstr "Suqqel asenfaṛ n Crowdin"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Mɛawan akked wiyiḍ deg usenfaṛ n Crowdin."
+
+msgid "Recent files"
+msgstr "Ifuyla n melmi kan"
 
 msgid "Sync"
 msgstr "Mtawi"
@@ -2152,8 +2238,8 @@ msgstr "&Gzem"
 msgid "Cut"
 msgstr "Gzem"
 
-msgid "&Delete"
-msgstr "&Kkes"
+msgid "Edit"
+msgstr "Ẓreg"
 
 msgid "&Quit"
 msgstr "Ffeɣ"
@@ -2163,6 +2249,9 @@ msgstr "Tallelt"
 
 msgid "&New"
 msgstr "&Amaynut"
+
+msgid "New"
+msgstr "Amaynut"
 
 msgid "&No"
 msgstr "&Ala"

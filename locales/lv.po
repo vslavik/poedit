@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv_LV\n"
@@ -30,20 +30,20 @@ msgstr "Turpmāk nerādīt"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Jauns: %i, novecojis: %i)"
 
-msgid "Updating catalog"
-msgstr "Atjaunina katalogu"
-
 msgid "Collecting source files…"
 msgstr "Vāc avota datnes…"
 
 msgid "Extracting translatable strings…"
 msgstr "Izvērš tulkojamos vārdus…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Neizdevās ielādēt izvilkto katalogu."
+msgid "Failed to load file with extracted translations."
+msgstr ""
 
 msgid "Merging differences…"
 msgstr "Apvieno atšķirības…"
+
+msgid "Updating translations"
+msgstr ""
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -80,22 +80,16 @@ msgstr[2] "%i rindiņas failā \"%s\" netika ielādētas pareizi."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Rinda %d failā \"%s\" ir bojāta (nederīgi %s dati)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Sabojāts kataloga fails: vienskaitļa forma msgstr lietota kopā ar "
-"msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Sabojāts kataloga fails: daudzskaitļa forma msgstr lietota bez msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Radās kļūdas ielādējot katalogu. Tā rezultātā daži dati varētu būt sabojāti "
-"vai varētu iztrūkt."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -119,18 +113,14 @@ msgstr "Radās kļūda formatējot failu (bet tomēr tika veiksmīgi saglabāts)
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalogu nevar saglabāt \"%s\" kodējumā, kā norādīts kataloga iestatījumos.\n"
-"\n"
-"Tas tā vietā tika saglabāts UTF-8 kodējumā un iestatījums tika attiecīgi "
-"izmainīts."
 
-msgid "Error saving catalog"
-msgstr "Kļūda saglabājot katalogu"
+msgid "Error saving file"
+msgstr ""
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -172,8 +162,11 @@ msgstr "Sinhronizēšana ar %s neizdevās."
 msgid "Syncing error"
 msgstr "Sinhronizācijas kļūda"
 
-msgid "JSON request error"
+msgid "Add"
 msgstr ""
+
+msgid "JSON request error"
+msgstr "JSON pieprasījuma kļūda"
 
 msgid "Not authorized, please sign in again."
 msgstr "Noraidīts, lūdzu pierakstīties no jauna."
@@ -205,9 +198,6 @@ msgstr "Gaida autentifikāciju…"
 
 msgid "Updating user information…"
 msgstr "Atjauno lietotāja informāciju…"
-
-msgid "Learn More About Crowdin"
-msgstr "Uzzināt vairak par Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Uzzināt vairak par Crowdin"
@@ -251,9 +241,6 @@ msgstr "Kopēt"
 msgid "Learn more"
 msgstr "Uzzināt vairāk"
 
-msgid "Learn More"
-msgstr "Uzzināt vairāk"
-
 msgid "&Help"
 msgstr "&Palīdzība"
 
@@ -286,15 +273,669 @@ msgstr "Komunikācija ar Poedit procesu neizdevās."
 msgid "Unhandled exception occurred: %s"
 msgstr "Neapstrādāts izņēmums notika: %s"
 
-msgid "Open catalog"
-msgstr "Atvērt katalogu"
+msgid "Select translation template"
+msgstr ""
+
+msgid "Select translation file"
+msgstr ""
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit ir vienkārši izmantojams tulkojumu redaktors."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO tulkojums"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Fails varētu būt bojāts vai Poedit neatpazīstamā formātā."
+
+msgid "The file cannot be opened."
+msgstr "Fails nav atverams."
+
+msgid "Invalid file"
+msgstr "Nederīgs fails"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr ""
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Fails “%s” nav tulkojuma fails."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Fails “%s” nepastāv."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit ir vienkārši izmantojams tulkojumu redaktors."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Iet"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Pareizrakstības pārbaude ir atslēgta, jo nav instalēta %s valodas vārdnīca."
+
+msgid "Install"
+msgstr "Instalēt"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr ""
+
+msgid "Reload file"
+msgstr ""
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+
+msgid "Ignore"
+msgstr ""
+
+msgid "Reload File"
+msgstr ""
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr ""
+
+msgid "Save changes"
+msgstr "Saglabāt izmaiņas"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Ja nesaglabāsiet izmaiņas, tās tiks zaudētas."
+
+msgid "Save"
+msgstr "Saglabāt"
+
+msgid "Do&n’t save"
+msgstr "&Nesaglabāt"
+
+msgid "Don’t Save"
+msgstr "Nesaglabāt"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+
+msgid "Cancel"
+msgstr "Atcelt"
+
+msgid "Save Anyway"
+msgstr ""
+
+msgid "Save anyway"
+msgstr ""
+
+msgid "Save as…"
+msgstr "Saglabāt kā…"
+
+msgid "Compile to…"
+msgstr ""
+
+msgid "Compiled Translation Files"
+msgstr ""
+
+msgid "Export as…"
+msgstr "Eksportēt kā…"
+
+msgid "HTML Files"
+msgstr "HTML faili"
+
+#, c-format
+msgid "In: %s"
+msgstr ""
+
+msgid "Source code not available."
+msgstr ""
+
+msgid "Updating failed"
+msgstr "Neizdevās atjaunināt"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+
+msgid "Permission denied."
+msgstr ""
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr ""
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+
+msgid "Open translation template"
+msgstr ""
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "Validation results"
+msgstr "Pārbaudes rezultāts"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+
+msgid "The file was saved safely."
+msgstr ""
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr ""
+
+msgid "No problems with the translation found."
+msgstr ""
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "The translation is ready for use."
+msgstr ""
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+
+msgid "Language of the translation isn’t set."
+msgstr ""
+
+msgid "Set Language"
+msgstr ""
+
+msgid "Set language"
+msgstr ""
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+
+msgid "Language of the translation is the same as source language."
+msgstr "Tulkojuma valoda ir tāda pati kā avota valoda."
+
+msgid "Fix Language"
+msgstr "Labot valodu"
+
+msgid "Fix language"
+msgstr "Labot valodu"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+
+msgid "Required header Plural-Forms is missing."
+msgstr ""
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Sintakses kļūda daudzskaitļa formu galvenē (\"%s\")."
+
+msgid "Fix the Header"
+msgstr ""
+
+msgid "Fix the header"
+msgstr "Salabot galveni"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Skatīt"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr ""
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Iztulkoti: %d no %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Atlikuši: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d kļūdas"
+msgstr[1] "%d kļūda"
+msgstr[2] "%d kļūdas"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid " (unsaved)"
+msgstr " (nesaglabāts)"
+
+msgid " (modified)"
+msgstr " (modificēts)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Neizdevās atjaunināt tulkojumu atmiņu: %s"
+
+msgid "Purge deleted translations"
+msgstr "&Iztīrīt dzēstos tulkojumus"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Vai vēlaties izņemt visus tulkojumus, kas vairs netiek izmantoti?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Ja jūs turpināsiet ar iztīrīšanu, visi tulkojumi, kas atzīmēti kā dzēsti, "
+"tiks pilnībā izņemti. Iespējams, ka vēlāk tie jums būs jātulko vēlreiz, ja "
+"tie vēlāk tiks pievienoti atpakaļ."
+
+msgid "Keep"
+msgstr "Paturēt"
+
+msgid "Purge"
+msgstr "Iztīrīt"
+
+msgid "Copy from source text"
+msgstr "Kopēt no avota teksta"
+
+msgid "Copy from Source Text"
+msgstr "Kopēt no avota teksta"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Notīrīt tulkojumu"
+
+msgid "Clear Translation"
+msgstr "Notīrīt tulkojumu"
+
+msgid "Edit comment"
+msgstr "Rediģēt komentāru"
+
+msgid "Edit Comment"
+msgstr "Rediģēt komentāru"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr ""
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr ""
+
+msgid "&Bookmarks"
+msgstr "&Grāmatzīmes"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Pievienot grāmatzīmi %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Doties uz grāmatzīmi %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Pievienot grāmatzīmi %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Doties uz grāmatzīmi %i"
+
+msgid "Hide Sidebar"
+msgstr "Slēpt sānjoslu"
+
+msgid "Show Sidebar"
+msgstr "Rādīt sānjoslu"
+
+msgid "Hide Status Bar"
+msgstr "Slēpt statusa joslu"
+
+msgid "Show Status Bar"
+msgstr "Rādīt statusa joslu"
+
+msgid "String length in characters: translation | source"
+msgstr ""
+
+msgid "String length in characters"
+msgstr ""
+
+msgid "Source text"
+msgstr "Avota teksts"
+
+msgid "Singular"
+msgstr "Vienskaitlis"
+
+msgid "Plural"
+msgstr "Daudzskaitlis"
+
+msgid "Translation"
+msgstr "Tulkojums"
+
+msgid "Pre-translated"
+msgstr ""
+
+msgid "Needs Work"
+msgstr "Jāpārbauda"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Jāpārbauda"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT faili ir tikai veidnes, kas nesatur tulkojumus.\n"
+"Lai tulkotu, izveidojiet no tā jaunu PO failu."
+
+msgid "Create new translation"
+msgstr "Izveidot jaunu tulkojumu"
+
+msgid "Make a new translation from this POT file."
+msgstr ""
+
+msgid "Everything"
+msgstr "Visi"
+
+#, c-format
+msgid "Form %i"
+msgstr "Forma %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Forma %i (neizmantota)"
+
+msgid "Zero"
+msgstr "Nulle"
+
+msgid "One"
+msgstr "Viens"
+
+msgid "Two"
+msgstr "Divi"
+
+msgid "Other"
+msgstr "Cits"
+
+#, c-format
+msgid "%s Format"
+msgstr ""
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr ""
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Tulkojums — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Avota teksts — %s"
+
+msgid "unknown language"
+msgstr "nezināma valoda"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Neizdevās komanda: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Neizdevās apvienot gettext katalogus."
+
+msgid "Open in Editor"
+msgstr "Atvērt redaktorā"
+
+msgid "Open in editor"
+msgstr "Atvērt redaktorā"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+
+msgid "No usage information"
+msgstr ""
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "Source code not found"
+msgstr ""
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+
+msgid "File cannot be opened"
+msgstr ""
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr ""
+
+msgid "Find"
+msgstr "Atrast"
+
+msgid "Replace"
+msgstr "Aizstāt"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Iestatījumi"
+
+msgid "Ignore case"
+msgstr "Ignorēt reģistru"
+
+msgid "Wrap around"
+msgstr "Meklēt visā"
+
+msgid "Whole words only"
+msgstr "Tikai veselus vārdus"
+
+msgid "Find in source texts"
+msgstr "Meklēt avota tekstā"
+
+msgid "Find in translations"
+msgstr "Meklēt tulkojumā"
+
+msgid "Find in comments"
+msgstr "Meklēt komentāros"
+
+msgid "Close"
+msgstr "Aizvērt"
+
+msgid "Replace &All"
+msgstr "&Aizstāt visus"
+
+msgid "Replace &all"
+msgstr "&Aizstāt visus"
+
+msgid "&Replace"
+msgstr ""
+
+msgid "< &Previous"
+msgstr "< Ie&priekšējais"
+
+msgid "&Next >"
+msgstr "&Nākamais >"
+
+msgid "String to find"
+msgstr "Atrast"
+
+msgid "Replacement string"
+msgstr "Aizstāt ar"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Nevar palaist programmu: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Valodas kods vai nosaukums (piem. lv_LV)"
+
+msgid "Translation Language"
+msgstr "Tulkojuma valoda"
+
+msgid "Language of the translation:"
+msgstr "Tulkojuma valoda:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - katalogu pārvaldnieks"
+
+msgid "Edit…"
+msgstr "Rediģēt…"
+
+msgid "Create new translations project"
+msgstr "Izveidot jaunu tulkošanas projektu"
+
+msgid "Delete the project"
+msgstr "Izdzēst projektu"
+
+msgid "Edit the project"
+msgstr "Rediģēt projeku"
+
+msgid "Update all"
+msgstr "Atjaunot visus"
+
+msgid "Update all catalogs in the project"
+msgstr "Atjaunot visus katalogus šajā projektā"
+
+msgid "Total"
+msgstr "Kopā"
+
+msgid "Untrans"
+msgstr "Neiztulk"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Jāpārbauda"
+
+msgid "Errors"
+msgstr "Kļūdas"
+
+msgid "Last modified"
+msgstr "Pēdējo reizi modificēts"
+
+msgid "Select directory"
+msgstr "Izvēlieties mapi"
+
+msgid "Directories:"
+msgstr "Mapes:"
+
+msgid "<unnamed>"
+msgstr "<nenosaukts>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr ""
+
+msgid "Delete project"
+msgstr ""
+
+msgid "Deleting the project will not delete any translation files."
+msgstr ""
+
+msgid "Confirmation"
+msgstr "Apstiprinājums"
+
+msgid "Update all catalogs in this project?"
+msgstr ""
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
 
 msgid "Catalogs Manager"
 msgstr "Katalogu pārvaldnieks"
@@ -380,6 +1021,15 @@ msgstr "Beigt izrunāt"
 msgid "&View"
 msgstr "&Skats"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Parādīt rīku joslu"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Pielāgot rīku joslu…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr ""
 
@@ -392,601 +1042,11 @@ msgstr "Minimizēt"
 msgid "Zoom"
 msgstr ""
 
+msgid "Welcome to Poedit"
+msgstr ""
+
 msgid "Bring All to Front"
 msgstr ""
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr ""
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Fails varētu būt bojāts vai Poedit neatpazīstamā formātā."
-
-msgid "The file cannot be opened."
-msgstr "Fails nav atverams."
-
-msgid "Invalid file"
-msgstr "Nederīgs fails"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr ""
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Fails “%s” nav tulkojuma fails."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Fails"
-
-msgid "&Go"
-msgstr "&Iet"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-
-msgid "Install"
-msgstr "Instalēt"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalogs ir modificēts. Vai vēlaties saglabāt izmaiņas?"
-
-msgid "Save changes"
-msgstr "Saglabāt izmaiņas"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr ""
-
-msgid "Save"
-msgstr "Saglabāt"
-
-msgid "Do&n’t save"
-msgstr ""
-
-msgid "Don’t Save"
-msgstr "Nesaglabāt"
-
-msgid "Save as…"
-msgstr "Saglabāt kā…"
-
-msgid "Compile to…"
-msgstr ""
-
-msgid "Compiled Translation Files"
-msgstr ""
-
-msgid "Export as…"
-msgstr "Eksportēt kā…"
-
-msgid "HTML Files"
-msgstr "HTML faili"
-
-msgid "Open catalog template"
-msgstr "Atvērt kataloga paraugu"
-
-msgid "Source code not available."
-msgstr ""
-
-msgid "Updating failed"
-msgstr ""
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-
-msgid "Permission denied."
-msgstr ""
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Ieraksti katalogā, iespējams, nav pareizi."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Kataloga atjaunošana neizdevās. Nospiediet 'Vairāk>>', lai iegūtu papildu "
-"informāciju."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-msgid "Validation results"
-msgstr ""
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-
-msgid "The file was saved safely."
-msgstr ""
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
-
-msgid "No problems with the translation found."
-msgstr ""
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-msgid "The translation is ready for use."
-msgstr ""
-
-msgid "Warnings have been disabled."
-msgstr ""
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-
-msgid "Send Feedback"
-msgstr ""
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr ""
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-
-msgid "Language of the translation isn’t set."
-msgstr ""
-
-msgid "Set Language"
-msgstr ""
-
-msgid "Set language"
-msgstr ""
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-
-msgid "Language of the translation is the same as source language."
-msgstr "Tulkojuma valoda ir tāda pati kā avota valoda."
-
-msgid "Fix Language"
-msgstr "Labot valodu"
-
-msgid "Fix language"
-msgstr "Labot valodu"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-
-msgid "Required header Plural-Forms is missing."
-msgstr ""
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Sintakses kļūda daudzskaitļa formu galvenē (\"%s\")."
-
-msgid "Fix the Header"
-msgstr ""
-
-msgid "Fix the header"
-msgstr "Salabot galveni"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr ""
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr ""
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Iztulkoti: %d no %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr ""
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d kļūdas"
-msgstr[1] "%d kļūdas"
-msgstr[2] "%d kļūdas"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-msgid " (unsaved)"
-msgstr " (nesaglabāts)"
-
-msgid " (modified)"
-msgstr " (modificēts)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr ""
-
-msgid "Purge deleted translations"
-msgstr "&Iztīrīt dzēstos tulkojumus"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Vai vēlaties izņemt visus tulkojumus, kas vairs netiek izmantoti?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Ja jūs turpināsiet ar iztīrīšanu, visi tulkojumi, kas atzīmēti kā dzēsti, "
-"tiks pilnībā izņemti. Iespējams, ka vēlāk tie jums būs jātulko vēlreiz, ja "
-"tie vēlāk tiks pievienoti atpakaļ."
-
-msgid "Keep"
-msgstr "Paturēt"
-
-msgid "Purge"
-msgstr "Iztīrīt"
-
-msgid "Copy from source text"
-msgstr "Kopēt no avota teksta"
-
-msgid "Copy from Source Text"
-msgstr "Kopēt no avota teksta"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Notīrīt tulkojumu"
-
-msgid "Clear Translation"
-msgstr "Notīrīt tulkojumu"
-
-msgid "Edit comment"
-msgstr "Rediģēt komentāru"
-
-msgid "Edit Comment"
-msgstr "Rediģēt komentāru"
-
-msgid "References:"
-msgstr "Atsauces:"
-
-msgid "&Bookmarks"
-msgstr "&Grāmatzīmes"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr ""
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr ""
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr ""
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr ""
-
-msgid "Hide Sidebar"
-msgstr "Slēpt sānjoslu"
-
-msgid "Show Sidebar"
-msgstr "Rādīt sānjoslu"
-
-msgid "Hide Status Bar"
-msgstr "Slēpt statusa joslu"
-
-msgid "Show Status Bar"
-msgstr "Rādīt statusa joslu"
-
-msgid "Source text:"
-msgstr "Avota teksts:"
-
-msgid "Singular:"
-msgstr "Vienskaitlis:"
-
-msgid "Plural:"
-msgstr "Daudzskaitlis:"
-
-msgid "Translation:"
-msgstr "Tulkojums:"
-
-msgid "Pre-translated"
-msgstr ""
-
-msgid "Needs Work"
-msgstr ""
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr ""
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-
-msgid "Create New Translation"
-msgstr "Izveidot jaunu tulkojumu"
-
-msgid "Create new translation"
-msgstr "Izveidot jaunu tulkojumu"
-
-msgid "Everything"
-msgstr ""
-
-#, c-format
-msgid "Form %i"
-msgstr "Forma %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr ""
-
-msgid "Singular"
-msgstr "Vienskaitlis"
-
-msgid "Zero"
-msgstr "Nulle"
-
-msgid "One"
-msgstr "Viens"
-
-msgid "Two"
-msgstr "Divi"
-
-msgid "Plural"
-msgstr "Daudzskaitlis"
-
-msgid "Other"
-msgstr "Cits"
-
-#, c-format
-msgid "%s Format"
-msgstr ""
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr ""
-
-msgid "Source text"
-msgstr "Avota teksts"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Tulkojums — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr ""
-
-msgid "unknown language"
-msgstr "nezināma valoda"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Neizdevās komanda: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Neizdevās apvienot gettext katalogus."
-
-msgid "Source file"
-msgstr "Avota fails"
-
-msgid "Source file occurrence:"
-msgstr "Avota faila gadījums:"
-
-msgid "Open in Editor"
-msgstr "Atvērt redaktorā"
-
-msgid "Open in editor"
-msgstr "Atvērt redaktorā"
-
-msgid "No references for the selected item."
-msgstr ""
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Kļūda atverot failu %s!"
-
-msgid "Find"
-msgstr "Atrast"
-
-msgid "Replace"
-msgstr "Aizstāt"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Iestatījumi"
-
-msgid "Ignore case"
-msgstr ""
-
-msgid "Wrap around"
-msgstr ""
-
-msgid "Whole words only"
-msgstr "Tikai veselus vārdus"
-
-msgid "Find in source texts"
-msgstr ""
-
-msgid "Find in translations"
-msgstr ""
-
-msgid "Find in comments"
-msgstr "Meklēt komentāros"
-
-msgid "Close"
-msgstr "Aizvērt"
-
-msgid "Replace &All"
-msgstr ""
-
-msgid "Replace &all"
-msgstr ""
-
-msgid "&Replace"
-msgstr ""
-
-msgid "< &Previous"
-msgstr ""
-
-msgid "&Next >"
-msgstr ""
-
-msgid "String to find"
-msgstr ""
-
-msgid "Replacement string"
-msgstr ""
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Nevar palaist programmu: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr ""
-
-msgid "Translation Language"
-msgstr "Tulkojuma valoda"
-
-msgid "Language of the translation:"
-msgstr "Tulkojuma valoda:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - katalogu pārvaldnieks"
-
-msgid "Catalog"
-msgstr "Katalogs"
-
-msgid "Total"
-msgstr "Kopā"
-
-msgid "Untrans"
-msgstr "Neiztulk"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr ""
-
-msgid "Errors"
-msgstr "Kļūdas"
-
-msgid "Last modified"
-msgstr "Pēdējo reizi modificēts"
-
-msgid "Select directory"
-msgstr "Izvēlieties mapi"
-
-msgid "Directories:"
-msgstr "Mapes:"
-
-msgid "<unnamed>"
-msgstr "<nenosaukts>"
-
-msgid "Do you want to delete the project?"
-msgstr "Vai vēlaties izdzēst projektu?"
-
-msgid "Confirmation"
-msgstr "Apstiprinājums"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Vai tiešām vēlaties veikt masveida atjaunošanu\n"
-"visiem katalogiem šajā projektā?"
 
 msgid "Information about the translator"
 msgstr "Infoermācija par tulkotāju"
@@ -1000,7 +1060,7 @@ msgstr "Jūsu vārds"
 msgid "Email:"
 msgstr "E-pasts:"
 
-msgid "your_email@example.com"
+msgid "you@example.com"
 msgstr ""
 
 msgid ""
@@ -1014,11 +1074,11 @@ msgstr "Rediģēšana"
 msgid "Automatically compile MO file when saving"
 msgstr "Saglabājot automātiski kompilēt MO failu"
 
-msgid "Show summary after catalog update"
-msgstr "Parādīt kopsavilkumu pēc kataloga atjaunošanas"
+msgid "Show summary after updating files"
+msgstr ""
 
 msgid "Check spelling"
-msgstr ""
+msgstr "Pārbaudīt pareizrakstību"
 
 msgid "Always change focus to text input field"
 msgstr "Vienmēr fokusēties uz teksta ievades lauku"
@@ -1033,7 +1093,7 @@ msgstr ""
 "nekavējoties, nenospiežot Tab taustiņu, lai mainītu fokusu."
 
 msgid "Appearance"
-msgstr ""
+msgstr "Izskats"
 
 msgid "Use custom list font:"
 msgstr ""
@@ -1046,16 +1106,16 @@ msgstr "Mainīt lietojumprogrammas valodu"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
 msgid "(requires Windows 8 or newer)"
-msgstr ""
+msgstr "(nepieciešama Windows 8 vai jaunāka)"
 
 msgid "General"
 msgstr "Vispārīgi"
 
 msgid "Use translation memory"
-msgstr "Izmantot tulkošanas atmiņu"
+msgstr "Izmantot tulkojumu atmiņu"
 
 msgid "Manage…"
-msgstr ""
+msgstr "Pārvaldīt…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1077,16 +1137,16 @@ msgid ""
 msgstr ""
 
 msgid "Stored translations:"
-msgstr ""
+msgstr "Saglabāti tulkojumi:"
 
 msgid "Database size on disk:"
-msgstr ""
+msgstr "Datubāzes lielums:"
 
 msgid "Import Translation Files…"
-msgstr ""
+msgstr "Importēt tulkojuma failus…"
 
 msgid "Import translation files…"
-msgstr ""
+msgstr "Importēt tulkojuma failus…"
 
 msgid "Import From TMX…"
 msgstr "Importēt no TMX…"
@@ -1137,7 +1197,7 @@ msgid "Exporting translation memory to “%s” failed."
 msgstr ""
 
 msgid "Export error"
-msgstr ""
+msgstr "Eksportēšanas kļūda"
 
 msgid "Reset translation memory"
 msgstr ""
@@ -1149,9 +1209,6 @@ msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr ""
-
-msgid "Cancel"
-msgstr "Atcelt"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
@@ -1170,16 +1227,15 @@ msgstr ""
 msgid "Custom extractors:"
 msgstr ""
 
-msgid "Edit…"
-msgstr "Rediģēt…"
-
 msgid "GNU gettext"
-msgstr ""
+msgstr "GNU gettext"
 
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
+"Atbalsta visas programmēšanas valodas, kuras atpazīst GNU gettext rīki (PHP, "
+"C/C++, C#, Perl, Python, Java, JavaScript u.c.)."
 
 msgid "Delete extractor"
 msgstr ""
@@ -1204,6 +1260,8 @@ msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr ""
+"Beta versijās ir jaunas funkcijas un uzlabojumi, taču tās var būt nedaudz "
+"mazāk stabilas."
 
 msgid "Updates"
 msgstr "Atjauninājumi"
@@ -1232,7 +1290,10 @@ msgstr ""
 msgid "Advanced"
 msgstr "Papildu"
 
-msgid "Pre-translating…"
+msgid "Preparing strings…"
+msgstr ""
+
+msgid "Pre-translating from translation memory…"
 msgstr ""
 
 #, c-format
@@ -1241,6 +1302,9 @@ msgid_plural "Pre-translated %u strings"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+msgid "Pre-translating…"
+msgstr ""
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1297,16 +1361,13 @@ msgid ""
 "from files that you translated manually."
 msgstr ""
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
+msgid "Cancelling…"
 msgstr ""
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
+msgid "Drag Folders or Files Here"
+msgstr ""
+
+msgid "Drag folders or files here"
 msgstr ""
 
 msgid "Add Folders…"
@@ -1325,6 +1386,17 @@ msgid "Add Wildcard…"
 msgstr ""
 
 msgid "Add wildcard…"
+msgstr ""
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr ""
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr ""
+
+msgid "Show in Folder"
 msgstr ""
 
 msgid "Paths"
@@ -1366,13 +1438,22 @@ msgstr "UTF-8 (ieteicamais)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 
+msgid "Plural form translations"
+msgstr ""
+
 msgid "Not all plural forms are translated."
+msgstr ""
+
+msgid "Inconsistent upper/lower case"
 msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr ""
 
 msgid "The translation should start with a lowercase character."
+msgstr ""
+
+msgid "Inconsistent whitespace"
 msgstr ""
 
 msgid "The translation doesn’t start with a space."
@@ -1393,6 +1474,9 @@ msgstr ""
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr ""
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr ""
@@ -1405,38 +1489,23 @@ msgstr ""
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr ""
 
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
 msgid "Comment:"
 msgstr "Komentārs:"
 
-msgid "OK"
-msgstr "Labi"
-
-msgid "C&lear"
+msgid "Update"
 msgstr ""
 
-msgid "Clear the comment"
-msgstr "Notīrīt komentāru"
+msgid "&Delete"
+msgstr "&Dzēst"
 
-msgid "New"
-msgstr "Jauns"
-
-msgid "Create new translations project"
-msgstr "Izveidot jaunu tulkošanas projektu"
-
-msgid "Edit"
-msgstr "Rediģēt"
-
-msgid "Edit the project"
-msgstr "Rediģēt projeku"
-
-msgid "Delete the project"
-msgstr "Izdzēst projektu"
-
-msgid "Update all"
-msgstr "Atjaunot visus"
-
-msgid "Update all catalogs in the project"
-msgstr "Atjaunot visus katalogus šajā projektā"
+msgid "Delete the comment"
+msgstr ""
 
 msgid "Edit project"
 msgstr "Rediģēt projektu"
@@ -1449,6 +1518,12 @@ msgstr "Pārlūkot"
 
 msgid "Add directory to the list"
 msgstr "Pievienot mapi sarakstam"
+
+msgid "OK"
+msgstr "Labi"
+
+msgid "&File"
+msgstr "&Fails"
 
 msgid "&New…"
 msgstr "&Jauns…"
@@ -1465,11 +1540,26 @@ msgstr "&Atvērt…"
 msgid "Open Recent"
 msgstr ""
 
+msgid "Open recent"
+msgstr ""
+
 msgid "Open from Crowdin…"
 msgstr "Atvērt no Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Atvērt no Crowdin…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "Katalogu &pārvaldnieks"
+
+msgid "Catalogs &Manager"
+msgstr "Katalogu &pārvaldnieks"
 
 msgid "&Close"
 msgstr "Ai&zvērt"
@@ -1484,22 +1574,16 @@ msgid "Save &As…"
 msgstr "Saglabāt &kā…"
 
 msgid "Compile to MO…"
-msgstr ""
+msgstr "Kompilēt uz MO…"
 
 msgid "E&xport as HTML…"
 msgstr "E&ksportēt kā HTML…"
 
 msgid "Check for updates…"
-msgstr ""
+msgstr "Meklēt atjauninājumus…"
 
 msgid "&Preferences…"
 msgstr "&Iestatījumi…"
-
-msgid "Catalogs &manager"
-msgstr "Katalogu &pārvaldnieks"
-
-msgid "Catalogs &Manager"
-msgstr "Katalogu &pārvaldnieks"
 
 msgid "E&xit"
 msgstr "I&ziet"
@@ -1508,10 +1592,10 @@ msgid "Quit"
 msgstr "Iziet"
 
 msgid "Copy from singular"
-msgstr ""
+msgstr "Kopēt vienskaitļa formu"
 
 msgid "Copy From Singular"
-msgstr ""
+msgstr "Kopēt vienskaitļa formu"
 
 msgid "Translation needs &work"
 msgstr ""
@@ -1525,8 +1609,9 @@ msgstr "Rediģēt &komentāru"
 msgid "Edit &Comment"
 msgstr "Rediģēt &komentāru"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
-msgstr ""
+msgstr "Ieteikumi"
 
 msgid "&Find…"
 msgstr "&Atrast…"
@@ -1535,28 +1620,28 @@ msgid "Replace…"
 msgstr "Aizstāt…"
 
 msgid "Find next"
-msgstr ""
+msgstr "Atrast nākamo"
 
 msgid "Find previous"
-msgstr ""
+msgstr "Atrast iepriekšējo"
 
 msgid "Find and Replace…"
 msgstr "Atrast un aizstāt…"
 
 msgid "Find Next"
-msgstr ""
+msgstr "Meklēt komentāros"
 
 msgid "Find Previous"
-msgstr ""
+msgstr "Atrast iepriekšējo"
 
 msgid "&Preferences"
 msgstr "&Iestatījumi"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "Rādīt rindas &ID"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "Rādīt rindas &ID"
 
 msgid "Show warnings"
 msgstr "Rādīt brīdinājumus"
@@ -1583,16 +1668,16 @@ msgid "Sort by &Translation"
 msgstr "Kārtot pēc &tulkojuma"
 
 msgid "&Group by context"
-msgstr ""
+msgstr "&Grupēt pēc konteksta"
 
 msgid "&Group By Context"
-msgstr ""
+msgstr "&Grupēt pēc konteksta"
 
 msgid "Entries with errors first"
-msgstr ""
+msgstr "Vispirms ierakstus ar kļūdām"
 
 msgid "Entries with Errors First"
-msgstr ""
+msgstr "Vispirms ierakstus ar kļūdām"
 
 msgid "&Untranslated entries first"
 msgstr "Vispirms neizt&ulkotos ierakstus"
@@ -1600,11 +1685,11 @@ msgstr "Vispirms neizt&ulkotos ierakstus"
 msgid "&Untranslated Entries First"
 msgstr "Vispirms neizt&ulkotos ierakstus"
 
-msgid "&Show references"
-msgstr "&Parādīt atsauces"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "&Parādīt atsauces"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Rādīt sānjoslu"
@@ -1612,14 +1697,14 @@ msgstr "Rādīt sānjoslu"
 msgid "Show status bar"
 msgstr "Rādīt statusa joslu"
 
-msgid "C&atalog"
-msgstr "K&atalogs"
+msgid "&Translation"
+msgstr ""
 
 msgid "&Update from source code"
-msgstr ""
+msgstr "Atja&unot no avota koda"
 
 msgid "&Update from Source Code"
-msgstr ""
+msgstr "Atja&unot no avota koda"
 
 msgid "Update from &POT file…"
 msgstr "Atjaunot no &POT faila…"
@@ -1640,10 +1725,10 @@ msgid "&Purge Deleted Translations"
 msgstr "Iztīrīt &dzēstos tulkojumus"
 
 msgid "&Validate translations"
-msgstr ""
+msgstr "&Pārbaudīt tulkojumu"
 
 msgid "&Validate Translations"
-msgstr ""
+msgstr "&Pārbaudīt tulkojumu"
 
 msgid "&Properties…"
 msgstr "&Rekvizīti…"
@@ -1655,16 +1740,16 @@ msgid "&Done and Next"
 msgstr "Pa&beigt un pāriet uz nākamo"
 
 msgid "&Previous translation"
-msgstr ""
+msgstr "I&priekšējais tulkojums"
 
 msgid "&Previous Translation"
-msgstr ""
+msgstr "I&priekšējais tulkojums"
 
 msgid "&Next translation"
-msgstr ""
+msgstr "&Nākamais tulkojums"
 
 msgid "&Next Translation"
-msgstr ""
+msgstr "&Nākamais tulkojums"
 
 msgid "P&revious unfinished"
 msgstr "Iep&riekšejais nepabeigtais"
@@ -1697,10 +1782,10 @@ msgid "&Online Help"
 msgstr "&Tiešsaistes palīdzība"
 
 msgid "&GNU gettext manual"
-msgstr ""
+msgstr "&GNU gettext rokasgrāmata"
 
 msgid "&GNU gettext Manual"
-msgstr ""
+msgstr "&GNU gettext rokasgrāmata"
 
 msgid "&About Poedit"
 msgstr "P&ar Poedit"
@@ -1759,14 +1844,14 @@ msgstr ""
 "Šis vienums tiks pievienots komandrindai tikai tad, ja\n"
 "būs doda pirmkoda simbolkopa. %c atbilst simbolkopas vērtībai."
 
-msgid "Catalog properties"
-msgstr "Kataloga īpašības"
+msgid "Translation Properties"
+msgstr "Tulkojuma rekvizīti"
 
 msgid "Project name and version:"
 msgstr "Projekta nosaukums un versija:"
 
 msgid "Language team:"
-msgstr ""
+msgstr "Tulkotāju komanda:"
 
 msgid "Plural forms:"
 msgstr "Daudzskaitļa formas:"
@@ -1788,9 +1873,6 @@ msgstr ""
 
 msgid "Advanced extraction settings…"
 msgstr ""
-
-msgid "Translation Properties"
-msgstr "Tulkojuma rekvizīti"
 
 msgid "Translation properties"
 msgstr "Tulkojuma rekvizīti"
@@ -1824,9 +1906,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr ""
 
-msgid "Learn About Gettext Keywords"
-msgstr "Vairāk par Gettext atslēgvārdiem"
-
 msgid "Learn about gettext keywords"
 msgstr "Vairāk par gettext atslēgvārdiem"
 
@@ -1834,21 +1913,17 @@ msgid "Update summary"
 msgstr "Atjaunot kopsavilkumu"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Šīs virknes tika atrastas avotos, bet nebija katalogā.\n"
-"Poedit tūlīt pat pievienos tās katalogam."
 
 msgid "New strings"
 msgstr "Jaunas virknes"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Šīs virknes vair nav avotos.\n"
-"Poedit tūlīt pat izņems tās no kataloga."
 
 msgid "Obsolete strings"
 msgstr "Novecojušās virknes"
@@ -1859,14 +1934,17 @@ msgstr "(0 jaunas, 0 novecojušas)"
 msgid "Open"
 msgstr "Atvērt"
 
-msgid "Save catalog"
-msgstr "Saglabāt katalogu"
+msgid "Open file"
+msgstr ""
+
+msgid "Save file"
+msgstr ""
 
 msgid "Validate"
-msgstr ""
+msgstr "Pārbaudīt"
 
 msgid "Check for errors in the translation"
-msgstr ""
+msgstr "Pārbaudīt, vai tulkojumā nav kļūdu"
 
 msgid "Update from code"
 msgstr ""
@@ -1884,7 +1962,7 @@ msgid "Show or hide the sidebar"
 msgstr "Rādīt vai slēpt sānjoslu"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
+msgid "Previous source text"
 msgstr ""
 
 msgid ""
@@ -1892,8 +1970,11 @@ msgid ""
 "inaccurate translation corresponds to."
 msgstr ""
 
-msgid "Notes for translators:"
-msgstr "Piezīmes tulkotājiem:"
+msgid "Notes for translators"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
 
 msgid "Add comment"
 msgstr "Pievienot komentāru"
@@ -1902,21 +1983,21 @@ msgid "Add Comment"
 msgstr "Pievienot komentāru"
 
 msgid "Delete From Translation Memory"
-msgstr ""
+msgstr "Dzēst no tulkojumu atmiņas"
 
 msgid "Delete from translation memory"
-msgstr ""
+msgstr "Dzēst no tulkojumu atmiņas"
 
-msgid "Translation suggestions:"
+msgid "Translation suggestions"
 msgstr ""
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
-msgstr ""
+msgstr "Nav atrasta neviena atbilstība"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
 msgid "No Matches Found"
-msgstr ""
+msgstr "Nav atrasta neviena atbilstība"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr ""
@@ -1929,44 +2010,14 @@ msgstr ""
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "Tulkojumu atmiņas datubāze ir bojāta: %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr "Tulkošanas atmiņas kļūda: %s (%d)."
+msgstr "Tulkojumu atmiņas kļūda: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Nevar izveidot pagaidu datu mapi."
-
-msgid "Welcome to Poedit"
-msgstr ""
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versija %s"
-
-msgid "Edit a translation"
-msgstr "Rediģēt tulkojumu"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Atvērt esošu PO failu un rediģēt tulkojumu."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-
-msgid "Collaborate on a translation with others"
-msgstr ""
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-
-msgid "What is Crowdin?"
-msgstr "Kas ir Crowdin?"
 
 msgid "There are no translations. That’s unusual."
 msgstr ""
@@ -1982,11 +2033,13 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr ""
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
 
 msgid "Update from POT"
-msgstr ""
+msgstr "Atjaunināt no POT faila"
 
 msgid "Take translatable strings from an existing POT template."
 msgstr ""
@@ -1999,6 +2052,33 @@ msgid "Extract from sources"
 msgstr ""
 
 msgid "Configure source code extraction in Properties."
+msgstr ""
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Versija %s"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
 msgstr ""
 
 msgid "Sync"
@@ -2016,7 +2096,7 @@ msgstr "Par %s"
 #. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
 #, c-format
 msgid "%s Preferences"
-msgstr ""
+msgstr "%s iestatījumi"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Services"
@@ -2038,7 +2118,7 @@ msgstr ""
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
 msgid "Quit %s"
-msgstr ""
+msgstr "Iziet no %s"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Preferences…"
@@ -2085,8 +2165,8 @@ msgstr ""
 msgid "Cut"
 msgstr "Izgriezt"
 
-msgid "&Delete"
-msgstr "&Dzēst"
+msgid "Edit"
+msgstr "Rediģēt"
 
 msgid "&Quit"
 msgstr ""
@@ -2096,6 +2176,9 @@ msgstr "Palīdzība"
 
 msgid "&New"
 msgstr ""
+
+msgid "New"
+msgstr "Jauns"
 
 msgid "&No"
 msgstr "&Nē"
@@ -2122,7 +2205,7 @@ msgid "Paste"
 msgstr "Ielīmēt"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Iestatījumi"
 
 msgid "&Redo"
 msgstr ""
@@ -2161,11 +2244,11 @@ msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr ""
+msgstr "Up"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr ""
+msgstr "Down"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"

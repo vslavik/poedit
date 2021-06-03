@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Irish\n"
 "Language: ga_IE\n"
@@ -31,20 +31,20 @@ msgstr "Ná taispeáin arís"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Nua: %i, dulta i léig: %i)"
 
-msgid "Updating catalog"
-msgstr "Catalóg á nuashonrú"
-
 msgid "Collecting source files…"
 msgstr "Foinsí á mbailiú…"
 
 msgid "Extracting translatable strings…"
 msgstr "Teaghráin inaistrithe á mbailiú…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Níorbh féidir an chatalóg a baineadh amach a lódáil."
+msgid "Failed to load file with extracted translations."
+msgstr "Níorbh fhéidir an comhad le haistriúcháin bailithe a lódáil."
 
 msgid "Merging differences…"
 msgstr "Difríochtaí á gcumasc…"
+
+msgid "Updating translations"
+msgstr "Aistriúcháin á nuashonrú"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -83,22 +83,20 @@ msgstr[4] "Níor luchtaíodh %i líne i gcomhad '%s' mar is ceart."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Líne %d i gcomhad '%s' truaillithe (ní sonraí bailí %s é)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Comhad clár briste: baineadh feidhm as leagan uatha mgstr le msgid_plural"
+"Comhad PO briste: baineadh úsáid as leagan uatha msgstr le msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Comhad comhaid briste: baineadh feidhm as leagan iolrach mgstr gan "
-"msgid_plural"
+"Comhad PO briste: baineadh úsáid as leagan iolra msgstr gan msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Tharla botúin i rith luchtú an clár. D'fhéadfadh sonraí bheith in easnamh nó "
-"truaillithe dá bharr."
+"Tharla botúin i rith luchtú an chomhaid. D'fhéadfadh sonraí bheith in "
+"easnamh nó truaillithe dá bharr."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -124,18 +122,14 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Níorbh fhéidir an chatalóg a shábháil mar “%s” de réir socruithe na "
-"catalóige.\n"
-"\n"
-"Sábháladh mar UTF-8 é agus athraíodh an socrú dá bharr sin."
 
-msgid "Error saving catalog"
-msgstr "Tharla botún ag chuir an clár i dtaisce"
+msgid "Error saving file"
+msgstr "Earráid agus an comhad á shábháil"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -177,6 +171,9 @@ msgstr "Níorbh fhéidir sioncronú le %s."
 msgid "Syncing error"
 msgstr "Earráid le linn sioncronaithe"
 
+msgid "Add"
+msgstr "Cuir leis"
+
 msgid "JSON request error"
 msgstr ""
 
@@ -184,7 +181,7 @@ msgid "Not authorized, please sign in again."
 msgstr "Níl cead agat. Logáil isteach arís."
 
 msgid "Downloading translations is disabled in this project."
-msgstr "Ní féidir aistriúcháin a íosluchtú don togra seo."
+msgstr "Ní féidir aistriúcháin a íosluchtú don tionscadal seo."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
@@ -210,9 +207,6 @@ msgstr "Ag fanacht le fíordheimhniú…"
 
 msgid "Updating user information…"
 msgstr "Sonraí an úsáideora á nuashonrú…"
-
-msgid "Learn More About Crowdin"
-msgstr "Tuilleadh eolais faoi Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Tuilleadh eolais faoi Crowdin"
@@ -256,9 +250,6 @@ msgstr "&Cóipeáil"
 msgid "Learn more"
 msgstr "Tuilleadh eolais"
 
-msgid "Learn More"
-msgstr "Tuilleadh Eolais"
-
 msgid "&Help"
 msgstr "&Cabhair"
 
@@ -291,15 +282,702 @@ msgstr "Theip ar chumarsáid leis an bpróiseas Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Tharla earráid gan réiteach: %s"
 
-msgid "Open catalog"
-msgstr "Oscail clár"
+msgid "Select translation template"
+msgstr ""
+
+msgid "Select translation file"
+msgstr "Roghnaigh comhad aistriúcháin"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Is eagarthóir aistriúcháin é Poedit atá furasta feidhm a bhaint as."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Aistriúchán PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"Seans go bhfuil an comhad truaillithe, nó ní aithníonn Poedit an fhormáid."
+
+msgid "The file cannot be opened."
+msgstr "Ní féidir an comhad a oscailt."
+
+msgid "Invalid file"
+msgstr "Comhad neamhbhailí"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr ""
+"Ní féidir ach comhad amháin a chaitheamh isteach ar an fhuinneog PoEdit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Ní comhad aistriúcháin é \"%s\"."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Níl comhad “%s” ann."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Is eagarthóir aistriúcháin é Poedit atá furasta feidhm a bhaint as."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "&Téigh"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "Níl an litreoir ar fáil, toisc nach bhfuil foclóir %s ann."
+
+msgid "Install"
+msgstr "Suiteáil"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr ""
+
+msgid "Reload file"
+msgstr "Athluchtaigh an comhad"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+
+msgid "Ignore"
+msgstr ""
+
+msgid "Reload File"
+msgstr "Athluchtaigh an Comhad"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr ""
+
+msgid "Save changes"
+msgstr "Cuir i dtaisce na hathruithe"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Caillfidh tú do chuid athruithe mura sábhálfaidh tú iad."
+
+msgid "Save"
+msgstr "Cuir i dtaisce"
+
+msgid "Do&n’t save"
+msgstr "Ná sábháil"
+
+msgid "Don’t Save"
+msgstr "Ná Sábháil"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+
+msgid "Cancel"
+msgstr "Cealaigh"
+
+msgid "Save Anyway"
+msgstr "Sábháil mar sin féin"
+
+msgid "Save anyway"
+msgstr "Sábháil mar sin féin"
+
+msgid "Save as…"
+msgstr "Sábháil mar…"
+
+msgid "Compile to…"
+msgstr "Tiomsaigh mar…"
+
+msgid "Compiled Translation Files"
+msgstr "Comhaid Aistriúcháin Tiomsaithe"
+
+msgid "Export as…"
+msgstr "Easpórtáil mar…"
+
+msgid "HTML Files"
+msgstr "Comhaid HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "I: %s"
+
+msgid "Source code not available."
+msgstr "Níl an cód foinseach ar fáil."
+
+msgid "Updating failed"
+msgstr "Theip ar nuashonrú"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+
+msgid "Permission denied."
+msgstr "Níl cead agat é seo a dhéanamh."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Mura bhfuil teacht agat ar do chuid comhad a thuilleadh, is féidir leat cead "
+"a thabhairt in System Preferences > Security & Privacy > Privacy > Files & "
+"Folders."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr ""
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+
+msgid "Open translation template"
+msgstr "Oscail teimpléad aistriúcháin"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "Aimsíodh %d fhadhb leis an aistriúchán."
+msgstr[1] "Aimsíodh %d fhadhb leis an aistriúchán."
+msgstr[2] "Aimsíodh %d fhadhb leis an aistriúchán."
+msgstr[3] "Aimsíodh %d bhfadhb leis an aistriúchán."
+msgstr[4] "Aimsíodh %d fadhb leis an aistriúchán."
+
+msgid "Validation results"
+msgstr "Torthaí an bhailíochtaithe"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Marcáladh earráidí le cló dearg sa liosta. Gheobhaidh tú mionsonraí na "
+"hearráide nuair a roghnóidh tú iontráil sa liosta."
+
+msgid "The file was saved safely."
+msgstr "Sábháladh an comhad."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Sábháladh an comhad agus tiomsaíodh mar chomhad MO é, ach is dócha nach n-"
+"oibreoidh sé mar is ceart."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr "Sábháladh an comhad, ach ní féidir é a thiomsú mar chomhad MO."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Tiomsaíodh an comhad mar chomhad MO, ach is dócha nach n-oibreoidh sé mar is "
+"ceart."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Ní féidir an comhad a thiomsú mar chomhad MO."
+
+msgid "No problems with the translation found."
+msgstr "Níor aimsíodh aon fhadhb leis an aistriúchán."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Tá an t-aistriúchán réidh le húsáid, ach tá %d teaghrán gan aistriúchán fós."
+msgstr[1] ""
+"Tá an t-aistriúchán réidh le húsáid, ach tá %d theaghrán gan aistriúchán fós."
+msgstr[2] ""
+"Tá an t-aistriúchán réidh le húsáid, ach tá %d theaghrán gan aistriúchán fós."
+msgstr[3] ""
+"Tá an t-aistriúchán réidh le húsáid, ach tá %d dteaghrán gan aistriúchán fós."
+msgstr[4] ""
+"Tá an t-aistriúchán réidh le húsáid, ach tá %d teaghrán gan aistriúchán fós."
+
+msgid "The translation is ready for use."
+msgstr "Tá an t-aistriúchán réidh le húsáid."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Dheisigh Poedit ábhar neamhbhailí sa chomhad \"%s\" go huathoibríoch."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Bhí teaghráin dhúblacha sa chomhad, rud nach gceadaítear i gcomhaid PO. "
+"Réitigh Poedit an fhadhb, ach ba chóir duit na haistriúcháin a bhfuil "
+"tuilleadh oibre de dhíth orthu a athbhreithniú."
+
+msgid "Language of the translation isn’t set."
+msgstr "Níl teanga an aistriúcháin socraithe."
+
+msgid "Set Language"
+msgstr "Roghnaigh Teanga"
+
+msgid "Set language"
+msgstr "Roghnaigh teanga"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Ní féidir moltaí a fháil mura bhfuil teanga an aistriúcháin socraithe. Agus "
+"beidh fadhbanna agat le gnéithe eile freisin, mar shampla iolraí."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Is ionann an bhunteanga agus an sprioctheanga."
+
+msgid "Fix Language"
+msgstr "Athraigh an Teanga"
+
+msgid "Fix language"
+msgstr "Athraigh an teanga"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Ceanntásc riachtanach Plural-Forms ar iarraidh."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Earráid chomhréire ar an líne Plural-Forms (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Deisigh an Ceanntásc"
+
+msgid "Fix the header"
+msgstr "Deisigh an ceanntásc"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Athbhreithniú"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Earráid agus comhad aistriúcháin “%s” á luchtú."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Aistrithe: %d as %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Fágtha: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d earráid"
+msgstr[1] "%d earráid"
+msgstr[2] "%d earráid"
+msgstr[3] "%d n-earráid"
+msgstr[4] "%d earráid"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d iontráil"
+msgstr[1] "%d iontráil"
+msgstr[2] "%d iontráil"
+msgstr[3] "%d n-iontráil"
+msgstr[4] "%d iontráil"
+
+msgid " (unsaved)"
+msgstr " (gan sábháil)"
+
+msgid " (modified)"
+msgstr " (mionathraithe)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Níorbh fhéidir an chuimhne aistriúchán a nuashonrú: %s"
+
+msgid "Purge deleted translations"
+msgstr "Glan aistriúcháin scriosta"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+"An bhfuil fonn ort na haistriúcháin go léir nach bhfuil in úsáid a scriosadh?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Má leanann tú ar aghaidh leis seo, déanfar léirscriosadh buan ar gach "
+"aistriúchán atá marcáilte \"scriosta\". Beidh sé ort iad a aistriú arís má "
+"chuirtear ar ais iad amach anseo."
+
+msgid "Keep"
+msgstr "Ná Scrios"
+
+msgid "Purge"
+msgstr "Scrios"
+
+msgid "Copy from source text"
+msgstr "Cóipeáil ón fhoinse"
+
+msgid "Copy from Source Text"
+msgstr "Cóipeáil ón Fhoinse"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Glan an t-aistriúchán"
+
+msgid "Clear Translation"
+msgstr "Glan an tAistriúchán"
+
+msgid "Edit comment"
+msgstr "Déan eagar ar an nóta tráchta"
+
+msgid "Edit Comment"
+msgstr "Cuir Nóta Tráchta in Eagar"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr ""
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr ""
+
+msgid "&Bookmarks"
+msgstr "&Astail"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Socraigh leabharmharc a %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Oscail leabharmharc a %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Socraigh Leabharmharc a %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Oscail Leabharmharc a %i"
+
+msgid "Hide Sidebar"
+msgstr "Cuir an Barra Taoibh i bhfolach"
+
+msgid "Show Sidebar"
+msgstr "Taispeáin an Barra Taoibh"
+
+msgid "Hide Status Bar"
+msgstr "Cuir an Barra Stádais i bhfolach"
+
+msgid "Show Status Bar"
+msgstr "Taispeáin an Barra Stádais"
+
+msgid "String length in characters: translation | source"
+msgstr ""
+
+msgid "String length in characters"
+msgstr ""
+
+msgid "Source text"
+msgstr "Téacs foinseach"
+
+msgid "Singular"
+msgstr "Uatha"
+
+msgid "Plural"
+msgstr "Iolra"
+
+msgid "Translation"
+msgstr "Aistriúchán"
+
+msgid "Pre-translated"
+msgstr "Réamhaistrithe"
+
+msgid "Needs Work"
+msgstr "Tuilleadh oibre de dhíth"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Tuilleadh oibre de dhíth"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Níl sna comhaid POT ach teimpléid; níl aon aistriúcháin iontu.\n"
+"Chun aistriúchán a dhéanamh, cruthaigh comhad nua PO, bunaithe ar an "
+"teimpléad."
+
+msgid "Create new translation"
+msgstr "Cruthaigh aistriúchán nua"
+
+msgid "Make a new translation from this POT file."
+msgstr ""
+
+msgid "Everything"
+msgstr "Gach Rud"
+
+#, c-format
+msgid "Form %i"
+msgstr "Leagan %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Foirm %i (neamhúsáidte)"
+
+msgid "Zero"
+msgstr "Náid"
+
+msgid "One"
+msgstr "Aon"
+
+msgid "Two"
+msgstr "Dó"
+
+msgid "Other"
+msgstr "Eile"
+
+#, c-format
+msgid "%s Format"
+msgstr "Formáid %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Formáid %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Aistriúchán — %s"
+
+msgid "ID"
+msgstr "Aitheantas"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Téacs foinseach — %s"
+
+msgid "unknown language"
+msgstr "teanga anaithnid"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Ordú teipthe: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Theip ar cláir gettext a chumascú. "
+
+msgid "Open in Editor"
+msgstr "Oscail san Eagarthóir"
+
+msgid "Open in editor"
+msgstr "Oscail san eagarthóir"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+
+msgid "No usage information"
+msgstr "Gan eolas úsáide"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+
+msgid "Source code not found"
+msgstr "Cód foinseach gan aimsiú"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+
+msgid "File cannot be opened"
+msgstr "Ní féidir an comhad a oscailt"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr ""
+
+msgid "Find"
+msgstr "Aimsigh"
+
+msgid "Replace"
+msgstr "Ionadaigh"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Roghanna"
+
+msgid "Ignore case"
+msgstr "Ná bac le cás uachtair/íochtair"
+
+msgid "Wrap around"
+msgstr "Timfhilleadh"
+
+msgid "Whole words only"
+msgstr "Focail iomlán amháin"
+
+msgid "Find in source texts"
+msgstr "Aimsigh sna foinsí"
+
+msgid "Find in translations"
+msgstr "Cuardaigh in aistriúcháin"
+
+msgid "Find in comments"
+msgstr "Aimsigh sna nótaí tráchta"
+
+msgid "Close"
+msgstr "Dún"
+
+msgid "Replace &All"
+msgstr "Ionadaigh &Uile"
+
+msgid "Replace &all"
+msgstr "Ionadaigh &uile"
+
+msgid "&Replace"
+msgstr "&Ionadaigh"
+
+msgid "< &Previous"
+msgstr "< &Roimhe Seo"
+
+msgid "&Next >"
+msgstr "&Ar Aghaidh >"
+
+msgid "String to find"
+msgstr "Teaghrán le haimsiú"
+
+msgid "Replacement string"
+msgstr "Teaghrán le cur ina ionad"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Ní féidir an clár a rith: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Cód nó Ainm na Teanga (m.sh. ga_IE)"
+
+msgid "Translation Language"
+msgstr "Sprioctheanga"
+
+msgid "Language of the translation:"
+msgstr "Teanga an aistriúcháin:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Bainisteoir Clár"
+
+msgid "Edit…"
+msgstr "Eagar…"
+
+msgid "Create new translations project"
+msgstr "Cruthaigh tionscadal aistriúcháin nua"
+
+msgid "Delete the project"
+msgstr "Scrios an tionscadal"
+
+msgid "Edit the project"
+msgstr "Cuir an tionscadal in eagar"
+
+msgid "Update all"
+msgstr "Nuashonraigh uile"
+
+msgid "Update all catalogs in the project"
+msgstr "Nuashonraigh gach catalóg sa tionscadal"
+
+msgid "Total"
+msgstr "Iomlán"
+
+msgid "Untrans"
+msgstr "Neamhaistrithe"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Tuilleadh oibre de dhíth"
+
+msgid "Errors"
+msgstr "Earráidí"
+
+msgid "Last modified"
+msgstr "Mionathraithe an uair deirineadh ar an"
+
+msgid "Select directory"
+msgstr "Select directory"
+
+msgid "Directories:"
+msgstr "Comhadlannaí:"
+
+msgid "<unnamed>"
+msgstr "<gan ainm>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "An bhfuil fonn ort tionscadal “%s” a scriosadh?"
+
+msgid "Delete project"
+msgstr "Scrios an tionscadal"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Má scriosann tú an tionscadal, ní scriosfar aon chomhad aistriúcháin."
+
+msgid "Confirmation"
+msgstr "Dearbhú"
+
+msgid "Update all catalogs in this project?"
+msgstr "Nuashonraigh gach catalóg sa tionscadal seo?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
+"Déanann sé seo nuashonrú ón gcód foinseach ar gach comhad sa tionscadal."
 
 msgid "Catalogs Manager"
 msgstr "Bainisteoir na gCatalóg"
@@ -385,6 +1063,15 @@ msgstr "Stop ag Labhairt"
 msgid "&View"
 msgstr "&Amharc"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Taispeáin an Barra Uirlisí"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Saincheap an Barra Uirlisí…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Mód Lánscáileáin"
 
@@ -397,644 +1084,11 @@ msgstr "Íoslaghdaigh"
 msgid "Zoom"
 msgstr "Súmáil"
 
+msgid "Welcome to Poedit"
+msgstr "Fáilte go dtí Poedit"
+
 msgid "Bring All to Front"
 msgstr "Tabhair Uile Chun Tosaigh"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Aistriúchán PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Seans go bhfuil an comhad truaillithe, nó ní aithníonn Poedit an fhormáid."
-
-msgid "The file cannot be opened."
-msgstr "Ní féidir an comhad a oscailt."
-
-msgid "Invalid file"
-msgstr "Comhad neamhbhailí"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr ""
-"Ní féidir ach comhad amháin a chaitheamh isteach ar an fhuinneog PoEdit."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Ní comhad aistriúcháin é \"%s\"."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Comhad"
-
-msgid "&Go"
-msgstr "&Téigh"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "Níl an litreoir ar fáil, toisc nach bhfuil foclóir %s ann."
-
-msgid "Install"
-msgstr "Suiteáil"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Clár mionathraithe. Ar mhaith leat na hathruithe a chur i dtaisce?"
-
-msgid "Save changes"
-msgstr "Cuir i dtaisce na hathruithe"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Caillfidh tú do chuid athruithe mura sábhálfaidh tú iad."
-
-msgid "Save"
-msgstr "Cuir i dtaisce"
-
-msgid "Do&n’t save"
-msgstr "Ná sábháil"
-
-msgid "Don’t Save"
-msgstr "Ná Sábháil"
-
-msgid "Save as…"
-msgstr "Sábháil mar…"
-
-msgid "Compile to…"
-msgstr "Tiomsaigh mar…"
-
-msgid "Compiled Translation Files"
-msgstr "Comhaid Aistriúcháin Tiomsaithe"
-
-msgid "Export as…"
-msgstr "Easpórtáil mar…"
-
-msgid "HTML Files"
-msgstr "Comhaid HTML"
-
-msgid "Open catalog template"
-msgstr "Oscail fíoraí an chláir"
-
-msgid "Source code not available."
-msgstr "Níl an cód foinseach ar fáil."
-
-msgid "Updating failed"
-msgstr "Theip ar nuashonrú"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Níorbh fhéidir na haistriúcháin a nuashonrú ón gcód foinseach, toisc nár "
-"aimsíodh aon chód san áit sainithe in airíonna na catalóige."
-
-msgid "Permission denied."
-msgstr "Níl cead agat é seo a dhéanamh."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Níl cead agat comhaid fhoinseacha a léamh ón áit a sonraíodh sa chatalóg."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Mura bhfuil teacht agat ar do chuid comhad a thuilleadh, is féidir leat cead "
-"a thabhairt in System Preferences > Security & Privacy > Privacy > Files & "
-"Folders."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Is dóigh go bhfuil na hiontrálacha sa chlár mícheart."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Theip ar nuashonrú na catalóige. Cliceáil 'Mionsonraí >>' chun tuilleadh "
-"eolais a fháil."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "Aimsíodh %d fhadhb leis an aistriúchán."
-msgstr[1] "Aimsíodh %d fhadhb leis an aistriúchán."
-msgstr[2] "Aimsíodh %d fhadhb leis an aistriúchán."
-msgstr[3] "Aimsíodh %d bhfadhb leis an aistriúchán."
-msgstr[4] "Aimsíodh %d fadhb leis an aistriúchán."
-
-msgid "Validation results"
-msgstr "Torthaí an bhailíochtaithe"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Marcáladh earráidí le cló dearg sa liosta. Gheobhaidh tú mionsonraí na "
-"hearráide nuair a roghnóidh tú iontráil sa liosta."
-
-msgid "The file was saved safely."
-msgstr "Sábháladh an comhad."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Sábháladh an comhad agus tiomsaíodh mar chomhad MO é, ach is dócha nach n-"
-"oibreoidh sé mar is ceart."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr "Sábháladh an comhad, ach ní féidir é a thiomsú mar chomhad MO."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Tiomsaíodh an comhad mar chomhad MO, ach is dócha nach n-oibreoidh sé mar is "
-"ceart."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "Ní féidir an comhad a thiomsú mar chomhad MO."
-
-msgid "No problems with the translation found."
-msgstr "Níor aimsíodh aon fhadhb leis an aistriúchán."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Tá an t-aistriúchán réidh le húsáid, ach tá %d teaghrán gan aistriúchán fós."
-msgstr[1] ""
-"Tá an t-aistriúchán réidh le húsáid, ach tá %d theaghrán gan aistriúchán fós."
-msgstr[2] ""
-"Tá an t-aistriúchán réidh le húsáid, ach tá %d theaghrán gan aistriúchán fós."
-msgstr[3] ""
-"Tá an t-aistriúchán réidh le húsáid, ach tá %d dteaghrán gan aistriúchán fós."
-msgstr[4] ""
-"Tá an t-aistriúchán réidh le húsáid, ach tá %d teaghrán gan aistriúchán fós."
-
-msgid "The translation is ready for use."
-msgstr "Tá an t-aistriúchán réidh le húsáid."
-
-msgid "Warnings have been disabled."
-msgstr "Díchumasaíodh na rabhaidh."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Má chuir tú stop leis na rabhaidh mar gheall ar an iomarca rabhadh bréige, "
-"ba chóir duit comhad samplach a sheoladh chuig help@poedit.net chun cabhrú "
-"linn iad a fheabhsú."
-
-msgid "Send Feedback"
-msgstr "Seol Aiseolas"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Seol aiseolas"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Dheisigh Poedit ábhar neamhbhailí sa chomhad \"%s\" go huathoibríoch."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Bhí teaghráin dhúblacha sa chomhad, rud nach gceadaítear i gcomhaid PO. "
-"Réitigh Poedit an fhadhb, ach ba chóir duit na haistriúcháin a bhfuil "
-"tuilleadh oibre de dhíth orthu a athbhreithniú."
-
-msgid "Language of the translation isn’t set."
-msgstr "Níl teanga an aistriúcháin socraithe."
-
-msgid "Set Language"
-msgstr "Roghnaigh Teanga"
-
-msgid "Set language"
-msgstr "Roghnaigh teanga"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Ní féidir moltaí a fháil mura bhfuil teanga an aistriúcháin socraithe. Agus "
-"beidh fadhbanna agat le gnéithe eile freisin, mar shampla iolraí."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Is ionann an bhunteanga agus an sprioctheanga."
-
-msgid "Fix Language"
-msgstr "Athraigh an Teanga"
-
-msgid "Fix language"
-msgstr "Athraigh an teanga"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Tá iontrálacha iolra sa chatalóg seo, ach níl an ceanntásc Plural-Forms "
-"socraithe."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Ní ionann líon na n-iolraí sa chatalóg seo agus an líon atá sainithe ar an "
-"líne Plural-Forms"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Ceanntásc riachtanach Plural-Forms ar iarraidh."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Earráid chomhréire ar an líne Plural-Forms (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Deisigh an Ceanntásc"
-
-msgid "Fix the header"
-msgstr "Deisigh an ceanntásc"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Tá an líne Plural-Forms sa chatalóg as an ngnáth don teanga seo: %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Athbhreithniú"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Tharla botún ag luchtú comhad clár teachtaireachtaí “%s”."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Aistrithe: %d as %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Fágtha: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d earráid"
-msgstr[1] "%d earráid"
-msgstr[2] "%d earráid"
-msgstr[3] "%d n-earráid"
-msgstr[4] "%d earráid"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d iontráil"
-msgstr[1] "%d iontráil"
-msgstr[2] "%d iontráil"
-msgstr[3] "%d n-iontráil"
-msgstr[4] "%d iontráil"
-
-msgid " (unsaved)"
-msgstr " (gan sábháil)"
-
-msgid " (modified)"
-msgstr " (mionathraithe)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Níorbh fhéidir an chuimhne aistriúchán a nuashonrú: %s"
-
-msgid "Purge deleted translations"
-msgstr "Glan aistriúcháin scriosta"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
-"An bhfuil fonn ort na haistriúcháin go léir nach bhfuil in úsáid a scriosadh?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Má leanann tú ar aghaidh leis seo, déanfar léirscriosadh buan ar gach "
-"aistriúchán atá marcáilte \"scriosta\". Beidh sé ort iad a aistriú arís má "
-"chuirtear ar ais iad amach anseo."
-
-msgid "Keep"
-msgstr "Ná Scrios"
-
-msgid "Purge"
-msgstr "Scrios"
-
-msgid "Copy from source text"
-msgstr "Cóipeáil ón fhoinse"
-
-msgid "Copy from Source Text"
-msgstr "Cóipeáil ón Fhoinse"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Glan an t-aistriúchán"
-
-msgid "Clear Translation"
-msgstr "Glan an tAistriúchán"
-
-msgid "Edit comment"
-msgstr "Déan eagar ar an nóta tráchta"
-
-msgid "Edit Comment"
-msgstr "Cuir Nóta Tráchta in Eagar"
-
-msgid "References:"
-msgstr "Tagairtí:"
-
-msgid "&Bookmarks"
-msgstr "&Astail"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Socraigh leabharmharc a %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Oscail leabharmharc a %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Socraigh Leabharmharc a %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Oscail Leabharmharc a %i"
-
-msgid "Hide Sidebar"
-msgstr "Cuir an Barra Taoibh i bhfolach"
-
-msgid "Show Sidebar"
-msgstr "Taispeáin an Barra Taoibh"
-
-msgid "Hide Status Bar"
-msgstr "Cuir an Barra Stádais i bhfolach"
-
-msgid "Show Status Bar"
-msgstr "Taispeáin an Barra Stádais"
-
-msgid "Source text:"
-msgstr "Foinse:"
-
-msgid "Singular:"
-msgstr "Uatha:"
-
-msgid "Plural:"
-msgstr "Iolra:"
-
-msgid "Translation:"
-msgstr "Aistriúchán:"
-
-msgid "Pre-translated"
-msgstr "Réamhaistrithe"
-
-msgid "Needs Work"
-msgstr "Tuilleadh oibre de dhíth"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Tuilleadh oibre de dhíth"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Níl sna comhaid POT ach teimpléid; níl aon aistriúcháin iontu.\n"
-"Chun aistriúchán a dhéanamh, cruthaigh comhad nua PO, bunaithe ar an "
-"teimpléad."
-
-msgid "Create New Translation"
-msgstr "Cruthaigh Aistriúchán Nua"
-
-msgid "Create new translation"
-msgstr "Cruthaigh aistriúchán nua"
-
-msgid "Everything"
-msgstr "Gach Rud"
-
-#, c-format
-msgid "Form %i"
-msgstr "Leagan %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Foirm %i (neamhúsáidte)"
-
-msgid "Singular"
-msgstr "Uatha"
-
-msgid "Zero"
-msgstr "Náid"
-
-msgid "One"
-msgstr "Aon"
-
-msgid "Two"
-msgstr "Dó"
-
-msgid "Plural"
-msgstr "Iolra"
-
-msgid "Other"
-msgstr "Eile"
-
-#, c-format
-msgid "%s Format"
-msgstr "Formáid %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "Formáid %s"
-
-msgid "Source text"
-msgstr "Téacs foinseach"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Aistriúchán — %s"
-
-msgid "ID"
-msgstr "Aitheantas"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Téacs foinseach — %s"
-
-msgid "unknown language"
-msgstr "teanga anaithnid"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Ordú teipthe: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Theip ar cláir gettext a chumascú. "
-
-msgid "Source file"
-msgstr "Comhad foinse"
-
-msgid "Source file occurrence:"
-msgstr "Tagairt san fhoinse:"
-
-msgid "Open in Editor"
-msgstr "Oscail san Eagarthóir"
-
-msgid "Open in editor"
-msgstr "Oscail san eagarthóir"
-
-msgid "No references for the selected item."
-msgstr "Níl aon tagairt don mhír roghnaithe."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Tharla botún ag oscailt comhad %s!"
-
-msgid "Find"
-msgstr "Aimsigh"
-
-msgid "Replace"
-msgstr "Ionadaigh"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Roghanna"
-
-msgid "Ignore case"
-msgstr "Ná bac le cás uachtair/íochtair"
-
-msgid "Wrap around"
-msgstr "Timfhilleadh"
-
-msgid "Whole words only"
-msgstr "Focail iomlán amháin"
-
-msgid "Find in source texts"
-msgstr "Aimsigh sna foinsí"
-
-msgid "Find in translations"
-msgstr "Cuardaigh in aistriúcháin"
-
-msgid "Find in comments"
-msgstr "Aimsigh sna nótaí tráchta"
-
-msgid "Close"
-msgstr "Dún"
-
-msgid "Replace &All"
-msgstr "Ionadaigh &Uile"
-
-msgid "Replace &all"
-msgstr "Ionadaigh &uile"
-
-msgid "&Replace"
-msgstr "&Ionadaigh"
-
-msgid "< &Previous"
-msgstr "< &Roimhe Seo"
-
-msgid "&Next >"
-msgstr "&Ar Aghaidh >"
-
-msgid "String to find"
-msgstr "Teaghrán le haimsiú"
-
-msgid "Replacement string"
-msgstr "Teaghrán le cur ina ionad"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Ní féidir an clár a rith: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Cód nó Ainm na Teanga (m.sh. ga_IE)"
-
-msgid "Translation Language"
-msgstr "Sprioctheanga"
-
-msgid "Language of the translation:"
-msgstr "Teanga an aistriúcháin:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Bainisteoir Clár"
-
-msgid "Catalog"
-msgstr "Clár"
-
-msgid "Total"
-msgstr "Iomlán"
-
-msgid "Untrans"
-msgstr "Neamhaistrithe"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Tuilleadh oibre de dhíth"
-
-msgid "Errors"
-msgstr "Earráidí"
-
-msgid "Last modified"
-msgstr "Mionathraithe an uair deirineadh ar an"
-
-msgid "Select directory"
-msgstr "Select directory"
-
-msgid "Directories:"
-msgstr "Comhadlannaí:"
-
-msgid "<unnamed>"
-msgstr "<gan ainm>"
-
-msgid "Do you want to delete the project?"
-msgstr "An dteastaíonn uait an togra a scrios?"
-
-msgid "Confirmation"
-msgstr "Dearbhú"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"An bhfuil tú cinnte go dteastaíonn uait nuashonrú ollmhór\n"
-"dos na cláir uile sa togra seo a dhéanamh?"
 
 msgid "Information about the translator"
 msgstr "Eolas faoin aistritheoir"
@@ -1048,8 +1102,8 @@ msgstr "D'ainm"
 msgid "Email:"
 msgstr "Ríomhphost:"
 
-msgid "your_email@example.com"
-msgstr "do_sheoladh@example.com"
+msgid "you@example.com"
+msgstr "tusa@seoladh.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1064,8 +1118,8 @@ msgstr "Cur in Eagar"
 msgid "Automatically compile MO file when saving"
 msgstr "Tiomsaigh mar chomhad MO go huathoibríoch agus é á shábháil"
 
-msgid "Show summary after catalog update"
-msgstr "Taispeáin achoimre tar éis nuashonrú an clár"
+msgid "Show summary after updating files"
+msgstr ""
 
 msgid "Check spelling"
 msgstr "Seiceáil an litriú"
@@ -1209,9 +1263,6 @@ msgstr ""
 "Má athshocraíonn tú an chuimhne aistriúcháin, scriosfar gach aistriúchán atá "
 "inti go buan. Ní féidir dul ar ais air seo."
 
-msgid "Cancel"
-msgstr "Cealaigh"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1230,9 +1281,6 @@ msgstr "Bailitheoirí Saincheaptha:"
 
 msgid "Custom extractors:"
 msgstr "Bailitheoirí saincheaptha:"
-
-msgid "Edit…"
-msgstr "Eagar…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1300,8 +1348,11 @@ msgstr "Caomhnaigh an formáidiú i gcomhaid atá ann"
 msgid "Advanced"
 msgstr "Casta"
 
-msgid "Pre-translating…"
-msgstr "Réamhaistriúchán ar siúl…"
+msgid "Preparing strings…"
+msgstr "Teaghráin á n-ullmhú…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Réamhaistriúchán ón chuimhne aistriúcháin…"
 
 #, c-format
 msgid "Pre-translated %u string"
@@ -1311,6 +1362,9 @@ msgstr[1] "%u theaghrán réamhaistrithe"
 msgstr[2] "%u theaghrán réamhaistrithe"
 msgstr[3] "%u dteaghrán réamhaistrithe"
 msgstr[4] "%u teaghrán réamhaistrithe"
+
+msgid "Pre-translating…"
+msgstr "Réamhaistriúchán ar siúl…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1382,23 +1436,14 @@ msgstr ""
 "Ní bheidh an TM éifeachtach go dtí go mbaileoidh Poedit go leor comhad a "
 "aistríonn tú de láimh."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Tarraing agus Scaoil Fillteáin Anseo</big>\n"
-"\n"
-"nó úsáid an cnaipe +"
+msgid "Cancelling…"
+msgstr "Á chur i gceal…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Tarraing agus scaoil fillteáin anseo</big>\n"
-"\n"
-"nó úsáid an cnaipe +"
+msgid "Drag Folders or Files Here"
+msgstr "Tarraing Fillteáin nó Comhaid Anseo"
+
+msgid "Drag folders or files here"
+msgstr "Tarraing fillteáin nó comhaid anseo"
 
 msgid "Add Folders…"
 msgstr "Cuir Fillteáin Leis…"
@@ -1417,6 +1462,17 @@ msgstr "Cuir Saoróg leis…"
 
 msgid "Add wildcard…"
 msgstr "Cuir saoróg leis…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Taispeáin sa Finder"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr ""
+
+msgid "Show in Folder"
+msgstr "Taispeáin san fhillteán"
 
 msgid "Paths"
 msgstr "Cosáin:"
@@ -1459,14 +1515,23 @@ msgstr ""
 "Sábháil an comhad ar dtús. Ní féidir an rannán seo a chur in eagar go dtí go "
 "sábhálfaidh tú é."
 
+msgid "Plural form translations"
+msgstr "Aistriúcháin ar leaganacha iolra"
+
 msgid "Not all plural forms are translated."
 msgstr "Níl gach foirm iolra aistrithe."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr "Ba chóir an t-aistriúchán a thosú mar abairt."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Ba chóir don aistriúchán a thosú le litir bheag."
+
+msgid "Inconsistent whitespace"
+msgstr ""
 
 msgid "The translation doesn’t start with a space."
 msgstr "Ní thosaíonn an t-aistriúchán le spás."
@@ -1487,6 +1552,9 @@ msgstr "Tá spás ar iarraidh ag deireadh an aistriúcháin."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Tá spás ag deireadh an aistriúcháin cé nach bhfuil sa mbuntéacs."
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Ba chóir “%s” a bheith ag deireadh an aistriúcháin."
@@ -1500,50 +1568,41 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 "Tá “%s” ag deireadh an aistriúcháin, ach tá “%s” ag deireadh an bhuntéacs."
 
+msgid "Clear Menu"
+msgstr "Glan an roghchlár"
+
+msgid "Clear menu"
+msgstr "Glan an roghchlár"
+
 msgid "Comment:"
 msgstr "Nóta tráchta:"
 
-msgid "OK"
-msgstr "Tá go maith"
+msgid "Update"
+msgstr "Nuashonraigh é"
 
-msgid "C&lear"
-msgstr "G&lan"
+msgid "&Delete"
+msgstr "&Scrios"
 
-msgid "Clear the comment"
-msgstr "Glan an nóta tráchta"
-
-msgid "New"
-msgstr "Nua"
-
-msgid "Create new translations project"
-msgstr "Cruthaigh togra aistriúcháin nua"
-
-msgid "Edit"
-msgstr "Déan eagar"
-
-msgid "Edit the project"
-msgstr "Déan eagar ar an togra"
-
-msgid "Delete the project"
-msgstr "Scrios an togra"
-
-msgid "Update all"
-msgstr "Nuashonraigh uile"
-
-msgid "Update all catalogs in the project"
-msgstr "Nuashonraigh gach clár sa togra"
+msgid "Delete the comment"
+msgstr "Scrios an nóta tráchta"
 
 msgid "Edit project"
-msgstr "Déan eagar ar an togra"
+msgstr "Cuir an tionscadal in eagar"
 
 msgid "Project name:"
-msgstr "Ainm an togra:"
+msgstr "Ainm an tionscadail:"
 
 msgid "Browse"
 msgstr "Siortaigh"
 
 msgid "Add directory to the list"
 msgstr "Cuir comhadlann leis an réim"
+
+msgid "OK"
+msgstr "Tá go maith"
+
+msgid "&File"
+msgstr "&Comhad"
 
 msgid "&New…"
 msgstr "&Nua…"
@@ -1560,11 +1619,26 @@ msgstr "&Oscail…"
 msgid "Open Recent"
 msgstr "Oscail Comhaid Le Déanaí"
 
+msgid "Open recent"
+msgstr "Oscail comhaid le déanaí"
+
 msgid "Open from Crowdin…"
 msgstr "Oscail ó Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Oscail ó Crowdin…"
+
+msgid "&Start window"
+msgstr "&Tosaigh fuinneog"
+
+msgid "&Start Window"
+msgstr "&Tosaigh fuinneog"
+
+msgid "Catalogs &manager"
+msgstr "&Bainisteoir clár"
+
+msgid "Catalogs &Manager"
+msgstr "&Bainisteoir na gCatalóg"
 
 msgid "&Close"
 msgstr "&Dún"
@@ -1590,12 +1664,6 @@ msgstr "Lorg nuashonruithe…"
 msgid "&Preferences…"
 msgstr "&Sainroghanna…"
 
-msgid "Catalogs &manager"
-msgstr "&Bainisteoir clár"
-
-msgid "Catalogs &Manager"
-msgstr "&Bainisteoir na gCatalóg"
-
 msgid "E&xit"
 msgstr "S&coir"
 
@@ -1620,6 +1688,7 @@ msgstr "Déan eagar ar an &nóta tráchta"
 msgid "Edit &Comment"
 msgstr "Cuir &Nóta Tráchta in Eagar"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Moltaí"
 
@@ -1695,11 +1764,11 @@ msgstr "Iontrálacha &gan aistriú ar dtús"
 msgid "&Untranslated Entries First"
 msgstr "Iontrálacha &gan aistriú ar dtús"
 
-msgid "&Show references"
-msgstr "&Taispeáin tagairtí"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "&Taispeáin Tagairtí"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Taispeáin an barra taoibh"
@@ -1707,8 +1776,8 @@ msgstr "Taispeáin an barra taoibh"
 msgid "Show status bar"
 msgstr "Taispeáin an barra stádais"
 
-msgid "C&atalog"
-msgstr "C&omhad"
+msgid "&Translation"
+msgstr "&Aistriúchán"
 
 msgid "&Update from source code"
 msgstr "N&uashonraigh ón chód foinseach"
@@ -1859,11 +1928,11 @@ msgstr ""
 "amháin má tugadh tacar carachtar an chóid. Leathnaíonn %c go dtí an tacar "
 "carachtar."
 
-msgid "Catalog properties"
-msgstr "Airíonna na catalóige"
+msgid "Translation Properties"
+msgstr "Airíonna an Aistriúcháin"
 
 msgid "Project name and version:"
-msgstr "Ainm agus leagan an togra:"
+msgstr "Ainm agus leagan an tionscadail:"
 
 msgid "Language team:"
 msgstr "Foireann teanga:"
@@ -1888,9 +1957,6 @@ msgstr "Ardsocruithe Bailithe…"
 
 msgid "Advanced extraction settings…"
 msgstr "Ardsocruithe bailithe…"
-
-msgid "Translation Properties"
-msgstr "Airíonna an Aistriúcháin"
 
 msgid "Translation properties"
 msgstr "Airíonna an aistriúcháin"
@@ -1926,9 +1992,6 @@ msgstr ""
 "Bain úsáid as lorgfhocail réamhshocraithe le haghaidh teangacha a dtacaítear "
 "leo"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Maidir le Lorgfhocail gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Maidir le lorgfhocail gettext"
 
@@ -1936,21 +1999,17 @@ msgid "Update summary"
 msgstr "Nuashonraigh achoimre"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Aimsíodh na teaghráin seo sna foinsí ach ní raibh siad sa chlár.\n"
-"Cuirfidh Poedit sa chlár iad anois."
 
 msgid "New strings"
 msgstr "Teaghráin nua"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Níl na teaghráin seo sna foinsí a thuilleadh.\n"
-"Bainfidh Poedit iad ón chlár anois."
 
 msgid "Obsolete strings"
 msgstr "Teaghráin as feidhm"
@@ -1961,8 +2020,11 @@ msgstr "(0 nua, 0 as feidhm)"
 msgid "Open"
 msgstr "Oscail"
 
-msgid "Save catalog"
-msgstr "Cuir an clár i dtaisce"
+msgid "Open file"
+msgstr "Oscail comhad"
+
+msgid "Save file"
+msgstr "Cuir an comhad i dtaisce"
 
 msgid "Validate"
 msgstr "Deimhnigh"
@@ -1986,8 +2048,8 @@ msgid "Show or hide the sidebar"
 msgstr "Taispeáin nó folaigh an barra taoibh"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Seantéacs foinseach:"
+msgid "Previous source text"
+msgstr "Seantéacs foinseach"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1996,8 +2058,11 @@ msgstr ""
 "An sean-bhuntéacs (sular athraigh sé) a fhreagraíonn an t-aistriúchán (atá "
 "míchruinn anois) dó."
 
-msgid "Notes for translators:"
-msgstr "Nótaí ar son aistritheoirí:"
+msgid "Notes for translators"
+msgstr "Nótaí ar son aistritheoirí"
+
+msgid "Comment"
+msgstr "Nóta tráchta"
 
 msgid "Add comment"
 msgstr "Cuir nóta tráchta leis"
@@ -2011,8 +2076,8 @@ msgstr "Scrios ón gCuimhne Aistriúcháin É"
 msgid "Delete from translation memory"
 msgstr "Scrios ón gcuimhne aistriúcháin é"
 
-msgid "Translation suggestions:"
-msgstr "Aistriúcháin mholta:"
+msgid "Translation suggestions"
+msgstr "Aistriúcháin mholta"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2042,38 +2107,6 @@ msgstr "Earráid chuimhne aistriúcháin: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Ní féidir comhadlann shealadach a chruthú."
 
-msgid "Welcome to Poedit"
-msgstr "Fáilte go dtí Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Leagan %s"
-
-msgid "Edit a translation"
-msgstr "Cuir aistriúchán in eagar"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Oscail comhad PO atá ann agus cuir an t-aistriúchán in eagar."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr "Cruthaigh aistriúchán nua as comhad PO atá ann, nó as teimpléad POT."
-
-msgid "Collaborate on a translation with others"
-msgstr "Déan comhoibriú ar aistriúchán"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Íoslódáil comhad ó thionscadal Crowdin, aistrigh é, agus sioncronaigh na "
-"hathruithe."
-
-msgid "What is Crowdin?"
-msgstr "Cad é Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Níl aon aistriúcháin ann. Nach ait é sin."
 
@@ -2094,7 +2127,9 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Tuilleadh eolais faoi GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
 "An bealach is fusa an chatalóg seo a líonadh ná nuashonrú ó chomhad POT:"
 
@@ -2114,6 +2149,33 @@ msgstr "Faigh teaghráin ón chód"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Cumraigh an próiseas bailithe teaghrán ó bhunchód sna hAiríonna."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Leagan %s"
+
+msgid "Create new…"
+msgstr "Cruthaigh nua…"
+
+msgid "Create new translation from POT template."
+msgstr "Cruthaigh aistriúchán nua ó theimpléad POT."
+
+msgid "Browse files"
+msgstr "Siortaigh comhaid"
+
+msgid "Open and edit translation files."
+msgstr "Comhaid aistriúcháin a oscailt agus a chur in eagar."
+
+msgid "Translate Crowdin project"
+msgstr "Aistrigh an tionscadal Crowdin"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Glac páirt le daoine eile i dtionscadal Crowdin."
+
+msgid "Recent files"
+msgstr "Comhaid le déanaí"
 
 msgid "Sync"
 msgstr "Siocronaigh"
@@ -2199,8 +2261,8 @@ msgstr "Gea&rr"
 msgid "Cut"
 msgstr "Gearr"
 
-msgid "&Delete"
-msgstr "&Scrios"
+msgid "Edit"
+msgstr "Déan eagar"
 
 msgid "&Quit"
 msgstr "Sc&oir"
@@ -2210,6 +2272,9 @@ msgstr "Cabhair"
 
 msgid "&New"
 msgstr "&Nua"
+
+msgid "New"
+msgstr "Nua"
 
 msgid "&No"
 msgstr "&Níl"

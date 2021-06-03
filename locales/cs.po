@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -30,20 +30,20 @@ msgstr "Příště nezobrazovat"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Nové: %i, zastaralé: %i)"
 
-msgid "Updating catalog"
-msgstr "Probíhá aktualizace katalogu"
-
 msgid "Collecting source files…"
 msgstr "Probíhá shromažďování zdrojových souborů…"
 
 msgid "Extracting translatable strings…"
 msgstr "Probíhá extrakce přeložitelných řetězců…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Při načítání extrahovaného katalogu došlo k chybě."
+msgid "Failed to load file with extracted translations."
+msgstr "Nepodařilo se načíst soubor s rozbalenými překlady."
 
 msgid "Merging differences…"
 msgstr "Slučování rozdílů…"
+
+msgid "Updating translations"
+msgstr "Aktualizace překladů"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -81,15 +81,14 @@ msgstr[3] "%i řádků souboru „%s“ nebylo načteno správně."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Řádek %d souboru „%s“ je poškozený (neplatná data v %s)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr "Špatný katalog: verze msgstr pro singulár použita spolu s msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr "Špatný katalog: verze msgstr pro plurál použita bez msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
 "Při načítání katalogu došlo k chybě. Některé překlady mohou chybět nebo být "
@@ -118,7 +117,7 @@ msgstr "Při formátování souboru došlo k chybě (ale byl úspěšně uložen
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
@@ -128,8 +127,8 @@ msgstr ""
 "\n"
 "Místo toho byl uložen v UTF-8 a nastavení bylo příslušně změněno."
 
-msgid "Error saving catalog"
-msgstr "Při ukládání katalogu došlo k chybě"
+msgid "Error saving file"
+msgstr "Chyba při ukládání souboru"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -171,6 +170,9 @@ msgstr "Synchronizace s %s se nezdařila."
 msgid "Syncing error"
 msgstr "Chyba synchronizace"
 
+msgid "Add"
+msgstr "Přidat"
+
 msgid "JSON request error"
 msgstr "Chyba požadavku JSON"
 
@@ -205,9 +207,6 @@ msgstr "Čekání na ověření…"
 
 msgid "Updating user information…"
 msgstr "Aktualizace informací o uživateli…"
-
-msgid "Learn More About Crowdin"
-msgstr "Další informace o Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Další informace o Crowdin"
@@ -251,9 +250,6 @@ msgstr "&Kopírovat"
 msgid "Learn more"
 msgstr "Další informace"
 
-msgid "Learn More"
-msgstr "Další informace"
-
 msgid "&Help"
 msgstr "&Nápověda"
 
@@ -286,15 +282,712 @@ msgstr "Nelze komunikovat s procesem Poeditu."
 msgid "Unhandled exception occurred: %s"
 msgstr "Došlo k neošetřené výjimce: %s"
 
-msgid "Open catalog"
-msgstr "Otevřít katalog"
+msgid "Select translation template"
+msgstr "Vybrat šablonu překladu"
+
+msgid "Select translation file"
+msgstr "Vybrat soubor s překladem"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit je jednoduchý editor překladů."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "Překlady PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Soubor je poškozen, nebo používá neznámý formát."
+
+msgid "The file cannot be opened."
+msgstr "Soubor nelze otevřít."
+
+msgid "Invalid file"
+msgstr "Neplatný soubor"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Na okno Poeditu nelze přetáhnou více než jeden soubor."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Soubor „%s“ není soubor překladů."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Soubor „%s“ neexistuje."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit je jednoduchý editor překladů."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "Pře&jít"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Kontrola pravopisu je zakázána, protože slovník pro jazyk %s není "
+"nainstalován."
+
+msgid "Install"
+msgstr "Nainstalovat"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Soubor „%s“ byl změněn jinou aplikací."
+
+msgid "Reload file"
+msgstr "Znovu načíst soubor"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Chcete soubor znovu načíst z disku? Pokud tak učiníte, vaše neuložené úpravy "
+"v Poedit budou ztraceny."
+
+msgid "Ignore"
+msgstr "Ignorovat"
+
+msgid "Reload File"
+msgstr "Znovu načíst soubor"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Soubor byl změněn. Chcete uložit změny?"
+
+msgid "Save changes"
+msgstr "Uložit změny"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Pokud je neuložíte, přijdete o všechny změny."
+
+msgid "Save"
+msgstr "Uložit"
+
+msgid "Do&n’t save"
+msgstr "&Neukládat"
+
+msgid "Don’t Save"
+msgstr "Neukládat"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "Změny provedené jinou aplikací budou po uložení ztraceny."
+
+msgid "Cancel"
+msgstr "Storno"
+
+msgid "Save Anyway"
+msgstr "Přesto uložit"
+
+msgid "Save anyway"
+msgstr "Přesto uložit"
+
+msgid "Save as…"
+msgstr "Uložit jako…"
+
+msgid "Compile to…"
+msgstr "Zkompilovat do…"
+
+msgid "Compiled Translation Files"
+msgstr "Zkompilované překladové soubory"
+
+msgid "Export as…"
+msgstr "Exportovat jako…"
+
+msgid "HTML Files"
+msgstr "Soubory HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "V %s"
+
+msgid "Source code not available."
+msgstr "Zdrojový kód není k dispozici."
+
+msgid "Updating failed"
+msgstr "Aktualizace selhala"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Překlady nebylo možné aktualizovat ze zdrojového kódu, protože v umístění "
+"uvedeném ve Vlastnostech souboru nebyl nalezen žádný kód."
+
+msgid "Permission denied."
+msgstr "Přístup odepřen."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"Nemáte oprávnění číst soubory zdrojového kódu z umístění uvedeného ve "
+"vlastnostech souboru."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Pokud jste dříve odepřeli přístup k souborům, můžete jej povolit v Předvolby "
+"systému > Zabezpečení a soukromí > Soukromí > Soubory a složky."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Položky překladu v souboru jsou pravděpodobně nesprávné."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+"Aktualizace souboru se nezdařila. Klikněte na 'Podrobnosti >>' pro získání "
+"podrobností."
+
+msgid "Open translation template"
+msgstr "Vybrat šablonu překladu"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "Nalezen %d problém s překladem."
+msgstr[1] "Nalezeny %d problémy s překladem."
+msgstr[2] "Nalezeno %d problémů s překladem."
+msgstr[3] "Nalezeno %d problémů s překladem."
+
+msgid "Validation results"
+msgstr "Výsledky kontroly"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Položky obsahující chyby byly v seznamu zvýrazněny červenou barvou. "
+"Podrobnosti o chybě se zobrazí po vybrání chybné položky."
+
+msgid "The file was saved safely."
+msgstr "Soubor byl úspěšně uložen."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Soubor byl úspěšně uložen a zkompilován do formátu MO, ale pravděpodobně "
+"nebude fungovat správně."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Soubor byl úspěšně uložen, ale nepůjde jej zkompilovat do formátu MO a "
+"používat."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Soubor byl zkompilován do formátu MO, ale pravděpodobně nebude pracovat "
+"správně."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr ""
+"Soubor se nepodařilo zkompilovat do formátu MO a není tak možné ho použít."
+
+msgid "No problems with the translation found."
+msgstr "V překladu nebyly nalezeny žádné problémy."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Překlad je připraven k použití, ale %d položka ještě není přeložená."
+msgstr[1] ""
+"Překlad je připraven k použití, ale %d položky ještě nejsou přeloženy."
+msgstr[2] ""
+"Překlad je připraven k použití, ale %d položek ještě není přeloženo."
+msgstr[3] ""
+"Překlad je připraven k použití, ale %d položek ještě není přeloženo."
+
+msgid "The translation is ready for use."
+msgstr "Překlad je připraven k použití."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit automaticky opravil chybný obsah souboru „%s“."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Soubor obsahoval duplicitní položky, což není v PO souborech povoleno a "
+"zabránilo by to jejich použití. Poedit tento problém opravil, ale měli byste "
+"zkontrolovat všechny překlady označené jako vyžadující pozornost a v případě "
+"potřeby je opravit."
+
+msgid "Language of the translation isn’t set."
+msgstr "Jazyk překladu není nastaven."
+
+msgid "Set Language"
+msgstr "Nastavit jazyk"
+
+msgid "Set language"
+msgstr "Nastavit jazyk"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Pokud není správně nastaven jazyk překladu, nejsou k dispozici návrhy. "
+"Ovlivněny mohou být i další funkce, jako například formy plurálu."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Jazyk překladu je shodný s jazykem zdroje."
+
+msgid "Fix Language"
+msgstr "Opravit jazyk"
+
+msgid "Fix language"
+msgstr "Opravit jazyk"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"V katalogu jsou položky s plurály, ale není nastavená hlavička Plural-Forms."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"U položek v souboru je použit jiný počet forem plurálu, než jaký je nastaven "
+"v hlavičce Plural-Forms"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "V hlavičce chybí povinná položka Plural-Forms."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Syntaktická chyba v hlavičce Plural-Forms („%s“)."
+
+msgid "Fix the Header"
+msgstr "Opravit hlavičku"
+
+msgid "Fix the header"
+msgstr "Opravit hlavičku"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "Výraz pro formy plurálu používá pro jazyk %s nezvyklý formát."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Zkontrolovat"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Při načítání souboru překladu „%s“ došlo k chybě."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Přeloženo: %d z %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Zbývá: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d chyba"
+msgstr[1] "%d chyby"
+msgstr[2] "%d chyb"
+msgstr[3] "%d chyb"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d položka"
+msgstr[1] "%d položky"
+msgstr[2] "%d položek"
+msgstr[3] "%d položek"
+
+msgid " (unsaved)"
+msgstr " (neuloženo)"
+
+msgid " (modified)"
+msgstr " (změněno)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Aktualizace překladové paměti se nezdařila: %s"
+
+msgid "Purge deleted translations"
+msgstr "&Smazat staré překlady"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Chcete odstranit všechny již nepoužívané překlady?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Pokud budete pokračovat, všechny překlady označené jako smazané budou "
+"natrvalo odstraněny. Pokud budou příslušné řetězce později přidány zpět, tak "
+"je budete muset znovu přeložit."
+
+msgid "Keep"
+msgstr "Ponechat"
+
+msgid "Purge"
+msgstr "Smazat"
+
+msgid "Copy from source text"
+msgstr "Zkopírovat ze zdrojového textu"
+
+msgid "Copy from Source Text"
+msgstr "Zkopírovat ze zdrojového textu"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Smazat překlad"
+
+msgid "Clear Translation"
+msgstr "Smazat překlad"
+
+msgid "Edit comment"
+msgstr "Upravit komentář"
+
+msgid "Edit Comment"
+msgstr "Upravit komentář"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Výskyty v kódu"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Výskyty v kódu"
+
+msgid "&Bookmarks"
+msgstr "&Záložky"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Nastavit záložku %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Přejít na záložku %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Nastavit záložku %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Přejít na záložku %i"
+
+msgid "Hide Sidebar"
+msgstr "Skrýt postranní panel"
+
+msgid "Show Sidebar"
+msgstr "Zobrazit postranní panel"
+
+msgid "Hide Status Bar"
+msgstr "Skrýt stavový řádek"
+
+msgid "Show Status Bar"
+msgstr "Zobrazit stavový řádek"
+
+msgid "String length in characters: translation | source"
+msgstr "Délka řetězce ve znacích: překlad | zdroj"
+
+msgid "String length in characters"
+msgstr "Délka řetězce ve znacích"
+
+msgid "Source text"
+msgstr "Zdrojový text"
+
+msgid "Singular"
+msgstr "Singulár"
+
+msgid "Plural"
+msgstr "Plurál"
+
+msgid "Translation"
+msgstr "Překlad"
+
+msgid "Pre-translated"
+msgstr "Před-přeloženo"
+
+msgid "Needs Work"
+msgstr "Vyžaduje úpravy"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Vyžaduje úpravy"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Soubory POT jsou jen šablony a samy o sobě neobsahují žádné překlady.\n"
+"Pro vytvoření překladu vytvořte na základě šablony nový PO soubor."
+
+msgid "Create new translation"
+msgstr "Vytvořit nový překlad"
+
+msgid "Make a new translation from this POT file."
+msgstr "Vytvořit nový překlad z tohoto POT souboru."
+
+msgid "Everything"
+msgstr "Vše"
+
+#, c-format
+msgid "Form %i"
+msgstr "Forma %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Forma %i (nepoužitá)"
+
+msgid "Zero"
+msgstr "Nula"
+
+msgid "One"
+msgstr "Jeden"
+
+msgid "Two"
+msgstr "Dva"
+
+msgid "Other"
+msgstr "Ostatní"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s formát"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s formát"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Překlad — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Zdrojový text — %s"
+
+msgid "unknown language"
+msgstr "neznámý jazyk"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Příkaz selhal: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Při slučování gettext katalogů došlo k chybě."
+
+msgid "Open in Editor"
+msgstr "Otevřít v editoru"
+
+msgid "Open in editor"
+msgstr "Otevřít v editoru"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"V souboru nejsou uvedeny žádné informace o výskytu tohoto řetězce ve "
+"zdrojovém kódu."
+
+msgid "No usage information"
+msgstr "Žádné informace o použití"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d výskyt v kódu"
+msgstr[1] "%d výskyty v kódu"
+msgstr[2] "%d výskytů v kódu"
+msgstr[3] "%d výskytů v kódu"
+
+msgid "Source code not found"
+msgstr "Zdrojový kód nebyl nalezen"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit nemůže zobrazit zdrojový kód, kde se používá řetězec, protože soubor "
+"není k dispozici v odkazovaném umístění, nebo je to symbolický odkaz, který "
+"neukazuje na skutečný soubor."
+
+msgid "File cannot be opened"
+msgstr "Soubor nelze otevřít"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit nemohl otevřít soubor \"%s\"."
+
+msgid "Find"
+msgstr "Najít"
+
+msgid "Replace"
+msgstr "Nahradit"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Možnosti"
+
+msgid "Ignore case"
+msgstr "Ignorovat velikost písmen"
+
+msgid "Wrap around"
+msgstr "Po dosažení konce hledat od začátku"
+
+msgid "Whole words only"
+msgstr "Jen celá slova"
+
+msgid "Find in source texts"
+msgstr "Hledat ve zdrojových textech"
+
+msgid "Find in translations"
+msgstr "Hledat v překladech"
+
+msgid "Find in comments"
+msgstr "Hledat v komentářích"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "Replace &All"
+msgstr "N&ahradit vše"
+
+msgid "Replace &all"
+msgstr "N&ahradit vše"
+
+msgid "&Replace"
+msgstr "Nah&radit"
+
+msgid "< &Previous"
+msgstr "< &Předchozí"
+
+msgid "&Next >"
+msgstr "&Další >"
+
+msgid "String to find"
+msgstr "Hledaný řetězec"
+
+msgid "Replacement string"
+msgstr "Nahradit za"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Není možné spustit program: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Kód, nebo název jazyku (např. cs_CZ)"
+
+msgid "Translation Language"
+msgstr "Jazyk překladu"
+
+msgid "Language of the translation:"
+msgstr "Jazyk překladu:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - správce katalogů"
+
+msgid "Edit…"
+msgstr "Upravit…"
+
+msgid "Create new translations project"
+msgstr "Vytvořit nový překladový projekt"
+
+msgid "Delete the project"
+msgstr "Odstranit projekt"
+
+msgid "Edit the project"
+msgstr "Upravit projekt"
+
+msgid "Update all"
+msgstr "Aktualizovat všechny katalogy"
+
+msgid "Update all catalogs in the project"
+msgstr "Aktualizovat všechny katalogy v projektu"
+
+msgid "Total"
+msgstr "Celkem"
+
+msgid "Untrans"
+msgstr "Nepřelož"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Vyžaduje úpravy"
+
+msgid "Errors"
+msgstr "Chyby"
+
+msgid "Last modified"
+msgstr "Poslední změna"
+
+msgid "Select directory"
+msgstr "Vyberte adresář"
+
+msgid "Directories:"
+msgstr "Adresáře:"
+
+msgid "<unnamed>"
+msgstr "<bez názvu>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Chcete odstranit projekt „%s“?"
+
+msgid "Delete project"
+msgstr "Odstranit projekt"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Odstranění projektu nesmaže žádné překladové soubory."
+
+msgid "Confirmation"
+msgstr "Potvrzení"
+
+msgid "Update all catalogs in this project?"
+msgstr "Aktualizovat všechny katalogy v projektu?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Provede aktualizaci ze zdrojového kódu na všech souborech v projektu."
 
 msgid "Catalogs Manager"
 msgstr "Správce katalogů"
@@ -380,6 +1073,15 @@ msgstr "Ukončit předčítání"
 msgid "&View"
 msgstr "&Zobrazení"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Zobrazit panel nástrojů"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Upravit panel nástrojů…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Zobrazit na celou obrazovku"
 
@@ -392,640 +1094,11 @@ msgstr "Minimalizovat"
 msgid "Zoom"
 msgstr "Přepnout velikost"
 
+msgid "Welcome to Poedit"
+msgstr "Vítá vás Poedit"
+
 msgid "Bring All to Front"
 msgstr "Přenést vše do popředí"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "Překlady PO"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Soubor je poškozen, nebo používá neznámý formát."
-
-msgid "The file cannot be opened."
-msgstr "Soubor nelze otevřít."
-
-msgid "Invalid file"
-msgstr "Neplatný soubor"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Na okno Poeditu nelze přetáhnou více než jeden soubor."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Soubor „%s“ není soubor překladů."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Soubor"
-
-msgid "&Go"
-msgstr "Pře&jít"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Kontrola pravopisu je zakázána, protože slovník pro jazyk %s není "
-"nainstalován."
-
-msgid "Install"
-msgstr "Nainstalovat"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalog byl změněn. Chcete změny uložit?"
-
-msgid "Save changes"
-msgstr "Uložit změny"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Pokud je neuložíte, přijdete o všechny změny."
-
-msgid "Save"
-msgstr "Uložit"
-
-msgid "Do&n’t save"
-msgstr "&Neukládat"
-
-msgid "Don’t Save"
-msgstr "Neukládat"
-
-msgid "Save as…"
-msgstr "Uložit jako…"
-
-msgid "Compile to…"
-msgstr "Zkompilovat do…"
-
-msgid "Compiled Translation Files"
-msgstr "Zkompilované překladové soubory"
-
-msgid "Export as…"
-msgstr "Exportovat jako…"
-
-msgid "HTML Files"
-msgstr "Soubory HTML"
-
-msgid "Open catalog template"
-msgstr "Otevřít šablonu katalogu"
-
-msgid "Source code not available."
-msgstr "Zdrojový kód není k dispozici."
-
-msgid "Updating failed"
-msgstr "Aktualizace selhala"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Aktualizace překladu ze zdrojového kódu se nezdařila, protože v umístěních "
-"uvedených ve vlastnostech katalogu nebyl nalezen žádný kód."
-
-msgid "Permission denied."
-msgstr "Přístup odepřen."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"Nemáte oprávnění číst soubory zdrojového kódu z místa zadaného ve "
-"vlastnostech katalogu."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"Pokud jste dříve odepřeli přístup k souborům, můžete jej povolit v Předvolby "
-"systému > Zabezpečení a soukromí > Soukromí > Soubory a složky."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Položky katalogu jsou pravděpodobně chybné."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Aktualizace katalogu selhala. Podrobnosti zobrazíte kliknutím na tlačítko "
-"'Detaily >>'."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "Nalezen %d problém s překladem."
-msgstr[1] "Nalezeny %d problémy s překladem."
-msgstr[2] "Nalezeno %d problémů s překladem."
-msgstr[3] "Nalezeno %d problémů s překladem."
-
-msgid "Validation results"
-msgstr "Výsledky kontroly"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Položky obsahující chyby byly v seznamu zvýrazněny červenou barvou. "
-"Podrobnosti o chybě se zobrazí po vybrání chybné položky."
-
-msgid "The file was saved safely."
-msgstr "Soubor byl úspěšně uložen."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Soubor byl úspěšně uložen a zkompilován do formátu MO, ale pravděpodobně "
-"nebude fungovat správně."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Soubor byl úspěšně uložen, ale nepůjde jej zkompilovat do formátu MO a "
-"používat."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Soubor byl zkompilován do formátu MO, ale pravděpodobně nebude pracovat "
-"správně."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
-"Soubor se nepodařilo zkompilovat do formátu MO a není tak možné ho použít."
-
-msgid "No problems with the translation found."
-msgstr "V překladu nebyly nalezeny žádné problémy."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"Překlad je připraven k použití, ale %d položka ještě není přeložená."
-msgstr[1] ""
-"Překlad je připraven k použití, ale %d položky ještě nejsou přeloženy."
-msgstr[2] ""
-"Překlad je připraven k použití, ale %d položek ještě není přeloženo."
-msgstr[3] ""
-"Překlad je připraven k použití, ale %d položek ještě není přeloženo."
-
-msgid "The translation is ready for use."
-msgstr "Překlad je připraven k použití."
-
-msgid "Warnings have been disabled."
-msgstr "Varování byla vypnuta."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Pokud jste vypnuli varování kvůli nadměrnému množství falešných poplachů, "
-"zvažte prosím poslání ukázkového souboru na help@poedit.net, abychom "
-"varování mohli vylepšit."
-
-msgid "Send Feedback"
-msgstr "Poslat připomínky"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Poslat připomínky"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit automaticky opravil chybný obsah souboru „%s“."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Soubor obsahoval duplicitní položky, což není v PO souborech povoleno a "
-"zabránilo by to jejich použití. Poedit tento problém opravil, ale měli byste "
-"zkontrolovat všechny překlady označené jako vyžadující pozornost a v případě "
-"potřeby je opravit."
-
-msgid "Language of the translation isn’t set."
-msgstr "Jazyk překladu není nastaven."
-
-msgid "Set Language"
-msgstr "Nastavit jazyk"
-
-msgid "Set language"
-msgstr "Nastavit jazyk"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Pokud není správně nastaven jazyk překladu, nejsou k dispozici návrhy. "
-"Ovlivněny mohou být i další funkce, jako například formy plurálu."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Jazyk překladu je shodný s jazykem zdroje."
-
-msgid "Fix Language"
-msgstr "Opravit jazyk"
-
-msgid "Fix language"
-msgstr "Opravit jazyk"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"V katalogu jsou položky s plurály, ale není nastavená hlavička Plural-Forms."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"U položek katalogu je použit jiný počet forem plurálu, než jaký je nastaven "
-"v hlavičce Plural-Forms"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "V hlavičce chybí povinná položka Plural-Forms."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Syntaktická chyba v hlavičce Plural-Forms („%s“)."
-
-msgid "Fix the Header"
-msgstr "Opravit hlavičku"
-
-msgid "Fix the header"
-msgstr "Opravit hlavičku"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Výraz pro formy plurálu používá pro jazyk %s nezvyklý formát."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Zkontrolovat"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Při načítání katalogu „%s“ došlo k chybě."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Přeloženo: %d z %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Zbývá: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d chyba"
-msgstr[1] "%d chyby"
-msgstr[2] "%d chyb"
-msgstr[3] "%d chyb"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d položka"
-msgstr[1] "%d položky"
-msgstr[2] "%d položek"
-msgstr[3] "%d položek"
-
-msgid " (unsaved)"
-msgstr " (neuloženo)"
-
-msgid " (modified)"
-msgstr " (změněno)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Aktualizace překladové paměti se nezdařila: %s"
-
-msgid "Purge deleted translations"
-msgstr "&Smazat staré překlady"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Chcete odstranit všechny již nepoužívané překlady?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Pokud budete pokračovat, všechny překlady označené jako smazané budou "
-"natrvalo odstraněny. Pokud budou příslušné řetězce později přidány zpět, tak "
-"je budete muset znovu přeložit."
-
-msgid "Keep"
-msgstr "Ponechat"
-
-msgid "Purge"
-msgstr "Smazat"
-
-msgid "Copy from source text"
-msgstr "Zkopírovat ze zdrojového textu"
-
-msgid "Copy from Source Text"
-msgstr "Zkopírovat ze zdrojového textu"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Smazat překlad"
-
-msgid "Clear Translation"
-msgstr "Smazat překlad"
-
-msgid "Edit comment"
-msgstr "Upravit komentář"
-
-msgid "Edit Comment"
-msgstr "Upravit komentář"
-
-msgid "References:"
-msgstr "Odkazy:"
-
-msgid "&Bookmarks"
-msgstr "&Záložky"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Nastavit záložku %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Přejít na záložku %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Nastavit záložku %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Přejít na záložku %i"
-
-msgid "Hide Sidebar"
-msgstr "Skrýt postranní panel"
-
-msgid "Show Sidebar"
-msgstr "Zobrazit postranní panel"
-
-msgid "Hide Status Bar"
-msgstr "Skrýt stavový řádek"
-
-msgid "Show Status Bar"
-msgstr "Zobrazit stavový řádek"
-
-msgid "Source text:"
-msgstr "Zdrojový text:"
-
-msgid "Singular:"
-msgstr "Singulár:"
-
-msgid "Plural:"
-msgstr "Plurál:"
-
-msgid "Translation:"
-msgstr "Překlad:"
-
-msgid "Pre-translated"
-msgstr "Před-přeloženo"
-
-msgid "Needs Work"
-msgstr "Vyžaduje úpravy"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Vyžaduje úpravy"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Soubory POT jsou jen šablony a samy o sobě neobsahují žádné překlady.\n"
-"Pro vytvoření překladu vytvořte na základě šablony nový PO soubor."
-
-msgid "Create New Translation"
-msgstr "Vytvořit nový překlad"
-
-msgid "Create new translation"
-msgstr "Vytvořit nový překlad"
-
-msgid "Everything"
-msgstr "Vše"
-
-#, c-format
-msgid "Form %i"
-msgstr "Forma %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Forma %i (nepoužitá)"
-
-msgid "Singular"
-msgstr "Singulár"
-
-msgid "Zero"
-msgstr "Nula"
-
-msgid "One"
-msgstr "Jeden"
-
-msgid "Two"
-msgstr "Dva"
-
-msgid "Plural"
-msgstr "Plurál"
-
-msgid "Other"
-msgstr "Ostatní"
-
-#, c-format
-msgid "%s Format"
-msgstr "%s formát"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "%s formát"
-
-msgid "Source text"
-msgstr "Zdrojový text"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Překlad — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Zdrojový text — %s"
-
-msgid "unknown language"
-msgstr "neznámý jazyk"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Příkaz selhal: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Při slučování gettext katalogů došlo k chybě."
-
-msgid "Source file"
-msgstr "Zdrojový soubor"
-
-msgid "Source file occurrence:"
-msgstr "Výskyt ve zdrojovém kódu:"
-
-msgid "Open in Editor"
-msgstr "Otevřít v editoru"
-
-msgid "Open in editor"
-msgstr "Otevřít v editoru"
-
-msgid "No references for the selected item."
-msgstr "Žádné výskyty vybrané položky."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Při otevírání souboru %s došlo k chybě!"
-
-msgid "Find"
-msgstr "Najít"
-
-msgid "Replace"
-msgstr "Nahradit"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Možnosti"
-
-msgid "Ignore case"
-msgstr "Ignorovat velikost písmen"
-
-msgid "Wrap around"
-msgstr "Po dosažení konce hledat od začátku"
-
-msgid "Whole words only"
-msgstr "Jen celá slova"
-
-msgid "Find in source texts"
-msgstr "Hledat ve zdrojových textech"
-
-msgid "Find in translations"
-msgstr "Hledat v překladech"
-
-msgid "Find in comments"
-msgstr "Hledat v komentářích"
-
-msgid "Close"
-msgstr "Zavřít"
-
-msgid "Replace &All"
-msgstr "N&ahradit vše"
-
-msgid "Replace &all"
-msgstr "N&ahradit vše"
-
-msgid "&Replace"
-msgstr "Nah&radit"
-
-msgid "< &Previous"
-msgstr "< &Předchozí"
-
-msgid "&Next >"
-msgstr "&Další >"
-
-msgid "String to find"
-msgstr "Hledaný řetězec"
-
-msgid "Replacement string"
-msgstr "Nahradit za"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Není možné spustit program: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Kód, nebo název jazyku (např. cs_CZ)"
-
-msgid "Translation Language"
-msgstr "Jazyk překladu"
-
-msgid "Language of the translation:"
-msgstr "Jazyk překladu:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - správce katalogů"
-
-msgid "Catalog"
-msgstr "Katalog"
-
-msgid "Total"
-msgstr "Celkem"
-
-msgid "Untrans"
-msgstr "Nepřelož"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Vyžaduje úpravy"
-
-msgid "Errors"
-msgstr "Chyby"
-
-msgid "Last modified"
-msgstr "Poslední změna"
-
-msgid "Select directory"
-msgstr "Vyberte adresář"
-
-msgid "Directories:"
-msgstr "Adresáře:"
-
-msgid "<unnamed>"
-msgstr "<bez názvu>"
-
-msgid "Do you want to delete the project?"
-msgstr "Opravdu chcete vybraný projekt smazat?"
-
-msgid "Confirmation"
-msgstr "Potvrzení"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Opravdu chcete provést hromadnou aktualizaci všech\n"
-"katalogů ve vybraném projektu?"
 
 msgid "Information about the translator"
 msgstr "Informace o překladateli"
@@ -1039,8 +1112,8 @@ msgstr "Vaše jméno"
 msgid "Email:"
 msgstr "E-mail:"
 
-msgid "your_email@example.com"
-msgstr "vas_email@example.com"
+msgid "you@example.com"
+msgstr "vy@example.cz"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1055,8 +1128,8 @@ msgstr "Editace"
 msgid "Automatically compile MO file when saving"
 msgstr "Při uložení automaticky zkompilovat MO soubor"
 
-msgid "Show summary after catalog update"
-msgstr "Po aktualizaci katalogu zobrazit přehled změn"
+msgid "Show summary after updating files"
+msgstr "Po aktualizaci souborů zobrazit shrnutí"
 
 msgid "Check spelling"
 msgstr "Kontrolovat pravopis"
@@ -1197,9 +1270,6 @@ msgstr ""
 "Vymazáním překladové paměti nenávratně smažete všechny v ní uložené "
 "překlady. Po provedení této akce už neexistuje žádná možnost obnovy."
 
-msgid "Cancel"
-msgstr "Storno"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1218,9 +1288,6 @@ msgstr "Uživatelské extraktory:"
 
 msgid "Custom extractors:"
 msgstr "Uživatelské extraktory:"
-
-msgid "Edit…"
-msgstr "Upravit…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1287,8 +1354,11 @@ msgstr "Zachovat stávající formátování souboru"
 msgid "Advanced"
 msgstr "Pokročilé"
 
-msgid "Pre-translating…"
-msgstr "Probíhá předběžný překlad…"
+msgid "Preparing strings…"
+msgstr "Příprava řetězců…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Před-překládání z překladové paměti…"
 
 #, c-format
 msgid "Pre-translated %u string"
@@ -1297,6 +1367,9 @@ msgstr[0] "Před-přeložen %u řetězec"
 msgstr[1] "Před-přeloženy %u řetězce"
 msgstr[2] "Před-přeloženo %u řetězců"
 msgstr[3] "Před-přeloženo %u řetězců"
+
+msgid "Pre-translating…"
+msgstr "Probíhá předběžný překlad…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1367,29 +1440,20 @@ msgstr ""
 "Poloautomaticky je schopna efektivně překládat teprve poté, co se Poedit "
 "naučí dostatek dat z ručně přeložených souborů."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Sem přetáhněte adresáře</big>\n"
-"\n"
-"nebo použijte tlačítko +"
+msgid "Cancelling…"
+msgstr "Ukončuji…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Sem přetáhněte adresáře</big>\n"
-"\n"
-"nebo použijte tlačítko +"
+msgid "Drag Folders or Files Here"
+msgstr "Sem přetáhněte složky nebo soubory"
+
+msgid "Drag folders or files here"
+msgstr "Sem přetáhněte složky nebo soubory"
 
 msgid "Add Folders…"
-msgstr "Přidat adresáře…"
+msgstr "Přidat složky…"
 
 msgid "Add folders…"
-msgstr "Přidat adresáře…"
+msgstr "Přidat složky…"
 
 msgid "Add Files…"
 msgstr "Přidat soubory…"
@@ -1402,6 +1466,17 @@ msgstr "Přidat zástupný řetězec…"
 
 msgid "Add wildcard…"
 msgstr "Přidat zástupný řetězec…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Ukázat ve Finderu"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Ukázat v Průzkumníkovi"
+
+msgid "Show in Folder"
+msgstr "Ukázat ve složce"
 
 msgid "Paths"
 msgstr "Cesty"
@@ -1442,14 +1517,23 @@ msgstr "UTF-8 (doporučeno)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Nejdříve soubor uložte, jinak nebude možné tuto sekci editovat."
 
+msgid "Plural form translations"
+msgstr "Překlady forem plurálu"
+
 msgid "Not all plural forms are translated."
 msgstr "Nejsou přeloženy všechny formy plurálu."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Nekonzistentní malá/velká písmena"
 
 msgid "The translation should start as a sentence."
 msgstr "Překlad by měl začínat jako věta."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Překlad by měl začínat malým písmenem."
+
+msgid "Inconsistent whitespace"
+msgstr "Nekonzistentní mezery a bílé znaky"
 
 msgid "The translation doesn’t start with a space."
 msgstr "Na začátku překladu chybí mezera."
@@ -1469,6 +1553,9 @@ msgstr "Na konci překladu chybí mezera."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Na konci překladu je mezera, která není ve zdrojovém textu."
 
+msgid "Punctuation checks"
+msgstr "Kontroly interpunkce"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Překlad by měl být ukončen „%s“."
@@ -1481,38 +1568,23 @@ msgstr "Překlad by neměl být ukončen „%s“."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "Překlad je ukončen „%s“, ale zdrojový text je ukončen „%s“."
 
+msgid "Clear Menu"
+msgstr "Vyprázdnit menu"
+
+msgid "Clear menu"
+msgstr "Vyprázdnit menu"
+
 msgid "Comment:"
 msgstr "Komentář:"
 
-msgid "OK"
-msgstr "OK"
+msgid "Update"
+msgstr "Aktualizovat"
 
-msgid "C&lear"
+msgid "&Delete"
 msgstr "&Smazat"
 
-msgid "Clear the comment"
+msgid "Delete the comment"
 msgstr "Odstranit komentář"
-
-msgid "New"
-msgstr "Nový"
-
-msgid "Create new translations project"
-msgstr "Vytvořit nový překladový projekt"
-
-msgid "Edit"
-msgstr "Upravit"
-
-msgid "Edit the project"
-msgstr "Upravit projekt"
-
-msgid "Delete the project"
-msgstr "Smazat projekt"
-
-msgid "Update all"
-msgstr "Aktualizovat všechny katalogy"
-
-msgid "Update all catalogs in the project"
-msgstr "Aktualizovat všechny katalogy v projektu"
 
 msgid "Edit project"
 msgstr "Upravit projekt"
@@ -1525,6 +1597,12 @@ msgstr "Procházet"
 
 msgid "Add directory to the list"
 msgstr "Přidat adresář do seznamu"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "&File"
+msgstr "&Soubor"
 
 msgid "&New…"
 msgstr "&Nový…"
@@ -1541,11 +1619,26 @@ msgstr "&Otevřít…"
 msgid "Open Recent"
 msgstr "Otevřít poslední položku"
 
+msgid "Open recent"
+msgstr "Otevřít nedávné"
+
 msgid "Open from Crowdin…"
 msgstr "Otevřít z Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Otevřít z Crowdin…"
+
+msgid "&Start window"
+msgstr "Úvodní okno"
+
+msgid "&Start Window"
+msgstr "Úvodní okno"
+
+msgid "Catalogs &manager"
+msgstr "Správce &katalogů"
+
+msgid "Catalogs &Manager"
+msgstr "Správce &katalogů"
 
 msgid "&Close"
 msgstr "&Zavřít"
@@ -1571,12 +1664,6 @@ msgstr "Vyhledat aktualizace…"
 msgid "&Preferences…"
 msgstr "Nasta&vení…"
 
-msgid "Catalogs &manager"
-msgstr "Správce &katalogů"
-
-msgid "Catalogs &Manager"
-msgstr "Správce &katalogů"
-
 msgid "E&xit"
 msgstr "&Konec"
 
@@ -1601,6 +1688,7 @@ msgstr "Upravit &komentář"
 msgid "Edit &Comment"
 msgstr "Upravit &komentář"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Návrhy"
 
@@ -1676,11 +1764,11 @@ msgstr "&Nepřeložené položky jako první"
 msgid "&Untranslated Entries First"
 msgstr "&Nepřeložené položky jako první"
 
-msgid "&Show references"
-msgstr "&Zobrazit odkazy"
+msgid "&Show code occurrences"
+msgstr "&Zobrazit výskyty v kódu"
 
-msgid "&Show References"
-msgstr "&Zobrazit odkazy"
+msgid "&Show Code Occurrences"
+msgstr "&Zobrazit výskyty v kódu"
 
 msgid "Show sidebar"
 msgstr "Zobrazit postranní panel"
@@ -1688,8 +1776,8 @@ msgstr "Zobrazit postranní panel"
 msgid "Show status bar"
 msgstr "Zobrazit stavový řádek"
 
-msgid "C&atalog"
-msgstr "&Katalog"
+msgid "&Translation"
+msgstr "&Překlad"
 
 msgid "&Update from source code"
 msgstr "&Aktualizovat ze zdrojového kódu"
@@ -1839,8 +1927,8 @@ msgstr ""
 "Tento parametr bude do příkazové řádky vložen jen pokud byla zadána\n"
 "znaková sada zdrojových souborů. %c bude nahrazeno znakovou sadou."
 
-msgid "Catalog properties"
-msgstr "Vlastnosti katalogu"
+msgid "Translation Properties"
+msgstr "Vlastnosti překladu"
 
 msgid "Project name and version:"
 msgstr "Název a verze projektu:"
@@ -1868,9 +1956,6 @@ msgstr "Pokročilá nastavení extrakce…"
 
 msgid "Advanced extraction settings…"
 msgstr "Pokročilá nastavení extrakce…"
-
-msgid "Translation Properties"
-msgstr "Vlastnosti překladu"
 
 msgid "Translation properties"
 msgstr "Vlastnosti překladu"
@@ -1903,9 +1988,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Použít také výchozí klíčová slova pro podporované jazyky"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Podrobnosti o klíčových slovech gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Podrobnosti o klíčových slovech gettext"
 
@@ -1913,21 +1995,21 @@ msgid "Update summary"
 msgstr "Výsledek aktualizace"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Tyto řetězce se vyskytují ve zdrojácích, ale nejsou v katalogu.\n"
-"Poedit je nyní do katalogu přidá."
+"Tyto řetězce se vyskytují ve zdrojácích, ale nejsou v souboru.\n"
+"Poedit je nyní do souboru přidá."
 
 msgid "New strings"
 msgstr "Nové řetězce"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Tyto řetězce již nejsou ve zdrojácích.\n"
-"Poedit je nyní z katalogu odstraní."
+"Tyto řetězce již nejsou ve zdrojovém kódu.\n"
+"Poedit je nyní ze souboru odstraní."
 
 msgid "Obsolete strings"
 msgstr "Odstraněné řetězce"
@@ -1938,8 +2020,11 @@ msgstr "(0 nových, 0 odstraněných)"
 msgid "Open"
 msgstr "Otevřít"
 
-msgid "Save catalog"
-msgstr "Uložit katalog"
+msgid "Open file"
+msgstr "Otevřít soubor"
+
+msgid "Save file"
+msgstr "Uložit soubor"
 
 msgid "Validate"
 msgstr "Zkontrolovat"
@@ -1963,8 +2048,8 @@ msgid "Show or hide the sidebar"
 msgstr "Zobrazit nebo skrýt postranní panel"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Původní zdrojový text:"
+msgid "Previous source text"
+msgstr "Původní zdrojový text"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1973,8 +2058,11 @@ msgstr ""
 "Původní zdrojový text (než byl při aktualizaci změněn), kterému odpovídá "
 "použitý a nyní nepřesný překlad."
 
-msgid "Notes for translators:"
-msgstr "Poznámky pro překladatele:"
+msgid "Notes for translators"
+msgstr "Poznámky pro překladatele"
+
+msgid "Comment"
+msgstr "Komentář"
 
 msgid "Add comment"
 msgstr "Přidat komentář"
@@ -1988,8 +2076,8 @@ msgstr "Vymazat z překladové paměti"
 msgid "Delete from translation memory"
 msgstr "Vymazat z překladové paměti"
 
-msgid "Translation suggestions:"
-msgstr "Návrhy překladu:"
+msgid "Translation suggestions"
+msgstr "Návrhy překladu"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2019,40 +2107,6 @@ msgstr "Chyba překladové paměti: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Nelze vytvořit adresář na dočasné soubory."
 
-msgid "Welcome to Poedit"
-msgstr "Vítá vás Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Verze %s"
-
-msgid "Edit a translation"
-msgstr "Upravit překlad"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Otevře existující PO katalog a umožní jeho úpravu."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Použije existující soubor PO nebo POT jako šablonu pro vytvoření nového "
-"překladu."
-
-msgid "Collaborate on a translation with others"
-msgstr "Spolupracovat na překladu s ostatními"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Stáhne soubor z Crowdin projektu a po jeho překladu synchronizuje provedené "
-"změny zpět."
-
-msgid "What is Crowdin?"
-msgstr "Co je Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "V souboru nejsou žádné překlady. To je neobvyklé."
 
@@ -2072,9 +2126,11 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(další informace o GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Nejjednodušším způsobem naplnění tohoto katalogu je jeho aktualizace z POT "
+"Nejjednodušším způsobem naplnění tohoto souboru je jeho aktualizace z POT "
 "souboru:"
 
 msgid "Update from POT"
@@ -2093,6 +2149,33 @@ msgstr "Extrahovat ze zdrojových souborů"
 msgid "Configure source code extraction in Properties."
 msgstr ""
 "Parametry pro extrakci ze zdrojového kódu nastavte ve Vlastnostech katalogu."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Verze %s"
+
+msgid "Create new…"
+msgstr "Vytvořit nový…"
+
+msgid "Create new translation from POT template."
+msgstr "Vytvořte nový překlad z šablony POT."
+
+msgid "Browse files"
+msgstr "Procházet soubory"
+
+msgid "Open and edit translation files."
+msgstr "Otevřete a editujte překladové soubory."
+
+msgid "Translate Crowdin project"
+msgstr "Přeložit Crowdin projekt"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Spolupracujte s ostatními na projektu v Crowdin."
+
+msgid "Recent files"
+msgstr "Nedávné soubory"
 
 msgid "Sync"
 msgstr "Synchronizovat"
@@ -2178,8 +2261,8 @@ msgstr "Vyjmou&t"
 msgid "Cut"
 msgstr "Vyjmout"
 
-msgid "&Delete"
-msgstr "&Smazat"
+msgid "Edit"
+msgstr "Upravit"
 
 msgid "&Quit"
 msgstr "&Konec"
@@ -2189,6 +2272,9 @@ msgstr "Nápověda"
 
 msgid "&New"
 msgstr "&Nový"
+
+msgid "New"
+msgstr "Nový"
 
 msgid "&No"
 msgstr "N&e"

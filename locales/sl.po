@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -31,20 +31,20 @@ msgstr "Ne prikazuj več"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Novo: %i, zastarelo: %i)"
 
-msgid "Updating catalog"
-msgstr "Posodabljanje kataloga"
-
 msgid "Collecting source files…"
-msgstr "Zbiranje izvornih datotek ..."
+msgstr "Zbiranje izvornih datotek…"
 
 msgid "Extracting translatable strings…"
-msgstr "Razširjanje prevedljivih nizov..."
+msgstr "Razširjanje prevedljivih nizov…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Ni uspelo nalaganje razširjenega kataloga."
+msgid "Failed to load file with extracted translations."
+msgstr "Datoteke z razširjenimi prevodi ni bilo mogoče naložiti."
 
 msgid "Merging differences…"
-msgstr "Združevanje razlik..."
+msgstr "Združevanje razlik…"
+
+msgid "Updating translations"
+msgstr "Posodabljanje prevodov"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -82,27 +82,26 @@ msgstr[3] "%i vrstic datoteke »%s« ni pravilno naloženih."
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Vrstica %d datoteke \"%s\" je poškodovana (niso veljavni %s podatki)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Prkinjena datoteka kataloga: edninska oblika msgstr je uporabljena skupaj z "
+"Poškodovana datoteka PO: edninska oblika msgstr je uporabljena skupaj z "
 "msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Prekinjena datoteka kataloga: množinska oblika msgstr je uporabljena brez "
+"Poškodovana datoteka PO: množinska oblika msgstr je uporabljena brez "
 "msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Med nalaganjem kataloga je prišlo do napak. Nekateri podatki morda manjkajo "
-"ali so poškodovani."
+"Pri nalaganju datoteke je prišlo do napak. Nekateri podatki morda zaradi "
+"tega manjkajo ali so poškodovani."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
-msgstr "Datoteke %s ni mogoče naložiti, ker je najverjetneje poškodovana."
+msgstr "Datoteke %s ni mogoče naložiti, ker je verjetno poškodovana."
 
 #, c-format
 msgid ""
@@ -124,19 +123,19 @@ msgstr ""
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Kataloga ni mogoče shraniti v naboru znakov \"%s\", kot je določeno v "
-"nastavitvah kataloga.\n"
+"Datoteke ni mogoče shraniti v naboru znakov \"%s\", kot je določeno v "
+"nastavitvah prevajanja.\n"
 "\n"
-"Namesto tega je bil shranjen v UTF-8 in nastavitev je bila ustrezno "
+"Namesto tega je bila shranjena v UTF-8 in nastavitev je bila ustrezno "
 "spremenjena."
 
-msgid "Error saving catalog"
-msgstr "Napaka pri shranjevanju kataloga"
+msgid "Error saving file"
+msgstr "Napaka pri shranjevanju datoteke"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -168,7 +167,7 @@ msgstr "Usklajevanje"
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s…"
-msgstr "Usklajevanje s strežnikom %s ..."
+msgstr "Usklajevanje s strežnikom %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
@@ -177,6 +176,9 @@ msgstr "Usklajevanje s strežnikom %s je spodletelo."
 
 msgid "Syncing error"
 msgstr "Napaka usklajevanja"
+
+msgid "Add"
+msgstr "Dodaj"
 
 msgid "JSON request error"
 msgstr "Napaka zahteve JSON"
@@ -208,13 +210,10 @@ msgid "Sign out"
 msgstr "Odjavi"
 
 msgid "Waiting for authentication…"
-msgstr "Čakanje na preverjanje pristnosti ..."
+msgstr "Čakanje na preverjanje pristnosti…"
 
 msgid "Updating user information…"
-msgstr "Posodabljanje uporabniških podatkov..."
-
-msgid "Learn More About Crowdin"
-msgstr "Več o Crowdin"
+msgstr "Posodabljanje uporabniških podatkov…"
 
 msgid "Learn more about Crowdin"
 msgstr "Več o Crowdin"
@@ -241,7 +240,7 @@ msgid "No translation projects listed in your Crowdin account."
 msgstr "V vašem Crowdinovem računu niso navedeni nobeni prevajalski projekti."
 
 msgid "Downloading latest translations…"
-msgstr "Prenos najnovejših prevodov..."
+msgstr "Prenos najnovejših prevodov…"
 
 msgid "Syncing with Crowdin failed."
 msgstr "Usklajevanje s Crowdin ni uspelo."
@@ -250,15 +249,12 @@ msgid "Crowdin error"
 msgstr "Napaka Crowdina"
 
 msgid "Uploading translations…"
-msgstr "Nalaganje prevodov ..."
+msgstr "Nalaganje prevodov…"
 
 msgid "&Copy"
 msgstr "&Kopiraj"
 
 msgid "Learn more"
-msgstr "Več o tem"
-
-msgid "Learn More"
 msgstr "Več o tem"
 
 msgid "&Help"
@@ -293,114 +289,14 @@ msgstr "Povezovanje s programom Poedit je spodletelo."
 msgid "Unhandled exception occurred: %s"
 msgstr "Neobravnavana izjema: %s"
 
-msgid "Open catalog"
-msgstr "Odpre katalog"
+msgid "Select translation template"
+msgstr "Izberi pedlogo prevoda"
 
-#, c-format
-msgid "File “%s” doesn’t exist."
-msgstr "Datoteka \"%s\" ne obstaja."
+msgid "Select translation file"
+msgstr "Izberi datoteko za prevod"
 
 msgid "Poedit is an easy to use translation editor."
 msgstr "Poedit je enostaven in priročen urejevalnik prevodov."
-
-msgid "Catalogs Manager"
-msgstr "Upravitelj katalogov"
-
-msgid "Check for Updates…"
-msgstr "Preveri obstoj posodobitev..."
-
-msgid "&Edit"
-msgstr "&Uredi"
-
-msgid "Undo"
-msgstr "Razveljavi"
-
-msgid "Redo"
-msgstr "Povrni"
-
-msgid "Paste and Match Style"
-msgstr "Prilepi in uskladi slog"
-
-msgid "Delete"
-msgstr "Izbriši"
-
-msgid "Spelling and Grammar"
-msgstr "Črkovanje in slovnica"
-
-msgid "Show Spelling and Grammar"
-msgstr "Prikaži črkovanje in slovnico"
-
-msgid "Check Document Now"
-msgstr "Provjeri dokument sada"
-
-msgid "Check Spelling While Typing"
-msgstr "Provjeri pravopis tijekom tipkanja"
-
-msgid "Check Grammar With Spelling"
-msgstr "Uz pravopis provjeravaj i gramatiku"
-
-msgid "Correct Spelling Automatically"
-msgstr "Samodejno popravi črkovanje"
-
-msgid "Substitutions"
-msgstr "Zamenjave"
-
-msgid "Show Substitutions"
-msgstr "Prikaži zamenjave"
-
-msgid "Smart Copy/Paste"
-msgstr "Pametno kopiranje/lepljenje"
-
-msgid "Smart Quotes"
-msgstr "Pametni narekovaji"
-
-msgid "Smart Dashes"
-msgstr "Pametni pomišljaji"
-
-msgid "Smart Links"
-msgstr "Pametne povezave"
-
-msgid "Text Replacement"
-msgstr "Zamenjava besedila"
-
-msgid "Transformations"
-msgstr "Preobliovanja"
-
-msgid "Make Upper Case"
-msgstr "Izpiši z velikimi črkami"
-
-msgid "Make Lower Case"
-msgstr "Izpiši z malimi črkami"
-
-msgid "Capitalize"
-msgstr "Z velikimi začetnicami"
-
-msgid "Speech"
-msgstr "Govor"
-
-msgid "Start Speaking"
-msgstr "Začni govoriti"
-
-msgid "Stop Speaking"
-msgstr "Nehaj govoriti"
-
-msgid "&View"
-msgstr "&Pogled"
-
-msgid "Enter Full Screen"
-msgstr "Preklopi na celozaslonski prikaz"
-
-msgid "Window"
-msgstr "Okno"
-
-msgid "Minimize"
-msgstr "Pomanjšaj"
-
-msgid "Zoom"
-msgstr "Povečava"
-
-msgid "Bring All to Front"
-msgstr "Postavi vse v ospredje"
 
 #. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
@@ -423,11 +319,12 @@ msgstr "Ni mogoče povleči več kot ene datoteke v okno Poedita."
 msgid "File “%s” is not a translation file."
 msgstr "Datoteka \"%s\" ni datoteka s prevodom."
 
+#, c-format
+msgid "File “%s” doesn’t exist."
+msgstr "Datoteka \"%s\" ne obstaja."
+
 msgid "Poedit"
 msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Datoteka"
 
 msgid "&Go"
 msgstr "&Pojdi"
@@ -443,8 +340,28 @@ msgstr "Preverjanje črkovanja je onemogočeno, ker ni nameščen slovar za %s."
 msgid "Install"
 msgstr "Namesti"
 
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Katalog je spremenjen. Ali želite spremembe shraniti?"
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Datoteko “%s” je spremenil drug program."
+
+msgid "Reload file"
+msgstr "Znova naloži datoteko"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Ali želite datoteko znova naložiti z diska? V nasprotnem primeru bodo vaše "
+"neshranjene spremembe v Poeditu izgubljene."
+
+msgid "Ignore"
+msgstr "Prezri"
+
+msgid "Reload File"
+msgstr "Znova naloži datoteko"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Datoteka je bila spremenjena. Ali želite shraniti spremembe?"
 
 msgid "Save changes"
 msgstr "Shrani spremembe"
@@ -461,23 +378,37 @@ msgstr "&Ne shrani"
 msgid "Don’t Save"
 msgstr "Ne shrani"
 
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+"Spremembe, ki jih je naredila druga aplikacija bodo izgubljene, če shranite."
+
+msgid "Cancel"
+msgstr "Prekliči"
+
+msgid "Save Anyway"
+msgstr "Vseeno shrani"
+
+msgid "Save anyway"
+msgstr "Vseeno shrani"
+
 msgid "Save as…"
 msgstr "Shrani kot …"
 
 msgid "Compile to…"
-msgstr "Prevedi v ..."
+msgstr "Prevedi v…"
 
 msgid "Compiled Translation Files"
 msgstr "Prevedene prevodne datoteke"
 
 msgid "Export as…"
-msgstr "Izvozi kot ..."
+msgstr "Izvozi kot…"
 
 msgid "HTML Files"
 msgstr "Datoteke HTML"
 
-msgid "Open catalog template"
-msgstr "Odpri predlogo kataloga"
+#, c-format
+msgid "In: %s"
+msgstr "V: %s"
 
 msgid "Source code not available."
 msgstr "Izvorna koda ni na voljo."
@@ -487,20 +418,20 @@ msgstr "Posodobitev ni uspela"
 
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
+"found in the location specified in the file’s Properties."
 msgstr ""
-"Prevodov ni bilo mogoče posodobiti iz izvorne kode, ker ni bila najdena "
-"nobena koda na mastu, ki je bilo navedeno v lastnostih kataloga."
+"Prevoda ni mogoče posodobiti iz izvorne kode, ker na mestu, ki je določeno v "
+"lastnostih datoteke, ni bilo mogoče najti nobene kode."
 
 msgid "Permission denied."
 msgstr "Dovoljenje zavrnjeno."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
+"specified in the file’s Properties."
 msgstr ""
 "Nimate dovoljenja za branje datotek izvorne kode z mesta, navedenega v "
-"lastnostih kataloga."
+"lastnostih datoteke."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
@@ -510,13 +441,15 @@ msgstr ""
 "Če ste prej zavrnili dostop do vaših datotek, lahko to dovolite v Nastavitve "
 "sistema > Varnost in zasebnost > Zasebnost > Datoteke in mape."
 
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Vnosi v katalogu so verjetno napačni."
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Vnosi za prevod v datoteki so verjetno napačni."
 
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgid "Updating the file failed. Click on 'Details >>' for details."
 msgstr ""
-"Posodobitev kataloga ni uspela. Za več podrobnosti kliknite na 'Podrobnosti "
-">>'."
+"Posodabljanje datoteke ni uspelo. Za podrobnosti kliknite 'Podrobnosti >>'."
+
+msgid "Open translation template"
+msgstr "Odpri pedlogo prevoda"
 
 #, c-format
 msgid "%d issue with the translation found."
@@ -582,24 +515,6 @@ msgstr[3] ""
 msgid "The translation is ready for use."
 msgstr "Prevod je pripravljen za uporabo."
 
-msgid "Warnings have been disabled."
-msgstr "Opozorila so onemogočena."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Če ste onemogočili opozorila zaradi pretiranih lažnih pozitivnih ujemanj "
-"razmislite o pošiljanju datoteke s primeri na naslov help@poedit.net, da na "
-"pomagate izboljšati jih."
-
-msgid "Send Feedback"
-msgstr "Pošlji povratne informacije"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "Pošlji povratne informacije"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Program je samodejno popravil neveljavno vsebino v datoteki \"%s\"."
@@ -642,18 +557,18 @@ msgid "Fix language"
 msgstr "Popravi jezik"
 
 msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr ""
-"V katalogu so vnosi z množinskimi oblikami, ki niso pravilno določeni v "
-"glavi kataloga."
+"V tej datoteki so vnosi z množinskimi oblikami, vendar ni nastavljena glava "
+"'Množinske oblike'."
 
 msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
 msgstr ""
-"Vnosi v katalogu uporabljajo druge množinske oblike, kot je to določeno v "
-"glavi kataloga."
+"Vnosi v tej datoteki imajo različno število oblik množine, od tistega, kar "
+"piše v glavi 'Množinske oblike', datoteke"
 
 msgid "Required header Plural-Forms is missing."
 msgstr "V glavi manjka zahtevano določilo za množinske oblike."
@@ -672,17 +587,16 @@ msgstr "Popravi glavo"
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
 #, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
-"Izraz množinskih oblik, ki je zaveden v katalogu, ni običajen za jezik %s."
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "Izraz množinskih oblik, ki ga uporablja datoteka, je nenavaden za %s."
 
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
 msgid "Review"
 msgstr "Pregled"
 
 #, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Napaka med nalaganjem datoteke kataloga sporočil \"%s\"."
+msgid "Error loading translation file “%s”."
+msgstr "Napaka pri nalaganju datoteke za prevod “%s”."
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -762,8 +676,13 @@ msgstr "Uredi komentar"
 msgid "Edit Comment"
 msgstr "Uredi komentar"
 
-msgid "References:"
-msgstr "Sklici:"
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Kode pojavitev"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Kode pojavitev"
 
 msgid "&Bookmarks"
 msgstr "&Zaznamki"
@@ -801,17 +720,23 @@ msgstr "Skrij statusno vrstico"
 msgid "Show Status Bar"
 msgstr "Prikaži statusno vrstico"
 
-msgid "Source text:"
-msgstr "Izvorno besedilo:"
+msgid "String length in characters: translation | source"
+msgstr "Dolžina niza v znakih: prevod | vir"
 
-msgid "Singular:"
-msgstr "Ednina:"
+msgid "String length in characters"
+msgstr "Dolžina niza v znakih"
 
-msgid "Plural:"
-msgstr "Množina:"
+msgid "Source text"
+msgstr "Izvorno besedilo"
 
-msgid "Translation:"
-msgstr "Prevod:"
+msgid "Singular"
+msgstr "Ednina"
+
+msgid "Plural"
+msgstr "Množina"
+
+msgid "Translation"
+msgstr "Prevod"
 
 msgid "Pre-translated"
 msgstr "Vnaprej prevedeno"
@@ -837,11 +762,11 @@ msgstr ""
 "POT datoteke so samo predloge in ne vsebujejo prevodov.\n"
 "Za prevod ustvarite novo datoteko PO na osnovi predloge."
 
-msgid "Create New Translation"
-msgstr "Ustvari nov prevod"
-
 msgid "Create new translation"
 msgstr "Ustvari nov prevod"
+
+msgid "Make a new translation from this POT file."
+msgstr "Naredi nov prevod iz te datoteke POT."
 
 msgid "Everything"
 msgstr "Vse"
@@ -854,9 +779,6 @@ msgstr "Oblika %i"
 msgid "Form %i (unused)"
 msgstr "Oblika %i (ni uporabljeno)"
 
-msgid "Singular"
-msgstr "Ednina"
-
 msgid "Zero"
 msgstr "Nič"
 
@@ -865,9 +787,6 @@ msgstr "Eden"
 
 msgid "Two"
 msgstr "Dva"
-
-msgid "Plural"
-msgstr "Množina"
 
 msgid "Other"
 msgstr "Drugo"
@@ -880,9 +799,6 @@ msgstr "Format %s"
 #, c-format
 msgid "%s format"
 msgstr "Oblika %s"
-
-msgid "Source text"
-msgstr "Izvorno besedilo"
 
 #, c-format
 msgid "Translation — %s"
@@ -905,24 +821,46 @@ msgstr "Neuspeli ukaz: %s"
 msgid "Failed to merge gettext catalogs."
 msgstr "Povezovalnih katalogov ni bilo mogoče združiti."
 
-msgid "Source file"
-msgstr "Izvorna datoteka"
-
-msgid "Source file occurrence:"
-msgstr "Pojavitev izvorne datoteke:"
-
 msgid "Open in Editor"
 msgstr "Odpri v urejevalniku"
 
 msgid "Open in editor"
 msgstr "Odpri v urejevalniku"
 
-msgid "No references for the selected item."
-msgstr "Ni sklicev za izbran vnos."
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr "Ni podatkov o pojavih tega niza v izvorni kodi zagotovljene datoteke."
+
+msgid "No usage information"
+msgstr "Ni podatkov o uporabi"
 
 #, c-format
-msgid "Error opening file %s!"
-msgstr "Napaka pri odpiranju datoteke %s!"
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d pojavitvi kode"
+msgstr[1] "%d pojavitvi kode"
+msgstr[2] "%d pojavitev kode"
+msgstr[3] "%d pojavitev kode"
+
+msgid "Source code not found"
+msgstr "Izvorna koda ni bila najdena"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit ne more prikazati izvorne kode, kjer se uporablja niz,, ker datoteka "
+"bodisi ni na voljo na referenčnem mestu ali je ta simbolni sklic, ki ne kaže "
+"na resnično datoteko."
+
+msgid "File cannot be opened"
+msgstr "Datoteke ni mogoče odpreti"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit ni mogel odpreti datoteke \"%s\"."
 
 msgid "Find"
 msgstr "Najdi"
@@ -992,8 +930,23 @@ msgstr "Jezik prevoda:"
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit – upravljalnik katalogov"
 
-msgid "Catalog"
-msgstr "Katalog"
+msgid "Edit…"
+msgstr "Uredi…"
+
+msgid "Create new translations project"
+msgstr "Ustvari nov projekt prevoda"
+
+msgid "Delete the project"
+msgstr "Izbriši projekt"
+
+msgid "Edit the project"
+msgstr "Uredi projekt"
+
+msgid "Update all"
+msgstr "Posodobi vse"
+
+msgid "Update all catalogs in the project"
+msgstr "Posodobi vse kataloge projekta"
 
 msgid "Total"
 msgstr "Skupno"
@@ -1020,18 +973,135 @@ msgstr "Mape:"
 msgid "<unnamed>"
 msgstr "<neimenovano>"
 
-msgid "Do you want to delete the project?"
-msgstr "Ali želite izbrisati projekt?"
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Ali želite izbrisati projekt “%s”?"
+
+msgid "Delete project"
+msgstr "Izbriši projekt"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "Brisanje projekta ne bo izbrisalo nobene prevajalske datoteke."
 
 msgid "Confirmation"
 msgstr "Potrditev"
 
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Ali res želite množično nadgraditi vse\n"
-"kataloge v tem projektu?"
+msgid "Update all catalogs in this project?"
+msgstr "Posodobim vse kataloge v tem projektu?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "Izvede posodobitev iz izvorne kode za vse datoteke v projektu."
+
+msgid "Catalogs Manager"
+msgstr "Upravitelj katalogov"
+
+msgid "Check for Updates…"
+msgstr "Preveri obstoj posodobitev…"
+
+msgid "&Edit"
+msgstr "&Uredi"
+
+msgid "Undo"
+msgstr "Razveljavi"
+
+msgid "Redo"
+msgstr "Povrni"
+
+msgid "Paste and Match Style"
+msgstr "Prilepi in uskladi slog"
+
+msgid "Delete"
+msgstr "Izbriši"
+
+msgid "Spelling and Grammar"
+msgstr "Črkovanje in slovnica"
+
+msgid "Show Spelling and Grammar"
+msgstr "Prikaži črkovanje in slovnico"
+
+msgid "Check Document Now"
+msgstr "Provjeri dokument sada"
+
+msgid "Check Spelling While Typing"
+msgstr "Provjeri pravopis tijekom tipkanja"
+
+msgid "Check Grammar With Spelling"
+msgstr "Uz pravopis provjeravaj i gramatiku"
+
+msgid "Correct Spelling Automatically"
+msgstr "Samodejno popravi črkovanje"
+
+msgid "Substitutions"
+msgstr "Zamenjave"
+
+msgid "Show Substitutions"
+msgstr "Prikaži zamenjave"
+
+msgid "Smart Copy/Paste"
+msgstr "Pametno kopiranje/lepljenje"
+
+msgid "Smart Quotes"
+msgstr "Pametni narekovaji"
+
+msgid "Smart Dashes"
+msgstr "Pametni pomišljaji"
+
+msgid "Smart Links"
+msgstr "Pametne povezave"
+
+msgid "Text Replacement"
+msgstr "Zamenjava besedila"
+
+msgid "Transformations"
+msgstr "Preobliovanja"
+
+msgid "Make Upper Case"
+msgstr "Izpiši z velikimi črkami"
+
+msgid "Make Lower Case"
+msgstr "Izpiši z malimi črkami"
+
+msgid "Capitalize"
+msgstr "Z velikimi začetnicami"
+
+msgid "Speech"
+msgstr "Govor"
+
+msgid "Start Speaking"
+msgstr "Začni govoriti"
+
+msgid "Stop Speaking"
+msgstr "Nehaj govoriti"
+
+msgid "&View"
+msgstr "&Prikaz"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Prikaži orodno vrstico"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Prilagodi orodno vrstico…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Enter Full Screen"
+msgstr "Preklopi na celozaslonski prikaz"
+
+msgid "Window"
+msgstr "Okno"
+
+msgid "Minimize"
+msgstr "Pomanjšaj"
+
+msgid "Zoom"
+msgstr "Povečava"
+
+msgid "Welcome to Poedit"
+msgstr "Dobrodošli v Poedit"
+
+msgid "Bring All to Front"
+msgstr "Postavi vse v ospredje"
 
 msgid "Information about the translator"
 msgstr "Podatki o prevajalcu"
@@ -1043,10 +1113,10 @@ msgid "Your Name"
 msgstr "Vaše ime"
 
 msgid "Email:"
-msgstr "E-pošta"
+msgstr "E-pošta:"
 
-msgid "your_email@example.com"
-msgstr "vasa_e-posta@primer.com"
+msgid "you@example.com"
+msgstr "vi@primer.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1059,8 +1129,8 @@ msgstr "Urejanje"
 msgid "Automatically compile MO file when saving"
 msgstr "Med shranjevanjem samodejno ustvari datoteko MO"
 
-msgid "Show summary after catalog update"
-msgstr "Prikaži povzetek po posodobitvi kataloga"
+msgid "Show summary after updating files"
+msgstr "Po posodobitvi datotek prikaži povzetek"
 
 msgid "Check spelling"
 msgstr "Preveri črkovanje"
@@ -1104,7 +1174,7 @@ msgstr "Upravljaj …"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
-msgstr "Pri posodabljanju iz virov ..."
+msgstr "Pri posodabljanju iz virov"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
@@ -1160,10 +1230,10 @@ msgid "Translation Memory"
 msgstr "Pomnilnik prevodov"
 
 msgid "Importing translations…"
-msgstr "Uvažanje prevodov..."
+msgstr "Uvažanje prevodov…"
 
 msgid "Finalizing…"
-msgstr "Dokončanje..."
+msgstr "Dokončanje…"
 
 msgid "Select TMX files to import"
 msgstr "Izberi datoteke TMX za uvoz"
@@ -1201,9 +1271,6 @@ msgstr ""
 "Ponastavitev pomnilnika prevodov bo nepovratno izbrisala vse njegove "
 "shranjene prevode. Te operacije ne morete razveljaviti."
 
-msgid "Cancel"
-msgstr "Prekliči"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1223,9 +1290,6 @@ msgstr "Razširjevalci po meri:"
 
 msgid "Custom extractors:"
 msgstr "Razširjevalci po meri:"
-
-msgid "Edit…"
-msgstr "Uredi ..."
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1292,8 +1356,11 @@ msgstr "Ohrani oblikovanje obstoječih datotek"
 msgid "Advanced"
 msgstr "Napredno"
 
-msgid "Pre-translating…"
-msgstr "Prevajanje vnaprej ..."
+msgid "Preparing strings…"
+msgstr "Priprava nizov…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "Predhodno prevajanje iz pomnilnika prevodov…"
 
 #, c-format
 msgid "Pre-translated %u string"
@@ -1302,6 +1369,9 @@ msgstr[0] "Vnaprej preveden niz %u"
 msgstr[1] "Zapolnjena sta %u niza"
 msgstr[2] "Zapolnjeni so %u nizi"
 msgstr[3] "Zapolnjenih je %u nizov"
+
+msgid "Pre-translating…"
+msgstr "Prevajanje vnaprej…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1371,41 +1441,43 @@ msgstr ""
 "Učinkovit je le za polavtomatske prevode potem, ko se Poedit dovolj nauči iz "
 "datotek, ki ste jih ročno prevedli."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Povlecite in spustite mape tukaj</big> \n"
-"\n"
-"ali pa uporabite gumb +"
+msgid "Cancelling…"
+msgstr "Preklic…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>Povlecite in spustite mape tukaj</big> \n"
-"\n"
-"ali pa uporabite gumb +"
+msgid "Drag Folders or Files Here"
+msgstr "Povlecite mape ali datoteke sem"
+
+msgid "Drag folders or files here"
+msgstr "Povlecite mape ali datoteke sem"
 
 msgid "Add Folders…"
-msgstr "Dodaj mape..."
+msgstr "Dodaj mape…"
 
 msgid "Add folders…"
-msgstr "Dodaj mape ..."
+msgstr "Dodaj mape…"
 
 msgid "Add Files…"
-msgstr "Dodaj datoteke ..."
+msgstr "Dodaj datoteke…"
 
 msgid "Add files…"
-msgstr "Dodaj datoteke ..."
+msgstr "Dodaj datoteke…"
 
 msgid "Add Wildcard…"
-msgstr "Dodaj nadomestni znak ..."
+msgstr "Dodaj nadomestni znak…"
 
 msgid "Add wildcard…"
-msgstr "Dodaj nadomestni znak ..."
+msgstr "Dodaj nadomestni znak…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Razkrij v Finderju"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "Prikaži v Raziskovalcu"
+
+msgid "Show in Folder"
+msgstr "Prikaži v mapi"
 
 msgid "Paths"
 msgstr "Poti"
@@ -1414,7 +1486,7 @@ msgid "Excluded paths"
 msgstr "Izključene poti"
 
 msgid "Advanced extraction settings"
-msgstr "Napredne nastavitve razširjanja..."
+msgstr "Napredne nastavitve razširjanja"
 
 msgid "Extract notes for translators from:"
 msgstr "Razširi opombe za prevajalce iz:"
@@ -1446,14 +1518,23 @@ msgstr "UTF-8 (priporočeno)"
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Najprej shranite datoteko. Do tedaj, tega oddelka ni mogoče urejati."
 
+msgid "Plural form translations"
+msgstr "Množinske oblike prevodov"
+
 msgid "Not all plural forms are translated."
 msgstr "Vse množinske oblike niso prevedene."
+
+msgid "Inconsistent upper/lower case"
+msgstr "Nedosledena V/m črka presledek"
 
 msgid "The translation should start as a sentence."
 msgstr "Prevod se mora začeti kot stavek."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Prevod se mora začeti z malo črko."
+
+msgid "Inconsistent whitespace"
+msgstr "Nedosleden presledek"
 
 msgid "The translation doesn’t start with a space."
 msgstr "Prevod se ne začne s presledkom."
@@ -1473,6 +1554,9 @@ msgstr "Na koncu prevoda manjka presledek."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Prevod se konča s presledkom, ki ne obstaja v izvornem besedilu."
 
+msgid "Punctuation checks"
+msgstr "Preverjanja ločil"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Prevod se mora končati z znakom \"%s\"."
@@ -1486,38 +1570,23 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 "Prevod se konča z znakom \"%s\", toda izborno besedilo se konča z \"%s\"."
 
+msgid "Clear Menu"
+msgstr "Počisti meni"
+
+msgid "Clear menu"
+msgstr "Počisti meni"
+
 msgid "Comment:"
 msgstr "Komentar:"
 
-msgid "OK"
-msgstr "Vredu"
+msgid "Update"
+msgstr "Posodobi"
 
-msgid "C&lear"
-msgstr "Po&čisti"
+msgid "&Delete"
+msgstr "&Izbriši"
 
-msgid "Clear the comment"
-msgstr "Počisti komentar"
-
-msgid "New"
-msgstr "Novo"
-
-msgid "Create new translations project"
-msgstr "Ustvari nov projekt prevoda"
-
-msgid "Edit"
-msgstr "Uredi"
-
-msgid "Edit the project"
-msgstr "Uredi projekt"
-
-msgid "Delete the project"
-msgstr "Izbriši projekt"
-
-msgid "Update all"
-msgstr "Posodobi vse"
-
-msgid "Update all catalogs in the project"
-msgstr "Posodobi vse kataloge projekta"
+msgid "Delete the comment"
+msgstr "Izbriši komentar"
 
 msgid "Edit project"
 msgstr "Uredi projekt"
@@ -1531,26 +1600,47 @@ msgstr "Prebrskaj"
 msgid "Add directory to the list"
 msgstr "Dodaj mapo na seznam"
 
+msgid "OK"
+msgstr "Vredu"
+
+msgid "&File"
+msgstr "&Datoteka"
+
 msgid "&New…"
-msgstr "&Nov ..."
+msgstr "&Nov…"
 
 msgid "New from &POT/PO file…"
-msgstr "Nov iz datoteke &POT/PO ..."
+msgstr "Nov iz datoteke &POT/PO…"
 
 msgid "New From &POT/PO File…"
-msgstr "Nov iz datoteke &POT/PO ..."
+msgstr "Nov iz datoteke &POT/PO…"
 
 msgid "&Open…"
-msgstr "&Odpri..."
+msgstr "&Odpri…"
 
 msgid "Open Recent"
 msgstr "Odpri nedavne"
 
+msgid "Open recent"
+msgstr "Odpri nedavno"
+
 msgid "Open from Crowdin…"
-msgstr "Odpri iz Crowdina..."
+msgstr "Odpri iz Crowdina…"
 
 msgid "Open From Crowdin…"
-msgstr "Odpri iz Crowdina..."
+msgstr "Odpri iz Crowdina…"
+
+msgid "&Start window"
+msgstr "&Začetno okno"
+
+msgid "&Start Window"
+msgstr "&Začetno okno"
+
+msgid "Catalogs &manager"
+msgstr "&Upravitelj katalogov"
+
+msgid "Catalogs &Manager"
+msgstr "Upravitelj katalogov"
 
 msgid "&Close"
 msgstr "&Zapri"
@@ -1565,22 +1655,16 @@ msgid "Save &As…"
 msgstr "Shrani &kot…"
 
 msgid "Compile to MO…"
-msgstr "Prevedi v MO ..."
+msgstr "Prevedi v MO…"
 
 msgid "E&xport as HTML…"
-msgstr "&Izvozi kot HTML..."
+msgstr "&Izvozi kot HTML…"
 
 msgid "Check for updates…"
-msgstr "Preveri obstoj posodobitev..."
+msgstr "Preveri obstoj posodobitev…"
 
 msgid "&Preferences…"
-msgstr "&Nastavitve..."
-
-msgid "Catalogs &manager"
-msgstr "&Upravitelj katalogov"
-
-msgid "Catalogs &Manager"
-msgstr "Upravitelj katalogov"
+msgstr "&Nastavitve…"
 
 msgid "E&xit"
 msgstr "Iz&hod"
@@ -1606,14 +1690,15 @@ msgstr "Uredi &komentar"
 msgid "Edit &Comment"
 msgstr "Uredi &komentar"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Predlogi"
 
 msgid "&Find…"
-msgstr "&Najdi ..."
+msgstr "&Najdi…"
 
 msgid "Replace…"
-msgstr "Zamenjaj ..."
+msgstr "Zamenjaj…"
 
 msgid "Find next"
 msgstr "Poišči naslednjega"
@@ -1622,7 +1707,7 @@ msgid "Find previous"
 msgstr "Poišči prejšnjega"
 
 msgid "Find and Replace…"
-msgstr "Poišči in zamenjaj..."
+msgstr "Poišči in zamenjaj…"
 
 msgid "Find Next"
 msgstr "Poišči naslednjega"
@@ -1681,11 +1766,11 @@ msgstr "&Najprej neprevedeni nizi"
 msgid "&Untranslated Entries First"
 msgstr "&Najprej neprevedeni nizi"
 
-msgid "&Show references"
-msgstr "&Prikaži sklice"
+msgid "&Show code occurrences"
+msgstr "&Prikaži pojavitve kode"
 
-msgid "&Show References"
-msgstr "&Prikaži sklice"
+msgid "&Show Code Occurrences"
+msgstr "Prikaži poja&vitve kode"
 
 msgid "Show sidebar"
 msgstr "Prikaži stransko vrstico"
@@ -1693,8 +1778,8 @@ msgstr "Prikaži stransko vrstico"
 msgid "Show status bar"
 msgstr "Prikaži statusno vrstico"
 
-msgid "C&atalog"
-msgstr "K&atalog"
+msgid "&Translation"
+msgstr "&Prevod"
 
 msgid "&Update from source code"
 msgstr "&Posodobi iz izvorne kode"
@@ -1703,16 +1788,16 @@ msgid "&Update from Source Code"
 msgstr "&Posodobi iz izvorne kode"
 
 msgid "Update from &POT file…"
-msgstr "Posodobi iz datoteke &POT ..."
+msgstr "Posodobi iz datoteke &POT…"
 
 msgid "Update from &POT File…"
-msgstr "Posodobi z datoteko &POT..."
+msgstr "Posodobi z datoteko &POT…"
 
 msgid "Sync with Crowdin"
 msgstr "Uskladi s Crowdinom"
 
 msgid "Pre-&translate…"
-msgstr "Vnapre&j prevedi..."
+msgstr "Vnapre&j prevedi…"
 
 msgid "&Purge deleted translations"
 msgstr "Poči&sti izbrisane prevode"
@@ -1727,7 +1812,7 @@ msgid "&Validate Translations"
 msgstr "&Preveri ustreznost prevoda"
 
 msgid "&Properties…"
-msgstr "&Lastnosti ..."
+msgstr "&Lastnosti…"
 
 msgid "&Done and next"
 msgstr "&Dokončano in naprej"
@@ -1845,8 +1930,8 @@ msgstr ""
 "kode.\n"
 " Parameter %c razširi vvrednost kodnega nabora."
 
-msgid "Catalog properties"
-msgstr "Lastnosti kataloga"
+msgid "Translation Properties"
+msgstr "Lastnosti prevoda"
 
 msgid "Project name and version:"
 msgstr "Ime in različica projekta:"
@@ -1870,13 +1955,10 @@ msgid "Charset:"
 msgstr "Kodni nabor:"
 
 msgid "Advanced Extraction Settings…"
-msgstr "Napredne nastavitve razširjanja..."
+msgstr "Napredne nastavitve razširjanja…"
 
 msgid "Advanced extraction settings…"
-msgstr "Napredne nastavitve razširjanja..."
-
-msgid "Translation Properties"
-msgstr "Lastnosti prevoda"
+msgstr "Napredne nastavitve razširjanja…"
 
 msgid "Translation properties"
 msgstr "Lastnosti prevoda"
@@ -1909,9 +1991,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Uporabi tudi privzete ključne besede za podprte jezike"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Več o gettext ključnih besedah"
-
 msgid "Learn about gettext keywords"
 msgstr "Več o gettext ključnih besedah"
 
@@ -1919,21 +1998,21 @@ msgid "Update summary"
 msgstr "Posodobi povzetek"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Ti nizi so bili najdeni v izvornih datotekah, vendar jih ni v katalogu.\n"
-"Poedit jih bo samodejno dodal v katalog."
+"Ti nizi so bili najdeni v virih, niso pa bili v datoteki.\n"
+"Poedit jih bo zdaj dodal v datoteko."
 
 msgid "New strings"
 msgstr "Novi nizi"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Teh nizov ni več v virih\n"
-"Poedit jih bo zdaj samodejno odstranil iz kataloga."
+"Teh nizov ni več v izvorni kodi.\n"
+"Poedit jih bo zdaj odstranil iz datoteke."
 
 msgid "Obsolete strings"
 msgstr "Zastareli nizi"
@@ -1944,8 +2023,11 @@ msgstr "(novi: 0, zastareli: 0)"
 msgid "Open"
 msgstr "Odpri"
 
-msgid "Save catalog"
-msgstr "Shrani katalog"
+msgid "Open file"
+msgstr "Odpri datoteko"
+
+msgid "Save file"
+msgstr "Shrani datoteko"
 
 msgid "Validate"
 msgstr "Preveri ustreznost"
@@ -1969,8 +2051,8 @@ msgid "Show or hide the sidebar"
 msgstr "Prikaži ali skrij stransko vrstico"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Prejšnji vir besedila:"
+msgid "Previous source text"
+msgstr "Prejšnje izvorno besedilo"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1979,8 +2061,11 @@ msgstr ""
 "Stari vir besedila (preden je bil spremenjen med posodobitvijo), da je "
 "nepravilen prevod zdaj ustrezen."
 
-msgid "Notes for translators:"
-msgstr "Opomba prevajalcem:"
+msgid "Notes for translators"
+msgstr "Opombe za prevajalce"
+
+msgid "Comment"
+msgstr "Komentar"
 
 msgid "Add comment"
 msgstr "Dodaj komentar"
@@ -1994,8 +2079,8 @@ msgstr "Izbriši iz pomnilnika prevodov"
 msgid "Delete from translation memory"
 msgstr "Izbriši iz pomnilnika prevodov"
 
-msgid "Translation suggestions:"
-msgstr "Predlogi prevoda:"
+msgid "Translation suggestions"
+msgstr "Predlogi prevoda"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2025,40 +2110,6 @@ msgstr "Napaka pomnilnika prevodov: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Ni mogoče ustvariti začasne mape."
 
-msgid "Welcome to Poedit"
-msgstr "Dobrodošli v Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Različica %s"
-
-msgid "Edit a translation"
-msgstr "Uredi prevod"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Odpre obstoječo datoteko PO za urejanje."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-"Vzemite obstoječo PO datoteko ali POT predlogo in ustvarite nov prevod iz "
-"nje."
-
-msgid "Collaborate on a translation with others"
-msgstr "Sodelujte pri prevajanju z drugimi"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Prenesite datoteko iz Crowdinovega projekta, prevedite in uskladite svoje "
-"spremembe nazaj."
-
-msgid "What is Crowdin?"
-msgstr "Kaj je Crowdin?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Ni prevodov. To je nenavadno."
 
@@ -2078,10 +2129,12 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Več o GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Najpreprostejši način zapolnjevanja tega kataloga je, da ga posodobite iz "
-"POT datoteke:"
+"Najpreprostejši način zapolnitve te datoteke s prevodi je posodobitev iz "
+"datoteke POT:"
 
 msgid "Update from POT"
 msgstr "Posodobi iz POT datoteke"
@@ -2098,6 +2151,33 @@ msgstr "Razširi iz izvorne kode"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Konfigurirajte razširjanje izvorne kode v Lastnostih."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Različica %s"
+
+msgid "Create new…"
+msgstr "Ustvari nov…"
+
+msgid "Create new translation from POT template."
+msgstr "Ustvari nov proevod iz predloge POT."
+
+msgid "Browse files"
+msgstr "Prebrskaj datoteke"
+
+msgid "Open and edit translation files."
+msgstr "Odpri in uredi datoteke za prevajanje."
+
+msgid "Translate Crowdin project"
+msgstr "Prevedi projekt Crowdin"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "Sodeluj z drugimi v projektu Crowdin."
+
+msgid "Recent files"
+msgstr "Nedavne datoteke"
 
 msgid "Sync"
 msgstr "Uskladi"
@@ -2131,7 +2211,7 @@ msgstr "Skrij druge"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Show All"
-msgstr "Pokaži vse"
+msgstr "Prikaži vse"
 
 #. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 #, c-format
@@ -2140,7 +2220,7 @@ msgstr "Končaj %s"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Preferences…"
-msgstr "Nastavitve..."
+msgstr "Nastavitve…"
 
 msgid "Preferences..."
 msgstr "Nastavitve..."
@@ -2183,8 +2263,8 @@ msgstr "I&zreži"
 msgid "Cut"
 msgstr "Izreži"
 
-msgid "&Delete"
-msgstr "&Izbriši"
+msgid "Edit"
+msgstr "Uredi"
 
 msgid "&Quit"
 msgstr "&Končaj"
@@ -2194,6 +2274,9 @@ msgstr "Pomoč"
 
 msgid "&New"
 msgstr "&Nov"
+
+msgid "New"
+msgstr "Novo"
 
 msgid "&No"
 msgstr "&Ne"
@@ -2205,7 +2288,7 @@ msgid "&OK"
 msgstr "V&redu"
 
 msgid "Open…"
-msgstr "Odpri..."
+msgstr "Odpri…"
 
 msgid "&Open..."
 msgstr "&Odpri..."

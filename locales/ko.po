@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -30,20 +30,20 @@ msgstr "다시 표시하지 않기"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(새 문자열: %i개, 오래된 문자열: %i개)"
 
-msgid "Updating catalog"
-msgstr "카탈로그 업데이트 중"
-
 msgid "Collecting source files…"
 msgstr "소스 파일 수집 중…"
 
 msgid "Extracting translatable strings…"
 msgstr "번역 가능한 문자열 추출 중…"
 
-msgid "Failed to load extracted catalog."
-msgstr "추출한 카탈로그를 불러오지 못했습니다."
+msgid "Failed to load file with extracted translations."
+msgstr "추출한 번역이 들어있는 파일 불러오기에 실패했습니다."
 
 msgid "Merging differences…"
 msgstr "차이점 병합 중…"
+
+msgid "Updating translations"
+msgstr "번역 업데이트 중"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -79,19 +79,18 @@ msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr ""
 "\"%2$s\" 파일의 %1$d번째 줄이 손상되었습니다. (%3$s 데이터가 유효하지 않음)"
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "카탈로그 파일 오류: msgid_plural을 사용한 단수 형식의 msgstr"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
+msgstr "PO 파일 오류: msgid_plural을 사용한 단수 형식의 msgstr"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "카탈로그 파일 오류: msgid_plural 없이 사용한 복수 형식의 msgstr"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "PO 파일 오류: msgid_plural 없이 사용한 복수 형식의 msgstr"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"카탈로그를 읽어드릴 때 오류가 발생했습니다. 일부가 누락되거나 손상될 수 있습"
-"니다."
+"파일을 불러올 때 오류가 있었습니다. 데이터 일부가 빠지거나 깨졌을 수도 있습니"
+"다."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -115,18 +114,17 @@ msgstr "파일 형식을 붙이는 중 문제가 발생했으나 저장은 성�
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"카탈로그 설정에서 지정한 \"%s\" 문자 집합으로 카탈로그를 저장할 수 없습니"
-"다.\n"
+"이 파일은 번역 설정에서 지정한 \"%s\" 문자 집합으로 저장할 수 없습니다.\n"
 "\n"
-"파일이 UTF-8로 저장되었으며 설정 또한 이에 맞춰 수정되었습니다."
+"대신 UTF-8로 저장했으며 이에 따라 설정 값도 수정했습니다."
 
-msgid "Error saving catalog"
-msgstr "카탈로그 저장 오류"
+msgid "Error saving file"
+msgstr "파일 저장 오류"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -168,6 +166,9 @@ msgstr "%s 동기화에 실패했습니다."
 msgid "Syncing error"
 msgstr "동기화 오류"
 
+msgid "Add"
+msgstr "추가"
+
 msgid "JSON request error"
 msgstr "JSON 요청 오류"
 
@@ -201,9 +202,6 @@ msgstr "인증 대기 중…"
 
 msgid "Updating user information…"
 msgstr "사용자 정보 업데이트 중…"
-
-msgid "Learn More About Crowdin"
-msgstr "Crowdin 더 알아보기"
 
 msgid "Learn more about Crowdin"
 msgstr "Crowdin 더 알아보기"
@@ -247,9 +245,6 @@ msgstr "복사(&C)"
 msgid "Learn more"
 msgstr "더 알아보기"
 
-msgid "Learn More"
-msgstr "더 알아보기"
-
 msgid "&Help"
 msgstr "도움말(&H)"
 
@@ -282,15 +277,679 @@ msgstr "Poedit 프로세스와의 통신에 실패했습니다."
 msgid "Unhandled exception occurred: %s"
 msgstr "처리하지 못한 오류 발생: %s"
 
-msgid "Open catalog"
-msgstr "카탈로그 열기"
+msgid "Select translation template"
+msgstr "번역 양식 선택"
+
+msgid "Select translation file"
+msgstr "번역 파일 선택"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit는 사용하기 쉬운 번역 편집기입니다."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO 번역"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "파일이 손상되었거나 Poedit에서 인식할 수 없는 형식입니다."
+
+msgid "The file cannot be opened."
+msgstr "파일을 열 수 없습니다."
+
+msgid "Invalid file"
+msgstr "잘못된 파일"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Poedit 윈도우에 하나를 초과하는 항목을 드롭할 수 없습니다."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "“%s” 파일은 번역 파일이 아닙니다."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "\"%s\" 파일이 존재하지 않습니다."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit는 사용하기 쉬운 번역 편집기입니다."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "이동(&G)"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "%s 언어 사전을 설치하지 않아 철자 검사를 비활성화했습니다."
+
+msgid "Install"
+msgstr "설치"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "다른 프로그램에서 “%s” 파일의 내용을 바꾸었습니다."
+
+msgid "Reload file"
+msgstr "파일 다시 불러오기"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"디스크에서 파일을 다시 불러올까요? poedit에서 편집했지만 저장하지 않은 내용"
+"을 잃습니다."
+
+msgid "Ignore"
+msgstr "무시"
+
+msgid "Reload File"
+msgstr "파일 다시 불러오기"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "파일의 내용을 수정했습니다. 바뀐 내용을 저장하시겠습니까?"
+
+msgid "Save changes"
+msgstr "변경 사항 저장"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "저장하지 않으면 바뀐 내용을 잃어버립니다."
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Do&n’t save"
+msgstr "저장하지 않음"
+
+msgid "Don’t Save"
+msgstr "저장하지 않음"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "저장하면 다른 프로그램에서 바꾼 내용을 잃습니다."
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Save Anyway"
+msgstr "무시하고 저장"
+
+msgid "Save anyway"
+msgstr "무시하고 저장"
+
+msgid "Save as…"
+msgstr "다음 이름으로 저장…"
+
+msgid "Compile to…"
+msgstr "다음으로 컴파일…"
+
+msgid "Compiled Translation Files"
+msgstr "컴파일한 번역 파일"
+
+msgid "Export as…"
+msgstr "다음으로 내보내기…"
+
+msgid "HTML Files"
+msgstr "HTML 파일"
+
+#, c-format
+msgid "In: %s"
+msgstr "파일 위치: %s"
+
+msgid "Source code not available."
+msgstr "소스 코드가 존재하지 않습니다."
+
+msgid "Updating failed"
+msgstr "업데이트 실패"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"파일 속성에 지정한 위치에 코드가 없어, 소스 코드에서 번역 항목을 새로 가져올 "
+"수 없습니다."
+
+msgid "Permission denied."
+msgstr "권한이 거부되었습니다."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"파일 속성의 지정한 위치에서 소스 코드 파일을 불러올 수 있는 권한이 없습니다."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"파일 접근 권한을 예전에 거부했던 적이 있었다면, 시스템 설정 > 보안 및 개인정"
+"보 > 개인정보 > 파일 및 폴더에서 허용할 수 있습니다."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "파일의 번역 항목이 올바르지 않은 것 같습니다."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr "파일 업데이트에 실패했습니다. 자세히 보려면 '자세히 >>'를 누르십시오."
+
+msgid "Open translation template"
+msgstr "번역 양식 열기"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "번역에서 %d개의 문제점을 찾았습니다."
+
+msgid "Validation results"
+msgstr "검증 결과"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"오류가 있는 항목은 붉은색으로 표시했습니다. 자세한 오류 내용은 각각의 항목을 "
+"선택했을 때 나타납니다."
+
+msgid "The file was saved safely."
+msgstr "파일을 안전하게 저장했습니다."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"파일을 안전하게 저장하고 MO 형식으로 컴파일했지만 올바르게 작동하지 않을 수 "
+"있습니다."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr "파일을 안전하게 저장했지만 MO 형식으로 컴파일할 수 없었습니다."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr "MO 형식으로 파일을 컴파일했지만 올바르게 작동하지 않을 수 있습니다."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "MO 파일로 컴파일할 수 없습니다."
+
+msgid "No problems with the translation found."
+msgstr "번역에 문제가 없습니다."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"번역을 사용할 준비가 되었지만, 아직 %d개의 항목을 번역하지 않았습니다."
+
+msgid "The translation is ready for use."
+msgstr "번역을 사용할 준비가 되었습니다."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit가 “%s” 파일의 잘못된 내용을 자동으로 수정했습니다."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"PO 파일에서 허용되지 않는 중복 항목이 있어 파일 활용에 문제가 생길 수 있습니"
+"다. Poedit이 해당 문제를 해결했지만 필요한 경우 작업할 항목을 표시해둔 부분"
+"의 번역을 검토해야 합니다."
+
+msgid "Language of the translation isn’t set."
+msgstr "번역 언어가 설정되지 않았습니다."
+
+msgid "Set Language"
+msgstr "언어 설정"
+
+msgid "Set language"
+msgstr "언어 설정"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"번역 언어를 올바르게 선택하지 않으면 제안 기능을 사용할 수 없습니다. 서수 형"
+"식 같은 기능도 마찬가지로 영향을 받을 수 있습니다."
+
+msgid "Language of the translation is the same as source language."
+msgstr "번역 언어가 원본 언어와 같습니다."
+
+msgid "Fix Language"
+msgstr "언어 수정"
+
+msgid "Fix language"
+msgstr "언어 수정"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"이 파일에는 서수 형식 항목이 들어있으나 서수 형식 헤더를 구성하지 않았습니다."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"이 파일의 항목은 파일의 Plural-Forms 헤더에 명시한 서수 형식 카운트와 다른 값"
+"을 가지고 있습니다."
+
+msgid "Required header Plural-Forms is missing."
+msgstr "필요한 Plural-Forms 헤더가 빠졌습니다."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Plural-Forms 헤더에 문법 오류가 있습니다. (\"%s\")"
+
+msgid "Fix the Header"
+msgstr "헤더 수정"
+
+msgid "Fix the header"
+msgstr "헤더 수정"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr "파일에서 사용하는 %s 언어의 서수 형식 표현이 잘못되었습니다."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "검토"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "“%s” 번역 파일 불러오는 중 오류가 있습니다."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "번역됨: 문장 %2$d개 중 %1$d개 (%3$d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "남음: %d개"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "오류 %d개"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "항목 %d개"
+
+msgid " (unsaved)"
+msgstr " (저장하지 않음)"
+
+msgid " (modified)"
+msgstr " (수정함)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "번역 기억 장소 업데이트에 실패했습니다: %s"
+
+msgid "Purge deleted translations"
+msgstr "삭제한 번역을 완전히 제거"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "더 이상 사용하지 않는 모든 번역을 제거하시겠습니까?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"계속 제거를 진행하면 삭제한 것으로 표시한 모든 번역을 완전히 제거합니다. 다음"
+"에 다시 추가하면 다시 번역해야 합니다."
+
+msgid "Keep"
+msgstr "그대로 유지"
+
+msgid "Purge"
+msgstr "제거"
+
+msgid "Copy from source text"
+msgstr "원본 텍스트 복사"
+
+msgid "Copy from Source Text"
+msgstr "원본 텍스트 복사"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "번역 지우기"
+
+msgid "Clear Translation"
+msgstr "번역 지우기"
+
+msgid "Edit comment"
+msgstr "주석 편집"
+
+msgid "Edit Comment"
+msgstr "주석 편집"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "코드 출현 횟수"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "코드 출현 횟수"
+
+msgid "&Bookmarks"
+msgstr "책갈피(&B)"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "책갈피 %i번으로 설정"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "책갈피 %i번으로 이동"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "책갈피 %i번으로 설정"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "책갈피 %i번으로 이동"
+
+msgid "Hide Sidebar"
+msgstr "가장자리 창 숨김"
+
+msgid "Show Sidebar"
+msgstr "가장자리 창 표시"
+
+msgid "Hide Status Bar"
+msgstr "상태 표시줄 숨기기"
+
+msgid "Show Status Bar"
+msgstr "상태 표시줄 표시"
+
+msgid "String length in characters: translation | source"
+msgstr "문자 단위 문자열 길이: 번역 | 원본"
+
+msgid "String length in characters"
+msgstr "문자 단위 문자열 길이"
+
+msgid "Source text"
+msgstr "원본 텍스트"
+
+msgid "Singular"
+msgstr "단수"
+
+msgid "Plural"
+msgstr "복수"
+
+msgid "Translation"
+msgstr "번역"
+
+msgid "Pre-translated"
+msgstr "사전 번역함"
+
+msgid "Needs Work"
+msgstr "작업 필요"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "작업 필요"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT 파일은 양식일 뿐이며 어떤 번역 내용도 들어있지 않습니다.\n"
+"번역하려면 이 양식을 기반으로 새 PO 파일을 만드십시오."
+
+msgid "Create new translation"
+msgstr "새 번역 만들기"
+
+msgid "Make a new translation from this POT file."
+msgstr "이 POT 파일로 새 번역을 작성합니다."
+
+msgid "Everything"
+msgstr "모두"
+
+#, c-format
+msgid "Form %i"
+msgstr "%i번 양식"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "양식 %i (미사용)"
+
+msgid "Zero"
+msgstr "영"
+
+msgid "One"
+msgstr "하나"
+
+msgid "Two"
+msgstr "둘"
+
+msgid "Other"
+msgstr "기타"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s Format"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s 형식"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "번역 — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "원본 텍스트 — %s"
+
+msgid "unknown language"
+msgstr "알 수 없는 언어"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "오류 발생: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "gettext 카탈로그 병합에 실패했습니다."
+
+msgid "Open in Editor"
+msgstr "편집기에서 열기"
+
+msgid "Open in editor"
+msgstr "편집기에서 열기"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr "이 파일에 언급한 소스 코드에서 문자열 출현 정보가 없습니다."
+
+msgid "No usage information"
+msgstr "사용 정보 없음"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "코드 %d회 나타남"
+
+msgid "Source code not found"
+msgstr "소스 코드가 없습니다"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"poedit에서는 문자열을 활용하는 참조 위치에 파일이 없거나 실제 파일이 아닌 심"
+"볼릭 참조여서 소스 코드를 나타낼 수 없습니다."
+
+msgid "File cannot be opened"
+msgstr "파일을 열 수 없습니다"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "poedit에서 “%s” 파일을 열 수 없습니다."
+
+msgid "Find"
+msgstr "찾기"
+
+msgid "Replace"
+msgstr "바꾸기"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "설정"
+
+msgid "Ignore case"
+msgstr "대소문자 무시"
+
+msgid "Wrap around"
+msgstr "자동 줄 바꾸기"
+
+msgid "Whole words only"
+msgstr "단어 단위로 검색"
+
+msgid "Find in source texts"
+msgstr "원본 문자열에서 찾기"
+
+msgid "Find in translations"
+msgstr "번역에서 찾기"
+
+msgid "Find in comments"
+msgstr "주석에서 찾기"
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Replace &All"
+msgstr "모두 바꾸기(&A)"
+
+msgid "Replace &all"
+msgstr "모두 바꾸기(&A)"
+
+msgid "&Replace"
+msgstr "바꾸기(&R)"
+
+msgid "< &Previous"
+msgstr "< 이전(&P)"
+
+msgid "&Next >"
+msgstr "다음(&N) >"
+
+msgid "String to find"
+msgstr "찾을 문자열"
+
+msgid "Replacement string"
+msgstr "바꿀 문자열"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "프로그램을 실행할 수 없습니다: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "언어 코드 또는 이름(예 en_GB)"
+
+msgid "Translation Language"
+msgstr "번역 언어"
+
+msgid "Language of the translation:"
+msgstr "번역 언어:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - 카탈로그 관리자"
+
+msgid "Edit…"
+msgstr "수정…"
+
+msgid "Create new translations project"
+msgstr "새 번역 프로젝트 만들기"
+
+msgid "Delete the project"
+msgstr "프로젝트 삭제"
+
+msgid "Edit the project"
+msgstr "프로젝트 편집"
+
+msgid "Update all"
+msgstr "모두 업데이트"
+
+msgid "Update all catalogs in the project"
+msgstr "이 프로젝트의 모든 카탈로그 업데이트"
+
+msgid "Total"
+msgstr "전체"
+
+msgid "Untrans"
+msgstr "미번역"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "작업 필요"
+
+msgid "Errors"
+msgstr "오류"
+
+msgid "Last modified"
+msgstr "최종 편집"
+
+msgid "Select directory"
+msgstr "디렉터리 선택"
+
+msgid "Directories:"
+msgstr "디렉터리:"
+
+msgid "<unnamed>"
+msgstr "<이름 없음>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "“%s” 프로젝트를 삭제하시겠습니까?"
+
+msgid "Delete project"
+msgstr "프로젝트 삭제"
+
+msgid "Deleting the project will not delete any translation files."
+msgstr "프로젝트 삭제 동작은 번역 파일을 삭제하지는 않습니다"
+
+msgid "Confirmation"
+msgstr "확인"
+
+msgid "Update all catalogs in this project?"
+msgstr "이 프로젝트의 모든 카탈로그를 업데이트하시겠습니까?"
+
+msgid "Performs update from source code on all files in the project."
+msgstr "이 프로젝트의 모든 소스 코드 파일에서 업데이트를 수행합니다."
 
 msgid "Catalogs Manager"
 msgstr "카탈로그 관리자"
@@ -376,6 +1035,15 @@ msgstr "말하기 중지"
 msgid "&View"
 msgstr "보기(&V)"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "도구 모음 표시"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "도구 모음 사용자 지정…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "전체 화면상태 진입"
 
@@ -388,617 +1056,11 @@ msgstr "최소화"
 msgid "Zoom"
 msgstr "확대"
 
+msgid "Welcome to Poedit"
+msgstr "Poedit에 잘 오셨습니다"
+
 msgid "Bring All to Front"
 msgstr "모두 앞으로"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO 번역"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "파일이 손상되었거나 Poedit에서 인식할 수 없는 형식입니다."
-
-msgid "The file cannot be opened."
-msgstr "파일을 열 수 없습니다."
-
-msgid "Invalid file"
-msgstr "잘못된 파일"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Poedit 윈도우에 하나를 초과하는 항목을 드롭할 수 없습니다."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "“%s” 파일은 번역 파일이 아닙니다."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "파일(&F)"
-
-msgid "&Go"
-msgstr "이동(&G)"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "%s 언어 사전을 설치하지 않아 철자 검사를 비활성화했습니다."
-
-msgid "Install"
-msgstr "설치"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "카탈로그를 수정했습니다. 바뀐 내용을 저장하시겠습니까?"
-
-msgid "Save changes"
-msgstr "변경 사항 저장"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "저장하지 않으면 바뀐 내용을 잃어버립니다."
-
-msgid "Save"
-msgstr "저장"
-
-msgid "Do&n’t save"
-msgstr "저장하지 않음"
-
-msgid "Don’t Save"
-msgstr "저장하지 않음"
-
-msgid "Save as…"
-msgstr "다음 이름으로 저장…"
-
-msgid "Compile to…"
-msgstr "다음으로 컴파일…"
-
-msgid "Compiled Translation Files"
-msgstr "컴파일한 번역 파일"
-
-msgid "Export as…"
-msgstr "다음으로 내보내기…"
-
-msgid "HTML Files"
-msgstr "HTML 파일"
-
-msgid "Open catalog template"
-msgstr "카탈로그 양식 열기"
-
-msgid "Source code not available."
-msgstr "소스 코드가 존재하지 않습니다."
-
-msgid "Updating failed"
-msgstr "업데이트 실패"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"카탈로그 속성에서 지정한 위치에 코드가 없어 소스 코드로부터 번역을 업데이트"
-"할 수 없습니다."
-
-msgid "Permission denied."
-msgstr "권한이 거부되었습니다."
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-"카탈로그의 속성에 지정된 위치의 소스 코드 파일을 불러올 수 있는 권한이 없습니"
-"다."
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-"파일 접근 권한을 예전에 거부했던 적이 있었다면, 시스템 설정 > 보안 및 개인정"
-"보 > 개인정보 > 파일 및 폴더에서 허용할 수 있습니다."
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "카탈로그의 항목이 잘못된 것 같습니다."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"카탈로그 업데이트에 실패했습니다. 자세히 보려면 '자세히 >>'를 누르십시오."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "번역에서 %d개의 문제점을 찾았습니다."
-
-msgid "Validation results"
-msgstr "검증 결과"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"오류가 있는 항목은 붉은색으로 표시했습니다. 자세한 오류 내용은 각각의 항목을 "
-"선택했을 때 나타납니다."
-
-msgid "The file was saved safely."
-msgstr "파일을 안전하게 저장했습니다."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"파일을 안전하게 저장하고 MO 형식으로 컴파일했지만 올바르게 작동하지 않을 수 "
-"있습니다."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr "파일을 안전하게 저장했지만 MO 형식으로 컴파일할 수 없었습니다."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr "MO 형식으로 파일을 컴파일했지만 올바르게 작동하지 않을 수 있습니다."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr "MO 파일로 컴파일할 수 없습니다."
-
-msgid "No problems with the translation found."
-msgstr "번역에 문제가 없습니다."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
-"번역을 사용할 준비가 되었지만, 아직 %d개의 항목을 번역하지 않았습니다."
-
-msgid "The translation is ready for use."
-msgstr "번역을 사용할 준비가 되었습니다."
-
-msgid "Warnings have been disabled."
-msgstr "경고를 표시하지 않습니다."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"오검이 너무 많아 경고를 끄셨다면, help@poedit.net으로 샘플을 보내주는 것을 고"
-"려해주시기 바랍니다."
-
-msgid "Send Feedback"
-msgstr "피드백 보내기"
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr "피드백 보내기"
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit가 “%s” 파일의 잘못된 내용을 자동으로 수정했습니다."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"PO 파일에서 허용되지 않는 중복 항목이 있어 파일 활용에 문제가 생길 수 있습니"
-"다. Poedit이 해당 문제를 해결했지만 필요한 경우 작업할 항목을 표시해둔 부분"
-"의 번역을 검토해야 합니다."
-
-msgid "Language of the translation isn’t set."
-msgstr "번역 언어가 설정되지 않았습니다."
-
-msgid "Set Language"
-msgstr "언어 설정"
-
-msgid "Set language"
-msgstr "언어 설정"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"번역 언어를 올바르게 선택하지 않으면 제안 기능을 사용할 수 없습니다. 서수 형"
-"식 같은 기능도 마찬가지로 영향을 받을 수 있습니다."
-
-msgid "Language of the translation is the same as source language."
-msgstr "번역 언어가 원본 언어와 같습니다."
-
-msgid "Fix Language"
-msgstr "언어 수정"
-
-msgid "Fix language"
-msgstr "언어 수정"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"이 카탈로그는 서수 형식 항목이 포함되어 있으나 서수 형식 헤더가 구성되어 있"
-"지 않습니다."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"이 카탈로그에는 Plural-Forms 헤더에서 지정한 숫자와 다른 서수형 형식 개수를 "
-"지닌 항목이 있습니다"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "필요한 Plural-Forms 헤더가 빠졌습니다."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Plural-Forms 헤더에 문법 오류가 있습니다. (\"%s\")"
-
-msgid "Fix the Header"
-msgstr "헤더 수정"
-
-msgid "Fix the header"
-msgstr "헤더 수정"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
-"카탈로그에서 사용하는 %s 언어에 대한 서수 형식 표현식은 일반적인 표현식이 아"
-"닙니다."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "검토"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "\"%s\" 파일의 메시지 카탈로그를 불러오는 중 오류가 발생했습니다."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "번역됨: 문장 %2$d개 중 %1$d개 (%3$d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "남음: %d개"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "오류 %d개"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "항목 %d개"
-
-msgid " (unsaved)"
-msgstr " (저장하지 않음)"
-
-msgid " (modified)"
-msgstr " (수정함)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "번역 기억 장소 업데이트에 실패했습니다: %s"
-
-msgid "Purge deleted translations"
-msgstr "삭제한 번역을 완전히 제거"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "더 이상 사용하지 않는 모든 번역을 제거하시겠습니까?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"계속 제거를 진행하면 삭제한 것으로 표시한 모든 번역을 완전히 제거합니다. 다음"
-"에 다시 추가하면 다시 번역해야 합니다."
-
-msgid "Keep"
-msgstr "그대로 유지"
-
-msgid "Purge"
-msgstr "제거"
-
-msgid "Copy from source text"
-msgstr "원본 텍스트 복사"
-
-msgid "Copy from Source Text"
-msgstr "원본 텍스트 복사"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "번역 지우기"
-
-msgid "Clear Translation"
-msgstr "번역 지우기"
-
-msgid "Edit comment"
-msgstr "주석 편집"
-
-msgid "Edit Comment"
-msgstr "주석 편집"
-
-msgid "References:"
-msgstr "참조:"
-
-msgid "&Bookmarks"
-msgstr "책갈피(&B)"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "책갈피 %i번으로 설정"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "책갈피 %i번으로 이동"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "책갈피 %i번으로 설정"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "책갈피 %i번으로 이동"
-
-msgid "Hide Sidebar"
-msgstr "가장자리 창 숨김"
-
-msgid "Show Sidebar"
-msgstr "가장자리 창 표시"
-
-msgid "Hide Status Bar"
-msgstr "상태 표시줄 숨기기"
-
-msgid "Show Status Bar"
-msgstr "상태 표시줄 표시"
-
-msgid "Source text:"
-msgstr "원본 텍스트:"
-
-msgid "Singular:"
-msgstr "단수:"
-
-msgid "Plural:"
-msgstr "복수:"
-
-msgid "Translation:"
-msgstr "번역:"
-
-msgid "Pre-translated"
-msgstr "사전 번역함"
-
-msgid "Needs Work"
-msgstr "작업 필요"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "작업 필요"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT 파일은 양식일 뿐이며 어떤 번역 내용도 들어있지 않습니다.\n"
-"번역하려면 이 양식을 기반으로 새 PO 파일을 만드십시오."
-
-msgid "Create New Translation"
-msgstr "새 번역 만들기"
-
-msgid "Create new translation"
-msgstr "새 번역 만들기"
-
-msgid "Everything"
-msgstr "모두"
-
-#, c-format
-msgid "Form %i"
-msgstr "%i번 양식"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "양식 %i (미사용)"
-
-msgid "Singular"
-msgstr "단수"
-
-msgid "Zero"
-msgstr "영"
-
-msgid "One"
-msgstr "하나"
-
-msgid "Two"
-msgstr "둘"
-
-msgid "Plural"
-msgstr "복수"
-
-msgid "Other"
-msgstr "기타"
-
-#, c-format
-msgid "%s Format"
-msgstr "%s Format"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "%s 형식"
-
-msgid "Source text"
-msgstr "원본 텍스트"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "번역 — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "원본 텍스트 — %s"
-
-msgid "unknown language"
-msgstr "알 수 없는 언어"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "오류 발생: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "gettext 카탈로그 병합에 실패했습니다."
-
-msgid "Source file"
-msgstr "원본 파일"
-
-msgid "Source file occurrence:"
-msgstr "원본 파일 발견 횟수:"
-
-msgid "Open in Editor"
-msgstr "편집기에서 열기"
-
-msgid "Open in editor"
-msgstr "편집기에서 열기"
-
-msgid "No references for the selected item."
-msgstr "선택한 항목의 참조가 없습니다."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "%s 파일을 여는 중 오류 발생!"
-
-msgid "Find"
-msgstr "찾기"
-
-msgid "Replace"
-msgstr "바꾸기"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "설정"
-
-msgid "Ignore case"
-msgstr "대소문자 무시"
-
-msgid "Wrap around"
-msgstr "자동 줄 바꾸기"
-
-msgid "Whole words only"
-msgstr "단어 단위로 검색"
-
-msgid "Find in source texts"
-msgstr "원본 문자열에서 찾기"
-
-msgid "Find in translations"
-msgstr "번역에서 찾기"
-
-msgid "Find in comments"
-msgstr "주석에서 찾기"
-
-msgid "Close"
-msgstr "닫기"
-
-msgid "Replace &All"
-msgstr "모두 바꾸기(&A)"
-
-msgid "Replace &all"
-msgstr "모두 바꾸기(&A)"
-
-msgid "&Replace"
-msgstr "바꾸기(&R)"
-
-msgid "< &Previous"
-msgstr "< 이전(&P)"
-
-msgid "&Next >"
-msgstr "다음(&N) >"
-
-msgid "String to find"
-msgstr "찾을 문자열"
-
-msgid "Replacement string"
-msgstr "바꿀 문자열"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "프로그램을 실행할 수 없습니다: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "언어 코드 또는 이름(예 en_GB)"
-
-msgid "Translation Language"
-msgstr "번역 언어"
-
-msgid "Language of the translation:"
-msgstr "번역 언어:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - 카탈로그 관리자"
-
-msgid "Catalog"
-msgstr "카탈로그"
-
-msgid "Total"
-msgstr "전체"
-
-msgid "Untrans"
-msgstr "미번역"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "작업 필요"
-
-msgid "Errors"
-msgstr "오류"
-
-msgid "Last modified"
-msgstr "최종 편집"
-
-msgid "Select directory"
-msgstr "디렉터리 선택"
-
-msgid "Directories:"
-msgstr "디렉터리:"
-
-msgid "<unnamed>"
-msgstr "<이름 없음>"
-
-msgid "Do you want to delete the project?"
-msgstr "프로젝트를 삭제하시겠습니까?"
-
-msgid "Confirmation"
-msgstr "확인"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"정말로 이 프로젝트의 모든 카탈로그를\n"
-"통째로 업데이트 하시겠습니까?"
 
 msgid "Information about the translator"
 msgstr "번역자 정보"
@@ -1012,8 +1074,8 @@ msgstr "이름"
 msgid "Email:"
 msgstr "이메일:"
 
-msgid "your_email@example.com"
-msgstr "your_email@example.com"
+msgid "you@example.com"
+msgstr "gdhong@website.co.kr"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1028,8 +1090,8 @@ msgstr "편집 중"
 msgid "Automatically compile MO file when saving"
 msgstr "저장할 때 MO 파일 자동 컴파일"
 
-msgid "Show summary after catalog update"
-msgstr "카탈로그 업데이트 후 요약 정보 보기"
+msgid "Show summary after updating files"
+msgstr "파일 업데이트 후 요약 표시"
 
 msgid "Check spelling"
 msgstr "철자 검사"
@@ -1169,9 +1231,6 @@ msgstr ""
 "번역 기억장소를 초기화하면 저장한 모든 번역을 완전히 삭제합니다. 이 동작은 취"
 "소할 수 없습니다."
 
-msgid "Cancel"
-msgstr "취소"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1190,9 +1249,6 @@ msgstr "사용자 지정 추출 프로그램:"
 
 msgid "Custom extractors:"
 msgstr "사용자 지정 추출 프로그램:"
-
-msgid "Edit…"
-msgstr "수정…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1257,13 +1313,19 @@ msgstr "기존 파일 서식 유지"
 msgid "Advanced"
 msgstr "고급"
 
-msgid "Pre-translating…"
-msgstr "사전 번역 중…"
+msgid "Preparing strings…"
+msgstr "문자열 준비 중…"
+
+msgid "Pre-translating from translation memory…"
+msgstr "번역 기억 장소에서 번역 미리 가져오는 중…"
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "사전 번역한 문자열 %u개"
+
+msgid "Pre-translating…"
+msgstr "사전 번역 중…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1326,27 +1388,18 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
-"이 파일의 내용과 유사한 어떤 문자열도 번역 기억장소에 없습니다. Poedit에서 직"
-"접 번역한 파일에서 충분히 내용을 가져온 후에야 반자동 번역의 결과가 제대로 나"
-"옵니다."
+"이 파일의 내용과 유사한 어떤 문자열도 번역 기억 장소에 없습니다. poedit에서"
+"는 직접 번역한 파일의 내용을 충분히 학습한 후에야 반자동 번역의 결과가 제대"
+"로 나옵니다."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>여기에 폴더를 끌어 놓거나</big>,\n"
-"\n"
-"+ 단추를 사용하세요"
+msgid "Cancelling…"
+msgstr "취소 중…"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
-msgstr ""
-"<big>여기에 폴더를 끌어 놓거나</big>,\n"
-"\n"
-"+ 단추를 사용하세요"
+msgid "Drag Folders or Files Here"
+msgstr "폴더 또는 파일을 여기에 끌어다 놓으세요"
+
+msgid "Drag folders or files here"
+msgstr "폴더 또는 파일을 여기에 끌어다 놓으세요"
 
 msgid "Add Folders…"
 msgstr "폴더 추가…"
@@ -1365,6 +1418,17 @@ msgstr "와일드카드 추가…"
 
 msgid "Add wildcard…"
 msgstr "와일드카드 추가…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "Finder에 표시"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "탐색기에 표시"
+
+msgid "Show in Folder"
+msgstr "폴더 보기"
 
 msgid "Paths"
 msgstr "경로"
@@ -1406,14 +1470,23 @@ msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
 "먼저 파일을 저장하세요. 저장하기 전까지는 이 구역을 편집할 수 없습니다."
 
+msgid "Plural form translations"
+msgstr "복수 형식 번역"
+
 msgid "Not all plural forms are translated."
 msgstr "모든 서수 형식이 번역되지 않았습니다."
 
+msgid "Inconsistent upper/lower case"
+msgstr "일치하지 않는 대소문자"
+
 msgid "The translation should start as a sentence."
-msgstr "번역문은 문장으로 시작되어야 합니다."
+msgstr "번역문은 문장처럼 시작해야 합니다."
 
 msgid "The translation should start with a lowercase character."
-msgstr "번역문은 소문자로 시작되어야 합니다."
+msgstr "번역문은 소문자로 시작해야 합니다."
+
+msgid "Inconsistent whitespace"
+msgstr "일치하지 않는 공백 문자"
 
 msgid "The translation doesn’t start with a space."
 msgstr "번역문이 공백으로 시작하지 않았습니다."
@@ -1433,6 +1506,9 @@ msgstr "번역문 마지막에 공백이 없습니다."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "번역문 마지막에 공백이 있으나, 원문은 그렇지 않습니다."
 
+msgid "Punctuation checks"
+msgstr "문장 부호 검사"
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "번역문은 \"%s\"(으)로 끝나야 합니다."
@@ -1445,38 +1521,23 @@ msgstr "번역문은 \"%s\"로 끝나지 말아야 합니다."
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr "번역문은 \"%s\"로 끝나나 원문은 \"%s\"로 끝나지 않습니다."
 
+msgid "Clear Menu"
+msgstr "메뉴 지우기"
+
+msgid "Clear menu"
+msgstr "메뉴 지우기"
+
 msgid "Comment:"
 msgstr "주석:"
 
-msgid "OK"
-msgstr "확인"
+msgid "Update"
+msgstr "업데이트"
 
-msgid "C&lear"
-msgstr "지우기(&L)"
+msgid "&Delete"
+msgstr "삭제(&D)"
 
-msgid "Clear the comment"
-msgstr "주석 지우기"
-
-msgid "New"
-msgstr "새 파일"
-
-msgid "Create new translations project"
-msgstr "새 번역 프로젝트 만들기"
-
-msgid "Edit"
-msgstr "편집"
-
-msgid "Edit the project"
-msgstr "프로젝트 편집"
-
-msgid "Delete the project"
-msgstr "프로젝트 삭제"
-
-msgid "Update all"
-msgstr "모두 업데이트"
-
-msgid "Update all catalogs in the project"
-msgstr "이 프로젝트의 모든 카탈로그 업데이트"
+msgid "Delete the comment"
+msgstr "설명 삭제"
 
 msgid "Edit project"
 msgstr "프로젝트 편집"
@@ -1489,6 +1550,12 @@ msgstr "찾아보기"
 
 msgid "Add directory to the list"
 msgstr "디렉터리를 목록에 추가"
+
+msgid "OK"
+msgstr "확인"
+
+msgid "&File"
+msgstr "파일(&F)"
 
 msgid "&New…"
 msgstr "새로 만들기(&N)…"
@@ -1505,11 +1572,26 @@ msgstr "열기(&O)…"
 msgid "Open Recent"
 msgstr "최근 파일 열기"
 
+msgid "Open recent"
+msgstr "최근 파일 열기"
+
 msgid "Open from Crowdin…"
 msgstr "Crowdin에서 열기…"
 
 msgid "Open From Crowdin…"
 msgstr "Crowdin에서 열기…"
+
+msgid "&Start window"
+msgstr "시작 창(&S)"
+
+msgid "&Start Window"
+msgstr "시작 창(&S)"
+
+msgid "Catalogs &manager"
+msgstr "카탈로그 관리자(&M)"
+
+msgid "Catalogs &Manager"
+msgstr "카탈로그 관리자(&M)"
 
 msgid "&Close"
 msgstr "닫기(&C)"
@@ -1535,12 +1617,6 @@ msgstr "업데이트 확인…"
 msgid "&Preferences…"
 msgstr "설정(&P)…"
 
-msgid "Catalogs &manager"
-msgstr "카탈로그 관리자(&M)"
-
-msgid "Catalogs &Manager"
-msgstr "카탈로그 관리자(&M)"
-
 msgid "E&xit"
 msgstr "나가기(&X)"
 
@@ -1565,6 +1641,7 @@ msgstr "주석 편집(&C)"
 msgid "Edit &Comment"
 msgstr "주석 편집(&C)"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "제안"
 
@@ -1640,11 +1717,11 @@ msgstr "번역하지 않은 항목 먼저(&U)"
 msgid "&Untranslated Entries First"
 msgstr "번역하지 않은 항목 먼저(&U)"
 
-msgid "&Show references"
-msgstr "참조 보기(&S)"
+msgid "&Show code occurrences"
+msgstr "코드 출현 횟수 표시(&S)"
 
-msgid "&Show References"
-msgstr "참조 보기(&S)"
+msgid "&Show Code Occurrences"
+msgstr "코드 출현 횟수 표시(&S)"
 
 msgid "Show sidebar"
 msgstr "가장자리 표시줄 표시"
@@ -1652,8 +1729,8 @@ msgstr "가장자리 표시줄 표시"
 msgid "Show status bar"
 msgstr "상태 표시줄 표시"
 
-msgid "C&atalog"
-msgstr "카탈로그(&A)"
+msgid "&Translation"
+msgstr "번역(&T)"
 
 msgid "&Update from source code"
 msgstr "소스 코드에서 업데이트(&U)"
@@ -1803,8 +1880,8 @@ msgstr ""
 "소스 코드 문자 집합을 지정했을 경우에만\n"
 "명령줄에 붙일 수 있습니다. %c는 문자 집합을 의미합니다."
 
-msgid "Catalog properties"
-msgstr "카탈로그 속성"
+msgid "Translation Properties"
+msgstr "번역 속성"
 
 msgid "Project name and version:"
 msgstr "프로젝트 이름과 버전:"
@@ -1832,9 +1909,6 @@ msgstr "고급 확장 프로그램 설정…"
 
 msgid "Advanced extraction settings…"
 msgstr "고급 확장 프로그램 설정…"
-
-msgid "Translation Properties"
-msgstr "번역 속성"
 
 msgid "Translation properties"
 msgstr "번역 속성"
@@ -1867,9 +1941,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "지원되는 언어의 기본 키워드 또한 사용"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Gettext 키워드 더 알아보기"
-
 msgid "Learn about gettext keywords"
 msgstr "gettext 키워드에 대해 알아보기"
 
@@ -1877,21 +1948,21 @@ msgid "Update summary"
 msgstr "업데이트 요약"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"이 문자열은 소스에 있지만 카탈로그에는 없습니다.\n"
-"Poedit이 해당 문자열을 카탈로그에 추가합니다."
+"이 문자열은 소스에는 있지만 파일에는 없습니다.\n"
+"poedit에서 해당 문자열을 파일에 바로 추가하겠습니다."
 
 msgid "New strings"
 msgstr "새 문자열"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"이 문자열이 더 이상 소스에 없습니다.\n"
-"Poedit이 카탈로그에서 해당 문자열을 제거합니다."
+"이 문자열이 더 이상 소스 코드에 없습니다.\n"
+"poedit에서 해당 문자열을 파일에서 제거하겠습니다."
 
 msgid "Obsolete strings"
 msgstr "제거한 문자열"
@@ -1902,8 +1973,11 @@ msgstr "(신규 0, 제거 0)"
 msgid "Open"
 msgstr "열기"
 
-msgid "Save catalog"
-msgstr "카탈로그 저장"
+msgid "Open file"
+msgstr "파일 열기"
+
+msgid "Save file"
+msgstr "파일 저장"
 
 msgid "Validate"
 msgstr "검증하기"
@@ -1927,8 +2001,8 @@ msgid "Show or hide the sidebar"
 msgstr "가장자리 창을 표시하거나 숨깁니다"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "이전 원본 텍스트:"
+msgid "Previous source text"
+msgstr "이전 원본 텍스트"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1936,8 +2010,11 @@ msgid ""
 msgstr ""
 "부정확한 번역을 채워둔, 업데이트하여 바뀌기 전의 오래된 원본 텍스트입니다."
 
-msgid "Notes for translators:"
-msgstr "번역 참고:"
+msgid "Notes for translators"
+msgstr "번역 참고"
+
+msgid "Comment"
+msgstr "참고 설명"
 
 msgid "Add comment"
 msgstr "주석 추가"
@@ -1951,8 +2028,8 @@ msgstr "TM에서 삭제"
 msgid "Delete from translation memory"
 msgstr "TM에서 삭제"
 
-msgid "Translation suggestions:"
-msgstr "번역 제안:"
+msgid "Translation suggestions"
+msgstr "번역 제안"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -1982,38 +2059,6 @@ msgstr "TM 오류: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "임시 디렉터리를 만들 수 없습니다."
 
-msgid "Welcome to Poedit"
-msgstr "Poedit에 잘 오셨습니다"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "버전 %s"
-
-msgid "Edit a translation"
-msgstr "번역 편집"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "기존 PO 파일을 열어 번역을 편집합니다."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr "기존 PO 파일 또는 POT 양식을 취하여 새 번역을 만듭니다."
-
-msgid "Collaborate on a translation with others"
-msgstr "다른 사람과 공동 번역"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Crowdin 프로젝트에서 파일을 다운로드하여 번역하고, 동기화하여 파일을 되돌려 "
-"보냅니다."
-
-msgid "What is Crowdin?"
-msgstr "Crowdin이 무엇인가요?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "번역이 없습니다. 흔한 일은 아니네요."
 
@@ -2031,8 +2076,11 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(GNU gettext에 대해 자세히 알아보기)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "카탈로그를 손쉽게 채우려면 POT에서 업데이트하세요:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr ""
+"이 파일의 번역을 채우는 가장 간단한 방법은 POT에서 업데이트하는 방법입니다:"
 
 msgid "Update from POT"
 msgstr "POT 파일로 업데이트"
@@ -2049,6 +2097,33 @@ msgstr "소스에서 가져오기"
 
 msgid "Configure source code extraction in Properties."
 msgstr "속성에서 소스 코드 추출을 설정합니다."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "버전 %s"
+
+msgid "Create new…"
+msgstr "새로 만들기…"
+
+msgid "Create new translation from POT template."
+msgstr "POT 양식에서 새 번역을 만듭니다."
+
+msgid "Browse files"
+msgstr "파일 찾아보기"
+
+msgid "Open and edit translation files."
+msgstr "번역 파일을 열어 편집합니다."
+
+msgid "Translate Crowdin project"
+msgstr "크라우드인 프로젝트 번역"
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr "크라우드인 프로젝트에서 다른 번역가와 협업합니다."
+
+msgid "Recent files"
+msgstr "최근 파일"
 
 msgid "Sync"
 msgstr "동기화"
@@ -2134,8 +2209,8 @@ msgstr "잘라내기(&T)"
 msgid "Cut"
 msgstr "잘라내기"
 
-msgid "&Delete"
-msgstr "삭제(&D)"
+msgid "Edit"
+msgstr "편집"
 
 msgid "&Quit"
 msgstr "끝내기(&Q)"
@@ -2145,6 +2220,9 @@ msgstr "도움말"
 
 msgid "&New"
 msgstr "새로 만들기(&N)"
+
+msgid "New"
+msgstr "새 파일"
 
 msgid "&No"
 msgstr "아니요(&N)"

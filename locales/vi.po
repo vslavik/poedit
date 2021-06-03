@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2020-11-09 15:18+0100\n"
-"PO-Revision-Date: 2020-11-09 14:17\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -30,20 +30,20 @@ msgstr "Không hiển thị lại"
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Mới: %i, quá cũ: %i)"
 
-msgid "Updating catalog"
-msgstr "Cập nhật catalog"
-
 msgid "Collecting source files…"
 msgstr "Đang thu thập các tập tin nguồn…"
 
 msgid "Extracting translatable strings…"
 msgstr "Đang giải nén các chuỗi có thể dịch…"
 
-msgid "Failed to load extracted catalog."
-msgstr "Lỗi rút trích catalog."
+msgid "Failed to load file with extracted translations."
+msgstr "Lỗi nạp tập tin với các bản dịch được giải nén."
 
 msgid "Merging differences…"
 msgstr "Đang trộn các khác biệt…"
+
+msgid "Updating translations"
+msgstr "Đang cập nhật bản dịch"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -78,20 +78,18 @@ msgstr[0] "dòng %i của tập tin '%s' đã không được tải một cách 
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Dòng %d của tập tin '%s' bị hỏng (dữ liệu không hợp lệ %s)."
 
-msgid ""
-"Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Tập tin catalog hỏng: dạng số ít msgstr mà sử dụng với msgid_plural"
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
+msgstr "Tập tin PO hỏng: dạng số ít msgstr mà sử dụng với msgid_plural"
 
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"Tập tin catalog hỏng: dạng số nhiều msgstr được sử dụng mà không có "
-"msgid_plural"
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr "Tập tin PO hỏng: dạng số nhiều msgstr sử dụng mà không có msgid_plural"
 
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
+"There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Có nhiều lỗi khi tải lên tập tin catalog. Một số dữ liệu bị mất hay sai lạc."
+"Đã xảy ra lỗi khi tải tệp. Vì vậy, một số dữ liệu có thể bị thiếu hoặc bị "
+"hỏng."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -115,17 +113,18 @@ msgstr "Có vấn đề với định dạng (nhưng vẫn có thể lưu lại)
 
 #, c-format
 msgid ""
-"The catalog couldn’t be saved in “%s” charset as specified in catalog "
+"The file couldn’t be saved in “%s” charset as specified in translation "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Catalog không ghi lại được theo danh nghĩa bộ ký tự “%s” như trong cài đặt.\n"
+"Không thể lưu tập tin trong bộ ký tự “%s” như được chỉ định trong cài đặt "
+"dịch. \n"
 "\n"
-"Nó được ghi lại bằng kiểu UTF-8 và cài đặt sẽ được chỉnh sửa lại cho phù hợp."
+"Tập tin đã được lưu trong UTF-8 và cài đặt đã được sửa đổi cho phù hợp."
 
-msgid "Error saving catalog"
-msgstr "Gặp lỗi khi lưu catalog"
+msgid "Error saving file"
+msgstr "Lỗi lưu tập tin"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -167,8 +166,11 @@ msgstr "Đồng bộ với %s bị lỗi."
 msgid "Syncing error"
 msgstr "Lỗi đồng bộ"
 
+msgid "Add"
+msgstr "Thêm"
+
 msgid "JSON request error"
-msgstr ""
+msgstr "Lỗi yêu cầu JSON"
 
 msgid "Not authorized, please sign in again."
 msgstr "Không có thẩm quyền, xin vui lòng đăng nhập lại."
@@ -200,9 +202,6 @@ msgstr "Đang chờ xác thực…"
 
 msgid "Updating user information…"
 msgstr "Đang cập nhật thông tin người dùng…"
-
-msgid "Learn More About Crowdin"
-msgstr "Tìm Hiểu Thêm Về Crowdin"
 
 msgid "Learn more about Crowdin"
 msgstr "Tìm hiểu thêm về Crowdin"
@@ -247,9 +246,6 @@ msgstr "&Sao"
 msgid "Learn more"
 msgstr "Tìm hiểu thêm"
 
-msgid "Learn More"
-msgstr "Tìm hiểu thêm"
-
 msgid "&Help"
 msgstr "T&rợ giúp"
 
@@ -282,15 +278,695 @@ msgstr "Không thể giao tiếp với quá trình Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Chưa được xử lý ngoại lệ: %s"
 
-msgid "Open catalog"
-msgstr "Mở catalog"
+msgid "Select translation template"
+msgstr "Chọn mẫu bản dịch"
+
+msgid "Select translation file"
+msgstr "Chọn tập tin bản dịch"
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "Poedit rất dễ dùng cho việc biên tập bản dịch."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "PO Dịch"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "Tập tin có lẽ đã hư hỏng hoặc là Poedit không chấp nhận định dạng này."
+
+msgid "The file cannot be opened."
+msgstr "Không thể mở tập-tin."
+
+msgid "Invalid file"
+msgstr "Tập tin không hợp lệ"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "Bạn không thể kéo thả nhiều hơn một tập tin vào trong cửa sổ Poedit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "Tập tin \"%s\" không phải là một tập tin dịch."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
 msgstr "Tập tin \"%s\" không tồn tại."
 
-msgid "Poedit is an easy to use translation editor."
-msgstr "Poedit rất dễ dùng cho việc biên tập bản dịch."
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&Go"
+msgstr "Nhả&y đến"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"Kiểm tra chính tả bị vô hiệu, bởi vì từ điển cho %s không được cài đặt."
+
+msgid "Install"
+msgstr "Cài đặt"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr "Tập tin “%s” đã bị thay đổi bởi một ứng dụng khác."
+
+msgid "Reload file"
+msgstr "Tải lại tập tin"
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+"Bạn có muốn tải lại tập tin từ ổ đĩa không? Các chỉnh sửa chưa được lưu của "
+"bạn trong Poedit sẽ bị mất nếu bạn làm vậy."
+
+msgid "Ignore"
+msgstr "Lờ đi"
+
+msgid "Reload File"
+msgstr "Tải lại tập tin"
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr "Tập tin đã được sửa đổi. Bạn có muốn lưu các thay đổi?"
+
+msgid "Save changes"
+msgstr "Lưu thay đổi"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "Các thay đổi của bạn sẽ bị mất nếu bạn không lưu chúng."
+
+msgid "Save"
+msgstr "Lưu"
+
+msgid "Do&n’t save"
+msgstr "Khô&ng lưu"
+
+msgid "Don’t Save"
+msgstr "Không Lưu"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr "Các thay đổi được thực hiện bởi ứng dụng khác sẽ bị mất nếu bạn lưu."
+
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+msgid "Save Anyway"
+msgstr "Vẫn Lưu"
+
+msgid "Save anyway"
+msgstr "Vẫn lưu"
+
+msgid "Save as…"
+msgstr "Lưu như…"
+
+msgid "Compile to…"
+msgstr "Biên dịch sang…"
+
+msgid "Compiled Translation Files"
+msgstr "Các tập tin bản dịch đã được biên dịch"
+
+msgid "Export as…"
+msgstr "Xuất ra như…"
+
+msgid "HTML Files"
+msgstr "Tập tin HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "Trong: %s"
+
+msgid "Source code not available."
+msgstr "Mã nguồn không có sẵn."
+
+msgid "Updating failed"
+msgstr "Cập Nhật không thành công"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+"Không thể cập nhật bản dịch từ mã nguồn vì không tìm thấy mã nào ở vị trí "
+"được chỉ định trong Thuộc tính của tập tin."
+
+msgid "Permission denied."
+msgstr "Quyền bị từ chối."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+"Bạn không có quyền đọc các tập tin mã nguồn từ vị trí được chỉ định trong "
+"Thuộc tính của tập tin."
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"Nếu trước đây bạn đã từ chối quyền truy cập vào tệp của mình, bạn có thể cho "
+"phép nó trong Tùy chọn hệ thống > Bảo mật và quyền riêng tư > Quyền riêng tư "
+"> Tệp & thư mục."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr "Các mục dịch trong tập tin có thể không chính xác."
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+"Cập nhật tập tin không thành công. Nhấp vào 'Chi tiết >>' để biết chi tiết."
+
+msgid "Open translation template"
+msgstr "Mở mẫu bản dịch"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "Tìm thấy trong bản dịch %d lỗi."
+
+msgid "Validation results"
+msgstr "Kết quả xác nhận"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Các mục có lỗi được đánh dấu màu đỏ trong danh sách. Chi tiết về lỗi sẽ hiển "
+"thị khi bạn chọn mục tương ứng đó."
+
+msgid "The file was saved safely."
+msgstr "Tệp được lưu một cách an toàn."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Các tập tin được lưu một cách an toàn và biên soạn thành định dạng MO, nhưng "
+"nó sẽ có lẽ không làm việc một cách chính xác."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Tập tin đã được lưu một cách an toàn, nhưng nó không thể được biên dịch "
+"thành định dạng MO để có thể sử dụng được."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Các tập tin được biên dịch vào các định dạng MO, nhưng nó sẽ có lẽ không làm "
+"việc một cách chính xác."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr ""
+"Các tập tin không thể được biên dịch thành các định dạng MO và sử dụng."
+
+msgid "No problems with the translation found."
+msgstr "Không tìm thấy lỗi nào trong bản dịch."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "Bản dịch đã sẵn sàng để sử dụng, nhưng %d mục không được dịch."
+
+msgid "The translation is ready for use."
+msgstr "Bản dịch đã sẵn sàng để sử dụng."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit đã tự động sửa các nội dung không hợp lệ trong tập tin \"%s\"."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"Tập tin chứa các mục trùng lặp, mà không được cho phép trong các tập tin PO "
+"và sẽ ngăn chặn các tập tin được sử dụng từ chúng. Poedit đã sửa vấn đề, "
+"nhưng bạn nên xem lại các bản dịch của bất kỳ mục nào được đánh dấu là cần "
+"làm việc và sửa lại chúng nếu cần thiết."
+
+msgid "Language of the translation isn’t set."
+msgstr "Ngôn ngữ của bản dịch chưa được đặt."
+
+msgid "Set Language"
+msgstr "Đặt ngôn ngữ"
+
+msgid "Set language"
+msgstr "Đặt ngôn ngữ"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"Gợi ý không có sẵn nếu ngôn ngữ bản dịch không được thiết lập đúng. Các tính "
+"năng khác, chẳng hạn như hình thức số nhiều, có thể bị ảnh hưởng."
+
+msgid "Language of the translation is the same as source language."
+msgstr "Ngôn ngữ của bản dịch là giống như ngôn ngữ nguồn."
+
+msgid "Fix Language"
+msgstr "Sửa ngôn ngữ"
+
+msgid "Fix language"
+msgstr "Sửa chữa ngôn ngữ"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+"Tập tin này có các mục nhập có dạng số nhiều, nhưng chưa định cấu hình tiêu "
+"đề Dạng số nhiều."
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+"Các mục nhập trong tập tin này có các dạng số nhiều khác nhau so với tiêu đề "
+"Dạng số nhiều của tập tin cho biết"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "Phần đầu Plural-Forms đã yêu cầu bị thiếu."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Cú pháp lỗi trong khai báo phần đầu Plural-Forms (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Sửa Phần Đầu"
+
+msgid "Fix the header"
+msgstr "Sửa phần đầu"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+"Biểu thức dạng số nhiều được tập tin sử dụng là không bình thường đối với %s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "Xem lại"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr "Lỗi tải tập tin bản dịch “%s”."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Đã dịch: %d of %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Còn lại: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d lỗi"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d mục"
+
+msgid " (unsaved)"
+msgstr " (chưa lưu)"
+
+msgid " (modified)"
+msgstr " (đã sửa)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Gặp lỗi khi cập nhật bộ nhớ dịch: %s"
+
+msgid "Purge deleted translations"
+msgstr "Xóa bỏ các chuỗi dịch bị đánh dấu là không dùng nữa"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "Bạn có muốn loại bỏ tất cả các chuỗi không còn sử dụng nữa không?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Nếu bạn vẫn muốn thanh lọc, tất cả các chuỗi dịch mà được đánh dấu là đã xoá "
+"sẽ bị gỡ bỏ hoàn toàn khỏi tập tin. Bạn sẽ phải dịch lại chúng nếu người lập "
+"trình sử dụng lại nó trong tương lai."
+
+msgid "Keep"
+msgstr "Giữ lại"
+
+msgid "Purge"
+msgstr "Thanh lọc"
+
+msgid "Copy from source text"
+msgstr "Chép từ chuỗi nguồn"
+
+msgid "Copy from Source Text"
+msgstr "Chép từ chuỗi nguồn"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "Xóa phần dịch"
+
+msgid "Clear Translation"
+msgstr "Xóa phần dịch"
+
+msgid "Edit comment"
+msgstr "Sửa chú thích"
+
+msgid "Edit Comment"
+msgstr "Sửa chú thích"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr "Lần xuất hiện mã"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr "Lần xuất hiện mã"
+
+msgid "&Bookmarks"
+msgstr "Đánh &dấu"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Đặt dấu trang %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Đi đến dấu trang %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Đặt Dấu Trang %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Đi đến Dấu Trang %i"
+
+msgid "Hide Sidebar"
+msgstr "Ẩn Thanh Công Cụ"
+
+msgid "Show Sidebar"
+msgstr "Hiện thanh công cụ"
+
+msgid "Hide Status Bar"
+msgstr "Ẩn Thanh Trạng Thái"
+
+msgid "Show Status Bar"
+msgstr "Hiển Thanh Trạng Thái"
+
+msgid "String length in characters: translation | source"
+msgstr "Độ dài chuỗi ký tự: dịch | nguồn"
+
+msgid "String length in characters"
+msgstr "Độ dài chuỗi ký tự"
+
+msgid "Source text"
+msgstr "Văn bản nguồn"
+
+msgid "Singular"
+msgstr "Dạng số ít"
+
+msgid "Plural"
+msgstr "Số nhiều"
+
+msgid "Translation"
+msgstr "Bản dịch"
+
+msgid "Pre-translated"
+msgstr "Dịch trước"
+
+msgid "Needs Work"
+msgstr "Cần làm"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Cần làm việc"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Các tập tin POT chỉ là các mẫu và không chứa bất kì bản dịch nào của chính "
+"chúng.\n"
+"Để tạo 1 bản dịch, tạo 1 tập tin PO mới dựa trên mẫu."
+
+msgid "Create new translation"
+msgstr "Tạo bản dịch mới"
+
+msgid "Make a new translation from this POT file."
+msgstr "Tạo một bản dịch mới từ tập tin POT này."
+
+msgid "Everything"
+msgstr "Mọi thứ"
+
+#, c-format
+msgid "Form %i"
+msgstr "Dạng %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Form %i (không sử dụng)"
+
+msgid "Zero"
+msgstr "Số không"
+
+msgid "One"
+msgstr "Một"
+
+msgid "Two"
+msgstr "Hai"
+
+msgid "Other"
+msgstr "Khác"
+
+#, c-format
+msgid "%s Format"
+msgstr "Định dạng %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "định dạng %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Bản dịch — %s"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Mã nguồn văn bản — %s"
+
+msgid "unknown language"
+msgstr "không hiểu ngôn ngữ"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Lệnh bị sai: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Lỗi trộn catalog gettext."
+
+msgid "Open in Editor"
+msgstr "Mở trong Trình Soạn Thảo"
+
+msgid "Open in editor"
+msgstr "Mở trong trình soạn thảo"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+"Không có thông tin về sự xuất hiện của chuỗi này trong mã nguồn được cung "
+"cấp trong tập tin."
+
+msgid "No usage information"
+msgstr "Không có thông tin sử dụng"
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] "%d lần xuất hiện mã"
+
+msgid "Source code not found"
+msgstr "Không tìm thấy mã nguồn"
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+"Poedit không thể hiển thị mã nguồn nơi chuỗi được sử dụng, bởi vì các tập "
+"tin hoặc là không có sẵn trong các vị trí tham chiếu hoặc nó là một tài liệu "
+"tham khảo mang tính biểu tượng mà không trỏ đến một tập tin thực sự."
+
+msgid "File cannot be opened"
+msgstr "Tập tin không thể mở được"
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr "Poedit đã không thể mở tập tin “%s”."
+
+msgid "Find"
+msgstr "Tìm"
+
+msgid "Replace"
+msgstr "Thay thế"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Tùy chọn"
+
+msgid "Ignore case"
+msgstr "Không phân biệt HOA/thường"
+
+msgid "Wrap around"
+msgstr "Ngắt khoảng"
+
+msgid "Whole words only"
+msgstr "Phải khớp toàn bộ các từ"
+
+msgid "Find in source texts"
+msgstr "Tìm trong các văn bản nguồn"
+
+msgid "Find in translations"
+msgstr "Tìm trong phần dịch"
+
+msgid "Find in comments"
+msgstr "Tìm trong chú thích"
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "Replace &All"
+msgstr "Thay Thế &Tất Cả"
+
+msgid "Replace &all"
+msgstr "Thay Thế &tất cả"
+
+msgid "&Replace"
+msgstr "T&hay thế"
+
+msgid "< &Previous"
+msgstr "< &Trước"
+
+msgid "&Next >"
+msgstr "&Tiếp theo >"
+
+msgid "String to find"
+msgstr "Chuỗi cần tìm"
+
+msgid "Replacement string"
+msgstr "Thay thế chuỗi"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Không thể thi hành chương trình: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Mã ngôn ngữ hoặc tên (ví dụ: vi_VN)"
+
+msgid "Translation Language"
+msgstr "Ngôn ngữ bản dịch"
+
+msgid "Language of the translation:"
+msgstr "Ngôn ngữ của bản dịch:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Quản lý catalog"
+
+msgid "Edit…"
+msgstr "Chỉnh sửa…"
+
+msgid "Create new translations project"
+msgstr "Tạo một dự án dịch mới"
+
+msgid "Delete the project"
+msgstr "Xóa bỏ dự án"
+
+msgid "Edit the project"
+msgstr "Chỉnh sửa dự án"
+
+msgid "Update all"
+msgstr "Cập nhật tất cả"
+
+msgid "Update all catalogs in the project"
+msgstr "Cập nhật tất cả các catalog trong dự án"
+
+msgid "Total"
+msgstr "Tổng cộng"
+
+msgid "Untrans"
+msgstr "Chưa dịch"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "Cần làm"
+
+msgid "Errors"
+msgstr "Lỗi"
+
+msgid "Last modified"
+msgstr "Lần sửa cuối"
+
+msgid "Select directory"
+msgstr "Chọn thư mục"
+
+msgid "Directories:"
+msgstr "Thư mục:"
+
+msgid "<unnamed>"
+msgstr "<chưa-đặt-tên>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr "Bạn có muốn xóa dự án “%s” không?"
+
+msgid "Delete project"
+msgstr ""
+
+msgid "Deleting the project will not delete any translation files."
+msgstr ""
+
+msgid "Confirmation"
+msgstr "Sự xác thực"
+
+msgid "Update all catalogs in this project?"
+msgstr ""
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
 
 msgid "Catalogs Manager"
 msgstr "Quản lý các catalog"
@@ -376,6 +1052,15 @@ msgstr "Dừng Nói"
 msgid "&View"
 msgstr "&Trình bày"
 
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "Hiển Thị Thanh Công Cụ"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "Tùy Chỉnh Thanh Công Cụ…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
 msgid "Enter Full Screen"
 msgstr "Nhập Toàn Màn Hình"
 
@@ -388,620 +1073,11 @@ msgstr "Thu nhỏ"
 msgid "Zoom"
 msgstr "Phóng to"
 
+msgid "Welcome to Poedit"
+msgstr "Chào mừng bạn dùng Poedit"
+
 msgid "Bring All to Front"
 msgstr "Mang Tất Cả ra Trước"
-
-#. TRANSLATORS:File kind displayed in Finder/Explorer
-msgid "PO Translation"
-msgstr "PO Dịch"
-
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Tập tin có lẽ đã hư hỏng hoặc là Poedit không chấp nhận định dạng này."
-
-msgid "The file cannot be opened."
-msgstr "Không thể mở tập-tin."
-
-msgid "Invalid file"
-msgstr "Tập tin không hợp lệ"
-
-msgid "You can’t drop more than one file on Poedit window."
-msgstr "Bạn không thể kéo thả nhiều hơn một tập tin vào trong cửa sổ Poedit."
-
-#, c-format
-msgid "File “%s” is not a translation file."
-msgstr "Tập tin \"%s\" không phải là một tập tin dịch."
-
-msgid "Poedit"
-msgstr "Poedit"
-
-msgid "&File"
-msgstr "&Chính"
-
-msgid "&Go"
-msgstr "Nhả&y đến"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid ""
-"Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr ""
-"Kiểm tra chính tả bị vô hiệu, bởi vì từ điển cho %s không được cài đặt."
-
-msgid "Install"
-msgstr "Cài đặt"
-
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Catalog đã bị sửa. Bạn có muốn lưu lại các thay đổi không?"
-
-msgid "Save changes"
-msgstr "Lưu thay đổi"
-
-msgid "Your changes will be lost if you don’t save them."
-msgstr "Các thay đổi của bạn sẽ bị mất nếu bạn không lưu chúng."
-
-msgid "Save"
-msgstr "Lưu"
-
-msgid "Do&n’t save"
-msgstr "Khô&ng lưu"
-
-msgid "Don’t Save"
-msgstr "Không Lưu"
-
-msgid "Save as…"
-msgstr "Lưu như…"
-
-msgid "Compile to…"
-msgstr "Biên dịch sang…"
-
-msgid "Compiled Translation Files"
-msgstr "Các tập tin bản dịch đã được biên dịch"
-
-msgid "Export as…"
-msgstr "Xuất ra như…"
-
-msgid "HTML Files"
-msgstr "Tập tin HTML"
-
-msgid "Open catalog template"
-msgstr "Mở tập tin catalog mẫu"
-
-msgid "Source code not available."
-msgstr "Mã nguồn không có sẵn."
-
-msgid "Updating failed"
-msgstr "Cập Nhật không thành công"
-
-msgid ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
-msgstr ""
-"Bản dịch không thể được cập nhật từ mã nguồn, bởi vì không có mã nào được "
-"tìm thấy tại vị trí chỉ định trong Thuộc tính của danh mục."
-
-msgid "Permission denied."
-msgstr ""
-
-msgid ""
-"You don’t have permission to read source code files from the location "
-"specified in the catalog’s Properties."
-msgstr ""
-
-#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
-msgid ""
-"If you previously denied access to your files, you can allow it in System "
-"Preferences > Security & Privacy > Privacy > Files & Folders."
-msgstr ""
-
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Các mục từ trong catalog chắc chắn là không đúng."
-
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"Cập nhật catalog không thành công. Bấm chuột vào 'Chi tiết >>' để có thông "
-"tin đầy đủ."
-
-#, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "Tìm thấy trong bản dịch %d lỗi."
-
-msgid "Validation results"
-msgstr "Kết quả xác nhận"
-
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Các mục có lỗi được đánh dấu màu đỏ trong danh sách. Chi tiết về lỗi sẽ hiển "
-"thị khi bạn chọn mục tương ứng đó."
-
-msgid "The file was saved safely."
-msgstr "Tệp được lưu một cách an toàn."
-
-msgid ""
-"The file was saved safely and compiled into the MO format, but it will "
-"probably not work correctly."
-msgstr ""
-"Các tập tin được lưu một cách an toàn và biên soạn thành định dạng MO, nhưng "
-"nó sẽ có lẽ không làm việc một cách chính xác."
-
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"Tập tin đã được lưu một cách an toàn, nhưng nó không thể được biên dịch "
-"thành định dạng MO để có thể sử dụng được."
-
-msgid ""
-"The file was compiled into the MO format, but it will probably not work "
-"correctly."
-msgstr ""
-"Các tập tin được biên dịch vào các định dạng MO, nhưng nó sẽ có lẽ không làm "
-"việc một cách chính xác."
-
-msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
-"Các tập tin không thể được biên dịch thành các định dạng MO và sử dụng."
-
-msgid "No problems with the translation found."
-msgstr "Không tìm thấy lỗi nào trong bản dịch."
-
-#, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural ""
-"The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Bản dịch đã sẵn sàng để sử dụng, nhưng %d mục không được dịch."
-
-msgid "The translation is ready for use."
-msgstr "Bản dịch đã sẵn sàng để sử dụng."
-
-msgid "Warnings have been disabled."
-msgstr "Cảnh báo đã bị tắt."
-
-msgid ""
-"If you disabled the warnings because of excessive false positives, please "
-"consider sending a sample file to help@poedit.net to help improve them."
-msgstr ""
-"Nếu bạn vô hiệu hóa các cảnh báo vì có quá nhiều xác thực sai, vui lòng xem "
-"xét gửi tệp mẫu tới help@poedit.net để giúp cải thiện chúng."
-
-msgid "Send Feedback"
-msgstr ""
-
-#. TRANSLATORS: This is a button to send email with feedback when clicked
-msgid "Send feedback"
-msgstr ""
-
-#, c-format
-msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit đã tự động sửa các nội dung không hợp lệ trong tập tin \"%s\"."
-
-msgid ""
-"The file contained duplicate items, which is not allowed in PO files and "
-"would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as needing work and correct "
-"them if necessary."
-msgstr ""
-"Tập tin chứa các mục trùng lặp, mà không được cho phép trong các tập tin PO "
-"và sẽ ngăn chặn các tập tin được sử dụng từ chúng. Poedit đã sửa vấn đề, "
-"nhưng bạn nên xem lại các bản dịch của bất kỳ mục nào được đánh dấu là cần "
-"làm việc và sửa lại chúng nếu cần thiết."
-
-msgid "Language of the translation isn’t set."
-msgstr "Ngôn ngữ của bản dịch chưa được đặt."
-
-msgid "Set Language"
-msgstr "Đặt ngôn ngữ"
-
-msgid "Set language"
-msgstr "Đặt ngôn ngữ"
-
-#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
-msgid ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
-msgstr ""
-"Gợi ý không có sẵn nếu ngôn ngữ bản dịch không được thiết lập đúng. Các tính "
-"năng khác, chẳng hạn như hình thức số nhiều, có thể bị ảnh hưởng."
-
-msgid "Language of the translation is the same as source language."
-msgstr "Ngôn ngữ của bản dịch là giống như ngôn ngữ nguồn."
-
-msgid "Fix Language"
-msgstr "Sửa ngôn ngữ"
-
-msgid "Fix language"
-msgstr "Sửa chữa ngôn ngữ"
-
-msgid ""
-"This catalog has entries with plural forms, but doesn’t have Plural-Forms "
-"header configured."
-msgstr ""
-"Có các mục tin dạng số nhiều, nhưng chưa được khai báo ở phần đầu Plural-"
-"Form."
-
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog’s Plural-Forms header says"
-msgstr ""
-"Các mục từ trong catalog có số dạng số nhiều khác với phần khai báo ở phần "
-"đầu tập tin (Plural-Forms)"
-
-msgid "Required header Plural-Forms is missing."
-msgstr "Phần đầu Plural-Forms đã yêu cầu bị thiếu."
-
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Cú pháp lỗi trong khai báo phần đầu Plural-Forms (\"%s\")."
-
-msgid "Fix the Header"
-msgstr "Sửa Phần Đầu"
-
-msgid "Fix the header"
-msgstr "Sửa phần đầu"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr "Dạng thức số nhiều được dùng cho catalog là bất thường đối với %s."
-
-#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-msgid "Review"
-msgstr "Xem lại"
-
-#, c-format
-msgid "Error loading message catalog file “%s”."
-msgstr "Gặp lỗi khi đang tải các chuỗi từ tập tin catalog '%s'."
-
-#, c-format
-msgid "Translated: %d of %d (%d %%)"
-msgstr "Đã dịch: %d of %d (%d %%)"
-
-#, c-format
-msgid "Remaining: %d"
-msgstr "Còn lại: %d"
-
-#, c-format
-msgid "%d error"
-msgid_plural "%d errors"
-msgstr[0] "%d lỗi"
-
-#, c-format
-msgid "%d entry"
-msgid_plural "%d entries"
-msgstr[0] "%d mục"
-
-msgid " (unsaved)"
-msgstr " (chưa lưu)"
-
-msgid " (modified)"
-msgstr " (đã sửa)"
-
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Gặp lỗi khi cập nhật bộ nhớ dịch: %s"
-
-msgid "Purge deleted translations"
-msgstr "Xóa bỏ các chuỗi dịch bị đánh dấu là không dùng nữa"
-
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Bạn có muốn loại bỏ tất cả các chuỗi không còn sử dụng nữa không?"
-
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Nếu bạn vẫn muốn thanh lọc, tất cả các chuỗi dịch mà được đánh dấu là đã xoá "
-"sẽ bị gỡ bỏ hoàn toàn khỏi tập tin. Bạn sẽ phải dịch lại chúng nếu người lập "
-"trình sử dụng lại nó trong tương lai."
-
-msgid "Keep"
-msgstr "Giữ lại"
-
-msgid "Purge"
-msgstr "Thanh lọc"
-
-msgid "Copy from source text"
-msgstr "Chép từ chuỗi nguồn"
-
-msgid "Copy from Source Text"
-msgstr "Chép từ chuỗi nguồn"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-msgid "Clear translation"
-msgstr "Xóa phần dịch"
-
-msgid "Clear Translation"
-msgstr "Xóa phần dịch"
-
-msgid "Edit comment"
-msgstr "Sửa chú thích"
-
-msgid "Edit Comment"
-msgstr "Sửa chú thích"
-
-msgid "References:"
-msgstr "Tham chiếu:"
-
-msgid "&Bookmarks"
-msgstr "Đánh &dấu"
-
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Alt+"
-msgstr "Alt+"
-
-#, c-format
-msgid "Set bookmark %i"
-msgstr "Đặt dấu trang %i"
-
-#, c-format
-msgid "Go to bookmark %i"
-msgstr "Đi đến dấu trang %i"
-
-#, c-format
-msgid "Set Bookmark %i"
-msgstr "Đặt Dấu Trang %i"
-
-#, c-format
-msgid "Go to Bookmark %i"
-msgstr "Đi đến Dấu Trang %i"
-
-msgid "Hide Sidebar"
-msgstr "Ẩn Thanh Công Cụ"
-
-msgid "Show Sidebar"
-msgstr "Hiện thanh công cụ"
-
-msgid "Hide Status Bar"
-msgstr "Ẩn Thanh Trạng Thái"
-
-msgid "Show Status Bar"
-msgstr "Hiển Thanh Trạng Thái"
-
-msgid "Source text:"
-msgstr "Văn bản nguồn:"
-
-msgid "Singular:"
-msgstr "Dạng số ít:"
-
-msgid "Plural:"
-msgstr "Số nhiều:"
-
-msgid "Translation:"
-msgstr "Bản dịch:"
-
-msgid "Pre-translated"
-msgstr "Dịch trước"
-
-msgid "Needs Work"
-msgstr "Cần làm"
-
-#. TRANSLATORS: This indicates that the string's translation isn't final
-#. and has known problems.  For example, it might be machine translated or
-#. fuzzy matched from an older string. The translation should be short and
-#. convey this. If it's problematic to translate it, "Needs review" is
-#. acceptable substitute, but note that the meaning is subtly different:
-#. "needs review" implies that somebody else should review the string after
-#. I am done with it (i.e. consider it good), while "needs work" implies I
-#. need to return to it and finish the translation.
-msgid "Needs work"
-msgstr "Cần làm việc"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Các tập tin POT chỉ là các mẫu và không chứa bất kì bản dịch nào của chính "
-"chúng.\n"
-"Để tạo 1 bản dịch, tạo 1 tập tin PO mới dựa trên mẫu."
-
-msgid "Create New Translation"
-msgstr "Tạo Bản Dịch Mới"
-
-msgid "Create new translation"
-msgstr "Tạo bản dịch mới"
-
-msgid "Everything"
-msgstr "Mọi thứ"
-
-#, c-format
-msgid "Form %i"
-msgstr "Dạng %i"
-
-#, c-format
-msgid "Form %i (unused)"
-msgstr "Form %i (không sử dụng)"
-
-msgid "Singular"
-msgstr "Dạng số ít"
-
-msgid "Zero"
-msgstr "Số không"
-
-msgid "One"
-msgstr "Một"
-
-msgid "Two"
-msgstr "Hai"
-
-msgid "Plural"
-msgstr "Số nhiều"
-
-msgid "Other"
-msgstr "Khác"
-
-#, c-format
-msgid "%s Format"
-msgstr "Định dạng %s"
-
-#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-#, c-format
-msgid "%s format"
-msgstr "định dạng %s"
-
-msgid "Source text"
-msgstr "Văn bản nguồn"
-
-#, c-format
-msgid "Translation — %s"
-msgstr "Bản dịch — %s"
-
-msgid "ID"
-msgstr "ID"
-
-#, c-format
-msgid "Source text — %s"
-msgstr "Mã nguồn văn bản — %s"
-
-msgid "unknown language"
-msgstr "không hiểu ngôn ngữ"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Lệnh bị sai: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Lỗi trộn catalog gettext."
-
-msgid "Source file"
-msgstr "Tập tin mã nguồn"
-
-msgid "Source file occurrence:"
-msgstr "Xuất hiện trong tập tin nguồn:"
-
-msgid "Open in Editor"
-msgstr "Mở trong Trình Soạn Thảo"
-
-msgid "Open in editor"
-msgstr "Mở trong trình soạn thảo"
-
-msgid "No references for the selected item."
-msgstr "Không có tham chiếu cho mục đã chọn."
-
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Gặp lỗi khi đang mở tập tin %s!"
-
-msgid "Find"
-msgstr "Tìm"
-
-msgid "Replace"
-msgstr "Thay thế"
-
-#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-msgid "Options"
-msgstr "Tùy chọn"
-
-msgid "Ignore case"
-msgstr "Không phân biệt HOA/thường"
-
-msgid "Wrap around"
-msgstr "Ngắt khoảng"
-
-msgid "Whole words only"
-msgstr "Phải khớp toàn bộ các từ"
-
-msgid "Find in source texts"
-msgstr "Tìm trong các văn bản nguồn"
-
-msgid "Find in translations"
-msgstr "Tìm trong phần dịch"
-
-msgid "Find in comments"
-msgstr "Tìm trong chú thích"
-
-msgid "Close"
-msgstr "Đóng"
-
-msgid "Replace &All"
-msgstr "Thay Thế &Tất Cả"
-
-msgid "Replace &all"
-msgstr "Thay Thế &tất cả"
-
-msgid "&Replace"
-msgstr "T&hay thế"
-
-msgid "< &Previous"
-msgstr "< &Trước"
-
-msgid "&Next >"
-msgstr "&Tiếp theo >"
-
-msgid "String to find"
-msgstr "Chuỗi cần tìm"
-
-msgid "Replacement string"
-msgstr "Thay thế chuỗi"
-
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Không thể thi hành chương trình: %s"
-
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr "Mã ngôn ngữ hoặc tên (ví dụ: vi_VN)"
-
-msgid "Translation Language"
-msgstr "Ngôn ngữ bản dịch"
-
-msgid "Language of the translation:"
-msgstr "Ngôn ngữ của bản dịch:"
-
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Quản lý catalog"
-
-msgid "Catalog"
-msgstr "Catalog"
-
-msgid "Total"
-msgstr "Tổng cộng"
-
-msgid "Untrans"
-msgstr "Chưa dịch"
-
-msgctxt "column/row header"
-msgid "Needs Work"
-msgstr "Cần làm"
-
-msgid "Errors"
-msgstr "Lỗi"
-
-msgid "Last modified"
-msgstr "Lần sửa cuối"
-
-msgid "Select directory"
-msgstr "Chọn thư mục"
-
-msgid "Directories:"
-msgstr "Thư mục:"
-
-msgid "<unnamed>"
-msgstr "<chưa-đặt-tên>"
-
-msgid "Do you want to delete the project?"
-msgstr "Bạn có muốn xóa bỏ dự án không?"
-
-msgid "Confirmation"
-msgstr "Sự xác thực"
-
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Bạn có muốn cập nhật hàng loạt\n"
-"tất cả các catalog trong dự án này?"
 
 msgid "Information about the translator"
 msgstr "Thông tin về các dịch giả"
@@ -1015,8 +1091,8 @@ msgstr "Tên Bạn"
 msgid "Email:"
 msgstr "Email:"
 
-msgid "your_email@example.com"
-msgstr "thevuong@live.com"
+msgid "you@example.com"
+msgstr ""
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1031,8 +1107,8 @@ msgstr "Đang chỉnh sửa"
 msgid "Automatically compile MO file when saving"
 msgstr "Tự động biên dịch tập tin MO khi lưu"
 
-msgid "Show summary after catalog update"
-msgstr "Hiển thị thông tin tóm tắt sau khi cập nhật catalog"
+msgid "Show summary after updating files"
+msgstr ""
 
 msgid "Check spelling"
 msgstr "Kiểm tra lỗi chính tả"
@@ -1173,9 +1249,6 @@ msgstr ""
 "Đặt lại bộ nhớ dịch thuật sẽ xóa bỏ tất cả bản dịch được lưu trữ từ nó. Bạn "
 "không thể hoàn tác thao tác này."
 
-msgid "Cancel"
-msgstr "Hủy bỏ"
-
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
@@ -1194,9 +1267,6 @@ msgstr "Tùy Chọn Giải Nén:"
 
 msgid "Custom extractors:"
 msgstr "Tùy chọn giải nén:"
-
-msgid "Edit…"
-msgstr "Chỉnh sửa…"
 
 msgid "GNU gettext"
 msgstr "GNU gettext"
@@ -1263,13 +1333,19 @@ msgstr "Duy trì định dạng của tập tin đã có"
 msgid "Advanced"
 msgstr "Nâng cao"
 
-msgid "Pre-translating…"
-msgstr "Đang dịch trước…"
+msgid "Preparing strings…"
+msgstr ""
+
+msgid "Pre-translating from translation memory…"
+msgstr ""
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
 msgstr[0] "Chuỗi %u đã được dịch trước"
+
+msgid "Pre-translating…"
+msgstr "Đang dịch trước…"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1335,23 +1411,14 @@ msgstr ""
 "có hiệu lực cho các bản dịch bán tự động sau khi Poedit học đủ từ các tập "
 "tin mà bạn đã dịch thủ công."
 
-msgid ""
-"<big>Drag and Drop Folders Here</big>\n"
-"\n"
-"or use the + button"
+msgid "Cancelling…"
 msgstr ""
-"<big>Kéo và Thả Thư mục Ở đây</big> \n"
-"\n"
-"hoặc sử dụng nút +"
 
-msgid ""
-"<big>Drag and drop folders here</big>\n"
-"\n"
-"or use the + button"
+msgid "Drag Folders or Files Here"
 msgstr ""
-"<big>Kéo và thả thư mục ở đây</big> \n"
-"\n"
-"hoặc sử dụng nút +"
+
+msgid "Drag folders or files here"
+msgstr ""
 
 msgid "Add Folders…"
 msgstr "Thêm Thư Mục…"
@@ -1370,6 +1437,17 @@ msgstr "Thêm ký tự đại diện…"
 
 msgid "Add wildcard…"
 msgstr "Thêm ký tự đại diện…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr ""
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr ""
+
+msgid "Show in Folder"
+msgstr ""
 
 msgid "Paths"
 msgstr "Đường dẫn"
@@ -1412,14 +1490,23 @@ msgstr ""
 "Vui lòng lưu tập tin này trước. Phần này không được chỉnh sửa cho đến khi "
 "tập tin được lưu lại."
 
+msgid "Plural form translations"
+msgstr ""
+
 msgid "Not all plural forms are translated."
 msgstr "Không phải tất cả các hình thức số nhiều được dịch."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
 
 msgid "The translation should start as a sentence."
 msgstr "Bản dịch nên bắt đầu như là một câu."
 
 msgid "The translation should start with a lowercase character."
 msgstr "Bản dịch nên bắt đầu với một ký tự chữ thường."
+
+msgid "Inconsistent whitespace"
+msgstr ""
 
 msgid "The translation doesn’t start with a space."
 msgstr "Bản dịch không bắt đầu với một dấu cách."
@@ -1439,6 +1526,9 @@ msgstr "Các bản dịch là thiếu một dấu cách ở phần cuối."
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Bản dịch kết thúc với một dấu cách, nhưng văn bản nguồn không có."
 
+msgid "Punctuation checks"
+msgstr ""
+
 #, c-format
 msgid "The translation should end with “%s”."
 msgstr "Bản dịch nên kết thúc với \"%s\"."
@@ -1452,38 +1542,23 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr ""
 "Bản dịch kết thúc bằng \"%s\", nhưng văn bản nguồn kết thúc bằng \"%s\"."
 
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
 msgid "Comment:"
 msgstr "Chú thích:"
 
-msgid "OK"
-msgstr "Đồng ý"
+msgid "Update"
+msgstr ""
 
-msgid "C&lear"
-msgstr "&Dọn dẹp"
+msgid "&Delete"
+msgstr "&Xóa"
 
-msgid "Clear the comment"
-msgstr "Xóa phần chú thích"
-
-msgid "New"
-msgstr "Mới"
-
-msgid "Create new translations project"
-msgstr "Tạo một dự án dịch mới"
-
-msgid "Edit"
-msgstr "Biên tập"
-
-msgid "Edit the project"
-msgstr "Chỉnh sửa dự án"
-
-msgid "Delete the project"
-msgstr "Xóa bỏ dự án"
-
-msgid "Update all"
-msgstr "Cập nhật tất cả"
-
-msgid "Update all catalogs in the project"
-msgstr "Cập nhật tất cả các catalog trong dự án"
+msgid "Delete the comment"
+msgstr ""
 
 msgid "Edit project"
 msgstr "Chỉnh sửa dự án"
@@ -1496,6 +1571,12 @@ msgstr "Duyệt"
 
 msgid "Add directory to the list"
 msgstr "Thêm thư mục vào danh sách"
+
+msgid "OK"
+msgstr "Đồng ý"
+
+msgid "&File"
+msgstr "&Chính"
 
 msgid "&New…"
 msgstr "&Mới…"
@@ -1512,11 +1593,26 @@ msgstr "&Mở…"
 msgid "Open Recent"
 msgstr "Mở gần đây"
 
+msgid "Open recent"
+msgstr ""
+
 msgid "Open from Crowdin…"
 msgstr "Mở từ Crowdin…"
 
 msgid "Open From Crowdin…"
 msgstr "Mở Từ Crowdin…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "&Quản lý các catalog"
+
+msgid "Catalogs &Manager"
+msgstr "&Quản lý các catalog"
 
 msgid "&Close"
 msgstr "Đó&ng"
@@ -1542,12 +1638,6 @@ msgstr "Kiểm tra cập nhật…"
 msgid "&Preferences…"
 msgstr "&Cá nhân hóa…"
 
-msgid "Catalogs &manager"
-msgstr "&Quản lý các catalog"
-
-msgid "Catalogs &Manager"
-msgstr "&Quản lý các catalog"
-
 msgid "E&xit"
 msgstr "Thoá&t"
 
@@ -1572,6 +1662,7 @@ msgstr "Sửa &chú thích"
 msgid "Edit &Comment"
 msgstr "Sửa &chú thích"
 
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
 msgid "Suggestions"
 msgstr "Đề xuất"
 
@@ -1647,11 +1738,11 @@ msgstr "Mục &chưa dịch đầu tiên"
 msgid "&Untranslated Entries First"
 msgstr "Mục &chưa dịch đầu tiên"
 
-msgid "&Show references"
-msgstr "&Hiển thị tham chiếu"
+msgid "&Show code occurrences"
+msgstr ""
 
-msgid "&Show References"
-msgstr "&Hiển thị tham chiếu"
+msgid "&Show Code Occurrences"
+msgstr ""
 
 msgid "Show sidebar"
 msgstr "Hiện thanh công cụ"
@@ -1659,8 +1750,8 @@ msgstr "Hiện thanh công cụ"
 msgid "Show status bar"
 msgstr "Hiển thanh trạng thái"
 
-msgid "C&atalog"
-msgstr "C&atalog"
+msgid "&Translation"
+msgstr ""
 
 msgid "&Update from source code"
 msgstr "&Cập nhật từ mã nguồn"
@@ -1810,8 +1901,8 @@ msgstr ""
 "Cái này sẽ gắn với dòng lệnh chỉ khi bộ mã ký tự\n"
 "nguồn được đưa ra. %c được triển khai thành giá trị bộ ký tự."
 
-msgid "Catalog properties"
-msgstr "Các thuộc tính của catalog"
+msgid "Translation Properties"
+msgstr "Thuộc tính dịch"
 
 msgid "Project name and version:"
 msgstr "Tên và phiên bản của dự án:"
@@ -1839,9 +1930,6 @@ msgstr "Cài Đặt Giải Nén Nâng Cao…"
 
 msgid "Advanced extraction settings…"
 msgstr "Cài đặt giải nén nâng cao…"
-
-msgid "Translation Properties"
-msgstr "Thuộc tính dịch"
 
 msgid "Translation properties"
 msgstr "Thuộc tính bản dịch"
@@ -1874,9 +1962,6 @@ msgstr ""
 msgid "Also use default keywords for supported languages"
 msgstr "Cũng có thể sử dụng từ khóa mặc định cho các ngôn ngữ được hỗ trợ"
 
-msgid "Learn About Gettext Keywords"
-msgstr "Tìm hiểu thêm về các từ khoá Gettext"
-
 msgid "Learn about gettext keywords"
 msgstr "Học thêm về các từ khóa của GNU gettext"
 
@@ -1884,21 +1969,17 @@ msgid "Update summary"
 msgstr "Tóm tắt sơ lược quá trình cập nhật"
 
 msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
 msgstr ""
-"Các chuỗi tìm thấy trong tập tin nguồn nhưng không có trong catalog.\n"
-"Poedit sẽ thêm vào ngay bây giờ."
 
 msgid "New strings"
 msgstr "Chuỗi mới"
 
 msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
 msgstr ""
-"Những chuỗi này không còn tồn tại trong tập tin nguồn nữa.\n"
-"Poedit sẽ loại bỏ chúng bây giờ."
 
 msgid "Obsolete strings"
 msgstr "Chuỗi đã cũ"
@@ -1909,8 +1990,11 @@ msgstr "(0 mới, 0 cũ)"
 msgid "Open"
 msgstr "Mở"
 
-msgid "Save catalog"
-msgstr "Lưu catalog"
+msgid "Open file"
+msgstr ""
+
+msgid "Save file"
+msgstr ""
 
 msgid "Validate"
 msgstr "Thẩm tra"
@@ -1934,8 +2018,8 @@ msgid "Show or hide the sidebar"
 msgstr "Hiện hoặc ẩn thanh công cụ"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-msgid "Previous source text:"
-msgstr "Văn bản nguồn trước đó:"
+msgid "Previous source text"
+msgstr ""
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1944,8 +2028,11 @@ msgstr ""
 "Các nguồn văn bản cũ (trước khi nó thay đổi trong quá trình cập nhật) mà bản "
 "dịch hiện thời không chính xác tương ứng."
 
-msgid "Notes for translators:"
-msgstr "Ghi chú dành cho người dịch:"
+msgid "Notes for translators"
+msgstr ""
+
+msgid "Comment"
+msgstr "Bình luận"
 
 msgid "Add comment"
 msgstr "Thêm bình luận"
@@ -1959,8 +2046,8 @@ msgstr "Xóa từ bộ nhớ dịch thuật"
 msgid "Delete from translation memory"
 msgstr "Xóa từ bộ nhớ dịch thuật"
 
-msgid "Translation suggestions:"
-msgstr "Các gợi ý dịch:"
+msgid "Translation suggestions"
+msgstr "Các gợi ý dịch"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -1990,38 +2077,6 @@ msgstr "Lỗi bộ nhớ dịch thuật: %s (%d)."
 msgid "Cannot create temporary directory."
 msgstr "Không thể tạo thư mục tạm."
 
-msgid "Welcome to Poedit"
-msgstr "Chào mừng bạn dùng Poedit"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Phiên bản %s"
-
-msgid "Edit a translation"
-msgstr "Sửa một bản dịch"
-
-msgid "Open an existing PO file and edit the translation."
-msgstr "Mở một tập tin PO sẵn có và sửa bản dịch."
-
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr "Lấy một tập tin PO hay mẫu POT và tạo bản dịch mới từ đó."
-
-msgid "Collaborate on a translation with others"
-msgstr "Cộng tác trên một bản dịch với những người khác"
-
-msgid ""
-"Download a file from Crowdin project, translate and sync your changes back."
-msgstr ""
-"Tải một tập tin từ dự án Crowdin, dịch và đồng bộ các thay đổi của bạn trở "
-"lại."
-
-msgid "What is Crowdin?"
-msgstr "Crowdin là gì?"
-
 msgid "There are no translations. That’s unusual."
 msgstr "Ở đây không có bản dịch nào cả. Điều này là bất thường."
 
@@ -2042,10 +2097,10 @@ msgstr ""
 msgid "(Learn more about GNU gettext)"
 msgstr "(Học thêm về GNU gettext)"
 
-msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
 msgstr ""
-"Cách đơn giản nhất để điền thông tin cho catalog này là cập nhật nó từ một "
-"tập tin POT:"
 
 msgid "Update from POT"
 msgstr "Cập nhật từ tệp tin POT"
@@ -2064,6 +2119,33 @@ msgstr "Trích từ mã nguồn"
 
 msgid "Configure source code extraction in Properties."
 msgstr "Cấu hình việc rút trích mã nguồn trong `Thuộc tính'."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Phiên bản %s"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
+msgstr ""
 
 msgid "Sync"
 msgstr "Đồng bộ"
@@ -2149,8 +2231,8 @@ msgstr "Cắ&t"
 msgid "Cut"
 msgstr "Cắt"
 
-msgid "&Delete"
-msgstr "&Xóa"
+msgid "Edit"
+msgstr "Biên tập"
 
 msgid "&Quit"
 msgstr "&Thoát"
@@ -2160,6 +2242,9 @@ msgstr "Trợ giúp"
 
 msgid "&New"
 msgstr "&Mới"
+
+msgid "New"
+msgstr "Mới"
 
 msgid "&No"
 msgstr "&Không"
