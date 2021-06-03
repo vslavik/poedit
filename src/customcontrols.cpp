@@ -222,7 +222,7 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 
 bool AutoWrappingText::InformFirstDirection(int direction, int size, int /*availableOtherDir*/)
 {
-    if (direction == wxVERTICAL)
+    if (size > 0 && direction == wxHORIZONTAL)
         return RewrapForWidth(size);
     return false;
 }
