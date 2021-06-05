@@ -16,4 +16,5 @@ EXTRA_DIST = \
 	deps/pugixml/src/pugiconfig.hpp \
 	deps/pugixml/src/pugixml.cpp \
 	deps/pugixml/src/pugixml.hpp \
+	README.md \
 	bootstrap
