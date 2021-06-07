@@ -50,7 +50,8 @@ CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDial
     // else: button is labeled "Update" in XRC
 
     wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD, WXK_RETURN, wxID_OK }
+        { wxACCEL_CMD, WXK_RETURN, wxID_OK },
+        { wxACCEL_CMD, WXK_NUMPAD_ENTER, wxID_OK }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
