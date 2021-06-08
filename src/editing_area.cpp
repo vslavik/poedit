@@ -1012,7 +1012,7 @@ void EditingArea::UpdateCharCounter(CatalogItemPtr item)
     if (!m_charCounter || !item)
         return;
 
-    if (item->HasPlural())
+    if (item->HasPlural() && m_pluralNotebook)
     {
         int index = m_pluralNotebook->GetSelection();
         if (index == 0)
