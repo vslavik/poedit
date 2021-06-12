@@ -246,20 +246,9 @@ Based on Minimal CSS (minimalcss.com) under the MIT license.
 * { margin: 0; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 /* Layout */
-body { background-color: #fff; color: #333;	font: 14px/20px -apple-system, "HelveticaNeue", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-
-header { width: 100%; margin: 0 auto; position: relative; padding: 20px 0; margin-bottom: 20px; }
-
-nav ul { margin: 0; }
-nav ul li { display: inline; margin-right: 20px; font-size: 16px; line-height: 28px; color: #333; }
-nav ul li a { color: #333; }
+body { font: 14px/20px -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
 .container { position: relative; max-width: 90%; margin: 0 auto; }
-
-footer { border-top:1px solid #ccc; font-size:11px; line-height:26px; color:#999; }
-footer a { color:#999999; }
-footer a:hover { color:#105CB6; }
-footer ul li { display:inline; list-style:none; padding-left:20px; }
 
 /* Typography */
 a { color: #105CB6; text-decoration: none; }
@@ -272,7 +261,6 @@ h3 { font-size: 16px; line-height: 20px; margin: 10px 0; }
 h4 { font-size: 14px; line-height: 20px; margin: 10px 0; }
 h5 { font-size: 12px; line-height: 20px; margin: 10px 0; }
 h5 { font-size: 10px; line-height: 20px; margin: 10px 0; }
-h1,h2,h3,h4,h5,h6 { color: #333; }
 
 p { margin-bottom: 10px; }
 
@@ -286,15 +274,6 @@ img.center      { margin: 0 auto; display: block; }
 .text-center  { text-align: center; }
 .text-right   { text-align: right; }
 .text-justify { text-align: justify; }
-
-/* Misc */
-hr { background-color: #ccc; border: 0px; color: #ccc; height: 1px; margin: 8px 0 20px 0; }
-pre, code { background:#E0ECF6; display:block; margin-bottom: 20px; padding:10px; }
-
-blockquote { margin: 10px 10px 20px; padding: 9px; background-color: #f8f8f8; color: #666; border-left: 5px solid #ddd; font: 14px/20px Georgia, Times, serif; quotes: "\201C" "\201D"; }
-blockquote p { margin: 0; }
-blockquote:before { content: open-quote; font-weight: bold; }
-blockquote:after  { content: close-quote; font-weight: bold; }
 
 /* List */
 ul { list-style-position:inside; }
@@ -329,12 +308,8 @@ table.metadata td {
 .graph div { float: left; }
 .graph div:first-child { border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
 .graph div:last-child { border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
-.percent-done    { background-color: rgb(90, 228, 140); height: 10px; }
-.percent-fuzzy   { background-color: rgb(255, 167, 52); height: 10px; }
-.percent-untrans { background-color: #F1F1F1; height: 10px; }
 .legend {
   font-size: smaller;
-  color: #aaa;
   padding-top: 12px;
   text-align: center;
 }
@@ -347,7 +322,7 @@ table.translations {
 table.translations th, table.translations td {
   padding: 5px 10px;
   vertical-align: top;
-  border-bottom: 1px solid #E1E1E1;
+  border-bottom: 1px solid #F1F1F1;
 }
 table.translations th {
   text-align: left;
@@ -362,22 +337,40 @@ tr.comments div {
   float: left;
   max-width: 90%;
   font-size: smaller;
-  color: #aaa;
 }
 tr.comments div p:last-child { margin-bottom: 0; }
 tr.comments td { padding-top: 0; }
 
-.fuzzy .tra {
-  color: rgb(218, 123, 0);
-}
-
 .msgctxt {
-  color: rgb(70, 109, 137);
   font-size: smaller;
-  background-color: rgb(217, 232, 242);
   border-radius: 2px;
   padding: 2px 4px;
   margin-right: 4px;
+}
+
+
+/* Colors */
+
+body { background-color: #fff; color: #333; }
+
+.percent-done    { background-color: rgb(146, 236, 106); height: 10px; }
+.percent-fuzzy   { background-color: rgb(255, 149, 0); height: 10px; }
+.percent-untrans { background-color: #F1F1F1; height: 10px; }
+.legend          { color: #aaa; }
+tr.comments div  { color: #aaa; }
+.fuzzy .tra      { color: rgb(230, 134, 0); }
+
+.msgctxt         { color: rgb(70, 109, 137); background-color: rgb(217, 232, 242); }
+
+
+@media (prefers-color-scheme: dark) {
+    body             { background-color: rgb(45, 42, 41); color: #eee; }
+    .percent-untrans { background-color: rgba(255, 255, 255, 0.3); }
+    .legend          { color: rgba(255, 255, 255, 0.6); }
+    tr.comments div  { color: rgba(255, 255, 255, 0.6); }
+    .fuzzy .tra      { color: rgb(253, 178, 72); }
+    .msgctxt         { color: rgb(180, 222, 254); background-color: rgba(67, 94, 147, 0.6); }
+    table.translations th, table.translations td { border-bottom: 1px solid #333; }
 }
 
 )";
