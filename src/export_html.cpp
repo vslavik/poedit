@@ -56,6 +56,8 @@ extern const char *CSS_STYLE;
 void Catalog::ExportToHTML(std::ostream& f)
 {
     const bool translated = HasCapability(Catalog::Cap::Translations);
+    const auto lang = translated ? GetLanguage() : Language();
+    const auto srclang = GetSourceLanguage();
 
     f << "<!DOCTYPE html>\n"
          "<html>\n"
@@ -73,8 +75,8 @@ void Catalog::ExportToHTML(std::ostream& f)
     f << "<table class='metadata'>\n";
     if (!m_header.Project.empty())
         TableRow(f, _("Project:"), m_header.Project);
-    if (translated && m_header.Lang.IsValid())
-        TableRow(f, _("Language:"), m_header.Lang.DisplayName());
+    if (translated && lang.IsValid())
+        TableRow(f, _("Language:"), lang.DisplayName());
     f << "</table>\n";
 
 
@@ -120,20 +122,20 @@ void Catalog::ExportToHTML(std::ostream& f)
     // Translations:
 
     std::string lang_src, lang_tra;
-    if (m_sourceLanguage.IsValid())
-        lang_src = " lang='" + m_sourceLanguage.LanguageTag() + "'";
-    if (m_header.Lang.IsValid())
+    if (srclang.IsValid())
+        lang_src = " lang='" + srclang.LanguageTag() + "'";
+    if (lang.IsValid())
     {
-        lang_tra = " lang='" + m_header.Lang.LanguageTag() + "'";
-        if (m_header.Lang.IsRTL())
+        lang_tra = " lang='" + lang.LanguageTag() + "'";
+        if (lang.IsRTL())
             lang_tra += " dir='rtl'";
     }
 
-    auto thead_src = m_sourceLanguage.IsValid()
-                     ? (wxString::Format(_(L"Source text — %s"), m_sourceLanguage.DisplayName()))
+    auto thead_src = srclang.IsValid()
+                     ? (wxString::Format(_(L"Source text — %s"), srclang.DisplayName()))
                      : _("Source text");
     auto thead_tra = wxString::Format(_(L"Translation — %s"),
-                                      m_header.Lang.IsValid() ? m_header.Lang.DisplayName() : _("unknown language"));
+                                      lang.IsValid() ? lang.DisplayName() : _("unknown language"));
 
     f << "<table class='translations'>\n"
          "  <thead>\n"
