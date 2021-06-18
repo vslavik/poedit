@@ -848,6 +848,6 @@ void PoeditListCtrl::DoFreeze()
 
 void PoeditListCtrl::DoThaw()
 {
-    m_model->Thaw();
     wxDataViewCtrl::DoThaw();
+    m_model->Thaw();
 }
