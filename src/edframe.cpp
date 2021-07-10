@@ -2613,12 +2613,12 @@ void PoeditFrame::UpdateTitle()
     }
     else
   #endif
+#endif // __WXOSX__
     if (!subtitle.empty())
     {
         title << MACOS_OR_OTHER(L" — ", L" • ");
         title << subtitle;
     }
-#endif // __WXOSX__
 
     m_fileNamePartOfTitle = title;
 
