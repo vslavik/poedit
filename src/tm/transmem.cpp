@@ -559,9 +559,11 @@ void TranslationMemoryImpl::ExportData(TranslationMemory::IOInterface& destinati
     try
     {
         auto reader = m_mng->Reader();
-        int32_t numDocs = reader->numDocs();
+        int32_t numDocs = reader->maxDoc();
         for (int32_t i = 0; i < numDocs; i++)
         {
+            if (reader->isDeleted(i))
+                continue;
             auto doc = reader->document(i);
             destination.Insert
             (
