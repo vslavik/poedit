@@ -40,11 +40,17 @@ apps:
     command: bin/poedit
     desktop: share/applications/net.poedit.Poedit.desktop
     extensions: [gnome-3-38]
+    environment:
+      # Workaround Snap bug https://bugs.launchpad.net/snapd/+bug/1916745
+      LD_PRELOAD: $SNAP_DESKTOP_RUNTIME/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libGLdispatch.so.0:$SNAP_DESKTOP_RUNTIME/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libEGL.so.1
 
   poedit-uri-handler:
     command: bin/poedit
     desktop: share/applications/net.poedit.PoeditURI.desktop
     extensions: [gnome-3-38]
+    environment:
+      # Workaround Snap bug https://bugs.launchpad.net/snapd/+bug/1916745
+      LD_PRELOAD: $SNAP_DESKTOP_RUNTIME/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libGLdispatch.so.0:$SNAP_DESKTOP_RUNTIME/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libEGL.so.1
 
 plugs:
   # File access
