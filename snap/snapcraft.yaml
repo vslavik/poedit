@@ -17,11 +17,14 @@ description: >
 
     $ snap connect poedit:password-manager-service
 
-base: core18
+base: core20
 grade: stable
 confinement: strict
 icon: artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg
 
+architectures:
+  - build-on: amd64
+    run-on: amd64
 layout:
   /usr/share/aspell:
     symlink: $SNAP/usr/share/aspell
@@ -36,12 +39,12 @@ apps:
   poedit:
     command: bin/poedit
     desktop: share/applications/net.poedit.Poedit.desktop
-    extensions: [gnome-3-34]
+    extensions: [gnome-3-38]
 
   poedit-uri-handler:
     command: bin/poedit
     desktop: share/applications/net.poedit.PoeditURI.desktop
-    extensions: [gnome-3-34]
+    extensions: [gnome-3-38]
 
 plugs:
   # File access
