@@ -393,6 +393,8 @@ class Catalog
             Entries m_entries;
 
             const Entry *Find(const wxString& key) const;
+
+            void NormalizeHeaderOrder();
         };
 
         enum CreationFlags
