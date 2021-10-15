@@ -272,7 +272,7 @@ dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const
         prj->name = str::to_wstring(d["name"]);
         prj->id = d["id"];
         for (const auto& langCode : d["targetLanguageIds"])
-            prj->languages.push_back(Language::TryParse(str::to_wstring(langCode)));
+            prj->languages.push_back(Language::FromLanguageTag(std::string(langCode)));
 
         //TODO: get more until all files gotten (if more than 500)
         return m_api->get(url + "/files?limit=500");
