@@ -321,6 +321,18 @@ private:
             if (src == '?')
                 return trans == ';';
         }
+        else if (m_lang == "hi")
+        {
+            // In Hindi, full stop is '|'.
+            if (src == '.')
+                return trans == L'।';
+        }
+        else if (m_lang == "hy")
+        {
+            // In Armenian, full stop is '։', which is often substituted with Latin ':'.
+            if (src == '.')
+                return trans == L'։' || trans == L':';
+        }
 
         return false;
     }
