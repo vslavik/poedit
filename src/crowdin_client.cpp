@@ -560,7 +560,11 @@ std::string CrowdinClient::GetValidToken() const
     {
         token = token.substr(2);
     }
-    // else: 'token' is empty string
+    else
+    {
+        // 'token' is empty or invalid, make sure it is empty
+        token.clear();
+    }
 
     m_cachedAuthToken = std::make_unique<std::string>(token);
     return token;
