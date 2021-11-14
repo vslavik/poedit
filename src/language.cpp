@@ -406,6 +406,8 @@ Language Language::FromLanguageTag(const std::string& tag)
     if (std::regex_search(locale, m, re_private_subtag))
         lang.m_code += "@" + m.str(1);
 
+    lang.m_direction = DoIsRTL(lang) ? TextDirection::RTL : TextDirection::LTR;
+
     return lang;
 }
 
