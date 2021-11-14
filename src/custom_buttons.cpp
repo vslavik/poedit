@@ -97,14 +97,13 @@
     NSColor *bg = self.window.backgroundColor;
     if (self.mouseHover)
     {
-        NSColor *highlight;
         if (@available(macOS 10.14, *)) {
-            highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+            NSColor *highlight = [bg colorWithSystemEffect:NSColorSystemEffectRollover];
+            // use only lighter version of the highlight by blending with the background
+            bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
         } else {
-            highlight = [NSColor colorWithWhite:0.72 alpha:1.0];
+            bg = [NSColor colorWithWhite:0.9 alpha:1.0];
         }
-        // use only lighter version of the highlight by blending with the background
-        bg = [bg blendedColorWithFraction:0.2 ofColor:highlight];
     }
     [StyleKit drawActionButtonWithFrame:self.bounds
                             buttonColor:bg
