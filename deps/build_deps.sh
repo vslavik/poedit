@@ -30,6 +30,14 @@ else
     YACC=/usr/local/opt/bison/bin/yacc
 fi
 
+if [ -f /opt/homebrew/opt/curl/bin/curl ] ; then
+    CURL=/opt/homebrew/opt/curl/bin/curl
+elif [ -f /usr/local/opt/curl/bin/curl ] ; then
+    CURL=/usr/local/opt/curl/bin/curl
+else
+    CURL=curl
+fi
+
 if [ -d /opt/homebrew/opt/ccache/libexec ] ; then
     CC=/opt/homebrew/opt/ccache/libexec/clang
     CXX=/opt/homebrew/opt/ccache/libexec/clang++
@@ -57,6 +65,7 @@ CONFIGURATION = $CONFIGURATION
 
 sed = $GSED
 yacc = $YACC
+curl = $CURL
 
 top_srcdir = `pwd`
 builddir = $DEPS_BUILD_DIR
