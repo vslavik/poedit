@@ -190,10 +190,10 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
     {
         item = AddNativeItem(editNS, pasteItem+1, _("Paste and Match Style"),
                              @selector(pasteAsPlainText:), @"V");
-        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
+        [item setKeyEquivalentModifierMask:NSEventModifierFlagCommand | NSEventModifierFlagOption];
         item = AddNativeItem(editNS, pasteItem+2, _("Delete"),
                              @selector(delete:), @"");
-        [item setKeyEquivalentModifierMask:NSCommandKeyMask];
+        [item setKeyEquivalentModifierMask:NSEventModifierFlagCommand];
         if (findItem != -1) findItem += 2;
     }
 
@@ -241,13 +241,13 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         [viewNS addItem:[NSMenuItem separatorItem]];
         // TRANSLATORS: This must be the same as OS X's translation of this View menu item
         item = AddNativeItem(viewNS, -1, _("Show Toolbar"), @selector(toggleToolbarShown:), @"t");
-        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
+        [item setKeyEquivalentModifierMask:NSEventModifierFlagCommand | NSEventModifierFlagOption];
         // TRANSLATORS: This must be the same as OS X's translation of this View menu item
         AddNativeItem(viewNS, -1, _(L"Customize Toolbar…"), @selector(runToolbarCustomizationPalette:), @"");
         [viewNS addItem:[NSMenuItem separatorItem]];
         // TRANSLATORS: This must be the same as OS X's translation of this View menu item
         item = AddNativeItem(viewNS, -1, _("Enter Full Screen"), @selector(toggleFullScreen:), @"f");
-        [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSControlKeyMask];
+        [item setKeyEquivalentModifierMask:NSEventModifierFlagCommand | NSEventModifierFlagControl];
 
     }
 
@@ -259,7 +259,7 @@ void MenusManager::TweakOSXMenuBar(wxMenuBar *bar)
         [windowMenu addItem:[NSMenuItem separatorItem]];
         item = AddNativeItem(windowMenu, -1, _("Welcome to Poedit"), @selector(showWelcomeWindow:), @"1");
         item.target = m_nativeMacData->actions;
-        [item setKeyEquivalentModifierMask: NSShiftKeyMask | NSCommandKeyMask];
+        [item setKeyEquivalentModifierMask: NSEventModifierFlagShift | NSEventModifierFlagCommand];
 
         [windowMenu addItem:[NSMenuItem separatorItem]];
         AddNativeItem(windowMenu, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");

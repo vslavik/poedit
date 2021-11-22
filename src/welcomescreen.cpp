@@ -65,17 +65,12 @@ public:
 #else
         SetLabel(text);
     #ifdef __WXOSX__
-        if (@available(macOS 10.11, *))
-        {
-            SetFont([NSFont systemFontOfSize:30 weight:NSFontWeightRegular]);
-        }
-        else
+        SetFont([NSFont systemFontOfSize:30 weight:NSFontWeightRegular]);
+    #else
+        auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
+        wxFont f(wxFontInfo(22).FaceName(guiface).AntiAliased());
+        SetFont(f);
     #endif
-        {
-            auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
-            wxFont f(wxFontInfo(22).FaceName(guiface).AntiAliased());
-            SetFont(f);
-        }
 #endif
     }
 };

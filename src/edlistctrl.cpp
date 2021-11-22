@@ -598,7 +598,6 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
     // See http://stackoverflow.com/questions/17095927/dynamically-changing-row-height-after-font-size-of-entire-nstableview-nsoutlin
     NSLayoutManager *lm = [[NSLayoutManager alloc] init];
     [lm setTypesetterBehavior:NSTypesetterBehavior_10_2_WithCompatibility];
-    [lm setUsesScreenFonts:NO];
     CGFloat height = [lm defaultLineHeightForFont:nativeFont];
     SetRowHeight(int(height) + PX(4));
 #elif defined(__WXMSW__)

@@ -58,7 +58,7 @@
 		B216A14E1AD9426500F2898C /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
 		B21B7B491DD4DB9F002A4C62 /* editing_area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21B7B471DD4DB9F002A4C62 /* editing_area.cpp */; };
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
-		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -Wno-deprecated-declarations"; }; };
 		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
 		B228A1531AD94FF6006B0BBC /* libwx_osx_base_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */; };
 		B228A5F521591D7E0050520D /* catalog_xliff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2377A1E2159179B0085E9C4 /* catalog_xliff.cpp */; };
@@ -1790,7 +1790,7 @@
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				POEDIT_FEATURES = "";
@@ -1864,7 +1864,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				POEDIT_FEATURES = "";
 				POEDIT_VERSION = 3.0;
 				SDKROOT = macosx;

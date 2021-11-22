@@ -141,7 +141,7 @@ TitlelessWindowBase<T>::TitlelessWindowBase(wxWindow* parent,
 #ifdef __WXOSX__
     // Pretify the window:
     NSWindow* wnd = (NSWindow*)this->GetWXWindow();
-    wnd.styleMask |= NSFullSizeContentViewWindowMask;
+    wnd.styleMask |= NSWindowStyleMaskFullSizeContentView;
     wnd.titleVisibility = NSWindowTitleHidden;
     wnd.titlebarAppearsTransparent = YES;
     wnd.movableByWindowBackground = YES;

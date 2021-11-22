@@ -228,18 +228,13 @@ ActionButton::ActionButton(wxWindow *parent, wxWindowID winid, const wxString& s
 {
     #pragma unused(sender)
     double target = (self.state == NSOnState) ? 1.0 : 0.0;
-    if (@available(macOS 10.12, *))
+
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
     {
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-        {
-            context.duration = 0.1;
-            self.animator.animationPosition = target;
-        }];
-    }
-    else
-    {
-        self.animationPosition = target;
-    }
+        context.duration = 0.1;
+        self.animator.animationPosition = target;
+    }];
+
     _parent->SendToggleEvent();
 }
 

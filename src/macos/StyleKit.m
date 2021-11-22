@@ -126,7 +126,7 @@
     //// Text Drawing
     NSRect textRect = NSMakeRect(NSMinX(frame), NSMinY(frame) + floor((NSHeight(frame) - 18) / 2 + 0.5), NSWidth(frame) - 36, 18);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
-    textStyle.alignment = NSRightTextAlignment;
+    textStyle.alignment = NSTextAlignmentRight;
 
     NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: labelColor, NSParagraphStyleAttributeName: textStyle};
 
@@ -205,7 +205,7 @@
     //// Text Drawing
     NSRect textRect = NSMakeRect(NSMinX(frame) + 14, NSMinY(frame) + floor((NSHeight(frame) - 12) * 0.50000 + 0.5), NSWidth(frame) - 27, 12);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
-    textStyle.alignment = NSLeftTextAlignment;
+    textStyle.alignment = NSTextAlignmentLeft;
 
     NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: NSColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
@@ -235,7 +235,7 @@
     //// Text Drawing
     NSRect textRect = NSMakeRect(textPosition, 25, 468, 14);
     NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
-    textStyle.alignment = NSLeftTextAlignment;
+    textStyle.alignment = NSTextAlignmentLeft;
 
     NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: osSecondaryLabelColor, NSParagraphStyleAttributeName: textStyle};
 
@@ -256,7 +256,7 @@
     //// Text 2 Drawing
     NSRect text2Rect = NSMakeRect(textPosition, 8, 468, 18);
     NSMutableParagraphStyle* text2Style = [NSMutableParagraphStyle new];
-    text2Style.alignment = NSLeftTextAlignment;
+    text2Style.alignment = NSTextAlignmentLeft;
 
     NSDictionary* text2FontAttributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize: NSFont.systemFontSize], NSForegroundColorAttributeName: osLabelColor, NSParagraphStyleAttributeName: text2Style};
 
