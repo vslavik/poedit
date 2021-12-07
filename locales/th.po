@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
 "POT-Creation-Date: 2021-06-03 11:36+0200\n"
-"PO-Revision-Date: 2021-06-03 09:36\n"
+"PO-Revision-Date: 2021-12-07 17:27\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Language: th_TH\n"
@@ -401,6 +401,7 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
+"ไม่สามารถอัพเดตการแปลจากซอร์สโค้ดได้ เนื่องจากไม่พบโค้ดใดๆ ในตำแหน่งที่ระบุในคุณสมบัติของไฟล์"
 
 msgid "Permission denied."
 msgstr "สิทธิ์การใช้งานถูกปฏิเสธ!"
@@ -408,7 +409,7 @@ msgstr "สิทธิ์การใช้งานถูกปฏิเสธ
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
-msgstr ""
+msgstr "คุณไม่ได้รับอนุญาตให้อ่านไฟล์รหัสต้นฉบับจากตำแหน่งที่ระบุในคุณสมบัติของไฟล์"
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
@@ -419,13 +420,13 @@ msgstr ""
 "ความปลอดภัยและความเป็นส่วนตัว> ความเป็นส่วนตัว> ไฟล์และโฟลเดอร์"
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr ""
+msgstr "รายการการแปลในไฟล์อาจไม่ถูกต้อง"
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
+msgstr "การอัปเดตไฟล์ล้มเหลว คลิกที่ \"รายละเอียด >>\" เพื่อดูรายละเอียด"
 
 msgid "Open translation template"
-msgstr ""
+msgstr "เปิดแม่แบบการแปล"
 
 #, c-format
 msgid "%d issue with the translation found."
@@ -519,12 +520,13 @@ msgstr "แก้ไขภาษา"
 msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
-msgstr ""
+msgstr "ไฟล์นี้มีรายการที่มีรูปแบบพหูพจน์ แต่ไม่ได้กำหนดค่าส่วนหัว Plural-Forms ไว้"
 
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr ""
+"รายการในไฟล์นี้มีการนับรูปแบบพหูพจน์แตกต่างจากที่กำหนดไว้ในส่วนหัว Plural-Forms ของไฟล์"
 
 msgid "Required header Plural-Forms is missing."
 msgstr "ส่วนหัว Plural-Forms ที่จำเป็นไม่มีอยู่"
@@ -544,7 +546,7 @@ msgstr "แก้ไขส่วนหัว"
 #. to rephrase it, e.g. to an equivalent of "for language %s".
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
-msgstr ""
+msgstr "นิพจน์รูปแบบพหูพจน์ที่ใช้โดยไฟล์ผิดปกติสำหรับ %s"
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
 msgid "Review"
@@ -552,7 +554,7 @@ msgstr "ตรวจทาน"
 
 #, c-format
 msgid "Error loading translation file “%s”."
-msgstr ""
+msgstr "เกิดข้อผิดพลาดในการโหลดไฟล์การแปล \"%s\""
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -576,7 +578,7 @@ msgid " (unsaved)"
 msgstr " (ยังไม่ได้บันทึก)"
 
 msgid " (modified)"
-msgstr "(ที่ถูกปรับเปลี่ยน)"
+msgstr " (ถูกแก้ไข)"
 
 #, c-format
 msgid "Failed to update translation memory: %s"
@@ -627,11 +629,11 @@ msgstr "แก้ไขคำแนะนำ"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code Occurrences"
-msgstr ""
+msgstr "ตำแหน่งที่พบในรหัส"
 
 #. TRANSLATORS: Meaning occurrences of the string in source code
 msgid "Code occurrences"
-msgstr ""
+msgstr "ตำแหน่งที่พบในรหัส"
 
 msgid "&Bookmarks"
 msgstr "&บุ๊คมาร์ค"
@@ -670,10 +672,10 @@ msgid "Show Status Bar"
 msgstr "แสดงแถบสถานะ"
 
 msgid "String length in characters: translation | source"
-msgstr ""
+msgstr "ความยาวสตริงในหน่วยอักขระ: การแปล | ต้นฉบับ"
 
 msgid "String length in characters"
-msgstr ""
+msgstr "ความยาวสตริงในหน่วยอักขระ"
 
 msgid "Source text"
 msgstr "ข้อความต้นฉบับ"
@@ -715,7 +717,7 @@ msgid "Create new translation"
 msgstr "สร้างการแปลใหม่"
 
 msgid "Make a new translation from this POT file."
-msgstr ""
+msgstr "สร้างการแปลใหม่จากไฟล์ POT นี้"
 
 msgid "Everything"
 msgstr "ทุกอย่าง"
@@ -779,31 +781,33 @@ msgstr "เปิดในตัวแก้ไข"
 msgid ""
 "No information about this string’s occurrences in the source code is "
 "provided in the file."
-msgstr ""
+msgstr "ไม่มีข้อมูลเกี่ยวกับตำแหน่งที่พบของสตริงนี้ในรหัสต้นฉบับในไฟล์"
 
 msgid "No usage information"
-msgstr ""
+msgstr "ไม่มีข้อมูลการใช้"
 
 #, c-format
 msgid "%d code occurrence"
 msgid_plural "%d code occurrences"
-msgstr[0] ""
+msgstr[0] "ตำแหน่งที่พบในรหัส %d ตำแหน่ง"
 
 msgid "Source code not found"
-msgstr ""
+msgstr "ไม่พบรหัสต้นฉบับ"
 
 msgid ""
 "Poedit cannot show source code where the string is used, because the file is "
 "either not available in the referenced location or it is a symbolic "
 "reference that doesn’t point to a real file."
 msgstr ""
+"Poedit ไม่สามารถแสดงรหัสต้นฉบับส่วนที่ใช้สตริงได้ เนื่องจากไม่มีไฟล์ในตำแหน่งที่อ้างอิง "
+"หรือเป็นการอ้างอิงแบบสัญลักษณ์ที่ไม่ชี้ไปยังไฟล์จริง"
 
 msgid "File cannot be opened"
-msgstr ""
+msgstr "ไม่สามารถเปิดไฟล์"
 
 #, c-format
 msgid "Poedit was unable to open the “%s” file."
-msgstr ""
+msgstr "Poedit ไม่สามารถเปิดไฟล์ “%s”"
 
 msgid "Find"
 msgstr "ค้นหา"
@@ -918,22 +922,22 @@ msgstr "<ไม่มีชื่อ>"
 
 #, c-format
 msgid "Do you want to delete project “%s”?"
-msgstr ""
+msgstr "คุณต้องการลบโครงการ “%s” หรือไม่?"
 
 msgid "Delete project"
-msgstr ""
+msgstr "ลบโครงการ"
 
 msgid "Deleting the project will not delete any translation files."
-msgstr ""
+msgstr "การลบโครงการจะไม่ลบไฟล์การแปลใดๆ"
 
 msgid "Confirmation"
 msgstr "การยืนยัน"
 
 msgid "Update all catalogs in this project?"
-msgstr ""
+msgstr "ต้องการอัพเดตรายการทั้งหมดในโครงการนี้หรือไม่?"
 
 msgid "Performs update from source code on all files in the project."
-msgstr ""
+msgstr "ทำการอัพเดตจากรหัสต้นฉบับบนไฟล์ทั้งหมดในโครงการ"
 
 msgid "Catalogs Manager"
 msgstr "ตัวจัดการแค็ตตาล็อก"
@@ -1059,7 +1063,7 @@ msgid "Email:"
 msgstr "อีเมล:"
 
 msgid "you@example.com"
-msgstr ""
+msgstr "you@example.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1075,7 +1079,7 @@ msgid "Automatically compile MO file when saving"
 msgstr "คอมไพล์ไฟล์ MO โดยอัตโนมัติเมื่อบันทึก"
 
 msgid "Show summary after updating files"
-msgstr ""
+msgstr "แสดงสรุปหลังจากอัพเดตไฟล์"
 
 msgid "Check spelling"
 msgstr "การตรวจสอบการสะกด"
@@ -1375,10 +1379,10 @@ msgid "Cancelling…"
 msgstr "กำลังยกเลิก…"
 
 msgid "Drag Folders or Files Here"
-msgstr ""
+msgstr "ลากโฟลเดอร์หรือไฟล์มาที่นี่"
 
 msgid "Drag folders or files here"
-msgstr ""
+msgstr "ลากโฟลเดอร์หรือไฟล์มาที่นี่"
 
 msgid "Add Folders…"
 msgstr "เพิ่มโฟลเดอร์…"
@@ -1400,14 +1404,14 @@ msgstr "เพิ่มอักขระตัวแทน…"
 
 #. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
 msgid "Reveal in Finder"
-msgstr ""
+msgstr "แสดงใน Finder"
 
 #. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
 msgid "Show in Explorer"
-msgstr ""
+msgstr "แสดงใน Explorer"
 
 msgid "Show in Folder"
-msgstr ""
+msgstr "แสดงในโฟลเดอร์"
 
 msgid "Paths"
 msgstr "เส้นทาง"
@@ -1449,13 +1453,13 @@ msgid "Please save the file first. This section cannot be edited until then."
 msgstr "โปรดบันทึกไฟล์ก่อน จึงจะสามารถแก้ไขส่วนนี้ได้"
 
 msgid "Plural form translations"
-msgstr ""
+msgstr "การแปลรูปพหูพจน์"
 
 msgid "Not all plural forms are translated."
 msgstr "ไม่ได้แปลรูปแบบพหูพจน์ทั้งหมด"
 
 msgid "Inconsistent upper/lower case"
-msgstr ""
+msgstr "ตัวพิมพ์ใหญ่-เล็กไม่สม่ำเสมอกัน"
 
 msgid "The translation should start as a sentence."
 msgstr "การแปลควรเริ่มต้นด้วยประโยค"
@@ -1464,7 +1468,7 @@ msgid "The translation should start with a lowercase character."
 msgstr "การแปลควรเริ่มต้นด้วยตัวอักษรตัวพิมพ์เล็ก"
 
 msgid "Inconsistent whitespace"
-msgstr ""
+msgstr "ช่องว่างไม่สม่ำเสมอกัน"
 
 msgid "The translation doesn’t start with a space."
 msgstr "การแปลไม่ได้เริ่มต้นด้วยช่องว่าง"
@@ -1485,7 +1489,7 @@ msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "การแปลมีช่องว่างในตอนท้าย แต่ในข้อความต้นฉบับไม่มีช่องว่างในตอนท้าย"
 
 msgid "Punctuation checks"
-msgstr ""
+msgstr "ตรวจสอบเครื่องหมายวรรคตอน"
 
 #, c-format
 msgid "The translation should end with “%s”."
@@ -1500,22 +1504,22 @@ msgid "The translation ends with “%s”, but the source text ends with “%s�
 msgstr "การแปลสิ้นสุดด้วย \"%s\" แต่ในข้อความต้นฉบับสิ้นสุดด้วย \"%s\""
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "ล้างรายการ"
 
 msgid "Clear menu"
-msgstr ""
+msgstr "ล้างรายการ"
 
 msgid "Comment:"
 msgstr "คำแนะนำ:"
 
 msgid "Update"
-msgstr ""
+msgstr "อัปเดต"
 
 msgid "&Delete"
 msgstr "&ลบ"
 
 msgid "Delete the comment"
-msgstr ""
+msgstr "ลบความคิดเห็น"
 
 msgid "Edit project"
 msgstr "แก้ไขโครงการ"
@@ -1551,7 +1555,7 @@ msgid "Open Recent"
 msgstr "เปิดล่าสุด"
 
 msgid "Open recent"
-msgstr ""
+msgstr "เปิดไฟล์ล่าสุด"
 
 msgid "Open from Crowdin…"
 msgstr "เปิดจาก Crowdin…"
@@ -1560,10 +1564,10 @@ msgid "Open From Crowdin…"
 msgstr "เปิดจาก Crowdin…"
 
 msgid "&Start window"
-msgstr ""
+msgstr "หน้าต่างเมื่อเ&ริ่มทำงาน"
 
 msgid "&Start Window"
-msgstr ""
+msgstr "หน้าต่างเมื่อเ&ริ่มทำงาน"
 
 msgid "Catalogs &manager"
 msgstr "ตัวจัดการ&แค็ตตาล็อก"
@@ -1696,10 +1700,10 @@ msgid "&Untranslated Entries First"
 msgstr "ขึ้นต้นด้วยรายการที่ยังไ&ม่ได้แปลก่อน"
 
 msgid "&Show code occurrences"
-msgstr ""
+msgstr "แ&สดงตำแหน่งที่พบในรหัส"
 
 msgid "&Show Code Occurrences"
-msgstr ""
+msgstr "แ&สดงตำแหน่งที่พบในรหัส"
 
 msgid "Show sidebar"
 msgstr "แสดงแถบด้านข้าง"
@@ -1708,7 +1712,7 @@ msgid "Show status bar"
 msgstr "แสดงแถบสถานะ"
 
 msgid "&Translation"
-msgstr ""
+msgstr "&การแปล"
 
 msgid "&Update from source code"
 msgstr "&อัพเดตจากซอร์สโค้ด"
@@ -1929,6 +1933,8 @@ msgid ""
 "These strings were found in the sources but were not in the file.\n"
 "Poedit will add them to the file now."
 msgstr ""
+"พบสตริงเหล่านี้ในต้นฉบับ แต่ไม่ได้อยู่ในไฟล์\n"
+"Poedit จะเพิ่มสตริงเหล่านี้ไปยังไฟล์ทันที"
 
 msgid "New strings"
 msgstr "สตริงใหม่"
@@ -1937,6 +1943,8 @@ msgid ""
 "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
 msgstr ""
+"สตริงเหล่านี้ไม่ได้อยู่ในรหัสต้นฉบับอีกต่อไปแล้ว\n"
+"Poedit จะเอาสตริงเหล่านี้ออกจากไฟล์ทันที"
 
 msgid "Obsolete strings"
 msgstr "ข้อมูลโดยแท้"
@@ -1948,10 +1956,10 @@ msgid "Open"
 msgstr "เปิด"
 
 msgid "Open file"
-msgstr ""
+msgstr "เปิดไฟล์"
 
 msgid "Save file"
-msgstr ""
+msgstr "บันทึกไฟล์"
 
 msgid "Validate"
 msgstr "ตรวจสอบ"
@@ -1976,7 +1984,7 @@ msgstr "แสดงหรือซ่อนแถบด้านข้าง"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text"
-msgstr ""
+msgstr "ข้อความต้นฉบับก่อนหน้านี้"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -1985,10 +1993,10 @@ msgstr ""
 "ข้อความต้นฉบับ (ก่อนที่จะถูกเปลี่ยนระหว่างการอัพเดต) ที่เกี่ยวข้องกับการแปลที่ไม่ถูกต้องในขณะนี้"
 
 msgid "Notes for translators"
-msgstr ""
+msgstr "หมายเหตุสำหรับนักแปล"
 
 msgid "Comment"
-msgstr ""
+msgstr "ความคิดเห็น"
 
 msgid "Add comment"
 msgstr "เพิ่มคำแนะนำ"
@@ -2003,7 +2011,7 @@ msgid "Delete from translation memory"
 msgstr "ลบออกจากหน่วยความจำการแปล"
 
 msgid "Translation suggestions"
-msgstr ""
+msgstr "คำแนะนำการแปล"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
@@ -2054,7 +2062,7 @@ msgstr "(เรียนรู้เพิ่มเติมเกี่ยว�
 msgid ""
 "The simplest way to fill this file with translations is to update it from a "
 "POT:"
-msgstr ""
+msgstr "วิธีการเติมการแปลในไฟล์นี้ที่ง่ายที่สุดคือให้อัปเดตข้อมูลจากไฟล์ POT:"
 
 msgid "Update from POT"
 msgstr "อัพเดตจากไฟล์ POT"
@@ -2079,25 +2087,25 @@ msgid "Version %s"
 msgstr "รุ่น %s"
 
 msgid "Create new…"
-msgstr ""
+msgstr "สร้างใหม่…"
 
 msgid "Create new translation from POT template."
-msgstr ""
+msgstr "สร้างการแปลใหม่จากแม่แบบ POT"
 
 msgid "Browse files"
-msgstr ""
+msgstr "เรียกดูไฟล์"
 
 msgid "Open and edit translation files."
-msgstr ""
+msgstr "เปิดและแก้ไขไฟล์การแปล"
 
 msgid "Translate Crowdin project"
-msgstr ""
+msgstr "แปลโครงการ Crowdin"
 
 msgid "Collaborate with others in a Crowdin project."
-msgstr ""
+msgstr "ทํางานร่วมกับผู้อื่นในโครงการ Crowdin"
 
 msgid "Recent files"
-msgstr ""
+msgstr "ไฟล์ล่าสุด"
 
 msgid "Sync"
 msgstr "ซิงค์"

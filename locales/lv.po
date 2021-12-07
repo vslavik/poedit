@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
 "POT-Creation-Date: 2021-06-03 11:36+0200\n"
-"PO-Revision-Date: 2021-06-03 09:36\n"
+"PO-Revision-Date: 2021-12-07 17:26\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv_LV\n"
@@ -37,13 +37,13 @@ msgid "Extracting translatable strings…"
 msgstr "Izvērš tulkojamos vārdus…"
 
 msgid "Failed to load file with extracted translations."
-msgstr ""
+msgstr "Kļūda ielādējot failu ar tulkojumiem."
 
 msgid "Merging differences…"
 msgstr "Apvieno atšķirības…"
 
 msgid "Updating translations"
-msgstr ""
+msgstr "Jaunināt tulkojumus"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
@@ -81,15 +81,17 @@ msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Rinda %d failā \"%s\" ir bojāta (nederīgi %s dati)."
 
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
-msgstr ""
+msgstr "Bojāts PO fails: vienskaitļa forma msgstr lietota kopā ar msgid_plural"
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
-msgstr ""
+msgstr "Bojāts PO fails: daudzskaitļa forma msgstr lietota bez msgid_plural"
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
+"Radās kļūdas ielādējot failu. Rezultātā daži dati varētu būt bojāti vai "
+"varētu iztrūkt."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -118,9 +120,13 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
+"Failu nevar saglabāt \"%s\" kodējumā, kā norādīts kataloga iestatījumos.\n"
+"\n"
+"Tas tā vietā tika saglabāts UTF-8 kodējumā un iestatījums tika attiecīgi "
+"izmainīts."
 
 msgid "Error saving file"
-msgstr ""
+msgstr "Kļūda saglabājot failu"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -163,7 +169,7 @@ msgid "Syncing error"
 msgstr "Sinhronizācijas kļūda"
 
 msgid "Add"
-msgstr ""
+msgstr "Pievienot"
 
 msgid "JSON request error"
 msgstr "JSON pieprasījuma kļūda"
@@ -338,13 +344,13 @@ msgid ""
 msgstr ""
 
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorēt"
 
 msgid "Reload File"
-msgstr ""
+msgstr "Pārlādēt failu"
 
 msgid "The file has been modified. Do you want to save changes?"
-msgstr ""
+msgstr "Fails tika izmainīts. Vai vēlaties saglabāt izmaiņas?"
 
 msgid "Save changes"
 msgstr "Saglabāt izmaiņas"
@@ -362,25 +368,25 @@ msgid "Don’t Save"
 msgstr "Nesaglabāt"
 
 msgid "The changes made by the other application will be lost if you save."
-msgstr ""
+msgstr "Saglabājot failu citu programmu ieviestās izmaiņas tiks zaudētas."
 
 msgid "Cancel"
 msgstr "Atcelt"
 
 msgid "Save Anyway"
-msgstr ""
+msgstr "Vienalga saglabāt"
 
 msgid "Save anyway"
-msgstr ""
+msgstr "Vienalga saglabāt"
 
 msgid "Save as…"
 msgstr "Saglabāt kā…"
 
 msgid "Compile to…"
-msgstr ""
+msgstr "Kompilēt uz…"
 
 msgid "Compiled Translation Files"
-msgstr ""
+msgstr "Kompilētie tulkojuma faili"
 
 msgid "Export as…"
 msgstr "Eksportēt kā…"
@@ -390,10 +396,10 @@ msgstr "HTML faili"
 
 #, c-format
 msgid "In: %s"
-msgstr ""
+msgstr "Uz: %s"
 
 msgid "Source code not available."
-msgstr ""
+msgstr "Sākumkods nav pieejams."
 
 msgid "Updating failed"
 msgstr "Neizdevās atjaunināt"
@@ -402,29 +408,35 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the file’s Properties."
 msgstr ""
+"Tulkojums nevar tikt jaunināts no sākumkoda, jo kods nav atrasts norādītajos "
+"failu Iestatījumos."
 
 msgid "Permission denied."
-msgstr ""
+msgstr "Piekļuve aizliegta."
 
 msgid ""
 "You don’t have permission to read source code files from the location "
 "specified in the file’s Properties."
 msgstr ""
+"Jums nav tiesību sākumkoda failu piekļuvei norādītajos failu Iestatījumos."
 
 #. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
 msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"Ja agrāk tika atteikts piekļuve failiem, to var atjaunot Sistēmas "
+"iestatījumi > Drošība un konfidencialitāte > Konfidencialitāte > Faili un "
+"mapes."
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr ""
+msgstr "Tulkojuma ierakstos, iespējams, ir kļūda."
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
-msgstr ""
+msgstr "Kļūda jauninot failu. Papildus informācijai spiediet 'Detaļas>>'."
 
 msgid "Open translation template"
-msgstr ""
+msgstr "Atvērt tulkojuma šablonu"
 
 #, c-format
 msgid "%d issue with the translation found."
@@ -440,24 +452,29 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
+"Ieraksti ar kļūdām tika izdalīti sarkanā krāsā. Ja izvēlēties tādu ierakstu, "
+"tiks parādīta informācija par kļūdu."
 
 msgid "The file was saved safely."
-msgstr ""
+msgstr "Fails veiksmīgi tika saglabāts."
 
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
+"Fails tika saglabāts un kompilēts MO formātā, bet iespējams, ka darbosies "
+"nekorekti."
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
+"Fails bija saglabāts, bet to neizdevās nokompilēt MO formātā un izmantot."
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
-msgstr ""
+msgstr "Fails tika sakompilēts MO formātā, bet visticamāk darbosies nekorekti."
 
 msgid "The file cannot be compiled into the MO format and used."
 msgstr ""

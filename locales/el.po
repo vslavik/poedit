@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
 "POT-Creation-Date: 2021-06-03 11:36+0200\n"
-"PO-Revision-Date: 2021-06-03 09:36\n"
+"PO-Revision-Date: 2021-12-07 17:36\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -86,6 +86,8 @@ msgstr ""
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
+"Κατεστραμμένο αρχείο PO: το msgstr μορφής πληθυντικού χρησιμοποιείται χωρίς "
+"msgid_plural"
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
@@ -123,6 +125,10 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
+"Δεν ήταν δυνατή η αποθήκευση του αρχείου στο σύνολο χαρακτήρων “%s” όπως "
+"ορίζουν οι ρυθμίσεις μετάφρασης.\n"
+"\n"
+"Αντ' αυτού, αποθηκεύτηκε σε UTF-8 και η ρύθμιση τροποποιήθηκε αναλόγως."
 
 msgid "Error saving file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
@@ -143,10 +149,10 @@ msgid "(Use default language)"
 msgstr "(Χρήση προεπιλεγμένης γλώσσας)"
 
 msgid "Language selection"
-msgstr "Επιλογή Γλώσσας"
+msgstr "Επιλογή γλώσσας"
 
 msgid "Select your preferred language"
-msgstr "Επιλογή της γλώσσας προτίμησης"
+msgstr "Επιλέξτε την προτιμώμενη γλώσσα σας"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr ""
@@ -356,7 +362,7 @@ msgid "Reload File"
 msgstr "Επαναφόρτωση Αρχείου"
 
 msgid "The file has been modified. Do you want to save changes?"
-msgstr ""
+msgstr "Το αρχείο έχει τροποποιηθεί. Θέλετε να αποθηκεύσετε τις αλλαγές;"
 
 msgid "Save changes"
 msgstr "Αποθήκευση αλλαγών"
@@ -375,6 +381,7 @@ msgstr "Χωρίς αποθήκευση"
 
 msgid "The changes made by the other application will be lost if you save."
 msgstr ""
+"Οι αλλαγές που έγιναν από την άλλη εφαρμογή θα χαθούν αν κάνετε αποθήκευση."
 
 msgid "Cancel"
 msgstr "Ακύρωση"
@@ -432,12 +439,17 @@ msgid ""
 "If you previously denied access to your files, you can allow it in System "
 "Preferences > Security & Privacy > Privacy > Files & Folders."
 msgstr ""
+"Αν αρνηθήκατε στο παρελθόν την πρόσβαση στα αρχεία σας, μπορείτε να την "
+"επιτρέψετε στις Προτιμήσεις συστήματος > Ασφάλεια & απόρρητο > Απόρρητο > "
+"Αρχεία & φάκελοι."
 
 msgid "Translation entries in the file are probably incorrect."
-msgstr ""
+msgstr "Οι καταχωρήσεις μετάφρασης στο αρχείο είναι πιθανώς λανθασμένες."
 
 msgid "Updating the file failed. Click on 'Details >>' for details."
 msgstr ""
+"Αποτυχία ενημέρωσης αρχείου. Κάντε κλικ στο 'Λεπτομέρειες >>' για "
+"λεπτομέρειες."
 
 msgid "Open translation template"
 msgstr "Άνοιγμα προτύπου μετάφρασης"
@@ -551,18 +563,22 @@ msgid ""
 "This file has entries with plural forms, but doesn’t have Plural-Forms "
 "header configured."
 msgstr ""
+"Αυτό το αρχείο περιέχει καταχωρήσεις με πληθυντικούς αριθμούς, αλλά δεν "
+"είναι ρυθμισμένη η κεφαλίδα \"Plural-Forms\" του."
 
 msgid ""
 "Entries in this file have different plural forms count from what the file’s "
 "Plural-Forms header says"
 msgstr ""
+"Οι καταχωρήσεις σε αυτό το αρχείο έχουν διαφορετικό αριθμό μορφών "
+"πληθυντικού από αυτόν που αναφέρει η κεφαλίδα \"Plural-Forms\" του αρχείου"
 
 msgid "Required header Plural-Forms is missing."
 msgstr "Λείπει η απαιτούμενη κεφαλίδα «Plural-Forms»."
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Σφάλμα σύνταξης στην κεφαλίδα «Plural-Forms» (\"%s\")."
+msgstr "Σφάλμα σύνταξης στην κεφαλίδα \"Plural-Forms\" (\"%s\")."
 
 msgid "Fix the Header"
 msgstr "Επιδιόρθωση της κεφαλίδας"
@@ -576,6 +592,7 @@ msgstr "Επιδιόρθωση κεφαλίδας"
 #, c-format
 msgid "Plural forms expression used by the file is unusual for %s."
 msgstr ""
+"Η έκφραση των μορφών πληθυντικού του αρχείου είναι ασυνήθιστη για τα %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
 msgid "Review"
@@ -640,10 +657,10 @@ msgid "Purge"
 msgstr "Εκκαθάριση"
 
 msgid "Copy from source text"
-msgstr "Αντιγραφή από το πηγαίο κείμενο"
+msgstr "Αντιγραφή από αρχικό κείμενο"
 
 msgid "Copy from Source Text"
-msgstr "Αντιγραφή από το Πηγαίο Κείμενο"
+msgstr "Αντιγραφή από αρχικό κείμενο"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
@@ -707,13 +724,13 @@ msgid "Show Status Bar"
 msgstr "Εμφάνιση μπάρας κατάστασης"
 
 msgid "String length in characters: translation | source"
-msgstr ""
+msgstr "Μήκος συμβολοσειράς σε χαρακτήρες: μετάφραση | αρχική"
 
 msgid "String length in characters"
 msgstr "Μήκος συμβολοσειράς σε χαρακτήρες"
 
 msgid "Source text"
-msgstr "Πηγαίο κείμενο"
+msgstr "Αρχικό κείμενο"
 
 msgid "Singular"
 msgstr "Ενικός"
@@ -780,12 +797,12 @@ msgstr "Άλλο"
 
 #, c-format
 msgid "%s Format"
-msgstr "%s Μορφή"
+msgstr "Μορφή %s"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
 #, c-format
 msgid "%s format"
-msgstr "%s μορφή"
+msgstr "Μορφή %s"
 
 #, c-format
 msgid "Translation — %s"
@@ -796,7 +813,7 @@ msgstr "ID"
 
 #, c-format
 msgid "Source text — %s"
-msgstr "Πηγαίο κείμενο — %s"
+msgstr "Αρχικό κείμενο — %s"
 
 msgid "unknown language"
 msgstr "άγνωστη γλώσσα"
@@ -916,13 +933,13 @@ msgid "Language of the translation:"
 msgstr "Γλώσσα της μετάφρασης:"
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Διαχειριστής καταλόγων"
+msgstr "Poedit - Διαχείριση καταλόγων"
 
 msgid "Edit…"
 msgstr "Επεξεργασία…"
 
 msgid "Create new translations project"
-msgstr "Δημιουργία νέας εργασίας μετάφρασης"
+msgstr "Δημιουργία νέου έργου μετάφρασης"
 
 msgid "Delete the project"
 msgstr "Διαγραφή έργου"
@@ -969,7 +986,7 @@ msgid "Delete project"
 msgstr "Διαγραφή έργου"
 
 msgid "Deleting the project will not delete any translation files."
-msgstr ""
+msgstr "Η διαγραφή του έργου δεν θα διαγράψει κανένα αρχείο μετάφρασης."
 
 msgid "Confirmation"
 msgstr "Επιβεβαίωση"
@@ -978,7 +995,7 @@ msgid "Update all catalogs in this project?"
 msgstr "Ενημέρωση όλων των καταλόγων αυτού του έργου;"
 
 msgid "Performs update from source code on all files in the project."
-msgstr ""
+msgstr "Εκτελεί ενημέρωση από τον πηγαίο κώδικα σε όλα τα αρχεία του έργου."
 
 msgid "Catalogs Manager"
 msgstr "Διαχείριση καταλόγων"
@@ -1092,7 +1109,7 @@ msgid "Bring All to Front"
 msgstr "Φέρτε όλα προς τα εμπρός"
 
 msgid "Information about the translator"
-msgstr "Πληροφορίες σχετικά με το μεταφραστή"
+msgstr "Πληροφορίες σχετικά με τον μεταφραστή"
 
 msgid "Name:"
 msgstr "Όνομα:"
@@ -1110,14 +1127,14 @@ msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr ""
-"Το όνομα σας και η διεύθυνση email σας χρησιμοποιούνται μόνο για να ορίσουν "
-"την επικεφαλίδα Τελευταίος-Μεταφραστής στα αρχεία GNU gettext."
+"Το όνομα και η διεύθυνση email σας χρησιμοποιούνται μόνο για τον ορισμό της "
+"επικεφαλίδας \"Last-Translator\" στα αρχεία GNU gettext."
 
 msgid "Editing"
 msgstr "Επεξεργασία"
 
 msgid "Automatically compile MO file when saving"
-msgstr "Αυτόματη σύνταξη αρχείου MO όταν αποθηκεύεται"
+msgstr "Αυτόματη μεταγλώττιση αρχείου MO κατά την αποθήκευση"
 
 msgid "Show summary after updating files"
 msgstr "Εμφάνιση σύνοψης μετά την ενημέρωση αρχείων"
@@ -1274,8 +1291,8 @@ msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
 msgstr ""
-"Οι εξαγωγείς πηγαίου κώδικα χρησιμοποιούνται για να βρουν μεταφράσιμες "
-"συμβολοσειρές στα αρχεία του πηγαίου κώδικα και τις εξάγουν ώστε να "
+"Τα εργαλεία εξαγωγής πηγαίου κώδικα χρησιμοποιούνται για την εύρεση και την "
+"εξαγωγή μεταφράσιμων συμβολοσειρών από τα αρχεία πηγαίου κώδικα ώστε να "
 "μπορέσουν να μεταφραστούν."
 
 msgid "Custom Extractors:"
@@ -1309,7 +1326,7 @@ msgid "Accounts"
 msgstr "Λογαριασμοί"
 
 msgid "Automatically check for updates"
-msgstr "Ελέγχει αυτόματα για ενημερώσεις"
+msgstr "Αυτόματος έλεγχος για ενημερώσεις"
 
 msgid "Include beta versions"
 msgstr "Συμπερίληψη εκδόσεων beta"
@@ -1318,7 +1335,7 @@ msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr ""
-"Οι εκδόσεις Beta περιέχουν τις πιο πρόσφατες λειτουργίες και βελτιώσεις, "
+"Οι εκδόσεις beta περιέχουν τις πιο πρόσφατες λειτουργίες και βελτιώσεις, "
 "αλλά μπορεί να είναι λιγότερο σταθερές."
 
 msgid "Updates"
@@ -1329,7 +1346,7 @@ msgid ""
 "have specific requirements e.g. because of version control."
 msgstr ""
 "Αυτές οι ρυθμίσεις επηρεάζουν την εσωτερική μορφοποίηση των αρχείων PO. "
-"Προσαρμόστε τες αν έχετε ειδικές απαιτήσεις π.χ λόγω ελέγχου έκδοσης."
+"Προσαρμόστε τις αν έχετε ειδικές απαιτήσεις π.χ. λόγω ελέγχου έκδοσης."
 
 msgid "Line endings:"
 msgstr "Καταλήξεις γραμμής:"
@@ -1345,7 +1362,7 @@ msgid "Wrap at:"
 msgstr "Αναδίπλωση σε:"
 
 msgid "Preserve formatting of existing files"
-msgstr "Διατηρήστε την μορφοποίηση των υπαρχόντων αρχείων"
+msgstr "Διατήρηση μορφοποίησης υπαρχόντων αρχείων"
 
 msgid "Advanced"
 msgstr "Σύνθετα"
@@ -1497,7 +1514,7 @@ msgid "Additional keywords"
 msgstr "Επιπρόσθετες λέξεις-κλειδιά"
 
 msgid "Name of the project the translation is for"
-msgstr "Το όνομα της εργασίας για την οποία είναι η μετάφραση"
+msgstr "Το όνομα του έργου για το οποίο είναι η μετάφραση"
 
 msgid "Team name and email address or URL"
 msgstr "Όνομα ομάδας και διεύθυνση email ή διεύθυνση URL"
@@ -1601,7 +1618,7 @@ msgid "&File"
 msgstr "&Αρχείο"
 
 msgid "&New…"
-msgstr "& Νέο…"
+msgstr "&Νέο…"
 
 msgid "New from &POT/PO file…"
 msgstr "Νέα από αρχείο &POT/PO…"
@@ -1649,7 +1666,7 @@ msgid "Save &As…"
 msgstr "Αποθήκευση &ως…"
 
 msgid "Compile to MO…"
-msgstr "Σύνθεση σε MO…"
+msgstr "Μεταγλώττιση σε MO…"
 
 msgid "E&xport as HTML…"
 msgstr "E&ξαγωγή ως HTML…"
@@ -1713,10 +1730,10 @@ msgid "&Preferences"
 msgstr "&Προτιμήσεις"
 
 msgid "Show string &ID"
-msgstr "Προβολή του Αριθμού &Ταυτότητας του στίχου"
+msgstr "Εμφάνιση αναγνωριστικού &συμβολοσειράς"
 
 msgid "Show String &ID"
-msgstr "Προβολή του Αριθμού &Ταυτότητας του Στίχου"
+msgstr "Εμφάνιση αναγνωριστικού &συμβολοσειράς"
 
 msgid "Show warnings"
 msgstr "Προβολή προειδοποιήσεων"
@@ -1860,7 +1877,7 @@ msgid "&GNU gettext manual"
 msgstr "&Οδηγίες χρήσης του GNU gettext"
 
 msgid "&GNU gettext Manual"
-msgstr "&Οδηγίες Χρήσης του GNU gettext"
+msgstr "&Οδηγίες χρήσης του GNU gettext"
 
 msgid "&About Poedit"
 msgstr "&Σχετικά με το Poedit"
@@ -1928,7 +1945,7 @@ msgid "Translation Properties"
 msgstr "Ιδιότητες μετάφρασης"
 
 msgid "Project name and version:"
-msgstr "Όνομα εργασίας και έκδοση:"
+msgstr "Όνομα και έκδοση έργου:"
 
 msgid "Language team:"
 msgstr "Ομάδα μετάφρασης:"
@@ -1937,13 +1954,13 @@ msgid "Plural forms:"
 msgstr "Μορφές πληθυντικού:"
 
 msgid "Use default rules for this language"
-msgstr "Χρήση των προκαθορισμένων κανόνων για αυτή τη γλώσσα"
+msgstr "Χρήση προεπιλεγμένων κανόνων για αυτή τη γλώσσα"
 
 msgid "Use custom expression"
 msgstr "Χρήση προσαρμοσμένων εκφράσεων"
 
 msgid "Learn about plural forms"
-msgstr "Πληροφορίες για τις Μορφές Πληθυντικού"
+msgstr "Μάθετε για τις μορφές πληθυντικού"
 
 msgid "Charset:"
 msgstr "Σύνολο χαρακτήρων:"
@@ -1985,9 +2002,11 @@ msgstr ""
 
 msgid "Also use default keywords for supported languages"
 msgstr ""
+"Χρησιμοποιήστε επίσης τις προεπιλεγμένες λέξεις-κλειδιά για υποστηριζόμενες "
+"γλώσσες"
 
 msgid "Learn about gettext keywords"
-msgstr "Εκμάθηση από λέξεις-κλειδιά του γκέττεξτ"
+msgstr "Μάθετε για τις λέξεις-κλειδιά του gettext"
 
 msgid "Update summary"
 msgstr "Περίληψη ενημέρωσης"
@@ -2001,12 +2020,14 @@ msgstr ""
 "Το Poedit θα τα προσθέσει στο αρχείο τώρα."
 
 msgid "New strings"
-msgstr "Νέοι στίχοι"
+msgstr "Νέες συμβολοσειρές"
 
 msgid ""
 "These strings are no longer in the source code.\n"
 "Poedit will remove them from the file now."
 msgstr ""
+"Αυτές οι συμβολοσειρές δεν υπάρχουν πλέον στον πηγαίο κώδικα.\n"
+"Το Poedit θα τις αφαιρέσει από το αρχείο."
 
 msgid "Obsolete strings"
 msgstr "Παρωχημένες συμβολοσειρές"
@@ -2046,7 +2067,7 @@ msgstr "Εμφάνιση ή απόκρυψη πλευρικής γραμμής"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text"
-msgstr "Προηγούμενο πηγαίο κείμενο"
+msgstr "Προηγούμενο αρχικό κείμενο"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
@@ -2114,6 +2135,12 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
+"Οι μεταφράσιμες καταχωρήσεις δεν προστίθενται αυτόματα στο σύστημα του "
+"Gettext, αλλά εξάγονται αυτόματα\n"
+"από τον πηγαίο κώδικα. Με αυτόν τον τρόπο, παραμένουν ενημερωμένες και "
+"ακριβείς.\n"
+"Οι μεταφραστές χρησιμοποιούν συνήθως τα αρχεία προτύπων PO (POT), που "
+"προετοιμάζονται από τον προγραμματιστή."
 
 msgid "(Learn more about GNU gettext)"
 msgstr "(Μάθε περισσότερα για το GNU gettext)"
@@ -2165,7 +2192,7 @@ msgid "Translate Crowdin project"
 msgstr "Μετάφραση έργου Crowdin"
 
 msgid "Collaborate with others in a Crowdin project."
-msgstr "Συνεργαστείτε με άλλους σε ένα έργο Crowdin."
+msgstr "Συνεργασία με άλλους μεταφραστές σε ένα έργο Crowdin."
 
 msgid "Recent files"
 msgstr "Πρόσφατα αρχεία"
