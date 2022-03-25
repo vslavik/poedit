@@ -1078,6 +1078,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     about.SetCopyright(L"Copyright \u00a9 1999-2021 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
     about.SetWebSite("https://poedit.net");
+    about.SetIcon(wxArtProvider::GetIcon("net.poedit.Poedit", wxART_FRAME_ICON, wxSize(128, 128)));
 #endif
 
     wxAboutBox(about);
