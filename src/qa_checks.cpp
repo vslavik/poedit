@@ -95,7 +95,12 @@ public:
 
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
-        if (u_isupper(source[0]) && u_islower(translation[0]))
+        if (source.length() < 2)
+            return false;
+
+        // Detect that the source string is a sentence: should have 1st letter uppercase and 2nd lowercase,
+        // as checking just the 1st letter would lead to false positives (consider e.g. "MSP430 built-in"):
+        if (u_isupper(source[0]) && u_islower(source[1]) && u_islower(translation[0]))
         {
             item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start as a sentence."));
             return true;
