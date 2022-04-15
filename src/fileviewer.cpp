@@ -136,7 +136,7 @@ FileViewer::FileViewer(wxWindow*)
 #endif
     m_topBarSizer->Add(m_openInEditor, wxSizerFlags().Center().ReserveSpaceEvenIfHidden().Border(wxLEFT, PX(10)));
 
-    sizer->Add(new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
+    sizer->Add(new wxStaticLine(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
     m_content = wxWebView::New(panel, wxID_ANY);
     sizer->Add(m_content, 1, wxEXPAND);
