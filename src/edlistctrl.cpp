@@ -156,6 +156,62 @@ public:
 
 #endif
 
+/**
+ * A wxDataViewColum whose GetWidth() prefers to return the fixed width over the actual width - they may differ, e.g.
+ * for the last column which may automatically grow to take the available space on resize.
+ */
+class DataViewFixedColumn : public wxDataViewColumn
+{
+
+public:
+
+    DataViewFixedColumn(const wxString &title, wxDataViewRenderer *renderer,
+                       unsigned int model_column, int width = wxDVC_DEFAULT_WIDTH,
+                       wxAlignment align = wxALIGN_CENTER) : wxDataViewColumn(title, renderer, model_column, width, align, 0)
+    {
+        fixed_width = width >= 0 ? width : wxCOL_WIDTH_DEFAULT;
+    }
+
+    /**
+     * Returns the fixed width, if any, or the width returned by parent wxDataViewColumn.
+     */
+    int GetWidth() const override
+    {
+        // workaround a wx bug where it calculates width of hidden columns
+        // see https://github.com/wxWidgets/wxWidgets/commit/560a81b913f23800e286d297d8cd38e72a207641
+        if ( IsHidden() )
+            return 0;
+
+        if ( fixed_width != wxCOL_WIDTH_DEFAULT )
+            return fixed_width;
+
+        return wxDataViewColumn::GetWidth();
+    }
+
+    /**
+     * Either:
+     *
+     * - Fixes the width if given width is >= 0
+     * - Unsets the width if value is wxCOL_WIDTH_DEFAULT or wxCOL_WIDTH_AUTOSIZE;
+     */
+    void SetWidth( int width ) override
+    {
+        if ( width >= 0 )
+        {
+            fixed_width = width;
+        }
+        else if ( width == wxCOL_WIDTH_AUTOSIZE || width == wxCOL_WIDTH_DEFAULT )
+        {
+            fixed_width = wxCOL_WIDTH_DEFAULT;
+        }
+
+        wxDataViewColumn::SetWidth(width);
+    }
+
+private:
+    // The fixed width, if any, or wxCOL_WIDTH_DEFAULT
+    int fixed_width;
+};
 
 #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)&& !defined(__WXOSX__)
 
@@ -648,7 +704,9 @@ void PoeditListCtrl::CreateColumns()
     m_colTrans = new wxDataViewColumn(_(L"Translation — %s"), transRenderer, Model::Col_Translation, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colTrans);
 
-    m_colID = AppendTextColumn(_("ID"), Model::Col_ID, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT, 0);
+    auto idRenderer = new wxDataViewTextRenderer();
+    m_colID = new DataViewFixedColumn(_("ID"), idRenderer, Model::Col_ID, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT);
+    AppendColumn(m_colID);
 
     // wxDVC insists on having an expander column, but we really don't want one:
     auto fake = AppendTextColumn("", Model::Col_ID);
@@ -719,25 +777,28 @@ void PoeditListCtrl::UpdateColumns()
     }
 
     m_colID->SetHidden(!m_displayIDs);
-    if (m_displayIDs)
-    {
-        // determine best fitting width only once, then set it as fixed, because IDs are immutable
-        m_colID->SetWidth(wxCOL_WIDTH_AUTOSIZE);
-        m_colID->SetWidth(m_colID->GetWidth());
-    }
-    else
-    {
-        // workaround a wx bug where it calculates width of hidden columns
-        // see https://github.com/wxWidgets/wxWidgets/commit/560a81b913f23800e286d297d8cd38e72a207641
-        m_colID->SetWidth(0);
-    }
+
+    // determine best fitting width only once, then set it as fixed, because IDs are immutable
+    m_colID->SetWidth(wxCOL_WIDTH_AUTOSIZE);
+    FixIdColumnSize();
 
     SizeColumns();
 
 #ifdef __WXGTK__
     // wxGTK has delayed sizing computation, apparently
-    CallAfter([=]{ SizeColumns(); });
+    CallAfter([=]{
+        FixIdColumnSize();
+        SizeColumns();
+    });
 #endif
+}
+
+void PoeditListCtrl::FixIdColumnSize()
+{
+    int computed_colID_width = m_colID->GetWidth();
+    // The returned width may be 0 if it is not computed yet or if column is hidden - don't fix it yet in this case
+    if ( computed_colID_width > 0 )
+        m_colID->SetWidth(computed_colID_width);
 }
 
 void PoeditListCtrl::SizeColumns()
