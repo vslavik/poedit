@@ -657,6 +657,18 @@ wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
         wchar_t c = *i;
         switch (c)
         {
+            case '\0':
+                s2 += "\\0";
+                break;
+            case '\a':
+                s2 += "\\a";
+                break;
+            case '\b':
+                s2 += "\\b";
+                break;
+            case '\f':
+                s2 += "\\f";
+                break;
             case '\n':
                 s2 += "\\n\n";
                 break;
@@ -666,11 +678,8 @@ wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
             case '\t':
                 s2 += "\\t";
                 break;
-            case '\a':
-                s2 += "\\a";
-                break;
-            case '\0':
-                s2 += "\\0";
+            case '\v':
+                s2 += "\\v";
                 break;
             case '\\':
             {
@@ -680,10 +689,14 @@ wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
                 {
                     switch ((wchar_t)*peek)
                     {
+                        case '0': case '\0':
+                        case 'a': case '\a':
+                        case 'b': case '\b':
+                        case 'f': case '\f':
                         case 'n': case '\n':
                         case 'r': case '\r':
                         case 't': case '\t':
-                        case '0': case '\0':
+                        case 'v': case '\v':
                         case '\\':
                             s2 += c; // escape problematic backslash
                             break;
@@ -716,17 +729,17 @@ wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
             wchar_t c = *i;
             switch (c)
             {
-                case 'r':
-                    s2 += '\r';
-                    break;
-                case 't':
-                    s2 += '\t';
+                case '0':
+                    s2 += '\0';
                     break;
                 case 'a':
                     s2 += '\a';
                     break;
-                case '0':
-                    s2 += '\0';
+                case 'b':
+                    s2 += '\b';
+                    break;
+                case 'f':
+                    s2 += '\f';
                     break;
                 case 'n':
                 {
@@ -739,6 +752,15 @@ wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
                     }
                     break;
                 }
+                case 'r':
+                    s2 += '\r';
+                    break;
+                case 't':
+                    s2 += '\t';
+                    break;
+                case 'v':
+                    s2 += '\v';
+                    break;
                 case '\\':
                     s2 += '\\';
                     break;

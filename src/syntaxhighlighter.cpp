@@ -104,9 +104,13 @@ public:
                 switch (*i)
                 {
                     case '0':
+                    case 'a':
+                    case 'b':
+                    case 'f':
                     case 'n':
                     case 'r':
                     case 't':
+                    case 'v':
                     case '\\':
                         highlight(pos, pos + 2, Escape);
                         break;
