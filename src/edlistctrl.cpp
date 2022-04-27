@@ -177,10 +177,12 @@ public:
      */
     int GetWidth() const override
     {
+#if !wxCHECK_VERSION(3,1,3)
         // workaround a wx bug where it calculates width of hidden columns
         // see https://github.com/wxWidgets/wxWidgets/commit/560a81b913f23800e286d297d8cd38e72a207641
         if ( IsHidden() )
             return 0;
+#endif
 
         if ( fixed_width != wxCOL_WIDTH_DEFAULT )
             return fixed_width;
