@@ -15,7 +15,7 @@ from tempfile import TemporaryDirectory
 import xml.etree.ElementTree as ET
 
 
-TABLE_URL = "https://github.com/unicode-org/cldr/raw/master/common/supplemental/plurals.xml"
+TABLE_URL = "https://github.com/unicode-org/cldr/raw/main/common/supplemental/plurals.xml"
 
 MARKER_BEGIN = "// Code generated with scripts/extract-plural-forms.py begins here"
 MARKER_END   = "// Code generated with scripts/extract-plural-forms.py ends here"
@@ -61,8 +61,12 @@ with TemporaryDirectory() as tmpdir:
     xml = ET.parse(tmpfile)
     for n in xml.findall('./plurals/pluralRules'):
         for lang in n.get('locales').split():
-            expr = subprocess.run([cldr_plurals, lang, tmpfile], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
-            langdata[lang] = expr
+            result = subprocess.run([cldr_plurals, lang, tmpfile], stdout=subprocess.PIPE)
+            if result.returncode != 0:
+                print(f'Error for locale {lang}, omitting from output!')
+            else:
+                expr = result.stdout.decode('utf-8').strip()
+                langdata[lang] = expr
 
 output = "// Code generated with scripts/extract-plural-forms.py begins here\n\n"
 
