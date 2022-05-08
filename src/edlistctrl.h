@@ -306,6 +306,7 @@ class PoeditListCtrl : public wxDataViewCtrl
         void UpdateHeaderAttrs();
         void CreateColumns();
         void UpdateColumns();
+        void FixIdColumnSize();
         void OnSize(wxSizeEvent& event);
 
         bool m_displayIDs;
