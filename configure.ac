@@ -161,7 +161,7 @@ WXRC_CHECK([], [AC_MSG_ERROR([wxrc is needed to compile Poedit.])])
 AC_CHECK_FUNCS([mkdtemp])
 
 
-PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n],
+PKG_CHECK_MODULES([ICU], [icu-uc icu-i18n >= 54],
         [
             CXXFLAGS="$CXXFLAGS $ICU_CFLAGS"
             LIBS="$LIBS $ICU_LIBS"

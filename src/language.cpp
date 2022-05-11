@@ -34,7 +34,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include <unicode/uvernum.h>
 #include <unicode/locid.h>
 #include <unicode/coll.h>
 #include <unicode/utypes.h>
@@ -251,18 +250,10 @@ std::string DoGetLanguageTag(const Language& lang)
     return tag;
 }
 
-bool DoIsRTL(const Language& lang)
+inline bool DoIsRTL(const Language& lang)
 {
-#if U_ICU_VERSION_MAJOR_NUM >= 51
     auto locale = lang.IcuLocaleName();
-    UErrorCode err = U_ZERO_ERROR;
-    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
-    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
-        return false; // fallback
-    return uscript_isRightToLeft(codes[0]);
-#else
-    return false; // fallback
-#endif
+    return uloc_isRightToLeft(locale.c_str());
 }
 
 } // anonymous namespace
