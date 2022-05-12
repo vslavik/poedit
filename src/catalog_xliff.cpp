@@ -580,7 +580,9 @@ public:
         m_string = str::to_wx(extractor.extractedText);
 
         // TODO: switch to textual IDs in CatalogItem
-        std::string id = node.attribute("id").value();
+        std::string id = node.attribute("resname").value();
+        if (id.empty())
+            id = node.attribute("id").value();
         // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text
         if (!id.empty() && id != m_string)
             m_extractedComments.push_back("ID: " + str::to_wx(id));
@@ -757,7 +759,9 @@ public:
         m_string = str::to_wx(extractor.extractedText);
 
         // TODO: switch to textual IDs in CatalogItem
-        std::string id = unit().attribute("id").value();
+        std::string id = unit().attribute("name").value();
+        if (id.empty())
+            id = unit().attribute("id").value();
         // some tools (e.g. Xcode, tool-id="com.apple.dt.xcode") use ID same as text
         if (!id.empty() && id != m_string)
             m_extractedComments.push_back("ID: " + str::to_wx(id));
