@@ -619,8 +619,12 @@ private:
                             wxOK | wxICON_ERROR
                         ));
                     err->SetExtendedMessage(DescribeCurrentException());
-                    err->ShowWindowModalThenDo([err](int){});
-                    break;
+                    // FIXME: can't use ShowWindowModalThenDo, as would be better, because multiple
+                    //        errors may occur in this loop. See https://github.com/vslavik/poedit/issues/748
+                    if (paths.size() == 1)
+                        err->ShowWindowModalThenDo([err](int){});
+                    else
+                        err->ShowModal();
                 }
             }
             UpdateStats();
