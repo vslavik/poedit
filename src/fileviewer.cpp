@@ -138,7 +138,18 @@ FileViewer::FileViewer(wxWindow*)
 
     sizer->Add(new wxStaticLine(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
+#ifdef __WXMSW__
+    m_usesMSIE = false;
+    m_content = wxWebView::New(panel, wxID_ANY, wxWebViewDefaultURLStr, wxDefaultPosition, wxDefaultSize, wxWebViewBackendEdge);
+    if (!m_content)
+    {
+        wxWebViewIE::MSWSetEmulationLevel(wxWEBVIEWIE_EMU_IE11);
+        m_content = wxWebView::New(panel, wxID_ANY);
+        m_usesMSIE = true;
+    }
+#else
     m_content = wxWebView::New(panel, wxID_ANY);
+#endif
     sizer->Add(m_content, 1, wxEXPAND);
 
     RestoreWindowState(this, wxSize(PX(600), PX(400)));
@@ -303,8 +314,7 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
     Layout();
 
 #ifdef __WXMSW__
-    // On Windows, we use embedded MSIE browser (Edge embedding is still a bit
-    // experimental). Streaming document content to it via SetPage() behaves
+    // Streaming document content to MSIE it via SetPage() behaves
     // a bit differently from loading a file or HTTP document and in particular,
     // we're hit by two issues:
     //
@@ -315,6 +325,7 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
     //
     // So we instead put the content into a temporary file and load that. This
     // sidesteps both issues at a negligible performance cost.
+    if (m_usesMSIE)
     {
         if (!m_tmpFile)
             m_tmpFile = std::make_shared<TempFile>();
@@ -325,9 +336,11 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
 
         m_content->LoadURL(wxFileName::FileNameToURL(m_tmpFile->file));
     }
-#else
-    m_content->SetPage(markup, "file:///");
+    else
 #endif
+    {
+        m_content->SetPage(markup, "file:///");
+    }
 }
 
 

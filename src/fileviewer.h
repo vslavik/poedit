@@ -81,6 +81,7 @@ private:
 #ifdef __WXMSW__
     struct TempFile;
     std::shared_ptr<TempFile> m_tmpFile;
+    bool m_usesMSIE;
 #endif
 };
 
