@@ -343,9 +343,10 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
                 <style>%s</style>
             </head>
             <body>
-                <div class="message">
-                    <h1>%s</h1>
-                    <h2>%s</h2>
+                <div class="message-wrapper">
+                    <div class="message">
+                        <h1>%s</h1>
+                        <h2>%s</h2>
         )",
         HTML_POEDIT_CSS,
         icon,
@@ -359,6 +360,7 @@ void FileViewer::ShowError(const char *icon, const wxString& msg, const wxString
         html += wxString::Format("<div class=\"explanation\">%s</div>", EscapeMarkup(description));
 
     html += R"(
+                    </div>
                 </div>
             </body>
         </html>
@@ -745,6 +747,13 @@ mark {
 }
 
 /* Error messages: */
+
+.message-wrapper {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .message {
     text-align: center;
