@@ -445,7 +445,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     for (size_t i = 0; i < count; i++)
     {
         if (i == lineno-1)
-            html += "<span id=\"mark\"></span>";
+            html += "<span id=\"mark\"><span id=\"msie_anchor\"></span></span>";
         else
             html += "<span></span>";
     }
@@ -453,10 +453,15 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     html += "</span></code></pre>";
 
     if (lineno)
+    {
+        // Alternative implementation that doesn't need msie_anchor, but doesn't work on MSIE, is to do:
+        //     document.getElementById('mark').scrollIntoView({behavior: 'instant', block: 'center'});
+        // instead of
+        //     window.location.hash = "#msie_anchor";
         html += R"(<script>
-                document.getElementById('mark').scrollIntoView({behavior: 'instant', block: 'center'});
-                if (document.documentMode) window.scrollBy(0, -100); // MSIE
-                </script>)";
+                   window.location.hash = "#msie_anchor";
+                   </script>)";
+    }
 
     // PrismJS is added after everything else so that basic rendering works even
     // when offline.
@@ -742,6 +747,13 @@ mark {
         background-color: rgb(198, 171, 113);
         color: #393A34;
     }
+}
+
+#msie_anchor {
+    display: block;
+    visibility: hidden;
+    height: 50vh; /* 50% viewport height */
+    margin-top: -50vh;
 }
 
 /* Error messages: */
