@@ -138,7 +138,18 @@ FileViewer::FileViewer(wxWindow*)
 
     sizer->Add(new wxStaticLine(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
+#ifdef __WXMSW__
+    m_usesMSIE = false;
+    m_content = wxWebView::New(panel, wxID_ANY, wxWebViewDefaultURLStr, wxDefaultPosition, wxDefaultSize, wxWebViewBackendEdge);
+    if (!m_content)
+    {
+        wxWebViewIE::MSWSetEmulationLevel(wxWEBVIEWIE_EMU_IE11);
+        m_content = wxWebView::New(panel, wxID_ANY);
+        m_usesMSIE = true;
+    }
+#else
     m_content = wxWebView::New(panel, wxID_ANY);
+#endif
     sizer->Add(m_content, 1, wxEXPAND);
 
     RestoreWindowState(this, wxSize(PX(600), PX(400)));
@@ -303,8 +314,7 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
     Layout();
 
 #ifdef __WXMSW__
-    // On Windows, we use embedded MSIE browser (Edge embedding is still a bit
-    // experimental). Streaming document content to it via SetPage() behaves
+    // Streaming document content to MSIE it via SetPage() behaves
     // a bit differently from loading a file or HTTP document and in particular,
     // we're hit by two issues:
     //
@@ -315,6 +325,7 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
     //
     // So we instead put the content into a temporary file and load that. This
     // sidesteps both issues at a negligible performance cost.
+    if (m_usesMSIE)
     {
         if (!m_tmpFile)
             m_tmpFile = std::make_shared<TempFile>();
@@ -325,9 +336,11 @@ void FileViewer::ShowHTMLContent(const wxString& markup)
 
         m_content->LoadURL(wxFileName::FileNameToURL(m_tmpFile->file));
     }
-#else
-    m_content->SetPage(markup, "file:///");
+    else
 #endif
+    {
+        m_content->SetPage(markup, "file:///");
+    }
 }
 
 
@@ -447,7 +460,7 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     for (size_t i = 0; i < count; i++)
     {
         if (i == lineno-1)
-            html += "<span id=\"mark\"></span>";
+            html += "<span id=\"mark\"><span id=\"msie_anchor\"></span></span>";
         else
             html += "<span></span>";
     }
@@ -455,10 +468,15 @@ wxString FileToHTMLMarkup(const wxTextFile& file, const wxString& ext, size_t li
     html += "</span></code></pre>";
 
     if (lineno)
+    {
+        // Alternative implementation that doesn't need msie_anchor, but doesn't work on MSIE, is to do:
+        //     document.getElementById('mark').scrollIntoView({behavior: 'instant', block: 'center'});
+        // instead of
+        //     window.location.hash = "#msie_anchor";
         html += R"(<script>
-                document.getElementById('mark').scrollIntoView({behavior: 'instant', block: 'center'});
-                if (document.documentMode) window.scrollBy(0, -100); // MSIE
-                </script>)";
+                   window.location.hash = "#msie_anchor";
+                   </script>)";
+    }
 
     // PrismJS is added after everything else so that basic rendering works even
     // when offline.
@@ -744,6 +762,13 @@ mark {
         background-color: rgb(198, 171, 113);
         color: #393A34;
     }
+}
+
+#msie_anchor {
+    display: block;
+    visibility: hidden;
+    height: 50vh; /* 50% viewport height */
+    margin-top: -50vh;
 }
 
 /* Error messages: */
