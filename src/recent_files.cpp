@@ -118,7 +118,12 @@ class file_icons
 public:
     file_icons()
     {
+#ifdef __WXGTK__
+        // wxSYS_SMALLICON_X is not implemented by wxGTK:
+        m_iconSize[icon_small] = PX(16);
+#else
         m_iconSize[icon_small] = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+#endif
         m_iconSize[icon_large] = wxSystemSettings::GetMetric(wxSYS_ICON_X);
     }
 
@@ -155,6 +160,7 @@ private:
     wxBitmap create_bitmap(const wxIconLocation& loc, icon_size size)
     {
         wxString fullname = loc.GetFileName();
+        int desiredSize = m_iconSize[size];
 #ifdef __WXMSW__
         if (loc.GetIndex())
         {
@@ -162,10 +168,19 @@ private:
             fullname << ';' << loc.GetIndex();
         }
 #endif
-        wxIcon icon(fullname, wxBITMAP_TYPE_ICO, m_iconSize[size], m_iconSize[size]);
+        wxIcon icon(fullname, wxBITMAP_TYPE_ICO, desiredSize, desiredSize);
         if (!icon.IsOk())
             icon.LoadFile(fullname, wxBITMAP_TYPE_ICO);
-
+#ifndef __WXMSW__
+        // There is no guarantee that the desired size given at icon construction
+        // has been taken into account - only wxMSW seems to use it
+        if (icon.GetWidth() != desiredSize || icon.GetHeight() != desiredSize)
+        {
+            wxImage image = icon.ConvertToImage();
+            image.Rescale(desiredSize, desiredSize, wxIMAGE_QUALITY_HIGH);
+            return wxBitmap(image);
+        }
+#endif
         return icon;
     }
 
