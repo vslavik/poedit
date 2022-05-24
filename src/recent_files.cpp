@@ -406,9 +406,10 @@ protected:
             // we need to quote '&' characters which are used for mnemonics
             menuEntry.Replace("&", "&&");
 
-            auto item = menu->Append(wxID_FILE1 + n, wxString::Format("&%d %s", n + 1, menuEntry));
+            auto item = new wxMenuItem(menu, wxID_FILE1 + n, wxString::Format("&%d %s", n + 1, menuEntry));
             item->SetHelp(fn.GetFullPath());
             item->SetBitmap(m_icons_cache->get_small(fn.GetExt()));
+            menu->Append(item);
         }
 
         file_icons_ptr m_icons_cache;
