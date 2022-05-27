@@ -95,6 +95,14 @@ inline wxFont SmallerFont(const wxFont& font)
 }
 
 
+struct ScaledImage
+{
+    wxImage image;
+    double scale = 1.0;
+
+    bool IsOk() const { return image.IsOk(); }
+};
+
 /**
     Load image from given PNG file.
 
@@ -104,6 +112,6 @@ inline wxFont SmallerFont(const wxFont& font)
 
     Note that @a name is given *without* the ".png" extension.
  */
-extern wxImage LoadScaledBitmap(const wxString& name);
+extern ScaledImage LoadScaledBitmap(const wxString& name);
 
 #endif // Poedit_hidpi_h
