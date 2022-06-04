@@ -410,11 +410,12 @@ private:
             if ( state & wxDATAVIEW_CELL_SELECTED )
                 flags |= wxCONTROL_SELECTED;
 
+            rect.height /= 2;
             for (auto& line: wxSplit(m_text, '\n'))
             {
                 wxItemMarkupText markup(line);
                 markup.Render(GetView(), *dc, rect, flags, GetEllipsizeMode());
-                rect.y += rect.height / 2;
+                rect.y += rect.height;
             }
 
             return true;
