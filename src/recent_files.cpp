@@ -184,6 +184,8 @@ private:
             return wxBitmap(image);
         }
 #endif
+
+        icon.SetScaleFactor(HiDPIScalingFactor());
         return icon;
     }
 
