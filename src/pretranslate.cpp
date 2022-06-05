@@ -43,7 +43,7 @@
 
 
 template<typename T>
-int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, int flags, dispatch::cancellation_token_ptr cancellation_token)
+int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, PreTranslateOptions options, dispatch::cancellation_token_ptr cancellation_token)
 {
     if (range.empty())
         return 0;
@@ -54,6 +54,7 @@ int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, int flags, dispa
     TranslationMemory& tm = TranslationMemory::Get();
     auto srclang = catalog->GetSourceLanguage();
     auto lang = catalog->GetLanguage();
+    const auto flags = options.flags;
 
     Progress top_progress(1);
     top_progress.message(_(L"Preparing strings…"));
@@ -130,21 +131,21 @@ int PreTranslateCatalogImpl(CatalogPtr catalog, const T& range, int flags, dispa
 }
 
 template<typename T>
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, int flags)
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, const PreTranslateOptions& options)
 {
     int matches = 0;
     ProgressWindow::RunCancellableTask(window, _(L"Pre-translating…"),
     [=,&matches](dispatch::cancellation_token_ptr cancellationToken)
     {
-        matches = PreTranslateCatalogImpl(catalog, range, flags, cancellationToken);
+        matches = PreTranslateCatalogImpl(catalog, range, options, cancellationToken);
     });
 
     return matches;
 }
 
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags)
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslateOptions& options)
 {
-    return PreTranslateCatalog(window, catalog, catalog->items(), flags);
+    return PreTranslateCatalog(window, catalog, catalog->items(), options);
 }
 
 
@@ -218,21 +219,21 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
 
         int matches = 0;
 
-        int flags = 0;
+        PreTranslateOptions options;
         if (settings.onlyExact)
-            flags |= PreTranslate_OnlyExact;
+            options.flags |= PreTranslate_OnlyExact;
         if (settings.exactNotFuzzy)
-            flags |= PreTranslate_ExactNotFuzzy;
+            options.flags |= PreTranslate_ExactNotFuzzy;
 
         if (list->HasMultipleSelection())
         {
-            matches = PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), flags);
+            matches = PreTranslateCatalog(window, catalog, list->GetSelectedCatalogItems(), options);
             if (matches == 0)
                 return;
         }
         else
         {
-            matches = PreTranslateCatalog(window, catalog, flags);
+            matches = PreTranslateCatalog(window, catalog, options);
             if (matches == 0)
                 return;
         }

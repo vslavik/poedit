@@ -1684,7 +1684,7 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
             {
                 if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                 {
-                    if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality))
+                    if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
                     {
                         if (!m_modified)
                         {
@@ -1738,7 +1738,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                 {
                     if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                     {
-                        if (PreTranslateCatalog(this, m_catalog, PreTranslate_OnlyGoodQuality))
+                        if (PreTranslateCatalog(this, m_catalog, PreTranslateOptions(PreTranslate_OnlyGoodQuality)))
                         {
                             if (!m_modified)
                             {

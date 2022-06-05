@@ -42,6 +42,15 @@ enum PreTranslateFlags
     PreTranslate_OnlyGoodQuality = 0x04
 };
 
+/// Options passed to pre-translation functions
+struct PreTranslateOptions
+{
+    explicit PreTranslateOptions(int flags_ = 0) : flags(flags_) {}
+
+    /// Flags, a combination of PreTranslateFlags values
+    int flags;
+};
+
 /**
     Pre-translate a range of items.
     
@@ -50,7 +59,7 @@ enum PreTranslateFlags
     Returns number of pre-translated (i.e. changed) items.
  */
 template<typename T>
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, int flags);
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, const PreTranslateOptions& options);
 
 /**
     Pre-translate all items in the catalog.
@@ -59,7 +68,7 @@ int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, in
 
     Returns number of pre-translated (i.e. changed) items.
  */
-int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags);
+int PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const PreTranslateOptions& options);
 
 /**
     Show UI for choosing pre-translation choices, then proceed with
