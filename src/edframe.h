@@ -231,11 +231,14 @@ class PoeditFrame : public PoeditFrameBase
         // (Re)initializes spellchecker, if needed
         void InitSpellchecker();
 
+        void RecordItemToNavigationHistory(const CatalogItemPtr& item);
+
         // navigation to another item in the list
         typedef bool (*NavigatePredicate)(const CatalogItemPtr& item);
         int NavigateGetNextItem(const int start, int step, NavigatePredicate predicate, bool wrap, CatalogItemPtr *out_item);
         bool Navigate(int step, NavigatePredicate predicate, bool wrap);
         void OnDoneAndNext(wxCommandEvent&);
+        void OnGoPreviouslyEdited(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
         void OnNext(wxCommandEvent&);
         void OnPrevPage(wxCommandEvent&);
@@ -307,6 +310,7 @@ private:
         void OnSelectionUpdateEditable(wxUpdateUIEvent& event);
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
         void OnSingleSelectionWithPluralsUpdate(wxUpdateUIEvent& event);
+        void OnGoPreviouslyEditedUpdate(wxUpdateUIEvent& event);
         void OnHasCatalogUpdate(wxUpdateUIEvent& event);
         void OnIsEditableUpdate(wxUpdateUIEvent& event);
         void OnEditCommentUpdate(wxUpdateUIEvent& event);
@@ -356,6 +360,7 @@ private:
         std::unique_ptr<MainToolbar> m_toolbar;
 
         CatalogItemPtr m_pendingHumanEditedItem;
+        std::vector<CatalogItemPtr> m_navigationHistory;
 
         EditingArea *m_editingArea;
         wxSplitterWindow *m_splitter;

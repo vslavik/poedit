@@ -78,6 +78,11 @@ class PoeditListCtrl : public wxDataViewCtrl
             return m_model->GetItem(m_model->RowFromCatalogIndex(index));
         }
 
+        wxDataViewItem CatalogItemToListItem(const CatalogItemPtr& item) const
+        {
+            return m_model->GetItem(m_model->RowFromCatalogItem(item));
+        }
+
         /// Returns item's index in the catalog
         int ListIndexToCatalog(int index) const
         {
@@ -276,6 +281,21 @@ class PoeditListCtrl : public wxDataViewCtrl
                     return -1;
                 else
                     return m_mapCatalogToList[index];
+            }
+
+            int RowFromCatalogItem(const CatalogItemPtr& item) const
+            {
+                if (!item)
+                    return -1;
+
+                auto& items = m_catalog->items();
+                for (size_t i = 0; i < items.size(); i++)
+                {
+                    if (items[i] == item)
+                        return RowFromCatalogIndex((int)i);
+                }
+
+                return -1;
             }
 
             void CreateSortMap();

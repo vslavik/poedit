@@ -365,6 +365,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_BUTTON         (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
    EVT_MENU           (XRCID("go_done_and_next"),   PoeditFrame::OnDoneAndNext)
+   EVT_MENU           (XRCID("go_previously_edited"), PoeditFrame::OnGoPreviouslyEdited)
    EVT_MENU           (XRCID("go_prev"),            PoeditFrame::OnPrev)
    EVT_MENU           (XRCID("go_next"),            PoeditFrame::OnNext)
    EVT_MENU           (XRCID("go_prev_page"),       PoeditFrame::OnPrevPage)
@@ -388,6 +389,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI_RANGE(ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9, PoeditFrame::OnSingleSelectionUpdate)
 
    EVT_UPDATE_UI(XRCID("go_done_and_next"),   PoeditFrame::OnSingleSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("go_previously_edited"), PoeditFrame::OnGoPreviouslyEditedUpdate)
    EVT_UPDATE_UI(XRCID("go_prev"),            PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_next"),            PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_prev_page"),       PoeditFrame::OnSingleSelectionUpdate)
@@ -802,6 +804,7 @@ PoeditFrame::~PoeditFrame()
 
     m_catalog.reset();
     m_pendingHumanEditedItem.reset();
+    m_navigationHistory.clear();
 
     // shutdown the spellchecker:
     InitSpellchecker();
@@ -1359,6 +1362,7 @@ void PoeditFrame::NewFromPOT(POCatalogPtr pot, Language language)
 
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
+    m_navigationHistory.clear();
 
     m_fileExistsOnDisk = false;
     m_modified = true;
@@ -1428,6 +1432,7 @@ void PoeditFrame::NewFromScratch()
 
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
+    m_navigationHistory.clear();
 
     m_fileExistsOnDisk = false;
     m_modified = true;
@@ -2187,6 +2192,7 @@ void PoeditFrame::OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged)
     GetMenuBar()->Check(XRCID("menu_fuzzy"), item->IsFuzzy());
 
     m_pendingHumanEditedItem = item;
+    RecordItemToNavigationHistory(item);
 
     if (statsChanged)
     {
@@ -2199,6 +2205,13 @@ void PoeditFrame::OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged)
         m_modified = true;
         UpdateTitle();
     }
+}
+
+
+void PoeditFrame::RecordItemToNavigationHistory(const CatalogItemPtr& item)
+{
+    if (m_navigationHistory.empty() || m_navigationHistory.back() != item)
+        m_navigationHistory.push_back(item);
 }
 
 
@@ -2290,6 +2303,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         m_catalog = cat;
         m_fileMonitor->SetFile(m_catalog->GetFileName());
         m_pendingHumanEditedItem.reset();
+        m_navigationHistory.clear();
 
         if (m_catalog->empty())
         {
@@ -2511,6 +2525,7 @@ void PoeditFrame::RefreshControls(int flags)
         UpdateTitle();
         m_catalog.reset();
         m_pendingHumanEditedItem.reset();
+        m_navigationHistory.clear();
         NotifyCatalogChanged(nullptr);
         return;
     }
@@ -2856,6 +2871,7 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
     UpdateTitle();
     UpdateStatusBar();
 
+    RecordItemToNavigationHistory(entry);
     UpdateToTextCtrl(EditingArea::UndoableEdit);
     m_list->RefreshItem(m_list->GetCurrentItem());
 }
@@ -3286,6 +3302,11 @@ void PoeditFrame::OnSingleSelectionWithPluralsUpdate(wxUpdateUIEvent& event)
                  m_editingArea->IsShowingPlurals());
 }
 
+void PoeditFrame::OnGoPreviouslyEditedUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(!m_navigationHistory.empty());
+}
+
 void PoeditFrame::OnHasCatalogUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog != nullptr);
@@ -3445,6 +3466,7 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
 
         // do additional processing of finished translations, such as adding it to the TM:
         m_pendingHumanEditedItem = item;
+        RecordItemToNavigationHistory(item);
     }
 
     // like "next unfinished", but wraps
@@ -3455,6 +3477,13 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
         UpdateToTextCtrl(EditingArea::UndoableEdit | EditingArea::DontTouchText);
         m_list->RefreshItem(m_list->GetCurrentItem());
     }
+}
+
+void PoeditFrame::OnGoPreviouslyEdited(wxCommandEvent&)
+{
+    auto previous = m_navigationHistory.back();
+    m_list->SelectAndFocus(m_list->CatalogItemToListItem(previous));
+    m_navigationHistory.pop_back();
 }
 
 void PoeditFrame::OnPrevPage(wxCommandEvent&)
