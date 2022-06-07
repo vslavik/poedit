@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2021-06-03 11:36+0200\n"
-"PO-Revision-Date: 2021-06-03 09:36\n"
+"POT-Creation-Date: 2022-06-07 17:30+0200\n"
+"PO-Revision-Date: 2022-06-07 14:46\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Crowdin-File-ID: 3\n"
 
 msgid "Hide this notification message"
-msgstr "Не показывать это уведомление"
+msgstr "Скрыть это уведомление"
 
 msgid "Don’t Show Again"
 msgstr "Больше не показывать"
@@ -49,7 +49,7 @@ msgstr "Обновление переводов"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
-msgstr "«%s» не является корректным POT-файлом."
+msgstr "«%s» не является допустимым файлом POT."
 
 #, c-format
 msgid "Malformed header: “%s”"
@@ -65,7 +65,7 @@ msgid "XLIFF Translation Files"
 msgstr "Файлы перевода XLIFF"
 
 msgid "All Translation Files"
-msgstr "Все файлы переводов"
+msgstr "Все файлы перевода"
 
 #, c-format
 msgid "File “%s” is in unsupported format."
@@ -86,20 +86,20 @@ msgstr ""
 
 msgid "Broken PO file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Испорченый PO-файл: форма единственного числа msgstr, используемая вместе с "
+"Некорректный файл PO: форма единственного числа msgstr используется вместе с "
 "msgid_plural"
 
 msgid "Broken PO file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Испорченый PO-файл: форма множественного числа msgstr использована без "
+"Некорректный файл PO: форма множественного числа msgstr используется без "
 "msgid_plural"
 
 msgid ""
 "There were errors when loading the file. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"При загрузке файла произошли ошибки. В результате некоторые данные могут "
-"быть потеряны или повреждены."
+"При загрузке файла произошли ошибки. В результате чего некоторые данные "
+"могут быть потеряны или повреждены."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -129,14 +129,14 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Файл не может быть сохранен в кодировке “%s” как указано в настройках "
+"Файл не может быть сохранен в кодировке «%s» как указано в настройках "
 "перевода.\n"
 "\n"
-"Вместо этого он был сохранен в UTF-8 и соответственно были изменены "
+"Вместо этого он был сохранен в UTF-8 и, соответственно, были изменены "
 "настройки."
 
 msgid "Error saving file"
-msgstr "Ошибка при сохранении файла"
+msgstr "Ошибка сохранения файла"
 
 #, c-format
 msgid "Error loading file “%s”: %s."
@@ -144,11 +144,11 @@ msgstr "Ошибка загрузки файла “%s”: %s."
 
 #, c-format
 msgid "unsupported XLIFF version (%s)"
-msgstr "не поддерживаемая версия XLIFF (%s)"
+msgstr "неподдерживаемая версия XLIFF (%s)"
 
 #. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
 msgid "Broken markup in translation string."
-msgstr "Испорченная разметка в строке перевода."
+msgstr "Некорректная разметка в строке перевода."
 
 msgid "(Use default language)"
 msgstr "(Использовать язык по умолчанию)"
@@ -277,7 +277,7 @@ msgid "don’t delete temporary files (for debugging)"
 msgstr "не удалять временные файлы (для отладки)"
 
 msgid "handle a poedit:// URI"
-msgstr "открывать адреса poedit://"
+msgstr "обрабатывать адрес poedit://"
 
 msgid "go to item at given line number"
 msgstr "перейти к элементу с заданным номером строки"
@@ -317,7 +317,7 @@ msgstr "В окно Poedit можно перетащить только один
 
 #, c-format
 msgid "File “%s” is not a translation file."
-msgstr "Файл “%s” не является файлом перевода."
+msgstr "Файл «%s» не является файлом перевода."
 
 #, c-format
 msgid "File “%s” doesn’t exist."
@@ -343,7 +343,7 @@ msgstr "Установить"
 
 #, c-format
 msgid "The file “%s” has been changed by another application."
-msgstr "Файл “%s” был изменён другим приложением."
+msgstr "Файл «%s» был изменён другим приложением."
 
 msgid "Reload file"
 msgstr "Перезагрузить файл"
@@ -1194,9 +1194,9 @@ msgid ""
 "translations to it."
 msgstr ""
 "Poedit может попытаться заполнить новые строки только предыдущими переводами "
-"из этого файла либо из вашей памяти переводов. Использование ПП будет не "
-"очень эффективным, если она почти пуста, но будет улучшаться по мере "
-"добавления переводов."
+"из этого файла либо из вашей памяти переводов. Использование памяти перевода "
+"будет не очень эффективным, если она почти пуста, но будет улучшаться по "
+"мере добавления в нее переводов."
 
 msgid "Stored translations:"
 msgstr "Сохраненных переводов:"
@@ -1825,6 +1825,12 @@ msgstr "&Закончить и перейти к следующему"
 msgid "&Done and Next"
 msgstr "&Закончить и перейти к следующему"
 
+msgid "Previously edited"
+msgstr "Предыдущий отредактированный"
+
+msgid "Previously Edited"
+msgstr "Предыдущий отредактированный"
+
 msgid "&Previous translation"
 msgstr "Предыдущий перевод"
 
@@ -1832,7 +1838,7 @@ msgid "&Previous Translation"
 msgstr "Предыдущий перевод"
 
 msgid "&Next translation"
-msgstr "Следующий перевод"
+msgstr "&Следующий перевод"
 
 msgid "&Next Translation"
 msgstr "Следующий перевод"
