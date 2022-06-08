@@ -105,7 +105,7 @@ parts:
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
-      make -j2
+      make -j1
       make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
 
       # Fix-up application icon lookup
