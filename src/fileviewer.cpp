@@ -139,13 +139,16 @@ FileViewer::FileViewer(wxWindow*)
     sizer->Add(new wxStaticLine(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 1)), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
 #ifdef __WXMSW__
-    m_usesMSIE = false;
-    m_content = wxWebView::New(panel, wxID_ANY, wxWebViewDefaultURLStr, wxDefaultPosition, wxDefaultSize, wxWebViewBackendEdge);
-    if (!m_content)
+    if (wxWebView::IsBackendAvailable(wxWebViewBackendEdge))
     {
+        m_usesMSIE = false;
+        m_content = wxWebView::New(panel, wxID_ANY);
+    }
+    else
+    {
+        m_usesMSIE = true;
         wxWebViewIE::MSWSetEmulationLevel(wxWEBVIEWIE_EMU_IE11);
         m_content = wxWebView::New(panel, wxID_ANY);
-        m_usesMSIE = true;
     }
 #else
     m_content = wxWebView::New(panel, wxID_ANY);
