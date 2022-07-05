@@ -140,6 +140,12 @@ parts:
         - usr/*
       resources:
         - share/*
+      exclude-gtk-runtime:
+        - -usr/lib/*/libgtk-*
+        - -usr/lib/*/libgdk*
+        - -usr/lib/*/libcairo*
+        - -usr/lib/*/libpango*
+        - -usr/lib/*/libwayland*
 
     stage:
       - $executables
@@ -150,6 +156,7 @@ parts:
       - $executables
       - $files-in-stage-packages
       - $resources
+      - $exclude-gtk-runtime
 
   wxwidgets:
     source: deps/wx
