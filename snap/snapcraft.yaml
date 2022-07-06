@@ -1,5 +1,6 @@
 name: poedit
 version: "3.1"
+title: Poedit
 summary: Simple translation editor
 description: >
   Translation editor for gettext (PO files) and XLIFF.
@@ -20,11 +21,13 @@ description: >
 base: core20
 grade: stable
 confinement: strict
+compression: lzo
 icon: artwork/linux/appicon/scalable/apps/net.poedit.Poedit.svg
 
 architectures:
   - build-on: amd64
-    run-on: amd64
+  - build-on: arm64
+
 layout:
   /usr/share/aspell:
     symlink: $SNAP/usr/share/aspell
@@ -137,6 +140,12 @@ parts:
         - usr/*
       resources:
         - share/*
+      exclude-gtk-runtime:
+        - -usr/lib/*/libgtk-*
+        - -usr/lib/*/libgdk*
+        - -usr/lib/*/libcairo*
+        - -usr/lib/*/libpango*
+        - -usr/lib/*/libwayland*
 
     stage:
       - $executables
@@ -147,6 +156,7 @@ parts:
       - $executables
       - $files-in-stage-packages
       - $resources
+      - $exclude-gtk-runtime
 
   wxwidgets:
     source: deps/wx
