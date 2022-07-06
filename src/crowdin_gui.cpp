@@ -28,6 +28,8 @@
 
 #include "crowdin_client.h"
 
+#include <unicode/coll.h>
+
 #include "catalog.h"
 #include "cloud_sync.h"
 #include "colorscheme.h"
@@ -67,6 +69,40 @@
 #include <regex>
 
 #include <boost/algorithm/string.hpp>
+
+
+namespace
+{
+
+template<typename T, typename Key>
+void SortAlphabetically(std::vector<T>& items, Key func)
+{
+    UErrorCode err = U_ZERO_ERROR;
+    std::unique_ptr<icu::Collator> coll(icu::Collator::createInstance(err));
+    if (coll)
+        coll->setStrength(icu::Collator::SECONDARY); // case insensitive
+
+    std::sort
+    (
+        items.begin(), items.end(),
+        [&coll,&func](const T& a, const T& b)
+        {
+            auto ka = func(a);
+            auto kb = func(b);
+            if (coll)
+            {
+                UErrorCode e = U_ZERO_ERROR;
+                return coll->compare(str::to_icu(ka), str::to_icu(kb), e) == UCOL_LESS;
+            }
+            else
+            {
+                return ka < kb;
+            }
+        }
+    );
+}
+
+} // anonymous namespace
 
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
@@ -516,17 +552,19 @@ private:
     void OnFetchedProjects(std::vector<CrowdinClient::ProjectListing> prjs)
     {
         m_projects = prjs;
-        m_project->Append("");
-        for (auto& p: prjs)
-            m_project->Append(p.name);
-        m_project->Enable(!prjs.empty());
+        SortAlphabetically(m_projects, [](const auto& p){ return p.name; });
 
-        if (prjs.empty())
+        m_project->Append("");
+        for (auto& p: m_projects)
+            m_project->Append(p.name);
+        m_project->Enable(!m_projects.empty());
+
+        if (m_projects.empty())
             m_activity->StopWithError(_("No translation projects listed in your Crowdin account."));
         else
             m_activity->Stop();
 
-        if (prjs.size() == 1)
+        if (m_projects.size() == 1)
         {
             m_project->SetSelection(1);
             OnProjectSelected();
@@ -553,6 +591,8 @@ private:
     void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
     {
         m_info = prj;
+        SortAlphabetically(m_info.languages, [](const auto& l){ return l.DisplayName(); });
+
         m_language->Clear();
         m_language->Append("");
         for (auto& i: m_info.languages)
