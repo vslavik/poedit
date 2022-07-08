@@ -16,6 +16,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Checkout submodules
       run: git submodule update --init deps/json deps/pugixml
+    - name: Install ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ github.job }}
+    - name: Add ccache to path
+      run: echo "/usr/lib/ccache" >> $GITHUB_PATH
     - name: Install dependencies
       run: |
         sudo apt-get install \
@@ -50,6 +56,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
+    - name: Install ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ github.job }}
     - name: Install external dependencies
       run: brew bundle --file=macos/Brewfile
     - uses: sersoft-gmbh/xcodebuild-action@v2
