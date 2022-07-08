@@ -42,3 +42,19 @@ jobs:
       run: ./configure
     - name: Run make distcheck
       run: make distcheck
+
+  build-macos:
+    name: Build on macOS
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Install external dependencies
+      run: brew bundle --file=macos/Brewfile
+    - uses: sersoft-gmbh/xcodebuild-action@v2
+      with:
+        workspace: Poedit2.xcworkspace
+        scheme: Poedit
+        parallelize-targets: true
+        action: build
