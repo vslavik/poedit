@@ -68,3 +68,17 @@ jobs:
         scheme: Poedit
         parallelize-targets: true
         action: build
+
+  build-windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - uses: microsoft/setup-msbuild@v1.1
+    - uses: nuget/setup-nuget@v1
+    - name: Restore NuGet packages
+      run: nuget restore Poedit2.sln
+    - name: Build solution
+      run: msbuild Poedit2.sln /p:configuration=Debug
