@@ -1606,8 +1606,8 @@ bool POCatalog::FixDuplicateItems()
     }
 
     ExecuteGettext(wxString::Format("msguniq -o %s %s",
-                                    QuoteCmdlineArg(po_file_fixed),
-                                    QuoteCmdlineArg(po_file_temp)));
+                                    QuoteCmdlineArg(CliSafeFileName(po_file_fixed)),
+                                    QuoteCmdlineArg(CliSafeFileName(po_file_temp))));
 
     if (!wxFileName::FileExists(po_file_fixed))
         return false;
