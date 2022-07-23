@@ -133,6 +133,7 @@ with open('build.ninja', 'w') as buildfile:
                                      'LDFLAGS="$ldflags"',
                                      'GSED=$sed',
                                      'YACC=$yacc',
+                                     '--config-cache',
                                      '--with-libiconv-prefix=$SDKROOT/usr',
                                      '--disable-static',
                                      '--disable-java',

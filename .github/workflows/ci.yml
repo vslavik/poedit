@@ -1,0 +1,107 @@
+name: Build
+
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-linux:
+    name: Build on Linux
+    runs-on: ubuntu-20.04
+    env:
+      MAKEFLAGS: -j2
+    steps:
+    - uses: actions/checkout@v3
+    - name: Checkout submodules
+      run: git submodule update --init deps/json deps/pugixml
+    - name: Install dependencies
+      run: |
+        sudo apt-get update && \
+        sudo apt-get install \
+            gettext \
+            libexpat1-dev \
+            libdb++-dev \
+            libboost-dev \
+            libboost-system-dev \
+            libboost-regex-dev \
+            libboost-thread-dev \
+            libboost-iostreams-dev \
+            liblucene++-dev \
+            libicu-dev \
+            libwxgtk3.0-gtk3-dev \
+            libwxgtk-webview3.0-gtk3-dev \
+            libgtk-3-dev \
+            libgtkspell3-3-dev \
+            libcld2-dev \
+            libcpprest-dev \
+            libsecret-1-dev
+    - name: Install ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ github.job }}
+    - name: Add ccache to path
+      run: echo "/usr/lib/ccache" >> $GITHUB_PATH
+    - name: Run bootstrap
+      run: ./bootstrap
+    - name: Run configure
+      run: ./configure
+    - name: Run make distcheck
+      run: make distcheck
+    - name: Upload source tarball artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: source-tarball
+        path: poedit-*.tar.gz
+
+  build-macos:
+    name: Build on macOS
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Install ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ github.job }}
+    - name: Install external dependencies
+      run: brew bundle --file=macos/Brewfile
+    - uses: sersoft-gmbh/xcodebuild-action@v2
+      with:
+        workspace: Poedit2.xcworkspace
+        scheme: Poedit
+        parallelize-targets: true
+        action: build
+
+  build-windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - uses: microsoft/setup-msbuild@v1.1
+    - uses: nuget/setup-nuget@v1
+    - name: Restore NuGet packages
+      run: nuget restore Poedit2.sln
+    - name: Build solution
+      run: msbuild Poedit2.sln /p:configuration=Debug
+
+  publish-release:
+    name: Publish release tarball
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: build-linux
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: source-tarball
+
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          prerelease: true
+          artifacts: "*.tar.gz"
+          token: ${{ secrets.GITHUB_TOKEN }}
