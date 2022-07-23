@@ -87,3 +87,20 @@ jobs:
       run: nuget restore Poedit2.sln
     - name: Build solution
       run: msbuild Poedit2.sln /p:configuration=Debug
+
+  publish-release:
+    name: Publish release tarball
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: build-linux
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: source-tarball
+
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          prerelease: true
+          artifacts: "*.tar.gz"
+          token: ${{ secrets.GITHUB_TOKEN }}
