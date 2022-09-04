@@ -212,9 +212,11 @@ std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll
 // variables expansion for various template languages
 std::wregex RE_COMMON_PLACEHOLDERS(
                     //
-                    //           |             |
-                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\})",
-                    //      |    |      |      |        |
+                    //           |             |               |
+                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\}|[@%:][\w-]+)",
+                    //      |    |      |      |        |      |      |
+                    //      |           |               |             +--------- Drupal: non-terminated @var, %var or :var
+                    //      |           |               |                        !MUST be last in regex because of lack of termination character!
                     //      |           |               |
                     //      |           |               +----------------------- {{var}}
                     //      |           |
