@@ -209,8 +209,19 @@ std::wregex RE_PYTHON_FORMAT(LR"((%(\(\w+\))?[-+ #0]?(\d+|\*)?(\.(\d+|\*))?[hlL]
 std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
                            std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
-// variables expansion for %foo% (Twig), %{foo} (Ruby), {foo} and {{foo}}
-std::wregex RE_COMMON_PLACEHOLDERS(LR"((%[0-9a-zA-Z_.-]+%)|(%?\{[0-9a-zA-Z_.-]+\})|(\{\{[0-9a-zA-Z_.-]+\}\}))",
+// variables expansion for various template languages
+std::wregex RE_COMMON_PLACEHOLDERS(
+                    //
+                    //           |             |
+                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\})",
+                    //      |    |      |      |        |
+                    //      |           |               |
+                    //      |           |               +----------------------- {{var}}
+                    //      |           |
+                    //      |           +--------------------------------------- %{var} (Ruby) and {var}
+                    //      |
+                    //      +--------------------------------------------------- %var% (Twig)
+                    //
                     std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
 } // anonymous namespace
