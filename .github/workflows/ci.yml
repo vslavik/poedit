@@ -70,7 +70,7 @@ jobs:
       run: brew bundle --file=macos/Brewfile
     - uses: sersoft-gmbh/xcodebuild-action@v2
       with:
-        workspace: Poedit2.xcworkspace
+        workspace: Poedit.xcworkspace
         scheme: Poedit
         parallelize-targets: true
         action: build
@@ -85,9 +85,9 @@ jobs:
     - uses: microsoft/setup-msbuild@v1.1
     - uses: nuget/setup-nuget@v1
     - name: Restore NuGet packages
-      run: nuget restore Poedit2.sln
+      run: nuget restore Poedit.sln
     - name: Build solution
-      run: msbuild Poedit2.sln /p:configuration=Debug
+      run: msbuild Poedit.sln /p:configuration=Debug
 
   publish-release:
     name: Publish release tarball
