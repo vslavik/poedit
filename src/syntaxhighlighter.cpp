@@ -251,29 +251,29 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
     if (needsPlaceholders)
     {
         // If no format specified, heuristically apply highlighting of common variable markers
-        static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(RE_COMMON_PLACEHOLDERS, TextKind::Format);
+        static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(RE_COMMON_PLACEHOLDERS, TextKind::Placeholder);
         all->Add(placeholders);
     }
 
     // TODO: more/all languages
     if (formatFlag == "php")
     {
-        static auto php_format = std::make_shared<RegexSyntaxHighlighter>(RE_PHP_FORMAT, TextKind::Format);
+        static auto php_format = std::make_shared<RegexSyntaxHighlighter>(RE_PHP_FORMAT, TextKind::Placeholder);
         all->Add(php_format);
     }
     else if (formatFlag == "c")
     {
-        static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Format);
+        static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
         all->Add(c_format);
     }
     else if (formatFlag == "python")
     {
-        static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Format);
+        static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Placeholder);
         all->Add(python_format);
     }
     else if (formatFlag == "ruby")
     {
-        static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Format);
+        static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Placeholder);
         all->Add(ruby_format);
     }
 

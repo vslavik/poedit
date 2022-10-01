@@ -520,7 +520,7 @@ class AnyTranslatableTextCtrl::Attributes
 {
 public:
 #ifdef __WXOSX__
-    NSDictionary *m_attrSpace, *m_attrEscape, *m_attrMarkup, *m_attrFormat;
+    NSDictionary *m_attrSpace, *m_attrEscape, *m_attrMarkup, *m_attrPlaceholder;
     typedef NSDictionary* AttrType;
 
     Attributes(wxTextCtrl*)
@@ -529,10 +529,10 @@ public:
         m_attrEscape = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeBg).OSXGetNSColor(),
                          NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeFg).OSXGetNSColor()};
         m_attrMarkup = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxMarkup).OSXGetNSColor()};
-        m_attrFormat = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxFormat).OSXGetNSColor()};
+        m_attrPlaceholder = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxFormat).OSXGetNSColor()};
     }
 #else // !__WXOSX__
-    wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup, m_attrFormat;
+    wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup, m_attrPlaceholder;
     typedef wxTextAttr AttrType;
 
     Attributes(wxTextCtrl *ctrl)
@@ -547,7 +547,7 @@ public:
 
         m_attrMarkup.SetTextColour(ColorScheme::Get(Color::SyntaxMarkup));
 
-        m_attrFormat.SetTextColour(ColorScheme::Get(Color::SyntaxFormat));
+        m_attrPlaceholder.SetTextColour(ColorScheme::Get(Color::SyntaxFormat));
     }
 
     const AttrType& Default() const {  return m_attrDefault; }
@@ -560,7 +560,7 @@ public:
             case SyntaxHighlighter::LeadingWhitespace:  return m_attrSpace;
             case SyntaxHighlighter::Escape:             return m_attrEscape;
             case SyntaxHighlighter::Markup:             return m_attrMarkup;
-            case SyntaxHighlighter::Format:             return m_attrFormat;
+            case SyntaxHighlighter::Placeholder:        return m_attrPlaceholder;
         }
         return m_attrSpace; // silence bogus warning
     }
