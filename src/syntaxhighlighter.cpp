@@ -232,8 +232,18 @@ std::wregex RE_COMMON_PLACEHOLDERS(
 SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask)
 {
     auto formatFlag = item.GetFormatFlag();
-    bool needsHTML = (kindsMask & Markup) && std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP);
-    bool needsGenericPlaceholders = (kindsMask & Placeholder) && std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS);
+    bool needsHTML = (kindsMask & Markup);
+    if (needsHTML)
+    {
+        needsHTML = std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP) ||
+                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), RE_HTML_MARKUP));
+    }
+    bool needsGenericPlaceholders = (kindsMask & Placeholder);
+    if (needsGenericPlaceholders)
+    {
+        needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS) ||
+                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), RE_COMMON_PLACEHOLDERS));
+    }
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();
     if (!needsHTML && !needsGenericPlaceholders && formatFlag.empty())
