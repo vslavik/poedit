@@ -49,10 +49,10 @@ public:
     // Kind of the element to highlight
     enum TextKind
     {
-        LeadingWhitespace,
-        Escape,
-        Markup,
-        Placeholder
+        LeadingWhitespace = 0x0001,
+        Escape            = 0x0002,
+        Markup            = 0x0004,
+        Placeholder       = 0x0008
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;
@@ -61,13 +61,18 @@ public:
         Perform highlighting in given text.
         
         The @a highlight function is called once for every range that should
-        be highlighted, with the range boundaries and highlight kind as its
-        arguments.
+        be highlighted, with the range boundaries (start, end offsets) and highlight kind
+        as its arguments.
      */
     virtual void Highlight(const std::wstring& s, const CallbackType& highlight) = 0;
 
-    /// Return highlighter suitable for given translation item
-    static SyntaxHighlighterPtr ForItem(const CatalogItem& item);
+    /**
+        Return highlighter suitable for given translation item.
+
+        @param item      Translation item to highlight
+        @param kindsMask Optionally specify only a subset of highlighters as TextKind or-combination
+     */
+    static SyntaxHighlighterPtr ForItem(const CatalogItem& item, int kindsMask = 0xffff);
 };
 
 #endif // Poedit_syntaxhighlighter_h

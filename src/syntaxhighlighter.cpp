@@ -229,15 +229,20 @@ std::wregex RE_COMMON_PLACEHOLDERS(
 } // anonymous namespace
 
 
-SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
+SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask)
 {
     auto formatFlag = item.GetFormatFlag();
-    bool needsHTML = std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP);
-    bool needsPlaceholders = std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS);
+    bool needsHTML = (kindsMask & Markup) && std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP);
+    bool needsGenericPlaceholders = (kindsMask & Placeholder) && std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS);
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();
-    if (!needsHTML && !needsPlaceholders && formatFlag.empty())
-        return basic;
+    if (!needsHTML && !needsGenericPlaceholders && formatFlag.empty())
+    {
+        if (kindsMask & (LeadingWhitespace | Escape))
+            return basic;
+        else
+            return nullptr;
+    }
 
     auto all = std::make_shared<CompositeSyntaxHighlighter>();
 
@@ -248,37 +253,41 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
         all->Add(html);
     }
 
-    if (needsPlaceholders)
+    if (needsGenericPlaceholders)
     {
         // If no format specified, heuristically apply highlighting of common variable markers
         static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(RE_COMMON_PLACEHOLDERS, TextKind::Placeholder);
         all->Add(placeholders);
     }
 
-    // TODO: more/all languages
-    if (formatFlag == "php")
+    if (kindsMask & Placeholder)
     {
-        static auto php_format = std::make_shared<RegexSyntaxHighlighter>(RE_PHP_FORMAT, TextKind::Placeholder);
-        all->Add(php_format);
-    }
-    else if (formatFlag == "c")
-    {
-        static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
-        all->Add(c_format);
-    }
-    else if (formatFlag == "python")
-    {
-        static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Placeholder);
-        all->Add(python_format);
-    }
-    else if (formatFlag == "ruby")
-    {
-        static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Placeholder);
-        all->Add(ruby_format);
+        // TODO: more/all languages
+        if (formatFlag == "php")
+        {
+            static auto php_format = std::make_shared<RegexSyntaxHighlighter>(RE_PHP_FORMAT, TextKind::Placeholder);
+            all->Add(php_format);
+        }
+        else if (formatFlag == "c")
+        {
+            static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
+            all->Add(c_format);
+        }
+        else if (formatFlag == "python")
+        {
+            static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Placeholder);
+            all->Add(python_format);
+        }
+        else if (formatFlag == "ruby")
+        {
+            static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Placeholder);
+            all->Add(ruby_format);
+        }
     }
 
     // basic highlighting has highest priority, so should come last in the order:
-    all->Add(basic);
+    if (kindsMask & (LeadingWhitespace | Escape))
+        all->Add(basic);
 
     return all;
 }
