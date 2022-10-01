@@ -213,9 +213,10 @@ std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll
 std::wregex RE_COMMON_PLACEHOLDERS(
                     //
                     //           |             |               |
-                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\}|[@%:][\w-]+)",
+                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\}|[@%][\w-]+|":[\w-]+"|':[\w-]+')",
                     //      |    |      |      |        |      |      |
                     //      |           |               |             +--------- Drupal: non-terminated @var, %var or :var
+                    //                                                           (the last one only in href, as ":var" or ':var')
                     //      |           |               |                        !MUST be last in regex because of lack of termination character!
                     //      |           |               |
                     //      |           |               +----------------------- {{var}}
