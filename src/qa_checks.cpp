@@ -440,7 +440,11 @@ int QAChecker::Check(CatalogItemPtr item)
             continue;
 
         if (c->CheckItem(item))
+        {
             issues++;
+            // we only record single issue, so there's no point in continuing with other checks:
+            break;
+        }
     }
 
     return issues;
