@@ -25,8 +25,10 @@
 
 #include "qa_checks.h"
 
-#include <unicode/uchar.h>
+#include "syntaxhighlighter.h"
 
+#include <regex>
+#include <unicode/uchar.h>
 #include <wx/translation.h>
 
 
@@ -38,6 +40,7 @@ namespace QA
 {
 
 #define QA_ENUM_ALL_CHECKS(m)       \
+    m(QA::Placeholders);            \
     m(QA::NotAllPlurals);           \
     m(QA::CaseMismatch);            \
     m(QA::WhitespaceMismatch);      \
@@ -49,6 +52,111 @@ namespace QA
     static const char *GetId() { return symbolicName; }             \
     static wxString GetDescription() { return description; }        \
     const char *GetCheckId() const override { return GetId(); }
+
+
+std::wregex RE_POSITIONAL_FORMAT(LR"(^%[0-9]\$(.*))", std::regex_constants::ECMAScript | std::regex_constants::optimize);
+
+class Placeholders : public QACheck
+{
+public:
+    QA_METADATA("placeholders", _("Placeholders correctness"))
+
+    Placeholders(Language /*lang*/) {}
+
+    bool CheckItem(CatalogItemPtr item) override
+    {
+        // this check is expensive, so make sure to run it on fully translated items only
+        if (!item->IsTranslated())
+            return false;
+
+        auto syntax = SyntaxHighlighter::ForItem(*item, SyntaxHighlighter::Placeholder);
+        if (!syntax)
+            return false;
+
+        PlaceholdersSet phSource;
+        ExtractPlaceholders(phSource, syntax, item->GetString());
+
+        if (item->HasPlural())
+        {
+            ExtractPlaceholders(phSource, syntax, item->GetPluralString());
+            int index = 0;
+            for (auto& t: item->GetTranslations())
+            {
+                if (CheckPlaceholders(phSource, syntax, item, t, index++))
+                    return true;
+            }
+            return false;
+        }
+        else
+        {
+            return CheckPlaceholders(phSource, syntax, item, item->GetTranslation());
+        }
+
+        return false;
+    }
+
+private:
+    // TODO: use std::string_view (C++17)
+    typedef std::set<std::wstring> PlaceholdersSet;
+
+    bool CheckPlaceholders(const PlaceholdersSet& phSource, SyntaxHighlighterPtr syntax, CatalogItemPtr item, const wxString& str, int pluralIndex = -1)
+    {
+        PlaceholdersSet phTrans;
+        ExtractPlaceholders(phTrans, syntax, str);
+
+        // Check the all placeholders are used in translation:
+        for (auto& ph: phSource)
+        {
+            if (phTrans.find(ph) == phTrans.end())
+            {
+                // as a special case, allow errors in 1st plural form, because people tend to translate e.g.
+                // "%d items" as "One item" for n=1
+                if (pluralIndex != 0)
+                {
+                    item->SetIssue(CatalogItem::Issue::Warning,
+                                   wxString::Format(_(L"Placeholder “%s” is missing from translation."), ph));
+                    return true;
+                }
+            }
+        }
+
+        // And the other way around, that there are no superfluous ones:
+        for (auto& ph: phTrans)
+        {
+            if (phSource.find(ph) == phSource.end())
+            {
+                item->SetIssue(CatalogItem::Issue::Warning,
+                               wxString::Format(_(L"Superfluous placeholder “%s” that isn’t in source text."), ph));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void ExtractPlaceholders(PlaceholdersSet& ph, SyntaxHighlighterPtr syntax, const wxString& str)
+    {
+        const std::wstring text(str.ToStdWstring());
+        syntax->Highlight(text, [&text, &ph, syntax](int a, int b, SyntaxHighlighter::TextKind kind){
+            if (kind != SyntaxHighlighter::Placeholder)
+                return;
+
+            auto x = text.substr(a, b - a);
+            if (x == L"%%")
+                return;
+
+            // filter out reordering of positional arguments by tracking them as unordered;
+            // e.g. %1$s is translated into %s
+            std::wsmatch m;
+            if (std::regex_match(x, m, RE_POSITIONAL_FORMAT))
+            {
+                x = std::wstring(L"%") + std::wstring(m[1]);
+            }
+
+            ph.insert(x);
+        });
+    }
+};
 
 
 class NotAllPlurals : public QACheck
@@ -440,7 +548,11 @@ int QAChecker::Check(CatalogItemPtr item)
             continue;
 
         if (c->CheckItem(item))
+        {
             issues++;
+            // we only record single issue, so there's no point in continuing with other checks:
+            break;
+        }
     }
 
     return issues;
