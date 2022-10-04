@@ -417,7 +417,13 @@ public:
         auto mergeSizer = new wxBoxSizer(wxHORIZONTAL);
         mergeSizer->Add(m_mergeUse, wxSizerFlags().Center());
         mergeSizer->AddSpacer(PX(5));
-        mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center().BORDER_MACOS(wxTOP, PX(1)).BORDER_WIN(wxBOTTOM, 1));
+        mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center()
+                    #ifdef __WXOSX__ // BORDER_WIN would reset this padding otherwise
+                        .Border(wxTOP, AboveCheckboxPadding())
+                    #else
+                        .BORDER_WIN(wxBOTTOM, 1)
+                    #endif
+                    );
         sizer->Add(mergeSizer, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM));
 
         auto explainTxt = _(L"Poedit can attempt to fill in new entries from only previous translations in the file or from your entire translation memory. Using the TM won’t be very effective if it’s near-empty, but it will get better as you add more translations to it.");

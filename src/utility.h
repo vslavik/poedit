@@ -67,6 +67,18 @@
     #define BORDER_MACOS(dir, n) Border(dir, 0)
 #endif
 
+#ifdef __WXOSX__
+    inline int AboveCheckboxPadding()
+    {
+        if (__builtin_available(macOS 11.0, *))
+            return 4;
+        else
+            return 0;
+    }
+#else
+    #define AboveCheckboxPadding()  0
+#endif
+
 
 // ----------------------------------------------------------------------
 // Platform version checks
