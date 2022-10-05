@@ -29,7 +29,7 @@
 #include <wx/frame.h>
 #include <wx/dialog.h>
 
-class WXDLLIMPEXP_CORE wxButton;
+class WXDLLIMPEXP_FWD_CORE wxButton;
 
 
 /**

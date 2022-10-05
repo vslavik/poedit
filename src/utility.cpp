@@ -302,8 +302,10 @@ bool TempOutputFileFor::ReplaceFile(const wxString& temp, const wxString& dest)
   #ifdef __UNIX__
     if (overwrite)
     {
-        chown(destPath, st.st_uid, st.st_gid);
-        chmod(destPath, st.st_mode);
+        if (!chown(destPath, st.st_uid, st.st_gid))
+            return false;
+        if (!chmod(destPath, st.st_mode))
+            return false;
     }
   #endif
 
