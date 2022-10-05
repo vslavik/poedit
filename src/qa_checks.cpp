@@ -28,6 +28,7 @@
 #include "syntaxhighlighter.h"
 
 #include <regex>
+#include <set>
 #include <unicode/uchar.h>
 #include <wx/translation.h>
 
