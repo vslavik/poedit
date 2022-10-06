@@ -360,7 +360,7 @@ public:
         }
         else if (s_punct && t_punct && s_last != t_last)
         {
-            if (t_last == L'…' && source.EndsWith("..."))
+            if (IsEquivalent(L'…', t_last) && source.EndsWith("..."))
             {
                 // as a special case, allow translating ... (3 dots) as … (ellipsis)
             }
@@ -389,7 +389,8 @@ private:
     {
         return u_hasBinaryProperty(c, UCHAR_TERMINAL_PUNCTUATION) ||
                u_hasBinaryProperty(c, UCHAR_QUOTATION_MARK) ||
-               c == L'…'; // somehow U+2026 ellipsis is not terminal punctuation
+               c == L'…' ||  // somehow U+2026 ellipsis is not terminal punctuation
+               c == L'⋯';    // ...or Chinese U+22EF
     }
 
     bool IsEquivalent(UChar32 src, UChar32 trans) const
@@ -417,6 +418,8 @@ private:
                     return trans == L'（';
                 case ')':
                     return trans == L'）';
+                case L'…':
+                    return trans == L'⋯';
                 default:
                     break;
             }
