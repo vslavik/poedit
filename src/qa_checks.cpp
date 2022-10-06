@@ -347,9 +347,16 @@ public:
         }
         else if (!s_punct && t_punct)
         {
-            item->SetIssue(CatalogItem::Issue::Warning,
-                           wxString::Format(_(L"The translation should not end with “%s”."), wxString(wxUniChar(t_last))));
-            return true;
+            if (t_last == '.' && (source.EndsWith("st") || source.EndsWith("nd") || source.EndsWith("th")))
+            {
+                // special-case English ordinals to languages that use [number].
+            }
+            else
+            {
+                item->SetIssue(CatalogItem::Issue::Warning,
+                               wxString::Format(_(L"The translation should not end with “%s”."), wxString(wxUniChar(t_last))));
+                return true;
+            }
         }
         else if (s_punct && t_punct && s_last != t_last)
         {
