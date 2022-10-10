@@ -120,6 +120,9 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         if (excludedPaths.MatchesFile(fullpath))
             continue;
 
+        if (!wxFileName::FileExists(basepath + fullpath))
+            continue;
+        
         CheckReadPermissions(basepath, fullpath);
         wxLogTrace("poedit.extractor", "  - %s", fullpath);
         output.push_back(fullpath);
