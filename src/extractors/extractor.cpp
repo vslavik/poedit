@@ -120,6 +120,11 @@ int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMa
         if (excludedPaths.MatchesFile(fullpath))
             continue;
 
+        // Normally, a file enumerated by wxDir exists, but in one special case, it may
+        // not: if it is a broken symlink. FileExists() follows the symlink to check.
+        if (!wxFileName::FileExists(basepath + fullpath))
+            continue;
+        
         CheckReadPermissions(basepath, fullpath);
         wxLogTrace("poedit.extractor", "  - %s", fullpath);
         output.push_back(fullpath);
