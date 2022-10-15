@@ -267,7 +267,7 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         all->Add(placeholders);
     }
 
-    if (kindsMask & Placeholder)
+    if (!fmt.empty() && (kindsMask & Placeholder))
     {
         if (fmt == "php")
         {
