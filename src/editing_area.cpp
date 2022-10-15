@@ -174,7 +174,7 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
     else if (fmt == "csharp")
         return "C#";
     else if (fmt == "objc")
-        return "Objective C";
+        return "Objective-C";
     else if (fmt == "sh")
         return "Shell";
     else if (fmt == "kde")

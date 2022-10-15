@@ -212,7 +212,9 @@ const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%
 
 // c-format per http://en.cppreference.com/w/cpp/io/c/fprintf,
 //              http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
-const wchar_t* RE_C_FORMAT = LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])";
+#define RE_C_FORMAT_BASE LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])"
+const wchar_t* RE_C_FORMAT = RE_C_FORMAT_BASE;
+const wchar_t* RE_OBJC_FORMAT =  L"%@|" RE_C_FORMAT_BASE;
 
 // python-format old style https://docs.python.org/2/library/stdtypes.html#string-formatting
 //               new style https://docs.python.org/3/library/string.html#format-string-syntax
@@ -288,6 +290,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Placeholder);
             all->Add(ruby_format);
+        }
+        else if (fmt == "objc")
+        {
+            static auto objc_format = std::make_shared<RegexSyntaxHighlighter>(RE_OBJC_FORMAT, TextKind::Placeholder);
+            all->Add(objc_format);
         }
     }
 
