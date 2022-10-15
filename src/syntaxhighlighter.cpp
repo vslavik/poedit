@@ -225,6 +225,9 @@ const wchar_t* RE_PYTHON_FORMAT = LR"((%(\(\w+\))?[-+ #0]?(\d+|\*)?(\.(\d+|\*))?
 // ruby-format per https://ruby-doc.org/core-2.7.1/Kernel.html#method-i-sprintf
 const wchar_t* RE_RUBY_FORMAT = LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])";
 
+// Qt and KDE formats
+const wchar_t* RE_QT_FORMAT = LR"(%L?(\d\d?|n))";
+
 } // anonymous namespace
 
 
@@ -295,6 +298,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto objc_format = std::make_shared<RegexSyntaxHighlighter>(RE_OBJC_FORMAT, TextKind::Placeholder);
             all->Add(objc_format);
+        }
+        else if (fmt == "qt" || fmt == "qt-plural" || fmt == "kde" || fmt == "kde-kuit")
+        {
+            static auto qt_format = std::make_shared<RegexSyntaxHighlighter>(RE_QT_FORMAT, TextKind::Placeholder);
+            all->Add(qt_format);
         }
     }
 

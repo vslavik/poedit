@@ -181,6 +181,10 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
         return "KDE";
     else if (fmt == "javascript")
         return "JavaScript";
+    else if (fmt == "qt" || fmt == "qt-plural")
+        return "Qt";
+    else if (fmt == "kde" || fmt == "kde-kuit")
+        return "KDE";
     else
         return wxToupper(fmt[0]) + fmt.substr(1);
 }
