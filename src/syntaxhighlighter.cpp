@@ -146,8 +146,10 @@ private:
 class RegexSyntaxHighlighter : public SyntaxHighlighter
 {
 public:
-    /// Ctor. Notice that @a re is a reference and must outlive the highlighter!
-    RegexSyntaxHighlighter(std::wregex& re, TextKind kind) : m_re(re), m_kind(kind) {}
+    static const std::wregex::flag_type flags = std::regex_constants::ECMAScript | std::regex_constants::optimize;
+
+    RegexSyntaxHighlighter(const wchar_t *regex, TextKind kind) : m_re(regex, flags), m_kind(kind) {}
+    RegexSyntaxHighlighter(const std::wregex& regex, TextKind kind) : m_re(regex), m_kind(kind) {}
 
     void Highlight(const std::wstring& s, const CallbackType& highlight) override
     {
@@ -181,70 +183,67 @@ public:
     }
 
 private:
-    std::wregex& m_re;
+    std::wregex m_re;
     TextKind m_kind;
 };
 
 
-std::wregex RE_HTML_MARKUP(LR"((<\/?[a-zA-Z0-9:-]+(\s+[-:\w]+(=([-:\w+]|"[^"]*"|'[^']*'))?)*\s*\/?>)|(&[^ ;]+;))",
-                           std::regex_constants::ECMAScript | std::regex_constants::optimize);
+std::wregex REOBJ_HTML_MARKUP(LR"((<\/?[a-zA-Z0-9:-]+(\s+[-:\w]+(=([-:\w+]|"[^"]*"|'[^']*'))?)*\s*\/?>)|(&[^ ;]+;))",
+                              RegexSyntaxHighlighter::flags);
+
+// variables expansion for various template languages
+std::wregex REOBJ_COMMON_PLACEHOLDERS(
+                //
+                //           |             |
+                LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\})",
+                //      |    |      |      |        |
+                //      |           |               |
+                //      |           |               +----------------------- {{var}}
+                //      |           |
+                //      |           +--------------------------------------- %{var} (Ruby) and {var}
+                //      |
+                //      +--------------------------------------------------- %var% (Twig)
+                //
+                RegexSyntaxHighlighter::flags);
+
 
 // php-format per http://php.net/manual/en/function.sprintf.php plus positionals
-std::wregex RE_PHP_FORMAT(LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeEfFgGosuxX])",
-                          std::regex_constants::ECMAScript | std::regex_constants::optimize);
+const wchar_t* RE_PHP_FORMAT = LR"(%(\d+\$)?[-+]{0,2}([ 0]|'.)?-?\d*(\..?\d+)?[%bcdeEfFgGosuxX])";
 
 // c-format per http://en.cppreference.com/w/cpp/io/c/fprintf,
 //              http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
-std::wregex RE_C_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
-                        std::regex_constants::ECMAScript | std::regex_constants::optimize);
+const wchar_t* RE_C_FORMAT = LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])";
 
 // python-format old style https://docs.python.org/2/library/stdtypes.html#string-formatting
 //               new style https://docs.python.org/3/library/string.html#format-string-syntax
-std::wregex RE_PYTHON_FORMAT(LR"((%(\(\w+\))?[-+ #0]?(\d+|\*)?(\.(\d+|\*))?[hlL]?[diouxXeEfFgGcrs%]))" // old style
-                             "|"
-                             LR"((\{([^{}])*\}))", // new style, being permissive
-                             std::regex_constants::ECMAScript | std::regex_constants::optimize);
+const wchar_t* RE_PYTHON_FORMAT = LR"((%(\(\w+\))?[-+ #0]?(\d+|\*)?(\.(\d+|\*))?[hlL]?[diouxXeEfFgGcrs%]))" // old style
+                                  "|"
+                                  LR"((\{([^{}])*\}))"; // new style, being permissive
 
 // ruby-format per https://ruby-doc.org/core-2.7.1/Kernel.html#method-i-sprintf
-std::wregex RE_RUBY_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])",
-                           std::regex_constants::ECMAScript | std::regex_constants::optimize);
-
-// variables expansion for various template languages
-std::wregex RE_COMMON_PLACEHOLDERS(
-                    //
-                    //           |             |
-                    LR"(%[\w.-]+%|%?\{[\w.-]+\}|\{\{[\w.-]+\}\})",
-                    //      |    |      |      |        |
-                    //      |           |               |
-                    //      |           |               +----------------------- {{var}}
-                    //      |           |
-                    //      |           +--------------------------------------- %{var} (Ruby) and {var}
-                    //      |
-                    //      +--------------------------------------------------- %var% (Twig)
-                    //
-                    std::regex_constants::ECMAScript | std::regex_constants::optimize);
+const wchar_t* RE_RUBY_FORMAT = LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[hljztL])?[%csdioxXufFeEaAgGnp])";
 
 } // anonymous namespace
 
 
 SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kindsMask)
 {
-    auto formatFlag = item.GetFormatFlag();
+    auto fmt = item.GetFormatFlag();
     bool needsHTML = (kindsMask & Markup);
     if (needsHTML)
     {
-        needsHTML = std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP) ||
-                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), RE_HTML_MARKUP));
+        needsHTML = std::regex_search(str::to_wstring(item.GetString()), REOBJ_HTML_MARKUP) ||
+                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_HTML_MARKUP));
     }
     bool needsGenericPlaceholders = (kindsMask & Placeholder);
     if (needsGenericPlaceholders)
     {
-        needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), RE_COMMON_PLACEHOLDERS) ||
-                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), RE_COMMON_PLACEHOLDERS));
+        needsGenericPlaceholders = std::regex_search(str::to_wstring(item.GetString()), REOBJ_COMMON_PLACEHOLDERS) ||
+                (item.HasPlural() && std::regex_search(str::to_wstring(item.GetPluralString()), REOBJ_COMMON_PLACEHOLDERS));
     }
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();
-    if (!needsHTML && !needsGenericPlaceholders && formatFlag.empty())
+    if (!needsHTML && !needsGenericPlaceholders && fmt.empty())
     {
         if (kindsMask & (LeadingWhitespace | Escape))
             return basic;
@@ -257,36 +256,35 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
     // HTML goes first, has lowest priority than special-purpose stuff like format strings:
     if (needsHTML)
     {
-        static auto html = std::make_shared<RegexSyntaxHighlighter>(RE_HTML_MARKUP, TextKind::Markup);
+        static auto html = std::make_shared<RegexSyntaxHighlighter>(REOBJ_HTML_MARKUP, TextKind::Markup);
         all->Add(html);
     }
 
     if (needsGenericPlaceholders)
     {
         // If no format specified, heuristically apply highlighting of common variable markers
-        static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(RE_COMMON_PLACEHOLDERS, TextKind::Placeholder);
+        static auto placeholders = std::make_shared<RegexSyntaxHighlighter>(REOBJ_COMMON_PLACEHOLDERS, TextKind::Placeholder);
         all->Add(placeholders);
     }
 
     if (kindsMask & Placeholder)
     {
-        // TODO: more/all languages
-        if (formatFlag == "php")
+        if (fmt == "php")
         {
             static auto php_format = std::make_shared<RegexSyntaxHighlighter>(RE_PHP_FORMAT, TextKind::Placeholder);
             all->Add(php_format);
         }
-        else if (formatFlag == "c")
+        else if (fmt == "c")
         {
             static auto c_format = std::make_shared<RegexSyntaxHighlighter>(RE_C_FORMAT, TextKind::Placeholder);
             all->Add(c_format);
         }
-        else if (formatFlag == "python")
+        else if (fmt == "python")
         {
             static auto python_format = std::make_shared<RegexSyntaxHighlighter>(RE_PYTHON_FORMAT, TextKind::Placeholder);
             all->Add(python_format);
         }
-        else if (formatFlag == "ruby")
+        else if (fmt == "ruby")
         {
             static auto ruby_format = std::make_shared<RegexSyntaxHighlighter>(RE_RUBY_FORMAT, TextKind::Placeholder);
             all->Add(ruby_format);
