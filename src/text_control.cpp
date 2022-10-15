@@ -824,12 +824,28 @@ void AnyTranslatableTextCtrl::UpdateRTLStyle()
 void AnyTranslatableTextCtrl::HighlightText()
 {
 #ifdef __WXOSX__
-
     // See the comment in DoGetValueForRange() for why GetValue() returns subtly
     // different thing in RTL.
     // For highlighting, where we index into the string, we need to operate on the
     // exact same string addTemporaryAttributes:forCharacterRange: is expecting.
-    auto text = str::to_wstring([TextView(this) string]);
+    auto traw = [TextView(this) string];
+    auto text = str::to_wstring(traw);
+    if (text.length() != [traw length] )
+    {
+        // Internally, NSString uses UTF-16 and all indexes including via NSLayoutManager
+        // are in it. std::wstring is 32bit and uses UCS4/UTF-32, so simply using wstring
+        // with syntax highlighter would break on any string with characters outside of BMP
+        // (e.g. Emoji, see https://github.com/vslavik/poedit/issues/731).
+        //
+        // To fix this, we need to guarantee same indices in NSString/UTF-16 and wstring,
+        // and a simple way to do it is to put UTF-16 data into wstring. That of course yields
+        // incorrectly encoded string, but that doesn't matter ofr the purpose of syntax
+        // highlighting, which is safely within BMP.
+        //
+        // Only do this in the rare non-BMP case for efficiency.
+        std::u16string utf16 = boost::locale::conv::utf_to_utf<char16_t>([traw UTF8String]);
+        text = std::wstring(utf16.begin(), utf16.end());
+    }
 
     NSRange fullRange = NSMakeRange(0, text.length());
     NSLayoutManager *layout = [TextView(this) layoutManager];
