@@ -189,6 +189,8 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
         return "Python";
     else if (fmt == "perl-brace")
         return "Perl";
+    else if (fmt == "object-pascal")
+        return "Pascal";
     else
         return wxToupper(fmt[0]) + fmt.substr(1);
 }

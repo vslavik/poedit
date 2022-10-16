@@ -234,6 +234,10 @@ const wchar_t* RE_QT_FORMAT = LR"(%L?(\d\d?|n))";
 // Lua
 const wchar_t* RE_LUA_FORMAT = LR"(%[- 0]*\d*(\.\d+)?[sqdiouXxAaEefGgc])";
 
+// Pascal per https://www.freepascal.org/docs-html/rtl/sysutils/format.html
+const wchar_t* RE_PASCAL_FORMAT = LR"(%(\*:|\d*:)?-?(\*|\d+)?(\.\*|\.\d+)?[dDuUxXeEfFgGnNmMsSpP])";
+
+
 } // anonymous namespace
 
 
@@ -319,6 +323,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto brace_format = std::make_shared<RegexSyntaxHighlighter>(RE_BRACES, TextKind::Placeholder);
             all->Add(brace_format);
+        }
+        else if (fmt == "object-pascal")
+        {
+            static auto pascal_format = std::make_shared<RegexSyntaxHighlighter>(RE_PASCAL_FORMAT, TextKind::Placeholder);
+            all->Add(pascal_format);
         }
     }
 
