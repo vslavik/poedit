@@ -185,6 +185,10 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
         return "Qt";
     else if (fmt == "kde" || fmt == "kde-kuit")
         return "KDE";
+    else if (fmt == "python-brace")
+        return "Python";
+    else if (fmt == "perl-brace")
+        return "Perl";
     else
         return wxToupper(fmt[0]) + fmt.substr(1);
 }
