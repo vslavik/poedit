@@ -228,6 +228,9 @@ const wchar_t* RE_RUBY_FORMAT = LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(
 // Qt and KDE formats
 const wchar_t* RE_QT_FORMAT = LR"(%L?(\d\d?|n))";
 
+// Lua
+const wchar_t* RE_LUA_FORMAT = LR"(%[- 0]*\d*(\.\d+)?[sqdiouXxAaEefGgc])";
+
 } // anonymous namespace
 
 
@@ -303,6 +306,11 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
         {
             static auto qt_format = std::make_shared<RegexSyntaxHighlighter>(RE_QT_FORMAT, TextKind::Placeholder);
             all->Add(qt_format);
+        }
+        else if (fmt == "lua")
+        {
+            static auto lua_format = std::make_shared<RegexSyntaxHighlighter>(RE_LUA_FORMAT, TextKind::Placeholder);
+            all->Add(lua_format);
         }
     }
 
