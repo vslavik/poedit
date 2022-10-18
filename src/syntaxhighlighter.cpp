@@ -217,7 +217,7 @@ const wchar_t* RE_C_FORMAT = RE_C_FORMAT_BASE;
 const wchar_t* RE_OBJC_FORMAT =  L"%@|" RE_C_FORMAT_BASE;
 
 // Python and Perl-libintl braces format (also covered by common placeholders above)
-#define RE_BRACES LR"(\{[\w.-:]+\})"
+#define RE_BRACES LR"(\{[\w.-:,]+\})"
 
 // python-format old style https://docs.python.org/2/library/stdtypes.html#string-formatting
 //               new style https://docs.python.org/3/library/string.html#format-string-syntax
@@ -315,7 +315,7 @@ SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item, int kin
             static auto lua_format = std::make_shared<RegexSyntaxHighlighter>(RE_LUA_FORMAT, TextKind::Placeholder);
             all->Add(lua_format);
         }
-        else if (fmt == "perl-brace" || fmt == "python-brace")
+        else if (fmt == "csharp" || fmt == "perl-brace" || fmt == "python-brace")
         {
             static auto brace_format = std::make_shared<RegexSyntaxHighlighter>(RE_BRACES, TextKind::Placeholder);
             all->Add(brace_format);
