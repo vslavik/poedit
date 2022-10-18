@@ -174,13 +174,23 @@ wxString PrettyPrintFormatTag(const wxString& fmt)
     else if (fmt == "csharp")
         return "C#";
     else if (fmt == "objc")
-        return "Objective C";
+        return "Objective-C";
     else if (fmt == "sh")
         return "Shell";
     else if (fmt == "kde")
         return "KDE";
     else if (fmt == "javascript")
         return "JavaScript";
+    else if (fmt == "qt" || fmt == "qt-plural")
+        return "Qt";
+    else if (fmt == "kde" || fmt == "kde-kuit")
+        return "KDE";
+    else if (fmt == "python-brace")
+        return "Python";
+    else if (fmt == "perl-brace")
+        return "Perl";
+    else if (fmt == "object-pascal")
+        return "Pascal";
     else
         return wxToupper(fmt[0]) + fmt.substr(1);
 }
